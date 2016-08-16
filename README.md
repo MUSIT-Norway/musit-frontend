@@ -1,4 +1,4 @@
-# Museit
+# Musit
 
 ## Requirements
 
