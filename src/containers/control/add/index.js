@@ -47,6 +47,7 @@ export default class ControlView extends React.Component {
     translate: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
     saveControl: React.PropTypes.func.isRequired
+    params: React.PropTypes.object
   }
 
   constructor(props) {
@@ -126,7 +127,7 @@ export default class ControlView extends React.Component {
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
       hashHistory.push({
-        pathname: '/observation/control/add',
+        pathname: `/magasin/${this.props.params.id}/observation/control/add`,
         state: controlState
       })
     } else {
