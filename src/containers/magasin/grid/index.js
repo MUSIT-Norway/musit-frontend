@@ -84,8 +84,8 @@ export default class StorageUnitsContainer extends React.Component {
         totalObjectCount={78}
         underNodeCount={5}
         onClickProperties={(key) => key}
-        onClickObservations={(id) => this.props.history.push(`/magasin/${id}/observationcontrol`)}
-        onClickController={(id) => this.props.history.push(`/magasin/${id}/observationcontrol`)}
+        onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observationcontrol`)}
+        onClickController={(id) => hashHistory.push(`/magasin/${id}/observationcontrol`)}
         onClickMoveNode={(key) => key}
         onClickDelete={this.props.onDelete}
       />
