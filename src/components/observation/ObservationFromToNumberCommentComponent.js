@@ -54,6 +54,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
         onChange: onChangeFrom,
         validate: 'number',
         precision: 3,
+        minimumLength: 1,
         disabled: disabled
       },
       to: {

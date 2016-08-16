@@ -68,6 +68,7 @@ export default class ObervationStatusPercentageComment extends Component {
         items: statusOptionValues,
         translate: translate,
         translateKey: translateKeyPrefix,
+        minimumLength: 1,
         disabled: disabled
       },
       volume: {
