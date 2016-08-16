@@ -46,7 +46,7 @@ export default class ControlView extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
-    saveControl: React.PropTypes.func.isRequired
+    saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object
   }
 
