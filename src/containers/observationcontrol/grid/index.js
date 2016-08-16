@@ -25,6 +25,7 @@ import Language from '../../../components/language'
 import Layout from '../../../layout'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
+import { hashHistory } from 'react-router'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -40,7 +41,8 @@ export default class ObservationControlGridShow extends React.Component {
   static propTypes = {
     unit: React.PropTypes.object.isRequired,
     translate: React.PropTypes.func.isRequired,
-    observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object)
+    observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
+    params: React.PropTypes.object,
   }
 
   constructor(props) {
@@ -66,21 +68,19 @@ export default class ObservationControlGridShow extends React.Component {
   makeLeftMenu() {
     return (<div style={{ paddingTop: 10 }}>
       <ObservationControlComponent
-        id={this.props.unit.id}
+        id={this.props.params.id}
         translate={this.props.translate}
         selectObservation
         selectControl
-        onClickNewObservation={(key) => key}
-        onClickNewControl={(key) => key}
-        onClickSelectObservation={(key) => key}
-        onClickSelectControl={(key) => key}
+        onClickNewObservation={() => hashHistory.push(`magasin/${this.props.params.id}/observation/add`)}
+        onClickNewControl={() => hashHistory.push(`magasin/${this.props.params.id}/control/add`)}
       />
     </div>)
   }
 
   makeContent() {
     return (<ObservationControlGrid
-      id={this.props.unit.id}
+      id={this.props.params.id}
       translate={this.props.translate}
       tableData={this.props.observationControlGridData}
     />)
@@ -89,7 +89,7 @@ export default class ObservationControlGridShow extends React.Component {
   render() {
     return (
       <Layout
-        title={`${this.props.translate('musit.grid.observation.header')}`}
+        title={`${this.props.unit.name} - ${this.props.translate('musit.grid.observation.header')}`}
         translate={this.props.translate}
         breadcrumb={"Museum / Papirdunken / Esken inni der"}
         toolbar={this.makeToolbar()}
