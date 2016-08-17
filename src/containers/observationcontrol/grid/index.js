@@ -68,19 +68,19 @@ export default class ObservationControlGridShow extends React.Component {
   makeLeftMenu() {
     return (<div style={{ paddingTop: 10 }}>
       <ObservationControlComponent
-        id={this.props.params.id}
+        id={this.props.params.id * 1}
         translate={this.props.translate}
         selectObservation
         selectControl
-        onClickNewObservation={() => hashHistory.push(`magasin/${this.props.params.id}/observation/add`)}
-        onClickNewControl={() => hashHistory.push(`magasin/${this.props.params.id}/control/add`)}
+        onClickNewObservation={() => hashHistory.push(`/magasin/${this.props.params.id}/observation/add`)}
+        onClickNewControl={() => hashHistory.push(`/magasin/${this.props.params.id}/control/add`)}
       />
     </div>)
   }
 
   makeContent() {
     return (<ObservationControlGrid
-      id={this.props.params.id}
+      id={this.props.params.id * 1}
       translate={this.props.translate}
       tableData={this.props.observationControlGridData}
     />)

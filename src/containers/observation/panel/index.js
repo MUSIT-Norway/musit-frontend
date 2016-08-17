@@ -70,6 +70,7 @@ export default class ObservationView extends React.Component {
     onDoneBySuggestionsUpdateRequested: React.PropTypes.func.isRequired,
     suggest: React.PropTypes.array.isRequired,
     route: React.PropTypes.object,
+    location: React.PropTypes.object
   }
 
   constructor(props) {
@@ -249,7 +250,11 @@ export default class ObservationView extends React.Component {
       return array
     }
     this.mapControlObservation = (arr, controlType, obsType, defaultValuesType) => {
-      if (this.props.controlObservations[controlType] === false) {
+      const fromLocation = this.props.location
+                      && this.props.location.state
+                      && this.props.location.state[controlType] === false;
+      const fromReducer = this.props.controlObservations[controlType] === false;
+      if (fromLocation || fromReducer) {
         this.addNewControlObservationArrayOfJson(arr, obsType, defaultValuesType)
       }
     }
@@ -259,11 +264,11 @@ export default class ObservationView extends React.Component {
       this.mapControlObservation(arr, 'lightConditionsOK', 'lux', 'comments')
       this.mapControlObservation(arr, 'gasOK', 'gas', 'comments')
       this.mapControlObservation(arr, 'cleaningOK', 'cleaning', 'comments')
-      this.mapControlObservation(arr, 'moldFungusOK', 'mold', 'comments')
+      this.mapControlObservation(arr, 'moldOK', 'mold', 'comments')
       this.mapControlObservation(arr, 'temperatureOK', 'temperature', 'fromTo')
       this.mapControlObservation(arr, 'relativeHumidityOK', 'rh', 'fromTo')
       this.mapControlObservation(arr, 'inertAirOK', 'hypoxicAir', 'fromTo')
-      this.mapControlObservation(arr, 'alchoholOK', 'alcohol', 'status')
+      this.mapControlObservation(arr, 'alcoholOK', 'alcohol', 'status')
       this.mapControlObservation(arr, 'pestOK', 'pest', 'pest')
       return arr
     }
@@ -285,8 +290,8 @@ export default class ObservationView extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.params.id) {
-      this.props.loadObservation(this.props.params.id)
+    if (this.props.params.obsId) {
+      this.props.loadObservation(this.props.params.obsId)
     }
   }
 
