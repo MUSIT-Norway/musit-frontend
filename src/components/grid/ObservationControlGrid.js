@@ -10,7 +10,7 @@ export default class ObservationControlGrid extends Component {
     id: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
       types: PropTypes.object.isRequired,

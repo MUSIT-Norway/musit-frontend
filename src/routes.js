@@ -59,15 +59,15 @@ export default (store) => {
       <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
       <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
+      <Route path="/magasin/add" component={StorageUnitPanel} />
       <Route path="/magasin/:id" component={StorageUnitsTable} />
       <Route path="/magasin/:id/view" component={StorageUnitPanel} />
-      <Route path="/magasin/add" component={StorageUnitPanel} />
       <Route path="/magasin/:id/observationcontrol" component={ObservationControlGridShow} />
       <Route path="/magasin/:id/control/add" component={ControlAdd} />
       <Route path="/magasin/:id/control/:controlId" component={ControlView} />
       <Route path="/magasin/:id/observation/add" component={ObservationView} />
-      <Route path="/magasin/:id/observation/:obsId" component={ObservationView} />
       <Route path="/magasin/:id/observation/control/add" newControlObservation component={ObservationView} />
+      <Route path="/magasin/:id/observation/:obsId" component={ObservationView} />
 
       -- Authentication routes
       <Route path="/musit" component={WelcomeUserView} onEnter={requireLogin} />
