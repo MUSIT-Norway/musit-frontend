@@ -27,7 +27,7 @@ import Autosuggest from 'react-autosuggest'
 import { suggestPerson, clearSuggest } from '../../../reducers/suggest'
 import { observationTypeDefinitions, defineCommentType,
   defineFromToType, definePestType, defineStatusType } from './observationTypeDefinitions'
-import { addObservation, loadObservation } from '../../../reducers/observation'
+import { addObservation, loadObservation, getActorNameFromId } from '../../../reducers/observation'
 import { actions } from './actions'
 import { MusitField } from '../../../components/formfields'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
@@ -36,6 +36,10 @@ import { resolveConditions } from '../../../util'
 // TODO: Bind finished page handling to redux and microservices.
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
+  doneBy: state.observation.data.doneBy,
+  doneDate: state.observation.data.doneDate,
+  registeredDate: state.observation.data.registeredDate,
+  registeredBy: state.observation.data.registeredBy,
   observations: state.observation.data.observations,
   controlObservations: state.control.data,
   suggest: state.suggest
@@ -55,6 +59,9 @@ const mapDispatchToProps = (dispatch) => ({
     } else {
       dispatch(clearSuggest('doneByField'))
     }
+  },
+  loadPersonNameFromId: (id) => {
+    dispatch(getActorNameFromId(id))
   }
 })
 
@@ -62,6 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default class ObservationView extends React.Component {
   static propTypes = {
     loadObservation: React.PropTypes.func.isRequired,
+    loadPersonNameFromId: React.PropTypes.func.isRequired,
     translate: React.PropTypes.func.isRequired,
     onSaveObservation: React.PropTypes.func.isRequired,
     observations: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -70,7 +78,8 @@ export default class ObservationView extends React.Component {
     onDoneBySuggestionsUpdateRequested: React.PropTypes.func.isRequired,
     suggest: React.PropTypes.array.isRequired,
     route: React.PropTypes.object,
-    location: React.PropTypes.object
+    location: React.PropTypes.object,
+    doneBy: React.PropTypes.object
   }
 
   constructor(props) {
@@ -272,7 +281,7 @@ export default class ObservationView extends React.Component {
       this.mapControlObservation(arr, 'pestOK', 'pest', 'pest')
       return arr
     }
-    this.state = {
+    this.state = { ...this.state,
       observations: resolveConditions(
         this.displayExisting,
         this.props.observations,
@@ -294,19 +303,26 @@ export default class ObservationView extends React.Component {
       this.props.loadObservation(this.props.params.obsId)
     }
   }
+  componentWillReceiveProps(nextProps) {
+// TODO: When chaining this will be changed
+    if (!this.doneByRetrieved && nextProps.doneBy && nextProps.doneBy.id && !nextProps.doneBy.fn) {
+      this.props.loadPersonNameFromId(nextProps.doneBy.id)
+      this.doneByRetrieved = true
+    }
+  }
 
   onChangeDoneBy(event, { newValue }) {
-    this.updateDoneBy(newValue)
+    this.updateDoneByName(newValue)
   }
 
   onChangeDate(v) {
-    this.setState({ ...this.state, date: v })
+    this.setState({ ...this.state, doneDate: v })
   }
 
   onCancelObservation() {
     this.clearState()
-    if (this.props.params.id) {
-      this.props.loadObservation(this.props.params.id)
+    if (this.props.params.obsId) {
+      this.props.loadObservation(this.props.params.obsId)
     }
   }
 
@@ -324,7 +340,7 @@ export default class ObservationView extends React.Component {
   }
 
   clearState() {
-    this.setState({ ...this.state, observations: [], date: '', doneBy: '' })
+    this.setState({ ...this.state, observations: [], doneDate: '', doneBy: {} })
   }
 
   selectType(index, observationType) {
@@ -344,6 +360,10 @@ export default class ObservationView extends React.Component {
 
   updateDoneBy(newValue) {
     this.setState({ ...this.state, doneBy: newValue })
+  }
+
+  updateDoneByName(newValue) {
+    this.setState({ ...this.state, doneBy: { ...this.state.doneBy, fn: newValue } })
   }
 
   renderDoneBySuggestion(suggestion) {
@@ -371,9 +391,9 @@ export default class ObservationView extends React.Component {
       onCancelObservation
     } = this
 
-    const { observations, date, doneBy } = this.displayExisting ? this.props : this.state
+    const { observations, doneDate, doneBy, registeredBy, registeredDate } = this.displayExisting ? this.props : this.state
 
-    const { doneByField } = suggest
+    const doneByField = suggest.doneByField
 
     const suggestions = doneByField && doneByField.data ? doneByField.data : [];
 
@@ -454,7 +474,8 @@ export default class ObservationView extends React.Component {
                 <Col xs={12} sm={5} smOffset={1}>
                   <ControlLabel>{translate('musit.observation.date')}</ControlLabel>
                   <DatePicker
-                    value={date}
+                    dateFormat="YYYY-MM-DD"
+                    value={doneDate}
                     onChange={this.onChangeDate}
                     disabled={this.displayExisting}
                   />
@@ -479,8 +500,8 @@ export default class ObservationView extends React.Component {
                     <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
                     <br />
                     <DatePicker
-                      dateFormat="DD.MM.YYYY"
-                      value={date}
+                      dateFormat="YYYY-MM-DD"
+                      value={registeredDate}
                       disabled={this.displayExisting}
                     />
                   </Col>
@@ -489,7 +510,7 @@ export default class ObservationView extends React.Component {
                     <br />
                     <MusitField
                       id="registeredBy"
-                      value="Change it"
+                      value={registeredBy}
                       validate="text"
                       disabled={this.displayExisting}
                     />
@@ -497,7 +518,7 @@ export default class ObservationView extends React.Component {
                 </Row>
               : ''}
               <h1 />
-              {renderActiveTypes(observations)}
+              {observations ? renderActiveTypes(observations) : null}
               {this.displayExisting || this.props.route.newControlObservation ? '' :
                 <Row>
                   <h1 />

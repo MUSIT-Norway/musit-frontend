@@ -29,6 +29,10 @@ const wrapAlcoholState = ((s) => {
 
 const wrap = (be) => {
   const ret = {}
+  ret.doneBy = {}
+  ret.doneBy.id = be.doneBy
+  ret.doneDate = be.doneDate
+  ret.registeredDate = be.registeredDate
   // ret.doneBy = be.links.filter((f) => { return f.rel === 'actor' })[0].href
   ret.observations = be['subEvents-parts'] ? be['subEvents-parts'].map((o) => {
     const retobs = {}
