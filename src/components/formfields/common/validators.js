@@ -1,5 +1,7 @@
-const validateString = (value, minimumLength = 0, maximumLength = 20) => {
-  return value.length < minimumLength || value.length > maximumLength ? 'error' : 'success'
+const validateString = (value, minimumLength = 1, maximumLength = 20) => {
+  const isSomething = value && value.length >= minimumLength
+  const isValid = isSomething ? 'success' : null
+  return value && value.length > maximumLength ? 'error' : isValid
 }
 
 const validateNumber = (value, minimumLength = 0, maximumLength = 10, precision = 3) => {
