@@ -23,19 +23,34 @@ import DatePicker from 'react-bootstrap-date-picker'
 import { MusitField } from '../../../components/formfields'
 import Language from '../../../components/language'
 import { connect } from 'react-redux'
+import { loadControl } from '../../../reducers/control/add'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
-  control: state.controlDetails.data
+  control: state.controlDetails.data,
+  controls: state.control
 })
 
-@connect(mapStateToProps)
+const mapDispatchToProps = (dispatch) => ({
+  loadControl: (id) => {
+    dispatch(loadControl(id))
+  }
+})
+@connect(mapStateToProps, mapDispatchToProps)
 export default class ControlViewShow extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    control: React.PropTypes.object.isRequired
+    control: React.PropTypes.object.isRequired,
+    controls: React.PropTypes.object.isRequired,
+    loadControl: React.PropTypes.func.isRequired,
+    params: React.PropTypes.object,
   }
 
+  componentWillMount() {
+    if (this.props.params.controlId) {
+      this.props.loadControl(this.props.params.controlId)
+    }
+  }
   render() {
     const { translate } = this.props
     const temperature = {
@@ -54,6 +69,20 @@ export default class ControlViewShow extends React.Component {
       type: 'pest',
       ok: this.props.control.control.pestControl.ok
     }
+    const test = () => {
+      if (this.props.controls.loaded) {
+        /* eslint-disable no-console */
+        console.log('Rituvesh')
+        console.log(this.props.controls)
+        console.log(this.props.controls.data['subEvents-parts'][0].eventType)
+        /* eslint-disable no-console */
+      }
+      return ''
+    }
+
+
+    // console.log(this.props.controls.data['subEvents-parts'])
+    // console.log(this.props.controls.data['subEvents-parts'][0].eventType)
     const alcohol = {
       type: 'alcohol',
       ok: this.props.control.control.alcoholControl.ok
@@ -66,6 +95,7 @@ export default class ControlViewShow extends React.Component {
               <br />
               <br />
               <br />
+              {test()}
             </Row>
             <Row>
               <Col sm={4} smOffset={2}>
