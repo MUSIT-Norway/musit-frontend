@@ -185,9 +185,6 @@ describe('ObservationReducer', () => {
     // TODO fix this
     const fixedFrontend = completeFrontEnd
     const s = mapToFrontEnd(mapToBackEnd(fixedFrontend))
-    console.log(JSON.stringify(completeFrontEnd))
-    console.log('-----------------------')
-    console.log(JSON.stringify(s))
     assert(JSON.stringify(s) === JSON.stringify(completeFrontEnd))
   })
 })
