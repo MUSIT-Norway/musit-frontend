@@ -23,6 +23,7 @@ import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import Language from '../../../components/language'
 import Layout from '../../../layout'
+import { blur } from '../../../util'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
@@ -43,32 +44,30 @@ export default class ObservationControlGridShow extends React.Component {
     translate: React.PropTypes.func.isRequired,
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
     params: React.PropTypes.object,
+    route: React.PropTypes.object
   }
 
   constructor(props) {
     super(props)
-    this.state = {
-      showControls: true,
-      showObservations: true
-    }
+    this.props.params.id = this.props.params.id * 1
   }
 
   makeToolbar() {
     return (<Toolbar
-      showRight={this.state.showControls}
-      showLeft={this.state.showObservations}
+      showRight={this.props.route.showControls}
+      showLeft={this.props.route.showObservations}
       labelRight="Kontroller"
       labelLeft="Observasjoner"
       placeHolderSearch="Filtrer i liste"
-      clickShowRight={() => this.setState({ ...this.state, showControls: !this.state.showControls })}
-      clickShowLeft={() => this.setState({ ...this.state, showObservations: !this.state.showObservations })}
+      clickShowRight={blur}
+      clickShowLeft={blur}
     />)
   }
 
   makeLeftMenu() {
     return (<div style={{ paddingTop: 10 }}>
       <ObservationControlComponent
-        id={this.props.params.id * 1}
+        id={this.props.params.id}
         translate={this.props.translate}
         selectObservation
         selectControl
@@ -80,7 +79,7 @@ export default class ObservationControlGridShow extends React.Component {
 
   makeContent() {
     return (<ObservationControlGrid
-      id={this.props.params.id * 1}
+      id={this.props.params.id}
       translate={this.props.translate}
       tableData={this.props.observationControlGridData}
     />)

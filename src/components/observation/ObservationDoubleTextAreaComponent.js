@@ -47,6 +47,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
         onChange: onChangeLeft,
         validate: 'text',
         maximumLength: 100,
+        minimumLength: 1,
         numberOfRows: 5,
         disabled: disabled
       },
