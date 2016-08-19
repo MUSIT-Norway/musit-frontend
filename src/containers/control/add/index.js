@@ -127,7 +127,7 @@ export default class ControlView extends React.Component {
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
       hashHistory.push({
-        pathname: `/magasin/${this.props.params.id}/observation/control/add`,
+        pathname: `/magasin/${this.props.params.id}/control/observation/add`,
         state: controlState
       })
     } else {

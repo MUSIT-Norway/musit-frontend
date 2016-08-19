@@ -9,7 +9,7 @@ describe('NodeLeftMenuComponent', () => {
   before('should render ObservationControlComponent', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <NodeLeftMenuComponent
-        id="1"
+        id={1}
         translate={(key) => key}
         onClickNewNode={(key) => key}
         objectsOnNode={11}

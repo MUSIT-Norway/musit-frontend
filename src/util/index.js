@@ -19,3 +19,13 @@ export const flatten = (arr) => {
 
   return obj
 }
+
+export const blur = () => {
+  // Give the document focus
+  window.focus();
+
+  // Remove focus from any focused element
+  if (document.activeElement) {
+    document.activeElement.blur();
+  }
+}
