@@ -132,6 +132,7 @@ export default class ControlView extends React.Component {
       })
     } else {
       this.props.saveControl(controlState)
+      hashHistory.goBack()
     }
   }
 
@@ -167,7 +168,7 @@ export default class ControlView extends React.Component {
       saveLabel={translate(this.oneStateIsNotOK() ? 'musit.observation.registerObservation' : 'musit.texts.save')}
       translate={translate}
       onClickSave={this.onClickSave}
-      onClickCancel={(a) => (a)}
+      onClickCancel={() => { hashHistory.goBack() }}
     />)
 
     const fields = [
