@@ -20,6 +20,7 @@ describe('ObservationReducer', () => {
 
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = deepFreeze({
+      doneBy: { id: '1' },
       observations: [
         {
           type: 'hypoxicAir',
@@ -39,7 +40,7 @@ describe('ObservationReducer', () => {
       ]
     })
     // TODO fix this
-    const fixedFrontend = { ...frontEnd, doneBy: { id: '' } }
+    const fixedFrontend = frontEnd
     const fe = mapToFrontEnd(mapToBackEnd(fixedFrontend))
     // console.log(JSON.stringify(frontEnd))
     // console.log('-----------------------')
@@ -73,6 +74,8 @@ describe('ObservationReducer', () => {
   })
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const completeFrontEnd = {
+      doneBy: { id: '1' },
+      doneDate: '1999-11-11',
       observations: [
         {
 
@@ -180,11 +183,11 @@ describe('ObservationReducer', () => {
         }
       ] }
     // TODO fix this
-    const fixedFrontend = { ...completeFrontEnd, doneBy: { id: '' } }
+    const fixedFrontend = completeFrontEnd
     const s = mapToFrontEnd(mapToBackEnd(fixedFrontend))
-    // console.log(JSON.stringify(completeFrontEnd))
-    // console.log('-----------------------')
-    // console.log(JSON.stringify(s))
+    console.log(JSON.stringify(completeFrontEnd))
+    console.log('-----------------------')
+    console.log(JSON.stringify(s))
     assert(JSON.stringify(s) === JSON.stringify(completeFrontEnd))
   })
 })
