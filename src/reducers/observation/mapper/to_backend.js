@@ -30,7 +30,7 @@ const wrap = (e) => {
   const r = {}
   r.eventType = 'Observation'
   r.doneBy = e.doneBy.id
-  r.doneDate = e.doneDate.substring(1, 8)
+  r.doneDate = e.doneDate
   r['subEvents-parts'] = e.observations ? e.observations.map((el) => {
     const re = {}
     switch (el.type) {
