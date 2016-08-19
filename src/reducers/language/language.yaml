@@ -64,13 +64,18 @@ no:
       save: "Lagre"
       saveTooltip: "Lagre"
       cancel: "Avbryt"
-      cancelTooltip: "Avbryt"
-    controls:
-      temperature: "Temperature"
-      relativeHumidity: "Relativ luftfuktighet"
-      lightCondition: "Lysforhold"
-      pest: "Skadedyr"
-      alcohol: "Sprit"
+      cancelTooltip: "Avbryt"    
+    viewControl:
+      controlTemperature: "Temperature"
+      controlInertluft: "Inert luft"
+      controlRelativLuftfuktighet: "Relativ luftfuktighet"
+      controlLysforhold: "Lysforhold"
+      controlRenhold: "Renhold"
+      controlGass: "Gass"
+      controlMugg: "Mugg"
+      controlSkadedyr: "Skadedyr"
+      controlSprit: "Sprit"
+
     newControl:
       title: "Ny kontroll"
       date: "Dato"

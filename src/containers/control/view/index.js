@@ -41,7 +41,7 @@ export default class ControlViewShow extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     control: React.PropTypes.object.isRequired,
-    controls: React.PropTypes.object.isRequired,
+    controls: React.PropTypes.arrayOf(React.PropTypes.object),
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
   }
@@ -53,40 +53,22 @@ export default class ControlViewShow extends React.Component {
   }
   render() {
     const { translate } = this.props
-    const temperature = {
-      type: 'temperature',
-      ok: this.props.control.control.temperatureControl.ok
-    }
-    const relativeHumidity = {
-      type: 'relativeHumidity',
-      ok: this.props.control.control.relativeHumidity.ok
-    }
-    const lightCondition = {
-      type: 'lightCondition',
-      ok: this.props.control.control.lightConditionControl.ok
-    }
-    const pest = {
-      type: 'pest',
-      ok: this.props.control.control.pestControl.ok
-    }
     const test = () => {
       if (this.props.controls.loaded) {
         /* eslint-disable no-console */
-        console.log('Rituvesh')
         console.log(this.props.controls)
-        console.log(this.props.controls.data['subEvents-parts'][0].eventType)
-        /* eslint-disable no-console */
+        this.props.controls.data['subEvents-parts'].map((c) => {
+          console.log(c.eventType)
+          if (c['subEvents-motivates']) {
+            console.log(c['subEvents-motivates'][0].eventType)
+          }
+          return ''
+        }
+        )
       }
       return ''
     }
 
-
-    // console.log(this.props.controls.data['subEvents-parts'])
-    // console.log(this.props.controls.data['subEvents-parts'][0].eventType)
-    const alcohol = {
-      type: 'alcohol',
-      ok: this.props.control.control.alcoholControl.ok
-    }
     return (
       <div>
         <main>
@@ -129,13 +111,7 @@ export default class ControlViewShow extends React.Component {
                 <ControlView
                   id="1"
                   translate={translate}
-                  controls={[
-                    temperature,
-                    relativeHumidity,
-                    lightCondition,
-                    pest,
-                    alcohol
-                  ]}
+                  controlsJson={this.props.controls.loaded ? this.props.controls.data['subEvents-parts'] : null}
                 />
               </Col>
             </Row>
