@@ -9,13 +9,14 @@ export default class NodeGrid extends Component {
     id: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
       type: PropTypes.string.isRequired,
       objectCount: PropTypes.number,
       totalObjectCount: PropTypes.number,
       nodeCount: PropTypes.number
     })),
-    onPick: PropTypes.func.isRequired,
+    onAction: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired
   }
 
@@ -33,15 +34,9 @@ export default class NodeGrid extends Component {
                 <th>
                   {translate('musit.grid.node.nodeType')}
                 </th>
-                <th>
-                  {translate('musit.grid.node.objectCount')}
-                </th>
-                <th>
-                  {translate('musit.grid.node.totalObjectCount')}
-                </th>
-                <th>
-                  {translate('musit.grid.node.nodeCount')}
-                </th>
+                <th />
+                <th />
+                <th />
                 <th />
                 <th />
                 <th />
@@ -76,20 +71,44 @@ export default class NodeGrid extends Component {
                     {c.nodeCount}
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_eye`}>
-                    <FontAwesome name="eye" />
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault()
+                        this.props.onAction('observation', c)
+                      }}
+                    >
+                      <FontAwesome name="eye" />
+                    </a>
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_search`}>
-                    <FontAwesome name="search" />
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault()
+                        this.props.onAction('control', c)
+                      }}
+                    >
+                      <FontAwesome name="search" />
+                    </a>
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_truck`}>
-                    <FontAwesome name="truck" />
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault()
+                        this.props.onAction('move', c)
+                      }}
+                    >
+                      <FontAwesome name="truck" />
+                    </a>
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_shoppingCart`}>
                     <a
                       href=""
                       onClick={(e) => {
                         e.preventDefault()
-                        this.props.onPick(c)
+                        this.props.onAction('pick', c)
                       }}
                     >
                       <FontAwesome name="shopping-cart" />
