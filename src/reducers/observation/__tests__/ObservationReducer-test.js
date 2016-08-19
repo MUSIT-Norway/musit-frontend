@@ -3,7 +3,8 @@ import deepFreeze from 'deep-freeze'
 import observationReducer, {
   addObservation,
   loadObservation,
-  initialState
+  initialState,
+  getActorNameFromId
 } from '../index'
 import { mapToFrontEnd, mapToBackEnd } from '../mapper'
 
@@ -72,6 +73,12 @@ describe('ObservationReducer', () => {
     const state = observationReducer(initialState, addObservation(fromServer))
     assert(state.type !== 'ADD_SUCCESS' || state.data === fromServer)
   })
+
+  it('Actor reducer should give a valid name given a valid id', () => {
+    const state = observationReducer(initialState, getActorNameFromId(1))
+    assert(state.type !== 'LOAD_ACTOR_SUCCESS' || state.data.fn === 'Arne And1')
+  })
+
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const completeFrontEnd = {
       doneBy: { id: '1' },

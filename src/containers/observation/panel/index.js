@@ -23,6 +23,7 @@ import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import Language from '../../../components/language'
 import DatePicker from 'react-bootstrap-date-picker'
+import { hashHistory } from 'react-router'
 import Autosuggest from 'react-autosuggest'
 import { suggestPerson, clearSuggest } from '../../../reducers/suggest'
 import { observationTypeDefinitions, defineCommentType,
@@ -51,6 +52,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onSaveObservation: (data) => {
     dispatch(addObservation(data))
+    hashHistory.goBack()
   },
   onDoneBySuggestionsUpdateRequested: ({ value, reason }) => {
     // Should only autosuggest on typing if you have more then 2 characters
@@ -321,9 +323,7 @@ export default class ObservationView extends React.Component {
 
   onCancelObservation() {
     this.clearState()
-    if (this.props.params.obsId) {
-      this.props.loadObservation(this.props.params.obsId)
-    }
+    hashHistory.goBack()
   }
 
   onSuggestionSelected(event, { suggestion }) {
@@ -512,7 +512,7 @@ export default class ObservationView extends React.Component {
                       id="registeredBy"
                       value={registeredBy}
                       validate="text"
-                      disabled={this.displayExisting}
+                      disabled={this.SaveCancelSaveCancel}
                     />
                   </Col>
                 </Row>
