@@ -14,57 +14,57 @@ export default class ControlView extends Component {
   }
 
   static iconMap = {
-    ControlTemperature: 'asterisk',
-    ControlInertluft: 'asterisk',
-    ControlRelativLuftfuktighet: 'tint',
-    ControlLysforhold: 'sun-o',
-    ControlRenhold: 'asterisk',
-    ControlGass: 'asterisk',
-    ControlMugg: 'asterisk',
-    ControlSkadedyr: 'bug',
-    ControlSprit: 'percent'
+    ControlAlcohol: 'percent',
+    ControlCleaning: 'asterisk',
+    ControlGas: 'asterisk',
+    ControlHypoxicAir: 'asterisk',
+    ControlLightingCondition: 'sun-o',
+    ControlMold: 'asterisk',
+    ControlPest: 'bug',
+    ControlRelativeHumidity: 'tint',
+    ControlTemperature: 'asterisk'
 
   }
   static typeMap = {
-    ControlTemperature: 'controlTemperature',
-    ControlInertluft: 'controlInertluft',
-    ControlRelativLuftfuktighet: 'controlRelativLuftfuktighet',
-    ControlLysforhold: 'controlLysforhold',
-    ControlRenhold: 'controlRenhold',
-    ControlGass: 'controlGass',
-    ControlMugg: 'controlMugg',
-    ControlSkadedyr: 'controlSkadedyr',
-    ControlSprit: 'controlSprit'
+    ControlAlcohol: 'controlAlcohol',
+    ControlCleaning: 'controlCleaning',
+    ControlGas: 'controlGas',
+    ControlHypoxicAir: 'controlHypoxicAir',
+    ControlLightingCondition: 'controlLightingCondition',
+    ControlMold: 'controlMold',
+    ControlPest: 'controlPest',
+    ControlRelativeHumidity: 'controlRelativeHumidity',
+    ControlTemperature: 'controlTemperature'
   }
 
   constructor(props) {
     super(props);
     this.state = {
+      ControlAlcohol: {
+        open: false
+      },
+      ControlCleaning: {
+        open: false
+      },
+      ControlGas: {
+        open: false
+      },
+      ControlHypoxicAir: {
+        open: false
+      },
+      ControlLightingCondition: {
+        open: false
+      },
+      ControlMold: {
+        open: false
+      },
+      ControlPest: {
+        open: false
+      },
+      ControlRelativeHumidity: {
+        open: false
+      },
       ControlTemperature: {
-        open: false
-      },
-      ControlInertluft: {
-        open: false
-      },
-      ControlRelativLuftfuktighet: {
-        open: false
-      },
-      ControlLysforhold: {
-        open: false
-      },
-      ControlRenhold: {
-        open: false
-      },
-      ControlGass: {
-        open: false
-      },
-      ControlMugg: {
-        open: false
-      },
-      ControlSkadedyr: {
-        open: false
-      },
-      ControlSprit: {
         open: false
       }
     };

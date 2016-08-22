@@ -22,8 +22,8 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 class ApiClient {
 
-  constructor(req) {
-    const token = this.getToken(req);
+  constructor() {
+    const token = 'fake-token-zab-xy-stein';
     methods.forEach((method) => {
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const apiRequest = request[method](this.fixPath(path));
