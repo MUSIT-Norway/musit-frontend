@@ -8,10 +8,11 @@ describe('NodeGrid', () => {
       <NodeGrid
         id={1}
         translate={(key) => key}
-        onPick={(key) => key}
+        onAction={(key) => key}
         onClick={(key) => key}
         tableData={[
           {
+            id: 1,
             name: 'Eske',
             type: 'Lagringsenh',
             objectCount: 0,
@@ -19,6 +20,7 @@ describe('NodeGrid', () => {
             nodeCount: 0
           },
           {
+            id: 2,
             name: 'Pose',
             type: 'Lagringsenh',
             objectCount: 0,
