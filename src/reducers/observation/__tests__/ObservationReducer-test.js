@@ -3,8 +3,7 @@ import deepFreeze from 'deep-freeze'
 import observationReducer, {
   addObservation,
   loadObservation,
-  initialState,
-  getActorNameFromId
+  initialState
 } from '../index'
 import { mapToFrontEnd, mapToBackEnd } from '../mapper'
 
@@ -74,8 +73,16 @@ describe('ObservationReducer', () => {
     assert(state.type !== 'ADD_SUCCESS' || state.data === fromServer)
   })
 
-  it('Actor reducer should give a valid name given a valid id', () => {
-    const state = observationReducer(initialState, getActorNameFromId(1))
+  it('Valid action from calling actor service for finding actor should update state correctly', () => {
+    const actionResult = {
+      data: {
+        id: 1,
+        fn: 'Arne And1'
+      },
+      type: 'LOAD_ACTOR_SUCCESS'
+    }
+
+    const state = observationReducer(initialState, actionResult)
     assert(state.type !== 'LOAD_ACTOR_SUCCESS' || state.data.fn === 'Arne And1')
   })
 
