@@ -16,6 +16,7 @@ ADD webpack.dev.config.js webpack.dev.config.js
 ADD .babelrc .babelrc
 ADD .eslintrc .eslintrc
 ADD start.sh start.sh
+ADD fake_security.json fake_security.json
 
 RUN chmod +x start.sh
 
