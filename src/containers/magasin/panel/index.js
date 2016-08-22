@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { hashHistory } from 'react-router'
 import Language from '../../../components/language'
 import { load, insert as insertStorageUnitContainer } from '../../../reducers/storageunit/panel';
 import { suggestAddress, clearSuggest } from '../../../reducers/suggest'
@@ -16,6 +17,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLagreClick: (data) => {
       dispatch(insertStorageUnitContainer(data))
+      hashHistory.goBack()
     },
     loadStorageUnit: (id) => {
       dispatch(load(id))
