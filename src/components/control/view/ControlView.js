@@ -22,7 +22,7 @@ export default class ControlView extends Component {
     ControlMold: 'asterisk',
     ControlPest: 'bug',
     ControlRelativeHumidity: 'tint',
-    ControlTemperature: 'bug'
+    ControlTemperature: 'asterisk'
 
   }
   static typeMap = {

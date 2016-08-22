@@ -75,6 +75,7 @@ no:
       controlPest: "Skadedyr"
       controlRelativeHumidity: "Relativ luftfuktighet"
       controlTemperature: "Temperature"
+
     newControl:
       title: "Ny kontroll"
       date: "Dato"
