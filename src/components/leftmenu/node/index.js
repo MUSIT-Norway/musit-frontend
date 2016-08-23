@@ -83,7 +83,7 @@ export default class NodeLeftMenuComponent extends Component {
 
     return (
       <div>
-        {newButton(id)}
+        {Number.isInteger(id) ? newButton(id) : null}
         {(Number.isInteger(id)) ? (<hr />) : null}
         {showCount(objectsOnNode, 'objectsOnNode')}
         {showCount(totalObjectCount, 'totalObjectCount')}
