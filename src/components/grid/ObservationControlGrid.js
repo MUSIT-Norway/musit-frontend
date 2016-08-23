@@ -12,7 +12,7 @@ export default class ObservationControlGrid extends Component {
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
+      doneDate: PropTypes.string.isRequired,
       types: PropTypes.object.isRequired,
       doneBy: PropTypes.string.isRequired,
       registeredDate: PropTypes.string.isRequired,
@@ -73,20 +73,20 @@ export default class ObservationControlGrid extends Component {
               {this.props.tableData.map((c, i) =>
                 <tr
                   key={i}
-                  id={`${c.id}_${c.date}`}
+                  id={`${c.id}_${c.doneDate}`}
                   onClick={() =>
                     (hashHistory.push(c.type === 'control' ?
                     `magasin/${id}/control/${c.id}` : `magasin/${id}/observation/${c.id}`
                   ))}
                 >
-                  <td id={`${c.id}_${c.date}_type`}>
+                  <td id={`${c.id}_${c.doneDate}_type`}>
                     {c.type === 'control' ? <FontAwesome name="user-secret" /> : ''}
                     {c.type === 'observation' ? <FontAwesome name="eye" /> : ''}
                   </td>
-                  <td id={`${c.id}_${c.date}_date`}>
-                    {`${c.date}`}
+                  <td id={`${c.id}_${c.doneDate}_date`}>
+                    {`${c.doneDate}`}
                   </td>
-                  <td id={`${c.id}_${c.date}_types`}>
+                  <td id={`${c.id}_${c.doneDate}_types`}>
                     {showEnabledIcon(c.types.temperature, 'temperature')}
                     {showDisabledIcon(c.types.temperature, 'temperature')}
                     {showEnabledIcon(c.types.inertAir, 'inertAir')}
@@ -108,13 +108,13 @@ export default class ObservationControlGrid extends Component {
                     {showEnabledIcon(c.types.envdata, 'envdata')}
                     {showDisabledIcon(c.types.envdata, 'envdata')}
                   </td>
-                  <td id={`${c.id}_${c.date}_doneBy`}>
+                  <td id={`${c.id}_${c.doneDate}_doneBy`}>
                     {`${c.doneBy}`}
                   </td>
-                  <td id={`${c.id}_${c.date}_registeredDate`}>
+                  <td id={`${c.id}_${c.doneDate}_registeredDate`}>
                     {`${c.registeredDate}`}
                   </td>
-                  <td id={`${c.id}_${c.date}_registeredBy`}>
+                  <td id={`${c.id}_${c.doneDate}_registeredBy`}>
                     {`${c.registeredBy}`}
                   </td>
                 </tr>

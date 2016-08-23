@@ -5,7 +5,7 @@ const initialState = {
     {
       id: 1,
       type: 'control',
-      date: '01.01.1983',
+      doneDate: '01.01.1983',
       types: { temperature: true,
         inertAir: null,
         relativeHumidity: null,
@@ -23,7 +23,7 @@ const initialState = {
     {
       id: 2,
       type: 'observation',
-      date: '01.01.1984',
+      doneDate: '01.01.1984',
       types: { temperature: true,
         inertAir: null,
         relativeHumidity: null,
@@ -40,7 +40,7 @@ const initialState = {
     {
       id: 3,
       type: 'observation',
-      date: '01.01.1984',
+      doneDate: '01.01.1984',
       types: { temperature: true,
         inertAir: true,
         relativeHumidity: true,
@@ -57,7 +57,7 @@ const initialState = {
     {
       id: 4,
       type: 'control',
-      date: '01.01.1984',
+      doneDate: '01.01.1984',
       types: { temperature: false,
         inertAir: false,
         relativeHumidity: false,
@@ -74,13 +74,13 @@ const initialState = {
     {
       id: 5,
       type: 'observation',
-      date: '01.01.1984',
+      doneDate: '01.01.1984',
       types: { temperature: null,
         inertAir: null,
         relativeHumidity: null,
         cleaning: null,
         lightCondition: null,
-        alchohol: null,
+        alchohol: true,
         gas: null,
         mold: null,
         envdata: null },
@@ -91,7 +91,7 @@ const initialState = {
     {
       id: 6,
       type: 'control',
-      date: '01.01.1984',
+      doneDate: '01.01.1984',
       types: { temperature: false
          },
       doneBy: 'Blablabla...',
