@@ -22,8 +22,9 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 class ApiClient {
 
-  constructor(req) {
-    const token = this.getToken(req);
+  constructor() {
+    const token = 'fake-token-zab-xy-stein';
+
     methods.forEach((method) => {
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const apiRequest = request[method](this.fixPath(path));
@@ -43,13 +44,6 @@ class ApiClient {
         apiRequest.end((err, { body } = {}) => (err ? reject(body || err) : resolve(body)));
       });
     })
-  }
-
-  getToken(req) {
-    if (req && req.user) {
-      return req.user.accessToken
-    }
-    return '';
   }
 
   fixPath(path) {
