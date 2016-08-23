@@ -20,6 +20,7 @@ describe('ObservationReducer', () => {
 
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = deepFreeze({
+      doneBy: { id: '1' },
       observations: [
         {
           type: 'hypoxicAir',
@@ -39,7 +40,7 @@ describe('ObservationReducer', () => {
       ]
     })
     // TODO fix this
-    const fixedFrontend = { ...frontEnd, doneBy: { id: '' } }
+    const fixedFrontend = frontEnd
     const fe = mapToFrontEnd(mapToBackEnd(fixedFrontend))
     // console.log(JSON.stringify(frontEnd))
     // console.log('-----------------------')
@@ -71,8 +72,24 @@ describe('ObservationReducer', () => {
     const state = observationReducer(initialState, addObservation(fromServer))
     assert(state.type !== 'ADD_SUCCESS' || state.data === fromServer)
   })
+
+  it('Valid action from calling actor service for finding actor should update state correctly', () => {
+    const actionResult = {
+      data: {
+        id: 1,
+        fn: 'Arne And1'
+      },
+      type: 'LOAD_ACTOR_SUCCESS'
+    }
+
+    const state = observationReducer(initialState, actionResult)
+    assert(state.type !== 'LOAD_ACTOR_SUCCESS' || state.data.fn === 'Arne And1')
+  })
+
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const completeFrontEnd = {
+      doneBy: { id: '1' },
+      doneDate: '1999-11-11',
       observations: [
         {
 
@@ -180,11 +197,8 @@ describe('ObservationReducer', () => {
         }
       ] }
     // TODO fix this
-    const fixedFrontend = { ...completeFrontEnd, doneBy: { id: '' } }
+    const fixedFrontend = completeFrontEnd
     const s = mapToFrontEnd(mapToBackEnd(fixedFrontend))
-    // console.log(JSON.stringify(completeFrontEnd))
-    // console.log('-----------------------')
-    // console.log(JSON.stringify(s))
     assert(JSON.stringify(s) === JSON.stringify(completeFrontEnd))
   })
 })
