@@ -171,8 +171,6 @@ export default class StorageUnitsContainer extends React.Component {
           onClickNewNode={(parentId) => {
             if (parentId) {
               history.push(`/magasin/${parentId}/add`)
-            } else {
-              history.push('/magasin/add')
             }
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
