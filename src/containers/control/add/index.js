@@ -36,8 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (data) => {
-    dispatch(addControl(data))
+  saveControl: (data, saveControlCallback) => {
+    dispatch(addControl(data, saveControlCallback))
   }
 })
 
@@ -131,8 +131,8 @@ export default class ControlView extends React.Component {
         state: controlState
       })
     } else {
-      this.props.saveControl(controlState)
-      hashHistory.goBack()
+      this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
+                                             onFailure: () => { alert('Kunne ikke lagre kontroll') } })
     }
   }
 
