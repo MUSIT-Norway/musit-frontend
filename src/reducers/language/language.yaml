@@ -73,6 +73,40 @@ en:
       mold: "Mold"
       pest: "Pest"
       envdata: "Environmental Records"
+    observation:
+      registerObservation: "Register observation"
+      registerObservations: "Register observations"
+      date: "Performed date"
+      doneBy: "Performed by"
+      registeredDate: "Registered date"
+      registeredBy: "Registered by"
+      newObservationHeader: "New observation"
+      viewObservationHeader: "Observation"
+      newButtonLabel: "Add new"
+      pest:
+        identificationLabel: "Identification"
+        identificationTooltip: "Identification tooltip!"
+        commentsLabel: "Task/Comment"
+        commentsTooltip: "Task/Comment tooltip!"
+        lifeCycleLabel: "Life cycle"
+        lifeCycleLabelMenu:
+          adult: "Adult"
+          puppe: "Pupa"
+          puppeskin: "Pupa skin"
+          larva: "Larva"
+          egg: "Egg"
+        lifeCycleTooltip: "Life cycle tooltip"
+        countLabel: "Quantity"
+        countPlaceHolder: "Integer"
+        countTooltip: "Quantity tooltip!"
+        lifeCycleItems:
+          adult: "Adult"
+          puppe: "Pupa"
+          puppeskin: "Pupa skin"
+          larva: "Larva"
+          egg: "Egg"
+      inertAir:
+        fromLabel: "From"
     welcomePage:
       title: >
         Norwegian University Museums' joint Collection Databases
@@ -177,10 +211,10 @@ no:
     observation:
       registerObservation: "Registrer observasjon"
       registerObservations: "Registrer observasjoner"
-      date: "Dato"
+      date: "Utført dato"
       doneBy: "Utført av"
-      registeredDate: "Reg. dato"
-      registeredBy: "Reg. av"
+      registeredDate: "Registrert dato"
+      registeredBy: "Registrert av"
       newObservationHeader: "Ny observasjon"
       viewObservationHeader: "Observasjon"
       newButtonLabel: "Legg til ny"
@@ -194,8 +228,8 @@ no:
           adult: "Adult"
           puppe: "Puppe"
           puppeskin: "Puppeskin"
-          larva: "Larva"
-          egg: "Eggg"
+          larva: "Larve"
+          egg: "Egg"
         lifeCycleTooltip: "Livssyklus tooltip"
         countLabel: "Antall"
         countPlaceHolder: "Heltall"
@@ -204,10 +238,10 @@ no:
           adult: "Adult"
           puppe: "Puppe"
           puppeskin: "Puppeskin"
-          larva: "Larva"
+          larva: "Larve"
           egg: "Egg"
       inertAir:
-        fromLabel: "Fr"
+        fromLabel: "Fra"
     pickList:
       title: "Plukkliste"
       action:
