@@ -2,9 +2,23 @@
 en:
   musit:
     welcomePage:
-      title: "University Museums Collection database"
-      body: "<TBD>"
-      noAccess: "<TBD>"
+      title: >
+        Norwegian University Museums IT organization,
+
+        MUSIT
+      body: >
+        **Museum of Archaeology, University of Stavanger**
+
+        **University Museum of Bergen, University of Bergen**
+
+        **Museum of Cultural History, University of Oslo**
+
+        **Natural History Museum, University of Oslo**
+
+        **Tromsø University Museum, University of Tromsø**
+
+        **NTNU University Museum, Norwegian University of Science and Technology**
+      noAccess: Your account does not have access to MUSIT. Contact your local MUSIT administrator.
     pickList:
       title: "Picklist"
     welcomeUserPage:
@@ -226,7 +240,7 @@ no:
 
         **Tromsø Museum - Universitetetsmuseet, Universitetet i Tromsø**
 
-        **Vitenskapsmuseet - NTNU, Norges Teknologisk-Naturvitenskapelige Universitetet**'
+        **Vitenskapsmuseet - NTNU, Norges Teknisk-Naturvitenskapelige Universitet**
       noAccess: Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil
     welcomeUserPage:
       body: >
@@ -236,7 +250,7 @@ no:
         Kulturhistorisk museum (Universitetet i Oslo),
         Naturhistorisk museum (Universitetet i Oslo),
         Tromsø Museum - Universitetetsmuseet (Universitetet i Tromsø),
-        og Vitenskapsmuseet - NTNU, Norges (Teknologisk-Naturvitenskapelige Universitetet).
+        og Vitenskapsmuseet - NTNU (Norges Teknisk-Naturvitenskapelige Universitet).
 
         Samarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014.
 
