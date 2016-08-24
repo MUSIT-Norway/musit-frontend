@@ -112,6 +112,92 @@ en:
       action:
         markAll: "All"
         executeAll: "Execute (all)"
+    storageUnits:
+      title: "Storage facility"
+      environmentRequirements:
+        temperature:
+          labelText: "Temperature"
+          tooltip: "TODO Måleenhet grader celsius, desimaltall"
+          placeHolder: "C"
+          comment: "Task/Comment"
+        temperatureTolerance:
+          labelText: ""
+          tooltip: "TODO Måleenhet toleranse, ett tall"
+          placeHolder: "int"
+          addOnPrefix: "\u00b1"
+        relativeHumidity:
+          labelText: "Relative humidity"
+          tooltip: "TODO Måleenhet prosent, desimaltall"
+          placeHolder: "%"
+          comment: "Task/Comment"
+        relativeHumidityTolerance:
+          labelText: ""
+          tooltip: "TODO Måleenhet prosent toleranse, ett tall"
+          placeHolder: "int"
+          addOnPrefix: "\u00b1"
+        inertAir:
+          labelText: "Hypoxic air"
+          tooltip: "TODO Måleenhet prosent oksygen, desimaltall"
+          placeHolder: "% O2"
+          comment: "Task/Comment"
+        inertAirTolerance:
+          labelText: ""
+          tooltip: "TODO Måleenhet prosent oksygen toleranse, ett tall"
+          placeHolder: "int"
+          addOnPrefix: "\u00b1"
+        renhold:
+          labelText: "Cleaning"
+          comment: "Task/Comment"
+          tooltip: "TODO Renhold"
+        lightCondition:
+          labelText: "Lighting condition"
+          comment: "Task/Comment"
+          tooltip: "TODO Lysforhold"
+        comments:
+          labelText: "Comment"
+          tooltip: "TODO Kommentar!"
+        gas:
+          labelText: "Gas"
+          comment: "Task/Comment"
+          tooltip: "TODO Gass"
+        skallsikring:
+          labelText: "Perimeter security"
+          comment: "Task/Comment"
+          tooltip: "TODO Skallsikring"
+        brannsikring:
+          labelText: "Fire protection"
+          comment: "Task/Comment"
+          tooltip: "TODO Brannsikring"
+        vannskaderisiko:
+          labelText: "Water damage assessment"
+          comment: "Task/Comment"
+          tooltip: "TODO Vannskaderisiko"
+        tyverisikring:
+          labelText: "Theft protection"
+          comment: "Task/Comment"
+          tooltip: "TODO Tyverisikring"
+        mold:
+          labelText: "Mold"
+          comment: "Task/Comment"
+          tooltip: "TODO Mugg"
+        alcohol:
+          labelText: "Alcohol"
+          volume: "Volume"
+          statusLabel: "Level"
+          comment: "Task/Comment"
+          tooltip: "TODO Sprit"
+          statusItems:
+            dryed: "Desiccated"
+            allmostDryed: "Almost desiccated"
+            someDryed: "Some desiccated"
+            minorDryed: "A bit desiccated"
+            satisfactory: "Satisfactory"
+      storageType:
+        items:
+          storageunit: "Storage unit"
+          room: "Room"
+          building: "Building"
+          organization: "Organization"
     welcomePage:
       title: >
         Norwegian University Museums' joint Collection Databases
