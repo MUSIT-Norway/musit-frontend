@@ -22,7 +22,7 @@ en:
     welcomeUserPage:
       body: >
         The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger, 
-        University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university and the 
+        University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the 
         Norwegian University of Science and Technology. The University museums of Norway hold in trust regional and global 
         scientific collections of natural and cultural history. The cooperative aims to ensure the operation, 
         maintenance and development of the university museums' joint collection databases, and to facilitate sharing 
@@ -246,9 +246,8 @@ no:
     welcomeUserPage:
       body: >
         MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom 
-        Arkeologisk museum (Universitetet i Stavanger), Universitetsmuseet i Bergen (Universitetet i Bergen), 
-        Kulturhistorisk museum (Universitetet i Oslo), Naturhistorisk museum (Universitetet i Oslo), 
-        Tromsø Museum - Universitetetsmuseet (Universitetet i Tromsø) og Vitenskapsmuseet - NTNU (Norges Teknisk-Naturvitenskapelige Universitet).
+        Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet,
+        Universitetet i Tromsø, og Universitetet i Stavanger.
 
         Samarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014.
 
