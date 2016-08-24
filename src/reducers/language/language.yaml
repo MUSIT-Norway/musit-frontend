@@ -33,14 +33,25 @@ en:
         totalObjectCount: "Tot. qty. of obj."
         nodeCount: "Qty. of places"
       object:
-        museumsNumber: "Museum nmbr"
-        uNumber: "U. nmbr"
+        museumsNumber: "Museum no."
+        uNumber: "U.no."
         term: "Term/Species"
+    texts:
+      freetext: "Freetext"
+      makeChoice: "Please choose..."
+      datePerformed: "Performed date"
+      dateRegistered: "Registered date"
+      registeredBy: "Registered by"
+      performedBy: "Performed by"
+      ok: "OK"
+      notOk: "Not OK"
+      save: "Save"
+      saveTooltip: "Save"
+      cancel: "Cancel"
+      cancelTooltip: "Cancel"
     welcomePage:
       title: >
-        Norwegian University Museums IT organization,
-
-        MUSIT
+        Norwegian University Museums' joint Collection Databases
       body: >
         **Museum of Archaeology, University of Stavanger**
 
@@ -105,8 +116,8 @@ no:
     texts:
       freetext: "Fritekst"
       makeChoice: "Vennligst velg..."
-      datePerformed: "Dato utført"
-      dateRegistered: "Dato registrert"
+      datePerformed: "Utført dato"
+      dateRegistered: "Registrert dato"
       registeredBy: "Registrert av"
       performedBy: "Utført av"
       ok: "OK"
@@ -262,9 +273,7 @@ no:
           organization: "Organisasjon"
     welcomePage:
       title: >
-        Universitetsmuseenes IT-organisasjon,
-
-        MUSIT
+        Universitetsmuseenes samlingsdatabaser
       body: >
         **Arkeologisk museum, Universitetet i Stavanger**
 
