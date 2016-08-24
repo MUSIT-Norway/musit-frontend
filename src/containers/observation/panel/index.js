@@ -32,7 +32,7 @@ import { addObservation, loadObservation, getActorNameFromId } from '../../../re
 import { actions } from './actions'
 import { MusitField } from '../../../components/formfields'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
-import { resolveConditions } from '../../../util'
+import { isDefined } from '../../../util'
 
 // TODO: Bind finished page handling to redux and microservices.
 const mapStateToProps = (state) => ({
@@ -104,7 +104,8 @@ export default class ObservationView extends React.Component {
 
     this.observationTypes = {
       lux: defineCommentType(
-        'lux', 'Lysforhold',
+        'lux',
+        'Lysforhold',
         label('lightCondition.labelText'),
         label('lightCondition.tooltip'),
         label('renhold.comment'),
@@ -114,7 +115,8 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       gas: defineCommentType(
-        'gas', 'Gass',
+        'gas',
+        'Gass',
         label('gas.labelText'),
         label('gas.tooltip'),
         label('renhold.comment'),
@@ -124,16 +126,19 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       cleaning: defineCommentType(
-        'cleaning', 'Renhold',
+        'cleaning',
+        'Renhold',
         label('renhold.labelText'),
         label('renhold.tooltip'),
-        label('renhold.comment'), 'Right tooltip',
+        label('renhold.comment'),
+        'Right tooltip',
         this.actions.changeCleaningLeft,
         this.actions.changeCleaningRight,
         this.displayExisting
       ),
       mold: defineCommentType(
-        'mold', 'Mugg',
+        'mold',
+        'Mugg',
         label('mold.labelText'),
         label('mold.tooltip'),
         label('renhold.comment'),
@@ -144,7 +149,8 @@ export default class ObservationView extends React.Component {
       ),
       skallsikring: defineCommentType(
         'skallsikring',
-        'Skallsikring', label('skallsikring.labelText'),
+        'Skallsikring',
+        label('skallsikring.labelText'),
         label('skallsikring.tooltip'),
         label('skallsikring.comment'),
         label('skallsikring.comment'),
@@ -153,7 +159,8 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       tyverisikring: defineCommentType(
-        'tyverisikring', 'Tyverisikring',
+        'tyverisikring',
+        'Tyverisikring',
         label('tyverisikring.labelText'),
         label('tyverisikring.tooltip'),
         label('renhold.comment'),
@@ -163,7 +170,8 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       brannsikring: defineCommentType(
-        'brannsikring', 'Brannsikring',
+        'brannsikring',
+        'Brannsikring',
         label('brannsikring.labelText'),
         label('brannsikring.tooltip'),
         label('brannsikring.comment'),
@@ -173,7 +181,8 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       vannskaderisiko: defineCommentType(
-        'vannskaderisiko', 'Vannskaderisiko',
+        'vannskaderisiko',
+        'Vannskaderisiko',
         label('vannskaderisiko.labelText'),
         label('vannskaderisiko.tooltip'),
         label('vannskaderisiko.comment'),
@@ -183,7 +192,8 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       temperature: defineFromToType(
-        'temperature', 'Temperatur',
+        'temperature',
+        'Temperatur',
         label('temperature.labelText'),
         label('temperature.tooltip'),
         label('temperatureTolerance.labelText'),
@@ -197,7 +207,8 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       rh: defineFromToType(
-        'rh', 'Relativ luftfuktighet',
+        'rh',
+        'Relativ luftfuktighet',
         label('relativeHumidity.labelText'),
         label('relativeHumidity.tooltip'),
         label('relativeHumidityTolerance.labelText'),
@@ -211,7 +222,8 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       hypoxicAir: defineFromToType(
-        'hypoxicAir', 'Inert luft',
+        'hypoxicAir',
+        'Inert luft',
         label('inertAir.labelText'),
         label('inertAir.tooltip'),
         label('inertAirTolerance.labelText'),
@@ -229,11 +241,13 @@ export default class ObservationView extends React.Component {
         label('alcohol.labelText'),
         label('alcohol.statusLabel'),
         'statusTooltip',
-        [label('alcohol.statusItems.dryed'),
-        label('alcohol.statusItems.allmostDryed'),
-        label('alcohol.statusItems.someDryed'),
-        label('alcohol.statusItems.minorDryed'),
-        label('alcohol.statusItems.satisfactory')],
+        [
+          label('alcohol.statusItems.dryed'),
+          label('alcohol.statusItems.allmostDryed'),
+          label('alcohol.statusItems.someDryed'),
+          label('alcohol.statusItems.minorDryed'),
+          label('alcohol.statusItems.satisfactory')
+        ],
         label('alcohol.volume'),
         label('alcohol.tooltip'),
         label('alcohol.comment'),
@@ -244,7 +258,8 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       ),
       pest: definePestType(
-        'pest', 'Skadedyr',
+        'pest',
+        'Skadedyr',
         this.actions.addPest,
         this.actions.changeLifeCycle,
         this.actions.changeCount,
@@ -253,6 +268,7 @@ export default class ObservationView extends React.Component {
         this.displayExisting
       )
     }
+
     this.addNewControlObservationJson = (obsType, defaultValuesType) => {
       const json = {}
       json.type = obsType
@@ -260,30 +276,30 @@ export default class ObservationView extends React.Component {
       return json
     }
 
-    this.addNewControlObservationArrayOfJson = (array, obsType, defaultValuesType) => {
-      array.push(this.addNewControlObservationJson(obsType, defaultValuesType))
-      return array
+    this.addNewControlObservationArrayOfJson = (obsType, defaultValuesType) => {
+      return this.addNewControlObservationJson(obsType, defaultValuesType)
     }
-    this.mapControlObservation = (arr, controlType, obsType, defaultValuesType) => {
-      const createObservation = this.props.location
-                      && this.props.location.state
-                      && this.props.location.state[controlType] === false;
+
+    this.mapControlObservation = (controlType, obsType, defaultValuesType) => {
+      const location = this.props.location;
+      const createObservation = location && location.state && location.state[controlType] === false;
       if (createObservation) {
-        this.addNewControlObservationArrayOfJson(arr, obsType, defaultValuesType)
+        return this.addNewControlObservationArrayOfJson(obsType, defaultValuesType)
       }
+      return null
     }
 
     this.addNewControlObservation = () => {
       const arr = []
-      this.mapControlObservation(arr, 'lightConditionsOK', 'lux', 'comments')
-      this.mapControlObservation(arr, 'gasOK', 'gas', 'comments')
-      this.mapControlObservation(arr, 'cleaningOK', 'cleaning', 'comments')
-      this.mapControlObservation(arr, 'moldOK', 'mold', 'comments')
-      this.mapControlObservation(arr, 'temperatureOK', 'temperature', 'fromTo')
-      this.mapControlObservation(arr, 'relativeHumidityOK', 'rh', 'fromTo')
-      this.mapControlObservation(arr, 'inertAirOK', 'hypoxicAir', 'fromTo')
-      this.mapControlObservation(arr, 'alcoholOK', 'alcohol', 'status')
-      this.mapControlObservation(arr, 'pestOK', 'pest', 'pest')
+      arr.push(this.mapControlObservation('lightConditionsOK', 'lux', 'comments'))
+      arr.push(this.mapControlObservation('gasOK', 'gas', 'comments'))
+      arr.push(this.mapControlObservation('cleaningOK', 'cleaning', 'comments'))
+      arr.push(this.mapControlObservation('moldOK', 'mold', 'comments'))
+      arr.push(this.mapControlObservation('temperatureOK', 'temperature', 'fromTo'))
+      arr.push(this.mapControlObservation('relativeHumidityOK', 'rh', 'fromTo'))
+      arr.push(this.mapControlObservation('inertAirOK', 'hypoxicAir', 'fromTo'))
+      arr.push(this.mapControlObservation('alcoholOK', 'alcohol', 'status'))
+      arr.push(this.mapControlObservation('pestOK', 'pest', 'pest'))
       return arr
     }
 
@@ -294,7 +310,7 @@ export default class ObservationView extends React.Component {
       observations = this.addNewControlObservation()
     }
 
-    this.state = { ...this.state, observations }
+    this.state = { ...this.state, observations: observations.filter(isDefined) }
 
     this.addNewObservation = this.addNewObservation.bind(this)
     this.onChangeDoneBy = this.onChangeDoneBy.bind(this)
@@ -342,8 +358,16 @@ export default class ObservationView extends React.Component {
     return suggestion.fn
   }
 
-  updateDoneBy(newValue) {
-    this.setState({ ...this.state, doneBy: newValue })
+  getPageHeader() {
+    if (this.props.location.state) {
+      return this.props.translate('musit.newControl.title')
+    }
+
+    if (this.displayExisting) {
+      return this.props.translate('musit.observation.viewObservationHeader')
+    }
+
+    return this.props.translate('musit.observation.newObservationHeader')
   }
 
   selectType(index, observationType) {
@@ -371,6 +395,10 @@ export default class ObservationView extends React.Component {
 
   updateDoneByName(newValue) {
     this.setState({ ...this.state, doneBy: { ...this.state.doneBy, fn: newValue } })
+  }
+
+  updateDoneBy(newValue) {
+    this.setState({ ...this.state, doneBy: newValue })
   }
 
   renderDoneBySuggestion(suggestion) {
@@ -445,13 +473,7 @@ export default class ObservationView extends React.Component {
               <Row>
                 <Col style={{ textAlign: 'center' }}>
                   <PageHeader>
-                    {resolveConditions(
-                      this.props.location.state,
-                      this.props.translate('musit.newControl.title'),
-                      this.displayExisting,
-                      this.props.translate('musit.observation.viewObservationHeader'),
-                      this.props.translate('musit.observation.newObservationHeader')
-                    )}
+                    {this.getPageHeader()}
                     <br />
                     { this.props.location.state ? this.props.translate('musit.observation.registerObservations') : ''}
                   </PageHeader>

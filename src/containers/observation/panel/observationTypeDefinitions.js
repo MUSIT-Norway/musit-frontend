@@ -25,22 +25,6 @@ import {
   ObservationPest
 } from '../../../components/observation'
 
-const renderDoubleTextArea = (index, props) => (
-  <ObservationDoubleTextAreaComponent {...props} />
-)
-
-const renderFromToNumber = (index, props) => (
-  <ObservationFromToNumberCommentComponent {...props} />
-)
-
-const renderStatusPercent = (index, props) => (
-  <ObservationStatusPercentageComment {...props} />
-)
-
-const renderPest = (index, props) => (
-  <ObservationPest {...props} />
-)
-
 const observationTypeDefinitions = (translate) => {
   return {
     pest: {
@@ -60,7 +44,9 @@ const observationTypeDefinitions = (translate) => {
         identificationValue: '',
         commentsValue: ''
       },
-      render: renderPest
+      render: (index, props) => (
+        <ObservationPest {...props} />
+      )
 
     },
     status: {
@@ -74,7 +60,9 @@ const observationTypeDefinitions = (translate) => {
         volumeValue: '',
         commentValue: ''
       },
-      render: renderStatusPercent
+      render: (index, props) => (
+        <ObservationStatusPercentageComment {...props} />
+      )
     },
     comments: {
       viewLabel: translate('musit.texts.ok'),
@@ -85,7 +73,9 @@ const observationTypeDefinitions = (translate) => {
         leftValue: '',
         rightValue: ''
       },
-      render: renderDoubleTextArea
+      render: (index, props) => (
+        <ObservationDoubleTextAreaComponent {...props} />
+      )
     },
     fromTo: {
       viewLabel: translate('musit.texts.ok'),
@@ -97,7 +87,9 @@ const observationTypeDefinitions = (translate) => {
         toValue: '',
         commentValue: ''
       },
-      render: renderFromToNumber
+      render: (index, props) => (
+        <ObservationFromToNumberCommentComponent {...props} />
+      )
     }
   }
 }

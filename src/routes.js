@@ -23,10 +23,10 @@ import NotFound from './components/NotFound'
 import WelcomeView from './containers/welcome-view'
 import StorageUnitsTable from './containers/magasin/grid'
 import PickListView from './containers/picklist'
-// import ExampleView from './containers/example-view'
 import StorageUnitPanel from './containers/magasin/panel'
 import WelcomeUserView from './containers/welcome-user'
 import ObservationView from './containers/observation/panel'
+import LOLFIX from './containers/observation/second'
 import ControlView from './containers/control/view'
 import ControlAdd from './containers/control/add'
 import App from './containers/app'
@@ -63,6 +63,7 @@ export default (store) => {
       <Route path="/magasin/:id/control/:controlId" component={ControlView} />
       <Route path="/magasin/:id/observations" showObservations showControls={false} component={ObservationControlGridShow} />
       <Route path="/magasin/:id/observation/add" component={ObservationView} />
+      <Route path="/magasin/:id/observation/add2" component={LOLFIX} />
       <Route path="/magasin/:id/observation/:obsId" component={ObservationView} />
       <Route path="/magasin/*" component={StorageUnitsTable} />
 

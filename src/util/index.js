@@ -29,3 +29,7 @@ export const blur = () => {
     document.activeElement.blur();
   }
 }
+
+export const isDefined = (o) => o !== null && typeof o !== 'undefined'
+
+export const containsObjectWithField = (arr, field, value) => arr.filter((e) => e[field] === value).length > 0
