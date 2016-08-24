@@ -1,13 +1,17 @@
+// import { parseObservation } from '../../../observation/mapper/to_backend'
+
 export const mapToBackend = (state) => {
   const r = {}
   r.eventType = 'Control'
-  r.doneBY = state.doneBy
+  r.doneBy = 1 // state.doneBy.id
   r.doneDate = state.doneDate
   r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
+    const observationKey = key.substring(0, key.length - 2)
+    console.log(`Observation key: ${observationKey}`)
     switch (key) {
       case 'inertAirOK':
         return {
-          eventType: 'ControlInertluft',
+          eventType: 'ControlInertAir',
           ok: state[key]
         }
       case 'temperatureOK':
@@ -17,37 +21,37 @@ export const mapToBackend = (state) => {
         }
       case 'gasOK':
         return {
-          eventType: 'ControlGass',
+          eventType: 'ControlGas',
           ok: state[key]
         }
       case 'cleaningOK':
         return {
-          eventType: 'ControlRenhold',
+          eventType: 'ControlCleaning',
           ok: state[key]
         }
       case 'relativeHumidityOK':
         return {
-          eventType: 'ControlRelativLuftfuktighet',
+          eventType: 'ControlRelativeHumidity',
           ok: state[key]
         }
       case 'lightConditionsOK':
         return {
-          eventType: 'ControlLysforhold',
+          eventType: 'ControlLightConditions',
           ok: state[key]
         }
       case 'alcoholOK':
         return {
-          eventType: 'ControlSprit',
+          eventType: 'ControlAlcohol',
           ok: state[key]
         }
       case 'pestOK':
         return {
-          eventType: 'ControlSkadedyr',
+          eventType: 'ControlPest',
           ok: state[key]
         }
       case 'moldOK':
         return {
-          eventType: 'ControlMugg',
+          eventType: 'ControlMold',
           ok: state[key]
         }
       default:

@@ -49,9 +49,6 @@ export default (store) => {
     cb();
   };
 
-  /**
-   * Please keep routes in alphabetical order
-   */
   return (
     <Route component={App}>
       <IndexRedirect to="/" />
@@ -62,7 +59,6 @@ export default (store) => {
       <Route path="/magasin/:id/add" component={StorageUnitPanel} />
       <Route path="/magasin/:id/view" component={StorageUnitPanel} />
       <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/control/observation/add" newControlObservation component={ObservationView} />
       <Route path="/magasin/:id/control/add" component={ControlAdd} />
       <Route path="/magasin/:id/control/:controlId" component={ControlView} />
       <Route path="/magasin/:id/observations" showObservations showControls={false} component={ObservationControlGridShow} />
