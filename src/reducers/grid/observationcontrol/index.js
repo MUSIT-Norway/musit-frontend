@@ -2,8 +2,7 @@ const LOAD = 'musit/observationcontrol/LOAD'
 const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS'
 const LOAD_FAIL = 'musit/observationcontrol/LOAD_FAIL'
 
-const initialState = { data: [] }
-const initialState1 = {
+const initialState = {
   data: [
     {
       id: 1,
