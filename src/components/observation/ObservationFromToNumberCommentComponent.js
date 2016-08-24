@@ -64,7 +64,6 @@ export default class ObservationFromToNumberCommentComponent extends Component {
         onChange: props.onChangeFrom,
         validate: 'number',
         precision: 3,
-        minimumLength: 1,
         disabled: props.disabled
       },
       to: {

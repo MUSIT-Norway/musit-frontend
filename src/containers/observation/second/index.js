@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react'
 import { PageHeader, Panel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
-import {
-    ObservationFromToNumberCommentComponent
-} from '../../../components/observation'
+import { ObservationFromToNumberCommentComponent } from '../../../components/observation'
 import { containsObjectWithField } from '../../../util'
 import { connect } from 'react-redux'
 import Language from '../../../components/language'
+import FontAwesome from 'react-fontawesome'
 
 const mapStateToProps = () => {
   return {
@@ -28,31 +27,28 @@ export default class ObservationPage extends React.Component {
     }
     this.isTypeAdded = this.isTypeAdded.bind(this)
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
+    this.onChangeField = this.onChangeField.bind(this)
+    this.addObservationType = this.addObservationType.bind(this)
+    this.renderObservationType = this.renderObservationType.bind(this)
+    this.renderTemperatureObservation = this.renderTemperatureObservation.bind(this)
   }
 
-  getTemperatureProperties() {
-    return {
-      id: 'temperature',
-      fromLabel: this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText'),
-      fromTooltip: this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip'),
-      toLabel: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.labelText'),
-      toTooltip: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.tooltip'),
-      commentLabel: this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment.labelText'),
-      commentTooltip: this.props.translate('musit.texts.freetext')
-    }
-  }
-
-  types = ['', 'temperature', 'gas', 'flux', 'pest', 'mold']
-
-  addObservationType(type) {
+  onChangeField(type, field, value) {
     const observations = [...this.state.observations]
-    switch (type) {
-      case 'temperature':
-        observations.push({ type, props: this.getTemperatureProperties() });
-        break
-      default:
-        console.log('Unknown type')
-    }
+    const index = observations.findIndex((elem) => elem.type === type)
+    observations[index] = { ...observations[index], props: { ...observations[index].props, [field]: value } }
+    this.setState({ ...this.state, observations })
+  }
+
+  types = ['',
+    'temperature', 'gas', 'lux', 'cleaning', 'pest', 'mold', 'skallsikring',
+    'tyverisikring', 'brannsikring', 'vannskaderisiko', 'rh', 'hypoxicAir',
+    'alcohol'
+  ]
+
+  addObservationType(type, props = {}) {
+    const observations = [...this.state.observations]
+    observations.push({ type, props });
     this.setState({ ...this.state, observations, selectedType: null })
   }
 
@@ -62,6 +58,20 @@ export default class ObservationPage extends React.Component {
 
   isTypeSelectable(type) {
     return !this.isTypeAdded(type)
+  }
+
+  camelCase(string, separator) {
+    return string
+      .split(separator)
+      .map((word, index) =>
+        word.substr(0, 1)[index === 0 ? 'toUpperCase' : 'toLowerCase']() + word.substr(1)
+      ).join('');
+  }
+
+  removeObservation(index) {
+    const observations = this.state.observations
+    delete observations[index]
+    this.setState({ ...this.state, observations: observations.filter((o) => o !== undefined) })
   }
 
   renderObservationType(type, props) {
@@ -76,10 +86,20 @@ export default class ObservationPage extends React.Component {
 
   renderTemperatureObservation(props) {
     return (
-      <div>
-        <h3>Temperatur</h3>
-        <ObservationFromToNumberCommentComponent {...props} />
-      </div>
+      <ObservationFromToNumberCommentComponent
+        {...props}
+        id={"temperature"}
+        fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')}
+        fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip')}
+        onChangeFrom={(value) => this.onChangeField('temperature', 'fromValue', value)}
+        toLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.labelText')}
+        toTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.tooltip')}
+        onChangeTo={(value) => this.onChangeField('temperature', 'toValue', value)}
+        commentLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment')}
+        commentTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment')}
+        commentPlaceholder={this.props.translate('musit.texts.freetext')}
+        onChangeComment={(value) => this.onChangeField('temperature', 'commentValue', value)}
+      />
     )
   }
 
@@ -105,16 +125,16 @@ export default class ObservationPage extends React.Component {
                           componentClass="select"
                           placeholder="select"
                           onChange={(e) => {
-                            const selectedType = e.target.options[e.target.selectedIndex].value
                             this.setState({
                               ...this.state,
-                              selectedType
+                              selectedType: e.target.options[e.target.selectedIndex].value
                             })
                           }}
+                          value={this.state.selectedType ? this.state.selectedType : ''}
                         >
-                          {this.types.filter(this.isTypeSelectable).map((typeValue) => {
+                          {this.types.filter(this.isTypeSelectable).map((typeValue, index) => {
                             return (
-                              <option value={typeValue} selected={this.state.selectedType === typeValue ? 'selected' : ''}>{typeValue === '' ? 'Velg type' : typeValue}</option>
+                              <option key={index} value={typeValue}>{typeValue === '' ? 'Velg type' : typeValue}</option>
                             )
                           })}
                         </FormControl>
@@ -129,7 +149,15 @@ export default class ObservationPage extends React.Component {
                       </Button>
                     </Col>
                   </Row>
-                  {this.state.observations.map((obs) => this.renderObservationType(obs.type, obs.props))}
+                  {this.state.observations.map((obs, index) => {
+                    return (
+                      <div key={index}>
+                        <h3>{this.camelCase(obs.type, ' ')} <a onClick={() => this.removeObservation(index)}><FontAwesome name="trash-o" /></a></h3>
+                        {this.renderObservationType(obs.type, obs.props)}
+                        <hr />
+                      </div>
+                    )
+                  })}
                 </form>
               </Row>
             </Grid>

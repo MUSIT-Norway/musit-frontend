@@ -130,9 +130,7 @@ no:
         temperature:
           labelText: "Målt temperatur [fra]"
           tooltip: "Måleenhet grader celsius, desimaltall"
-          comment:
-            placeHolder: "Tiltak / kommentar"
-            labelText: "Tiltak / kommentar"
+          comment: "Tiltak / kommentar"
         temperatureTolerance:
           labelText: "Målt temperatur [til]"
           tooltip: "Måleenhet toleranse, ett tall"
