@@ -107,6 +107,11 @@ en:
           egg: "Egg"
       inertAir:
         fromLabel: "From"
+    pickList:
+      title: "Picklist"
+      action:
+        markAll: "All"
+        executeAll: "Execute (all)"
     welcomePage:
       title: >
         Norwegian University Museums' joint Collection Databases
@@ -132,8 +137,6 @@ en:
         maintenance and development of the university museums' joint collection databases, and to facilitate sharing 
         dissemination of data for research, education, management and the public.
     login: Login through Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Login")
-    pickList:
-      title: "Picklist"
 no:
   musit:
     leftMenu:
@@ -251,75 +254,75 @@ no:
       title: "Magasin"
       environmentRequirements:
         temperature:
-          labelText: "Målt temperatur [fra]"
+          labelText: "Temperatur"
           tooltip: "Måleenhet grader celsius, desimaltall"
-          placeHolder: C
-          comment: "Tiltak / kommentar"
+          placeHolder: "C"
+          comment: "Tiltak/Kommentar"
         temperatureTolerance:
-          labelText: "Målt temperatur [til]"
+          labelText: ""
           tooltip: "Måleenhet toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         relativeHumidity:
-          labelText: "Rel. luftfuktighet [fra]"
+          labelText: "Relativ luftfuktighet"
           tooltip: "Måleenhet prosent, desimaltall"
           placeHolder: "%"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
         relativeHumidityTolerance:
-          labelText: "Rel. luftfuktighet [til]"
+          labelText: ""
           tooltip: "Måleenhet prosent toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         inertAir:
-          labelText: "Inert luft [fra]"
+          labelText: "Inertluft"
           tooltip: "Måleenhet prosent oksygen, desimaltall"
           placeHolder: "% O2"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
         inertAirTolerance:
-          labelText: "Inert luft [til]"
+          labelText: ""
           tooltip: "Måleenhet prosent oksygen toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         renhold:
-          labelText: Renhold
-          comment: "Tiltak / kommentar"
-          tooltip: Renhold
+          labelText: "Renhold"
+          comment: "Tiltak/Kommentar"
+          tooltip: "Renhold"
         lightCondition:
-          labelText: Lysforhold
-          comment: "Tiltak / kommentar"
-          tooltip: Lysforhold
+          labelText: "Lysforhold"
+          comment: "Tiltak/Kommentar"
+          tooltip: "Lysforhold"
         comments:
-          labelText: Kommentarer
+          labelText: "Kommentar"
           tooltip: "Kommentar!"
         gas:
           labelText: "Gass"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Gass"
         skallsikring:
           labelText: "Skallsikring"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Skallsikring"
         brannsikring:
           labelText: "Brannsikring"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Brannsikring"
         vannskaderisiko:
           labelText: "Vannskaderisiko"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Vannskaderisiko"
         tyverisikring:
           labelText: "Tyverisikring"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Tyverisikring"
         mold:
           labelText: "Mugg"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Mugg"
         alcohol:
           labelText: "Sprit"
-          volume: "Volum %"
-          statusLabel: Tilstand
-          comment: "Tiltak / kommentar"
+          volume: "Volum"
+          statusLabel: "Tilstand"
+          comment: "Tiltak/Kommentar"
           tooltip: "Sprit"
           statusItems:
             dryed: "Uttørket"
@@ -330,7 +333,7 @@ no:
       storageType:
         items:
           storageunit: "Lagringsenhet"
-          room: Rom
+          room: "Rom"
           building: "Bygning"
           organization: "Organisasjon"
     welcomePage:
