@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { PageHeader, Panel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
-import { ObservationFromToNumberCommentComponent } from '../../../components/observation'
+import { ObservationFromToNumberCommentComponent, ObservationDoubleTextAreaComponent } from '../../../components/observation'
 import { containsObjectWithField, camelCase } from '../../../util'
 import { connect } from 'react-redux'
 import Language from '../../../components/language'
@@ -70,10 +70,90 @@ export default class ObservationPage extends React.Component {
     switch (type) {
       case 'temperature':
         return this.renderTemperatureObservation(props)
+      case 'rh':
+        return this.renderRelativeHumidityObservation(props)
+      case 'hypoxicAir':
+        return this.renderHypoxicAirObservation(props)
+      case 'lux':
+        return this.renderLuxObservation(props)
+      case 'gas':
+        return this.renderGasObservation(props)
+      case 'cleaning':
+        return this.renderCleaningObservation(props)
+      case 'mold':
+        return this.renderMoldObservation(props)
+      case 'skallsikring':
+        return this.renderSkallsikringObservation(props)
+      case 'tyverisikring':
+        return this.renderTyverisikringObservation(props)
+      case 'brannsikring':
+        return this.renderBrannsikringObservation(props)
+      case 'vannskaderisiko':
+        return this.renderVannskaderisikoObservation(props)
       default:
         console.log('Unknown type')
     }
     return null
+  }
+
+  renderBrannsikringObservation(props) {
+    return (
+      <ObservationDoubleTextAreaComponent {...props} />
+    )
+  }
+
+  renderVannskaderisikoObservation(props) {
+    return (
+      <ObservationDoubleTextAreaComponent {...props} />
+    )
+  }
+
+  renderTyverisikringObservation(props) {
+    return (
+      <ObservationDoubleTextAreaComponent {...props} />
+    )
+  }
+
+  renderSkallsikringObservation(props) {
+    return (
+      <ObservationDoubleTextAreaComponent {...props} />
+    )
+  }
+
+  renderMoldObservation(props) {
+    return (
+      <ObservationDoubleTextAreaComponent {...props} />
+    )
+  }
+
+  renderCleaningObservation(props) {
+    return (
+      <ObservationDoubleTextAreaComponent {...props} />
+    )
+  }
+
+  renderLuxObservation(props) {
+    return (
+      <ObservationDoubleTextAreaComponent {...props} />
+    )
+  }
+
+  renderGasObservation(props) {
+    return (
+      <ObservationDoubleTextAreaComponent {...props} />
+    )
+  }
+
+  renderHypoxicAirObservation(props) {
+    return (
+      <ObservationFromToNumberCommentComponent {...props} />
+    )
+  }
+
+  renderRelativeHumidityObservation(props) {
+    return (
+      <ObservationFromToNumberCommentComponent {...props} />
+    )
   }
 
   renderTemperatureObservation(props) {

@@ -24,25 +24,26 @@ import { Row, ControlLabel, Col } from 'react-bootstrap'
 export default class ObservationDoubleTextAreaComponent extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    translate: PropTypes.func.isRequired,
     leftLabel: PropTypes.string.isRequired,
     leftValue: PropTypes.string.isRequired,
     leftTooltip: PropTypes.string.isRequired,
+    leftPlaceHolder: PropTypes.string.isRequired,
     onChangeLeft: PropTypes.func.isRequired,
     rightLabel: PropTypes.string.isRequired,
     rightValue: PropTypes.string.isRequired,
     rightTooltip: PropTypes.string.isRequired,
+    rightPlaceHolder: PropTypes.string.isRequired,
     onChangeRight: PropTypes.func.isRequired,
     disabled: PropTypes.bool
   }
 
   constructor(props) {
     super(props)
-    const { id, leftTooltip, onChangeLeft, rightTooltip, onChangeRight, translate, disabled } = props
+    const { id, leftTooltip, onChangeLeft, leftPlaceHolder, rightTooltip, onChangeRight, rightPlaceHolder, disabled } = props
     this.fields = {
       left: {
         id: `${id}_left`,
-        placeHolder: translate('musit.texts.freetext'),
+        placeHolder: leftPlaceHolder,
         tooltip: leftTooltip,
         onChange: onChangeLeft,
         validate: 'text',
@@ -53,7 +54,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
       },
       right: {
         id: `${id}_right`,
-        placeHolder: translate('musit.texts.freetext'),
+        placeHolder: rightPlaceHolder,
         tooltip: rightTooltip,
         onChange: onChangeRight,
         validate: 'text',
