@@ -18,6 +18,24 @@ en:
         selectObservation: "Observations"
         selectControl: "Controls"
         show: "View"
+    grid:
+      observation:
+        date: "Date"
+        types: "Types"
+        doneBy: "Performed by"
+        registeredDate: "Reg. date"
+        registeredBy: "Reg. by"
+        header: "Controls and observations"
+      node:
+        nodeName: "Place name"
+        nodeType: "Place type"
+        objectCount: "Qty. of obj."
+        totalObjectCount: "Tot. qty. of obj."
+        nodeCount: "Qty. of places"
+      object:
+        museumsNumber: "Museum nmbr"
+        uNumber: "U. nmbr"
+        term: "Term/Species"
     welcomePage:
       title: >
         Norwegian University Museums IT organization,
@@ -83,7 +101,7 @@ no:
       object:
         museumsNumber: "Museumsnr"
         uNumber: "Unr"
-        term: "Term"
+        term: "Term/Artsnavn"
     texts:
       freetext: "Fritekst"
       makeChoice: "Vennligst velg..."
