@@ -92,9 +92,14 @@ const observationReducer = (state = initialState, action = {}) => {
 
 export default observationReducer;
 
-export const addObservation = (data) => {
+export const addObservation = (data, id) => {
   const action = 'post'
-  const url = '/api/event/v1/event'
+  let url = ''
+  if (id) {
+    url = `/api/event/v1/node/${id}/observation`
+  } else {
+    url = '/api/event/v1/event'
+  }
   const dataToPost = mapToBackEnd(data)
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],

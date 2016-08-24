@@ -50,8 +50,8 @@ const mapDispatchToProps = (dispatch) => ({
   loadObservation: (id) => {
     dispatch(loadObservation(id))
   },
-  onSaveObservation: (data) => {
-    dispatch(addObservation(data))
+  onSaveObservation: (data, id = null) => {
+    dispatch(addObservation(data, id))
     hashHistory.goBack()
   },
   onDoneBySuggestionsUpdateRequested: ({ value, reason }) => {
@@ -538,7 +538,7 @@ export default class ObservationView extends React.Component {
               <h1 />
               <SaveCancel
                 translate={translate}
-                onClickSave={() => onSaveObservation(this.state)}
+                onClickSave={() => onSaveObservation(this.state, this.props.params.id)}
                 onClickCancel={() => onCancelObservation()}
                 saveDisabled={this.displayExisting}
                 cancelDisabled={this.displayExisting}

@@ -1,6 +1,9 @@
+const LOAD = 'musit/observationcontrol/LOAD'
+const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS'
+const LOAD_FAIL = 'musit/observationcontrol/LOAD_FAIL'
 
-
-const initialState = {
+const initialState = { data: [] }
+const initialState1 = {
   data: [
     {
       id: 1,
@@ -102,8 +105,45 @@ const initialState = {
 }
 
 
-const observationControlGridReducer = (state = initialState) => {
-  return state;
+const observationControlGridReducer = (state = initialState, action = { data: [] }) => {
+  switch (action.type) {
+    case LOAD: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    }
+    case LOAD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: action.result
+      };
+    case LOAD_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error
+      }
+    default:
+      return state;
+  }
+}
+
+export const loadControlsForNode = (id) => {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`/api/event/v1/node/${id}/controls`)
+  }
+}
+export const loadObservationsForNode = (id) => {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`/api/event/v1/node/${id}/observations`)
+  }
 }
 
 export default observationControlGridReducer

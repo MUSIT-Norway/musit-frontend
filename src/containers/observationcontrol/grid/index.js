@@ -22,6 +22,7 @@ import React from 'react'
 import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import Language from '../../../components/language'
+import { loadControlsForNode, loadObservationsForNode } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
 import { blur } from '../../../util'
 import { connect } from 'react-redux'
@@ -37,19 +38,38 @@ const mapStateToProps = (state) => ({
   }
 })
 
-@connect(mapStateToProps)
+const mapDispatchToProps = (dispatch) => ({
+  loadControls: (id) => {
+    dispatch(loadControlsForNode(id))
+  },
+  loadObservations: (data) => {
+    dispatch(loadObservationsForNode(data))
+  }
+})
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class ObservationControlGridShow extends React.Component {
   static propTypes = {
     unit: React.PropTypes.object.isRequired,
     translate: React.PropTypes.func.isRequired,
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
     params: React.PropTypes.object,
-    route: React.PropTypes.object
+    route: React.PropTypes.object,
+    loadControls: React.PropTypes.func.isRequired,
+    loadObservations: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
     this.props.params.id = this.props.params.id * 1
+  }
+
+  componentWillMount() {
+    if (this.props.route.showControls) {
+      this.props.loadControls(this.props.unit.id)
+    } else {
+      this.props.loadObservations(this.props.unit.id)
+    }
   }
 
   makeToolbar() {
