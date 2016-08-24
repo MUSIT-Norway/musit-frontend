@@ -1,65 +1,143 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import Language from '../../../components/language'
-import { loadAll, loadChildren, deleteUnit } from '../../../reducers/storageunit/grid'
+import { loadRoot, clearRoot, loadChildren, deleteUnit } from '../../../reducers/storageunit/grid'
 import { add } from '../../../reducers/picklist'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
+import Breadcrumb from 'react-breadcrumbs'
+import { blur } from '../../../util'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
-  unit: {
-    id: 1,
-    name: 'Root'
-  }
+  rootNode: state.storageGridUnit.root,
+  routerState: state.router
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  loadStorageUnits: () => dispatch(loadAll()),
-  loadChildren: (id) => dispatch(loadChildren(id)),
-  onPick: (unit) => dispatch(add('default', unit)),
-  onItemClick: (unit) => { hashHistory.push(`/magasin/${unit.id}`) },
-  onEdit: (unit) => { hashHistory.push(`/magasin/${unit.id}/view`) },
-  onDelete: (unit) => dispatch(deleteUnit(unit.id))
-})
+const mapDispatchToProps = (dispatch, props) => {
+  const { history } = props
+
+  return ({
+    loadStorageUnits: () => {
+      dispatch(clearRoot())
+      dispatch(loadRoot())
+    },
+    loadChildren: (id) => {
+      dispatch(loadChildren(id))
+      dispatch(loadRoot(id))
+    },
+    onAction: (actionName, unit) => {
+      switch (actionName) {
+        case 'pick':
+          dispatch(add('default', unit))
+          break
+        case 'observation':
+          history.push(`/magasin/${unit.id}/observations`)
+          break
+        case 'control':
+          history.push(`/magasin/${unit.id}/controls`)
+          break
+        case 'move':
+          /* TODO: Add move route or action */
+          break
+        default:
+          break
+      }
+    },
+    onEdit: (unit) => { hashHistory.push(`/magasin/${unit.id}/view`) },
+    onDelete: (id, currentNode) => { // TODO: Problems with delete slower then callback (async)
+      if (id === currentNode.id) {
+        dispatch(deleteUnit(id, {
+          onSuccess: () => {
+            dispatch(clearRoot())
+            if (currentNode.isPartOf) {
+              dispatch(loadChildren(currentNode.isPartOf))
+              dispatch(loadRoot(currentNode.isPartOf))
+            } else {
+              dispatch(loadRoot())
+            }
+          }
+        }))
+      }
+    }
+  })
+}
+
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class StorageUnitsContainer extends React.Component {
   static propTypes = {
     children: React.PropTypes.arrayOf(React.PropTypes.object),
-    unit: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      name: React.PropTypes.string.isRequired
-    }),
+    rootNode: React.PropTypes.object,
     translate: React.PropTypes.func.isRequired,
     loadStorageUnits: React.PropTypes.func.isRequired,
     onDelete: React.PropTypes.func.isRequired,
     onEdit: React.PropTypes.func.isRequired,
-    onPick: React.PropTypes.func.isRequired,
+    onAction: React.PropTypes.func.isRequired,
     props: React.PropTypes.object,
     params: React.PropTypes.object,
     history: React.PropTypes.object,
+    routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func
   }
 
   constructor(props) {
     super(props)
     this.state = {
+      searchPattern: '',
       showObjects: false,
       showNodes: true
     }
   }
 
   componentWillMount() {
-    if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id)
+    // Issued on initial render of the component
+    if (this.props.params.splat) {
+      this.props.loadChildren(this.resolveCurrentId(this.props.params.splat))
     } else {
       this.props.loadStorageUnits()
     }
+  }
+
+
+  componentWillReceiveProps(newProps) {
+        // Issued on every propchange, including local route changes
+    if (newProps.params.splat !== this.props.params.splat) {
+      if (newProps.params.splat) {
+        this.props.loadChildren(this.resolveCurrentId(newProps.params.splat))
+      } else {
+        this.props.loadStorageUnits()
+      }
+    }
+  }
+
+  resolveCurrentId(splat) {
+    const ids = this.resolveId(splat)
+    let retVal = null
+    if (ids && ids.length > 0) {
+      retVal = ids[ids.length - 1]
+    }
+    return retVal
+  }
+
+  resolveId(splat) {
+    let splatList = []
+    if (splat) {
+      splatList = splat.split('/')
+    }
+    return splatList
+  }
+
+  pathChild(splat, id) {
+    let newUri = `${id}`
+    if (splat) {
+      newUri = `${splat}/${id}`
+    }
+    return newUri
   }
 
   makeToolbar() {
@@ -69,57 +147,85 @@ export default class StorageUnitsContainer extends React.Component {
       labelRight="Objekter"
       labelLeft="Noder"
       placeHolderSearch="Filtrer i liste"
-      clickShowRight={() => this.setState({ ...this.state, showObjects: true, showNodes: false })}
-      clickShowLeft={() => this.setState({ ...this.state, showObjects: false, showNodes: true })}
+      searchValue={this.state.searchPattern}
+      onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
+      clickShowRight={() => {
+        this.setState({ ...this.state, showObjects: true, showNodes: false })
+        blur()
+      }}
+      clickShowLeft={() => {
+        this.setState({ ...this.state, showObjects: false, showNodes: true })
+        blur()
+      }}
     />)
   }
 
-  makeLeftMenu() {
-    return (<div style={{ paddingTop: 10 }}>
-      <NodeLeftMenuComponent
-        id="1"
-        translate={this.props.translate}
-        onClickNewNode={() => this.props.history.push('/magasin/add')}
-        objectsOnNode={11}
-        totalObjectCount={78}
-        underNodeCount={5}
-        onClickProperties={(key) => key}
-        onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observationcontrol`)}
-        onClickController={(id) => hashHistory.push(`/magasin/${id}/observationcontrol`)}
-        onClickMoveNode={(key) => key}
-        onClickDelete={this.props.onDelete}
-      />
-    </div>)
+  makeLeftMenu(rootNode, statistics) {
+    const { onEdit, onDelete, history } = this.props
+
+    return (
+      <div style={{ paddingTop: 10 }}>
+        <NodeLeftMenuComponent
+          id={rootNode ? rootNode.id : null}
+          translate={this.props.translate}
+          onClickNewNode={(parentId) => {
+            if (parentId) {
+              history.push(`/magasin/${parentId}/add`)
+            }
+          }}
+          objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
+          totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
+          underNodeCount={statistics ? statistics.underNodeCount : Number.NaN}
+          onClickProperties={(id) => onEdit({ id })}
+          onClickObservations={(id) => history.push(`/magasin/${id}/observations`)}
+          onClickController={(id) => history.push(`/magasin/${id}/controls`)}
+          onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}
+          onClickDelete={(id) => onDelete(id, rootNode)}
+        />
+      </div>
+    )
   }
 
-  makeContentGrid() {
+  makeContentGrid(filter, rootNode, children) {
     if (this.state.showNodes) {
       return (<NodeGrid
-        id={this.props.unit.id}
+        id={rootNode ? rootNode.id : 0}
         translate={this.props.translate}
-        tableData={this.props.children}
-        onPick={this.props.onPick}
-        onClick={(unit) =>
-          this.props.history.push(`/magasin/${unit.id}`)
+        tableData={children.filter((row) => row.name.indexOf(filter) !== -1)}
+        onAction={this.props.onAction}
+        onClick={(row) =>
+            this.props.history.push(
+                `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
+            )
         }
       />)
     }
     return (<ObjectGrid
-      id={this.props.unit.id}
+      id={rootNode ? rootNode.id : 0}
       translate={this.props.translate}
       tableData={[]}
     />)
   }
 
+  makeBreadcrumb(router) {
+    return (<Breadcrumb
+      routes={router.routes}
+      params={router.params}
+    />)
+  }
+
   render() {
+    // breadcrumb={this.makeBreadcrumb(routerState)}
+    const { searchPattern } = this.state
+    const { children, translate } = this.props
+    const { data: rootNodeData, statistics } = this.props.rootNode
     return (
       <Layout
         title={"Magasin"}
-        translate={this.props.translate}
-        breadcrumb={"Museum / Papirdunken / Esken inni der"}
+        translate={translate}
         toolbar={this.makeToolbar()}
-        leftMenu={this.makeLeftMenu()}
-        content={this.makeContentGrid()}
+        leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
+        content={this.makeContentGrid(searchPattern, rootNodeData, children)}
       />
     )
   }
