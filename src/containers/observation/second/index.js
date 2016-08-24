@@ -1,13 +1,24 @@
 import React, { PropTypes } from 'react'
-import { PageHeader, Panel, Grid, Row, Col, Button, FormGroup, FormControl, ControlLabel, SplitButton, MenuItem } from 'react-bootstrap'
+import { PageHeader, Panel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import {
     ObservationFromToNumberCommentComponent
 } from '../../../components/observation'
 import { containsObjectWithField } from '../../../util'
+import { connect } from 'react-redux'
+import Language from '../../../components/language'
 
+const mapStateToProps = () => {
+  return {
+    translate: (key, markdown) => Language.translate(key, markdown),
+  }
+}
+
+@connect(mapStateToProps)
 export default class ObservationPage extends React.Component {
 
-  types = [ '', 'temperature', 'gas', 'flux', 'pest', 'mold' ]
+  static propTypes = {
+    translate: PropTypes.func.isRequired
+  }
 
   constructor(props) {
     super(props)
@@ -19,27 +30,19 @@ export default class ObservationPage extends React.Component {
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
   }
 
-  renderObservationType(type, props) {
-    switch (type) {
-      case 'temperature':
-        return this.renderTemperatureObservation(props)
-    }
-  }
-
-  renderTemperatureObservation(props) {
-    return (
-      <div>
-        <h3>Temperatur</h3>
-        <ObservationFromToNumberCommentComponent {...props} />
-      </div>
-    )
-  }
-
   getTemperatureProperties() {
     return {
-      translate: (k) => k
+      id: 'temperature',
+      fromLabel: this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText'),
+      fromTooltip: this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip'),
+      toLabel: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.labelText'),
+      toTooltip: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.tooltip'),
+      commentLabel: this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment.labelText'),
+      commentTooltip: this.props.translate('musit.texts.freetext')
     }
   }
+
+  types = ['', 'temperature', 'gas', 'flux', 'pest', 'mold']
 
   addObservationType(type) {
     const observations = [...this.state.observations]
@@ -59,6 +62,25 @@ export default class ObservationPage extends React.Component {
 
   isTypeSelectable(type) {
     return !this.isTypeAdded(type)
+  }
+
+  renderObservationType(type, props) {
+    switch (type) {
+      case 'temperature':
+        return this.renderTemperatureObservation(props)
+      default:
+        console.log('Unknown type')
+    }
+    return null
+  }
+
+  renderTemperatureObservation(props) {
+    return (
+      <div>
+        <h3>Temperatur</h3>
+        <ObservationFromToNumberCommentComponent {...props} />
+      </div>
+    )
   }
 
   render() {

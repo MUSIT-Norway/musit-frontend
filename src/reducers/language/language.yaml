@@ -130,12 +130,13 @@ no:
         temperature:
           labelText: "Målt temperatur [fra]"
           tooltip: "Måleenhet grader celsius, desimaltall"
-          placeHolder: C
-          comment: "Tiltak / kommentar"
+          comment:
+            placeHolder: "Tiltak / kommentar"
+            labelText: "Tiltak / kommentar"
         temperatureTolerance:
           labelText: "Målt temperatur [til]"
           tooltip: "Måleenhet toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         relativeHumidity:
           labelText: "Rel. luftfuktighet [fra]"
@@ -145,7 +146,7 @@ no:
         relativeHumidityTolerance:
           labelText: "Rel. luftfuktighet [til]"
           tooltip: "Måleenhet prosent toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         inertAir:
           labelText: "Inert luft [fra]"
@@ -155,18 +156,18 @@ no:
         inertAirTolerance:
           labelText: "Inert luft [til]"
           tooltip: "Måleenhet prosent oksygen toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         renhold:
-          labelText: Renhold
+          labelText: "Renhold"
           comment: "Tiltak / kommentar"
-          tooltip: Renhold
+          tooltip: "Renhold"
         lightCondition:
-          labelText: Lysforhold
+          labelText: "Lysforhold"
           comment: "Tiltak / kommentar"
-          tooltip: Lysforhold
+          tooltip: "Lysforhold"
         comments:
-          labelText: Kommentarer
+          labelText: "Kommentarer"
           tooltip: "Kommentar!"
         gas:
           labelText: "Gass"
@@ -195,7 +196,7 @@ no:
         alcohol:
           labelText: "Sprit"
           volume: "Volum %"
-          statusLabel: Tilstand
+          statusLabel: "Tilstand"
           comment: "Tiltak / kommentar"
           tooltip: "Sprit"
           statusItems:
@@ -207,7 +208,7 @@ no:
       storageType:
         items:
           storageunit: "Lagringsenhet"
-          room: Rom
+          room: "Rom"
           building: "Bygning"
           organization: "Organisasjon"
     welcomePage:

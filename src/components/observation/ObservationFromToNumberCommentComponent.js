@@ -24,7 +24,6 @@ import { Row, ControlLabel, Col } from 'react-bootstrap'
 export default class ObservationFromToNumberCommentComponent extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    translate: PropTypes.func.isRequired,
     fromLabel: PropTypes.string.isRequired,
     fromValue: PropTypes.string.isRequired,
     fromTooltip: PropTypes.string.isRequired,
@@ -36,45 +35,56 @@ export default class ObservationFromToNumberCommentComponent extends Component {
     commentLabel: PropTypes.string.isRequired,
     commentValue: PropTypes.string.isRequired,
     commentTooltip: PropTypes.string.isRequired,
+    commentPlaceholder: PropTypes.string,
     onChangeComment: PropTypes.func.isRequired,
     fromPlaceHolder: PropTypes.string,
     toPlaceHolder: PropTypes.string,
     disabled: PropTypes.bool
   }
 
+  static defaultProps = {
+    onChangeFrom: () => true,
+    onChangeTo: () => true,
+    onChangeComment: () => true,
+    fromValue: '',
+    fromPlaceHolder: '',
+    toValue: '',
+    toPlaceHolder: '',
+    commentValue: '',
+    commentPlaceholder: ''
+  }
+
   constructor(props) {
     super(props)
-    const { id, fromTooltip, onChangeFrom, toTooltip, onChangeTo, commentTooltip, onChangeComment, translate,
-      fromPlaceHolder, toPlaceHolder, disabled } = props
     this.fields = {
       from: {
-        id: `${id}_from`,
-        placeHolder: fromPlaceHolder,
-        tooltip: fromTooltip,
-        onChange: onChangeFrom,
+        id: `${props.id}_from`,
+        placeHolder: props.fromPlaceHolder,
+        tooltip: props.fromTooltip,
+        onChange: props.onChangeFrom,
         validate: 'number',
         precision: 3,
         minimumLength: 1,
-        disabled: disabled
+        disabled: props.disabled
       },
       to: {
-        id: `${id}_to`,
-        placeHolder: toPlaceHolder,
-        tooltip: toTooltip,
-        onChange: onChangeTo,
+        id: `${props.id}_to`,
+        placeHolder: props.toPlaceHolder,
+        tooltip: props.toTooltip,
+        onChange: props.onChangeTo,
         validate: 'number',
         precision: 3,
-        disabled: disabled
+        disabled: props.disabled
       },
       comment: {
-        id: `${id}_comment`,
-        placeHolder: translate('musit.texts.freetext'),
-        tooltip: commentTooltip,
-        onChange: onChangeComment,
+        id: `${props.id}_comment`,
+        placeHolder: props.commentPlaceholder,
+        tooltip: props.commentTooltip,
+        onChange: props.onChangeComment,
         validate: 'text',
         maximumLength: 250,
         numberOfRows: 5,
-        disabled: disabled
+        disabled: props.disabled
       }
     }
   }

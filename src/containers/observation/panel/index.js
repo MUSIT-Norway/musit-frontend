@@ -199,6 +199,7 @@ export default class ObservationView extends React.Component {
         label('temperatureTolerance.labelText'),
         label('temperatureTolerance.tooltip'),
         label('temperature.comment'),
+        translate('musit.texts.freetext'),
         label('temperature.comment'),
         this.actions.changeTempFrom,
         this.actions.changeTempTo,
