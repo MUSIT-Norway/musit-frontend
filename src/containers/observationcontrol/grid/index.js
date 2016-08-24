@@ -31,11 +31,26 @@ import { hashHistory } from 'react-router'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
-  observationControlGridData: state.observationControlGrid.data,
-  unit: {
-    id: 1,
-    name: 'Reol 5'
-  }
+  observationControlGridData: state.observationControlGrid.data.map((e) => {
+    if (e.eventType === 'Control') { return e }
+    return { ...e,
+              types: e['subEvents-parts'] ? e['subEvents-parts'].map((se) => {
+                switch (se.eventType) {
+                  case 'ObservationLightingCondition': return { ControlLightingCondition: true }
+                  case 'temperature': return { ControlTemperature: true }
+                  case 'vannskaderisiko': return { ControlWaterDamageAssessment: true }
+                  case 'ObservationHypoxicAir': return { ControlHypoxicAir: true }
+                  case 'ObservationRelativeHumidity': return { ControlRelativeHumidity: true }
+                  case 'ObservationCleaning': return { ControlCleaning: true }
+                  case 'ObservationMold': return { ControlMold: true }
+                  case 'ObservationPest': return { ControlPest: true }
+                  case 'ObservationAlcohol': return { ControlAlcohol: true }
+                  case 'brannsikring': return { ControlFireProtection: true }
+                  case 'tyverisikring': return { ControlTheftProtection: true }
+                  case 'skallsikring': return { ControlPerimetersecurity: true }
+                  default: return null
+                } }) : [] } }),
+  unit: state.storageGridUnit.root.data
 })
 
 const mapDispatchToProps = (dispatch) => ({

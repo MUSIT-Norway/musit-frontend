@@ -92,7 +92,7 @@ const observationReducer = (state = initialState, action = {}) => {
 
 export default observationReducer;
 
-export const addObservation = (data, id) => {
+export const addObservation = (data, id, callback) => {
   const action = 'post'
   let url = ''
   if (id) {
@@ -103,7 +103,8 @@ export const addObservation = (data, id) => {
   const dataToPost = mapToBackEnd(data)
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
-    promise: (client) => client[action](url, { data: dataToPost })
+    promise: (client) => client[action](url, { data: dataToPost }),
+    callback
   };
 }
 
@@ -114,9 +115,10 @@ export const getActorNameFromId = (id) => {
   }
 }
 
-export const loadObservation = (id) => {
+export const loadObservation = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`api/event/v1/event/${id}`)
+    promise: (client) => client.get(`api/event/v1/event/${id}`),
+    callback
   }
 }

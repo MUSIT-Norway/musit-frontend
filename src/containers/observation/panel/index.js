@@ -48,12 +48,15 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadObservation: (id) => {
-    dispatch(loadObservation(id))
+    dispatch(loadObservation(id), {
+      onSuccess: () => { /* Dispatche personnavn */ },
+      onFailure: () => alert('Kunne ikke laste observasjon') })
   },
   onSaveObservation: (data, id = null) => {
-    dispatch(addObservation(data, id))
-    hashHistory.goBack()
-  },
+    dispatch(addObservation(data, id, {
+      onSuccess: () => { this.hashHistory.goBack() },
+      onFailure: () => alert('ikke istand til å lagre')
+    })) },
   onDoneBySuggestionsUpdateRequested: ({ value, reason }) => {
     // Should only autosuggest on typing if you have more then 2 characters
     if (reason && (reason === 'type') && value && value.length >= 2) {
