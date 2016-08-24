@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { PageHeader, Panel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { ObservationFromToNumberCommentComponent } from '../../../components/observation'
-import { containsObjectWithField } from '../../../util'
+import { containsObjectWithField, camelCase } from '../../../util'
 import { connect } from 'react-redux'
 import Language from '../../../components/language'
 import FontAwesome from 'react-fontawesome'
@@ -58,14 +58,6 @@ export default class ObservationPage extends React.Component {
 
   isTypeSelectable(type) {
     return !this.isTypeAdded(type)
-  }
-
-  camelCase(string, separator) {
-    return string
-      .split(separator)
-      .map((word, index) =>
-        word.substr(0, 1)[index === 0 ? 'toUpperCase' : 'toLowerCase']() + word.substr(1)
-      ).join('');
   }
 
   removeObservation(index) {
@@ -152,7 +144,7 @@ export default class ObservationPage extends React.Component {
                   {this.state.observations.map((obs, index) => {
                     return (
                       <div key={index}>
-                        <h3>{this.camelCase(obs.type, ' ')} <a onClick={() => this.removeObservation(index)}><FontAwesome name="trash-o" /></a></h3>
+                        <h3>{camelCase(obs.type, ' ')} <a onClick={() => this.removeObservation(index)}><FontAwesome name="trash-o" /></a></h3>
                         {this.renderObservationType(obs.type, obs.props)}
                         <hr />
                       </div>
