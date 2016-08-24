@@ -5,8 +5,8 @@ const ADD_SUCCESS = 'musit/control/ADD_SUCCESS'
 const ADD_FAIL = 'musit/control/ADD_FAILURE'
 
 const initialState = {
-  user: '',
-  date: '',
+  doneBy: '',
+  doneDate: '',
   data: {
     temperatureOK: null,
     inertAirOK: null,
@@ -26,8 +26,8 @@ const initialState = {
     inertAirInterval: '4',
     light: 'Mørkt',
     cleaning: 'Gullende rent',
-    startDate: null, // moment(),
-    user: null // this.props.user ? this.props.user.name : ''
+    doneDate: null, // moment(),
+    doneBy: null // this.props.user ? this.props.user.name : ''
   }
 }
 
