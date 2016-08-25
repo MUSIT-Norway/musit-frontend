@@ -63,7 +63,7 @@ export default class ObservationPage extends React.Component {
   }
 
   static defaultProps = {
-    mode: 'EDIT'
+    mode: 'ADD'
   }
 
   constructor(props) {
@@ -257,11 +257,36 @@ export default class ObservationPage extends React.Component {
       case 'alcohol':
         return this.renderAlcoholObservation(props)
       default:
-        console.log('Unknown type')
+        // do nothing
     }
     return null
   }
 
+  /**
+   alcohol: defineStatusType(
+   'alcohol',
+   label('alcohol.labelText'),
+   label('alcohol.statusLabel'),
+   'statusTooltip',
+   [
+   label('alcohol.statusItems.dryed'),
+   label('alcohol.statusItems.allmostDryed'),
+   label('alcohol.statusItems.someDryed'),
+   label('alcohol.statusItems.minorDryed'),
+   label('alcohol.statusItems.satisfactory')
+   ],
+   label('alcohol.volume'),
+   label('alcohol.tooltip'),
+   label('alcohol.comment'),
+   label('alcohol.comment'),
+   this.actions.changeAlchoholStatus,
+   this.actions.changeAlchoholVolume,
+   this.actions.changeAlchoholComment,
+   this.displayExisting
+   ),
+   * @param props
+   * @returns {XML}
+   */
   renderAlcoholObservation(props) {
     return (
       <ObservationStatusPercentageComment {...props} />
@@ -272,7 +297,7 @@ export default class ObservationPage extends React.Component {
     return (
       <ObservationPest
         disabled={this.props.mode === 'VIEW'}
-        canAddObservations={this.props.mode === 'EDIT'}
+        canEdit={this.props.mode !== 'VIEW'}
         observations={props.observations}
         lifeCycle={{
           label: this.props.translate('musit.observation.pest.lifeCycleLabel'),

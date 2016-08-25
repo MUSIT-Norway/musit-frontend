@@ -26,7 +26,7 @@ import FontAwesome from 'react-fontawesome'
 export default class ObservationPest extends Component {
   static propTypes = {
     disabled: PropTypes.bool,
-    canAddObservations: PropTypes.bool,
+    canEdit: PropTypes.bool,
     observations: PropTypes.array.isRequired,
     lifeCycle: PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -62,7 +62,7 @@ export default class ObservationPest extends Component {
 
   static defaultProps = {
     disabled: false,
-    canAddObservations: true,
+    canEdit: true,
     lifeCycle: {
       validate: 'text'
     },
@@ -79,9 +79,9 @@ export default class ObservationPest extends Component {
     return (
       <div>
         <ObservationDoubleTextAreaComponent {...this.props.comments} disabled={this.props.disabled} />
-        <span>
+        <span>'
           <ControlLabel>{'\u00A0'}</ControlLabel><br />
-          {!this.props.canAddObservations ? '' :
+          {!this.props.canEdit ? '' :
             <Button onClick={this.props.newButton.onClick}>
               <FontAwesome name="plus-circle" />&nbsp;{this.props.newButton.label}
             </Button>
@@ -93,7 +93,10 @@ export default class ObservationPest extends Component {
             <Row key={index}>
               <Col xs={6} sm={3} md={3}>
                 <span style={{ height: 50 }}>
-                  <ControlLabel>{this.props.lifeCycle.label}&nbsp;{!this.props.canAddObservations ? '' : <FontAwesome onClick={() => this.props.lifeCycle.onRemove(index)} name="times" />}</ControlLabel>
+                  <ControlLabel>
+                    {this.props.lifeCycle.label}&nbsp;
+                    {!this.props.canEdit ? '' : <FontAwesome onClick={() => this.props.lifeCycle.onRemove(index)} name="times" />}
+                  </ControlLabel>
                   <MusitDropDownField
                     {...this.props.lifeCycle}
                     disabled={this.props.disabled}

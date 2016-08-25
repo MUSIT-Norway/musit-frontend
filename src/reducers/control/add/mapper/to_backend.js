@@ -6,8 +6,8 @@ export const mapToBackend = (state) => {
   r.doneBy = 1 // state.doneBy.id
   r.doneDate = state.doneDate
   r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
-    const observationKey = key.substring(0, key.length - 2)
-    console.log(`Observation key: ${observationKey}`)
+    // const observationKey = key.substring(0, key.length - 2)
+    // console.log(`Observation key: ${observationKey}`)
     switch (key) {
       case 'inertAirOK':
         return {
