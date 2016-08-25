@@ -38,14 +38,14 @@ export default function clientMiddleware(client) {
           next({ ...rest, result, type: SUCCESS })
           if (callback) {
             const { onSuccess } = callback
-            if (typeof onSuccess === 'function') onSuccess()
+            if (typeof onSuccess === 'function') onSuccess(result)
           }
         },
         (error) => {
           next({ ...rest, error, type: FAILURE })
           if (callback) {
             const { onFailure } = callback
-            if (typeof onFailure === 'function') onFailure()
+            if (typeof onFailure === 'function') onFailure(error)
           }
         }
       ).catch((error) => {

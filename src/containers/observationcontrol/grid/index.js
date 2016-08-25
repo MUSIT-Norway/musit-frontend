@@ -22,7 +22,7 @@ import React from 'react'
 import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import Language from '../../../components/language'
-import { loadControlsForNode, loadObservationsForNode } from '../../../reducers/grid/observationcontrol'
+import { loadControlsForNode, loadObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
 import { blur } from '../../../util'
 import { connect } from 'react-redux'
@@ -44,15 +44,16 @@ const mapStateToProps = (state) => ({
                      case 'ControlHypoxicAir': return { ControlHypoxicAir: true }
                      case 'ControlRelativeHumidity': return { ...p, ControlRelativeHumidity: true }
                      case 'ControlCleaning': return { ...p, ControlCleaning: true }
-                     case 'ControlMold': return { ...p, ControlMold: true }
+                     case 'ControlM25old': return { ...p, ControlMold: true }
                      case 'ControlPest': return { ...p, ControlPest: true }
                      case 'ControlAlcohol': return { ...p, ControlAlcohol: true }
                      case 'ControlFireProtection': return { ...p, ControlFireProtection: true }
                      case 'ControlTheftProtection': return { ...p, ControlTheftProtection: true }
-                     case 'ControlPerimetersecurity': return { ...p, ControlPerimetersecurity: true }
+                     case 'ControresultlPerimetersecurity': return { ...p, ControlPerimetersecurity: true }
                      case 'ControlGas': return { ControlGas: true }
                      default: return null
-                   } }, {}) : [] }
+                   } }, {}) : {}
+          }
     }
     return { ...e,
               type: e.eventType,
@@ -72,15 +73,20 @@ const mapStateToProps = (state) => ({
                   case 'ObservationPerimeterSecurity': return { ...p, ControlPerimetersecurity: true }
                   case 'ObservationGas': return { ControlGas: true }
                   default: return null
-                } }, {}) : [] } })
+                } }, {}) : {}
+          }
+  })
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadControls: (id) => {
-    dispatch(loadControlsForNode(id))
+  loadControls: (id, callback) => {
+    dispatch(loadControlsForNode(id, callback))
   },
-  loadObservations: (id) => {
-    dispatch(loadObservationsForNode(id))
+  loadObservations: (id, callback) => {
+    dispatch(loadObservationsForNode(id, callback))
+  },
+  loadPerson: (id) => {
+    dispatch(loadActor(id))
   }
 })
 
@@ -93,6 +99,7 @@ export default class ObservationControlGridShow extends React.Component {
     params: React.PropTypes.object,
     route: React.PropTypes.object,
     loadControls: React.PropTypes.func.isRequired,
+    loadPerson: React.PropTypes.func.isRequired,
     loadObservations: React.PropTypes.func.isRequired
   }
 
@@ -103,9 +110,11 @@ export default class ObservationControlGridShow extends React.Component {
 
   componentWillMount() {
     if (this.props.route.showControls) {
-      this.props.loadControls(this.props.params.id)
+      this.props.loadControls(this.props.params.id, { onSuccess: (r) => this.props.loadPerson(r)
+                                                    })
     } else {
-      this.props.loadObservations(this.props.params.id)
+      this.props.loadObservations(this.props.params.id, { onSuccess: (r) => this.props.loadPerson(r)
+                                                    })
     }
   }
 
