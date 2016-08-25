@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { PageHeader, Panel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { ObservationFromToNumberCommentComponent, ObservationDoubleTextAreaComponent } from '../../../components/observation'
-import { containsObjectWithField, camelCase } from '../../../util'
+import { containsObjectWithField } from '../../../util'
 import { connect } from 'react-redux'
 import Language from '../../../components/language'
 import FontAwesome from 'react-fontawesome'
@@ -29,8 +29,12 @@ export default class ObservationPage extends React.Component {
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
     this.onChangeField = this.onChangeField.bind(this)
     this.addObservationType = this.addObservationType.bind(this)
-    this.renderObservationType = this.renderObservationType.bind(this)
+    this.renderObservation = this.renderObservation.bind(this)
     this.renderTemperatureObservation = this.renderTemperatureObservation.bind(this)
+    this.typeDisplayMap = {}
+    this.types.forEach((t) => {
+      this.typeDisplayMap[t.value] = t.display
+    })
   }
 
   onChangeField(type, field, value) {
@@ -40,15 +44,68 @@ export default class ObservationPage extends React.Component {
     this.setState({ ...this.state, observations })
   }
 
-  types = ['',
-    'temperature', 'gas', 'lux', 'cleaning', 'pest', 'mold', 'skallsikring',
-    'tyverisikring', 'brannsikring', 'vannskaderisiko', 'rh', 'hypoxicAir',
-    'alcohol'
+  types = [
+    {
+      value: '',
+      display: 'Velg type'
+    },
+    {
+      value: 'temperature',
+      display: 'Temperature'
+    },
+    {
+      value: 'gas',
+      display: 'Gas'
+    },
+    {
+      value: 'lux',
+      display: 'LUX'
+    },
+    {
+      value: 'cleaning',
+      display: 'Cleaning'
+    },
+    {
+      value: 'pest',
+      display: 'Pest'
+    },
+    {
+      value: 'mold',
+      display: 'Mold'
+    },
+    {
+      value: 'skallsikring',
+      display: 'Skallsikring'
+    },
+    {
+      value: 'tyverisikring',
+      display: 'Tyverisikring'
+    },
+    {
+      value: 'brannsikring',
+      display: 'Brannsikring'
+    },
+    {
+      value: 'vannskaderisiko',
+      display: 'Vannskaderisiko'
+    },
+    {
+      value: 'rh',
+      display: 'Relative humidity'
+    },
+    {
+      value: 'hypoxicAir',
+      display: 'HypoxicAir'
+    },
+    {
+      value: 'alcohol',
+      display: 'Alcohol'
+    }
   ]
 
+
   addObservationType(type, props = {}) {
-    const observations = [...this.state.observations]
-    observations.push({ type, props });
+    const observations = [...this.state.observations, { type, props }]
     this.setState({ ...this.state, observations, selectedType: null })
   }
 
@@ -56,8 +113,8 @@ export default class ObservationPage extends React.Component {
     return containsObjectWithField(this.state.observations, 'type', typeStr)
   }
 
-  isTypeSelectable(type) {
-    return !this.isTypeAdded(type)
+  isTypeSelectable(typeObj) {
+    return !this.isTypeAdded(typeObj.value)
   }
 
   removeObservation(index) {
@@ -66,8 +123,9 @@ export default class ObservationPage extends React.Component {
     this.setState({ ...this.state, observations: observations.filter((o) => o !== undefined) })
   }
 
-  renderObservationType(type, props) {
-    switch (type) {
+  renderObservation(observation) {
+    const props = observation.props
+    switch (observation.type) {
       case 'temperature':
         return this.renderTemperatureObservation(props)
       case 'rh':
@@ -204,9 +262,9 @@ export default class ObservationPage extends React.Component {
                           }}
                           value={this.state.selectedType ? this.state.selectedType : ''}
                         >
-                          {this.types.filter(this.isTypeSelectable).map((typeValue, index) => {
+                          {this.types.filter(this.isTypeSelectable).map((typeObj, index) => {
                             return (
-                              <option key={index} value={typeValue}>{typeValue === '' ? 'Velg type' : typeValue}</option>
+                              <option key={index} value={typeObj.value}>{typeObj.display}</option>
                             )
                           })}
                         </FormControl>
@@ -224,8 +282,8 @@ export default class ObservationPage extends React.Component {
                   {this.state.observations.map((obs, index) => {
                     return (
                       <div key={index}>
-                        <h3>{camelCase(obs.type, ' ')} <a onClick={() => this.removeObservation(index)}><FontAwesome name="trash-o" /></a></h3>
-                        {this.renderObservationType(obs.type, obs.props)}
+                        <h3>{this.typeDisplayMap[obs.type]}&nbsp;<a onClick={() => this.removeObservation(index)}><FontAwesome name="trash-o" /></a></h3>
+                        {this.renderObservation(obs)}
                         <hr />
                       </div>
                     )
