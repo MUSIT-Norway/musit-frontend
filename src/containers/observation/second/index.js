@@ -205,47 +205,14 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  /**
-   * id: `${id}_comments`,
-   translate: translate,
-   leftLabel: translate('musit.observation.pest.identificationLabel'),
-   leftTooltip: translate('musit.observation.pest.identificationTooltip'),
-   onChangeLeft: onChangeIdentification,
-   rightLabel: translate('musit.observation.pest.commentsLabel'),
-   rightTooltip: translate('musit.observation.pest.commentsTooltip'),
-   onChangeRight: onChangeComments,
-   disabled: disabled
-   * @param props
-   * @returns {XML}
-   */
   renderPestObservation(props) {
     return (
       <ObservationPest
         observations={[{ lifeCycle: '', count: '' }]}
-        identification={{
-          ...props.identification,
-          onChange: () => console.log('update identification')
-        }}
-        count={{
-          ...props.count,
-          label: this.props.translate('musit.observation.pest.countLabel'),
-          onChange: () => console.log('update count')
-        }}
-        newButton={{
-          label: this.props.translate('musit.observation.newButtonLabel'),
-          onClick: () => console.log('add new')
-        }}
-        comments={{
-          ...props.comments,
-          leftLabel: this.props.translate('musit.observation.pest.identificationLabel'),
-          leftTooltip: this.props.translate('musit.observation.pest.identificationTooltip'),
-          onChangeLeft: (value) => this.onChangeNestedField('pest', 'comments', 'leftValue', value),
-          rightLabel: this.props.translate('musit.observation.pest.commentsLabel'),
-          rightTooltip: this.props.translate('musit.observation.pest.commentsTooltip'),
-          onChangeRight: (value) => this.onChangeNestedField('pest', 'comments', 'rightValue', value),
-        }}
         lifeCycle={{
           label: this.props.translate('musit.observation.pest.lifeCycleLabel'),
+          placeHolder: this.props.translate('musit.texts.makeChoice'),
+          tooltip: this.props.translate('musit.observation.pest.lifeCycleTooltip'),
           onChange: () => console.log('update lifecycle'),
           items: [
             this.props.translate('musit.observation.lifeCycleLabelMenu.puppe'),
@@ -254,6 +221,26 @@ export default class ObservationPage extends React.Component {
             this.props.translate('musit.observation.lifeCycleLabelMenu.larva'),
             this.props.translate('musit.observation.lifeCycleLabelMenu.egg')
           ]
+        }}
+        count={{
+          label: this.props.translate('musit.observation.pest.countLabel'),
+          placeHolder: this.props.translate('musit.observation.pest.countPlaceHolder'),
+          tooltip: this.props.translate('musit.observation.pest.countTooltip'),
+          onChange: () => console.log('update count')
+        }}
+        comments={{
+          leftValue: props.identificationValue,
+          leftLabel: this.props.translate('musit.observation.pest.identificationLabel'),
+          leftTooltip: this.props.translate('musit.observation.pest.identificationTooltip'),
+          onChangeLeft: (value) => this.onChangeField('pest', 'identificationValue', value),
+          rightValue: props.rightValue,
+          rightLabel: this.props.translate('musit.observation.pest.commentsLabel'),
+          rightTooltip: this.props.translate('musit.observation.pest.commentsTooltip'),
+          onChangeRight: (value) => this.onChangeField('pest', 'commentsValue', value),
+        }}
+        newButton={{
+          label: this.props.translate('musit.observation.newButtonLabel'),
+          onClick: () => console.log('add new')
         }}
       />
     )

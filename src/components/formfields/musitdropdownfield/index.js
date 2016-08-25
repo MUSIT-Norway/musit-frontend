@@ -7,6 +7,27 @@ import Select from 'react-select'
 import validate from '../common/validators'
 
 export default class MusitDropDownField extends Component {
+  static propTypes = {
+    value: PropTypes.string.isRequired, // Should be any
+    addOnPrefix: PropTypes.string,
+    help: PropTypes.string, // always ? on add on after
+    placeHolder: PropTypes.string,
+    tooltip: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    validate: PropTypes.string,
+    minimumLength: PropTypes.number,
+    maximumLength: PropTypes.number,
+    validator: PropTypes.string,
+    precision: PropTypes.number,
+    items: PropTypes.array.isRequired,
+    translate: PropTypes.func,
+    translateKeyPrefix: PropTypes.string,
+    disabled: PropTypes.bool
+  }
+
+  static defaultProps = {
+    validate: 'text'
+  }
 
   classNameOnlyWithInput() {
     let lvString = ''
@@ -40,7 +61,6 @@ export default class MusitDropDownField extends Component {
     const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
     const lcPlaceholder = (
       <Select
-        id={this.props.id}
         disabled={this.props.disabled}
         name="form-field-name"
         value={v}
@@ -69,23 +89,3 @@ export default class MusitDropDownField extends Component {
       )
   }
 }
-
-
-MusitDropDownField.propTypes = {
-  id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired, // Should be any
-  addOnPrefix: PropTypes.string,
-  help: PropTypes.string, // always ? on add on after
-  placeHolder: PropTypes.string,
-  tooltip: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  validate: PropTypes.string.isRequired,
-  minimumLength: PropTypes.number,
-  maximumLength: PropTypes.number,
-  validator: PropTypes.string,
-  precision: PropTypes.number,
-  items: PropTypes.array.isRequired,
-  translate: PropTypes.func,
-  translateKeyPrefix: PropTypes.string,
-  disabled: PropTypes.bool
-};

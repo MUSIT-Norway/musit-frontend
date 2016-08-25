@@ -30,18 +30,18 @@ export default class ObservationPest extends Component {
       label: PropTypes.string.isRequired,
       placeHolder: PropTypes.string.isRequired,
       tooltip: PropTypes.string.isRequired,
-      validate: PropTypes.string.isRequired,
+      validate: PropTypes.string,
       items: PropTypes.array.isRequired,
       onChange: PropTypes.func.isRequired,
-      disabled: PropTypes.bool.isRequired
+      disabled: PropTypes.bool
     }).isRequired,
     count: PropTypes.shape({
       label: PropTypes.string.isRequired,
       placeHolder: PropTypes.string.isRequired,
       tooltip: PropTypes.string.isRequired,
-      validate: PropTypes.string.isRequired,
+      validate: PropTypes.string,
       onChange: PropTypes.func.isRequired,
-      disabled: PropTypes.bool.isRequired
+      disabled: PropTypes.bool
     }).isRequired,
     comments: PropTypes.shape({
       leftValue: PropTypes.string,
@@ -52,12 +52,12 @@ export default class ObservationPest extends Component {
       rightLabel: PropTypes.string.isRequired,
       rightTooltip: PropTypes.string.isRequired,
       onChangeRight: PropTypes.func.isRequired,
-      disabled: PropTypes.bool.isRequired
+      disabled: PropTypes.bool
     }).isRequired,
     newButton: PropTypes.shape({
       label: PropTypes.string.isRequired,
       onClick: PropTypes.func.isRequired,
-      disabled: PropTypes.bool.isRequired
+      disabled: PropTypes.bool
     }).isRequired
   }
 
@@ -113,10 +113,11 @@ export default class ObservationPest extends Component {
           <Col xs={12} sm={6} md={6}>
             <span>
               <ControlLabel>{'\u00A0'}</ControlLabel><br />
-              {this.props.newButton.disabled ? '' :
-                <Button onClick={this.props.newButton.onClick}>
-                  <FontAwesome name="plus-circle" />&nbsp;{this.props.newButton.label}
-                </Button>}
+            {this.props.newButton.disabled ? '' :
+              <Button onClick={this.props.newButton.onClick}>
+                <FontAwesome name="plus-circle" />&nbsp;{this.props.newButton.label}
+              </Button>
+            }
             </span>
           </Col>
         </Row>
