@@ -36,8 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (data, callback) => {
-    dispatch(addControl(data, callback))
+  saveControl: (data, id, callback) => {
+    dispatch(addControl(data, callback, id))
   }
 })
 
@@ -112,7 +112,7 @@ export default class ControlView extends React.Component {
   }
 
   onClickSave() {
-    // Could extract it, but its only used here and in the method above
+    // Could extract it, but its only used here and in the method aboveonFailure
     const controls = Object.keys(this.state)
         .filter((k) => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
         .map((k) => ({
@@ -125,15 +125,15 @@ export default class ControlView extends React.Component {
       doneDate: this.state.startDate
     }
     if (this.oneStateIsNotOK()) {
-      // push a new path onto the history, with the provided nice control state
+      // push a new path onto the history, with the provided nice control stateonFailure
       hashHistory.replace({
         pathname: `/magasin/${this.props.params.id}/observation/control/add`,
         state: controlState
       })
     } else {
-      console.log(controlState)
-      this.props.saveControl(controlState, { onSuccess: () => { hashHistory.goBack() },
-                                             onFailure: () => { window.alert('Kunne ikke lagre kontroll') } })
+      console.log(this.props.params)
+      this.props.saveControl(controlState, this.props.params.id, { onSuccess: () => hashHistory.goBack(),
+                                             onFailure: () => window.alert('Kunne ikke lagre kontroll') })
     }
   }
 

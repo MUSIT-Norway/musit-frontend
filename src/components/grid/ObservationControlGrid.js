@@ -80,8 +80,8 @@ export default class ObservationControlGrid extends Component {
                   ))}
                 >
                   <td id={`${c.id}_${c.doneDate}_type`}>
-                    {c.type.toLowerCase() === 'control' ? <FontAwesome name="user-secret" /> : ''}
-                    {c.type.toLowerCase() === 'observation' ? <FontAwesome name="eye" /> : ''}
+                    {c.type && c.type.toLowerCase() === 'control' ? <FontAwesome name="user-secret" /> : ''}
+                    {c.type && c.type.toLowerCase() === 'observation' ? <FontAwesome name="eye" /> : ''}
                   </td>
                   <td id={`${c.id}_${c.doneDate}_date`}>
                     {`${c.doneDate}`}

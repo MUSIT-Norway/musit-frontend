@@ -104,15 +104,14 @@ const initialState = {
 }
 
 
-const observationControlGridReducer = (state = initialState, action = { data: [] }) => {
+const observationControlGridReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD: {
+    case LOAD:
       return {
         ...state,
         loading: true,
         loaded: false
       };
-    }
     case LOAD_SUCCESS:
       return {
         ...state,

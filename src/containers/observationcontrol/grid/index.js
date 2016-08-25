@@ -31,8 +31,29 @@ import { hashHistory } from 'react-router'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
+  unit: state.storageGridUnit.root.data,
   observationControlGridData: state.observationControlGrid.data.map((e) => {
-    if (e.eventType === 'Control') { return { ...e, type: e.eventType } }
+    if (e.eventType === 'Control') {
+      return { ...e,
+                 type: e.eventType,
+                 types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
+                   switch (c.eventType) {
+                     case 'ControlLightingCondition': return { ...p, ControlLightingCondition: true }
+                     case 'ControlTemperature': return { ...p, ControlTemperature: true }
+                     case 'ControlWaterDamageAssessment': return { ...p, ControlWaterDamageAssessment: true }
+                     case 'ControlHypoxicAir': return { ControlHypoxicAir: true }
+                     case 'ControlRelativeHumidity': return { ...p, ControlRelativeHumidity: true }
+                     case 'ControlCleaning': return { ...p, ControlCleaning: true }
+                     case 'ControlMold': return { ...p, ControlMold: true }
+                     case 'ControlPest': return { ...p, ControlPest: true }
+                     case 'ControlAlcohol': return { ...p, ControlAlcohol: true }
+                     case 'ControlFireProtection': return { ...p, ControlFireProtection: true }
+                     case 'ControlTheftProtection': return { ...p, ControlTheftProtection: true }
+                     case 'ControlPerimetersecurity': return { ...p, ControlPerimetersecurity: true }
+                     case 'ControlGas': return { ControlGas: true }
+                     default: return null
+                   } }, {}) : [] }
+    }
     return { ...e,
               type: e.eventType,
               types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
@@ -51,16 +72,15 @@ const mapStateToProps = (state) => ({
                   case 'ObservationPerimeterSecurity': return { ...p, ControlPerimetersecurity: true }
                   case 'ObservationGas': return { ControlGas: true }
                   default: return null
-                } }, {}) : [] } }),
-  unit: state.storageGridUnit.root.data
+                } }, {}) : [] } })
 })
 
 const mapDispatchToProps = (dispatch) => ({
   loadControls: (id) => {
     dispatch(loadControlsForNode(id))
   },
-  loadObservations: (data) => {
-    dispatch(loadObservationsForNode(data))
+  loadObservations: (id) => {
+    dispatch(loadObservationsForNode(id))
   }
 })
 
