@@ -47,6 +47,8 @@ export default class ObservationPage extends React.Component {
     this.renderObservation = this.renderObservation.bind(this)
     this.renderTemperatureObservation = this.renderTemperatureObservation.bind(this)
     this.onChangeTypeSelect = this.onChangeTypeSelect.bind(this)
+    this.onChangePestObservation = this.onChangePestObservation.bind(this)
+    this.onClickAddObservation = this.onClickAddObservation.bind(this)
     this.typeDisplayMap = {}
     this.types.forEach((t) => {
       this.typeDisplayMap[t.value] = this.props.translate(t.display, false)
@@ -60,14 +62,22 @@ export default class ObservationPage extends React.Component {
     this.setState({ ...this.state, observations })
   }
 
-  onChangeNestedField(type, field, nestedField, value) {
-    const observations = [...this.state.observations]
-    const index = observations.findIndex((elem) => elem.type === type)
-    const observation = { ...observations[index] }
-    const fieldData = observation.props[field]
-    observation.props[field] = { ...fieldData, [nestedField]: value }
-    observations[index] = observation
-    this.setState({ ...this.state, observations })
+  onChangePestObservation(pestObservationIndex, field, value) {
+    const observationsCopy = [...this.state.observations]
+    const pestIndex = observationsCopy.findIndex((o) => o.type === 'pest')
+    const pestObj = observationsCopy[pestIndex]
+    const pestObservations = pestObj.props.observations
+    pestObservations[pestObservationIndex][field] = value
+    this.setState({ ...this.state, observations: observationsCopy })
+  }
+
+  onClickAddObservation() {
+    const observationsCopy = [...this.state.observations]
+    const pestIndex = observationsCopy.findIndex((o) => o.type === 'pest')
+    const pestObj = observationsCopy[pestIndex]
+    const pestObservations = pestObj.props.observations
+    pestObservations.push({ lifeCycle: '', count: '' })
+    this.setState({ ...this.state, observations: observationsCopy })
   }
 
   onChangeTypeSelect(e) {
@@ -190,6 +200,10 @@ export default class ObservationPage extends React.Component {
       case 'vannskaderisiko':
         return this.renderVannskaderisikoObservation(props)
       case 'pest':
+        // TODO where can this be moved? e.g. default values?
+        if (!props.observations) {
+          props.observations = [{ lifeCycle: '', count: '' }]
+        }
         return this.renderPestObservation(props)
       case 'alcohol':
         return this.renderAlcoholObservation(props)
@@ -208,12 +222,12 @@ export default class ObservationPage extends React.Component {
   renderPestObservation(props) {
     return (
       <ObservationPest
-        observations={[{ lifeCycle: '', count: '' }]}
+        observations={props.observations}
         lifeCycle={{
           label: this.props.translate('musit.observation.pest.lifeCycleLabel'),
           placeHolder: this.props.translate('musit.texts.makeChoice'),
           tooltip: this.props.translate('musit.observation.pest.lifeCycleTooltip'),
-          onChange: () => console.log('update lifecycle'),
+          onChange: (index, value) => this.onChangePestObservation(index, 'lifeCycle', value),
           items: [
             this.props.translate('musit.observation.lifeCycleLabelMenu.puppe'),
             this.props.translate('musit.observation.lifeCycleLabelMenu.adult'),
@@ -226,7 +240,7 @@ export default class ObservationPage extends React.Component {
           label: this.props.translate('musit.observation.pest.countLabel'),
           placeHolder: this.props.translate('musit.observation.pest.countPlaceHolder'),
           tooltip: this.props.translate('musit.observation.pest.countTooltip'),
-          onChange: () => console.log('update count')
+          onChange: (index, value) => this.onChangePestObservation(index, 'count', value)
         }}
         comments={{
           leftValue: props.identificationValue,
@@ -240,7 +254,7 @@ export default class ObservationPage extends React.Component {
         }}
         newButton={{
           label: this.props.translate('musit.observation.newButtonLabel'),
-          onClick: () => console.log('add new')
+          onClick: this.onClickAddObservation
         }}
       />
     )
