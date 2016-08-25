@@ -48,10 +48,13 @@ export default class ObservationPage extends React.Component {
     this.renderTemperatureObservation = this.renderTemperatureObservation.bind(this)
     this.onChangeTypeSelect = this.onChangeTypeSelect.bind(this)
     this.onChangePestObservation = this.onChangePestObservation.bind(this)
+    this.onRemovePestObservation = this.onRemovePestObservation.bind(this)
     this.onClickAddObservation = this.onClickAddObservation.bind(this)
     this.typeDisplayMap = {}
+    this.typePropsMap = {}
     this.types.forEach((t) => {
       this.typeDisplayMap[t.value] = this.props.translate(t.display, false)
+      this.typePropsMap[t.value] = t.props
     })
   }
 
@@ -71,12 +74,20 @@ export default class ObservationPage extends React.Component {
     this.setState({ ...this.state, observations: observationsCopy })
   }
 
+  onRemovePestObservation(pestObservationIndex) {
+    const observationsCopy = [...this.state.observations]
+    const pestIndex = observationsCopy.findIndex((o) => o.type === 'pest')
+    const pestObj = observationsCopy[pestIndex]
+    pestObj.props.observations = pestObj.props.observations.filter((elm, index) => index !== pestObservationIndex)
+    this.setState({ ...this.state, observations: observationsCopy })
+  }
+
   onClickAddObservation() {
     const observationsCopy = [...this.state.observations]
     const pestIndex = observationsCopy.findIndex((o) => o.type === 'pest')
     const pestObj = observationsCopy[pestIndex]
     const pestObservations = pestObj.props.observations
-    pestObservations.push({ lifeCycle: '', count: '' })
+    pestObservations.unshift({ lifeCycle: '', count: '' })
     this.setState({ ...this.state, observations: observationsCopy })
   }
 
@@ -121,7 +132,10 @@ export default class ObservationPage extends React.Component {
     },
     {
       value: 'pest',
-      display: 'Pest'
+      display: 'Pest',
+      props: {
+        observations: [{ lifeCycle: '', count: '' }]
+      }
     },
     {
       value: 'mold',
@@ -158,8 +172,10 @@ export default class ObservationPage extends React.Component {
   ]
 
 
-  addObservationType(type, props = {}) {
-    const observations = [{ type, props }, ...this.state.observations]
+  addObservationType(typeToAdd, props = {}) {
+    const type = typeToAdd || this.state.selectedType
+    const typeProps = { ...props, ...this.typePropsMap[type] }
+    const observations = [{ type, props: typeProps }, ...this.state.observations]
     this.setState({ ...this.state, observations, selectedType: null })
   }
 
@@ -200,10 +216,6 @@ export default class ObservationPage extends React.Component {
       case 'vannskaderisiko':
         return this.renderVannskaderisikoObservation(props)
       case 'pest':
-        // TODO where can this be moved? e.g. default values?
-        if (!props.observations) {
-          props.observations = [{ lifeCycle: '', count: '' }]
-        }
         return this.renderPestObservation(props)
       case 'alcohol':
         return this.renderAlcoholObservation(props)
@@ -228,6 +240,7 @@ export default class ObservationPage extends React.Component {
           placeHolder: this.props.translate('musit.texts.makeChoice'),
           tooltip: this.props.translate('musit.observation.pest.lifeCycleTooltip'),
           onChange: (index, value) => this.onChangePestObservation(index, 'lifeCycle', value),
+          onRemove: (index) => this.onRemovePestObservation(index),
           items: [
             this.props.translate('musit.observation.lifeCycleLabelMenu.puppe'),
             this.props.translate('musit.observation.lifeCycleLabelMenu.adult'),
@@ -472,7 +485,7 @@ export default class ObservationPage extends React.Component {
                     <Col xs={4}>
                       <Button
                         bsStyle="primary"
-                        onClick={() => this.addObservationType(this.state.selectedType)}
+                        onClick={() => this.addObservationType()}
                       >
                           Legg til
                       </Button>

@@ -33,6 +33,7 @@ export default class ObservationPest extends Component {
       validate: PropTypes.string,
       items: PropTypes.array.isRequired,
       onChange: PropTypes.func.isRequired,
+      onRemove: PropTypes.func.isRequired,
       disabled: PropTypes.bool
     }).isRequired,
     count: PropTypes.shape({
@@ -83,44 +84,42 @@ export default class ObservationPest extends Component {
     return (
       <div>
         <ObservationDoubleTextAreaComponent {...this.props.comments} />
-        <h1 />
-        <Row>
-      {this.props.observations.map((observation, index) => {
-        return [
-          <Col xs={6} sm={3} md={3}>
-            <span style={{ height: 50 }}>
-              <ControlLabel>{this.props.lifeCycle.label}</ControlLabel>
-              <MusitDropDownField
-                {...this.props.lifeCycle}
-                value={observation.lifeCycle}
-                onChange={(lifeCycleValue) => this.props.lifeCycle.onChange(index, lifeCycleValue)}
-              />
-            </span>
-          </Col>,
-          <Col xs={6} sm={3} md={3}>
-            <span>
-              <ControlLabel>{this.props.count.label}</ControlLabel>
-              <MusitField
-                {...this.props.count}
-                value={observation.count}
-                onChange={(countValue) => this.props.count.onChange(index, countValue)}
-                style={{ height: 36 }}
-              />
-            </span>
-          </Col>
-        ]
-      })}
-          <Col xs={12} sm={6} md={6}>
-            <span>
-              <ControlLabel>{'\u00A0'}</ControlLabel><br />
-            {this.props.newButton.disabled ? '' :
-              <Button onClick={this.props.newButton.onClick}>
-                <FontAwesome name="plus-circle" />&nbsp;{this.props.newButton.label}
-              </Button>
-            }
-            </span>
-          </Col>
-        </Row>
+        <span>
+          <ControlLabel>{'\u00A0'}</ControlLabel><br />
+          {this.props.newButton.disabled ? '' :
+            <Button onClick={this.props.newButton.onClick}>
+              <FontAwesome name="plus-circle" />&nbsp;{this.props.newButton.label}
+            </Button>
+          }
+        </span>
+        <hr />
+        {this.props.observations.map((observation, index) => {
+          return (
+            <Row key={index}>
+              <Col xs={6} sm={3} md={3}>
+                <span style={{ height: 50 }}>
+                  <ControlLabel>{this.props.lifeCycle.label}&nbsp;<FontAwesome onClick={() => this.props.lifeCycle.onRemove(index)} name="times" /></ControlLabel>
+                  <MusitDropDownField
+                    {...this.props.lifeCycle}
+                    value={observation.lifeCycle}
+                    onChange={(lifeCycleValue) => this.props.lifeCycle.onChange(index, lifeCycleValue)}
+                  />
+                </span>
+              </Col>
+              <Col xs={6} sm={3} md={3}>
+                <span>
+                  <ControlLabel>{this.props.count.label}</ControlLabel>
+                  <MusitField
+                    {...this.props.count}
+                    value={observation.count}
+                    onChange={(countValue) => this.props.count.onChange(index, countValue)}
+                    style={{ height: 36 }}
+                  />
+                </span>
+              </Col>
+            </Row>
+          )
+        })}
       </div>
     )
   }
