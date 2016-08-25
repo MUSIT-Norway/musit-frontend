@@ -106,6 +106,7 @@ export default class ObservationPage extends React.Component {
    *
    *   value <- the type identificator
    *   display <- the type label key (which needs to be translated)
+   *   props <- default props for the type (ex for pest we have a default observation array)
    *
    * @type {*[]}
    */
@@ -174,6 +175,9 @@ export default class ObservationPage extends React.Component {
 
   addObservationType(typeToAdd, props = {}) {
     const type = typeToAdd || this.state.selectedType
+    if (!type || type === '') {
+      return
+    }
     const typeProps = { ...props, ...this.typePropsMap[type] }
     const observations = [{ type, props: typeProps }, ...this.state.observations]
     this.setState({ ...this.state, observations, selectedType: null })
@@ -260,7 +264,7 @@ export default class ObservationPage extends React.Component {
           leftLabel: this.props.translate('musit.observation.pest.identificationLabel'),
           leftTooltip: this.props.translate('musit.observation.pest.identificationTooltip'),
           onChangeLeft: (value) => this.onChangeField('pest', 'identificationValue', value),
-          rightValue: props.rightValue,
+          rightValue: props.commentsValue,
           rightLabel: this.props.translate('musit.observation.pest.commentsLabel'),
           rightTooltip: this.props.translate('musit.observation.pest.commentsTooltip'),
           onChangeRight: (value) => this.onChangeField('pest', 'commentsValue', value),
