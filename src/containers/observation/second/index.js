@@ -14,6 +14,39 @@ import FontAwesome from 'react-fontawesome'
 const mapStateToProps = () => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
+    observations: [
+      {
+        type: 'tyverisikring',
+        props: {
+          leftValue: 'Heisann',
+          rightValue: 'Hoho'
+        }
+      },
+      {
+        type: 'temperature',
+        props: {
+          fromValue: '12,23',
+          toValue: '12',
+          commentValue: 'This was very bad'
+        }
+      },
+      {
+        type: 'pest',
+        props: {
+          identificationValue: 'Sumtin',
+          commentValue: 'This was very bad',
+          observations: [
+            {
+              lifeCycle: 'Puppe',
+              count: '1'
+            }
+          ]
+        }
+      }
+    ],
+    doneDate: null,
+    doneBy: null,
+    title: 'Add new observation'
   }
 }
 
@@ -21,25 +54,25 @@ const mapStateToProps = () => {
 export default class ObservationPage extends React.Component {
 
   static propTypes = {
-    translate: PropTypes.func.isRequired
+    translate: PropTypes.func.isRequired,
+    observations: PropTypes.arrayOf(PropTypes.object),
+    doneDate: PropTypes.string,
+    doneBy: PropTypes.object,
+    title: PropTypes.string.isRequired,
+    mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
+  }
+
+  static defaultProps = {
+    mode: 'EDIT'
   }
 
   constructor(props) {
     super(props)
     this.state = {
       selectedType: null,
-      observations: [
-        /* an example
-        {
-          type: 'temperature',
-          props: {
-            fromValue: '12,23',
-            toValue: '12',
-            commentValue: 'This was very bad'
-          }
-        }
-        */
-      ]
+      observations: props.observations,
+      doneDate: props.doneDate,
+      doneBy: props.doneBy
     }
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
     this.onChangeField = this.onChangeField.bind(this)
@@ -175,7 +208,7 @@ export default class ObservationPage extends React.Component {
 
   addObservationType(typeToAdd, props = {}) {
     const type = typeToAdd || this.state.selectedType
-    if (!type || type === '') {
+    if (!type || type === '') {
       return
     }
     const typeProps = { ...props, ...this.typePropsMap[type] }
@@ -238,6 +271,8 @@ export default class ObservationPage extends React.Component {
   renderPestObservation(props) {
     return (
       <ObservationPest
+        disabled={this.props.mode === 'VIEW'}
+        canAddObservations={this.props.mode === 'EDIT'}
         observations={props.observations}
         lifeCycle={{
           label: this.props.translate('musit.observation.pest.lifeCycleLabel'),
@@ -264,10 +299,10 @@ export default class ObservationPage extends React.Component {
           leftLabel: this.props.translate('musit.observation.pest.identificationLabel'),
           leftTooltip: this.props.translate('musit.observation.pest.identificationTooltip'),
           onChangeLeft: (value) => this.onChangeField('pest', 'identificationValue', value),
-          rightValue: props.commentsValue,
+          rightValue: props.commentValue,
           rightLabel: this.props.translate('musit.observation.pest.commentsLabel'),
           rightTooltip: this.props.translate('musit.observation.pest.commentsTooltip'),
-          onChangeRight: (value) => this.onChangeField('pest', 'commentsValue', value),
+          onChangeRight: (value) => this.onChangeField('pest', 'commentValue', value),
         }}
         newButton={{
           label: this.props.translate('musit.observation.newButtonLabel'),
@@ -282,6 +317,7 @@ export default class ObservationPage extends React.Component {
       <ObservationDoubleTextAreaComponent
         {...props}
         id={"brannsikring"}
+        disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.brannsikring.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.brannsikring.tooltip')}
         onChangeLeft={(value) => this.onChangeField('brannsikring', 'leftValue', value)}
@@ -297,6 +333,7 @@ export default class ObservationPage extends React.Component {
       <ObservationDoubleTextAreaComponent
         {...props}
         id={"vannskaderisiko"}
+        disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.vannskaderisiko.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.vannskaderisiko.tooltip')}
         onChangeLeft={(value) => this.onChangeField('vannskaderisiko', 'leftValue', value)}
@@ -312,6 +349,7 @@ export default class ObservationPage extends React.Component {
       <ObservationDoubleTextAreaComponent
         {...props}
         id={"tyverisikring"}
+        disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.tyverisikring.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.tyverisikring.tooltip')}
         onChangeLeft={(value) => this.onChangeField('tyverisikring', 'leftValue', value)}
@@ -327,6 +365,7 @@ export default class ObservationPage extends React.Component {
       <ObservationDoubleTextAreaComponent
         {...props}
         id={"skallsikring"}
+        disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.skallsikring.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.skallsikring.tooltip')}
         onChangeLeft={(value) => this.onChangeField('skallsikring', 'leftValue', value)}
@@ -342,6 +381,7 @@ export default class ObservationPage extends React.Component {
       <ObservationDoubleTextAreaComponent
         {...props}
         id={"mold"}
+        disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.mold.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.mold.tooltip')}
         onChangeLeft={(value) => this.onChangeField('mold', 'leftValue', value)}
@@ -357,6 +397,7 @@ export default class ObservationPage extends React.Component {
       <ObservationDoubleTextAreaComponent
         {...props}
         id={"cleaning"}
+        disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.cleaning.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.cleaning.tooltip')}
         onChangeLeft={(value) => this.onChangeField('cleaning', 'leftValue', value)}
@@ -372,6 +413,7 @@ export default class ObservationPage extends React.Component {
       <ObservationDoubleTextAreaComponent
         {...props}
         id={"lux"}
+        disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.tooltip')}
         onChangeLeft={(value) => this.onChangeField('lux', 'leftValue', value)}
@@ -387,6 +429,7 @@ export default class ObservationPage extends React.Component {
       <ObservationDoubleTextAreaComponent
         {...props}
         id={"gas"}
+        disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.gas.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.gas.tooltip')}
         onChangeLeft={(value) => this.onChangeField('gas', 'leftValue', value)}
@@ -402,6 +445,7 @@ export default class ObservationPage extends React.Component {
       <ObservationFromToNumberCommentComponent
         {...props}
         id={"hypoxicAir"}
+        disabled={this.props.mode === 'VIEW'}
         fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.inertAir.labelText')}
         fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.inertAir.tooltip')}
         onChangeFrom={(value) => this.onChangeField('hypoxicAir', 'fromValue', value)}
@@ -421,6 +465,7 @@ export default class ObservationPage extends React.Component {
       <ObservationFromToNumberCommentComponent
         {...props}
         id={"rh"}
+        disabled={this.props.mode === 'VIEW'}
         fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.labelText')}
         fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.tooltip')}
         onChangeFrom={(value) => this.onChangeField('rh', 'fromValue', value)}
@@ -440,6 +485,7 @@ export default class ObservationPage extends React.Component {
       <ObservationFromToNumberCommentComponent
         {...props}
         id={"temperature"}
+        disabled={this.props.mode === 'VIEW'}
         fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')}
         fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip')}
         onChangeFrom={(value) => this.onChangeField('temperature', 'fromValue', value)}
@@ -463,47 +509,51 @@ export default class ObservationPage extends React.Component {
               <Row>
                 <Col style={{ textAlign: 'center' }}>
                   <PageHeader>
-                    Add new observation
+                    {this.props.title}
                   </PageHeader>
                 </Col>
               </Row>
               <Row>
                 <form>
-                  <Row>
-                    <Col xs={4}>
-                      <FormGroup controlId="formControlsSelect">
-                        <FormControl
-                          componentClass="select"
-                          placeholder="select"
-                          onChange={this.onChangeTypeSelect}
-                          value={this.state.selectedType ? this.state.selectedType : ''}
+                  {this.props.mode !== 'ADD' ? '' : (
+                    <Row>
+                      <Col xs={4}>
+                        <FormGroup controlId="formControlsSelect">
+                          <FormControl
+                            componentClass="select"
+                            placeholder="select"
+                            onChange={this.onChangeTypeSelect}
+                            value={this.state.selectedType ? this.state.selectedType : ''}
+                          >
+                            {Object.keys(this.typeDisplayMap).filter(this.isTypeSelectable).map((typeStr, index) => {
+                              return (
+                                <option key={index} value={typeStr}>{this.typeDisplayMap[typeStr]}</option>
+                              )
+                            })}
+                          </FormControl>
+                        </FormGroup>
+                      </Col>
+                      <Col xs={4}>
+                        <Button
+                          bsStyle="primary"
+                          onClick={() => this.addObservationType()}
                         >
-                          {Object.keys(this.typeDisplayMap).filter(this.isTypeSelectable).map((typeStr, index) => {
-                            return (
-                              <option key={index} value={typeStr}>{this.typeDisplayMap[typeStr]}</option>
-                            )
-                          })}
-                        </FormControl>
-                      </FormGroup>
-                    </Col>
-                    <Col xs={4}>
-                      <Button
-                        bsStyle="primary"
-                        onClick={() => this.addObservationType()}
-                      >
-                          Legg til
-                      </Button>
-                    </Col>
-                  </Row>
+                            Legg til
+                        </Button>
+                      </Col>
+                    </Row>
+                  )}
                   {this.state.observations.map((obs, index) => {
                     return (
                       <div key={index}>
                         <h3>
                           {this.typeDisplayMap[obs.type]}
                           &nbsp;
-                          <a onClick={() => this.removeObservation(index)}>
-                            <FontAwesome name="times" />
-                          </a>
+                          {this.props.mode !== 'ADD' ? '' : (
+                            <a onClick={() => this.removeObservation(index)}>
+                              <FontAwesome name="times" />
+                            </a>
+                          )}
                         </h3>
                         {this.renderObservation(obs)}
                         <hr />

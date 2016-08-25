@@ -25,6 +25,8 @@ import FontAwesome from 'react-fontawesome'
 
 export default class ObservationPest extends Component {
   static propTypes = {
+    disabled: PropTypes.bool,
+    canAddObservations: PropTypes.bool,
     observations: PropTypes.array.isRequired,
     lifeCycle: PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -33,16 +35,14 @@ export default class ObservationPest extends Component {
       validate: PropTypes.string,
       items: PropTypes.array.isRequired,
       onChange: PropTypes.func.isRequired,
-      onRemove: PropTypes.func.isRequired,
-      disabled: PropTypes.bool
+      onRemove: PropTypes.func.isRequired
     }).isRequired,
     count: PropTypes.shape({
       label: PropTypes.string.isRequired,
       placeHolder: PropTypes.string.isRequired,
       tooltip: PropTypes.string.isRequired,
       validate: PropTypes.string,
-      onChange: PropTypes.func.isRequired,
-      disabled: PropTypes.bool
+      onChange: PropTypes.func.isRequired
     }).isRequired,
     comments: PropTypes.shape({
       leftValue: PropTypes.string,
@@ -52,41 +52,36 @@ export default class ObservationPest extends Component {
       rightValue: PropTypes.string,
       rightLabel: PropTypes.string.isRequired,
       rightTooltip: PropTypes.string.isRequired,
-      onChangeRight: PropTypes.func.isRequired,
-      disabled: PropTypes.bool
+      onChangeRight: PropTypes.func.isRequired
     }).isRequired,
     newButton: PropTypes.shape({
       label: PropTypes.string.isRequired,
-      onClick: PropTypes.func.isRequired,
-      disabled: PropTypes.bool
+      onClick: PropTypes.func.isRequired
     }).isRequired
   }
 
   static defaultProps = {
+    disabled: false,
+    canAddObservations: true,
     lifeCycle: {
-      validate: 'text',
-      disabled: false
+      validate: 'text'
     },
     count: {
-      validate: 'number',
-      disabled: false
+      validate: 'number'
     },
     comments: {
       leftValue: '',
       rightValue: ''
-    },
-    newButton: {
-      disabled: false
     }
   }
 
   render() {
     return (
       <div>
-        <ObservationDoubleTextAreaComponent {...this.props.comments} />
+        <ObservationDoubleTextAreaComponent {...this.props.comments} disabled={this.props.disabled} />
         <span>
           <ControlLabel>{'\u00A0'}</ControlLabel><br />
-          {this.props.newButton.disabled ? '' :
+          {!this.props.canAddObservations ? '' :
             <Button onClick={this.props.newButton.onClick}>
               <FontAwesome name="plus-circle" />&nbsp;{this.props.newButton.label}
             </Button>
@@ -98,9 +93,10 @@ export default class ObservationPest extends Component {
             <Row key={index}>
               <Col xs={6} sm={3} md={3}>
                 <span style={{ height: 50 }}>
-                  <ControlLabel>{this.props.lifeCycle.label}&nbsp;<FontAwesome onClick={() => this.props.lifeCycle.onRemove(index)} name="times" /></ControlLabel>
+                  <ControlLabel>{this.props.lifeCycle.label}&nbsp;{!this.props.canAddObservations ? '' : <FontAwesome onClick={() => this.props.lifeCycle.onRemove(index)} name="times" />}</ControlLabel>
                   <MusitDropDownField
                     {...this.props.lifeCycle}
+                    disabled={this.props.disabled}
                     value={observation.lifeCycle}
                     onChange={(lifeCycleValue) => this.props.lifeCycle.onChange(index, lifeCycleValue)}
                   />
@@ -111,6 +107,7 @@ export default class ObservationPest extends Component {
                   <ControlLabel>{this.props.count.label}</ControlLabel>
                   <MusitField
                     {...this.props.count}
+                    disabled={this.props.disabled}
                     value={observation.count}
                     onChange={(countValue) => this.props.count.onChange(index, countValue)}
                     style={{ height: 36 }}
