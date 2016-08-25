@@ -23,7 +23,6 @@ import { Row, ControlLabel, Col } from 'react-bootstrap'
 
 export default class ObservationDoubleTextAreaComponent extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     leftLabel: PropTypes.string.isRequired,
     leftValue: PropTypes.string.isRequired,
     leftTooltip: PropTypes.string.isRequired,
@@ -37,12 +36,18 @@ export default class ObservationDoubleTextAreaComponent extends Component {
     disabled: PropTypes.bool
   }
 
+  static defaultProps = {
+    leftValue: '',
+    leftPlaceHolder: '',
+    rightValue: '',
+    rightPlaceHolder: ''
+  }
+
   constructor(props) {
     super(props)
-    const { id, leftTooltip, onChangeLeft, leftPlaceHolder, rightTooltip, onChangeRight, rightPlaceHolder, disabled } = props
+    const { leftTooltip, onChangeLeft, leftPlaceHolder, rightTooltip, onChangeRight, rightPlaceHolder, disabled } = props
     this.fields = {
       left: {
-        id: `${id}_left`,
         placeHolder: leftPlaceHolder,
         tooltip: leftTooltip,
         onChange: onChangeLeft,
@@ -53,7 +58,6 @@ export default class ObservationDoubleTextAreaComponent extends Component {
         disabled: disabled
       },
       right: {
-        id: `${id}_right`,
         placeHolder: rightPlaceHolder,
         tooltip: rightTooltip,
         onChange: onChangeRight,

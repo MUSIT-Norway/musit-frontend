@@ -48,7 +48,6 @@ export default class MusitTextArea extends Component {
         className="form-control"
         placeholder={this.props.placeHolder}
         value={this.props.value}
-        id={this.props.id}
         rows={this.props.numberOfRows}
         disabled={this.props.disabled}
         onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
@@ -65,7 +64,6 @@ export default class MusitTextArea extends Component {
 }
 
 MusitTextArea.propTypes = {
-  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired, // Should be any
   placeHolder: PropTypes.string,
   tooltip: PropTypes.string,
