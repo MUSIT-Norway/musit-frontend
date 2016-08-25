@@ -54,7 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   onSaveObservation: (data, id = null) => {
     dispatch(addObservation(data, id, {
-      onSuccess: () => { this.hashHistory.goBack() },
+      onSuccess: () => this.hashHistory.goBack(),
       onFailure: () => alert('ikke istand til å lagre')
     })) },
   onDoneBySuggestionsUpdateRequested: ({ value, reason }) => {

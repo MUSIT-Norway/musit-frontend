@@ -32,24 +32,26 @@ import { hashHistory } from 'react-router'
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   observationControlGridData: state.observationControlGrid.data.map((e) => {
-    if (e.eventType === 'Control') { return e }
+    if (e.eventType === 'Control') { return { ...e, type: e.eventType } }
     return { ...e,
-              types: e['subEvents-parts'] ? e['subEvents-parts'].map((se) => {
-                switch (se.eventType) {
-                  case 'ObservationLightingCondition': return { ControlLightingCondition: true }
-                  case 'temperature': return { ControlTemperature: true }
-                  case 'vannskaderisiko': return { ControlWaterDamageAssessment: true }
+              type: e.eventType,
+              types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
+                switch (c.eventType) {
+                  case 'ObservationLightingCondition': return { ...p, ControlLightingCondition: true }
+                  case 'ObservationTemperature': return { ...p, ControlTemperature: true }
+                  case 'ObservationWaterDamageAssessment': return { ...p, ControlWaterDamageAssessment: true }
                   case 'ObservationHypoxicAir': return { ControlHypoxicAir: true }
-                  case 'ObservationRelativeHumidity': return { ControlRelativeHumidity: true }
-                  case 'ObservationCleaning': return { ControlCleaning: true }
-                  case 'ObservationMold': return { ControlMold: true }
-                  case 'ObservationPest': return { ControlPest: true }
-                  case 'ObservationAlcohol': return { ControlAlcohol: true }
-                  case 'brannsikring': return { ControlFireProtection: true }
-                  case 'tyverisikring': return { ControlTheftProtection: true }
-                  case 'skallsikring': return { ControlPerimetersecurity: true }
+                  case 'ObservationRelativeHumidity': return { ...p, ControlRelativeHumidity: true }
+                  case 'ObservationCleaning': return { ...p, ControlCleaning: true }
+                  case 'ObservationMold': return { ...p, ControlMold: true }
+                  case 'ObservationPest': return { ...p, ControlPest: true }
+                  case 'ObservationAlcohol': return { ...p, ControlAlcohol: true }
+                  case 'ObservationFireProtection': return { ...p, ControlFireProtection: true }
+                  case 'ObservationTheftProtection': return { ...p, ControlTheftProtection: true }
+                  case 'ObservationPerimeterSecurity': return { ...p, ControlPerimetersecurity: true }
+                  case 'ObservationGas': return { ControlGas: true }
                   default: return null
-                } }) : [] } }),
+                } }, {}) : [] } }),
   unit: state.storageGridUnit.root.data
 })
 
@@ -81,9 +83,9 @@ export default class ObservationControlGridShow extends React.Component {
 
   componentWillMount() {
     if (this.props.route.showControls) {
-      this.props.loadControls(this.props.unit.id)
+      this.props.loadControls(this.props.params.id)
     } else {
-      this.props.loadObservations(this.props.unit.id)
+      this.props.loadObservations(this.props.params.id)
     }
   }
 

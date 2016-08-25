@@ -36,8 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (data) => {
-    dispatch(addControl(data))
+  saveControl: (data, callback) => {
+    dispatch(addControl(data, callback))
   }
 })
 
@@ -131,13 +131,14 @@ export default class ControlView extends React.Component {
         state: controlState
       })
     } else {
-      this.props.saveControl(controlState)
-      hashHistory.goBack()
+      console.log(controlState)
+      this.props.saveControl(controlState, { onSuccess: () => { hashHistory.goBack() },
+                                             onFailure: () => { window.alert('Kunne ikke lagre kontroll') } })
     }
   }
 
   getDate() {
-    return moment().format('mm/dd/yyyy');
+    return moment().format('YYYY-MM-DD');
   }
 
   render() {
