@@ -30,8 +30,8 @@ const wrap = (e) => {
   const r = {}
   r.eventType = 'Observation'
   r.doneBy = e.doneBy.id
-  r.doneDate = e.date
-  r['subEvents-parts'] = e.observations ? e.observations.map((el) => {
+  r.doneDate = e.doneDate
+  r['subEvents-parts'] = e.observations ? e.observations.filter((f) => { return f.data }).map((el) => {
     const re = {}
     switch (el.type) {
       case 'pest':

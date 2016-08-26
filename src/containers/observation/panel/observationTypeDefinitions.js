@@ -56,7 +56,7 @@ const observationTypeDefinitions = (translate) => {
           translate('musit.observation.lifeCycleLabelMenu.egg')]
       },
       defaultValues: {
-        observations: [],
+        observations: [{ lifeCycle: '', count: '' }],
         identificationValue: '',
         commentsValue: ''
       },
