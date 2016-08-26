@@ -61,7 +61,6 @@ const controlReducer = (state = initialState, action = {}) => {
 
 export default controlReducer;
 
-
 export const addControl = (controlData, callback, id) => {
   const data = mapToBackend(controlData)
   let url = ''
