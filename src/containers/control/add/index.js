@@ -36,8 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (data) => {
-    dispatch(addControl(data))
+  saveControl: (id, data) => {
+    dispatch(addControl(id, data))
   }
 })
 
@@ -131,7 +131,7 @@ export default class ControlView extends React.Component {
         state: controlState
       })
     } else {
-      this.props.saveControl(controlState)
+      this.props.saveControl(this.props.params.id, controlState)
     }
   }
 
