@@ -23,11 +23,10 @@ import DatePicker from 'react-bootstrap-date-picker'
 import { MusitField } from '../../../components/formfields'
 import Language from '../../../components/language'
 import { connect } from 'react-redux'
-import { loadControl } from '../../../reducers/control/add'
+import { loadControl } from '../../../reducers/control'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
-  control: state.controlDetails.data,
   controls: state.control
 })
 
@@ -40,7 +39,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default class ControlViewShow extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    control: React.PropTypes.object.isRequired,
     controls: React.PropTypes.arrayOf(React.PropTypes.object),
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
@@ -56,6 +54,8 @@ export default class ControlViewShow extends React.Component {
     const test = () => {
       if (this.props.controls.loaded) {
         /* eslint-disable no-console */
+        console.log(this.props.controls.data.registeredBy)
+        console.log(this.props.controls.data.doneDate)
         console.log(this.props.controls)
         this.props.controls.data['subEvents-parts'].map((c) => {
           console.log(c.eventType)
@@ -65,6 +65,7 @@ export default class ControlViewShow extends React.Component {
           return ''
         }
         )
+        /* eslint-disable no-console */
       }
       return ''
     }
@@ -83,24 +84,40 @@ export default class ControlViewShow extends React.Component {
               <Col sm={4} smOffset={2}>
                 <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
                 <br />
-                <DatePicker dateFormat="DD.MM.YYYY" value={this.props.control.datePerformed} />
+                <DatePicker
+                  dateFormat="DD.MM.YYYY"
+                  value={this.props.controls.loaded ? this.props.controls.data.doneDate : null}
+                />
               </Col>
               <Col sm={4} >
                 <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
                 <br />
-                <MusitField id="performedBy" value={this.props.control.performedBy} validate="text" disabled={Boolean(true)} />
+                <MusitField
+                  id="performedBy"
+                  value={this.props.controls.loaded ? this.props.controls.data.doneBy : null}
+                  validate="text"
+                  disabled={Boolean(true)}
+                />
               </Col>
             </Row>
             <Row>
               <Col sm={4} smOffset={2}>
                 <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
                 <br />
-                <DatePicker dateFormat="DD.MM.YYYY" value={this.props.control.dateRegistered} />
+                <DatePicker
+                  dateFormat="DD.MM.YYYY"
+                  value={this.props.controls.loaded ? this.props.controls.data.registeredDate : null}
+                />
               </Col>
               <Col sm={4} >
                 <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
                 <br />
-                <MusitField id="registeredBy" value={this.props.control.registeredBy} validate="text" disabled={Boolean(true)} />
+                <MusitField
+                  id="registeredBy"
+                  value={this.props.controls.loaded ? this.props.controls.data.registeredBy : null}
+                  validate="text"
+                  disabled={Boolean(true)}
+                />
               </Col>
             </Row>
             <Row>
