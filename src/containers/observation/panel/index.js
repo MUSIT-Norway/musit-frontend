@@ -47,10 +47,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadObservation: (id) => {
-    dispatch(loadObservation(id), {
-      onSuccess: () => { /* Dispatche personnavn */ },
-      onFailure: () => alert('Kunne ikke laste observasjon') })
+  loadObservation: (id, callback) => {
+    dispatch(loadObservation(id, callback))
   },
   onSaveObservation: (data, id = null) => {
     dispatch(addObservation(data, id, {
@@ -305,7 +303,9 @@ export default class ObservationView extends React.Component {
 
   componentWillMount() {
     if (this.props.params.obsId) {
-      this.props.loadObservation(this.props.params.obsId)
+      this.props.loadObservation(this.props.params.obsId, {
+        onSuccess: (r) => this.props.loadPersonNameFromId(r.doneBy)
+      })
     }
   }
   componentWillReceiveProps(nextProps) {

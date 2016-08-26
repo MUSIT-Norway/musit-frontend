@@ -110,10 +110,10 @@ export default class ObservationControlGridShow extends React.Component {
 
   componentWillMount() {
     if (this.props.route.showControls) {
-      this.props.loadControls(this.props.params.id, { onSuccess: (r) => this.props.loadPerson(r)
+      this.props.loadControls(this.props.params.id, { onSuccess: (r) => console.log(r)
                                                     })
     } else {
-      this.props.loadObservations(this.props.params.id, { onSuccess: (r) => this.props.loadPerson(r)
+      this.props.loadObservations(this.props.params.id, { onSuccess: (r) => console.log(r)
                                                     })
     }
   }
