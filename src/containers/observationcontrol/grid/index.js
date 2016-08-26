@@ -22,9 +22,9 @@ import React from 'react'
 import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import Language from '../../../components/language'
-import { loadControlsForNode, loadObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
+import { loadControlsForNode, loadControlsAndObservationsForNode,
+  loadObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
-import { blur } from '../../../util'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => ({
                      case 'ControlHypoxicAir': return { ControlHypoxicAir: true }
                      case 'ControlRelativeHumidity': return { ...p, ControlRelativeHumidity: true }
                      case 'ControlCleaning': return { ...p, ControlCleaning: true }
-                     case 'ControlM25old': return { ...p, ControlMold: true }
+                     case 'ControlMold': return { ...p, ControlMold: true }
                      case 'ControlPest': return { ...p, ControlPest: true }
                      case 'ControlAlcohol': return { ...p, ControlAlcohol: true }
                      case 'ControlFireProtection': return { ...p, ControlFireProtection: true }
@@ -85,6 +85,9 @@ const mapDispatchToProps = (dispatch) => ({
   loadObservations: (id, callback) => {
     dispatch(loadObservationsForNode(id, callback))
   },
+  loadControlAndObservations: (id, callback) => {
+    dispatch(loadControlsAndObservationsForNode(id, callback))
+  },
   loadPerson: (id) => {
     dispatch(loadActor(id))
   }
@@ -100,33 +103,31 @@ export default class ObservationControlGridShow extends React.Component {
     route: React.PropTypes.object,
     loadControls: React.PropTypes.func.isRequired,
     loadPerson: React.PropTypes.func.isRequired,
-    loadObservations: React.PropTypes.func.isRequired
+    loadObservations: React.PropTypes.func.isRequired,
+    loadControlAndObservations: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
     this.props.params.id = this.props.params.id * 1
-  }
-
-  componentWillMount() {
-    if (this.props.route.showControls) {
-      this.props.loadControls(this.props.params.id, { onSuccess: (r) => console.log(r)
-                                                    })
-    } else {
-      this.props.loadObservations(this.props.params.id, { onSuccess: (r) => console.log(r)
-                                                    })
+    this.state = {
+      showObservations: this.props.route.showObservations,
+      showControls: this.props.route.showControls
     }
   }
 
+  componentWillMount() {
+    this.props.loadControlAndObservations(this.props.params.id)
+  }
   makeToolbar() {
     return (<Toolbar
-      showRight={this.props.route.showControls}
-      showLeft={this.props.route.showObservations}
+      showRight={this.state.showControls}
+      showLeft={this.state.showObservations}
       labelRight="Kontroller"
       labelLeft="Observasjoner"
       placeHolderSearch="Filtrer i liste"
-      clickShowRight={blur}
-      clickShowLeft={blur}
+      clickShowRight={() => { this.setState({ ...this.state, showControls: !this.state.showControls }) }}
+      clickShowLeft={() => { this.setState({ ...this.state, showObservations: !this.state.showObservations }) }}
     />)
   }
 
@@ -147,7 +148,16 @@ export default class ObservationControlGridShow extends React.Component {
     return (<ObservationControlGrid
       id={this.props.params.id}
       translate={this.props.translate}
-      tableData={this.props.observationControlGridData}
+      tableData={this.props.observationControlGridData.filter((e) => {
+        if (e.type && this.state.showControls && this.state.showObservations) {
+          return true
+        } else if (e.type && this.state.showControls) {
+          return e.type.toLowerCase() === 'control'
+        } else if (e.type && this.state.showObservations) {
+          return e.type.toLowerCase() === 'observation'
+        }
+        return false
+      })}
     />)
   }
 

@@ -177,6 +177,7 @@ export default class StorageUnitsContainer extends React.Component {
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
           underNodeCount={statistics ? statistics.underNodeCount : Number.NaN}
           onClickProperties={(id) => onEdit({ id })}
+          onClickControlObservations={(id) => history.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => history.push(`/magasin/${id}/observations`)}
           onClickController={(id) => history.push(`/magasin/${id}/controls`)}
           onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}

@@ -9,6 +9,7 @@ export default class ObservationControlGrid extends Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
+    showMode: PropTypes.oneOf(['ALL', 'CONTROLS', 'OBSERVATIONS', '']),
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,

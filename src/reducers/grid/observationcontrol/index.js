@@ -176,4 +176,12 @@ export const loadObservationsForNode = (id, callback) => {
   }
 }
 
+export const loadControlsAndObservationsForNode = (id, callback) => {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`/api/event/v1/node/${id}/controlsAndObservations`),
+    callback
+  }
+}
+
 export default observationControlGridReducer

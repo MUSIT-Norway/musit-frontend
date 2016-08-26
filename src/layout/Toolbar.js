@@ -18,6 +18,7 @@ export default class Toolbar extends React.Component {
   }
 
   render() {
+    let optionalSearch;
     const {
       placeHolderSearch,
       onSearchChanged,
@@ -29,18 +30,22 @@ export default class Toolbar extends React.Component {
       labelRight,
       clickShowRight
     } = this.props
+    if (onSearchChanged) {
+      optionalSearch =
+      (<div className={styles.searchField}>
+        <MusitField
+          id={'search'}
+          addOnPrefix={'\u2315'}
+          placeHolder={placeHolderSearch}
+          value={searchValue}
+          validate="text"
+          onChange={onSearchChanged}
+        />
+      </div>)
+    }
     return (
       <div className={styles.wrapper}>
-        <div className={styles.searchField}>
-          <MusitField
-            id={'search'}
-            addOnPrefix={'\u2315'}
-            placeHolder={placeHolderSearch}
-            value={searchValue}
-            validate="text"
-            onChange={onSearchChanged}
-          />
-        </div>
+        {optionalSearch}
         <div className={styles.toolBarButtons}>
           <Button active={showLeft} onClick={() => clickShowLeft()}>
             <FontAwesome name={showLeft ? 'check-square-o' : 'square-o'} />{' '}{labelLeft}
