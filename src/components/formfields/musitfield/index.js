@@ -50,7 +50,6 @@ export default class MusitField extends Component {
         type="text" className="form-control"
         placeholder={this.props.placeHolder}
         value={this.props.value}
-        id={this.props.id}
         disabled={this.props.disabled}
         onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
       />);
@@ -75,7 +74,6 @@ export default class MusitField extends Component {
 }
 
 MusitField.propTypes = {
-  id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired, // Should be any
   addOnPrefix: PropTypes.string,
   help: PropTypes.string, // always ? on add on after

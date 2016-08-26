@@ -23,10 +23,10 @@ import { Row, ControlLabel, Col } from 'react-bootstrap'
 
 export default class ObervationStatusPercentageComment extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     translate: PropTypes.func,
     translateKeyPrefix: PropTypes.string,
-    statusLabel: PropTypes.string,
+    statusLabel: PropTypes.string.isRequired,
+    statusPlaceHolder: PropTypes.string.isRequired,
     statusValue: PropTypes.string.isRequired,
     statusOptionValues: PropTypes.array.isRequired,
     statusTooltip: PropTypes.string,
@@ -35,7 +35,8 @@ export default class ObervationStatusPercentageComment extends Component {
     volumeValue: PropTypes.string.isRequired,
     volumeTooltip: PropTypes.string,
     onChangeVolume: PropTypes.func.isRequired,
-    commentLabel: PropTypes.string,
+    commentLabel: PropTypes.string.isRequired,
+    commentPlaceHolder: PropTypes.string.isRequired,
     commentValue: PropTypes.string.isRequired,
     commentTooltip: PropTypes.string,
     onChangeComment: PropTypes.func.isRequired,
@@ -44,51 +45,34 @@ export default class ObervationStatusPercentageComment extends Component {
 
   constructor(props) {
     super(props)
-    const {
-      id,
-      statusTooltip,
-      onChangeStatus,
-      volumeTooltip,
-      statusOptionValues,
-      onChangeVolume,
-      commentTooltip,
-      onChangeComment,
-      translate,
-      translateKeyPrefix,
-      disabled
-    } = props
     this.fields = {
       status: {
-        id: `${id}_status`,
-        placeHolder: translate('musit.texts.makeChoice'),
-        tooltip: statusTooltip,
-        onChange: onChangeStatus,
+        placeHolder: this.props.statusPlaceHolder,
+        tooltip: this.props.statusTooltip,
+        onChange: this.props.onChangeStatus,
         validate: 'text',
         precision: 3,
-        items: statusOptionValues,
-        translate: translate,
-        translateKey: translateKeyPrefix,
+        items: this.props.statusOptionValues,
+        translateKey: this.props.translateKeyPrefix,
         minimumLength: 1,
-        disabled: disabled
+        disabled: this.props.disabled
       },
       volume: {
-        id: `${id}_percentage`,
         placeHolder: '%',
-        tooltip: volumeTooltip,
-        onChange: onChangeVolume,
+        tooltip: this.props.volumeTooltip,
+        onChange: this.props.onChangeVolume,
         validate: 'number',
         precision: 3,
-        disabled: disabled
+        disabled: this.props.disabled
       },
       comment: {
-        id: `${id}_comment`,
-        placeHolder: translate('musit.texts.freetext'),
-        tooltip: commentTooltip,
-        onChange: onChangeComment,
+        placeHolder: this.props.commentPlaceHolder,
+        tooltip: this.props.commentTooltip,
+        onChange: this.props.onChangeComment,
         validate: 'text',
         maximumLength: 250,
         numberOfRows: 5,
-        disabled: disabled
+        disabled: this.props.disabled
       }
     }
   }

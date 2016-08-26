@@ -91,6 +91,35 @@ no:
       pest: "Skadedyr"
       envdata: "Miljødata"
     observation:
+      page:
+        typeSelect:
+          labelText: "Choose type"
+        pest:
+          labelText: "Pest"
+        mold:
+          labelText: "Mold"
+        temperature:
+          labelText: "Temperature"
+        skallsikring:
+          labelText: "Skallsikring"
+        brannsikring:
+          labelText: "Brannsikring"
+        vannskaderisiko:
+          labelText: "Vannskaderisiko"
+        tyverisikring:
+          labelText: "Tyverisikring"
+        alcohol:
+          labelText: "Alcohol"
+        hypoxicAir:
+          labelText: "Hypoxic Air"
+        rh:
+          labelText: "Relative Humidity"
+        cleaning:
+          labelText: "Cleaning"
+        gas:
+          labelText: "Gas"
+        lux:
+          labelText: "Light Conditions"
       registerObservation: "Registrer observasjon"
       registerObservations: "Registrer observasjoner"
       date: "Dato"
@@ -135,12 +164,11 @@ no:
         temperature:
           labelText: "Målt temperatur [fra]"
           tooltip: "Måleenhet grader celsius, desimaltall"
-          placeHolder: C
           comment: "Tiltak / kommentar"
         temperatureTolerance:
           labelText: "Målt temperatur [til]"
           tooltip: "Måleenhet toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         relativeHumidity:
           labelText: "Rel. luftfuktighet [fra]"
@@ -150,7 +178,7 @@ no:
         relativeHumidityTolerance:
           labelText: "Rel. luftfuktighet [til]"
           tooltip: "Måleenhet prosent toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         inertAir:
           labelText: "Inert luft [fra]"
@@ -160,18 +188,18 @@ no:
         inertAirTolerance:
           labelText: "Inert luft [til]"
           tooltip: "Måleenhet prosent oksygen toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         renhold:
-          labelText: Renhold
+          labelText: "Renhold"
           comment: "Tiltak / kommentar"
-          tooltip: Renhold
+          tooltip: "Renhold"
         lightCondition:
-          labelText: Lysforhold
+          labelText: "Lysforhold"
           comment: "Tiltak / kommentar"
-          tooltip: Lysforhold
+          tooltip: "Lysforhold"
         comments:
-          labelText: Kommentarer
+          labelText: "Kommentarer"
           tooltip: "Kommentar!"
         gas:
           labelText: "Gass"
@@ -200,7 +228,7 @@ no:
         alcohol:
           labelText: "Sprit"
           volume: "Volum %"
-          statusLabel: Tilstand
+          statusLabel: "Tilstand"
           comment: "Tiltak / kommentar"
           tooltip: "Sprit"
           statusItems:
@@ -212,7 +240,7 @@ no:
       storageType:
         items:
           storageunit: "Lagringsenhet"
-          room: Rom
+          room: "Rom"
           building: "Bygning"
           organization: "Organisasjon"
     welcomePage:

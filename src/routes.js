@@ -23,10 +23,10 @@ import NotFound from './components/NotFound'
 import WelcomeView from './containers/welcome-view'
 import StorageUnitsTable from './containers/magasin/grid'
 import PickListView from './containers/picklist'
-// import ExampleView from './containers/example-view'
 import StorageUnitPanel from './containers/magasin/panel'
 import WelcomeUserView from './containers/welcome-user'
-import ObservationView from './containers/observation/panel'
+import AddObservationPage from './containers/observation/add'
+import EditObservationPage from './containers/observation/edit'
 import ControlView from './containers/control/view'
 import ControlAdd from './containers/control/add'
 import App from './containers/app'
@@ -49,9 +49,6 @@ export default (store) => {
     cb();
   };
 
-  /**
-   * Please keep routes in alphabetical order
-   */
   return (
     <Route component={App}>
       <IndexRedirect to="/" />
@@ -62,12 +59,12 @@ export default (store) => {
       <Route path="/magasin/:id/add" component={StorageUnitPanel} />
       <Route path="/magasin/:id/view" component={StorageUnitPanel} />
       <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/control/observation/add" newControlObservation component={ObservationView} />
       <Route path="/magasin/:id/control/add" component={ControlAdd} />
       <Route path="/magasin/:id/control/:controlId" component={ControlView} />
       <Route path="/magasin/:id/observations" showObservations showControls={false} component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/observation/add" component={ObservationView} />
-      <Route path="/magasin/:id/observation/:obsId" component={ObservationView} />
+      <Route path="/magasin/:id/observation/add" component={AddObservationPage} />
+      <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
+      <Route path="/magasin/:id/observation/:obsId" component={EditObservationPage} />
       <Route path="/magasin/*" component={StorageUnitsTable} />
 
       -- Authentication routes
