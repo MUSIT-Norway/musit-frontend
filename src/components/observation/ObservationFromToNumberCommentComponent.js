@@ -43,9 +43,6 @@ export default class ObservationFromToNumberCommentComponent extends Component {
   }
 
   static defaultProps = {
-    onChangeFrom: () => true,
-    onChangeTo: () => true,
-    onChangeComment: () => true,
     fromValue: '',
     fromPlaceHolder: '',
     toValue: '',

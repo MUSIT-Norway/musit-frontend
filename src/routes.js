@@ -25,8 +25,8 @@ import StorageUnitsTable from './containers/magasin/grid'
 import PickListView from './containers/picklist'
 import StorageUnitPanel from './containers/magasin/panel'
 import WelcomeUserView from './containers/welcome-user'
-import ObservationView from './containers/observation/panel'
-import LOLFIX from './containers/observation/second'
+import AddObservationPage from './containers/observation/add'
+import EditObservationPage from './containers/observation/edit'
 import ControlView from './containers/control/view'
 import ControlAdd from './containers/control/add'
 import App from './containers/app'
@@ -62,9 +62,9 @@ export default (store) => {
       <Route path="/magasin/:id/control/add" component={ControlAdd} />
       <Route path="/magasin/:id/control/:controlId" component={ControlView} />
       <Route path="/magasin/:id/observations" showObservations showControls={false} component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/observation/add" component={ObservationView} />
-      <Route path="/magasin/:id/observation/add2" component={LOLFIX} />
-      <Route path="/magasin/:id/observation/:obsId" component={ObservationView} />
+      <Route path="/magasin/:id/observation/add" component={AddObservationPage} />
+      <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
+      <Route path="/magasin/:id/observation/:obsId" component={EditObservationPage} />
       <Route path="/magasin/*" component={StorageUnitsTable} />
 
       -- Authentication routes

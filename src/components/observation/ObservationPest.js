@@ -79,7 +79,7 @@ export default class ObservationPest extends Component {
     return (
       <div>
         <ObservationDoubleTextAreaComponent {...this.props.comments} disabled={this.props.disabled} />
-        <span>'
+        <span>
           <ControlLabel>{'\u00A0'}</ControlLabel><br />
           {!this.props.canEdit ? '' :
             <Button onClick={this.props.newButton.onClick}>

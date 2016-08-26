@@ -7,50 +7,8 @@ import {
   ObservationPest
 } from '../../../components/observation'
 import { containsObjectWithField } from '../../../util'
-import { connect } from 'react-redux'
-import Language from '../../../components/language'
 import FontAwesome from 'react-fontawesome'
 
-const mapStateToProps = () => {
-  return {
-    translate: (key, markdown) => Language.translate(key, markdown),
-    observations: [
-      {
-        type: 'tyverisikring',
-        props: {
-          leftValue: 'Heisann',
-          rightValue: 'Hoho'
-        }
-      },
-      {
-        type: 'temperature',
-        props: {
-          fromValue: '12,23',
-          toValue: '12',
-          commentValue: 'This was very bad'
-        }
-      },
-      {
-        type: 'pest',
-        props: {
-          identificationValue: 'Sumtin',
-          commentValue: 'This was very bad',
-          observations: [
-            {
-              lifeCycle: 'Puppe',
-              count: '1'
-            }
-          ]
-        }
-      }
-    ],
-    doneDate: null,
-    doneBy: null,
-    title: 'Add new observation'
-  }
-}
-
-@connect(mapStateToProps)
 export default class ObservationPage extends React.Component {
 
   static propTypes = {
@@ -60,10 +18,6 @@ export default class ObservationPage extends React.Component {
     doneBy: PropTypes.object,
     title: PropTypes.string.isRequired,
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
-  }
-
-  static defaultProps = {
-    mode: 'ADD'
   }
 
   constructor(props) {
@@ -76,19 +30,10 @@ export default class ObservationPage extends React.Component {
     }
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
     this.onChangeField = this.onChangeField.bind(this)
-    this.addObservationType = this.addObservationType.bind(this)
-    this.renderObservation = this.renderObservation.bind(this)
-    this.renderTemperatureObservation = this.renderTemperatureObservation.bind(this)
     this.onChangeTypeSelect = this.onChangeTypeSelect.bind(this)
     this.onChangePestObservation = this.onChangePestObservation.bind(this)
     this.onRemovePestObservation = this.onRemovePestObservation.bind(this)
     this.onClickAddObservation = this.onClickAddObservation.bind(this)
-    this.typeDisplayMap = {}
-    this.typePropsMap = {}
-    this.types.forEach((t) => {
-      this.typeDisplayMap[t.value] = this.props.translate(t.display, false)
-      this.typePropsMap[t.value] = t.props
-    })
   }
 
   onChangeField(type, field, value) {
@@ -99,12 +44,12 @@ export default class ObservationPage extends React.Component {
   }
 
   onChangePestObservation(pestObservationIndex, field, value) {
-    const observationsCopy = [...this.state.observations]
-    const pestIndex = observationsCopy.findIndex((o) => o.type === 'pest')
-    const pestObj = observationsCopy[pestIndex]
+    const observations = [...this.state.observations]
+    const pestIndex = observations.findIndex((o) => o.type === 'pest')
+    const pestObj = observations[pestIndex]
     const pestObservations = pestObj.props.observations
     pestObservations[pestObservationIndex][field] = value
-    this.setState({ ...this.state, observations: observationsCopy })
+    this.setState({ ...this.state, observations: observations })
   }
 
   onRemovePestObservation(pestObservationIndex) {
@@ -131,87 +76,29 @@ export default class ObservationPage extends React.Component {
     })
   }
 
-  /**
-   * This is configuration data. Not to be used directly in code for rendering etc.
-   * Referenced in constructor for creating a typeDisplayMap object.
-   *
-   * This array contains object with:
-   *
-   *   value <- the type identificator
-   *   display <- the type label key (which needs to be translated)
-   *   props <- default props for the type (ex for pest we have a default observation array)
-   *
-   * @type {*[]}
-   */
-  types = [
-    {
-      value: '',
-      display: 'musit.texts.makeChoice'
-    },
-    {
-      value: 'temperature',
-      display: 'Temperature'
-    },
-    {
-      value: 'gas',
-      display: 'Gas'
-    },
-    {
-      value: 'lux',
-      display: 'LUX'
-    },
-    {
-      value: 'cleaning',
-      display: 'Cleaning'
-    },
-    {
-      value: 'pest',
-      display: 'Pest',
-      props: {
-        observations: [{ lifeCycle: '', count: '' }]
-      }
-    },
-    {
-      value: 'mold',
-      display: 'Mold'
-    },
-    {
-      value: 'skallsikring',
-      display: 'Skallsikring'
-    },
-    {
-      value: 'tyverisikring',
-      display: 'Tyverisikring'
-    },
-    {
-      value: 'brannsikring',
-      display: 'Brannsikring'
-    },
-    {
-      value: 'vannskaderisiko',
-      display: 'Vannskaderisiko'
-    },
-    {
-      value: 'rh',
-      display: 'Relative humidity'
-    },
-    {
-      value: 'hypoxicAir',
-      display: 'HypoxicAir'
-    },
-    {
-      value: 'alcohol',
-      display: 'Alcohol'
-    }
-  ]
-
+  typeDefinitions = {
+    '': { label: 'typeSelect.labelText' },
+    temperature: { label: 'temperature.labelText', render: this.renderTemperature },
+    gas: { label: 'gas.labelText', render: this.renderGas },
+    lux: { label: 'lux.labelText', render: this.renderLux },
+    cleaning: { label: 'cleaning.labelText', render: this.renderCleaning },
+    pest: { label: 'pest.labelText', render: this.renderPest, props: { observations: [{ lifeCycle: '', count: '' }] } },
+    mold: { label: 'mold.labelText', render: this.renderMold },
+    skallsikring: { label: 'skallsikring.labelText', render: this.renderSkallsikring },
+    tyverisikring: { label: 'tyverisikring.labelText', render: this.renderTyverisikring },
+    brannsikring: { label: 'brannsikring.labelText', render: this.renderBrannsikring },
+    vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderVannskaderisiko },
+    rh: { label: 'rh.labelText', render: this.renderRelativeHumidity },
+    hypoxicAir: { label: 'hypoxicAir.labelText', render: this.renderHypoxicAir },
+    alcohol: { label: 'alcohol.labelText', render: this.renderAlcohol }
+  }
 
   addObservationType(typeToAdd, props = {}) {
     const type = typeToAdd || this.state.selectedType
     if (!type || type === '') {
       return
     }
-    const typeProps = { ...props, ...this.typePropsMap[type] }
+    const typeProps = { ...props, ...this.typeDefinitions[type].props }
     const observations = [{ type, props: typeProps }, ...this.state.observations]
     this.setState({ ...this.state, observations, selectedType: null })
   }
@@ -228,72 +115,25 @@ export default class ObservationPage extends React.Component {
   }
 
   renderObservation(observation) {
-    const props = observation.props
-    switch (observation.type) {
-      case 'temperature':
-        return this.renderTemperatureObservation(props)
-      case 'rh':
-        return this.renderRelativeHumidityObservation(props)
-      case 'hypoxicAir':
-        return this.renderHypoxicAirObservation(props)
-      case 'lux':
-        return this.renderLuxObservation(props)
-      case 'gas':
-        return this.renderGasObservation(props)
-      case 'cleaning':
-        return this.renderCleaningObservation(props)
-      case 'mold':
-        return this.renderMoldObservation(props)
-      case 'skallsikring':
-        return this.renderSkallsikringObservation(props)
-      case 'tyverisikring':
-        return this.renderTyverisikringObservation(props)
-      case 'brannsikring':
-        return this.renderBrannsikringObservation(props)
-      case 'vannskaderisiko':
-        return this.renderVannskaderisikoObservation(props)
-      case 'pest':
-        return this.renderPestObservation(props)
-      case 'alcohol':
-        return this.renderAlcoholObservation(props)
-      default:
-        // do nothing
-    }
-    return null
+    return this.typeDefinitions[observation.type].render.bind(this)(observation.props)
   }
 
-  /**
-   alcohol: defineStatusType(
-   'alcohol',
-   label('alcohol.labelText'),
-   label('alcohol.statusLabel'),
-   'statusTooltip',
-   [
-   label('alcohol.statusItems.dryed'),
-   label('alcohol.statusItems.allmostDryed'),
-   label('alcohol.statusItems.someDryed'),
-   label('alcohol.statusItems.minorDryed'),
-   label('alcohol.statusItems.satisfactory')
-   ],
-   label('alcohol.volume'),
-   label('alcohol.tooltip'),
-   label('alcohol.comment'),
-   label('alcohol.comment'),
-   this.actions.changeAlchoholStatus,
-   this.actions.changeAlchoholVolume,
-   this.actions.changeAlchoholComment,
-   this.displayExisting
-   ),
-   * @param props
-   * @returns {XML}
-   */
-  renderAlcoholObservation(props) {
+  renderAlcohol(props) {
     return (
-      <ObservationStatusPercentageComment {...props} />
+      <ObservationStatusPercentageComment
+        {...props}
+        statusOptionValues={[
+          this.props.translate('alcohol.statusItems.dryed'),
+          this.props.translate('alcohol.statusItems.allmostDryed'),
+          this.props.translate('alcohol.statusItems.someDryed'),
+          this.props.translate('alcohol.statusItems.minorDryed'),
+          this.props.translate('alcohol.statusItems.satisfactory')
+        ]}
+      />
     )
   }
 
-  renderPestObservation(props) {
+  renderPest(props) {
     return (
       <ObservationPest
         disabled={this.props.mode === 'VIEW'}
@@ -337,7 +177,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderBrannsikringObservation(props) {
+  renderBrannsikring(props) {
     return (
       <ObservationDoubleTextAreaComponent
         {...props}
@@ -353,7 +193,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderVannskaderisikoObservation(props) {
+  renderVannskaderisiko(props) {
     return (
       <ObservationDoubleTextAreaComponent
         {...props}
@@ -369,7 +209,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderTyverisikringObservation(props) {
+  renderTyverisikring(props) {
     return (
       <ObservationDoubleTextAreaComponent
         {...props}
@@ -385,7 +225,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderSkallsikringObservation(props) {
+  renderSkallsikring(props) {
     return (
       <ObservationDoubleTextAreaComponent
         {...props}
@@ -401,7 +241,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderMoldObservation(props) {
+  renderMold(props) {
     return (
       <ObservationDoubleTextAreaComponent
         {...props}
@@ -417,7 +257,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderCleaningObservation(props) {
+  renderCleaning(props) {
     return (
       <ObservationDoubleTextAreaComponent
         {...props}
@@ -433,7 +273,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderLuxObservation(props) {
+  renderLux(props) {
     return (
       <ObservationDoubleTextAreaComponent
         {...props}
@@ -449,7 +289,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderGasObservation(props) {
+  renderGas(props) {
     return (
       <ObservationDoubleTextAreaComponent
         {...props}
@@ -465,7 +305,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderHypoxicAirObservation(props) {
+  renderHypoxicAir(props) {
     return (
       <ObservationFromToNumberCommentComponent
         {...props}
@@ -485,7 +325,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderRelativeHumidityObservation(props) {
+  renderRelativeHumidity(props) {
     return (
       <ObservationFromToNumberCommentComponent
         {...props}
@@ -505,7 +345,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderTemperatureObservation(props) {
+  renderTemperature(props) {
     return (
       <ObservationFromToNumberCommentComponent
         {...props}
@@ -550,9 +390,11 @@ export default class ObservationPage extends React.Component {
                             onChange={this.onChangeTypeSelect}
                             value={this.state.selectedType ? this.state.selectedType : ''}
                           >
-                            {Object.keys(this.typeDisplayMap).filter(this.isTypeSelectable).map((typeStr, index) => {
+                            {Object.keys(this.typeDefinitions).filter(this.isTypeSelectable).map((type, index) => {
                               return (
-                                <option key={index} value={typeStr}>{this.typeDisplayMap[typeStr]}</option>
+                                <option key={index} value={type}>
+                                  {this.props.translate(`musit.observation.page.${this.typeDefinitions[type].label}`)}
+                                </option>
                               )
                             })}
                           </FormControl>
@@ -572,7 +414,7 @@ export default class ObservationPage extends React.Component {
                     return (
                       <div key={index}>
                         <h3>
-                          {this.typeDisplayMap[obs.type]}
+                          {this.props.translate(`musit.observation.page.${this.typeDefinitions[obs.type].label}`)}
                           &nbsp;
                           {this.props.mode !== 'ADD' ? '' : (
                             <a onClick={() => this.removeObservation(index)}>
