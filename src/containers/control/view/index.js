@@ -17,7 +17,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React from 'react'
-import { Grid, Row, Col, ControlLabel } from 'react-bootstrap'
+import { hashHistory } from 'react-router'
+import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap'
 import { ControlView } from '../../../components/control/view'
 import DatePicker from 'react-bootstrap-date-picker'
 import { MusitField } from '../../../components/formfields'
@@ -58,6 +59,15 @@ export default class ControlViewShow extends React.Component {
       type: 'alcohol',
       ok: this.props.control.control.alcoholControl.ok
     }
+    const closeBtn = (
+      <Row>
+        <Col style={{ border: 'none', textAlign: 'center' }}>
+          <Button onClick={() => { hashHistory.goBack() }}>
+            Lukk
+          </Button>
+        </Col>
+      </Row>
+    )
     return (
       <div>
         <main>
@@ -109,6 +119,7 @@ export default class ControlViewShow extends React.Component {
                 />
               </Col>
             </Row>
+            {closeBtn}
           </Grid>
         </main>
       </div>
