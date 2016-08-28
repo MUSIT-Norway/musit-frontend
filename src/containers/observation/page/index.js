@@ -78,18 +78,18 @@ export default class ObservationPage extends React.Component {
 
   typeDefinitions = {
     '': { label: 'typeSelect.labelText' },
-    temperature: { label: 'temperature.labelText', render: this.renderTemperature },
-    gas: { label: 'gas.labelText', render: this.renderGas },
-    lux: { label: 'lux.labelText', render: this.renderLux },
-    cleaning: { label: 'cleaning.labelText', render: this.renderCleaning },
+    gas: { label: 'gas.labelText', render: this.renderDoubleTextArea },
+    lux: { label: 'lux.labelText', render: this.renderDoubleTextArea },
+    cleaning: { label: 'cleaning.labelText', render: this.renderDoubleTextArea },
     pest: { label: 'pest.labelText', render: this.renderPest, data: { observations: [{ lifeCycle: '', count: '' }] } },
-    mold: { label: 'mold.labelText', render: this.renderMold },
-    skallsikring: { label: 'skallsikring.labelText', render: this.renderSkallsikring },
-    tyverisikring: { label: 'tyverisikring.labelText', render: this.renderTyverisikring },
-    brannsikring: { label: 'brannsikring.labelText', render: this.renderBrannsikring },
-    vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderVannskaderisiko },
-    relativeHumidity: { label: 'rh.labelText', render: this.renderRelativeHumidity },
-    inertAir: { label: 'hypoxicAir.labelText', render: this.renderHypoxicAir },
+    mold: { label: 'mold.labelText', render: this.renderDoubleTextArea },
+    skallsikring: { label: 'skallsikring.labelText', render: this.renderDoubleTextArea },
+    tyverisikring: { label: 'tyverisikring.labelText', render: this.renderDoubleTextArea },
+    brannsikring: { label: 'brannsikring.labelText', render: this.renderDoubleTextArea },
+    vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderDoubleTextArea },
+    relativeHumidity: { label: 'rh.labelText', render: this.renderFromToNumberComment },
+    inertAir: { label: 'hypoxicAir.labelText', render: this.renderFromToNumberComment },
+    temperature: { label: 'temperature.labelText', render: this.renderFromToNumberComment },
     alcohol: { label: 'alcohol.labelText', render: this.renderAlcohol }
   }
 
@@ -113,10 +113,10 @@ export default class ObservationPage extends React.Component {
   }
 
   renderObservation(observation, index) {
-    return this.typeDefinitions[observation.type].render.bind(this)(observation.data, index)
+    return this.typeDefinitions[observation.type].render.bind(this)(observation.type, observation.data, index)
   }
 
-  renderAlcohol(props, index) {
+  renderAlcohol(id, props, index) {
     return (
       <ObservationStatusPercentageComment
         {...props}
@@ -146,7 +146,7 @@ export default class ObservationPage extends React.Component {
     )
   }
 
-  renderPest(props, index) {
+  renderPest(id, props, index) {
     return (
       <ObservationPest
         disabled={this.props.mode === 'VIEW'}
@@ -220,50 +220,6 @@ export default class ObservationPage extends React.Component {
         onChangeComment={(value) => this.onChangeField('commentValue', value, index)}
       />
     )
-  }
-
-  renderBrannsikring(props, index) {
-    return this.renderDoubleTextArea('brannsikring', props, index)
-  }
-
-  renderVannskaderisiko(props, index) {
-    return this.renderDoubleTextArea('vannskaderisiko', props, index)
-  }
-
-  renderTyverisikring(props, index) {
-    return this.renderDoubleTextArea('tyverisikring', props, index)
-  }
-
-  renderSkallsikring(props, index) {
-    return this.renderDoubleTextArea('skallsikring', props, index)
-  }
-
-  renderMold(props, index) {
-    return this.renderDoubleTextArea('mold', props, index)
-  }
-
-  renderCleaning(props, index) {
-    return this.renderDoubleTextArea('cleaning', props, index)
-  }
-
-  renderLux(props, index) {
-    return this.renderDoubleTextArea('lux', props, index)
-  }
-
-  renderGas(props, index) {
-    return this.renderDoubleTextArea('gas', props, index)
-  }
-
-  renderHypoxicAir(props, index) {
-    return this.renderFromToNumberComment('inertAir', props, index)
-  }
-
-  renderRelativeHumidity(props, index) {
-    return this.renderFromToNumberComment('relativeHumidity', props, index)
-  }
-
-  renderTemperature(props, index) {
-    return this.renderFromToNumberComment('temperature', props, index)
   }
 
   render() {
