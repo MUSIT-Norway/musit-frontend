@@ -45,7 +45,7 @@ export default class ObservationPage extends React.Component {
   onChangePestObservation(pestObservationIndex, field, value, pestIndex) {
     const observations = [...this.state.observations]
     const pestObj = observations[pestIndex]
-    const pestObservations = pestObj.props.observations
+    const pestObservations = pestObj.data.observations
     pestObservations[pestObservationIndex][field] = value
     this.setState({ ...this.state, observations: observations })
   }
@@ -53,14 +53,14 @@ export default class ObservationPage extends React.Component {
   onRemovePestObservation(pestObservationIndex, pestIndex) {
     const observationsCopy = [...this.state.observations]
     const pestObj = observationsCopy[pestIndex]
-    pestObj.props.observations = pestObj.props.observations.filter((elm, index) => index !== pestObservationIndex)
+    pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex)
     this.setState({ ...this.state, observations: observationsCopy })
   }
 
   onClickAddObservation(pestIndex) {
     const observationsCopy = [...this.state.observations]
     const pestObj = observationsCopy[pestIndex]
-    const pestObservations = pestObj.props.observations
+    const pestObservations = pestObj.data.observations
     pestObservations.unshift({ lifeCycle: '', count: '' })
     this.setState({ ...this.state, observations: observationsCopy })
   }
