@@ -8,7 +8,7 @@ import validate from '../common/validators'
 
 export default class MusitDropDownField extends Component {
   static propTypes = {
-    value: PropTypes.string.isRequired, // Should be any
+    value: PropTypes.string, // Should be any
     addOnPrefix: PropTypes.string,
     help: PropTypes.string, // always ? on add on after
     placeHolder: PropTypes.string,
@@ -26,7 +26,16 @@ export default class MusitDropDownField extends Component {
   }
 
   static defaultProps = {
-    validate: 'text'
+    validate: 'text',
+    value: '',
+    placeHolder: 'Choose ...'
+  }
+
+  getOptions() {
+    return this.props.items.map((el) => ({
+      value: el,
+      label: this.props.translateKeyPrefix ? this.props.translate(this.props.translateKeyPrefix.concat(el)) : el
+    }))
   }
 
   classNameOnlyWithInput() {
@@ -49,27 +58,21 @@ export default class MusitDropDownField extends Component {
     return lvString
   }
 
-
   render() {
-    const v = this.props.value ? this.props.value : '';
-    const options = this.props.items.map((el) => (
-      {
-        value: el,
-        label: this.props.translateKeyPrefix ? this.props.translate(this.props.translateKeyPrefix.concat(el)) : el
-      }
-    ));
     const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
+
     const lcPlaceholder = (
       <Select
+        placeholder={this.props.placeHolder}
         disabled={this.props.disabled}
-        name="form-field-name"
-        value={v}
-        options={options}
-        onChange={(event) => this.props.onChange(event.value)}
+        value={this.props.value}
+        options={this.getOptions()}
+        onChange={(el) => this.props.onChange(el.value)}
         data-toggle="tooltip"
         title={this.props.tooltip}
         clearable={false}
       />);
+
     const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
 
     return (lcAddOnPrefix !== null || lcHelp !== null) ? (

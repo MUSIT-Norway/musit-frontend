@@ -22,6 +22,21 @@ import validate from '../common/validators'
 
 export default class MusitField extends Component {
 
+  static propTypes = {
+    value: PropTypes.string, // Should be any
+    addOnPrefix: PropTypes.string,
+    help: PropTypes.string, // always ? on add on after
+    placeHolder: PropTypes.string,
+    tooltip: PropTypes.string,
+    onChange: PropTypes.func,
+    validate: PropTypes.string,
+    minimumLength: PropTypes.number,
+    maximumLength: PropTypes.number,
+    precision: PropTypes.number,
+    disabled: PropTypes.bool,
+    style: PropTypes.object
+  }
+
   classNameWithSpan() {
     let lvString = ' '
     if (validate(this.props) === 'error') {
@@ -72,19 +87,3 @@ export default class MusitField extends Component {
       )
   }
 }
-
-MusitField.propTypes = {
-  value: PropTypes.string.isRequired, // Should be any
-  addOnPrefix: PropTypes.string,
-  help: PropTypes.string, // always ? on add on after
-  placeHolder: PropTypes.string,
-  tooltip: PropTypes.string,
-  onChange: PropTypes.func,
-  validate: PropTypes.string,
-  minimumLength: PropTypes.number,
-  maximumLength: PropTypes.number,
-  validator: PropTypes.string,
-  precision: PropTypes.number,
-  disabled: PropTypes.bool,
-  style: PropTypes.object
-};

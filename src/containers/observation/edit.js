@@ -58,7 +58,7 @@ export default class EditObservationPage extends React.Component {
 
   render() {
     const observations = this.props.location.state ? this.getObservationsFromLocationState() : this.props.observations
-    const page = (<ObservationPage
+    return (<ObservationPage
       observations={observations}
       doneDate={this.props.doneDate}
       doneBy={this.props.doneBy}
@@ -66,6 +66,5 @@ export default class EditObservationPage extends React.Component {
       title="Enter control observations"
       mode="EDIT"
     />)
-    return page
   }
 }

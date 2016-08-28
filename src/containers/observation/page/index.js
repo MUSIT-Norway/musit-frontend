@@ -76,6 +76,10 @@ export default class ObservationPage extends React.Component {
     })
   }
 
+  getLabel(key) {
+    return this.props.translate(`musit.observation.page.${key}`)
+  }
+
   typeDefinitions = {
     '': { label: 'typeSelect.labelText' },
     temperature: { label: 'temperature.labelText', render: this.renderTemperature },
@@ -122,13 +126,28 @@ export default class ObservationPage extends React.Component {
     return (
       <ObservationStatusPercentageComment
         {...props}
-        statusOptionValues={[
-          this.props.translate('alcohol.statusItems.dryed'),
-          this.props.translate('alcohol.statusItems.allmostDryed'),
-          this.props.translate('alcohol.statusItems.someDryed'),
-          this.props.translate('alcohol.statusItems.minorDryed'),
-          this.props.translate('alcohol.statusItems.satisfactory')
+        statusValue={props.status}
+        statusLabel={this.props.translate('musit.observation.page.alcohol.statusLabel')}
+        statusTooltip={this.props.translate('musit.observation.page.alcohol.statusTooltip')}
+        statusPlaceHolder={this.props.translate('musit.observation.page.alcohol.statusPlaceHolder')}
+        statusItems={[
+          this.props.translate('musit.observation.page.alcohol.statusItems.dryed'),
+          this.props.translate('musit.observation.page.alcohol.statusItems.allmostDryed'),
+          this.props.translate('musit.observation.page.alcohol.statusItems.someDryed'),
+          this.props.translate('musit.observation.page.alcohol.statusItems.minorDryed'),
+          this.props.translate('musit.observation.page.alcohol.statusItems.satisfactory')
         ]}
+        statusOnChange={(value) => this.onChangeField('alcohol', 'status', value)}
+        volumeValue={props.volume}
+        volumeLabel={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.volumeLabel')}
+        volumeTooltip={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.volumeTooltip')}
+        volumePlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.volumePlaceHolder')}
+        volumeOnChange={(value) => this.onChangeField('alcohol', 'volume', value)}
+        commentValue={props.comment}
+        commentLabel={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.commentLabel')}
+        commentTooltip={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.commentTooltip')}
+        commentPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.commentPlaceHolder')}
+        commentOnChange={(value) => this.onChangeField('alcohol', 'comment', value)}
       />
     )
   }
@@ -139,40 +158,34 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         canEdit={this.props.mode !== 'VIEW'}
         observations={props.observations}
-        lifeCycle={{
-          label: this.props.translate('musit.observation.pest.lifeCycleLabel'),
-          placeHolder: this.props.translate('musit.texts.makeChoice'),
-          tooltip: this.props.translate('musit.observation.pest.lifeCycleTooltip'),
-          onChange: (index, value) => this.onChangePestObservation(index, 'lifeCycle', value),
-          onRemove: (index) => this.onRemovePestObservation(index),
-          items: [
-            this.props.translate('musit.observation.lifeCycleLabelMenu.puppe'),
-            this.props.translate('musit.observation.lifeCycleLabelMenu.adult'),
-            this.props.translate('musit.observation.lifeCycleLabelMenu.puppeskin'),
-            this.props.translate('musit.observation.lifeCycleLabelMenu.larva'),
-            this.props.translate('musit.observation.lifeCycleLabelMenu.egg')
-          ]
-        }}
-        count={{
-          label: this.props.translate('musit.observation.pest.countLabel'),
-          placeHolder: this.props.translate('musit.observation.pest.countPlaceHolder'),
-          tooltip: this.props.translate('musit.observation.pest.countTooltip'),
-          onChange: (index, value) => this.onChangePestObservation(index, 'count', value)
-        }}
-        comments={{
-          leftValue: props.identificationValue,
-          leftLabel: this.props.translate('musit.observation.pest.identificationLabel'),
-          leftTooltip: this.props.translate('musit.observation.pest.identificationTooltip'),
-          onChangeLeft: (value) => this.onChangeField('pest', 'identificationValue', value),
-          rightValue: props.commentValue,
-          rightLabel: this.props.translate('musit.observation.pest.commentsLabel'),
-          rightTooltip: this.props.translate('musit.observation.pest.commentsTooltip'),
-          onChangeRight: (value) => this.onChangeField('pest', 'commentValue', value),
-        }}
-        newButton={{
-          label: this.props.translate('musit.observation.newButtonLabel'),
-          onClick: this.onClickAddObservation
-        }}
+        lifeCycleLabel={this.props.translate('musit.observation.pest.lifeCycleLabel')}
+        lifeCyclePlaceHolder={this.props.translate('musit.texts.makeChoice')}
+        lifeCycleTooltip={this.props.translate('musit.observation.pest.lifeCycleTooltip')}
+        lifeCycleOnChange={(index, value) => this.onChangePestObservation(index, 'lifeCycle', value)}
+        lifeCycleOnRemove={(index) => this.onRemovePestObservation(index)}
+        lifeCycleItems={[
+          this.props.translate('musit.observation.lifeCycleLabelMenu.puppe'),
+          this.props.translate('musit.observation.lifeCycleLabelMenu.adult'),
+          this.props.translate('musit.observation.lifeCycleLabelMenu.puppeskin'),
+          this.props.translate('musit.observation.lifeCycleLabelMenu.larva'),
+          this.props.translate('musit.observation.lifeCycleLabelMenu.egg')
+        ]}
+        countLabel={this.props.translate('musit.observation.pest.countLabel')}
+        countPlaceHolder={this.props.translate('musit.observation.pest.countPlaceHolder')}
+        countTooltip={this.props.translate('musit.observation.pest.countTooltip')}
+        countOnChange={(index, value) => this.onChangePestObservation(index, 'count', value)}
+        commentsLeftValue={props.identificationValue}
+        commentsLeftLabel={this.props.translate('musit.observation.pest.identificationLabel')}
+        commentsLeftTooltip={this.props.translate('musit.observation.pest.identificationTooltip')}
+        commentsLeftPlaceHolder={this.props.translate('musit.observation.pest.identificationPlaceHolder')}
+        commentsOnChangeLeft={(value) => this.onChangeField('pest', 'identificationValue', value)}
+        commentsRightValue={props.commentValue}
+        commentsRightLabel={this.props.translate('musit.observation.pest.commentsLabel')}
+        commentsRightTooltip={this.props.translate('musit.observation.pest.commentsTooltip')}
+        commentsRightPlaceHolder={this.props.translate('musit.observation.pest.commentsPlaceHolder')}
+        commentsOnChangeRight={(value) => this.onChangeField('pest', 'commentValue', value)}
+        newButtonLabel={this.props.translate('musit.observation.newButtonLabel')}
+        newButtonOnClick={this.onClickAddObservation}
       />
     )
   }
@@ -393,7 +406,7 @@ export default class ObservationPage extends React.Component {
                             {Object.keys(this.typeDefinitions).filter(this.isTypeSelectable).map((type, index) => {
                               return (
                                 <option key={index} value={type}>
-                                  {this.props.translate(`musit.observation.page.${this.typeDefinitions[type].label}`)}
+                                  {this.getLabel(this.typeDefinitions[type].label)}
                                 </option>
                               )
                             })}
@@ -414,7 +427,7 @@ export default class ObservationPage extends React.Component {
                     return (
                       <div key={index}>
                         <h3>
-                          {this.props.translate(`musit.observation.page.${this.typeDefinitions[obs.type].label}`)}
+                          {this.getLabel(this.typeDefinitions[obs.type].label)}
                           &nbsp;
                           {this.props.mode !== 'ADD' ? '' : (
                             <a onClick={() => this.removeObservation(index)}>

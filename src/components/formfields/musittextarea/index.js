@@ -22,6 +22,19 @@ import validate from '../common/validators'
 
 export default class MusitTextArea extends Component {
 
+  static propTypes = {
+    value: PropTypes.string, // Should be any
+    placeHolder: PropTypes.string,
+    tooltip: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    validate: PropTypes.string,
+    minimumLength: PropTypes.number,
+    maximumLength: PropTypes.number,
+    precision: PropTypes.number,
+    numberOfRows: PropTypes.number,
+    disabled: PropTypes.bool
+  }
+
   classNameWithSpan() {
     let lvString = ' '
     if (validate(this.props) === 'error') {
@@ -62,17 +75,3 @@ export default class MusitTextArea extends Component {
     )
   }
 }
-
-MusitTextArea.propTypes = {
-  value: PropTypes.string.isRequired, // Should be any
-  placeHolder: PropTypes.string,
-  tooltip: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  validate: PropTypes.string.isRequired,
-  minimumLength: PropTypes.number,
-  maximumLength: PropTypes.number,
-  validator: PropTypes.string,
-  precision: PropTypes.number,
-  numberOfRows: PropTypes.number,
-  disabled: PropTypes.bool
-};
