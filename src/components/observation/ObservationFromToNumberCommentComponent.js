@@ -23,7 +23,6 @@ import { Row, ControlLabel, Col } from 'react-bootstrap'
 
 export default class ObservationFromToNumberCommentComponent extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
     fromLabel: PropTypes.string.isRequired,
     fromValue: PropTypes.string.isRequired,
     fromTooltip: PropTypes.string.isRequired,
@@ -55,7 +54,6 @@ export default class ObservationFromToNumberCommentComponent extends Component {
     super(props)
     this.fields = {
       from: {
-        id: `${props.id}_from`,
         placeHolder: props.fromPlaceHolder,
         tooltip: props.fromTooltip,
         onChange: props.onChangeFrom,
@@ -64,7 +62,6 @@ export default class ObservationFromToNumberCommentComponent extends Component {
         disabled: props.disabled
       },
       to: {
-        id: `${props.id}_to`,
         placeHolder: props.toPlaceHolder,
         tooltip: props.toTooltip,
         onChange: props.onChangeTo,
@@ -73,7 +70,6 @@ export default class ObservationFromToNumberCommentComponent extends Component {
         disabled: props.disabled
       },
       comment: {
-        id: `${props.id}_comment`,
         placeHolder: props.commentPlaceholder,
         tooltip: props.commentTooltip,
         onChange: props.onChangeComment,
