@@ -198,9 +198,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.brannsikring.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.brannsikring.tooltip')}
+        leftPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.brannsikring.placeHolder')}
         onChangeLeft={(value) => this.onChangeField('brannsikring', 'leftValue', value)}
         rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.brannsikring.comment')}
         rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.brannsikring.comment')}
+        rightPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.brannsikring.commentPlaceHolder')}
         onChangeRight={(value) => this.onChangeField('brannsikring', 'rightValue', value)}
       />
     )
@@ -214,9 +216,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.vannskaderisiko.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.vannskaderisiko.tooltip')}
+        leftPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.vannskaderisiko.placeHolder')}
         onChangeLeft={(value) => this.onChangeField('vannskaderisiko', 'leftValue', value)}
         rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.vannskaderisiko.comment')}
         rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.vannskaderisiko.comment')}
+        rightPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.vannskaderisiko.commentPlaceHolder')}
         onChangeRight={(value) => this.onChangeField('vannskaderisiko', 'rightValue', value)}
       />
     )
@@ -230,9 +234,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.tyverisikring.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.tyverisikring.tooltip')}
+        leftPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.tyverisikring.placeHolder')}
         onChangeLeft={(value) => this.onChangeField('tyverisikring', 'leftValue', value)}
         rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.tyverisikring.comment')}
         rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.tyverisikring.comment')}
+        rightPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.tyverisikring.commentPlaceHolder')}
         onChangeRight={(value) => this.onChangeField('tyverisikring', 'rightValue', value)}
       />
     )
@@ -246,9 +252,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.skallsikring.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.skallsikring.tooltip')}
+        leftPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.skallsikring.placeHolder')}
         onChangeLeft={(value) => this.onChangeField('skallsikring', 'leftValue', value)}
         rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.skallsikring.comment')}
         rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.skallsikring.comment')}
+        rightPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.skallsikring.commentPlaceHolder')}
         onChangeRight={(value) => this.onChangeField('skallsikring', 'rightValue', value)}
       />
     )
@@ -262,9 +270,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.mold.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.mold.tooltip')}
+        leftPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.mold.placeHolder')}
         onChangeLeft={(value) => this.onChangeField('mold', 'leftValue', value)}
         rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.mold.comment')}
         rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.mold.comment')}
+        rightPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.mold.commentPlaceHolder')}
         onChangeRight={(value) => this.onChangeField('mold', 'rightValue', value)}
       />
     )
@@ -278,9 +288,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.cleaning.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.cleaning.tooltip')}
+        leftPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.cleaning.placeHolder')}
         onChangeLeft={(value) => this.onChangeField('cleaning', 'leftValue', value)}
         rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.cleaning.comment')}
         rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.cleaning.comment')}
+        rightPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.cleaning.commentPlaceHolder')}
         onChangeRight={(value) => this.onChangeField('cleaning', 'rightValue', value)}
       />
     )
@@ -294,9 +306,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.tooltip')}
+        leftPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.placeHolder')}
         onChangeLeft={(value) => this.onChangeField('lux', 'leftValue', value)}
         rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.comment')}
         rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.comment')}
+        rightPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.commentPlaceHolder')}
         onChangeRight={(value) => this.onChangeField('lux', 'rightValue', value)}
       />
     )
@@ -310,9 +324,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         leftLabel={this.props.translate('musit.storageUnits.environmentRequirements.gas.labelText')}
         leftTooltip={this.props.translate('musit.storageUnits.environmentRequirements.gas.tooltip')}
+        leftPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.gas.placeHolder')}
         onChangeLeft={(value) => this.onChangeField('gas', 'leftValue', value)}
-        rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.gas.comment')}
-        rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.gas.comment')}
+        rightLabel={this.props.translate('musit.storageUnits.environmentRequirements.gas.commentLabel')}
+        rightTooltip={this.props.translate('musit.storageUnits.environmentRequirements.gas.commentTooltip')}
+        rightPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.gas.commentPlaceHolder')}
         onChangeRight={(value) => this.onChangeField('gas', 'rightValue', value)}
       />
     )
@@ -326,9 +342,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.inertAir.labelText')}
         fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.inertAir.tooltip')}
+        fromPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.inertAir.placeHolder')}
         onChangeFrom={(value) => this.onChangeField('hypoxicAir', 'fromValue', value)}
         toLabel={this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.labelText')}
         toTooltip={this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.tooltip')}
+        toPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.placeHolder')}
         onChangeTo={(value) => this.onChangeField('hypoxicAir', 'toValue', value)}
         commentLabel={this.props.translate('musit.storageUnits.environmentRequirements.inertAir.comment')}
         commentTooltip={this.props.translate('musit.storageUnits.environmentRequirements.inertAir.comment')}
@@ -346,9 +364,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.labelText')}
         fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.tooltip')}
+        fromPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.placeHolder')}
         onChangeFrom={(value) => this.onChangeField('rh', 'fromValue', value)}
         toLabel={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.labelText')}
         toTooltip={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.tooltip')}
+        toPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.placeHolder')}
         onChangeTo={(value) => this.onChangeField('rh', 'toValue', value)}
         commentLabel={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.comment')}
         commentTooltip={this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.comment')}
@@ -366,9 +386,11 @@ export default class ObservationPage extends React.Component {
         disabled={this.props.mode === 'VIEW'}
         fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')}
         fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip')}
+        fromPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.temperature.placeHolder')}
         onChangeFrom={(value) => this.onChangeField('temperature', 'fromValue', value)}
         toLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.labelText')}
         toTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.tooltip')}
+        toPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.placeHolder')}
         onChangeTo={(value) => this.onChangeField('temperature', 'toValue', value)}
         commentLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment')}
         commentTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment')}
