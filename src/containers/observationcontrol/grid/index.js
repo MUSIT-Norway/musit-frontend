@@ -88,8 +88,8 @@ const mapDispatchToProps = (dispatch) => ({
   loadControlAndObservations: (id, callback) => {
     dispatch(loadControlsAndObservationsForNode(id, callback))
   },
-  loadPerson: (id) => {
-    dispatch(loadActor(id))
+  loadPerson: () => {
+    dispatch(loadActor())
   }
 })
 
@@ -117,7 +117,9 @@ export default class ObservationControlGridShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadControlAndObservations(this.props.params.id)
+    this.props.loadControlAndObservations(this.props.params.id,
+                                          { onSuccess: () => this.props.loadPerson(),
+                                            onFailure: () => console.log('Feil feil feil feil *********************') })
   }
   makeToolbar() {
     return (<Toolbar
