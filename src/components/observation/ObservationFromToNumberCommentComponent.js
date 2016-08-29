@@ -23,81 +23,91 @@ import { Row, ControlLabel, Col } from 'react-bootstrap'
 
 export default class ObservationFromToNumberCommentComponent extends Component {
   static propTypes = {
+    // From
     fromLabel: PropTypes.string.isRequired,
     fromValue: PropTypes.string.isRequired,
     fromTooltip: PropTypes.string.isRequired,
+    fromPlaceHolder: PropTypes.string,
+    fromValidate: PropTypes.string,
+    fromPrecision: PropTypes.number,
     onChangeFrom: PropTypes.func.isRequired,
+    // To
     toLabel: PropTypes.string.isRequired,
     toValue: PropTypes.string.isRequired,
     toTooltip: PropTypes.string.isRequired,
+    toValidate: PropTypes.string,
+    toPrecision: PropTypes.number,
+    toPlaceHolder: PropTypes.string,
     onChangeTo: PropTypes.func.isRequired,
+    // Comment
     commentLabel: PropTypes.string.isRequired,
     commentValue: PropTypes.string.isRequired,
     commentTooltip: PropTypes.string.isRequired,
     commentPlaceholder: PropTypes.string,
+    commentMaximumLength: PropTypes.number,
+    commentNumberOfRows: PropTypes.number,
     onChangeComment: PropTypes.func.isRequired,
-    fromPlaceHolder: PropTypes.string,
-    toPlaceHolder: PropTypes.string,
+    // Other
     disabled: PropTypes.bool
   }
 
   static defaultProps = {
+    // From
     fromValue: '',
     fromPlaceHolder: '',
+    fromValidate: 'number',
+    fromPrecision: 3,
+    // To
     toValue: '',
     toPlaceHolder: '',
+    toValidate: 'number',
+    toPrecision: 3,
+    // Comment
     commentValue: '',
-    commentPlaceholder: ''
-  }
-
-  constructor(props) {
-    super(props)
-    this.fields = {
-      from: {
-        placeHolder: props.fromPlaceHolder,
-        tooltip: props.fromTooltip,
-        onChange: props.onChangeFrom,
-        validate: 'number',
-        precision: 3,
-        disabled: props.disabled
-      },
-      to: {
-        placeHolder: props.toPlaceHolder,
-        tooltip: props.toTooltip,
-        onChange: props.onChangeTo,
-        validate: 'number',
-        precision: 3,
-        disabled: props.disabled
-      },
-      comment: {
-        placeHolder: props.commentPlaceholder,
-        tooltip: props.commentTooltip,
-        onChange: props.onChangeComment,
-        validate: 'text',
-        maximumLength: 250,
-        numberOfRows: 5,
-        disabled: props.disabled
-      }
-    }
+    commentPlaceholder: '',
+    commentValidate: 'text',
+    commentMaximumLength: 250,
+    commentNumberOfRows: 5
   }
 
   render() {
-    const { from, to, comment } = this.fields
-    const { fromValue, toValue, fromLabel, toLabel, commentValue, commentLabel } = this.props
-
     return (
       <Row>
         <Col xs={12} sm={3}>
-          <ControlLabel>{fromLabel}</ControlLabel>
-          <MusitField {...from} value={fromValue} />
+          <ControlLabel>{this.props.fromLabel}</ControlLabel>
+          <MusitField
+            value={this.props.fromValue}
+            tooltip={this.props.fromTooltip}
+            placeHolder={this.props.fromPlaceHolder}
+            validate={this.props.fromValidate}
+            precision={this.props.fromPrecision}
+            onChange={this.props.onChangeFrom}
+            disabled={this.props.disabled}
+          />
         </Col>
         <Col xs={12} sm={3}>
-          <ControlLabel>{toLabel}</ControlLabel>
-          <MusitField {...to} value={toValue} />
+          <ControlLabel>{this.props.toLabel}</ControlLabel>
+          <MusitField
+            value={this.props.toValue}
+            tooltip={this.props.toTooltip}
+            placeHolder={this.props.toPlaceHolder}
+            validate={this.props.toValidate}
+            precision={this.props.toPrecision}
+            onChange={this.props.onChangeTo}
+            disabled={this.props.disabled}
+          />
         </Col>
         <Col xs={12} sm={6}>
-          <ControlLabel>{commentLabel}</ControlLabel>
-          <MusitTextArea {...comment} value={commentValue} />
+          <ControlLabel>{this.props.commentLabel}</ControlLabel>
+          <MusitTextArea
+            value={this.props.commentValue}
+            tooltip={this.props.commentTooltip}
+            placeHolder={this.props.commentPlaceholder}
+            maximumLength={this.props.commentMaximumLength}
+            numberOfRows={this.props.commentNumberOfRows}
+            onChange={this.props.onChangeComment}
+            disabled={this.props.disabled}
+          />
         </Col>
       </Row>
     )
