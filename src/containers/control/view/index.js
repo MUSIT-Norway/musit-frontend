@@ -39,7 +39,8 @@ const mapDispatchToProps = (dispatch) => ({
 export default class ControlViewShow extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    controls: React.PropTypes.arrayOf(React.PropTypes.object),
+    // controls: React.PropTypes.arrayOf(React.PropTypes.object),
+    controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
   }
@@ -86,7 +87,7 @@ export default class ControlViewShow extends React.Component {
                 <br />
                 <DatePicker
                   dateFormat="DD.MM.YYYY"
-                  value={this.props.controls.loaded ? this.props.controls.data.doneDate : null}
+                  value={this.props.controls.loaded ? this.props.controls.data.doneDate : ''}
                 />
               </Col>
               <Col sm={4} >
@@ -94,7 +95,7 @@ export default class ControlViewShow extends React.Component {
                 <br />
                 <MusitField
                   id="performedBy"
-                  value={this.props.controls.loaded ? this.props.controls.data.doneBy : null}
+                  value={this.props.controls.loaded ? this.props.controls.data.doneBy.toString() : ''}
                   validate="text"
                   disabled={Boolean(true)}
                 />
@@ -106,7 +107,7 @@ export default class ControlViewShow extends React.Component {
                 <br />
                 <DatePicker
                   dateFormat="DD.MM.YYYY"
-                  value={this.props.controls.loaded ? this.props.controls.data.registeredDate : null}
+                  value={this.props.controls.loaded ? this.props.controls.data.registeredDate : ''}
                 />
               </Col>
               <Col sm={4} >
@@ -114,7 +115,7 @@ export default class ControlViewShow extends React.Component {
                 <br />
                 <MusitField
                   id="registeredBy"
-                  value={this.props.controls.loaded ? this.props.controls.data.registeredBy : null}
+                  value={this.props.controls.loaded ? this.props.controls.data.registeredBy.toString() : ''}
                   validate="text"
                   disabled={Boolean(true)}
                 />
