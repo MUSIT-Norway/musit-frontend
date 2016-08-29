@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
-import { connect, hashHistory } from 'react-redux'
+import { connect } from 'react-redux'
+import { hashHistory } from 'react-router'
 import Language from '../../components/language'
 import ObservationPage from './page'
 import { suggestPerson, clearSuggest } from '../../reducers/suggest'
@@ -27,7 +28,11 @@ const mapDispatchToProps = (dispatch) => ({
   onSaveObservation: (data) => {
     return (observations) => {
       dispatch(addControl(data, observations, {
-        onSuccess: () => hashHistory.goBack()
+        onSuccess: () => hashHistory.goBack(),
+        onFailure: (error) => {
+          console.log(error)
+          alert('This went terribly wrong!')
+        }
       }))
     }
   },

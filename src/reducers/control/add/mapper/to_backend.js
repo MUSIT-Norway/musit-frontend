@@ -47,6 +47,6 @@ export const mapToBackend = (state, observations = []) => {
     }
     return control
   })
-  console.log(r)
+  console.log(JSON.stringify(r))
   return r
 }

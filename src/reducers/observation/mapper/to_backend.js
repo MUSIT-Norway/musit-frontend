@@ -25,10 +25,10 @@ export const parseObservation = (el) => {
       re.eventType = 'observationPest'
       re.identifikasjon = el.data.identificationValue
       re.note = el.data.commentValue
-      re.livssykluser = el.data.observations.map((o) => {
+      re.lifeCycles = el.data.observations.map((o) => {
         const ret = {}
-        ret.livssyklus = o.lifeCycle
-        ret.antall = parseFloat(o.count.replace(',', '.'))
+        ret.lifeCycle = o.lifeCycle
+        ret.count = parseFloat(o.count.replace(',', '.'))
         return ret
       })
       break
