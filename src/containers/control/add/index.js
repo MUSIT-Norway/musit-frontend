@@ -127,12 +127,12 @@ export default class ControlView extends React.Component {
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
       hashHistory.replace({
-        pathname: `/magasin/${this.props.params.id}/observation/add`,
+        pathname: `/magasin/${this.props.params.id}/observation/edit`,
         state: controlState
       })
     } else {
       this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
-                                             onFailure: () => { alert('Kunne ikke lagre kontroll') } })
+                                             onFailure: () => { /* alert('Kunne ikke lagre kontroll') */ } })
     }
   }
 

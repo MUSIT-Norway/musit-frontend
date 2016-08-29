@@ -35,16 +35,6 @@ export default class MusitTextArea extends Component {
     disabled: PropTypes.bool
   }
 
-  classNameWithSpan() {
-    let lvString = ' '
-    if (validate(this.props) === 'error') {
-      lvString = 'form-group has-error'
-    } else {
-      lvString = 'form-group'
-    }
-    return lvString
-  }
-
   classNameOnlyWithInput() {
     let lvString = ''
     if (validate(this.props) === 'error') {
@@ -63,13 +53,13 @@ export default class MusitTextArea extends Component {
         value={this.props.value}
         rows={this.props.numberOfRows}
         disabled={this.props.disabled}
-        onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
-      />);
+        onChange={(event) => this.props.onChange(event.target.value)}
+        title={this.props.tooltip}
+      />
+    )
 
     return (
-      <div
-        className={this.classNameOnlyWithInput()}
-      >
+      <div className={this.classNameOnlyWithInput()}>
        {lcPlaceholder}
       </div>
     )

@@ -24,7 +24,7 @@ export const parseObservation = (el) => {
     case 'pest':
       re.eventType = 'observationPest'
       re.identifikasjon = el.data.identificationValue
-      re.note = el.data.commentsValue
+      re.note = el.data.commentValue
       re.livssykluser = el.data.observations.map((o) => {
         const ret = {}
         ret.livssyklus = o.lifeCycle
@@ -47,7 +47,7 @@ export const parseObservation = (el) => {
       re.renhold = el.data.leftValue
       re.note = el.data.rightValue
       break
-    case 'rh':
+    case 'relativeHumidity':
       re.eventType = 'observationRelativeHumidity'
       re.from = el.data.fromValue ? parseFloat(el.data.fromValue.replace(',', '.')) : null
       re.to = el.data.toValue ? parseFloat(el.data.toValue.replace(',', '.')) : null
@@ -78,7 +78,7 @@ export const parseObservation = (el) => {
       re.vannskaderisiko = el.data.leftValue
       re.note = el.data.rightValue
       break
-    case 'hypoxicAir':
+    case 'inertAir':
       re.eventType = 'ObservationInertAir'
       re.from = parseFloat(el.data.fromValue.replace(',', '.'))
       re.to = parseFloat(el.data.toValue.replace(',', '.'))
@@ -86,9 +86,9 @@ export const parseObservation = (el) => {
       break
     case 'alcohol':
       re.eventType = 'observationAlcohol'
-      re.note = el.data.commentValue
-      re.tilstand = el.data.statusValue
-      re.volum = parseFloat(el.data.volumeValue.replace(',', '.'))
+      re.note = el.data.comment
+      re.tilstand = el.data.status
+      re.volum = parseFloat(el.data.volume.replace(',', '.'))
       break
     case 'temperature':
       re.eventType = 'observationTemperature'

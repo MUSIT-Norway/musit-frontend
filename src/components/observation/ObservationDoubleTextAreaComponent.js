@@ -38,50 +38,38 @@ export default class ObservationDoubleTextAreaComponent extends Component {
 
   static defaultProps = {
     leftValue: '',
-    leftPlaceHolder: '',
-    rightValue: '',
-    rightPlaceHolder: ''
-  }
-
-  constructor(props) {
-    super(props)
-    const { leftTooltip, onChangeLeft, leftPlaceHolder, rightTooltip, onChangeRight, rightPlaceHolder, disabled } = props
-    this.fields = {
-      left: {
-        placeHolder: leftPlaceHolder,
-        tooltip: leftTooltip,
-        onChange: onChangeLeft,
-        validate: 'text',
-        maximumLength: 100,
-        minimumLength: 1,
-        numberOfRows: 5,
-        disabled: disabled
-      },
-      right: {
-        placeHolder: rightPlaceHolder,
-        tooltip: rightTooltip,
-        onChange: onChangeRight,
-        validate: 'text',
-        maximumLength: 250,
-        numberOfRows: 5,
-        disabled: disabled
-      }
-    }
+    rightValue: ''
   }
 
   render() {
-    const { left, right } = this.fields
-    const { leftValue, rightValue, leftLabel, rightLabel } = this.props
-
     return (
       <Row>
         <Col xs={12} sm={6}>
-          <ControlLabel>{leftLabel}</ControlLabel>
-          <MusitTextArea {...left} value={leftValue} />
+          <ControlLabel>{this.props.leftLabel}</ControlLabel>
+          <MusitTextArea
+            value={this.props.leftValue}
+            tooltip={this.props.leftTooltip}
+            placeHolder={this.props.leftPlaceHolder}
+            onChange={this.props.onChangeLeft}
+            disabled={this.props.disabled}
+            validate={'text'}
+            maximumLength={100}
+            minimumLength={1}
+            numberOfRows={5}
+          />
         </Col>
         <Col xs={12} sm={6}>
-          <ControlLabel>{rightLabel}</ControlLabel>
-          <MusitTextArea {...right} value={rightValue} />
+          <ControlLabel>{this.props.rightLabel}</ControlLabel>
+          <MusitTextArea
+            value={this.props.rightValue}
+            tooltip={this.props.rightTooltip}
+            placeHolder={this.props.rightPlaceHolder}
+            onChange={this.props.onChangeRight}
+            disabled={this.props.disabled}
+            validate={'text'}
+            maximumLength={250}
+            numberOfRows={5}
+          />
         </Col>
       </Row>
     )

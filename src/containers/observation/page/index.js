@@ -8,6 +8,7 @@ import {
 } from '../../../components/observation'
 import { containsObjectWithField } from '../../../util'
 import FontAwesome from 'react-fontawesome'
+// import Autosuggest from 'react-autosuggest'
 
 export default class ObservationPage extends React.Component {
 
@@ -16,9 +17,15 @@ export default class ObservationPage extends React.Component {
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
     doneBy: PropTypes.object,
+    registeredDate: PropTypes.string,
+    registeredBy: PropTypes.string,
+    suggest: PropTypes.arrayOf(PropTypes.object),
+    onSaveObservation: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
   }
+
+  static defaultPestData = { observations: [{ lifeCycle: '', count: '' }] }
 
   constructor(props) {
     super(props)
@@ -81,7 +88,7 @@ export default class ObservationPage extends React.Component {
     gas: { label: 'gas.labelText', render: this.renderDoubleTextArea },
     lux: { label: 'lux.labelText', render: this.renderDoubleTextArea },
     cleaning: { label: 'cleaning.labelText', render: this.renderDoubleTextArea },
-    pest: { label: 'pest.labelText', render: this.renderPest, data: { observations: [{ lifeCycle: '', count: '' }] } },
+    pest: { label: 'pest.labelText', render: this.renderPest, data: ObservationPage.defaultPestData },
     mold: { label: 'mold.labelText', render: this.renderDoubleTextArea },
     skallsikring: { label: 'skallsikring.labelText', render: this.renderDoubleTextArea },
     tyverisikring: { label: 'tyverisikring.labelText', render: this.renderDoubleTextArea },
@@ -284,6 +291,7 @@ export default class ObservationPage extends React.Component {
                       </div>
                     )
                   })}
+                  <button onClick={() => this.props.onSaveObservation(this.state.observations)}>Lagre observasjon</button>
                 </form>
               </Row>
             </Grid>
