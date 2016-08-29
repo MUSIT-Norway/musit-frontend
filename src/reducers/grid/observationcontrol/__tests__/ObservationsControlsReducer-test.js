@@ -1,6 +1,5 @@
 import { assert } from '../../../../../test/setup'
-import deepFreeze from 'deep-freeze'
-import observationControlGridReducer, { loadControlsAndObservationsForNode } from '../index'
+import observationControlGridReducer from '../index'
 
 const initialState = {
   data: [
