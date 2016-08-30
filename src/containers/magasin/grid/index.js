@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   rootNode: state.storageGridUnit.root,
-  routerState: state.router
+  routerState: state.routing
 })
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -162,11 +162,12 @@ export default class StorageUnitsContainer extends React.Component {
 
   makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete, history } = this.props
+    const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root')
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           id={rootNode ? rootNode.id : 0}
-          showButtons={(rootNode)}
+          showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
             if (parentId) {
