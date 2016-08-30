@@ -40,22 +40,22 @@ const wrap = (be) => {
     retobs.type = ''
     retobs.data = {}
     switch (o.eventType.toLowerCase()) {
-      case 'observationlys':
+      case 'observationlightcontrol':
         retobs.type = 'lux'
         retobs.data.leftValue = o.lysforhold
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationgass':
+      case 'observationgas':
         retobs.type = 'gas'
         retobs.data.leftValue = o.gass
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationmugg':
+      case 'observationmold':
         retobs.type = 'mold'
         retobs.data.leftValue = o.mugg
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationrenhold':
+      case 'observationcleaning':
         retobs.type = 'cleaning'
         retobs.data.leftValue = o.renhold
         retobs.data.rightValue = o.note
@@ -80,7 +80,7 @@ const wrap = (be) => {
         retobs.data.leftValue = o.vannskaderisiko
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationinertair':
+      case 'observationhypoxicair':
         retobs.type = 'hypoxicAir'
         retobs.data.fromValue = o.from.toString().replace('.', ',')
         retobs.data.toValue = o.to.toString().replace('.', ',')
@@ -93,31 +93,31 @@ const wrap = (be) => {
         retobs.data.commentValue = o.note
         return retobs
       case 'observationrelativehumidity':
-        retobs.type = 'rh'
+        retobs.type = 'relativeHumidity'
         retobs.data.fromValue = o.from.toString().replace('.', ',')
         retobs.data.toValue = o.to.toString().replace('.', ',')
         retobs.data.commentValue = o.note
         return retobs
-      case 'observationskadedyr':
+      case 'observationpest':
         retobs.type = 'pest'
         retobs.data.identificationValue = o.identifikasjon
-        retobs.data.commentsValue = o.note
-        retobs.data.observations = o.livssykluser ? o.livssykluser.map((l) => {
+        retobs.data.commentValue = o.note
+        retobs.data.observations = o.lifeCycles ? o.lifeCycles.map((l) => {
           const obs = {}
-          obs.lifeCycle = l.livssyklus
-          obs.count = l.antall.toString().replace('.', ',')
+          obs.lifeCycle = l.lifeCycle
+          obs.count = l.count.toString().replace('.', ',')
           return obs
         }
       ) : []
         return retobs
-      case 'observationsprit':
+      case 'observationalcohol':
         retobs.type = 'alcohol'
         retobs.data.statusValue = wrapAlcoholState(o.tilstand)
         retobs.data.volumeValue = o.volum.toString().replace('.', ',')
         retobs.data.commentValue = o.note
         return retobs
       default:
-        retobs.data.error = 'Not supported / ikke støttet'
+        retobs.data.error = `Not supported / ikke støttet : ${o.eventType.toLowerCase()}`
         return retobs
     }
   }) : []

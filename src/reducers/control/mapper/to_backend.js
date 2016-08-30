@@ -1,4 +1,4 @@
-import { parseObservation } from '../../../observation/mapper/to_backend'
+import { parseObservation } from '../../observation/mapper/to_backend'
 
 export const mapToBackend = (state, observations = []) => {
   const r = {}
@@ -9,7 +9,7 @@ export const mapToBackend = (state, observations = []) => {
     let eventType;
     switch (key) {
       case 'inertAirOK':
-        eventType = 'ControlInertAir'
+        eventType = 'ControlHypoxicAir'
         break;
       case 'temperatureOK':
         eventType = 'ControlTemperature'
@@ -24,7 +24,7 @@ export const mapToBackend = (state, observations = []) => {
         eventType = 'ControlRelativeHumidity'
         break;
       case 'lightConditionsOK':
-        eventType = 'ControlLightConditions'
+        eventType = 'ControlLightCondition'
         break;
       case 'alcoholOK':
         eventType = 'ControlAlcohol'
@@ -47,6 +47,6 @@ export const mapToBackend = (state, observations = []) => {
     }
     return control
   })
-  console.log(JSON.stringify(r))
+  // console.log(JSON.stringify(r))
   return r
 }

@@ -78,17 +78,17 @@ export const parseObservation = (el) => {
       re.vannskaderisiko = el.data.leftValue
       re.note = el.data.rightValue
       break
-    case 'inertAir':
-      re.eventType = 'ObservationInertAir'
+    case 'hypoxicAir':
+      re.eventType = 'ObservationHypoxicAir'
       re.from = parseFloat(el.data.fromValue.replace(',', '.'))
       re.to = parseFloat(el.data.toValue.replace(',', '.'))
       re.note = el.data.commentValue
       break
     case 'alcohol':
       re.eventType = 'observationAlcohol'
-      re.note = el.data.comment
-      re.tilstand = el.data.status
-      re.volum = parseFloat(el.data.volume.replace(',', '.'))
+      re.note = el.data.commentValue
+      re.tilstand = el.data.statusValue
+      re.volum = parseFloat(el.data.volumeValue.replace(',', '.'))
       break
     case 'temperature':
       re.eventType = 'observationTemperature'

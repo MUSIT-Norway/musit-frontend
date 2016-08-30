@@ -159,7 +159,7 @@ describe('ObservationReducer', () => {
         },
         {
 
-          type: 'rh',
+          type: 'relativeHumidity',
           data: {
             fromValue: '1,4',
             toValue: '4,4',
@@ -170,7 +170,7 @@ describe('ObservationReducer', () => {
           type: 'pest',
           data: {
             identificationValue: 'Mye skadedyr',
-            commentsValue: 'Ikke gjort noe med',
+            commentValue: 'Ikke gjort noe med',
             observations: [
                 { lifeCycle: 'Larva',
                 count: '4' },
@@ -196,9 +196,9 @@ describe('ObservationReducer', () => {
             commentValue: 'Altfor fuktig' }
         }
       ] }
-    // TODO fix this
-    const fixedFrontend = completeFrontEnd
-    const s = mapToFrontEnd(mapToBackEnd(fixedFrontend))
-    assert(JSON.stringify(s) === JSON.stringify(completeFrontEnd))
+    const s = mapToFrontEnd(mapToBackEnd(completeFrontEnd))
+    const stringify1 = JSON.stringify(s);
+    const stringify2 = JSON.stringify(completeFrontEnd);
+    assert(stringify1 === stringify2)
   })
 })

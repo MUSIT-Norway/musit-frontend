@@ -5,7 +5,7 @@ import Language from '../../components/language'
 import ObservationPage from './page'
 import { suggestPerson, clearSuggest } from '../../reducers/suggest'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import { addControl } from '../../reducers/control/add'
+import { addControl } from '../../reducers/control'
 
 const mapStateToProps = (state) => {
   return {
@@ -23,9 +23,9 @@ const mapDispatchToProps = (dispatch) => ({
     return (observations) => {
       dispatch(addControl(data, observations, {
         onSuccess: () => hashHistory.goBack(),
-        onFailure: (error) => {
-          console.log(error)
-          alert('This went terribly wrong!')
+        onFailure: () => {
+          /* console.log(error) */
+          /* alert('This went terribly wrong!') */
         }
       }))
     }
@@ -74,7 +74,7 @@ export default class EditObservationPage extends React.Component {
         case 'alcoholOK':
           return { type: 'alcohol', data: {} }
         default:
-          throw Error('Invalid control ' + o)
+          throw Error(`Invalid control ${o}`)
       }
     })
   }

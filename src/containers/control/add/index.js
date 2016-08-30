@@ -22,7 +22,7 @@ import { connect } from 'react-redux'
 import { Grid, Row, Col, FormControl, PageHeader } from 'react-bootstrap'
 import PairedToogleButtons from '../../../components/control/add'
 import Field from '../../../components/formfields/musitfield'
-import { addControl } from '../../../reducers/control/add'
+import { addControl } from '../../../reducers/control'
 import Language from '../../../components/language'
 import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (data, saveControlCallback) => {
+  saveControl: (id, data, saveControlCallback) => {
     dispatch(addControl(data, saveControlCallback))
   }
 })
@@ -131,8 +131,10 @@ export default class ControlView extends React.Component {
         state: controlState
       })
     } else {
-      this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
-                                             onFailure: () => { /* alert('Kunne ikke lagre kontroll') */ } })
+      this.props.saveControl(this.props.params.id, controlState, {
+        onSuccess: () => hashHistory.goBack(),
+        onFailure: () => { /* alert('Kunne ikke lagre kontroll') */ }
+      })
     }
   }
 
