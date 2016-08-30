@@ -10,13 +10,7 @@ import { addControl } from '../../reducers/control/add'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    suggest: state.suggest,
-    location: {
-      state: {
-        pestOK: false,
-        alcoholOK: false
-      }
-    }
+    suggest: state.suggest
   }
 }
 
@@ -37,7 +31,6 @@ const mapDispatchToProps = (dispatch) => ({
     }
   },
   onDoneBySuggestionsUpdateRequested: ({ value, reason }) => {
-    // Should only autosuggest on typing if you have more then 2 characters
     if (reason && (reason === 'type') && value && value.length >= 2) {
       dispatch(suggestPerson('doneByField', value))
     } else {
@@ -93,8 +86,8 @@ export default class EditObservationPage extends React.Component {
       doneBy={this.props.location.state.doneBy}
       translate={this.props.translate}
       onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
-      title="Enter control observations"
-      mode="EDIT"
+      title={this.props.translate('musit.observation.page.titles.edit')}
+      mode={"EDIT"}
     />)
   }
 }

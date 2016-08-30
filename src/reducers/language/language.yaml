@@ -87,6 +87,10 @@ no:
       envdata: "Miljødata"
     observation:
       page:
+        titles:
+          add: "Add observations"
+          edit: "Edit control observations"
+          view: "Observations"
         typeSelect:
           labelText: "Choose type"
         pest:
