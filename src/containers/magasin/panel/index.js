@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch) => {
     onLagreClick: (data) => {
       dispatch(insertStorageUnitContainer(data), {
         onSuccess: () => hashHistory.goBack(),
-        onFailure: () => { alert('Kunne ikke lagre node') }
+        onFailure: () => { /* alert('Kunne ikke lagre node') */ }
       })
     },
     loadStorageUnit: (id) => {
