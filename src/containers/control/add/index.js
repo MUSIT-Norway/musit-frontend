@@ -131,17 +131,10 @@ export default class ControlView extends React.Component {
         state: controlState
       })
     } else {
-<<<<<<< HEAD
       console.log(this.props.params)
       this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
                                              onFailure: () => window.alert('Kunne ikke lagre kontroll') },
                                              this.props.params.id)
-=======
-      this.props.saveControl(this.props.params.id, controlState, {
-        onSuccess: () => hashHistory.goBack(),
-        onFailure: () => { /* alert('Kunne ikke lagre kontroll') */ }
-      })
->>>>>>> master
     }
   }
 
