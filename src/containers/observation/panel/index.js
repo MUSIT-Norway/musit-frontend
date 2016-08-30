@@ -47,13 +47,14 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadObservation: (id) => {
-    dispatch(loadObservation(id))
+  loadObservation: (id, callback) => {
+    dispatch(loadObservation(id, callback))
   },
-  onSaveObservation: (data) => {
-    dispatch(addObservation(data))
-    hashHistory.goBack()
-  },
+  onSaveObservation: (data, id = null) => {
+    dispatch(addObservation(data, id, {
+      onSuccess: () => hashHistory.goBack(),
+      onFailure: () => alert('ikke istand til å lagre')
+    })) },
   onDoneBySuggestionsUpdateRequested: ({ value, reason }) => {
     // Should only autosuggest on typing if you have more then 2 characters
     if (reason && (reason === 'type') && value && value.length >= 2) {
@@ -302,7 +303,9 @@ export default class ObservationView extends React.Component {
 
   componentWillMount() {
     if (this.props.params.obsId) {
-      this.props.loadObservation(this.props.params.obsId)
+      this.props.loadObservation(this.props.params.obsId, {
+        onSuccess: (r) => this.props.loadPersonNameFromId(r.doneBy)
+      })
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -538,7 +541,7 @@ export default class ObservationView extends React.Component {
               <h1 />
               <SaveCancel
                 translate={translate}
-                onClickSave={() => onSaveObservation(this.state)}
+                onClickSave={() => onSaveObservation(this.state, this.props.params.id ? this.props.params.id : null)}
                 onClickCancel={() => onCancelObservation()}
                 saveDisabled={this.displayExisting}
                 cancelDisabled={this.displayExisting}

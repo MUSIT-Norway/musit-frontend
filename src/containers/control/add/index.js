@@ -22,7 +22,7 @@ import { connect } from 'react-redux'
 import { Grid, Row, Col, FormControl, PageHeader } from 'react-bootstrap'
 import PairedToogleButtons from '../../../components/control/add'
 import Field from '../../../components/formfields/musitfield'
-import { addControl } from '../../../reducers/control/add'
+import { addControl } from '../../../reducers/control'
 import Language from '../../../components/language'
 import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
@@ -36,8 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (data, saveControlCallback) => {
-    dispatch(addControl(data, saveControlCallback))
+  saveControl: (id, data, callback) => {
+    dispatch(addControl(id, data, callback))
   }
 })
 
@@ -112,7 +112,7 @@ export default class ControlView extends React.Component {
   }
 
   onClickSave() {
-    // Could extract it, but its only used here and in the method above
+    // Could extract it, but its only used here and in the method aboveonFailure
     const controls = Object.keys(this.state)
         .filter((k) => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
         .map((k) => ({
@@ -125,19 +125,21 @@ export default class ControlView extends React.Component {
       doneDate: this.state.startDate
     }
     if (this.oneStateIsNotOK()) {
-      // push a new path onto the history, with the provided nice control state
+      // push a new path onto the history, with the provided nice control stateonFailure
       hashHistory.replace({
-        pathname: `/magasin/${this.props.params.id}/observation/control/add`,
+        pathname: `/magasin/${this.props.params.id}/control/observation/add`,
         state: controlState
       })
     } else {
-      this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
-                                             onFailure: () => { alert('Kunne ikke lagre kontroll') } })
+      this.props.saveControl(this.props.params.id, controlState, {
+        onSuccess: () => hashHistory.goBack(),
+        onFailure: () => { /* alert('Kunne ikke lagre kontroll') */ }
+      })
     }
   }
 
   getDate() {
-    return moment().format('mm/dd/yyyy');
+    return moment().format('YYYY-MM-DD');
   }
 
   render() {

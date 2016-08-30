@@ -1,19 +1,227 @@
 
 en:
   musit:
-    welcomePage:
-      title: "University Museums Collection database"
-      body: "<TBD>"
-      noAccess: "<TBD>"
+    leftMenu:
+      node:
+        newNode: "New place"
+        objectsOnNode: "Objects in current place:"
+        totalObjectCount: "Total qty of objects:"
+        underNodeCount: "Quantity of sub places:"
+        properties: "Properties"
+        observations: "Observations"
+        controller: "Controls"
+        moveNode: "Move place"
+        delete: "Delete"
+      observationControl:
+        newObservation: "New observation"
+        newControl: "New control"
+        selectObservation: "Observations"
+        selectControl: "Controls"
+        show: "View"
+    grid:
+      observation:
+        date: "Date"
+        types: "Types"
+        doneBy: "Performed by"
+        registeredDate: "Reg. date"
+        registeredBy: "Reg. by"
+        header: "Controls and observations"
+      node:
+        nodeName: "Place name"
+        nodeType: "Place type"
+        objectCount: "Qty. of obj."
+        totalObjectCount: "Tot. qty. of obj."
+        nodeCount: "Qty. of places"
+      object:
+        museumsNumber: "Museum no."
+        uNumber: "U.no."
+        term: "Term/Species"
+    texts:
+      freetext: "Freetext"
+      makeChoice: "Please choose..."
+      datePerformed: "Performed date"
+      dateRegistered: "Registered date"
+      registeredBy: "Registered by"
+      performedBy: "Performed by"
+      ok: "OK"
+      notOk: "Not OK"
+      save: "Save"
+      saveTooltip: "Save"
+      cancel: "Cancel"
+      cancelTooltip: "Cancel"
+    viewControl:
+      controlAlcohol: "Alcohol"
+      controlCleaning: "Cleaning"
+      controlGas: "Gas"
+      controlHypoxicAir: "Hypoxic air"
+      controlLightingCondition: "Lighting condition"
+      controlMold: "Mold"
+      controlPest: "Pest"
+      controlRelativeHumidity: "Relative humidity"
+      controlTemperature: "Temperature"
+    newControl:
+      title: "New control"
+      date: "Performed date"
+      doneBy: "Performed by"
+      temperature: "Temperature"
+      inertAir: "Hypoxic air"
+      relativeHumidity: "Relative humidity"
+      cleaning: "Cleaning"
+      lightCondition: "Lighting condition"
+      alchohol: "Alcohol"
+      gas: "Gas"
+      mold: "Mold"
+      pest: "Pest"
+      envdata: "Environmental Records"
+    observation:
+      registerObservation: "Register observation"
+      registerObservations: "Register observations"
+      date: "Performed date"
+      doneBy: "Performed by"
+      registeredDate: "Registered date"
+      registeredBy: "Registered by"
+      newObservationHeader: "New observation"
+      viewObservationHeader: "Observation"
+      newButtonLabel: "Add new"
+      pest:
+        identificationLabel: "Identification"
+        identificationTooltip: "Identification tooltip!"
+        commentsLabel: "Task/Comment"
+        commentsTooltip: "Task/Comment tooltip!"
+        lifeCycleLabel: "Life cycle"
+        lifeCycleLabelMenu:
+          adult: "Adult"
+          puppe: "Pupa"
+          puppeskin: "Pupa skin"
+          larva: "Larva"
+          egg: "Egg"
+        lifeCycleTooltip: "Life cycle tooltip"
+        countLabel: "Quantity"
+        countPlaceHolder: "Integer"
+        countTooltip: "Quantity tooltip!"
+        lifeCycleItems:
+          adult: "Adult"
+          puppe: "Pupa"
+          puppeskin: "Pupa skin"
+          larva: "Larva"
+          egg: "Egg"
+      inertAir:
+        fromLabel: "From"
     pickList:
       title: "Picklist"
+      action:
+        markAll: "All"
+        executeAll: "Execute (all)"
+    storageUnits:
+      title: "Storage facility"
+      environmentRequirements:
+        temperature:
+          labelText: "Temperature"
+          tooltip: "TODO Måleenhet grader celsius, desimaltall"
+          placeHolder: "C"
+          comment: "Task/Comment"
+        temperatureTolerance:
+          labelText: ""
+          tooltip: "TODO Måleenhet toleranse, ett tall"
+          placeHolder: "int"
+          addOnPrefix: "\u00b1"
+        relativeHumidity:
+          labelText: "Relative humidity"
+          tooltip: "TODO Måleenhet prosent, desimaltall"
+          placeHolder: "%"
+          comment: "Task/Comment"
+        relativeHumidityTolerance:
+          labelText: ""
+          tooltip: "TODO Måleenhet prosent toleranse, ett tall"
+          placeHolder: "int"
+          addOnPrefix: "\u00b1"
+        inertAir:
+          labelText: "Hypoxic air"
+          tooltip: "TODO Måleenhet prosent oksygen, desimaltall"
+          placeHolder: "% O2"
+          comment: "Task/Comment"
+        inertAirTolerance:
+          labelText: ""
+          tooltip: "TODO Måleenhet prosent oksygen toleranse, ett tall"
+          placeHolder: "int"
+          addOnPrefix: "\u00b1"
+        renhold:
+          labelText: "Cleaning"
+          comment: "Task/Comment"
+          tooltip: "TODO Renhold"
+        lightCondition:
+          labelText: "Lighting condition"
+          comment: "Task/Comment"
+          tooltip: "TODO Lysforhold"
+        comments:
+          labelText: "Comment"
+          tooltip: "TODO Kommentar!"
+        gas:
+          labelText: "Gas"
+          comment: "Task/Comment"
+          tooltip: "TODO Gass"
+        skallsikring:
+          labelText: "Perimeter security"
+          comment: "Task/Comment"
+          tooltip: "TODO Skallsikring"
+        brannsikring:
+          labelText: "Fire protection"
+          comment: "Task/Comment"
+          tooltip: "TODO Brannsikring"
+        vannskaderisiko:
+          labelText: "Water damage assessment"
+          comment: "Task/Comment"
+          tooltip: "TODO Vannskaderisiko"
+        tyverisikring:
+          labelText: "Theft protection"
+          comment: "Task/Comment"
+          tooltip: "TODO Tyverisikring"
+        mold:
+          labelText: "Mold"
+          comment: "Task/Comment"
+          tooltip: "TODO Mugg"
+        alcohol:
+          labelText: "Alcohol"
+          volume: "Volume"
+          statusLabel: "Level"
+          comment: "Task/Comment"
+          tooltip: "TODO Sprit"
+          statusItems:
+            dryed: "Desiccated"
+            allmostDryed: "Almost desiccated"
+            someDryed: "Some desiccated"
+            minorDryed: "A bit desiccated"
+            satisfactory: "Satisfactory"
+      storageType:
+        items:
+          storageunit: "Storage unit"
+          room: "Room"
+          building: "Building"
+          organization: "Organization"
+    welcomePage:
+      title: >
+        Norwegian University Museums' joint Collection Databases
+      body: >
+        **Museum of Archaeology, University of Stavanger**
+
+        **University Museum of Bergen, University of Bergen**
+
+        **Museum of Cultural History, University of Oslo**
+
+        **Natural History Museum, University of Oslo**
+
+        **Tromsø University Museum, University of Tromsø**
+
+        **NTNU University Museum, Norwegian University of Science and Technology**
+      noAccess: Your account does not have access to MUSIT. Contact your local MUSIT administrator.
     welcomeUserPage:
       body: >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas arcu est, tempus eu tellus et, mollis maximus elit. Morbi est lorem, molestie fermentum interdum a, faucibus ultricies lectus. Ut eu lorem mi. In dictum neque vitae mollis posuere. Sed maximus, est eget rhoncus sagittis, dolor enim varius felis, at hendrerit urna urna a justo. Proin nunc ex, tristique sed bibendum vel, porta et elit. Vestibulum consectetur lacus nec elementum ornare. Vestibulum venenatis condimentum tortor sit amet pharetra. Maecenas tempus lectus vel vestibulum pharetra. Suspendisse euismod condimentum massa.
-        In at scelerisque erat, non venenatis nisl. Mauris sagittis odio id lectus faucibus, sit amet faucibus mauris gravida. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam iaculis cursus ante ut dignissim. Sed finibus suscipit ultrices. Integer sit amet malesuada odio. Phasellus vel commodo purus. Cras ultrices tincidunt nisi, at vehicula justo luctus at. Mauris pulvinar fringilla condimentum. Proin sed lacus nec urna lacinia porttitor in ac augue.
-        Vestibulum sed viverra augue. Nam iaculis mattis dui a maximus. Curabitur eget magna id velit pulvinar gravida. In rutrum urna ac semper auctor. Integer vel viverra metus. Sed dignissim dictum sapien non volutpat. Nunc nec auctor nunc, sit amet sodales lectus. Morbi cursus ipsum at odio fringilla, dictum scelerisque ligula lobortis. Vestibulum congue leo non est ultrices feugiat. Vestibulum venenatis nisi nisi.
-        Mauris scelerisque nulla et tempus laoreet. Nullam pharetra ultricies ipsum, a feugiat tellus fermentum at. Donec quis ipsum at eros viverra aliquam. Nulla facilisi. Aliquam erat volutpat. Nunc vel ante quis neque accumsan gravida. Vestibulum vitae urna vitae turpis tristique posuere et a lacus. Nulla viverra aliquam viverra. Nam eu diam tellus. Donec porta tellus odio, sed ultricies leo vestibulum sit amet. Proin et mauris condimentum enim cursus ornare. Pellentesque posuere eu nulla non posuere. Morbi id lobortis est. Morbi elementum pellentesque metus, eget fermentum purus hendrerit at. Nam ullamcorper est odio, vitae sodales elit porttitor vel.
-        Cras dapibus purus lorem, sit amet consectetur orci ornare ut. Integer vitae nulla orci. Pellentesque vestibulum sed leo sed posuere. Nulla blandit leo velit, vitae elementum neque porttitor id. Nulla ex diam, aliquet non maximus eget, sodales et purus. Fusce eu neque quis erat viverra facilisis vitae at sem. Morbi egestas, velit eget volutpat convallis, elit nunc ultricies dolor, eget finibus diam arcu a lacus. Phasellus tristique magna mattis elementum sodales. Sed luctus lorem non libero porttitor mollis. Cras at velit rhoncus, porttitor lectus eu, mattis est. Morbi vel tempor felis. Cras sodales eros nec lacus bibendum tristique. Nulla efficitur, erat faucibus viverra sagittis, erat orci porta lorem, posuere auctor nibh sapien ullamcorper sapien. Vivamus ornare quam vel ipsum feugiat, lacinia mollis mi suscipit.
+        The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger, 
+        University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the 
+        Norwegian University of Science and Technology. The University museums of Norway hold in trust regional and global 
+        scientific collections of natural and cultural history. The cooperative aims to ensure the operation, 
+        maintenance and development of the university museums' joint collection databases, and to facilitate sharing 
+        dissemination of data for research, education, management and the public.
     login: Login through Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Login")
 no:
   musit:
@@ -51,12 +259,12 @@ no:
       object:
         museumsNumber: "Museumsnr"
         uNumber: "Unr"
-        term: "Term"
+        term: "Term/Artsnavn"
     texts:
       freetext: "Fritekst"
       makeChoice: "Vennligst velg..."
-      datePerformed: "Dato utført"
-      dateRegistered: "Dato registrert"
+      datePerformed: "Utført dato"
+      dateRegistered: "Registrert dato"
       registeredBy: "Registrert av"
       performedBy: "Utført av"
       ok: "OK"
@@ -65,18 +273,22 @@ no:
       saveTooltip: "Lagre"
       cancel: "Avbryt"
       cancelTooltip: "Avbryt"
-    controls:
-      temperature: "Temperature"
-      relativeHumidity: "Relativ luftfuktighet"
-      lightCondition: "Lysforhold"
-      pest: "Skadedyr"
-      alcohol: "Sprit"
+    viewControl:
+      controlAlcohol: "Sprit"
+      controlCleaning: "Renhold"
+      controlGas: "Gass"
+      controlHypoxicAir: "Inertluft"
+      controlLightingCondition: "Lysforhold"
+      controlMold: "Mugg"
+      controlPest: "Skadedyr"
+      controlRelativeHumidity: "Relativ luftfuktighet"
+      controlTemperature: "Temperatur"
     newControl:
       title: "Ny kontroll"
-      date: "Dato"
+      date: "Utført dato"
       doneBy: "Utført av"
-      temperature: Temperatur
-      inertAir: "Inert luft"
+      temperature: "Temperatur"
+      inertAir: "Inertluft"
       relativeHumidity: "Relativ luftfuktighet"
       cleaning: "Renhold"
       lightCondition: "Lysforhold"
@@ -88,10 +300,10 @@ no:
     observation:
       registerObservation: "Registrer observasjon"
       registerObservations: "Registrer observasjoner"
-      date: "Dato"
+      date: "Utført dato"
       doneBy: "Utført av"
-      registeredDate: "Reg. dato"
-      registeredBy: "Reg. av"
+      registeredDate: "Registrert dato"
+      registeredBy: "Registrert av"
       newObservationHeader: "Ny observasjon"
       viewObservationHeader: "Observasjon"
       newButtonLabel: "Legg til ny"
@@ -105,8 +317,8 @@ no:
           adult: "Adult"
           puppe: "Puppe"
           puppeskin: "Puppeskin"
-          larva: "Larva"
-          egg: "Eggg"
+          larva: "Larve"
+          egg: "Egg"
         lifeCycleTooltip: "Livssyklus tooltip"
         countLabel: "Antall"
         countPlaceHolder: "Heltall"
@@ -115,10 +327,10 @@ no:
           adult: "Adult"
           puppe: "Puppe"
           puppeskin: "Puppeskin"
-          larva: "Larva"
+          larva: "Larve"
           egg: "Egg"
       inertAir:
-        fromLabel: "Fr"
+        fromLabel: "Fra"
     pickList:
       title: "Plukkliste"
       action:
@@ -131,75 +343,75 @@ no:
       environmentalData: "Miljødata"
       environmentRequirements:
         temperature:
-          labelText: "Målt temperatur [fra]"
+          labelText: "Temperatur"
           tooltip: "Måleenhet grader celsius, desimaltall"
-          placeHolder: C
-          comment: "Tiltak / kommentar"
+          placeHolder: "C"
+          comment: "Tiltak/Kommentar"
         temperatureTolerance:
-          labelText: "Målt temperatur [til]"
+          labelText: ""
           tooltip: "Måleenhet toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         relativeHumidity:
-          labelText: "Rel. luftfuktighet [fra]"
+          labelText: "Relativ luftfuktighet"
           tooltip: "Måleenhet prosent, desimaltall"
           placeHolder: "%"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
         relativeHumidityTolerance:
-          labelText: "Rel. luftfuktighet [til]"
+          labelText: ""
           tooltip: "Måleenhet prosent toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         inertAir:
-          labelText: "Inert luft [fra]"
+          labelText: "Inertluft"
           tooltip: "Måleenhet prosent oksygen, desimaltall"
           placeHolder: "% O2"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
         inertAirTolerance:
-          labelText: "Inert luft [til]"
+          labelText: ""
           tooltip: "Måleenhet prosent oksygen toleranse, ett tall"
-          placeHolder: int
+          placeHolder: "int"
           addOnPrefix: "\u00b1"
         renhold:
-          labelText: Renhold
-          comment: "Tiltak / kommentar"
-          tooltip: Renhold
+          labelText: "Renhold"
+          comment: "Tiltak/Kommentar"
+          tooltip: "Renhold"
         lightCondition:
-          labelText: Lysforhold
-          comment: "Tiltak / kommentar"
-          tooltip: Lysforhold
+          labelText: "Lysforhold"
+          comment: "Tiltak/Kommentar"
+          tooltip: "Lysforhold"
         comments:
-          labelText: Kommentarer
+          labelText: "Kommentar"
           tooltip: "Kommentar!"
         gas:
           labelText: "Gass"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Gass"
         skallsikring:
           labelText: "Skallsikring"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Skallsikring"
         brannsikring:
           labelText: "Brannsikring"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Brannsikring"
         vannskaderisiko:
           labelText: "Vannskaderisiko"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Vannskaderisiko"
         tyverisikring:
           labelText: "Tyverisikring"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Tyverisikring"
         mold:
           labelText: "Mugg"
-          comment: "Tiltak / kommentar"
+          comment: "Tiltak/Kommentar"
           tooltip: "Mugg"
         alcohol:
           labelText: "Sprit"
-          volume: "Volum %"
-          statusLabel: Tilstand
-          comment: "Tiltak / kommentar"
+          volume: "Volum"
+          statusLabel: "Tilstand"
+          comment: "Tiltak/Kommentar"
           tooltip: "Sprit"
           statusItems:
             dryed: "Uttørket"
@@ -210,14 +422,12 @@ no:
       storageType:
         items:
           storageunit: "Lagringsenhet"
-          room: Rom
+          room: "Rom"
           building: "Bygning"
           organization: "Organisasjon"
     welcomePage:
       title: >
-        Universitetsmuseenes IT-organisasjon,
-
-        MUSIT
+        Universitetsmuseenes samlingsdatabaser
       body: >
         **Arkeologisk museum, Universitetet i Stavanger**
 
@@ -229,17 +439,13 @@ no:
 
         **Tromsø Museum - Universitetetsmuseet, Universitetet i Tromsø**
 
-        **Vitenskapsmuseet - NTNU, Norges Teknologisk-Naturvitenskapelige Universitetet**'
+        **Vitenskapsmuseet - NTNU, Norges Teknisk-Naturvitenskapelige Universitet**
       noAccess: Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil
     welcomeUserPage:
       body: >
-        MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom
-        Arkeologisk museum (Universitetet i Stavanger),
-        Universitetsmuseet i Bergen (Universitetet i Bergen),
-        Kulturhistorisk museum (Universitetet i Oslo),
-        Naturhistorisk museum (Universitetet i Oslo),
-        Tromsø Museum - Universitetetsmuseet (Universitetet i Tromsø),
-        og Vitenskapsmuseet - NTNU, Norges (Teknologisk-Naturvitenskapelige Universitetet).
+        MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom 
+        Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet,
+        Universitetet i Tromsø, og Universitetet i Stavanger.
 
         Samarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014.
 
