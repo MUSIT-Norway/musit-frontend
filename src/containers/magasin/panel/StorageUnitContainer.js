@@ -17,6 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React, { Component, PropTypes } from 'react'
+import { hashHistory } from 'react-router'
 import Options from '../../../components/storageunits/EnvironmentOptions'
 import StorageUnitComponents from '../../../components/storageunits/StorageUnitComponent'
 import { ButtonToolbar, Button, Grid, Row } from 'react-bootstrap'
@@ -54,7 +55,7 @@ export default class StorageUnitContainer extends Component {
             <Row styleClass="row-centered">
               <ButtonToolbar>
                 <Button bsStyle="primary" onClick={() => this.props.onLagreClick(data)} >Lagre</Button>
-                <Button onClick={() => window.history.back()}>Cancel</Button>
+                <Button onClick={() => hashHistory.goBack()}>Cancel</Button>
               </ButtonToolbar>
             </Row>
           </Grid>
