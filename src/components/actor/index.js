@@ -54,7 +54,9 @@ export default class ActorSuggest extends React.Component {
       <Autosuggest
         suggestions={this.getSuggestions()}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={(update) => this.props.onDoneBySuggestionsUpdateRequested(this.props.id, update)}
+        onSuggestionsUpdateRequested={(update) =>
+          this.props.onDoneBySuggestionsUpdateRequested(this.props.id, update)
+        }
         getSuggestionValue={(suggestion) => suggestion.fn}
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
         inputProps={this.doneByProps}

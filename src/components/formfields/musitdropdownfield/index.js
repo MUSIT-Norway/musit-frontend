@@ -17,7 +17,7 @@ export default class MusitDropDownField extends Component {
     validate: PropTypes.string,
     minimumLength: PropTypes.number,
     maximumLength: PropTypes.number,
-    validator: PropTypes.string,
+    validator: PropTypes.func,
     precision: PropTypes.number,
     items: PropTypes.array.isRequired,
     translate: PropTypes.func,
@@ -40,7 +40,7 @@ export default class MusitDropDownField extends Component {
 
   classNameOnlyWithInput() {
     let lvString = ''
-    if (validate(this.props) === 'error') {
+    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'has-error'
     } else {
       lvString = ''
@@ -50,7 +50,7 @@ export default class MusitDropDownField extends Component {
 
   classNameWithSpan() {
     let lvString = ' '
-    if (validate(this.props) === 'error') {
+    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'input-group has-error'
     } else {
       lvString = 'input-group'

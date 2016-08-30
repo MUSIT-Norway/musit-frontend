@@ -28,8 +28,11 @@ export default class MusitField extends Component {
     help: PropTypes.string, // always ? on add on after
     placeHolder: PropTypes.string,
     tooltip: PropTypes.string,
-    onChange: PropTypes.func,
+    onChange: PropTypes.func.isRequired,
+    onBlur: PropTypes.func.isRequired,
+    onFocus: PropTypes.func.isRequired,
     validate: PropTypes.string,
+    validator: PropTypes.func,
     minimumLength: PropTypes.number,
     maximumLength: PropTypes.number,
     precision: PropTypes.number,
@@ -39,7 +42,7 @@ export default class MusitField extends Component {
 
   classNameWithSpan() {
     let lvString = ' '
-    if (validate(this.props) === 'error') {
+    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'input-group has-error'
     } else {
       lvString = 'input-group'
@@ -49,7 +52,7 @@ export default class MusitField extends Component {
 
   classNameOnlyWithInput() {
     let lvString = ''
-    if (validate(this.props) === 'error') {
+    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'has-error'
     } else {
       lvString = ''
@@ -67,6 +70,8 @@ export default class MusitField extends Component {
         value={this.props.value}
         disabled={this.props.disabled}
         onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
+        onBlur={this.props.onBlur}
+        onFocus={this.props.onFocus}
       />);
     const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
 
