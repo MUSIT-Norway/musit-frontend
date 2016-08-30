@@ -36,8 +36,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loadControl(id))
   }
 })
+
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ControlViewShow extends React.Component {
+export default class ControlViewContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     controls: React.PropTypes.arrayOf(React.PropTypes.object),

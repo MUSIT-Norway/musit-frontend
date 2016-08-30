@@ -1,52 +1,58 @@
-import { parseObservation } from '../../observation/mapper/to_backend'
-
-export const mapToBackend = (state, observations = []) => {
+export const mapToBackend = (state) => {
   const r = {}
   r.eventType = 'Control'
-  r.doneBy = 1 // state.doneBy.id
+  r.doneBY = state.doneBy
   r.doneDate = state.doneDate
   r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
-    let eventType;
     switch (key) {
       case 'inertAirOK':
-        eventType = 'ControlHypoxicAir'
-        break;
+        return {
+          eventType: 'ControlHypoxicAir',
+          ok: state[key]
+        }
       case 'temperatureOK':
-        eventType = 'ControlTemperature'
-        break;
+        return {
+          eventType: 'ControlTemperature',
+          ok: state[key]
+        }
       case 'gasOK':
-        eventType = 'ControlGas'
-        break;
+        return {
+          eventType: 'ControlGas',
+          ok: state[key]
+        }
       case 'cleaningOK':
-        eventType = 'ControlCleaning'
-        break;
+        return {
+          eventType: 'ControlCleaning',
+          ok: state[key]
+        }
       case 'relativeHumidityOK':
-        eventType = 'ControlRelativeHumidity'
-        break;
+        return {
+          eventType: 'ControlRelativeHumidity',
+          ok: state[key]
+        }
       case 'lightConditionsOK':
-        eventType = 'ControlLightCondition'
-        break;
+        return {
+          eventType: 'ControlLightingCondition',
+          ok: state[key]
+        }
       case 'alcoholOK':
-        eventType = 'ControlAlcohol'
-        break;
+        return {
+          eventType: 'ControlAlcohol',
+          ok: state[key]
+        }
       case 'pestOK':
-        eventType = 'ControlPest'
-        break;
+        return {
+          eventType: 'ControlPest',
+          ok: state[key]
+        }
       case 'moldOK':
-        eventType = 'ControlMold'
-        break;
+        return {
+          eventType: 'ControlMold',
+          ok: state[key]
+        }
       default:
         throw Error(`Unsupported control state key: ${key}`)
     }
-    const control = { eventType, ok: state[key] }
-    if (observations.length > 0) {
-      const observationKey = key.substring(0, key.length - 2)
-      const observation = observations.find((o) => o.type === observationKey)
-      const mappedObservation = parseObservation(observation)
-      control['subEvents-motivates'] = [mappedObservation]
-    }
-    return control
   })
-  // console.log(JSON.stringify(r))
   return r
 }

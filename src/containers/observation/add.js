@@ -25,6 +25,7 @@ export default class AddObservationPage extends React.Component {
   render() {
     return (
       <ObservationPage
+        onSaveObservation={() => true}
         observations={this.props.observations}
         doneDate={this.props.doneDate}
         doneBy={this.props.doneBy}

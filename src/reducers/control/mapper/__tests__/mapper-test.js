@@ -8,8 +8,8 @@ import {
 describe('ControlMapperReducer', () => {
   it('maps to correct backend structure', () => {
     const state = {
-      user: 'jarl',
-      date: 'some time',
+      doneBy: 'jarl',
+      doneDate: 'some time',
       temperatureOK: true,
       inertAirOK: false,
       gasOK: true,
@@ -32,7 +32,7 @@ describe('ControlMapperReducer', () => {
     assert(transformed['subEvents-parts'][3].ok === true)
     assert(transformed['subEvents-parts'][4].eventType === 'ControlRelativeHumidity')
     assert(transformed['subEvents-parts'][4].ok === true)
-    assert(transformed['subEvents-parts'][5].eventType === 'ControlLightCondition')
+    assert(transformed['subEvents-parts'][5].eventType === 'ControlLightingCondition')
     assert(transformed['subEvents-parts'][5].ok === true)
     assert(transformed['subEvents-parts'][6].eventType === 'ControlAlcohol')
     assert(transformed['subEvents-parts'][6].ok === true)

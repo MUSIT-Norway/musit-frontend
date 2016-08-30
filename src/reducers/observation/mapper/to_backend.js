@@ -22,29 +22,29 @@ export const parseObservation = (el) => {
   const re = {}
   switch (el.type) {
     case 'pest':
-      re.eventType = 'observationPest'
-      re.identifikasjon = el.data.identificationValue
+      re.eventType = 'ObservationPest'
+      re.identification = el.data.identificationValue
       re.note = el.data.commentValue
       re.lifeCycles = el.data.observations.map((o) => {
         const ret = {}
-        ret.lifeCycle = o.lifeCycle
-        ret.count = parseFloat(o.count.replace(',', '.'))
+        ret.stage = o.lifeCycle
+        ret.number = parseFloat(o.count.replace(',', '.'))
         return ret
       })
       break
     case 'lux':
-      re.eventType = 'observationLightControl'
-      re.lysforhold = el.data.leftValue
+      re.eventType = 'ObservationLightingCondition'
+      re.lightingCondition = el.data.leftValue
       re.note = el.data.rightValue
       break
     case 'gas':
-      re.eventType = 'observationGas'
-      re.gass = el.data.leftValue
+      re.eventType = 'ObservationGas'
+      re.gas = el.data.leftValue
       re.note = el.data.rightValue
       break
     case 'cleaning':
-      re.eventType = 'observationCleaning'
-      re.renhold = el.data.leftValue
+      re.eventType = 'ObservationCleaning'
+      re.cleaning = el.data.leftValue
       re.note = el.data.rightValue
       break
     case 'relativeHumidity':
@@ -54,28 +54,28 @@ export const parseObservation = (el) => {
       re.note = el.data.commentValue
       break
     case 'mold':
-      re.eventType = 'observationMold'
-      re.mugg = el.data.leftValue
+      re.eventType = 'ObservationMold'
+      re.mold = el.data.leftValue
       re.note = el.data.rightValue
       break
     case 'skallsikring':
-      re.eventType = 'observationSkallSikring'
-      re.skallsikring = el.data.leftValue
+      re.eventType = 'ObservationPerimeterSecurity'
+      re.perimeterSecurity = el.data.leftValue
       re.note = el.data.rightValue
       break
     case 'tyverisikring':
-      re.eventType = 'observationTyveriSikring'
-      re.tyverisikring = el.data.leftValue
+      re.eventType = 'ObservationTheftProtection'
+      re.theftProtection = el.data.leftValue
       re.note = el.data.rightValue
       break
     case 'brannsikring':
-      re.eventType = 'observationBrannsikring'
-      re.brannsikring = el.data.leftValue
+      re.eventType = 'ObservationFireProtection'
+      re.fireProtection = el.data.leftValue
       re.note = el.data.rightValue
       break
     case 'vannskaderisiko':
-      re.eventType = 'observationVannskadeRisiko'
-      re.vannskaderisiko = el.data.leftValue
+      re.eventType = 'ObservationWaterDamageAssessment'
+      re.waterDamageAssessment = el.data.leftValue
       re.note = el.data.rightValue
       break
     case 'hypoxicAir':
@@ -85,10 +85,10 @@ export const parseObservation = (el) => {
       re.note = el.data.commentValue
       break
     case 'alcohol':
-      re.eventType = 'observationAlcohol'
+      re.eventType = 'ObservationAlcohol'
       re.note = el.data.commentValue
-      re.tilstand = el.data.statusValue
-      re.volum = parseFloat(el.data.volumeValue.replace(',', '.'))
+      re.condition = el.data.statusValue
+      re.volume = parseFloat(el.data.volumeValue.replace(',', '.'))
       break
     case 'temperature':
       re.eventType = 'observationTemperature'
@@ -97,7 +97,7 @@ export const parseObservation = (el) => {
       re.note = el.data.commentValue
       break
     default:
-      throw Error(`Invalid el type: ${el.type}`)
+      throw Error(`Invalid type ${el.type.toLowerCase()}`)
   }
   return re
 }
@@ -107,8 +107,7 @@ const wrap = (e) => {
   r.eventType = 'Observation'
   r.doneBy = e.doneBy.id
   r.doneDate = e.doneDate
-  const observationData = e.observations ? e.observations.filter((f) => { return f.data }) : []
-  r['subEvents-parts'] = observationData.map(parseObservation)
+  r['subEvents-parts'] = e.observations ? e.observations.filter((f) => { return f.data }).map(parseObservation) : []
   return r
 }
 

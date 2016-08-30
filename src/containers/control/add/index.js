@@ -37,12 +37,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveControl: (id, data, saveControlCallback) => {
-    dispatch(addControl(data, saveControlCallback))
+    dispatch(addControl(id, data, saveControlCallback))
   }
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ControlView extends React.Component {
+export default class ControlAddContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
@@ -112,7 +112,7 @@ export default class ControlView extends React.Component {
   }
 
   onClickSave() {
-    // Could extract it, but its only used here and in the method above
+    // Could extract it, but its only used here and in the method aboveonFailure
     const controls = Object.keys(this.state)
         .filter((k) => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
         .map((k) => ({
@@ -139,7 +139,7 @@ export default class ControlView extends React.Component {
   }
 
   getDate() {
-    return moment().format('mm/dd/yyyy');
+    return moment().format('YYYY-MM-DD');
   }
 
   render() {

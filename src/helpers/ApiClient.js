@@ -28,15 +28,12 @@ class ApiClient {
     methods.forEach((method) => {
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const apiRequest = request[method](this.fixPath(path));
-
         if (params) {
           apiRequest.query(params);
         }
-
         if (token.length > 0) {
           apiRequest.set('Authorization', `Bearer ${token}`)
         }
-
         if (data) {
           apiRequest.send(data);
         }

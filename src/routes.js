@@ -27,8 +27,8 @@ import StorageUnitPanel from './containers/magasin/panel'
 import WelcomeUserView from './containers/welcome-user'
 import AddObservationPage from './containers/observation/add'
 import EditObservationPage from './containers/observation/edit'
-import ControlView from './containers/control/view'
-import ControlAdd from './containers/control/add'
+import ControlViewContainer from './containers/control/view'
+import ControlAddContainer from './containers/control/add'
 import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
@@ -59,9 +59,10 @@ export default (store) => {
       <Route path="/magasin/:id/add" component={StorageUnitPanel} />
       <Route path="/magasin/:id/view" component={StorageUnitPanel} />
       <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/control/add" component={ControlAdd} />
-      <Route path="/magasin/:id/control/:controlId" component={ControlView} />
+      <Route path="/magasin/:id/control/add" component={ControlAddContainer} />
+      <Route path="/magasin/:id/control/:controlId" component={ControlViewContainer} />
       <Route path="/magasin/:id/observations" showObservations showControls={false} component={ObservationControlGridShow} />
+      <Route path="/magasin/:id/controlsobservations" showObservations showControls component={ObservationControlGridShow} />
       <Route path="/magasin/:id/observation/add" component={AddObservationPage} />
       <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
       <Route path="/magasin/:id/observation/:obsId" component={EditObservationPage} />

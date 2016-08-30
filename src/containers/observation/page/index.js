@@ -8,7 +8,8 @@ import {
 } from '../../../components/observation'
 import { containsObjectWithField } from '../../../util'
 import FontAwesome from 'react-fontawesome'
-// import Autosuggest from 'react-autosuggest'
+// import DatePicker from 'react-bootstrap-date-picker'
+// import ActorSuggest from '../../../components/actor'
 
 export default class ObservationPage extends React.Component {
 
@@ -234,16 +235,16 @@ export default class ObservationPage extends React.Component {
       <div>
         <main>
           <Panel>
-            <Grid>
-              <Row>
-                <Col style={{ textAlign: 'center' }}>
-                  <PageHeader>
-                    {this.props.title}
-                  </PageHeader>
-                </Col>
-              </Row>
-              <Row>
-                <form>
+            <form>
+              <Grid>
+                <Row>
+                  <Col style={{ textAlign: 'center' }}>
+                    <PageHeader>
+                      {this.props.title}
+                    </PageHeader>
+                  </Col>
+                </Row>
+                <Row>
                   {this.props.mode !== 'ADD' ? '' : (
                     <Row>
                       <Col xs={4}>
@@ -292,9 +293,9 @@ export default class ObservationPage extends React.Component {
                     )
                   })}
                   <button onClick={() => this.props.onSaveObservation(this.state.observations)}>Lagre observasjon</button>
-                </form>
-              </Row>
-            </Grid>
+                </Row>
+              </Grid>
+            </form>
           </Panel>
         </main>
       </div>
