@@ -7,37 +7,64 @@ export default class ControlView extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     translate: PropTypes.func.isRequired,
-    controls: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.string.isRequired,
-      ok: PropTypes.bool.isRequired
-    }))
+    controlsJson: PropTypes.arrayOf(PropTypes.shape({
+      eventType: PropTypes.string,
+      ok: PropTypes.string.bool
+    })),
   }
 
   static iconMap = {
-    temperature: 'asterisk',
-    relativeHumidity: 'tint',
-    lightCondition: 'sun-o',
-    pest: 'bug',
-    alcohol: 'percent'
+    ControlAlcohol: 'percent',
+    ControlCleaning: 'asterisk',
+    ControlGas: 'asterisk',
+    ControlHypoxicAir: 'asterisk',
+    ControlLightingCondition: 'sun-o',
+    ControlMold: 'asterisk',
+    ControlPest: 'bug',
+    ControlRelativeHumidity: 'tint',
+    ControlTemperature: 'asterisk'
 
+  }
+  static typeMap = {
+    ControlAlcohol: 'controlAlcohol',
+    ControlCleaning: 'controlCleaning',
+    ControlGas: 'controlGas',
+    ControlHypoxicAir: 'controlHypoxicAir',
+    ControlLightingCondition: 'controlLightingCondition',
+    ControlMold: 'controlMold',
+    ControlPest: 'controlPest',
+    ControlRelativeHumidity: 'controlRelativeHumidity',
+    ControlTemperature: 'controlTemperature'
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      temperature: {
+      ControlAlcohol: {
         open: false
       },
-      relativeHumidity: {
+      ControlCleaning: {
         open: false
       },
-      lightCondition: {
+      ControlGas: {
         open: false
       },
-      pest: {
+      ControlHypoxicAir: {
         open: false
       },
-      alcohol: {
+      ControlLightingCondition: {
+        open: false
+      },
+      ControlMold: {
+        open: false
+      },
+      ControlPest: {
+        open: false
+      },
+      ControlRelativeHumidity: {
+        open: false
+      },
+      ControlTemperature: {
         open: false
       }
     };
@@ -77,20 +104,21 @@ export default class ControlView extends Component {
         </Col>
       ) }
     const oneTableRow = (control, i) => {
-      const { type, ok } = control
+      const { eventType, ok } = control
       return (
         <div key={i}>
           <Row>
-            {observation(ControlView.iconMap[type], this.props.translate(`musit.controls.${type}`))}
+            {observation(ControlView.iconMap[eventType],
+              this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
             {ok ? controlOk : controlNotOk}
-            {downButton(type)}
+            {downButton(eventType)}
           </Row>
           <Row>
-            <Panel collapsible expanded={this.state[type].open}>
+            <Panel collapsible expanded={this.state[eventType].open}>
               <Col sm={4} >
                 <ControlLabel>label text</ControlLabel>
                 <br />
-                <MusitField id={`${id}_${type}_MusitField`} value="test user" validate="text" />
+                <MusitField id={`${id}_${eventType}_MusitField`} value="test user" validate="text" />
               </Col>
             </Panel>
           </Row>
@@ -99,9 +127,9 @@ export default class ControlView extends Component {
 
     return (
       <FormGroup>
-        {this.props.controls.map((c, i) =>
+        {this.props.controlsJson ? this.props.controlsJson.map((c, i) =>
           oneTableRow(c, i)
-        )}
+        ) : null}
       </FormGroup>
     )
   }

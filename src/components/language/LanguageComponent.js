@@ -34,7 +34,7 @@ export default class Language extends Component {
   }
 
   render() {
-    let text = Language.translate(this.props.key, this.props.markdown)
+    const text = Language.translate(this.props.key, this.props.markdown)
     return (
       <div>{text}</div>
     )
