@@ -36,8 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (id, data) => {
-    dispatch(addControl(id, data))
+  saveControl: (id, data, saveControlCallback) => {
+    dispatch(addControl(data, saveControlCallback))
   }
 })
 
@@ -126,12 +126,15 @@ export default class ControlView extends React.Component {
     }
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
-      hashHistory.push({
-        pathname: `/magasin/${this.props.params.id}/control/observation/add`,
+      hashHistory.replace({
+        pathname: `/magasin/${this.props.params.id}/observation/control/add`,
         state: controlState
       })
     } else {
-      this.props.saveControl(this.props.params.id, controlState)
+      this.props.saveControl(this.props.params.id, controlState, {
+        onSuccess: () => hashHistory.goBack(),
+        onFailure: () => { alert('Kunne ikke lagre kontroll') }
+      })
     }
   }
 
@@ -167,7 +170,7 @@ export default class ControlView extends React.Component {
       saveLabel={translate(this.oneStateIsNotOK() ? 'musit.observation.registerObservation' : 'musit.texts.save')}
       translate={translate}
       onClickSave={this.onClickSave}
-      onClickCancel={(a) => (a)}
+      onClickCancel={() => { hashHistory.goBack() }}
     />)
 
     const fields = [
