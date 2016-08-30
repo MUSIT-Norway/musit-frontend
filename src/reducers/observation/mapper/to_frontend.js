@@ -40,47 +40,47 @@ const wrap = (be) => {
     retobs.type = ''
     retobs.data = {}
     switch (o.eventType.toLowerCase()) {
-      case 'observationlys':
+      case 'observationlightingcondition':
         retobs.type = 'lux'
-        retobs.data.leftValue = o.lysforhold
+        retobs.data.leftValue = o.lightingCondition
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationgass':
+      case 'observationgas':
         retobs.type = 'gas'
-        retobs.data.leftValue = o.gass
+        retobs.data.leftValue = o.gas
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationmugg':
+      case 'observationmold':
         retobs.type = 'mold'
-        retobs.data.leftValue = o.mugg
+        retobs.data.leftValue = o.mold
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationrenhold':
+      case 'observationcleaning':
         retobs.type = 'cleaning'
-        retobs.data.leftValue = o.renhold
+        retobs.data.leftValue = o.cleaning
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationskallsikring':
+      case 'observationperimetersecurity':
         retobs.type = 'skallsikring'
-        retobs.data.leftValue = o.skallsikring
+        retobs.data.leftValue = o.perimeterSecurity
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationbrannsikring':
+      case 'observationfireprotection':
         retobs.type = 'brannsikring'
-        retobs.data.leftValue = o.brannsikring
+        retobs.data.leftValue = o.fireProtection
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationtyverisikring':
+      case 'observationtheftprotection':
         retobs.type = 'tyverisikring'
-        retobs.data.leftValue = o.tyverisikring
+        retobs.data.leftValue = o.theftProtection
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationvannskaderisiko':
+      case 'observationwaterdamageassessment':
         retobs.type = 'vannskaderisiko'
-        retobs.data.leftValue = o.vannskaderisiko
+        retobs.data.leftValue = o.waterDamageAssessment
         retobs.data.rightValue = o.note
         return retobs
-      case 'observationinertair':
+      case 'observationhypoxicair':
         retobs.type = 'hypoxicAir'
         retobs.data.fromValue = o.from.toString().replace('.', ',')
         retobs.data.toValue = o.to.toString().replace('.', ',')
@@ -98,22 +98,22 @@ const wrap = (be) => {
         retobs.data.toValue = o.to.toString().replace('.', ',')
         retobs.data.commentValue = o.note
         return retobs
-      case 'observationskadedyr':
+      case 'observationpest':
         retobs.type = 'pest'
-        retobs.data.identificationValue = o.identifikasjon
+        retobs.data.identificationValue = o.identification
         retobs.data.commentsValue = o.note
-        retobs.data.observations = o.livssykluser ? o.livssykluser.map((l) => {
+        retobs.data.observations = o.lifeCycles ? o.lifeCycles.map((l) => {
           const obs = {}
-          obs.lifeCycle = l.livssyklus
-          obs.count = l.antall.toString().replace('.', ',')
+          obs.lifeCycle = l.stage
+          obs.count = l.number.toString().replace('.', ',')
           return obs
         }
       ) : []
         return retobs
-      case 'observationsprit':
+      case 'observationalcohol':
         retobs.type = 'alcohol'
-        retobs.data.statusValue = wrapAlcoholState(o.tilstand)
-        retobs.data.volumeValue = o.volum.toString().replace('.', ',')
+        retobs.data.statusValue = wrapAlcoholState(o.condition)
+        retobs.data.volumeValue = o.volume.toString().replace('.', ',')
         retobs.data.commentValue = o.note
         return retobs
       default:
