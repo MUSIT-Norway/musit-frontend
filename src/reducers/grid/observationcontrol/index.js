@@ -57,7 +57,7 @@ const observationControlGridReducer = (state = initialState, action) => {
 export const loadActor = () => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: (client) => client.get('/api/actor/v1/person/details', { d: [1, 2] })
+    promise: (client) => client.post('/api/actor/v1/person/details', { data: [1, 2] })
   }
 }
 
