@@ -53,7 +53,7 @@ export default class EditObservationPage extends React.Component {
   }
 
   getObservationsFromLocationState() {
-    return Object.keys(this.props.location.state).map((o) => {
+    return Object.keys(this.props.location.state).filter((o) => o.endsWith('OK')).map((o) => {
       switch (o) {
         case 'pestOK':
           return { type: 'pest', data: ObservationPage.defaultPestData }
@@ -74,7 +74,7 @@ export default class EditObservationPage extends React.Component {
         case 'alcoholOK':
           return { type: 'alcohol', data: {} }
         default:
-          throw Error('Invalid control')
+          throw Error('Invalid control ' + o)
       }
     })
   }
