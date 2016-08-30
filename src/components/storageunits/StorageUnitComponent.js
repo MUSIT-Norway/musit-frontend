@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react';
 import { MusitDropDownField as MusitDropDown, MusitField as TextField } from '../../components/formfields'
-import { Panel, Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
+import { Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
 import Autosuggest from 'react-autosuggest'
 
 export default class StorageUnitComponent extends Component {
@@ -141,95 +141,91 @@ export default class StorageUnitComponent extends Component {
 
     return (
       <div>
-        <main>
-          <Panel>
-            <Grid>
-              <Row className="row-centered">
-                <Col md={6}>
-                  <form className="form-horizontal">
-                    <form className="form-group">
-                      <label className="col-sm-3 control-label" htmlFor="storageUnitType">
-                        {this.type.labelText}</label>
-                      <div class="col-sm-5" is="null">
-                        <MusitDropDown
-                          {...this.type}
-                          id={this.type.controlId}
-                          value={this.type.valueText()}
-                          translate={this.props.translate}
-                          translateKey={'musit.storageUnits.storageType.items.'}
-                        />
-                      </div>
-                    </form>
-                  </form>
-                </Col>
-                <Col md={6}>
-                  <Form horizontal>
-                    {renderFieldBlock(this.name.valueText(), this.name, this.name.labelText)}
-                  </Form>
-                </Col>
-              </Row>
-              <Row styleClass="row-centered">
-                <Col md={6}>
-                  <form className="form-horizontal">
-                    <div className="form-group">
-                      <label className="col-sm-3 control-label" htmlFor="comments2">
-                        {this.areal.labelText}</label>
-                      <div class="col-sm-5" is="null">
-                        <TextField
-                          id={this.areal.controlId}
-                          value={this.areal.valueText()}
-                          onChange={this.areal.onChange1}
-                          placeHolder={this.areal.placeHolderText}
-                          validate={this.areal.validate}
-                        />
-                      </div>
-                      <div class="col-sm-4" is="null">
-                        <TextField
-                          id={this.areal.controlId2}
-                          value={this.areal.valueText2()}
-                          onChange={this.areal.onChange2}
-                          placeHolder={this.areal.placeHolderText2}
-                          validate={this.areal.validate}
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </Col>
-                <Col md={6}>
-                  <Form horizontal>
-                    <div className="form-group">
-                      <label className="col-sm-3 control-label" htmlFor="controlId">
-                        {this.hoyde.labelText}</label>
-                      <div class="col-sm-5" is="null">
-                        <TextField
-                          id={this.hoyde.controlId}
-                          value={this.hoyde.valueText()}
-                          onChange={this.hoyde.onChange1}
-                          placeHolder={this.hoyde.placeHolderText}
-                          validate={this.areal.validate}
-                        />
-                      </div>
-                      <div class="col-sm-4" is="null">
-                        <TextField
-                          id={this.hoyde.controlId2}
-                          value={this.hoyde.valueText2()}
-                          onChange={this.hoyde.onChange2}
-                          placeHolder={this.hoyde.placeHolderText2}
-                          validate={this.areal.validate}
-                        />
-                      </div>
-                    </div>
-                  </Form>
-                </Col>
-              </Row >
-              <Row>
-                <Col md={6}>
-                  {this.props.unit.type === 'building' ? addressBlock : null}
-                </Col>
-              </Row>
-            </Grid>
-          </Panel>
-        </main>
+        <Grid>
+          <Row className="row-centered">
+            <Col md={6}>
+              <form className="form-horizontal">
+                <form className="form-group">
+                  <label className="col-sm-3 control-label" htmlFor="storageUnitType">
+                    {this.type.labelText}</label>
+                  <div class="col-sm-5" is="null">
+                    <MusitDropDown
+                      {...this.type}
+                      id={this.type.controlId}
+                      value={this.type.valueText()}
+                      translate={this.props.translate}
+                      translateKey={'musit.storageUnits.storageType.items.'}
+                    />
+                  </div>
+                </form>
+              </form>
+            </Col>
+            <Col md={6}>
+              <Form horizontal>
+                {renderFieldBlock(this.name.valueText(), this.name, this.name.labelText)}
+              </Form>
+            </Col>
+          </Row>
+          <Row styleClass="row-centered">
+            <Col md={6}>
+              <form className="form-horizontal">
+                <div className="form-group">
+                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                    {this.areal.labelText}</label>
+                  <div class="col-sm-5" is="null">
+                    <TextField
+                      id={this.areal.controlId}
+                      value={this.areal.valueText()}
+                      onChange={this.areal.onChange1}
+                      placeHolder={this.areal.placeHolderText}
+                      validate={this.areal.validate}
+                    />
+                  </div>
+                  <div class="col-sm-4" is="null">
+                    <TextField
+                      id={this.areal.controlId2}
+                      value={this.areal.valueText2()}
+                      onChange={this.areal.onChange2}
+                      placeHolder={this.areal.placeHolderText2}
+                      validate={this.areal.validate}
+                    />
+                  </div>
+                </div>
+              </form>
+            </Col>
+            <Col md={6}>
+              <Form horizontal>
+                <div className="form-group">
+                  <label className="col-sm-3 control-label" htmlFor="controlId">
+                    {this.hoyde.labelText}</label>
+                  <div class="col-sm-5" is="null">
+                    <TextField
+                      id={this.hoyde.controlId}
+                      value={this.hoyde.valueText()}
+                      onChange={this.hoyde.onChange1}
+                      placeHolder={this.hoyde.placeHolderText}
+                      validate={this.areal.validate}
+                    />
+                  </div>
+                  <div class="col-sm-4" is="null">
+                    <TextField
+                      id={this.hoyde.controlId2}
+                      value={this.hoyde.valueText2()}
+                      onChange={this.hoyde.onChange2}
+                      placeHolder={this.hoyde.placeHolderText2}
+                      validate={this.areal.validate}
+                    />
+                  </div>
+                </div>
+              </Form>
+            </Col>
+          </Row >
+          <Row>
+            <Col md={6}>
+              {this.props.unit.type === 'building' ? addressBlock : null}
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }

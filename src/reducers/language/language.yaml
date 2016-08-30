@@ -338,6 +338,9 @@ no:
         executeAll: "Utfør (alle)"
     storageUnits:
       title: "Magasin"
+      header: "Egenskaper"
+      newNode: "Ny node"
+      environmentalData: "Miljødata"
       environmentRequirements:
         temperature:
           labelText: "Temperatur"
