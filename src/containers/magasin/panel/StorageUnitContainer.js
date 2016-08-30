@@ -52,7 +52,7 @@ export default class StorageUnitContainer extends Component {
   render() {
     const data = (this.state && this.state.unit) ? this.state.unit : this.props.unit;
 
-    const a = (<div>
+    const completePage = (<div>
       <Row>
         <Col style={{ textAlign: 'center' }}>
           <h2>{this.props.route.add ?
@@ -147,7 +147,7 @@ export default class StorageUnitContainer extends Component {
         breadcrumb={<span>"Museum / Papirdunken / Esken inni der"</span>}
         toolbar={<div />}
         leftMenu={<div />}
-        content={a}
+        content={completePage}
       />
     );
   }
