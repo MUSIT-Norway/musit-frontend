@@ -99,6 +99,7 @@ export default class NodeLeftMenuComponent extends Component {
         {showButtons ? buttonLink('controller', 'user-secret', onClickController) : null}
         {showButtons ? buttonLink('moveNode', 'truck', onClickMoveNode) : null}
         {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
+
       </div>
     )
   }
