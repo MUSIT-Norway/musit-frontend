@@ -66,6 +66,7 @@ export default (store) => {
       <Route path="/magasin/:id/control/add" component={ControlAdd} />
       <Route path="/magasin/:id/control/:controlId" component={ControlView} />
       <Route path="/magasin/:id/observations" showObservations showControls={false} component={ObservationControlGridShow} />
+      <Route path="/magasin/:id/controlsobservations" showObservations showControls component={ObservationControlGridShow} />
       <Route path="/magasin/:id/observation/add" component={ObservationView} />
       <Route path="/magasin/:id/observation/:obsId" component={ObservationView} />
       <Route path="/magasin/*" component={StorageUnitsTable} />
