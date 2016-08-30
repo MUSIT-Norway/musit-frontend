@@ -27,10 +27,9 @@ export default class EnvironmentOptions extends React.Component {
   render() {
     return (
       <Grid>
-        <Row styleClass="row-centered">
+        <Row>
           <Col lg={6} md={6} sm={6} xs={12}>
             <ControlLabel>Sikring</ControlLabel>
-
             <Checkbox
               checked={this.props.unit.sikringSkallsikring}
               onChange={(event) => this.props.updateSkallsikring(event.target.checked)}

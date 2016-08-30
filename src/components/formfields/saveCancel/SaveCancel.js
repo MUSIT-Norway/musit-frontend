@@ -48,7 +48,7 @@ export default class SaveCancel extends Component {
         disabled: saveDisabled
       },
       cancel: {
-        id: `Cancel_${id}`,
+        id: `Cancel_${id || 1}`,
         onClick: onClickCancel,
         disabled: cancelDisabled
       }
