@@ -8,8 +8,8 @@ import {
 describe('ControlMapperReducer', () => {
   it('maps to correct backend structure', () => {
     const state = {
-      user: 'jarl',
-      date: 'some time',
+      doneBy: 'jarl',
+      doneDate: 'some time',
       temperatureOK: true,
       inertAirOK: false,
       gasOK: true,

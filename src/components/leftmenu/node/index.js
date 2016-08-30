@@ -12,6 +12,7 @@ export default class NodeLeftMenuComponent extends Component {
     underNodeCount: PropTypes.number,
     onClickProperties: PropTypes.func.isRequired,
     onClickObservations: PropTypes.func.isRequired,
+    onClickControlObservations: PropTypes.func.isRequired,
     onClickController: PropTypes.func.isRequired,
     onClickMoveNode: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired
@@ -25,6 +26,7 @@ export default class NodeLeftMenuComponent extends Component {
       totalObjectCount,
       underNodeCount,
       onClickProperties,
+      onClickControlObservations,
       onClickObservations,
       onClickController,
       onClickMoveNode,
@@ -90,6 +92,7 @@ export default class NodeLeftMenuComponent extends Component {
         {showCount(underNodeCount, 'underNodeCount')}
         {(Number.isInteger(id)) ? (<hr />) : null}
         {buttonLink('properties', 'cog', onClickProperties)}
+        {buttonLink('controlsobservations', 'hospital-o', onClickControlObservations)}
         {buttonLink('observations', 'eye', onClickObservations)}
         {buttonLink('controller', 'user-secret', onClickController)}
         {buttonLink('moveNode', 'truck', onClickMoveNode)}

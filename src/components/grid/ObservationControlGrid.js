@@ -9,10 +9,11 @@ export default class ObservationControlGrid extends Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
+    showMode: PropTypes.oneOf(['ALL', 'CONTROLS', 'OBSERVATIONS', '']),
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       type: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
+      doneDate: PropTypes.string.isRequired,
       types: PropTypes.object.isRequired,
       doneBy: PropTypes.string.isRequired,
       registeredDate: PropTypes.string.isRequired,
@@ -73,48 +74,48 @@ export default class ObservationControlGrid extends Component {
               {this.props.tableData.map((c, i) =>
                 <tr
                   key={i}
-                  id={`${c.id}_${c.date}`}
+                  id={`${c.id}_${c.doneDate}`}
                   onClick={() =>
                     (hashHistory.push(c.type === 'control' ?
                     `magasin/${id}/control/${c.id}` : `magasin/${id}/observation/${c.id}`
                   ))}
                 >
-                  <td id={`${c.id}_${c.date}_type`}>
-                    {c.type === 'control' ? <FontAwesome name="user-secret" /> : ''}
-                    {c.type === 'observation' ? <FontAwesome name="eye" /> : ''}
+                  <td id={`${c.id}_${c.doneDate}_type`}>
+                    {c.type && c.type.toLowerCase() === 'control' ? <FontAwesome name="user-secret" /> : ''}
+                    {c.type && c.type.toLowerCase() === 'observation' ? <FontAwesome name="eye" /> : ''}
                   </td>
-                  <td id={`${c.id}_${c.date}_date`}>
-                    {`${c.date}`}
+                  <td id={`${c.id}_${c.doneDate}_date`}>
+                    {`${c.doneDate}`}
                   </td>
-                  <td id={`${c.id}_${c.date}_types`}>
-                    {showEnabledIcon(c.types.temperature, 'temperature')}
-                    {showDisabledIcon(c.types.temperature, 'temperature')}
-                    {showEnabledIcon(c.types.inertAir, 'inertAir')}
-                    {showDisabledIcon(c.types.inertAir, 'inertAir')}
-                    {showEnabledIcon(c.types.relativeHumidity, 'relativeHumidity')}
-                    {showDisabledIcon(c.types.relativeHumidity, 'relativeHumidity')}
-                    {showEnabledIcon(c.types.cleaning, 'cleaning')}
-                    {showDisabledIcon(c.types.cleaning, 'cleaning')}
-                    {showEnabledIcon(c.types.lightCondition, 'lightCondition')}
-                    {showDisabledIcon(c.types.lightCondition, 'lightCondition')}
-                    {showEnabledIcon(c.types.alchohol, 'alchohol')}
-                    {showDisabledIcon(c.types.alchohol, 'alchohol')}
-                    {showEnabledIcon(c.types.gas, 'gas')}
-                    {showDisabledIcon(c.types.gas, 'gas')}
-                    {showEnabledIcon(c.types.mold, 'mold')}
-                    {showDisabledIcon(c.types.mold, 'mold')}
-                    {showEnabledIcon(c.types.pest, 'pest')}
-                    {showDisabledIcon(c.types.pest, 'pest')}
+                  <td id={`${c.id}_${c.doneDate}_types`}>
+                    {showEnabledIcon(c.types.ControlTemperature, 'temperature')}
+                    {showDisabledIcon(c.types.ControlTemperature, 'temperature')}
+                    {showEnabledIcon(c.types.ControlHypoxicAir, 'inertAir')}
+                    {showDisabledIcon(c.types.ControlHypoxicAir, 'inertAir')}
+                    {showEnabledIcon(c.types.ControlRelativeHumidity, 'relativeHumidity')}
+                    {showDisabledIcon(c.types.ControlRelativeHumidity, 'relativeHumidity')}
+                    {showEnabledIcon(c.types.ControlCleaning, 'cleaning')}
+                    {showDisabledIcon(c.types.ControlCleaning, 'cleaning')}
+                    {showEnabledIcon(c.types.ControlLightingCondition, 'lightCondition')}
+                    {showDisabledIcon(c.types.ControlLightingCondition, 'lightCondition')}
+                    {showEnabledIcon(c.types.ControlAlcohol, 'alchohol')}
+                    {showDisabledIcon(c.types.ControlAlcohol, 'alchohol')}
+                    {showEnabledIcon(c.types.ControlGas, 'gas')}
+                    {showDisabledIcon(c.types.ControlGas, 'gas')}
+                    {showEnabledIcon(c.types.ControlMold, 'mold')}
+                    {showDisabledIcon(c.types.ControlMold, 'mold')}
+                    {showEnabledIcon(c.types.ControlPest, 'pest')}
+                    {showDisabledIcon(c.types.ControlPest, 'pest')}
                     {showEnabledIcon(c.types.envdata, 'envdata')}
                     {showDisabledIcon(c.types.envdata, 'envdata')}
                   </td>
-                  <td id={`${c.id}_${c.date}_doneBy`}>
+                  <td id={`${c.id}_${c.doneDate}_doneBy`}>
                     {`${c.doneBy}`}
                   </td>
-                  <td id={`${c.id}_${c.date}_registeredDate`}>
+                  <td id={`${c.id}_${c.doneDate}_registeredDate`}>
                     {`${c.registeredDate}`}
                   </td>
-                  <td id={`${c.id}_${c.date}_registeredBy`}>
+                  <td id={`${c.id}_${c.doneDate}_registeredBy`}>
                     {`${c.registeredBy}`}
                   </td>
                 </tr>

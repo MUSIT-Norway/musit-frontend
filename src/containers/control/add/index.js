@@ -36,8 +36,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (id, data, saveControlCallback) => {
-    dispatch(addControl(data, saveControlCallback))
+  saveControl: (id, data, callback) => {
+    dispatch(addControl(id, data, callback))
   }
 })
 
@@ -112,7 +112,7 @@ export default class ControlView extends React.Component {
   }
 
   onClickSave() {
-    // Could extract it, but its only used here and in the method above
+    // Could extract it, but its only used here and in the method aboveonFailure
     const controls = Object.keys(this.state)
         .filter((k) => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
         .map((k) => ({
@@ -125,9 +125,9 @@ export default class ControlView extends React.Component {
       doneDate: this.state.startDate
     }
     if (this.oneStateIsNotOK()) {
-      // push a new path onto the history, with the provided nice control state
+      // push a new path onto the history, with the provided nice control stateonFailure
       hashHistory.replace({
-        pathname: `/magasin/${this.props.params.id}/observation/control/add`,
+        pathname: `/magasin/${this.props.params.id}/control/observation/add`,
         state: controlState
       })
     } else {
@@ -139,7 +139,7 @@ export default class ControlView extends React.Component {
   }
 
   getDate() {
-    return moment().format('mm/dd/yyyy');
+    return moment().format('YYYY-MM-DD');
   }
 
   render() {

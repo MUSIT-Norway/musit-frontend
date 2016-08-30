@@ -22,45 +22,114 @@ import React from 'react'
 import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import Language from '../../../components/language'
+import { loadControlsForNode, loadControlsAndObservationsForNode,
+  loadObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
-import { blur } from '../../../util'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
-  observationControlGridData: state.observationControlGrid.data,
-  unit: {
-    id: 1,
-    name: 'Reol 5'
+  unit: state.storageGridUnit.root.data,
+  observationControlGridData: state.observationControlGrid.data.map((e) => {
+    if (e.eventType === 'Control') {
+      return { ...e,
+                 type: e.eventType,
+                 types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
+                   switch (c.eventType) {
+                     case 'ControlLightingCondition': return { ...p, ControlLightingCondition: true }
+                     case 'ControlTemperature': return { ...p, ControlTemperature: true }
+                     case 'ControlWaterDamageAssessment': return { ...p, ControlWaterDamageAssessment: true }
+                     case 'ControlHypoxicAir': return { ControlHypoxicAir: true }
+                     case 'ControlRelativeHumidity': return { ...p, ControlRelativeHumidity: true }
+                     case 'ControlCleaning': return { ...p, ControlCleaning: true }
+                     case 'ControlMold': return { ...p, ControlMold: true }
+                     case 'ControlPest': return { ...p, ControlPest: true }
+                     case 'ControlAlcohol': return { ...p, ControlAlcohol: true }
+                     case 'ControlFireProtection': return { ...p, ControlFireProtection: true }
+                     case 'ControlTheftProtection': return { ...p, ControlTheftProtection: true }
+                     case 'ControresultlPerimetersecurity': return { ...p, ControlPerimetersecurity: true }
+                     case 'ControlGas': return { ControlGas: true }
+                     default: return null
+                   } }, {}) : {}
+          }
+    }
+    return { ...e,
+              type: e.eventType,
+              types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
+                switch (c.eventType) {
+                  case 'ObservationLightingCondition': return { ...p, ControlLightingCondition: true }
+                  case 'ObservationTemperature': return { ...p, ControlTemperature: true }
+                  case 'ObservationWaterDamageAssessment': return { ...p, ControlWaterDamageAssessment: true }
+                  case 'ObservationHypoxicAir': return { ControlHypoxicAir: true }
+                  case 'ObservationRelativeHumidity': return { ...p, ControlRelativeHumidity: true }
+                  case 'ObservationCleaning': return { ...p, ControlCleaning: true }
+                  case 'ObservationMold': return { ...p, ControlMold: true }
+                  case 'ObservationPest': return { ...p, ControlPest: true }
+                  case 'ObservationAlcohol': return { ...p, ControlAlcohol: true }
+                  case 'ObservationFireProtection': return { ...p, ControlFireProtection: true }
+                  case 'ObservationTheftProtection': return { ...p, ControlTheftProtection: true }
+                  case 'ObservationPerimeterSecurity': return { ...p, ControlPerimetersecurity: true }
+                  case 'ObservationGas': return { ControlGas: true }
+                  default: return null
+                } }, {}) : {}
+          }
+  })
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadControls: (id, callback) => {
+    dispatch(loadControlsForNode(id, callback))
+  },
+  loadObservations: (id, callback) => {
+    dispatch(loadObservationsForNode(id, callback))
+  },
+  loadControlAndObservations: (id, callback) => {
+    dispatch(loadControlsAndObservationsForNode(id, callback))
+  },
+  loadPerson: () => {
+    dispatch(loadActor())
   }
 })
 
-@connect(mapStateToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class ObservationControlGridShow extends React.Component {
   static propTypes = {
     unit: React.PropTypes.object.isRequired,
     translate: React.PropTypes.func.isRequired,
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
     params: React.PropTypes.object,
-    route: React.PropTypes.object
+    route: React.PropTypes.object,
+    loadControls: React.PropTypes.func.isRequired,
+    loadPerson: React.PropTypes.func.isRequired,
+    loadObservations: React.PropTypes.func.isRequired,
+    loadControlAndObservations: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props)
     this.props.params.id = this.props.params.id * 1
+    this.state = {
+      showObservations: this.props.route.showObservations,
+      showControls: this.props.route.showControls
+    }
   }
 
+  componentWillMount() {
+    this.props.loadControlAndObservations(this.props.params.id,
+                                          { onSuccess: () => this.props.loadPerson(),
+                                            onFailure: () => console.log('Feil feil feil feil *********************') })
+  }
   makeToolbar() {
     return (<Toolbar
-      showRight={this.props.route.showControls}
-      showLeft={this.props.route.showObservations}
+      showRight={this.state.showControls}
+      showLeft={this.state.showObservations}
       labelRight="Kontroller"
       labelLeft="Observasjoner"
       placeHolderSearch="Filtrer i liste"
-      clickShowRight={blur}
-      clickShowLeft={blur}
+      clickShowRight={() => { this.setState({ ...this.state, showControls: !this.state.showControls }) }}
+      clickShowLeft={() => { this.setState({ ...this.state, showObservations: !this.state.showObservations }) }}
     />)
   }
 
@@ -81,7 +150,16 @@ export default class ObservationControlGridShow extends React.Component {
     return (<ObservationControlGrid
       id={this.props.params.id}
       translate={this.props.translate}
-      tableData={this.props.observationControlGridData}
+      tableData={this.props.observationControlGridData.filter((e) => {
+        if (e.type && this.state.showControls && this.state.showObservations) {
+          return true
+        } else if (e.type && this.state.showControls) {
+          return e.type.toLowerCase() === 'control'
+        } else if (e.type && this.state.showObservations) {
+          return e.type.toLowerCase() === 'observation'
+        }
+        return false
+      })}
     />)
   }
 

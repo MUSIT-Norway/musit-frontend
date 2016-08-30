@@ -65,11 +65,18 @@ const controlReducer = (state = initialState, action = {}) => {
 
 export default controlReducer;
 
-export const addControl = (id, controlData) => {
+export const addControl = (id, controlData, callback) => {
   const data = mapToBackend(controlData)
+  let url = ''
+  if (id) {
+    url = `/api/event/v1/node/${id}/control`
+  } else {
+    url = '/api/event/v1/event'
+  }
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
-    promise: (client) => client.post(`/api/event/v1/node/${id}/control`, { data })
+    promise: (client) => client.post(url, { data }),
+    callback
   }
 }
 
