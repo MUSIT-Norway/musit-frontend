@@ -23,7 +23,6 @@ export default class ObservationPage extends React.Component {
     doneBy: PropTypes.object,
     registeredDate: PropTypes.string,
     registeredBy: PropTypes.string,
-    suggest: PropTypes.arrayOf(PropTypes.object),
     onSaveObservation: PropTypes.func.isRequired,
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: React.PropTypes.bool,
@@ -251,8 +250,10 @@ export default class ObservationPage extends React.Component {
                 <ControlLabel>{this.props.translate('musit.observation.date')}</ControlLabel>
                 <DatePicker
                   dateFormat="YYYY-MM-DD"
-                  value={this.props.doneDate}
-                  onChange={() => true}
+                  value={this.state.doneDate}
+                  onChange={(value) => {
+                    this.setState({ ...this.state, doneDate: value })
+                  }}
                   disabled={this.props.mode === 'VIEW'}
                 />
               </Col>
@@ -260,11 +261,12 @@ export default class ObservationPage extends React.Component {
                 <ControlLabel>{this.props.translate('musit.observation.doneBy')}</ControlLabel>
                 <ActorSuggest
                   id="doneByField"
-                  value={this.props.doneBy ? this.props.doneBy.fn : ''}
+                  value={this.state.doneBy ? this.state.doneBy.fn : ''}
                   placeHolder="Find actor"
-                  suggest={this.props.suggest}
                   disabled={this.props.mode === 'VIEW'}
-                  onChange={(event, { newValue }) => console.log(newValue)}
+                  onChange={newValue => {
+                    this.setState({ ...this.state, doneBy: newValue })
+                  }}
                 />
               </Col>
             </Row>
@@ -321,7 +323,7 @@ export default class ObservationPage extends React.Component {
             translate={this.props.translate}
             onClickSave={() => this.props.onSaveObservation(this.props.id, this.state.observations)}
             onClickCancel={() => hashHistory.goBack()}
-            saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
+            saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
             cancelDisabled={this.props.cancelDisabled}
           />
         </Grid>

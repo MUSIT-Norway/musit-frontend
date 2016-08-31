@@ -82,7 +82,11 @@ class ReduxFormTutorial extends Component {
 
   renderField = props => <MusitField {...props.input} validator={() => this.isInvalid(props)} />
 
-  renderDropdownField = items => props => <MusitDropDownField {...props.input} validator={() => this.isInvalid(props)} items={items} />
+  renderDropdownField = items => props => <MusitDropDownField
+    {...props.input}
+    validator={() => this.isInvalid(props)}
+    items={items}
+  />
 
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;

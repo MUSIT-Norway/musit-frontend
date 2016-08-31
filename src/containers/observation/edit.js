@@ -7,10 +7,9 @@ import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown),
-    suggest: state.suggest
+    translate: (key, markdown) => Language.translate(key, markdown)
   }
 }
 
@@ -49,7 +48,8 @@ export default class EditObservationPage extends React.Component {
   static propTypes = {
     translate: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
-    onSaveObservation: PropTypes.func.isRequired
+    onSaveObservation: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired
   }
 
   getObservationsFromLocationState() {
@@ -100,7 +100,6 @@ export default class EditObservationPage extends React.Component {
             doneDate={this.props.location.state.doneDate}
             doneBy={this.props.location.state.doneBy}
             onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
-            suggest={this.props.suggest}
             translate={this.props.translate}
             mode="EDIT"
           />

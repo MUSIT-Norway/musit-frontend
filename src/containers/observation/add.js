@@ -4,10 +4,9 @@ import Language from '../../components/language'
 import ObservationPage from './page'
 import Layout from '../../layout'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown),
-    suggest: state.suggest
+    translate: (key, markdown) => Language.translate(key, markdown)
   }
 }
 
@@ -39,12 +38,8 @@ export default class AddObservationPage extends React.Component {
         content={
           <ObservationPage
             id={this.props.params.id}
-            onSaveObservation={(id, data) => {
-              console.log(id)
-              console.log(data)
-            }}
+            onSaveObservation={() => true}
             observations={this.props.observations}
-            suggest={this.props.suggest}
             translate={this.props.translate}
             title="Add new observations"
             mode="ADD"

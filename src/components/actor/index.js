@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onDoneBySuggestionsUpdateRequested: (id, { value, reason }) => {
+  onUpdateRequested: (id, { value, reason }) => {
     if (reason && (reason === 'type') && value && value.length >= 2) {
       dispatch(suggestPerson(id, value))
     } else {
@@ -26,15 +26,24 @@ export default class ActorSuggest extends React.Component {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
     placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.object.isRequired,
+    suggest: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
-    onDoneBySuggestionsUpdateRequested: React.PropTypes.func,
+    onUpdateRequested: React.PropTypes.func,
     disabled: React.PropTypes.bool
   }
 
   static defaultProps = {
     id: 'doneByField',
-    disabled: false
+    disabled: false,
+  }
+
+  constructor(props) {
+    super(props)
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
+  }
+
+  onSuggestionSelected(event, { suggestion }) {
+    this.props.onChange(suggestion)
   }
 
   getSuggestions() {
@@ -49,22 +58,15 @@ export default class ActorSuggest extends React.Component {
     onChange: this.props.onChange
   }
 
-  onSuggestionSelected(event, { suggestion }) {
-    this.props.onChange(suggestion)
-  }
-
   render() {
     return (
       <Autosuggest
         suggestions={this.getSuggestions()}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={(update) => {
-          console.log(update)
-          this.props.onDoneBySuggestionsUpdateRequested(this.props.id, update)
-        }}
+        onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
         getSuggestionValue={(suggestion) => suggestion.fn}
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
-        inputProps={{ ...this.doneByProps, value: this.props.value}}
+        inputProps={{ ...this.doneByProps, value: this.props.value }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />

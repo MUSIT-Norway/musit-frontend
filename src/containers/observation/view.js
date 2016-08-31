@@ -8,7 +8,6 @@ import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    suggest: state.suggest,
     doneBy: state.observation.data.doneBy,
     doneDate: state.observation.data.doneDate,
     registeredDate: state.observation.data.registeredDate,
@@ -19,7 +18,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadObservationWithCallback: (id, callback) => {
+    loadObservation: (id, callback) => {
       dispatch(loadObservation(id, callback))
     },
     loadPersonNameFromId: (id) => {
@@ -35,13 +34,17 @@ export default class ViewObservationPage extends React.Component {
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
     doneBy: PropTypes.object,
+    registeredBy: PropTypes.object,
+    registeredDate: PropTypes.object,
     translate: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
+    params: PropTypes.object.isRequired,
+    loadPersonNameFromId: PropTypes.func.isRequired,
+    loadObservation: PropTypes.func.isRequired
   }
 
   componentWillMount() {
     if (this.props.params.obsId) {
-      this.props.loadObservationWithCallback(this.props.params.obsId, {
+      this.props.loadObservation(this.props.params.obsId, {
         onSuccess: (r) => this.props.loadPersonNameFromId(r.doneBy)
       })
     }
@@ -71,7 +74,6 @@ export default class ViewObservationPage extends React.Component {
             doneDate={this.props.doneDate}
             registeredBy={this.props.registeredBy}
             registeredDate={this.props.registeredDate}
-            suggest={this.props.suggest}
             mode="VIEW"
           />
         }

@@ -119,7 +119,7 @@ export default class ObservationControlGridShow extends React.Component {
   componentWillMount() {
     this.props.loadControlAndObservations(this.props.params.id,
                                           { onSuccess: () => this.props.loadPerson(),
-                                            onFailure: () => console.log('Feil feil feil feil *********************') })
+                                            onFailure: () => true /* console.log('Feil feil feil feil') */ })
   }
   makeToolbar() {
     return (<Toolbar
