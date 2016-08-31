@@ -19,13 +19,18 @@ export default class AddObservationPage extends React.Component {
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
     doneBy: PropTypes.string,
-    translate: PropTypes.func.isRequired
+    translate: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired
   }
 
   render() {
     return (
       <ObservationPage
-        onSaveObservation={() => true}
+        id={this.props.params.id}
+        onSaveObservation={(id, data) => {
+          console.log(id)
+          console.log(data)
+        }}
         observations={this.props.observations}
         doneDate={this.props.doneDate}
         doneBy={this.props.doneBy}
