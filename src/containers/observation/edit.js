@@ -5,6 +5,7 @@ import ObservationPage from './page'
 import { suggestPerson, clearSuggest } from '../../reducers/suggest'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
+import Layout from '../../layout'
 
 const mapStateToProps = (state) => {
   return {
@@ -79,14 +80,32 @@ export default class EditObservationPage extends React.Component {
   }
 
   render() {
-    return (<ObservationPage
-      observations={this.getObservationsFromLocationState()}
-      doneDate={this.props.location.state.doneDate}
-      doneBy={this.props.location.state.doneBy}
-      translate={this.props.translate}
-      onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
-      title={this.props.translate('musit.observation.page.titles.edit')}
-      mode={"EDIT"}
-    />)
+    return (
+      <Layout
+        title={this.props.translate('musit.observation.page.titles.edit')}
+        translate={this.props.translate}
+        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        toolbar={<span />}
+        leftMenu={
+          <div
+            style={{
+              minHeight: 400
+            }}
+          />
+        }
+        content={
+          <ObservationPage
+            id={this.props.params.id}
+            observations={this.getObservationsFromLocationState()}
+            doneDate={this.props.location.state.doneDate}
+            doneBy={this.props.location.state.doneBy}
+            onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
+            suggest={this.props.suggest}
+            translate={this.props.translate}
+            mode="EDIT"
+          />
+        }
+      />
+    )
   }
 }

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { PageHeader, Panel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
+import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import {
   ObservationFromToNumberCommentComponent,
   ObservationDoubleTextAreaComponent,
@@ -10,8 +10,8 @@ import { containsObjectWithField } from '../../../util'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
-// import DatePicker from 'react-bootstrap-date-picker'
-// import ActorSuggest from '../../../components/actor'
+import DatePicker from 'react-bootstrap-date-picker'
+import ActorSuggest from '../../../components/actor'
 
 export default class ObservationPage extends React.Component {
 
@@ -25,8 +25,15 @@ export default class ObservationPage extends React.Component {
     registeredBy: PropTypes.string,
     suggest: PropTypes.arrayOf(PropTypes.object),
     onSaveObservation: PropTypes.func.isRequired,
-    title: PropTypes.string.isRequired,
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
+    saveDisabled: React.PropTypes.bool,
+    cancelDisabled: React.PropTypes.bool
+  }
+
+  static defaultProps = {
+    observations: [],
+    saveDisabled: false,
+    cancelDisabled: false
   }
 
   static defaultPestData = { observations: [{ lifeCycle: '', count: '' }] }
@@ -235,79 +242,90 @@ export default class ObservationPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <main>
-          <Panel>
-            <form>
-              <Grid>
-                <Row>
-                  <Col style={{ textAlign: 'center' }}>
-                    <PageHeader>
-                      {this.props.title}
-                    </PageHeader>
-                  </Col>
-                </Row>
-                <Row>
-                  {this.props.mode !== 'ADD' ? '' : (
-                    <Row>
-                      <Col xs={4}>
-                        <FormGroup controlId="formControlsSelect">
-                          <FormControl
-                            componentClass="select"
-                            placeholder="select"
-                            onChange={this.onChangeTypeSelect}
-                            value={this.state.selectedType ? this.state.selectedType : ''}
-                          >
-                            {Object.keys(this.typeDefinitions).filter(this.isTypeSelectable).map((type, index) => {
-                              return (
-                                <option key={index} value={type}>
-                                  {this.getLabel(this.typeDefinitions[type].label)}
-                                </option>
-                              )
-                            })}
-                          </FormControl>
-                        </FormGroup>
-                      </Col>
-                      <Col xs={4}>
-                        <Button
-                          bsStyle="primary"
-                          onClick={() => this.addObservationType()}
-                        >
-                            Legg til
-                        </Button>
-                      </Col>
-                    </Row>
-                  )}
-                  {this.state.observations.map((observation, index) => {
-                    return (
-                      <div key={index}>
-                        <h3>
-                          {this.getLabel(this.typeDefinitions[observation.type].label)}
-                          &nbsp;
-                          {this.props.mode !== 'ADD' ? '' : (
-                            <a onClick={() => this.removeObservation(index)}>
-                              <FontAwesome name="times" />
-                            </a>
-                          )}
-                        </h3>
-                        {this.renderObservation(observation, index)}
-                        <hr />
-                      </div>
-                    )
-                  })}
-                </Row>
-                <SaveCancel
-                  translate={this.props.translate}
-                  onClickSave={() => this.props.onSaveObservation(this.props.id, this.state.observations)}
-                  onClickCancel={() => hashHistory.goBack()}
-                  saveDisabled={false}
-                  cancelDisabled={false}
+      <form>
+        <Grid>
+          <Row>
+            <h3 />
+            <Row>
+              <Col xs={12} sm={5}>
+                <ControlLabel>{this.props.translate('musit.observation.date')}</ControlLabel>
+                <DatePicker
+                  dateFormat="YYYY-MM-DD"
+                  value={this.props.doneDate}
+                  onChange={() => true}
+                  disabled={this.props.mode === 'VIEW'}
                 />
-              </Grid>
-            </form>
-          </Panel>
-        </main>
-      </div>
+              </Col>
+              <Col xs={12} sm={5}>
+                <ControlLabel>{this.props.translate('musit.observation.doneBy')}</ControlLabel>
+                <ActorSuggest
+                  id="doneByField"
+                  value={this.props.doneBy ? this.props.doneBy.fn : ''}
+                  placeHolder="Find actor"
+                  suggest={this.props.suggest}
+                  disabled={this.props.mode === 'VIEW'}
+                  onChange={(event, { newValue }) => console.log(newValue)}
+                />
+              </Col>
+            </Row>
+            <h3 />
+            {this.props.mode !== 'ADD' ? '' : (
+              <Row>
+                <Col xs={4}>
+                  <FormGroup controlId="formControlsSelect">
+                    <FormControl
+                      componentClass="select"
+                      placeholder="select"
+                      onChange={this.onChangeTypeSelect}
+                      value={this.state.selectedType ? this.state.selectedType : ''}
+                    >
+                      {Object.keys(this.typeDefinitions).filter(this.isTypeSelectable).map((type, index) => {
+                        return (
+                          <option key={index} value={type}>
+                            {this.getLabel(this.typeDefinitions[type].label)}
+                          </option>
+                        )
+                      })}
+                    </FormControl>
+                  </FormGroup>
+                </Col>
+                <Col xs={4}>
+                  <Button
+                    bsStyle="primary"
+                    onClick={() => this.addObservationType()}
+                  >
+                      Legg til
+                  </Button>
+                </Col>
+              </Row>
+            )}
+            {this.state.observations.map((observation, index) => {
+              return (
+                <div key={index}>
+                  <h3>
+                    {this.getLabel(this.typeDefinitions[observation.type].label)}
+                    &nbsp;
+                    {this.props.mode !== 'ADD' ? '' : (
+                      <a onClick={() => this.removeObservation(index)}>
+                        <FontAwesome name="times" />
+                      </a>
+                    )}
+                  </h3>
+                  {this.renderObservation(observation, index)}
+                  <hr />
+                </div>
+              )
+            })}
+          </Row>
+          <SaveCancel
+            translate={this.props.translate}
+            onClickSave={() => this.props.onSaveObservation(this.props.id, this.state.observations)}
+            onClickCancel={() => hashHistory.goBack()}
+            saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
+            cancelDisabled={this.props.cancelDisabled}
+          />
+        </Grid>
+      </form>
     )
   }
 }

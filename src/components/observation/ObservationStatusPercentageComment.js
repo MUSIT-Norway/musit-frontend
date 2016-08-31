@@ -77,7 +77,7 @@ export default class ObervationStatusPercentageComment extends Component {
   render() {
     return (
       <Row>
-        <Col xs={12} sm={3}>
+        <Col xs={12} sm={2}>
           <ControlLabel>{this.props.statusLabel}</ControlLabel>
           <MusitDropDownField
             value={this.props.statusValue}
@@ -90,7 +90,7 @@ export default class ObervationStatusPercentageComment extends Component {
             disabled={this.props.disabled}
           />
         </Col>
-        <Col xs={12} sm={3}>
+        <Col xs={12} sm={2}>
           <ControlLabel>{this.props.volumeLabel}</ControlLabel>
           <MusitField
             value={this.props.volumeValue}

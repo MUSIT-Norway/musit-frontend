@@ -27,6 +27,7 @@ import StorageUnitPanel from './containers/magasin/panel'
 import WelcomeUserView from './containers/welcome-user'
 import AddObservationPage from './containers/observation/add'
 import EditObservationPage from './containers/observation/edit'
+import ViewObservationPage from './containers/observation/view'
 import ControlViewContainer from './containers/control/view'
 import ControlAddContainer from './containers/control/add'
 import ContactForm from './containers/observation/test'
@@ -67,7 +68,7 @@ export default (store) => {
       <Route path="/magasin/:id/controlsobservations" showObservations showControls component={ObservationControlGridShow} />
       <Route path="/magasin/:id/observation/add" component={AddObservationPage} />
       <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
-      <Route path="/magasin/:id/observation/:obsId" component={EditObservationPage} />
+      <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} />
       <Route path="/magasin/*" component={StorageUnitsTable} />
 
       -- Authentication routes

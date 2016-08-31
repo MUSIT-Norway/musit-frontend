@@ -44,7 +44,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
   render() {
     return (
       <Row>
-        <Col xs={12} sm={6}>
+        <Col xs={12} sm={5}>
           <ControlLabel>{this.props.leftLabel}</ControlLabel>
           <MusitTextArea
             value={this.props.leftValue}
@@ -57,7 +57,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
             numberOfRows={5}
           />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={12} sm={5}>
           <ControlLabel>{this.props.rightLabel}</ControlLabel>
           <MusitTextArea
             value={this.props.rightValue}

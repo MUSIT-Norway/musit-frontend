@@ -25,9 +25,10 @@ export default class ActorSuggest extends React.Component {
   static propTypes = {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
+    placeHolder: React.PropTypes.string,
     suggest: React.PropTypes.object.isRequired,
     onChange: React.PropTypes.func.isRequired,
-    onDoneBySuggestionsUpdateRequested: React.PropTypes.func.isRequired,
+    onDoneBySuggestionsUpdateRequested: React.PropTypes.func,
     disabled: React.PropTypes.bool
   }
 
@@ -42,11 +43,14 @@ export default class ActorSuggest extends React.Component {
   }
 
   doneByProps = {
-    id: 'doneByField',
-    placeholder: 'Done by',
-    value: this.props.value,
+    id: this.props.id,
+    placeholder: this.props.placeHolder,
     type: 'search',
     onChange: this.props.onChange
+  }
+
+  onSuggestionSelected(event, { suggestion }) {
+    this.props.onChange(suggestion)
   }
 
   render() {
@@ -54,12 +58,13 @@ export default class ActorSuggest extends React.Component {
       <Autosuggest
         suggestions={this.getSuggestions()}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={(update) =>
+        onSuggestionsUpdateRequested={(update) => {
+          console.log(update)
           this.props.onDoneBySuggestionsUpdateRequested(this.props.id, update)
-        }
+        }}
         getSuggestionValue={(suggestion) => suggestion.fn}
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
-        inputProps={this.doneByProps}
+        inputProps={{ ...this.doneByProps, value: this.props.value}}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
