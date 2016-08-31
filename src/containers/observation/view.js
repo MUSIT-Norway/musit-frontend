@@ -6,6 +6,7 @@ import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 
 const mapStateToProps = (state) => {
+  console.log(state.observation)
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
     doneBy: state.observation.data.doneBy,
@@ -53,7 +54,7 @@ export default class ViewObservationPage extends React.Component {
   render() {
     return (
       <Layout
-        title="View observations"
+        title="Magasin"
         translate={this.props.translate}
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         toolbar={<span />}
@@ -65,17 +66,21 @@ export default class ViewObservationPage extends React.Component {
           />
         }
         content={
-          <ObservationPage
-            id={this.props.params.id}
-            onSaveObservation={() => true} // disable save
-            observations={this.props.observations}
-            translate={this.props.translate}
-            doneBy={this.props.doneBy}
-            doneDate={this.props.doneDate}
-            registeredBy={this.props.registeredBy}
-            registeredDate={this.props.registeredDate}
-            mode="VIEW"
-          />
+          <div>
+            <center><h4>{this.props.translate('musit.observation.page.titles.view')}</h4></center>
+            <ObservationPage
+              id={this.props.params.id}
+              onSaveObservation={() => true} // disable save
+              observations={this.props.observations}
+              translate={this.props.translate}
+              doneBy={this.props.doneBy}
+              doneDate={this.props.doneDate}
+              registeredBy={this.props.registeredBy}
+              registeredDate={this.props.registeredDate}
+              saveDisabled
+              mode="VIEW"
+            />
+          </div>
         }
       />
     )

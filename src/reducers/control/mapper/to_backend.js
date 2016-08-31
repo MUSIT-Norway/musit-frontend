@@ -1,7 +1,7 @@
-export const mapToBackend = (state) => {
+export const mapToBackend = (state, observations) => {
   const r = {}
   r.eventType = 'Control'
-  r.doneBY = state.doneBy
+  r.doneBy = state.doneBy.id
   r.doneDate = state.doneDate
   r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
     switch (key) {

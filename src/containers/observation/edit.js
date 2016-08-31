@@ -6,6 +6,7 @@ import { suggestPerson, clearSuggest } from '../../reducers/suggest'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
+import { hashHistory } from 'react-router'
 
 const mapStateToProps = () => {
   return {
@@ -18,14 +19,11 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loadObservation(id))
   },
   // Higher order function (or partial function if you like to call it that)
-  onSaveObservation: (id, data) => {
-    return (observations) => {
-      dispatch(addControl(id, data, observations, {
-        onSuccess: () => true /* hashHistory.goBack() */,
-        onFailure: () => {
-          /* console.log(error) */
-          /* alert('This went terribly wrong!') */
-        }
+  onSaveObservation: (controlState) => {
+    return (id, observationState) => {
+      dispatch(addControl(id, observationState, controlState,  {
+        onSuccess: () => hashHistory.goBack(),
+        onFailure: () => alert('This went terribly wrong!')
       }))
     }
   },
@@ -82,7 +80,7 @@ export default class EditObservationPage extends React.Component {
   render() {
     return (
       <Layout
-        title={this.props.translate('musit.observation.page.titles.edit')}
+        title={"Magasin"}
         translate={this.props.translate}
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         toolbar={<span />}
@@ -94,15 +92,18 @@ export default class EditObservationPage extends React.Component {
           />
         }
         content={
-          <ObservationPage
-            id={this.props.params.id}
-            observations={this.getObservationsFromLocationState()}
-            doneDate={this.props.location.state.doneDate}
-            doneBy={this.props.location.state.doneBy}
-            onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
-            translate={this.props.translate}
-            mode="EDIT"
-          />
+          <div>
+            <center><h4>{this.props.translate('musit.observation.page.titles.edit')}</h4></center>
+            <ObservationPage
+              id={this.props.params.id}
+              observations={this.getObservationsFromLocationState()}
+              doneDate={this.props.location.state.doneDate}
+              doneBy={this.props.location.state.doneBy}
+              onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
+              translate={this.props.translate}
+              mode="EDIT"
+            />
+          </div>
         }
       />
     )

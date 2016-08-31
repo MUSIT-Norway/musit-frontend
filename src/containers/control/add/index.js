@@ -21,7 +21,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Grid, Row, Col, FormControl, PageHeader } from 'react-bootstrap'
 import PairedToogleButtons from '../../../components/control/add'
-import Field from '../../../components/formfields/musitfield'
 import { addControl } from '../../../reducers/control'
 import Language from '../../../components/language'
 import DatePicker from 'react-bootstrap-date-picker'
@@ -29,6 +28,7 @@ import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
 import { flatten } from '../../../util'
+import ActorSuggest from '../../../components/actor'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -45,7 +45,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    user: React.PropTypes.object,
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object
   }
@@ -71,8 +70,7 @@ export default class ControlAddContainer extends React.Component {
       inertAirInterval: '4',
       light: 'Mørkt',
       cleaning: 'Gullende rent',
-      startDate: moment().format(),
-      user: this.props.user ? this.props.user.name : ''
+      startDate: moment().format()
     }
     this.getDate = this.getDate.bind(this)
 
@@ -121,7 +119,7 @@ export default class ControlAddContainer extends React.Component {
     // Create a nice representation of the control state
     const controlState = {
       ...flatten(controls),
-      doneBy: this.state.user,
+      doneBy: this.state.doneBy,
       doneDate: this.state.startDate
     }
     if (this.oneStateIsNotOK()) {
@@ -244,10 +242,13 @@ export default class ControlAddContainer extends React.Component {
               </Row>
               <Row>
                 <Col md={9}>
-                  <Field
-                    id={"user"}
-                    value={this.state.user}
-                    onChange={(v) => { this.setState({ ...this.state, user: v }) }}
+                  <ActorSuggest
+                    id="doneByField"
+                    value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                    placeHolder="Find actor"
+                    onChange={newValue => {
+                      this.setState({ ...this.state, doneBy: newValue })
+                    }}
                   />
                 </Col>
               </Row>

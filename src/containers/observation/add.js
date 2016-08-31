@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import Language from '../../components/language'
 import ObservationPage from './page'
 import Layout from '../../layout'
+import { hashHistory } from 'react-router'
+import { addObservation } from '../../reducers/observation'
 
 const mapStateToProps = () => {
   return {
@@ -10,7 +12,18 @@ const mapStateToProps = () => {
   }
 }
 
-@connect(mapStateToProps)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSaveObservation: (id, data) => {
+      dispatch(addObservation(id, data, {
+        onSuccess: () => hashHistory.goBack(),
+        onFailure: () => alert('ikke istand til å lagre')
+      }))
+    },
+  }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class AddObservationPage extends React.Component {
 
   static propTypes = {
@@ -18,13 +31,14 @@ export default class AddObservationPage extends React.Component {
     doneDate: PropTypes.string,
     doneBy: PropTypes.object,
     translate: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
+    params: PropTypes.object.isRequired,
+    onSaveObservation: PropTypes.func.isRequired
   }
 
   render() {
     return (
       <Layout
-        title="Add new observations"
+        title="Magasin"
         translate={this.props.translate}
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         toolbar={<span />}
@@ -36,14 +50,17 @@ export default class AddObservationPage extends React.Component {
           />
         }
         content={
-          <ObservationPage
-            id={this.props.params.id}
-            onSaveObservation={() => true}
-            observations={this.props.observations}
-            translate={this.props.translate}
-            title="Add new observations"
-            mode="ADD"
-          />
+          <div>
+            <center><h4>{this.props.translate('musit.observation.page.titles.add')}</h4></center>
+            <ObservationPage
+              id={this.props.params.id}
+              onSaveObservation={this.props.onSaveObservation}
+              observations={this.props.observations}
+              translate={this.props.translate}
+              title="Add new observations"
+              mode="ADD"
+            />
+          </div>
         }
       />
     )

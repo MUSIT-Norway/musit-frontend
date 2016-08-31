@@ -53,6 +53,17 @@ export default class ObservationPage extends React.Component {
     this.onClickAddObservation = this.onClickAddObservation.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.mode === 'VIEW') {
+      this.setState({
+        ...this.state,
+        doneBy: nextProps.doneBy && nextProps.doneBy.id ? nextProps.doneBy : null,
+        doneDate: nextProps.doneDate,
+        observations: nextProps.observations
+      })
+    }
+  }
+
   onChangeField(field, value, index) {
     const observations = [...this.state.observations]
     observations[index] = { ...observations[index], data: { ...observations[index].data, [field]: value } }
@@ -248,32 +259,67 @@ export default class ObservationPage extends React.Component {
             <Row>
               <Col xs={12} sm={5}>
                 <ControlLabel>{this.props.translate('musit.observation.date')}</ControlLabel>
-                <DatePicker
-                  dateFormat="YYYY-MM-DD"
-                  value={this.state.doneDate}
-                  onChange={(value) => {
-                    this.setState({ ...this.state, doneDate: value })
-                  }}
-                  disabled={this.props.mode === 'VIEW'}
-                />
+                {this.props.mode === 'VIEW' || this.props.mode === 'EDIT' ? (
+                  <FormControl
+                    componentClass="input"
+                    value={this.state.doneDate}
+                    disabled
+                  />
+                ) : (
+                  <DatePicker
+                    dateFormat="YYYY-MM-DD"
+                    value={this.state.doneDate}
+                    onChange={(value) => {
+                      this.setState({ ...this.state, doneDate: value })
+                    }}
+                    disabled={this.props.mode === 'VIEW'}
+                  />
+                )}
               </Col>
               <Col xs={12} sm={5}>
                 <ControlLabel>{this.props.translate('musit.observation.doneBy')}</ControlLabel>
-                <ActorSuggest
-                  id="doneByField"
-                  value={this.state.doneBy ? this.state.doneBy.fn : ''}
-                  placeHolder="Find actor"
-                  disabled={this.props.mode === 'VIEW'}
-                  onChange={newValue => {
-                    this.setState({ ...this.state, doneBy: newValue })
-                  }}
-                />
+                {this.props.mode === 'VIEW' || this.props.mode === 'EDIT'  ? (
+                  <FormControl
+                    componentClass="input"
+                    value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                    disabled
+                  />
+                ) : (
+                  <ActorSuggest
+                    id="doneByField"
+                    value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                    placeHolder="Find actor"
+                    onChange={newValue => {
+                      this.setState({ ...this.state, doneBy: newValue })
+                    }}
+                  />
+                )}
               </Col>
             </Row>
+            {this.props.mode === 'VIEW' ?
+              <Row>
+                <Col sm={5}>
+                  <ControlLabel>{this.props.translate('musit.texts.dateRegistered')}</ControlLabel>
+                  <FormControl
+                    componentClass="input"
+                    value={this.props.registeredDate}
+                    disabled
+                  />
+                </Col>
+                <Col sm={5} >
+                  <ControlLabel>{this.props.translate('musit.texts.registeredBy')}</ControlLabel>
+                  <FormControl
+                    componentClass="input"
+                    value={this.props.registeredBy}
+                    disabled
+                  />
+                </Col>
+              </Row>
+            : ''}
             <h3 />
             {this.props.mode !== 'ADD' ? '' : (
               <Row>
-                <Col xs={4}>
+                <Col xs={2}>
                   <FormGroup controlId="formControlsSelect">
                     <FormControl
                       componentClass="select"
@@ -321,7 +367,7 @@ export default class ObservationPage extends React.Component {
           </Row>
           <SaveCancel
             translate={this.props.translate}
-            onClickSave={() => this.props.onSaveObservation(this.props.id, this.state.observations)}
+            onClickSave={() => this.props.onSaveObservation(this.props.id, this.state)}
             onClickCancel={() => hashHistory.goBack()}
             saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
             cancelDisabled={this.props.cancelDisabled}

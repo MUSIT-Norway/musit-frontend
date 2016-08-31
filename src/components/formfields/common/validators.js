@@ -1,6 +1,6 @@
 const validateString = (value = '', minimumLength = 0, maximumLength = 20) => {
-  const isLessThanMinimum = value.length < minimumLength
-  const isMoreThanMaximuum = value.length > maximumLength
+  const isLessThanMinimum = value && value.length < minimumLength
+  const isMoreThanMaximuum = value && value.length > maximumLength
   return isLessThanMinimum || isMoreThanMaximuum ? 'error' : 'success'
 }
 

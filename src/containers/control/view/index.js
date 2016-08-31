@@ -56,8 +56,6 @@ export default class ControlViewContainer extends React.Component {
     const test = () => {
       if (this.props.controls.loaded) {
         /* eslint-disable no-console */
-        console.log(this.props.controls.data.registeredBy)
-        console.log(this.props.controls.data.doneDate)
         console.log(this.props.controls)
         this.props.controls.data['subEvents-parts'].map((c) => {
           console.log(c.eventType)
