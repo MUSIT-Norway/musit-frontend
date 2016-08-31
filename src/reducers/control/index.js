@@ -7,9 +7,7 @@ const LOAD = 'musit/control/LOAD'
 const LOAD_SUCCESS = 'musit/control/LOAD_SUCCESS'
 const LOAD_FAIL = 'musit/control/LOAD_FAIL'
 
-export const initialState = {
-
-}
+export const initialState = {}
 
 const controlReducer = (state = initialState, action = {}) => {
   switch (action.type) {

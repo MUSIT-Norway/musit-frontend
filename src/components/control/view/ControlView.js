@@ -1,7 +1,12 @@
 import React, { Component, PropTypes } from 'react'
-import { ControlLabel, Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
-import { MusitField } from '../../formfields'
+import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import {
+  ObservationFromToNumberCommentComponent // ,
+  // ObservationDoubleTextAreaComponent,
+  // ObservationStatusPercentageComment,
+  // ObservationPest
+} from '../../observation'
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -68,7 +73,64 @@ export default class ControlView extends Component {
         open: false
       }
     };
+
+    this.showObservation = (control) => {
+      let lv = ''
+      const { eventType, ok } = control
+      if (!ok) {
+        switch (eventType) {
+          case 'ControlTemperature':
+            lv = (<ObservationFromToNumberCommentComponent
+              id={"temperature"}
+              fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')}
+              fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip')}
+              onChangeFrom={(value) => this.onChangeField('temperature', 'fromValue', value)}
+              toLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.labelText')}
+              toTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.tooltip')}
+              onChangeTo={(value) => this.onChangeField('temperature', 'toValue', value)}
+              commentLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment')}
+              commentTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment')}
+              commentPlaceholder={this.props.translate('musit.texts.freetext')}
+              onChangeComment={(value) => this.onChangeField('temperature', 'commentValue', value)}
+              disabled={Boolean(true)}
+              fromValue={control['subEvents-motivates'][0].from.toString()}
+              toValue={control['subEvents-motivates'][0].to.toString()}
+              commentValue={control['subEvents-motivates'][0].note.toString()}
+            />)
+            break
+          case 'ControlAlcohol':
+            lv = ''
+            break
+          case 'ControlCleaning':
+            lv = ''
+            break
+          case 'ControlGas':
+            lv = ''
+            break
+          case 'ControlHypoxicAir':
+            lv = ''
+            break
+          case 'ControlLightingCondition':
+            lv = ''
+            break
+          case 'ControlMold':
+            lv = ''
+            break
+          case 'ControlPest':
+            lv = ''
+            break
+          case 'ControlRelativeHumidity':
+            lv = ''
+            break
+          default:
+            lv = ''
+            break
+        }
+      }
+      return lv
+    }
   }
+
 
   render() {
     const { id } = this.props
@@ -91,7 +153,7 @@ export default class ControlView extends Component {
         {`  ${this.props.translate('musit.texts.notOk')}`}
       </Col>
     )
-    const downButton = (observationType) => {
+    const downButton = (observationType, ok) => {
       return (
         <Col xs={2} sm={2} >
           <Button
@@ -99,7 +161,7 @@ export default class ControlView extends Component {
             onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
             bsStyle="link"
           >
-            <FontAwesome name="sort-desc" />
+            {ok ? null : <FontAwesome name="sort-desc" />}
           </Button>
         </Col>
       ) }
@@ -111,15 +173,11 @@ export default class ControlView extends Component {
             {observation(ControlView.iconMap[eventType],
               this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
             {ok ? controlOk : controlNotOk}
-            {downButton(eventType)}
+            {downButton(eventType, ok)}
           </Row>
           <Row>
             <Panel collapsible expanded={this.state[eventType].open}>
-              <Col sm={4} >
-                <ControlLabel>label text</ControlLabel>
-                <br />
-                <MusitField id={`${id}_${eventType}_MusitField`} value="test user" validate="text" />
-              </Col>
+              {this.showObservation(control)}
             </Panel>
           </Row>
         </div>
