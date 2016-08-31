@@ -15,7 +15,7 @@ const actions = {
 
 const validate = (formProps) => {
   const errors = {};
-  console.log(formProps)
+
   if (!formProps.firstName) {
     errors.firstName = 'Please enter a first name';
   }
@@ -80,6 +80,10 @@ class ReduxFormTutorial extends Component {
     return props.meta.touched && props.meta.error
   }
 
+  renderField = props => <MusitField {...props.input} validator={() => this.isInvalid(props)} />
+
+  renderDropdownField = items => props => <MusitDropDownField {...props.input} validator={() => this.isInvalid(props)} items={items} />
+
   render() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
@@ -90,19 +94,19 @@ class ReduxFormTutorial extends Component {
               <form onSubmit={handleSubmit(this.handleFormSubmit)}>
 
                 <label>First Name:</label>
-                <Field name="firstName" type="text" component={props => <MusitField {...props.input} validator={() => this.isInvalid(props)} />} />
+                <Field name="firstName" type="text" component={this.renderField} />
 
                 <label>Last Name:</label>
-                <Field name="lastName" type="text" component={props => <MusitField {...props.input} validator={() => this.isInvalid(props)} />} />
+                <Field name="lastName" type="text" component={this.renderField} />
 
                 <label>Gender:</label>
-                <Field name="sex" component={props => <MusitDropDownField {...props.input} validator={() => this.isInvalid(props)} items={['Male', 'Female']} />} />
+                <Field name="sex" component={this.renderDropdownField(['Male', 'Female'])} />
 
                 <label>Email:</label>
-                <Field name="email" type="email" component={props => <MusitField {...props.input} validator={() => this.isInvalid(props)} />} />
+                <Field name="email" type="email" component={this.renderField} />
 
                 <label>Phone:</label>
-                <Field name="phoneNumber" type="tel" component={props => <MusitField {...props.input} validator={() => this.isInvalid(props)} />} />
+                <Field name="phoneNumber" type="tel" component={this.renderField} />
 
                 <Button type="submit" disabled={pristine || submitting}>Submit</Button>
                 <Button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</Button>
@@ -115,10 +119,4 @@ class ReduxFormTutorial extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
-}
-
-export default connect(mapStateToProps, actions)(form(ReduxFormTutorial));
+export default connect(state => state.form.ReduxFormTutorial, actions)(form(ReduxFormTutorial));
