@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({
   // Higher order function (or partial function if you like to call it that)
   onSaveObservation: (controlState) => {
     return (id, observationState) => {
-      dispatch(addControl(id, observationState, controlState,  {
+      dispatch(addControl(id, controlState, observationState, {
         onSuccess: () => hashHistory.goBack(),
         onFailure: () => alert('This went terribly wrong!')
       }))

@@ -1,11 +1,6 @@
 import React, { PropTypes } from 'react'
 import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
-import {
-  ObservationFromToNumberCommentComponent,
-  ObservationDoubleTextAreaComponent,
-  ObservationStatusPercentageComment,
-  ObservationPest
-} from '../../../components/observation'
+import { RenderPest, RenderAlcohol, RenderDoubleTextArea, RenderFromToNumberComment } from '../../../components/observation/render'
 import { containsObjectWithField } from '../../../util'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
@@ -35,7 +30,7 @@ export default class ObservationPage extends React.Component {
     cancelDisabled: false
   }
 
-  static defaultPestData = { observations: [{ lifeCycle: '', count: '' }] }
+  static defaultPestData = {observations: [{lifeCycle: '', count: ''}]}
 
   constructor(props) {
     super(props)
@@ -66,8 +61,8 @@ export default class ObservationPage extends React.Component {
 
   onChangeField(field, value, index) {
     const observations = [...this.state.observations]
-    observations[index] = { ...observations[index], data: { ...observations[index].data, [field]: value } }
-    this.setState({ ...this.state, observations })
+    observations[index] = {...observations[index], data: {...observations[index].data, [field]: value}}
+    this.setState({...this.state, observations})
   }
 
   onChangePestObservation(pestObservationIndex, field, value, pestIndex) {
@@ -75,22 +70,22 @@ export default class ObservationPage extends React.Component {
     const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
     pestObservations[pestObservationIndex][field] = value
-    this.setState({ ...this.state, observations: observations })
+    this.setState({...this.state, observations: observations})
   }
 
   onRemovePestObservation(pestObservationIndex, pestIndex) {
     const observationsCopy = [...this.state.observations]
     const pestObj = observationsCopy[pestIndex]
     pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex)
-    this.setState({ ...this.state, observations: observationsCopy })
+    this.setState({...this.state, observations: observationsCopy})
   }
 
   onClickAddObservation(pestIndex) {
     const observationsCopy = [...this.state.observations]
     const pestObj = observationsCopy[pestIndex]
     const pestObservations = pestObj.data.observations
-    pestObservations.unshift({ lifeCycle: '', count: '' })
-    this.setState({ ...this.state, observations: observationsCopy })
+    pestObservations.unshift({lifeCycle: '', count: ''})
+    this.setState({...this.state, observations: observationsCopy})
   }
 
   onChangeTypeSelect(e) {
@@ -105,20 +100,20 @@ export default class ObservationPage extends React.Component {
   }
 
   typeDefinitions = {
-    '': { label: 'typeSelect.labelText' },
-    gas: { label: 'gas.labelText', render: this.renderDoubleTextArea },
-    lux: { label: 'lux.labelText', render: this.renderDoubleTextArea },
-    cleaning: { label: 'cleaning.labelText', render: this.renderDoubleTextArea },
-    pest: { label: 'pest.labelText', render: this.renderPest, data: ObservationPage.defaultPestData },
-    mold: { label: 'mold.labelText', render: this.renderDoubleTextArea },
-    skallsikring: { label: 'skallsikring.labelText', render: this.renderDoubleTextArea },
-    tyverisikring: { label: 'tyverisikring.labelText', render: this.renderDoubleTextArea },
-    brannsikring: { label: 'brannsikring.labelText', render: this.renderDoubleTextArea },
-    vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderDoubleTextArea },
-    relativeHumidity: { label: 'rh.labelText', render: this.renderFromToNumberComment },
-    inertAir: { label: 'hypoxicAir.labelText', render: this.renderFromToNumberComment },
-    temperature: { label: 'temperature.labelText', render: this.renderFromToNumberComment },
-    alcohol: { label: 'alcohol.labelText', render: this.renderAlcohol }
+    '': {label: 'typeSelect.labelText'},
+    gas: {label: 'gas.labelText', render: this._renderDoubleTextArea},
+    lux: {label: 'lux.labelText', render: this._renderDoubleTextArea},
+    cleaning: {label: 'cleaning.labelText', render: this._renderDoubleTextArea},
+    pest: {label: 'pest.labelText', render: this._renderPest, data: ObservationPage.defaultPestData},
+    mold: {label: 'mold.labelText', render: this._renderDoubleTextArea},
+    skallsikring: {label: 'skallsikring.labelText', render: this._renderDoubleTextArea},
+    tyverisikring: {label: 'tyverisikring.labelText', render: this._renderDoubleTextArea},
+    brannsikring: {label: 'brannsikring.labelText', render: this._renderDoubleTextArea},
+    vannskaderisiko: {label: 'vannskaderisiko.labelText', render: this._renderDoubleTextArea},
+    relativeHumidity: {label: 'rh.labelText', render: this._renderFromToNumberComment},
+    inertAir: {label: 'hypoxicAir.labelText', render: this._renderFromToNumberComment},
+    temperature: {label: 'temperature.labelText', render: this._renderFromToNumberComment},
+    alcohol: {label: 'alcohol.labelText', render: this._renderAlcohol}
   }
 
   addObservationType(typeToAdd, data = {}) {
@@ -126,9 +121,9 @@ export default class ObservationPage extends React.Component {
     if (!type || type === '') {
       return
     }
-    const typeProps = { ...data, ...this.typeDefinitions[type].data }
-    const observations = [{ type, data: typeProps }, ...this.state.observations]
-    this.setState({ ...this.state, observations, selectedType: null })
+    const typeProps = {...data, ...this.typeDefinitions[type].data}
+    const observations = [{type, data: typeProps}, ...this.state.observations]
+    this.setState({...this.state, observations, selectedType: null})
   }
 
   isTypeSelectable(typeStr) {
@@ -137,117 +132,57 @@ export default class ObservationPage extends React.Component {
 
   removeObservation(index) {
     const observations = this.state.observations
-    this.setState({ ...this.state, observations: observations.filter((o, i) => i !== index) })
+    this.setState({...this.state, observations: observations.filter((o, i) => i !== index)})
   }
 
   renderObservation(observation, index) {
-    return this.typeDefinitions[observation.type].render.bind(this)(observation.type, observation.data, index)
+    const typeDefinition = this.typeDefinitions[observation.type];
+    return typeDefinition.render.bind(this)(observation.type, observation.data, index)
   }
 
-  renderAlcohol(id, props, index) {
-    return (
-      <ObservationStatusPercentageComment
-        {...props}
-        statusValue={props.status}
-        statusLabel={this.props.translate('musit.observation.page.alcohol.statusLabel')}
-        statusTooltip={this.props.translate('musit.observation.page.alcohol.statusTooltip')}
-        statusPlaceHolder={this.props.translate('musit.observation.page.alcohol.statusPlaceHolder')}
-        statusItems={[
-          this.props.translate('musit.observation.page.alcohol.statusItems.dryed'),
-          this.props.translate('musit.observation.page.alcohol.statusItems.allmostDryed'),
-          this.props.translate('musit.observation.page.alcohol.statusItems.someDryed'),
-          this.props.translate('musit.observation.page.alcohol.statusItems.minorDryed'),
-          this.props.translate('musit.observation.page.alcohol.statusItems.satisfactory')
-        ]}
-        statusOnChange={(value) => this.onChangeField('status', value, index)}
-        volumeValue={props.volume}
-        volumeLabel={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.volumeLabel')}
-        volumeTooltip={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.volumeTooltip')}
-        volumePlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.volumePlaceHolder')}
-        volumeOnChange={(value) => this.onChangeField('volume', value, index)}
-        commentValue={props.comment}
-        commentLabel={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.commentLabel')}
-        commentTooltip={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.commentTooltip')}
-        commentPlaceHolder={this.props.translate('musit.storageUnits.environmentRequirements.alcohol.commentPlaceHolder')}
-        commentOnChange={(value) => this.onChangeField('comment', value, index)}
-      />
-    )
+  _renderAlcohol(id, valueProps, index) {
+    return <RenderAlcohol
+      valueProps={valueProps}
+      index={index}
+      mode={this.props.mode}
+      translate={this.props.translate}
+      onChangeField={this.onChangeField}
+    />
   }
 
-  renderPest(id, props, index) {
-    return (
-      <ObservationPest
-        disabled={this.props.mode === 'VIEW'}
-        canEdit={this.props.mode !== 'VIEW'}
-        observations={props.observations}
-        lifeCycleLabel={this.props.translate('musit.observation.pest.lifeCycleLabel')}
-        lifeCyclePlaceHolder={this.props.translate('musit.texts.makeChoice')}
-        lifeCycleTooltip={this.props.translate('musit.observation.pest.lifeCycleTooltip')}
-        lifeCycleOnChange={(lifeCycleIndex, value) => this.onChangePestObservation(lifeCycleIndex, 'lifeCycle', value, index)}
-        lifeCycleOnRemove={(lifeCycleIndex) => this.onRemovePestObservation(lifeCycleIndex, index)}
-        lifeCycleItems={[
-          this.props.translate('musit.observation.lifeCycleLabelMenu.puppe'),
-          this.props.translate('musit.observation.lifeCycleLabelMenu.adult'),
-          this.props.translate('musit.observation.lifeCycleLabelMenu.puppeskin'),
-          this.props.translate('musit.observation.lifeCycleLabelMenu.larva'),
-          this.props.translate('musit.observation.lifeCycleLabelMenu.egg')
-        ]}
-        countLabel={this.props.translate('musit.observation.pest.countLabel')}
-        countPlaceHolder={this.props.translate('musit.observation.pest.countPlaceHolder')}
-        countTooltip={this.props.translate('musit.observation.pest.countTooltip')}
-        countOnChange={(countIndex, value) => this.onChangePestObservation(countIndex, 'count', value, index)}
-        commentsLeftValue={props.identificationValue}
-        commentsLeftLabel={this.props.translate('musit.observation.pest.identificationLabel')}
-        commentsLeftTooltip={this.props.translate('musit.observation.pest.identificationTooltip')}
-        commentsLeftPlaceHolder={this.props.translate('musit.observation.pest.identificationPlaceHolder')}
-        commentsOnChangeLeft={(value) => this.onChangeField('identificationValue', value, index)}
-        commentsRightValue={props.commentValue}
-        commentsRightLabel={this.props.translate('musit.observation.pest.commentsLabel')}
-        commentsRightTooltip={this.props.translate('musit.observation.pest.commentsTooltip')}
-        commentsRightPlaceHolder={this.props.translate('musit.observation.pest.commentsPlaceHolder')}
-        commentsOnChangeRight={(value) => this.onChangeField('commentValue', value, index)}
-        newButtonLabel={this.props.translate('musit.observation.newButtonLabel')}
-        newButtonOnClick={() => this.onClickAddObservation(index)}
-      />
-    )
+  _renderPest(id, valueProps, index) {
+    return <RenderPest
+      valueProps={valueProps}
+      index={index}
+      mode={this.props.mode}
+      translate={this.props.translate}
+      onChangeField={this.onChangeField}
+      onChangePestObservation={this.onChangePestObservation}
+      onRemovePestObservation={this.onRemovePestObservation}
+      onClickAddObservation={this.onClickAddObservation}
+    />
   }
 
-  renderDoubleTextArea(id, props, index) {
-    return (
-      <ObservationDoubleTextAreaComponent
-        {...props}
-        disabled={this.props.mode === 'VIEW'}
-        leftLabel={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.labelText`)}
-        leftTooltip={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.tooltip`)}
-        leftPlaceHolder={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.placeHolder`)}
-        onChangeLeft={(value) => this.onChangeField('leftValue', value, index)}
-        rightLabel={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.comment`)}
-        rightTooltip={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.comment`)}
-        rightPlaceHolder={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.commentPlaceHolder`)}
-        onChangeRight={(value) => this.onChangeField('rightValue', value, index)}
-      />
-    )
+  _renderDoubleTextArea(id, valueProps, index) {
+    return <RenderDoubleTextArea
+      type={id}
+      valueProps={valueProps}
+      index={index}
+      mode={this.props.mode}
+      translate={this.props.translate}
+      onChangeField={this.onChangeField}
+    />
   }
 
-  renderFromToNumberComment(id, props, index) {
-    return (
-      <ObservationFromToNumberCommentComponent
-        {...props}
-        disabled={this.props.mode === 'VIEW'}
-        fromLabel={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.labelText`)}
-        fromTooltip={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.tooltip`)}
-        fromPlaceHolder={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.placeHolder`)}
-        onChangeFrom={(value) => this.onChangeField('fromValue', value, index)}
-        toLabel={this.props.translate(`musit.storageUnits.environmentRequirements.${id}Tolerance.labelText`)}
-        toTooltip={this.props.translate(`musit.storageUnits.environmentRequirements.${id}Tolerance.tooltip`)}
-        toPlaceHolder={this.props.translate(`musit.storageUnits.environmentRequirements.${id}Tolerance.placeHolder`)}
-        onChangeTo={(value) => this.onChangeField('toValue', value, index)}
-        commentLabel={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.comment`)}
-        commentTooltip={this.props.translate(`musit.storageUnits.environmentRequirements.${id}.comment`)}
-        commentPlaceholder={this.props.translate('musit.texts.freetext')}
-        onChangeComment={(value) => this.onChangeField('commentValue', value, index)}
-      />
-    )
+  _renderFromToNumberComment(id, valueProps, index) {
+    return <RenderFromToNumberComment
+      type={id}
+      valueProps={valueProps}
+      index={index}
+      mode={this.props.mode}
+      translate={this.props.translate}
+      onChangeField={this.onChangeField}
+    />
   }
 
   render() {

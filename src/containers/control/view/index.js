@@ -41,7 +41,6 @@ const mapDispatchToProps = (dispatch) => ({
 export default class ControlViewContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    // controls: React.PropTypes.arrayOf(React.PropTypes.object),
     controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
@@ -54,22 +53,6 @@ export default class ControlViewContainer extends React.Component {
   }
   render() {
     const { translate } = this.props
-    const test = () => {
-      if (this.props.controls.loaded) {
-        /* eslint-disable no-console */
-        console.log(this.props.controls)
-        this.props.controls.data['subEvents-parts'].map((c) => {
-          console.log(c.eventType)
-          if (c['subEvents-motivates']) {
-            console.log(c['subEvents-motivates'][0].eventType)
-          }
-          return ''
-        }
-        )
-        /* eslint-disable no-console */
-      }
-      return ''
-    }
 
     const closeBtn = (
       <Row>
@@ -88,8 +71,6 @@ export default class ControlViewContainer extends React.Component {
             <Row>
               <br />
               <br />
-              <br />
-              {test()}
             </Row>
             <Row>
               <Col sm={4} smOffset={2}>
@@ -105,7 +86,7 @@ export default class ControlViewContainer extends React.Component {
                 <br />
                 <MusitField
                   id="performedBy"
-                  value={this.props.controls.loaded ? this.props.controls.data.doneBy.toString() : ''}
+                  value={this.props.controls.loaded ? this.props.controls.data.doneBy : ''}
                   validate="text"
                   disabled={Boolean(true)}
                 />
