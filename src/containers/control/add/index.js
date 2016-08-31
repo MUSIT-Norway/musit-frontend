@@ -37,7 +37,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   saveControl: (data, callback, id) => {
-    dispatch(addControl(data, callback, id))
+    dispatch(addControl(id, data, callback))
   }
 })
 

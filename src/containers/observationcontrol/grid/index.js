@@ -36,6 +36,7 @@ const mapStateToProps = (state) => ({
     if (e.eventType === 'Control') {
       return { ...e,
                  type: e.eventType,
+                 doneBy: e.doneName ? e.doneName : e.doneBy,
                  types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
                    switch (c.eventType) {
                      case 'ControlLightingCondition': return { ...p, ControlLightingCondition: true }
@@ -57,6 +58,7 @@ const mapStateToProps = (state) => ({
     }
     return { ...e,
               type: e.eventType,
+              doneBy: e.doneName ? e.doneName : e.doneBy,
               types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
                 switch (c.eventType) {
                   case 'ObservationLightingCondition': return { ...p, ControlLightingCondition: true }
@@ -88,8 +90,8 @@ const mapDispatchToProps = (dispatch) => ({
   loadControlAndObservations: (id, callback) => {
     dispatch(loadControlsAndObservationsForNode(id, callback))
   },
-  loadPerson: () => {
-    dispatch(loadActor())
+  loadPerson: (data) => {
+    dispatch(loadActor(data))
   }
 })
 
@@ -118,7 +120,8 @@ export default class ObservationControlGridShow extends React.Component {
 
   componentWillMount() {
     this.props.loadControlAndObservations(this.props.params.id,
-                                          { onSuccess: () => this.props.loadPerson(),
+                                          { onSuccess: (result) => this.props.loadPerson({ data: result.filter((r) => r.doneBy)
+                                                                             .map((r) => r.doneBy) }),
                                             onFailure: () => console.log('Feil feil feil feil *********************') })
   }
   makeToolbar() {
@@ -166,7 +169,7 @@ export default class ObservationControlGridShow extends React.Component {
   render() {
     return (
       <Layout
-        title={`${this.props.unit.name} - ${this.props.translate('musit.grid.observation.header')}`}
+        title={`${this.props.unit ? this.props.unit.name : ''} - ${this.props.translate('musit.grid.observation.header')}`}
         translate={this.props.translate}
         breadcrumb={"Museum / Papirdunken / Esken inni der"}
         toolbar={this.makeToolbar()}

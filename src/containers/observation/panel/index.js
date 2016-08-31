@@ -265,7 +265,7 @@ export default class ObservationView extends React.Component {
       const fromLocation = this.props.location
                       && this.props.location.state
                       && this.props.location.state[controlType] === false;
-      const fromReducer = this.props.controlObservations[controlType] === false;
+      const fromReducer = this.props.controlObservations ? this.props.controlObservations[controlType] === false : false;
       if (fromLocation || fromReducer) {
         this.addNewControlObservationArrayOfJson(arr, obsType, defaultValuesType)
       }
