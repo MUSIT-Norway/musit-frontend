@@ -40,7 +40,8 @@ export default class StorageUnitComponent extends Component {
       tooltip: this.props.translate('musit.storageUnits.storageType.tooltip'),
       placeHolder: this.props.translate('musit.storageUnits.storageType.placeHolder'),
       value: this.props.unit.type,
-      onChange: (storageType) => this.props.updateType(storageType)
+      onChange: (storageType) => this.props.updateType(storageType),
+      maximumLength: 100
     }
     this.name = {
       id: 'name',
@@ -48,7 +49,8 @@ export default class StorageUnitComponent extends Component {
       validate: 'text',
       placeHolder: this.props.translate('musit.storageUnits.name.placeHolder'),
       value: this.props.unit.name,
-      onChange: (storageUnitName) => this.props.updateName(storageUnitName)
+      onChange: (storageUnitName) => this.props.updateName(storageUnitName),
+      maximumLength: 100
     }
     this.onAddressChange = this.onAddressChange.bind(this)
     this.areaFrom = {
@@ -58,6 +60,7 @@ export default class StorageUnitComponent extends Component {
       placeHolder: this.props.translate('musit.storageUnits.area.from.placeHolder'),
       value: this.props.unit.area,
       onChange: (areaFrom) => this.props.updateAreal1(areaFrom),
+      precision: 3
     }
     this.areaTo = {
       id: 'areaTo',
@@ -66,6 +69,7 @@ export default class StorageUnitComponent extends Component {
       placeHolder: this.props.translate('musit.storageUnits.area.to.placeHolder'),
       value: this.props.unit.areaTo,
       onChange: (areaTo) => this.props.updateAreal2(areaTo),
+      precision: 3
     }
     this.heightFrom = {
       id: 'heightFrom',
@@ -74,6 +78,7 @@ export default class StorageUnitComponent extends Component {
       placeHolder: this.props.translate('musit.storageUnits.height.from.placeHolder'),
       value: this.props.unit.height,
       onChange: (heightFrom) => this.props.updateHeight1(heightFrom),
+      precision: 3
     }
     this.heightTo = {
       id: 'heightTo',
@@ -82,6 +87,7 @@ export default class StorageUnitComponent extends Component {
       placeHolder: this.props.translate('musit.storageUnits.height.to.placeHolder'),
       value: this.props.unit.heightTo,
       onChange: (heightTo) => this.props.updateHeight2(heightTo),
+      precision: 3
     }
   }
 

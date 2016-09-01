@@ -30,6 +30,7 @@ export default class EnvironmentRequirementComponent extends Component {
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip'),
       validate: 'number',
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.temperature.placeHolder'),
+      precision: 3,
       onChange: (temperature) => {
         this.setState({
           environmentRequirement: {
@@ -61,6 +62,7 @@ export default class EnvironmentRequirementComponent extends Component {
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.tooltip'),
       validate: 'number',
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.placeHolder'),
+      precision: 3,
       onChange: (relativeHumidity) => {
         this.setState({
           environmentRequirement: {
@@ -92,6 +94,7 @@ export default class EnvironmentRequirementComponent extends Component {
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.inertAir.tooltip'),
       validate: 'number',
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.inertAir.placeHolder'),
+      precision: 3,
       onChange: (inertAir) => {
         this.setState({
           environmentRequirement: {
@@ -124,6 +127,7 @@ export default class EnvironmentRequirementComponent extends Component {
       // addOnPrefix: '\u00b1',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.renhold.tooltip'),
       validate: 'text',
+      maximumLength: 100,
       onChange: (renhold) => {
         this.setState({
           environmentRequirement: {
@@ -138,6 +142,7 @@ export default class EnvironmentRequirementComponent extends Component {
       id: 'lightCondition',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.tooltip'),
       validate: 'text',
+      maximumLength: 100,
       onChange: (lightCondition) => {
         this.setState({
           environmentRequirement: {
