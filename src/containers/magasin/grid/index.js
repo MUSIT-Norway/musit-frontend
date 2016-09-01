@@ -10,7 +10,7 @@ import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import Breadcrumb from 'react-breadcrumbs'
 import { blur } from '../../../util'
-import { Modal, ButtonToolbar, Button } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -87,7 +87,7 @@ export default class StorageUnitsContainer extends React.Component {
     history: React.PropTypes.object,
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
-    showModal: React.propTypes.bool.isRequired
+    showModal: React.PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -177,6 +177,7 @@ export default class StorageUnitsContainer extends React.Component {
             if (parentId) {
               history.push(`/magasin/${parentId}/add`)
             }
+            this.setState({ ...this.state, showModal: true })
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
@@ -219,27 +220,25 @@ export default class StorageUnitsContainer extends React.Component {
       params={router.params}
     />)
   }
+
   showModalDialog(question, onYes, onCancel) {
     return (
-      <ButtonToolbar>
-        <Modal
-          {...this.props}
-          show={this.state.showModal}
-          onHide={onCancel}
-          dialogClassName="custom-modal"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-lg">{question}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {question}
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={onYes}>Ja</Button>
-            <Button onClick={onCancel}>Close</Button>
-          </Modal.Footer>
-        </Modal>
-      </ButtonToolbar>
+      <Modal
+        show={this.state.showModal}
+        onHide={onCancel}
+        dialogClassName="custom-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-lg">{question}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {question}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={onYes}>Ja</Button>
+          <Button onClick={onCancel}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     )
   }
 
@@ -255,7 +254,9 @@ export default class StorageUnitsContainer extends React.Component {
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
         content={this.makeContentGrid(searchPattern, rootNodeData, children)}
-      />
+      >
+      {this.showModalDialog()}
+      </Layout>
     )
   }
 }
