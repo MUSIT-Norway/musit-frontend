@@ -51,30 +51,33 @@ export default class EditObservationPage extends React.Component {
   }
 
   getObservationsFromLocationState() {
-    return Object.keys(this.props.location.state).filter((o) => o.endsWith('OK')).map((o) => {
-      switch (o) {
-        case 'pestOK':
-          return { type: 'pest', data: ObservationPage.defaultPestData }
-        case 'temperatureOK':
-          return { type: 'temperature', data: {} }
-        case 'moldOK':
-          return { type: 'mold', data: {} }
-        case 'hypoxicAirOK':
-          return { type: 'hypoxicAir', data: {} }
-        case 'gasOK':
-          return { type: 'gas', data: {} }
-        case 'lightConditionsOK':
-          return { type: 'lightConditions', data: {} }
-        case 'cleaningOK':
-          return { type: 'cleaning', data: {} }
-        case 'relativeHumidityOK':
-          return { type: 'relativeHumidity', data: {} }
-        case 'alcoholOK':
-          return { type: 'alcohol', data: {} }
-        default:
-          throw Error(`Invalid control ${o}`)
+    return Object.keys(this.props.location.state)
+      .filter((o) => o.endsWith('OK') && this.props.location.state[o] === false)
+      .map((o) => {
+        switch (o) {
+          case 'pestOK':
+            return { type: 'pest', data: ObservationPage.defaultPestData }
+          case 'temperatureOK':
+            return { type: 'temperature', data: {} }
+          case 'moldOK':
+            return { type: 'mold', data: {} }
+          case 'hypoxicAirOK':
+            return { type: 'hypoxicAir', data: {} }
+          case 'gasOK':
+            return { type: 'gas', data: {} }
+          case 'lightConditionsOK':
+            return { type: 'lightConditions', data: {} }
+          case 'cleaningOK':
+            return { type: 'cleaning', data: {} }
+          case 'relativeHumidityOK':
+            return { type: 'relativeHumidity', data: {} }
+          case 'alcoholOK':
+            return { type: 'alcohol', data: {} }
+          default:
+            throw Error(`Invalid control ${o}`)
+        }
       }
-    })
+    )
   }
 
   render() {
