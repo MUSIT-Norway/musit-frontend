@@ -10,12 +10,14 @@ import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import Breadcrumb from 'react-breadcrumbs'
 import { blur } from '../../../util'
+import { Modal, ButtonToolbar, Button } from 'react-bootstrap'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   rootNode: state.storageGridUnit.root,
-  routerState: state.routing
+  routerState: state.routing,
+  showModal: state.showModal
 })
 
 
@@ -52,6 +54,7 @@ const mapDispatchToProps = (dispatch, props) => {
     onEdit: (unit) => { hashHistory.push(`/magasin/${unit.id}/view`) },
     onDelete: (id, currentNode) => { // TODO: Problems with delete slower then callback (async)
       if (id === currentNode.id) {
+        this.setState({ ...this.state, showModal: true })
         dispatch(deleteUnit(id, {
           onSuccess: () => {
             dispatch(clearRoot())
@@ -83,7 +86,8 @@ export default class StorageUnitsContainer extends React.Component {
     params: React.PropTypes.object,
     history: React.PropTypes.object,
     routerState: React.PropTypes.object,
-    loadChildren: React.PropTypes.func
+    loadChildren: React.PropTypes.func,
+    showModal: React.propTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -91,7 +95,8 @@ export default class StorageUnitsContainer extends React.Component {
     this.state = {
       searchPattern: '',
       showObjects: false,
-      showNodes: true
+      showNodes: true,
+      showModal: false
     }
   }
 
@@ -213,6 +218,29 @@ export default class StorageUnitsContainer extends React.Component {
       routes={router.routes}
       params={router.params}
     />)
+  }
+  showModalDialog(question, onYes, onCancel) {
+    return (
+      <ButtonToolbar>
+        <Modal
+          {...this.props}
+          show={this.state.showModal}
+          onHide={onCancel}
+          dialogClassName="custom-modal"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-lg">{question}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {question}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={onYes}>Ja</Button>
+            <Button onClick={onCancel}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+      </ButtonToolbar>
+    )
   }
 
   render() {
