@@ -10,7 +10,7 @@ const LOAD_ACTOR_SUCCESS = 'musit/observation/actor/LOAD_SUCCESS'
 const LOAD_ACTOR_FAIL = 'musit/observation/actor/LOAD_FAIL'
 export const initialState = {
   data: {
-    doneBy: '',
+    doneBy: {},
     doneDate: '',
     registeredBy: '',
     registeredDate: '',

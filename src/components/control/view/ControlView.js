@@ -82,8 +82,8 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="temperature"
               valueProps={{
-                fromValue: motivates.from,
-                toValue: motivates.to,
+                fromValue: JSON.stringify(motivates.from),
+                toValue: JSON.stringify(motivates.to),
                 commentValue: motivates.note
               }}
             />)
@@ -94,7 +94,7 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               valueProps={{
                 status: motivates.condition,
-                volume: motivates.volume,
+                volume: JSON.stringify(motivates.volume.toString()),
                 comment: motivates.note
               }}
             />)
@@ -127,8 +127,8 @@ export default class ControlView extends Component {
               type="inertAir"
               translate={this.props.translate}
               valueProps={{
-                fromValue: motivates.from,
-                toValue: motivates.to,
+                fromValue: JSON.stringify(motivates.from),
+                toValue: JSON.stringify(motivates.to),
                 commentValue: motivates.note
               }}
             />)
@@ -164,7 +164,7 @@ export default class ControlView extends Component {
                 observations: motivates.lifeCycles.map(lc => {
                   return {
                     lifeCycle: lc.stage,
-                    count: lc.number
+                    count: JSON.stringify(lc.number)
                   }
                 }),
                 identificationValue: motivates.identification,
@@ -178,8 +178,8 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="cleaning"
               valueProps={{
-                fromValue: motivates.from,
-                toValue: motivates.to
+                fromValue: JSON.stringify(motivates.from),
+                toValue: JSON.stringify(motivates.to)
               }}
             />)
             break
