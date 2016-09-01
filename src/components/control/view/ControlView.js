@@ -1,12 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-import {
-  ObservationFromToNumberCommentComponent // ,
-  // ObservationDoubleTextAreaComponent,
-  // ObservationStatusPercentageComment,
-  // ObservationPest
-} from '../../observation'
+import * as ObservationRender from '../../observation/render'
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -78,49 +73,113 @@ export default class ControlView extends Component {
       let lv = ''
       const { eventType, ok } = control
       if (!ok) {
+        const motivates = control['subEvents-motivates'];
         switch (eventType) {
           case 'ControlTemperature':
-            lv = (<ObservationFromToNumberCommentComponent
-              id={"temperature"}
-              fromLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')}
-              fromTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip')}
-              onChangeFrom={(value) => this.onChangeField('temperature', 'fromValue', value)}
-              toLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.labelText')}
-              toTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.tooltip')}
-              onChangeTo={(value) => this.onChangeField('temperature', 'toValue', value)}
-              commentLabel={this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment')}
-              commentTooltip={this.props.translate('musit.storageUnits.environmentRequirements.temperature.comment')}
-              commentPlaceholder={this.props.translate('musit.texts.freetext')}
-              onChangeComment={(value) => this.onChangeField('temperature', 'commentValue', value)}
-              disabled={Boolean(true)}
-              fromValue={control['subEvents-motivates'][0].from.toString()}
-              toValue={control['subEvents-motivates'][0].to.toString()}
-              commentValue={control['subEvents-motivates'][0].note.toString()}
+            lv = (<ObservationRender.RenderFromToNumberComment
+              disabled
+              translate={this.props.translate}
+              type="temperature"
+              valueProps={{
+                fromValue: motivates[0].from,
+                toValue: motivates[0].to,
+                commentValue: motivates[0].note
+              }}
             />)
             break
           case 'ControlAlcohol':
-            lv = ''
+            lv = (<ObservationRender.RenderAlcohol
+              disabled
+              translate={this.props.translate}
+              valueProps={{
+                status: motivates[0].status,
+                volume: motivates[0].volume,
+                comment: motivates[0].note
+              }}
+            />)
             break
           case 'ControlCleaning':
-            lv = ''
+            lv = (<ObservationRender.RenderDoubleTextArea
+              disabled
+              translate={this.props.translate}
+              type="cleaning"
+              valueProps={{
+                leftValue: motivates[0].from,
+                rightValue: motivates[0].to
+              }}
+            />)
             break
           case 'ControlGas':
-            lv = ''
+            lv = (<ObservationRender.RenderDoubleTextArea
+              disabled
+              type="gas"
+              translate={this.props.translate}
+              valueProps={{
+                leftValue: motivates[0].mold,
+                rightValue: motivates[0].note
+              }}
+            />)
             break
           case 'ControlHypoxicAir':
-            lv = ''
+            lv = (<ObservationRender.RenderFromToNumberComment
+              disabled
+              type="inertAir"
+              translate={this.props.translate}
+              valueProps={{
+                fromValue: motivates[0].from,
+                toValue: motivates[0].to
+              }}
+            />)
             break
           case 'ControlLightingCondition':
-            lv = ''
+            lv = (<ObservationRender.RenderDoubleTextArea
+              disabled
+              type="lux"
+              translate={this.props.translate}
+              valueProps={{
+                leftValue: motivates[0].mold,
+                rightValue: motivates[0].note
+              }}
+            />)
             break
           case 'ControlMold':
-            lv = ''
+            lv = (<ObservationRender.RenderDoubleTextArea
+              disabled
+              type="mold"
+              translate={this.props.translate}
+              valueProps={{
+                leftValue: motivates[0].mold,
+                rightValue: motivates[0].note
+              }}
+            />)
             break
           case 'ControlPest':
-            lv = ''
+            lv = (<ObservationRender.RenderPest
+              disabled
+              translate={this.props.translate}
+              canEdit={false}
+              valueProps={{
+                observations: motivates[0].lifeCycles.map(lc => {
+                  return {
+                    lifeCycle: lc.stage,
+                    count: lc.number
+                  }
+                }),
+                identificationValue: motivates[0].identification,
+                commentValue: motivates[0].note
+              }}
+            />)
             break
           case 'ControlRelativeHumidity':
-            lv = ''
+            lv = (<ObservationRender.RenderFromToNumberComment
+              disabled
+              translate={this.props.translate}
+              type="cleaning"
+              valueProps={{
+                fromValue: motivates[0].from,
+                toValue: motivates[0].to
+              }}
+            />)
             break
           default:
             lv = ''

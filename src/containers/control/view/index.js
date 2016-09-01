@@ -25,15 +25,20 @@ import { MusitField } from '../../../components/formfields'
 import Language from '../../../components/language'
 import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
+import { getActorNameFromId } from '../../../reducers/observation'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
-  controls: state.control
+  controls: state.control,
+  doneBy: state.observation.data.doneBy
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadControl: (id) => {
-    dispatch(loadControl(id))
+  loadControl: (id, callback) => {
+    dispatch(loadControl(id, callback))
+  },
+  loadPersonNameFromId: (id) => {
+    dispatch(getActorNameFromId(id))
   }
 })
 
@@ -44,11 +49,15 @@ export default class ControlViewContainer extends React.Component {
     controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
+    loadPersonNameFromId: React.PropTypes.func.isRequired,
+    doneBy: React.PropTypes.object
   }
 
   componentWillMount() {
     if (this.props.params.controlId) {
-      this.props.loadControl(this.props.params.controlId)
+      this.props.loadControl(this.props.params.controlId, {
+        onSuccess: (r) => this.props.loadPersonNameFromId(r.doneBy)
+      })
     }
   }
   render() {
@@ -78,15 +87,16 @@ export default class ControlViewContainer extends React.Component {
                 <br />
                 <DatePicker
                   dateFormat="DD.MM.YYYY"
-                  value={this.props.controls.loaded ? this.props.controls.data.doneDate : ''}
+                  value={this.props.controls.data ? this.props.controls.data.doneDate : ''}
                 />
               </Col>
               <Col sm={4} >
                 <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
                 <br />
                 <MusitField
+                  onChange={() => true}
                   id="performedBy"
-                  value={this.props.controls.loaded ? this.props.controls.data.doneBy : ''}
+                  value={this.props.doneBy ? this.props.doneBy.fn : ''}
                   validate="text"
                   disabled={Boolean(true)}
                 />
@@ -98,15 +108,16 @@ export default class ControlViewContainer extends React.Component {
                 <br />
                 <DatePicker
                   dateFormat="DD.MM.YYYY"
-                  value={this.props.controls.loaded ? this.props.controls.data.registeredDate : ''}
+                  value={this.props.controls.data ? this.props.controls.data.registeredDate : ''}
                 />
               </Col>
               <Col sm={4} >
                 <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
                 <br />
                 <MusitField
+                  onChange={() => true}
                   id="registeredBy"
-                  value={this.props.controls.loaded ? this.props.controls.data.registeredBy.toString() : ''}
+                  value={this.props.controls.data ? this.props.controls.data.registeredBy : ''}
                   validate="text"
                   disabled={Boolean(true)}
                 />
@@ -120,7 +131,7 @@ export default class ControlViewContainer extends React.Component {
                 <ControlView
                   id="1"
                   translate={translate}
-                  controlsJson={this.props.controls.loaded ? this.props.controls.data['subEvents-parts'] : null}
+                  controlsJson={this.props.controls.data && this.props.controls.data['subEvents-parts'] ? this.props.controls.data['subEvents-parts'] : null}
                 />
               </Col>
             </Row>

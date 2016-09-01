@@ -6,7 +6,7 @@ import { suggestPerson, clearSuggest } from '../../reducers/suggest'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
-import { hashHistory } from 'react-router'
+// import { hashHistory } from 'react-router'
 
 const mapStateToProps = () => {
   return {
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => ({
   onSaveObservation: (controlState) => {
     return (id, observationState) => {
       dispatch(addControl(id, controlState, observationState, {
-        onSuccess: () => hashHistory.goBack(),
+        onSuccess: () => true /* hashHistory.goBack() */,
         onFailure: () => alert('This went terribly wrong!')
       }))
     }

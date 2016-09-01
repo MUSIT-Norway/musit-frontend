@@ -1,7 +1,6 @@
 import { parseObservation } from '../../observation/mapper/to_backend'
 
 export const mapToBackend = (state, observations) => {
-  debugger;
   const r = {}
   r.eventType = 'Control'
   r.doneBy = state.doneBy.id
@@ -67,9 +66,9 @@ export const mapToBackend = (state, observations) => {
         throw Error(`Unsupported control state key: ${key}`)
     }
     const observationKey = key.substring(0, key.length - 2)
-    const index = observations.observations.findIndex(r => r.type === observationKey)
+    const index = observations.observations.findIndex(o => o.type === observationKey)
     if (index >= 0) {
-      control["subEvents-motivates"] = [parseObservation(observations.observations[index])]
+      control['subEvents-motivates'] = [parseObservation(observations.observations[index])]
     }
     return control;
   })

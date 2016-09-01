@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import {
   ObservationFromToNumberCommentComponent,
   ObservationDoubleTextAreaComponent,
@@ -9,7 +9,7 @@ import {
 export const RenderAlcohol = (props) => {
   return (
     <ObservationStatusPercentageComment
-      {...props.valueProps}
+      disabled={props.disabled}
       statusValue={props.valueProps.status}
       statusLabel={props.translate('musit.observation.page.alcohol.statusLabel')}
       statusTooltip={props.translate('musit.observation.page.alcohol.statusTooltip')}
@@ -36,11 +36,28 @@ export const RenderAlcohol = (props) => {
   )
 }
 
+RenderAlcohol.propTypes = {
+  translate: PropTypes.func.isRequired,
+  onChangeField: PropTypes.func,
+  index: PropTypes.number,
+  valueProps: PropTypes.shape({
+    status: PropTypes.string,
+    volume: PropTypes.string,
+    comment: PropTypes.string
+  }).isRequired,
+  disabled: PropTypes.bool,
+  canEdit: PropTypes.bool
+}
+
+RenderAlcohol.defaultProps = {
+  onChangeField: () => true
+}
+
 export const RenderPest = (props) => {
   return (
     <ObservationPest
-      disabled={props.mode === 'VIEW'}
-      canEdit={props.mode !== 'VIEW'}
+      disabled={props.disabled}
+      canEdit={props.canEdit}
       observations={props.valueProps.observations}
       lifeCycleLabel={props.translate('musit.observation.pest.lifeCycleLabel')}
       lifeCyclePlaceHolder={props.translate('musit.texts.makeChoice')}
@@ -76,11 +93,33 @@ export const RenderPest = (props) => {
   )
 }
 
+RenderPest.propTypes = {
+  translate: PropTypes.func.isRequired,
+  onChangePestObservation: PropTypes.func,
+  onClickAddObservation: PropTypes.func,
+  onRemovePestObservation: PropTypes.func,
+  index: PropTypes.number,
+  valueProps: PropTypes.shape({
+    observations: PropTypes.arrayOf(PropTypes.object),
+    identificationValue: PropTypes.string,
+    commentValue: PropTypes.string
+  }).isRequired,
+  disabled: PropTypes.bool,
+  canEdit: PropTypes.bool
+}
+
+RenderPest.defaultProps = {
+  onChangePestObservation: () => true,
+  onClickAddObservation: () => true,
+  onRemovePestObservation: () => true,
+  canEdit: true
+}
+
 export const RenderDoubleTextArea = (props) => {
   return (
     <ObservationDoubleTextAreaComponent
       {...props.valueProps}
-      disabled={props.mode === 'VIEW'}
+      disabled={props.disabled}
       leftLabel={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.labelText`)}
       leftTooltip={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.tooltip`)}
       leftPlaceHolder={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.placeHolder`)}
@@ -93,11 +132,28 @@ export const RenderDoubleTextArea = (props) => {
   )
 }
 
+RenderDoubleTextArea.propTypes = {
+  translate: PropTypes.func.isRequired,
+  onChangeField: PropTypes.func,
+  index: PropTypes.number,
+  valueProps: PropTypes.shape({
+    leftValue: PropTypes.string,
+    rightValue: PropTypes.string
+  }).isRequired,
+  type: PropTypes.string.isRequired,
+  disabled: PropTypes.bool
+}
+
+RenderDoubleTextArea.defaultProps = {
+  onChangeField: () => true
+}
+
+
 export const RenderFromToNumberComment = (props) => {
   return (
     <ObservationFromToNumberCommentComponent
       {...props.valueProps}
-      disabled={props.mode === 'VIEW'}
+      disabled={props.disabled}
       fromLabel={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.labelText`)}
       fromTooltip={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.tooltip`)}
       fromPlaceHolder={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.placeHolder`)}
@@ -112,4 +168,21 @@ export const RenderFromToNumberComment = (props) => {
       onChangeComment={(value) => props.onChangeField('commentValue', value, props.index)}
     />
   )
+}
+
+RenderFromToNumberComment.propTypes = {
+  translate: PropTypes.func.isRequired,
+  onChangeField: PropTypes.func,
+  index: PropTypes.number,
+  valueProps: PropTypes.shape({
+    fromValue: PropTypes.string,
+    toValue: PropTypes.string,
+    commentValue: PropTypes.string
+  }).isRequired,
+  type: PropTypes.string.isRequired,
+  disabled: PropTypes.bool
+}
+
+RenderFromToNumberComment.defaultProps = {
+  onChangeField: () => true
 }

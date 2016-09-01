@@ -30,7 +30,7 @@ export default class ObservationPage extends React.Component {
     cancelDisabled: false
   }
 
-  static defaultPestData = {observations: [{lifeCycle: '', count: ''}]}
+  static defaultPestData = { observations: [{ lifeCycle: '', count: '' }] }
 
   constructor(props) {
     super(props)
@@ -61,8 +61,8 @@ export default class ObservationPage extends React.Component {
 
   onChangeField(field, value, index) {
     const observations = [...this.state.observations]
-    observations[index] = {...observations[index], data: {...observations[index].data, [field]: value}}
-    this.setState({...this.state, observations})
+    observations[index] = { ...observations[index], data: { ...observations[index].data, [field]: value } }
+    this.setState({ ...this.state, observations })
   }
 
   onChangePestObservation(pestObservationIndex, field, value, pestIndex) {
@@ -70,22 +70,22 @@ export default class ObservationPage extends React.Component {
     const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
     pestObservations[pestObservationIndex][field] = value
-    this.setState({...this.state, observations: observations})
+    this.setState({ ...this.state, observations: observations })
   }
 
   onRemovePestObservation(pestObservationIndex, pestIndex) {
     const observationsCopy = [...this.state.observations]
     const pestObj = observationsCopy[pestIndex]
     pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex)
-    this.setState({...this.state, observations: observationsCopy})
+    this.setState({ ...this.state, observations: observationsCopy })
   }
 
   onClickAddObservation(pestIndex) {
     const observationsCopy = [...this.state.observations]
     const pestObj = observationsCopy[pestIndex]
     const pestObservations = pestObj.data.observations
-    pestObservations.unshift({lifeCycle: '', count: ''})
-    this.setState({...this.state, observations: observationsCopy})
+    pestObservations.unshift({ lifeCycle: '', count: '' })
+    this.setState({ ...this.state, observations: observationsCopy })
   }
 
   onChangeTypeSelect(e) {
@@ -100,20 +100,20 @@ export default class ObservationPage extends React.Component {
   }
 
   typeDefinitions = {
-    '': {label: 'typeSelect.labelText'},
-    gas: {label: 'gas.labelText', render: this._renderDoubleTextArea},
-    lux: {label: 'lux.labelText', render: this._renderDoubleTextArea},
-    cleaning: {label: 'cleaning.labelText', render: this._renderDoubleTextArea},
-    pest: {label: 'pest.labelText', render: this._renderPest, data: ObservationPage.defaultPestData},
-    mold: {label: 'mold.labelText', render: this._renderDoubleTextArea},
-    skallsikring: {label: 'skallsikring.labelText', render: this._renderDoubleTextArea},
-    tyverisikring: {label: 'tyverisikring.labelText', render: this._renderDoubleTextArea},
-    brannsikring: {label: 'brannsikring.labelText', render: this._renderDoubleTextArea},
-    vannskaderisiko: {label: 'vannskaderisiko.labelText', render: this._renderDoubleTextArea},
-    relativeHumidity: {label: 'rh.labelText', render: this._renderFromToNumberComment},
-    inertAir: {label: 'hypoxicAir.labelText', render: this._renderFromToNumberComment},
-    temperature: {label: 'temperature.labelText', render: this._renderFromToNumberComment},
-    alcohol: {label: 'alcohol.labelText', render: this._renderAlcohol}
+    '': { label: 'typeSelect.labelText' },
+    gas: { label: 'gas.labelText', render: this.renderDoubleTextArea },
+    lux: { label: 'lux.labelText', render: this.renderDoubleTextArea },
+    cleaning: { label: 'cleaning.labelText', render: this.renderDoubleTextArea },
+    pest: { label: 'pest.labelText', render: this.renderPest, data: ObservationPage.defaultPestData },
+    mold: { label: 'mold.labelText', render: this.renderDoubleTextArea },
+    skallsikring: { label: 'skallsikring.labelText', render: this.renderDoubleTextArea },
+    tyverisikring: { label: 'tyverisikring.labelText', render: this.renderDoubleTextArea },
+    brannsikring: { label: 'brannsikring.labelText', render: this.renderDoubleTextArea },
+    vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderDoubleTextArea },
+    relativeHumidity: { label: 'rh.labelText', render: this.renderFromToNumberComment },
+    inertAir: { label: 'hypoxicAir.labelText', render: this.renderFromToNumberComment },
+    temperature: { label: 'temperature.labelText', render: this.renderFromToNumberComment },
+    alcohol: { label: 'alcohol.labelText', render: this.renderAlcohol }
   }
 
   addObservationType(typeToAdd, data = {}) {
@@ -121,9 +121,9 @@ export default class ObservationPage extends React.Component {
     if (!type || type === '') {
       return
     }
-    const typeProps = {...data, ...this.typeDefinitions[type].data}
-    const observations = [{type, data: typeProps}, ...this.state.observations]
-    this.setState({...this.state, observations, selectedType: null})
+    const typeProps = { ...data, ...this.typeDefinitions[type].data }
+    const observations = [{ type, data: typeProps }, ...this.state.observations]
+    this.setState({ ...this.state, observations, selectedType: null })
   }
 
   isTypeSelectable(typeStr) {
@@ -132,7 +132,7 @@ export default class ObservationPage extends React.Component {
 
   removeObservation(index) {
     const observations = this.state.observations
-    this.setState({...this.state, observations: observations.filter((o, i) => i !== index)})
+    this.setState({ ...this.state, observations: observations.filter((o, i) => i !== index) })
   }
 
   renderObservation(observation, index) {
@@ -140,18 +140,21 @@ export default class ObservationPage extends React.Component {
     return typeDefinition.render.bind(this)(observation.type, observation.data, index)
   }
 
-  _renderAlcohol(id, valueProps, index) {
-    return <RenderAlcohol
+  renderAlcohol(id, valueProps, index) {
+    return (<RenderAlcohol
+      disabled={this.props.mode === 'VIEW'}
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />
+    />)
   }
 
-  _renderPest(id, valueProps, index) {
-    return <RenderPest
+  renderPest(id, valueProps, index) {
+    return (<RenderPest
+      disabled={this.props.mode === 'VIEW'}
+      canEdit={this.props.mode !== 'VIEW'}
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
@@ -160,29 +163,31 @@ export default class ObservationPage extends React.Component {
       onChangePestObservation={this.onChangePestObservation}
       onRemovePestObservation={this.onRemovePestObservation}
       onClickAddObservation={this.onClickAddObservation}
-    />
+    />)
   }
 
-  _renderDoubleTextArea(id, valueProps, index) {
-    return <RenderDoubleTextArea
+  renderDoubleTextArea(id, valueProps, index) {
+    return (<RenderDoubleTextArea
+      disabled={this.props.mode === 'VIEW'}
       type={id}
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />
+    />)
   }
 
-  _renderFromToNumberComment(id, valueProps, index) {
-    return <RenderFromToNumberComment
+  renderFromToNumberComment(id, valueProps, index) {
+    return (<RenderFromToNumberComment
+      disabled={this.props.mode === 'VIEW'}
       type={id}
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />
+    />)
   }
 
   render() {
@@ -194,7 +199,7 @@ export default class ObservationPage extends React.Component {
             <Row>
               <Col xs={12} sm={5}>
                 <ControlLabel>{this.props.translate('musit.observation.date')}</ControlLabel>
-                {this.props.mode === 'VIEW' || this.props.mode === 'EDIT' ? (
+                {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
                     value={this.state.doneDate}
@@ -213,7 +218,7 @@ export default class ObservationPage extends React.Component {
               </Col>
               <Col xs={12} sm={5}>
                 <ControlLabel>{this.props.translate('musit.observation.doneBy')}</ControlLabel>
-                {this.props.mode === 'VIEW' || this.props.mode === 'EDIT'  ? (
+                {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
                     value={this.state.doneBy ? this.state.doneBy.fn : ''}
