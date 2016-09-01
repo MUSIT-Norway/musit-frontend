@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { MusitDropDownField as MusitDropDown, MusitField as TextField } from '../../components/formfields'
+import { MusitDropDownField as MusitDropDown, MusitField } from '../../components/formfields'
 import { Panel, Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
 import Autosuggest from 'react-autosuggest'
 
@@ -33,34 +33,6 @@ export default class StorageUnitComponent extends Component {
 
   constructor(props) {
     super(props)
-
-    this.areal = {
-      controlId: 'areal1',
-      controlId2: 'areal2',
-      labelText: 'Areal (fra - til)',
-      tooltip: 'Areal (fra - til)',
-      validate: 'number',
-      placeHolderText: 'enter areal 1 here',
-      placeHolderText2: 'enter areal 2 here',
-      valueText: () => this.props.unit.area,
-      valueText2: () => this.props.unit.areaTo,
-      onChange1: (area) => this.props.updateAreal1(area),
-      onChange2: (areal2) => this.props.updateAreal2(areal2)
-    }
-    this.hoyde = {
-      controlId: 'hoyde1',
-      controlId2: 'hoyde2',
-      labelText: 'Høyde(fra - til)',
-      tooltip: 'Høyde (fra - til)',
-      validate: 'number',
-      placeHolderText: 'enter høyde 1 here',
-      placeHolderText2: 'enter høyde 2 here',
-      valueText: () => this.props.unit.height,
-      valueText2: () => this.props.unit.heightTo,
-      onChange1: (height) => this.props.updateHeight1(height),
-      onChange2: (height2) => this.props.updateHeight2(height2)
-    }
-
     this.type = {
       controlId: 'type',
       labelText: 'Type',
@@ -72,15 +44,46 @@ export default class StorageUnitComponent extends Component {
       onChange: (storageType) => this.props.updateType(storageType)
     }
     this.name = {
-      controlId: 'name',
-      labelText: 'Navn',
-      tooltip: 'Navn',
-      placeHolderText: 'enter name here',
+      id: 'name',
+      tooltip: this.props.translate('musit.storageUnits.name.tooltip'),
       validate: 'text',
-      valueText: () => this.props.unit.name,
+      placeHolder: this.props.translate('musit.storageUnits.name.placeHolder'),
+      value: this.props.unit.name,
       onChange: (storageUnitName) => this.props.updateName(storageUnitName)
     }
     this.onAddressChange = this.onAddressChange.bind(this)
+    this.areaFrom = {
+      id: 'areaFrom',
+      tooltip: this.props.translate('musit.storageUnits.area.from.tooltip'),
+      validate: 'number',
+      placeHolder: this.props.translate('musit.storageUnits.area.from.placeHolder'),
+      value: this.props.unit.area,
+      onChange: (areaFrom) => this.props.updateAreal1(areaFrom),
+    }
+    this.areaTo = {
+      id: 'areaTo',
+      tooltip: this.props.translate('musit.storageUnits.area.to.tooltip'),
+      validate: 'number',
+      placeHolder: this.props.translate('musit.storageUnits.area.to.placeHolder'),
+      value: this.props.unit.areaTo,
+      onChange: (areaTo) => this.props.updateAreal2(areaTo),
+    }
+    this.heightFrom = {
+      id: 'heightFrom',
+      tooltip: this.props.translate('musit.storageUnits.height.from.tooltip'),
+      validate: 'number',
+      placeHolder: this.props.translate('musit.storageUnits.height.from.placeHolder'),
+      value: this.props.unit.height,
+      onChange: (heightFrom) => this.props.updateHeight1(heightFrom),
+    }
+    this.heightTo = {
+      id: 'heightTo',
+      tooltip: this.props.translate('musit.storageUnits.height.to.tooltip'),
+      validate: 'number',
+      placeHolder: this.props.translate('musit.storageUnits.height.to.placeHolder'),
+      value: this.props.unit.heightTo,
+      onChange: (heightTo) => this.props.updateHeight2(heightTo),
+    }
   }
 
   onAddressChange(event, { newValue }) {
@@ -99,11 +102,11 @@ export default class StorageUnitComponent extends Component {
   }
 
   render() {
-    const renderFieldBlock = (bindValue, fieldProps, label) => (
+    const renderFieldBlock = (fieldProps, label) => (
       <FormGroup>
         <label className="col-sm-3 control-label" htmlFor="comments2">{label}</label>
         <div class="col-sm-9" is="null">
-          <TextField {...fieldProps} value={bindValue} />
+          <MusitField {...fieldProps} />
         </div>
       </FormGroup>
     )
@@ -164,7 +167,7 @@ export default class StorageUnitComponent extends Component {
                 </Col>
                 <Col md={6}>
                   <Form horizontal>
-                    {renderFieldBlock(this.name.valueText(), this.name, this.name.labelText)}
+                    {renderFieldBlock(this.name, this.props.translate('musit.storageUnits.name.label'))}
                   </Form>
                 </Col>
               </Row>
@@ -173,23 +176,15 @@ export default class StorageUnitComponent extends Component {
                   <form className="form-horizontal">
                     <div className="form-group">
                       <label className="col-sm-3 control-label" htmlFor="comments2">
-                        {this.areal.labelText}</label>
+                        {this.props.translate('musit.storageUnits.area.from.label')}</label>
                       <div class="col-sm-5" is="null">
-                        <TextField
-                          id={this.areal.controlId}
-                          value={this.areal.valueText()}
-                          onChange={this.areal.onChange1}
-                          placeHolder={this.areal.placeHolderText}
-                          validate={this.areal.validate}
+                        <MusitField
+                          {...this.areaFrom}
                         />
                       </div>
                       <div class="col-sm-4" is="null">
-                        <TextField
-                          id={this.areal.controlId2}
-                          value={this.areal.valueText2()}
-                          onChange={this.areal.onChange2}
-                          placeHolder={this.areal.placeHolderText2}
-                          validate={this.areal.validate}
+                        <MusitField
+                          {...this.areaTo}
                         />
                       </div>
                     </div>
@@ -199,23 +194,15 @@ export default class StorageUnitComponent extends Component {
                   <Form horizontal>
                     <div className="form-group">
                       <label className="col-sm-3 control-label" htmlFor="controlId">
-                        {this.hoyde.labelText}</label>
+                        {this.props.translate('musit.storageUnits.height.from.label')}</label>
                       <div class="col-sm-5" is="null">
-                        <TextField
-                          id={this.hoyde.controlId}
-                          value={this.hoyde.valueText()}
-                          onChange={this.hoyde.onChange1}
-                          placeHolder={this.hoyde.placeHolderText}
-                          validate={this.areal.validate}
+                        <MusitField
+                          {...this.heightFrom}
                         />
                       </div>
                       <div class="col-sm-4" is="null">
-                        <TextField
-                          id={this.hoyde.controlId2}
-                          value={this.hoyde.valueText2()}
-                          onChange={this.hoyde.onChange2}
-                          placeHolder={this.hoyde.placeHolderText2}
-                          validate={this.areal.validate}
+                        <MusitField
+                          {...this.heightTo}
                         />
                       </div>
                     </div>
