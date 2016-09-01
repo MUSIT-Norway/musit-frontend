@@ -107,7 +107,7 @@ export default class ObservationPage extends React.Component {
   typeDefinitions = {
     '': { label: 'typeSelect.labelText' },
     gas: { label: 'gas.labelText', render: this.renderDoubleTextArea },
-    lux: { label: 'lux.labelText', render: this.renderDoubleTextArea },
+    lightConditions: { label: 'lux.labelText', render: this.renderDoubleTextArea },
     cleaning: { label: 'cleaning.labelText', render: this.renderDoubleTextArea },
     pest: { label: 'pest.labelText', render: this.renderPest, data: ObservationPage.defaultPestData },
     mold: { label: 'mold.labelText', render: this.renderDoubleTextArea },

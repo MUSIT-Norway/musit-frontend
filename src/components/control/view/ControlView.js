@@ -139,7 +139,7 @@ export default class ControlView extends Component {
               type="lux"
               translate={this.props.translate}
               valueProps={{
-                leftValue: motivates.mold,
+                leftValue: motivates.lightingCondition,
                 rightValue: motivates.note
               }}
             />)
@@ -179,7 +179,8 @@ export default class ControlView extends Component {
               type="cleaning"
               valueProps={{
                 fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to)
+                toValue: JSON.stringify(motivates.to),
+                commentValue: motivates.note
               }}
             />)
             break

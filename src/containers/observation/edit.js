@@ -64,7 +64,7 @@ export default class EditObservationPage extends React.Component {
         case 'gasOK':
           return { type: 'gas', data: {} }
         case 'lightConditionsOK':
-          return { type: 'lux', data: {} }
+          return { type: 'lightConditions', data: {} }
         case 'cleaningOK':
           return { type: 'cleaning', data: {} }
         case 'relativeHumidityOK':
