@@ -8,7 +8,7 @@ export const mapToBackend = (state, observations) => {
   r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
     let control
     switch (key) {
-      case 'inertAirOK':
+      case 'hypoxicAirOK':
         control = {
           eventType: 'ControlHypoxicAir',
           ok: state[key]
@@ -69,10 +69,7 @@ export const mapToBackend = (state, observations) => {
       const observationKey = key.substring(0, key.length - 2)
       const index = observations.observations.findIndex(o => o.type === observationKey)
       if (index >= 0) {
-        const observation = observations.observations[index];
-        if (observation.type === 'inertAir') {
-          observation.type = 'hypoxicAir'
-        }
+        const observation = observations.observations[index]
         control['subEvents-motivates'] = [parseObservation(observation)]
       }
     }

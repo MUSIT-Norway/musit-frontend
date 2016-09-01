@@ -184,7 +184,7 @@ export default class ControlAddContainer extends React.Component {
         rightValue: this.state.relativeHumidityInterval
       },
       {
-        key: 'inertAir',
+        key: 'hypoxicAir',
         leftValue: this.state.inertAir,
         rightValue: this.state.inertAirInterval
       },

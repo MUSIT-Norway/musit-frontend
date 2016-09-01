@@ -59,8 +59,8 @@ export default class EditObservationPage extends React.Component {
           return { type: 'temperature', data: {} }
         case 'moldOK':
           return { type: 'mold', data: {} }
-        case 'inertAirOK':
-          return { type: 'inertAir', data: {} }
+        case 'hypoxicAirOK':
+          return { type: 'hypoxicAir', data: {} }
         case 'gasOK':
           return { type: 'gas', data: {} }
         case 'lightConditionsOK':

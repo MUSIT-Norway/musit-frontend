@@ -95,7 +95,6 @@ export default class ObservationPest extends Component {
         </span>
         <hr />
         {this.props.observations.map((observation, index) => {
-          console.log(observation)
           return (
             <Row key={index}>
               <Col xs={6} sm={3} md={3}>

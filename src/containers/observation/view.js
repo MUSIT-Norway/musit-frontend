@@ -6,7 +6,6 @@ import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 
 const mapStateToProps = (state) => {
-  console.log(state.observation)
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
     doneBy: state.observation.data.doneBy,
