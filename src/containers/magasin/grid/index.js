@@ -18,6 +18,7 @@ const mapStateToProps = (state) => ({
   routerState: state.routing
 })
 
+
 const mapDispatchToProps = (dispatch, props) => {
   const { history } = props
 
@@ -102,8 +103,6 @@ export default class StorageUnitsContainer extends React.Component {
       this.props.loadStorageUnits()
     }
   }
-
-
   componentWillReceiveProps(newProps) {
         // Issued on every propchange, including local route changes
     if (newProps.params.splat !== this.props.params.splat) {
