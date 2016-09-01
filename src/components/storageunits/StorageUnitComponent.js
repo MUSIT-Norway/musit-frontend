@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { MusitDropDownField as MusitDropDown, MusitField } from '../../components/formfields'
+import { MusitDropDownField, MusitField } from '../../components/formfields'
 import { Panel, Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
 import Autosuggest from 'react-autosuggest'
 
@@ -34,13 +34,12 @@ export default class StorageUnitComponent extends Component {
   constructor(props) {
     super(props)
     this.type = {
-      controlId: 'type',
-      labelText: 'Type',
+      id: 'type',
       items: ['StorageUnit', 'Room', 'Building', 'Organization'],
       validate: 'text',
-      tooltip: 'Type lagringsenhet',
-      placeHolder: 'velg type here',
-      valueText: () => this.props.unit.type,
+      tooltip: this.props.translate('musit.storageUnits.storageType.tooltip'),
+      placeHolder: this.props.translate('musit.storageUnits.storageType.placeHolder'),
+      value: this.props.unit.type,
       onChange: (storageType) => this.props.updateType(storageType)
     }
     this.name = {
@@ -104,7 +103,7 @@ export default class StorageUnitComponent extends Component {
   render() {
     const renderFieldBlock = (fieldProps, label) => (
       <FormGroup>
-        <label className="col-sm-3 control-label" htmlFor="comments2">{label}</label>
+        <label className="col-sm-3 control-label" htmlFor="name">{label}</label>
         <div class="col-sm-9" is="null">
           <MusitField {...fieldProps} />
         </div>
@@ -112,7 +111,7 @@ export default class StorageUnitComponent extends Component {
     )
     const inputAddressProps = {
       id: 'addressField',
-      placeholder: 'addresse',
+      placeholder: this.props.translate('musit.storageUnits.address.placeHolder'),
       value: this.props.unit.address,
       type: 'search',
       onChange: this.onAddressChange
@@ -125,11 +124,11 @@ export default class StorageUnitComponent extends Component {
     const suggestions = addressField && addressField.data ? addressField.data : [];
 
     const addressBlock = (
-      <Row>
-        <Col md={3}>
-          <label htmlFor={'addressField'}>Adresse</label>
-        </Col>
-        <Col md={9}>
+      <FormGroup>
+        <label className="col-sm-3 control-label" htmlFor="address">
+          {this.props.translate('musit.storageUnits.address.label')}
+        </label>
+        <div class="col-sm-9" is="null">
           <Autosuggest
             suggestions={suggestions}
             onSuggestionsUpdateRequested={onAddressSuggestionsUpdateRequested}
@@ -138,8 +137,8 @@ export default class StorageUnitComponent extends Component {
             inputProps={inputAddressProps}
             shouldRenderSuggestions={(v) => v !== 'undefined'}
           />
-        </Col>
-      </Row>
+        </div>
+      </FormGroup>
     )
 
     return (
@@ -152,22 +151,27 @@ export default class StorageUnitComponent extends Component {
                   <form className="form-horizontal">
                     <form className="form-group">
                       <label className="col-sm-3 control-label" htmlFor="storageUnitType">
-                        {this.type.labelText}</label>
+                        {this.props.translate('musit.storageUnits.storageType.label')}</label>
                       <div class="col-sm-5" is="null">
-                        <MusitDropDown
+                        <MusitDropDownField
                           {...this.type}
-                          id={this.type.controlId}
-                          value={this.type.valueText()}
                           translate={this.props.translate}
-                          translateKey={'musit.storageUnits.storageType.items.'}
+                          translateKeyPrefix={'musit.storageUnits.storageType.items.'}
                         />
                       </div>
                     </form>
                   </form>
                 </Col>
+              </Row>
+              <Row>
                 <Col md={6}>
                   <Form horizontal>
                     {renderFieldBlock(this.name, this.props.translate('musit.storageUnits.name.label'))}
+                  </Form>
+                </Col>
+                <Col md={6}>
+                  <Form horizontal>
+                    {this.props.unit.type === 'Building' ? addressBlock : null}
                   </Form>
                 </Col>
               </Row>
@@ -209,11 +213,6 @@ export default class StorageUnitComponent extends Component {
                   </Form>
                 </Col>
               </Row >
-              <Row>
-                <Col md={6}>
-                  {this.props.unit.type === 'building' ? addressBlock : null}
-                </Col>
-              </Row>
             </Grid>
           </Panel>
         </main>

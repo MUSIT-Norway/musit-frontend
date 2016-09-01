@@ -43,6 +43,7 @@ export default class MusitDropDownField extends Component {
         id={this.props.id}
         disabled={this.props.disabled}
         name="form-field-name"
+        placeHolder={this.props.placeHolder}
         value={v}
         options={options}
         onChange={(event) => this.props.onChange(event.value)}

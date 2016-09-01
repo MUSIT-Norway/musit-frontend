@@ -354,12 +354,12 @@ no:
       storageType:
         label: "Type"
         placeHolder: "velg type"
-        tooltip: "Type tooltip"
+        tooltip: "Type lagringsenhet"
         items:
-          storageUnit: "Lagringsenhet"
-          room: "Rom"
-          building: "Bygning"
-          organization: "Organisasjon"
+          StorageUnit: "Lagringsenhet"
+          Room: "Rom"
+          Building: "Bygning"
+          Organization: "Organisasjon"
       name:
         label: "Navn"
         placeHolder: " "
@@ -397,7 +397,6 @@ no:
         temperature: "Temperatur"
         lightingCondition: "Lysforhold"
         preventiveConservation: "Preventiv konservering"
-
       environmentRequirements:
         temperature:
           labelText: "Temperatur"
