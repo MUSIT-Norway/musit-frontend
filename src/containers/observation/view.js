@@ -57,14 +57,6 @@ export default class ViewObservationPage extends React.Component {
         title="Magasin"
         translate={this.props.translate}
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
-        toolbar={<span />}
-        leftMenu={
-          <div
-            style={{
-              minHeight: 400
-            }}
-          />
-        }
         content={
           <div>
             <center><h4>{this.props.translate('musit.observation.page.titles.view')}</h4></center>

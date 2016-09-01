@@ -111,6 +111,7 @@ export default class ObservationPage extends React.Component {
     brannsikring: { label: 'brannsikring.labelText', render: this.renderDoubleTextArea },
     vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderDoubleTextArea },
     relativeHumidity: { label: 'rh.labelText', render: this.renderFromToNumberComment },
+    rh: { label: 'rh.labelText', render: this.renderFromToNumberComment },
     inertAir: { label: 'hypoxicAir.labelText', render: this.renderFromToNumberComment },
     temperature: { label: 'temperature.labelText', render: this.renderFromToNumberComment },
     alcohol: { label: 'alcohol.labelText', render: this.renderAlcohol }

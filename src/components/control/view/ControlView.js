@@ -73,7 +73,8 @@ export default class ControlView extends Component {
       let lv = ''
       const { eventType, ok } = control
       if (!ok) {
-        const motivates = control['subEvents-motivates'];
+        const motivatesArr = control['subEvents-motivates'];
+        const motivates = motivatesArr ? motivatesArr[0] : {}
         switch (eventType) {
           case 'ControlTemperature':
             lv = (<ObservationRender.RenderFromToNumberComment
@@ -81,9 +82,9 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="temperature"
               valueProps={{
-                fromValue: motivates[0].from,
-                toValue: motivates[0].to,
-                commentValue: motivates[0].note
+                fromValue: motivates.from,
+                toValue: motivates.to,
+                commentValue: motivates.note
               }}
             />)
             break
@@ -92,9 +93,9 @@ export default class ControlView extends Component {
               disabled
               translate={this.props.translate}
               valueProps={{
-                status: motivates[0].status,
-                volume: motivates[0].volume,
-                comment: motivates[0].note
+                status: motivates.condition,
+                volume: motivates.volume,
+                comment: motivates.note
               }}
             />)
             break
@@ -104,8 +105,8 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="cleaning"
               valueProps={{
-                leftValue: motivates[0].from,
-                rightValue: motivates[0].to
+                leftValue: motivates.cleaning,
+                rightValue: motivates.note
               }}
             />)
             break
@@ -115,8 +116,8 @@ export default class ControlView extends Component {
               type="gas"
               translate={this.props.translate}
               valueProps={{
-                leftValue: motivates[0].mold,
-                rightValue: motivates[0].note
+                leftValue: motivates.gas,
+                rightValue: motivates.note
               }}
             />)
             break
@@ -126,8 +127,9 @@ export default class ControlView extends Component {
               type="inertAir"
               translate={this.props.translate}
               valueProps={{
-                fromValue: motivates[0].from,
-                toValue: motivates[0].to
+                fromValue: motivates.from,
+                toValue: motivates.to,
+                commentValue: motivates.note
               }}
             />)
             break
@@ -137,8 +139,8 @@ export default class ControlView extends Component {
               type="lux"
               translate={this.props.translate}
               valueProps={{
-                leftValue: motivates[0].mold,
-                rightValue: motivates[0].note
+                leftValue: motivates.mold,
+                rightValue: motivates.note
               }}
             />)
             break
@@ -148,8 +150,8 @@ export default class ControlView extends Component {
               type="mold"
               translate={this.props.translate}
               valueProps={{
-                leftValue: motivates[0].mold,
-                rightValue: motivates[0].note
+                leftValue: motivates.mold,
+                rightValue: motivates.note
               }}
             />)
             break
@@ -159,14 +161,14 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               canEdit={false}
               valueProps={{
-                observations: motivates[0].lifeCycles.map(lc => {
+                observations: motivates.lifeCycles.map(lc => {
                   return {
                     lifeCycle: lc.stage,
                     count: lc.number
                   }
                 }),
-                identificationValue: motivates[0].identification,
-                commentValue: motivates[0].note
+                identificationValue: motivates.identification,
+                commentValue: motivates.note
               }}
             />)
             break
@@ -176,8 +178,8 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="cleaning"
               valueProps={{
-                fromValue: motivates[0].from,
-                toValue: motivates[0].to
+                fromValue: motivates.from,
+                toValue: motivates.to
               }}
             />)
             break

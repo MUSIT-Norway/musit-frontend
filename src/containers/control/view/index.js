@@ -26,6 +26,7 @@ import Language from '../../../components/language'
 import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
+import Layout from '../../../layout'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -62,83 +63,77 @@ export default class ControlViewContainer extends React.Component {
   }
   render() {
     const { translate } = this.props
-
-    const closeBtn = (
-      <Row>
-        <Col style={{ border: 'none', textAlign: 'center' }}>
-          <Button onClick={() => { hashHistory.goBack() }}>
-            Lukk
-          </Button>
-        </Col>
-      </Row>
-    )
-
     return (
-      <div>
-        <main>
-          <Grid>
-            <Row>
-              <br />
-              <br />
-            </Row>
-            <Row>
-              <Col sm={4} smOffset={2}>
-                <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
+      <Layout
+        title="Magasin"
+        translate={this.props.translate}
+        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        content={
+          <div>
+            <h4>View control</h4>
+            <Grid>
+              <Row>
+                <Col sm={4}>
+                  <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
+                  <br />
+                  <DatePicker
+                    dateFormat="DD.MM.YYYY"
+                    value={this.props.controls.data ? this.props.controls.data.doneDate : ''}
+                  />
+                </Col>
+                <Col sm={4} >
+                  <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
+                  <br />
+                  <MusitField
+                    onChange={() => true}
+                    id="performedBy"
+                    value={this.props.doneBy ? this.props.doneBy.fn : ''}
+                    validate="text"
+                    disabled={Boolean(true)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={4}>
+                  <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
+                  <br />
+                  <DatePicker
+                    dateFormat="DD.MM.YYYY"
+                    value={this.props.controls.data ? this.props.controls.data.registeredDate : ''}
+                  />
+                </Col>
+                <Col sm={4} >
+                  <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
+                  <br />
+                  <MusitField
+                    onChange={() => true}
+                    id="registeredBy"
+                    value={this.props.controls.data ? this.props.controls.data.registeredBy : ''}
+                    validate="text"
+                    disabled={Boolean(true)}
+                  />
+                </Col>
+              </Row>
+              <Row>
                 <br />
-                <DatePicker
-                  dateFormat="DD.MM.YYYY"
-                  value={this.props.controls.data ? this.props.controls.data.doneDate : ''}
-                />
-              </Col>
-              <Col sm={4} >
-                <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
-                <br />
-                <MusitField
-                  onChange={() => true}
-                  id="performedBy"
-                  value={this.props.doneBy ? this.props.doneBy.fn : ''}
-                  validate="text"
-                  disabled={Boolean(true)}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={4} smOffset={2}>
-                <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
-                <br />
-                <DatePicker
-                  dateFormat="DD.MM.YYYY"
-                  value={this.props.controls.data ? this.props.controls.data.registeredDate : ''}
-                />
-              </Col>
-              <Col sm={4} >
-                <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
-                <br />
-                <MusitField
-                  onChange={() => true}
-                  id="registeredBy"
-                  value={this.props.controls.data ? this.props.controls.data.registeredBy : ''}
-                  validate="text"
-                  disabled={Boolean(true)}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <br />
-            </Row>
-            <Row>
-              <Col sm={8} smOffset={2}>
-                <ControlView
-                  id="1"
-                  translate={translate}
-                  controlsJson={this.props.controls.data && this.props.controls.data['subEvents-parts'] ? this.props.controls.data['subEvents-parts'] : null}
-                />
-              </Col>
-            </Row>
-            {closeBtn}
-          </Grid>
-        </main>
-      </div>
+              </Row>
+              <Row>
+                <Col sm={8}>
+                  <ControlView
+                    id="1"
+                    translate={translate}
+                    controlsJson={this.props.controls.data && this.props.controls.data['subEvents-parts'] ? this.props.controls.data['subEvents-parts'] : null}
+                  />
+                </Col>
+              </Row>
+              <Button onClick={() => { hashHistory.goBack() }}>
+                Lukk
+              </Button>
+            </Grid>
+          </div>
+        }
+      />
+
     )
   }
 }

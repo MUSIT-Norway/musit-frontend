@@ -84,12 +84,14 @@ export const parseObservation = (el) => {
       re.to = parseFloat(el.data.toValue.replace(',', '.'))
       re.note = el.data.commentValue
       break
-    case 'alcohol':
+    case 'alcohol': {
       re.eventType = 'ObservationAlcohol'
-      re.note = el.data.commentValue
-      re.condition = el.data.statusValue
-      re.volume = parseFloat(el.data.volumeValue.replace(',', '.'))
+      re.note = el.data.commentValue || el.data.comment
+      re.condition = el.data.statusValue || el.data.status
+      const volumeValue = el.data.volumeValue || el.data.volume
+      re.volume = parseFloat(volumeValue.replace(',', '.'))
       break
+    }
     case 'temperature':
       re.eventType = 'observationTemperature'
       re.from = parseFloat(el.data.fromValue.replace(',', '.'))

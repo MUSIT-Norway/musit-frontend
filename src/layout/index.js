@@ -23,10 +23,19 @@ export default class Layout extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
     translate: React.PropTypes.func.isRequired,
-    leftMenu: React.PropTypes.object.isRequired,
+    leftMenu: React.PropTypes.object,
     content: React.PropTypes.object.isRequired,
     breadcrumb: React.PropTypes.element,
     toolbar: React.PropTypes.element
+  }
+
+  static defaultProps = {
+    leftMenu: <div
+      style={{
+        minHeight: 400
+      }}
+    />,
+    toolbar: <span />
   }
 
   render() {

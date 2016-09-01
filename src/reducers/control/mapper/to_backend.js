@@ -68,7 +68,11 @@ export const mapToBackend = (state, observations) => {
     const observationKey = key.substring(0, key.length - 2)
     const index = observations.observations.findIndex(o => o.type === observationKey)
     if (index >= 0) {
-      control['subEvents-motivates'] = [parseObservation(observations.observations[index])]
+      const observation = observations.observations[index];
+      if (observation.type === 'inertAir') {
+        observation.type = 'hypoxicAir'
+      }
+      control['subEvents-motivates'] = [parseObservation(observation)]
     }
     return control;
   })
