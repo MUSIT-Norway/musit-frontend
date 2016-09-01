@@ -174,10 +174,10 @@ export default class StorageUnitsContainer extends React.Component {
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
+            this.setState({ ...this.state, showModal: true })
             if (parentId) {
               history.push(`/magasin/${parentId}/add`)
             }
-            this.setState({ ...this.state, showModal: true })
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
@@ -224,7 +224,7 @@ export default class StorageUnitsContainer extends React.Component {
   showModalDialog(question, onYes, onCancel) {
     return (
       <Modal
-        show={this.state.showModal}
+        show={this.props.showModal}
         onHide={onCancel}
         dialogClassName="custom-modal"
       >
@@ -255,7 +255,7 @@ export default class StorageUnitsContainer extends React.Component {
         leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
         content={this.makeContentGrid(searchPattern, rootNodeData, children)}
       >
-      {this.showModalDialog()}
+        {this.showModalDialog('Hei', (() => null), () => null)}
       </Layout>
     )
   }
