@@ -41,6 +41,9 @@ const form = reduxForm({
   validate
 });
 
+/**
+ * This example is going to be used for implementing validation on observation page.
+ */
 class ReduxFormTutorial extends Component {
   static propTypes = {
     pristine: React.PropTypes.bool,

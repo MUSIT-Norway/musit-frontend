@@ -1,7 +1,6 @@
 import { assert } from '../../../../test/setup'
 import deepFreeze from 'deep-freeze'
 import observationReducer, {
-  // addObservation,
   loadObservation,
   initialState
 } from '../index'
@@ -39,43 +38,9 @@ describe('ObservationReducer', () => {
         }
       ]
     })
-    // TODO fix this
-    const fixedFrontend = frontEnd
-    const fe = mapToFrontEnd(mapToBackEnd(fixedFrontend))
-    // console.log(JSON.stringify(frontEnd))
-    // console.log('-----------------------')
-    // console.log(JSON.stringify(fe))
+    const fe = mapToFrontEnd(mapToBackEnd(frontEnd))
     assert(JSON.stringify(fe) === JSON.stringify(frontEnd))
   })
-
-  // it('add observation should update state', () => {
-  //   const fromServer = deepFreeze({
-  //     doneBy: { id: '' },
-  //     observations: [
-  //       {
-  //         type: 'hypoxicAir',
-  //         data: {
-  //           fromValue: '19',
-  //           toValue: '23',
-  //           commentValue: 'Test comments.'
-  //         }
-  //       },
-  //       {
-  //         type: 'cleaning',
-  //         data: {
-  //           leftValue: 'Test cleaning value.',
-  //           rightValue: 'Test comments.'
-  //         }
-  //       }
-  //     ]
-  //   })
-  //   const state = observationReducer(initialState, {
-  //     type: 'musit/observation/ADD_SUCCESS',
-  //     result: fromServer
-  //   })
-  //   console.log(state)
-  //   assert(state.data === fromServer)
-  // })
 
   it('Valid action from calling actor service for finding actor should update state correctly', () => {
     const actionResult = {
@@ -97,7 +62,7 @@ describe('ObservationReducer', () => {
       observations: [
         {
 
-          type: 'lux',
+          type: 'lightConditions',
           data: {
             leftValue: 'Mørkst',
             rightValue: 'Altfor mørkt'
