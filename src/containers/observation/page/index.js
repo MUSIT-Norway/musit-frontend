@@ -1,6 +1,11 @@
 import React, { PropTypes } from 'react'
 import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
-import { RenderPest, RenderAlcohol, RenderDoubleTextArea, RenderFromToNumberComment } from '../../../components/observation/render'
+import {
+  RenderPest,
+  RenderAlcohol,
+  RenderDoubleTextArea,
+  RenderFromToNumberComment
+} from '../../../components/observation/render'
 import { containsObjectWithField } from '../../../util'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
@@ -111,7 +116,6 @@ export default class ObservationPage extends React.Component {
     brannsikring: { label: 'brannsikring.labelText', render: this.renderDoubleTextArea },
     vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderDoubleTextArea },
     relativeHumidity: { label: 'rh.labelText', render: this.renderFromToNumberComment },
-    rh: { label: 'rh.labelText', render: this.renderFromToNumberComment },
     inertAir: { label: 'hypoxicAir.labelText', render: this.renderFromToNumberComment },
     temperature: { label: 'temperature.labelText', render: this.renderFromToNumberComment },
     alcohol: { label: 'alcohol.labelText', render: this.renderAlcohol }
@@ -289,10 +293,11 @@ export default class ObservationPage extends React.Component {
               </Row>
             )}
             {this.state.observations.map((observation, index) => {
+              const typeDefinition = this.typeDefinitions[observation.type];
               return (
                 <div key={index}>
                   <h3>
-                    {this.getLabel(this.typeDefinitions[observation.type].label)}
+                    {this.getLabel(typeDefinition.label)}
                     &nbsp;
                     {this.props.mode !== 'ADD' ? '' : (
                       <a onClick={() => this.removeObservation(index)}>

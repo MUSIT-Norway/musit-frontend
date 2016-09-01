@@ -63,6 +63,7 @@ export default class ControlViewContainer extends React.Component {
   }
   render() {
     const { translate } = this.props
+    const data = this.props.controls.data;
     return (
       <Layout
         title="Magasin"
@@ -78,7 +79,7 @@ export default class ControlViewContainer extends React.Component {
                   <br />
                   <DatePicker
                     dateFormat="DD.MM.YYYY"
-                    value={this.props.controls.data ? this.props.controls.data.doneDate : ''}
+                    value={data ? data.doneDate : ''}
                   />
                 </Col>
                 <Col sm={4} >
@@ -99,7 +100,7 @@ export default class ControlViewContainer extends React.Component {
                   <br />
                   <DatePicker
                     dateFormat="DD.MM.YYYY"
-                    value={this.props.controls.data ? this.props.controls.data.registeredDate : ''}
+                    value={data ? data.registeredDate : ''}
                   />
                 </Col>
                 <Col sm={4} >
@@ -108,7 +109,7 @@ export default class ControlViewContainer extends React.Component {
                   <MusitField
                     onChange={() => true}
                     id="registeredBy"
-                    value={this.props.controls.data ? this.props.controls.data.registeredBy : ''}
+                    value={data ? data.registeredBy : ''}
                     validate="text"
                     disabled={Boolean(true)}
                   />
@@ -122,7 +123,7 @@ export default class ControlViewContainer extends React.Component {
                   <ControlView
                     id="1"
                     translate={translate}
-                    controlsJson={this.props.controls.data && this.props.controls.data['subEvents-parts'] ? this.props.controls.data['subEvents-parts'] : null}
+                    controlsJson={data && data['subEvents-parts'] ? data['subEvents-parts'] : null}
                   />
                 </Col>
               </Row>

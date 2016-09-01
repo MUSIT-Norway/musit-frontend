@@ -65,14 +65,16 @@ export const mapToBackend = (state, observations) => {
       default:
         throw Error(`Unsupported control state key: ${key}`)
     }
-    const observationKey = key.substring(0, key.length - 2)
-    const index = observations.observations.findIndex(o => o.type === observationKey)
-    if (index >= 0) {
-      const observation = observations.observations[index];
-      if (observation.type === 'inertAir') {
-        observation.type = 'hypoxicAir'
+    if (observations) {
+      const observationKey = key.substring(0, key.length - 2)
+      const index = observations.observations.findIndex(o => o.type === observationKey)
+      if (index >= 0) {
+        const observation = observations.observations[index];
+        if (observation.type === 'inertAir') {
+          observation.type = 'hypoxicAir'
+        }
+        control['subEvents-motivates'] = [parseObservation(observation)]
       }
-      control['subEvents-motivates'] = [parseObservation(observation)]
     }
     return control;
   })
