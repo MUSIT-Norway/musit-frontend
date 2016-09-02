@@ -25,137 +25,113 @@ import FontAwesome from 'react-fontawesome'
 
 export default class ObservationPest extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
-    translate: PropTypes.func.isRequired,
-    onChangeLifeCycle: PropTypes.func.isRequired,
-    lifeCycleItems: PropTypes.array.isRequired,
-    onChangeCount: PropTypes.func.isRequired,
-    onChangeIdentification: PropTypes.func.isRequired,
-    onChangeComments: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
+    canEdit: PropTypes.bool,
     observations: PropTypes.array.isRequired,
-    identificationValue: PropTypes.string.isRequired,
-    commentsValue: PropTypes.string.isRequired,
-    onAddPest: PropTypes.func.isRequired,
-    disabled: PropTypes.bool
+    // Lifecycle
+    lifeCycleLabel: PropTypes.string.isRequired,
+    lifeCyclePlaceHolder: PropTypes.string.isRequired,
+    lifeCycleTooltip: PropTypes.string.isRequired,
+    lifeCycleValidate: PropTypes.string,
+    lifeCycleItems: PropTypes.array.isRequired,
+    lifeCycleOnChange: PropTypes.func.isRequired,
+    lifeCycleOnRemove: PropTypes.func.isRequired,
+    // Count
+    countLabel: PropTypes.string.isRequired,
+    countPlaceHolder: PropTypes.string.isRequired,
+    countTooltip: PropTypes.string.isRequired,
+    countValidate: PropTypes.string,
+    countPrecision: PropTypes.number,
+    countOnChange: PropTypes.func.isRequired,
+    // Comments
+    commentsLeftValue: PropTypes.string,
+    commentsLeftLabel: PropTypes.string.isRequired,
+    commentsLeftTooltip: PropTypes.string.isRequired,
+    commentsLeftPlaceHolder: PropTypes.string,
+    commentsOnChangeLeft: PropTypes.func.isRequired,
+    commentsRightValue: PropTypes.string,
+    commentsRightLabel: PropTypes.string.isRequired,
+    commentsRightTooltip: PropTypes.string.isRequired,
+    commentsRightPlaceHolder: PropTypes.string,
+    commentsOnChangeRight: PropTypes.func.isRequired,
+    // New button
+    newButtonLabel: PropTypes.string.isRequired,
+    newButtonOnClick: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props)
-    const {
-      id,
-      lifeCycleItems,
-      onChangeIdentification,
-      onChangeComments,
-      translate,
-      disabled
-    } = props
-    this.fields = {
-      lifeCycle: {
-        placeHolder: translate('musit.texts.makeChoice'),
-        tooltip: translate('musit.observation.pest.lifeCycleTooltip'),
-        validate: 'text',
-        items: lifeCycleItems,
-        translate: translate,
-        disabled: disabled
-      },
-      count: {
-        placeHolder: translate('musit.observation.pest.countPlaceHolder'),
-        tooltip: translate('musit.observation.pest.countTooltip'),
-        validate: 'number',
-        precision: 3,
-        disabled: disabled
-      },
-      comments: {
-        id: `${id}_comments`,
-        translate: translate,
-        leftLabel: translate('musit.observation.pest.identificationLabel'),
-        leftTooltip: translate('musit.observation.pest.identificationTooltip'),
-        onChangeLeft: onChangeIdentification,
-        rightLabel: translate('musit.observation.pest.commentsLabel'),
-        rightTooltip: translate('musit.observation.pest.commentsTooltip'),
-        onChangeRight: onChangeComments,
-        disabled: disabled
-      }
-    }
+  static defaultProps = {
+    disabled: false,
+    canEdit: true,
+    lifeCycleValidate: 'text',
+    countValidate: 'number',
+    countPrecision: 0,
+    commentsLeftValue: '',
+    commentsRightValue: ''
   }
 
   render() {
-    const { lifeCycle, count, comments } = this.fields
-    const {
-      id,
-      observations,
-      identificationValue,
-      commentsValue,
-      onAddPest,
-      translate,
-      onChangeLifeCycle,
-      onChangeCount,
-      disabled
-    } = this.props
-
-    const renderSelectColumn = (items) => {
-      const observationBlock = items.map((observation, index) => {
-        return (
-          <span key={index} style={{ height: 50 }}>
-            <ControlLabel>{translate('musit.observation.pest.lifeCycleLabel')}</ControlLabel>
-            <MusitDropDownField
-              {...lifeCycle}
-              id={`${id}_lifeCycle_${index}`}
-              value={observation.lifeCycle}
-              onChange={(lifeCycleValue) => onChangeLifeCycle(index, lifeCycleValue)}
-            />
-          </span>
-        )
-      })
-      return (
-        <Col xs={6} sm={3} md={3}>
-          {observationBlock}
-        </Col>
-      )
-    }
-
-    const renderCountColumn = (items) => {
-      const observationBlock = items.map((observation, index) => {
-        return (
-          <span key={index}>
-            <ControlLabel>{translate('musit.observation.pest.countLabel')}</ControlLabel>
-            <MusitField
-              {...count}
-              id={`${id}_count_${index}`}
-              value={observation.count}
-              onChange={(countValue) => onChangeCount(index, countValue)}
-              style={{ height: 36 }}
-            />
-          </span>
-        )
-      })
-      return (
-        <Col xs={6} sm={3} md={3}>
-          {observationBlock}
-        </Col>
-      )
-    }
-
     return (
       <div>
-        <ObservationDoubleTextAreaComponent {...comments} leftValue={identificationValue} rightValue={commentsValue} />
-        <h1 />
-        <Row>
-          {renderSelectColumn(observations)}
-          {renderCountColumn(observations)}
-          <Col xs={12} sm={6} md={6}>
-            <span>
-              <ControlLabel>{'\u00A0'}</ControlLabel><br />
-              {disabled ? '' :
-                <Button
-                  onClick={() => onAddPest()}
-                  disabled={Boolean(disabled)}
-                >
-                  <FontAwesome name="plus-circle" /> {translate('musit.observation.newButtonLabel')}
-                </Button>}
-            </span>
-          </Col>
-        </Row>
+        <ObservationDoubleTextAreaComponent
+          leftValue={this.props.commentsLeftValue}
+          leftLabel={this.props.commentsLeftLabel}
+          leftTooltip={this.props.commentsLeftTooltip}
+          leftPlaceHolder={this.props.commentsLeftPlaceHolder}
+          onChangeLeft={this.props.commentsOnChangeLeft}
+          rightValue={this.props.commentsRightValue}
+          rightLabel={this.props.commentsRightLabel}
+          rightTooltip={this.props.commentsRightTooltip}
+          rightPlaceHolder={this.props.commentsRightPlaceHolder}
+          onChangeRight={this.props.commentsOnChangeRight}
+          disabled={this.props.disabled}
+        />
+        <span>
+          <ControlLabel>{'\u00A0'}</ControlLabel><br />
+          {!this.props.canEdit ? '' :
+            <Button onClick={this.props.newButtonOnClick}>
+              <FontAwesome name="plus-circle" />&nbsp;{this.props.newButtonLabel}
+            </Button>
+          }
+        </span>
+        <hr />
+        {this.props.observations.map((observation, index) => {
+          return (
+            <Row key={index}>
+              <Col xs={6} sm={3} md={3}>
+                <span style={{ height: 50 }}>
+                  <ControlLabel>
+                    {this.props.lifeCycleLabel}&nbsp;
+                    {!this.props.canEdit ? '' : <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
+                  </ControlLabel>
+                  <MusitDropDownField
+                    items={this.props.lifeCycleItems}
+                    placeHolder={this.props.lifeCyclePlaceHolder}
+                    tooltip={this.props.lifeCycleTooltip}
+                    validate={this.props.lifeCycleValidate}
+                    disabled={this.props.disabled}
+                    value={observation.lifeCycle}
+                    onChange={(lifeCycleValue) => this.props.lifeCycleOnChange(index, lifeCycleValue)}
+                  />
+                </span>
+              </Col>
+              <Col xs={6} sm={3} md={3}>
+                <span>
+                  <ControlLabel>{this.props.countLabel}</ControlLabel>
+                  <MusitField
+                    placeHolder={this.props.countPlaceHolder}
+                    tooltip={this.props.countTooltip}
+                    validate={this.props.countValidate}
+                    precision={this.props.countPrecision}
+                    disabled={this.props.disabled}
+                    value={observation.count}
+                    onChange={(countValue) => this.props.countOnChange(index, countValue)}
+                    style={{ height: 36 }}
+                  />
+                </span>
+              </Col>
+            </Row>
+          )
+        })}
       </div>
     )
   }

@@ -22,94 +22,99 @@ import { MusitField, MusitTextArea, MusitDropDownField } from '../../components/
 import { Row, ControlLabel, Col } from 'react-bootstrap'
 
 export default class ObervationStatusPercentageComment extends Component {
+
   static propTypes = {
-    id: PropTypes.string.isRequired,
-    translate: PropTypes.func,
-    translateKeyPrefix: PropTypes.string,
-    statusLabel: PropTypes.string,
-    statusValue: PropTypes.string.isRequired,
-    statusOptionValues: PropTypes.array.isRequired,
+    // Status
+    statusLabel: PropTypes.string.isRequired,
+    statusPlaceHolder: PropTypes.string.isRequired,
+    statusValue: PropTypes.string,
+    statusItems: PropTypes.array.isRequired,
     statusTooltip: PropTypes.string,
-    onChangeStatus: PropTypes.func.isRequired,
+    statusOnChange: PropTypes.func.isRequired,
+    statusValidate: PropTypes.string,
+    statusMinimumLength: PropTypes.number,
+    // Volume
     volumeLabel: PropTypes.string,
-    volumeValue: PropTypes.string.isRequired,
+    volumePlaceHolder: PropTypes.string,
+    volumeValue: PropTypes.string,
     volumeTooltip: PropTypes.string,
-    onChangeVolume: PropTypes.func.isRequired,
-    commentLabel: PropTypes.string,
-    commentValue: PropTypes.string.isRequired,
+    volumeOnChange: PropTypes.func.isRequired,
+    volumeValidate: PropTypes.string,
+    volumeMinimumLength: PropTypes.number,
+    volumePrecision: PropTypes.number,
+    // Comment
+    commentLabel: PropTypes.string.isRequired,
+    commentPlaceHolder: PropTypes.string.isRequired,
+    commentValue: PropTypes.string,
     commentTooltip: PropTypes.string,
-    onChangeComment: PropTypes.func.isRequired,
+    commentOnChange: PropTypes.func.isRequired,
+    commentValidate: PropTypes.string,
+    commentMaximumLength: PropTypes.number,
+    commentNumberOfRows: PropTypes.number,
+    // Other
     disabled: PropTypes.bool
   }
 
-  constructor(props) {
-    super(props)
-    const {
-      id,
-      statusTooltip,
-      onChangeStatus,
-      volumeTooltip,
-      statusOptionValues,
-      onChangeVolume,
-      commentTooltip,
-      onChangeComment,
-      translate,
-      translateKeyPrefix,
-      disabled
-    } = props
-    this.fields = {
-      status: {
-        id: `${id}_status`,
-        placeHolder: translate('musit.texts.makeChoice'),
-        tooltip: statusTooltip,
-        onChange: onChangeStatus,
-        validate: 'text',
-        precision: 3,
-        items: statusOptionValues,
-        translate: translate,
-        translateKey: translateKeyPrefix,
-        minimumLength: 1,
-        disabled: disabled
-      },
-      volume: {
-        id: `${id}_percentage`,
-        placeHolder: '%',
-        tooltip: volumeTooltip,
-        onChange: onChangeVolume,
-        validate: 'number',
-        precision: 3,
-        disabled: disabled
-      },
-      comment: {
-        id: `${id}_comment`,
-        placeHolder: translate('musit.texts.freetext'),
-        tooltip: commentTooltip,
-        onChange: onChangeComment,
-        validate: 'text',
-        maximumLength: 250,
-        numberOfRows: 5,
-        disabled: disabled
-      }
-    }
+  static defaultProps = {
+    // Status
+    statusValue: '',
+    statusValidate: 'text',
+    statusMinimumLength: 1,
+    // Volume
+    volumeValue: '',
+    volumeTooltip: '',
+    volumePlaceHolder: '%',
+    volumeValidate: 'number',
+    volumePrecision: 3,
+    // Comment
+    commentValue: '',
+    commentTooltip: '',
+    commentValidate: 'text',
+    commentMaximumLength: 250,
+    commentNumberOfRows: 5
   }
 
   render() {
-    const { status, volume, comment } = this.fields
-    const { statusValue, volumeValue, statusLabel, volumeLabel, commentValue, commentLabel } = this.props
-
     return (
       <Row>
-        <Col xs={12} sm={3}>
-          <ControlLabel>{statusLabel}</ControlLabel>
-          <MusitDropDownField {...status} value={statusValue} />
+        <Col xs={12} sm={2}>
+          <ControlLabel>{this.props.statusLabel}</ControlLabel>
+          <MusitDropDownField
+            value={this.props.statusValue}
+            items={this.props.statusItems}
+            tooltip={this.props.statusTooltip}
+            placeHolder={this.props.statusPlaceHolder}
+            validate={this.props.statusValidate}
+            onChange={this.props.statusOnChange}
+            minimumLength={this.props.statusMinimumLength}
+            disabled={this.props.disabled}
+          />
         </Col>
-        <Col xs={12} sm={3}>
-          <ControlLabel>{volumeLabel}</ControlLabel>
-          <MusitField {...volume} value={volumeValue} />
+        <Col xs={12} sm={2}>
+          <ControlLabel>{this.props.volumeLabel}</ControlLabel>
+          <MusitField
+            value={this.props.volumeValue}
+            tooltip={this.props.volumeTooltip}
+            placeHolder={this.props.volumePlaceHolder}
+            validate={this.props.volumeValidate}
+            onChange={this.props.volumeOnChange}
+            minimumLength={this.props.volumeMinimumLength}
+            precision={this.props.volumePrecision}
+            disabled={this.props.disabled}
+          />
         </Col>
         <Col xs={12} sm={6}>
-          <ControlLabel>{commentLabel}</ControlLabel>
-          <MusitTextArea {...comment} value={commentValue} />
+          <ControlLabel>{this.props.commentLabel}</ControlLabel>
+          <MusitTextArea
+            value={this.props.commentValue}
+            tooltip={this.props.commentTooltip}
+            placeHolder={this.props.commentPlaceHolder}
+            validate={this.props.commentValidate}
+            onChange={this.props.commentOnChange}
+            maximumLength={this.props.commentMaximumLength}
+            numberOfRows={this.props.commentNumberOfRows}
+            disabled={this.props.disabled}
+          />
         </Col>
       </Row>
     )

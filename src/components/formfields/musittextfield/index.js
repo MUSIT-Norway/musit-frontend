@@ -23,6 +23,24 @@ import { FormGroup, FormControl, Popover, ControlLabel, Row, Col, InputGroup, Ov
 
 export default class MusitTextField extends Component {
 
+  static propTypes = {
+    controlId: PropTypes.string.isRequired,
+    controlId2: PropTypes.string,
+    labelText: PropTypes.string.isRequired,
+    labelText2: PropTypes.string,
+    placeHolderText: PropTypes.string.isRequired,
+    placeHolderText2: PropTypes.string,
+    tooltip: PropTypes.string,
+    tooltip2: PropTypes.string,
+    valueText: PropTypes.func.isRequired,
+    valueText2: PropTypes.func,
+    valueType: PropTypes.string.isRequired,
+    validationState: PropTypes.func.isRequired,
+    validationState2: PropTypes.func,
+    onChange: PropTypes.func.isRequired,
+    onChange2: PropTypes.func,
+  }
+
   static helpText(tip) {
     return (
       <Popover id="InputLinkPopover" title="Info">
@@ -103,21 +121,3 @@ export default class MusitTextField extends Component {
     )
   }
 }
-
-MusitTextField.propTypes = {
-  controlId: PropTypes.string.isRequired,
-  controlId2: PropTypes.string,
-  labelText: PropTypes.string.isRequired,
-  labelText2: PropTypes.string,
-  placeHolderText: PropTypes.string.isRequired,
-  placeHolderText2: PropTypes.string,
-  tooltip: PropTypes.string,
-  tooltip2: PropTypes.string,
-  valueText: PropTypes.func.isRequired,
-  valueText2: PropTypes.func,
-  valueType: PropTypes.string.isRequired,
-  validationState: PropTypes.func.isRequired,
-  validationState2: PropTypes.func,
-  onChange: PropTypes.func.isRequired,
-  onChange2: PropTypes.func,
-};

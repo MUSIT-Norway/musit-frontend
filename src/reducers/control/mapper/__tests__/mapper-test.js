@@ -11,7 +11,7 @@ describe('ControlMapperReducer', () => {
       doneBy: 'jarl',
       doneDate: 'some time',
       temperatureOK: true,
-      inertAirOK: false,
+      hypoxicAirOK: false,
       gasOK: true,
       cleaningOK: true,
       relativeHumidityOK: true,
