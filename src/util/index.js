@@ -1,13 +1,3 @@
-export const resolveConditions = (condition1, block1, condition2, block2, blockElse) => {
-  if (condition1) {
-    return block1
-  }
-  if (condition2) {
-    return block2
-  }
-  return blockElse
-}
-
 export const flatten = (arr) => {
   const obj = {};
 
@@ -28,4 +18,16 @@ export const blur = () => {
   if (document.activeElement) {
     document.activeElement.blur();
   }
+}
+
+export const isDefined = (o) => o !== null && typeof o !== 'undefined'
+
+export const containsObjectWithField = (arr, field, value) => arr.filter((e) => e[field] === value).length > 0
+
+export const camelCase = (string, separator) => {
+  return string
+    .split(separator)
+    .map((word, index) =>
+      word.substr(0, 1)[index === 0 ? 'toUpperCase' : 'toLowerCase']() + word.substr(1)
+    ).join('');
 }

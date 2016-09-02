@@ -29,10 +29,6 @@ describe('ObservationDoubleTextAreaComponent', () => {
     assert(inputElementLeft.getAttribute('rows') === '5')
   })
 
-  it('Check the left text area id', () => {
-    assert(inputElementLeft.getAttribute('id') === 'test_left')
-  })
-
   it('Check the left text area Tooltip', () => {
     assert(inputElementLeft.getAttribute('title') === 'Left tooltip')
   })

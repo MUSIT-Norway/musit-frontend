@@ -22,14 +22,17 @@ import validate from '../common/validators'
 
 export default class MusitTextArea extends Component {
 
-  classNameWithSpan() {
-    let lvString = ' '
-    if (validate(this.props) === 'error') {
-      lvString = 'form-group has-error'
-    } else {
-      lvString = 'form-group'
-    }
-    return lvString
+  static propTypes = {
+    value: PropTypes.string, // Should be any
+    placeHolder: PropTypes.string,
+    tooltip: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    validate: PropTypes.string,
+    minimumLength: PropTypes.number,
+    maximumLength: PropTypes.number,
+    precision: PropTypes.number,
+    numberOfRows: PropTypes.number,
+    disabled: PropTypes.bool
   }
 
   classNameOnlyWithInput() {
@@ -48,33 +51,17 @@ export default class MusitTextArea extends Component {
         className="form-control"
         placeholder={this.props.placeHolder}
         value={this.props.value}
-        id={this.props.id}
         rows={this.props.numberOfRows}
         disabled={this.props.disabled}
-        onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
-      />);
+        onChange={(event) => this.props.onChange(event.target.value)}
+        title={this.props.tooltip}
+      />
+    )
 
     return (
-      <div
-        className={this.classNameOnlyWithInput()}
-      >
+      <div className={this.classNameOnlyWithInput()}>
        {lcPlaceholder}
       </div>
     )
   }
 }
-
-MusitTextArea.propTypes = {
-  id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired, // Should be any
-  placeHolder: PropTypes.string,
-  tooltip: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  validate: PropTypes.string.isRequired,
-  minimumLength: PropTypes.number,
-  maximumLength: PropTypes.number,
-  validator: PropTypes.string,
-  precision: PropTypes.number,
-  numberOfRows: PropTypes.number,
-  disabled: PropTypes.bool
-};

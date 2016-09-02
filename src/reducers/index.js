@@ -33,9 +33,11 @@ import controlReducer from './control'
 import observationControlGridReducer from './grid/observationcontrol'
 import nodeGridReducer from './grid/node'
 import objectGridReducer from './grid/object'
+import { reducer as formReducer } from 'redux-form'
 
 const rootReducer = combineReducers({
   routing: routerReducer,
+  form: formReducer,
   info: infoReducer,
   auth: authReducer,
   fakeAuthInfo: fakeAuthReducer,

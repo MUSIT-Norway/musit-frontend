@@ -1,7 +1,6 @@
 import { assert } from '../../../../test/setup'
 import deepFreeze from 'deep-freeze'
 import observationReducer, {
-  addObservation,
   loadObservation,
   initialState
 } from '../index'
@@ -39,38 +38,8 @@ describe('ObservationReducer', () => {
         }
       ]
     })
-    // TODO fix this
-    const fixedFrontend = frontEnd
-    const fe = mapToFrontEnd(mapToBackEnd(fixedFrontend))
-    // console.log(JSON.stringify(frontEnd))
-    // console.log('-----------------------')
-    // console.log(JSON.stringify(fe))
+    const fe = mapToFrontEnd(mapToBackEnd(frontEnd))
     assert(JSON.stringify(fe) === JSON.stringify(frontEnd))
-  })
-
-  it('add observation should update state', () => {
-    const fromServer = deepFreeze({
-      doneBy: { id: '' },
-      observations: [
-        {
-          type: 'hypoxicAir',
-          data: {
-            fromValue: '19',
-            toValue: '23',
-            commentValue: 'Test comments.'
-          }
-        },
-        {
-          type: 'cleaning',
-          data: {
-            leftValue: 'Test cleaning value.',
-            rightValue: 'Test comments.'
-          }
-        }
-      ]
-    })
-    const state = observationReducer(initialState, addObservation(fromServer))
-    assert(state.type !== 'ADD_SUCCESS' || state.data === fromServer)
   })
 
   it('Valid action from calling actor service for finding actor should update state correctly', () => {
@@ -93,7 +62,7 @@ describe('ObservationReducer', () => {
       observations: [
         {
 
-          type: 'lux',
+          type: 'lightConditions',
           data: {
             leftValue: 'Mørkst',
             rightValue: 'Altfor mørkt'
@@ -159,7 +128,7 @@ describe('ObservationReducer', () => {
         },
         {
 
-          type: 'rh',
+          type: 'relativeHumidity',
           data: {
             fromValue: '1,4',
             toValue: '4,4',
@@ -170,7 +139,7 @@ describe('ObservationReducer', () => {
           type: 'pest',
           data: {
             identificationValue: 'Mye skadedyr',
-            commentsValue: 'Ikke gjort noe med',
+            commentValue: 'Ikke gjort noe med',
             observations: [
                 { lifeCycle: 'Larva',
                 count: '4' },
@@ -196,9 +165,9 @@ describe('ObservationReducer', () => {
             commentValue: 'Altfor fuktig' }
         }
       ] }
-    // TODO fix this
-    const fixedFrontend = completeFrontEnd
-    const s = mapToFrontEnd(mapToBackEnd(fixedFrontend))
-    assert(JSON.stringify(s) === JSON.stringify(completeFrontEnd))
+    const s = mapToFrontEnd(mapToBackEnd(completeFrontEnd))
+    const stringify1 = JSON.stringify(s);
+    const stringify2 = JSON.stringify(completeFrontEnd);
+    assert(stringify1 === stringify2)
   })
 })
