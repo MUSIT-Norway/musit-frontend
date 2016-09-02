@@ -23,14 +23,14 @@ export const RenderAlcohol = (props) => {
       ]}
       statusOnChange={(value) => props.onChangeField('status', value, props.index)}
       volumeValue={props.valueProps.volume}
-      volumeLabel={props.translate('musit.storageUnits.environmentRequirements.alcohol.volumeLabel')}
-      volumeTooltip={props.translate('musit.storageUnits.environmentRequirements.alcohol.volumeTooltip')}
-      volumePlaceHolder={props.translate('musit.storageUnits.environmentRequirements.alcohol.volumePlaceHolder')}
+      volumeLabel={props.translate('musit.observation.page.alcohol.volumeLabel')}
+      volumeTooltip={props.translate('musit.observation.page.alcohol.volumeTooltip')}
+      volumePlaceHolder={props.translate('musit.observation.page.alcohol.volumePlaceHolder')}
       volumeOnChange={(value) => props.onChangeField('volume', value, props.index)}
       commentValue={props.valueProps.comment}
-      commentLabel={props.translate('musit.storageUnits.environmentRequirements.alcohol.commentLabel')}
-      commentTooltip={props.translate('musit.storageUnits.environmentRequirements.alcohol.commentTooltip')}
-      commentPlaceHolder={props.translate('musit.storageUnits.environmentRequirements.alcohol.commentPlaceHolder')}
+      commentLabel={props.translate('musit.observation.page.alcohol.commentLabel')}
+      commentTooltip={props.translate('musit.observation.page.alcohol.commentTooltip')}
+      commentPlaceHolder={props.translate('musit.observation.page.alcohol.commentPlaceHolder')}
       commentOnChange={(value) => props.onChangeField('comment', value, props.index)}
     />
   )
@@ -120,13 +120,13 @@ export const RenderDoubleTextArea = (props) => {
     <ObservationDoubleTextAreaComponent
       {...props.valueProps}
       disabled={props.disabled}
-      leftLabel={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.labelText`)}
-      leftTooltip={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.tooltip`)}
-      leftPlaceHolder={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.placeHolder`)}
+      leftLabel={props.translate(`musit.observation.page.${props.type}.leftLabelText`)}
+      leftTooltip={props.translate(`musit.observation.page.${props.type}.leftLabelText`)}
+      leftPlaceHolder={props.translate(`musit.observation.page.${props.type}.leftLabelPlaceHolder`)}
       onChangeLeft={(value) => props.onChangeField('leftValue', value, props.index)}
-      rightLabel={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.comment`)}
-      rightTooltip={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.comment`)}
-      rightPlaceHolder={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.commentPlaceHolder`)}
+      rightLabel={props.translate(`musit.observation.page.${props.type}.rightLabelText`)}
+      rightTooltip={props.translate(`musit.observation.page.${props.type}.rightLabelPlaceToolTip`)}
+      rightPlaceHolder={props.translate(`musit.observation.page.${props.type}.rightLabelPlaceHolder`)}
       onChangeRight={(value) => props.onChangeField('rightValue', value, props.index)}
     />
   )
@@ -154,17 +154,17 @@ export const RenderFromToNumberComment = (props) => {
     <ObservationFromToNumberCommentComponent
       {...props.valueProps}
       disabled={props.disabled}
-      fromLabel={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.labelText`)}
-      fromTooltip={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.tooltip`)}
-      fromPlaceHolder={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.placeHolder`)}
+      fromLabel={props.translate(`musit.observation.page.${props.type}.fromValueLabelText`)}
+      fromTooltip={props.translate(`musit.observation.page.${props.type}.fromValueTooltip`)}
+      fromPlaceHolder={props.translate(`musit.observation.page.${props.type}.fromValuePlaceHolder`)}
       onChangeFrom={(value) => props.onChangeField('fromValue', value, props.index)}
-      toLabel={props.translate(`musit.storageUnits.environmentRequirements.${props.type}Tolerance.labelText`)}
-      toTooltip={props.translate(`musit.storageUnits.environmentRequirements.${props.type}Tolerance.tooltip`)}
-      toPlaceHolder={props.translate(`musit.storageUnits.environmentRequirements.${props.type}Tolerance.placeHolder`)}
+      toLabel={props.translate(`musit.observation.page.${props.type}.toValueLabelText`)}
+      toTooltip={props.translate(`musit.observation.page.${props.type}.toValueTooltip`)}
+      toPlaceHolder={props.translate(`musit.observation.page.${props.type}.toValuePlaceHolder`)}
       onChangeTo={(value) => props.onChangeField('toValue', value, props.index)}
-      commentLabel={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.comment`)}
-      commentTooltip={props.translate(`musit.storageUnits.environmentRequirements.${props.type}.comment`)}
-      commentPlaceholder={props.translate('musit.texts.freetext')}
+      commentLabel={props.translate(`musit.observation.page.${props.type}.note`)}
+      commentTooltip={props.translate(`musit.observation.page.${props.type}.noteTooltip`)}
+      commentPlaceholder={props.translate(`musit.observation.page.${props.type}.notePlaceHolder`)}
       onChangeComment={(value) => props.onChangeField('commentValue', value, props.index)}
     />
   )

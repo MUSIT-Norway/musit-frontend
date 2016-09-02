@@ -51,7 +51,7 @@ en:
       cancelTooltip: "Cancel"
     viewControl:
       controlAlcohol: "Alcohol"
-      controlCleaning: "Cleaning"
+      controlCleaning: "to"
       controlGas: "Gas"
       controlHypoxicAir: "Hypoxic air"
       controlLightingCondition: "Lighting condition"
@@ -74,39 +74,150 @@ en:
       pest: "Pest"
       envdata: "Environmental Records"
     observation:
-      registerObservation: "Register observation"
-      registerObservations: "Register observations"
-      date: "Performed date"
-      doneBy: "Performed by"
-      registeredDate: "Registered date"
-      registeredBy: "Registered by"
-      newObservationHeader: "New observation"
-      viewObservationHeader: "Observation"
-      newButtonLabel: "Add new"
-      pest:
-        identificationLabel: "Identification"
-        identificationTooltip: "Identification tooltip!"
-        commentsLabel: "Task/Comment"
-        commentsTooltip: "Task/Comment tooltip!"
-        lifeCycleLabel: "Life cycle"
-        lifeCycleLabelMenu:
-          adult: "Adult"
-          puppe: "Pupa"
-          puppeskin: "Pupa skin"
-          larva: "Larva"
-          egg: "Egg"
-        lifeCycleTooltip: "Life cycle tooltip"
-        countLabel: "Quantity"
-        countPlaceHolder: "Integer"
-        countTooltip: "Quantity tooltip!"
-        lifeCycleItems:
-          adult: "Adult"
-          puppe: "Pupa"
-          puppeskin: "Pupa skin"
-          larva: "Larva"
-          egg: "Egg"
-      inertAir:
-        fromLabel: "From"
+      page:
+        registerObservation: "Register observation"
+        registerObservations: "Register observations"
+        date: "Performed date"
+        doneBy: "Performed by"
+        registeredDate: "Registered date"
+        registeredBy: "Registered by"
+        newObservationHeader: "New observation"
+        viewObservationHeader: "Observation"
+        newButtonLabel: "Add new"
+        pest:
+          identificationLabel: "Identification"
+          identificationTooltip: "Identification tooltip!"
+          commentsLabel: "Task/Comment"
+          commentsTooltip: "Task/Comment tooltip!"
+          lifeCycleLabel: "Life cycle"
+          lifeCycleLabelMenu:
+            adult: "Adult"
+            puppe: "Pupa"
+            puppeskin: "Pupa skin"
+            larva: "Larva"
+            egg: "Egg"
+          lifeCycleTooltip: "Life cycle tooltip"
+          countLabel: "Quantity"
+          countPlaceHolder: "Integer"
+          countTooltip: "Quantity tooltip!"
+          lifeCycleItems:
+            adult: "Adult"
+            puppe: "Pupa"
+            puppeskin: "Pupa skin"
+            larva: "Larva"
+            egg: "Egg"
+        mold:
+          labelText: "Mold"
+          leftLabelText: "State"
+          rightLabelText: "Task"
+          leftLabelPlaceHolder: "State"
+          rightLabelPlaceHolder: "Task"
+          leftLabelToolTip: "State"
+          rightLabelPlaceToolTip: "Task"
+        temperature:
+          labelText: "Temperature"
+          fromValueLabelText: "Temperature (from)"
+          toValueLabelText: "Temperature (to)"
+          fromValuePlaceHolder: "Temperature (from)"
+          toValuePlaceHolder: "Temperature (to)"
+          fromValueTooltip: "Temperature (from)"
+          toValueTooltip: "Temperature (to)"
+          note: "Note"
+          noteTooltip: "Note"
+          notePlaceHolder: "Note"
+        skallsikring:
+          labelText: "Perimeter security"
+          leftLabelText: "State"
+          rightLabelText: "Task"
+          leftLabelPlaceHolder: "State"
+          rightLabelPlaceHolder: "Task"
+          leftLabelToolTip: "State"
+          rightLabelPlaceToolTip: "Task"
+        brannsikring:
+          labelText: "Fire protection"
+          leftLabelText: "State"
+          rightLabelText: "Task"
+          leftLabelPlaceHolder: "State"
+          rightLabelPlaceHolder: "Task"
+          leftLabelToolTip: "State"
+          rightLabelPlaceToolTip: "Task"
+        vannskaderisiko:
+          labelText: "Water damage assessment"
+          leftLabelText: "State"
+          rightLabelText: "Task"
+          leftLabelPlaceHolder: "State"
+          rightLabelPlaceHolder: "Task"
+          leftLabelToolTip: "State"
+          rightLabelPlaceToolTip: "Task"
+        tyverisikring:
+          labelText: "Theft protection"
+          leftLabelText: "State"
+          rightLabelText: "Task"
+          leftLabelPlaceHolder: "State"
+          rightLabelPlaceHolder: "Task"
+          leftLabelToolTip: "State"
+          rightLabelPlaceToolTip: "Task"
+        alcohol:
+          labelText: "Alcohol"
+          volumeLabel: "Volume"
+          volumePlaceHolder: "Volume"
+          statusLabel: "State"
+          statusPlaceHolder: "State"
+          commentLabel: "Task/Note"
+          commentPlaceHolder: "Task/Note"
+          tooltip: "Alcohol"
+          statusItems:
+            dryed: "Dryed"
+            allmostDryed: "Allmost dryed"
+            someDryed: "Some dryed"
+            minorDryed: "Minor dryed"
+            satisfactory: "Satisfactory"
+        hypoxicAir:
+          labelText: "Hypoxic air"
+          fromValueLabelText: "Hypoxic air (from)"
+          toValueLabelText: "Hypoxic air (to)"
+          fromValuePlaceHolder: "Hypoxic air (from)"
+          toValuePlaceHolder: "Hypoxic air (to)"
+          fromValueTooltip: "Hypoxic air (from)"
+          toValueTooltip: "Hypoxic air (to)"
+          note: "Note"
+          noteTooltip: "Note"
+          notePlaceHolder: "Note"
+        rh:
+          labelText: "Relative humidity"
+          fromValueLabelText: "Relative humidity (from)"
+          toValueLabelText: "Relative humidity (to)"
+          fromValuePlaceHolder: "Relative humidity (from)"
+          toValuePlaceHolder: "Relative humidity (to)"
+          fromValueTooltip: "Relative humidity (from)"
+          toValueTooltip: "Relative humidity (to)"
+          note: "Note"
+          noteTooltip: "Note"
+          notePlaceHolder: "Note"
+        cleaning:
+          labelText: "Cleaning"
+          leftLabelText: "Status"
+          rightLabelText: "Task"
+          leftLabelPlaceHolder: "Status"
+          rightLabelPlaceHolder: "Task"
+          leftLabelToolTip: "Status"
+          rightLabelPlaceToolTip: "Task"
+        gas:
+          labelText: "Gas"
+          leftLabelText: "Status"
+          rightLabelText: "Task"
+          leftLabelPlaceHolder: "Status"
+          rightLabelPlaceHolder: "Task"
+          leftLabelToolTip: "Status"
+          rightLabelPlaceToolTip: "Task"
+        lux:
+          labelText: "Lighting condition"
+          leftLabelText: "Status"
+          rightLabelText: "Task"
+          leftLabelPlaceHolder: "Status"
+          rightLabelPlaceHolder: "Task"
+          leftLabelToolTip: "Status"
+          rightLabelPlaceToolTip: "Task"
     pickList:
       title: "Picklist"
       action:
@@ -216,11 +327,11 @@ en:
       noAccess: Your account does not have access to MUSIT. Contact your local MUSIT administrator.
     welcomeUserPage:
       body: >
-        The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger, 
-        University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the 
-        Norwegian University of Science and Technology. The University museums of Norway hold in trust regional and global 
-        scientific collections of natural and cultural history. The cooperative aims to ensure the operation, 
-        maintenance and development of the university museums' joint collection databases, and to facilitate sharing 
+        The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger,
+        University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the
+        Norwegian University of Science and Technology. The University museums of Norway hold in trust regional and global
+        scientific collections of natural and cultural history. The cooperative aims to ensure the operation,
+        maintenance and development of the university museums' joint collection databases, and to facilitate sharing
         dissemination of data for research, education, management and the public.
     login: Login through Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Login")
 no:
@@ -281,7 +392,7 @@ no:
       controlLightingCondition: "Lysforhold"
       controlMold: "Mugg"
       controlPest: "Skadedyr"
-      controlRelativeHumidity: "Relativ luftfuktighet"
+      controlRelativeHumidity: "Relative humidity"
       controlTemperature: "Temperatur"
     newControl:
       title: "Ny kontroll"
@@ -300,37 +411,140 @@ no:
     observation:
       page:
         titles:
-          add: "Add observations"
-          edit: "Edit control observations"
-          view: "Observations"
+          add: "Legg til observasjon"
+          edit: "Endre kontrollobservasjoner"
+          view: "Observasjoner"
         typeSelect:
-          labelText: "Choose type"
+          labelText: "Velg type"
         pest:
-          labelText: "Pest"
+          labelText: "Skadedyr"
+          identificationLabel: "Identifikasjon"
+          identificationTooltip: "Identifikasjon tooltip!"
+          commentsLabel: "Tiltak/Kommentar"
+          commentsTooltip: "Tiltak/Kommentar tooltip!"
+          lifeCycleLabel: "Livssyklus"
+          lifeCycleLabelMenu:
+            adult: "Adult"
+            puppe: "Puppe"
+            puppeskin: "Puppeskin"
+            larva: "Larve"
+            egg: "Egg"
+          lifeCycleTooltip: "Livssyklus tooltip"
+          countLabel: "Antall"
+          countPlaceHolder: "Heltall"
+          countTooltip: "Antall tooltip!"
         mold:
-          labelText: "Mold"
+          labelText: "Mugg"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         temperature:
-          labelText: "Temperature"
+          labelText: "Temperatur"
+          fromValueLabelText: "Temperatur (fra)"
+          toValueLabelText: "Temperatur (til)"
+          fromValuePlaceHolder: "Temperatur (fra)"
+          toValuePlaceHolder: "Temperatur (til)"
+          fromValueTooltip: "Temperatur (fra)"
+          toValueTooltip: "Temperatur (til)"
+          note: "Kommentar"
+          noteTooltip: "Kommentar"
+          notePlaceHolder: "Kommentar"
         skallsikring:
           labelText: "Skallsikring"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         brannsikring:
           labelText: "Brannsikring"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         vannskaderisiko:
           labelText: "Vannskaderisiko"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         tyverisikring:
           labelText: "Tyverisikring"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         alcohol:
-          labelText: "Alcohol"
+          labelText: "Sprit"
+          volumeLabel: "Volum"
+          volumePlaceHolder: "Volum"
+          statusLabel: "Tilstand"
+          statusPlaceHolder: "Tilstand"
+          commentLabel: "Tiltak/Kommentar"
+          commentPlaceHolder: "Tiltak/Kommentar"
+          tooltip: "Sprit"
+          statusItems:
+            dryed: "Uttørket"
+            allmostDryed: "Nesten uttørket"
+            someDryed: "Noe uttørket"
+            minorDryed: "Litt uttørket"
+            satisfactory: "Tilfredsstillende"
         hypoxicAir:
-          labelText: "Hypoxic Air"
+          labelText: "Inert luft"
+          fromValueLabelText: "Inert luft (fra)"
+          toValueLabelText: "Inert luft (til)"
+          fromValuePlaceHolder: "Inert luft (fra)"
+          toValuePlaceHolder: "Inert luft (til)"
+          fromValueTooltip: "Inert luft (fra)"
+          toValueTooltip: "Inert luft (til)"
+          note: "Kommentar"
+          noteTooltip: "Kommentar"
+          notePlaceHolder: "Kommentar"
         rh:
-          labelText: "Relative Humidity"
-        cleaning:
-          labelText: "Cleaning"
+          labelText: "Relativ luftfuktighet"
+          fromValueLabelText: "Relativ luftfuktighet (fra)"
+          toValueLabelText: "Relativ luftfuktighet (til)"
+          fromValuePlaceHolder: "Relativ luftfuktighet (fra)"
+          toValuePlaceHolder: "Relativ luftfuktighet (til)"
+          fromValueTooltip: "Relativ luftfuktighet (fra)"
+          toValueTooltip: "Relativ luftfuktighet (til)"
+          note: "Kommentar"
+          noteTooltip: "Kommentar"
+          notePlaceHolder: "Kommentar"
         gas:
-          labelText: "Gas"
+          labelText: "Gass"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         lux:
-          labelText: "Light Conditions"
+          labelText: "Lysforhold"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
+        cleaning:
+          labelText: "Renhold"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
       registerObservation: "Registrer observasjon"
       registerObservations: "Registrer observasjoner"
       date: "Utført dato"
@@ -342,9 +556,9 @@ no:
       newButtonLabel: "Legg til ny"
       pest:
         identificationLabel: "Identifikasjon"
-        identificationTooltip: "Identifikasjon tooltip!"
+        identificationTooltip: "Identifikasjon"
         commentsLabel: "Tiltak/Kommentar"
-        commentsTooltip: "Tiltak/Kommentar tooltip!"
+        commentsTooltip: "Tiltak/Kommentar"
         lifeCycleLabel: "Livssyklus"
         lifeCycleLabelMenu:
           adult: "Adult"
@@ -364,6 +578,7 @@ no:
           egg: "Egg"
       inertAir:
         fromLabel: "Fra"
+        toLabel: "Til"
     pickList:
       title: "Plukkliste"
       action:
@@ -473,7 +688,7 @@ no:
       noAccess: Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil
     welcomeUserPage:
       body: >
-        MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom 
+        MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom
         Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet,
         Universitetet i Tromsø, og Universitetet i Stavanger.
 
