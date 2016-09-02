@@ -311,6 +311,39 @@ no:
       pest: "Skadedyr"
       envdata: "Miljødata"
     observation:
+      page:
+        titles:
+          add: "Add observations"
+          edit: "Edit control observations"
+          view: "Observations"
+        typeSelect:
+          labelText: "Choose type"
+        pest:
+          labelText: "Pest"
+        mold:
+          labelText: "Mold"
+        temperature:
+          labelText: "Temperature"
+        skallsikring:
+          labelText: "Skallsikring"
+        brannsikring:
+          labelText: "Brannsikring"
+        vannskaderisiko:
+          labelText: "Vannskaderisiko"
+        tyverisikring:
+          labelText: "Tyverisikring"
+        alcohol:
+          labelText: "Alcohol"
+        hypoxicAir:
+          labelText: "Hypoxic Air"
+        rh:
+          labelText: "Relative Humidity"
+        cleaning:
+          labelText: "Cleaning"
+        gas:
+          labelText: "Gas"
+        lux:
+          labelText: "Light Conditions"
       registerObservation: "Registrer observasjon"
       registerObservations: "Registrer observasjoner"
       date: "Utført dato"
