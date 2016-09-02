@@ -45,6 +45,7 @@ export default class EnvironmentRequirementComponent extends Component {
       id: 'temperatureTolerance',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.tooltip'),
       validate: 'number',
+      precision: 0,
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.placeHolder'),
       addOnPrefix: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.addOnPrefix'),
       onChange: (temperatureTolerance) => {
@@ -77,6 +78,7 @@ export default class EnvironmentRequirementComponent extends Component {
       id: 'relativeHumidityTolerance',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.tooltip'),
       validate: 'number',
+      precision: 0,
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.placeHolder'),
       addOnPrefix: this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.addOnPrefix'),
       onChange: (relativeHumidityTolerance) => {
@@ -109,6 +111,7 @@ export default class EnvironmentRequirementComponent extends Component {
       id: 'inertAirTolerance',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.tooltip'),
       validate: 'number',
+      precision: 0,
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.placeHolder'),
       addOnPrefix: this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.addOnPrefix'),
       onChange: (inertAirTolerance) => {
@@ -158,6 +161,7 @@ export default class EnvironmentRequirementComponent extends Component {
       numberOfRows: 4,
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.comments.tooltip'),
       validate: 'text',
+      maximumLength: 250,
       onChange: (comments) => this.setState({
         environmentRequirement: {
           ...this.state.environmentRequirement,
