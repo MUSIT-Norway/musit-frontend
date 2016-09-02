@@ -10,16 +10,13 @@ import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import Breadcrumb from 'react-breadcrumbs'
 import { blur } from '../../../util'
-import { Modal, Button } from 'react-bootstrap'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   rootNode: state.storageGridUnit.root,
-  routerState: state.routing,
-  showModal: state.showModal
+  routerState: state.routing
 })
-
 
 const mapDispatchToProps = (dispatch, props) => {
   const { history } = props
@@ -54,7 +51,6 @@ const mapDispatchToProps = (dispatch, props) => {
     onEdit: (unit) => { hashHistory.push(`/magasin/${unit.id}/view`) },
     onDelete: (id, currentNode) => { // TODO: Problems with delete slower then callback (async)
       if (id === currentNode.id) {
-        this.setState({ ...this.state, showModal: true })
         dispatch(deleteUnit(id, {
           onSuccess: () => {
             dispatch(clearRoot())
@@ -86,8 +82,7 @@ export default class StorageUnitsContainer extends React.Component {
     params: React.PropTypes.object,
     history: React.PropTypes.object,
     routerState: React.PropTypes.object,
-    loadChildren: React.PropTypes.func,
-    showModal: React.PropTypes.bool.isRequired
+    loadChildren: React.PropTypes.func
   }
 
   constructor(props) {
@@ -96,7 +91,7 @@ export default class StorageUnitsContainer extends React.Component {
       searchPattern: '',
       showObjects: false,
       showNodes: true,
-      showModal: false
+      showDeleteModal: false
     }
   }
 
@@ -108,6 +103,8 @@ export default class StorageUnitsContainer extends React.Component {
       this.props.loadStorageUnits()
     }
   }
+
+
   componentWillReceiveProps(newProps) {
         // Issued on every propchange, including local route changes
     if (newProps.params.splat !== this.props.params.splat) {
@@ -174,10 +171,10 @@ export default class StorageUnitsContainer extends React.Component {
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
-            this.setState({ ...this.state, showModal: true })
-            if (parentId) {
-              history.push(`/magasin/${parentId}/add`)
-            }
+            console.log(parentId)
+            // if (parentId) {
+            //   history.push(`/magasin/${parentId}/add`)
+            // }
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
@@ -221,27 +218,6 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  showModalDialog(question, onYes, onCancel) {
-    return (
-      <Modal
-        show={this.props.showModal}
-        onHide={onCancel}
-        dialogClassName="custom-modal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-lg">{question}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {question}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={onYes}>Ja</Button>
-          <Button onClick={onCancel}>Close</Button>
-        </Modal.Footer>
-      </Modal>
-    )
-  }
-
   render() {
     // breadcrumb={this.makeBreadcrumb(routerState)}
     const { searchPattern } = this.state
@@ -254,9 +230,7 @@ export default class StorageUnitsContainer extends React.Component {
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
         content={this.makeContentGrid(searchPattern, rootNodeData, children)}
-      >
-        {this.showModalDialog('Hei', (() => null), () => null)}
-      </Layout>
+      />
     )
   }
 }
