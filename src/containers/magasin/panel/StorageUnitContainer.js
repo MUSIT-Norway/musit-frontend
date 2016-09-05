@@ -55,7 +55,7 @@ export default class StorageUnitContainer extends Component {
             <Row styleClass="row-centered">
               <ButtonToolbar>
                 <Button bsStyle="primary" onClick={() => this.props.onLagreClick(data)} >Lagre
-                </Button>EnvironmentRequirementComponent
+                </Button>
                 <Button onClick={() => hashHistory.goBack()}>Cancel</Button>
               </ButtonToolbar>
             </Row>
