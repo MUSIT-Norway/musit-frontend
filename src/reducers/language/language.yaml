@@ -384,6 +384,9 @@ no:
         executeAll: "Utfør (alle)"
     storageUnits:
       title: "Magasin"
+      header: "Egenskaper"
+      newNode: "Ny node"
+      environmentalData: "Miljødata"
       storageType:
         label: "Type"
         placeHolder: "velg type"
