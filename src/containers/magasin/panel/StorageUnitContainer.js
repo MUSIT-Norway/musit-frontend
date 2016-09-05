@@ -100,6 +100,7 @@ export default class StorageUnitContainer extends Component {
           />
           {data.type === 'Room' ?
             <Options
+              translate={this.props.translate}
               unit={data}
               // Disse må fikses (Mappe verdi av sikring fra bool -> {0,1})
               updateSkallsikring={(sikringSkallsikring) =>

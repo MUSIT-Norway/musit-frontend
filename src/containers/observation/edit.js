@@ -56,7 +56,7 @@ export default class EditObservationPage extends React.Component {
       .map((o) => {
         switch (o) {
           case 'pestOK':
-            return { type: 'pest', data: ObservationPage.defaultPestData }
+            return { type: 'pest', data: ObservationPage.createDefaultPestData() }
           case 'temperatureOK':
             return { type: 'temperature', data: {} }
           case 'moldOK':

@@ -2,6 +2,7 @@ import React from 'react'
 import { Checkbox, ControlLabel, Grid, Row, Col } from 'react-bootstrap'
 export default class EnvironmentOptions extends React.Component {
   static propTypes = {
+    translate: React.PropTypes.func.isRequired,
     unit: React.PropTypes.shape({
       sikringSkallsikring: React.PropTypes.bool,
       sikringTyverisikring: React.PropTypes.bool,
@@ -29,65 +30,65 @@ export default class EnvironmentOptions extends React.Component {
       <Grid>
         <Row styleClass="row-centered">
           <Col lg={6} md={6} sm={6} xs={12}>
-            <ControlLabel>Sikring</ControlLabel>
-
+            <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}</ControlLabel>
             <Checkbox
               checked={this.props.unit.sikringSkallsikring}
               onChange={(event) => this.props.updateSkallsikring(event.target.checked)}
             >
-              Skallsikring
+              {this.props.translate('musit.storageUnits.securityAssessment.perimeterSecurity')}
             </Checkbox>
             <Checkbox
               checked={this.props.unit.sikringTyverisikring}
               onChange={(event) => this.props.updateTyverisikring(event.target.checked)}
             >
-              Tyverisikring
+              {this.props.translate('musit.storageUnits.securityAssessment.theftProtection')}
             </Checkbox>
             <Checkbox
               checked={this.props.unit.sikringBrannsikring}
               onChange={(event) => this.props.updateBrannsikring(event.target.checked)}
             >
-              Brannsikring
+              {this.props.translate('musit.storageUnits.securityAssessment.fireProtection')}
             </Checkbox>
             <Checkbox
               checked={this.props.unit.sikringVannskaderisiko}
               onChange={(event) => this.props.updateVannskaderisiko(event.target.checked)}
             >
-              Vannskaderisiko
+              {this.props.translate('musit.storageUnits.securityAssessment.waterDamageAssessment')}
             </Checkbox>
             <Checkbox
               checked={this.props.unit.sikringRutineOgBeredskap}
               onChange={(event) => this.props.updateRutinerBeredskap(event.target.checked)}
             >
-              Rutiner/beredskap
+              {this.props.translate('musit.storageUnits.securityAssessment.routinesAndContingencyPlan')}
             </Checkbox>
           </Col>
           <Col lg={6} md={6} sm={6} xs={12}>
-            <ControlLabel>Bevaring</ControlLabel>
-
+            <ControlLabel>
+              {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
+            </ControlLabel>
             <Checkbox
               checked={this.props.unit.bevarLuftfuktOgTemp}
               onChange={(event) => this.props.updateLuftfuktighet(event.target.checked)}
             >
-              Luftfuktighet
+              {this.props.translate('musit.storageUnits.environmentalAssessment.relativeHumidity')}
             </Checkbox>
             <Checkbox
               checked={this.props.unit.bevarLysforhold}
               onChange={(event) => this.props.updateLysforhold(event.target.checked)}
             >
-              Lysforhold
+              {this.props.translate('musit.storageUnits.environmentalAssessment.lightingCondition')}
             </Checkbox>
             <Checkbox
               checked={this.props.unit.temperatur}
               onChange={(event) => this.props.updateTemperatur(event.target.checked)}
             >
-              Temperatur
+              {this.props.translate('musit.storageUnits.environmentalAssessment.temperature')}
             </Checkbox>
             <Checkbox
               checked={this.props.unit.bevarPrevantKons}
               onChange={(event) => this.props.updatePreventivKonservering(event.target.checked)}
             >
-              Preventiv Konservering
+              {this.props.translate('musit.storageUnits.environmentalAssessment.preventiveConservation')}
             </Checkbox>
           </Col>
         </Row>
