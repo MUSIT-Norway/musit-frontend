@@ -23,79 +23,73 @@ import { Row, ControlLabel, Col } from 'react-bootstrap'
 
 export default class ObservationFromToNumberCommentComponent extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
-    translate: PropTypes.func.isRequired,
+    // From
     fromLabel: PropTypes.string.isRequired,
     fromValue: PropTypes.string.isRequired,
     fromTooltip: PropTypes.string.isRequired,
+    fromPlaceHolder: PropTypes.string,
     onChangeFrom: PropTypes.func.isRequired,
+    // To
     toLabel: PropTypes.string.isRequired,
     toValue: PropTypes.string.isRequired,
     toTooltip: PropTypes.string.isRequired,
+    toPlaceHolder: PropTypes.string,
     onChangeTo: PropTypes.func.isRequired,
+    // Comment
     commentLabel: PropTypes.string.isRequired,
     commentValue: PropTypes.string.isRequired,
     commentTooltip: PropTypes.string.isRequired,
+    commentPlaceholder: PropTypes.string,
     onChangeComment: PropTypes.func.isRequired,
-    fromPlaceHolder: PropTypes.string,
-    toPlaceHolder: PropTypes.string,
+    // Other
     disabled: PropTypes.bool
   }
 
-  constructor(props) {
-    super(props)
-    const { id, fromTooltip, onChangeFrom, toTooltip, onChangeTo, commentTooltip, onChangeComment, translate,
-      fromPlaceHolder, toPlaceHolder, disabled } = props
-    this.fields = {
-      from: {
-        id: `${id}_from`,
-        placeHolder: fromPlaceHolder,
-        tooltip: fromTooltip,
-        onChange: onChangeFrom,
-        validate: 'number',
-        precision: 3,
-        minimumLength: 1,
-        disabled: disabled
-      },
-      to: {
-        id: `${id}_to`,
-        placeHolder: toPlaceHolder,
-        tooltip: toTooltip,
-        onChange: onChangeTo,
-        validate: 'number',
-        precision: 3,
-        disabled: disabled
-      },
-      comment: {
-        id: `${id}_comment`,
-        placeHolder: translate('musit.texts.freetext'),
-        tooltip: commentTooltip,
-        onChange: onChangeComment,
-        validate: 'text',
-        maximumLength: 250,
-        numberOfRows: 5,
-        disabled: disabled
-      }
-    }
+  static defaultProps = {
+    fromValue: '',
+    toValue: '',
+    commentValue: ''
   }
 
   render() {
-    const { from, to, comment } = this.fields
-    const { fromValue, toValue, fromLabel, toLabel, commentValue, commentLabel } = this.props
-
     return (
       <Row>
-        <Col xs={12} sm={3}>
-          <ControlLabel>{fromLabel}</ControlLabel>
-          <MusitField {...from} value={fromValue} />
+        <Col xs={12} sm={2}>
+          <ControlLabel>{this.props.fromLabel}</ControlLabel>
+          <MusitField
+            value={this.props.fromValue}
+            tooltip={this.props.fromTooltip}
+            placeHolder={this.props.fromPlaceHolder}
+            validate={'number'}
+            precision={3}
+            onChange={this.props.onChangeFrom}
+            disabled={this.props.disabled}
+          />
         </Col>
-        <Col xs={12} sm={3}>
-          <ControlLabel>{toLabel}</ControlLabel>
-          <MusitField {...to} value={toValue} />
+        <Col xs={12} sm={2}>
+          <ControlLabel>{this.props.toLabel}</ControlLabel>
+          <MusitField
+            value={this.props.toValue}
+            tooltip={this.props.toTooltip}
+            placeHolder={this.props.toPlaceHolder}
+            validate={'number'}
+            precision={3}
+            onChange={this.props.onChangeTo}
+            disabled={this.props.disabled}
+          />
         </Col>
         <Col xs={12} sm={6}>
-          <ControlLabel>{commentLabel}</ControlLabel>
-          <MusitTextArea {...comment} value={commentValue} />
+          <ControlLabel>{this.props.commentLabel}</ControlLabel>
+          <MusitTextArea
+            value={this.props.commentValue}
+            tooltip={this.props.commentTooltip}
+            placeHolder={this.props.commentPlaceholder}
+            validate={'text'}
+            maximumLength={250}
+            numberOfRows={5}
+            onChange={this.props.onChangeComment}
+            disabled={this.props.disabled}
+          />
         </Col>
       </Row>
     )

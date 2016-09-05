@@ -53,45 +53,22 @@ export default class StorageUnitContainer extends Component {
     const data = (this.state && this.state.unit) ? this.state.unit : this.props.unit;
 
     const completePage = (<div>
-      <Row>
-        <Col style={{ textAlign: 'center' }}>
-          <h2>{this.props.route.add ?
-          this.props.translate('musit.storageUnits.newNode') : this.props.params.id }
-          - {this.props.translate('musit.storageUnits.header')}
-          </h2>
-        </Col>
+      <Row style={{ textAlign: 'center' }}>
+        <h2>{this.props.route.add ?
+        this.props.translate('musit.storageUnits.newNode') : this.props.params.id }
+        - {this.props.translate('musit.storageUnits.header')}
+        </h2>
       </Row>
       <StorageUnitComponents
         unit={data}
         translate={this.props.translate}
-        updateType={(type) =>
-          this.updateStorageUnit(data, 'type', type)}
-        updateName={(name) =>
-          this.updateStorageUnit(data, 'name', name)}
-        updateAreal1={(area) =>
-          this.updateStorageUnit(
-            data, 'area', area !== '' && /^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(area) ? Number(area.replace(',', '.')) : area
-          )}
-        updateAreal2={(areaTo) =>
-          this.updateStorageUnit(
-            data,
-            'areaTo',
-            areaTo !== '' && /^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(areaTo) ? Number(areaTo.replace(',', '.')) : areaTo
-          )}
-        updateHeight1={(height) =>
-          this.updateStorageUnit(
-            data,
-            'height',
-            height !== '' && /^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(height) ? Number(height.replace(',', '.')) : height
-          )}
-        updateHeight2={(heightTo) =>
-          this.updateStorageUnit(
-            data,
-            'heightTo',
-            heightTo !== '' && /^-?(\d+\.?\d*)$|(\d*\.?\d+)$/.test(heightTo) ? Number(heightTo.replace(',', '.')) : heightTo
-          )}
-        updateAddress={(address) =>
-          this.updateStorageUnit(data, 'address', address)}
+        updateType={(type) => this.updateStorageUnit(data, 'type', type)}
+        updateName={(name) => this.updateStorageUnit(data, 'name', name)}
+        updateAreal1={(area) => this.updateStorageUnit(data, 'area', area)}
+        updateAreal2={(areaTo) => this.updateStorageUnit(data, 'areaTo', areaTo)}
+        updateHeight1={(height) => this.updateStorageUnit(data, 'height', height)}
+        updateHeight2={(heightTo) => this.updateStorageUnit(data, 'heightTo', heightTo)}
+        updateAddress={(address) => this.updateStorageUnit(data, 'address', address)}
         onAddressSuggestionsUpdateRequested={this.props.onAddressSuggestionsUpdateRequested}
         suggest={this.props.suggest}
       />
@@ -105,6 +82,7 @@ export default class StorageUnitContainer extends Component {
       />
       {data.type === 'Room' ?
         <Options
+          translate={this.props.translate}
           unit={data}
           // Disse må fikses (Mappe verdi av sikring fra bool -> {0,1})
           updateSkallsikring={(sikringSkallsikring) =>
@@ -145,10 +123,17 @@ export default class StorageUnitContainer extends Component {
         title={this.props.translate('musit.storageUnits.title')}
         translate={this.props.translate}
         breadcrumb={<span>"Museum / Papirdunken / Esken inni der"</span>}
-        toolbar={<div />}
-        leftMenu={<div />}
-        content={completePage}
+        content={
+          <Grid>
+            <Row>
+              <Col md={9}>
+                {completePage}
+              </Col>
+            </Row>
+          </Grid>
+        }
       />
+
     );
   }
 }

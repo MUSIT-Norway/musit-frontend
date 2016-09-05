@@ -25,128 +25,116 @@ import { MusitField } from '../../../components/formfields'
 import Language from '../../../components/language'
 import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
+import { getActorNameFromId } from '../../../reducers/observation'
+import Layout from '../../../layout'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
-  controls: state.control
+  controls: state.control,
+  doneBy: state.observation.data.doneBy
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadControl: (id) => {
-    dispatch(loadControl(id))
+  loadControl: (id, callback) => {
+    dispatch(loadControl(id, callback))
+  },
+  loadPersonNameFromId: (id) => {
+    dispatch(getActorNameFromId(id))
   }
 })
+
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ControlViewShow extends React.Component {
+export default class ControlViewContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    controls: React.PropTypes.arrayOf(React.PropTypes.object),
+    controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
+    loadPersonNameFromId: React.PropTypes.func.isRequired,
+    doneBy: React.PropTypes.object
   }
 
   componentWillMount() {
     if (this.props.params.controlId) {
-      this.props.loadControl(this.props.params.controlId)
+      this.props.loadControl(this.props.params.controlId, {
+        onSuccess: (r) => this.props.loadPersonNameFromId(r.doneBy)
+      })
     }
   }
   render() {
     const { translate } = this.props
-    const test = () => {
-      if (this.props.controls.loaded) {
-        /* eslint-disable no-console */
-        console.log(this.props.controls.data.registeredBy)
-        console.log(this.props.controls.data.doneDate)
-        console.log(this.props.controls)
-        this.props.controls.data['subEvents-parts'].map((c) => {
-          console.log(c.eventType)
-          if (c['subEvents-motivates']) {
-            console.log(c['subEvents-motivates'][0].eventType)
-          }
-          return ''
-        }
-        )
-        /* eslint-disable no-console */
-      }
-      return ''
-    }
-
-    const closeBtn = (
-      <Row>
-        <Col style={{ border: 'none', textAlign: 'center' }}>
-          <Button onClick={() => { hashHistory.goBack() }}>
-            Lukk
-          </Button>
-        </Col>
-      </Row>
-    )
-
+    const data = this.props.controls.data;
     return (
-      <div>
-        <main>
-          <Grid>
-            <Row>
-              <br />
-              <br />
-              <br />
-              {test()}
-            </Row>
-            <Row>
-              <Col sm={4} smOffset={2}>
-                <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
+      <Layout
+        title="Magasin"
+        translate={this.props.translate}
+        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        content={
+          <div>
+            <h4>View control</h4>
+            <Grid>
+              <Row>
+                <Col sm={4}>
+                  <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
+                  <br />
+                  <DatePicker
+                    dateFormat="DD.MM.YYYY"
+                    value={data ? data.doneDate : ''}
+                  />
+                </Col>
+                <Col sm={4} >
+                  <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
+                  <br />
+                  <MusitField
+                    onChange={() => true}
+                    id="performedBy"
+                    value={this.props.doneBy ? this.props.doneBy.fn : ''}
+                    validate="text"
+                    disabled={Boolean(true)}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col sm={4}>
+                  <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
+                  <br />
+                  <DatePicker
+                    dateFormat="DD.MM.YYYY"
+                    value={data ? data.registeredDate : ''}
+                  />
+                </Col>
+                <Col sm={4} >
+                  <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
+                  <br />
+                  <MusitField
+                    onChange={() => true}
+                    id="registeredBy"
+                    value={data ? data.registeredBy : ''}
+                    validate="text"
+                    disabled={Boolean(true)}
+                  />
+                </Col>
+              </Row>
+              <Row>
                 <br />
-                <DatePicker
-                  dateFormat="DD.MM.YYYY"
-                  value={this.props.controls.loaded ? this.props.controls.data.doneDate : null}
-                />
-              </Col>
-              <Col sm={4} >
-                <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
-                <br />
-                <MusitField
-                  id="performedBy"
-                  value={this.props.controls.loaded ? this.props.controls.data.doneBy : null}
-                  validate="text"
-                  disabled={Boolean(true)}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={4} smOffset={2}>
-                <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
-                <br />
-                <DatePicker
-                  dateFormat="DD.MM.YYYY"
-                  value={this.props.controls.loaded ? this.props.controls.data.registeredDate : null}
-                />
-              </Col>
-              <Col sm={4} >
-                <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
-                <br />
-                <MusitField
-                  id="registeredBy"
-                  value={this.props.controls.loaded ? this.props.controls.data.registeredBy : null}
-                  validate="text"
-                  disabled={Boolean(true)}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <br />
-            </Row>
-            <Row>
-              <Col sm={8} smOffset={2}>
-                <ControlView
-                  id="1"
-                  translate={translate}
-                  controlsJson={this.props.controls.loaded ? this.props.controls.data['subEvents-parts'] : null}
-                />
-              </Col>
-            </Row>
-            {closeBtn}
-          </Grid>
-        </main>
-      </div>
+              </Row>
+              <Row>
+                <Col sm={8}>
+                  <ControlView
+                    id="1"
+                    translate={translate}
+                    controlsJson={data && data['subEvents-parts'] ? data['subEvents-parts'] : null}
+                  />
+                </Col>
+              </Row>
+              <Button onClick={() => { hashHistory.goBack() }}>
+                Lukk
+              </Button>
+            </Grid>
+          </div>
+        }
+      />
+
     )
   }
 }

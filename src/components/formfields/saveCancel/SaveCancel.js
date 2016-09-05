@@ -56,7 +56,6 @@ export default class SaveCancel extends Component {
   }
 
   render() {
-    const { save, cancel } = this.fields
     const { saveLabel, cancelLabel, translate } = this.props
     const showButton = (data) => {
       return (
@@ -68,8 +67,22 @@ export default class SaveCancel extends Component {
 
     return (
       <Row>
-        {showButton(<Button {...save}>{saveLabel || translate('musit.texts.save')}</Button>)}
-        {showButton(<Button {...cancel}>{cancelLabel || translate('musit.texts.cancel')}</Button>)}
+        {showButton(
+          <Button
+            onClick={this.props.onClickSave}
+            disabled={this.props.saveDisabled}
+          >
+            {saveLabel || translate('musit.texts.save')}
+          </Button>
+        )}
+        {showButton(
+          <Button
+            onClick={this.props.onClickCancel}
+            disabled={this.props.cancelDisabled}
+          >
+            {cancelLabel || translate('musit.texts.cancel')}
+          </Button>
+        )}
       </Row>
     )
   }
