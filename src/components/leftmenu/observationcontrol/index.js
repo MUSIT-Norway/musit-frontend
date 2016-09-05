@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 
 export default class ObservationControlComponent extends Component {
@@ -18,7 +18,7 @@ export default class ObservationControlComponent extends Component {
         <Button
           id={`${id}_${type}`}
           onClick={(event) => eventType(event.target.value)}
-          style={{ width: '100%', textAlign: 'left' }}
+          style={{ textAlign: 'left' }}
         >
           <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
           {getTranslate(type)}
@@ -27,8 +27,14 @@ export default class ObservationControlComponent extends Component {
     }
     return (
       <div>
-        {buttonLogic('newObservation', onClickNewObservation)}
-        {buttonLogic('newControl', onClickNewControl)}
+        <Row>
+          <Col xs={6} sm={12}>
+            {buttonLogic('newObservation', onClickNewObservation)}
+          </Col>
+          <Col xs={6} sm={12}>
+            {buttonLogic('newControl', onClickNewControl)}
+          </Col>
+        </Row>
       </div>
     )
   }

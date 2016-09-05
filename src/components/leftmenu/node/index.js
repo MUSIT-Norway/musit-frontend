@@ -74,7 +74,7 @@ export default class NodeLeftMenuComponent extends Component {
           <Button
             id={`${identity}_newNode`}
             onClick={() => onClickNewNode(identity)}
-            style={{ width: '100%', textAlign: 'left' }}
+            style={{ textAlign: 'left' }}
           >
             <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
             {translate('musit.leftMenu.node.newNode')}
