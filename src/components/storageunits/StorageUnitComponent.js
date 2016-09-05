@@ -51,7 +51,7 @@ export default class StorageUnitComponent extends Component {
       maximumLength: 100
     }
     this.onAddressChange = this.onAddressChange.bind(this)
-    this.area = {
+    this.areaFrom = {
       id: 'area',
       tooltip: this.props.translate('musit.storageUnits.area.from.tooltip'),
       validate: 'number',
@@ -180,11 +180,11 @@ export default class StorageUnitComponent extends Component {
             <Col md={5}>
               <form className="form-horizontal">
                 <div className="form-group">
-                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                  <label className="col-sm-3 control-label" htmlFor="controlId">
                     {this.props.translate('musit.storageUnits.area.from.label')}</label>
                   <div class="col-sm-4" is="null">
                     <MusitField
-                      {...this.area}
+                      {...this.areaFrom}
                       value={this.props.unit.area}
                     />
                   </div>
