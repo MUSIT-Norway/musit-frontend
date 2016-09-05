@@ -223,7 +223,6 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   render() {
-    // breadcrumb={this.makeBreadcrumb(routerState)}
     const { searchPattern } = this.state
     const { children, translate } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode

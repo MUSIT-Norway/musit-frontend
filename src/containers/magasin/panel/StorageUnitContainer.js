@@ -54,7 +54,8 @@ export default class StorageUnitContainer extends Component {
           <Grid>
             <Row styleClass="row-centered">
               <ButtonToolbar>
-                <Button bsStyle="primary" onClick={() => this.props.onLagreClick(data)} >Lagre</Button>
+                <Button bsStyle="primary" onClick={() => this.props.onLagreClick(data)} >Lagre
+                </Button>EnvironmentRequirementComponent
                 <Button onClick={() => hashHistory.goBack()}>Cancel</Button>
               </ButtonToolbar>
             </Row>
@@ -95,6 +96,7 @@ export default class StorageUnitContainer extends Component {
           />
           <EnvironmentRequirementComponent
             translate={this.props.translate}
+            updateStorageUnit={(e) => { this.updateStorageUnit(data, 'environmentRequirements', e) }}
           />
           {data.type === 'Room' ?
             <Options

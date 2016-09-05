@@ -6,6 +6,7 @@ export default class EnvironmentRequirementComponent extends Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
+    updateStorageUnit: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -17,10 +18,10 @@ export default class EnvironmentRequirementComponent extends Component {
         temperatureTolerance: '',
         relativeHumidity: '',
         relativeHumidityTolerance: '',
-        inertAir: '',
-        inertAirTolerance: '',
-        renhold: '',
-        lightCondition: '',
+        hypoxicAir: '',
+        hypoxicAirTolerance: '',
+        cleaning: '',
+        lightningConditions: '',
         comments: ''
       }
     }
@@ -37,6 +38,7 @@ export default class EnvironmentRequirementComponent extends Component {
             temperature
           }
         })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
@@ -53,6 +55,7 @@ export default class EnvironmentRequirementComponent extends Component {
             temperatureTolerance
           }
         })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
@@ -68,6 +71,7 @@ export default class EnvironmentRequirementComponent extends Component {
             relativeHumidity
           }
         })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
@@ -84,67 +88,72 @@ export default class EnvironmentRequirementComponent extends Component {
             relativeHumidityTolerance
           }
         })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
-    this.inertAir = {
+    this.hypoxicAir = {
       id: 'inertAir',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.inertAir.tooltip'),
       validate: 'number',
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.inertAir.placeHolder'),
-      onChange: (inertAir) => {
+      onChange: (hypoxicAir) => {
         this.setState({
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            inertAir
+            hypoxicAir
           }
         })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
-    this.inertAirTolerance = {
+    this.hypoxicAirTolerance = {
       id: 'inertAirTolerance',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.tooltip'),
       validate: 'number',
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.placeHolder'),
       addOnPrefix: this.props.translate('musit.storageUnits.environmentRequirements.inertAirTolerance.addOnPrefix'),
-      onChange: (inertAirTolerance) => {
+      onChange: (hypoxicAirTolerance) => {
         this.setState({
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            inertAirTolerance
+            hypoxicAirTolerance
           }
         })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
-    this.renhold = {
+    this.cleaning = {
       id: 'renhold',
       // placeHolder: 'test placeHolder',
       // addOnPrefix: '\u00b1',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.renhold.tooltip'),
       validate: 'text',
-      onChange: (renhold) => {
+      onChange: (cleaning) => {
         this.setState({
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            renhold
+            cleaning
           }
         })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
-    this.lightCondition = {
+    this.lightningConditions = {
       id: 'lightCondition',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.tooltip'),
       validate: 'text',
-      onChange: (lightCondition) => {
+      onChange: (lightningConditions) => {
         this.setState({
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            lightCondition
+            lightningConditions
           }
         })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
@@ -153,12 +162,15 @@ export default class EnvironmentRequirementComponent extends Component {
       numberOfRows: 4,
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.comments.tooltip'),
       validate: 'text',
-      onChange: (comments) => this.setState({
-        environmentRequirement: {
-          ...this.state.environmentRequirement,
-          comments
-        }
-      })
+      onChange: (comments) => {
+        this.setState({
+          environmentRequirement: {
+            ...this.state.environmentRequirement,
+            comments
+          }
+        })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
+      }
     }
   }
 
@@ -217,17 +229,17 @@ export default class EnvironmentRequirementComponent extends Component {
                       <label className="col-sm-3 control-label" htmlFor="comments2">
                         {this.props.translate('musit.storageUnits.environmentRequirements.inertAir.labelText')}</label>
                       <div class="col-sm-5" is="null">
-                        <Field {...this.inertAir} value={this.state.environmentRequirement.inertAir} />
+                        <Field {...this.hypoxicAir} value={this.state.environmentRequirement.hypoxicAir} />
                       </div>
                       <div class="col-sm-4" is="null">
-                        <Field {...this.inertAirTolerance} value={this.state.environmentRequirement.inertAirTolerance} />
+                        <Field {...this.hypoxicAirTolerance} value={this.state.environmentRequirement.hypoxicAirTolerance} />
                       </div>
                     </div>
                   </form>
                 </Col>
                 <Col md={6}>
                   <Form horizontal>
-                    {renderFieldBlock(this.state.environmentRequirement.renhold, this.renhold,
+                    {renderFieldBlock(this.state.environmentRequirement.cleaning, this.cleaning,
                       this.props.translate('musit.storageUnits.environmentRequirements.renhold.labelText'))}
                   </Form>
                 </Col>
@@ -235,7 +247,7 @@ export default class EnvironmentRequirementComponent extends Component {
               <Row className="row-centered">
                 <Col md={6}>
                   <Form horizontal>
-                    {renderFieldBlock(this.state.environmentRequirement.lightCondition, this.lightCondition,
+                    {renderFieldBlock(this.state.environmentRequirement.lightningConditions, this.lightningConditions,
                       this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.labelText'))}
                   </Form>
                 </Col>
