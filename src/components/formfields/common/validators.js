@@ -2,7 +2,7 @@ const validateString = (value = '', minimumLength = 0, maximumLength = 20) => {
   return value.length < minimumLength || value.length > maximumLength ? 'error' : 'success'
 }
 
-const validateNumber = (value, minimumLength = 0, maximumLength = 10, precision = 3) => {
+const validateNumber = (value = '', minimumLength = 0, maximumLength = 10, precision = 3) => {
   /* eslint-disable prefer-template */
   const expression = '^(-?\\d{' +
     minimumLength +

@@ -28,8 +28,8 @@ export default class EnvironmentOptions extends React.Component {
   render() {
     return (
       <Grid>
-        <Row styleClass="row-centered">
-          <Col lg={6} md={6} sm={6} xs={12}>
+        <Row>
+          <Col lg={5} md={5} sm={5} xs={10} offset={1}>
             <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}</ControlLabel>
             <Checkbox
               checked={this.props.unit.sikringSkallsikring}
@@ -62,7 +62,7 @@ export default class EnvironmentOptions extends React.Component {
               {this.props.translate('musit.storageUnits.securityAssessment.routinesAndContingencyPlan')}
             </Checkbox>
           </Col>
-          <Col lg={6} md={6} sm={6} xs={12}>
+          <Col lg={5} md={5} sm={5} xs={10} offset={1}>
             <ControlLabel>
               {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
             </ControlLabel>

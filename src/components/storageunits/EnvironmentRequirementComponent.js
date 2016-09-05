@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { MusitTextArea as TextArea, MusitField as Field } from '../../components/formfields'
-import { Panel, Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
+import { Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
 
 export default class EnvironmentRequirementComponent extends Component {
   static propTypes = {
@@ -185,7 +185,7 @@ export default class EnvironmentRequirementComponent extends Component {
     const renderFieldBlock = (bindValue, fieldProps, label) => (
       <FormGroup>
         <label className="col-sm-3 control-label" htmlFor="comments2">{label}</label>
-        <div class="col-sm-9" is="null">
+        <div class="col-sm-8" is="null">
           <Field {...fieldProps} value={bindValue} />
         </div>
       </FormGroup>
@@ -193,91 +193,87 @@ export default class EnvironmentRequirementComponent extends Component {
 
     return (
       <div>
-        <main>
-          <Panel>
-            <Grid>
-              <Row className="row-centered">
-                <Col md={6}>
-                  <form className="form-horizontal">
-                    <div className="form-group">
-                      <label className="col-sm-3 control-label" htmlFor="comments2">
-                        {this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')}</label>
-                      <div class="col-sm-5" is="null">
-                        <Field {...this.temperature} value={this.state.environmentRequirement.temperature} />
-                      </div>
-                      <div class="col-sm-4" is="null">
-                        <Field {...this.temperatureTolerance} value={this.state.environmentRequirement.temperatureTolerance} />
-                      </div>
-                    </div>
-                  </form>
-                </Col>
-                <Col md={6}>
-                  <form className="form-horizontal">
-                    <div className="form-group">
-                      <label className="col-sm-3 control-label" htmlFor="comments2">
-                        {this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.labelText')}</label>
-                      <div class="col-sm-5" is="null">
-                        <Field {...this.relativeHumidity} value={this.state.environmentRequirement.relativeHumidity} />
-                      </div>
-                      <div class="col-sm-4" is="null">
-                        <Field
-                          {...this.relativeHumidityTolerance}
-                          value={this.state.environmentRequirement.relativeHumidityTolerance}
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </Col>
-              </Row>
-              <Row className="row-centered">
-                <Col md={6}>
-                  <form className="form-horizontal">
-                    <div className="form-group">
-                      <label className="col-sm-3 control-label" htmlFor="comments2">
-                        {this.props.translate('musit.storageUnits.environmentRequirements.inertAir.labelText')}</label>
-                      <div class="col-sm-5" is="null">
-                        <Field {...this.hypoxicAir} value={this.state.environmentRequirement.hypoxicAir} />
-                      </div>
-                      <div class="col-sm-4" is="null">
-                        <Field {...this.hypoxicAirTolerance} value={this.state.environmentRequirement.hypoxicAirTolerance} />
-                      </div>
-                    </div>
-                  </form>
-                </Col>
-                <Col md={6}>
-                  <Form horizontal>
-                    {renderFieldBlock(this.state.environmentRequirement.cleaning, this.cleaning,
-                      this.props.translate('musit.storageUnits.environmentRequirements.renhold.labelText'))}
-                  </Form>
-                </Col>
-              </Row>
-              <Row className="row-centered">
-                <Col md={6}>
-                  <Form horizontal>
-                    {renderFieldBlock(this.state.environmentRequirement.lightingConditions, this.lightingConditions,
-                      this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.labelText'))}
-                  </Form>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  <form className="form-horizontal">
-                    <div className="form-group">
-                      <label className="col-sm-3 control-label" htmlFor="comments">
-                        {this.props.translate('musit.storageUnits.environmentRequirements.comments.labelText')}</label>
-                      <div class="col-sm-9" is="null">
-                        <TextArea
-                          {...this.comments}
-                          value={this.state.environmentRequirement.comments}
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </Col>
-              </Row>
-            </Grid>
-          </Panel>
-        </main>
+        <Grid>
+          <Row className="row-centered">
+            <Col md={5}>
+              <form className="form-horizontal">
+                <div className="form-group">
+                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                    {this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')}</label>
+                  <div class="col-sm-4" is="null">
+                    <Field {...this.temperature} value={this.state.environmentRequirement.temperature} />
+                  </div>
+                  <div class="col-sm-4" is="null">
+                    <Field {...this.temperatureTolerance} value={this.state.environmentRequirement.temperatureTolerance} />
+                  </div>
+                </div>
+              </form>
+            </Col>
+            <Col md={5}>
+              <form className="form-horizontal">
+                <div className="form-group">
+                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                    {this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.labelText')}</label>
+                  <div class="col-sm-4" is="null">
+                    <Field {...this.relativeHumidity} value={this.state.environmentRequirement.relativeHumidity} />
+                  </div>
+                  <div class="col-sm-4" is="null">
+                    <Field
+                      {...this.relativeHumidityTolerance}
+                      value={this.state.environmentRequirement.relativeHumidityTolerance}
+                    />
+                  </div>
+                </div>
+              </form>
+            </Col>
+          </Row>
+          <Row className="row-centered">
+            <Col md={5}>
+              <form className="form-horizontal">
+                <div className="form-group">
+                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                    {this.props.translate('musit.storageUnits.environmentRequirements.inertAir.labelText')}</label>
+                  <div class="col-sm-4" is="null">
+                    <Field {...this.hypoxicAir} value={this.state.environmentRequirement.hypoxicAir} />
+                  </div>
+                  <div class="col-sm-4" is="null">
+                    <Field {...this.hypoxicAirTolerance} value={this.state.environmentRequirement.hypoxicAirTolerance} />
+                  </div>
+                </div>
+              </form>
+            </Col>
+            <Col md={5}>
+              <Form horizontal>
+                {renderFieldBlock(this.state.environmentRequirement.cleaning, this.cleaning,
+                  this.props.translate('musit.storageUnits.environmentRequirements.renhold.labelText'))}
+              </Form>
+            </Col>
+          </Row>
+          <Row className="row-centered">
+            <Col md={5}>
+              <Form horizontal>
+                {renderFieldBlock(this.state.environmentRequirement.lightingConditions, this.lightingConditions,
+                  this.props.translate('musit.storageUnits.environmentRequirements.lightCondition.labelText'))}
+              </Form>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={5}>
+              <form className="form-horizontal">
+                <div className="form-group">
+                  <label className="col-sm-3 control-label" htmlFor="comments">
+                    {this.props.translate('musit.storageUnits.environmentRequirements.comments.labelText')}</label>
+                  <div class="col-sm-8" is="null">
+                    <TextArea
+                      {...this.comments}
+                      value={this.state.environmentRequirement.comments}
+                    />
+                  </div>
+                </div>
+              </form>
+            </Col>
+          </Row>
+        </Grid>
       </div>
     );
   }
