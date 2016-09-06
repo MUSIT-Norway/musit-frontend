@@ -8,8 +8,8 @@ import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
-import Breadcrumb from 'react-breadcrumbs'
 import { blur } from '../../../util'
+import Breadcrumb from '../../../components/breadcrumb'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -207,15 +207,11 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  makeBreadcrumb(router) {
-    return (<Breadcrumb
-      routes={router.routes}
-      params={router.params}
-    />)
+  makeBreadcrumb() {
+    return (<Breadcrumb />)
   }
 
   render() {
-    // breadcrumb={this.makeBreadcrumb(routerState)}
     const { searchPattern } = this.state
     const { children, translate } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
@@ -224,6 +220,7 @@ export default class StorageUnitsContainer extends React.Component {
         title={"Magasin"}
         translate={translate}
         toolbar={this.makeToolbar()}
+        breadcrumb={this.makeBreadcrumb()}
         leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
         content={this.makeContentGrid(searchPattern, rootNodeData, children)}
       />
