@@ -80,22 +80,22 @@ export default class ObservationPage extends React.Component {
     const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
     pestObservations[pestObservationIndex][field] = value
-    this.setState({ ...this.state, observations: observations })
+    this.setState({ ...this.state, observations })
   }
 
   onRemovePestObservation(pestObservationIndex, pestIndex) {
-    const observationsCopy = [...this.state.observations]
-    const pestObj = observationsCopy[pestIndex]
+    const observations = [...this.state.observations]
+    const pestObj = observations[pestIndex]
     pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex)
-    this.setState({ ...this.state, observations: observationsCopy })
+    this.setState({ ...this.state, observations })
   }
 
   onClickAddObservation(pestIndex) {
-    const observationsCopy = [...this.state.observations]
-    const pestObj = observationsCopy[pestIndex]
+    const observations = [...this.state.observations]
+    const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
     pestObservations.unshift({ lifeCycle: '', count: '' })
-    this.setState({ ...this.state, observations: observationsCopy })
+    this.setState({ ...this.state, observations })
   }
 
   onChangeTypeSelect(e) {
@@ -103,10 +103,6 @@ export default class ObservationPage extends React.Component {
       ...this.state,
       selectedType: e.target.options[e.target.selectedIndex].value
     })
-  }
-
-  getLabel(key) {
-    return this.props.translate(`musit.observation.page.${key}`)
   }
 
   validateStringField(type, field, required = false, maxLength = 100) {
@@ -141,10 +137,12 @@ export default class ObservationPage extends React.Component {
 
     formProps.observations.forEach((observation, lifeCycleIndex) => {
       if (validateString(observation.lifeCycle, 1) === 'error') {
-        errors[`${type}.observations[${index}].observations[${lifeCycleIndex}].lifeCycle`] = `Please enter ${type} lifecycle for observation #${lifeCycleIndex}`
+        errors[`${type}.observations[${index}].observations[${lifeCycleIndex}].lifeCycle`] =
+            `Please enter ${type} lifecycle for observation #${lifeCycleIndex}`
       }
       if (!observation.count || validateNumber(observation.count, 0, 10, 0) === 'error') {
-        errors[`${type}.observations[${index}].observations[${lifeCycleIndex}].count`] = `Please enter ${type} count for observation #${lifeCycleIndex}`
+        errors[`${type}.observations[${index}].observations[${lifeCycleIndex}].count`] =
+            `Please enter ${type} count for observation #${lifeCycleIndex}`
       }
     })
 
@@ -283,7 +281,7 @@ export default class ObservationPage extends React.Component {
   validateForm(formProps) {
     let errors = {}
 
-    if (typeof formProps.doneBy !== 'object') {
+    if (typeof formProps.doneBy !== 'object' || !formProps.doneBy.id) {
       errors.doneBy = 'Please enter doneBy'
     }
 
@@ -384,8 +382,8 @@ export default class ObservationPage extends React.Component {
                   <DatePicker
                     dateFormat="DD-MM-YYYY"
                     value={this.state.doneDate}
-                    onChange={(value) => {
-                      this.setState({ ...this.state, doneDate: value })
+                    onChange={(newValue) => {
+                      this.setState({ ...this.state, doneDate: newValue })
                     }}
                     disabled={this.props.mode === 'VIEW'}
                   />
@@ -445,7 +443,7 @@ export default class ObservationPage extends React.Component {
                       {Object.keys(this.typeDefinitions).filter(this.isTypeSelectable).map((type, index) => {
                         return (
                           <option key={index} value={type}>
-                            {this.getLabel(this.typeDefinitions[type].label)}
+                            {this.props.translate(`musit.observation.page.${this.typeDefinitions[type].label}`)}
                           </option>
                         )
                       })}
@@ -467,7 +465,7 @@ export default class ObservationPage extends React.Component {
               return (
                 <div key={index}>
                   <h3>
-                    {this.getLabel(typeDefinition.label)}
+                    {this.props.translate(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
                     {this.props.mode !== 'ADD' ? '' : (
                       <a onClick={() => this.removeObservation(index)}>

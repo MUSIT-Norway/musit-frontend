@@ -100,8 +100,10 @@ export default class ObservationPest extends Component {
               <Col xs={6} sm={3} md={3}>
                 <span style={{ height: 50 }}>
                   <ControlLabel>
-                    {this.props.lifeCycleLabel}&nbsp;<FontAwesome name="asterisk" style={{ color: 'red' }} title="required" />&nbsp;
-                    {!this.props.canEdit ? '' : <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
+                    {this.props.lifeCycleLabel}
+                    &nbsp;{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+                    &nbsp;{!this.props.canEdit ? '' :
+                      <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
                   </ControlLabel>
                   <MusitDropDownField
                     items={this.props.lifeCycleItems}
@@ -117,7 +119,10 @@ export default class ObservationPest extends Component {
               </Col>
               <Col xs={6} sm={3} md={3}>
                 <span>
-                  <ControlLabel>{this.props.countLabel}&nbsp;<FontAwesome name="asterisk" style={{ color: 'red' }} /></ControlLabel>
+                  <ControlLabel>
+                    {this.props.countLabel}
+                    &nbsp;{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+                  </ControlLabel>
                   <MusitField
                     placeHolder={this.props.countPlaceHolder}
                     tooltip={this.props.countTooltip}

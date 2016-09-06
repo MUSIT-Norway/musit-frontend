@@ -20,7 +20,6 @@
 import React, { Component, PropTypes } from 'react'
 import { MusitField, MusitTextArea, MusitDropDownField } from '../../components/formfields'
 import { Row, ControlLabel, Col } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
 
 export default class ObervationStatusPercentageComment extends Component {
 
@@ -79,7 +78,10 @@ export default class ObervationStatusPercentageComment extends Component {
     return (
       <Row>
         <Col xs={12} sm={2}>
-          <ControlLabel>{this.props.statusLabel}&nbsp;<FontAwesome name="asterisk" style={{ color: 'red' }} /></ControlLabel>
+          <ControlLabel>
+            {this.props.statusLabel}
+            &nbsp;{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+          </ControlLabel>
           <MusitDropDownField
             value={this.props.statusValue}
             items={this.props.statusItems}
