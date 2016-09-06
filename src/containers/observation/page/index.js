@@ -12,6 +12,8 @@ import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import DatePicker from 'react-bootstrap-date-picker'
 import ActorSuggest from '../../../components/actor'
+import { validateString, validateNumber } from '../../../components/formfields/common/validators'
+import moment from 'moment'
 
 export default class ObservationPage extends React.Component {
 
@@ -44,7 +46,7 @@ export default class ObservationPage extends React.Component {
     this.state = {
       selectedType: null,
       observations: props.observations,
-      doneDate: props.doneDate,
+      doneDate: props.doneDate || moment().format('DD-MM-YYYY'),
       doneBy: props.doneBy
     }
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
@@ -53,6 +55,7 @@ export default class ObservationPage extends React.Component {
     this.onChangePestObservation = this.onChangePestObservation.bind(this)
     this.onRemovePestObservation = this.onRemovePestObservation.bind(this)
     this.onClickAddObservation = this.onClickAddObservation.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -106,21 +109,156 @@ export default class ObservationPage extends React.Component {
     return this.props.translate(`musit.observation.page.${key}`)
   }
 
+  validateStringField(type, field, required = false, maxLength = 100) {
+    return (formProps) => {
+      const errors = {}
+      if (required && !formProps[field]) {
+        errors[`${type}.${field}`] = `Please enter ${type} ${field}`
+      } else if (formProps[field] && validateString(formProps[field].trim(), 1, maxLength) === 'error') {
+        errors[`${type}.${field}`] = `Please correct ${type} ${field}`
+      }
+      return errors
+    }
+  }
+
+  validateDoubleTextArea(formProps, index, type) {
+    let errors = {}
+    errors = { ...errors, ...this.validateStringField(type, 'leftValue', true, 100)(formProps) }
+    errors = { ...errors, ...this.validateStringField(type, 'rightValue', false, 250)(formProps) }
+    return errors
+  }
+
+  validatePest(formProps, index, type) {
+    const errors = {}
+
+    if (!formProps.identificationValue) {
+      errors[`${type}.identificationValue`] = `Please enter ${type} identification value`
+    }
+
+    if (validateString(formProps.commentValue, 0, 250) === 'error') {
+      errors[`${type}.commentValue`] = `Please correct ${type} commentValue value`
+    }
+
+    formProps.observations.forEach((observation, lifeCycleIndex) => {
+      if (validateString(observation.lifeCycle, 1) === 'error') {
+        errors[`${type}.observations[${index}].observations[${lifeCycleIndex}].lifeCycle`] = `Please enter ${type} lifecycle for observation #${lifeCycleIndex}`
+      }
+      if (!observation.count || validateNumber(observation.count, 0, 10, 0) === 'error') {
+        errors[`${type}.observations[${index}].observations[${lifeCycleIndex}].count`] = `Please enter ${type} count for observation #${lifeCycleIndex}`
+      }
+    })
+
+    return errors
+  }
+
+  validateAlcohol(formProps, index, type) {
+    const errors = {}
+
+    if (!formProps.status) {
+      errors[`${type}.status`] = `Please enter ${type} status`
+    } else if (validateString(formProps.status, 1) === 'error') {
+      errors[`${type}.status`] = `Please correct ${type} status`
+    }
+
+    if (formProps.volume && validateNumber(formProps.volume, 0, 10, 3) === 'error') {
+      errors[`${type}.volume`] = `Please correct ${type} volume`
+    }
+
+    if (formProps.comment && validateString(formProps.comment, 1, 250) === 'error') {
+      errors[`${type}.comment`] = `Please correct ${type} comment`
+    }
+
+    return errors;
+  }
+
+  validateFromTo(formProps, index, type) {
+    const errors = {}
+
+    if (!formProps.fromValue) {
+      errors[`${type}.fromValue`] = `Please correct ${type} fromValue`
+    } else if (validateString(formProps.fromValue, 1) === 'error') {
+      errors[`${type}.fromValue`] = `Please correct ${type} fromValue`
+    }
+
+    if (formProps.toValue && validateNumber(formProps.toValue, 0, 10, 3) === 'error') {
+      errors[`${type}.toValue`] = `Please correct ${type} toValue`
+    }
+
+    if (formProps.commentValue && validateString(formProps.commentValue, 1, 250) === 'error') {
+      errors[`${type}.commentValue`] = `Please correct ${type} commentValue`
+    }
+
+    return errors;
+  }
+
   typeDefinitions = {
     '': { label: 'typeSelect.labelText' },
-    gas: { label: 'gas.labelText', render: this.renderDoubleTextArea },
-    lightConditions: { label: 'lux.labelText', render: this.renderDoubleTextArea },
-    cleaning: { label: 'cleaning.labelText', render: this.renderDoubleTextArea },
-    pest: { label: 'pest.labelText', render: this.renderPest, data: ObservationPage.createDefaultPestData() },
-    mold: { label: 'mold.labelText', render: this.renderDoubleTextArea },
-    skallsikring: { label: 'skallsikring.labelText', render: this.renderDoubleTextArea },
-    tyverisikring: { label: 'tyverisikring.labelText', render: this.renderDoubleTextArea },
-    brannsikring: { label: 'brannsikring.labelText', render: this.renderDoubleTextArea },
-    vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderDoubleTextArea },
-    relativeHumidity: { label: 'rh.labelText', render: this.renderFromToNumberComment },
-    hypoxicAir: { label: 'hypoxicAir.labelText', render: this.renderFromToNumberComment },
-    temperature: { label: 'temperature.labelText', render: this.renderFromToNumberComment },
-    alcohol: { label: 'alcohol.labelText', render: this.renderAlcohol }
+    gas: {
+      label: 'gas.labelText',
+      render: this.renderDoubleTextArea,
+      validate: this.validateDoubleTextArea
+    },
+    lightConditions: {
+      label: 'lux.labelText',
+      render: this.renderDoubleTextArea,
+      validate: this.validateDoubleTextArea
+    },
+    cleaning: {
+      label: 'cleaning.labelText',
+      render: this.renderDoubleTextArea,
+      validate: this.validateDoubleTextArea
+    },
+    pest: {
+      label: 'pest.labelText',
+      render: this.renderPest,
+      data: ObservationPage.createDefaultPestData(),
+      validate: this.validatePest
+    },
+    mold: {
+      label: 'mold.labelText',
+      render: this.renderDoubleTextArea,
+      validate: this.validateDoubleTextArea
+    },
+    skallsikring: {
+      label: 'skallsikring.labelText',
+      render: this.renderDoubleTextArea,
+      validate: this.validateDoubleTextArea
+    },
+    tyverisikring: {
+      label: 'tyverisikring.labelText',
+      render: this.renderDoubleTextArea,
+      validate: this.validateDoubleTextArea
+    },
+    brannsikring: {
+      label: 'brannsikring.labelText',
+      render: this.renderDoubleTextArea,
+      validate: this.validateDoubleTextArea
+    },
+    vannskaderisiko: {
+      label: 'vannskaderisiko.labelText',
+      render: this.renderDoubleTextArea,
+      validate: this.validateDoubleTextArea
+    },
+    relativeHumidity: {
+      label: 'rh.labelText',
+      render: this.renderFromToNumberComment,
+      validate: this.validateFromTo
+    },
+    hypoxicAir: {
+      label: 'hypoxicAir.labelText',
+      render: this.renderFromToNumberComment,
+      validate: this.validateFromTo
+    },
+    temperature: {
+      label: 'temperature.labelText',
+      render: this.renderFromToNumberComment,
+      validate: this.validateFromTo
+    },
+    alcohol: {
+      label: 'alcohol.labelText',
+      render: this.renderAlcohol,
+      validate: this.validateAlcohol
+    }
   }
 
   addObservationType(typeToAdd, data = {}) {
@@ -140,6 +278,36 @@ export default class ObservationPage extends React.Component {
   removeObservation(index) {
     const observations = this.state.observations
     this.setState({ ...this.state, observations: observations.filter((o, i) => i !== index) })
+  }
+
+  validateForm(formProps) {
+    let errors = {}
+
+    if (typeof formProps.doneBy !== 'object') {
+      errors.doneBy = 'Please enter doneBy'
+    }
+
+    if (!formProps.doneDate || formProps.doneDate.trim().length === 0) {
+      errors.doneDate = 'Please enter doneDate'
+    }
+
+    this.state.observations.forEach((observation, index) => {
+      const typeDefinition = this.typeDefinitions[observation.type];
+      if (typeDefinition.validate) {
+        errors = { ...errors, ...typeDefinition.validate.bind(this)(observation.data, index, observation.type) }
+      }
+    })
+
+    return errors
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    const errors = this.validateForm(this.state)
+    this.setState({ ...this.state, errors })
+    if (Object.keys(errors).length === 0) {
+      this.props.onSaveObservation(this.props.id, this.state)
+    }
   }
 
   renderObservation(observation, index) {
@@ -199,7 +367,7 @@ export default class ObservationPage extends React.Component {
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <Grid>
           <Row>
             <h3 />
@@ -214,7 +382,7 @@ export default class ObservationPage extends React.Component {
                   />
                 ) : (
                   <DatePicker
-                    dateFormat="YYYY-MM-DD"
+                    dateFormat="DD-MM-YYYY"
                     value={this.state.doneDate}
                     onChange={(value) => {
                       this.setState({ ...this.state, doneDate: value })
@@ -313,9 +481,14 @@ export default class ObservationPage extends React.Component {
               )
             })}
           </Row>
+          <br />
+          {this.state.errors && Object.values(this.state.errors).map((error, index) => {
+            return <p style={{ color: 'red' }} key={index}>{error}</p>
+          })}
+          <br />
           <SaveCancel
             translate={this.props.translate}
-            onClickSave={() => this.props.onSaveObservation(this.props.id, this.state)}
+            onClickSave={this.handleSubmit}
             onClickCancel={() => hashHistory.goBack()}
             saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
             cancelDisabled={this.props.cancelDisabled}

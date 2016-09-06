@@ -53,6 +53,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
             onChange={this.props.onChangeLeft}
             disabled={this.props.disabled}
             validate={'text'}
+            minimumLength={1}
             maximumLength={100}
             numberOfRows={5}
           />

@@ -108,6 +108,7 @@ export default class ObservationPest extends Component {
                     placeHolder={this.props.lifeCyclePlaceHolder}
                     tooltip={this.props.lifeCycleTooltip}
                     validate={this.props.lifeCycleValidate}
+                    minimumLength={1}
                     disabled={this.props.disabled}
                     value={observation.lifeCycle}
                     onChange={(lifeCycleValue) => this.props.lifeCycleOnChange(index, lifeCycleValue)}
