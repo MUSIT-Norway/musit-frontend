@@ -20,6 +20,7 @@
 import React, { Component, PropTypes } from 'react'
 import { MusitTextArea } from '../../components/formfields'
 import { Row, ControlLabel, Col } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
 
 export default class ObservationDoubleTextAreaComponent extends Component {
   static propTypes = {
@@ -45,7 +46,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
     return (
       <Row>
         <Col xs={12} sm={5}>
-          <ControlLabel>{this.props.leftLabel}</ControlLabel>
+          <ControlLabel>{this.props.leftLabel}&nbsp;<FontAwesome name="asterisk" style={{ color: 'red' }} /></ControlLabel>
           <MusitTextArea
             value={this.props.leftValue}
             tooltip={this.props.leftTooltip}
