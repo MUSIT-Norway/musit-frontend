@@ -1,5 +1,4 @@
 import { assert } from '../../../../test/setup'
-import deepFreeze from 'deep-freeze'
 import observationReducer, {
   loadObservation,
   initialState
