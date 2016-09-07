@@ -35,7 +35,9 @@ export default class ObservationPage extends React.Component {
     cancelDisabled: false
   }
 
-  static defaultPestData = { observations: [{ lifeCycle: '', count: '' }] }
+  static createDefaultPestData() {
+    return { observations: [{ lifeCycle: '', count: '' }] }
+  }
 
   constructor(props) {
     super(props)
@@ -109,7 +111,7 @@ export default class ObservationPage extends React.Component {
     gas: { label: 'gas.labelText', render: this.renderDoubleTextArea },
     lightConditions: { label: 'lux.labelText', render: this.renderDoubleTextArea },
     cleaning: { label: 'cleaning.labelText', render: this.renderDoubleTextArea },
-    pest: { label: 'pest.labelText', render: this.renderPest, data: ObservationPage.defaultPestData },
+    pest: { label: 'pest.labelText', render: this.renderPest, data: ObservationPage.createDefaultPestData() },
     mold: { label: 'mold.labelText', render: this.renderDoubleTextArea },
     skallsikring: { label: 'skallsikring.labelText', render: this.renderDoubleTextArea },
     tyverisikring: { label: 'tyverisikring.labelText', render: this.renderDoubleTextArea },

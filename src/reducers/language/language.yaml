@@ -114,6 +114,19 @@ en:
         executeAll: "Execute (all)"
     storageUnits:
       title: "Storage facility"
+      security:
+        securityAssessment: "Sikringstilstand"
+        perimeterSecurity: "Skallsikring"
+        theftProtection: "Tyverisikring"
+        fireProtection: "Brannsikring"
+        waterDamageAssessment: "Vannskaderisiko"
+        routinesAndContingencyPlan: "Rutiner og beredskap"
+      environmental:
+        environmentalAssessment: "Bevaringstilstand"
+        relativeHumidity: "Relativ luftfuktighet"
+        temperature: "Temperatur"
+        lightingCondition: "Lysforhold"
+        preventiveConservation: "Preventiv konservering"
       environmentRequirements:
         temperature:
           labelText: "Temperature"
@@ -216,11 +229,11 @@ en:
       noAccess: Your account does not have access to MUSIT. Contact your local MUSIT administrator.
     welcomeUserPage:
       body: >
-        The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger, 
-        University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the 
-        Norwegian University of Science and Technology. The University museums of Norway hold in trust regional and global 
-        scientific collections of natural and cultural history. The cooperative aims to ensure the operation, 
-        maintenance and development of the university museums' joint collection databases, and to facilitate sharing 
+        The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger,
+        University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the
+        Norwegian University of Science and Technology. The University museums of Norway hold in trust regional and global
+        scientific collections of natural and cultural history. The cooperative aims to ensure the operation,
+        maintenance and development of the university museums' joint collection databases, and to facilitate sharing
         dissemination of data for research, education, management and the public.
     login: Login through Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Login")
 no:
@@ -371,6 +384,55 @@ no:
         executeAll: "Utfør (alle)"
     storageUnits:
       title: "Magasin"
+      header: "Egenskaper"
+      newNode: "Ny node"
+      environmentalData: "Miljødata"
+      storageType:
+        label: "Type"
+        placeHolder: "velg type"
+        tooltip: "Type lagringsenhet"
+        items:
+          StorageUnit: "Lagringsenhet"
+          Room: "Rom"
+          Building: "Bygning"
+          Organization: "Organisasjon"
+      name:
+        label: "Navn"
+        placeHolder: " "
+        tooltip: "Navn tooltip"
+      address:
+        label: "Adresse"
+        placeHolder: "Gateadr."
+        tooltip: "Adresse tooltip"
+      area:
+        from:
+          label: "Areal"
+          placeHolder: "fra"
+          tooltip: "Areal fra tooltip"
+        to:
+          placeHolder: "til"
+          tooltip: "Areal til tooltip"
+      height:
+        from:
+          label: "Høyde"
+          placeHolder: "fra"
+          tooltip: "Høyde fra tooltip"
+        to:
+          placeHolder: "til"
+          tooltip: "Høyde til tooltip"
+      securityAssessment:
+        securityAssessment: "Sikringstilstand"
+        perimeterSecurity: "Skallsikring"
+        theftProtection: "Tyverisikring"
+        fireProtection: "Brannsikring"
+        waterDamageAssessment: "Vannskaderisiko"
+        routinesAndContingencyPlan: "Rutiner og beredskap"
+      environmentalAssessment:
+        environmentalAssessment: "Bevaringstilstand"
+        relativeHumidity: "Relativ luftfuktighet"
+        temperature: "Temperatur"
+        lightingCondition: "Lysforhold"
+        preventiveConservation: "Preventiv konservering"
       environmentRequirements:
         temperature:
           labelText: "Temperatur"
@@ -449,12 +511,6 @@ no:
             someDryed: "Noe uttørket"
             minorDryed: "Litt uttørket"
             satisfactory: "Tilfredsstillende"
-      storageType:
-        items:
-          storageunit: "Lagringsenhet"
-          room: "Rom"
-          building: "Bygning"
-          organization: "Organisasjon"
     welcomePage:
       title: >
         Universitetsmuseenes samlingsdatabaser
@@ -473,7 +529,7 @@ no:
       noAccess: Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil
     welcomeUserPage:
       body: >
-        MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom 
+        MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom
         Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet,
         Universitetet i Tromsø, og Universitetet i Stavanger.
 
