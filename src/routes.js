@@ -59,6 +59,7 @@ export default (store) => {
       <Route path="/test" component={ContactForm} />
       <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
+      <Route path="/magasin/root" component={StorageUnitsTable} />
       <Route path="/magasin/:id/add" add component={StorageUnitPanel} />
       <Route path="/magasin/:id/view" component={StorageUnitPanel} />
       <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />

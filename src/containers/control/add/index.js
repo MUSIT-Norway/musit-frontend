@@ -130,10 +130,9 @@ export default class ControlAddContainer extends React.Component {
         state: controlState
       })
     } else {
-      this.props.saveControl(this.props.params.id, controlState, {
-        onSuccess: () => hashHistory.goBack(),
-        onFailure: () => { /* alert('Kunne ikke lagre kontroll') */ }
-      })
+      this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
+                                             onFailure: () => window.alert('Kunne ikke lagre kontroll') },
+                                             this.props.params.id)
     }
   }
 
