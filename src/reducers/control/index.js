@@ -1,5 +1,4 @@
 import { mapToBackend } from './mapper/to_backend'
-// import { mapToFrontEnd } from './mapper/to_frontend'
 
 const ADD = 'musit/control/ADD'
 const ADD_SUCCESS = 'musit/control/ADD_SUCCESS'
@@ -8,26 +7,22 @@ const LOAD = 'musit/control/LOAD'
 const LOAD_SUCCESS = 'musit/control/LOAD_SUCCESS'
 const LOAD_FAIL = 'musit/control/LOAD_FAIL'
 
-export const initialState = []
+export const initialState = {}
 
 const controlReducer = (state = initialState, action = {}) => {
-  // let d = {}
   switch (action.type) {
     case ADD: {
       return {
         ...state,
         loading: true,
         loaded: false
-        // data: {}
       };
     }
     case ADD_SUCCESS:
-      // d = mapToFrontEnd(action.result)
       return {
         ...state,
         loading: false,
         loaded: true
-        // data: d
       };
     case ADD_FAIL:
       return {
@@ -44,7 +39,6 @@ const controlReducer = (state = initialState, action = {}) => {
         data: {}
       };
     case LOAD_SUCCESS:
-      // d = mapToFrontEnd(action.result)
       return {
         ...state,
         loading: false,
@@ -65,8 +59,8 @@ const controlReducer = (state = initialState, action = {}) => {
 
 export default controlReducer;
 
-export const addControl = (id, controlData, callback) => {
-  const data = mapToBackend(controlData)
+export const addControl = (id, controlData, observations, callback) => {
+  const data = mapToBackend(controlData, observations)
   let url = ''
   if (id) {
     url = `/api/event/v1/node/${id}/control`
@@ -80,9 +74,10 @@ export const addControl = (id, controlData, callback) => {
   }
 }
 
-export const loadControl = (id) => {
+export const loadControl = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`api/event/v1/event/${id}`)
+    promise: (client) => client.get(`api/event/v1/event/${id}`),
+    callback
   }
 }

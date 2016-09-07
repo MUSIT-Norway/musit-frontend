@@ -19,9 +19,8 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Col, FormControl, PageHeader } from 'react-bootstrap'
+import { Grid, Row, Col, FormControl } from 'react-bootstrap'
 import PairedToogleButtons from '../../../components/control/add'
-import Field from '../../../components/formfields/musitfield'
 import { addControl } from '../../../reducers/control'
 import Language from '../../../components/language'
 import DatePicker from 'react-bootstrap-date-picker'
@@ -29,6 +28,8 @@ import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
 import { flatten } from '../../../util'
+import ActorSuggest from '../../../components/actor'
+import Layout from '../../../layout'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -36,16 +37,15 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (data, callback, id) => {
-    dispatch(addControl(id, data, callback))
+  saveControl: (id, data, saveControlCallback) => {
+    dispatch(addControl(id, data, {}, saveControlCallback))
   }
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ControlView extends React.Component {
+export default class ControlAddContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    user: React.PropTypes.object,
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object
   }
@@ -71,8 +71,7 @@ export default class ControlView extends React.Component {
       inertAirInterval: '4',
       light: 'Mørkt',
       cleaning: 'Gullende rent',
-      startDate: moment().format(),
-      user: this.props.user ? this.props.user.name : ''
+      startDate: moment().format()
     }
     this.getDate = this.getDate.bind(this)
 
@@ -121,17 +120,16 @@ export default class ControlView extends React.Component {
     // Create a nice representation of the control state
     const controlState = {
       ...flatten(controls),
-      doneBy: this.state.user,
+      doneBy: this.state.doneBy,
       doneDate: this.state.startDate
     }
     if (this.oneStateIsNotOK()) {
-      // push a new path onto the history, with the provided nice control stateonFailure
+      // push a new path onto the history, with the provided nice control state
       hashHistory.replace({
-        pathname: `/magasin/${this.props.params.id}/control/observation/add`,
+        pathname: `/magasin/${this.props.params.id}/observation/edit`,
         state: controlState
       })
     } else {
-      console.log(this.props.params)
       this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
                                              onFailure: () => window.alert('Kunne ikke lagre kontroll') },
                                              this.props.params.id)
@@ -150,10 +148,10 @@ export default class ControlView extends React.Component {
 
       if (leftValue && rightValue) {
         return (<div>
-          <Col md={5}>
+          <Col xs={5}>
             {make(leftValue)}
           </Col>
-          <Col md={4}>
+          <Col xs={4}>
             {make(rightValue)}
           </Col>
         </div>)
@@ -185,7 +183,7 @@ export default class ControlView extends React.Component {
         rightValue: this.state.relativeHumidityInterval
       },
       {
-        key: 'inertAir',
+        key: 'hypoxicAir',
         leftValue: this.state.inertAir,
         rightValue: this.state.inertAirInterval
       },
@@ -204,87 +202,90 @@ export default class ControlView extends React.Component {
     ]
 
     return (
-      <div>
-        <Grid>
-          <Row className="row-centered" style={{ paddingLeft: 40 }}>
-            <PageHeader>
-              {this.props.translate('musit.newControl.title', false)}
-            </PageHeader>
-          </Row>
-
-          <Row>
-            <Col md={3}>
-              <Col md={2} />
-              <Col md={10}>
-                <Row>
-                  <Col md={12}>
-                    <label>
-                        {translate('musit.newControl.date')}
-                    </label>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={12}>
-                    <DatePicker
-                      dateFormat="DD/MM/YYYY"
-                      value={this.state.startDate}
-                      onChange={this.onHandleDateChange}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-            </Col>
-            <Col md={9}>
+      <Layout
+        title="Magasin"
+        translate={this.props.translate}
+        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        content={
+          <div>
+            <h4>{this.props.translate('musit.newControl.title', false)}</h4>
+            <Grid>
               <Row>
-                <Col md={5}>
-                  <label>
-                    {translate('musit.newControl.doneBy')}
-                  </label>
+                <Col xs={3}>
+                  <Col xs={2} />
+                  <Col xs={10}>
+                    <Row>
+                      <Col xs={12}>
+                        <label>
+                          {translate('musit.newControl.date')}
+                        </label>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={12}>
+                        <DatePicker
+                          dateFormat="DD/MM/YYYY"
+                          value={this.state.startDate}
+                          onChange={this.onHandleDateChange}
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
                 </Col>
-              </Row>
-              <Row>
-                <Col md={9}>
-                  <Field
-                    id={"user"}
-                    value={this.state.user}
-                    onChange={(v) => { this.setState({ ...this.state, user: v }) }}
-                  />
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-
-          {fields.map((e, i) => {
-            return (
-              <Row key={i}>
-                <hr />
-                <Col md={3}>
-                  <PairedToogleButtons
-                    label={translate(`musit.newControl.${e.key}`)}
-                    value={this.state[`${e.key}OK`]}
-                    updatevalueOK={this.onControlClickOK(`${e.key}OK`)}
-                    updatevalueNotOK={this.onControlClickNOK(`${e.key}OK`)}
-                  />
-                </Col>
-                <Col md={9}>
+                <Col xs={9}>
                   <Row>
-                    <Col md={5}>
-                      <label> {translate('musit.newControl.envdata')} </label>
+                    <Col xs={5}>
+                      <label>
+                        {translate('musit.newControl.doneBy')}
+                      </label>
                     </Col>
                   </Row>
                   <Row>
-                    {renderReadOnly(e.leftValue, e.rightValue)}
+                    <Col xs={9}>
+                      <ActorSuggest
+                        id="doneByField"
+                        value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                        placeHolder="Find actor"
+                        onChange={newValue => {
+                          this.setState({ ...this.state, doneBy: newValue })
+                        }}
+                      />
+                    </Col>
                   </Row>
                 </Col>
               </Row>
-            )
-          })}
 
-          <hr />
-
-          {btnTbr}
-        </Grid>
-      </div>
+              {fields.map((e, i) => {
+                return (
+                  <Row key={i}>
+                    <hr />
+                    <Col xs={3}>
+                      <PairedToogleButtons
+                        label={translate(`musit.newControl.${e.key}`)}
+                        value={this.state[`${e.key}OK`]}
+                        updatevalueOK={this.onControlClickOK(`${e.key}OK`)}
+                        updatevalueNotOK={this.onControlClickNOK(`${e.key}OK`)}
+                      />
+                    </Col>
+                    <Col xs={9}>
+                      <Row>
+                        <Col xs={5}>
+                          <label> {translate('musit.newControl.envdata')} </label>
+                        </Col>
+                      </Row>
+                      <Row>
+                        {renderReadOnly(e.leftValue, e.rightValue)}
+                      </Row>
+                    </Col>
+                  </Row>
+                )
+              })}
+              <hr />
+              {btnTbr}
+            </Grid>
+          </div>
+        }
+      />
     )
   }
 }

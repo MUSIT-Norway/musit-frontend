@@ -122,7 +122,7 @@ export default class ObservationControlGridShow extends React.Component {
     this.props.loadControlAndObservations(this.props.params.id,
                                           { onSuccess: (result) => this.props.loadPerson({ data: result.filter((r) => r.doneBy)
                                                                              .map((r) => r.doneBy) }),
-                                            onFailure: () => console.log('Feil feil feil feil *********************') })
+                                            onFailure: () => true })
   }
   makeToolbar() {
     return (<Toolbar
@@ -171,7 +171,7 @@ export default class ObservationControlGridShow extends React.Component {
       <Layout
         title={`${this.props.unit ? this.props.unit.name : ''} - ${this.props.translate('musit.grid.observation.header')}`}
         translate={this.props.translate}
-        breadcrumb={"Museum / Papirdunken / Esken inni der"}
+        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContent()}

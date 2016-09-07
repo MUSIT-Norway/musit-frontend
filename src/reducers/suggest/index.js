@@ -3,7 +3,9 @@ const SUGGEST = 'musit/suggest/LOAD'
 const SUGGEST_SUCCESS = 'musit/suggest/LOAD_SUCCESS'
 const SUGGEST_FAIL = 'musit/suggest/LOAD_FAIL'
 
-const initialState = []
+const initialState = {
+
+}
 
 const suggestionReducer = (state = initialState, action = {}) => {
   const subState = state[action.destination]

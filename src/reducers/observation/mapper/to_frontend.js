@@ -34,14 +34,13 @@ const wrap = (be) => {
   ret.doneDate = be.doneDate
   ret.registeredDate = be.registeredDate
   ret.registeredBy = be.registeredBy
-  // ret.doneBy = be.links.filter((f) => { return f.rel === 'actor' })[0].href
   ret.observations = be['subEvents-parts'] ? be['subEvents-parts'].map((o) => {
     const retobs = {}
     retobs.type = ''
     retobs.data = {}
     switch (o.eventType.toLowerCase()) {
       case 'observationlightingcondition':
-        retobs.type = 'lux'
+        retobs.type = 'lightConditions'
         retobs.data.leftValue = o.lightingCondition
         retobs.data.rightValue = o.note
         return retobs
@@ -93,7 +92,7 @@ const wrap = (be) => {
         retobs.data.commentValue = o.note
         return retobs
       case 'observationrelativehumidity':
-        retobs.type = 'rh'
+        retobs.type = 'relativeHumidity'
         retobs.data.fromValue = o.from.toString().replace('.', ',')
         retobs.data.toValue = o.to.toString().replace('.', ',')
         retobs.data.commentValue = o.note
@@ -101,7 +100,7 @@ const wrap = (be) => {
       case 'observationpest':
         retobs.type = 'pest'
         retobs.data.identificationValue = o.identification
-        retobs.data.commentsValue = o.note
+        retobs.data.commentValue = o.note
         retobs.data.observations = o.lifeCycles ? o.lifeCycles.map((l) => {
           const obs = {}
           obs.lifeCycle = l.stage
@@ -117,7 +116,7 @@ const wrap = (be) => {
         retobs.data.commentValue = o.note
         return retobs
       default:
-        retobs.data.error = 'Not supported / ikke støttet'
+        retobs.data.error = `Not supported / ikke støttet : ${o.eventType.toLowerCase()}`
         return retobs
     }
   }) : []

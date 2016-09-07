@@ -23,10 +23,19 @@ export default class Layout extends React.Component {
   static propTypes = {
     title: React.PropTypes.string.isRequired,
     translate: React.PropTypes.func.isRequired,
-    leftMenu: React.PropTypes.object.isRequired,
+    leftMenu: React.PropTypes.object,
     content: React.PropTypes.object.isRequired,
     breadcrumb: React.PropTypes.element,
     toolbar: React.PropTypes.element
+  }
+
+  static defaultProps = {
+    leftMenu: <div
+      style={{
+        minHeight: 0
+      }}
+    />,
+    toolbar: <span />
   }
 
   render() {
@@ -38,20 +47,24 @@ export default class Layout extends React.Component {
               <PageHeader style={{ marginTop: 0 }}>{this.props.title}</PageHeader>
             </Row>
             <Row style={{ paddingBottom: 10 }}>
-              <Col xs={6} xsOffset={2} style={{ display: 'inline-block', lineHeight: '30px', verticalAlign: 'center' }}>
+              <Col md={6} mdOffset={2} style={{ display: 'inline-block', lineHeight: '30px', verticalAlign: 'center' }}>
                 {this.props.breadcrumb}
               </Col>
-              <Col xs={4}>
+              <Col md={3}>
                 {this.props.toolbar}
               </Col>
             </Row>
             <Row>
-              <Col xs={2} style={{ borderTop: '#cdcdcd 1px solid', borderRight: '#cdcdcd 1px solid' }}>
-                {this.props.leftMenu}
-              </Col>
-              <Col xs={10} style={{ borderTop: '#cdcdcd 1px solid' }}>
-                {this.props.content}
-              </Col>
+              <div className="container-fluid">
+                <div className="row content">
+                  <div className="col-md-2 sidenav" style={{ borderTop: '#cdcdcd 1px solid', borderRight: '#cdcdcd 1px solid' }}>
+                    {this.props.leftMenu}
+                  </div>
+                  <div className="col-md-10" style={{ borderTop: '#cdcdcd 1px solid', borderLeft: '#cdcdcd 1px solid' }}>
+                    {this.props.content}
+                  </div>
+                </div>
+              </div>
             </Row>
           </Grid>
         </main>

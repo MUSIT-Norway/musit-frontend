@@ -23,12 +23,14 @@ import NotFound from './components/NotFound'
 import WelcomeView from './containers/welcome-view'
 import StorageUnitsTable from './containers/magasin/grid'
 import PickListView from './containers/picklist'
-// import ExampleView from './containers/example-view'
 import StorageUnitPanel from './containers/magasin/panel'
 import WelcomeUserView from './containers/welcome-user'
-import ObservationView from './containers/observation/panel'
-import ControlView from './containers/control/view'
-import ControlAdd from './containers/control/add'
+import AddObservationPage from './containers/observation/add'
+import EditObservationPage from './containers/observation/edit'
+import ViewObservationPage from './containers/observation/view'
+import ControlViewContainer from './containers/control/view'
+import ControlAddContainer from './containers/control/add'
+import ContactForm from './containers/observation/test'
 import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
@@ -49,27 +51,25 @@ export default (store) => {
     cb();
   };
 
-  /**
-   * Please keep routes in alphabetical order
-   */
   return (
     <Route component={App}>
       <IndexRedirect to="/" />
 
       <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
+      <Route path="/test" component={ContactForm} />
       <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
-      <Route path="/magasin/:id/add" component={StorageUnitPanel} />
+      <Route path="/magasin/:id/add" add component={StorageUnitPanel} />
       <Route path="/magasin/:id/view" component={StorageUnitPanel} />
       <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/control/observation/add" newControlObservation component={ObservationView} />
-      <Route path="/magasin/:id/control/add" component={ControlAdd} />
-      <Route path="/magasin/:id/control/:controlId" component={ControlView} />
+      <Route path="/magasin/:id/control/add" component={ControlAddContainer} />
+      <Route path="/magasin/:id/control/:controlId" component={ControlViewContainer} />
       <Route path="/magasin/:id/observations" showObservations showControls={false} component={ObservationControlGridShow} />
       <Route path="/magasin/:id/controlsobservations" showObservations showControls component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/observation/add" component={ObservationView} />
-      <Route path="/magasin/:id/observation/:obsId" component={ObservationView} />
+      <Route path="/magasin/:id/observation/add" component={AddObservationPage} />
+      <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
+      <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} />
       <Route path="/magasin/*" component={StorageUnitsTable} />
 
       -- Authentication routes

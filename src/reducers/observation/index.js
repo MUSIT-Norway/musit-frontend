@@ -10,7 +10,7 @@ const LOAD_ACTOR_SUCCESS = 'musit/observation/actor/LOAD_SUCCESS'
 const LOAD_ACTOR_FAIL = 'musit/observation/actor/LOAD_FAIL'
 export const initialState = {
   data: {
-    doneBy: '',
+    doneBy: {},
     doneDate: '',
     registeredBy: '',
     registeredDate: '',
@@ -92,7 +92,7 @@ const observationReducer = (state = initialState, action = {}) => {
 
 export default observationReducer;
 
-export const addObservation = (data, id, callback) => {
+export const addObservation = (id, data, callback) => {
   const action = 'post'
   let url = ''
   if (id) {
@@ -102,7 +102,7 @@ export const addObservation = (data, id, callback) => {
   }
   const dataToPost = mapToBackEnd(data)
   return {
-    types: [ADD, ADD_SUCCESS, ADD_FAIL],
+    types: [ADD, 'musit/observation/ADD_SUCCESS', ADD_FAIL],
     promise: (client) => client[action](url, { data: dataToPost }),
     callback
   };

@@ -23,60 +23,52 @@ import { Row, ControlLabel, Col } from 'react-bootstrap'
 
 export default class ObservationDoubleTextAreaComponent extends Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
-    translate: PropTypes.func.isRequired,
     leftLabel: PropTypes.string.isRequired,
     leftValue: PropTypes.string.isRequired,
     leftTooltip: PropTypes.string.isRequired,
+    leftPlaceHolder: PropTypes.string.isRequired,
     onChangeLeft: PropTypes.func.isRequired,
     rightLabel: PropTypes.string.isRequired,
     rightValue: PropTypes.string.isRequired,
     rightTooltip: PropTypes.string.isRequired,
+    rightPlaceHolder: PropTypes.string.isRequired,
     onChangeRight: PropTypes.func.isRequired,
     disabled: PropTypes.bool
   }
 
-  constructor(props) {
-    super(props)
-    const { id, leftTooltip, onChangeLeft, rightTooltip, onChangeRight, translate, disabled } = props
-    this.fields = {
-      left: {
-        id: `${id}_left`,
-        placeHolder: translate('musit.texts.freetext'),
-        tooltip: leftTooltip,
-        onChange: onChangeLeft,
-        validate: 'text',
-        maximumLength: 100,
-        minimumLength: 1,
-        numberOfRows: 5,
-        disabled: disabled
-      },
-      right: {
-        id: `${id}_right`,
-        placeHolder: translate('musit.texts.freetext'),
-        tooltip: rightTooltip,
-        onChange: onChangeRight,
-        validate: 'text',
-        maximumLength: 250,
-        numberOfRows: 5,
-        disabled: disabled
-      }
-    }
+  static defaultProps = {
+    leftValue: '',
+    rightValue: ''
   }
 
   render() {
-    const { left, right } = this.fields
-    const { leftValue, rightValue, leftLabel, rightLabel } = this.props
-
     return (
       <Row>
-        <Col xs={12} sm={6}>
-          <ControlLabel>{leftLabel}</ControlLabel>
-          <MusitTextArea {...left} value={leftValue} />
+        <Col xs={12} sm={5}>
+          <ControlLabel>{this.props.leftLabel}</ControlLabel>
+          <MusitTextArea
+            value={this.props.leftValue}
+            tooltip={this.props.leftTooltip}
+            placeHolder={this.props.leftPlaceHolder}
+            onChange={this.props.onChangeLeft}
+            disabled={this.props.disabled}
+            validate={'text'}
+            maximumLength={100}
+            numberOfRows={5}
+          />
         </Col>
-        <Col xs={12} sm={6}>
-          <ControlLabel>{rightLabel}</ControlLabel>
-          <MusitTextArea {...right} value={rightValue} />
+        <Col xs={12} sm={5}>
+          <ControlLabel>{this.props.rightLabel}</ControlLabel>
+          <MusitTextArea
+            value={this.props.rightValue}
+            tooltip={this.props.rightTooltip}
+            placeHolder={this.props.rightPlaceHolder}
+            onChange={this.props.onChangeRight}
+            disabled={this.props.disabled}
+            validate={'text'}
+            maximumLength={250}
+            numberOfRows={5}
+          />
         </Col>
       </Row>
     )
