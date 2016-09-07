@@ -225,6 +225,19 @@ en:
         executeAll: "Execute (all)"
     storageUnits:
       title: "Storage facility"
+      security:
+        securityAssessment: "Sikringstilstand"
+        perimeterSecurity: "Skallsikring"
+        theftProtection: "Tyverisikring"
+        fireProtection: "Brannsikring"
+        waterDamageAssessment: "Vannskaderisiko"
+        routinesAndContingencyPlan: "Rutiner og beredskap"
+      environmental:
+        environmentalAssessment: "Bevaringstilstand"
+        relativeHumidity: "Relativ luftfuktighet"
+        temperature: "Temperatur"
+        lightingCondition: "Lysforhold"
+        preventiveConservation: "Preventiv konservering"
       environmentRequirements:
         temperature:
           labelText: "Temperature"
@@ -561,6 +574,55 @@ no:
         executeAll: "Utfør (alle)"
     storageUnits:
       title: "Magasin"
+      header: "Egenskaper"
+      newNode: "Ny node"
+      environmentalData: "Miljødata"
+      storageType:
+        label: "Type"
+        placeHolder: "velg type"
+        tooltip: "Type lagringsenhet"
+        items:
+          StorageUnit: "Lagringsenhet"
+          Room: "Rom"
+          Building: "Bygning"
+          Organization: "Organisasjon"
+      name:
+        label: "Navn"
+        placeHolder: " "
+        tooltip: "Navn tooltip"
+      address:
+        label: "Adresse"
+        placeHolder: "Gateadr."
+        tooltip: "Adresse tooltip"
+      area:
+        from:
+          label: "Areal"
+          placeHolder: "fra"
+          tooltip: "Areal fra tooltip"
+        to:
+          placeHolder: "til"
+          tooltip: "Areal til tooltip"
+      height:
+        from:
+          label: "Høyde"
+          placeHolder: "fra"
+          tooltip: "Høyde fra tooltip"
+        to:
+          placeHolder: "til"
+          tooltip: "Høyde til tooltip"
+      securityAssessment:
+        securityAssessment: "Sikringstilstand"
+        perimeterSecurity: "Skallsikring"
+        theftProtection: "Tyverisikring"
+        fireProtection: "Brannsikring"
+        waterDamageAssessment: "Vannskaderisiko"
+        routinesAndContingencyPlan: "Rutiner og beredskap"
+      environmentalAssessment:
+        environmentalAssessment: "Bevaringstilstand"
+        relativeHumidity: "Relativ luftfuktighet"
+        temperature: "Temperatur"
+        lightingCondition: "Lysforhold"
+        preventiveConservation: "Preventiv konservering"
       environmentRequirements:
         temperature:
           labelText: "Temperatur"
@@ -639,12 +701,6 @@ no:
             someDryed: "Noe uttørket"
             minorDryed: "Litt uttørket"
             satisfactory: "Tilfredsstillende"
-      storageType:
-        items:
-          storageunit: "Lagringsenhet"
-          room: "Rom"
-          building: "Bygning"
-          organization: "Organisasjon"
     welcomePage:
       title: >
         Universitetsmuseenes samlingsdatabaser

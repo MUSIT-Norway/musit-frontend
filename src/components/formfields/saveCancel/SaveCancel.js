@@ -32,6 +32,29 @@ export default class SaveCancel extends Component {
     onClickCancel: PropTypes.func.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+    const {
+      id,
+      saveDisabled,
+      onClickSave,
+      cancelDisabled,
+      onClickCancel
+    } = props
+    this.fields = {
+      save: {
+        id: `Save_${id || 1}`,
+        onClick: onClickSave,
+        disabled: saveDisabled
+      },
+      cancel: {
+        id: `Cancel_${id || 1}`,
+        onClick: onClickCancel,
+        disabled: cancelDisabled
+      }
+    }
+  }
+
   render() {
     const { saveLabel, cancelLabel, translate } = this.props
     const showButton = (data) => {
