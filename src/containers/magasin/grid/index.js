@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import Language from '../../../components/language'
-import { loadRoot, clearRoot, loadChildren, deleteUnit } from '../../../reducers/storageunit/grid'
+import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
 import { add } from '../../../reducers/picklist'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
@@ -15,7 +15,10 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   rootNode: state.storageGridUnit.root,
-  routerState: state.router
+  routerState: state.router,
+  path: state.storageGridUnit.root.path ?
+    state.storageGridUnit.root.path.map((s) => { return { id: s.id, name: s.name, type: s.type } }) :
+    null
 })
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -26,9 +29,13 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(clearRoot())
       dispatch(loadRoot())
     },
-    loadChildren: (id) => {
-      dispatch(loadChildren(id))
+    loadChildren: (id, callback) => {
+      debugger
+      dispatch(loadChildren(id, callback))
       dispatch(loadRoot(id))
+    },
+    loadPath: (id) => {
+      dispatch(loadPath(id))
     },
     onAction: (actionName, unit) => {
       switch (actionName) {
@@ -49,19 +56,24 @@ const mapDispatchToProps = (dispatch, props) => {
       }
     },
     onEdit: (unit) => { hashHistory.push(`/magasin/${unit.id}/view`) },
-    onDelete: (id, currentNode) => { // TODO: Problems with delete slower then callback (async)
+    onDelete: (id, currentNode) => { // TODO: Problems with delete slower than callback (async)
       if (id === currentNode.id) {
-        dispatch(deleteUnit(id, {
-          onSuccess: () => {
-            dispatch(clearRoot())
-            if (currentNode.isPartOf) {
-              dispatch(loadChildren(currentNode.isPartOf))
-              dispatch(loadRoot(currentNode.isPartOf))
-            } else {
-              dispatch(loadRoot())
+        const name = currentNode.name
+        if (window.confirm(`Vil du virkelig slette node med navn ${name}`)) {
+          dispatch(deleteUnit(id, {
+            onSuccess: () => {
+              dispatch(clearRoot())
+              if (currentNode.isPartOf) {
+                dispatch(loadChildren(currentNode.isPartOf, { onSuccess: () => this.props.loadPath(currentNode.isPartOf)
+                                                            }))
+                dispatch(loadRoot(currentNode.isPartOf))
+              } else {
+                dispatch(loadRoot())
+              }
+              window.alert(`Du har slettet noden med navn ${name}`)
             }
-          }
-        }))
+          }))
+        }
       }
     }
   })
@@ -82,7 +94,9 @@ export default class StorageUnitsContainer extends React.Component {
     params: React.PropTypes.object,
     history: React.PropTypes.object,
     routerState: React.PropTypes.object,
-    loadChildren: React.PropTypes.func
+    loadChildren: React.PropTypes.func,
+    loadPath: React.PropTypes.func,
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   constructor(props) {
@@ -97,7 +111,10 @@ export default class StorageUnitsContainer extends React.Component {
   componentWillMount() {
     // Issued on initial render of the component
     if (this.props.params.splat) {
-      this.props.loadChildren(this.resolveCurrentId(this.props.params.splat))
+      this.props.loadChildren(this.resolveCurrentId(this.props.params.splat), {
+        onSuccess: () => this.props.loadPath(this.resolveCurrentId(this.props.params.splat)),
+        onFailure: true
+      })
     } else {
       this.props.loadStorageUnits()
     }
@@ -105,10 +122,13 @@ export default class StorageUnitsContainer extends React.Component {
 
 
   componentWillReceiveProps(newProps) {
-        // Issued on every propchange, including local route changes
+  // Issued on every propchange, including local route changes
     if (newProps.params.splat !== this.props.params.splat) {
       if (newProps.params.splat) {
-        this.props.loadChildren(this.resolveCurrentId(newProps.params.splat))
+        this.props.loadChildren(this.resolveCurrentId(newProps.params.splat), {
+          onSuccess: () => this.props.loadPath(this.resolveCurrentId(newProps.params.splat)),
+          onFailure: true
+        })
       } else {
         this.props.loadStorageUnits()
       }
@@ -207,14 +227,20 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
+
   makeBreadcrumb() {
     return (<Breadcrumb />)
   }
 
   render() {
     const { searchPattern } = this.state
-    const { children, translate } = this.props
+    const { children, translate, path } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
+    const nodes = path
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
+    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     return (
       <Layout
         title={"Magasin"}
