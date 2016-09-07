@@ -27,7 +27,7 @@ import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
-import { flatten } from '../../../util'
+import { flatten, getCurrentDate } from '../../../util'
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 
@@ -71,10 +71,8 @@ export default class ControlAddContainer extends React.Component {
       inertAirInterval: '4',
       light: 'Mørkt',
       cleaning: 'Gullende rent',
-      startDate: moment().format()
+      startDate: getCurrentDate()
     }
-    this.getDate = this.getDate.bind(this)
-
     this.onControlClick = this.onControlClick.bind(this)
     this.onControlClickOK = this.onControlClickOK.bind(this)
     this.onControlClickNOK = this.onControlClickNOK.bind(this)
@@ -121,7 +119,7 @@ export default class ControlAddContainer extends React.Component {
     const controlState = {
       ...flatten(controls),
       doneBy: this.state.doneBy,
-      doneDate: this.state.startDate
+      doneDate: moment(this.state.startDate, ['YYYY-MM-DD'], true).format('DD-MM-YYYY') // STRICT VALIDATION!
     }
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
@@ -135,10 +133,6 @@ export default class ControlAddContainer extends React.Component {
         onFailure: () => { /* alert('Kunne ikke lagre kontroll') */ }
       })
     }
-  }
-
-  getDate() {
-    return moment().format('YYYY-MM-DD');
   }
 
   render() {
@@ -225,7 +219,7 @@ export default class ControlAddContainer extends React.Component {
                     <Row>
                       <Col xs={12}>
                         <DatePicker
-                          dateFormat="DD/MM/YYYY"
+                          dateFormat="DD-MM-YYYY"
                           value={this.state.startDate}
                           onChange={this.onHandleDateChange}
                         />

@@ -6,7 +6,7 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from '../../../components/observation/render'
-import { containsObjectWithField } from '../../../util'
+import { containsObjectWithField, getCurrentDate } from '../../../util'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
@@ -46,7 +46,7 @@ export default class ObservationPage extends React.Component {
     this.state = {
       selectedType: null,
       observations: props.observations,
-      doneDate: props.doneDate || moment().format('DD-MM-YYYY'),
+      doneDate: props.doneDate ? moment(props.doneDate, ['DD-MM-YYYY'], true).format('DD-MM-YYYY') /* STRICT VALIDATION! */ : getCurrentDate(),
       doneBy: props.doneBy
     }
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
@@ -134,17 +134,6 @@ export default class ObservationPage extends React.Component {
     if (validateString(formProps.commentValue, 0, 250) === 'error') {
       errors[`${type}.commentValue`] = `Please correct ${type} commentValue value`
     }
-
-    formProps.observations.forEach((observation, lifeCycleIndex) => {
-      if (validateString(observation.lifeCycle, 1) === 'error') {
-        errors[`${type}.observations[${index}].observations[${lifeCycleIndex}].lifeCycle`] =
-            `Please enter ${type} lifecycle for observation #${lifeCycleIndex}`
-      }
-      if (!observation.count || validateNumber(observation.count, 0, 10, 0) === 'error') {
-        errors[`${type}.observations[${index}].observations[${lifeCycleIndex}].count`] =
-            `Please enter ${type} count for observation #${lifeCycleIndex}`
-      }
-    })
 
     return errors
   }

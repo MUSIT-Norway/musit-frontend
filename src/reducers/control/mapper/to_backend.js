@@ -1,10 +1,11 @@
 import { parseObservation } from '../../observation/mapper/to_backend'
+import moment from 'moment'
 
 export const mapToBackend = (state, observations) => {
   const r = {}
   r.eventType = 'Control'
   r.doneBy = state.doneBy.id
-  r.doneDate = state.doneDate
+  r.doneDate = moment(state.doneDate, ['DD-MM-YYYY'], true).format('YYYY-MM-DD') // STRICT VALIDATION!
   r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
     let control
     switch (key) {
@@ -65,7 +66,7 @@ export const mapToBackend = (state, observations) => {
       default:
         throw Error(`Unsupported control state key: ${key}`)
     }
-    if (observations) {
+    if (observations && observations.observations) {
       const observationKey = key.substring(0, key.length - 2)
       const index = observations.observations.findIndex(o => o.type === observationKey)
       if (index >= 0) {

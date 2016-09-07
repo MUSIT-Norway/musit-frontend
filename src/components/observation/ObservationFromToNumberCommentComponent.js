@@ -64,7 +64,6 @@ export default class ObservationFromToNumberCommentComponent extends Component {
             tooltip={this.props.fromTooltip}
             placeHolder={this.props.fromPlaceHolder}
             validate={'number'}
-            minimumLength={0.000000000001}
             precision={3}
             onChange={this.props.onChangeFrom}
             disabled={this.props.disabled}

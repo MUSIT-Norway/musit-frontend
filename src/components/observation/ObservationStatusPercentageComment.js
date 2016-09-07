@@ -59,7 +59,7 @@ export default class ObervationStatusPercentageComment extends Component {
     // Status
     statusValue: '',
     statusValidate: 'text',
-    statusMinimumLength: 1,
+    statusMinimumLength: 0,
     // Volume
     volumeValue: '',
     volumeTooltip: '',
