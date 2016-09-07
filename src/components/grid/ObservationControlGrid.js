@@ -76,7 +76,7 @@ export default class ObservationControlGrid extends Component {
                   key={i}
                   id={`${c.id}_${c.doneDate}`}
                   onClick={() =>
-                    (hashHistory.push(c.type === 'control' ?
+                    (hashHistory.push(c.type.toLowerCase() === 'control' ?
                     `magasin/${id}/control/${c.id}` : `magasin/${id}/observation/${c.id}`
                   ))}
                 >

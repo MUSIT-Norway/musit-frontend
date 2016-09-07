@@ -80,7 +80,7 @@ class App extends Component {
           <Navbar.Collapse>
             <Nav navbar>
               {user &&
-                <LinkContainer to="/magasin">
+                <LinkContainer to="/magasin/root">
                   <NavItem>Magasin</NavItem>
                 </LinkContainer>
               }

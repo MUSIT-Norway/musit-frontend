@@ -15,6 +15,7 @@ describe('NodeLeftMenuComponent', () => {
         objectsOnNode={11}
         totalObjectCount={78}
         underNodeCount={5}
+        showButtons
         onClickProperties={(key) => key}
         onClickObservations={(key) => key}
         onClickController={(key) => key}

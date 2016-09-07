@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   rootNode: state.storageGridUnit.root,
-  routerState: state.router
+  routerState: state.routing
 })
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -51,17 +51,21 @@ const mapDispatchToProps = (dispatch, props) => {
     onEdit: (unit) => { hashHistory.push(`/magasin/${unit.id}/view`) },
     onDelete: (id, currentNode) => { // TODO: Problems with delete slower then callback (async)
       if (id === currentNode.id) {
-        dispatch(deleteUnit(id, {
-          onSuccess: () => {
-            dispatch(clearRoot())
-            if (currentNode.isPartOf) {
-              dispatch(loadChildren(currentNode.isPartOf))
-              dispatch(loadRoot(currentNode.isPartOf))
-            } else {
-              dispatch(loadRoot())
+        const name = currentNode.name
+        if (window.confirm(`Vil du virkelig slette node med navn ${name}`)) {
+          dispatch(deleteUnit(id, {
+            onSuccess: () => {
+              dispatch(clearRoot())
+              if (currentNode.isPartOf) {
+                dispatch(loadChildren(currentNode.isPartOf))
+                dispatch(loadRoot(currentNode.isPartOf))
+              } else {
+                dispatch(loadRoot())
+              }
+              window.alert(`Du har slettet noden med navn ${name}`)
             }
-          }
-        }))
+          }))
+        }
       }
     }
   })
@@ -90,7 +94,8 @@ export default class StorageUnitsContainer extends React.Component {
     this.state = {
       searchPattern: '',
       showObjects: false,
-      showNodes: true
+      showNodes: true,
+      showDeleteModal: false
     }
   }
 
@@ -162,16 +167,18 @@ export default class StorageUnitsContainer extends React.Component {
 
   makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete, history } = this.props
-
+    const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root')
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          id={rootNode ? rootNode.id : null}
+          id={rootNode ? rootNode.id : 0}
+          showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
-            if (parentId) {
-              history.push(`/magasin/${parentId}/add`)
-            }
+            console.log(parentId)
+            // if (parentId) {
+            //   history.push(`/magasin/${parentId}/add`)
+            // }
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
@@ -190,7 +197,7 @@ export default class StorageUnitsContainer extends React.Component {
   makeContentGrid(filter, rootNode, children) {
     if (this.state.showNodes) {
       return (<NodeGrid
-        id={rootNode ? rootNode.id : 0}
+        id={rootNode ? rootNode.id : null}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.indexOf(filter) !== -1)}
         onAction={this.props.onAction}

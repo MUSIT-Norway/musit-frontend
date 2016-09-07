@@ -40,7 +40,10 @@ const observationControlGridReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        data: state.data.map((e) => { return { ...e, doneName: action.result.fn } })
+        data: state.data.map((e) => {
+          return { ...e,
+          doneName: action.result.find((a) => a.id === e.doneBy) ? action.result.find((a) => a.id === e.doneBy).fn : e.doneBy
+         } })
       };
     case LOAD_ACTOR_FAILURE:
       return {
@@ -54,10 +57,10 @@ const observationControlGridReducer = (state = initialState, action) => {
   }
 }
 
-export const loadActor = () => {
+export const loadActor = (r) => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: (client) => client.get('/api/actor/v1/person/details', { d: [1, 2] })
+    promise: (client) => client.post('/api/actor/v1/person/details', r)
   }
 }
 
