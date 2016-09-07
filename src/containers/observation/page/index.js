@@ -6,7 +6,7 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from '../../../components/observation/render'
-import { containsObjectWithField } from '../../../util'
+import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
@@ -364,15 +364,15 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
-                    value={this.state.doneDate.format('DD.MM.YYYY')}
+                    value={this.state.doneDate.format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                 ) : (
                   <DatePicker
-                    dateFormat="DD.MM.YYYY"
+                    dateFormat={DATE_FORMAT_DISPLAY}
                     value={this.state.doneDate}
                     onChange={(newValue) => {
-                      this.setState({ ...this.state, doneDate: moment(newValue, ['YYYY-MM-DD']) })
+                      this.setState({ ...this.state, doneDate: parseISODate(newValue) })
                     }}
                     disabled={this.props.mode === 'VIEW'}
                   />
@@ -404,7 +404,7 @@ export default class ObservationPage extends React.Component {
                   <ControlLabel>{this.props.translate('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
                     componentClass="input"
-                    value={moment(this.props.registeredDate, ['YYYY-MM-DD']).format('DD.MM.YYYY')}
+                    value={parseISODate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                 </Col>

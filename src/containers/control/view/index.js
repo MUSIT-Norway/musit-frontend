@@ -26,7 +26,7 @@ import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import Layout from '../../../layout'
-import moment from 'moment'
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -63,7 +63,7 @@ export default class ControlViewContainer extends React.Component {
   }
 
   getDate(data, field) {
-    return data && data[field] ? moment(data[field], ['YYYY-MM-DD']).format('DD.MM.YYYY') : '';
+    return data && data[field] ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
   }
 
   render() {

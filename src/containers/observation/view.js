@@ -4,7 +4,7 @@ import Language from '../../components/language'
 import ObservationPage from './page'
 import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import moment from 'moment'
+import { parseISODateNonStrict as parseISODate } from '../../util'
 
 const mapStateToProps = (state) => {
   return {
@@ -66,7 +66,7 @@ export default class ViewObservationPage extends React.Component {
               observations={this.props.observations}
               translate={this.props.translate}
               doneBy={this.props.doneBy}
-              doneDate={moment(this.props.doneDate, ['YYYY-MM-DD'])}
+              doneDate={parseISODate(this.props.doneDate)}
               registeredBy={this.props.registeredBy}
               registeredDate={this.props.registeredDate}
               saveDisabled

@@ -27,7 +27,7 @@ import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
-import { flatten } from '../../../util'
+import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 
@@ -212,10 +212,10 @@ export default class ControlAddContainer extends React.Component {
                     <Row>
                       <Col xs={12}>
                         <DatePicker
-                          dateFormat="DD.MM.YYYY"
+                          dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate}
                           onChange={newValue => {
-                            this.setState({ ...this.state, doneDate: moment(newValue, ['YYYY-MM-DD']) })
+                            this.setState({ ...this.state, doneDate: parseISODate(newValue) })
                           }}
                         />
                       </Col>

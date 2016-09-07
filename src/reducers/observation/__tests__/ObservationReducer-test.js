@@ -5,6 +5,7 @@ import observationReducer, {
   initialState
 } from '../index'
 import { mapToFrontEnd, mapToBackEnd } from '../mapper'
+import { parseISODateNonStrict as parseISODate } from '../../../util'
 
 describe('ObservationReducer', () => {
   it('Initial state is set', () => {
@@ -18,8 +19,9 @@ describe('ObservationReducer', () => {
   })
 
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
-    const frontEnd = deepFreeze({
+    const frontEnd = {
       doneBy: { id: '1' },
+      doneDate: parseISODate('2016-09-07'),
       observations: [
         {
           type: 'hypoxicAir',
@@ -37,9 +39,11 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    })
+    }
     const fe = mapToFrontEnd(mapToBackEnd(frontEnd))
-    assert(JSON.stringify(fe) === JSON.stringify(frontEnd))
+    const feStr = JSON.stringify(fe)
+    const beStr = JSON.stringify(frontEnd)
+    assert(feStr === beStr)
   })
 
   it('Valid action from calling actor service for finding actor should update state correctly', () => {
@@ -58,7 +62,7 @@ describe('ObservationReducer', () => {
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const completeFrontEnd = {
       doneBy: { id: '1' },
-      doneDate: '1999-11-11',
+      doneDate: parseISODate('1999-11-11'),
       observations: [
         {
 

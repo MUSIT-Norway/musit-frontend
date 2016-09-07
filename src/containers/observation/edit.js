@@ -6,7 +6,7 @@ import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 import { hashHistory } from 'react-router'
-import moment from 'moment'
+import { parseISODateNonStrict as parseISODate } from '../../util'
 
 const mapStateToProps = () => {
   return {
@@ -76,7 +76,7 @@ export default class EditObservationPage extends React.Component {
   parseDoneDateFromLocationState() {
     let doneDate = this.props.location.state.doneDate
     if (typeof doneDate === 'string') {
-      doneDate = moment(doneDate, ['YYYY-MM-DD'])
+      doneDate = parseISODate(doneDate)
     }
     return doneDate
   }

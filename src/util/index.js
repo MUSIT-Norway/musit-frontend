@@ -1,3 +1,8 @@
+import moment from 'moment'
+
+export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY'
+export const DATE_FORMAT_ISO = 'YYYY-MM-DD'
+
 export const flatten = (arr) => {
   const obj = {};
 
@@ -32,19 +37,10 @@ export const camelCase = (string, separator) => {
     ).join('');
 }
 
-export const getCurrentDate = () => {
-  const today = new Date();
-  let dd = today.getDate();
-  let mm = today.getMonth() + 1; // January is 0!
-  const yyyy = today.getFullYear();
+export const parseISODateNonStrict = (dateStr) => {
+  return moment(dateStr, [DATE_FORMAT_ISO])
+}
 
-  if (dd < 10) {
-    dd = `0${dd}`
-  }
-
-  if (mm < 10) {
-    mm = `0${mm}`
-  }
-
-  return `${yyyy}-${mm}-${dd}`
+export const parseISODateStrict = (dateStr) => {
+  return moment(dateStr, [DATE_FORMAT_ISO], true)
 }
