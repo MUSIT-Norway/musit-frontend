@@ -124,6 +124,7 @@ export default class ObservationControlGridShow extends React.Component {
                                                                              .map((r) => r.doneBy) }),
                                             onFailure: () => true })
   }
+
   makeToolbar() {
     return (<Toolbar
       showRight={this.state.showControls}
