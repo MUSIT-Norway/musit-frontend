@@ -21,29 +21,9 @@ import { hashHistory } from 'react-router'
 import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap'
 import { ControlView } from '../../../components/control/view'
 import { MusitField } from '../../../components/formfields'
-import Language from '../../../components/language'
-import { connect } from 'react-redux'
-import { loadControl } from '../../../reducers/control'
-import { getActorNameFromId } from '../../../reducers/observation'
 import Layout from '../../../layout'
 import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 
-const mapStateToProps = (state) => ({
-  translate: (key, markdown) => Language.translate(key, markdown),
-  controls: state.control,
-  doneBy: state.observation.data.doneBy
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  loadControl: (id, callback) => {
-    dispatch(loadControl(id, callback))
-  },
-  loadPersonNameFromId: (id) => {
-    dispatch(getActorNameFromId(id))
-  }
-})
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class ControlViewContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,

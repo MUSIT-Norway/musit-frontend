@@ -18,11 +18,8 @@
  */
 
 import React from 'react'
-import { connect } from 'react-redux'
 import { Grid, Row, Col, FormControl } from 'react-bootstrap'
 import PairedToogleButtons from '../../../components/control/add'
-import { addControl } from '../../../reducers/control'
-import Language from '../../../components/language'
 import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
@@ -31,18 +28,6 @@ import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } f
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  translate: (key, markdown) => Language.translate(key, markdown)
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  saveControl: (id, data, saveControlCallback) => {
-    dispatch(addControl(id, data, {}, saveControlCallback))
-  }
-})
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,

@@ -370,7 +370,7 @@ export default class ObservationPage extends React.Component {
                 ) : (
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
-                    value={this.state.doneDate}
+                    value={this.state.doneDate.toISOString()}
                     onChange={(newValue) => {
                       this.setState({ ...this.state, doneDate: parseISODate(newValue) })
                     }}

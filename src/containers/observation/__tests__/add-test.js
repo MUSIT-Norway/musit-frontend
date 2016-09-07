@@ -1,0 +1,38 @@
+import React from 'react'
+import { ReactTestUtils, assert } from '../../../../test/setup'
+import ObservationPage from '../page'
+import moment from 'moment'
+
+describe('Render add observation page', () => {
+  const renderer = ReactTestUtils.createRenderer();
+  let observationPage;
+
+  beforeEach(() => {
+    renderer.render(
+      <ObservationPage
+        translate={(key) => key}
+        params={{ }}
+        onSaveObservation={() => true}
+        mode="ADD"
+        id="1"
+      />
+    )
+    observationPage = renderer.getRenderOutput()
+  })
+
+  it('should set default date and have correct date format', () => {
+    const date = observationPage
+            .props
+            .children
+            .props
+            .children[0]
+            .props
+            .children[1]
+            .props
+            .children[0]
+            .props
+            .children[1]
+    assert(date.props.dateFormat === 'DD.MM.YYYY')
+    assert(moment(date.props.value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid())
+  })
+})
