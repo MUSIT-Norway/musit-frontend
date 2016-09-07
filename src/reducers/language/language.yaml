@@ -454,21 +454,21 @@ no:
           tooltip: "Måleenhet prosent toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
-        inertAir:
+        hypoxicAir:
           labelText: "Inertluft"
           tooltip: "Måleenhet prosent oksygen, desimaltall"
           placeHolder: "% O2"
           comment: "Tiltak/Kommentar"
-        inertAirTolerance:
+        hypoxicAirTolerance:
           labelText: ""
           tooltip: "Måleenhet prosent oksygen toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
-        renhold:
+        cleaning:
           labelText: "Renhold"
           comment: "Tiltak/Kommentar"
           tooltip: "Renhold"
-        lightCondition:
+        lightningConditions:
           labelText: "Lysforhold"
           comment: "Tiltak/Kommentar"
           tooltip: "Lysforhold"
