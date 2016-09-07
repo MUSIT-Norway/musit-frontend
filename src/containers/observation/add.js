@@ -41,14 +41,6 @@ export default class AddObservationPage extends React.Component {
         title="Magasin"
         translate={this.props.translate}
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
-        toolbar={<span />}
-        leftMenu={
-          <div
-            style={{
-              minHeight: 400
-            }}
-          />
-        }
         content={
           <div>
             <center><h4>{this.props.translate('musit.observation.page.titles.add')}</h4></center>
