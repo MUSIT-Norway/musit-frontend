@@ -29,14 +29,15 @@ import storagePanelReducer from './storageunit/panel'
 import storageGridReducer from './storageunit/grid'
 import organizationReducer from './organization'
 import observationReducer from './observation'
-import controlAddReducer from './control/add'
-import controlDetailsReducer from './control/view'
+import controlReducer from './control'
 import observationControlGridReducer from './grid/observationcontrol'
 import nodeGridReducer from './grid/node'
 import objectGridReducer from './grid/object'
+import { reducer as formReducer } from 'redux-form'
 
 const rootReducer = combineReducers({
   routing: routerReducer,
+  form: formReducer,
   info: infoReducer,
   auth: authReducer,
   fakeAuthInfo: fakeAuthReducer,
@@ -47,8 +48,7 @@ const rootReducer = combineReducers({
   storageGridUnit: storageGridReducer,
   organization: organizationReducer,
   observation: observationReducer,
-  control: controlAddReducer,
-  controlDetails: controlDetailsReducer,
+  control: controlReducer,
   observationControlGrid: observationControlGridReducer,
   nodeGrid: nodeGridReducer,
   objectGrid: objectGridReducer

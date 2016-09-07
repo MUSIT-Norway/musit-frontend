@@ -9,16 +9,16 @@ import Layout from '../../../layout'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
-import Breadcrumb from '../../../components/breadcrumb'
+import Breadcrumb from '../../../layout/Breadcrumb'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   rootNode: state.storageGridUnit.root,
-  routerState: state.router,
   path: state.storageGridUnit.root.path ?
     state.storageGridUnit.root.path.map((s) => { return { id: s.id, name: s.name, type: s.type } }) :
-    null
+    null,
+  routerState: state.routing
 })
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -30,7 +30,6 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(loadRoot())
     },
     loadChildren: (id, callback) => {
-      debugger
       dispatch(loadChildren(id, callback))
       dispatch(loadRoot(id))
     },
@@ -64,8 +63,7 @@ const mapDispatchToProps = (dispatch, props) => {
             onSuccess: () => {
               dispatch(clearRoot())
               if (currentNode.isPartOf) {
-                dispatch(loadChildren(currentNode.isPartOf, { onSuccess: () => this.props.loadPath(currentNode.isPartOf)
-                                                            }))
+                dispatch(loadChildren(currentNode.isPartOf))
                 dispatch(loadRoot(currentNode.isPartOf))
               } else {
                 dispatch(loadRoot())
@@ -104,21 +102,31 @@ export default class StorageUnitsContainer extends React.Component {
     this.state = {
       searchPattern: '',
       showObjects: false,
-      showNodes: true
+      showNodes: true,
+      showDeleteModal: false
     }
   }
 
   componentWillMount() {
     // Issued on initial render of the component
-    if (this.props.params.splat) {
-      this.props.loadChildren(this.resolveCurrentId(this.props.params.splat), {
-        onSuccess: () => this.props.loadPath(this.resolveCurrentId(this.props.params.splat)),
-        onFailure: true
-      })
-    } else {
-      this.props.loadStorageUnits()
+    // if (this.props.params.splat) {
+    //   this.props.loadChildren(this.resolveCurrentId(this.props.params.splat), {
+    //     onSuccess: () => this.props.loadPath(this.resolveCurrentId(this.props.params.splat)),
+    //     onFailure: true
+    //   })
+    // } else {
+    //   this.props.loadStorageUnits()
+    // }
+    debugger
+    if (this.props.rootNode.id) {
+      this.props.loadChildren(this.props.rootNode.id, {
+          onSuccess: () => this.props.loadPath(this.props.rootNode.id),
+          onFailure: true
+        })
+      } else {
+        this.props.loadStorageUnits()
+      }
     }
-  }
 
 
   componentWillReceiveProps(newProps) {
@@ -182,21 +190,24 @@ export default class StorageUnitsContainer extends React.Component {
 
   makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete, history } = this.props
-
+    const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root')
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          id={rootNode ? rootNode.id : null}
+          id={rootNode ? rootNode.id : 0}
+          showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
-            if (parentId) {
-              history.push(`/magasin/${parentId}/add`)
-            }
+            console.log(parentId)
+            // if (parentId) {
+            //   history.push(`/magasin/${parentId}/add`)
+            // }
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
           underNodeCount={statistics ? statistics.underNodeCount : Number.NaN}
           onClickProperties={(id) => onEdit({ id })}
+          onClickControlObservations={(id) => history.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => history.push(`/magasin/${id}/observations`)}
           onClickController={(id) => history.push(`/magasin/${id}/controls`)}
           onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}
@@ -209,7 +220,7 @@ export default class StorageUnitsContainer extends React.Component {
   makeContentGrid(filter, rootNode, children) {
     if (this.state.showNodes) {
       return (<NodeGrid
-        id={rootNode ? rootNode.id : 0}
+        id={rootNode ? rootNode.id : null}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.indexOf(filter) !== -1)}
         onAction={this.props.onAction}
@@ -245,8 +256,8 @@ export default class StorageUnitsContainer extends React.Component {
       <Layout
         title={"Magasin"}
         translate={translate}
+        breadcrumb={breadcrumb}
         toolbar={this.makeToolbar()}
-        breadcrumb={this.makeBreadcrumb()}
         leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
         content={this.makeContentGrid(searchPattern, rootNodeData, children)}
       />

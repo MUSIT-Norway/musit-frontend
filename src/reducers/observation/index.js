@@ -10,7 +10,7 @@ const LOAD_ACTOR_SUCCESS = 'musit/observation/actor/LOAD_SUCCESS'
 const LOAD_ACTOR_FAIL = 'musit/observation/actor/LOAD_FAIL'
 export const initialState = {
   data: {
-    doneBy: '',
+    doneBy: {},
     doneDate: '',
     registeredBy: '',
     registeredDate: '',
@@ -92,13 +92,19 @@ const observationReducer = (state = initialState, action = {}) => {
 
 export default observationReducer;
 
-export const addObservation = (data) => {
+export const addObservation = (id, data, callback) => {
   const action = 'post'
-  const url = '/api/event/v1/event'
+  let url = ''
+  if (id) {
+    url = `/api/event/v1/node/${id}/observation`
+  } else {
+    url = '/api/event/v1/event'
+  }
   const dataToPost = mapToBackEnd(data)
   return {
-    types: [ADD, ADD_SUCCESS, ADD_FAIL],
-    promise: (client) => client[action](url, { data: dataToPost })
+    types: [ADD, 'musit/observation/ADD_SUCCESS', ADD_FAIL],
+    promise: (client) => client[action](url, { data: dataToPost }),
+    callback
   };
 }
 
@@ -109,9 +115,10 @@ export const getActorNameFromId = (id) => {
   }
 }
 
-export const loadObservation = (id) => {
+export const loadObservation = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`api/event/v1/event/${id}`)
+    promise: (client) => client.get(`api/event/v1/event/${id}`),
+    callback
   }
 }

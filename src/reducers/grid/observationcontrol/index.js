@@ -1,109 +1,90 @@
+const LOAD = 'musit/observationcontrol/LOAD'
+const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS'
+const LOAD_FAIL = 'musit/observationcontrol/LOAD_FAIL'
+const LOAD_ACTOR = 'musit/observationcontrol/LOAD_ACTOR'
+const LOAD_ACTOR_SUCCESS = 'musit/observationcontrol/LOAD_ACTOR_SUCCESS'
+const LOAD_ACTOR_FAILURE = 'musit/observationcontrol/LOAD_ACTOR_FAILURE'
 
+const initialState = { data: [] }
 
-const initialState = {
-  data: [
-    {
-      id: 1,
-      type: 'control',
-      date: '01.01.1983',
-      types: { temperature: true,
-        inertAir: null,
-        relativeHumidity: null,
-        cleaning: null,
-        lightCondition: null,
-        alchohol: true,
-        gas: null,
-        mold: null,
-        pest: true,
-        envdata: null },
-      doneBy: 'Blablabla...',
-      registeredDate: '01.01.1983',
-      registeredBy: 'Blabla...'
-    },
-    {
-      id: 2,
-      type: 'observation',
-      date: '01.01.1984',
-      types: { temperature: true,
-        inertAir: null,
-        relativeHumidity: null,
-        cleaning: null,
-        lightCondition: true,
-        alchohol: false,
-        gas: null,
-        mold: null,
-        envdata: null },
-      doneBy: 'Blablabla...',
-      registeredDate: '01.01.1983',
-      registeredBy: 'Blabla...'
-    },
-    {
-      id: 3,
-      type: 'observation',
-      date: '01.01.1984',
-      types: { temperature: true,
-        inertAir: true,
-        relativeHumidity: true,
-        cleaning: true,
-        lightCondition: true,
-        alchohol: true,
-        gas: true,
-        mold: true,
-        envdata: true },
-      doneBy: 'Blablabla...',
-      registeredDate: '01.01.1983',
-      registeredBy: 'Blabla...'
-    },
-    {
-      id: 4,
-      type: 'control',
-      date: '01.01.1984',
-      types: { temperature: false,
-        inertAir: false,
-        relativeHumidity: false,
-        cleaning: false,
-        lightCondition: false,
-        alchohol: false,
-        gas: false,
-        mold: false,
-        envdata: false },
-      doneBy: 'Blablabla...',
-      registeredDate: '01.01.1983',
-      registeredBy: 'Blabla...'
-    },
-    {
-      id: 5,
-      type: 'observation',
-      date: '01.01.1984',
-      types: { temperature: null,
-        inertAir: null,
-        relativeHumidity: null,
-        cleaning: null,
-        lightCondition: null,
-        alchohol: null,
-        gas: null,
-        mold: null,
-        envdata: null },
-      doneBy: 'Blablabla...',
-      registeredDate: '01.01.1983',
-      registeredBy: 'Blabla...'
-    },
-    {
-      id: 6,
-      type: 'control',
-      date: '01.01.1984',
-      types: { temperature: false
-         },
-      doneBy: 'Blablabla...',
-      registeredDate: '01.01.1983',
-      registeredBy: 'Blabla...'
-    }
-  ]
+const observationControlGridReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LOAD:
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    case LOAD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: action.result
+      };
+    case LOAD_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error
+      }
+    case LOAD_ACTOR:
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    case LOAD_ACTOR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: state.data.map((e) => {
+          return { ...e,
+          doneName: action.result.find((a) => a.id === e.doneBy) ? action.result.find((a) => a.id === e.doneBy).fn : e.doneBy
+         } })
+      };
+    case LOAD_ACTOR_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error
+      }
+    default:
+      return state;
+  }
 }
 
+export const loadActor = (r) => {
+  return {
+    types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
+    promise: (client) => client.post('/api/actor/v1/person/details', r)
+  }
+}
 
-const observationControlGridReducer = (state = initialState) => {
-  return state;
+export const loadControlsForNode = (id, callback) => {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`/api/event/v1/node/${id}/controls`),
+    callback
+  }
+}
+export const loadObservationsForNode = (id, callback) => {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`/api/event/v1/node/${id}/observations`),
+    callback
+  }
+}
+
+export const loadControlsAndObservationsForNode = (id, callback) => {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`/api/event/v1/node/${id}/controlsAndObservations`),
+    callback
+  }
 }
 
 export default observationControlGridReducer

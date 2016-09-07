@@ -22,9 +22,27 @@ import validate from '../common/validators'
 
 export default class MusitField extends Component {
 
+  static propTypes = {
+    value: PropTypes.string, // Should be any
+    addOnPrefix: PropTypes.string,
+    help: PropTypes.string, // always ? on add on after
+    placeHolder: PropTypes.string,
+    tooltip: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    validate: PropTypes.string,
+    validator: PropTypes.func,
+    minimumLength: PropTypes.number,
+    maximumLength: PropTypes.number,
+    precision: PropTypes.number,
+    disabled: PropTypes.bool,
+    style: PropTypes.object
+  }
+
   classNameWithSpan() {
     let lvString = ' '
-    if (validate(this.props) === 'error') {
+    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'input-group has-error'
     } else {
       lvString = 'input-group'
@@ -34,7 +52,7 @@ export default class MusitField extends Component {
 
   classNameOnlyWithInput() {
     let lvString = ''
-    if (validate(this.props) === 'error') {
+    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'has-error'
     } else {
       lvString = ''
@@ -50,9 +68,10 @@ export default class MusitField extends Component {
         type="text" className="form-control"
         placeholder={this.props.placeHolder}
         value={this.props.value}
-        id={this.props.id}
         disabled={this.props.disabled}
         onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
+        onBlur={this.props.onBlur}
+        onFocus={this.props.onFocus}
       />);
     const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
 
@@ -73,20 +92,3 @@ export default class MusitField extends Component {
       )
   }
 }
-
-MusitField.propTypes = {
-  id: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired, // Should be any
-  addOnPrefix: PropTypes.string,
-  help: PropTypes.string, // always ? on add on after
-  placeHolder: PropTypes.string,
-  tooltip: PropTypes.string,
-  onChange: PropTypes.func,
-  validate: PropTypes.string,
-  minimumLength: PropTypes.number,
-  maximumLength: PropTypes.number,
-  validator: PropTypes.string,
-  precision: PropTypes.number,
-  disabled: PropTypes.bool,
-  style: PropTypes.object
-};
