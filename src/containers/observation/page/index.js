@@ -6,7 +6,7 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from '../../../components/observation/render'
-import { containsObjectWithField, getCurrentDate } from '../../../util'
+import { containsObjectWithField } from '../../../util'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
@@ -46,7 +46,7 @@ export default class ObservationPage extends React.Component {
     this.state = {
       selectedType: null,
       observations: props.observations,
-      doneDate: props.doneDate ? moment(props.doneDate, ['DD-MM-YYYY'], true).format('DD-MM-YYYY') /* STRICT VALIDATION! */ : getCurrentDate(),
+      doneDate: props.doneDate || moment(),
       doneBy: props.doneBy
     }
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
@@ -274,7 +274,7 @@ export default class ObservationPage extends React.Component {
       errors.doneBy = 'Please enter doneBy'
     }
 
-    if (!formProps.doneDate || formProps.doneDate.trim().length === 0) {
+    if (!formProps.doneDate) {
       errors.doneDate = 'Please enter doneDate'
     }
 
@@ -364,15 +364,15 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
-                    value={this.state.doneDate}
+                    value={this.state.doneDate.format('DD.MM.YYYY')}
                     disabled
                   />
                 ) : (
                   <DatePicker
-                    dateFormat="DD-MM-YYYY"
+                    dateFormat="DD.MM.YYYY"
                     value={this.state.doneDate}
                     onChange={(newValue) => {
-                      this.setState({ ...this.state, doneDate: newValue })
+                      this.setState({ ...this.state, doneDate: moment(newValue, ['YYYY-MM-DD']) })
                     }}
                     disabled={this.props.mode === 'VIEW'}
                   />
@@ -404,7 +404,7 @@ export default class ObservationPage extends React.Component {
                   <ControlLabel>{this.props.translate('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
                     componentClass="input"
-                    value={this.props.registeredDate}
+                    value={moment(this.props.registeredDate, ['YYYY-MM-DD']).format('DD.MM.YYYY')}
                     disabled
                   />
                 </Col>

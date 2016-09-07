@@ -27,7 +27,7 @@ import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
-import { flatten, getCurrentDate } from '../../../util'
+import { flatten } from '../../../util'
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 
@@ -71,18 +71,12 @@ export default class ControlAddContainer extends React.Component {
       inertAirInterval: '4',
       light: 'Mørkt',
       cleaning: 'Gullende rent',
-      startDate: getCurrentDate()
+      doneDate: moment()
     }
     this.onControlClick = this.onControlClick.bind(this)
     this.onControlClickOK = this.onControlClickOK.bind(this)
     this.onControlClickNOK = this.onControlClickNOK.bind(this)
-
     this.onClickSave = this.onClickSave.bind(this)
-    this.onHandleDateChange = this.onHandleDateChange.bind(this)
-  }
-
-  onHandleDateChange(d) {
-    this.setState({ ...this.state, startDate: d })
   }
 
   onControlClick(key, bool) {
@@ -119,7 +113,7 @@ export default class ControlAddContainer extends React.Component {
     const controlState = {
       ...flatten(controls),
       doneBy: this.state.doneBy,
-      doneDate: moment(this.state.startDate, ['YYYY-MM-DD'], true).format('DD-MM-YYYY') // STRICT VALIDATION!
+      doneDate: this.state.doneDate
     }
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
@@ -128,7 +122,7 @@ export default class ControlAddContainer extends React.Component {
         state: controlState
       })
     } else {
-      this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
+      this.props.saveControl(this.props.params.id, controlState, { onSuccess: () => hashHistory.goBack(),
                                              onFailure: () => window.alert('Kunne ikke lagre kontroll') },
                                              this.props.params.id)
     }
@@ -218,9 +212,11 @@ export default class ControlAddContainer extends React.Component {
                     <Row>
                       <Col xs={12}>
                         <DatePicker
-                          dateFormat="DD-MM-YYYY"
-                          value={this.state.startDate}
-                          onChange={this.onHandleDateChange}
+                          dateFormat="DD.MM.YYYY"
+                          value={this.state.doneDate}
+                          onChange={newValue => {
+                            this.setState({ ...this.state, doneDate: moment(newValue, ['YYYY-MM-DD']) })
+                          }}
                         />
                       </Col>
                     </Row>

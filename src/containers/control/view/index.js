@@ -20,13 +20,13 @@ import React from 'react'
 import { hashHistory } from 'react-router'
 import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap'
 import { ControlView } from '../../../components/control/view'
-import DatePicker from 'react-bootstrap-date-picker'
 import { MusitField } from '../../../components/formfields'
 import Language from '../../../components/language'
 import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import Layout from '../../../layout'
+import moment from 'moment'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -61,6 +61,11 @@ export default class ControlViewContainer extends React.Component {
       })
     }
   }
+
+  getDate(data, field) {
+    return data && data[field] ? moment(data[field], ['YYYY-MM-DD']).format('DD.MM.YYYY') : '';
+  }
+
   render() {
     const { translate } = this.props
     const data = this.props.controls.data;
@@ -77,9 +82,10 @@ export default class ControlViewContainer extends React.Component {
                 <Col sm={4}>
                   <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
                   <br />
-                  <DatePicker
-                    dateFormat="DD.MM.YYYY"
-                    value={data ? data.doneDate : ''}
+                  <MusitField
+                    onChange={() => true}
+                    value={this.getDate(data, 'doneDate')}
+                    disabled
                   />
                 </Col>
                 <Col sm={4} >
@@ -87,10 +93,8 @@ export default class ControlViewContainer extends React.Component {
                   <br />
                   <MusitField
                     onChange={() => true}
-                    id="performedBy"
                     value={this.props.doneBy ? this.props.doneBy.fn : ''}
-                    validate="text"
-                    disabled={Boolean(true)}
+                    disabled
                   />
                 </Col>
               </Row>
@@ -98,9 +102,10 @@ export default class ControlViewContainer extends React.Component {
                 <Col sm={4}>
                   <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
                   <br />
-                  <DatePicker
-                    dateFormat="DD.MM.YYYY"
-                    value={data ? data.registeredDate : ''}
+                  <MusitField
+                    onChange={() => true}
+                    value={this.getDate(data, 'registeredDate')}
+                    disabled
                   />
                 </Col>
                 <Col sm={4} >
@@ -108,10 +113,8 @@ export default class ControlViewContainer extends React.Component {
                   <br />
                   <MusitField
                     onChange={() => true}
-                    id="registeredBy"
                     value={data ? data.registeredBy : ''}
-                    validate="text"
-                    disabled={Boolean(true)}
+                    disabled
                   />
                 </Col>
               </Row>

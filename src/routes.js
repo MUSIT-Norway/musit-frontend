@@ -30,7 +30,6 @@ import EditObservationPage from './containers/observation/edit'
 import ViewObservationPage from './containers/observation/view'
 import ControlViewContainer from './containers/control/view'
 import ControlAddContainer from './containers/control/add'
-import ContactForm from './containers/observation/test'
 import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
@@ -56,10 +55,10 @@ export default (store) => {
       <IndexRedirect to="/" />
 
       <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
-      <Route path="/test" component={ContactForm} />
       <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
+      <Route path="/magasin/add" add component={StorageUnitPanel} />
       <Route path="/magasin/:id/add" add component={StorageUnitPanel} />
       <Route path="/magasin/:id/view" component={StorageUnitPanel} />
       <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />

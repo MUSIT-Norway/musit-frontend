@@ -16,7 +16,6 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import moment from 'moment'
 
 export const parseObservation = (el) => {
   const re = {}
@@ -108,7 +107,7 @@ const wrap = (e) => {
   const r = {}
   r.eventType = 'Observation'
   r.doneBy = e.doneBy.id
-  r.doneDate = moment(e.doneDate, ['DD-MM-YYYY'], true).format('YYYY-MM-DD') // STRICT VALIDATION!
+  r.doneDate = e.doneDate.format('YYYY-MM-DD')
   r['subEvents-parts'] = e.observations ? e.observations.filter((f) => { return f.data }).map(parseObservation) : []
   return r
 }

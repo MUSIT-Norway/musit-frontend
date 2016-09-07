@@ -40,7 +40,9 @@ export default class StorageUnitContainer extends Component {
 
 
   componentWillMount() {
-    this.props.loadStorageUnit(this.props.params.id)
+    if (this.props.params.id) {
+      this.props.loadStorageUnit(this.props.params.id)
+    }
   }
 
   updateStorageUnit(data, key, value) {
@@ -109,7 +111,7 @@ export default class StorageUnitContainer extends Component {
         <Row>
           <SaveCancel
             translate={this.props.translate}
-            onClickSave={() => this.props.onLagreClick(data)}
+            onClickSave={() => this.props.onLagreClick(this.props.params.id, data)}
             onClickCancel={() => hashHistory.goBack()}
             saveDisabled={this.displayExisting}
             cancelDisabled={this.displayExisting}

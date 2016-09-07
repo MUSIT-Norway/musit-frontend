@@ -1,11 +1,10 @@
 import { parseObservation } from '../../observation/mapper/to_backend'
-import moment from 'moment'
 
 export const mapToBackend = (state, observations) => {
   const r = {}
   r.eventType = 'Control'
-  r.doneBy = state.doneBy.id
-  r.doneDate = moment(state.doneDate, ['DD-MM-YYYY'], true).format('YYYY-MM-DD') // STRICT VALIDATION!
+  r.doneBy = observations.doneBy ? observations.doneBy.id : state.doneBy.id
+  r.doneDate = observations.doneDate ? observations.doneDate.format('YYYY-MM-DD') : state.doneDate.format('YYYY-MM-DD')
   r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
     let control
     switch (key) {

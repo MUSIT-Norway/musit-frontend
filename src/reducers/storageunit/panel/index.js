@@ -73,13 +73,25 @@ export const load = (id) => {
   };
 }
 
-export const insert = (data) => {
+const mapToBackend = (id, data) => {
+  return {
+    ...data,
+    isPartOf: id * 1,
+    area: data.area * 1,
+    areaTo: data.areaTo * 1,
+    height: data.height * 1,
+    heightTo: data.heightTo * 1
+  }
+}
+
+export const insert = (id, data) => {
   let action = 'post'
   let url = '/api/storageadmin/v1/storageunit';
   if (data.id) {
     action = 'put'
     url += `/${data.id}`
   }
+  data = mapToBackend(id, data)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
     promise: (client) => client[action](url, { data })
