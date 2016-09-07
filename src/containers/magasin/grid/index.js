@@ -6,9 +6,10 @@ import { add } from '../../../reducers/picklist'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
+import Breadcrumb from '../../../layout/Breadcrumb.js'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
-import Breadcrumb from 'react-breadcrumbs'
+// import Breadcrumb from 'react-breadcrumbs'
 import { blur } from '../../../util'
 
 const mapStateToProps = (state) => ({
@@ -214,10 +215,15 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  makeBreadcrumb(router) {
+  makeBreadcrumb() {
+    const nodes = [{ id: 1, name: 'Bygg 1', type: 'Building', url: '' },
+    { id: 2, name: 'Bygg 2', type: 'Building', url: '' },
+    { id: 2, name: 'Rom 2', type: 'Room', url: '' }]
+    const nodeTypes = [{ type: 'Building', iconName: 'building' },
+                       { type: 'Room', iconName: 'folder' }]
     return (<Breadcrumb
-      routes={router.routes}
-      params={router.params}
+      nodes={nodes}
+      nodeTypes={nodeTypes}
     />)
   }
 
@@ -229,6 +235,7 @@ export default class StorageUnitsContainer extends React.Component {
       <Layout
         title={"Magasin"}
         translate={translate}
+        breadcrumb={this.makeBreadcrumb()}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
         content={this.makeContentGrid(searchPattern, rootNodeData, children)}
