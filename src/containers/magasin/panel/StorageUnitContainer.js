@@ -76,7 +76,7 @@ export default class StorageUnitContainer extends Component {
   }
   validateForm(formProps) {
     let errors = {}
-    if (formProps) {
+    if (formProps && formProps.unit) {
       if (!formProps.unit.type || formProps.unit.type.trim().length === 0) {
         errors.type = this.props.translate('musit.storageUnits.type.required')
       }
