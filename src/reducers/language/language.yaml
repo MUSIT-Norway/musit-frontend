@@ -51,7 +51,7 @@ en:
       cancelTooltip: "Cancel"
     viewControl:
       controlAlcohol: "Alcohol"
-      controlCleaning: "to"
+      controlCleaning: "Cleaning"
       controlGas: "Gas"
       controlHypoxicAir: "Hypoxic air"
       controlLightingCondition: "Lighting condition"
@@ -72,7 +72,7 @@ en:
       gas: "Gas"
       mold: "Mold"
       pest: "Pest"
-      envdata: "Environmental Records"
+      envdata: "Environmental Conditions"
     observation:
       page:
         titles:
@@ -430,14 +430,14 @@ no:
         registeredBy: "Reg. av"
         header: "Kontroller og observasjoner"
       node:
-        nodeName: "Nodenavn"
-        nodeType: "Nodetype"
+        nodeName: "Navn"
+        nodeType: "Type"
         objectCount: "Ant. obj."
         totalObjectCount: "Tot. ant. obj."
         nodeCount: "Ant. noder"
       object:
-        museumsNumber: "Museumsnr"
-        uNumber: "Unr"
+        museumsNumber: "Museumsnr."
+        uNumber: "Unr."
         term: "Term/Artsnavn"
     texts:
       freetext: "Fritekst"
@@ -460,7 +460,7 @@ no:
       controlLightingCondition: "Lysforhold"
       controlMold: "Mugg"
       controlPest: "Skadedyr"
-      controlRelativeHumidity: "Relative humidity"
+      controlRelativeHumidity: "Relativ luftfuktighet"
       controlTemperature: "Temperatur"
     newControl:
       title: "Ny kontroll"
@@ -480,13 +480,13 @@ no:
       page:
         titles:
           add: "Legg til observasjon"
-          edit: "Endre kontrollobservasjoner"
-          view: "Observasjoner"
+          edit: "Endre"
+          view: "Observasjon"
         registerObservation: "Registrer observasjon"
         registerObservations: "Registrer observasjoner"
         date: "Utført dato"
-        dateRequired: "Please enter when the bservation was done"
-        doneByRequired: "Please enter who has done the observation"
+        dateRequired: "Vennligst fyll ut dato når observasjonen ble utført"
+        doneByRequired: "Vennligst fyll ut navn på den som utførte observasjonen"
         doneBy: "Utført av"
         registeredDate: "Registrert dato"
         registeredBy: "Registrert av"
@@ -496,56 +496,86 @@ no:
         typeSelect:
           labelText: "Velg type"
         pest:
-          identificationValueRequired: 'Please enter pest identification'
-          identificationValueIncorrect: 'Maximum length for pest identification is 100 characters'
-          commentsValueIncorrect: 'Maximum length for pest comments is 250 characters'
-          countIncorrect: "Please correct invalid count in pest observations"
-          lifeCycleIncorrect: "Please correct invalid lifeCycle in pest observations"
-          lifeCycleRequired: "Please enter missing lifeCycle in pest observations "
+          identificationValueRequired: 'Identifikasjon av skadedyr er påkrevd.'
+          identificationValueIncorrect: 'Identifikasjon kan ikke være på mer enn 100 tegn.'
+          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          countIncorrect: "Feltet Antall har ikke gyldig verdi."
+          lifeCycleIncorrect: "Feltet Stadie har ikke gyldig verdi."
+          lifeCycleRequired: "Stadie på skadedyr er påkrevd."
           labelText: "Skadedyr"
           identificationLabel: "Identifikasjon"
-          identificationTooltip: "Identifikasjon tooltip!"
-          identificationPlaceHolder: "Identifikasjon"
+          identificationTooltip: "Identifikasjon av skadedyr"
+          identificationPlaceHolder: "Fritekst"
           commentsLabel: "Tiltak/Kommentar"
-          commentsTooltip: "Tiltak/Kommentar tooltip!"
+          commentsTooltip: "Tiltak som bør iverksettes"
           commentsPlaceHolder: "Fritekst"
-          lifeCycleLabel: "Livssyklus"
+          lifeCycleLabel: "Stadie"
           lifeCycleLabelMenu:
             adult: "Adult"
             puppe: "Puppe"
-            puppeskin: "Puppeskin"
+            puppeskin: "Puppeskinn"
             larva: "Larve"
             egg: "Egg"
-          lifeCycleTooltip: "Livssyklus tooltip"
+          lifeCycleTooltip: "Skadedyrets stadie"
           countLabel: "Antall"
           countPlaceHolder: "Heltall"
-          countTooltip: "Antall tooltip!"
-        mold:
-          leftValueRequired: 'Please enter mold status'
-          leftValueIncorrect: 'Maximum length for mold status is 100 characters'
-          rightValueIncorrect: 'Maximum length for mold note is 250 characters'
-          labelText: "Mugg"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
+          countTooltip: "Antall skadedyr"
         temperature:
-          fromValueRequired: 'Please enter temperature from value'
-          fromValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
-          toValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
-          commentsValueIncorrect: 'Maximum length for temperature tiltak is 250 characters'
+          fromValueRequired: 'Målt temperatur (fra) er påkrevd.'
+          fromValueIncorrect: 'Målt temperatur (fra) må være et desimaltall med maks 3 desimaler.'
+          toValueIncorrect: 'Målt temperatur (til) må være et desimaltall med maks 3 desimaler.'
+          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
           labelText: "Temperatur"
-          fromValueLabelText: "Temperatur (fra)"
-          toValueLabelText: "Temperatur (til)"
-          fromValuePlaceHolder: "C\u00b0"
-          toValuePlaceHolder: "C\u00b0"
-          fromValueTooltip: "Temperatur (fra)"
-          toValueTooltip: "Temperatur (til)"
-          note: "Kommentar"
-          noteTooltip: "Kommentar"
-          notePlaceHolder: "Kommentar"
+          fromValueLabelText: "Målt temperatur (fra)"
+          toValueLabelText: "Målt temperatur (til)"
+          fromValuePlaceHolder: "\u00b0""C"
+          toValuePlaceHolder: "\u00b0""C"
+          fromValueTooltip: "Målt temperatur"
+          toValueTooltip: "Målt temperatur"
+          note: "Tiltak/Kommentar"
+          noteTooltip: "Tiltak som bør iverksettes"
+          notePlaceHolder: "Fritekst"
+        hypoxicAir:
+          fromValueRequired: 'Målt inertluft (fra) er påkrevd.'
+          fromValueIncorrect: 'Målt inertluft (fra) må være et desimaltall med maks 3 desimaler.'
+          toValueIncorrect: 'Målt inertluft (til) må være et desimaltall med maks 3 desimaler.'
+          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Inertluft"
+          fromValueLabelText: "Målt inertluft (fra)"
+          toValueLabelText: "Målt inertluft (til)"
+          fromValuePlaceHolder: "% O2"
+          toValuePlaceHolder: "% O2"
+          fromValueTooltip: "Målt inertluft"
+          toValueTooltip: "Målt inertluft"
+          note: "Tiltak/Kommentar"
+          noteTooltip: "Tiltak som bør iverksettes"
+          notePlaceHolder: "Fritekst"
+        relativeHumidity:
+          fromValueRequired: 'Målt luftfuktighet (fra) er påkrevd.'
+          fromValueIncorrect: 'Målt luftfuktighet (fra) må være et desimaltall med maks 3 desimaler.'
+          toValueIncorrect: 'Målt luftfuktighet (til) må være et desimaltall med maks 3 desimaler.'
+          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Relativ luftfuktighet"
+          fromValueLabelText: "Målt luftfuktighet (fra)"
+          toValueLabelText: "Målt luftfuktighet (til)"
+          fromValuePlaceHolder: "%"
+          toValuePlaceHolder: "%"
+          fromValueTooltip: "Målt luftfuktighet"
+          toValueTooltip: "Målt luftfuktighet"
+          note: "Tiltak/Kommentar"
+          noteTooltip: "Tiltak som bør iverksettes"
+          notePlaceHolder: "Fritekst"
+        mold:
+          leftValueRequired: 'Informasjon om muggobservasjonen er påkrevd.'
+          leftValueIncorrect: 'Informasjon om muggobservasjonen kan ikke være på mer enn 100 tegn.'
+          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Mugg"
+          leftLabelText: "Mugg"
+          rightLabelText: "Tiltak/Kommentar"
+          leftLabelPlaceHolder: "Fritekst"
+          rightLabelPlaceHolder: "Fritekst"
+          leftLabelToolTip: "Observert mugg"
+          rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         skallsikring:
           leftValueRequired: 'Please enter skallsikring status'
           leftValueIncorrect: 'Maximum length for skallsikring status is 100 characters'
@@ -609,36 +639,6 @@ no:
             someDryed: "Noe uttørket"
             minorDryed: "Litt uttørket"
             satisfactory: "Tilfredsstillende"
-        hypoxicAir:
-          fromValueRequired: 'Please enter hypoxic air from value'
-          fromValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
-          toValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
-          commentsValueIncorrect: 'Maximum length for Hypoxic air tiltak is 250 characters'
-          labelText: "Inert luft"
-          fromValueLabelText: "Inert luft (fra)"
-          toValueLabelText: "Inert luft (til)"
-          fromValuePlaceHolder: "Inert luft (fra)"
-          toValuePlaceHolder: "Inert luft (til)"
-          fromValueTooltip: "Inert luft (fra)"
-          toValueTooltip: "Inert luft (til)"
-          note: "Kommentar"
-          noteTooltip: "Kommentar"
-          notePlaceHolder: "Kommentar"
-        relativeHumidity:
-          fromValueRequired: 'Please enter relative humidity from value'
-          fromValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
-          toValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
-          commentsValueIncorrect: 'Maximum length for Relative humidity tiltak is 250 characters'
-          labelText: "Relativ luftfuktighet"
-          fromValueLabelText: "Relativ luftfuktighet (fra)"
-          toValueLabelText: "Relativ luftfuktighet (til)"
-          fromValuePlaceHolder: "Relativ luftfuktighet (fra)"
-          toValuePlaceHolder: "Relativ luftfuktighet (til)"
-          fromValueTooltip: "Relativ luftfuktighet (fra)"
-          toValueTooltip: "Relativ luftfuktighet (til)"
-          note: "Kommentar"
-          noteTooltip: "Kommentar"
-          notePlaceHolder: "Kommentar"
         gas:
           leftValueRequired: 'Please enter Gass status'
           leftValueIncorrect: 'Maximum length for Gass status is 100 characters'
