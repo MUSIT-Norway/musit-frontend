@@ -51,17 +51,21 @@ const mapDispatchToProps = (dispatch, props) => {
     onEdit: (unit) => { hashHistory.push(`/magasin/${unit.id}/view`) },
     onDelete: (id, currentNode) => { // TODO: Problems with delete slower then callback (async)
       if (id === currentNode.id) {
-        dispatch(deleteUnit(id, {
-          onSuccess: () => {
-            dispatch(clearRoot())
-            if (currentNode.isPartOf) {
-              dispatch(loadChildren(currentNode.isPartOf))
-              dispatch(loadRoot(currentNode.isPartOf))
-            } else {
-              dispatch(loadRoot())
+        const name = currentNode.name
+        if (window.confirm(`Vil du virkelig slette node med navn ${name}`)) {
+          dispatch(deleteUnit(id, {
+            onSuccess: () => {
+              dispatch(clearRoot())
+              if (currentNode.isPartOf) {
+                dispatch(loadChildren(currentNode.isPartOf))
+                dispatch(loadRoot(currentNode.isPartOf))
+              } else {
+                dispatch(loadRoot())
+              }
+              window.alert(`Du har slettet noden med navn ${name}`)
             }
-          }
-        }))
+          }))
+        }
       }
     }
   })
@@ -90,7 +94,8 @@ export default class StorageUnitsContainer extends React.Component {
     this.state = {
       searchPattern: '',
       showObjects: false,
-      showNodes: true
+      showNodes: true,
+      showDeleteModal: false
     }
   }
 
@@ -170,9 +175,10 @@ export default class StorageUnitsContainer extends React.Component {
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
-            if (parentId) {
-              history.push(`/magasin/${parentId}/add`)
-            }
+            console.log(parentId)
+            // if (parentId) {
+            //   history.push(`/magasin/${parentId}/add`)
+            // }
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
