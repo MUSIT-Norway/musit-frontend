@@ -12,8 +12,8 @@ import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import DatePicker from 'react-bootstrap-date-picker'
 import ActorSuggest from '../../../components/actor'
-import { validateString, validateNumber } from '../../../components/formfields/common/validators'
 import moment from 'moment'
+import * as validation from './validation'
 
 export default class ObservationPage extends React.Component {
 
@@ -105,146 +105,73 @@ export default class ObservationPage extends React.Component {
     })
   }
 
-  validateStringField(type, field, required = false, maxLength = 100) {
-    return (formProps) => {
-      const errors = {}
-      if (required && !formProps[field]) {
-        errors[`${type}.${field}`] = `Please enter ${type} ${field}`
-      } else if (formProps[field] && validateString(formProps[field].trim(), 1, maxLength) === 'error') {
-        errors[`${type}.${field}`] = `Please correct ${type} ${field}`
-      }
-      return errors
-    }
-  }
-
-  validateDoubleTextArea(formProps, index, type) {
-    let errors = {}
-    errors = { ...errors, ...this.validateStringField(type, 'leftValue', true, 100)(formProps) }
-    errors = { ...errors, ...this.validateStringField(type, 'rightValue', false, 250)(formProps) }
-    return errors
-  }
-
-  validatePest(formProps, index, type) {
-    const errors = {}
-
-    if (!formProps.identificationValue) {
-      errors[`${type}.identificationValue`] = `Please enter ${type} identification value`
-    }
-
-    if (validateString(formProps.commentValue, 0, 250) === 'error') {
-      errors[`${type}.commentValue`] = `Please correct ${type} commentValue value`
-    }
-
-    return errors
-  }
-
-  validateAlcohol(formProps, index, type) {
-    const errors = {}
-
-    if (!formProps.status) {
-      errors[`${type}.status`] = `Please enter ${type} status`
-    } else if (validateString(formProps.status, 1) === 'error') {
-      errors[`${type}.status`] = `Please correct ${type} status`
-    }
-
-    if (formProps.volume && validateNumber(formProps.volume, 0, 10, 3) === 'error') {
-      errors[`${type}.volume`] = `Please correct ${type} volume`
-    }
-
-    if (formProps.comment && validateString(formProps.comment, 1, 250) === 'error') {
-      errors[`${type}.comment`] = `Please correct ${type} comment`
-    }
-
-    return errors;
-  }
-
-  validateFromTo(formProps, index, type) {
-    const errors = {}
-
-    if (!formProps.fromValue) {
-      errors[`${type}.fromValue`] = `Please correct ${type} fromValue`
-    } else if (validateString(formProps.fromValue, 1) === 'error') {
-      errors[`${type}.fromValue`] = `Please correct ${type} fromValue`
-    }
-
-    if (formProps.toValue && validateNumber(formProps.toValue, 0, 10, 3) === 'error') {
-      errors[`${type}.toValue`] = `Please correct ${type} toValue`
-    }
-
-    if (formProps.commentValue && validateString(formProps.commentValue, 1, 250) === 'error') {
-      errors[`${type}.commentValue`] = `Please correct ${type} commentValue`
-    }
-
-    return errors;
-  }
-
   typeDefinitions = {
     '': { label: 'typeSelect.labelText' },
     gas: {
       label: 'gas.labelText',
       render: this.renderDoubleTextArea,
-      validate: this.validateDoubleTextArea
+      validate: validation.validateDoubleTextArea
     },
     lightConditions: {
-      label: 'lux.labelText',
+      label: 'lightConditions.labelText',
       render: this.renderDoubleTextArea,
-      validate: this.validateDoubleTextArea
+      validate: validation.validateDoubleTextArea
     },
     cleaning: {
       label: 'cleaning.labelText',
       render: this.renderDoubleTextArea,
-      validate: this.validateDoubleTextArea
+      validate: validation.validateDoubleTextArea
     },
     pest: {
       label: 'pest.labelText',
       render: this.renderPest,
       data: ObservationPage.createDefaultPestData(),
-      validate: this.validatePest
+      validate: validation.validatePest
     },
     mold: {
       label: 'mold.labelText',
       render: this.renderDoubleTextArea,
-      validate: this.validateDoubleTextArea
+      validate: validation.validateDoubleTextArea
     },
     skallsikring: {
       label: 'skallsikring.labelText',
       render: this.renderDoubleTextArea,
-      validate: this.validateDoubleTextArea
+      validate: validation.validateDoubleTextArea
     },
     tyverisikring: {
       label: 'tyverisikring.labelText',
       render: this.renderDoubleTextArea,
-      validate: this.validateDoubleTextArea
+      validate: validation.validateDoubleTextArea
     },
     brannsikring: {
       label: 'brannsikring.labelText',
       render: this.renderDoubleTextArea,
-      validate: this.validateDoubleTextArea
+      validate: validation.validateDoubleTextArea
     },
     vannskaderisiko: {
       label: 'vannskaderisiko.labelText',
       render: this.renderDoubleTextArea,
-      validate: this.validateDoubleTextArea
+      validate: validation.validateDoubleTextArea
     },
     relativeHumidity: {
-      label: 'rh.labelText',
+      label: 'relativeHumidity.labelText',
       render: this.renderFromToNumberComment,
-      validate: this.validateFromTo
+      validate: validation.validateFromTo
     },
     hypoxicAir: {
       label: 'hypoxicAir.labelText',
       render: this.renderFromToNumberComment,
-      validate: this.validateFromTo
+      validate: validation.validateFromTo
     },
     temperature: {
       label: 'temperature.labelText',
       render: this.renderFromToNumberComment,
-      validate: this.validateFromTo
+      validate: validation.validateFromTo
     },
     alcohol: {
       label: 'alcohol.labelText',
       render: this.renderAlcohol,
-      validate: this.validateAlcohol
+      validate: validation.validateAlcohol
     }
   }
 
@@ -271,11 +198,11 @@ export default class ObservationPage extends React.Component {
     let errors = {}
 
     if (typeof formProps.doneBy !== 'object' || !formProps.doneBy.id) {
-      errors.doneBy = 'Please enter doneBy'
+      errors.doneBy = 'musit.observation.page.doneByRequired'
     }
 
     if (!formProps.doneDate) {
-      errors.doneDate = 'Please enter doneDate'
+      errors.doneDate = 'musit.observation.page.dateRequired'
     }
 
     this.state.observations.forEach((observation, index) => {
@@ -470,7 +397,7 @@ export default class ObservationPage extends React.Component {
           </Row>
           <br />
           {this.state.errors && Object.values(this.state.errors).map((error, index) => {
-            return <p style={{ color: 'red' }} key={index}>{error}</p>
+            return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>
           })}
           <br />
           <SaveCancel

@@ -56,8 +56,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
       <Row>
         <Col xs={12} sm={2}>
           <ControlLabel>
-            {this.props.fromLabel}
-            &nbsp;{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+            {this.props.fromLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
           </ControlLabel>
           <MusitField
             value={this.props.fromValue}
