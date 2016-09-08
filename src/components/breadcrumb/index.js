@@ -69,7 +69,6 @@ export default class Breadcrumb extends Component {
 
   render() {
     const breadcrumbIds = this.resolveBreadcrumbIds(this.props)
-
     return (
       <div>
         {breadcrumbIds.map((id) => this.renderLabel(id))}
