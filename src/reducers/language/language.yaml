@@ -520,6 +520,25 @@ no:
           countLabel: "Antall"
           countPlaceHolder: "Heltall"
           countTooltip: "Antall skadedyr"
+        alcohol:
+          statusRequired: 'Nivå på sprittilstanden en påkrevd.'
+          statusIncorrect: 'Sprit status har ikke gyldig verdi.'
+          volumeIncorrect: 'Sprit volum må være et desimaltall med maks 3 desimaler.'
+          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
+          labelText: "Sprit"
+          volumeLabel: "Volum"
+          volumePlaceHolder: "%"
+          statusLabel: "Nivå"
+          statusPlaceHolder: "Nivå"
+          commentLabel: "Tiltak/Kommentar"
+          commentPlaceHolder: "Fritekst"
+          tooltip: "Sprit"
+          statusItems:
+            dryed: "Uttørket"
+            allmostDryed: "Nesten uttørket"
+            someDryed: "Noe uttørket"
+            minorDryed: "Litt uttørket"
+            satisfactory: "Tilfredsstillende"
         temperature:
           fromValueRequired: 'Målt temperatur (fra) er påkrevd.'
           fromValueIncorrect: 'Målt temperatur (fra) må være et desimaltall med maks 3 desimaler.'
@@ -566,112 +585,93 @@ no:
           noteTooltip: "Tiltak som bør iverksettes"
           notePlaceHolder: "Fritekst"
         mold:
-          leftValueRequired: 'Informasjon om muggobservasjonen er påkrevd.'
-          leftValueIncorrect: 'Informasjon om muggobservasjonen kan ikke være på mer enn 100 tegn.'
+          leftValueRequired: 'Beskrivelse av observert mugg er påkrevd.'
+          leftValueIncorrect: 'Beskrivelsen av observert mugg kan ikke være på mer enn 100 tegn.'
           rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
           labelText: "Mugg"
-          leftLabelText: "Mugg"
+          leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
           leftLabelPlaceHolder: "Fritekst"
           rightLabelPlaceHolder: "Fritekst"
           leftLabelToolTip: "Observert mugg"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
-        skallsikring:
-          leftValueRequired: 'Please enter skallsikring status'
-          leftValueIncorrect: 'Maximum length for skallsikring status is 100 characters'
-          rightValueIncorrect: 'Maximum length for skallsikring tiltak is 250 characters'
-          labelText: "Skallsikring"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        brannsikring:
-          leftValueRequired: 'Please enter Brannsikring status'
-          leftValueIncorrect: 'Maximum length for Brannsikring status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Brannsikring tiltak is 250 characters'
-          labelText: "Brannsikring"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        vannskaderisiko:
-          leftValueRequired: 'Please enter Vannskaderisiko status'
-          leftValueIncorrect: 'Maximum length for Vannskaderisiko status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Vannskaderisiko tiltak is 250 characters'
-          labelText: "Vannskaderisiko"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        tyverisikring:
-          leftValueRequired: 'Please enter Tyverisikring status'
-          leftValueIncorrect: 'Maximum length for Tyverisikring status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Tyverisikring tiltak is 250 characters'
-          labelText: "Tyverisikring"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        alcohol:
-          statusRequired: 'Please enter alcohol status'
-          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals'
-          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals'
-          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
-          labelText: "Sprit"
-          volumeLabel: "Volum"
-          volumePlaceHolder: "Volum"
-          statusLabel: "Tilstand"
-          statusPlaceHolder: "Tilstand"
-          commentLabel: "Tiltak/Kommentar"
-          commentPlaceHolder: "Tiltak/Kommentar"
-          tooltip: "Sprit"
-          statusItems:
-            dryed: "Uttørket"
-            allmostDryed: "Nesten uttørket"
-            someDryed: "Noe uttørket"
-            minorDryed: "Litt uttørket"
-            satisfactory: "Tilfredsstillende"
-        gas:
-          leftValueRequired: 'Please enter Gass status'
-          leftValueIncorrect: 'Maximum length for Gass status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Gass tiltak is 100 characters'
-          labelText: "Gass"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        lightConditions:
-          leftValueRequired: 'Please enter Lysforhold status'
-          leftValueIncorrect: 'Maximum length for Lysforhold status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Lysforhold tiltak is 100 characters'
-          labelText: "Lysforhold"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
         cleaning:
-          leftValueRequired: 'Please enter cleaning status'
-          leftValueIncorrect: 'Maximum length for cleaning status is 100 characters'
-          rightValueIncorrect: 'Maximum length for cleaning tiltak is 100 characters'
+          leftValueRequired: 'Beskrivelse av observert renhold er påkrevd.'
+          leftValueIncorrect: 'Beskrivelsen av observert renhold kan ikke være på mer enn 100 tegn.'
+          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
           labelText: "Renhold"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
+          leftLabelText: "Beskrivelse"
+          rightLabelText: "Tiltak/Kommentar"
+          leftLabelPlaceHolder: "Fritekst"
+          rightLabelPlaceHolder: "Fritekst"
+          leftLabelToolTip: "Observert renhold"
+          rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
+        gas:
+          leftValueRequired: 'Informasjon om målt verdi er påkrevd.'
+          leftValueIncorrect: 'Informasjon om målt verdi kan ikke være på mer enn 100 tegn.'
+          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Gass"
+          leftLabelText: "Målt verdi"
+          rightLabelText: "Tiltak/Kommentar"
+          leftLabelPlaceHolder: "Fritekst"
+          rightLabelPlaceHolder: "Fritekst"
+          leftLabelToolTip: "Målt gass"
+          rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
+        lightConditions:
+          leftValueRequired: 'Informasjon om målt/observert verdi er påkrevd'
+          leftValueIncorrect: 'Informasjon om målt/observert verdi kan ikke være på mer enn 100 tegn.'
+          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Lysforhold"
+          leftLabelText: "Målt/observert verdi"
+          rightLabelText: "Tiltak/Kommentar"
+          leftLabelPlaceHolder: "Fritekst"
+          rightLabelPlaceHolder: "Fritekst"
+          leftLabelToolTip: "Målt/observert lysforhold"
+          rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
+        skallsikring:
+          leftValueRequired: 'Beskrivelse av skallsikringens tilstand er påkrevd.'
+          leftValueIncorrect: 'Beskrivelsen av skallsikringens tilstand kan ikke være på mer enn 100 tegn.'
+          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Skallsikring"
+          leftLabelText: "Beskrivelse"
+          rightLabelText: "Tiltak/Kommentar"
+          leftLabelPlaceHolder: "Fritekst"
+          rightLabelPlaceHolder: "Fritekst"
+          leftLabelToolTip: "Observert skallsikring"
+          rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
+        brannsikring:
+          leftValueRequired: 'Beskrivelse av brannsikringens tilstand er påkrevd.'
+          leftValueIncorrect: 'Beskrivelsen av brannsikringens tilstand kan ikke være på mer enn 100 tegn.'
+          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Brannsikring"
+          leftLabelText: "Beskrivelse"
+          rightLabelText: "Tiltak/Kommentar"
+          leftLabelPlaceHolder: "Fritekst"
+          rightLabelPlaceHolder: "Fritekst"
+          leftLabelToolTip: "Observert brannsikring"
+          rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
+        vannskaderisiko:
+          leftValueRequired: 'Beskrivelse av vannskaderisiko er påkrevd.'
+          leftValueIncorrect: 'Beskrivelsen av vannskaderisiko kan ikke være på mer enn 100 tegn.'
+          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Vannskaderisiko"
+          leftLabelText: "Beskrivelse"
+          rightLabelText: "Tiltak/Kommentar"
+          leftLabelPlaceHolder: "Fritekst"
+          rightLabelPlaceHolder: "Fritekst"
+          leftLabelToolTip: "Observert vannskaderisiko"
+          rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
+        tyverisikring:
+          leftValueRequired: 'Beskrivelse av tyverisikringens tilstand er påkrevd.'
+          leftValueIncorrect: 'Beskrivelsen av tyverisikringens tilstand kan ikke være på mer enn 100 tegn.'
+          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          labelText: "Tyverisikring"
+          leftLabelText: "Beskrivelse"
+          rightLabelText: "Tiltak/Kommentar"
+          leftLabelPlaceHolder: "Fritekst"
+          rightLabelPlaceHolder: "Fritekst"
+          leftLabelToolTip: "Observert tyverisikring"
+          rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
     pickList:
       title: "Plukkliste"
       action:
