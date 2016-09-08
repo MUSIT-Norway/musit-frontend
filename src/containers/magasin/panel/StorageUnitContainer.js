@@ -45,7 +45,9 @@ export default class StorageUnitContainer extends Component {
   }
 
   componentWillMount() {
-    this.props.loadStorageUnit(this.props.params.id)
+    if (this.props.params.id) {
+      this.props.loadStorageUnit(this.props.params.id)
+    }
   }
 
   errorAddMessage = (errors, field) => {

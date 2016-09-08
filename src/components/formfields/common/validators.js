@@ -15,7 +15,8 @@ export const validateNumber = (value = '', minimumLength = 0, maximumLength = 10
     '})?$'
   /* eslint-enable prefer-template */
   const matcher = new RegExp(expression)
-  return matcher.test(value) ? 'success' : 'error'
+  const matches = matcher.test(value)
+  return matches ? 'success' : 'error'
 }
 
 const validate = (source) => {

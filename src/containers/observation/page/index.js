@@ -6,12 +6,14 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from '../../../components/observation/render'
-import { containsObjectWithField } from '../../../util'
+import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import DatePicker from 'react-bootstrap-date-picker'
 import ActorSuggest from '../../../components/actor'
+import moment from 'moment'
+import * as validation from './validation'
 
 export default class ObservationPage extends React.Component {
 
@@ -44,7 +46,7 @@ export default class ObservationPage extends React.Component {
     this.state = {
       selectedType: null,
       observations: props.observations,
-      doneDate: props.doneDate,
+      doneDate: props.doneDate || moment(),
       doneBy: props.doneBy
     }
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
@@ -53,6 +55,7 @@ export default class ObservationPage extends React.Component {
     this.onChangePestObservation = this.onChangePestObservation.bind(this)
     this.onRemovePestObservation = this.onRemovePestObservation.bind(this)
     this.onClickAddObservation = this.onClickAddObservation.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,22 +80,22 @@ export default class ObservationPage extends React.Component {
     const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
     pestObservations[pestObservationIndex][field] = value
-    this.setState({ ...this.state, observations: observations })
+    this.setState({ ...this.state, observations })
   }
 
   onRemovePestObservation(pestObservationIndex, pestIndex) {
-    const observationsCopy = [...this.state.observations]
-    const pestObj = observationsCopy[pestIndex]
+    const observations = [...this.state.observations]
+    const pestObj = observations[pestIndex]
     pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex)
-    this.setState({ ...this.state, observations: observationsCopy })
+    this.setState({ ...this.state, observations })
   }
 
   onClickAddObservation(pestIndex) {
-    const observationsCopy = [...this.state.observations]
-    const pestObj = observationsCopy[pestIndex]
+    const observations = [...this.state.observations]
+    const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
     pestObservations.unshift({ lifeCycle: '', count: '' })
-    this.setState({ ...this.state, observations: observationsCopy })
+    this.setState({ ...this.state, observations })
   }
 
   onChangeTypeSelect(e) {
@@ -102,25 +105,74 @@ export default class ObservationPage extends React.Component {
     })
   }
 
-  getLabel(key) {
-    return this.props.translate(`musit.observation.page.${key}`)
-  }
-
   typeDefinitions = {
     '': { label: 'typeSelect.labelText' },
-    gas: { label: 'gas.labelText', render: this.renderDoubleTextArea },
-    lightConditions: { label: 'lux.labelText', render: this.renderDoubleTextArea },
-    cleaning: { label: 'cleaning.labelText', render: this.renderDoubleTextArea },
-    pest: { label: 'pest.labelText', render: this.renderPest, data: ObservationPage.createDefaultPestData() },
-    mold: { label: 'mold.labelText', render: this.renderDoubleTextArea },
-    skallsikring: { label: 'skallsikring.labelText', render: this.renderDoubleTextArea },
-    tyverisikring: { label: 'tyverisikring.labelText', render: this.renderDoubleTextArea },
-    brannsikring: { label: 'brannsikring.labelText', render: this.renderDoubleTextArea },
-    vannskaderisiko: { label: 'vannskaderisiko.labelText', render: this.renderDoubleTextArea },
-    relativeHumidity: { label: 'rh.labelText', render: this.renderFromToNumberComment },
-    hypoxicAir: { label: 'hypoxicAir.labelText', render: this.renderFromToNumberComment },
-    temperature: { label: 'temperature.labelText', render: this.renderFromToNumberComment },
-    alcohol: { label: 'alcohol.labelText', render: this.renderAlcohol }
+    gas: {
+      label: 'gas.labelText',
+      render: this.renderDoubleTextArea,
+      validate: validation.validateDoubleTextArea
+    },
+    lightConditions: {
+      label: 'lightConditions.labelText',
+      render: this.renderDoubleTextArea,
+      validate: validation.validateDoubleTextArea
+    },
+    cleaning: {
+      label: 'cleaning.labelText',
+      render: this.renderDoubleTextArea,
+      validate: validation.validateDoubleTextArea
+    },
+    pest: {
+      label: 'pest.labelText',
+      render: this.renderPest,
+      data: ObservationPage.createDefaultPestData(),
+      validate: validation.validatePest
+    },
+    mold: {
+      label: 'mold.labelText',
+      render: this.renderDoubleTextArea,
+      validate: validation.validateDoubleTextArea
+    },
+    skallsikring: {
+      label: 'skallsikring.labelText',
+      render: this.renderDoubleTextArea,
+      validate: validation.validateDoubleTextArea
+    },
+    tyverisikring: {
+      label: 'tyverisikring.labelText',
+      render: this.renderDoubleTextArea,
+      validate: validation.validateDoubleTextArea
+    },
+    brannsikring: {
+      label: 'brannsikring.labelText',
+      render: this.renderDoubleTextArea,
+      validate: validation.validateDoubleTextArea
+    },
+    vannskaderisiko: {
+      label: 'vannskaderisiko.labelText',
+      render: this.renderDoubleTextArea,
+      validate: validation.validateDoubleTextArea
+    },
+    relativeHumidity: {
+      label: 'relativeHumidity.labelText',
+      render: this.renderFromToNumberComment,
+      validate: validation.validateFromTo
+    },
+    hypoxicAir: {
+      label: 'hypoxicAir.labelText',
+      render: this.renderFromToNumberComment,
+      validate: validation.validateFromTo
+    },
+    temperature: {
+      label: 'temperature.labelText',
+      render: this.renderFromToNumberComment,
+      validate: validation.validateFromTo
+    },
+    alcohol: {
+      label: 'alcohol.labelText',
+      render: this.renderAlcohol,
+      validate: validation.validateAlcohol
+    }
   }
 
   addObservationType(typeToAdd, data = {}) {
@@ -140,6 +192,36 @@ export default class ObservationPage extends React.Component {
   removeObservation(index) {
     const observations = this.state.observations
     this.setState({ ...this.state, observations: observations.filter((o, i) => i !== index) })
+  }
+
+  validateForm(formProps) {
+    let errors = {}
+
+    if (typeof formProps.doneBy !== 'object' || !formProps.doneBy.id) {
+      errors.doneBy = 'musit.observation.page.doneByRequired'
+    }
+
+    if (!formProps.doneDate) {
+      errors.doneDate = 'musit.observation.page.dateRequired'
+    }
+
+    this.state.observations.forEach((observation, index) => {
+      const typeDefinition = this.typeDefinitions[observation.type];
+      if (typeDefinition.validate) {
+        errors = { ...errors, ...typeDefinition.validate.bind(this)(observation.data, index, observation.type) }
+      }
+    })
+
+    return errors
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    const errors = this.validateForm(this.state)
+    this.setState({ ...this.state, errors })
+    if (Object.keys(errors).length === 0) {
+      this.props.onSaveObservation(this.props.id, this.state)
+    }
   }
 
   renderObservation(observation, index) {
@@ -199,7 +281,7 @@ export default class ObservationPage extends React.Component {
 
   render() {
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <Grid>
           <Row>
             <h3 />
@@ -209,15 +291,15 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
-                    value={this.state.doneDate}
+                    value={this.state.doneDate.format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                 ) : (
                   <DatePicker
-                    dateFormat="YYYY-MM-DD"
-                    value={this.state.doneDate}
-                    onChange={(value) => {
-                      this.setState({ ...this.state, doneDate: value })
+                    dateFormat={DATE_FORMAT_DISPLAY}
+                    value={this.state.doneDate.toISOString()}
+                    onChange={(newValue) => {
+                      this.setState({ ...this.state, doneDate: parseISODate(newValue) })
                     }}
                     disabled={this.props.mode === 'VIEW'}
                   />
@@ -249,7 +331,7 @@ export default class ObservationPage extends React.Component {
                   <ControlLabel>{this.props.translate('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
                     componentClass="input"
-                    value={this.props.registeredDate}
+                    value={parseISODate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                 </Col>
@@ -277,7 +359,7 @@ export default class ObservationPage extends React.Component {
                       {Object.keys(this.typeDefinitions).filter(this.isTypeSelectable).map((type, index) => {
                         return (
                           <option key={index} value={type}>
-                            {this.getLabel(this.typeDefinitions[type].label)}
+                            {this.props.translate(`musit.observation.page.${this.typeDefinitions[type].label}`)}
                           </option>
                         )
                       })}
@@ -299,7 +381,7 @@ export default class ObservationPage extends React.Component {
               return (
                 <div key={index}>
                   <h3>
-                    {this.getLabel(typeDefinition.label)}
+                    {this.props.translate(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
                     {this.props.mode !== 'ADD' ? '' : (
                       <a onClick={() => this.removeObservation(index)}>
@@ -313,9 +395,14 @@ export default class ObservationPage extends React.Component {
               )
             })}
           </Row>
+          <br />
+          {this.state.errors && Object.values(this.state.errors).map((error, index) => {
+            return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>
+          })}
+          <br />
           <SaveCancel
             translate={this.props.translate}
-            onClickSave={() => this.props.onSaveObservation(this.props.id, this.state)}
+            onClickSave={this.handleSubmit}
             onClickCancel={() => hashHistory.goBack()}
             saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
             cancelDisabled={this.props.cancelDisabled}

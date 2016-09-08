@@ -75,149 +75,200 @@ en:
       envdata: "Environmental Records"
     observation:
       page:
-        registerObservation: "Register observation"
-        registerObservations: "Register observations"
-        date: "Performed date"
-        doneBy: "Performed by"
-        registeredDate: "Registered date"
-        registeredBy: "Registered by"
-        newObservationHeader: "New observation"
-        viewObservationHeader: "Observation"
-        newButtonLabel: "Add new"
+        titles:
+          add: "Legg til observasjon"
+          edit: "Endre kontrollobservasjoner"
+          view: "Observasjoner"
+        registerObservation: "Registrer observasjon"
+        registerObservations: "Registrer observasjoner"
+        date: "Utført dato"
+        dateRequired: "Please enter when the bservation was done"
+        doneByRequired: "Please enter who has done the observation"
+        doneBy: "Utført av"
+        registeredDate: "Registrert dato"
+        registeredBy: "Registrert av"
+        newObservationHeader: "Ny observasjon"
+        viewObservationHeader: "Observasjon"
+        newButtonLabel: "Legg til ny"
+        typeSelect:
+          labelText: "Velg type"
         pest:
-          identificationLabel: "Identification"
-          identificationTooltip: "Identification tooltip!"
-          commentsLabel: "Task/Comment"
-          commentsTooltip: "Task/Comment tooltip!"
-          lifeCycleLabel: "Life cycle"
+          identificationValueRequired: 'Please enter pest identification'
+          identificationValueIncorrect: 'Maximum length for pest identification is 100 characters'
+          commentsValueIncorrect: 'Maximum length for pest comments is 250 characters'
+          countIncorrect: "Please correct invalid count in pest observations"
+          lifeCycleIncorrect: "Please correct invalid lifeCycle in pest observations"
+          lifeCycleRequired: "Please enter missing lifeCycle in pest observations "
+          labelText: "Skadedyr"
+          identificationLabel: "Identifikasjon"
+          identificationTooltip: "Identifikasjon tooltip!"
+          identificationPlaceHolder: "Identifikasjon"
+          commentsLabel: "Tiltak/Kommentar"
+          commentsTooltip: "Tiltak/Kommentar tooltip!"
+          commentsPlaceHolder: "Fritekst"
+          lifeCycleLabel: "Livssyklus"
           lifeCycleLabelMenu:
             adult: "Adult"
-            puppe: "Pupa"
-            puppeskin: "Pupa skin"
-            larva: "Larva"
+            puppe: "Puppe"
+            puppeskin: "Puppeskin"
+            larva: "Larve"
             egg: "Egg"
-          lifeCycleTooltip: "Life cycle tooltip"
-          countLabel: "Quantity"
-          countPlaceHolder: "Integer"
-          countTooltip: "Quantity tooltip!"
-          lifeCycleItems:
-            adult: "Adult"
-            puppe: "Pupa"
-            puppeskin: "Pupa skin"
-            larva: "Larva"
-            egg: "Egg"
+          lifeCycleTooltip: "Livssyklus tooltip"
+          countLabel: "Antall"
+          countPlaceHolder: "Heltall"
+          countTooltip: "Antall tooltip!"
         mold:
-          labelText: "Mold"
-          leftLabelText: "State"
-          rightLabelText: "Task"
-          leftLabelPlaceHolder: "State"
-          rightLabelPlaceHolder: "Task"
-          leftLabelToolTip: "State"
-          rightLabelPlaceToolTip: "Task"
+          leftValueRequired: 'Please enter mold status'
+          leftValueIncorrect: 'Maximum length for mold status is 100 characters'
+          rightValueIncorrect: 'Maximum length for mold note is 250 characters'
+          labelText: "Mugg"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         temperature:
-          labelText: "Temperature"
-          fromValueLabelText: "Temperature (from)"
-          toValueLabelText: "Temperature (to)"
-          fromValuePlaceHolder: "C\u00B0"
-          toValuePlaceHolder: "C\u00B0"
-          fromValueTooltip: "Temperature (from)"
-          toValueTooltip: "Temperature (to)"
-          note: "Note"
-          noteTooltip: "Note"
-          notePlaceHolder: "Note"
+          fromValueRequired: 'Please enter temperature from value'
+          fromValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
+          toValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
+          commentsValueIncorrect: 'Maximum length for temperature tiltak is 250 characters'
+          labelText: "Temperatur"
+          fromValueLabelText: "Temperatur (fra)"
+          toValueLabelText: "Temperatur (til)"
+          fromValuePlaceHolder: "C\u00b0"
+          toValuePlaceHolder: "C\u00b0"
+          fromValueTooltip: "Temperatur (fra)"
+          toValueTooltip: "Temperatur (til)"
+          note: "Kommentar"
+          noteTooltip: "Kommentar"
+          notePlaceHolder: "Kommentar"
         skallsikring:
-          labelText: "Perimeter security"
-          leftLabelText: "State"
-          rightLabelText: "Task"
-          leftLabelPlaceHolder: "State"
-          rightLabelPlaceHolder: "Task"
-          leftLabelToolTip: "State"
-          rightLabelPlaceToolTip: "Task"
+          leftValueRequired: 'Please enter skallsikring status'
+          leftValueIncorrect: 'Maximum length for skallsikring status is 100 characters'
+          rightValueIncorrect: 'Maximum length for skallsikring tiltak is 250 characters'
+          labelText: "Skallsikring"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         brannsikring:
-          labelText: "Fire protection"
-          leftLabelText: "State"
-          rightLabelText: "Task"
-          leftLabelPlaceHolder: "State"
-          rightLabelPlaceHolder: "Task"
-          leftLabelToolTip: "State"
-          rightLabelPlaceToolTip: "Task"
+          leftValueRequired: 'Please enter Brannsikring status'
+          leftValueIncorrect: 'Maximum length for Brannsikring status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Brannsikring tiltak is 250 characters'
+          labelText: "Brannsikring"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         vannskaderisiko:
-          labelText: "Water damage assessment"
-          leftLabelText: "State"
-          rightLabelText: "Task"
-          leftLabelPlaceHolder: "State"
-          rightLabelPlaceHolder: "Task"
-          leftLabelToolTip: "State"
-          rightLabelPlaceToolTip: "Task"
+          leftValueRequired: 'Please enter Vannskaderisiko status'
+          leftValueIncorrect: 'Maximum length for Vannskaderisiko status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Vannskaderisiko tiltak is 250 characters'
+          labelText: "Vannskaderisiko"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         tyverisikring:
-          labelText: "Theft protection"
-          leftLabelText: "State"
-          rightLabelText: "Task"
-          leftLabelPlaceHolder: "State"
-          rightLabelPlaceHolder: "Task"
-          leftLabelToolTip: "State"
-          rightLabelPlaceToolTip: "Task"
+          leftValueRequired: 'Please enter Tyverisikring status'
+          leftValueIncorrect: 'Maximum length for Tyverisikring status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Tyverisikring tiltak is 250 characters'
+          labelText: "Tyverisikring"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         alcohol:
-          labelText: "Alcohol"
-          volumeLabel: "Volume"
-          volumePlaceHolder: "Volume"
-          statusLabel: "State"
-          statusPlaceHolder: "State"
-          commentLabel: "Task/Note"
-          commentPlaceHolder: "Task/Note"
-          tooltip: "Alcohol"
+          statusRequired: 'Please enter alcohol status'
+          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals'
+          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals'
+          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
+          labelText: "Sprit"
+          volumeLabel: "Volum"
+          volumePlaceHolder: "Volum"
+          statusLabel: "Tilstand"
+          statusPlaceHolder: "Tilstand"
+          commentLabel: "Tiltak/Kommentar"
+          commentPlaceHolder: "Tiltak/Kommentar"
+          tooltip: "Sprit"
           statusItems:
-            dryed: "Dryed"
-            allmostDryed: "Allmost dryed"
-            someDryed: "Some dryed"
-            minorDryed: "Minor dryed"
-            satisfactory: "Satisfactory"
+            dryed: "Uttørket"
+            allmostDryed: "Nesten uttørket"
+            someDryed: "Noe uttørket"
+            minorDryed: "Litt uttørket"
+            satisfactory: "Tilfredsstillende"
         hypoxicAir:
-          labelText: "Hypoxic air"
-          fromValueLabelText: "Hypoxic air (from)"
-          toValueLabelText: "Hypoxic air (to)"
-          fromValuePlaceHolder: "Hypoxic air (from)"
-          toValuePlaceHolder: "Hypoxic air (to)"
-          fromValueTooltip: "Hypoxic air (from)"
-          toValueTooltip: "Hypoxic air (to)"
-          note: "Note"
-          noteTooltip: "Note"
-          notePlaceHolder: "Note"
-        rh:
-          labelText: "Relative humidity"
-          fromValueLabelText: "Relative humidity (from)"
-          toValueLabelText: "Relative humidity (to)"
-          fromValuePlaceHolder: "Relative humidity (from)"
-          toValuePlaceHolder: "Relative humidity (to)"
-          fromValueTooltip: "Relative humidity (from)"
-          toValueTooltip: "Relative humidity (to)"
-          note: "Note"
-          noteTooltip: "Note"
-          notePlaceHolder: "Note"
-        cleaning:
-          labelText: "Cleaning"
-          leftLabelText: "Status"
-          rightLabelText: "Task"
-          leftLabelPlaceHolder: "Status"
-          rightLabelPlaceHolder: "Task"
-          leftLabelToolTip: "Status"
-          rightLabelPlaceToolTip: "Task"
+          fromValueRequired: 'Please enter hypoxic air from value'
+          fromValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
+          toValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
+          commentsValueIncorrect: 'Maximum length for Hypoxic air tiltak is 250 characters'
+          labelText: "Inert luft"
+          fromValueLabelText: "Inert luft (fra)"
+          toValueLabelText: "Inert luft (til)"
+          fromValuePlaceHolder: "Inert luft (fra)"
+          toValuePlaceHolder: "Inert luft (til)"
+          fromValueTooltip: "Inert luft (fra)"
+          toValueTooltip: "Inert luft (til)"
+          note: "Kommentar"
+          noteTooltip: "Kommentar"
+          notePlaceHolder: "Kommentar"
+        relativeHumidity:
+          fromValueRequired: 'Please enter relative humidity from value'
+          fromValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
+          toValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
+          commentsValueIncorrect: 'Maximum length for Relative humidity tiltak is 250 characters'
+          labelText: "Relativ luftfuktighet"
+          fromValueLabelText: "Relativ luftfuktighet (fra)"
+          toValueLabelText: "Relativ luftfuktighet (til)"
+          fromValuePlaceHolder: "Relativ luftfuktighet (fra)"
+          toValuePlaceHolder: "Relativ luftfuktighet (til)"
+          fromValueTooltip: "Relativ luftfuktighet (fra)"
+          toValueTooltip: "Relativ luftfuktighet (til)"
+          note: "Kommentar"
+          noteTooltip: "Kommentar"
+          notePlaceHolder: "Kommentar"
         gas:
-          labelText: "Gas"
-          leftLabelText: "Status"
-          rightLabelText: "Task"
-          leftLabelPlaceHolder: "Status"
-          rightLabelPlaceHolder: "Task"
-          leftLabelToolTip: "Status"
-          rightLabelPlaceToolTip: "Task"
-        lux:
-          labelText: "Lighting condition"
-          leftLabelText: "Status"
-          rightLabelText: "Task"
-          leftLabelPlaceHolder: "Status"
-          rightLabelPlaceHolder: "Task"
-          leftLabelToolTip: "Status"
-          rightLabelPlaceToolTip: "Task"
+          leftValueRequired: 'Please enter Gass status'
+          leftValueIncorrect: 'Maximum length for Gass status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Gass tiltak is 100 characters'
+          labelText: "Gass"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
+        lightConditions:
+          leftValueRequired: 'Please enter Lysforhold status'
+          leftValueIncorrect: 'Maximum length for Lysforhold status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Lysforhold tiltak is 100 characters'
+          labelText: "Lysforhold"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
+        cleaning:
+          leftValueRequired: 'Please enter cleaning status'
+          leftValueIncorrect: 'Maximum length for cleaning status is 100 characters'
+          rightValueIncorrect: 'Maximum length for cleaning tiltak is 100 characters'
+          labelText: "Renhold"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
     pickList:
       title: "Picklist"
       action:
@@ -430,6 +481,8 @@ no:
         registerObservation: "Registrer observasjon"
         registerObservations: "Registrer observasjoner"
         date: "Utført dato"
+        dateRequired: "Please enter when the bservation was done"
+        doneByRequired: "Please enter who has done the observation"
         doneBy: "Utført av"
         registeredDate: "Registrert dato"
         registeredBy: "Registrert av"
@@ -439,11 +492,19 @@ no:
         typeSelect:
           labelText: "Velg type"
         pest:
+          identificationValueRequired: 'Please enter pest identification'
+          identificationValueIncorrect: 'Maximum length for pest identification is 100 characters'
+          commentsValueIncorrect: 'Maximum length for pest comments is 250 characters'
+          countIncorrect: "Please correct invalid count in pest observations"
+          lifeCycleIncorrect: "Please correct invalid lifeCycle in pest observations"
+          lifeCycleRequired: "Please enter missing lifeCycle in pest observations "
           labelText: "Skadedyr"
           identificationLabel: "Identifikasjon"
           identificationTooltip: "Identifikasjon tooltip!"
+          identificationPlaceHolder: "Identifikasjon"
           commentsLabel: "Tiltak/Kommentar"
           commentsTooltip: "Tiltak/Kommentar tooltip!"
+          commentsPlaceHolder: "Fritekst"
           lifeCycleLabel: "Livssyklus"
           lifeCycleLabelMenu:
             adult: "Adult"
@@ -456,6 +517,9 @@ no:
           countPlaceHolder: "Heltall"
           countTooltip: "Antall tooltip!"
         mold:
+          leftValueRequired: 'Please enter mold status'
+          leftValueIncorrect: 'Maximum length for mold status is 100 characters'
+          rightValueIncorrect: 'Maximum length for mold note is 250 characters'
           labelText: "Mugg"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
@@ -464,6 +528,10 @@ no:
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
         temperature:
+          fromValueRequired: 'Please enter temperature from value'
+          fromValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
+          toValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
+          commentsValueIncorrect: 'Maximum length for temperature tiltak is 250 characters'
           labelText: "Temperatur"
           fromValueLabelText: "Temperatur (fra)"
           toValueLabelText: "Temperatur (til)"
@@ -475,6 +543,9 @@ no:
           noteTooltip: "Kommentar"
           notePlaceHolder: "Kommentar"
         skallsikring:
+          leftValueRequired: 'Please enter skallsikring status'
+          leftValueIncorrect: 'Maximum length for skallsikring status is 100 characters'
+          rightValueIncorrect: 'Maximum length for skallsikring tiltak is 250 characters'
           labelText: "Skallsikring"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
@@ -483,6 +554,9 @@ no:
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
         brannsikring:
+          leftValueRequired: 'Please enter Brannsikring status'
+          leftValueIncorrect: 'Maximum length for Brannsikring status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Brannsikring tiltak is 250 characters'
           labelText: "Brannsikring"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
@@ -491,6 +565,9 @@ no:
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
         vannskaderisiko:
+          leftValueRequired: 'Please enter Vannskaderisiko status'
+          leftValueIncorrect: 'Maximum length for Vannskaderisiko status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Vannskaderisiko tiltak is 250 characters'
           labelText: "Vannskaderisiko"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
@@ -499,6 +576,9 @@ no:
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
         tyverisikring:
+          leftValueRequired: 'Please enter Tyverisikring status'
+          leftValueIncorrect: 'Maximum length for Tyverisikring status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Tyverisikring tiltak is 250 characters'
           labelText: "Tyverisikring"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
@@ -507,6 +587,10 @@ no:
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
         alcohol:
+          statusRequired: 'Please enter alcohol status'
+          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals'
+          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals'
+          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
           labelText: "Sprit"
           volumeLabel: "Volum"
           volumePlaceHolder: "Volum"
@@ -522,6 +606,10 @@ no:
             minorDryed: "Litt uttørket"
             satisfactory: "Tilfredsstillende"
         hypoxicAir:
+          fromValueRequired: 'Please enter hypoxic air from value'
+          fromValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
+          toValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
+          commentsValueIncorrect: 'Maximum length for Hypoxic air tiltak is 250 characters'
           labelText: "Inert luft"
           fromValueLabelText: "Inert luft (fra)"
           toValueLabelText: "Inert luft (til)"
@@ -532,7 +620,11 @@ no:
           note: "Kommentar"
           noteTooltip: "Kommentar"
           notePlaceHolder: "Kommentar"
-        rh:
+        relativeHumidity:
+          fromValueRequired: 'Please enter relative humidity from value'
+          fromValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
+          toValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
+          commentsValueIncorrect: 'Maximum length for Relative humidity tiltak is 250 characters'
           labelText: "Relativ luftfuktighet"
           fromValueLabelText: "Relativ luftfuktighet (fra)"
           toValueLabelText: "Relativ luftfuktighet (til)"
@@ -544,6 +636,9 @@ no:
           noteTooltip: "Kommentar"
           notePlaceHolder: "Kommentar"
         gas:
+          leftValueRequired: 'Please enter Gass status'
+          leftValueIncorrect: 'Maximum length for Gass status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Gass tiltak is 100 characters'
           labelText: "Gass"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
@@ -551,7 +646,10 @@ no:
           rightLabelPlaceHolder: "Tiltak"
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
-        lux:
+        lightConditions:
+          leftValueRequired: 'Please enter Lysforhold status'
+          leftValueIncorrect: 'Maximum length for Lysforhold status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Lysforhold tiltak is 100 characters'
           labelText: "Lysforhold"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
@@ -560,6 +658,9 @@ no:
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
         cleaning:
+          leftValueRequired: 'Please enter cleaning status'
+          leftValueIncorrect: 'Maximum length for cleaning status is 100 characters'
+          rightValueIncorrect: 'Maximum length for cleaning tiltak is 100 characters'
           labelText: "Renhold"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
