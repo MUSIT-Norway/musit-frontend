@@ -51,61 +51,7 @@ export default class StorageUnitContainer extends Component {
   }
 
   errorAddMessage = (errors, field) => {
-    let lv = ''
-    switch (field) {
-      case 'type':
-        lv = this.props.translate('musit.storageUnits.type.labelText')
-        break
-      case 'name':
-        lv = this.props.translate('musit.storageUnits.name.labelText')
-        break
-      case 'address':
-        lv = this.props.translate('musit.storageUnits.address.labelText')
-        break
-      case 'area':
-        lv = this.props.translate('musit.storageUnits.area.labelText')
-        break
-      case 'areaTo':
-        lv = this.props.translate('musit.storageUnits.areaTo.labelText')
-        break
-      case 'height':
-        lv = this.props.translate('musit.storageUnits.height.labelText')
-        break
-      case 'heightTo':
-        lv = this.props.translate('musit.storageUnits.heightTo.labelText')
-        break
-      case 'temperature':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')
-        break
-      case 'temperatureTolerance':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.labelText')
-        break
-      case 'relativeHumidity':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.labelText')
-        break
-      case 'relativeHumidityTolerance':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.labelText')
-        break
-      case 'hypoxicAir':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.hypoxicAir.labelText')
-        break
-      case 'hypoxicAirTolerance':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.hypoxicAirTolerance.labelText')
-        break
-      case 'cleaning':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.cleaning.labelText')
-        break
-      case 'lightningConditions':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.lightningConditions.labelText')
-        break
-      case 'comments':
-        lv = this.props.translate('musit.storageUnits.environmentRequirements.comments.labelText')
-        break
-      default:
-        lv = ''
-        break
-    }
-    errors[`${field}`] = `${this.props.translate('musit.storageUnits.message.errorCommonPrefix')} ${lv}`
+    errors[`${field}`] = this.props.translate(`musit.storageUnits.${field}.incorrect`)
   }
 
   validateStringField(field, value, maxLength = 100) {
@@ -144,27 +90,42 @@ export default class StorageUnitContainer extends Component {
     errors = { ...errors, ...this.validateNumberField('height', formProps.unit.height, 0, 10, 3)(formProps.unit) }
     errors = { ...errors, ...this.validateNumberField('heightTo', formProps.unit.heightTo, 0, 10, 3)(formProps.unit) }
 
-    errors = { ...errors, ...this.validateNumberField('temperature', formProps.unit.temperature, 0, 10, 3)(formProps.unit) }
     errors = {
       ...errors,
-      ...this.validateNumberField('temperatureTolerance', formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
+      ...this.validateNumberField('environmentRequirements.temperature',
+      formProps.unit.temperature, 0, 10, 3)(formProps.unit)
     }
     errors = {
       ...errors,
-      ...this.validateNumberField('relativeHumidity', formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
+      ...this.validateNumberField('environmentRequirements.temperatureTolerance',
+      formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
     }
     errors = {
       ...errors,
-      ...this.validateNumberField('relativeHumidityTolerance', formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
+      ...this.validateNumberField('environmentRequirements.relativeHumidity',
+      formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
     }
-    errors = { ...errors, ...this.validateNumberField('hypoxicAir', formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit) }
     errors = {
       ...errors,
-      ...this.validateNumberField('hypoxicAirTolerance', formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
+      ...this.validateNumberField('environmentRequirements.relativeHumidityTolerance',
+      formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
     }
-    errors = { ...errors, ...this.validateStringField('cleaning', formProps.unit.cleaning, 100)() }
-    errors = { ...errors, ...this.validateStringField('lightningConditions', formProps.unit.lightningConditions, 100)() }
-    errors = { ...errors, ...this.validateStringField('comments', formProps.unit.comments, 250)() }
+    errors = {
+      ...errors,
+      ...this.validateNumberField('environmentRequirements.hypoxicAir',
+      formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit)
+    }
+    errors = {
+      ...errors,
+      ...this.validateNumberField('environmentRequirements.hypoxicAirTolerance',
+      formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
+    }
+    errors = { ...errors, ...this.validateStringField('environmentRequirements.cleaning', formProps.unit.cleaning, 100)() }
+    errors = {
+      ...errors,
+      ...this.validateStringField('environmentRequirements.lightningConditions', formProps.unit.lightningConditions, 100)()
+    }
+    errors = { ...errors, ...this.validateStringField('environmentRequirements.comments', formProps.unit.comments, 250)() }
     return errors
   }
 

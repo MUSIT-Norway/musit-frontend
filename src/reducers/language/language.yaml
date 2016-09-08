@@ -674,16 +674,14 @@ no:
         markAll: "Alle"
         executeAll: "Utfør (alle)"
     storageUnits:
-      message:
-        name: "Vennligst oppgi navn"
-        type: "Velg typen"
-        errorCommonPrefix: "Korriger"
       title: "Magasin"
       header: "Egenskaper"
       newNode: "Ny node"
       environmentalData: "Miljødata"
       type:
         label: "Type"
+        incorrect: 'Type: Maximum length is 100 characters'
+        required: "Vennligst oppgi type"
         placeHolder: "velg type"
         tooltip: "Type lagringsenhet"
         items:
@@ -693,26 +691,33 @@ no:
           Organization: "Organisasjon"
       name:
         labelText: "Navn"
+        incorrect: 'Navn: Maximum length is 100 characters'
+        required: "Vennligst oppgi navn"
         placeHolder: " "
         tooltip: "Navn tooltip"
       address:
         labelText: "Adresse"
+        incorrect: 'Adresse: Maximum length is 100 characters'
         placeHolder: "Gateadr."
         tooltip: "Adresse tooltip"
       area:
         labelText: "Areal"
+        incorrect: 'Areal: Value must be a number with maximum 3 decimals'
         placeHolder: "fra"
         tooltip: "Areal fra tooltip"
       areaTo:
         labelText: "Areal til"
+        incorrect: 'Areal til: Value must be a number with maximum 3 decimals'
         placeHolder: "til"
         tooltip: "Areal til tooltip"
       height:
         labelText: "Høyde"
+        incorrect: 'Høyde: Value must be a number with maximum 3 decimals'
         placeHolder: "fra"
         tooltip: "Høyde fra tooltip"
       heightTo:
         labelText: "Høyde til"
+        incorrect: 'Høyde til: Value must be a number with maximum 3 decimals'
         placeHolder: "til"
         tooltip: "Høyde til tooltip"
       securityAssessment:
@@ -731,44 +736,53 @@ no:
       environmentRequirements:
         temperature:
           labelText: "Temperatur"
+          incorrect: 'Temperatur: Value must be a number with maximum 3 decimals'
           tooltip: "Måleenhet grader celsius, desimaltall"
           placeHolder: "C"
           comment: "Tiltak/Kommentar"
         temperatureTolerance:
           labelText: "Temperatur Toleranse"
+          incorrect: 'Temperatur Toleranse: Value must be a number with no decimals'
           tooltip: "Måleenhet toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
         relativeHumidity:
           labelText: "Relativ luftfuktighet"
+          incorrect: 'Relativ luftfuktighet: Value must be a number with maximum 3 decimals'
           tooltip: "Måleenhet prosent, desimaltall"
           placeHolder: "%"
           comment: "Tiltak/Kommentar"
         relativeHumidityTolerance:
           labelText: "Relativ luftfuktighet Toleranse"
+          incorrect: 'Relativ luftfuktighet Toleranse: Value must be a number with no decimals'
           tooltip: "Måleenhet prosent toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
         hypoxicAir:
           labelText: "Inertluft"
+          incorrect: 'Inertluft: Value must be a number with maximum 3 decimals'
           tooltip: "Måleenhet prosent oksygen, desimaltall"
           placeHolder: "% O2"
           comment: "Tiltak/Kommentar"
         hypoxicAirTolerance:
           labelText: "Inertluft Toleranse"
+          incorrect: 'Inertluft Toleranse: Value must be a number with no decimals'
           tooltip: "Måleenhet prosent oksygen toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
         cleaning:
           labelText: "Renhold"
+          incorrect: 'Renhold: Maximum length is 100 characters'
           comment: "Tiltak/Kommentar"
           tooltip: "Renhold"
         lightningConditions:
           labelText: "Lysforhold"
+          incorrect: 'Lysforhold: Maximum length is 100 characters'
           comment: "Tiltak/Kommentar"
           tooltip: "Lysforhold"
         comments:
           labelText: "Kommentar"
+          incorrect: 'Kommentar: Maximum length is 250 characters'
           tooltip: "Kommentar!"
         gas:
           labelText: "Gass"

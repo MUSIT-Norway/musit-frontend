@@ -104,8 +104,7 @@ export default class StorageUnitComponent extends Component {
     const renderFieldBlock = (fieldProps, label) => (
       <FormGroup>
         <label className="col-sm-3 control-label" htmlFor="name">
-          {label}
-           &nbsp;{ <span style={{ color: 'red' }}>*</span> }
+          {label}{ <span style={{ color: 'red' }}>*</span> }
         </label>
         <div class="col-sm-8" is="null">
           <MusitField {...fieldProps} value={this.props.unit.name} />
@@ -152,8 +151,8 @@ export default class StorageUnitComponent extends Component {
               <form className="form-horizontal">
                 <form className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="storageUnitType">
-                    {this.props.translate('musit.storageUnits.storageType.labelText')}
-                    &nbsp;{ <span style={{ color: 'red' }}>*</span> }
+                    {this.props.translate('musit.storageUnits.type.labelText')}
+                    { <span style={{ color: 'red' }}>*</span> }
                   </label>
                   <div class="col-sm-4" is="null">
                     <MusitDropDownField
