@@ -1,7 +1,10 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { MusitField } from '../components/formfields'
-import styles from './Toolbar.scss'
+let styles = {}
+if (process.env.NODE_ENV !== 'test') {
+  styles = require('./Toolbar.scss')
+}
 import FontAwesome from 'react-fontawesome'
 
 export default class Toolbar extends React.Component {

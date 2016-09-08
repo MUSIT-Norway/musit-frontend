@@ -190,10 +190,9 @@ export default class StorageUnitsContainer extends React.Component {
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
-            console.log(parentId)
-            // if (parentId) {
-            //   history.push(`/magasin/${parentId}/add`)
-            // }
+            if (parentId) {
+              history.push(`/magasin/${parentId}/add`)
+            }
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}

@@ -1,6 +1,9 @@
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
-import styles from './Breadcrumb.scss'
+let styles = {}
+if (process.env.NODE_ENV !== 'test') {
+  styles = require('./Breadcrumb.scss')
+}
 
 export default class Breadcrumb extends React.Component {
   static propTypes = {
@@ -11,8 +14,8 @@ export default class Breadcrumb extends React.Component {
       url: React.PropTypes.string
     })),
     nodeTypes: React.PropTypes.arrayOf(React.PropTypes.shape({
-      type: React.PropTypes.string,
-      iconName: React.PropTypes.string
+      type: React.PropTypes.string.isRequired,
+      iconName: React.PropTypes.string.isRequired
     })),
     onClickCrumb: React.PropTypes.func.isRequired
   }
