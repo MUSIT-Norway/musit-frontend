@@ -36,8 +36,8 @@ export default class StorageUnitComponent extends Component {
     this.type = {
       id: 'type',
       validate: 'text',
-      tooltip: this.props.translate('musit.storageUnits.storageType.tooltip'),
-      placeHolder: this.props.translate('musit.storageUnits.storageType.placeHolder'),
+      tooltip: this.props.translate('musit.storageUnits.type.tooltip'),
+      placeHolder: this.props.translate('musit.storageUnits.type.placeHolder'),
       maximumLength: 100,
       value: () => this.props.unit.type
     }
@@ -53,33 +53,33 @@ export default class StorageUnitComponent extends Component {
     this.onAddressChange = this.onAddressChange.bind(this)
     this.areaFrom = {
       id: 'areaFrom',
-      tooltip: this.props.translate('musit.storageUnits.area.from.tooltip'),
+      tooltip: this.props.translate('musit.storageUnits.area.tooltip'),
       validate: 'number',
-      placeHolder: this.props.translate('musit.storageUnits.area.from.placeHolder'),
+      placeHolder: this.props.translate('musit.storageUnits.area.placeHolder'),
       onChange: (areaFrom) => this.props.updateAreal1(areaFrom),
       precision: 3
     }
     this.areaTo = {
       id: 'areaTo',
-      tooltip: this.props.translate('musit.storageUnits.area.to.tooltip'),
+      tooltip: this.props.translate('musit.storageUnits.areaTo.tooltip'),
       validate: 'number',
-      placeHolder: this.props.translate('musit.storageUnits.area.to.placeHolder'),
+      placeHolder: this.props.translate('musit.storageUnits.areaTo.placeHolder'),
       onChange: (areaTo) => this.props.updateAreal2(areaTo),
       precision: 3
     }
     this.heightFrom = {
       id: 'heightFrom',
-      tooltip: this.props.translate('musit.storageUnits.height.from.tooltip'),
+      tooltip: this.props.translate('musit.storageUnits.height.tooltip'),
       validate: 'number',
-      placeHolder: this.props.translate('musit.storageUnits.height.from.placeHolder'),
+      placeHolder: this.props.translate('musit.storageUnits.height.placeHolder'),
       onChange: (heightFrom) => this.props.updateHeight1(heightFrom),
       precision: 3
     }
     this.heightTo = {
       id: 'heightTo',
-      tooltip: this.props.translate('musit.storageUnits.height.to.tooltip'),
+      tooltip: this.props.translate('musit.storageUnits.heightTo.tooltip'),
       validate: 'number',
-      placeHolder: this.props.translate('musit.storageUnits.height.to.placeHolder'),
+      placeHolder: this.props.translate('musit.storageUnits.heightTo.placeHolder'),
       onChange: (heightTo) => this.props.updateHeight2(heightTo),
       precision: 3
     }
@@ -129,7 +129,7 @@ export default class StorageUnitComponent extends Component {
     const addressBlock = (
       <FormGroup>
         <label className="col-sm-3 control-label" htmlFor="address">
-          {this.props.translate('musit.storageUnits.address.label')}
+          {this.props.translate('musit.storageUnits.address.labelText')}
         </label>
         <div class="col-sm-8" is="null">
           <Autosuggest
@@ -152,7 +152,7 @@ export default class StorageUnitComponent extends Component {
               <form className="form-horizontal">
                 <form className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="storageUnitType">
-                    {this.props.translate('musit.storageUnits.storageType.label')}
+                    {this.props.translate('musit.storageUnits.storageType.labelText')}
                     &nbsp;{ <span style={{ color: 'red' }}>*</span> }
                   </label>
                   <div class="col-sm-4" is="null">
@@ -160,7 +160,7 @@ export default class StorageUnitComponent extends Component {
                       {...this.type}
                       items={['StorageUnit', 'Room', 'Building', 'Organization']}
                       translate={this.props.translate}
-                      translateKeyPrefix={'musit.storageUnits.storageType.items.'}
+                      translateKeyPrefix={'musit.storageUnits.type.items.'}
                       onChange={(storageType) => this.props.updateType(storageType)}
                       value={this.type.value()}
                     />
@@ -172,7 +172,7 @@ export default class StorageUnitComponent extends Component {
           <Row>
             <Col md={5}>
               <Form horizontal>
-                {renderFieldBlock(this.name, this.props.translate('musit.storageUnits.name.label'))}
+                {renderFieldBlock(this.name, this.props.translate('musit.storageUnits.name.labelText'))}
               </Form>
             </Col>
             <Col md={5}>
@@ -186,7 +186,7 @@ export default class StorageUnitComponent extends Component {
               <form className="form-horizontal">
                 <div className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="comments2">
-                    {this.props.translate('musit.storageUnits.area.from.label')}</label>
+                    {this.props.translate('musit.storageUnits.area.labelText')}</label>
                   <div class="col-sm-4" is="null">
                     <MusitField
                       {...this.areaFrom}
@@ -206,7 +206,7 @@ export default class StorageUnitComponent extends Component {
               <Form horizontal>
                 <div className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="controlId">
-                    {this.props.translate('musit.storageUnits.height.from.label')}</label>
+                    {this.props.translate('musit.storageUnits.height.labelText')}</label>
                   <div class="col-sm-4" is="null">
                     <MusitField
                       {...this.heightFrom}

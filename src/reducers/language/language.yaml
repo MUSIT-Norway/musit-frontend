@@ -383,11 +383,15 @@ no:
         markAll: "Alle"
         executeAll: "Utfør (alle)"
     storageUnits:
+      message:
+        name: "Vennligst oppgi navn"
+        type: "Velg typen"
+        errorCommonPrefix: "Korriger"
       title: "Magasin"
       header: "Egenskaper"
       newNode: "Ny node"
       environmentalData: "Miljødata"
-      storageType:
+      type:
         label: "Type"
         placeHolder: "velg type"
         tooltip: "Type lagringsenhet"
@@ -397,29 +401,29 @@ no:
           Building: "Bygning"
           Organization: "Organisasjon"
       name:
-        label: "Navn"
+        labelText: "Navn"
         placeHolder: " "
         tooltip: "Navn tooltip"
       address:
-        label: "Adresse"
+        labelText: "Adresse"
         placeHolder: "Gateadr."
         tooltip: "Adresse tooltip"
       area:
-        from:
-          label: "Areal"
-          placeHolder: "fra"
-          tooltip: "Areal fra tooltip"
-        to:
-          placeHolder: "til"
-          tooltip: "Areal til tooltip"
+        labelText: "Areal"
+        placeHolder: "fra"
+        tooltip: "Areal fra tooltip"
+      areaTo:
+        labelText: "Areal til"
+        placeHolder: "til"
+        tooltip: "Areal til tooltip"
       height:
-        from:
-          label: "Høyde"
-          placeHolder: "fra"
-          tooltip: "Høyde fra tooltip"
-        to:
-          placeHolder: "til"
-          tooltip: "Høyde til tooltip"
+        labelText: "Høyde"
+        placeHolder: "fra"
+        tooltip: "Høyde fra tooltip"
+      heightTo:
+        labelText: "Høyde til"
+        placeHolder: "til"
+        tooltip: "Høyde til tooltip"
       securityAssessment:
         securityAssessment: "Sikringstilstand"
         perimeterSecurity: "Skallsikring"
@@ -440,7 +444,7 @@ no:
           placeHolder: "C"
           comment: "Tiltak/Kommentar"
         temperatureTolerance:
-          labelText: ""
+          labelText: "Temperatur Toleranse"
           tooltip: "Måleenhet toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
@@ -450,7 +454,7 @@ no:
           placeHolder: "%"
           comment: "Tiltak/Kommentar"
         relativeHumidityTolerance:
-          labelText: ""
+          labelText: "Relativ luftfuktighet Toleranse"
           tooltip: "Måleenhet prosent toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
@@ -460,7 +464,7 @@ no:
           placeHolder: "% O2"
           comment: "Tiltak/Kommentar"
         hypoxicAirTolerance:
-          labelText: ""
+          labelText: "Inertluft Toleranse"
           tooltip: "Måleenhet prosent oksygen toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"

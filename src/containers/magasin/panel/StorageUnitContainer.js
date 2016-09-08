@@ -48,11 +48,69 @@ export default class StorageUnitContainer extends Component {
     this.props.loadStorageUnit(this.props.params.id)
   }
 
+  errorAddMessage = (errors, field) => {
+    let lv = ''
+    switch (field) {
+      case 'type':
+        lv = this.props.translate('musit.storageUnits.type.labelText')
+        break
+      case 'name':
+        lv = this.props.translate('musit.storageUnits.name.labelText')
+        break
+      case 'address':
+        lv = this.props.translate('musit.storageUnits.address.labelText')
+        break
+      case 'area':
+        lv = this.props.translate('musit.storageUnits.area.labelText')
+        break
+      case 'areaTo':
+        lv = this.props.translate('musit.storageUnits.areaTo.labelText')
+        break
+      case 'height':
+        lv = this.props.translate('musit.storageUnits.height.labelText')
+        break
+      case 'heightTo':
+        lv = this.props.translate('musit.storageUnits.heightTo.labelText')
+        break
+      case 'temperature':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')
+        break
+      case 'temperatureTolerance':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.labelText')
+        break
+      case 'relativeHumidity':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.labelText')
+        break
+      case 'relativeHumidityTolerance':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.labelText')
+        break
+      case 'hypoxicAir':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.hypoxicAir.labelText')
+        break
+      case 'hypoxicAirTolerance':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.hypoxicAirTolerance.labelText')
+        break
+      case 'cleaning':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.cleaning.labelText')
+        break
+      case 'lightningConditions':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.lightningConditions.labelText')
+        break
+      case 'comments':
+        lv = this.props.translate('musit.storageUnits.environmentRequirements.comments.labelText')
+        break
+      default:
+        lv = ''
+        break
+    }
+    errors[`${field}`] = `${this.props.translate('musit.storageUnits.message.errorCommonPrefix')} ${lv}`
+  }
+
   validateStringField(field, value, maxLength = 100) {
     return () => {
       const errors = {}
       if (validateString(value, 0, maxLength) === 'error') {
-        errors[`${field}`] = `Please correct ${field}`
+        this.errorAddMessage(errors, field)
       }
       return errors
     }
@@ -62,7 +120,7 @@ export default class StorageUnitContainer extends Component {
       const errors = {}
       if (unit) {
         if (validateNumber(value, minimumLength, maximumLength, precision) === 'error') {
-          errors[`${field}`] = `Please correct ${field}`
+          this.errorAddMessage(errors, field)
         }
       }
       return errors
@@ -71,16 +129,16 @@ export default class StorageUnitContainer extends Component {
   validateForm(formProps) {
     let errors = {}
     if (!formProps.unit.type || formProps.unit.type.trim().length === 0) {
-      errors.type = 'Please select type'
+      errors.type = this.props.translate('musit.storageUnits.message.type')
     }
     if (!formProps.unit.name || formProps.unit.name.trim().length === 0) {
-      errors.name = 'Please enter name'
+      errors.name = this.props.translate('musit.storageUnits.message.name')
     }
     errors = { ...errors, ...this.validateStringField('type', formProps.unit.type, 100)() }
     errors = { ...errors, ...this.validateStringField('name', formProps.unit.name, 100)() }
     errors = { ...errors, ...this.validateStringField('address', formProps.unit.address, 100)() }
     errors = { ...errors, ...this.validateNumberField('area', formProps.unit.area, 0, 10, 3)(formProps.unit) }
-    errors = { ...errors, ...this.validateNumberField('areaTo', formProps.unit.areaTo, 0, 10, 0)(formProps.unit) }
+    errors = { ...errors, ...this.validateNumberField('areaTo', formProps.unit.areaTo, 0, 10, 3)(formProps.unit) }
     errors = { ...errors, ...this.validateNumberField('height', formProps.unit.height, 0, 10, 3)(formProps.unit) }
     errors = { ...errors, ...this.validateNumberField('heightTo', formProps.unit.heightTo, 0, 10, 3)(formProps.unit) }
 
