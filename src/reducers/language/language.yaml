@@ -678,8 +678,10 @@ no:
       header: "Egenskaper"
       newNode: "Ny node"
       environmentalData: "Miljødata"
-      storageType:
+      type:
         label: "Type"
+        incorrect: 'Type: Maximum length is 100 characters'
+        required: "Vennligst oppgi type"
         placeHolder: "velg type"
         tooltip: "Type lagringsenhet"
         items:
@@ -688,29 +690,36 @@ no:
           Building: "Bygning"
           Organization: "Organisasjon"
       name:
-        label: "Navn"
+        labelText: "Navn"
+        incorrect: 'Navn: Maximum length is 100 characters'
+        required: "Vennligst oppgi navn"
         placeHolder: " "
         tooltip: "Navn tooltip"
       address:
-        label: "Adresse"
+        labelText: "Adresse"
+        incorrect: 'Adresse: Maximum length is 100 characters'
         placeHolder: "Gateadr."
         tooltip: "Adresse tooltip"
       area:
-        from:
-          label: "Areal"
-          placeHolder: "fra"
-          tooltip: "Areal fra tooltip"
-        to:
-          placeHolder: "til"
-          tooltip: "Areal til tooltip"
+        labelText: "Areal"
+        incorrect: 'Areal: Value must be a number with maximum 3 decimals'
+        placeHolder: "fra"
+        tooltip: "Areal fra tooltip"
+      areaTo:
+        labelText: "Areal til"
+        incorrect: 'Areal til: Value must be a number with maximum 3 decimals'
+        placeHolder: "til"
+        tooltip: "Areal til tooltip"
       height:
-        from:
-          label: "Høyde"
-          placeHolder: "fra"
-          tooltip: "Høyde fra tooltip"
-        to:
-          placeHolder: "til"
-          tooltip: "Høyde til tooltip"
+        labelText: "Høyde"
+        incorrect: 'Høyde: Value must be a number with maximum 3 decimals'
+        placeHolder: "fra"
+        tooltip: "Høyde fra tooltip"
+      heightTo:
+        labelText: "Høyde til"
+        incorrect: 'Høyde til: Value must be a number with maximum 3 decimals'
+        placeHolder: "til"
+        tooltip: "Høyde til tooltip"
       securityAssessment:
         securityAssessment: "Sikringstilstand"
         perimeterSecurity: "Skallsikring"
@@ -727,44 +736,53 @@ no:
       environmentRequirements:
         temperature:
           labelText: "Temperatur"
+          incorrect: 'Temperatur: Value must be a number with maximum 3 decimals'
           tooltip: "Måleenhet grader celsius, desimaltall"
           placeHolder: "C"
           comment: "Tiltak/Kommentar"
         temperatureTolerance:
-          labelText: ""
+          labelText: "Temperatur Toleranse"
+          incorrect: 'Temperatur Toleranse: Value must be a number with no decimals'
           tooltip: "Måleenhet toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
         relativeHumidity:
           labelText: "Relativ luftfuktighet"
+          incorrect: 'Relativ luftfuktighet: Value must be a number with maximum 3 decimals'
           tooltip: "Måleenhet prosent, desimaltall"
           placeHolder: "%"
           comment: "Tiltak/Kommentar"
         relativeHumidityTolerance:
-          labelText: ""
+          labelText: "Relativ luftfuktighet Toleranse"
+          incorrect: 'Relativ luftfuktighet Toleranse: Value must be a number with no decimals'
           tooltip: "Måleenhet prosent toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
-        inertAir:
+        hypoxicAir:
           labelText: "Inertluft"
+          incorrect: 'Inertluft: Value must be a number with maximum 3 decimals'
           tooltip: "Måleenhet prosent oksygen, desimaltall"
           placeHolder: "% O2"
           comment: "Tiltak/Kommentar"
-        inertAirTolerance:
-          labelText: ""
+        hypoxicAirTolerance:
+          labelText: "Inertluft Toleranse"
+          incorrect: 'Inertluft Toleranse: Value must be a number with no decimals'
           tooltip: "Måleenhet prosent oksygen toleranse, ett tall"
           placeHolder: "int"
           addOnPrefix: "\u00b1"
-        renhold:
+        cleaning:
           labelText: "Renhold"
+          incorrect: 'Renhold: Maximum length is 100 characters'
           comment: "Tiltak/Kommentar"
           tooltip: "Renhold"
-        lightCondition:
+        lightningConditions:
           labelText: "Lysforhold"
+          incorrect: 'Lysforhold: Maximum length is 100 characters'
           comment: "Tiltak/Kommentar"
           tooltip: "Lysforhold"
         comments:
           labelText: "Kommentar"
+          incorrect: 'Kommentar: Maximum length is 250 characters'
           tooltip: "Kommentar!"
         gas:
           labelText: "Gass"

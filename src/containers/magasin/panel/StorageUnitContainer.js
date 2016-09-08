@@ -24,6 +24,7 @@ import { Grid, Row, Col } from 'react-bootstrap'
 import EnvironmentRequirementComponent from '../../../components/storageunits/EnvironmentRequirementComponent'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../layout'
+import { validateString, validateNumber } from '../../../components/formfields/common/validators'
 
 export default class StorageUnitContainer extends Component {
   static propTypes = {
@@ -38,10 +39,102 @@ export default class StorageUnitContainer extends Component {
     route: React.PropTypes.object,
   }
 
+  constructor(props) {
+    super(props)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
 
   componentWillMount() {
     if (this.props.params.id) {
       this.props.loadStorageUnit(this.props.params.id)
+    }
+  }
+
+  errorAddMessage = (errors, field) => {
+    errors[`${field}`] = this.props.translate(`musit.storageUnits.${field}.incorrect`)
+  }
+
+  validateStringField(field, value, maxLength = 100) {
+    return () => {
+      const errors = {}
+      if (validateString(value, 0, maxLength) === 'error') {
+        this.errorAddMessage(errors, field)
+      }
+      return errors
+    }
+  }
+  validateNumberField(field, value = '', minimumLength = 0, maximumLength = 10, precision = 3) {
+    return (unit) => {
+      const errors = {}
+      if (unit) {
+        if (validateNumber(value, minimumLength, maximumLength, precision) === 'error') {
+          this.errorAddMessage(errors, field)
+        }
+      }
+      return errors
+    }
+  }
+  validateForm(formProps) {
+    let errors = {}
+    if (!formProps.unit.type || formProps.unit.type.trim().length === 0) {
+      errors.type = this.props.translate('musit.storageUnits.type.required')
+    }
+    if (!formProps.unit.name || formProps.unit.name.trim().length === 0) {
+      errors.name = this.props.translate('musit.storageUnits.name.required')
+    }
+    errors = { ...errors, ...this.validateStringField('type', formProps.unit.type, 100)() }
+    errors = { ...errors, ...this.validateStringField('name', formProps.unit.name, 100)() }
+    errors = { ...errors, ...this.validateStringField('address', formProps.unit.address, 100)() }
+    errors = { ...errors, ...this.validateNumberField('area', formProps.unit.area, 0, 10, 3)(formProps.unit) }
+    errors = { ...errors, ...this.validateNumberField('areaTo', formProps.unit.areaTo, 0, 10, 3)(formProps.unit) }
+    errors = { ...errors, ...this.validateNumberField('height', formProps.unit.height, 0, 10, 3)(formProps.unit) }
+    errors = { ...errors, ...this.validateNumberField('heightTo', formProps.unit.heightTo, 0, 10, 3)(formProps.unit) }
+
+    errors = {
+      ...errors,
+      ...this.validateNumberField('environmentRequirements.temperature',
+      formProps.unit.temperature, 0, 10, 3)(formProps.unit)
+    }
+    errors = {
+      ...errors,
+      ...this.validateNumberField('environmentRequirements.temperatureTolerance',
+      formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
+    }
+    errors = {
+      ...errors,
+      ...this.validateNumberField('environmentRequirements.relativeHumidity',
+      formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
+    }
+    errors = {
+      ...errors,
+      ...this.validateNumberField('environmentRequirements.relativeHumidityTolerance',
+      formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
+    }
+    errors = {
+      ...errors,
+      ...this.validateNumberField('environmentRequirements.hypoxicAir',
+      formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit)
+    }
+    errors = {
+      ...errors,
+      ...this.validateNumberField('environmentRequirements.hypoxicAirTolerance',
+      formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
+    }
+    errors = { ...errors, ...this.validateStringField('environmentRequirements.cleaning', formProps.unit.cleaning, 100)() }
+    errors = {
+      ...errors,
+      ...this.validateStringField('environmentRequirements.lightningConditions', formProps.unit.lightningConditions, 100)()
+    }
+    errors = { ...errors, ...this.validateStringField('environmentRequirements.comments', formProps.unit.comments, 250)() }
+    return errors
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    const errors = this.state ? this.validateForm(this.state) : ''
+    this.setState({ ...this.state, errors })
+    if (Object.keys(errors).length === 0) {
+      this.props.onLagreClick((this.state && this.state.unit) ? this.state.unit : this.props.unit)
     }
   }
 
@@ -51,6 +144,10 @@ export default class StorageUnitContainer extends Component {
     this.setState({ unit: newData })
   }
 
+  updateEnvironmentalData(environmentalData) {
+    const newData = Object.assign((this.state && this.state.unit) ? this.state.unit : this.props.unit, environmentalData)
+    this.setState({ unit: newData })
+  }
   render() {
     const data = (this.state && this.state.unit) ? this.state.unit : this.props.unit;
 
@@ -81,6 +178,7 @@ export default class StorageUnitContainer extends Component {
       </Row>
       <EnvironmentRequirementComponent
         translate={this.props.translate}
+        updateStorageUnit={(e) => this.updateEnvironmentalData(e)}
       />
       {data.type === 'Room' ?
         <Options
@@ -109,9 +207,14 @@ export default class StorageUnitContainer extends Component {
         : null}
       <Grid>
         <Row>
+          <br />
+            {this.state && this.state.errors && Object.values(this.state.errors).map((error, index) => {
+              return <p style={{ color: 'red' }} key={index}>{error}</p>
+            })}
+          <br />
           <SaveCancel
             translate={this.props.translate}
-            onClickSave={() => this.props.onLagreClick(this.props.params.id, data)}
+            onClickSave={this.handleSubmit}
             onClickCancel={() => hashHistory.goBack()}
             saveDisabled={this.displayExisting}
             cancelDisabled={this.displayExisting}
@@ -129,7 +232,9 @@ export default class StorageUnitContainer extends Component {
           <Grid>
             <Row>
               <Col md={9}>
-                {completePage}
+                <form onSubmit={this.handleSubmit}>
+                  {completePage}
+                </form>
               </Col>
             </Row>
           </Grid>
