@@ -1,6 +1,5 @@
 import { assert } from '../../../../../test/setup'
-import deepFreeze from 'deep-freeze'
-
+import { parseISODateNonStrict as parseISODate } from '../../../../util'
 import {
   mapToBackend
 } from '../to_backend'
@@ -9,7 +8,7 @@ describe('ControlMapperReducer', () => {
   it('maps to correct backend structure', () => {
     const state = {
       doneBy: 'jarl',
-      doneDate: 'some time',
+      doneDate: parseISODate('2016-11-01'),
       temperatureOK: true,
       hypoxicAirOK: false,
       gasOK: true,
@@ -20,7 +19,6 @@ describe('ControlMapperReducer', () => {
       pestOK: false,
       moldOK: true
     }
-    deepFreeze(state)
     const transformed = mapToBackend(state)
     assert(transformed['subEvents-parts'][0].eventType === 'ControlTemperature')
     assert(transformed['subEvents-parts'][0].ok === true)

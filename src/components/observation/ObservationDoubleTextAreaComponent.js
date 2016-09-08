@@ -45,7 +45,9 @@ export default class ObservationDoubleTextAreaComponent extends Component {
     return (
       <Row>
         <Col xs={12} sm={5}>
-          <ControlLabel>{this.props.leftLabel}</ControlLabel>
+          <ControlLabel>
+            {this.props.leftLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+          </ControlLabel>
           <MusitTextArea
             value={this.props.leftValue}
             tooltip={this.props.leftTooltip}

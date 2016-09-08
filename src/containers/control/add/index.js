@@ -18,31 +18,16 @@
  */
 
 import React from 'react'
-import { connect } from 'react-redux'
 import { Grid, Row, Col, FormControl } from 'react-bootstrap'
 import PairedToogleButtons from '../../../components/control/add'
-import { addControl } from '../../../reducers/control'
-import Language from '../../../components/language'
 import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
-import { flatten } from '../../../util'
+import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  translate: (key, markdown) => Language.translate(key, markdown)
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  saveControl: (id, data, saveControlCallback) => {
-    dispatch(addControl(id, data, {}, saveControlCallback))
-  }
-})
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
@@ -71,20 +56,12 @@ export default class ControlAddContainer extends React.Component {
       inertAirInterval: '4',
       light: 'Mørkt',
       cleaning: 'Gullende rent',
-      startDate: moment().format()
+      doneDate: moment()
     }
-    this.getDate = this.getDate.bind(this)
-
     this.onControlClick = this.onControlClick.bind(this)
     this.onControlClickOK = this.onControlClickOK.bind(this)
     this.onControlClickNOK = this.onControlClickNOK.bind(this)
-
     this.onClickSave = this.onClickSave.bind(this)
-    this.onHandleDateChange = this.onHandleDateChange.bind(this)
-  }
-
-  onHandleDateChange(d) {
-    this.setState({ ...this.state, startDate: d })
   }
 
   onControlClick(key, bool) {
@@ -121,7 +98,7 @@ export default class ControlAddContainer extends React.Component {
     const controlState = {
       ...flatten(controls),
       doneBy: this.state.doneBy,
-      doneDate: this.state.startDate
+      doneDate: this.state.doneDate
     }
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
@@ -130,14 +107,10 @@ export default class ControlAddContainer extends React.Component {
         state: controlState
       })
     } else {
-      this.props.saveControl(controlState, { onSuccess: () => hashHistory.goBack(),
+      this.props.saveControl(this.props.params.id, controlState, { onSuccess: () => hashHistory.goBack(),
                                              onFailure: () => window.alert('Kunne ikke lagre kontroll') },
                                              this.props.params.id)
     }
-  }
-
-  getDate() {
-    return moment().format('YYYY-MM-DD');
   }
 
   render() {
@@ -224,9 +197,11 @@ export default class ControlAddContainer extends React.Component {
                     <Row>
                       <Col xs={12}>
                         <DatePicker
-                          dateFormat="DD/MM/YYYY"
-                          value={this.state.startDate}
-                          onChange={this.onHandleDateChange}
+                          dateFormat={DATE_FORMAT_DISPLAY}
+                          value={this.state.doneDate}
+                          onChange={newValue => {
+                            this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+                          }}
                         />
                       </Col>
                     </Row>

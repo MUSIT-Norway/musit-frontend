@@ -1,8 +1,8 @@
-const validateString = (value = '', minimumLength = 0, maximumLength = 20) => {
+export const validateString = (value = '', minimumLength = 0, maximumLength = 20) => {
   return value.length < minimumLength || value.length > maximumLength ? 'error' : 'success'
 }
 
-const validateNumber = (value = '', minimumLength = 0, maximumLength = 10, precision = 3) => {
+export const validateNumber = (value = '', minimumLength = 0, maximumLength = 10, precision = 3) => {
   /* eslint-disable prefer-template */
   const expression = '^(-?\\d{' +
     minimumLength +
@@ -15,7 +15,8 @@ const validateNumber = (value = '', minimumLength = 0, maximumLength = 10, preci
     '})?$'
   /* eslint-enable prefer-template */
   const matcher = new RegExp(expression)
-  return matcher.test(value) ? 'success' : 'error'
+  const matches = matcher.test(value)
+  return matches ? 'success' : 'error'
 }
 
 const validate = (source) => {

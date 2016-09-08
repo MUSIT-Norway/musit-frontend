@@ -59,35 +59,35 @@ export const RenderPest = (props) => {
       disabled={props.disabled}
       canEdit={props.canEdit}
       observations={props.valueProps.observations}
-      lifeCycleLabel={props.translate('musit.observation.pest.lifeCycleLabel')}
+      lifeCycleLabel={props.translate('musit.observation.page.pest.lifeCycleLabel')}
       lifeCyclePlaceHolder={props.translate('musit.texts.makeChoice')}
-      lifeCycleTooltip={props.translate('musit.observation.pest.lifeCycleTooltip')}
+      lifeCycleTooltip={props.translate('musit.observation.page.pest.lifeCycleTooltip')}
       lifeCycleOnChange={(lifeCycleIndex, value) =>
         props.onChangePestObservation(lifeCycleIndex, 'lifeCycle', value, props.index)
       }
       lifeCycleOnRemove={(lifeCycleIndex) => props.onRemovePestObservation(lifeCycleIndex, props.index)}
       lifeCycleItems={[
-        props.translate('musit.observation.lifeCycleLabelMenu.puppe'),
-        props.translate('musit.observation.lifeCycleLabelMenu.adult'),
-        props.translate('musit.observation.lifeCycleLabelMenu.puppeskin'),
-        props.translate('musit.observation.lifeCycleLabelMenu.larva'),
-        props.translate('musit.observation.lifeCycleLabelMenu.egg')
+        props.translate('musit.observation.page.pest.lifeCycleLabelMenu.puppe'),
+        props.translate('musit.observation.pest.pest.lifeCycleLabelMenu.adult'),
+        props.translate('musit.observation.pest.pest.lifeCycleLabelMenu.puppeskin'),
+        props.translate('musit.observation.pest.pest.lifeCycleLabelMenu.larva'),
+        props.translate('musit.observation.pest.pest.lifeCycleLabelMenu.egg')
       ]}
-      countLabel={props.translate('musit.observation.pest.countLabel')}
-      countPlaceHolder={props.translate('musit.observation.pest.countPlaceHolder')}
-      countTooltip={props.translate('musit.observation.pest.countTooltip')}
+      countLabel={props.translate('musit.observation.page.pest.countLabel')}
+      countTooltip={props.translate('musit.observation.page.pest.countTooltip')}
+      countPlaceHolder={props.translate('musit.observation.page.pest.countPlaceHolder')}
       countOnChange={(countIndex, value) => props.onChangePestObservation(countIndex, 'count', value, props.index)}
       commentsLeftValue={props.valueProps.identificationValue}
-      commentsLeftLabel={props.translate('musit.observation.pest.identificationLabel')}
-      commentsLeftTooltip={props.translate('musit.observation.pest.identificationTooltip')}
-      commentsLeftPlaceHolder={props.translate('musit.observation.pest.identificationPlaceHolder')}
+      commentsLeftLabel={props.translate('musit.observation.page.pest.identificationLabel')}
+      commentsLeftTooltip={props.translate('musit.observation.page.pest.identificationTooltip')}
+      commentsLeftPlaceHolder={props.translate('musit.observation.page.pest.identificationPlaceHolder')}
       commentsOnChangeLeft={(value) => props.onChangeField('identificationValue', value, props.index)}
       commentsRightValue={props.valueProps.commentValue}
-      commentsRightLabel={props.translate('musit.observation.pest.commentsLabel')}
-      commentsRightTooltip={props.translate('musit.observation.pest.commentsTooltip')}
-      commentsRightPlaceHolder={props.translate('musit.observation.pest.commentsPlaceHolder')}
+      commentsRightLabel={props.translate('musit.observation.page.pest.commentsLabel')}
+      commentsRightTooltip={props.translate('musit.observation.page.pest.commentsTooltip')}
+      commentsRightPlaceHolder={props.translate('musit.observation.page.pest.commentsPlaceHolder')}
       commentsOnChangeRight={(value) => props.onChangeField('commentValue', value, props.index)}
-      newButtonLabel={props.translate('musit.observation.newButtonLabel')}
+      newButtonLabel={props.translate('musit.observation.page.newButtonLabel')}
       newButtonOnClick={() => props.onClickAddObservation(props.index)}
     />
   )

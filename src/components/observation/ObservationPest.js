@@ -100,8 +100,9 @@ export default class ObservationPest extends Component {
               <Col xs={6} sm={3} md={3}>
                 <span style={{ height: 50 }}>
                   <ControlLabel>
-                    {this.props.lifeCycleLabel}&nbsp;
-                    {!this.props.canEdit ? '' : <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
+                    {this.props.lifeCycleLabel}
+                    &nbsp;{!this.props.canEdit ? '' :
+                      <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
                   </ControlLabel>
                   <MusitDropDownField
                     items={this.props.lifeCycleItems}
@@ -116,7 +117,9 @@ export default class ObservationPest extends Component {
               </Col>
               <Col xs={6} sm={3} md={3}>
                 <span>
-                  <ControlLabel>{this.props.countLabel}</ControlLabel>
+                  <ControlLabel>
+                    {this.props.countLabel}
+                  </ControlLabel>
                   <MusitField
                     placeHolder={this.props.countPlaceHolder}
                     tooltip={this.props.countTooltip}

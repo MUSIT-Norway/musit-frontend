@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
 import ObservationPage from './page'
-import { suggestPerson, clearSuggest } from '../../reducers/suggest'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 import { hashHistory } from 'react-router'
+import { parseISODateNonStrict as parseISODate } from '../../util'
 
 const mapStateToProps = () => {
   return {
@@ -25,13 +25,6 @@ const mapDispatchToProps = (dispatch) => ({
         onSuccess: () => hashHistory.goBack(),
         onFailure: () => alert('This went terribly wrong!')
       }))
-    }
-  },
-  onDoneBySuggestionsUpdateRequested: ({ value, reason }) => {
-    if (reason && (reason === 'type') && value && value.length >= 2) {
-      dispatch(suggestPerson('doneByField', value))
-    } else {
-      dispatch(clearSuggest('doneByField'))
     }
   },
   loadPersonNameFromId: (id) => {
@@ -80,27 +73,27 @@ export default class EditObservationPage extends React.Component {
     )
   }
 
+  parseDoneDateFromLocationState() {
+    let doneDate = this.props.location.state.doneDate
+    if (typeof doneDate === 'string') {
+      doneDate = parseISODate(doneDate)
+    }
+    return doneDate
+  }
+
   render() {
     return (
       <Layout
         title={"Magasin"}
         translate={this.props.translate}
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
-        toolbar={<span />}
-        leftMenu={
-          <div
-            style={{
-              minHeight: 400
-            }}
-          />
-        }
         content={
           <div>
             <center><h4>{this.props.translate('musit.observation.page.titles.edit')}</h4></center>
             <ObservationPage
               id={this.props.params.id}
               observations={this.getObservationsFromLocationState()}
-              doneDate={this.props.location.state.doneDate}
+              doneDate={this.parseDoneDateFromLocationState()}
               doneBy={this.props.location.state.doneBy}
               onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
               translate={this.props.translate}

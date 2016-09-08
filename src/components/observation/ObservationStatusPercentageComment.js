@@ -59,7 +59,7 @@ export default class ObervationStatusPercentageComment extends Component {
     // Status
     statusValue: '',
     statusValidate: 'text',
-    statusMinimumLength: 1,
+    statusMinimumLength: 0,
     // Volume
     volumeValue: '',
     volumeTooltip: '',
@@ -78,7 +78,9 @@ export default class ObervationStatusPercentageComment extends Component {
     return (
       <Row>
         <Col xs={12} sm={2}>
-          <ControlLabel>{this.props.statusLabel}</ControlLabel>
+          <ControlLabel>
+            {this.props.statusLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+          </ControlLabel>
           <MusitDropDownField
             value={this.props.statusValue}
             items={this.props.statusItems}
