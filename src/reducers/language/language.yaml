@@ -375,6 +375,8 @@ en:
           organization: "Organization"
     welcomePage:
       title: >
+        MUSIT
+      
         Norwegian University Museums' joint Collection Databases
       body: >
         **Museum of Archaeology, University of Stavanger**
@@ -393,10 +395,12 @@ en:
       body: >
         The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger,
         University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the
-        Norwegian University of Science and Technology. The University museums of Norway hold in trust regional and global
-        scientific collections of natural and cultural history. The cooperative aims to ensure the operation,
-        maintenance and development of the university museums' joint collection databases, and to facilitate sharing
-        dissemination of data for research, education, management and the public.
+        Norwegian University of Science and Technology. 
+        
+        The University museums of Norway hold in trust regional and global scientific collections of natural and cultural history. 
+        
+        The cooperative aims to ensure the operation, maintenance and development of the university museums' joint collection 
+        databases, and to facilitate sharing dissemination of data for research, education, management and the public.
     login: Login through Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Login")
 no:
   musit:
@@ -822,6 +826,8 @@ no:
             satisfactory: "Tilfredsstillende"
     welcomePage:
       title: >
+        MUSIT
+        
         Universitetsmuseenes samlingsdatabaser
       body: >
         **Arkeologisk museum, Universitetet i Stavanger**
@@ -835,18 +841,18 @@ no:
         **Tromsø Museum - Universitetetsmuseet, Universitetet i Tromsø**
 
         **Vitenskapsmuseet - NTNU, Norges Teknisk-Naturvitenskapelige Universitet**
-      noAccess: Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil
+    noAccess: Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil
     welcomeUserPage:
       body: >
         MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom
         Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet,
         Universitetet i Tromsø, og Universitetet i Stavanger.
-
+		
         Samarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014.
-
+		
         MUSIT har som formål «å sikre drift, vedlikehold og utvikling av museenes felles samlingsdatabaser,
         og å legge til rette for deling av data for forskning, utdanning, forvaltning og allmennhet».
-
+		
         MUSIT forvalter samlinger innenfor en rekke fagfelt innen naturhistorie og kulturhistorie
         (se http://www.unimus.no/).
     login: Logg inn via Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Loggin")
