@@ -120,13 +120,13 @@ export default class StorageUnitsContainer extends React.Component {
     debugger
     if (this.props.rootNode.id) {
       this.props.loadChildren(this.props.rootNode.id, {
-          onSuccess: () => this.props.loadPath(this.props.rootNode.id),
-          onFailure: true
-        })
-      } else {
-        this.props.loadStorageUnits()
-      }
+        onSuccess: () => this.props.loadPath(this.props.rootNode.id),
+        onFailure: true
+      })
+    } else {
+      this.props.loadStorageUnits()
     }
+  }
 
 
   componentWillReceiveProps(newProps) {
