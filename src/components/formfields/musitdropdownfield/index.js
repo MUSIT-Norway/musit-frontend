@@ -71,7 +71,6 @@ export default class MusitDropDownField extends Component {
         data-toggle="tooltip"
         title={this.props.tooltip}
         clearable={false}
-        placeholder={this.props.placeHolder}
       />);
 
     const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;

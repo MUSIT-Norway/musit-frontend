@@ -27,9 +27,6 @@ const mapDispatchToProps = (dispatch) => {
 export default class AddObservationPage extends React.Component {
 
   static propTypes = {
-    observations: PropTypes.arrayOf(PropTypes.object),
-    doneDate: PropTypes.string,
-    doneBy: PropTypes.object,
     translate: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired
@@ -47,7 +44,6 @@ export default class AddObservationPage extends React.Component {
             <ObservationPage
               id={this.props.params.id}
               onSaveObservation={this.props.onSaveObservation}
-              observations={this.props.observations}
               translate={this.props.translate}
               title="Add new observations"
               mode="ADD"
