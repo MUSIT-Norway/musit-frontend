@@ -18,8 +18,6 @@ export default class Breadcrumb extends Component {
     // Issued on every propchange, including local route changes
     const oldBreadcrumbIds = this.resolveBreadcrumbIds(this.props)
     const newBreadcrumbIds = this.resolveBreadcrumbIds(newProps)
-    console.log(oldBreadcrumbIds)
-    console.log(newBreadcrumbIds)
     if (oldBreadcrumbIds !== newBreadcrumbIds) {
       newBreadcrumbIds.filter((id) => {
         return oldBreadcrumbIds.indexOf(id) === -1
@@ -28,7 +26,7 @@ export default class Breadcrumb extends Component {
   }
 
   resolveBreadcrumbIds(routeSplat) {
-    const { useOverride } = props
+    const { useOverride } = this.props
 
     let breadcrumbIds = []
     if (useOverride) {
@@ -55,7 +53,6 @@ export default class Breadcrumb extends Component {
 
   fetchBreadcrumbRecordAction(id) {
     const { fetchAction } = this.props
-    console.log(id)
     if (fetchAction) {
       fetchAction(id)
     }
@@ -71,7 +68,6 @@ export default class Breadcrumb extends Component {
   }
 
   render() {
-    console.log(this.props)
     const breadcrumbIds = this.resolveBreadcrumbIds(this.props)
 
     return (
