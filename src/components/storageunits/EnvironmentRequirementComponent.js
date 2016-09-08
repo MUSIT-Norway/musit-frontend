@@ -24,7 +24,7 @@ export default class EnvironmentRequirementComponent extends Component {
         comments: ''
       }
     }
-    this.temperatureOnClick = (temperature) => {
+    this.temperatureOnChange = (temperature) => {
       const state = {
         environmentRequirement: {
           ...this.state.environmentRequirement,
@@ -214,7 +214,7 @@ export default class EnvironmentRequirementComponent extends Component {
                     <Field
                       {...this.temperature}
                       value={this.state.environmentRequirement.temperature}
-                      onChange={this.temperatureOnClick}
+                      onChange={this.temperatureOnChange}
                     />
                   </div>
                   <div class="col-sm-4" is="null">
