@@ -1,12 +1,13 @@
 import { parseObservation } from '../../observation/mapper/to_backend'
+import { DATE_FORMAT_ISO } from './../../../util'
 
 export const mapToBackend = (state, observations) => {
   const r = {}
   r.eventType = 'Control'
   r.doneBy = observations && observations.doneBy ? observations.doneBy.id :
       state.doneBy.id
-  r.doneDate = observations && observations.doneDate ? observations.doneDate.format('YYYY-MM-DD') :
-      state.doneDate.format('YYYY-MM-DD')
+  r.doneDate = observations && observations.doneDate ? observations.doneDate.format(DATE_FORMAT_ISO) :
+      state.doneDate.format(DATE_FORMAT_ISO)
   r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
     let control
     switch (key) {

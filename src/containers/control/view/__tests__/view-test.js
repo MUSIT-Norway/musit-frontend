@@ -2,6 +2,7 @@ import React from 'react'
 import { ReactTestUtils, assert } from '../../../../../test/setup'
 import ControlViewContainer from '../index'
 import moment from 'moment'
+import { DATE_FORMAT_DISPLAY } from './../../../../util'
 
 describe('Render view control page', () => {
   const renderer = ReactTestUtils.createRenderer();
@@ -44,7 +45,7 @@ describe('Render view control page', () => {
             .children[2]
             .props
 
-    assert(moment(dateProps.value, 'DD.MM.YYYY', true).isValid())
+    assert(moment(dateProps.value, DATE_FORMAT_DISPLAY, true).isValid())
   })
 
   it('should set default date and have correct date format for registeredBy', () => {
@@ -61,6 +62,6 @@ describe('Render view control page', () => {
             .children[2]
             .props
 
-    assert(moment(dateProps.value, 'DD.MM.YYYY', true).isValid())
+    assert(moment(dateProps.value, DATE_FORMAT_DISPLAY, true).isValid())
   })
 })

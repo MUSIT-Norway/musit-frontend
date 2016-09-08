@@ -2,6 +2,7 @@ import React from 'react'
 import { ReactTestUtils, assert } from '../../../../../test/setup'
 import ControlAddContainer from '../index'
 import moment from 'moment'
+import { DATE_FORMAT_DISPLAY } from './../../../../util'
 
 describe('Render add control page', () => {
   const renderer = ReactTestUtils.createRenderer();
@@ -38,7 +39,7 @@ describe('Render add control page', () => {
             .children
             .props
 
-    assert(dateProps.dateFormat === 'DD.MM.YYYY')
+    assert(dateProps.dateFormat === DATE_FORMAT_DISPLAY)
     assert(moment(dateProps.value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid())
   })
 })
