@@ -3,14 +3,14 @@ en:
   musit:
     leftMenu:
       node:
-        newNode: "New place"
-        objectsOnNode: "Objects in current place:"
-        totalObjectCount: "Total qty of objects:"
-        underNodeCount: "Quantity of sub places:"
+        newNode: "New node"
+        objectsOnNode: "No. og objects:"
+        totalObjectCount: "Total no. of objects:"
+        underNodeCount: "No. of sub nodes:"
         properties: "Properties"
         observations: "Observations"
         controller: "Controls"
-        moveNode: "Move place"
+        moveNode: "Move node"
         delete: "Delete"
       observationControl:
         newObservation: "New observation"
@@ -27,17 +27,17 @@ en:
         registeredBy: "Reg. by"
         header: "Controls and observations"
       node:
-        nodeName: "Place name"
-        nodeType: "Place type"
-        objectCount: "Qty. of obj."
-        totalObjectCount: "Tot. qty. of obj."
-        nodeCount: "Qty. of places"
+        nodeName: "Name"
+        nodeType: "Type"
+        objectCount: "No. of obj."
+        totalObjectCount: "Tot. no. of obj."
+        nodeCount: "No. of nodes"
       object:
-        museumsNumber: "Museum no."
-        uNumber: "U.no."
-        term: "Term/Species"
+        museumsNumber: "Museum No."
+        uNumber: "U. No."
+        term: "Artefact/Species"
     texts:
-      freetext: "Freetext"
+      freetext: "Free text"
       makeChoice: "Please choose..."
       datePerformed: "Performed date"
       dateRegistered: "Registered date"
@@ -408,7 +408,7 @@ no:
       node:
         newNode: "Ny node"
         objectsOnNode: "Objekter på node:"
-        totalObjectCount: "Totalt ant objekter:"
+        totalObjectCount: "Totalt ant. objekter:"
         underNodeCount: "Antall undernoder:"
         properties: "Egenskaper"
         observations: "Observasjoner"
