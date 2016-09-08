@@ -133,7 +133,7 @@ export const loadRoot = (id) => {
     }
   } else {
     action = {
-      types: [LOAD_ONE, LOAD_ONE_SUCCESS, LOAD_ONE_FAIL],
+      types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
       promise: (client) => client.get('/api/storageadmin/v1/storageunit/root')
     }
   }

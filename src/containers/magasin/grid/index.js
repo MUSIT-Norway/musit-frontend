@@ -16,7 +16,9 @@ const mapStateToProps = (state) => ({
   children: state.storageGridUnit.data || [],
   rootNode: state.storageGridUnit.root,
   path: state.storageGridUnit.root.path ?
-    state.storageGridUnit.root.path.map((s) => { return { id: s.id, name: s.name, type: s.type } }) :
+    state.storageGridUnit.root.path.map((s) => {
+      return {
+        id: s.id, name: s.name, type: s.type, url: (() => { return `/magasin/${s.id}` }) } }) :
     null,
   routerState: state.routing
 })
@@ -109,25 +111,15 @@ export default class StorageUnitsContainer extends React.Component {
 
   componentWillMount() {
     // Issued on initial render of the component
-    // if (this.props.params.splat) {
-    //   this.props.loadChildren(this.resolveCurrentId(this.props.params.splat), {
-    //     onSuccess: () => this.props.loadPath(this.resolveCurrentId(this.props.params.splat)),
-    //     onFailure: true
-    //   })
-    // } else {
-    //   this.props.loadStorageUnits()
-    // }
-    debugger
-    if (this.props.rootNode.id) {
-      this.props.loadChildren(this.props.rootNode.id, {
-        onSuccess: () => this.props.loadPath(this.props.rootNode.id),
+    if (this.props.params.splat) {
+      this.props.loadChildren(this.resolveCurrentId(this.props.params.splat), {
+        onSuccess: () => this.props.loadPath(this.resolveCurrentId(this.props.params.splat)),
         onFailure: true
       })
     } else {
       this.props.loadStorageUnits()
     }
   }
-
 
   componentWillReceiveProps(newProps) {
   // Issued on every propchange, including local route changes
@@ -239,8 +231,8 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
 
-  makeBreadcrumb() {
-    return (<Breadcrumb />)
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} onClickCrumb={(node) => this.props.history.push(node.url())} />)
   }
 
   render() {
