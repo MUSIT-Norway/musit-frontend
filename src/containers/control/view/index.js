@@ -49,7 +49,7 @@ export default class ControlViewContainer extends React.Component {
   }
 
   makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} />)
+    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
   }
 
   render() {

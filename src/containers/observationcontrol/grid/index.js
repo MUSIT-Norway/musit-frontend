@@ -175,7 +175,7 @@ export default class ObservationControlGridShow extends React.Component {
   }
 
   makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} />)
+    return (<Breadcrumb nodes={n} nodeTypes={nt} allActive onClickCrumb={(node) => hashHistory.push(node.url)} />)
   }
 
   render() {

@@ -158,7 +158,7 @@ export default class StorageUnitContainer extends Component {
   }
 
   makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} />)
+    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
   }
   render() {
     const data = (this.state && this.state.unit) ? this.state.unit : this.props.unit;

@@ -116,7 +116,7 @@ export default class ControlAddContainer extends React.Component {
   }
 
   makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} />)
+    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
   }
 
   render() {

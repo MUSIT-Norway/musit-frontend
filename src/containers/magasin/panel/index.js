@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { hashHistory } from 'react-router'
 import Language from '../../../components/language'
 import { load, insert as insertStorageUnitContainer } from '../../../reducers/storageunit/panel';
-import { loadPath } from '../../../reducers/storageunit/grid';
 import { suggestAddress, clearSuggest } from '../../../reducers/suggest'
 import StorageUnitContainerImpl from './StorageUnitContainer'
 
@@ -37,9 +36,6 @@ const mapDispatchToProps = (dispatch) => {
       } else {
         dispatch(clearSuggest('addressField'))
       }
-    },
-    loadPath: (id) => {
-      dispatch(loadPath(id))
     }
   }
 }

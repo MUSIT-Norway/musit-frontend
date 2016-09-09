@@ -18,13 +18,17 @@ export default class Breadcrumb extends React.Component {
       iconName: React.PropTypes.string.isRequired
     })),
     onClickCrumb: React.PropTypes.func,
+    passive: React.PropTypes.bool,
+    allActive: React.PropTypes.bool,
   }
 
   render() {
     const {
       nodes,
       nodeTypes,
-      onClickCrumb
+      onClickCrumb,
+      passive, // All nodes are unclickable
+      allActive // All nodes are clickable, also current node
     } = this.props
 
     const isLast = (array, index) => (array.length - 1) === index
@@ -40,7 +44,17 @@ export default class Breadcrumb extends React.Component {
             )
           }
         }
-        if (!isLast(nodeArray, index)) {
+        debugger
+        if (passive) {
+          fragment = (
+            <span>
+              <span className={styles.crumb}>
+              {iconFragment}{node.name}
+              </span>
+              <span className={styles.crumb}>/</span>
+            </span>
+          )
+        } else if (!isLast(nodeArray, index) || allActive) {
           fragment = (
             <span>
               <span className={styles.crumb}>
@@ -64,7 +78,7 @@ export default class Breadcrumb extends React.Component {
     }
     return (
       <div>
-        <span>/</span>{renderCrumb(nodes)}
+        <span className={styles.crumb}>/</span>{renderCrumb(nodes)}
       </div>
     )
   }

@@ -3,10 +3,9 @@ import { connect } from 'react-redux'
 import Language from '../../components/language'
 import ObservationPage from './page'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import { loadPath } from '../../storageunit/grid'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { parseISODateNonStrict as parseISODate } from '../../util'
 
@@ -23,13 +22,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   loadObservation: (id) => {
-    dispatch(loadObservation(id, {
-      onSuccess: () => this.props.loadPath(id),
-      onFailure: true
-    }))
-  },
-  loadPath: (id) => {
-    dispatch(loadPath(id))
+    dispatch(loadObservation(id))
   },
   // Higher order function (or partial function if you like to call it that)
   onSaveObservation: (controlState) => {
@@ -94,6 +87,10 @@ export default class EditObservationPage extends React.Component {
       doneDate = parseISODate(doneDate)
     }
     return doneDate
+  }
+
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
   }
 
   render() {
