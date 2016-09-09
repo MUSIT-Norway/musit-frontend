@@ -28,7 +28,8 @@ export default class ObservationPage extends React.Component {
     onSaveObservation: PropTypes.func.isRequired,
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: React.PropTypes.bool,
-    cancelDisabled: React.PropTypes.bool
+    cancelDisabled: React.PropTypes.bool,
+    userName: PropTypes.string,
   }
 
   static defaultProps = {
@@ -316,7 +317,7 @@ export default class ObservationPage extends React.Component {
                 ) : (
                   <ActorSuggest
                     id="doneByField"
-                    value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                    value={this.state.doneBy ? this.state.doneBy.fn : this.props.userName}
                     placeHolder="Find actor"
                     onChange={newValue => {
                       this.setState({ ...this.state, doneBy: newValue })

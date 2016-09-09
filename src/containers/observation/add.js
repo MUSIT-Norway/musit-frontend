@@ -6,8 +6,9 @@ import Layout from '../../layout'
 import { hashHistory } from 'react-router'
 import { addObservation } from '../../reducers/observation'
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
+    user: state.auth.user,
     translate: (key, markdown) => Language.translate(key, markdown)
   }
 }
@@ -29,7 +30,8 @@ export default class AddObservationPage extends React.Component {
   static propTypes = {
     translate: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    onSaveObservation: PropTypes.func.isRequired
+    onSaveObservation: PropTypes.func.isRequired,
+    user: PropTypes.object
   }
 
   render() {
@@ -47,6 +49,7 @@ export default class AddObservationPage extends React.Component {
               translate={this.props.translate}
               title="Add new observations"
               mode="ADD"
+              userName={(this.props.user && this.props.user.name) ? this.props.user.name : ''}
             />
           </div>
         }

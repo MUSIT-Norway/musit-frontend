@@ -32,7 +32,8 @@ export default class ControlAddContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     saveControl: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object
+    params: React.PropTypes.object,
+    user: React.PropTypes.object,
   }
 
   constructor(props) {
@@ -48,14 +49,14 @@ export default class ControlAddContainer extends React.Component {
       relativeHumidityOK: null,
       pestOK: null,
       storageUnit: null,
-      temperature: '12',
-      temperatureTolerance: '2',
-      relativeHumidity: '89',
-      relativeHumidityInterval: '4',
-      inertAir: '56',
-      inertAirInterval: '4',
-      light: 'Mørkt',
-      cleaning: 'Gullende rent',
+      temperature: ' ',
+      temperatureTolerance: ' ',
+      relativeHumidity: ' ',
+      relativeHumidityInterval: ' ',
+      inertAir: ' ',
+      inertAirInterval: ' ',
+      light: ' ',
+      cleaning: ' ',
       doneDate: moment()
     }
     this.onControlClick = this.onControlClick.bind(this)
@@ -144,6 +145,8 @@ export default class ControlAddContainer extends React.Component {
       onClickCancel={() => { hashHistory.goBack() }}
     />)
 
+    const getUser = ((this.props.user && this.props.user.name) ? this.props.user.name : '')
+
     const fields = [
       {
         key: 'temperature',
@@ -219,7 +222,7 @@ export default class ControlAddContainer extends React.Component {
                     <Col xs={9}>
                       <ActorSuggest
                         id="doneByField"
-                        value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                        value={this.state.doneBy ? this.state.doneBy.fn : getUser}
                         placeHolder="Find actor"
                         onChange={newValue => {
                           this.setState({ ...this.state, doneBy: newValue })
