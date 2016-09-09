@@ -420,7 +420,6 @@ no:
         newControl: "Ny kontroll"
         selectObservation: "Observasjoner"
         selectControl: "Kontroller"
-        show: "Vis"
     grid:
       observation:
         date: "Dato"
@@ -451,7 +450,7 @@ no:
       save: "Lagre"
       saveTooltip: "Lagre"
       cancel: "Avbryt"
-      cancelTooltip: "Avbryt"
+      cancelTooltip: "Avbryter registreringen"
     viewControl:
       controlAlcohol: "Sprit"
       controlCleaning: "Renhold"
@@ -520,17 +519,17 @@ no:
           countTooltip: "Antall skadedyr"
         alcohol:
           statusRequired: 'Nivå på sprittilstanden en påkrevd.'
-          statusIncorrect: 'Sprit status har ikke gyldig verdi.'
           volumeIncorrect: 'Sprit volum må være et desimaltall med maks 3 desimaler.'
           commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
           labelText: "Sprit"
           volumeLabel: "Volum"
           volumePlaceHolder: "%"
+          volumeTooltip: "Målt volum %"
           statusLabel: "Nivå"
-          statusPlaceHolder: "Nivå"
+          statusPlaceHolder: "Vennligst velg..."
           commentLabel: "Tiltak/Kommentar"
           commentPlaceHolder: "Fritekst"
-          tooltip: "Sprit"
+          commentTooltip: "Tiltak som bør iverksettes"
           statusItems:
             dryed: "Uttørket"
             allmostDryed: "Nesten uttørket"
@@ -545,8 +544,8 @@ no:
           labelText: "Temperatur"
           fromValueLabelText: "Målt temperatur (fra)"
           toValueLabelText: "Målt temperatur (til)"
-          fromValuePlaceHolder: "\u00b0""C"
-          toValuePlaceHolder: "\u00b0""C"
+          fromValuePlaceHolder: "\u00b0C"
+          toValuePlaceHolder: "\u00b0C"
           fromValueTooltip: "Målt temperatur"
           toValueTooltip: "Målt temperatur"
           note: "Tiltak/Kommentar"
