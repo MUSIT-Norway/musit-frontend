@@ -479,8 +479,8 @@ no:
     observation:
       page:
         titles:
-          add: "Legg til observasjon"
-          edit: "Endre"
+          add: "Ny observasjon"
+          edit: "Registrer observasjoner"
           view: "Observasjon"
         registerObservation: "Registrer observasjon"
         registerObservations: "Registrer observasjoner"
@@ -490,8 +490,6 @@ no:
         doneBy: "Utført av"
         registeredDate: "Registrert dato"
         registeredBy: "Registrert av"
-        newObservationHeader: "Ny observasjon"
-        viewObservationHeader: "Observasjon"
         newButtonLabel: "Legg til ny"
         typeSelect:
           labelText: "Velg type"
@@ -500,8 +498,7 @@ no:
           identificationValueIncorrect: 'Identifikasjon kan ikke være på mer enn 100 tegn.'
           commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
           countIncorrect: "Feltet Antall har ikke gyldig verdi."
-          lifeCycleIncorrect: "Feltet Stadie har ikke gyldig verdi."
-          lifeCycleRequired: "Stadie på skadedyr er påkrevd."
+          lifeCycleRequired: "Stadie på skadedyr må velges når antall er oppgitt."
           labelText: "Skadedyr"
           identificationLabel: "Identifikasjon"
           identificationTooltip: "Identifikasjon av skadedyr"
@@ -516,6 +513,7 @@ no:
             puppeskin: "Puppeskinn"
             larva: "Larve"
             egg: "Egg"
+          lifeCyclePlaceholder: "Vennligst velg..."
           lifeCycleTooltip: "Skadedyrets stadie"
           countLabel: "Antall"
           countPlaceHolder: "Heltall"
