@@ -11,38 +11,26 @@ describe('ObservationControlGrid', () => {
         tableData={[
           {
             id: 1,
-            type: 'control',
-            doneDate: '01.01.1983',
-            types: { temperature: true,
-              ControlInertAir: null,
-              ControlHypoxicAir: null,
-              ControlCleaning: null,
-              ControlLightingCondition: null,
-              ControlAlcohol: true,
-              ControlGas: null,
-              ControlMold: null,
-              pest: true,
-              envdata: null },
+            eventType: 'control',
+            doneDate: '1983.01.01',
+            'subEvents-parts': [
+              { eventType: 'ControlAlcohole', ok: true },
+              { eventType: 'ControlPest', ok: true }
+            ],
             doneBy: 'Blablabla...',
-            registeredDate: '01.01.1983',
+            registeredDate: '1983.01.01',
             registeredBy: 'Blabla...'
           },
           {
             id: 2,
-            type: 'observation',
-            doneDate: '01.01.1984',
-            types: { temperature: true,
-              ControlInertAir: null,
-              ControlHypoxicAir: null,
-              ControlCleaning: null,
-              ControlLightingCondition: true,
-              ControlAlcohol: false,
-              ControlGas: null,
-              ControlMold: null,
-              ControlPest: null,
-              envdata: null },
+            eventType: 'observation',
+            doneDate: '1984.01.01',
+            'subEvents-parts': [
+              { eventType: 'ObservationTemperature', ok: true },
+              { eventType: 'ObservationLightingConditions', ok: true }
+            ],
             doneBy: 'Blablabla...',
-            registeredDate: '01.01.1983',
+            registeredDate: '1983.01.01',
             registeredBy: 'Blabla...'
           }
         ]}
@@ -50,13 +38,6 @@ describe('ObservationControlGrid', () => {
     );
     inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'td');
   });
-
-  it('Check the 1st row Type number id.', () => {
-    assert(inputComponent[0].getAttribute('id') === '1_01.01.1983_type')
-  })
-  it('Check the 1st row Date id', () => {
-    assert(inputComponent[1].getAttribute('id') === '1_01.01.1983_date')
-  })
   it('Check the 1st row Date value', () => {
     assert(inputComponent[1].innerHTML === '01.01.1983')
   })
