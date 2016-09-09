@@ -115,10 +115,10 @@ en:
           countPlaceHolder: "Integer"
           countTooltip: "Pest quantity"
         alcohol:
-          statusRequired: 'Please enter alcohol status'
-          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals'
-          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals'
-          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
+          statusRequired: 'Please enter alcohol status.'
+          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals.'
+          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals.'
+          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters.'
           labelText: "Alcohol"
           volumeLabel: "Volume"
           volumePlaceHolder: "%"
@@ -135,55 +135,77 @@ en:
             minorDryed: "A little dehydated"
             satisfactory: "Satisfactory"
         temperature:
-          fromValueRequired: 'Please enter temperature from value'
-          fromValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
-          toValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
-          commentsValueIncorrect: 'Maximum length for temperature tiltak is 250 characters'
-          labelText: "Temperatur"
-          fromValueLabelText: "Temperatur (fra)"
-          toValueLabelText: "Temperatur (til)"
-          fromValuePlaceHolder: "C\u00b0"
-          toValuePlaceHolder: "C\u00b0"
-          fromValueTooltip: "Temperatur (fra)"
-          toValueTooltip: "Temperatur (til)"
-          note: "Kommentar"
-          noteTooltip: "Kommentar"
-          notePlaceHolder: "Kommentar"
+          fromValueRequired: 'Measured value (from) is required.'
+          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
+          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
+          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Temperature"
+          fromValueLabelText: "Measured value (from)"
+          toValueLabelText: "Measured value (to)"
+          fromValuePlaceHolder: "\u00b0C"
+          toValuePlaceHolder: "\u00b0C"
+          fromValueTooltip: "Measured temperature"
+          toValueTooltip: "Measured temperature"
+          note: "Task/Comment"
+          noteTooltip: "Task that should be performed"
+          notePlaceHolder: "Free text"
         hypoxicAir:
-          fromValueRequired: 'Please enter hypoxic air from value'
-          fromValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
-          toValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
-          commentsValueIncorrect: 'Maximum length for Hypoxic air tiltak is 250 characters'
-          labelText: "Inert luft"
-          fromValueLabelText: "Inert luft (fra)"
-          toValueLabelText: "Inert luft (til)"
-          fromValuePlaceHolder: "Inert luft (fra)"
-          toValuePlaceHolder: "Inert luft (til)"
-          fromValueTooltip: "Inert luft (fra)"
-          toValueTooltip: "Inert luft (til)"
-          note: "Kommentar"
-          noteTooltip: "Kommentar"
-          notePlaceHolder: "Kommentar"
+          fromValueRequired: 'Measured value (from) is required.'
+          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
+          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
+          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Hypoxic air"
+          fromValueLabelText:  "Measured value (from)"
+          toValueLabelText: "Measured value (to)"
+          fromValuePlaceHolder: "% O2"
+          toValuePlaceHolder: "% O2"
+          fromValueTooltip: "Measured hypoxic air"
+          toValueTooltip: "Measured hypoxic air"
+          note: "Task/Comment"
+          noteTooltip: "Task that should be performed"
+          notePlaceHolder: "Free text"
         relativeHumidity:
-          fromValueRequired: 'Please enter relative humidity from value'
-          fromValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
-          toValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
-          commentsValueIncorrect: 'Maximum length for Relative humidity tiltak is 250 characters'
-          labelText: "Relativ luftfuktighet"
-          fromValueLabelText: "Relativ luftfuktighet (fra)"
-          toValueLabelText: "Relativ luftfuktighet (til)"
-          fromValuePlaceHolder: "Relativ luftfuktighet (fra)"
-          toValuePlaceHolder: "Relativ luftfuktighet (til)"
-          fromValueTooltip: "Relativ luftfuktighet (fra)"
-          toValueTooltip: "Relativ luftfuktighet (til)"
-          note: "Kommentar"
-          noteTooltip: "Kommentar"
-          notePlaceHolder: "Kommentar"
+          fromValueRequired: 'Measured value (from) is required.'
+          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
+          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
+          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Relative humidity"
+          fromValueLabelText: "Measured value (from)"
+          toValueLabelText: "Measured value (to)"
+          fromValuePlaceHolder: "%"
+          toValuePlaceHolder: "%"
+          fromValueTooltip: "Measured humidity"
+          toValueTooltip: "Measured humidity"
+          note: "Task/Comment"
+          noteTooltip: "Task that should be performed"
+          notePlaceHolder: "Free text"
         mold:
-          leftValueRequired: 'Please enter mold status'
-          leftValueIncorrect: 'Maximum length for mold status is 100 characters'
-          rightValueIncorrect: 'Maximum length for mold note is 250 characters'
-          labelText: "Mugg"
+          leftValueRequired: 'Description of the observed mold is required.'
+          leftValueIncorrect: 'Maximum length for Description is 100 characters.'
+          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Mold"
+          leftLabelText: "Description"
+          rightLabelText: "Task/Comment"
+          leftLabelPlaceHolder: "Free text"
+          rightLabelPlaceHolder: "Free text"
+          leftLabelToolTip: "Observed mold"
+          rightLabelPlaceToolTip: "Task that should be performed"
+        cleaning:
+          leftValueRequired: 'Description of the observed cleaning is required.'
+          leftValueIncorrect: 'Maximum length for Description is 100 characters.'
+          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Cleaning"
+          leftLabelText: "Description"
+          rightLabelText: "Task/Comment"
+          leftLabelPlaceHolder: "Free text"
+          rightLabelPlaceHolder: "Free text"
+          leftLabelToolTip: "Observed cleaning"
+          rightLabelPlaceToolTip: "Task that should be performed"
+        gas:
+          leftValueRequired: 'Please enter Gass status'
+          leftValueIncorrect: 'Maximum length for Gass status is 100 characters'
+          rightValueIncorrect: 'Maximum length for Gass tiltak is 100 characters'
+          labelText: "Gass"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
           leftLabelPlaceHolder: "Tilstand"
@@ -234,33 +256,11 @@ en:
           rightLabelPlaceHolder: "Tiltak"
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
-        gas:
-          leftValueRequired: 'Please enter Gass status'
-          leftValueIncorrect: 'Maximum length for Gass status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Gass tiltak is 100 characters'
-          labelText: "Gass"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
         lightConditions:
           leftValueRequired: 'Please enter Lysforhold status'
           leftValueIncorrect: 'Maximum length for Lysforhold status is 100 characters'
           rightValueIncorrect: 'Maximum length for Lysforhold tiltak is 100 characters'
           labelText: "Lysforhold"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        cleaning:
-          leftValueRequired: 'Please enter cleaning status'
-          leftValueIncorrect: 'Maximum length for cleaning status is 100 characters'
-          rightValueIncorrect: 'Maximum length for cleaning tiltak is 100 characters'
-          labelText: "Renhold"
           leftLabelText: "Tilstand"
           rightLabelText: "Tiltak"
           leftLabelPlaceHolder: "Tilstand"
