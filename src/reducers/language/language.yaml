@@ -17,7 +17,6 @@ en:
         newControl: "New control"
         selectObservation: "Observations"
         selectControl: "Controls"
-        show: "View"
     grid:
       observation:
         date: "Date"
@@ -48,7 +47,7 @@ en:
       save: "Save"
       saveTooltip: "Save"
       cancel: "Cancel"
-      cancelTooltip: "Cancel"
+      cancelTooltip: "Cancel registration"
     viewControl:
       controlAlcohol: "Alcohol"
       controlCleaning: "Cleaning"
@@ -76,22 +75,20 @@ en:
     observation:
       page:
         titles:
-          add: "Legg til observasjon"
-          edit: "Endre kontrollobservasjoner"
-          view: "Observasjoner"
-        registerObservation: "Registrer observasjon"
-        registerObservations: "Registrer observasjoner"
-        date: "Utført dato"
-        dateRequired: "Please enter when the bservation was done"
-        doneByRequired: "Please enter who has done the observation"
-        doneBy: "Utført av"
-        registeredDate: "Registrert dato"
-        registeredBy: "Registrert av"
-        newObservationHeader: "Ny observasjon"
-        viewObservationHeader: "Observasjon"
-        newButtonLabel: "Legg til ny"
+          add: "New observation"
+          edit: "Register observations"
+          view: "Observation"
+        registerObservation: "Register observation"
+        registerObservations: "Register observations"
+        date: "Perfoemed dato"
+        dateRequired: "Please enter date of observation"
+        doneByRequired: "Please enter name on the observer"
+        doneBy: "Performed by"
+        registeredDate: "Registered date"
+        registeredBy: "Registered by"
+        newButtonLabel: "Add new"
         typeSelect:
-          labelText: "Velg type"
+          labelText: "Choose type"
         pest:
           identificationValueRequired: 'Please enter pest identification'
           identificationValueIncorrect: 'Maximum length for pest identification is 100 characters'
