@@ -232,6 +232,7 @@ export default class StorageUnitsContainer extends React.Component {
       <Layout
         title={"Magasin"}
         translate={translate}
+        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
         content={this.makeContentGrid(searchPattern, rootNodeData, children)}

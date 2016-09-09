@@ -157,7 +157,7 @@ export default class StorageUnitComponent extends Component {
                   <div class="col-sm-4" is="null">
                     <MusitDropDownField
                       {...this.type}
-                      items={['StorageUnit', 'Room', 'Building', 'Organization']}
+                      items={['StorageUnit', 'Room', 'Building', 'Organisation']}
                       translate={this.props.translate}
                       translateKeyPrefix={'musit.storageUnits.type.items.'}
                       onChange={(storageType) => this.props.updateType(storageType)}
@@ -176,7 +176,7 @@ export default class StorageUnitComponent extends Component {
             </Col>
             <Col md={5}>
               <Form horizontal>
-                {this.props.unit.type === 'Building' ? addressBlock : null}
+                {this.props.unit.type === 'Building' || this.props.unit.type === 'Organisation' ? addressBlock : null}
               </Form>
             </Col>
           </Row>

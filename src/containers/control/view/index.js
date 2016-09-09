@@ -56,7 +56,7 @@ export default class ControlViewContainer extends React.Component {
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         content={
           <div>
-            <h4>View control</h4>
+            <h4 style={{ textAlign: 'center' }}>View control</h4>
             <Grid>
               <Row>
                 <Col sm={4}>
@@ -110,9 +110,13 @@ export default class ControlViewContainer extends React.Component {
                   />
                 </Col>
               </Row>
-              <Button onClick={() => { hashHistory.goBack() }}>
-                Lukk
-              </Button>
+              <Row className="row-centered" style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}>
+                <Col xs={10}>
+                  <Button onClick={() => { hashHistory.goBack() }}>
+                    Lukk
+                  </Button>
+                </Col>
+              </Row>
             </Grid>
           </div>
         }

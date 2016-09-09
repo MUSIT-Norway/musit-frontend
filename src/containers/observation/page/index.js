@@ -396,17 +396,28 @@ export default class ObservationPage extends React.Component {
             })}
           </Row>
           <br />
-          {this.state.errors && Object.values(this.state.errors).map((error, index) => {
-            return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>
-          })}
-          <br />
-          <SaveCancel
-            translate={this.props.translate}
-            onClickSave={this.handleSubmit}
-            onClickCancel={() => hashHistory.goBack()}
-            saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
-            cancelDisabled={this.props.cancelDisabled}
-          />
+          <Row className="row-centered" style={{ textAlign: 'center '}}>
+            {this.state.errors && Object.values(this.state.errors).map((error, index) => {
+              return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>
+            })}
+            <br />
+            {this.props.mode === 'VIEW' ?
+                <Col xs={10}>
+                  <Button onClick={() => {
+                    hashHistory.goBack()
+                  }}>
+                    Lukk
+                  </Button>
+                </Col> :
+                <SaveCancel
+                  translate={this.props.translate}
+                  onClickSave={this.handleSubmit}
+                  onClickCancel={() => hashHistory.goBack()}
+                  saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
+                  cancelDisabled={this.props.cancelDisabled}
+                />
+            }
+          </Row>
         </Grid>
       </form>
     )

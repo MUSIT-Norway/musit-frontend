@@ -76,6 +76,7 @@ export const load = (id) => {
 const mapToBackend = (id, data) => {
   return {
     ...data,
+    groupRead: 'foo', // Must be removed
     isPartOf: id * 1,
     area: data.area * 1,
     areaTo: data.areaTo * 1,

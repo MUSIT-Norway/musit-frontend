@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
 
 export default class ObservationControlGrid extends Component {
   static propTypes = {
@@ -20,32 +21,75 @@ export default class ObservationControlGrid extends Component {
       registeredBy: PropTypes.string.isRequired
     }))
   }
-  static iconMap = {
-    temperature: 'asterisk',
-    inertAir: 'cloud',
-    relativeHumidity: 'tint',
-    cleaning: 'fa',
-    lightCondition: 'sun-o',
-    alchohol: 'percent',
-    gas: 'inr',
-    mold: 'bolt',
-    pest: 'bug',
-    envdata: 'truck'
+
+  static icon(ok, name) {
+    if (ok) {
+      return <FontAwesome style={{ padding: '2px' }} name={name} />
+    }
+    return <FontAwesome style={{ color: 'gray', padding: '2px' }} name={name} />
+  }
+
+  static getIcon(data) {
+    const arr = []
+    switch (data.eventType) {
+      case 'ObservationLightingCondition':
+      case 'ControlLightingCondition':
+        arr.push(ObservationControlGrid.icon(data.ok, 'sun-o'))
+        break;
+      case 'ObservationTemperature':
+      case 'ControlTemperature':
+        arr.push(ObservationControlGrid.icon(data.ok, 'asterisk'))
+        break;
+      case 'ObservationHypoxicAir':
+      case 'ControlHypoxicAir':
+        arr.push(ObservationControlGrid.icon(data.ok, 'cloud'))
+        break;
+      case 'ObservationRelativeHumidity':
+      case 'ControlRelativeHumidity':
+        arr.push(ObservationControlGrid.icon(data.ok, 'tint'))
+        break;
+      case 'ObservationCleaning':
+      case 'ControlCleaning':
+        arr.push(ObservationControlGrid.icon(data.ok, 'fa'))
+        break;
+      case 'ObservationMold':
+      case 'ControlMold':
+        arr.push(ObservationControlGrid.icon(data.ok, 'bolt'))
+        break;
+      case 'ObservationPest':
+      case 'ControlPest':
+        arr.push(ObservationControlGrid.icon(data.ok, 'bug'))
+        break;
+      case 'ObservationAlcohol':
+      case 'ControlAlcohol':
+        arr.push(ObservationControlGrid.icon(data.ok, 'percent'))
+        break;
+      case 'ObservationGas':
+      case 'ControlGas':
+        arr.push(ObservationControlGrid.icon(data.ok, 'inr'))
+        break;
+      case 'ObservationWaterDamageAssessment':
+      case 'ControlWaterDamageAssessment':
+        arr.push('wda') // TODO icon(data.ok, 'sun-o')
+        break;
+      case 'ObservationFireProtection':
+      case 'ControlFireProtection':
+        arr.push('fp') // TODO icon(data.ok, 'sun-o')
+        break;
+      case 'ObservationTheftProtection':
+      case 'ControlTheftProtection':
+        arr.push('tp') // TODO icon(data.ok, 'sun-o')
+        break;
+      case 'ObservationPerimeterSecurity':
+      case 'ControlPerimeterSecurity':
+        arr.push('ps') // TODO icon(data.ok, 'sun-o')
+        break;
+      default:
+    }
+    return arr;
   }
 
   render() {
-    const { id, translate } = this.props
-    const showEnabledIcon = (data, type) => {
-      return (
-        (data) ? <FontAwesome style={{ padding: '2px' }} name={ObservationControlGrid.iconMap[type]} /> : ''
-      )
-    }
-    const showDisabledIcon = (data, type) => {
-      return (
-        (data === false) ?
-          <FontAwesome style={{ color: 'gray', padding: '2px' }} name={ObservationControlGrid.iconMap[type]} /> : ''
-      )
-    }
     return (
       <FormGroup>
         <div>
@@ -54,72 +98,58 @@ export default class ObservationControlGrid extends Component {
               <tr>
                 <th />
                 <th>
-                  {translate('musit.grid.observation.date')}
+                  {this.props.translate('musit.grid.observation.date')}
                 </th>
                 <th>
-                  {translate('musit.grid.observation.types')}
+                  {this.props.translate('musit.grid.observation.types')}
                 </th>
                 <th>
-                  {translate('musit.grid.observation.doneBy')}
+                  {this.props.translate('musit.grid.observation.doneBy')}
                 </th>
                 <th>
-                  {translate('musit.grid.observation.registeredDate')}
+                  {this.props.translate('musit.grid.observation.registeredDate')}
                 </th>
                 <th>
-                  {translate('musit.grid.observation.registeredBy')}
+                  {this.props.translate('musit.grid.observation.registeredBy')}
                 </th>
               </tr>
             </thead>
             <tbody>
-              {this.props.tableData.map((c, i) =>
-                <tr
+              {this.props.tableData.map((c, i) => {
+                const types = c['subEvents-parts'].map(ObservationControlGrid.getIcon).reduce((f, s) => [...f, ...s])
+                return (<tr
+                  style={{ cursor: 'pointer' }}
                   key={i}
                   id={`${c.id}_${c.doneDate}`}
-                  onClick={() =>
-                    (hashHistory.push(c.type.toLowerCase() === 'control' ?
-                    `magasin/${id}/control/${c.id}` : `magasin/${id}/observation/${c.id}`
-                  ))}
+                  onClick={() => {
+                    if (c.eventType.toLowerCase() === 'control') {
+                      hashHistory.push(`magasin/${this.props.id}/control/${c.id}`)
+                    } else {
+                      hashHistory.push(`magasin/${this.props.id}/observation/${c.id}`)
+                    }
+                  }}
                 >
                   <td id={`${c.id}_${c.doneDate}_type`}>
-                    {c.type && c.type.toLowerCase() === 'control' ? <FontAwesome name="user-secret" /> : ''}
-                    {c.type && c.type.toLowerCase() === 'observation' ? <FontAwesome name="eye" /> : ''}
+                    {c.eventType.toLowerCase() === 'control' ? <FontAwesome name="user-secret" /> : ''}
+                    {c.eventType.toLowerCase() === 'observation' ? <FontAwesome name="eye" /> : ''}
                   </td>
                   <td id={`${c.id}_${c.doneDate}_date`}>
-                    {`${c.doneDate}`}
+                    {parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}
                   </td>
                   <td id={`${c.id}_${c.doneDate}_types`}>
-                    {showEnabledIcon(c.types.ControlTemperature, 'temperature')}
-                    {showDisabledIcon(c.types.ControlTemperature, 'temperature')}
-                    {showEnabledIcon(c.types.ControlHypoxicAir, 'inertAir')}
-                    {showDisabledIcon(c.types.ControlHypoxicAir, 'inertAir')}
-                    {showEnabledIcon(c.types.ControlRelativeHumidity, 'relativeHumidity')}
-                    {showDisabledIcon(c.types.ControlRelativeHumidity, 'relativeHumidity')}
-                    {showEnabledIcon(c.types.ControlCleaning, 'cleaning')}
-                    {showDisabledIcon(c.types.ControlCleaning, 'cleaning')}
-                    {showEnabledIcon(c.types.ControlLightingCondition, 'lightCondition')}
-                    {showDisabledIcon(c.types.ControlLightingCondition, 'lightCondition')}
-                    {showEnabledIcon(c.types.ControlAlcohol, 'alchohol')}
-                    {showDisabledIcon(c.types.ControlAlcohol, 'alchohol')}
-                    {showEnabledIcon(c.types.ControlGas, 'gas')}
-                    {showDisabledIcon(c.types.ControlGas, 'gas')}
-                    {showEnabledIcon(c.types.ControlMold, 'mold')}
-                    {showDisabledIcon(c.types.ControlMold, 'mold')}
-                    {showEnabledIcon(c.types.ControlPest, 'pest')}
-                    {showDisabledIcon(c.types.ControlPest, 'pest')}
-                    {showEnabledIcon(c.types.envdata, 'envdata')}
-                    {showDisabledIcon(c.types.envdata, 'envdata')}
+                    {types}
                   </td>
                   <td id={`${c.id}_${c.doneDate}_doneBy`}>
-                    {`${c.doneBy}`}
+                    {c.doneBy}
                   </td>
                   <td id={`${c.id}_${c.doneDate}_registeredDate`}>
-                    {`${c.registeredDate}`}
+                    {parseISODate(c.registeredDate).format(DATE_FORMAT_DISPLAY)}
                   </td>
                   <td id={`${c.id}_${c.doneDate}_registeredBy`}>
-                    {`${c.registeredBy}`}
+                    {c.registeredBy}
                   </td>
                 </tr>
-              )}
+                ) })}
             </tbody>
           </Table>
         </div>
