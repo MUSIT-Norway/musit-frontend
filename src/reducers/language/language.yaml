@@ -202,16 +202,16 @@ en:
           leftLabelToolTip: "Observed cleaning"
           rightLabelPlaceToolTip: "Task that should be performed"
         gas:
-          leftValueRequired: 'Please enter Gass status'
-          leftValueIncorrect: 'Maximum length for Gass status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Gass tiltak is 100 characters'
-          labelText: "Gass"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
+          leftValueRequired: 'Information about measured value is required.'
+          leftValueIncorrect: 'Maximum length for information about measured value is 100 characters.'
+          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Gas"
+          leftLabelText: "Measured value"
+          rightLabelText: "Task/Comment"
+          leftLabelPlaceHolder: "Free text"
+          rightLabelPlaceHolder: "Free text"
+          leftLabelToolTip: "Measured gas"
+          rightLabelPlaceToolTip: "Task that should be performed"
         skallsikring:
           leftValueRequired: 'Please enter skallsikring status'
           leftValueIncorrect: 'Maximum length for skallsikring status is 100 characters'
