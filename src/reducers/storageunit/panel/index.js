@@ -85,7 +85,7 @@ const mapToBackend = (id, data) => {
   }
 }
 
-export const insert = (id, data) => {
+export const insert = (id, data, callback) => {
   let action = 'post'
   let url = '/api/storageadmin/v1/storageunit';
   if (data.id) {
@@ -95,7 +95,8 @@ export const insert = (id, data) => {
   data = mapToBackend(id, data)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
-    promise: (client) => client[action](url, { data })
+    promise: (client) => client[action](url, { data }),
+    callback
   };
 }
 
