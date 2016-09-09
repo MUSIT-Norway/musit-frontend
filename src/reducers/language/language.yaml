@@ -80,9 +80,9 @@ en:
           view: "Observation"
         registerObservation: "Register observation"
         registerObservations: "Register observations"
-        date: "Perfoemed dato"
+        date: "Performed date"
         dateRequired: "Please enter date of observation"
-        doneByRequired: "Please enter name on the observer"
+        doneByRequired: "Please enter name of observer"
         doneBy: "Performed by"
         registeredDate: "Registered date"
         registeredBy: "Registered by"
@@ -90,41 +90,50 @@ en:
         typeSelect:
           labelText: "Choose type"
         pest:
-          identificationValueRequired: 'Please enter pest identification'
-          identificationValueIncorrect: 'Maximum length for pest identification is 100 characters'
-          commentsValueIncorrect: 'Maximum length for pest comments is 250 characters'
-          countIncorrect: "Please correct invalid count in pest observations"
-          lifeCycleIncorrect: "Please correct invalid lifeCycle in pest observations"
-          lifeCycleRequired: "Please enter missing lifeCycle in pest observations "
-          labelText: "Skadedyr"
-          identificationLabel: "Identifikasjon"
-          identificationTooltip: "Identifikasjon tooltip!"
-          identificationPlaceHolder: "Identifikasjon"
-          commentsLabel: "Tiltak/Kommentar"
-          commentsTooltip: "Tiltak/Kommentar tooltip!"
-          commentsPlaceHolder: "Fritekst"
-          lifeCycleLabel: "Livssyklus"
+          identificationValueRequired: 'Pest identification is required.'
+          identificationValueIncorrect: 'Maximum length for pest identification is 100 characters.'
+          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          countIncorrect: "Please correct quantity, the input value is not valid."
+          lifeCycleRequired: "Please choose stage. Stage must be chosen when quantity is entered."
+          labelText: "Pest"
+          identificationLabel: "Identification"
+          identificationTooltip: "Pest identification"
+          identificationPlaceHolder: "Free text"
+          commentsLabel: "Task/Comment"
+          commentsTooltip: "Task that should be performed"
+          commentsPlaceHolder: "Free text"
+          lifeCycleLabel: "Stage"
           lifeCycleLabelMenu:
             adult: "Adult"
-            puppe: "Puppe"
-            puppeskin: "Puppeskin"
-            larva: "Larve"
+            puppe: "Pupa"
+            puppeskin: "Pupa skin"
+            larva: "Larva"
             egg: "Egg"
-          lifeCycleTooltip: "Livssyklus tooltip"
-          countLabel: "Antall"
-          countPlaceHolder: "Heltall"
-          countTooltip: "Antall tooltip!"
-        mold:
-          leftValueRequired: 'Please enter mold status'
-          leftValueIncorrect: 'Maximum length for mold status is 100 characters'
-          rightValueIncorrect: 'Maximum length for mold note is 250 characters'
-          labelText: "Mugg"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
+          lifeCyclePlaceholder: "Please choose..."
+          lifeCycleTooltip: "Pest stage"
+          countLabel: "Quantity"
+          countPlaceHolder: "Integer"
+          countTooltip: "Pest quantity"
+        alcohol:
+          statusRequired: 'Please enter alcohol status'
+          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals'
+          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals'
+          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
+          labelText: "Alcohol"
+          volumeLabel: "Volume"
+          volumePlaceHolder: "%"
+          volumeTooltip: "Measured volume %"
+          statusLabel: "Level"
+          statusPlaceHolder: "Please choose..."
+          commentLabel: "Task/Comment"
+          commentPlaceHolder: "Free text"
+          commentTooltip: "Task that should be performed"
+          statusItems:
+            dryed: "Dehydrated"
+            allmostDryed: "Almost dehydrated"
+            someDryed: "A bit dehydrated"
+            minorDryed: "A little dehydated"
+            satisfactory: "Satisfactory"
         temperature:
           fromValueRequired: 'Please enter temperature from value'
           fromValueIncorrect: 'Temperature from value must be a number with maximum 3 decimals'
@@ -140,6 +149,47 @@ en:
           note: "Kommentar"
           noteTooltip: "Kommentar"
           notePlaceHolder: "Kommentar"
+        hypoxicAir:
+          fromValueRequired: 'Please enter hypoxic air from value'
+          fromValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
+          toValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
+          commentsValueIncorrect: 'Maximum length for Hypoxic air tiltak is 250 characters'
+          labelText: "Inert luft"
+          fromValueLabelText: "Inert luft (fra)"
+          toValueLabelText: "Inert luft (til)"
+          fromValuePlaceHolder: "Inert luft (fra)"
+          toValuePlaceHolder: "Inert luft (til)"
+          fromValueTooltip: "Inert luft (fra)"
+          toValueTooltip: "Inert luft (til)"
+          note: "Kommentar"
+          noteTooltip: "Kommentar"
+          notePlaceHolder: "Kommentar"
+        relativeHumidity:
+          fromValueRequired: 'Please enter relative humidity from value'
+          fromValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
+          toValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
+          commentsValueIncorrect: 'Maximum length for Relative humidity tiltak is 250 characters'
+          labelText: "Relativ luftfuktighet"
+          fromValueLabelText: "Relativ luftfuktighet (fra)"
+          toValueLabelText: "Relativ luftfuktighet (til)"
+          fromValuePlaceHolder: "Relativ luftfuktighet (fra)"
+          toValuePlaceHolder: "Relativ luftfuktighet (til)"
+          fromValueTooltip: "Relativ luftfuktighet (fra)"
+          toValueTooltip: "Relativ luftfuktighet (til)"
+          note: "Kommentar"
+          noteTooltip: "Kommentar"
+          notePlaceHolder: "Kommentar"
+        mold:
+          leftValueRequired: 'Please enter mold status'
+          leftValueIncorrect: 'Maximum length for mold status is 100 characters'
+          rightValueIncorrect: 'Maximum length for mold note is 250 characters'
+          labelText: "Mugg"
+          leftLabelText: "Tilstand"
+          rightLabelText: "Tiltak"
+          leftLabelPlaceHolder: "Tilstand"
+          rightLabelPlaceHolder: "Tiltak"
+          leftLabelToolTip: "Tilstand"
+          rightLabelPlaceToolTip: "Tiltak"
         skallsikring:
           leftValueRequired: 'Please enter skallsikring status'
           leftValueIncorrect: 'Maximum length for skallsikring status is 100 characters'
@@ -184,55 +234,6 @@ en:
           rightLabelPlaceHolder: "Tiltak"
           leftLabelToolTip: "Tilstand"
           rightLabelPlaceToolTip: "Tiltak"
-        alcohol:
-          statusRequired: 'Please enter alcohol status'
-          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals'
-          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals'
-          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
-          labelText: "Sprit"
-          volumeLabel: "Volum"
-          volumePlaceHolder: "Volum"
-          statusLabel: "Tilstand"
-          statusPlaceHolder: "Tilstand"
-          commentLabel: "Tiltak/Kommentar"
-          commentPlaceHolder: "Tiltak/Kommentar"
-          tooltip: "Sprit"
-          statusItems:
-            dryed: "Uttørket"
-            allmostDryed: "Nesten uttørket"
-            someDryed: "Noe uttørket"
-            minorDryed: "Litt uttørket"
-            satisfactory: "Tilfredsstillende"
-        hypoxicAir:
-          fromValueRequired: 'Please enter hypoxic air from value'
-          fromValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
-          toValueIncorrect: 'Hypoxic air from value must be a number with maximum 3 decimals'
-          commentsValueIncorrect: 'Maximum length for Hypoxic air tiltak is 250 characters'
-          labelText: "Inert luft"
-          fromValueLabelText: "Inert luft (fra)"
-          toValueLabelText: "Inert luft (til)"
-          fromValuePlaceHolder: "Inert luft (fra)"
-          toValuePlaceHolder: "Inert luft (til)"
-          fromValueTooltip: "Inert luft (fra)"
-          toValueTooltip: "Inert luft (til)"
-          note: "Kommentar"
-          noteTooltip: "Kommentar"
-          notePlaceHolder: "Kommentar"
-        relativeHumidity:
-          fromValueRequired: 'Please enter relative humidity from value'
-          fromValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
-          toValueIncorrect: 'Relative humidity from value must be a number with maximum 3 decimals'
-          commentsValueIncorrect: 'Maximum length for Relative humidity tiltak is 250 characters'
-          labelText: "Relativ luftfuktighet"
-          fromValueLabelText: "Relativ luftfuktighet (fra)"
-          toValueLabelText: "Relativ luftfuktighet (til)"
-          fromValuePlaceHolder: "Relativ luftfuktighet (fra)"
-          toValuePlaceHolder: "Relativ luftfuktighet (til)"
-          fromValueTooltip: "Relativ luftfuktighet (fra)"
-          toValueTooltip: "Relativ luftfuktighet (til)"
-          note: "Kommentar"
-          noteTooltip: "Kommentar"
-          notePlaceHolder: "Kommentar"
         gas:
           leftValueRequired: 'Please enter Gass status'
           leftValueIncorrect: 'Maximum length for Gass status is 100 characters'
