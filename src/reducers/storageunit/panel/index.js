@@ -77,7 +77,7 @@ const mapToBackend = (id, data) => {
   return {
     ...data,
     groupRead: 'foo', // Must be removed
-    isPartOf: id * 1,
+    isPartOf: data.id ? data.isPartOf : id * 1,
     area: data.area * 1,
     areaTo: data.areaTo * 1,
     height: data.height * 1,
@@ -85,14 +85,14 @@ const mapToBackend = (id, data) => {
   }
 }
 
-export const insert = (id, data, callback) => {
+export const insert = (parentId, data, callback) => {
   let action = 'post'
   let url = '/api/storageadmin/v1/storageunit';
   if (data.id) {
     action = 'put'
     url += `/${data.id}`
   }
-  data = mapToBackend(id, data)
+  data = mapToBackend(parentId, data)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
     promise: (client) => client[action](url, { data }),

@@ -139,7 +139,7 @@ export default class StorageUnitContainer extends Component {
     const errors = this.validateForm(this.state)
     this.setState({ ...this.state, errors })
     if (Object.keys(errors).length === 0) {
-      this.props.onLagreClick(this.props.params.id, (this.state && this.state.unit) ? this.state.unit : this.props.unit)
+      this.props.onLagreClick(this.props.params.parentId, (this.state && this.state.unit) ? this.state.unit : this.props.unit)
     }
   }
 
