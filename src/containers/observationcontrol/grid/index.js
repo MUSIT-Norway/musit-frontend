@@ -25,6 +25,7 @@ import Language from '../../../components/language'
 import { loadControlsForNode, loadControlsAndObservationsForNode,
   loadObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
+import Breadcrumb from '../../../layout/Breadcrumb'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
@@ -32,6 +33,11 @@ import { hashHistory } from 'react-router'
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   unit: state.storageGridUnit.root.data,
+  path: state.storageGridUnit.root.path ?
+        state.storageGridUnit.root.path.map((s) => {
+          return {
+            id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
+    null,
   observationControlGridData: state.observationControlGrid.data.map((e) => {
     if (e.eventType === 'Control') {
       return { ...e,
@@ -106,7 +112,8 @@ export default class ObservationControlGridShow extends React.Component {
     loadControls: React.PropTypes.func.isRequired,
     loadPerson: React.PropTypes.func.isRequired,
     loadObservations: React.PropTypes.func.isRequired,
-    loadControlAndObservations: React.PropTypes.func.isRequired
+    loadControlAndObservations: React.PropTypes.func.isRequired,
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   constructor(props) {
@@ -167,12 +174,21 @@ export default class ObservationControlGridShow extends React.Component {
     />)
   }
 
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} />)
+  }
+
   render() {
+    const nodes = this.props.path
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
+    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     return (
       <Layout
         title={`${this.props.unit ? this.props.unit.name : ''} - ${this.props.translate('musit.grid.observation.header')}`}
         translate={this.props.translate}
-        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        breadcrumb={breadcrumb}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContent()}

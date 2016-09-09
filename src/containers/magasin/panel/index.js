@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { hashHistory } from 'react-router'
 import Language from '../../../components/language'
 import { load, insert as insertStorageUnitContainer } from '../../../reducers/storageunit/panel';
+import { loadPath } from '../../../reducers/storageunit/grid';
 import { suggestAddress, clearSuggest } from '../../../reducers/suggest'
 import StorageUnitContainerImpl from './StorageUnitContainer'
 
@@ -9,7 +10,12 @@ const mapStateToProps = (state) => {
   return {
     unit: (state.storagePanelUnit && state.storagePanelUnit.data) ? state.storagePanelUnit.data : {},
     translate: (key, markdown) => Language.translate(key, markdown),
-    suggest: state.suggest
+    suggest: state.suggest,
+    path: state.storageGridUnit.root.path ?
+      state.storageGridUnit.root.path.map((s) => {
+        return {
+          id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
+      null
   }
 }
 
@@ -31,6 +37,9 @@ const mapDispatchToProps = (dispatch) => {
       } else {
         dispatch(clearSuggest('addressField'))
       }
+    },
+    loadPath: (id) => {
+      dispatch(loadPath(id))
     }
   }
 }

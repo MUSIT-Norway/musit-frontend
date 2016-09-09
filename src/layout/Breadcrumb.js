@@ -17,7 +17,7 @@ export default class Breadcrumb extends React.Component {
       type: React.PropTypes.string.isRequired,
       iconName: React.PropTypes.string.isRequired
     })),
-    onClickCrumb: React.PropTypes.func.isRequired
+    onClickCrumb: React.PropTypes.func,
   }
 
   render() {

@@ -27,12 +27,14 @@ import { hashHistory } from 'react-router'
 import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
+import Breadcrumb from '../../../layout/Breadcrumb'
 
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     saveControl: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object
+    params: React.PropTypes.object,
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   constructor(props) {
@@ -113,7 +115,16 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} />)
+  }
+
   render() {
+    const nodes = this.props.path
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
+    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     const { translate } = this.props
 
     const renderReadOnly = (leftValue, rightValue) => {
@@ -178,7 +189,7 @@ export default class ControlAddContainer extends React.Component {
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        breadcrumb={breadcrumb}
         content={
           <div>
             <h4>{this.props.translate('musit.newControl.title', false)}</h4>
