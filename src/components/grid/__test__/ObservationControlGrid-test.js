@@ -18,7 +18,7 @@ describe('ObservationControlGrid', () => {
               { eventType: 'ControlPest', ok: true }
             ],
             doneBy: 'Blablabla...',
-            registeredDate: '1983.01.01',
+            registeredDate: '1983.01.04',
             registeredBy: 'Blabla...'
           },
           {
@@ -26,11 +26,11 @@ describe('ObservationControlGrid', () => {
             eventType: 'observation',
             doneDate: '1984.01.01',
             'subEvents-parts': [
-              { eventType: 'ObservationTemperature', ok: true },
-              { eventType: 'ObservationLightingConditions', ok: true }
+              { eventType: 'ObservationTemperature' },
+              { eventType: 'ObservationLightingConditions' }
             ],
             doneBy: 'Blablabla...',
-            registeredDate: '1983.01.01',
+            registeredDate: '1984.01.04',
             registeredBy: 'Blabla...'
           }
         ]}
@@ -42,12 +42,12 @@ describe('ObservationControlGrid', () => {
     assert(inputComponent[1].innerHTML === '01.01.1983')
   })
   it('Check the 1st row registered date value', () => {
-    assert(inputComponent[4].innerHTML === '01.01.1983')
+    assert(inputComponent[4].innerHTML === '04.01.1983')
   })
   it('Check the 2nd row Date value', () => {
     assert(inputComponent[7].innerHTML === '01.01.1984')
   })
   it('Check the 2nd row registered date value', () => {
-    assert(inputComponent[10].innerHTML === '01.01.1983')
+    assert(inputComponent[10].innerHTML === '04.01.1984')
   })
 })

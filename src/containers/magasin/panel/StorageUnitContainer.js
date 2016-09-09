@@ -158,8 +158,7 @@ export default class StorageUnitContainer extends Component {
 
     const completePage = (<div>
       <h4 style={{ textAlign: 'center' }}>
-        {this.props.route.add ? this.props.translate('musit.storageUnits.newNode') : this.props.params.id }
-      - {this.props.translate('musit.storageUnits.header')}
+        {this.props.route.add ? `${this.props.translate('musit.storageUnits.newNode')} - ` : ''}{this.props.translate('musit.storageUnits.header')}
       </h4>
       <StorageUnitComponents
         unit={data}

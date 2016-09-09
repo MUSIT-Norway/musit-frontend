@@ -97,16 +97,6 @@ class App extends Component {
             </Nav>
             {user &&
               <p className={`${styles.loggedInMessage} navbar-text`}>Logged in as <strong>{user.name}</strong>.</p>}
-            <Nav navbar pullRight>
-              <NavItem
-                target="_blank"
-                rel="noopener noreferrer"
-                title="View on Github"
-                href="https://github.com/MUSIT-Norway/musit"
-              >
-                <i className="fa fa-github" />
-              </NavItem>
-            </Nav>
           </Navbar.Collapse>
         </Navbar>
 
@@ -114,15 +104,7 @@ class App extends Component {
           {this.props.children}
         </div>
 
-        <div className="well text-center">
-          Have questions? Ask for help<a
-            href="https://github.com/MUSIT-Norway/musit/issues"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            on Github
-          </a>
-        </div>
+        <div className="well text-center">{' '}</div>
       </div>
     );
   }

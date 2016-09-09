@@ -40,6 +40,13 @@ export default class ActorSuggest extends React.Component {
   constructor(props) {
     super(props)
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
+    this.state = {
+      value: this.props.value
+    }
+  }
+
+  onCHange(event, { newValue }) {
+    this.setState({ ...this.state, value: newValue })
   }
 
   onSuggestionSelected(event, { suggestion }) {
@@ -55,7 +62,7 @@ export default class ActorSuggest extends React.Component {
     id: this.props.id,
     placeholder: this.props.placeHolder,
     type: 'search',
-    onChange: this.props.onChange
+    onChange: this.onCHange.bind(this)
   }
 
   render() {
@@ -66,7 +73,7 @@ export default class ActorSuggest extends React.Component {
         onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
         getSuggestionValue={(suggestion) => suggestion.fn}
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
-        inputProps={{ ...this.doneByProps, value: this.props.value }}
+        inputProps={{ ...this.doneByProps, value: this.state.value }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
