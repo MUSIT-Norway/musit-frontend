@@ -76,62 +76,67 @@ export default class StorageUnitContainer extends Component {
   }
   validateForm(formProps) {
     let errors = {}
-    if (!formProps.unit.type || formProps.unit.type.trim().length === 0) {
+    if (formProps && formProps.unit) {
+      if (!formProps.unit.type || formProps.unit.type.trim().length === 0) {
+        errors.type = this.props.translate('musit.storageUnits.type.required')
+      }
+      if (!formProps.unit.name || formProps.unit.name.trim().length === 0) {
+        errors.name = this.props.translate('musit.storageUnits.name.required')
+      }
+      errors = { ...errors, ...this.validateStringField('type', formProps.unit.type, 100)() }
+      errors = { ...errors, ...this.validateStringField('name', formProps.unit.name, 100)() }
+      errors = { ...errors, ...this.validateStringField('address', formProps.unit.address, 100)() }
+      errors = { ...errors, ...this.validateNumberField('area', formProps.unit.area, 0, 10, 3)(formProps.unit) }
+      errors = { ...errors, ...this.validateNumberField('areaTo', formProps.unit.areaTo, 0, 10, 3)(formProps.unit) }
+      errors = { ...errors, ...this.validateNumberField('height', formProps.unit.height, 0, 10, 3)(formProps.unit) }
+      errors = { ...errors, ...this.validateNumberField('heightTo', formProps.unit.heightTo, 0, 10, 3)(formProps.unit) }
+
+      errors = {
+        ...errors,
+        ...this.validateNumberField('environmentRequirements.temperature',
+        formProps.unit.temperature, 0, 10, 3)(formProps.unit)
+      }
+      errors = {
+        ...errors,
+        ...this.validateNumberField('environmentRequirements.temperatureTolerance',
+        formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
+      }
+      errors = {
+        ...errors,
+        ...this.validateNumberField('environmentRequirements.relativeHumidity',
+        formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
+      }
+      errors = {
+        ...errors,
+        ...this.validateNumberField('environmentRequirements.relativeHumidityTolerance',
+        formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
+      }
+      errors = {
+        ...errors,
+        ...this.validateNumberField('environmentRequirements.hypoxicAir',
+        formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit)
+      }
+      errors = {
+        ...errors,
+        ...this.validateNumberField('environmentRequirements.hypoxicAirTolerance',
+        formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
+      }
+      errors = { ...errors, ...this.validateStringField('environmentRequirements.cleaning', formProps.unit.cleaning, 100)() }
+      errors = {
+        ...errors,
+        ...this.validateStringField('environmentRequirements.lightningConditions', formProps.unit.lightningConditions, 100)()
+      }
+      errors = { ...errors, ...this.validateStringField('environmentRequirements.comments', formProps.unit.comments, 250)() }
+    } else {
       errors.type = this.props.translate('musit.storageUnits.type.required')
-    }
-    if (!formProps.unit.name || formProps.unit.name.trim().length === 0) {
       errors.name = this.props.translate('musit.storageUnits.name.required')
     }
-    errors = { ...errors, ...this.validateStringField('type', formProps.unit.type, 100)() }
-    errors = { ...errors, ...this.validateStringField('name', formProps.unit.name, 100)() }
-    errors = { ...errors, ...this.validateStringField('address', formProps.unit.address, 100)() }
-    errors = { ...errors, ...this.validateNumberField('area', formProps.unit.area, 0, 10, 3)(formProps.unit) }
-    errors = { ...errors, ...this.validateNumberField('areaTo', formProps.unit.areaTo, 0, 10, 3)(formProps.unit) }
-    errors = { ...errors, ...this.validateNumberField('height', formProps.unit.height, 0, 10, 3)(formProps.unit) }
-    errors = { ...errors, ...this.validateNumberField('heightTo', formProps.unit.heightTo, 0, 10, 3)(formProps.unit) }
-
-    errors = {
-      ...errors,
-      ...this.validateNumberField('environmentRequirements.temperature',
-      formProps.unit.temperature, 0, 10, 3)(formProps.unit)
-    }
-    errors = {
-      ...errors,
-      ...this.validateNumberField('environmentRequirements.temperatureTolerance',
-      formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
-    }
-    errors = {
-      ...errors,
-      ...this.validateNumberField('environmentRequirements.relativeHumidity',
-      formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
-    }
-    errors = {
-      ...errors,
-      ...this.validateNumberField('environmentRequirements.relativeHumidityTolerance',
-      formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
-    }
-    errors = {
-      ...errors,
-      ...this.validateNumberField('environmentRequirements.hypoxicAir',
-      formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit)
-    }
-    errors = {
-      ...errors,
-      ...this.validateNumberField('environmentRequirements.hypoxicAirTolerance',
-      formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
-    }
-    errors = { ...errors, ...this.validateStringField('environmentRequirements.cleaning', formProps.unit.cleaning, 100)() }
-    errors = {
-      ...errors,
-      ...this.validateStringField('environmentRequirements.lightningConditions', formProps.unit.lightningConditions, 100)()
-    }
-    errors = { ...errors, ...this.validateStringField('environmentRequirements.comments', formProps.unit.comments, 250)() }
     return errors
   }
 
   handleSubmit(e) {
     e.preventDefault()
-    const errors = this.state ? this.validateForm(this.state) : ''
+    const errors = this.validateForm(this.state)
     this.setState({ ...this.state, errors })
     if (Object.keys(errors).length === 0) {
       this.props.onLagreClick((this.state && this.state.unit) ? this.state.unit : this.props.unit)
