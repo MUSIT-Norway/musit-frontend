@@ -65,8 +65,7 @@ const mapDispatchToProps = (dispatch, props) => {
             onSuccess: () => {
               dispatch(clearRoot())
               if (currentNode.isPartOf) {
-                dispatch(loadChildren(currentNode.isPartOf))
-                dispatch(loadRoot(currentNode.isPartOf))
+                hashHistory.replace(`/magasin/${currentNode.isPartOf}`)
               } else {
                 dispatch(loadRoot())
               }

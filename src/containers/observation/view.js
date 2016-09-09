@@ -58,6 +58,10 @@ export default class ViewObservationPage extends React.Component {
     }
   }
 
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
+  }
+
   render() {
     const nodes = this.props.path
     const nodeTypes = [{ type: 'Building', iconName: 'folder' },
