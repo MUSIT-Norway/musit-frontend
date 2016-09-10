@@ -1,7 +1,7 @@
 import 'react-select/dist/react-select.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { IndexLink } from 'react-router'
+import { IndexLink, hashHistory } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
@@ -36,7 +36,9 @@ const mapDispatchToProps = (dispatch) => {
           email: localStorage.getItem('musitUserEmail'),
           userId: localStorage.getItem('musitUserId')
         }));
+        return true;
       }
+      return false
     }
   }
 }
@@ -59,12 +61,16 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.props.loadUser()
+    const loaded = this.props.loadUser()
+    if (!loaded) {
+      hashHistory.replace('/')
+    }
   }
 
   handleLogout = (event) => {
     event.preventDefault()
     this.props.clearUser()
+    hashHistory.replace('/')
   }
 
   render() {
