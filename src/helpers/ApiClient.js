@@ -23,21 +23,18 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 class ApiClient {
 
   constructor() {
-    const token = 'fake-token-zab-xy-stein';
-
     methods.forEach((method) => {
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const apiRequest = request[method](this.fixPath(path));
         if (params) {
           apiRequest.query(params);
         }
-        if (token.length > 0) {
-          apiRequest.set('Authorization', `Bearer ${token}`)
+        if (localStorage.getItem('musitAccessToken')) {
+          apiRequest.set('Authorization', `Bearer ${localStorage.getItem('musitAccessToken')}`)
         }
         if (data) {
           apiRequest.send(data);
         }
-
         apiRequest.end((err, { body } = {}) => (err ? reject(body || err) : resolve(body)));
       });
     })

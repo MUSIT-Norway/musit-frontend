@@ -7,7 +7,7 @@ import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
-import { clearUser } from '../../reducers/auth';
+import { clearUser, connectUser } from '../../reducers/auth';
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -21,7 +21,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearUser: () => dispatch(clearUser())
+    clearUser: () => dispatch(clearUser()),
+    loadUser: () => {
+      if (localStorage.getItem('musitAccessToken')) {
+        dispatch(connectUser({
+          name: localStorage.getItem('musitUserName'),
+          accessToken: localStorage.getItem('musitAccessToken'),
+          email: localStorage.getItem('musitUserEmail'),
+          userId: localStorage.getItem('musitUserId')
+        }));
+      }
+    }
   }
 }
 
@@ -33,7 +43,8 @@ class App extends Component {
     pushState: PropTypes.func.isRequired,
     store: PropTypes.object,
     pickListCount: PropTypes.number.isRequired,
-    clearUser: PropTypes.func.isRequired
+    clearUser: PropTypes.func.isRequired,
+    loadUser: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -41,12 +52,8 @@ class App extends Component {
     router: PropTypes.object.isRequired
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.user && nextProps.user) {
-      this.context.router.push('/musit');
-    } else if (this.props.user && !nextProps.user) {
-      this.context.router.push('/');
-    }
+  componentWillMount() {
+    this.props.loadUser()
   }
 
   handleLogout = (event) => {
