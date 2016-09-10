@@ -21,7 +21,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearUser: () => dispatch(clearUser()),
+    clearUser: () => {
+      localStorage.removeItem('musitUserName')
+      localStorage.removeItem('musitAccessToken')
+      localStorage.removeItem('musitUserEmail')
+      localStorage.removeItem('musitUserId')
+      dispatch(clearUser())
+    },
     loadUser: () => {
       if (localStorage.getItem('musitAccessToken')) {
         dispatch(connectUser({
@@ -59,10 +65,6 @@ class App extends Component {
   handleLogout = (event) => {
     event.preventDefault()
     this.props.clearUser()
-  }
-
-  handleFakeLogin = (event) => {
-    event.preventDefault()
   }
 
   render() {
