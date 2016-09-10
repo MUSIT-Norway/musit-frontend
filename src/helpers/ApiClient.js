@@ -17,20 +17,24 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import request from 'superagent';
+import jwtDecode from 'jwt-decode';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 class ApiClient {
-
   constructor() {
+    let token = ''
+    if (localStorage.getItem('jwtToken')) {
+      token = jwtDecode(localStorage.getItem('jwtToken')).accessToken
+    }
     methods.forEach((method) => {
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const apiRequest = request[method](this.fixPath(path));
         if (params) {
           apiRequest.query(params);
         }
-        if (localStorage.getItem('musitAccessToken')) {
-          apiRequest.set('Authorization', `Bearer ${localStorage.getItem('musitAccessToken')}`)
+        if (token !== '') {
+          apiRequest.set('Authorization', `Bearer ${token}`)
         }
         if (data) {
           apiRequest.send(data);

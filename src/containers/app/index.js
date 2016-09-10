@@ -8,6 +8,7 @@ import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
 import { clearUser, connectUser } from '../../reducers/auth';
+import jwtDecode from 'jwt-decode';
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -22,20 +23,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     clearUser: () => {
-      localStorage.removeItem('musitUserName')
-      localStorage.removeItem('musitAccessToken')
-      localStorage.removeItem('musitUserEmail')
-      localStorage.removeItem('musitUserId')
+      localStorage.removeItem('jwtToken')
       dispatch(clearUser())
     },
     loadUser: () => {
-      if (localStorage.getItem('musitAccessToken')) {
-        dispatch(connectUser({
-          name: localStorage.getItem('musitUserName'),
-          accessToken: localStorage.getItem('musitAccessToken'),
-          email: localStorage.getItem('musitUserEmail'),
-          userId: localStorage.getItem('musitUserId')
-        }));
+      if (localStorage.getItem('jwtToken')) {
+        const user = jwtDecode(localStorage.getItem('jwtToken'))
+        dispatch(connectUser(user));
         return true;
       }
       return false
