@@ -37,10 +37,7 @@ export default class AddObservationPage extends React.Component {
     translate: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
-<<<<<<< HEAD
-=======
     actor: PropTypes.object,
->>>>>>> master
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
