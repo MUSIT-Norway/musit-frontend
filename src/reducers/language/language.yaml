@@ -212,61 +212,61 @@ en:
           rightLabelPlaceHolder: "Free text"
           leftLabelToolTip: "Measured gas"
           rightLabelPlaceToolTip: "Task that should be performed"
-        skallsikring:
-          leftValueRequired: 'Please enter skallsikring status'
-          leftValueIncorrect: 'Maximum length for skallsikring status is 100 characters'
-          rightValueIncorrect: 'Maximum length for skallsikring tiltak is 250 characters'
-          labelText: "Skallsikring"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        brannsikring:
-          leftValueRequired: 'Please enter Brannsikring status'
-          leftValueIncorrect: 'Maximum length for Brannsikring status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Brannsikring tiltak is 250 characters'
-          labelText: "Brannsikring"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        vannskaderisiko:
-          leftValueRequired: 'Please enter Vannskaderisiko status'
-          leftValueIncorrect: 'Maximum length for Vannskaderisiko status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Vannskaderisiko tiltak is 250 characters'
-          labelText: "Vannskaderisiko"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
-        tyverisikring:
-          leftValueRequired: 'Please enter Tyverisikring status'
-          leftValueIncorrect: 'Maximum length for Tyverisikring status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Tyverisikring tiltak is 250 characters'
-          labelText: "Tyverisikring"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
         lightConditions:
-          leftValueRequired: 'Please enter Lysforhold status'
-          leftValueIncorrect: 'Maximum length for Lysforhold status is 100 characters'
-          rightValueIncorrect: 'Maximum length for Lysforhold tiltak is 100 characters'
-          labelText: "Lysforhold"
-          leftLabelText: "Tilstand"
-          rightLabelText: "Tiltak"
-          leftLabelPlaceHolder: "Tilstand"
-          rightLabelPlaceHolder: "Tiltak"
-          leftLabelToolTip: "Tilstand"
-          rightLabelPlaceToolTip: "Tiltak"
+          leftValueRequired: 'Information about measured/observed value is required.'
+          leftValueIncorrect: 'Maximum length for information about measured/observed value is 100 characters.'
+          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Lighting condition"
+          leftLabelText: "Measured/observed value"
+          rightLabelText: "Task/Comment"
+          leftLabelPlaceHolder: "Free text"
+          rightLabelPlaceHolder: "Free text"
+          leftLabelToolTip: "Measured/observed lighting condition"
+          rightLabelPlaceToolTip: "Task that should be performed"
+        skallsikring:
+          leftValueRequired: 'Description of observed perimeter security is required.'
+          leftValueIncorrect: 'Maximum length for description of observed perimeter security is 100 characters.'
+          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Perimeter security"
+          leftLabelText: "Description"
+          rightLabelText: "Task/Comment"
+          leftLabelPlaceHolder: "Free text"
+          rightLabelPlaceHolder: "Free text"
+          leftLabelToolTip: "Observed perimeter security"
+          rightLabelPlaceToolTip: "Task that should be performed"
+        brannsikring:
+          leftValueRequired: 'Description of observed fire protection is required.'
+          leftValueIncorrect: 'Maximum length for description of observed fire protection is 100 characters.'
+          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Fire protection"
+          leftLabelText: "Description"
+          rightLabelText: "Task/Comment"
+          leftLabelPlaceHolder: "Free text"
+          rightLabelPlaceHolder: "Free text"
+          leftLabelToolTip: "Observed fire protection"
+          rightLabelPlaceToolTip: "Task that should be performed"
+        vannskaderisiko:
+          leftValueRequired: 'Description of observed water damage assessment is required.'
+          leftValueIncorrect: 'Maximum length for description of observed water damage assessment is 100 characters.'
+          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Water damage assessment"
+          leftLabelText: "Description"
+          rightLabelText: "Task/Comment"
+          leftLabelPlaceHolder: "Free text"
+          rightLabelPlaceHolder: "Free text"
+          leftLabelToolTip: "Observed water damage assessment"
+          rightLabelPlaceToolTip: "Task that should be performed"
+        tyverisikring:
+          leftValueRequired: 'Description of theft protection is required.'
+          leftValueIncorrect: 'Maximum length for description of theft protection is 100 characters.'
+          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          labelText: "Theft protection"
+          leftLabelText: "Description"
+          rightLabelText: "Task/Comment"
+          leftLabelPlaceHolder: "Free text"
+          rightLabelPlaceHolder: "Free text"
+          leftLabelToolTip: "Observed theft protection"
+          rightLabelPlaceToolTip: "Task that should be performed"
     pickList:
       title: "Picklist"
       action:
