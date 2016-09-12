@@ -29,7 +29,6 @@ export default class ObservationPage extends React.Component {
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: React.PropTypes.bool,
     cancelDisabled: React.PropTypes.bool,
-    userName: PropTypes.string,
   }
 
   static defaultProps = {

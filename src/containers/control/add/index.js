@@ -33,7 +33,7 @@ export default class ControlAddContainer extends React.Component {
     translate: React.PropTypes.func.isRequired,
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
-    user: React.PropTypes.object,
+    actor: React.PropTypes.object,
   }
 
   constructor(props) {
@@ -57,7 +57,8 @@ export default class ControlAddContainer extends React.Component {
       inertAirInterval: ' ',
       light: ' ',
       cleaning: ' ',
-      doneDate: moment()
+      doneDate: moment(),
+      doneBy: this.props.actor
     }
     this.onControlClick = this.onControlClick.bind(this)
     this.onControlClickOK = this.onControlClickOK.bind(this)
@@ -145,8 +146,6 @@ export default class ControlAddContainer extends React.Component {
       onClickCancel={() => { hashHistory.goBack() }}
     />)
 
-    const getUser = ((this.props.user && this.props.user.name) ? this.props.user.name : '')
-
     const fields = [
       {
         key: 'temperature',
@@ -222,7 +221,7 @@ export default class ControlAddContainer extends React.Component {
                     <Col xs={9}>
                       <ActorSuggest
                         id="doneByField"
-                        value={this.state.doneBy ? this.state.doneBy.fn : getUser}
+                        value={this.state.doneBy ? this.state.doneBy.fn : ''}
                         placeHolder="Find actor"
                         onChange={newValue => {
                           this.setState({ ...this.state, doneBy: newValue })

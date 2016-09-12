@@ -1,8 +1,12 @@
 const SET_USER = 'musit/auth/SET_USER';
 const CLEAR_USER = 'musit/auth/CLEAR_USER';
+const LOAD_ACTOR = 'musit/auth/LOAD_ACTOR'
+const LOAD_ACTOR_SUCCESS = 'musit/auth/LOAD_ACTOR_SUCCESS'
+const LOAD_ACTOR_FAILURE = 'musit/auth/LOAD_ACTOR_FAILURE'
 
 const initialState = {
-  user: null
+  user: null,
+  actor: null
 };
 
 const authReducer = (state = initialState, action = {}) => {
@@ -17,12 +21,39 @@ const authReducer = (state = initialState, action = {}) => {
         ...state,
         user: null
       };
+    case LOAD_ACTOR:
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    case LOAD_ACTOR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        actor: action.result
+      };
+    case LOAD_ACTOR_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error
+      }
     default:
       return state;
   }
 }
 
 export default authReducer
+
+export const loadActor = () => {
+  return {
+    types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
+    promise: (client) => client.get('/api/actor/v1/dataporten/currentUser')
+  }
+}
 
 export const connectUser = (user) => {
   return {

@@ -23,6 +23,13 @@
       "emails": [ "foo@bar.bas" ],
       "groups": ["EtnoLes", "FotoLes"],
       "accessToken": "fake-token-zab-xy-stein"
+    },
+    {
+      "userId": "rituvesh",
+      "name": "Rituvesh Kumar",
+      "emails": [ "foo@bar.bas" ],
+      "groups": ["EtnoLes", "FotoLes"],
+      "accessToken": "fake-token-zab-xy-rituvesh"
     }
   ]
 }

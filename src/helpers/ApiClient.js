@@ -23,7 +23,7 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 class ApiClient {
 
   constructor() {
-    const token = 'fake-token-zab-xy-stein';
+    const token = 'fake-token-zab-xy-jarle';
 
     methods.forEach((method) => {
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
