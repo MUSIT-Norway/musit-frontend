@@ -21,14 +21,14 @@ export default class ObservationPage extends React.Component {
     id: PropTypes.string.isRequired,
     translate: PropTypes.func.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
-    doneDate: PropTypes.string,
+    doneDate: PropTypes.object,
     doneBy: PropTypes.object,
     registeredDate: PropTypes.string,
     registeredBy: PropTypes.string,
     onSaveObservation: PropTypes.func.isRequired,
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: React.PropTypes.bool,
-    cancelDisabled: React.PropTypes.bool
+    cancelDisabled: React.PropTypes.bool,
   }
 
   static defaultProps = {

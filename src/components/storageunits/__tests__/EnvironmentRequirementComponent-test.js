@@ -15,6 +15,7 @@ describe('EnvironmentRequirementComponent', () => {
       <EnvironmentRequirementComponent
         comments={comments}
         translate={(key) => key}
+        updateStorageUnit={(s) => s}
       />
     );
     const inputComponent = ReactTestUtils.findRenderedDOMComponentWithTag(myDiv, 'textarea');

@@ -9,7 +9,12 @@ const mapStateToProps = (state) => {
   return {
     unit: (state.storagePanelUnit && state.storagePanelUnit.data) ? state.storagePanelUnit.data : {},
     translate: (key, markdown) => Language.translate(key, markdown),
-    suggest: state.suggest
+    suggest: state.suggest,
+    path: state.storageGridUnit.root.path ?
+      state.storageGridUnit.root.path.map((s) => {
+        return {
+          id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
+      null
   }
 }
 
