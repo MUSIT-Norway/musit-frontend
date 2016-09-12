@@ -1,6 +1,5 @@
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
-import styles from './Breadcrumb.scss'
 
 export default class Breadcrumb extends React.Component {
   static propTypes = {
@@ -11,17 +10,24 @@ export default class Breadcrumb extends React.Component {
       url: React.PropTypes.string
     })),
     nodeTypes: React.PropTypes.arrayOf(React.PropTypes.shape({
-      type: React.PropTypes.string,
-      iconName: React.PropTypes.string
+      type: React.PropTypes.string.isRequired,
+      iconName: React.PropTypes.string.isRequired
     })),
-    onClickCrumb: React.PropTypes.func.isRequired
+    onClickCrumb: React.PropTypes.func,
+    passive: React.PropTypes.bool,
+    allActive: React.PropTypes.bool,
+    divider: React.PropTypes.string,
   }
 
   render() {
+    const styles = require('./Breadcrumb.scss')
     const {
       nodes,
       nodeTypes,
-      onClickCrumb
+      onClickCrumb,
+      passive, // All nodes are unclickable
+      allActive, // All nodes are clickable, also current node
+      divider // Fragment splitter
     } = this.props
 
     const isLast = (array, index) => (array.length - 1) === index
@@ -37,7 +43,17 @@ export default class Breadcrumb extends React.Component {
             )
           }
         }
-        if (!isLast(nodeArray, index)) {
+
+        if (passive) {
+          fragment = (
+            <span>
+              <span className={styles.crumb}>
+              {iconFragment}{node.name}
+              </span>
+              <span className={styles.crumb}>{divider}</span>
+            </span>
+          )
+        } else if (!isLast(nodeArray, index) || allActive) {
           fragment = (
             <span>
               <span className={styles.crumb}>
@@ -49,7 +65,7 @@ export default class Breadcrumb extends React.Component {
                   }}
                 >{iconFragment}{node.name}</a>
               </span>
-              <span className={styles.crumb}>/</span>
+              <span className={styles.crumb}>{divider}</span>
             </span>
           )
         } else {
@@ -61,7 +77,7 @@ export default class Breadcrumb extends React.Component {
     }
     return (
       <div>
-        <span>/</span>{renderCrumb(nodes)}
+        <span className={styles.crumb}>{divider}</span>{renderCrumb(nodes)}
       </div>
     )
   }

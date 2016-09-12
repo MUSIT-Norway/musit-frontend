@@ -25,6 +25,7 @@ import Language from '../../../components/language'
 import { loadControlsForNode, loadControlsAndObservationsForNode,
   loadObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
+import Breadcrumb from '../../../layout/Breadcrumb'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
@@ -63,7 +64,8 @@ export default class ObservationControlGridShow extends React.Component {
     loadControls: React.PropTypes.func.isRequired,
     loadPerson: React.PropTypes.func.isRequired,
     loadObservations: React.PropTypes.func.isRequired,
-    loadControlAndObservations: React.PropTypes.func.isRequired
+    loadControlAndObservations: React.PropTypes.func.isRequired,
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   constructor(props) {
@@ -126,12 +128,21 @@ export default class ObservationControlGridShow extends React.Component {
     />)
   }
 
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} allActive onClickCrumb={(node) => hashHistory.push(node.url)} />)
+  }
+
   render() {
+    const nodes = this.props.path
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
+    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     return (
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        breadcrumb={breadcrumb}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContent()}

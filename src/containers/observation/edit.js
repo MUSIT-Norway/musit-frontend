@@ -5,12 +5,18 @@ import ObservationPage from './page'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
+import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { parseISODateNonStrict as parseISODate } from '../../util'
 
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown)
+    translate: (key, markdown) => Language.translate(key, markdown),
+    path: state.storageGridUnit.root.path ?
+          state.storageGridUnit.root.path.map((s) => {
+            return {
+              id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
+      null
   }
 }
 
@@ -40,7 +46,9 @@ export default class EditObservationPage extends React.Component {
     translate: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired
+    loadPath: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   getObservationsFromLocationState() {
@@ -81,19 +89,28 @@ export default class EditObservationPage extends React.Component {
     return doneDate
   }
 
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
+  }
+
   render() {
+    const nodes = this.props.path
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
+    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     return (
       <Layout
         title={"Magasin"}
         translate={this.props.translate}
-        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        breadcrumb={breadcrumb}
         content={
           <div>
             <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.edit')}</h4>
             <ObservationPage
               id={this.props.params.id}
               observations={this.getObservationsFromLocationState()}
-              doneDate={this.parseDoneDateFromLocationState()}
+              doneDate={this.parseDoneDateFromLocationState().toISOString()}
               doneBy={this.props.location.state.doneBy}
               onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
               translate={this.props.translate}
