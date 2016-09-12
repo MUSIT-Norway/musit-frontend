@@ -30,63 +30,6 @@ import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
 
-<<<<<<< HEAD
-const mapStateToProps = (state) => ({
-  translate: (key, markdown) => Language.translate(key, markdown),
-  unit: state.storageGridUnit.root.data,
-  path: state.storageGridUnit.root.path ?
-        state.storageGridUnit.root.path.map((s) => {
-          return {
-            id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-    null,
-  observationControlGridData: state.observationControlGrid.data.map((e) => {
-    if (e.eventType === 'Control') {
-      return { ...e,
-                 type: e.eventType,
-                 doneBy: e.doneName ? e.doneName : e.doneBy,
-                 types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
-                   switch (c.eventType) {
-                     case 'ControlLightingCondition': return { ...p, ControlLightingCondition: true }
-                     case 'ControlTemperature': return { ...p, ControlTemperature: true }
-                     case 'ControlWaterDamageAssessment': return { ...p, ControlWaterDamageAssessment: true }
-                     case 'ControlHypoxicAir': return { ControlHypoxicAir: true }
-                     case 'ControlRelativeHumidity': return { ...p, ControlRelativeHumidity: true }
-                     case 'ControlCleaning': return { ...p, ControlCleaning: true }
-                     case 'ControlMold': return { ...p, ControlMold: true }
-                     case 'ControlPest': return { ...p, ControlPest: true }
-                     case 'ControlAlcohol': return { ...p, ControlAlcohol: true }
-                     case 'ControlFireProtection': return { ...p, ControlFireProtection: true }
-                     case 'ControlTheftProtection': return { ...p, ControlTheftProtection: true }
-                     case 'ControresultlPerimetersecurity': return { ...p, ControlPerimetersecurity: true }
-                     case 'ControlGas': return { ControlGas: true }
-                     default: return null
-                   } }, {}) : {}
-          }
-    }
-    return { ...e,
-              type: e.eventType,
-              doneBy: e.doneName ? e.doneName : e.doneBy,
-              types: e['subEvents-parts'] ? e['subEvents-parts'].reduce((p, c) => {
-                switch (c.eventType) {
-                  case 'ObservationLightingCondition': return { ...p, ControlLightingCondition: true }
-                  case 'ObservationTemperature': return { ...p, ControlTemperature: true }
-                  case 'ObservationWaterDamageAssessment': return { ...p, ControlWaterDamageAssessment: true }
-                  case 'ObservationHypoxicAir': return { ControlHypoxicAir: true }
-                  case 'ObservationRelativeHumidity': return { ...p, ControlRelativeHumidity: true }
-                  case 'ObservationCleaning': return { ...p, ControlCleaning: true }
-                  case 'ObservationMold': return { ...p, ControlMold: true }
-                  case 'ObservationPest': return { ...p, ControlPest: true }
-                  case 'ObservationAlcohol': return { ...p, ControlAlcohol: true }
-                  case 'ObservationFireProtection': return { ...p, ControlFireProtection: true }
-                  case 'ObservationTheftProtection': return { ...p, ControlTheftProtection: true }
-                  case 'ObservationPerimeterSecurity': return { ...p, ControlPerimetersecurity: true }
-                  case 'ObservationGas': return { ControlGas: true }
-                  default: return null
-                } }, {}) : {}
-          }
-  })
-})
-=======
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
@@ -94,7 +37,6 @@ const mapStateToProps = (state) => {
     observationControlGridData: state.observationControlGrid.data
   }
 }
->>>>>>> master
 
 const mapDispatchToProps = (dispatch) => ({
   loadControls: (id, callback) => {
