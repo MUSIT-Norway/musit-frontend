@@ -37,15 +37,12 @@ export default class AddObservationPage extends React.Component {
     translate: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
-<<<<<<< HEAD
-    actor: PropTypes.object
-=======
+    actor: PropTypes.object,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   makeBreadcrumb(n, nt) {
     return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
->>>>>>> master
   }
 
   render() {
