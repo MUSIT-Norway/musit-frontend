@@ -34,17 +34,25 @@ export default class Toolbar extends React.Component {
       clickShowRight
     } = this.props
     if (onSearchChanged) {
-      optionalSearch =
-      (<div className={styles.searchField}>
-        <MusitField
-          id={'search'}
-          addOnPrefix={'\u2315'}
-          placeHolder={placeHolderSearch}
-          value={searchValue}
-          validate="text"
-          onChange={onSearchChanged}
-        />
-      </div>)
+      optionalSearch = (
+        <div className={styles.searchField}>
+          <MusitField
+            style={{ width: '200px' }}
+            id={'search'}
+            addOnPrefix={'\u2315'}
+            placeHolder={placeHolderSearch}
+            value={searchValue}
+            validate="text"
+            onChange={onSearchChanged}
+          />
+        </div>
+      )
+    } else {
+      optionalSearch = (
+        <div className={styles.searchField}>
+          <span style={{ width: '200px', display: 'inline-block' }}>{' '}</span>
+        </div>
+      )
     }
     return (
       <div className={styles.wrapper}>

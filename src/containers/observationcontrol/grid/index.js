@@ -30,6 +30,7 @@ import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
 
+<<<<<<< HEAD
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   unit: state.storageGridUnit.root.data,
@@ -85,6 +86,15 @@ const mapStateToProps = (state) => ({
           }
   })
 })
+=======
+const mapStateToProps = (state) => {
+  return {
+    translate: (key, markdown) => Language.translate(key, markdown),
+    unit: state.storageGridUnit.root.data,
+    observationControlGridData: state.observationControlGrid.data
+  }
+}
+>>>>>>> master
 
 const mapDispatchToProps = (dispatch) => ({
   loadControls: (id, callback) => {
@@ -126,10 +136,12 @@ export default class ObservationControlGridShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadControlAndObservations(this.props.params.id,
-                                          { onSuccess: (result) => this.props.loadPerson({ data: result.filter((r) => r.doneBy)
-                                                                             .map((r) => r.doneBy) }),
-                                            onFailure: () => true })
+    this.props.loadControlAndObservations(this.props.params.id, {
+      onSuccess: (result) => {
+        this.props.loadPerson({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy) })
+      },
+      onFailure: () => true
+    })
   }
 
   makeToolbar() {
@@ -162,12 +174,12 @@ export default class ObservationControlGridShow extends React.Component {
       id={this.props.params.id}
       translate={this.props.translate}
       tableData={this.props.observationControlGridData.filter((e) => {
-        if (e.type && this.state.showControls && this.state.showObservations) {
+        if (e.eventType && this.state.showControls && this.state.showObservations) {
           return true
-        } else if (e.type && this.state.showControls) {
-          return e.type.toLowerCase() === 'control'
-        } else if (e.type && this.state.showObservations) {
-          return e.type.toLowerCase() === 'observation'
+        } else if (e.eventType && this.state.showControls) {
+          return e.eventType.toLowerCase() === 'control'
+        } else if (e.eventType && this.state.showObservations) {
+          return e.eventType.toLowerCase() === 'observation'
         }
         return false
       })}
@@ -186,7 +198,7 @@ export default class ObservationControlGridShow extends React.Component {
     const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     return (
       <Layout
-        title={`${this.props.unit ? this.props.unit.name : ''} - ${this.props.translate('musit.grid.observation.header')}`}
+        title="Magasin"
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         toolbar={this.makeToolbar()}

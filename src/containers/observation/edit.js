@@ -106,7 +106,7 @@ export default class EditObservationPage extends React.Component {
         breadcrumb={breadcrumb}
         content={
           <div>
-            <center><h4>{this.props.translate('musit.observation.page.titles.edit')}</h4></center>
+            <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.edit')}</h4>
             <ObservationPage
               id={this.props.params.id}
               observations={this.getObservationsFromLocationState()}
