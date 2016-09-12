@@ -135,7 +135,6 @@ describe('ObservationReducer', () => {
             commentValue: 'Altfor fuktig' }
         },
         {
-
           type: 'pest',
           data: {
             identificationValue: 'Mye skadedyr',
@@ -149,7 +148,6 @@ describe('ObservationReducer', () => {
           }
         },
         {
-
           type: 'vannskaderisiko',
           data: {
             leftValue: 'Vannskade',
@@ -157,7 +155,6 @@ describe('ObservationReducer', () => {
           }
         },
         {
-
           type: 'temperature',
           data: {
             fromValue: '1,4',
