@@ -96,40 +96,40 @@ export default class StorageUnitContainer extends Component {
 
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.temperature',
+        ...this.validateNumberField('environmentRequirement.temperature',
         formProps.unit.temperature, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.temperatureTolerance',
+        ...this.validateNumberField('environmentRequirement.temperatureTolerance',
         formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.relativeHumidity',
+        ...this.validateNumberField('environmentRequirement.relativeHumidity',
         formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.relativeHumidityTolerance',
+        ...this.validateNumberField('environmentRequirement.relativeHumidityTolerance',
         formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.hypoxicAir',
+        ...this.validateNumberField('environmentRequirement.hypoxicAir',
         formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.hypoxicAirTolerance',
+        ...this.validateNumberField('environmentRequirement.hypoxicAirTolerance',
         formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
       }
-      errors = { ...errors, ...this.validateStringField('environmentRequirements.cleaning', formProps.unit.cleaning, 100)() }
+      errors = { ...errors, ...this.validateStringField('environmentRequirement.cleaning', formProps.unit.cleaning, 100)() }
       errors = {
         ...errors,
-        ...this.validateStringField('environmentRequirements.lightningConditions', formProps.unit.lightningConditions, 100)()
+        ...this.validateStringField('environmentRequirement.lightingCondition', formProps.unit.lightningConditions, 100)()
       }
-      errors = { ...errors, ...this.validateStringField('environmentRequirements.comments', formProps.unit.comments, 250)() }
+      errors = { ...errors, ...this.validateStringField('environmentRequirement.comments', formProps.unit.comments, 250)() }
     } else {
       errors.type = this.props.translate('musit.storageUnits.type.required')
       errors.name = this.props.translate('musit.storageUnits.name.required')
@@ -142,6 +142,7 @@ export default class StorageUnitContainer extends Component {
     const errors = this.validateForm(this.state)
     this.setState({ ...this.state, errors })
     if (Object.keys(errors).length === 0) {
+      console.log(this.state.unit)
       this.props.onLagreClick(this.props.params.parentId, (this.state && this.state.unit) ? this.state.unit : this.props.unit)
     }
   }
@@ -193,7 +194,7 @@ export default class StorageUnitContainer extends Component {
       </Row>
       <EnvironmentRequirementComponent
         translate={this.props.translate}
-        updateStorageUnit={(e) => this.updateEnvironmentalData(e)}
+        updateStorageUnit={(e) => { this.updateStorageUnit(data, 'environmentRequirement', e) }}
       />
       {data.type === 'Room' ?
         <Options
@@ -255,7 +256,6 @@ export default class StorageUnitContainer extends Component {
           </Grid>
         }
       />
-
     );
   }
 }

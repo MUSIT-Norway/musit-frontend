@@ -230,7 +230,6 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-
   makeBreadcrumb(n, nt) {
     return (<Breadcrumb nodes={n} nodeTypes={nt} onClickCrumb={(node) => this.props.history.push(node.url)} />)
   }

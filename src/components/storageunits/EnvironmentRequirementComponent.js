@@ -5,7 +5,7 @@ import { Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
 export default class EnvironmentRequirementComponent extends Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    updateStorageUnit: React.PropTypes.func.isRequired,
+    updateStorageUnit: React.PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -20,7 +20,7 @@ export default class EnvironmentRequirementComponent extends Component {
         hypoxicAir: '',
         hypoxicAirTolerance: '',
         cleaning: '',
-        lightningConditions: '',
+        lightingCondition: '',
         comments: ''
       }
     }
@@ -32,7 +32,7 @@ export default class EnvironmentRequirementComponent extends Component {
         }
       }
       this.setState(state)
-      this.props.updateStorageUnit(state.environmentRequirement)
+      this.props.updateStorageUnit(this.state.environmentRequirement)
     }
     this.temperature = {
       id: 'temperature',
@@ -40,6 +40,15 @@ export default class EnvironmentRequirementComponent extends Component {
       validate: 'number',
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.temperature.placeHolder'),
       precision: 3,
+      onChange: (temperature) => {
+        this.setState({
+          environmentRequirement: {
+            ...this.state.environmentRequirement,
+            temperature
+          }
+        })
+        this.props.updateStorageUnit(this.state.environmentRequirement)
+      }
     }
 
     this.temperatureTolerance = {
@@ -57,7 +66,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
@@ -75,7 +84,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
@@ -94,7 +103,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateStorageUnit(this.state.environmentRequirement)
       }
     }
 
@@ -144,6 +153,7 @@ export default class EnvironmentRequirementComponent extends Component {
       maximumLength: 100,
       onChange: (cleaning) => {
         const state = {
+
           environmentRequirement: {
             ...this.state.environmentRequirement,
             cleaning
@@ -160,11 +170,11 @@ export default class EnvironmentRequirementComponent extends Component {
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.lightningConditions.tooltip'),
       validate: 'text',
       maximumLength: 100,
-      onChange: (lightningConditions) => {
+      onChange: (lightingCondition) => {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            lightningConditions
+            lightingCondition
           }
         }
         this.setState(state)
@@ -180,6 +190,7 @@ export default class EnvironmentRequirementComponent extends Component {
       maximumLength: 250,
       onChange: (comments) => {
         const state = {
+
           environmentRequirement: {
             ...this.state.environmentRequirement,
             comments
@@ -260,6 +271,7 @@ export default class EnvironmentRequirementComponent extends Component {
               <Form horizontal>
                 {renderFieldBlock(this.state.environmentRequirement.cleaning, this.cleaning,
                   this.props.translate('musit.storageUnits.environmentRequirements.cleaning.labelText'))}
+
               </Form>
             </Col>
           </Row>
@@ -268,6 +280,7 @@ export default class EnvironmentRequirementComponent extends Component {
               <Form horizontal>
                 {renderFieldBlock(this.state.environmentRequirement.lightningConditions, this.lightningConditions,
                   this.props.translate('musit.storageUnits.environmentRequirements.lightningConditions.labelText'))}
+
               </Form>
             </Col>
           </Row>
