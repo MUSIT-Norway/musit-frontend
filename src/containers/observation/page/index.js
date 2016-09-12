@@ -316,7 +316,7 @@ export default class ObservationPage extends React.Component {
                 ) : (
                   <ActorSuggest
                     id="doneByField"
-                    value={this.state.doneBy ? this.state.doneBy.fn : this.props.userName}
+                    value={this.state.doneBy ? this.state.doneBy.fn : ''}
                     placeHolder="Find actor"
                     onChange={newValue => {
                       this.setState({ ...this.state, doneBy: newValue })
