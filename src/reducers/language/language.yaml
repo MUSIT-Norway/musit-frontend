@@ -4,7 +4,7 @@ en:
     leftMenu:
       node:
         newNode: "New node"
-        objectsOnNode: "No. og objects:"
+        objectsOnNode: "No. of objects:"
         totalObjectCount: "Total no. of objects:"
         underNodeCount: "No. of sub nodes:"
         properties: "Properties"
