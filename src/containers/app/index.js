@@ -7,7 +7,7 @@ import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
-import { clearUser } from '../../reducers/auth';
+import { clearUser, loadActor } from '../../reducers/auth';
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -21,7 +21,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearUser: () => dispatch(clearUser())
+    clearUser: () => {
+      dispatch(clearUser())
+      dispatch(loadActor())
+    }
   }
 }
 
