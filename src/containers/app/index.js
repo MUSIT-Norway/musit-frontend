@@ -7,7 +7,7 @@ import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
-import { clearUser, connectUser } from '../../reducers/auth';
+import { clearUser, connectUser, clearActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
 
 const mapStateToProps = (state) => {
@@ -25,6 +25,7 @@ const mapDispatchToProps = (dispatch) => {
     clearUser: () => {
       localStorage.removeItem('jwtToken')
       dispatch(clearUser())
+      dispatch(clearActor())
     },
     loadUser: () => {
       if (localStorage.getItem('jwtToken')) {
