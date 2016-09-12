@@ -42,7 +42,7 @@ const observationControlGridReducer = (state = initialState, action) => {
         loaded: true,
         data: state.data.map((e) => {
           return { ...e,
-          doneName: action.result.find((a) => a.id === e.doneBy) ? action.result.find((a) => a.id === e.doneBy).fn : e.doneBy
+          doneBy: action.result.find((a) => a.id === e.doneBy) ? action.result.find((a) => a.id === e.doneBy).fn : e.doneBy
          } })
       };
     case LOAD_ACTOR_FAILURE:

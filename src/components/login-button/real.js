@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import jwtDecode from 'jwt-decode';
 
 export default class FeideButton extends React.Component {
   static propTypes = {
@@ -29,12 +30,8 @@ export default class FeideButton extends React.Component {
             webWindow.focus();
             const checkLoaded = () => {
               if (webWindow.closed === true) {
-                this.props.setUser({
-                  name: localStorage.getItem('musitUserName'),
-                  accessToken: localStorage.getItem('musitAccessToken'),
-                  email: localStorage.getItem('musitUserEmail'),
-                  userId: localStorage.getItem('musitUserId')
-                });
+                const user = jwtDecode(localStorage.getItem('jwtToken'))
+                this.props.setUser(user);
               } else {
                 setTimeout(checkLoaded, 500);
               }

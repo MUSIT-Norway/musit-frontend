@@ -3,6 +3,7 @@ const CLEAR_USER = 'musit/auth/CLEAR_USER';
 const LOAD_ACTOR = 'musit/auth/LOAD_ACTOR'
 const LOAD_ACTOR_SUCCESS = 'musit/auth/LOAD_ACTOR_SUCCESS'
 const LOAD_ACTOR_FAILURE = 'musit/auth/LOAD_ACTOR_FAILURE'
+const CLEAR_ACTOR = 'musit/auth/CLEAR_ACTOR'
 
 const initialState = {
   user: null,
@@ -20,6 +21,11 @@ const authReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         user: null
+      };
+    case CLEAR_ACTOR:
+      return {
+        ...state,
+        actor: null
       };
     case LOAD_ACTOR:
       return {
@@ -52,6 +58,12 @@ export const loadActor = () => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
     promise: (client) => client.get('/api/actor/v1/dataporten/currentUser')
+  }
+}
+
+export const clearActor = () => {
+  return {
+    type: CLEAR_ACTOR
   }
 }
 

@@ -1,13 +1,14 @@
 import 'react-select/dist/react-select.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { IndexLink } from 'react-router'
+import { IndexLink, hashHistory } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
-import { clearUser, loadActor } from '../../reducers/auth';
+import { clearUser, connectUser, clearActor } from '../../reducers/auth';
+import jwtDecode from 'jwt-decode';
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -22,8 +23,17 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     clearUser: () => {
+      localStorage.removeItem('jwtToken')
       dispatch(clearUser())
-      dispatch(loadActor())
+      dispatch(clearActor())
+    },
+    loadUser: () => {
+      if (localStorage.getItem('jwtToken')) {
+        const user = jwtDecode(localStorage.getItem('jwtToken'))
+        dispatch(connectUser(user));
+        return true;
+      }
+      return false
     }
   }
 }
@@ -36,7 +46,8 @@ class App extends Component {
     pushState: PropTypes.func.isRequired,
     store: PropTypes.object,
     pickListCount: PropTypes.number.isRequired,
-    clearUser: PropTypes.func.isRequired
+    clearUser: PropTypes.func.isRequired,
+    loadUser: PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -44,21 +55,17 @@ class App extends Component {
     router: PropTypes.object.isRequired
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.user && nextProps.user) {
-      this.context.router.push('/musit');
-    } else if (this.props.user && !nextProps.user) {
-      this.context.router.push('/');
+  componentWillMount() {
+    const loaded = this.props.loadUser()
+    if (!loaded) {
+      hashHistory.replace('/')
     }
   }
 
   handleLogout = (event) => {
     event.preventDefault()
     this.props.clearUser()
-  }
-
-  handleFakeLogin = (event) => {
-    event.preventDefault()
+    hashHistory.replace('/')
   }
 
   render() {
@@ -100,16 +107,6 @@ class App extends Component {
             </Nav>
             {user &&
               <p className={`${styles.loggedInMessage} navbar-text`}>Logged in as <strong>{user.name}</strong>.</p>}
-            <Nav navbar pullRight>
-              <NavItem
-                target="_blank"
-                rel="noopener noreferrer"
-                title="View on Github"
-                href="https://github.com/MUSIT-Norway/musit"
-              >
-                <i className="fa fa-github" />
-              </NavItem>
-            </Nav>
           </Navbar.Collapse>
         </Navbar>
 
@@ -117,15 +114,7 @@ class App extends Component {
           {this.props.children}
         </div>
 
-        <div className="well text-center">
-          Have questions? Ask for help<a
-            href="https://github.com/MUSIT-Norway/musit/issues"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            on Github
-          </a>
-        </div>
+        <div className="well text-center">{' '}</div>
       </div>
     );
   }

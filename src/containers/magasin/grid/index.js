@@ -200,7 +200,7 @@ export default class StorageUnitsContainer extends React.Component {
       return (<NodeGrid
         id={rootNode ? rootNode.id : null}
         translate={this.props.translate}
-        tableData={children.filter((row) => row.name.indexOf(filter) !== -1)}
+        tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={this.props.onAction}
         onClick={(row) =>
             this.props.history.push(
@@ -232,6 +232,7 @@ export default class StorageUnitsContainer extends React.Component {
       <Layout
         title={"Magasin"}
         translate={translate}
+        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
         content={this.makeContentGrid(searchPattern, rootNodeData, children)}
