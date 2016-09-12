@@ -115,10 +115,10 @@ en:
           countPlaceHolder: "Integer"
           countTooltip: "Pest quantity"
         alcohol:
-          statusRequired: 'Please enter alcohol status.'
+          statusRequired: 'Alcohol status is required.'
           statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals.'
           volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals.'
-          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters.'
+          commentIncorrect: 'Maximum length for Task/Comment is 250 characters.'
           labelText: "Alcohol"
           volumeLabel: "Volume"
           volumePlaceHolder: "%"
@@ -292,32 +292,32 @@ en:
         incorrect: 'Maximum length for name is 100 characters.'
         required: "Name is required."
         placeHolder: "Free text"
-        tooltip: "Name on node"
+        tooltip: "Node name"
       address:
         labelText: "Address"
         incorrect: 'Maximum length for address is 100 characters.'
         placeHolder: "Street adr."
-        tooltip: "The nodes address"
+        tooltip: "Node address"
       area:
         labelText: "Area"
         incorrect: 'Area (from) must be a number with maximum 3 decimals.'
         placeHolder: "from"
-        tooltip: "The nodes area in m2"
+        tooltip: "Node area in m2"
       areaTo:
         labelText: ""
         incorrect: 'Area (to) must be a number with maximum 3 decimals.'
         placeHolder: "to"
-        tooltip: "The nodes area in m2"
+        tooltip: "Node area in m2"
       height:
         labelText: "Height"
         incorrect: 'Height (from) must be a number with maximum 3 decimals.'
         placeHolder: "from"
-        tooltip: "The nodes height in m"
+        tooltip: "Node height in m"
       heightTo:
         labelText: ""
         incorrect: 'Height (to) must be a number with maximum 3 decimals.'
         placeHolder: "to"
-        tooltip: "The nodes height in m"
+        tooltip: "Node height in m"
       securityAssessment:
         securityAssessment: "Security assessment"
         perimeterSecurity: "Perimeter security"
