@@ -25,6 +25,7 @@ import EnvironmentRequirementComponent from '../../../components/storageunits/En
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../layout'
 import { validateString, validateNumber } from '../../../components/formfields/common/validators'
+import Breadcrumb from '../../../layout/Breadcrumb'
 
 export default class StorageUnitContainer extends Component {
   static propTypes = {
@@ -37,6 +38,8 @@ export default class StorageUnitContainer extends Component {
     onLagreClick: PropTypes.func.isRequired,
     translate: PropTypes.func.isRequired,
     route: React.PropTypes.object,
+    loadPath: React.PropTypes.func,
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   constructor(props) {
@@ -153,12 +156,22 @@ export default class StorageUnitContainer extends Component {
     const newData = Object.assign((this.state && this.state.unit) ? this.state.unit : this.props.unit, environmentalData)
     this.setState({ unit: newData })
   }
+
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
+  }
   render() {
     const data = (this.state && this.state.unit) ? this.state.unit : this.props.unit;
+    const nodes = this.props.path
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
+    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
 
     const completePage = (<div>
       <h4 style={{ textAlign: 'center' }}>
-        {this.props.route.add ? `${this.props.translate('musit.storageUnits.newNode')} - ` : ''}{this.props.translate('musit.storageUnits.header')}
+        {this.props.route.add ? `${this.props.translate('musit.storageUnits.newNode')} - ` : ''}
+        {this.props.translate('musit.storageUnits.header')}
       </h4>
       <StorageUnitComponents
         unit={data}
@@ -229,7 +242,7 @@ export default class StorageUnitContainer extends Component {
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
         translate={this.props.translate}
-        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        breadcrumb={breadcrumb}
         content={
           <Grid>
             <Row>
