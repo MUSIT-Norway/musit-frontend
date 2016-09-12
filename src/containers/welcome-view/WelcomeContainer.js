@@ -9,7 +9,6 @@ export default class WelcomeContainer extends React.Component {
     translate: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
     setUser: React.PropTypes.func.isRequired,
-    loadActor: React.PropTypes.func.isRequired,
   };
 
   render() {
