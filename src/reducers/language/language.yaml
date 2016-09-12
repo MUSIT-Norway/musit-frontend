@@ -679,36 +679,35 @@ no:
       environmentalData: "Miljødata"
       type:
         label: "Type"
-        incorrect: 'Type: Maximum length is 100 characters'
-        required: "Vennligst oppgi type"
-        placeHolder: "velg type"
-        tooltip: "Type lagringsenhet"
+        required: "Type er påkrevd."
+        placeHolder: "Vennligst velg..."
+        tooltip: "Nodens type"
         items:
           StorageUnit: "Lagringsenhet"
           Room: "Rom"
-          Building: "Bygning"
+          Building: "Bygg"
           Organization: "Organisasjon"
       name:
         labelText: "Navn"
-        incorrect: 'Navn: Maximum length is 100 characters'
-        required: "Vennligst oppgi navn"
-        placeHolder: " "
-        tooltip: "Navn tooltip"
+        incorrect: 'Navn kan ikke være på mer enn 100 tegn.'
+        required: "Navn er påkrevd."
+        placeHolder: "Navn"
+        tooltip: "Navn på noden"
       address:
         labelText: "Adresse"
-        incorrect: 'Adresse: Maximum length is 100 characters'
+        incorrect: 'Adresse kan ikke være på mer enn 100 tegn.'
         placeHolder: "Gateadr."
-        tooltip: "Adresse tooltip"
+        tooltip: "Nodens adresse"
       area:
         labelText: "Areal"
         incorrect: 'Areal: Value must be a number with maximum 3 decimals'
         placeHolder: "fra"
-        tooltip: "Areal fra tooltip"
+        tooltip: "Nodens areal i m2"
       areaTo:
         labelText: "Areal til"
         incorrect: 'Areal til: Value must be a number with maximum 3 decimals'
         placeHolder: "til"
-        tooltip: "Areal til tooltip"
+        tooltip: "Nodens areal i m2"
       height:
         labelText: "Høyde"
         incorrect: 'Høyde: Value must be a number with maximum 3 decimals'
