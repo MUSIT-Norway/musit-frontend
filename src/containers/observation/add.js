@@ -9,6 +9,7 @@ import { addObservation } from '../../reducers/observation'
 
 const mapStateToProps = (state) => {
   return {
+    actor: state.auth.actor,
     translate: (key, markdown) => Language.translate(key, markdown),
     path: state.storageGridUnit.root.path ?
           state.storageGridUnit.root.path.map((s) => {
@@ -36,6 +37,10 @@ export default class AddObservationPage extends React.Component {
     translate: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
+<<<<<<< HEAD
+=======
+    actor: PropTypes.object,
+>>>>>>> master
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
@@ -63,6 +68,7 @@ export default class AddObservationPage extends React.Component {
               translate={this.props.translate}
               title="Add new observations"
               mode="ADD"
+              doneBy={(this.props.actor && this.props.actor.fn) ? this.props.actor : ''}
             />
           </div>
         }

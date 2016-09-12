@@ -34,6 +34,7 @@ export default class ControlAddContainer extends React.Component {
     translate: React.PropTypes.func.isRequired,
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
+    actor: React.PropTypes.object,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
@@ -50,15 +51,16 @@ export default class ControlAddContainer extends React.Component {
       relativeHumidityOK: null,
       pestOK: null,
       storageUnit: null,
-      temperature: '12',
-      temperatureTolerance: '2',
-      relativeHumidity: '89',
-      relativeHumidityInterval: '4',
-      inertAir: '56',
-      inertAirInterval: '4',
-      light: 'Mørkt',
-      cleaning: 'Gullende rent',
-      doneDate: moment()
+      temperature: ' ',
+      temperatureTolerance: ' ',
+      relativeHumidity: ' ',
+      relativeHumidityInterval: ' ',
+      inertAir: ' ',
+      inertAirInterval: ' ',
+      light: ' ',
+      cleaning: ' ',
+      doneDate: moment(),
+      doneBy: this.props.actor
     }
     this.onControlClick = this.onControlClick.bind(this)
     this.onControlClickOK = this.onControlClickOK.bind(this)

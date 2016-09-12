@@ -1,9 +1,5 @@
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
-let styles = {}
-if (process.env.NODE_ENV !== 'test') {
-  styles = require('./Breadcrumb.scss')
-}
 
 export default class Breadcrumb extends React.Component {
   static propTypes = {
@@ -24,6 +20,7 @@ export default class Breadcrumb extends React.Component {
   }
 
   render() {
+    const styles = require('./Breadcrumb.scss')
     const {
       nodes,
       nodeTypes,

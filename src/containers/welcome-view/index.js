@@ -20,7 +20,7 @@
 import { connect } from 'react-redux';
 import Language from '../../components/language'
 import WelcomeContainer from './WelcomeContainer';
-import { connectUser } from '../../reducers/auth';
+import { connectUser, loadActor } from '../../reducers/auth';
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -28,10 +28,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setUser: (user) => dispatch(connectUser(user))
+  setUser: (user) => {
+    dispatch(connectUser(user))
+    dispatch(loadActor())
+  },
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class WelcomeView extends WelcomeContainer {
 }
-
