@@ -17,27 +17,41 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import request from 'superagent';
+import jwtDecode from 'jwt-decode';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
+/**
+ * This is a temporary solution. Its not effective, but it works for now.
+ * Gets the token either from jwtToken (real login) or accessToken (fake login) in localStorage
+ *
+ * @returns {string} the token
+ */
+const getToken = () => {
+  let token = ''
+  if (localStorage.getItem('jwtToken')) {
+    token = jwtDecode(localStorage.getItem('jwtToken')).accessToken
+  } else {
+    token = localStorage.getItem('accessToken')
+  }
+  return token
+}
+
 class ApiClient {
-
   constructor() {
-    const token = 'fake-token-zab-xy-stein';
-
     methods.forEach((method) => {
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const apiRequest = request[method](this.fixPath(path));
         if (params) {
           apiRequest.query(params);
         }
-        if (token.length > 0) {
+        const token = getToken()
+        if (token !== '') {
           apiRequest.set('Authorization', `Bearer ${token}`)
         }
         if (data) {
           apiRequest.send(data);
         }
-
         apiRequest.end((err, { body } = {}) => (err ? reject(body || err) : resolve(body)));
       });
     })
