@@ -12,66 +12,17 @@
   "users": [
     {
       "userId": "jarle",
-      "name": "Jarle",
+      "name": "Jarle Stabell",
       "emails": [ "foo@bar.bas" ],
       "groups": ["EtnoLes", "FotoLes"],
       "accessToken": "fake-token-zab-xy-jarle"
     },
     {
       "userId": "stein",
-      "name": "Stein",
+      "name": "Stein A. Olsen",
       "emails": [ "foo@bar.bas" ],
       "groups": ["EtnoLes", "FotoLes"],
       "accessToken": "fake-token-zab-xy-stein"
-    },
-    {
-      "userId": "kjellg",
-      "name": "Kjell Gunnar",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-kjellg"
-    },
-    {
-      "userId": "lasjo",
-      "name": "Line",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-lasjo"
-    },
-    {
-      "userId": "rituvesh",
-      "name": "Rituvesh",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-rituvesh"
-    },
-    {
-      "userId": "svein",
-      "name": "Svein",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-svein"
-    },
-    {
-      "userId": "ellen",
-      "name": "Ellen",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-ellen"
-    },
-    {
-      "userId": "jarl",
-      "name": "Jarl",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-jarl"
-    },
-    {
-      "userId": "kpmeen",
-      "name": "Knut Petter",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-kpmeen"
     }
   ]
 }
