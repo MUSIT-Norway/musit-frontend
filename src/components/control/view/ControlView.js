@@ -15,11 +15,11 @@ export default class ControlView extends Component {
 
   static iconMap = {
     ControlAlcohol: 'percent',
-    ControlCleaning: 'asterisk',
-    ControlGas: 'asterisk',
-    ControlHypoxicAir: 'asterisk',
+    ControlCleaning: 'fa',
+    ControlGas: 'inr',
+    ControlHypoxicAir: 'cloud',
     ControlLightingCondition: 'sun-o',
-    ControlMold: 'asterisk',
+    ControlMold: 'bolt',
     ControlPest: 'bug',
     ControlRelativeHumidity: 'tint',
     ControlTemperature: 'asterisk'

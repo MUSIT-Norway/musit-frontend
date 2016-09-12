@@ -40,7 +40,7 @@ export default class AddObservationPage extends React.Component {
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         content={
           <div>
-            <center><h4>{this.props.translate('musit.observation.page.titles.add')}</h4></center>
+            <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.add')}</h4>
             <ObservationPage
               id={this.props.params.id}
               onSaveObservation={this.props.onSaveObservation}

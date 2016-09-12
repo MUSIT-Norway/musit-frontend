@@ -51,6 +51,7 @@ export default class FakeLoginSelector extends Component {
   }
 
   onSelect(user) {
+    localStorage.setItem('accessToken', user.accessToken)
     this.props.setUser(user);
   }
 

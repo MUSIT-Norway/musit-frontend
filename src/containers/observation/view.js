@@ -59,7 +59,7 @@ export default class ViewObservationPage extends React.Component {
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         content={
           <div>
-            <h4>{this.props.translate('musit.observation.page.titles.view')}</h4>
+            <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.view')}</h4>
             <ObservationPage
               id={this.props.params.id}
               onSaveObservation={() => true} // disable save

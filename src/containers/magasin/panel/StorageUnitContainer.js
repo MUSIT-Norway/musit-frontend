@@ -139,7 +139,7 @@ export default class StorageUnitContainer extends Component {
     const errors = this.validateForm(this.state)
     this.setState({ ...this.state, errors })
     if (Object.keys(errors).length === 0) {
-      this.props.onLagreClick((this.state && this.state.unit) ? this.state.unit : this.props.unit)
+      this.props.onLagreClick(this.props.params.parentId, (this.state && this.state.unit) ? this.state.unit : this.props.unit)
     }
   }
 
@@ -157,12 +157,9 @@ export default class StorageUnitContainer extends Component {
     const data = (this.state && this.state.unit) ? this.state.unit : this.props.unit;
 
     const completePage = (<div>
-      <Row style={{ textAlign: 'center' }}>
-        <h2>{this.props.route.add ?
-        this.props.translate('musit.storageUnits.newNode') : this.props.params.id }
-        - {this.props.translate('musit.storageUnits.header')}
-        </h2>
-      </Row>
+      <h4 style={{ textAlign: 'center' }}>
+        {this.props.route.add ? `${this.props.translate('musit.storageUnits.newNode')} - ` : ''}{this.props.translate('musit.storageUnits.header')}
+      </h4>
       <StorageUnitComponents
         unit={data}
         translate={this.props.translate}
@@ -232,7 +229,7 @@ export default class StorageUnitContainer extends Component {
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
         translate={this.props.translate}
-        breadcrumb={<span>"Museum / Papirdunken / Esken inni der"</span>}
+        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         content={
           <Grid>
             <Row>
