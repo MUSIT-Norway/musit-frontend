@@ -21,18 +21,31 @@ import jwtDecode from 'jwt-decode';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
+/**
+ * This is a temporary solution. Its not effective, but it works for now.
+ * Gets the token either from jwtToken (real login) or accessToken (fake login) in localStorage
+ *
+ * @returns {string} the token
+ */
+const getToken = () => {
+  let token = ''
+  if (localStorage.getItem('jwtToken')) {
+    token = jwtDecode(localStorage.getItem('jwtToken')).accessToken
+  } else {
+    token = localStorage.getItem('accessToken')
+  }
+  return token
+}
+
 class ApiClient {
   constructor() {
-    let token = ''
-    if (localStorage.getItem('jwtToken')) {
-      token = jwtDecode(localStorage.getItem('jwtToken')).accessToken
-    }
     methods.forEach((method) => {
       this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
         const apiRequest = request[method](this.fixPath(path));
         if (params) {
           apiRequest.query(params);
         }
+        const token = getToken()
         if (token !== '') {
           apiRequest.set('Authorization', `Bearer ${token}`)
         }
