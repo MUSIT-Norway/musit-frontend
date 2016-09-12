@@ -93,7 +93,7 @@ en:
           identificationValueRequired: 'Pest identification is required.'
           identificationValueIncorrect: 'Maximum length for pest identification is 100 characters.'
           commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
-          countIncorrect: "Please correct quantity, the input value is not valid."
+          countIncorrect: "Quantity must be an integer."
           lifeCycleRequired: "Please choose stage. Stage must be chosen when quantity is entered."
           labelText: "Pest"
           identificationLabel: "Identification"
@@ -274,103 +274,112 @@ en:
         executeAll: "Execute (all)"
     storageUnits:
       title: "Storage facility"
-      security:
-        securityAssessment: "Sikringstilstand"
-        perimeterSecurity: "Skallsikring"
-        theftProtection: "Tyverisikring"
-        fireProtection: "Brannsikring"
-        waterDamageAssessment: "Vannskaderisiko"
-        routinesAndContingencyPlan: "Rutiner og beredskap"
-      environmental:
-        environmentalAssessment: "Bevaringstilstand"
-        relativeHumidity: "Relativ luftfuktighet"
-        temperature: "Temperatur"
-        lightingCondition: "Lysforhold"
-        preventiveConservation: "Preventiv konservering"
+      header: "Properties"
+      newNode: "New node"
+      environmentalData: "Environmental conditions"
+      type:
+        label: "Type"
+        required: "Type is required."
+        placeHolder: "Please choose..."
+        tooltip: "Type of node"
+        items:
+          StorageUnit: "Storage unit"
+          Room: "Room"
+          Building: "Building"
+          Organization: "Organisation"
+      name:
+        labelText: "Name"
+        incorrect: 'Maximum length for name is 100 characters.'
+        required: "Name is required."
+        placeHolder: "Free text"
+        tooltip: "Name on node"
+      address:
+        labelText: "Address"
+        incorrect: 'Maximum length for address is 100 characters.'
+        placeHolder: "Street adr."
+        tooltip: "The nodes address"
+      area:
+        labelText: "Area"
+        incorrect: 'Area (from) must be a number with maximum 3 decimals.'
+        placeHolder: "from"
+        tooltip: "The nodes area in m2"
+      areaTo:
+        labelText: ""
+        incorrect: 'Area (to) must be a number with maximum 3 decimals.'
+        placeHolder: "to"
+        tooltip: "The nodes area in m2"
+      height:
+        labelText: "Height"
+        incorrect: 'Height (from) must be a number with maximum 3 decimals.'
+        placeHolder: "from"
+        tooltip: "The nodes height in m"
+      heightTo:
+        labelText: ""
+        incorrect: 'Height (to) must be a number with maximum 3 decimals.'
+        placeHolder: "to"
+        tooltip: "The nodes height in m"
+      securityAssessment:
+        securityAssessment: "Security assessment"
+        perimeterSecurity: "Perimeter security"
+        theftProtection: "Theft protection"
+        fireProtection: "Fire protection"
+        waterDamageAssessment: "Water damage assessment"
+        routinesAndContingencyPlan: "Routines and contingency plan"
+      environmentalAssessment:
+        environmentalAssessment: "Environmental assessment"
+        relativeHumidity: "Relative humidity"
+        temperature: "Temperature"
+        lightingCondition: "Lighting condition"
+        preventiveConservation: "Preventive conservation"
       environmentRequirements:
         temperature:
           labelText: "Temperature"
-          tooltip: "TODO Måleenhet grader celsius, desimaltall"
-          placeHolder: "\u00b1 C"
-          comment: "Task/Comment"
+          incorrect: 'Temperature must be a number with maximum 3 decimals.'
+          tooltip: "Temperature requirement in °C"
+          placeHolder: "\u00b0C"
         temperatureTolerance:
           labelText: ""
-          tooltip: "TODO Måleenhet toleranse, ett tall"
-          placeHolder: "int"
-          addOnPrefix: "\u00b1"
+          incorrect: 'Temperature tolerance must be an integer.'
+          tooltip: "Temperature tolerance"
+          placeHolder: "+/- \u00b0C"
+          addOnPrefix: ""
         relativeHumidity:
-          labelText: "Relative humidity"
-          tooltip: "TODO Måleenhet prosent, desimaltall"
+          labelText: "Rel. humidity"
+          incorrect: 'Relative humidity must be a number with maximum 3 decimals.'
+          tooltip: "Relative humidity requirement in %"
           placeHolder: "%"
-          comment: "Task/Comment"
         relativeHumidityTolerance:
           labelText: ""
-          tooltip: "TODO Måleenhet prosent toleranse, ett tall"
-          placeHolder: "int"
-          addOnPrefix: "\u00b1"
-        inertAir:
+          incorrect: 'Relative humidity tolerance must be an integer.'
+          tooltip: "Relative humidity tolerance"
+          placeHolder: "+/- %"
+          addOnPrefix: ""
+        hypoxicAir:
           labelText: "Hypoxic air"
-          tooltip: "TODO Måleenhet prosent oksygen, desimaltall"
+          incorrect: 'Hypoxic air m must be a number with maximum 3 decimals.'
+          tooltip: "Hypoxic air requirement in % O2"
           placeHolder: "% O2"
-          comment: "Task/Comment"
-        inertAirTolerance:
+        hypoxicAirTolerance:
           labelText: ""
-          tooltip: "TODO Måleenhet prosent oksygen toleranse, ett tall"
-          placeHolder: "int"
-          addOnPrefix: "\u00b1"
-        renhold:
+          incorrect: 'Hypoxic air tolerance must be an integer.'
+          tooltip: "Hypoxic air tolerance"
+          placeHolder: "+/- % O2"
+          addOnPrefix: ""
+        cleaning:
           labelText: "Cleaning"
-          comment: "Task/Comment"
-          tooltip: "TODO Renhold"
-        lightCondition:
+          incorrect: 'Maximum length for cleaning is 100 characters.'
+          placeHolder: "Free text"
+          tooltip: "Cleaning requirement"
+        lightningConditions:
           labelText: "Lighting condition"
-          comment: "Task/Comment"
-          tooltip: "TODO Lysforhold"
+          incorrect: 'Maximum length for lighting condition is 100 characters.'
+          placeHolder: "Free text"
+          tooltip: "Lighting condition requirement"
         comments:
           labelText: "Comment"
-          tooltip: "TODO Kommentar!"
-        gas:
-          labelText: "Gas"
-          comment: "Task/Comment"
-          tooltip: "TODO Gass"
-        skallsikring:
-          labelText: "Perimeter security"
-          comment: "Task/Comment"
-          tooltip: "TODO Skallsikring"
-        brannsikring:
-          labelText: "Fire protection"
-          comment: "Task/Comment"
-          tooltip: "TODO Brannsikring"
-        vannskaderisiko:
-          labelText: "Water damage assessment"
-          comment: "Task/Comment"
-          tooltip: "TODO Vannskaderisiko"
-        tyverisikring:
-          labelText: "Theft protection"
-          comment: "Task/Comment"
-          tooltip: "TODO Tyverisikring"
-        mold:
-          labelText: "Mold"
-          comment: "Task/Comment"
-          tooltip: "TODO Mugg"
-        alcohol:
-          labelText: "Alcohol"
-          volume: "Volume"
-          statusLabel: "Level"
-          comment: "Task/Comment"
-          tooltip: "TODO Sprit"
-          statusItems:
-            dryed: "Desiccated"
-            allmostDryed: "Almost desiccated"
-            someDryed: "Some desiccated"
-            minorDryed: "A bit desiccated"
-            satisfactory: "Satisfactory"
-      storageType:
-        items:
-          storageunit: "Storage unit"
-          room: "Room"
-          building: "Building"
-          organization: "Organization"
+          incorrect: 'Maximum length for comment is 250 characters.'
+          placeHolder: "Free text"
+          tooltip: "Comment"
     welcomePage:
       title: >
         MUSIT
