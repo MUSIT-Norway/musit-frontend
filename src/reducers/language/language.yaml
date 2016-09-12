@@ -356,7 +356,7 @@ en:
           addOnPrefix: ""
         hypoxicAir:
           labelText: "Hypoxic air"
-          incorrect: 'Hypoxic air m must be a number with maximum 3 decimals.'
+          incorrect: 'Hypoxic air must be a number with maximum 3 decimals.'
           tooltip: "Hypoxic air requirement in % O2"
           placeHolder: "% O2"
         hypoxicAirTolerance:
@@ -457,7 +457,7 @@ no:
       save: "Lagre"
       saveTooltip: "Lagre"
       cancel: "Avbryt"
-      cancelTooltip: "Avbryter registreringen"
+      cancelTooltip: "Avbryt registreringen"
     viewControl:
       controlAlcohol: "Sprit"
       controlCleaning: "Renhold"
