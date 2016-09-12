@@ -62,7 +62,7 @@ export default class ActorSuggest extends React.Component {
     id: this.props.id,
     placeholder: this.props.placeHolder,
     type: 'search',
-    onChange: this.onCHange.bind(this)
+    onChange: this.onChange.bind(this)
   }
 
   render() {
