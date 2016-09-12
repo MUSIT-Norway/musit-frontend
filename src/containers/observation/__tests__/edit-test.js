@@ -1,7 +1,7 @@
 import React from 'react'
 import { ReactTestUtils, assert } from '../../../../test/setup'
 import ObservationPage from '../page'
-import moment from 'moment'
+import { parseISODateNonStrict as parseISODate } from '../../../util'
 
 describe('Render edit observation page', () => {
   const renderer = ReactTestUtils.createRenderer();
@@ -13,7 +13,7 @@ describe('Render edit observation page', () => {
         translate={(key) => key}
         params={{ }}
         onSaveObservation={() => true}
-        doneDate={moment('2016-12-23')}
+        doneDate={parseISODate('2016-12-23')}
         mode="EDIT"
         id="1"
       />

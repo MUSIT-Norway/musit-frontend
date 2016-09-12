@@ -13,6 +13,8 @@ describe('ObservationDoubleTextAreaComponent', () => {
         leftLabel="Left label"
         leftValue="left"
         leftTooltip="Left tooltip"
+        leftPlaceHolder="Left placeholder"
+        rightPlaceHolder="Right placeholder"
         onChangeLeft={() => ('ji')}
         rightLabel="Right label"
         rightValue="right"

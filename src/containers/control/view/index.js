@@ -22,6 +22,7 @@ import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap'
 import { ControlView } from '../../../components/control/view'
 import { MusitField } from '../../../components/formfields'
 import Layout from '../../../layout'
+import Breadcrumb from '../../../layout/Breadcrumb'
 import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 
 export default class ControlViewContainer extends React.Component {
@@ -31,7 +32,8 @@ export default class ControlViewContainer extends React.Component {
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
     loadPersonNameFromId: React.PropTypes.func.isRequired,
-    doneBy: React.PropTypes.object
+    doneBy: React.PropTypes.object,
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   componentWillMount() {
@@ -46,14 +48,23 @@ export default class ControlViewContainer extends React.Component {
     return data && data[field] ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
   }
 
+  makeBreadcrumb(n, nt) {
+    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
+  }
+
   render() {
+    const nodes = this.props.path
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
+    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     const { translate } = this.props
     const data = this.props.controls.data;
     return (
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
+        breadcrumb={breadcrumb}
         content={
           <div>
             <h4 style={{ textAlign: 'center' }}>View control</h4>
