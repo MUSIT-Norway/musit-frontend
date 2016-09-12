@@ -181,7 +181,7 @@ export default class ControlAddContainer extends React.Component {
         breadcrumb={<span>Museum / Papirdunken / Esken inni der</span>}
         content={
           <div>
-            <h4>{this.props.translate('musit.newControl.title', false)}</h4>
+            <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.newControl.title', false)}</h4>
             <Grid>
               <Row>
                 <Col xs={3}>
