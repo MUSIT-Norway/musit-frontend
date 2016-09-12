@@ -20,7 +20,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
-import { connectUser } from '../../reducers/auth'
 
 const mapStateToProps = (state) => {
   return {
@@ -28,17 +27,12 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setUser: (user) => dispatch(connectUser(user))
-  }
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps)
 export default class FakeLoginSelector extends Component {
   static propTypes = {
     users: PropTypes.arrayOf(PropTypes.object),
     setUser: PropTypes.func.isRequired,
+    loadActor: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
