@@ -1,7 +1,6 @@
 import React from 'react'
 import { ReactTestUtils, assert } from '../../../../test/setup'
 import ObservationPage from '../page'
-import moment from 'moment'
 import { parseISODateNonStrict as parseISODate } from '../../../util'
 
 describe('Render edit observation page', () => {
