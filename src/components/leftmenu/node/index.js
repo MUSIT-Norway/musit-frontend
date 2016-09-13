@@ -33,7 +33,7 @@ export default class NodeLeftMenuComponent extends Component {
       showButtons
     } = this.props
 
-    const buttonLink = (type, icon, eventType, iconType) => {
+    const buttonLink = (type, icon, eventType, MusitIconType) => {
       let fragment = null
       if (Number.isInteger(id)) {
         fragment = (
@@ -44,7 +44,7 @@ export default class NodeLeftMenuComponent extends Component {
               onClick={() => eventType(id)}
               style={{ color: 'black' }}
             >
-              {iconType ? <div className={`icon icon-${icon}`} /> :
+              {MusitIconType ? <div className={`icon icon-${icon}`} /> :
                 <FontAwesome name={`${icon}`} style={{ padding: '14px' }} />}
               <br />
               {translate(`musit.leftMenu.node.${type}`)}
