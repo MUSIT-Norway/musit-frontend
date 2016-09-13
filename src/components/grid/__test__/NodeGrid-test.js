@@ -43,9 +43,9 @@ describe('NodeGrid', () => {
     assert(inputComponent[1].innerHTML === 'Lagringsenh')
   })
   it('Check the value of second row second column.', () => {
-    assert(inputComponent[10].innerHTML === 'Lagringsenh')
+    assert(inputComponent[9].innerHTML === 'Lagringsenh')
   })
   it('Check the value of second row fourth column.', () => {
-    assert(inputComponent[12].innerHTML === '16')
+    assert(inputComponent[11].innerHTML === '16')
   })
 })
