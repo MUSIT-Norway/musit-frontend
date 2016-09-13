@@ -22,7 +22,7 @@ import Language from '../../../components/language'
 import ControlAddContainerImpl from './index'
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user,
+  actor: state.auth.actor,
   translate: (key, markdown) => Language.translate(key, markdown),
   path: state.storageGridUnit.root.path ?
         state.storageGridUnit.root.path.map((s) => {
