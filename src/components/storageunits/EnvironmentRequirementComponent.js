@@ -202,7 +202,7 @@ export default class EnvironmentRequirementComponent extends Component {
 
   componentWillReceiveProps(props) {
     console.log(this.state)
-    this.setState({ environmentRequirement: props.environmentRequirement })
+    this.setState({ environmentRequirement: { ...this.state.environmentRequirement, ...props.environmentRequirement } })
     console.log(this.state)
   }
 
