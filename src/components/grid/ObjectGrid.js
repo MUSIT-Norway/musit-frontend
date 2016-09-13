@@ -36,21 +36,21 @@ export default class ObjectGrid extends Component {
             </thead>
             <tbody>
               {tableData.map((c, i) =>
-                <tr key={i} id={`${id}_${c.museumsNumber}_${c.uNumber}`} >
-                  <td id={`${id}_${c.museumsNumber}_${c.uNumber}_museumNumber`}>
+                <tr key={i} id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}`} >
+                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_museumNumber`}>
                     <FontAwesome name="rebel" />
-                    {` ${c.museumsNumber}`}
+                    {` ${c.identifier.museumNo}`}
                   </td>
-                  <td id={`${id}_${c.museumsNumber}_${c.uNumber}_uNumber`}>
-                    {c.uNumber}
+                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_uNumber`}>
+                    {c.identifier.subNo}
                   </td>
-                  <td id={`${id}_${c.museumsNumber}_${c.uNumber}_term`}>
-                    {c.term}
+                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_term`}>
+                    {c.displayName}
                   </td>
-                  <td id={`${id}_${c.museumsNumber}_${c.uNumber}_truck`}>
+                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
                     <FontAwesome name="truck" />
                   </td>
-                  <td id={`${id}_${c.museumsNumber}_${c.uNumber}_shoppingCart`}>
+                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_shoppingCart`}>
                     <FontAwesome name="shopping-cart" />
                   </td>
                 </tr>
