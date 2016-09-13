@@ -192,6 +192,7 @@ export default class StorageUnitContainer extends Component {
         </Col>
       </Row>
       <EnvironmentRequirementComponent
+        environmentRequirement={this.props.unit.environmentRequirement}
         translate={this.props.translate}
         updateStorageUnit={(e) => { this.updateStorageUnit(data, 'environmentRequirement', e) }}
       />

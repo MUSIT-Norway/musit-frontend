@@ -5,12 +5,12 @@ import { Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
 export default class EnvironmentRequirementComponent extends Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    updateStorageUnit: React.PropTypes.func.isRequired
+    updateStorageUnit: React.PropTypes.func.isRequired,
+    environmentRequirement: React.PropTypes.object,
   };
 
   constructor(props) {
     super(props)
-
     this.state = {
       environmentRequirement: {
         temperature: '',
@@ -153,19 +153,17 @@ export default class EnvironmentRequirementComponent extends Component {
       maximumLength: 100,
       onChange: (cleaning) => {
         const state = {
-
           environmentRequirement: {
             ...this.state.environmentRequirement,
             cleaning
           }
         }
-
         this.setState(state)
         this.props.updateStorageUnit(state.environmentRequirement)
       }
     }
 
-    this.lightningConditions = {
+    this.lightingCondition = {
       id: 'lightningConditions',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.lightningConditions.tooltip'),
       validate: 'text',
@@ -200,6 +198,12 @@ export default class EnvironmentRequirementComponent extends Component {
         this.props.updateStorageUnit(state.environmentRequirement)
       }
     }
+  }
+
+  componentWillReceiveProps(props) {
+    console.log(this.state)
+    this.setState({ environmentRequirement: props.environmentRequirement })
+    console.log(this.state)
   }
 
   render() {
@@ -278,9 +282,8 @@ export default class EnvironmentRequirementComponent extends Component {
           <Row className="row-centered">
             <Col md={5}>
               <Form horizontal>
-                {renderFieldBlock(this.state.environmentRequirement.lightningConditions, this.lightningConditions,
+                {renderFieldBlock(this.state.environmentRequirement.lightingCondition, this.lightingCondition,
                   this.props.translate('musit.storageUnits.environmentRequirements.lightningConditions.labelText'))}
-
               </Form>
             </Col>
           </Row>

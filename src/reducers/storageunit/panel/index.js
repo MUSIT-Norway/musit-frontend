@@ -104,6 +104,7 @@ export const insert = (parentId, data, callback) => {
   const dataToPost = mapToBackend(parentId, data)
 
   console.log(dataToPost)
+  console.log(`Action: ${action}  ${url}`)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
     promise: (client) => client[action](url, { data: dataToPost }),
