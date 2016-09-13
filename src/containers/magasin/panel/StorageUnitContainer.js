@@ -45,11 +45,15 @@ export default class StorageUnitContainer extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.updateStorageUnit = this.updateStorageUnit.bind(this)
   }
 
   componentWillMount() {
     if (this.props.params.id) {
       this.props.loadStorageUnit(this.props.params.id)
+    }
+    if (this.props.route.add) {
+      this.setState({ unit: { environmentRequirement: {}, securityAssessment: {}, environmentalAssessment: {} } })
     }
   }
 
@@ -147,6 +151,10 @@ export default class StorageUnitContainer extends Component {
   }
 
   updateStorageUnit(data, key, value) {
+    console.log('updateStorageUnit')
+    console.log(key)
+    console.log(value)
+    console.log(data)
     const newData = Object.assign({}, data);
     newData[key] = value
     this.setState({ unit: newData })
@@ -194,31 +202,31 @@ export default class StorageUnitContainer extends Component {
       <EnvironmentRequirementComponent
         environmentRequirement={this.props.unit.environmentRequirement}
         translate={this.props.translate}
-        updateStorageUnit={(e) => { this.updateStorageUnit(data, 'environmentRequirement', e) }}
+        updateEnvRequirements={(e) => { this.updateStorageUnit(data, 'environmentRequirement', e) }}
       />
       {data.type === 'Room' ?
         <Options
           translate={this.props.translate}
           unit={data}
           // Disse må fikses (Mappe verdi av sikring fra bool -> {0,1})
-          updateSkallsikring={(sikringSkallsikring) =>
-            this.updateStorageUnit(data, 'sikringSkallsikring', sikringSkallsikring)}
-          updateTyverisikring={(sikringTyverisikring) =>
-            this.updateStorageUnit(data, 'sikringTyverisikring', sikringTyverisikring)}
-          updateBrannsikring={(sikringBrannsikring) =>
-            this.updateStorageUnit(data, 'sikringBrannsikring', sikringBrannsikring)}
-          updateVannskaderisiko={(sikringVannskaderisiko) =>
-            this.updateStorageUnit(data, 'sikringVannskaderisiko', sikringVannskaderisiko)}
-          updateRutinerBeredskap={(sikringRutineOgBeredskap) =>
-            this.updateStorageUnit(data, 'sikringRutineOgBeredskap', sikringRutineOgBeredskap)}
-          updateLuftfuktighet={(bevarLuftfuktOgTemp) =>
-            this.updateStorageUnit(data, 'bevarLuftfuktOgTemp', bevarLuftfuktOgTemp)}
-          updateLysforhold={(bevarLysforhold) =>
-            this.updateStorageUnit(data, 'bevarLysforhold', bevarLysforhold)}
-          updateTemperatur={(temperatur) =>
-            this.updateStorageUnit(data, 'temperatur', temperatur)}
-          updatePreventivKonservering={(bevarPrevantKons) =>
-            this.updateStorageUnit(data, 'bevarPrevantKons', bevarPrevantKons)}
+          updateSkallsikring={(perimeter) =>
+            this.updateStorageUnit(data, 'securityAssessment', { ...data.securityAssessment, perimeter })}
+          updateTyverisikring={(theftProtection) =>
+            this.updateStorageUnit(data, 'securityAssessment', { ...data.securityAssessment, theftProtection })}
+          updateBrannsikring={(fireProtection) =>
+            this.updateStorageUnit(data, 'securityAssessment', { ...data.securityAssessment, fireProtection })}
+          updateVannskaderisiko={(waterDamage) =>
+            this.updateStorageUnit(data, 'securityAssessment', { ...data.securityAssessment, waterDamage })}
+          updateRutinerBeredskap={(routinesAndContingencyPlan) =>
+            this.updateStorageUnit(data, 'securityAssessment', { ...data.securityAssessment, routinesAndContingencyPlan })}
+          updateLuftfuktighet={(relativeHumidity) =>
+            this.updateStorageUnit(data, 'environmentAssessment', { ...data.environmentAssessment, relativeHumidity })}
+          updateLysforhold={(lightingCondition) =>
+            this.updateStorageUnit(data, 'environmentAssessment', { ...data.environmentAssessment, lightingCondition })}
+          updateTemperatur={(temperatureAssessment) =>
+            this.updateStorageUnit(data, 'environmentAssessment', { ...data.environmentAssessment, temperatureAssessment })}
+          updatePreventivKonservering={(preventiveConservation) =>
+            this.updateStorageUnit(data, 'environmentAssessment', { ...data.preventiveConservation, preventiveConservation })}
         />
         : null}
       <Grid>

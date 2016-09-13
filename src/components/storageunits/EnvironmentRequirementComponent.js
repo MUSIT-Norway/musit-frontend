@@ -5,7 +5,7 @@ import { Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
 export default class EnvironmentRequirementComponent extends Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    updateStorageUnit: React.PropTypes.func.isRequired,
+    updateEnvRequirements: React.PropTypes.func.isRequired,
     environmentRequirement: React.PropTypes.object,
   };
 
@@ -32,7 +32,7 @@ export default class EnvironmentRequirementComponent extends Component {
         }
       }
       this.setState(state)
-      this.props.updateStorageUnit(this.state.environmentRequirement)
+      this.props.updateEnvRequirements(this.state.environmentRequirement)
     }
     this.temperature = {
       id: 'temperature',
@@ -41,13 +41,12 @@ export default class EnvironmentRequirementComponent extends Component {
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.temperature.placeHolder'),
       precision: 3,
       onChange: (temperature) => {
-        this.setState({
-          environmentRequirement: {
-            ...this.state.environmentRequirement,
-            temperature
+        const state = {
+          environmentRequirement: { ...this.state.environmentRequirement, temperature
           }
-        })
-        this.props.updateStorageUnit(this.state.environmentRequirement)
+        }
+        this.setState(state)
+        this.props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
 
@@ -66,7 +65,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(this.state.environmentRequirement)
+        props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
 
@@ -84,7 +83,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(this.state.environmentRequirement)
+        this.props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
 
@@ -103,7 +102,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(this.state.environmentRequirement)
+        this.props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
 
@@ -121,7 +120,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
 
@@ -140,7 +139,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
 
@@ -159,7 +158,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
 
@@ -176,7 +175,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
 
@@ -188,22 +187,22 @@ export default class EnvironmentRequirementComponent extends Component {
       maximumLength: 250,
       onChange: (comments) => {
         const state = {
-
           environmentRequirement: {
             ...this.state.environmentRequirement,
             comments
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements(this.state.environmentRequirement)
       }
     }
   }
 
   componentWillReceiveProps(props) {
-    console.log(this.state)
-    this.setState({ environmentRequirement: { ...this.state.environmentRequirement, ...props.environmentRequirement } })
-    console.log(this.state)
+    this.setState(props.environmentRequirement ?
+      { environmentRequirement: { ...this.state.environmentRequirement, ...props.environmentRequirement } } :
+      { environmentRequirement: {} }
+    )
   }
 
   render() {
@@ -229,7 +228,6 @@ export default class EnvironmentRequirementComponent extends Component {
                     <Field
                       {...this.temperature}
                       value={this.state.environmentRequirement.temperature}
-                      onChange={this.temperatureOnChange}
                     />
                   </div>
                   <div class="col-sm-4" is="null">
