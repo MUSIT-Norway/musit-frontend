@@ -411,6 +411,7 @@ no:
         controller: "Kontroller"
         moveNode: "Flytt node"
         delete: "Slett"
+        controlsobservations: "KontrolObservasjon"
       observationControl:
         newObservation: "Ny observasjon"
         newControl: "Ny kontroll"

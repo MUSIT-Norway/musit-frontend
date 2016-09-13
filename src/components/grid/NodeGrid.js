@@ -40,7 +40,6 @@ export default class NodeGrid extends Component {
                 <th />
                 <th />
                 <th />
-                <th />
               </tr>
             </thead>
             <tbody>
@@ -75,21 +74,10 @@ export default class NodeGrid extends Component {
                       href=""
                       onClick={(e) => {
                         e.preventDefault()
-                        this.props.onAction('observation', c)
+                        this.props.onAction('controlsobservations', c)
                       }}
                     >
-                      <FontAwesome name="eye" />
-                    </a>
-                  </td>
-                  <td id={`${id}_${c.name}_${c.type}_search`}>
-                    <a
-                      href=""
-                      onClick={(e) => {
-                        e.preventDefault()
-                        this.props.onAction('control', c)
-                      }}
-                    >
-                      <FontAwesome name="search" />
+                      <div className="icon icon-musitcontrolobsicon" />
                     </a>
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_truck`}>
