@@ -239,9 +239,9 @@ export default class StorageUnitsContainer extends React.Component {
     const { children, translate, path } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
     const nodes = path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
+    const nodeTypes = [{ storageType: 'Building', iconName: 'folder' },
+                       { storageType: 'Room', iconName: 'folder' },
+                       { storageType: 'StorageUnit', iconName: 'folder' }]
     const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     return (
       <Layout

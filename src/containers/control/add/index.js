@@ -123,9 +123,9 @@ export default class ControlAddContainer extends React.Component {
 
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
+    const nodeTypes = [{ storageType: 'Building', iconName: 'folder' },
+                       { storageType: 'Room', iconName: 'folder' },
+                       { storageType: 'StorageUnit', iconName: 'folder' }]
     const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     const { translate } = this.props
 

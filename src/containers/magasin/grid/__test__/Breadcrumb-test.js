@@ -9,7 +9,7 @@ describe('StorageUnitsContainer_Breadcrumb_test', () => {
   before('should render Breadcrumb in Layout', () => {
     const nodes = [{ id: 1, name: 'Museum', type: 'Building' }, { key: 2, id: 2, name: 'Bygg1', type: 'Building' },
     { key: 3, id: 3, name: 'Pauserom', type: 'Room' }]
-    const nodeTypes = [{ key: 1, type: 'Room', iconName: 'folder' }]
+    const nodeTypes = [{ key: 1, storageType: 'Room', iconName: 'folder' }]
     const makeBreadcrumb = (n, nt) => {
       return (
         <Breadcrumb

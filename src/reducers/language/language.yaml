@@ -1,4 +1,3 @@
-
 en:
   musit:
     leftMenu:
@@ -278,7 +277,7 @@ en:
       newNode: "New node"
       environmentalData: "Environmental conditions"
       type:
-        label: "Type"
+        labelText: "Type"
         required: "Type is required."
         placeHolder: "Please choose..."
         tooltip: "Type of node"
@@ -687,7 +686,7 @@ no:
       newNode: "Ny node"
       environmentalData: "Miljødata"
       type:
-        label: "Type"
+        labelText: "Type"
         required: "Type er påkrevd."
         placeHolder: "Vennligst velg..."
         tooltip: "Nodens type"
