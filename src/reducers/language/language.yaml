@@ -278,7 +278,7 @@ en:
       newNode: "New node"
       environmentalData: "Environmental conditions"
       type:
-        label: "Type"
+        labelText: "Type"
         required: "Type is required."
         placeHolder: "Please choose..."
         tooltip: "Type of node"
@@ -342,7 +342,6 @@ en:
           incorrect: 'Temperature tolerance must be an integer.'
           tooltip: "Temperature tolerance"
           placeHolder: "+/- \u00b0C"
-          addOnPrefix: ""
         relativeHumidity:
           labelText: "Rel. humidity"
           incorrect: 'Relative humidity must be a number with maximum 3 decimals.'
@@ -353,7 +352,6 @@ en:
           incorrect: 'Relative humidity tolerance must be an integer.'
           tooltip: "Relative humidity tolerance"
           placeHolder: "+/- %"
-          addOnPrefix: ""
         hypoxicAir:
           labelText: "Hypoxic air"
           incorrect: 'Hypoxic air must be a number with maximum 3 decimals.'
@@ -364,7 +362,6 @@ en:
           incorrect: 'Hypoxic air tolerance must be an integer.'
           tooltip: "Hypoxic air tolerance"
           placeHolder: "+/- % O2"
-          addOnPrefix: ""
         cleaning:
           labelText: "Cleaning"
           incorrect: 'Maximum length for cleaning is 100 characters.'
@@ -383,7 +380,7 @@ en:
     welcomePage:
       title: >
         MUSIT
-      
+
         Norwegian University Museums' joint Collection Databases
       body: >
         **Museum of Archaeology, University of Stavanger**
@@ -422,6 +419,7 @@ no:
         controller: "Kontroller"
         moveNode: "Flytt node"
         delete: "Slett"
+        controlsobservations: "KontrolObservasjon"
       observationControl:
         newObservation: "Ny observasjon"
         newControl: "Ny kontroll"
@@ -687,7 +685,7 @@ no:
       newNode: "Ny node"
       environmentalData: "Miljødata"
       type:
-        label: "Type"
+        labelText: "Type"
         required: "Type er påkrevd."
         placeHolder: "Vennligst velg..."
         tooltip: "Nodens type"
@@ -751,7 +749,6 @@ no:
           incorrect: 'Temperatur toleranse må være et heltall.'
           tooltip: "Temperatur toleranse"
           placeHolder: "+/- \u00b0C"
-          addOnPrefix: ""
         relativeHumidity:
           labelText: "Rel. luftfuktighet"
           incorrect: 'Relativ luftfuktighet må være et desimaltall med maks 3 desimaler.'
@@ -762,7 +759,6 @@ no:
           incorrect: 'Relativ luftfuktighet toleranse må være et heltall.'
           tooltip: "Relativ luftfuktighet toleranse"
           placeHolder: "+/- %"
-          addOnPrefix: ""
         hypoxicAir:
           labelText: "Inertluft"
           incorrect: 'Inertluft må være et desimaltall med maks 3 desimaler.'
@@ -773,7 +769,6 @@ no:
           incorrect: 'Inertluft toleranse må være et heltall.'
           tooltip: "Inertluft toleranse"
           placeHolder: "+/- % O2"
-          addOnPrefix: ""
         cleaning:
           labelText: "Renhold"
           incorrect: 'Renhold kan ikke være på mer enn 100 tegn.'
@@ -812,7 +807,6 @@ no:
         MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom
         Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet,
         Universitetet i Tromsø, og Universitetet i Stavanger.
-
         Samarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014.
 
         MUSIT har som formål «å sikre drift, vedlikehold og utvikling av museenes felles samlingsdatabaser,
