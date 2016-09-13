@@ -44,8 +44,8 @@ export default class NodeLeftMenuComponent extends Component {
               onClick={() => eventType(id)}
               style={{ color: 'black' }}
             >
-              {MusitIconType ? <div className={`icon icon-${icon}`} /> :
-                <FontAwesome name={`${icon}`} style={{ padding: '14px' }} />}
+              {MusitIconType ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
+                <FontAwesome name={`${icon}`} style={{ padding: '2px' }} />}
               <br />
               {translate(`musit.leftMenu.node.${type}`)}
             </Button>
@@ -93,7 +93,6 @@ export default class NodeLeftMenuComponent extends Component {
         {showCount(underNodeCount, 'underNodeCount')}
         {(Number.isInteger(id)) ? (<hr />) : null}
         {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
-        <br />
         {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
         {showButtons ? buttonLink('moveNode', 'truck', onClickMoveNode) : null}
         {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}

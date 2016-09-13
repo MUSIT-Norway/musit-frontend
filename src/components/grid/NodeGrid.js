@@ -77,7 +77,7 @@ export default class NodeGrid extends Component {
                         this.props.onAction('controlsobservations', c)
                       }}
                     >
-                      <div className="icon icon-musitcontrolobsicon" />
+                      <span className="icon icon-musitcontrolobsicon" />
                     </a>
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_truck`}>

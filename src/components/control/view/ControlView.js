@@ -199,7 +199,7 @@ export default class ControlView extends Component {
     const observation = (fontName, observationType) => {
       return (
         <Col xs={5} sm={5} >
-          <div className={`icon icon-${fontName}`} />
+          <span className={`icon icon-${fontName}`} />
           {` ${observationType}`}
         </Col>
     ) }

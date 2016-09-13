@@ -23,9 +23,9 @@ export default class ObservationControlGrid extends Component {
 
   static icon(ok, name) {
     if (ok) {
-      return <div style={{ padding: '2px' }} className={`icon icon-${name}`} />
+      return <span style={{ padding: '2px' }} className={`icon icon-${name}`} />
     }
-    return <div style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
+    return <span style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
   }
 
   static getIcon(data) {
