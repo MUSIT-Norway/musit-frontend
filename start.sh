@@ -8,4 +8,4 @@ while [ ! -s public/index.html ]
   printf ""
 done
 echo "found public"
-npm start
+npm run start:utv
