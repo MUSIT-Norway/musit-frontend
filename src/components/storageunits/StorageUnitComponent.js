@@ -12,7 +12,7 @@ export default class StorageUnitComponent extends Component {
   static propTypes = {
     unit: React.PropTypes.shape({
       name: React.PropTypes.string,
-      area: React.PropTypes.string,
+      area: React.PropTypes.number,
       areaTo: React.PropTypes.number,
       height: React.PropTypes.number,
       heightTo: React.PropTypes.number,
