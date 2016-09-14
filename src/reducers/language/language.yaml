@@ -180,9 +180,9 @@ en:
           noteTooltip: "Task that should be performed"
           notePlaceHolder: "Free text"
         mold:
-          leftValueRequired: 'Description of the observed mold is required.'
-          leftValueIncorrect: 'Maximum length for Description is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed mold is required."
+          leftValueIncorrect: "Max length for Description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Mold"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -191,9 +191,9 @@ en:
           leftLabelToolTip: "Observed mold"
           rightLabelPlaceToolTip: "Task that should be performed"
         cleaning:
-          leftValueRequired: 'Description of the observed cleaning is required.'
-          leftValueIncorrect: 'Maximum length for Description is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed cleaning is required."
+          leftValueIncorrect: "Max length for Description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Cleaning"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -202,9 +202,9 @@ en:
           leftLabelToolTip: "Observed cleaning"
           rightLabelPlaceToolTip: "Task that should be performed"
         gas:
-          leftValueRequired: 'Information about measured value is required.'
-          leftValueIncorrect: 'Maximum length for information about measured value is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Measured value is required."
+          leftValueIncorrect: "Max length for measured value is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Gas"
           leftLabelText: "Measured value"
           rightLabelText: "Task/Comment"
@@ -213,9 +213,9 @@ en:
           leftLabelToolTip: "Measured gas"
           rightLabelPlaceToolTip: "Task that should be performed"
         lightConditions:
-          leftValueRequired: 'Information about measured/observed value is required.'
-          leftValueIncorrect: 'Maximum length for information about measured/observed value is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Measured/observed value is required."
+          leftValueIncorrect: "Max length for measured/observed value is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Lighting condition"
           leftLabelText: "Measured/observed value"
           rightLabelText: "Task/Comment"
@@ -224,9 +224,9 @@ en:
           leftLabelToolTip: "Measured/observed lighting condition"
           rightLabelPlaceToolTip: "Task that should be performed"
         skallsikring:
-          leftValueRequired: 'Description of observed perimeter security is required.'
-          leftValueIncorrect: 'Maximum length for description of observed perimeter security is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed perimeter security status is required."
+          leftValueIncorrect: "Max length for description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Perimeter security"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -235,9 +235,9 @@ en:
           leftLabelToolTip: "Observed perimeter security"
           rightLabelPlaceToolTip: "Task that should be performed"
         brannsikring:
-          leftValueRequired: 'Description of observed fire protection is required.'
-          leftValueIncorrect: 'Maximum length for description of observed fire protection is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed fire protection status is required."
+          leftValueIncorrect: "Max length for description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Fire protection"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -246,9 +246,9 @@ en:
           leftLabelToolTip: "Observed fire protection"
           rightLabelPlaceToolTip: "Task that should be performed"
         vannskaderisiko:
-          leftValueRequired: 'Description of observed water damage assessment is required.'
-          leftValueIncorrect: 'Maximum length for description of observed water damage assessment is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed water damage assessment is required."
+          leftValueIncorrect: "Max length for descriptionis 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Water damage assessment"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -257,9 +257,9 @@ en:
           leftLabelToolTip: "Observed water damage assessment"
           rightLabelPlaceToolTip: "Task that should be performed"
         tyverisikring:
-          leftValueRequired: 'Description of theft protection is required.'
-          leftValueIncorrect: 'Maximum length for description of theft protection is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of theft protection status is required."
+          leftValueIncorrect: "Max length for description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Theft protection"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -289,33 +289,33 @@ en:
           Organization: "Organisation"
       name:
         labelText: "Name"
-        incorrect: 'Maximum length for name is 100 characters.'
+        incorrect: "Max length for name is 100 char."
         required: "Name is required."
         placeHolder: "Free text"
         tooltip: "Node name"
       address:
         labelText: "Address"
-        incorrect: 'Maximum length for address is 100 characters.'
+        incorrect: "Max length for address is 100 char."
         placeHolder: "Street adr."
         tooltip: "Node address"
       area:
         labelText: "Area"
-        incorrect: 'Area (from) must be a number with maximum 3 decimals.'
+        incorrect: "Area (from) must be a number with max 3 decimals."
         placeHolder: "from"
         tooltip: "Node area in m2"
       areaTo:
         labelText: ""
-        incorrect: 'Area (to) must be a number with maximum 3 decimals.'
+        incorrect: "Area (to) must be a number with max 3 decimals."
         placeHolder: "to"
         tooltip: "Node area in m2"
       height:
         labelText: "Height"
-        incorrect: 'Height (from) must be a number with maximum 3 decimals.'
+        incorrect: "Height (from) must be a number with max 3 decimals."
         placeHolder: "from"
         tooltip: "Node height in m"
       heightTo:
         labelText: ""
-        incorrect: 'Height (to) must be a number with maximum 3 decimals.'
+        incorrect: "Height (to) must be a number with max 3 decimals."
         placeHolder: "to"
         tooltip: "Node height in m"
       securityAssessment:
@@ -334,47 +334,47 @@ en:
       environmentRequirements:
         temperature:
           labelText: "Temperature"
-          incorrect: 'Temperature must be a number with maximum 3 decimals.'
+          incorrect: "Temperature must be a number with max 3 decimals."
           tooltip: "Temperature requirement in °C"
           placeHolder: "\u00b0C"
         temperatureTolerance:
           labelText: ""
-          incorrect: 'Temperature tolerance must be an integer.'
+          incorrect: "Temperature tolerance must be an integer."
           tooltip: "Temperature tolerance"
-          placeHolder: "+/- \u00b0C"
+          placeHolder: "\u00b0C"
         relativeHumidity:
           labelText: "Rel. humidity"
-          incorrect: 'Relative humidity must be a number with maximum 3 decimals.'
+          incorrect: "Relative humidity must be a number with max 3 decimals."
           tooltip: "Relative humidity requirement in %"
           placeHolder: "%"
         relativeHumidityTolerance:
           labelText: ""
-          incorrect: 'Relative humidity tolerance must be an integer.'
+          incorrect: "Relative humidity tolerance must be an integer."
           tooltip: "Relative humidity tolerance"
-          placeHolder: "+/- %"
+          placeHolder: "%"
         hypoxicAir:
           labelText: "Hypoxic air"
-          incorrect: 'Hypoxic air must be a number with maximum 3 decimals.'
+          incorrect: "Hypoxic air must be a number with max 3 decimals."
           tooltip: "Hypoxic air requirement in % O2"
           placeHolder: "% O2"
         hypoxicAirTolerance:
           labelText: ""
-          incorrect: 'Hypoxic air tolerance must be an integer.'
+          incorrect: "Hypoxic air tolerance must be an integer."
           tooltip: "Hypoxic air tolerance"
-          placeHolder: "+/- % O2"
+          placeHolder: "% O2"
         cleaning:
           labelText: "Cleaning"
-          incorrect: 'Maximum length for cleaning is 100 characters.'
+          incorrect: "Max length for cleaning is 100 char."
           placeHolder: "Free text"
           tooltip: "Cleaning requirement"
         lightningConditions:
           labelText: "Lighting condition"
-          incorrect: 'Maximum length for lighting condition is 100 characters.'
+          incorrect: "Max length for lighting condition is 100 char."
           placeHolder: "Free text"
           tooltip: "Lighting condition requirement"
         comments:
           labelText: "Comment"
-          incorrect: 'Maximum length for comment is 250 characters.'
+          incorrect: "Max length for comment is 250 char."
           placeHolder: "Free text"
           tooltip: "Comment"
     welcomePage:
