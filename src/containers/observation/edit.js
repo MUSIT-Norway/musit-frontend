@@ -95,9 +95,9 @@ export default class EditObservationPage extends React.Component {
 
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ storageType: 'Building', iconName: 'folder' },
-                       { storageType: 'Room', iconName: 'folder' },
-                       { storageType: 'StorageUnit', iconName: 'folder' }]
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
     const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     return (
       <Layout

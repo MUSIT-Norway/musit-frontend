@@ -192,9 +192,9 @@ export default class StorageUnitContainer extends Component {
   render() {
     const data = (this.props.route.add) ? this.state.unit : this.props.unit;
     const nodes = this.props.path
-    const nodeTypes = [{ storageType: 'Building', iconName: 'folder' },
-                       { storageType: 'Room', iconName: 'folder' },
-                       { storageType: 'StorageUnit', iconName: 'folder' }]
+    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
+                       { type: 'Room', iconName: 'folder' },
+                       { type: 'StorageUnit', iconName: 'folder' }]
     const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
 
     const completePage = (<div>
