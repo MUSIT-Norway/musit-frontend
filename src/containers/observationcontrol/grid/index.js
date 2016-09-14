@@ -139,7 +139,6 @@ export default class ObservationControlGridShow extends React.Component {
 
   render() {
     const nodes = this.props.path
-    console.log(nodes)
     const nodeTypes = [{ storageType: 'Building', iconName: 'folder' },
                        { storageType: 'Room', iconName: 'folder' },
                        { storageType: 'StorageUnit', iconName: 'folder' }]

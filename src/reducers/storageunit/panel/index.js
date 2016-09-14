@@ -74,7 +74,6 @@ export const load = (id) => {
 }
 
 const mapToBackend = (id, data) => {
-  console.log(data)
   return {
     ...data,
     groupRead: 'foo', // Must be removed
@@ -103,12 +102,7 @@ export const insert = (parentId, data, callback) => {
     action = 'put'
     url += `/${data.id}`
   }
-  console.log('Hei hei hei')
-  console.log(data)
   const dataToPost = mapToBackend(parentId, data)
-
-  console.log(dataToPost)
-  console.log(`Action: ${action}  ${url}`)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
     promise: (client) => client[action](url, { data: dataToPost }),
