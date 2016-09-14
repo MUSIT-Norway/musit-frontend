@@ -117,7 +117,7 @@ en:
         alcohol:
           statusRequired: "Level is required."
           volumeIncorrect: "Volume must be a number with max 3 decimals."
-          commentIncorrect: "Max length for Task/Comment is 250 char"'
+          commentIncorrect: "Max length for Task/Comment is 250 char"
           labelText: "Alcohol"
           volumeLabel: "Volume"
           volumePlaceHolder: "%"
