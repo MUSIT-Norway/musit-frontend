@@ -5,10 +5,10 @@ export default class EnvironmentOptions extends React.Component {
     translate: React.PropTypes.func.isRequired,
     unit: React.PropTypes.shape({
       securityAssessment: React.PropTypes.shape({
-        perimeter: React.PropTypes.bool,
+        perimeterSecurity: React.PropTypes.bool,
         theftProtection: React.PropTypes.bool,
         fireProtection: React.PropTypes.bool,
-        waterDamage: React.PropTypes.bool,
+        waterDamageAssessment: React.PropTypes.bool,
         routinesAndContingencyPlan: React.PropTypes.bool,
       }),
       environmentAssessment: React.PropTypes.shape({
@@ -36,7 +36,7 @@ export default class EnvironmentOptions extends React.Component {
           <Col lg={5} md={5} sm={5} xs={10} offset={1}>
             <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}</ControlLabel>
             <Checkbox
-              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.perimeter : null}
+              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.perimeterSecurity : null}
               onChange={(event) => this.props.updateSkallsikring(event.target.checked)}
             >
               {this.props.translate('musit.storageUnits.securityAssessment.perimeterSecurity')}
@@ -54,7 +54,7 @@ export default class EnvironmentOptions extends React.Component {
               {this.props.translate('musit.storageUnits.securityAssessment.fireProtection')}
             </Checkbox>
             <Checkbox
-              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.waterDamage : null}
+              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.waterDamageAssessment : null}
               onChange={(event) => this.props.updateVannskaderisiko(event.target.checked)}
             >
               {this.props.translate('musit.storageUnits.securityAssessment.waterDamageAssessment')}
