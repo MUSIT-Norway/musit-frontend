@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import Language from '../../../components/language'
 import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
+import { loadObjects } from '../../../reducers/storageobject/grid'
 import { add } from '../../../reducers/picklist'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
@@ -14,6 +15,7 @@ import Breadcrumb from '../../../layout/Breadcrumb'
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
+  objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root,
   path: state.storageGridUnit.root.path ?
     state.storageGridUnit.root.path.map((s) => {
@@ -30,6 +32,9 @@ const mapDispatchToProps = (dispatch, props) => {
     loadStorageUnits: () => {
       dispatch(clearRoot())
       dispatch(loadRoot())
+    },
+    loadStorageObjects: (id) => {
+      dispatch(loadObjects(id))
     },
     loadChildren: (id, callback) => {
       dispatch(loadChildren(id, callback))
@@ -86,9 +91,11 @@ const mapDispatchToProps = (dispatch, props) => {
 export default class StorageUnitsContainer extends React.Component {
   static propTypes = {
     children: React.PropTypes.arrayOf(React.PropTypes.object),
+    objects: React.PropTypes.arrayOf(React.PropTypes.object),
     rootNode: React.PropTypes.object,
     translate: React.PropTypes.func.isRequired,
     loadStorageUnits: React.PropTypes.func.isRequired,
+    loadStorageObjects: React.PropTypes.func.isRequired,
     onDelete: React.PropTypes.func.isRequired,
     onEdit: React.PropTypes.func.isRequired,
     onAction: React.PropTypes.func.isRequired,
@@ -112,15 +119,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillMount() {
-    // Issued on initial render of the component
-    if (this.props.params.splat) {
-      this.props.loadChildren(this.resolveCurrentId(this.props.params.splat), {
-        onSuccess: () => this.props.loadPath(this.resolveCurrentId(this.props.params.splat)),
-        onFailure: true
-      })
-    } else {
-      this.props.loadStorageUnits()
-    }
+    this.loadNodes();
   }
 
   componentWillReceiveProps(newProps) {
@@ -134,6 +133,26 @@ export default class StorageUnitsContainer extends React.Component {
       } else {
         this.props.loadStorageUnits()
       }
+    }
+  }
+
+  loadNodes() {
+    if (this.props.params.splat) {
+      const currentId = this.resolveCurrentId(this.props.params.splat);
+      this.props.loadChildren(currentId, {
+        onSuccess: () => this.props.loadPath(currentId),
+        onFailure: true
+      })
+    } else {
+      this.props.loadStorageUnits()
+    }
+  }
+
+  loadObjects() {
+    if (this.props.params.splat) {
+      const currentId = this.resolveCurrentId(this.props.params.splat);
+      console.log(currentId)
+      this.props.loadStorageObjects(currentId)
     }
   }
 
@@ -172,11 +191,13 @@ export default class StorageUnitsContainer extends React.Component {
       searchValue={this.state.searchPattern}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
-        this.setState({ ...this.state, showObjects: true, showNodes: false })
+        this.setState({ ...this.state, showObjects: true, showNodes: false });
+        this.loadObjects();
         blur()
       }}
       clickShowLeft={() => {
         this.setState({ ...this.state, showObjects: false, showNodes: true })
+        this.loadNodes();
         blur()
       }}
     />)
@@ -229,7 +250,7 @@ export default class StorageUnitsContainer extends React.Component {
     return (<ObjectGrid
       id={rootNode ? rootNode.id : 0}
       translate={this.props.translate}
-      tableData={[]}
+      tableData={this.props.objects}
     />)
   }
 

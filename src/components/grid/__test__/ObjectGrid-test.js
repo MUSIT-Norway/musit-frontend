@@ -11,14 +11,20 @@ describe('ObjectGrid', () => {
         translate={(key) => key}
         tableData={[
           {
-            museumsNumber: 'C10001',
-            uNumber: '1',
-            term: 'Gråstein'
+            id: 1,
+            identifier: {
+              museumNo: 'C10001',
+              subNo: '1',
+            },
+            displayName: 'Gråstein'
           },
           {
-            museumsNumber: 'C10002',
-            uNumber: '2',
-            term: 'Spydspiss'
+            id: 1,
+            identifier: {
+              museumNo: 'C10002',
+              subNo: '2',
+            },
+            displayName: 'Spydspiss'
           }
         ]}
       />
