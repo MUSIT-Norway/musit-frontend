@@ -18,6 +18,10 @@
  */
 import { DATE_FORMAT_ISO } from './../../../util'
 
+const fixFloat = (value) => {
+  return value ? parseFloat(value.replace(',', '.')) : null
+}
+
 export const parseObservation = (el) => {
   const re = {}
   switch (el.type) {
@@ -28,7 +32,7 @@ export const parseObservation = (el) => {
       re.lifeCycles = el.data.observations.map((o) => {
         const ret = {}
         ret.stage = o.lifeCycle
-        ret.number = parseFloat(o.count.replace(',', '.'))
+        ret.number = fixFloat(o.count)
         return ret
       })
       break
@@ -49,8 +53,8 @@ export const parseObservation = (el) => {
       break
     case 'relativeHumidity':
       re.eventType = 'observationRelativeHumidity'
-      re.from = el.data.fromValue ? parseFloat(el.data.fromValue.replace(',', '.')) : null
-      re.to = el.data.toValue ? parseFloat(el.data.toValue.replace(',', '.')) : null
+      re.from = fixFloat(el.data.fromValue)
+      re.to = fixFloat(el.data.toValue)
       re.note = el.data.commentValue
       break
     case 'mold':
@@ -80,8 +84,8 @@ export const parseObservation = (el) => {
       break
     case 'hypoxicAir':
       re.eventType = 'ObservationHypoxicAir'
-      re.from = parseFloat(el.data.fromValue.replace(',', '.'))
-      re.to = parseFloat(el.data.toValue.replace(',', '.'))
+      re.from = fixFloat(el.data.fromValue)
+      re.to = fixFloat(el.data.toValue)
       re.note = el.data.commentValue
       break
     case 'alcohol': {
@@ -89,13 +93,13 @@ export const parseObservation = (el) => {
       re.note = el.data.commentValue || el.data.comment
       re.condition = el.data.statusValue || el.data.status
       const volumeValue = el.data.volumeValue || el.data.volume
-      re.volume = parseFloat(volumeValue.replace(',', '.'))
+      re.volume = fixFloat(volumeValue)
       break
     }
     case 'temperature':
       re.eventType = 'observationTemperature'
-      re.from = parseFloat(el.data.fromValue.replace(',', '.'))
-      re.to = parseFloat(el.data.toValue.replace(',', '.'))
+      re.from = fixFloat(el.data.fromValue)
+      re.to = fixFloat(el.data.toValue)
       re.note = el.data.commentValue
       break
     default:
