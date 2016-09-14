@@ -46,7 +46,7 @@ en:
       ok: "OK"
       notOk: "Not OK"
       save: "Save"
-      saveTooltip: "Save"
+      saveTooltip: "Save registration"
       cancel: "Cancel"
       cancelTooltip: "Cancel registration"
     viewControl:
@@ -82,8 +82,8 @@ en:
         registerObservation: "Register observation"
         registerObservations: "Register observations"
         date: "Performed date"
-        dateRequired: "Please enter date of observation"
-        doneByRequired: "Please enter name of observer"
+        dateRequired: "Date of observation is required."
+        doneByRequired: "Name of observer is required."
         doneBy: "Performed by"
         registeredDate: "Registered date"
         registeredBy: "Registered by"
@@ -91,8 +91,8 @@ en:
         typeSelect:
           labelText: "Choose type"
         pest:
-          identificationValueRequired: 'Pest identification is required.'
-          identificationValueIncorrect: 'Maximum length for pest identification is 100 characters.'
+          identificationValueRequired: "Identification is required."
+          identificationValueIncorrect: "Maximum length for pest identification is 100 characters."
           commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
           countIncorrect: "Quantity must be an integer."
           lifeCycleRequired: "Please choose stage. Stage must be chosen when quantity is entered."
