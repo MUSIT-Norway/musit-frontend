@@ -5,12 +5,12 @@ import { Form, Grid, Row, Col, FormGroup } from 'react-bootstrap'
 export default class EnvironmentRequirementComponent extends Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    updateStorageUnit: React.PropTypes.func.isRequired,
+    updateEnvRequirements: React.PropTypes.func.isRequired,
+    environmentRequirement: React.PropTypes.object,
   };
 
   constructor(props) {
     super(props)
-
     this.state = {
       environmentRequirement: {
         temperature: '',
@@ -20,26 +20,25 @@ export default class EnvironmentRequirementComponent extends Component {
         hypoxicAir: '',
         hypoxicAirTolerance: '',
         cleaning: '',
-        lightningConditions: '',
+        lightingCondition: '',
         comments: ''
       }
     }
-    this.temperatureOnChange = (temperature) => {
-      const state = {
-        environmentRequirement: {
-          ...this.state.environmentRequirement,
-          temperature
-        }
-      }
-      this.setState(state)
-      this.props.updateStorageUnit(state.environmentRequirement)
-    }
+
     this.temperature = {
       id: 'temperature',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.temperature.tooltip'),
       validate: 'number',
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.temperature.placeHolder'),
       precision: 3,
+      onChange: (temperature) => {
+        const state = {
+          environmentRequirement: { ...this.state.environmentRequirement, temperature: temperature
+          }
+        }
+        this.setState(state)
+        this.props.updateEnvRequirements('temperature', temperature)
+      }
     }
 
     this.temperatureTolerance = {
@@ -53,11 +52,11 @@ export default class EnvironmentRequirementComponent extends Component {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            temperatureTolerance
+            temperatureTolerance: temperatureTolerance
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements('temperatureTolerance', temperatureTolerance)
       }
     }
 
@@ -71,11 +70,11 @@ export default class EnvironmentRequirementComponent extends Component {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            relativeHumidity
+            relativeHumidity: relativeHumidity
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements('relativeHumidity', relativeHumidity)
       }
     }
 
@@ -90,11 +89,11 @@ export default class EnvironmentRequirementComponent extends Component {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            relativeHumidityTolerance
+            relativeHumidityTolerance: relativeHumidityTolerance
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements('relativeHumidityTolerance', relativeHumidityTolerance)
       }
     }
 
@@ -108,11 +107,11 @@ export default class EnvironmentRequirementComponent extends Component {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            hypoxicAir
+            hypoxicAir: hypoxicAir
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements('hypoxicAir', hypoxicAir)
       }
     }
 
@@ -127,11 +126,11 @@ export default class EnvironmentRequirementComponent extends Component {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            hypoxicAirTolerance
+            hypoxicAirTolerance: hypoxicAirTolerance
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements('hypoxicAirTolerance', hypoxicAirTolerance)
       }
     }
 
@@ -144,29 +143,28 @@ export default class EnvironmentRequirementComponent extends Component {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            cleaning
+            cleaning: cleaning
           }
         }
-
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements('cleaning', cleaning)
       }
     }
 
-    this.lightningConditions = {
+    this.lightingCondition = {
       id: 'lightningConditions',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.lightningConditions.tooltip'),
       validate: 'text',
       maximumLength: 100,
-      onChange: (lightningConditions) => {
+      onChange: (lightingCondition) => {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            lightningConditions
+            lightingCondition: lightingCondition
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements('lightingCondition', lightingCondition)
       }
     }
 
@@ -180,13 +178,20 @@ export default class EnvironmentRequirementComponent extends Component {
         const state = {
           environmentRequirement: {
             ...this.state.environmentRequirement,
-            comments
+            comments: comments
           }
         }
         this.setState(state)
-        this.props.updateStorageUnit(state.environmentRequirement)
+        this.props.updateEnvRequirements('comments', comments)
       }
     }
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState(props.environmentRequirement ?
+      { environmentRequirement: { ...this.state.environmentRequirement, ...props.environmentRequirement } } :
+      { environmentRequirement: {} }
+    )
   }
 
   render() {
@@ -212,7 +217,6 @@ export default class EnvironmentRequirementComponent extends Component {
                     <Field
                       {...this.temperature}
                       value={this.state.environmentRequirement.temperature}
-                      onChange={this.temperatureOnChange}
                     />
                   </div>
                   <div class="col-sm-4" is="null">
@@ -258,13 +262,14 @@ export default class EnvironmentRequirementComponent extends Component {
               <Form horizontal>
                 {renderFieldBlock(this.state.environmentRequirement.cleaning, this.cleaning,
                   this.props.translate('musit.storageUnits.environmentRequirements.cleaning.labelText'))}
+
               </Form>
             </Col>
           </Row>
           <Row className="row-centered">
             <Col md={5}>
               <Form horizontal>
-                {renderFieldBlock(this.state.environmentRequirement.lightningConditions, this.lightningConditions,
+                {renderFieldBlock(this.state.environmentRequirement.lightingCondition, this.lightingCondition,
                   this.props.translate('musit.storageUnits.environmentRequirements.lightningConditions.labelText'))}
               </Form>
             </Col>

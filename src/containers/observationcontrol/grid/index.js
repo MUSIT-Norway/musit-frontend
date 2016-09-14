@@ -34,6 +34,11 @@ const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
     unit: state.storageGridUnit.root.data,
+    path: state.storageGridUnit.root.path ?
+      state.storageGridUnit.root.path.map((s) => {
+        return {
+          id: s.id, name: s.name, type: s.storageType, url: `/magasin/${s.id}` } }) :
+      null,
     observationControlGridData: state.observationControlGrid.data
   }
 }
