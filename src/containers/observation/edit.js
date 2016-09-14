@@ -110,7 +110,7 @@ export default class EditObservationPage extends React.Component {
             <ObservationPage
               id={this.props.params.id}
               observations={this.getObservationsFromLocationState()}
-              doneDate={this.parseDoneDateFromLocationState().toISOString()}
+              doneDate={this.parseDoneDateFromLocationState()}
               doneBy={this.props.location.state.doneBy}
               onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
               translate={this.props.translate}
