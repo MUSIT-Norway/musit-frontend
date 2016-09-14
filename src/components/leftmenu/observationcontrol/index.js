@@ -12,7 +12,7 @@ export default class ObservationControlComponent extends Component {
 
   render() {
     const { id, translate, onClickNewControl, onClickNewObservation } = this.props
-    const getTranslate = (term) => (translate(`musit.leftmenu.observationControl.${term}`))
+    const getTranslate = (term) => (translate(`musit.leftMenu.observationControl.${term}`))
     const buttonLogic = (type, eventType) => {
       return (
         <Button

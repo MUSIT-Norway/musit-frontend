@@ -95,3 +95,114 @@
   z-index: 3;
   -webkit-overflow-scrolling: touch;
 }
+
+@font-face {
+  font-family: "untitled-font-1";
+  src:url("/assets/fonts/untitled-font-1.eot");
+  src:url("/assets/fonts/untitled-font-1.eot?#iefix") format("embedded-opentype"),
+    url("/assets/fonts/untitled-font-1.woff") format("woff"),
+    url("/assets/fonts/untitled-font-1.ttf") format("truetype"),
+    url("/assets/fonts/untitled-font-1.svg#untitled-font-1") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "untitled-font-1" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "untitled-font-1" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-musitalcoholicon:before {
+  content: "\61";
+}
+.icon-musitarcheologyicon:before {
+  content: "\62";
+}
+.icon-musitbotanyicon:before {
+  content: "\63";
+}
+.icon-musitbuildingicon:before {
+  content: "\64";
+}
+.icon-musitcleaningicon:before {
+  content: "\65";
+}
+.icon-musitcontrolicon:before {
+  content: "\66";
+}
+.icon-musitcontrolobsicon:before {
+  content: "\67";
+}
+.icon-musitentomologyicon:before {
+  content: "\68";
+}
+.icon-musitethnographyicon:before {
+  content: "\69";
+}
+.icon-musitfireprotectionicon:before {
+  content: "\6a";
+}
+.icon-musitgasicon:before {
+  content: "\6b";
+}
+.icon-musithypoxicairicon:before {
+  content: "\6c";
+}
+.icon-musitlightingcondicon:before {
+  content: "\6d";
+}
+.icon-musitwaterdamageicon:before {
+  content: "\6e";
+}
+.icon-musittheftprotectionicon:before {
+  content: "\6f";
+}
+.icon-musittemperatureicon:before {
+  content: "\70";
+}
+.icon-musitrelhumidityicon:before {
+  content: "\71";
+}
+.icon-musitplusminusicon:before {
+  content: "\72";
+}
+.icon-musitpesticon:before {
+  content: "\73";
+}
+.icon-musitperimetersecurityicon:before {
+  content: "\74";
+}
+.icon-musitobservationicon:before {
+  content: "\75";
+}
+.icon-musitnumismaticsicon:before {
+  content: "\76";
+}
+.icon-musitmovehistoryicon:before {
+  content: "\77";
+}
+.icon-musitmoldicon:before {
+  content: "\78";
+}

@@ -14,15 +14,15 @@ export default class ControlView extends Component {
   }
 
   static iconMap = {
-    ControlAlcohol: 'percent',
-    ControlCleaning: 'fa',
-    ControlGas: 'inr',
-    ControlHypoxicAir: 'cloud',
-    ControlLightingCondition: 'sun-o',
-    ControlMold: 'bolt',
-    ControlPest: 'bug',
-    ControlRelativeHumidity: 'tint',
-    ControlTemperature: 'asterisk'
+    ControlAlcohol: 'musitalcoholicon',
+    ControlCleaning: 'musitcleaningicon',
+    ControlGas: 'musitgasicon',
+    ControlHypoxicAir: 'musithypoxicairicon',
+    ControlLightingCondition: 'musitlightingcondicon',
+    ControlMold: 'musitmoldicon',
+    ControlPest: 'musitpesticon',
+    ControlRelativeHumidity: 'musitrelhumidityicon',
+    ControlTemperature: 'musittemperatureicon'
 
   }
   static typeMap = {
@@ -199,7 +199,7 @@ export default class ControlView extends Component {
     const observation = (fontName, observationType) => {
       return (
         <Col xs={5} sm={5} >
-          <FontAwesome name={fontName} />
+          <span className={`icon icon-${fontName}`} />
           {` ${observationType}`}
         </Col>
     ) }
