@@ -45,14 +45,18 @@ export default class StorageUnitContainer extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.state = {
+      unit: {
+        environmentRequirement: {},
+        environmentAssessment: {},
+        securityAssessment: {}
+      }
+    }
   }
 
   componentWillMount() {
-    if (this.props.params.id) {
+    if (this.props.params.id && !this.props.route.add) {
       this.props.loadStorageUnit(this.props.params.id)
-    }
-    if (this.props.route.add) {
-      this.setState({ unit: { environmentRequirement: {}, securityAssessment: {}, environmentalAssessment: {} } })
     }
   }
 
@@ -151,12 +155,19 @@ export default class StorageUnitContainer extends Component {
 
   updateStorageUnit(data, key, value) {
     const newData = Object.assign({}, data);
+    if (key === 'securityAssessment') {
+      console.log(value)
+    }
     newData[key] = value
     this.setState({ unit: newData })
   }
 
-  updateEnvironmentalData(environmentalData) {
-    const newData = Object.assign((this.state && this.state.unit) ? this.state.unit : this.props.unit, environmentalData)
+  updateEnvRequirements(data, key, value) {
+    const newData = Object.assign({}, data);
+    if (!newData.environmentRequirement) {
+      newData.environmentRequirement = {}
+    }
+    newData.environmentRequirement[key] = value
     this.setState({ unit: newData })
   }
 
@@ -164,7 +175,8 @@ export default class StorageUnitContainer extends Component {
     return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
   }
   render() {
-    const data = (this.state && this.state.unit) ? this.state.unit : this.props.unit;
+    const data = (this.props.route.add && this.state && this.state.unit) ? this.state.unit : this.props.unit;
+    debugger;
     const nodes = this.props.path
     const nodeTypes = [{ storageType: 'Building', iconName: 'folder' },
                        { storageType: 'Room', iconName: 'folder' },
@@ -195,9 +207,9 @@ export default class StorageUnitContainer extends Component {
         </Col>
       </Row>
       <EnvironmentRequirementComponent
-        environmentRequirement={this.props.unit.environmentRequirement}
+        environmentRequirement={data.environmentRequirement}
         translate={this.props.translate}
-        updateEnvRequirements={(e) => { this.updateStorageUnit(data, 'environmentRequirement', e) }}
+        updateEnvRequirements={(k, v) => { this.updateEnvRequirements(data, k, v) }}
       />
       {data.type === 'Room' ?
         <Options

@@ -37,7 +37,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('temperature', temperature)
       }
     }
 
@@ -56,7 +56,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('temperatureTolerance', temperatureTolerance)
       }
     }
 
@@ -74,7 +74,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('relativeHumidity', relativeHumidity)
       }
     }
 
@@ -93,7 +93,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('relativeHumidityTolerance', relativeHumidityTolerance)
       }
     }
 
@@ -111,7 +111,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('hypoxicAir', hypoxicAir)
       }
     }
 
@@ -130,7 +130,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('hypoxicAirTolerance', hypoxicAirTolerance)
       }
     }
 
@@ -147,7 +147,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('cleaning', cleaning)
       }
     }
 
@@ -164,7 +164,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('lightingCondition', lightingCondition)
       }
     }
 
@@ -182,7 +182,7 @@ export default class EnvironmentRequirementComponent extends Component {
           }
         }
         this.setState(state)
-        this.props.updateEnvRequirements(this.state.environmentRequirement)
+        this.props.updateEnvRequirements('comments', comments)
       }
     }
   }

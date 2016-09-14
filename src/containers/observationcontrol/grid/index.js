@@ -34,6 +34,11 @@ const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
     unit: state.storageGridUnit.root.data,
+    path: state.storageGridUnit.root.path ?
+      state.storageGridUnit.root.path.map((s) => {
+        return {
+          id: s.id, name: s.name, storageType: s.storageType, url: `/magasin/${s.id}` } }) :
+      null,
     observationControlGridData: state.observationControlGrid.data
   }
 }
@@ -134,6 +139,7 @@ export default class ObservationControlGridShow extends React.Component {
 
   render() {
     const nodes = this.props.path
+    console.log(nodes)
     const nodeTypes = [{ storageType: 'Building', iconName: 'folder' },
                        { storageType: 'Room', iconName: 'folder' },
                        { storageType: 'StorageUnit', iconName: 'folder' }]

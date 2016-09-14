@@ -74,6 +74,7 @@ export const load = (id) => {
 }
 
 const mapToBackend = (id, data) => {
+  console.log(data)
   return {
     ...data,
     groupRead: 'foo', // Must be removed
@@ -89,7 +90,9 @@ const mapToBackend = (id, data) => {
       hypoxicAirTolerance: data.environmentRequirement.hypoxicAirTolerance * 1,
       relativeHumidity: data.environmentRequirement.relativeHumidity * 1,
       relativeHumidityTolerance: data.environmentRequirement.relativeHumidityTolerance * 1
-    } : {}
+    } : {},
+    environmentAssessment: data.environmentAssessment ? data.environmentAssessment : {},
+    securityAssessment: data.securityAssessment ? data.securityAssessment : {}
   }
 }
 
@@ -101,6 +104,7 @@ export const insert = (parentId, data, callback) => {
     url += `/${data.id}`
   }
   console.log('Hei hei hei')
+  console.log(data)
   const dataToPost = mapToBackend(parentId, data)
 
   console.log(dataToPost)
