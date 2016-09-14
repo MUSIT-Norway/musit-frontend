@@ -12,6 +12,7 @@ en:
         controller: "Controls"
         moveNode: "Move node"
         delete: "Delete"
+        controlsobservations: "Controls and Observations"
       observationControl:
         newObservation: "New observation"
         newControl: "New control"
@@ -419,7 +420,7 @@ no:
         controller: "Kontroller"
         moveNode: "Flytt node"
         delete: "Slett"
-        controlsobservations: "KontrolObservasjon"
+        controlsobservations: "Kontroller og Observasjoner"
       observationControl:
         newObservation: "Ny observasjon"
         newControl: "Ny kontroll"
@@ -489,8 +490,8 @@ no:
         registerObservation: "Registrer observasjon"
         registerObservations: "Registrer observasjoner"
         date: "Utført dato"
-        dateRequired: "Vennligst fyll ut dato når observasjonen ble utført"
-        doneByRequired: "Vennligst fyll ut navn på den som utførte observasjonen"
+        dateRequired: "Dato for observasjonen er påkrevd."
+        doneByRequired: "Navn på den som gjorde observasjonen er påkrevd."
         doneBy: "Utført av"
         registeredDate: "Registrert dato"
         registeredBy: "Registrert av"
@@ -498,11 +499,11 @@ no:
         typeSelect:
           labelText: "Velg type"
         pest:
-          identificationValueRequired: 'Identifikasjon av skadedyr er påkrevd.'
-          identificationValueIncorrect: 'Identifikasjon kan ikke være på mer enn 100 tegn.'
-          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
-          countIncorrect: "Feltet Antall har ikke gyldig verdi."
-          lifeCycleRequired: "Stadie på skadedyr må velges når antall er oppgitt."
+          identificationValueRequired: "Identifikasjon er påkrevd."
+          identificationValueIncorrect: "Identifikasjon kan ha maks 100 tegn."
+          commentsValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
+          countIncorrect: "Antall må være et heltall."
+          lifeCycleRequired: "Stadie er påkrevd når antall er oppgitt."
           labelText: "Skadedyr"
           identificationLabel: "Identifikasjon"
           identificationTooltip: "Identifikasjon av skadedyr"
@@ -523,9 +524,9 @@ no:
           countPlaceHolder: "Heltall"
           countTooltip: "Antall skadedyr"
         alcohol:
-          statusRequired: 'Nivå på sprittilstanden en påkrevd.'
-          volumeIncorrect: 'Sprit volum må være et desimaltall med maks 3 desimaler.'
-          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
+          statusRequired: "Nivå er påkrevd."
+          volumeIncorrect: "Volum må være et tall med maks 3 desimaler."
+          commentIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Sprit"
           volumeLabel: "Volum"
           volumePlaceHolder: "%"
@@ -542,10 +543,10 @@ no:
             minorDryed: "Litt uttørket"
             satisfactory: "Tilfredsstillende"
         temperature:
-          fromValueRequired: 'Målt temperatur (fra) er påkrevd.'
-          fromValueIncorrect: 'Målt temperatur (fra) må være et desimaltall med maks 3 desimaler.'
-          toValueIncorrect: 'Målt temperatur (til) må være et desimaltall med maks 3 desimaler.'
-          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          fromValueRequired: "Målt temperatur (fra) er påkrevd."
+          fromValueIncorrect: "Målt temperatur (fra) må være et tall med maks 3 desimaler."
+          toValueIncorrect: "Målt temperatur (til) må være et tall med maks 3 desimaler."
+          commentsValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Temperatur"
           fromValueLabelText: "Målt temperatur (fra)"
           toValueLabelText: "Målt temperatur (til)"
@@ -557,10 +558,10 @@ no:
           noteTooltip: "Tiltak som bør iverksettes"
           notePlaceHolder: "Fritekst"
         hypoxicAir:
-          fromValueRequired: 'Målt inertluft (fra) er påkrevd.'
-          fromValueIncorrect: 'Målt inertluft (fra) må være et desimaltall med maks 3 desimaler.'
-          toValueIncorrect: 'Målt inertluft (til) må være et desimaltall med maks 3 desimaler.'
-          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          fromValueRequired: "Målt inertluft (fra) er påkrevd."
+          fromValueIncorrect: "Målt inertluft (fra) må være et tall med maks 3 desimaler."
+          toValueIncorrect: "Målt inertluft (til) må være et tall med maks 3 desimaler."
+          commentsValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Inertluft"
           fromValueLabelText: "Målt inertluft (fra)"
           toValueLabelText: "Målt inertluft (til)"
@@ -572,24 +573,24 @@ no:
           noteTooltip: "Tiltak som bør iverksettes"
           notePlaceHolder: "Fritekst"
         relativeHumidity:
-          fromValueRequired: 'Målt luftfuktighet (fra) er påkrevd.'
-          fromValueIncorrect: 'Målt luftfuktighet (fra) må være et desimaltall med maks 3 desimaler.'
-          toValueIncorrect: 'Målt luftfuktighet (til) må være et desimaltall med maks 3 desimaler.'
-          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          fromValueRequired: "Målt rel. luftfuktighet (fra) er påkrevd."
+          fromValueIncorrect: "Målt rel. luftfuktighet (fra) må være et tall med maks 3 desimaler."
+          toValueIncorrect: "Målt rel. luftfuktighet (til) må være et tall med maks 3 desimaler."
+          commentsValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Relativ luftfuktighet"
-          fromValueLabelText: "Målt luftfuktighet (fra)"
-          toValueLabelText: "Målt luftfuktighet (til)"
+          fromValueLabelText: "Målt rel. luftfuktighet (fra)"
+          toValueLabelText: "Målt rel. luftfuktighet (til)"
           fromValuePlaceHolder: "%"
           toValuePlaceHolder: "%"
-          fromValueTooltip: "Målt luftfuktighet"
-          toValueTooltip: "Målt luftfuktighet"
+          fromValueTooltip: "Målt rel. luftfuktighet"
+          toValueTooltip: "Målt rel. luftfuktighet"
           note: "Tiltak/Kommentar"
           noteTooltip: "Tiltak som bør iverksettes"
           notePlaceHolder: "Fritekst"
         mold:
-          leftValueRequired: 'Beskrivelse av observert mugg er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av observert mugg kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av observert mugg er påkrevd."
+          leftValueIncorrect: "Beskrivelse av observert mugg kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Mugg"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -598,9 +599,9 @@ no:
           leftLabelToolTip: "Observert mugg"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         cleaning:
-          leftValueRequired: 'Beskrivelse av observert renhold er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av observert renhold kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av observert renhold er påkrevd."
+          leftValueIncorrect: "Beskrivelse av observert renhold kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Renhold"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -609,9 +610,9 @@ no:
           leftLabelToolTip: "Observert renhold"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         gas:
-          leftValueRequired: 'Informasjon om målt verdi er påkrevd.'
-          leftValueIncorrect: 'Informasjon om målt verdi kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Målt verdi er påkrevd."
+          leftValueIncorrect: "Målt verdi kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Gass"
           leftLabelText: "Målt verdi"
           rightLabelText: "Tiltak/Kommentar"
@@ -620,9 +621,9 @@ no:
           leftLabelToolTip: "Målt gass"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         lightConditions:
-          leftValueRequired: 'Informasjon om målt/observert verdi er påkrevd'
-          leftValueIncorrect: 'Informasjon om målt/observert verdi kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Målt/observert verdi er påkrevd"
+          leftValueIncorrect: "Målt/observert verdi kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Lysforhold"
           leftLabelText: "Målt/observert verdi"
           rightLabelText: "Tiltak/Kommentar"
@@ -631,9 +632,9 @@ no:
           leftLabelToolTip: "Målt/observert lysforhold"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         skallsikring:
-          leftValueRequired: 'Beskrivelse av skallsikringens tilstand er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av skallsikringens tilstand kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av skallsikringens tilstand er påkrevd."
+          leftValueIncorrect: "Beskrivelse av skallsikringens tilstand kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Skallsikring"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -642,9 +643,9 @@ no:
           leftLabelToolTip: "Observert skallsikring"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         brannsikring:
-          leftValueRequired: 'Beskrivelse av brannsikringens tilstand er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av brannsikringens tilstand kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av brannsikringens tilstand er påkrevd."
+          leftValueIncorrect: "Beskrivelse av brannsikringens tilstand kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Brannsikring"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -653,9 +654,9 @@ no:
           leftLabelToolTip: "Observert brannsikring"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         vannskaderisiko:
-          leftValueRequired: 'Beskrivelse av vannskaderisiko er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av vannskaderisiko kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av vannskaderisiko er påkrevd."
+          leftValueIncorrect: "Beskrivelse av vannskaderisiko kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Vannskaderisiko"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -664,9 +665,9 @@ no:
           leftLabelToolTip: "Observert vannskaderisiko"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         tyverisikring:
-          leftValueRequired: 'Beskrivelse av tyverisikringens tilstand er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av tyverisikringens tilstand kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av tyverisikringens tilstand er påkrevd."
+          leftValueIncorrect: "Beskrivelse av tyverisikringens tilstand kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Tyverisikring"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -696,33 +697,33 @@ no:
           Organization: "Organisasjon"
       name:
         labelText: "Navn"
-        incorrect: 'Navn kan ikke være på mer enn 100 tegn.'
+        incorrect: "Navn kan ha maks 100 tegn."
         required: "Navn er påkrevd."
         placeHolder: "Fritekst"
         tooltip: "Navn på noden"
       address:
         labelText: "Adresse"
-        incorrect: 'Adresse kan ikke være på mer enn 100 tegn.'
+        incorrect: "Adresse kan ha maks 100 tegn."
         placeHolder: "Gateadr."
         tooltip: "Nodens adresse"
       area:
         labelText: "Areal"
-        incorrect: 'Areal (fra) må være et desimaltall med maks 3 desimaler.'
+        incorrect: "Areal (fra) må være et tall med maks 3 desimaler."
         placeHolder: "fra"
         tooltip: "Nodens areal i m2"
       areaTo:
         labelText: ""
-        incorrect: 'Areal (til) må være et desimaltall med maks 3 desimaler.'
+        incorrect: "Areal (til) må være et tall med maks 3 desimaler."
         placeHolder: "til"
         tooltip: "Nodens areal i m2"
       height:
         labelText: "Høyde"
-        incorrect: 'Høyde (fra) må være et desimaltall med maks 3 desimaler.'
+        incorrect: "Høyde (fra) må være et tall med maks 3 desimaler."
         placeHolder: "fra"
         tooltip: "Nodens høyde i m"
       heightTo:
         labelText: ""
-        incorrect: 'Høyde (til) må være et desimaltall med maks 3 desimaler.'
+        incorrect: "Høyde (til) må være et tall med maks 3 desimaler."
         placeHolder: "til"
         tooltip: "Nodens høyde i m"
       securityAssessment:
@@ -741,47 +742,47 @@ no:
       environmentRequirements:
         temperature:
           labelText: "Temperatur"
-          incorrect: 'Temperatur må være et desimaltall med maks 3 desimaler.'
+          incorrect: "Temperatur må være et tall med maks 3 desimaler."
           tooltip: "Krav til temperatur i °C"
           placeHolder: "\u00b0C"
         temperatureTolerance:
           labelText: ""
-          incorrect: 'Temperatur toleranse må være et heltall.'
+          incorrect: "Temperaturtoleranse må være et heltall."
           tooltip: "Temperatur toleranse"
-          placeHolder: "+/- \u00b0C"
+          placeHolder: "\u00b0C"
         relativeHumidity:
           labelText: "Rel. luftfuktighet"
-          incorrect: 'Relativ luftfuktighet må være et desimaltall med maks 3 desimaler.'
+          incorrect: "Relativ luftfuktighet må være et tall med maks 3 desimaler."
           tooltip: "Krav til relativ luftfuktighet i %"
           placeHolder: "%"
         relativeHumidityTolerance:
           labelText: ""
-          incorrect: 'Relativ luftfuktighet toleranse må være et heltall.'
+          incorrect: "Relativ luftfuktighettoleranse må være et heltall."
           tooltip: "Relativ luftfuktighet toleranse"
-          placeHolder: "+/- %"
+          placeHolder: "%"
         hypoxicAir:
           labelText: "Inertluft"
-          incorrect: 'Inertluft må være et desimaltall med maks 3 desimaler.'
+          incorrect: "Inertluft må være et tall med maks 3 desimaler."
           tooltip: "Krav til inertluft i % O2"
           placeHolder: "% O2"
         hypoxicAirTolerance:
           labelText: ""
-          incorrect: 'Inertluft toleranse må være et heltall.'
+          incorrect: "Inertlufttoleranse må være et heltall."
           tooltip: "Inertluft toleranse"
-          placeHolder: "+/- % O2"
+          placeHolder: "% O2"
         cleaning:
           labelText: "Renhold"
-          incorrect: 'Renhold kan ikke være på mer enn 100 tegn.'
+          incorrect: "Renhold kan ha maks 100 tegn."
           placeHolder: "Fritekst"
           tooltip: "Krav til renhold"
         lightningConditions:
           labelText: "Lysforhold"
-          incorrect: 'Lysforhold kan ikke være på mer enn 100 tegn.'
+          incorrect: "Lysforhold kan ha maks 100 tegn."
           placeHolder: "Fritekst"
           tooltip: "Krav til lysforhold"
         comments:
           labelText: "Kommentar"
-          incorrect: 'Kommentar kan ikke være på mer enn 250 tegn.'
+          incorrect: "Kommentar kan ha maks 250 tegn."
           placeHolder: "Fritekst"
           tooltip: "Kommentar"
     welcomePage:
