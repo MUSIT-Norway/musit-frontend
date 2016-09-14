@@ -292,7 +292,7 @@ export default class ExampleView extends React.Component {
               </Row>
             </Grid>
           </Panel>
-          <EnvironmentRequirementComponent translate={this.props.translate} />
+          <EnvironmentRequirementComponent translate={this.props.translate} updateEnvRequirements={(z) => z} />
           <Panel>
             <Options
               unit={this.state.sikringBevaring}

@@ -29,6 +29,10 @@ const wrapAlcoholState = ((s) => {
   }
 })
 
+const fixNumber = (number) => {
+  return number ? number.toString().replace('.', ',') : ''
+}
+
 const wrap = (be) => {
   const ret = {}
   ret.doneBy = {}
@@ -83,20 +87,20 @@ const wrap = (be) => {
         return retobs
       case 'observationhypoxicair':
         retobs.type = 'hypoxicAir'
-        retobs.data.fromValue = o.from.toString().replace('.', ',')
-        retobs.data.toValue = o.to.toString().replace('.', ',')
+        retobs.data.fromValue = fixNumber(o.from)
+        retobs.data.toValue = fixNumber(o.to)
         retobs.data.commentValue = o.note
         return retobs
       case 'observationtemperature':
         retobs.type = 'temperature'
-        retobs.data.fromValue = o.from.toString().replace('.', ',')
-        retobs.data.toValue = o.to.toString().replace('.', ',')
+        retobs.data.fromValue = fixNumber(o.from)
+        retobs.data.toValue = fixNumber(o.to)
         retobs.data.commentValue = o.note
         return retobs
       case 'observationrelativehumidity':
         retobs.type = 'relativeHumidity'
-        retobs.data.fromValue = o.from.toString().replace('.', ',')
-        retobs.data.toValue = o.to.toString().replace('.', ',')
+        retobs.data.fromValue = fixNumber(o.from)
+        retobs.data.toValue = fixNumber(o.to)
         retobs.data.commentValue = o.note
         return retobs
       case 'observationpest':
@@ -106,7 +110,7 @@ const wrap = (be) => {
         retobs.data.observations = o.lifeCycles ? o.lifeCycles.map((l) => {
           const obs = {}
           obs.lifeCycle = l.stage
-          obs.count = l.number.toString().replace('.', ',')
+          obs.count = fixNumber(l.number)
           return obs
         }
       ) : []
@@ -114,7 +118,7 @@ const wrap = (be) => {
       case 'observationalcohol':
         retobs.type = 'alcohol'
         retobs.data.statusValue = wrapAlcoholState(o.condition)
-        retobs.data.volumeValue = o.volume.toString().replace('.', ',')
+        retobs.data.volumeValue = fixNumber(o.volume)
         retobs.data.commentValue = o.note
         return retobs
       default:

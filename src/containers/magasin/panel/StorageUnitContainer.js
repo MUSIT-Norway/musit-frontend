@@ -45,10 +45,17 @@ export default class StorageUnitContainer extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.state = {
+      unit: {
+        environmentRequirement: {},
+        environmentAssessment: {},
+        securityAssessment: {}
+      }
+    }
   }
 
   componentWillMount() {
-    if (this.props.params.id) {
+    if (this.props.params.id && !this.props.route.add) {
       this.props.loadStorageUnit(this.props.params.id)
     }
   }
@@ -96,40 +103,40 @@ export default class StorageUnitContainer extends Component {
 
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.temperature',
+        ...this.validateNumberField('environmentRequirement.temperature',
         formProps.unit.temperature, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.temperatureTolerance',
+        ...this.validateNumberField('environmentRequirement.temperatureTolerance',
         formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.relativeHumidity',
+        ...this.validateNumberField('environmentRequirement.relativeHumidity',
         formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.relativeHumidityTolerance',
+        ...this.validateNumberField('environmentRequirement.relativeHumidityTolerance',
         formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.hypoxicAir',
+        ...this.validateNumberField('environmentRequirement.hypoxicAir',
         formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
-        ...this.validateNumberField('environmentRequirements.hypoxicAirTolerance',
+        ...this.validateNumberField('environmentRequirement.hypoxicAirTolerance',
         formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
       }
-      errors = { ...errors, ...this.validateStringField('environmentRequirements.cleaning', formProps.unit.cleaning, 100)() }
+      errors = { ...errors, ...this.validateStringField('environmentRequirement.cleaning', formProps.unit.cleaning, 100)() }
       errors = {
         ...errors,
-        ...this.validateStringField('environmentRequirements.lightningConditions', formProps.unit.lightningConditions, 100)()
+        ...this.validateStringField('environmentRequirement.lightingCondition', formProps.unit.lightningConditions, 100)()
       }
-      errors = { ...errors, ...this.validateStringField('environmentRequirements.comments', formProps.unit.comments, 250)() }
+      errors = { ...errors, ...this.validateStringField('environmentRequirement.comments', formProps.unit.comments, 250)() }
     } else {
       errors.type = this.props.translate('musit.storageUnits.type.required')
       errors.name = this.props.translate('musit.storageUnits.name.required')
@@ -152,8 +159,30 @@ export default class StorageUnitContainer extends Component {
     this.setState({ unit: newData })
   }
 
-  updateEnvironmentalData(environmentalData) {
-    const newData = Object.assign((this.state && this.state.unit) ? this.state.unit : this.props.unit, environmentalData)
+  updateEnvRequirements(data, key, value) {
+    const newData = Object.assign({}, data);
+    if (!newData.environmentRequirement) {
+      newData.environmentRequirement = {}
+    }
+    newData.environmentRequirement[key] = value
+    this.setState({ unit: newData })
+  }
+
+  updateEnvAssessments(data, key, value) {
+    const newData = Object.assign({}, data);
+    if (!newData.environmentAssessment) {
+      newData.environmentAssessment = {}
+    }
+    newData.environmentAssessment[key] = value
+    this.setState({ unit: newData })
+  }
+
+  updateSecAssessments(data, key, value) {
+    const newData = Object.assign({}, data);
+    if (!newData.securityAssessment) {
+      newData.securityAssessment = {}
+    }
+    newData.securityAssessment[key] = value
     this.setState({ unit: newData })
   }
 
@@ -161,7 +190,7 @@ export default class StorageUnitContainer extends Component {
     return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
   }
   render() {
-    const data = (this.state && this.state.unit) ? this.state.unit : this.props.unit;
+    const data = (this.props.route.add) ? this.state.unit : this.props.unit;
     const nodes = this.props.path
     const nodeTypes = [{ type: 'Building', iconName: 'folder' },
                        { type: 'Room', iconName: 'folder' },
@@ -192,32 +221,33 @@ export default class StorageUnitContainer extends Component {
         </Col>
       </Row>
       <EnvironmentRequirementComponent
+        environmentRequirement={data.environmentRequirement}
         translate={this.props.translate}
-        updateStorageUnit={(e) => this.updateEnvironmentalData(e)}
+        updateEnvRequirements={(k, v) => { this.updateEnvRequirements(data, k, v) }}
       />
       {data.type === 'Room' ?
         <Options
           translate={this.props.translate}
           unit={data}
           // Disse må fikses (Mappe verdi av sikring fra bool -> {0,1})
-          updateSkallsikring={(sikringSkallsikring) =>
-            this.updateStorageUnit(data, 'sikringSkallsikring', sikringSkallsikring)}
-          updateTyverisikring={(sikringTyverisikring) =>
-            this.updateStorageUnit(data, 'sikringTyverisikring', sikringTyverisikring)}
-          updateBrannsikring={(sikringBrannsikring) =>
-            this.updateStorageUnit(data, 'sikringBrannsikring', sikringBrannsikring)}
-          updateVannskaderisiko={(sikringVannskaderisiko) =>
-            this.updateStorageUnit(data, 'sikringVannskaderisiko', sikringVannskaderisiko)}
-          updateRutinerBeredskap={(sikringRutineOgBeredskap) =>
-            this.updateStorageUnit(data, 'sikringRutineOgBeredskap', sikringRutineOgBeredskap)}
-          updateLuftfuktighet={(bevarLuftfuktOgTemp) =>
-            this.updateStorageUnit(data, 'bevarLuftfuktOgTemp', bevarLuftfuktOgTemp)}
-          updateLysforhold={(bevarLysforhold) =>
-            this.updateStorageUnit(data, 'bevarLysforhold', bevarLysforhold)}
-          updateTemperatur={(temperatur) =>
-            this.updateStorageUnit(data, 'temperatur', temperatur)}
-          updatePreventivKonservering={(bevarPrevantKons) =>
-            this.updateStorageUnit(data, 'bevarPrevantKons', bevarPrevantKons)}
+          updateSkallsikring={(perimeterSecurity) =>
+            this.updateSecAssessments(data, 'perimeterSecurity', perimeterSecurity)}
+          updateTyverisikring={(theftProtection) =>
+            this.updateSecAssessments(data, 'theftProtection', theftProtection)}
+          updateBrannsikring={(fireProtection) =>
+            this.updateSecAssessments(data, 'fireProtection', fireProtection)}
+          updateVannskaderisiko={(waterDamageAssessment) =>
+            this.updateSecAssessments(data, 'waterDamageAssessment', waterDamageAssessment)}
+          updateRutinerBeredskap={(routinesAndContingencyPlan) =>
+            this.updateSecAssessments(data, 'routinesAndContingencyPlan', routinesAndContingencyPlan)}
+          updateLuftfuktighet={(relativeHumidity) =>
+            this.updateEnvAssessments(data, 'relativeHumidity', relativeHumidity)}
+          updateLysforhold={(lightingCondition) =>
+            this.updateEnvAssessments(data, 'lightingCondition', lightingCondition)}
+          updateTemperatur={(temperatureAssessment) =>
+            this.updateEnvAssessments(data, 'temperatureAssessment', temperatureAssessment)}
+          updatePreventivKonservering={(preventiveConservation) =>
+            this.updateEnvAssessments(data, 'preventiveConservation', preventiveConservation)}
         />
         : null}
       <Grid>
@@ -255,7 +285,6 @@ export default class StorageUnitContainer extends Component {
           </Grid>
         }
       />
-
     );
   }
 }

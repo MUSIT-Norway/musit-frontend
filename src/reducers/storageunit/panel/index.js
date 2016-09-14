@@ -81,7 +81,17 @@ const mapToBackend = (id, data) => {
     area: data.area * 1,
     areaTo: data.areaTo * 1,
     height: data.height * 1,
-    heightTo: data.heightTo * 1
+    heightTo: data.heightTo * 1,
+    environmentRequirement: data.environmentRequirement ? { ...data.environmentRequirement,
+      temperature: data.environmentRequirement.temperature * 1,
+      temperatureTolerance: data.environmentRequirement.temperatureTolerance * 1,
+      hypoxicAir: data.environmentRequirement.hypoxicAir * 1,
+      hypoxicAirTolerance: data.environmentRequirement.hypoxicAirTolerance * 1,
+      relativeHumidity: data.environmentRequirement.relativeHumidity * 1,
+      relativeHumidityTolerance: data.environmentRequirement.relativeHumidityTolerance * 1
+    } : {},
+    environmentAssessment: data.environmentAssessment ? data.environmentAssessment : {},
+    securityAssessment: data.securityAssessment ? data.securityAssessment : {}
   }
 }
 
@@ -92,10 +102,10 @@ export const insert = (parentId, data, callback) => {
     action = 'put'
     url += `/${data.id}`
   }
-  data = mapToBackend(parentId, data)
+  const dataToPost = mapToBackend(parentId, data)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
-    promise: (client) => client[action](url, { data }),
+    promise: (client) => client[action](url, { data: dataToPost }),
     callback
   };
 }
