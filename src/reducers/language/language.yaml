@@ -92,10 +92,10 @@ en:
           labelText: "Choose type"
         pest:
           identificationValueRequired: "Identification is required."
-          identificationValueIncorrect: "Maximum length for pest identification is 100 characters."
-          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          identificationValueIncorrect: "Max length for identification is 100 char."
+          commentsValueIncorrect: "Max length for Task/Comment is 250 char."
           countIncorrect: "Quantity must be an integer."
-          lifeCycleRequired: "Please choose stage. Stage must be chosen when quantity is entered."
+          lifeCycleRequired: "Stage is required when quantity is specified."
           labelText: "Pest"
           identificationLabel: "Identification"
           identificationTooltip: "Pest identification"
@@ -116,10 +116,9 @@ en:
           countPlaceHolder: "Integer"
           countTooltip: "Pest quantity"
         alcohol:
-          statusRequired: 'Alcohol status is required.'
-          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals.'
-          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals.'
-          commentIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          statusRequired: "Level is required."
+          volumeIncorrect: "Volume must be a number with max 3 decimals."
+          commentIncorrect: "Max length for Task/Comment is 250 char"'
           labelText: "Alcohol"
           volumeLabel: "Volume"
           volumePlaceHolder: "%"
@@ -136,10 +135,10 @@ en:
             minorDryed: "A little dehydated"
             satisfactory: "Satisfactory"
         temperature:
-          fromValueRequired: 'Measured value (from) is required.'
-          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
-          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
-          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          fromValueRequired: "Measured value (from) is required."
+          fromValueIncorrect: "Measured value (from) must be a number with max 3 decimals."
+          toValueIncorrect: "Measured value (to) must be a number with max 3 decimals."
+          commentsValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Temperature"
           fromValueLabelText: "Measured value (from)"
           toValueLabelText: "Measured value (to)"
@@ -151,10 +150,10 @@ en:
           noteTooltip: "Task that should be performed"
           notePlaceHolder: "Free text"
         hypoxicAir:
-          fromValueRequired: 'Measured value (from) is required.'
-          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
-          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
-          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          fromValueRequired: "Measured value (from) is required."
+          fromValueIncorrect: "Measured value (from) must be a number with max 3 decimals."
+          toValueIncorrect: "Measured value (to) must be a number with max 3 decimals."
+          commentsValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Hypoxic air"
           fromValueLabelText:  "Measured value (from)"
           toValueLabelText: "Measured value (to)"
@@ -166,17 +165,17 @@ en:
           noteTooltip: "Task that should be performed"
           notePlaceHolder: "Free text"
         relativeHumidity:
-          fromValueRequired: 'Measured value (from) is required.'
-          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
-          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
-          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          fromValueRequired: "Measured value (from) is required."
+          fromValueIncorrect: "Measured value (from) must be a number with max 3 decimals."
+          toValueIncorrect: "Measured value (to) must be a number with max 3 decimals."
+          commentsValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Relative humidity"
           fromValueLabelText: "Measured value (from)"
           toValueLabelText: "Measured value (to)"
           fromValuePlaceHolder: "%"
           toValuePlaceHolder: "%"
-          fromValueTooltip: "Measured humidity"
-          toValueTooltip: "Measured humidity"
+          fromValueTooltip: "Measured rel. humidity"
+          toValueTooltip: "Measured rel. humidity"
           note: "Task/Comment"
           noteTooltip: "Task that should be performed"
           notePlaceHolder: "Free text"
