@@ -11,9 +11,9 @@ export default class NodeLeftMenuComponent extends Component {
     totalObjectCount: PropTypes.number,
     underNodeCount: PropTypes.number,
     onClickProperties: PropTypes.func.isRequired,
-    onClickObservations: PropTypes.func.isRequired,
+    onClickObservations: PropTypes.func,
     onClickControlObservations: PropTypes.func.isRequired,
-    onClickController: PropTypes.func.isRequired,
+    onClickController: PropTypes.func,
     onClickMoveNode: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired,
     showButtons: PropTypes.bool.isRequired
@@ -28,14 +28,12 @@ export default class NodeLeftMenuComponent extends Component {
       underNodeCount,
       onClickProperties,
       onClickControlObservations,
-      onClickObservations,
-      onClickController,
       onClickMoveNode,
       onClickDelete,
       showButtons
     } = this.props
 
-    const buttonLink = (type, icon, eventType) => {
+    const buttonLink = (type, icon, eventType, MusitIconType) => {
       let fragment = null
       if (Number.isInteger(id)) {
         fragment = (
@@ -46,7 +44,8 @@ export default class NodeLeftMenuComponent extends Component {
               onClick={() => eventType(id)}
               style={{ color: 'black' }}
             >
-              <FontAwesome name={icon} style={{ padding: '2px' }} />
+              {MusitIconType ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
+                <FontAwesome name={`${icon}`} style={{ padding: '2px' }} />}
               <br />
               {translate(`musit.leftMenu.node.${type}`)}
             </Button>
@@ -94,9 +93,7 @@ export default class NodeLeftMenuComponent extends Component {
         {showCount(underNodeCount, 'underNodeCount')}
         {(Number.isInteger(id)) ? (<hr />) : null}
         {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
-        {showButtons ? buttonLink('controlsobservations', 'hospital-o', onClickControlObservations) : null}
-        {showButtons ? buttonLink('observations', 'eye', onClickObservations) : null}
-        {showButtons ? buttonLink('controller', 'user-secret', onClickController) : null}
+        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
         {showButtons ? buttonLink('moveNode', 'truck', onClickMoveNode) : null}
         {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
 
