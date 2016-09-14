@@ -45,7 +45,6 @@ export default class StorageUnitContainer extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.updateStorageUnit = this.updateStorageUnit.bind(this)
   }
 
   componentWillMount() {
@@ -151,10 +150,6 @@ export default class StorageUnitContainer extends Component {
   }
 
   updateStorageUnit(data, key, value) {
-    console.log('updateStorageUnit')
-    console.log(key)
-    console.log(value)
-    console.log(data)
     const newData = Object.assign({}, data);
     newData[key] = value
     this.setState({ unit: newData })
