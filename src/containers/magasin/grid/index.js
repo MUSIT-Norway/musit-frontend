@@ -10,7 +10,7 @@ import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
-
+import { MusitModal } from '../../../components/formfields'
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
@@ -161,6 +161,11 @@ export default class StorageUnitsContainer extends React.Component {
     }
     return newUri
   }
+  showModal() {
+    return (
+      <MusitModal valueHeader="Hi" state />
+    )
+  }
 
   makeToolbar() {
     return (<Toolbar
@@ -205,7 +210,7 @@ export default class StorageUnitsContainer extends React.Component {
           onClickControlObservations={(id) => history.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => history.push(`/magasin/${id}/observations`)}
           onClickController={(id) => history.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}
+          onClickMoveNode={() => this.showModal()}
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
