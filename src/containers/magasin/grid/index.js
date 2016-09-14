@@ -33,12 +33,12 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(clearRoot())
       dispatch(loadRoot())
     },
+    loadStorageObjects: (id) => {
+      dispatch(loadObjects(id))
+    },
     loadChildren: (id, callback) => {
       dispatch(loadChildren(id, callback))
       dispatch(loadRoot(id))
-    },
-    loadStorageObjects: (id) => {
-      dispatch(loadObjects(id))
     },
     loadPath: (id) => {
       dispatch(loadPath(id))
@@ -151,7 +151,6 @@ export default class StorageUnitsContainer extends React.Component {
   loadObjects() {
     if (this.props.params.splat) {
       const currentId = this.resolveCurrentId(this.props.params.splat);
-      console.log(currentId)
       this.props.loadStorageObjects(currentId)
     }
   }
@@ -197,7 +196,7 @@ export default class StorageUnitsContainer extends React.Component {
       }}
       clickShowLeft={() => {
         this.setState({ ...this.state, showObjects: false, showNodes: true })
-        this.loadObjects();
+        this.loadNodes();
         blur()
       }}
     />)
