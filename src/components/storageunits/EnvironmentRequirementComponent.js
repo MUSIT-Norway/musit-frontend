@@ -56,7 +56,7 @@ export default class EnvironmentRequirementComponent extends Component {
       validate: 'number',
       precision: 0,
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.placeHolder'),
-      addOnPrefix: this.props.translate('musit.storageUnits.environmentRequirements.temperatureTolerance.addOnPrefix'),
+      addOnPrefix: '\u00b1',
       onChange: (temperatureTolerance) => {
         const state = {
           environmentRequirement: {
@@ -93,7 +93,7 @@ export default class EnvironmentRequirementComponent extends Component {
       validate: 'number',
       precision: 0,
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.placeHolder'),
-      addOnPrefix: this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidityTolerance.addOnPrefix'),
+      addOnPrefix: '\u00b1',
       onChange: (relativeHumidityTolerance) => {
         const state = {
           environmentRequirement: {
@@ -130,7 +130,7 @@ export default class EnvironmentRequirementComponent extends Component {
       validate: 'number',
       precision: 0,
       placeHolder: this.props.translate('musit.storageUnits.environmentRequirements.hypoxicAirTolerance.placeHolder'),
-      addOnPrefix: this.props.translate('musit.storageUnits.environmentRequirements.hypoxicAirTolerance.addOnPrefix'),
+      addOnPrefix: '\u00b1',
       onChange: (hypoxicAirTolerance) => {
         const state = {
           environmentRequirement: {
@@ -145,8 +145,6 @@ export default class EnvironmentRequirementComponent extends Component {
 
     this.cleaning = {
       id: 'cleaning',
-      // placeHolder: 'test placeHolder',
-      // addOnPrefix: '\u00b1',
       tooltip: this.props.translate('musit.storageUnits.environmentRequirements.cleaning.tooltip'),
       validate: 'text',
       maximumLength: 100,
