@@ -69,6 +69,12 @@ export default class ControlAddContainer extends React.Component {
     this.onClickSave = this.onClickSave.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.actor) {
+      this.setState({ ...this.state, doneBy: nextProps.actor })
+    }
+  }
+
   onControlClick(key, bool) {
     const me = this
     return () => {

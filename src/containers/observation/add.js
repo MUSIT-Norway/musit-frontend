@@ -41,16 +41,20 @@ export default class AddObservationPage extends React.Component {
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
+  nodeTypes = [
+    { type: 'Organisation', iconName: 'folder' },
+    { type: 'Building', iconName: 'folder' },
+    { type: 'Room', iconName: 'folder' },
+    { type: 'StorageUnit', iconName: 'folder' }
+  ]
+
+  makeBreadcrumb(nodes, nodeTypes) {
+    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} /> : null
   }
 
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = this.makeBreadcrumb(nodes, this.nodeTypes)
     return (
       <Layout
         title="Magasin"
@@ -63,9 +67,8 @@ export default class AddObservationPage extends React.Component {
               id={this.props.params.id}
               onSaveObservation={this.props.onSaveObservation}
               translate={this.props.translate}
-              title="Add new observations"
               mode="ADD"
-              doneBy={(this.props.actor && this.props.actor.fn) ? this.props.actor : ''}
+              doneBy={this.props.actor}
             />
           </div>
         }
