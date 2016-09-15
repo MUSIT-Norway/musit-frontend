@@ -35,6 +35,7 @@ export default class ControlAddContainer extends React.Component {
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
     actor: React.PropTypes.object,
+    envReqData: React.PropTypes.object,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
@@ -51,14 +52,14 @@ export default class ControlAddContainer extends React.Component {
       relativeHumidityOK: null,
       pestOK: null,
       storageUnit: null,
-      temperature: ' ',
-      temperatureTolerance: ' ',
-      relativeHumidity: ' ',
-      relativeHumidityInterval: ' ',
-      inertAir: ' ',
-      inertAirInterval: ' ',
-      light: ' ',
-      cleaning: ' ',
+      temperature: this.props.envReqData ? this.props.envReqData.temperature : ' ',
+      temperatureTolerance: this.props.envReqData ? this.props.envReqData.temperatureTolerance : ' ',
+      relativeHumidity: this.props.envReqData ? this.props.envReqData.relativeHumidity : ' ',
+      relativeHumidityInterval: this.props.envReqData ? this.props.envReqData.relativeHumidityTolerance : ' ',
+      inertAir: this.props.envReqData ? this.props.envReqData.hypoxicAir : ' ',
+      inertAirInterval: this.props.envReqData ? this.props.envReqData.hypoxicAirTolerance : ' ',
+      light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
+      cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
       doneDate: moment(),
       doneBy: this.props.actor
     }
@@ -147,7 +148,7 @@ export default class ControlAddContainer extends React.Component {
         return <Col md={9}>{make(leftValue)}</Col>
       }
 
-      return (<Col md={9}> --- </Col>)
+      return (<Col md={9}>{null}</Col>)
     }
 
     const btnTbr = (<SaveCancel
@@ -174,7 +175,7 @@ export default class ControlAddContainer extends React.Component {
         rightValue: this.state.inertAirInterval
       },
       {
-        key: 'lightConditions',
+        key: 'lightCondition',
         leftValue: this.state.light
       },
       {
