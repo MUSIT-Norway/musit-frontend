@@ -34,3 +34,11 @@ export const parseISODateNonStrict = (dateStr) => {
 export const parseISODateStrict = (dateStr) => {
   return moment(dateStr, [DATE_FORMAT_ISO], true)
 }
+
+export const parseFloatFromString = (value) => {
+  return typeof value === 'string' ? window.parseFloat(value.replace(',', '.')) : value
+}
+
+export const formatFloatToString = (number) => {
+  return typeof number === 'number' ? number.toString().replace('.', ',') : number
+}
