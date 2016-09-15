@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { parseISODateNonStrict as parseISODate } from './../../../util'
+import { parseISODateNonStrict as parseISODate, formatFloatToString } from './../../../util'
 
 const wrapAlcoholState = ((s) => {
   switch (s) {
@@ -28,10 +28,6 @@ const wrapAlcoholState = ((s) => {
     default: return s
   }
 })
-
-const fixNumber = (number) => {
-  return number ? number.toString().replace('.', ',') : ''
-}
 
 const wrap = (be) => {
   const ret = {}
@@ -87,20 +83,20 @@ const wrap = (be) => {
         return retobs
       case 'observationhypoxicair':
         retobs.type = 'hypoxicAir'
-        retobs.data.fromValue = fixNumber(o.from)
-        retobs.data.toValue = fixNumber(o.to)
+        retobs.data.fromValue = formatFloatToString(o.from)
+        retobs.data.toValue = formatFloatToString(o.to)
         retobs.data.commentValue = o.note
         return retobs
       case 'observationtemperature':
         retobs.type = 'temperature'
-        retobs.data.fromValue = fixNumber(o.from)
-        retobs.data.toValue = fixNumber(o.to)
+        retobs.data.fromValue = formatFloatToString(o.from)
+        retobs.data.toValue = formatFloatToString(o.to)
         retobs.data.commentValue = o.note
         return retobs
       case 'observationrelativehumidity':
         retobs.type = 'relativeHumidity'
-        retobs.data.fromValue = fixNumber(o.from)
-        retobs.data.toValue = fixNumber(o.to)
+        retobs.data.fromValue = formatFloatToString(o.from)
+        retobs.data.toValue = formatFloatToString(o.to)
         retobs.data.commentValue = o.note
         return retobs
       case 'observationpest':
@@ -110,7 +106,7 @@ const wrap = (be) => {
         retobs.data.observations = o.lifeCycles ? o.lifeCycles.map((l) => {
           const obs = {}
           obs.lifeCycle = l.stage
-          obs.count = fixNumber(l.number)
+          obs.count = formatFloatToString(l.number)
           return obs
         }
       ) : []
@@ -118,7 +114,7 @@ const wrap = (be) => {
       case 'observationalcohol':
         retobs.type = 'alcohol'
         retobs.data.statusValue = wrapAlcoholState(o.condition)
-        retobs.data.volumeValue = fixNumber(o.volume)
+        retobs.data.volumeValue = formatFloatToString(o.volume)
         retobs.data.commentValue = o.note
         return retobs
       default:
