@@ -148,7 +148,7 @@ export default class ControlAddContainer extends React.Component {
         return <Col md={9}>{make(leftValue)}</Col>
       }
 
-      return (<Col md={9}> --- </Col>)
+      return (<Col md={9}>{null}</Col>)
     }
 
     const btnTbr = (<SaveCancel
