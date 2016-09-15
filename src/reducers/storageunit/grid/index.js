@@ -120,10 +120,6 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
 
 export default storageUnitGridReducer;
 
-export const isLoaded = (globalState) => {
-  return globalState.storageUnitContainer && globalState.storageUnitContainer.loaded;
-}
-
 export const loadRoot = (id) => {
   let action = {}
   if (id) {
@@ -138,13 +134,6 @@ export const loadRoot = (id) => {
     }
   }
   return action
-}
-
-export const loadAll = () => {
-  return {
-    types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get('/api/storageadmin/v1/storageunit')
-  };
 }
 
 export const loadChildren = (id, callback) => {
