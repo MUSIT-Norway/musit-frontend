@@ -1,4 +1,3 @@
 node_modules
 public
-webpack.dev.config.js
-webpack.prod.config.js
+webpack.*.config.js
