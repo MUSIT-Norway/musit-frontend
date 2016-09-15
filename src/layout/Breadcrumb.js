@@ -32,7 +32,7 @@ export default class Breadcrumb extends React.Component {
 
     const isLast = (array, index) => (array.length - 1) === index
     const renderCrumb = (nodeArray) => {
-      const breadcrumb = nodes.map((node, index) => {
+      return nodes.map((node, index) => {
         let fragment = ''
         let iconFragment = ''
         if (node.type && nodeTypes) {
@@ -73,7 +73,6 @@ export default class Breadcrumb extends React.Component {
         }
         return fragment
       })
-      return breadcrumb
     }
     return (
       <div>

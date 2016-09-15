@@ -123,7 +123,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-  // Issued on every propchange, including local route changes
+    // Issued on every propchange, including local route changes
     if (newProps.params.splat !== this.props.params.splat) {
       if (newProps.params.splat) {
         this.props.loadChildren(this.resolveCurrentId(newProps.params.splat), {
@@ -134,6 +134,10 @@ export default class StorageUnitsContainer extends React.Component {
         this.props.loadStorageUnits()
       }
     }
+  }
+
+  onClickCrumb(node) {
+    this.props.history.push(node.url)
   }
 
   loadNodes() {
@@ -253,19 +257,22 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} onClickCrumb={(node) => this.props.history.push(node.url)} />)
+  nodeTypes = [
+    { type: 'Organisation', iconName: 'folder' },
+    { type: 'Building', iconName: 'folder' },
+    { type: 'Room', iconName: 'folder' },
+    { type: 'StorageUnit', iconName: 'folder' }
+  ]
+
+  makeBreadcrumb(nodes, nodeTypes) {
+    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} onClickCrumb={node => this.onClickCrumb(node)} /> : null
   }
 
   render() {
     const { searchPattern } = this.state
     const { children, translate, path } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
-    const nodes = path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = this.makeBreadcrumb(path, this.nodeTypes)
     return (
       <Layout
         title={"Magasin"}
