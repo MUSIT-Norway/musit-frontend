@@ -93,7 +93,7 @@ export default class ObservationControlGridShow extends React.Component {
         this.props.loadPerson({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy) })
         this.props.loadPath(this.props.params.id)
       },
-      onFailure: () => console.log('Hei feil ')
+      onFailure: () => true
     })
   }
 
