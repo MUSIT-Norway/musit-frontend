@@ -33,7 +33,13 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(connectUser(user));
         return true;
       }
-      return false
+      if (localStorage.getItem('fakeToken')) {
+        const userId = JSON.parse(localStorage.getItem('fakeToken')).userId
+        const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
+        dispatch(connectUser(user))
+        return true;
+      }
+      return false;
     }
   }
 }
@@ -48,11 +54,6 @@ class App extends Component {
     pickListCount: PropTypes.number.isRequired,
     clearUser: PropTypes.func.isRequired,
     loadUser: PropTypes.func.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
   }
 
   componentWillMount() {

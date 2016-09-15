@@ -16,48 +16,74 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
 import { hashHistory } from 'react-router'
-import Options from '../../../components/storageunits/EnvironmentOptions'
-import StorageUnitComponents from '../../../components/storageunits/StorageUnitComponent'
+import Options from '../../../../components/storageunits/EnvironmentOptions'
+import StorageUnitComponents from '../../../../components/storageunits/StorageUnitComponent'
 import { Grid, Row, Col } from 'react-bootstrap'
-import EnvironmentRequirementComponent from '../../../components/storageunits/EnvironmentRequirementComponent'
-import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
-import Layout from '../../../layout'
-import { validateString, validateNumber } from '../../../components/formfields/common/validators'
-import Breadcrumb from '../../../layout/Breadcrumb'
+import EnvironmentRequirementComponent from '../../../../components/storageunits/EnvironmentRequirementComponent'
+import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
+import Layout from '../../../../layout'
+import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
+import Breadcrumb from '../../../../layout/Breadcrumb'
+import Language from '../../../../components/language'
+import { suggestAddress, clearSuggest } from '../../../../reducers/suggest'
 
+const mapStateToProps = (state) => {
+  return {
+    translate: (key, markdown) => Language.translate(key, markdown),
+    suggest: state.suggest,
+    path: state.storageGridUnit.root.path ?
+            state.storageGridUnit.root.path.map((s) => {
+              return { id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` };
+            }) : null
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddressSuggestionsUpdateRequested: ({ value, reason }) => {
+      if (reason && (reason === 'type') && value && value.length >= 3) {
+        dispatch(suggestAddress('addressField', value))
+      } else {
+        dispatch(clearSuggest('addressField'))
+      }
+    }
+  }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class StorageUnitContainer extends Component {
   static propTypes = {
     unit: PropTypes.object.isRequired,
-    id: PropTypes.number,
-    loadStorageUnit: PropTypes.func.isRequired,
     onAddressSuggestionsUpdateRequested: PropTypes.func.isRequired,
     suggest: React.PropTypes.array.isRequired,
     params: PropTypes.object,
     onLagreClick: PropTypes.func.isRequired,
     translate: PropTypes.func.isRequired,
-    route: React.PropTypes.object,
-    loadPath: React.PropTypes.func,
+    isAdd: React.PropTypes.bool,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
+  }
+
+  static defaultProps = {
+    unit: {
+      environmentRequirement: {},
+      environmentAssessment: {},
+      securityAssessment: {}
+    }
   }
 
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
-      unit: {
-        environmentRequirement: {},
-        environmentAssessment: {},
-        securityAssessment: {}
-      }
+      unit: this.props.unit
     }
   }
 
-  componentWillMount() {
-    if (this.props.params.id && !this.props.route.add) {
-      this.props.loadStorageUnit(this.props.params.id)
-    }
+  componentWillReceiveProps(nextProps) {
+    this.setState({ ...this.state, unit: nextProps.unit })
   }
 
   errorAddMessage = (errors, field) => {
@@ -104,32 +130,32 @@ export default class StorageUnitContainer extends Component {
       errors = {
         ...errors,
         ...this.validateNumberField('environmentRequirement.temperature',
-        formProps.unit.temperature, 0, 10, 3)(formProps.unit)
+                    formProps.unit.temperature, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
         ...this.validateNumberField('environmentRequirement.temperatureTolerance',
-        formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
+                    formProps.unit.temperatureTolerance, 0, 10, 0)(formProps.unit)
       }
       errors = {
         ...errors,
         ...this.validateNumberField('environmentRequirement.relativeHumidity',
-        formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
+                    formProps.unit.relativeHumidity, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
         ...this.validateNumberField('environmentRequirement.relativeHumidityTolerance',
-        formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
+                    formProps.unit.relativeHumidityTolerance, 0, 10, 0)(formProps.unit)
       }
       errors = {
         ...errors,
         ...this.validateNumberField('environmentRequirement.hypoxicAir',
-        formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit)
+                    formProps.unit.hypoxicAir, 0, 10, 3)(formProps.unit)
       }
       errors = {
         ...errors,
         ...this.validateNumberField('environmentRequirement.hypoxicAirTolerance',
-        formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
+                    formProps.unit.hypoxicAirTolerance, 0, 10, 0)(formProps.unit)
       }
       errors = { ...errors, ...this.validateStringField('environmentRequirement.cleaning', formProps.unit.cleaning, 100)() }
       errors = {
@@ -149,7 +175,7 @@ export default class StorageUnitContainer extends Component {
     const errors = this.validateForm(this.state)
     this.setState({ ...this.state, errors })
     if (Object.keys(errors).length === 0) {
-      this.props.onLagreClick(this.props.params.parentId, (this.state && this.state.unit) ? this.state.unit : this.props.unit)
+      this.props.onLagreClick(this.state.unit)
     }
   }
 
@@ -186,87 +212,90 @@ export default class StorageUnitContainer extends Component {
     this.setState({ unit: newData })
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
-  }
-  render() {
-    const data = (this.props.route.add) ? this.state.unit : this.props.unit;
-    const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+  nodeTypes = [
+    { type: 'Organisation', iconName: 'folder' },
+    { type: 'Building', iconName: 'folder' },
+    { type: 'Room', iconName: 'folder' },
+    { type: 'StorageUnit', iconName: 'folder' }
+  ]
 
-    const completePage = (<div>
-      <h4 style={{ textAlign: 'center' }}>
-        {this.props.route.add ? `${this.props.translate('musit.storageUnits.newNode')} - ` : ''}
-        {this.props.translate('musit.storageUnits.header')}
-      </h4>
-      <StorageUnitComponents
-        unit={data}
-        translate={this.props.translate}
-        updateType={(type) => this.updateStorageUnit(data, 'type', type)}
-        updateName={(name) => this.updateStorageUnit(data, 'name', name)}
-        updateAreal1={(area) => this.updateStorageUnit(data, 'area', area)}
-        updateAreal2={(areaTo) => this.updateStorageUnit(data, 'areaTo', areaTo)}
-        updateHeight1={(height) => this.updateStorageUnit(data, 'height', height)}
-        updateHeight2={(heightTo) => this.updateStorageUnit(data, 'heightTo', heightTo)}
-        updateAddress={(address) => this.updateStorageUnit(data, 'address', address)}
-        onAddressSuggestionsUpdateRequested={this.props.onAddressSuggestionsUpdateRequested}
-        suggest={this.props.suggest}
-      />
-      <Row>
-        <Col style={{ textAlign: 'center' }}>
-          <h3>{this.props.translate('musit.storageUnits.environmentalData')} </h3>
-        </Col>
-      </Row>
-      <EnvironmentRequirementComponent
-        environmentRequirement={data.environmentRequirement}
-        translate={this.props.translate}
-        updateEnvRequirements={(k, v) => { this.updateEnvRequirements(data, k, v) }}
-      />
-      {data.type === 'Room' ?
-        <Options
-          translate={this.props.translate}
+  makeBreadcrumb(nodes, nodeTypes) {
+    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} passive /> : null
+  }
+
+  render() {
+    const data = this.state.unit
+    const breadcrumb = this.makeBreadcrumb(this.props.path, this.nodeTypes)
+    const completePage = (
+      <div>
+        <h4 style={{ textAlign: 'center' }}>
+          {this.props.isAdd ? `${this.props.translate('musit.storageUnits.newNode')} - ` : ''}
+          {this.props.translate('musit.storageUnits.header')}
+        </h4>
+        <StorageUnitComponents
           unit={data}
-          // Disse må fikses (Mappe verdi av sikring fra bool -> {0,1})
-          updateSkallsikring={(perimeterSecurity) =>
-            this.updateSecAssessments(data, 'perimeterSecurity', perimeterSecurity)}
-          updateTyverisikring={(theftProtection) =>
-            this.updateSecAssessments(data, 'theftProtection', theftProtection)}
-          updateBrannsikring={(fireProtection) =>
-            this.updateSecAssessments(data, 'fireProtection', fireProtection)}
-          updateVannskaderisiko={(waterDamageAssessment) =>
-            this.updateSecAssessments(data, 'waterDamageAssessment', waterDamageAssessment)}
-          updateRutinerBeredskap={(routinesAndContingencyPlan) =>
-            this.updateSecAssessments(data, 'routinesAndContingencyPlan', routinesAndContingencyPlan)}
-          updateLuftfuktighet={(relativeHumidity) =>
-            this.updateEnvAssessments(data, 'relativeHumidity', relativeHumidity)}
-          updateLysforhold={(lightingCondition) =>
-            this.updateEnvAssessments(data, 'lightingCondition', lightingCondition)}
-          updateTemperatur={(temperatureAssessment) =>
-            this.updateEnvAssessments(data, 'temperatureAssessment', temperatureAssessment)}
-          updatePreventivKonservering={(preventiveConservation) =>
-            this.updateEnvAssessments(data, 'preventiveConservation', preventiveConservation)}
+          translate={this.props.translate}
+          updateType={(type) => this.updateStorageUnit(data, 'type', type)}
+          updateName={(name) => this.updateStorageUnit(data, 'name', name)}
+          updateAreal1={(area) => this.updateStorageUnit(data, 'area', area)}
+          updateAreal2={(areaTo) => this.updateStorageUnit(data, 'areaTo', areaTo)}
+          updateHeight1={(height) => this.updateStorageUnit(data, 'height', height)}
+          updateHeight2={(heightTo) => this.updateStorageUnit(data, 'heightTo', heightTo)}
+          updateAddress={(address) => this.updateStorageUnit(data, 'address', address)}
+          onAddressSuggestionsUpdateRequested={this.props.onAddressSuggestionsUpdateRequested}
+          suggest={this.props.suggest}
         />
-        : null}
-      <Grid>
         <Row>
-          <br />
+          <Col style={{ textAlign: 'center' }}>
+            x<h3>{this.props.translate('musit.storageUnits.environmentalData')} </h3>
+          </Col>
+        </Row>
+        <EnvironmentRequirementComponent
+          environmentRequirement={data.environmentRequirement}
+          translate={this.props.translate}
+          updateEnvRequirements={(k, v) => { this.updateEnvRequirements(data, k, v) }}
+        />
+        {data.type === 'Room' ?
+          <Options
+            translate={this.props.translate}
+            unit={data}
+              // Disse må fikses (Mappe verdi av sikring fra bool -> {0,1})
+            updateSkallsikring={(perimeterSecurity) =>
+                  this.updateSecAssessments(data, 'perimeterSecurity', perimeterSecurity)}
+            updateTyverisikring={(theftProtection) =>
+                  this.updateSecAssessments(data, 'theftProtection', theftProtection)}
+            updateBrannsikring={(fireProtection) =>
+                  this.updateSecAssessments(data, 'fireProtection', fireProtection)}
+            updateVannskaderisiko={(waterDamageAssessment) =>
+                  this.updateSecAssessments(data, 'waterDamageAssessment', waterDamageAssessment)}
+            updateRutinerBeredskap={(routinesAndContingencyPlan) =>
+                  this.updateSecAssessments(data, 'routinesAndContingencyPlan', routinesAndContingencyPlan)}
+            updateLuftfuktighet={(relativeHumidity) =>
+                  this.updateEnvAssessments(data, 'relativeHumidity', relativeHumidity)}
+            updateLysforhold={(lightingCondition) =>
+                  this.updateEnvAssessments(data, 'lightingCondition', lightingCondition)}
+            updateTemperatur={(temperatureAssessment) =>
+                  this.updateEnvAssessments(data, 'temperatureAssessment', temperatureAssessment)}
+            updatePreventivKonservering={(preventiveConservation) =>
+                  this.updateEnvAssessments(data, 'preventiveConservation', preventiveConservation)}
+          />
+          : null}
+        <Grid>
+          <Row>
+            <br />
             {this.state && this.state.errors && Object.values(this.state.errors).map((error, index) => {
               return <p style={{ color: 'red' }} key={index}>{error}</p>
             })}
-          <br />
-          <SaveCancel
-            translate={this.props.translate}
-            onClickSave={this.handleSubmit}
-            onClickCancel={() => hashHistory.goBack()}
-            saveDisabled={this.displayExisting}
-            cancelDisabled={this.displayExisting}
-          />
-        </Row>
-      </Grid>
-    </div>)
+            <br />
+            <SaveCancel
+              translate={this.props.translate}
+              onClickSave={this.handleSubmit}
+              onClickCancel={() => hashHistory.goBack()}
+            />
+          </Row>
+        </Grid>
+      </div>
+    )
 
     return (
       <Layout

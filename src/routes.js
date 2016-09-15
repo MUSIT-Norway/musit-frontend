@@ -23,7 +23,8 @@ import NotFound from './components/NotFound'
 import WelcomeView from './containers/welcome-view'
 import StorageUnitsTable from './containers/magasin/grid'
 import PickListView from './containers/picklist'
-import StorageUnitPanel from './containers/magasin/panel'
+import AddStorageUnitPanel from './containers/magasin/panel/add'
+import EditStorageUnitPanel from './containers/magasin/panel/edit'
 import WelcomeUserView from './containers/welcome-user'
 import AddObservationPage from './containers/observation/add'
 import EditObservationPage from './containers/observation/edit'
@@ -58,9 +59,9 @@ export default (store) => {
       <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
-      <Route path="/magasin/add" add component={StorageUnitPanel} />
-      <Route path="/magasin/:parentId/add" add component={StorageUnitPanel} />
-      <Route path="/magasin/:id/view" component={StorageUnitPanel} />
+      <Route path="/magasin/add" add component={AddStorageUnitPanel} />
+      <Route path="/magasin/:parentId/add" add component={AddStorageUnitPanel} />
+      <Route path="/magasin/:id/view" component={EditStorageUnitPanel} />
       <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />
       <Route path="/magasin/:id/control/add" component={ControlAddContainer} />
       <Route path="/magasin/:id/control/:controlId" component={ControlViewContainer} />
