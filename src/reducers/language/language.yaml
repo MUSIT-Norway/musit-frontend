@@ -11,7 +11,7 @@ en:
         controller: "Controls"
         moveNode: "Move node"
         delete: "Delete"
-        controlsobservations: "Controls and Observations"
+        controlsobservations: "Contr./Observ."
       observationControl:
         newObservation: "New observation"
         newControl: "New control"
@@ -418,7 +418,7 @@ no:
         controller: "Kontroller"
         moveNode: "Flytt node"
         delete: "Slett"
-        controlsobservations: "Kontroller og Observasjoner"
+        controlsobservations: "Kontr./Observ."
       observationControl:
         newObservation: "Ny observasjon"
         newControl: "Ny kontroll"
@@ -806,7 +806,7 @@ no:
         MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom
         Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet,
         Universitetet i Tromsø, og Universitetet i Stavanger.
-        
+
         Samarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014.
 
         MUSIT har som formål «å sikre drift, vedlikehold og utvikling av museenes felles samlingsdatabaser,
