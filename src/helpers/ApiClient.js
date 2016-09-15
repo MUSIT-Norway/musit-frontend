@@ -31,8 +31,8 @@ const getToken = () => {
   let token = ''
   if (localStorage.getItem('jwtToken')) {
     token = jwtDecode(localStorage.getItem('jwtToken')).accessToken
-  } else {
-    token = localStorage.getItem('accessToken')
+  } else if (localStorage.getItem('fakeToken')) {
+    token = JSON.parse(localStorage.getItem('fakeToken')).accessToken
   }
   return token
 }
