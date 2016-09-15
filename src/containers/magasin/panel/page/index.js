@@ -21,7 +21,7 @@ import React, { Component, PropTypes } from 'react'
 import { hashHistory } from 'react-router'
 import Options from '../../../../components/storageunits/EnvironmentOptions'
 import StorageUnitComponents from '../../../../components/storageunits/StorageUnitComponent'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col, Form } from 'react-bootstrap'
 import EnvironmentRequirementComponent from '../../../../components/storageunits/EnvironmentRequirementComponent'
 import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../../layout'
@@ -58,7 +58,7 @@ export default class StorageUnitContainer extends Component {
   static propTypes = {
     unit: PropTypes.object.isRequired,
     onAddressSuggestionsUpdateRequested: PropTypes.func.isRequired,
-    suggest: React.PropTypes.array.isRequired,
+    suggest: React.PropTypes.object.isRequired,
     params: PropTypes.object,
     onLagreClick: PropTypes.func.isRequired,
     translate: PropTypes.func.isRequired,
@@ -306,9 +306,9 @@ export default class StorageUnitContainer extends Component {
           <Grid>
             <Row>
               <Col md={9}>
-                <form onSubmit={this.handleSubmit}>
+                <Form onSubmit={this.handleSubmit}>
                   {completePage}
-                </form>
+                </Form>
               </Col>
             </Row>
           </Grid>
