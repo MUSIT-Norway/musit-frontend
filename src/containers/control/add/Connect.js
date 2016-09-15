@@ -24,11 +24,12 @@ import ControlAddContainerImpl from './index'
 const mapStateToProps = (state) => ({
   actor: state.auth.actor,
   translate: (key, markdown) => Language.translate(key, markdown),
+  envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
   path: state.storageGridUnit.root.path ?
         state.storageGridUnit.root.path.map((s) => {
           return {
             id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-    null
+    null,
 })
 
 const mapDispatchToProps = (dispatch) => ({
