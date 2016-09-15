@@ -247,7 +247,7 @@ export default class StorageUnitContainer extends Component {
         />
         <Row>
           <Col style={{ textAlign: 'center' }}>
-            x<h3>{this.props.translate('musit.storageUnits.environmentalData')} </h3>
+            <h3>{this.props.translate('musit.storageUnits.environmentalData')} </h3>
           </Col>
         </Row>
         <EnvironmentRequirementComponent

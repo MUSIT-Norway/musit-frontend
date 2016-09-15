@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
   path: state.storageGridUnit.root.path ?
         state.storageGridUnit.root.path.map((s) => {
           return {
-            id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
+            id: s.id, name: s.name, type: s.storageType, url: `/magasin/${s.id}` } }) :
     null
 })
 

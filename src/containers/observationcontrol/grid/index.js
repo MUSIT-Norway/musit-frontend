@@ -25,6 +25,7 @@ import Language from '../../../components/language'
 import { loadControlsForNode, loadControlsAndObservationsForNode,
   loadObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
+import { loadPath } from '../../../reducers/storageunit/grid/index'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
@@ -55,6 +56,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadPerson: (data) => {
     dispatch(loadActor(data))
+  },
+  loadPath: (id) => {
+    dispatch(loadPath(id))
   }
 })
 
@@ -68,6 +72,7 @@ export default class ObservationControlGridShow extends React.Component {
     route: React.PropTypes.object,
     loadControls: React.PropTypes.func.isRequired,
     loadPerson: React.PropTypes.func.isRequired,
+    loadPath: React.PropTypes.func.isRequired,
     loadObservations: React.PropTypes.func.isRequired,
     loadControlAndObservations: React.PropTypes.func.isRequired,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
@@ -86,6 +91,7 @@ export default class ObservationControlGridShow extends React.Component {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
         this.props.loadPerson({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy) })
+        this.props.loadPath(this.props.params.id)
       },
       onFailure: () => true
     })
