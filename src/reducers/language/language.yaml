@@ -28,6 +28,11 @@ en:
       node:
         nodeName: "Name"
         nodeType: "Type"
+        nodeTypeItems:
+          StorageUnit: "Storage unit"
+          Room: "Room"
+          Building: "Building"
+          Organisation: "Organisation"
         objectCount: "No. of obj."
         totalObjectCount: "Tot. no. of obj."
         nodeCount: "No. of nodes"
@@ -435,6 +440,11 @@ no:
       node:
         nodeName: "Navn"
         nodeType: "Type"
+        nodeTypeItems:
+          StorageUnit: "Lagringsenhet"
+          Room: "Rom"
+          Building: "Bygg"
+          Organisation: "Organisasjon"
         objectCount: "Ant. obj."
         totalObjectCount: "Tot. ant. obj."
         nodeCount: "Ant. noder"

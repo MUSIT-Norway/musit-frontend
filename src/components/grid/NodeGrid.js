@@ -58,7 +58,7 @@ export default class NodeGrid extends Component {
                     </a>
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_nodeType`}>
-                    {c.type}
+                    {translate(`musit.grid.node.nodeTypeItems.${c.type}`)}
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_objectCount`}>
                     {c.objectCount}
