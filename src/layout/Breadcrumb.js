@@ -69,7 +69,7 @@ export default class Breadcrumb extends React.Component {
             </span>
           )
         } else {
-          fragment = (<span className={styles.crumb}>{node.name}</span>)
+          fragment = (<span className={styles.crumb}>{iconFragment}{node.name}</span>)
         }
         return fragment
       })
