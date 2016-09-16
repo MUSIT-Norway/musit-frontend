@@ -137,7 +137,16 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   onClickCrumb(node) {
+    this.showNodes();
     this.props.history.push(node.url)
+  }
+
+  showNodes() {
+    this.setState({ ...this.state, showNodes: true, showObjects: false })
+  }
+
+  showObjects() {
+    this.setState({ ...this.state, showNodes: false, showObjects: true })
   }
 
   loadNodes() {
@@ -194,13 +203,13 @@ export default class StorageUnitsContainer extends React.Component {
       searchValue={this.state.searchPattern}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
-        this.setState({ ...this.state, showObjects: true, showNodes: false })
+        this.showObjects()
         this.loadObjects();
         blur()
       }}
       clickShowLeft={() => {
-        this.setState({ ...this.state, showObjects: false, showNodes: true })
-        this.loadNodes();
+        this.showNodes()
+        this.loadNodes()
         blur()
       }}
     />)
