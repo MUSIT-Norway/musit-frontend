@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
-import { suggestPerson, clearSuggest } from '../../reducers/suggest'
+import { suggestAddress, clearSuggest } from '../../reducers/suggest'
 
 const mapStateToProps = (state) => ({
   suggest: state.suggest
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onUpdateRequested: (id, { value, reason }) => {
     if (reason && (reason === 'type') && value && value.length >= 2) {
-      dispatch(suggestPerson(id, value))
+      dispatch(suggestAddress(id, value))
     } else {
       dispatch(clearSuggest(id))
     }
@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ActorSuggest extends React.Component {
+export default class AddressSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
@@ -31,8 +31,9 @@ export default class ActorSuggest extends React.Component {
   }
 
   static defaultProps = {
-    id: 'doneByField',
+    id: 'addressField',
     disabled: false,
+    value: ''
   }
 
   constructor(props) {
@@ -51,12 +52,17 @@ export default class ActorSuggest extends React.Component {
     if (event.keyCode === 13) {
       event.preventDefault()
     }
-    this.props.onChange(suggestion)
+    const value = this.getAddressSuggestionValue(suggestion);
+    this.props.onChange(value)
   }
 
   getSuggestions() {
     const suggest = this.props.suggest[this.props.id];
     return suggest && suggest.data ? suggest.data : []
+  }
+
+  getAddressSuggestionValue(suggestion) {
+    return `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`
   }
 
   doneByProps = {
@@ -66,14 +72,21 @@ export default class ActorSuggest extends React.Component {
     onChange: this.onChange.bind(this)
   }
 
+  renderAddressSuggestion(suggestion) {
+    const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`
+    return (
+      <span className={'suggestion-content'}>{suggestionText}</span>
+    )
+  }
+
   render() {
     return (
       <Autosuggest
         suggestions={this.getSuggestions()}
         disabled={this.props.disabled}
         onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
-        getSuggestionValue={(suggestion) => suggestion.fn}
-        renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
+        getSuggestionValue={this.getAddressSuggestionValue}
+        renderSuggestion={this.renderAddressSuggestion}
         inputProps={{ ...this.doneByProps, value: this.state.value }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}

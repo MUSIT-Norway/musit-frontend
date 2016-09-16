@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { hashHistory } from 'react-router'
 import { insert } from '../../../reducers/storageunit/panel';
 import StorageUnitContainerImpl from './page'
+import { loadPath } from '../../../reducers/storageunit/grid'
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -11,6 +12,9 @@ const mapDispatchToProps = (dispatch) => {
         onSuccess: () => hashHistory.goBack(),
         onFailure: () => { alert('Kunne ikke lagre node') }
       }))
+    },
+    loadPath: (id) => {
+      dispatch(loadPath(id))
     }
   }
 }
@@ -19,7 +23,14 @@ const mapDispatchToProps = (dispatch) => {
 export default class AddStorageUnitContainer extends React.Component {
   static propTypes = {
     onLagreClick: PropTypes.func.isRequired,
-    params: PropTypes.object
+    params: PropTypes.object,
+    loadPath: PropTypes.func.isRequired
+  }
+
+  componentWillMount() {
+    if (this.props.params.parentId) {
+      this.props.loadPath(this.props.params.parentId)
+    }
   }
 
   render() {

@@ -40,6 +40,10 @@ export default class MusitField extends Component {
     style: PropTypes.object
   }
 
+  static defaultProps = {
+    value: ''
+  }
+
   classNameWithSpan() {
     let lvString = ' '
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
