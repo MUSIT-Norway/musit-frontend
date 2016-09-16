@@ -67,6 +67,12 @@ export default class StorageUnitContainer extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.unit && nextProps.unit.id && nextProps.unit.id !== this.props.unit.id) {
+      this.setState({ ...this.state, unit: nextProps.unit })
+    }
+  }
+
   errorAddMessage = (errors, field) => {
     errors[`${field}`] = this.props.translate(`musit.storageUnits.${field}.incorrect`)
   }

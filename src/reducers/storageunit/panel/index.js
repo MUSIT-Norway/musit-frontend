@@ -64,7 +64,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
         ...state,
         loading: false,
         loaded: true,
-        data: action.result
+        data: mapToFrontend(action.result)
       };
     case INSERT_FAIL:
       return {
@@ -106,10 +106,11 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
 
 export default storageUnitContainerReducer;
 
-export const load = (id) => {
+export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`)
+    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`),
+    callback
   };
 }
 

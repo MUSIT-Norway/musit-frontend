@@ -7,7 +7,7 @@ import { loadPath } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
-    unit: (state.storagePanelUnit && state.storagePanelUnit.data) ? state.storagePanelUnit.data : null
+    unit: state.storagePanelUnit.data
   }
 }
 
@@ -19,8 +19,8 @@ const mapDispatchToProps = (dispatch) => {
         onFailure: () => { alert('Kunne ikke lagre node') }
       }))
     },
-    loadStorageUnit: (id) => {
-      dispatch(load(id))
+    loadStorageUnit: (id, callback) => {
+      dispatch(load(id, callback))
     },
     loadPath: (id) => {
       dispatch(loadPath(id))
@@ -39,8 +39,9 @@ export default class EditStorageUnitContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadStorageUnit(this.props.params.id)
-    this.props.loadPath(this.props.params.id)
+    this.props.loadStorageUnit(this.props.params.id, {
+      onSuccess: () => this.props.loadPath(this.props.params.id)
+    })
   }
 
   render() {
