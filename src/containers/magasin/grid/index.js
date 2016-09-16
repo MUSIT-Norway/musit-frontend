@@ -138,7 +138,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   onClickCrumb(node) {
     this.showNodes();
-    this.props.history.push(node.url)
+    hashHistory.push(node.url)
   }
 
   showNodes() {
@@ -216,7 +216,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   makeLeftMenu(rootNode, statistics) {
-    const { onEdit, onDelete, history } = this.props
+    const { onEdit, onDelete } = this.props
     const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root')
     return (
       <div style={{ paddingTop: 10 }}>
@@ -226,18 +226,18 @@ export default class StorageUnitsContainer extends React.Component {
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
             if (parentId) {
-              history.push(`/magasin/${parentId}/add`)
+              hashHistory.push(`/magasin/${parentId}/add`)
             } else {
-              history.push('/magasin/add')
+              hashHistory.push('/magasin/add')
             }
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
           underNodeCount={statistics ? statistics.underNodeCount : Number.NaN}
           onClickProperties={(id) => onEdit({ id })}
-          onClickControlObservations={(id) => history.push(`/magasin/${id}/controlsobservations`)}
-          onClickObservations={(id) => history.push(`/magasin/${id}/observations`)}
-          onClickController={(id) => history.push(`/magasin/${id}/controls`)}
+          onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
+          onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
+          onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
@@ -253,9 +253,9 @@ export default class StorageUnitsContainer extends React.Component {
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={this.props.onAction}
         onClick={(row) =>
-            this.props.history.push(
-                `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
-            )
+          hashHistory.push(
+            `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
+          )
         }
       />)
     }

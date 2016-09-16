@@ -46,8 +46,17 @@ export default class AddObservationPage extends React.Component {
     loadPath: React.PropTypes.func.isRequired
   }
 
+  constructor(props) {
+    super(props)
+    this.onClickCrumb = this.onClickCrumb.bind(this)
+  }
+
   componentWillMount() {
     this.props.loadPath(this.props.params.id)
+  }
+
+  onClickCrumb(node) {
+    hashHistory.push(node.url)
   }
 
   nodeTypes = [
@@ -58,7 +67,7 @@ export default class AddObservationPage extends React.Component {
   ]
 
   makeBreadcrumb(nodes, nodeTypes) {
-    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} /> : null
+    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} onClickCrumb={this.onClickCrumb} /> : null
   }
 
   render() {

@@ -159,10 +159,11 @@ export const clearRoot = () => {
   }
 }
 
-export const loadPath = (id) => {
+export const loadPath = (id, callback) => {
   const url = `/api/storageadmin/v1/storageunit/${id}/path`
   return {
     types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
-    promise: (client) => client.get(url)
+    promise: (client) => client.get(url),
+    callback
   };
 }

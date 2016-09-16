@@ -34,7 +34,6 @@ import { hashHistory } from 'react-router'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    unit: state.storageGridUnit.root.data,
     path: state.storageGridUnit.root.path ?
       state.storageGridUnit.root.path.map((s) => {
         return {
@@ -54,24 +53,23 @@ const mapDispatchToProps = (dispatch) => ({
   loadControlAndObservations: (id, callback) => {
     dispatch(loadControlsAndObservationsForNode(id, callback))
   },
-  loadPerson: (data) => {
+  loadActorDetails: (data) => {
     dispatch(loadActor(data))
   },
-  loadPath: (id) => {
-    dispatch(loadPath(id))
+  loadPath: (id, callback) => {
+    dispatch(loadPath(id, callback))
   }
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ObservationControlGridShow extends React.Component {
   static propTypes = {
-    unit: React.PropTypes.object.isRequired,
     translate: React.PropTypes.func.isRequired,
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
     params: React.PropTypes.object,
     route: React.PropTypes.object,
     loadControls: React.PropTypes.func.isRequired,
-    loadPerson: React.PropTypes.func.isRequired,
+    loadActorDetails: React.PropTypes.func.isRequired,
     loadPath: React.PropTypes.func.isRequired,
     loadObservations: React.PropTypes.func.isRequired,
     loadControlAndObservations: React.PropTypes.func.isRequired,
@@ -90,7 +88,7 @@ export default class ObservationControlGridShow extends React.Component {
   componentWillMount() {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
-        this.props.loadPerson({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy) })
+        this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy) })
         this.props.loadPath(this.props.params.id)
       },
       onFailure: () => true

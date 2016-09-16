@@ -79,7 +79,7 @@ export default class ControlAddContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.actor) {
+    if (nextProps.actor && this.props.actor && nextProps.actor.id !== this.props.actor.id) {
       this.setState({ ...this.state, doneBy: nextProps.actor })
     }
   }

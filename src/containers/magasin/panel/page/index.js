@@ -68,7 +68,7 @@ export default class StorageUnitContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.unit && nextProps.unit.id && nextProps.unit.id !== this.props.unit.id) {
+    if (nextProps.unit && this.props.unit && nextProps.unit.id !== this.props.unit.id) {
       this.setState({ ...this.state, unit: nextProps.unit })
     }
   }
@@ -283,23 +283,25 @@ export default class StorageUnitContainer extends Component {
                           </Form>
                         </Col>
                         <Col md={5}>
-                          <Form horizontal>
-                            <FormGroup>
-                              <label className="col-sm-3 control-label" htmlFor="address">
-                                {this.props.translate('musit.storageUnits.address.labelText')}
-                              </label>
-                              <div class="col-sm-8" is="null">
-                                <AddressSuggest
-                                  id="addressField"
-                                  value={this.state.unit.address}
-                                  placeHolder="Find address"
-                                  onChange={(address) => {
-                                    this.updateStorageUnit(this.state.unit, 'address', address)
-                                  }}
-                                />
-                              </div>
-                            </FormGroup>
-                          </Form>
+                          {(this.state.unit.type === 'Building' || this.state.unit.type === 'Organisation') &&
+                            <Form horizontal>
+                              <FormGroup>
+                                <label className="col-sm-3 control-label" htmlFor="address">
+                                  {this.props.translate('musit.storageUnits.address.labelText')}
+                                </label>
+                                <div class="col-sm-8" is="null">
+                                  <AddressSuggest
+                                    id="addressField"
+                                    value={this.state.unit.address}
+                                    placeHolder="Find address"
+                                    onChange={(address) => {
+                                      this.updateStorageUnit(this.state.unit, 'address', address)
+                                    }}
+                                  />
+                                </div>
+                              </FormGroup>
+                            </Form>
+                          }
                         </Col>
                       </Row>
                       <Row className="row-centered">
