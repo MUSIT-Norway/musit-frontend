@@ -26,7 +26,7 @@ export default class StorageUnitComponent extends Component {
     updateAreal1: React.PropTypes.func.isRequired,
     updateAreal2: React.PropTypes.func.isRequired,
     updateAddress: React.PropTypes.func.isRequired,
-    suggest: React.PropTypes.array.isRequired,
+    suggest: React.PropTypes.object.isRequired,
     onAddressSuggestionsUpdateRequested: React.PropTypes.func.isRequired,
     translate: React.PropTypes.func.isRequired,
   }
@@ -148,8 +148,8 @@ export default class StorageUnitComponent extends Component {
         <Grid>
           <Row className="row-centered">
             <Col md={5}>
-              <form className="form-horizontal">
-                <form className="form-group">
+              <Form horizontal>
+                <div className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="storageUnitType">
                     {this.props.translate('musit.storageUnits.type.labelText')}
                     { <span style={{ color: 'red' }}>*</span> }
@@ -164,8 +164,8 @@ export default class StorageUnitComponent extends Component {
                       value={this.type.value()}
                     />
                   </div>
-                </form>
-              </form>
+                </div>
+              </Form>
             </Col>
           </Row>
           <Row>
@@ -180,9 +180,9 @@ export default class StorageUnitComponent extends Component {
               </Form>
             </Col>
           </Row>
-          <Row styleClass="row-centered">
+          <Row className="row-centered">
             <Col md={5}>
-              <form className="form-horizontal">
+              <Form horizontal>
                 <div className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="comments2">
                     {this.props.translate('musit.storageUnits.area.labelText')}</label>
@@ -199,7 +199,7 @@ export default class StorageUnitComponent extends Component {
                     />
                   </div>
                 </div>
-              </form>
+              </Form>
             </Col>
             <Col md={5}>
               <Form horizontal>
@@ -221,7 +221,7 @@ export default class StorageUnitComponent extends Component {
                 </div>
               </Form>
             </Col>
-          </Row >
+          </Row>
         </Grid>
       </div>
     );

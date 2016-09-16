@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
 import ObservationPage from './page'
-import { loadObservation, getActorNameFromId } from '../../reducers/observation'
+import { loadObservation } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
@@ -32,9 +32,6 @@ const mapDispatchToProps = (dispatch) => ({
         onFailure: () => alert('This went terribly wrong!')
       }))
     }
-  },
-  loadPersonNameFromId: (id) => {
-    dispatch(getActorNameFromId(id))
   }
 })
 

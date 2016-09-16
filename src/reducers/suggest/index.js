@@ -4,7 +4,6 @@ const SUGGEST_SUCCESS = 'musit/suggest/LOAD_SUCCESS'
 const SUGGEST_FAIL = 'musit/suggest/LOAD_FAIL'
 
 const initialState = {
-
 }
 
 const suggestionReducer = (state = initialState, action = {}) => {

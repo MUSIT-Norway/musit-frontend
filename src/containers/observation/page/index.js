@@ -67,6 +67,12 @@ export default class ObservationPage extends React.Component {
         observations: nextProps.observations
       })
     }
+    if (this.props.mode === 'ADD') {
+      this.setState({
+        ...this.state,
+        doneBy: nextProps.doneBy
+      })
+    }
   }
 
   onChangeField(field, value, index) {
