@@ -33,10 +33,7 @@ import AddressSuggest from '../../../../components/address'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path ?
-            state.storageGridUnit.root.path.map((s) => {
-              return { id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` };
-            }) : null
+    path: state.storageGridUnit.root.path
   }
 }
 
@@ -68,7 +65,7 @@ export default class StorageUnitContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.unit && nextProps.unit.id && nextProps.unit.id !== this.props.unit.id) {
+    if (nextProps.unit && this.props.unit && nextProps.unit.id !== this.props.unit.id) {
       this.setState({ ...this.state, unit: nextProps.unit })
     }
   }
@@ -199,23 +196,12 @@ export default class StorageUnitContainer extends Component {
     this.setState({ ...this.state, unit: newData })
   }
 
-  nodeTypes = [
-    { type: 'Organisation', iconName: 'folder' },
-    { type: 'Building', iconName: 'folder' },
-    { type: 'Room', iconName: 'folder' },
-    { type: 'StorageUnit', iconName: 'folder' }
-  ]
-
-  makeBreadcrumb(nodes, nodeTypes) {
-    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} passive /> : null
-  }
-
   render() {
     return (
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
         translate={this.props.translate}
-        breadcrumb={this.makeBreadcrumb(this.props.path, this.nodeTypes)}
+        breadcrumb={<Breadcrumb nodes={this.props.path} passive />}
         content={
           <Grid>
             <Row>
@@ -283,23 +269,25 @@ export default class StorageUnitContainer extends Component {
                           </Form>
                         </Col>
                         <Col md={5}>
-                          <Form horizontal>
-                            <FormGroup>
-                              <label className="col-sm-3 control-label" htmlFor="address">
-                                {this.props.translate('musit.storageUnits.address.labelText')}
-                              </label>
-                              <div class="col-sm-8" is="null">
-                                <AddressSuggest
-                                  id="addressField"
-                                  value={this.state.unit.address}
-                                  placeHolder="Find address"
-                                  onChange={(address) => {
-                                    this.updateStorageUnit(this.state.unit, 'address', address)
-                                  }}
-                                />
-                              </div>
-                            </FormGroup>
-                          </Form>
+                          {(this.state.unit.type === 'Building' || this.state.unit.type === 'Organisation') &&
+                            <Form horizontal>
+                              <FormGroup>
+                                <label className="col-sm-3 control-label" htmlFor="address">
+                                  {this.props.translate('musit.storageUnits.address.labelText')}
+                                </label>
+                                <div class="col-sm-8" is="null">
+                                  <AddressSuggest
+                                    id="addressField"
+                                    value={this.state.unit.address}
+                                    placeHolder="Find address"
+                                    onChange={(address) => {
+                                      this.updateStorageUnit(this.state.unit, 'address', address)
+                                    }}
+                                  />
+                                </div>
+                              </FormGroup>
+                            </Form>
+                          }
                         </Col>
                       </Row>
                       <Row className="row-centered">
@@ -367,7 +355,7 @@ export default class StorageUnitContainer extends Component {
                     </Grid>
                     <Row>
                       <Col style={{ textAlign: 'center' }}>
-                        <h3>{this.props.translate('musit.storageUnits.environmentalData')} </h3>
+                        <h4>{this.props.translate('musit.storageUnits.environmentalData')}</h4>
                       </Col>
                     </Row>
                     <EnvironmentRequirementComponent

@@ -14,7 +14,7 @@ describe('ControlMapperReducer', () => {
       gasOK: true,
       cleaningOK: true,
       relativeHumidityOK: true,
-      lightConditionsOK: true,
+      lightConditionOK: true,
       alcoholOK: true,
       pestOK: false,
       moldOK: true

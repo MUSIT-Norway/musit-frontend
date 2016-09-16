@@ -67,7 +67,7 @@ export default class ObservationPage extends React.Component {
         observations: nextProps.observations
       })
     }
-    if (this.props.mode === 'ADD') {
+    if (this.props.mode === 'ADD' && nextProps.doneBy && this.props.doneBy && nextProps.doneBy.id !== this.props.doneBy.id) {
       this.setState({
         ...this.state,
         doneBy: nextProps.doneBy

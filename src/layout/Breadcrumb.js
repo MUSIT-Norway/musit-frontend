@@ -19,6 +19,16 @@ export default class Breadcrumb extends React.Component {
     divider: React.PropTypes.string,
   }
 
+  static defaultProps = {
+    nodeTypes: [
+      { type: 'Organisation', iconName: 'folder' },
+      { type: 'Building', iconName: 'folder' },
+      { type: 'Room', iconName: 'folder' },
+      { type: 'StorageUnit', iconName: 'folder' }
+    ],
+    nodes: []
+  }
+
   render() {
     const styles = require('./Breadcrumb.scss')
     const {

@@ -56,19 +56,12 @@ export default class ControlViewContainer extends React.Component {
     return data && data[field] ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
-  }
-
   render() {
     if (!this.props.controls) {
       return null;  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
     }
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
     const data = this.props.controls.data;
     return (
