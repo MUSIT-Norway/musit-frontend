@@ -46,7 +46,7 @@ export default class Breadcrumb extends React.Component {
 
         if (passive) {
           fragment = (
-            <span>
+            <span key={index}>
               <span className={styles.crumb}>
               {iconFragment}{node.name}
               </span>
@@ -55,7 +55,7 @@ export default class Breadcrumb extends React.Component {
           )
         } else if (!isLast(nodeArray, index) || allActive) {
           fragment = (
-            <span>
+            <span key={index}>
               <span className={styles.crumb}>
                 <a
                   href=""
@@ -69,7 +69,7 @@ export default class Breadcrumb extends React.Component {
             </span>
           )
         } else {
-          fragment = (<span className={styles.crumb}>{node.name}</span>)
+          fragment = (<span key={index} className={styles.crumb}>{iconFragment}{node.name}</span>)
         }
         return fragment
       })

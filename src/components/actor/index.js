@@ -45,6 +45,12 @@ export default class ActorSuggest extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value) {
+      this.setState({ ...this.state, value: nextProps.value })
+    }
+  }
+
   onChange(event, { newValue }) {
     this.setState({ ...this.state, value: newValue })
   }

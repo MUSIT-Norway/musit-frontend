@@ -6,7 +6,7 @@ import FontAwesome from 'react-fontawesome'
 
 export default class NodeGrid extends Component {
   static propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,

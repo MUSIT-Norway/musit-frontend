@@ -209,7 +209,7 @@ export default class EnvironmentRequirementComponent extends Component {
         <Grid>
           <Row className="row-centered">
             <Col md={5}>
-              <form className="form-horizontal">
+              <Form horizontal>
                 <div className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="comments2">
                     {this.props.translate('musit.storageUnits.environmentRequirements.temperature.labelText')}</label>
@@ -223,10 +223,10 @@ export default class EnvironmentRequirementComponent extends Component {
                     <Field {...this.temperatureTolerance} value={this.state.environmentRequirement.temperatureTolerance} />
                   </div>
                 </div>
-              </form>
+              </Form>
             </Col>
             <Col md={5}>
-              <form className="form-horizontal">
+              <Form horizontal>
                 <div className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="comments2">
                     {this.props.translate('musit.storageUnits.environmentRequirements.relativeHumidity.labelText')}</label>
@@ -240,12 +240,12 @@ export default class EnvironmentRequirementComponent extends Component {
                     />
                   </div>
                 </div>
-              </form>
+              </Form>
             </Col>
           </Row>
           <Row className="row-centered">
             <Col md={5}>
-              <form className="form-horizontal">
+              <Form horizontal>
                 <div className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="comments2">
                     {this.props.translate('musit.storageUnits.environmentRequirements.hypoxicAir.labelText')}</label>
@@ -256,7 +256,7 @@ export default class EnvironmentRequirementComponent extends Component {
                     <Field {...this.hypoxicAirTolerance} value={this.state.environmentRequirement.hypoxicAirTolerance} />
                   </div>
                 </div>
-              </form>
+              </Form>
             </Col>
             <Col md={5}>
               <Form horizontal>
@@ -276,7 +276,7 @@ export default class EnvironmentRequirementComponent extends Component {
           </Row>
           <Row>
             <Col md={5}>
-              <form className="form-horizontal">
+              <Form horizontal>
                 <div className="form-group">
                   <label className="col-sm-3 control-label" htmlFor="comments">
                     {this.props.translate('musit.storageUnits.environmentRequirements.comments.labelText')}</label>
@@ -287,7 +287,7 @@ export default class EnvironmentRequirementComponent extends Component {
                     />
                   </div>
                 </div>
-              </form>
+              </Form>
             </Col>
           </Row>
         </Grid>
