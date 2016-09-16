@@ -133,16 +133,9 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
-  }
-
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
 
     const renderReadOnly = (leftValue, rightValue) => {

@@ -27,11 +27,7 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  path: state.storageGridUnit.root.path ?
-        state.storageGridUnit.root.path.map((s) => {
-          return {
-            id: s.id, name: s.name, type: s.storageType, url: `/magasin/${s.id}` } }) :
-    null
+  path: state.storageGridUnit.root.path
 })
 
 const mapDispatchToProps = (dispatch) => ({

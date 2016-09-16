@@ -13,11 +13,7 @@ import { loadPath } from '../../reducers/storageunit/grid'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path ?
-          state.storageGridUnit.root.path.map((s) => {
-            return {
-              id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-      null
+    path: state.storageGridUnit.root.path
   }
 }
 
@@ -71,7 +67,7 @@ export default class EditObservationPage extends React.Component {
             return { type: 'hypoxicAir', data: {} }
           case 'gasOK':
             return { type: 'gas', data: {} }
-          case 'lightConditionsOK':
+          case 'lightConditionOK':
             return { type: 'lightConditions', data: {} }
           case 'cleaningOK':
             return { type: 'cleaning', data: {} }
@@ -94,16 +90,9 @@ export default class EditObservationPage extends React.Component {
     return doneDate
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
-  }
-
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
         title={"Magasin"}

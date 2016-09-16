@@ -16,11 +16,7 @@ const mapStateToProps = (state) => {
     registeredDate: state.observation.data.registeredDate,
     registeredBy: state.observation.data.registeredBy,
     observations: state.observation.data.observations,
-    path: state.storageGridUnit.root.path ?
-      state.storageGridUnit.root.path.map((s) => {
-        return {
-          id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-      null
+    path: state.storageGridUnit.root.path
   }
 }
 
@@ -66,20 +62,13 @@ export default class ViewObservationPage extends React.Component {
     }
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
-  }
-
   render() {
     if (!this.props.observations) {
       return null; // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
     }
 
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
         title="Magasin"

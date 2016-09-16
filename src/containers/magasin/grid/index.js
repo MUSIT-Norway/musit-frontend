@@ -17,11 +17,7 @@ const mapStateToProps = (state) => ({
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root,
-  path: state.storageGridUnit.root.path ?
-    state.storageGridUnit.root.path.map((s) => {
-      return {
-        id: s.id, name: s.name, type: s.storageType, url: `/magasin/${s.id}` } }) :
-    null,
+  path: state.storageGridUnit.root.path,
   routerState: state.routing
 })
 
@@ -266,22 +262,11 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  nodeTypes = [
-    { type: 'Organisation', iconName: 'folder' },
-    { type: 'Building', iconName: 'folder' },
-    { type: 'Room', iconName: 'folder' },
-    { type: 'StorageUnit', iconName: 'folder' }
-  ]
-
-  makeBreadcrumb(nodes, nodeTypes) {
-    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} onClickCrumb={node => this.onClickCrumb(node)} /> : null
-  }
-
   render() {
     const { searchPattern } = this.state
     const { children, translate, path } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
-    const breadcrumb = this.makeBreadcrumb(path, this.nodeTypes)
+    const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
     return (
       <Layout
         title={"Magasin"}

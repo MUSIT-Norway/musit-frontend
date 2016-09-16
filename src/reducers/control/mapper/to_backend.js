@@ -41,7 +41,7 @@ export const mapToBackend = (state, observations) => {
           ok: state[key]
         }
         break;
-      case 'lightConditionsOK':
+      case 'lightConditionOK':
         control = {
           eventType: 'ControlLightingCondition',
           ok: state[key]

@@ -33,10 +33,7 @@ import AddressSuggest from '../../../../components/address'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path ?
-            state.storageGridUnit.root.path.map((s) => {
-              return { id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` };
-            }) : null
+    path: state.storageGridUnit.root.path
   }
 }
 
@@ -199,23 +196,12 @@ export default class StorageUnitContainer extends Component {
     this.setState({ ...this.state, unit: newData })
   }
 
-  nodeTypes = [
-    { type: 'Organisation', iconName: 'folder' },
-    { type: 'Building', iconName: 'folder' },
-    { type: 'Room', iconName: 'folder' },
-    { type: 'StorageUnit', iconName: 'folder' }
-  ]
-
-  makeBreadcrumb(nodes, nodeTypes) {
-    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} passive /> : null
-  }
-
   render() {
     return (
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
         translate={this.props.translate}
-        breadcrumb={this.makeBreadcrumb(this.props.path, this.nodeTypes)}
+        breadcrumb={<Breadcrumb nodes={this.props.path} passive />}
         content={
           <Grid>
             <Row>
@@ -369,7 +355,7 @@ export default class StorageUnitContainer extends Component {
                     </Grid>
                     <Row>
                       <Col style={{ textAlign: 'center' }}>
-                        <h3>{this.props.translate('musit.storageUnits.environmentalData')} </h3>
+                        <h4>{this.props.translate('musit.storageUnits.environmentalData')}</h4>
                       </Col>
                     </Row>
                     <EnvironmentRequirementComponent

@@ -12,11 +12,7 @@ const mapStateToProps = (state) => {
   return {
     actor: state.auth.actor,
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path ?
-          state.storageGridUnit.root.path.map((s) => {
-            return {
-              id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-      null
+    path: state.storageGridUnit.root.path
   }
 }
 
@@ -59,20 +55,9 @@ export default class AddObservationPage extends React.Component {
     hashHistory.push(node.url)
   }
 
-  nodeTypes = [
-    { type: 'Organisation', iconName: 'folder' },
-    { type: 'Building', iconName: 'folder' },
-    { type: 'Room', iconName: 'folder' },
-    { type: 'StorageUnit', iconName: 'folder' }
-  ]
-
-  makeBreadcrumb(nodes, nodeTypes) {
-    return nodes ? <Breadcrumb nodes={nodes} nodeTypes={nodeTypes} onClickCrumb={this.onClickCrumb} /> : null
-  }
-
   render() {
     const nodes = this.props.path
-    const breadcrumb = this.makeBreadcrumb(nodes, this.nodeTypes)
+    const breadcrumb = <Breadcrumb nodes={nodes} onClickCrumb={this.onClickCrumb} />
     return (
       <Layout
         title="Magasin"

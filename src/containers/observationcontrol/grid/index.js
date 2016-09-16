@@ -34,11 +34,7 @@ import { hashHistory } from 'react-router'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path ?
-      state.storageGridUnit.root.path.map((s) => {
-        return {
-          id: s.id, name: s.name, type: s.storageType, url: `/magasin/${s.id}` } }) :
-      null,
+    path: state.storageGridUnit.root.path,
     observationControlGridData: state.observationControlGrid.data
   }
 }
@@ -137,16 +133,9 @@ export default class ObservationControlGridShow extends React.Component {
     />)
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} allActive onClickCrumb={(node) => hashHistory.push(node.url)} />)
-  }
-
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} allActive onClickCrumb={(node) => hashHistory.push(node.url)} />
     return (
       <Layout
         title="Magasin"
