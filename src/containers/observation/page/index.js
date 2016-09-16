@@ -211,7 +211,7 @@ export default class ObservationPage extends React.Component {
       errors.doneDate = 'musit.observation.page.dateRequired'
     }
 
-    this.state.observations.forEach((observation, index) => {
+    formProps.observations.forEach((observation, index) => {
       const typeDefinition = this.typeDefinitions[observation.type];
       if (typeDefinition.validate) {
         errors = { ...errors, ...typeDefinition.validate.bind(this)(observation.data, index, observation.type) }
@@ -287,7 +287,14 @@ export default class ObservationPage extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        onKeyDown={(e) => {
+          if (e.keyCode === 13) {
+            e.preventDefault()
+          }
+        }}
+        onSubmit={this.handleSubmit}
+      >
         <Grid>
           <Row>
             <h3 />

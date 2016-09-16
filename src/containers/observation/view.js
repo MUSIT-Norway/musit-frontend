@@ -6,6 +6,7 @@ import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { parseISODateNonStrict as parseISODate } from '../../util'
 import Breadcrumb from '../../layout/Breadcrumb'
+import { loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
@@ -30,6 +31,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadPersonNameFromId: (id) => {
       dispatch(getActorNameFromId(id))
+    },
+    loadPath: (id) => {
+      dispatch(loadPath(id))
     }
   }
 }
@@ -47,13 +51,17 @@ export default class ViewObservationPage extends React.Component {
     params: PropTypes.object.isRequired,
     loadPersonNameFromId: PropTypes.func.isRequired,
     loadObservation: PropTypes.func.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    loadPath: React.PropTypes.func.isRequired
   }
 
   componentWillMount() {
     if (this.props.params.obsId) {
       this.props.loadObservation(this.props.params.obsId, {
-        onSuccess: (r) => this.props.loadPersonNameFromId(r.doneBy)
+        onSuccess: (r) => {
+          this.props.loadPersonNameFromId(r.doneBy)
+          this.props.loadPath(this.props.params.id)
+        }
       })
     }
   }
@@ -63,6 +71,10 @@ export default class ViewObservationPage extends React.Component {
   }
 
   render() {
+    if (!this.props.observations) {
+      return null; // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
+    }
+
     const nodes = this.props.path
     const nodeTypes = [{ type: 'Building', iconName: 'folder' },
                        { type: 'Room', iconName: 'folder' },

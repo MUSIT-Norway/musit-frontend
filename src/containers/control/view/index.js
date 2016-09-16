@@ -33,13 +33,21 @@ export default class ControlViewContainer extends React.Component {
     params: React.PropTypes.object,
     loadPersonNameFromId: React.PropTypes.func.isRequired,
     doneBy: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    loadPath: React.PropTypes.func.isRequired
+  }
+
+  static defaultProps = {
+    loadPath: () => true
   }
 
   componentWillMount() {
     if (this.props.params.controlId) {
       this.props.loadControl(this.props.params.controlId, {
-        onSuccess: (r) => this.props.loadPersonNameFromId(r.doneBy)
+        onSuccess: (r) => {
+          this.props.loadPersonNameFromId(r.doneBy)
+          this.props.loadPath(this.props.params.id)
+        }
       })
     }
   }
@@ -53,6 +61,9 @@ export default class ControlViewContainer extends React.Component {
   }
 
   render() {
+    if (!this.props.controls) {
+      return null;  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
+    }
     const nodes = this.props.path
     const nodeTypes = [{ type: 'Building', iconName: 'folder' },
                        { type: 'Room', iconName: 'folder' },
