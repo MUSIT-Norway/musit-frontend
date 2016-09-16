@@ -43,7 +43,6 @@ export default class EditStorageUnitContainer extends React.Component {
         unit={this.props.unit}
         onLagreClick={data => this.props.onLagreClick(data)}
         params={this.props.params}
-        isAdd
       />
     )
   }
