@@ -106,7 +106,7 @@ export default class ObservationPest extends Component {
                   </ControlLabel>
                   <MusitDropDownField
                     items={this.props.lifeCycleItems}
-                    placeHolder={this.props.lifeCyclePlaceHolder}
+                    placeHolder={!this.props.disabled ? this.props.lifeCyclePlaceHolder : ''}
                     tooltip={this.props.lifeCycleTooltip}
                     validate={this.props.lifeCycleValidate}
                     disabled={this.props.disabled}
@@ -121,7 +121,7 @@ export default class ObservationPest extends Component {
                     {this.props.countLabel}
                   </ControlLabel>
                   <MusitField
-                    placeHolder={this.props.countPlaceHolder}
+                    placeHolder={!this.props.disabled ? this.props.countPlaceHolder : ''}
                     tooltip={this.props.countTooltip}
                     validate={this.props.countValidate}
                     precision={this.props.countPrecision}
