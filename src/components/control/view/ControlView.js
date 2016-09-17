@@ -93,9 +93,9 @@ export default class ControlView extends Component {
               disabled
               translate={this.props.translate}
               valueProps={{
-                status: motivates.condition,
-                volume: JSON.stringify(motivates.volume),
-                comment: motivates.note
+                statusValue: motivates.condition,
+                volumeValue: JSON.stringify(motivates.volume),
+                commentValue: motivates.note
               }}
             />)
             break

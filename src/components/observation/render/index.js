@@ -10,7 +10,7 @@ export const RenderAlcohol = (props) => {
   return (
     <ObservationStatusPercentageComment
       disabled={props.disabled}
-      statusValue={props.valueProps.status}
+      statusValue={props.valueProps.statusValue}
       statusLabel={props.translate('musit.observation.page.alcohol.statusLabel')}
       statusTooltip={props.translate('musit.observation.page.alcohol.statusTooltip')}
       statusPlaceHolder={props.translate('musit.observation.page.alcohol.statusPlaceHolder')}
@@ -21,17 +21,17 @@ export const RenderAlcohol = (props) => {
         props.translate('musit.observation.page.alcohol.statusItems.minorDryed'),
         props.translate('musit.observation.page.alcohol.statusItems.satisfactory')
       ]}
-      statusOnChange={(value) => props.onChangeField('status', value, props.index)}
-      volumeValue={props.valueProps.volume}
+      statusOnChange={(value) => props.onChangeField('statusValue', value, props.index)}
+      volumeValue={props.valueProps.volumeValue}
       volumeLabel={props.translate('musit.observation.page.alcohol.volumeLabel')}
       volumeTooltip={props.translate('musit.observation.page.alcohol.volumeTooltip')}
       volumePlaceHolder={props.translate('musit.observation.page.alcohol.volumePlaceHolder')}
-      volumeOnChange={(value) => props.onChangeField('volume', value, props.index)}
-      commentValue={props.valueProps.comment}
+      volumeOnChange={(value) => props.onChangeField('volumeValue', value, props.index)}
+      commentValue={props.valueProps.commentValue}
       commentLabel={props.translate('musit.observation.page.alcohol.commentLabel')}
       commentTooltip={props.translate('musit.observation.page.alcohol.commentTooltip')}
       commentPlaceHolder={props.translate('musit.observation.page.alcohol.commentPlaceHolder')}
-      commentOnChange={(value) => props.onChangeField('comment', value, props.index)}
+      commentOnChange={(value) => props.onChangeField('commentValue', value, props.index)}
     />
   )
 }
@@ -41,9 +41,9 @@ RenderAlcohol.propTypes = {
   onChangeField: PropTypes.func,
   index: PropTypes.number,
   valueProps: PropTypes.shape({
-    status: PropTypes.string,
-    volume: PropTypes.string,
-    comment: PropTypes.string
+    statusValue: PropTypes.string,
+    volumeValue: PropTypes.string,
+    commentValue: PropTypes.string
   }).isRequired,
   disabled: PropTypes.bool,
   canEdit: PropTypes.bool
