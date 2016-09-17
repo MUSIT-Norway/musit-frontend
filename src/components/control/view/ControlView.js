@@ -94,7 +94,7 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               valueProps={{
                 status: motivates.condition,
-                volume: JSON.stringify(motivates.volume.toString()),
+                volume: JSON.stringify(motivates.volume),
                 comment: motivates.note
               }}
             />)
