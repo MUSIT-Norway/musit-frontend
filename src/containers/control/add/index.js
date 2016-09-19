@@ -72,6 +72,7 @@ export default class ControlAddContainer extends React.Component {
     this.onControlClickOK = this.onControlClickOK.bind(this)
     this.onControlClickNOK = this.onControlClickNOK.bind(this)
     this.onClickSave = this.onClickSave.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillMount() {
@@ -81,6 +82,23 @@ export default class ControlAddContainer extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.actor && this.props.actor && nextProps.actor.id !== this.props.actor.id) {
       this.setState({ ...this.state, doneBy: nextProps.actor })
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const errors = []
+    const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null)
+    if (controls.length === 0) {
+      errors.push('There are no controls')
+    }
+    if (!this.state.doneBy || !this.state.doneBy.id) {
+      errors.push('Please enter done by')
+    }
+    if (errors.length === 0) {
+      this.onClickSave()
+    } else {
+      this.setState({ ...this.state, errors })
     }
   }
 
@@ -159,13 +177,6 @@ export default class ControlAddContainer extends React.Component {
       return (<Col md={9}>{null}</Col>)
     }
 
-    const btnTbr = (<SaveCancel
-      saveLabel={translate(this.oneStateIsNotOK() ? 'musit.observation.registerObservation' : 'musit.texts.save')}
-      translate={translate}
-      onClickSave={this.onClickSave}
-      onClickCancel={() => { hashHistory.goBack() }}
-    />)
-
     const fields = [
       {
         key: 'temperature',
@@ -202,7 +213,7 @@ export default class ControlAddContainer extends React.Component {
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         content={
-          <div>
+          <form onSubmit={this.handleSubmit}>
             <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.newControl.title', false)}</h4>
             <Grid>
               <Row>
@@ -278,9 +289,18 @@ export default class ControlAddContainer extends React.Component {
                 )
               })}
               <hr />
-              {btnTbr}
+              {this.state.errors && this.state.errors.map((e,i) => {
+                return <center><span key={i} style={{ color: 'red' }}>{e}</span></center>
+              })}
+              <hr />
+              <SaveCancel
+                saveLabel={translate(this.oneStateIsNotOK() ? 'musit.observation.registerObservation' : 'musit.texts.save')}
+                translate={translate}
+                onClickSave={(e) => this.handleSubmit(e)}
+                onClickCancel={() => { hashHistory.goBack() }}
+              />
             </Grid>
-          </div>
+          </form>
         }
       />
     )
