@@ -42,7 +42,7 @@ const wrap = (be) => {
     retobs.data = {}
     switch (o.eventType.toLowerCase()) {
       case 'observationlightingcondition':
-        retobs.type = 'lightConditions'
+        retobs.type = 'lightCondition'
         retobs.data.leftValue = o.lightingCondition
         retobs.data.rightValue = o.note
         return retobs
