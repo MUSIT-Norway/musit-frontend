@@ -301,7 +301,7 @@ export default class ControlAddContainer extends React.Component {
               })}
               <hr />
               <SaveCancel
-                saveLabel={translate(this.oneStateIsNotOK() ? 'musit.observation.registerObservation' : 'musit.texts.save')}
+                saveLabel={translate(this.oneStateIsNotOK() ? 'musit.newControl.registerObservations' : 'musit.texts.save')}
                 translate={translate}
                 onClickSave={(e) => this.handleSubmit(e)}
                 onClickCancel={() => { hashHistory.goBack() }}

@@ -54,6 +54,7 @@ en:
       cancel: "Cancel"
       cancelTooltip: "Cancel registration"
     viewControl:
+      title: "View control"
       controlAlcohol: "Alcohol"
       controlCleaning: "Cleaning"
       controlGas: "Gas"
@@ -70,16 +71,17 @@ en:
       dateRequired: "Date of control is required."
       doneByRequired: "Name of controller is required."
       temperature: "Temperature"
-      inertAir: "Hypoxic air"
+      hypoxicAir: "Hypoxic air"
       relativeHumidity: "Relative humidity"
       cleaning: "Cleaning"
       lightCondition: "Lighting condition"
-      alchohol: "Alcohol"
+      alcohol: "Alcohol"
       gas: "Gas"
       mold: "Mold"
       pest: "Pest"
       envdata: "Environmental Conditions"
       controlsRequired: 'At least one controltype must be checked OK or Not OK'
+      registerObservations: "Register observations"
     observation:
       page:
         titles:
@@ -469,6 +471,7 @@ no:
       cancel: "Avbryt"
       cancelTooltip: "Avbryt registreringen"
     viewControl:
+      title: "Vis kontroll"
       controlAlcohol: "Sprit"
       controlCleaning: "Renhold"
       controlGas: "Gass"
@@ -485,16 +488,17 @@ no:
       doneBy: "Utført av"
       doneByRequired: "Navn på den som utførte kontrollen er påkrevd."
       temperature: "Temperatur"
-      inertAir: "Inertluft"
+      hypoxicAir: "Inertluft"
       relativeHumidity: "Relativ luftfuktighet"
       cleaning: "Renhold"
       lightCondition: "Lysforhold"
-      alchohol: "Sprit"
+      alcohol: "Sprit"
       gas: "Gass"
       mold: "Mugg"
       pest: "Skadedyr"
       envdata: "Miljødata"
       controlsRequired: 'Minst en kontroll må merkes OK eller Ikke OK'
+      registerObservations: "Registrer observasjoner"
     observation:
       page:
         titles:

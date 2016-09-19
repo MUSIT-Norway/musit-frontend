@@ -380,7 +380,9 @@ export default class ObservationPage extends React.Component {
                   </FormGroup>
                 </Col>
                 <Col xs={4}>
-                  <Button onClick={this.addObservationType}>
+                  <Button
+                    onClick={() => this.addObservationType()}
+                  >
                     <FontAwesome name="plus-circle" />&nbsp;{this.props.translate('musit.observation.page.newButtonLabel')}
                   </Button>
                 </Col>

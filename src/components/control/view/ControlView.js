@@ -124,7 +124,7 @@ export default class ControlView extends Component {
           case 'ControlHypoxicAir':
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
-              type="inertAir"
+              type="hypoxicAir"
               translate={this.props.translate}
               valueProps={{
                 fromValue: JSON.stringify(motivates.from),
@@ -136,7 +136,7 @@ export default class ControlView extends Component {
           case 'ControlLightingCondition':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
-              type="lux"
+              type="lightConditions"
               translate={this.props.translate}
               valueProps={{
                 leftValue: motivates.lightingCondition,
@@ -176,7 +176,7 @@ export default class ControlView extends Component {
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
-              type="cleaning"
+              type="relativeHumidity"
               valueProps={{
                 fromValue: JSON.stringify(motivates.from),
                 toValue: JSON.stringify(motivates.to),
@@ -198,19 +198,19 @@ export default class ControlView extends Component {
     const { id } = this.props
     const observation = (fontName, observationType) => {
       return (
-        <Col xs={5} sm={5} >
+        <Col xs={5} sm={5} md={5} >
           <span className={`icon icon-${fontName}`} />
           {` ${observationType}`}
         </Col>
     ) }
     const controlOk = (
-      <Col xs={5} sm={5} >
+      <Col xs={5} sm={5} md={5} >
         <FontAwesome name="check" />
         {`  ${this.props.translate('musit.texts.ok')}`}
       </Col>
     )
     const controlNotOk = (
-      <Col xs={5} sm={5} >
+      <Col xs={5} sm={5} md={5} >
         <FontAwesome name="close" />
         {`  ${this.props.translate('musit.texts.notOk')}`}
       </Col>

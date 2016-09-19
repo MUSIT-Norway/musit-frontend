@@ -85,14 +85,6 @@ export default class ObservationPest extends Component {
           onChangeRight={this.props.commentsOnChangeRight}
           disabled={this.props.disabled}
         />
-        <span>
-          <ControlLabel>{'\u00A0'}</ControlLabel><br />
-          {!this.props.canEdit ? '' :
-            <Button onClick={this.props.newButtonOnClick}>
-              <FontAwesome name="plus-circle" />&nbsp;{this.props.newButtonLabel}
-            </Button>
-          }
-        </span>
         <hr />
         {this.props.observations.map((observation, index) => {
           return (
@@ -101,8 +93,6 @@ export default class ObservationPest extends Component {
                 <span style={{ height: 50 }}>
                   <ControlLabel>
                     {this.props.lifeCycleLabel}
-                    &nbsp;{!this.props.canEdit ? '' :
-                      <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
                   </ControlLabel>
                   <MusitDropDownField
                     items={this.props.lifeCycleItems}
@@ -130,6 +120,22 @@ export default class ObservationPest extends Component {
                     onChange={(countValue) => this.props.countOnChange(index, countValue)}
                     style={{ height: 36 }}
                   />
+                </span>
+              </Col>
+              <Col xs={1} sm={1} md={1}>
+                <span style={{ height: 50 }}>
+                  <ControlLabel>{'\u00A0'}</ControlLabel><br />{!this.props.canEdit ? '' :
+                    <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
+                </span>
+              </Col>
+              <Col xs={1} sm={1} md={1}>
+                <span style={{ height: 50 }}>
+                  <ControlLabel>{'\u00A0'}</ControlLabel><br />
+                  {!this.props.canEdit ? '' :
+                    <Button onClick={this.props.newButtonOnClick}>
+                      <FontAwesome name="plus-circle" />&nbsp;{this.props.newButtonLabel}
+                    </Button>
+                  }
                 </span>
               </Col>
             </Row>
