@@ -221,7 +221,7 @@ en:
           rightLabelPlaceHolder: "Free text"
           leftLabelToolTip: "Measured gas"
           rightLabelPlaceToolTip: "Task that should be performed"
-        lightConditions:
+        lightCondition:
           leftValueRequired: "Measured/observed value is required."
           leftValueIncorrect: "Max length for measured/observed value is 100 char."
           rightValueIncorrect: "Max length for Task/Comment is 250 char."
@@ -638,7 +638,7 @@ no:
           rightLabelPlaceHolder: "Fritekst"
           leftLabelToolTip: "Målt gass"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
-        lightConditions:
+        lightCondition:
           leftValueRequired: "Målt/observert verdi er påkrevd"
           leftValueIncorrect: "Målt/observert verdi kan ha maks 100 tegn."
           rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
