@@ -139,10 +139,13 @@ export default class ControlAddContainer extends React.Component {
     const errors = []
     const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null)
     if (controls.length === 0) {
-      errors.push('There are no controls')
+      errors.push(this.props.translate('musit.newControl.controlsRequired'))
     }
     if (!this.state.doneBy || !this.state.doneBy.id) {
-      errors.push('Please enter done by')
+      errors.push(this.props.translate('musit.newControl.doneByRequired'))
+    }
+    if (!this.state.doneDate) {
+      errors.push(this.props.translate('musit.newControl.dateRequired'))
     }
     if (errors.length === 0) {
       this.onClickSave()
@@ -232,7 +235,11 @@ export default class ControlAddContainer extends React.Component {
                         <DatePicker
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate.toISOString()}
+                          onClear={() => this.setState({ ...this.state, doneDate: moment() })}
                           onChange={newValue => {
+                            if (!newValue) {
+                              return;
+                            }
                             this.setState({ ...this.state, doneDate: parseISODate(newValue) })
                           }}
                         />
