@@ -85,23 +85,6 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
-  handleSubmit(event) {
-    event.preventDefault()
-    const errors = []
-    const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null)
-    if (controls.length === 0) {
-      errors.push('There are no controls')
-    }
-    if (!this.state.doneBy || !this.state.doneBy.id) {
-      errors.push('Please enter done by')
-    }
-    if (errors.length === 0) {
-      this.onClickSave()
-    } else {
-      this.setState({ ...this.state, errors })
-    }
-  }
-
   onControlClick(key, bool) {
     const me = this
     return () => {
@@ -148,6 +131,23 @@ export default class ControlAddContainer extends React.Component {
       this.props.saveControl(this.props.params.id, controlState, { onSuccess: () => hashHistory.goBack(),
                                              onFailure: () => window.alert('Kunne ikke lagre kontroll') },
                                              this.props.params.id)
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const errors = []
+    const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null)
+    if (controls.length === 0) {
+      errors.push('There are no controls')
+    }
+    if (!this.state.doneBy || !this.state.doneBy.id) {
+      errors.push('Please enter done by')
+    }
+    if (errors.length === 0) {
+      this.onClickSave()
+    } else {
+      this.setState({ ...this.state, errors })
     }
   }
 
@@ -289,7 +289,7 @@ export default class ControlAddContainer extends React.Component {
                 )
               })}
               <hr />
-              {this.state.errors && this.state.errors.map((e,i) => {
+              {this.state.errors && this.state.errors.map((e, i) => {
                 return <center><span key={i} style={{ color: 'red' }}>{e}</span></center>
               })}
               <hr />
