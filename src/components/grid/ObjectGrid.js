@@ -7,9 +7,11 @@ export default class ObjectGrid extends Component {
     id: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
-      museumsNumber: PropTypes.string.isRequired,
-      uNumber: PropTypes.string.isRequired,
-      term: PropTypes.string
+      identifier: PropTypes.shape({
+        museumNo: PropTypes.string.isRequired,
+        subNo: PropTypes.string.isRequired,
+      }).isRequired,
+      displayName: PropTypes.string
     }))
   }
 

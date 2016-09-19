@@ -48,7 +48,14 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
         ...state,
         root: {
           ...state.root,
-          path: action.result,
+          path: action.result.map((s) => {
+            return {
+              id: s.id,
+              name: s.name,
+              type: s.storageType,
+              url: `/magasin/${s.id}`
+            }
+          }),
           loaded: true,
           loading: false
         }
@@ -120,10 +127,6 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
 
 export default storageUnitGridReducer;
 
-export const isLoaded = (globalState) => {
-  return globalState.storageUnitContainer && globalState.storageUnitContainer.loaded;
-}
-
 export const loadRoot = (id) => {
   let action = {}
   if (id) {
@@ -138,13 +141,6 @@ export const loadRoot = (id) => {
     }
   }
   return action
-}
-
-export const loadAll = () => {
-  return {
-    types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get('/api/storageadmin/v1/storageunit')
-  };
 }
 
 export const loadChildren = (id, callback) => {
@@ -170,10 +166,11 @@ export const clearRoot = () => {
   }
 }
 
-export const loadPath = (id) => {
+export const loadPath = (id, callback) => {
   const url = `/api/storageadmin/v1/storageunit/${id}/path`
   return {
     types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
-    promise: (client) => client.get(url)
+    promise: (client) => client.get(url),
+    callback
   };
 }

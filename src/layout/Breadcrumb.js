@@ -19,6 +19,16 @@ export default class Breadcrumb extends React.Component {
     divider: React.PropTypes.string,
   }
 
+  static defaultProps = {
+    nodeTypes: [
+      { type: 'Organisation', iconName: 'folder' },
+      { type: 'Building', iconName: 'folder' },
+      { type: 'Room', iconName: 'folder' },
+      { type: 'StorageUnit', iconName: 'folder' }
+    ],
+    nodes: []
+  }
+
   render() {
     const styles = require('./Breadcrumb.scss')
     const {
@@ -32,7 +42,7 @@ export default class Breadcrumb extends React.Component {
 
     const isLast = (array, index) => (array.length - 1) === index
     const renderCrumb = (nodeArray) => {
-      const breadcrumb = nodes.map((node, index) => {
+      return nodes.map((node, index) => {
         let fragment = ''
         let iconFragment = ''
         if (node.type && nodeTypes) {
@@ -46,7 +56,7 @@ export default class Breadcrumb extends React.Component {
 
         if (passive) {
           fragment = (
-            <span>
+            <span key={index}>
               <span className={styles.crumb}>
               {iconFragment}{node.name}
               </span>
@@ -55,7 +65,7 @@ export default class Breadcrumb extends React.Component {
           )
         } else if (!isLast(nodeArray, index) || allActive) {
           fragment = (
-            <span>
+            <span key={index}>
               <span className={styles.crumb}>
                 <a
                   href=""
@@ -69,11 +79,10 @@ export default class Breadcrumb extends React.Component {
             </span>
           )
         } else {
-          fragment = (<span className={styles.crumb}>{node.name}</span>)
+          fragment = (<span key={index} className={styles.crumb}>{iconFragment}{node.name}</span>)
         }
         return fragment
       })
-      return breadcrumb
     }
     return (
       <div>

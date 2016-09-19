@@ -7,7 +7,7 @@ import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
-import { clearUser, connectUser, clearActor } from '../../reducers/auth';
+import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
 
 const mapStateToProps = (state) => {
@@ -31,9 +31,17 @@ const mapDispatchToProps = (dispatch) => {
       if (localStorage.getItem('jwtToken')) {
         const user = jwtDecode(localStorage.getItem('jwtToken'))
         dispatch(connectUser(user));
+        dispatch(loadActor())
         return true;
       }
-      return false
+      if (localStorage.getItem('fakeToken')) {
+        const userId = JSON.parse(localStorage.getItem('fakeToken')).userId
+        const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
+        dispatch(connectUser(user))
+        dispatch(loadActor())
+        return true;
+      }
+      return false;
     }
   }
 }
@@ -48,11 +56,6 @@ class App extends Component {
     pickListCount: PropTypes.number.isRequired,
     clearUser: PropTypes.func.isRequired,
     loadUser: PropTypes.func.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-    router: PropTypes.object.isRequired
   }
 
   componentWillMount() {

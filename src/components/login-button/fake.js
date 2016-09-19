@@ -35,17 +35,13 @@ export default class FakeLoginSelector extends Component {
     loadActor: PropTypes.func.isRequired,
   }
 
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  }
-
   constructor(props) {
     super(props);
     this.onSelect = this.onSelect.bind(this);
   }
 
   onSelect(user) {
-    localStorage.setItem('accessToken', user.accessToken)
+    localStorage.setItem('fakeToken', JSON.stringify(user))
     this.props.setUser(user);
   }
 

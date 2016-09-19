@@ -14,7 +14,7 @@ describe('NodeGrid', () => {
           {
             id: 1,
             name: 'Eske',
-            type: 'Lagringsenh',
+            type: 'StorageUnit',
             objectCount: 0,
             totalObjectCount: 12,
             nodeCount: 0
@@ -22,7 +22,7 @@ describe('NodeGrid', () => {
           {
             id: 2,
             name: 'Pose',
-            type: 'Lagringsenh',
+            type: 'StorageUnit',
             objectCount: 0,
             totalObjectCount: 16,
             nodeCount: 0
@@ -34,16 +34,16 @@ describe('NodeGrid', () => {
   });
 
   it('Check the first row first column is created.', () => {
-    assert(inputComponent[0].getAttribute('id') === '1_Eske_Lagringsenh_nodeName')
+    assert(inputComponent[0].getAttribute('id') === '1_Eske_StorageUnit_nodeName')
   })
   it('Check the first row second column is created.', () => {
-    assert(inputComponent[1].getAttribute('id') === '1_Eske_Lagringsenh_nodeType')
+    assert(inputComponent[1].getAttribute('id') === '1_Eske_StorageUnit_nodeType')
   })
   it('Check the value of first row second column.', () => {
-    assert(inputComponent[1].innerHTML === 'Lagringsenh')
+    assert(inputComponent[1].innerHTML === 'musit.grid.node.nodeTypeItems.StorageUnit')
   })
   it('Check the value of second row second column.', () => {
-    assert(inputComponent[9].innerHTML === 'Lagringsenh')
+    assert(inputComponent[9].innerHTML === 'musit.grid.node.nodeTypeItems.StorageUnit')
   })
   it('Check the value of second row fourth column.', () => {
     assert(inputComponent[11].innerHTML === '16')

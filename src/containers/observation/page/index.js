@@ -67,6 +67,12 @@ export default class ObservationPage extends React.Component {
         observations: nextProps.observations
       })
     }
+    if (this.props.mode === 'ADD' && nextProps.doneBy && this.props.doneBy && nextProps.doneBy.id !== this.props.doneBy.id) {
+      this.setState({
+        ...this.state,
+        doneBy: nextProps.doneBy
+      })
+    }
   }
 
   onChangeField(field, value, index) {
@@ -205,7 +211,7 @@ export default class ObservationPage extends React.Component {
       errors.doneDate = 'musit.observation.page.dateRequired'
     }
 
-    this.state.observations.forEach((observation, index) => {
+    formProps.observations.forEach((observation, index) => {
       const typeDefinition = this.typeDefinitions[observation.type];
       if (typeDefinition.validate) {
         errors = { ...errors, ...typeDefinition.validate.bind(this)(observation.data, index, observation.type) }
@@ -281,7 +287,14 @@ export default class ObservationPage extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        onKeyDown={(e) => {
+          if (e.keyCode === 13) {
+            e.preventDefault()
+          }
+        }}
+        onSubmit={this.handleSubmit}
+      >
         <Grid>
           <Row>
             <h3 />

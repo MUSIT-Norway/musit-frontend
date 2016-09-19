@@ -6,7 +6,7 @@ import FontAwesome from 'react-fontawesome'
 
 export default class NodeGrid extends Component {
   static propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -58,7 +58,7 @@ export default class NodeGrid extends Component {
                     </a>
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_nodeType`}>
-                    {c.type}
+                    {translate(`musit.grid.node.nodeTypeItems.${c.type}`)}
                   </td>
                   <td id={`${id}_${c.name}_${c.type}_objectCount`}>
                     {c.objectCount}

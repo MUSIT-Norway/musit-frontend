@@ -20,20 +20,21 @@ import { connect } from 'react-redux'
 import { addControl } from '../../../reducers/control'
 import Language from '../../../components/language'
 import ControlAddContainerImpl from './index'
+import { loadPath } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   actor: state.auth.actor,
   translate: (key, markdown) => Language.translate(key, markdown),
-  path: state.storageGridUnit.root.path ?
-        state.storageGridUnit.root.path.map((s) => {
-          return {
-            id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-    null
+  envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
+  path: state.storageGridUnit.root.path
 })
 
 const mapDispatchToProps = (dispatch) => ({
   saveControl: (id, data, saveControlCallback) => {
     dispatch(addControl(id, data, {}, saveControlCallback))
+  },
+  loadPath: (id) => {
+    dispatch(loadPath(id))
   }
 })
 

@@ -85,7 +85,7 @@ export default class ObervationStatusPercentageComment extends Component {
             value={this.props.statusValue}
             items={this.props.statusItems}
             tooltip={this.props.statusTooltip}
-            placeHolder={this.props.statusPlaceHolder}
+            placeHolder={!this.props.disabled ? this.props.statusPlaceHolder : ''}
             validate={this.props.statusValidate}
             onChange={this.props.statusOnChange}
             minimumLength={this.props.statusMinimumLength}
@@ -97,7 +97,7 @@ export default class ObervationStatusPercentageComment extends Component {
           <MusitField
             value={this.props.volumeValue}
             tooltip={this.props.volumeTooltip}
-            placeHolder={this.props.volumePlaceHolder}
+            placeHolder={!this.props.disabled ? this.props.volumePlaceHolder : ''}
             validate={this.props.volumeValidate}
             onChange={this.props.volumeOnChange}
             minimumLength={this.props.volumeMinimumLength}
@@ -110,7 +110,7 @@ export default class ObervationStatusPercentageComment extends Component {
           <MusitTextArea
             value={this.props.commentValue}
             tooltip={this.props.commentTooltip}
-            placeHolder={this.props.commentPlaceHolder}
+            placeHolder={!this.props.disabled ? this.props.commentPlaceHolder : ''}
             validate={this.props.commentValidate}
             onChange={this.props.commentOnChange}
             maximumLength={this.props.commentMaximumLength}

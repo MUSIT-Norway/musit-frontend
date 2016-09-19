@@ -14,6 +14,10 @@ describe('Render view control page', () => {
         translate={(key) => key}
         saveControl={() => true}
         loadControl={() => true}
+        doneBy={{
+          id: 1,
+          fn: 'Jarl'
+        }}
         params={{
 
         }}

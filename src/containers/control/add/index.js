@@ -35,7 +35,13 @@ export default class ControlAddContainer extends React.Component {
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
     actor: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    envReqData: React.PropTypes.object,
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    loadPath: React.PropTypes.func.isRequired
+  }
+
+  static defaultProps = {
+    loadPath: () => true
   }
 
   constructor(props) {
@@ -51,14 +57,14 @@ export default class ControlAddContainer extends React.Component {
       relativeHumidityOK: null,
       pestOK: null,
       storageUnit: null,
-      temperature: ' ',
-      temperatureTolerance: ' ',
-      relativeHumidity: ' ',
-      relativeHumidityInterval: ' ',
-      inertAir: ' ',
-      inertAirInterval: ' ',
-      light: ' ',
-      cleaning: ' ',
+      temperature: this.props.envReqData ? this.props.envReqData.temperature : ' ',
+      temperatureTolerance: this.props.envReqData ? this.props.envReqData.temperatureTolerance : ' ',
+      relativeHumidity: this.props.envReqData ? this.props.envReqData.relativeHumidity : ' ',
+      relativeHumidityInterval: this.props.envReqData ? this.props.envReqData.relativeHumidityTolerance : ' ',
+      inertAir: this.props.envReqData ? this.props.envReqData.hypoxicAir : ' ',
+      inertAirInterval: this.props.envReqData ? this.props.envReqData.hypoxicAirTolerance : ' ',
+      light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
+      cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
       doneDate: moment(),
       doneBy: this.props.actor
     }
@@ -66,6 +72,17 @@ export default class ControlAddContainer extends React.Component {
     this.onControlClickOK = this.onControlClickOK.bind(this)
     this.onControlClickNOK = this.onControlClickNOK.bind(this)
     this.onClickSave = this.onClickSave.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentWillMount() {
+    this.props.loadPath(this.props.params.id)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.actor && this.props.actor && nextProps.actor.id !== this.props.actor.id) {
+      this.setState({ ...this.state, doneBy: nextProps.actor })
+    }
   }
 
   onControlClick(key, bool) {
@@ -117,16 +134,29 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
+  handleSubmit(event) {
+    event.preventDefault()
+    const errors = []
+    const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null)
+    if (controls.length === 0) {
+      errors.push(this.props.translate('musit.newControl.controlsRequired'))
+    }
+    if (!this.state.doneBy || !this.state.doneBy.id) {
+      errors.push(this.props.translate('musit.newControl.doneByRequired'))
+    }
+    if (!this.state.doneDate) {
+      errors.push(this.props.translate('musit.newControl.dateRequired'))
+    }
+    if (errors.length === 0) {
+      this.onClickSave()
+    } else {
+      this.setState({ ...this.state, errors })
+    }
   }
 
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
 
     const renderReadOnly = (leftValue, rightValue) => {
@@ -147,15 +177,8 @@ export default class ControlAddContainer extends React.Component {
         return <Col md={9}>{make(leftValue)}</Col>
       }
 
-      return (<Col md={9}> --- </Col>)
+      return (<Col md={9}>{null}</Col>)
     }
-
-    const btnTbr = (<SaveCancel
-      saveLabel={translate(this.oneStateIsNotOK() ? 'musit.observation.registerObservation' : 'musit.texts.save')}
-      translate={translate}
-      onClickSave={this.onClickSave}
-      onClickCancel={() => { hashHistory.goBack() }}
-    />)
 
     const fields = [
       {
@@ -174,7 +197,7 @@ export default class ControlAddContainer extends React.Component {
         rightValue: this.state.inertAirInterval
       },
       {
-        key: 'lightConditions',
+        key: 'lightCondition',
         leftValue: this.state.light
       },
       {
@@ -193,7 +216,7 @@ export default class ControlAddContainer extends React.Component {
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         content={
-          <div>
+          <form onSubmit={this.handleSubmit}>
             <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.newControl.title', false)}</h4>
             <Grid>
               <Row>
@@ -212,7 +235,11 @@ export default class ControlAddContainer extends React.Component {
                         <DatePicker
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate.toISOString()}
+                          onClear={() => this.setState({ ...this.state, doneDate: moment() })}
                           onChange={newValue => {
+                            if (!newValue) {
+                              return;
+                            }
                             this.setState({ ...this.state, doneDate: parseISODate(newValue) })
                           }}
                         />
@@ -269,9 +296,18 @@ export default class ControlAddContainer extends React.Component {
                 )
               })}
               <hr />
-              {btnTbr}
+              {this.state.errors && this.state.errors.map((e, i) => {
+                return <center><span key={i} style={{ color: 'red' }}>{e}</span></center>
+              })}
+              <hr />
+              <SaveCancel
+                saveLabel={translate(this.oneStateIsNotOK() ? 'musit.observation.registerObservation' : 'musit.texts.save')}
+                translate={translate}
+                onClickSave={(e) => this.handleSubmit(e)}
+                onClickCancel={() => { hashHistory.goBack() }}
+              />
             </Grid>
-          </div>
+          </form>
         }
       />
     )

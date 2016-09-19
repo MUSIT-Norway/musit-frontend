@@ -6,6 +6,7 @@ import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { parseISODateNonStrict as parseISODate } from '../../util'
 import Breadcrumb from '../../layout/Breadcrumb'
+import { loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
@@ -15,11 +16,7 @@ const mapStateToProps = (state) => {
     registeredDate: state.observation.data.registeredDate,
     registeredBy: state.observation.data.registeredBy,
     observations: state.observation.data.observations,
-    path: state.storageGridUnit.root.path ?
-      state.storageGridUnit.root.path.map((s) => {
-        return {
-          id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-      null
+    path: state.storageGridUnit.root.path
   }
 }
 
@@ -30,6 +27,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadPersonNameFromId: (id) => {
       dispatch(getActorNameFromId(id))
+    },
+    loadPath: (id) => {
+      dispatch(loadPath(id))
     }
   }
 }
@@ -41,33 +41,34 @@ export default class ViewObservationPage extends React.Component {
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
     doneBy: PropTypes.object,
-    registeredBy: PropTypes.object,
-    registeredDate: PropTypes.object,
+    registeredBy: PropTypes.string,
+    registeredDate: PropTypes.string,
     translate: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     loadPersonNameFromId: PropTypes.func.isRequired,
     loadObservation: PropTypes.func.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    loadPath: React.PropTypes.func.isRequired
   }
 
   componentWillMount() {
     if (this.props.params.obsId) {
       this.props.loadObservation(this.props.params.obsId, {
-        onSuccess: (r) => this.props.loadPersonNameFromId(r.doneBy)
+        onSuccess: (r) => {
+          this.props.loadPersonNameFromId(r.doneBy)
+          this.props.loadPath(this.props.params.id)
+        }
       })
     }
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
-  }
-
   render() {
+    if (!this.props.observations) {
+      return null; // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
+    }
+
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
         title="Magasin"

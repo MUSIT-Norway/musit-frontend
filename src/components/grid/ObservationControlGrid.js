@@ -12,80 +12,87 @@ export default class ObservationControlGrid extends Component {
     showMode: PropTypes.oneOf(['ALL', 'CONTROLS', 'OBSERVATIONS', '']),
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
-      type: PropTypes.string.isRequired,
+      eventType: PropTypes.string.isRequired,
       doneDate: PropTypes.string.isRequired,
-      types: PropTypes.object.isRequired,
-      doneBy: PropTypes.string.isRequired,
+      doneBy: PropTypes.oneOfType([
+        React.PropTypes.number,
+        React.PropTypes.string
+      ]).isRequired,
       registeredDate: PropTypes.string.isRequired,
       registeredBy: PropTypes.string.isRequired
     }))
   }
 
-  static icon(ok, name) {
-    if (ok) {
-      return <span style={{ padding: '2px' }} className={`icon icon-${name}`} />
-    }
-    return <span style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
+  constructor(props) {
+    super(props)
+    this.getIcon = this.getIcon.bind(this)
   }
 
-  static getIcon(data) {
+  getIcon(data, index) {
     const arr = []
     switch (data.eventType) {
       case 'ObservationLightingCondition':
       case 'ControlLightingCondition':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitlightingcondicon'))
+        arr.push(this.icon(data.ok, index, 'musitlightingcondicon'))
         break;
       case 'ObservationTemperature':
       case 'ControlTemperature':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musittemperatureicon'))
+        arr.push(this.icon(data.ok, index, 'musittemperatureicon'))
         break;
       case 'ObservationHypoxicAir':
       case 'ControlHypoxicAir':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musithypoxicairicon'))
+        arr.push(this.icon(data.ok, index, 'musithypoxicairicon'))
         break;
       case 'ObservationRelativeHumidity':
       case 'ControlRelativeHumidity':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitrelhumidityicon'))
+        arr.push(this.icon(data.ok, index, 'musitrelhumidityicon'))
         break;
       case 'ObservationCleaning':
       case 'ControlCleaning':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitcleaningicon'))
+        arr.push(this.icon(data.ok, index, 'musitcleaningicon'))
         break;
       case 'ObservationMold':
       case 'ControlMold':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitmoldicon'))
+        arr.push(this.icon(data.ok, index, 'musitmoldicon'))
         break;
       case 'ObservationPest':
       case 'ControlPest':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitpesticon'))
+        arr.push(this.icon(data.ok, index, 'musitpesticon'))
         break;
       case 'ObservationAlcohol':
       case 'ControlAlcohol':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitalcoholicon'))
+        arr.push(this.icon(data.ok, index, 'musitalcoholicon'))
         break;
       case 'ObservationGas':
       case 'ControlGas':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitgasicon'))
+        arr.push(this.icon(data.ok, index, 'musitgasicon'))
         break;
       case 'ObservationWaterDamageAssessment':
       case 'ControlWaterDamageAssessment':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitwaterdamageicon'))
+        arr.push(this.icon(data.ok, index, 'musitwaterdamageicon'))
         break;
       case 'ObservationFireProtection':
       case 'ControlFireProtection':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitfireprotectionicon'))
+        arr.push(this.icon(data.ok, index, 'musitfireprotectionicon'))
         break;
       case 'ObservationTheftProtection':
       case 'ControlTheftProtection':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musittheftprotectionicon'))
+        arr.push(this.icon(data.ok, index, 'musittheftprotectionicon'))
         break;
       case 'ObservationPerimeterSecurity':
       case 'ControlPerimeterSecurity':
-        arr.push(ObservationControlGrid.icon(data.ok, 'musitperimetersecurityicon'))
+        arr.push(this.icon(data.ok, index, 'musitperimetersecurityicon'))
         break;
       default:
     }
-    return arr;
+    return arr
+  }
+
+  icon(ok, index, name) {
+    if (ok) {
+      return <span key={index} style={{ padding: '2px' }} className={`icon icon-${name}`} />
+    }
+    return <span key={index} style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
   }
 
   render() {
@@ -115,40 +122,43 @@ export default class ObservationControlGrid extends Component {
             </thead>
             <tbody>
               {this.props.tableData.map((c, i) => {
-                const types = c['subEvents-parts'].map(ObservationControlGrid.getIcon).reduce((f, s) => [...f, ...s])
-                return (<tr
-                  style={{ cursor: 'pointer' }}
-                  key={i}
-                  id={`${c.id}_${c.doneDate}`}
-                  onClick={() => {
-                    if (c.eventType.toLowerCase() === 'control') {
-                      hashHistory.push(`magasin/${this.props.id}/control/${c.id}`)
-                    } else {
-                      hashHistory.push(`magasin/${this.props.id}/observation/${c.id}`)
-                    }
-                  }}
-                >
-                  <td id={`${c.id}_${c.doneDate}_type`}>
-                    {c.eventType.toLowerCase() === 'control' ? <div className="icon icon-musitcontrolicon" /> : ''}
-                    {c.eventType.toLowerCase() === 'observation' ? <div className="icon icon-musitobservationicon" /> : ''}
-                  </td>
-                  <td id={`${c.id}_${c.doneDate}_date`}>
-                    {parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}
-                  </td>
-                  <td id={`${c.id}_${c.doneDate}_types`}>
-                    {types}
-                  </td>
-                  <td id={`${c.id}_${c.doneDate}_doneBy`}>
-                    {c.doneBy}
-                  </td>
-                  <td id={`${c.id}_${c.doneDate}_registeredDate`}>
-                    {parseISODate(c.registeredDate).format(DATE_FORMAT_DISPLAY)}
-                  </td>
-                  <td id={`${c.id}_${c.doneDate}_registeredBy`}>
-                    {c.registeredBy}
-                  </td>
-                </tr>
-                ) })}
+                const parts = c['subEvents-parts'];
+                const types = parts ? parts.map(this.getIcon).reduce((f, s) => [...f, ...s]) : null
+                return (
+                  <tr
+                    style={{ cursor: 'pointer' }}
+                    key={i}
+                    id={`${c.id}_${c.doneDate}`}
+                    onClick={() => {
+                      if (c.eventType.toLowerCase() === 'control') {
+                        hashHistory.push(`magasin/${this.props.id}/control/${c.id}`)
+                      } else {
+                        hashHistory.push(`magasin/${this.props.id}/observation/${c.id}`)
+                      }
+                    }}
+                  >
+                    <td id={`${c.id}_${c.doneDate}_type`}>
+                      {c.eventType.toLowerCase() === 'control' ? <div className="icon icon-musitcontrolicon" /> : ''}
+                      {c.eventType.toLowerCase() === 'observation' ? <div className="icon icon-musitobservationicon" /> : ''}
+                    </td>
+                    <td id={`${c.id}_${c.doneDate}_date`}>
+                      {parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}
+                    </td>
+                    <td id={`${c.id}_${c.doneDate}_types`}>
+                      {types}
+                    </td>
+                    <td id={`${c.id}_${c.doneDate}_doneBy`}>
+                      {c.doneBy}
+                    </td>
+                    <td id={`${c.id}_${c.doneDate}_registeredDate`}>
+                      {parseISODate(c.registeredDate).format(DATE_FORMAT_DISPLAY)}
+                    </td>
+                    <td id={`${c.id}_${c.doneDate}_registeredBy`}>
+                      {c.registeredBy}
+                    </td>
+                  </tr>
+                )
+              })}
             </tbody>
           </Table>
         </div>

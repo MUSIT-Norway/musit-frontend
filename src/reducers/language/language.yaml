@@ -11,6 +11,7 @@ en:
         controller: "Controls"
         moveNode: "Move node"
         delete: "Delete"
+        controlsobservations: "Contr./Observ."
       observationControl:
         newObservation: "New observation"
         newControl: "New control"
@@ -27,6 +28,11 @@ en:
       node:
         nodeName: "Name"
         nodeType: "Type"
+        nodeTypeItems:
+          StorageUnit: "Storage unit"
+          Room: "Room"
+          Building: "Building"
+          Organisation: "Organisation"
         objectCount: "No. of obj."
         totalObjectCount: "Tot. no. of obj."
         nodeCount: "No. of nodes"
@@ -44,7 +50,7 @@ en:
       ok: "OK"
       notOk: "Not OK"
       save: "Save"
-      saveTooltip: "Save"
+      saveTooltip: "Save registration"
       cancel: "Cancel"
       cancelTooltip: "Cancel registration"
     viewControl:
@@ -61,6 +67,8 @@ en:
       title: "New control"
       date: "Performed date"
       doneBy: "Performed by"
+      dateRequired: "Date of control is required."
+      doneByRequired: "Name of controller is required."
       temperature: "Temperature"
       inertAir: "Hypoxic air"
       relativeHumidity: "Relative humidity"
@@ -71,6 +79,7 @@ en:
       mold: "Mold"
       pest: "Pest"
       envdata: "Environmental Conditions"
+      controlsRequired: 'At least one controltype must be checked OK or Not OK'
     observation:
       page:
         titles:
@@ -80,8 +89,8 @@ en:
         registerObservation: "Register observation"
         registerObservations: "Register observations"
         date: "Performed date"
-        dateRequired: "Please enter date of observation"
-        doneByRequired: "Please enter name of observer"
+        dateRequired: "Date of observation is required."
+        doneByRequired: "Name of observer is required."
         doneBy: "Performed by"
         registeredDate: "Registered date"
         registeredBy: "Registered by"
@@ -89,11 +98,11 @@ en:
         typeSelect:
           labelText: "Choose type"
         pest:
-          identificationValueRequired: 'Pest identification is required.'
-          identificationValueIncorrect: 'Maximum length for pest identification is 100 characters.'
-          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          identificationValueRequired: "Identification is required."
+          identificationValueIncorrect: "Max length for identification is 100 char."
+          commentsValueIncorrect: "Max length for Task/Comment is 250 char."
           countIncorrect: "Quantity must be an integer."
-          lifeCycleRequired: "Please choose stage. Stage must be chosen when quantity is entered."
+          lifeCycleRequired: "Stage is required when quantity is specified."
           labelText: "Pest"
           identificationLabel: "Identification"
           identificationTooltip: "Pest identification"
@@ -114,10 +123,9 @@ en:
           countPlaceHolder: "Integer"
           countTooltip: "Pest quantity"
         alcohol:
-          statusRequired: 'Alcohol status is required.'
-          statusIncorrect: 'Alcohol status must be a number with maximum 3 decimals.'
-          volumeIncorrect: 'Alcohol volume must be a number with maximum 3 decimals.'
-          commentIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          statusRequired: "Level is required."
+          volumeIncorrect: "Volume must be a number with max 3 decimals."
+          commentIncorrect: "Max length for Task/Comment is 250 char"
           labelText: "Alcohol"
           volumeLabel: "Volume"
           volumePlaceHolder: "%"
@@ -134,10 +142,10 @@ en:
             minorDryed: "A little dehydated"
             satisfactory: "Satisfactory"
         temperature:
-          fromValueRequired: 'Measured value (from) is required.'
-          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
-          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
-          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          fromValueRequired: "Measured value (from) is required."
+          fromValueIncorrect: "Measured value (from) must be a number with max 3 decimals."
+          toValueIncorrect: "Measured value (to) must be a number with max 3 decimals."
+          commentsValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Temperature"
           fromValueLabelText: "Measured value (from)"
           toValueLabelText: "Measured value (to)"
@@ -149,10 +157,10 @@ en:
           noteTooltip: "Task that should be performed"
           notePlaceHolder: "Free text"
         hypoxicAir:
-          fromValueRequired: 'Measured value (from) is required.'
-          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
-          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
-          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          fromValueRequired: "Measured value (from) is required."
+          fromValueIncorrect: "Measured value (from) must be a number with max 3 decimals."
+          toValueIncorrect: "Measured value (to) must be a number with max 3 decimals."
+          commentsValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Hypoxic air"
           fromValueLabelText:  "Measured value (from)"
           toValueLabelText: "Measured value (to)"
@@ -164,24 +172,24 @@ en:
           noteTooltip: "Task that should be performed"
           notePlaceHolder: "Free text"
         relativeHumidity:
-          fromValueRequired: 'Measured value (from) is required.'
-          fromValueIncorrect: 'Measured value (from) must be a number with maximum 3 decimals.'
-          toValueIncorrect: 'Measured value (to) must be a number with maximum 3 decimals.'
-          commentsValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          fromValueRequired: "Measured value (from) is required."
+          fromValueIncorrect: "Measured value (from) must be a number with max 3 decimals."
+          toValueIncorrect: "Measured value (to) must be a number with max 3 decimals."
+          commentsValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Relative humidity"
           fromValueLabelText: "Measured value (from)"
           toValueLabelText: "Measured value (to)"
           fromValuePlaceHolder: "%"
           toValuePlaceHolder: "%"
-          fromValueTooltip: "Measured humidity"
-          toValueTooltip: "Measured humidity"
+          fromValueTooltip: "Measured rel. humidity"
+          toValueTooltip: "Measured rel. humidity"
           note: "Task/Comment"
           noteTooltip: "Task that should be performed"
           notePlaceHolder: "Free text"
         mold:
-          leftValueRequired: 'Description of the observed mold is required.'
-          leftValueIncorrect: 'Maximum length for Description is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed mold is required."
+          leftValueIncorrect: "Max length for Description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Mold"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -190,9 +198,9 @@ en:
           leftLabelToolTip: "Observed mold"
           rightLabelPlaceToolTip: "Task that should be performed"
         cleaning:
-          leftValueRequired: 'Description of the observed cleaning is required.'
-          leftValueIncorrect: 'Maximum length for Description is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed cleaning is required."
+          leftValueIncorrect: "Max length for Description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Cleaning"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -201,9 +209,9 @@ en:
           leftLabelToolTip: "Observed cleaning"
           rightLabelPlaceToolTip: "Task that should be performed"
         gas:
-          leftValueRequired: 'Information about measured value is required.'
-          leftValueIncorrect: 'Maximum length for information about measured value is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Measured value is required."
+          leftValueIncorrect: "Max length for measured value is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Gas"
           leftLabelText: "Measured value"
           rightLabelText: "Task/Comment"
@@ -212,9 +220,9 @@ en:
           leftLabelToolTip: "Measured gas"
           rightLabelPlaceToolTip: "Task that should be performed"
         lightConditions:
-          leftValueRequired: 'Information about measured/observed value is required.'
-          leftValueIncorrect: 'Maximum length for information about measured/observed value is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Measured/observed value is required."
+          leftValueIncorrect: "Max length for measured/observed value is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Lighting condition"
           leftLabelText: "Measured/observed value"
           rightLabelText: "Task/Comment"
@@ -223,9 +231,9 @@ en:
           leftLabelToolTip: "Measured/observed lighting condition"
           rightLabelPlaceToolTip: "Task that should be performed"
         skallsikring:
-          leftValueRequired: 'Description of observed perimeter security is required.'
-          leftValueIncorrect: 'Maximum length for description of observed perimeter security is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed perimeter security status is required."
+          leftValueIncorrect: "Max length for description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Perimeter security"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -234,9 +242,9 @@ en:
           leftLabelToolTip: "Observed perimeter security"
           rightLabelPlaceToolTip: "Task that should be performed"
         brannsikring:
-          leftValueRequired: 'Description of observed fire protection is required.'
-          leftValueIncorrect: 'Maximum length for description of observed fire protection is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed fire protection status is required."
+          leftValueIncorrect: "Max length for description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Fire protection"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -245,9 +253,9 @@ en:
           leftLabelToolTip: "Observed fire protection"
           rightLabelPlaceToolTip: "Task that should be performed"
         vannskaderisiko:
-          leftValueRequired: 'Description of observed water damage assessment is required.'
-          leftValueIncorrect: 'Maximum length for description of observed water damage assessment is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of observed water damage assessment is required."
+          leftValueIncorrect: "Max length for descriptionis 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Water damage assessment"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -256,9 +264,9 @@ en:
           leftLabelToolTip: "Observed water damage assessment"
           rightLabelPlaceToolTip: "Task that should be performed"
         tyverisikring:
-          leftValueRequired: 'Description of theft protection is required.'
-          leftValueIncorrect: 'Maximum length for description of theft protection is 100 characters.'
-          rightValueIncorrect: 'Maximum length for Task/Comment is 250 characters.'
+          leftValueRequired: "Description of theft protection status is required."
+          leftValueIncorrect: "Max length for description is 100 char."
+          rightValueIncorrect: "Max length for Task/Comment is 250 char."
           labelText: "Theft protection"
           leftLabelText: "Description"
           rightLabelText: "Task/Comment"
@@ -288,33 +296,33 @@ en:
           Organization: "Organisation"
       name:
         labelText: "Name"
-        incorrect: 'Maximum length for name is 100 characters.'
+        incorrect: "Max length for name is 100 char."
         required: "Name is required."
         placeHolder: "Free text"
         tooltip: "Node name"
       address:
         labelText: "Address"
-        incorrect: 'Maximum length for address is 100 characters.'
+        incorrect: "Max length for address is 100 char."
         placeHolder: "Street adr."
         tooltip: "Node address"
       area:
         labelText: "Area"
-        incorrect: 'Area (from) must be a number with maximum 3 decimals.'
+        incorrect: "Area (from) must be a number with max 3 decimals."
         placeHolder: "from"
         tooltip: "Node area in m2"
       areaTo:
         labelText: ""
-        incorrect: 'Area (to) must be a number with maximum 3 decimals.'
+        incorrect: "Area (to) must be a number with max 3 decimals."
         placeHolder: "to"
         tooltip: "Node area in m2"
       height:
         labelText: "Height"
-        incorrect: 'Height (from) must be a number with maximum 3 decimals.'
+        incorrect: "Height (from) must be a number with max 3 decimals."
         placeHolder: "from"
         tooltip: "Node height in m"
       heightTo:
         labelText: ""
-        incorrect: 'Height (to) must be a number with maximum 3 decimals.'
+        incorrect: "Height (to) must be a number with max 3 decimals."
         placeHolder: "to"
         tooltip: "Node height in m"
       securityAssessment:
@@ -333,47 +341,47 @@ en:
       environmentRequirements:
         temperature:
           labelText: "Temperature"
-          incorrect: 'Temperature must be a number with maximum 3 decimals.'
+          incorrect: "Temperature must be a number with max 3 decimals."
           tooltip: "Temperature requirement in °C"
           placeHolder: "\u00b0C"
         temperatureTolerance:
           labelText: ""
-          incorrect: 'Temperature tolerance must be an integer.'
+          incorrect: "Temperature tolerance must be an integer."
           tooltip: "Temperature tolerance"
-          placeHolder: "+/- \u00b0C"
+          placeHolder: "\u00b0C"
         relativeHumidity:
           labelText: "Rel. humidity"
-          incorrect: 'Relative humidity must be a number with maximum 3 decimals.'
+          incorrect: "Relative humidity must be a number with max 3 decimals."
           tooltip: "Relative humidity requirement in %"
           placeHolder: "%"
         relativeHumidityTolerance:
           labelText: ""
-          incorrect: 'Relative humidity tolerance must be an integer.'
+          incorrect: "Relative humidity tolerance must be an integer."
           tooltip: "Relative humidity tolerance"
-          placeHolder: "+/- %"
+          placeHolder: "%"
         hypoxicAir:
           labelText: "Hypoxic air"
-          incorrect: 'Hypoxic air must be a number with maximum 3 decimals.'
+          incorrect: "Hypoxic air must be a number with max 3 decimals."
           tooltip: "Hypoxic air requirement in % O2"
           placeHolder: "% O2"
         hypoxicAirTolerance:
           labelText: ""
-          incorrect: 'Hypoxic air tolerance must be an integer.'
+          incorrect: "Hypoxic air tolerance must be an integer."
           tooltip: "Hypoxic air tolerance"
-          placeHolder: "+/- % O2"
+          placeHolder: "% O2"
         cleaning:
           labelText: "Cleaning"
-          incorrect: 'Maximum length for cleaning is 100 characters.'
+          incorrect: "Max length for cleaning is 100 char."
           placeHolder: "Free text"
           tooltip: "Cleaning requirement"
         lightningConditions:
           labelText: "Lighting condition"
-          incorrect: 'Maximum length for lighting condition is 100 characters.'
+          incorrect: "Max length for lighting condition is 100 char."
           placeHolder: "Free text"
           tooltip: "Lighting condition requirement"
         comments:
           labelText: "Comment"
-          incorrect: 'Maximum length for comment is 250 characters.'
+          incorrect: "Max length for comment is 250 char."
           placeHolder: "Free text"
           tooltip: "Comment"
     welcomePage:
@@ -418,7 +426,7 @@ no:
         controller: "Kontroller"
         moveNode: "Flytt node"
         delete: "Slett"
-        controlsobservations: "KontrolObservasjon"
+        controlsobservations: "Kontr./Observ."
       observationControl:
         newObservation: "Ny observasjon"
         newControl: "Ny kontroll"
@@ -435,6 +443,11 @@ no:
       node:
         nodeName: "Navn"
         nodeType: "Type"
+        nodeTypeItems:
+          StorageUnit: "Lagringsenhet"
+          Room: "Rom"
+          Building: "Bygg"
+          Organisation: "Organisasjon"
         objectCount: "Ant. obj."
         totalObjectCount: "Tot. ant. obj."
         nodeCount: "Ant. noder"
@@ -468,7 +481,9 @@ no:
     newControl:
       title: "Ny kontroll"
       date: "Utført dato"
+      dateRequired: "Dato for kontrollen er påkrevd."
       doneBy: "Utført av"
+      doneByRequired: "Navn på den som utførte kontrollen er påkrevd."
       temperature: "Temperatur"
       inertAir: "Inertluft"
       relativeHumidity: "Relativ luftfuktighet"
@@ -479,6 +494,7 @@ no:
       mold: "Mugg"
       pest: "Skadedyr"
       envdata: "Miljødata"
+      controlsRequired: 'Minst en kontroll må merkes OK eller Ikke OK'
     observation:
       page:
         titles:
@@ -488,8 +504,8 @@ no:
         registerObservation: "Registrer observasjon"
         registerObservations: "Registrer observasjoner"
         date: "Utført dato"
-        dateRequired: "Vennligst fyll ut dato når observasjonen ble utført"
-        doneByRequired: "Vennligst fyll ut navn på den som utførte observasjonen"
+        dateRequired: "Dato for observasjonen er påkrevd."
+        doneByRequired: "Navn på den som gjorde observasjonen er påkrevd."
         doneBy: "Utført av"
         registeredDate: "Registrert dato"
         registeredBy: "Registrert av"
@@ -497,11 +513,11 @@ no:
         typeSelect:
           labelText: "Velg type"
         pest:
-          identificationValueRequired: 'Identifikasjon av skadedyr er påkrevd.'
-          identificationValueIncorrect: 'Identifikasjon kan ikke være på mer enn 100 tegn.'
-          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
-          countIncorrect: "Feltet Antall har ikke gyldig verdi."
-          lifeCycleRequired: "Stadie på skadedyr må velges når antall er oppgitt."
+          identificationValueRequired: "Identifikasjon er påkrevd."
+          identificationValueIncorrect: "Identifikasjon kan ha maks 100 tegn."
+          commentsValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
+          countIncorrect: "Antall må være et heltall."
+          lifeCycleRequired: "Stadie er påkrevd når antall er oppgitt."
           labelText: "Skadedyr"
           identificationLabel: "Identifikasjon"
           identificationTooltip: "Identifikasjon av skadedyr"
@@ -522,9 +538,9 @@ no:
           countPlaceHolder: "Heltall"
           countTooltip: "Antall skadedyr"
         alcohol:
-          statusRequired: 'Nivå på sprittilstanden en påkrevd.'
-          volumeIncorrect: 'Sprit volum må være et desimaltall med maks 3 desimaler.'
-          commentIncorrect: 'Maximum length for alcohol tiltak is 250 characters'
+          statusRequired: "Nivå er påkrevd."
+          volumeIncorrect: "Volum må være et tall med maks 3 desimaler."
+          commentIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Sprit"
           volumeLabel: "Volum"
           volumePlaceHolder: "%"
@@ -541,10 +557,10 @@ no:
             minorDryed: "Litt uttørket"
             satisfactory: "Tilfredsstillende"
         temperature:
-          fromValueRequired: 'Målt temperatur (fra) er påkrevd.'
-          fromValueIncorrect: 'Målt temperatur (fra) må være et desimaltall med maks 3 desimaler.'
-          toValueIncorrect: 'Målt temperatur (til) må være et desimaltall med maks 3 desimaler.'
-          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          fromValueRequired: "Målt temperatur (fra) er påkrevd."
+          fromValueIncorrect: "Målt temperatur (fra) må være et tall med maks 3 desimaler."
+          toValueIncorrect: "Målt temperatur (til) må være et tall med maks 3 desimaler."
+          commentsValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Temperatur"
           fromValueLabelText: "Målt temperatur (fra)"
           toValueLabelText: "Målt temperatur (til)"
@@ -556,10 +572,10 @@ no:
           noteTooltip: "Tiltak som bør iverksettes"
           notePlaceHolder: "Fritekst"
         hypoxicAir:
-          fromValueRequired: 'Målt inertluft (fra) er påkrevd.'
-          fromValueIncorrect: 'Målt inertluft (fra) må være et desimaltall med maks 3 desimaler.'
-          toValueIncorrect: 'Målt inertluft (til) må være et desimaltall med maks 3 desimaler.'
-          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          fromValueRequired: "Målt inertluft (fra) er påkrevd."
+          fromValueIncorrect: "Målt inertluft (fra) må være et tall med maks 3 desimaler."
+          toValueIncorrect: "Målt inertluft (til) må være et tall med maks 3 desimaler."
+          commentsValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Inertluft"
           fromValueLabelText: "Målt inertluft (fra)"
           toValueLabelText: "Målt inertluft (til)"
@@ -571,24 +587,24 @@ no:
           noteTooltip: "Tiltak som bør iverksettes"
           notePlaceHolder: "Fritekst"
         relativeHumidity:
-          fromValueRequired: 'Målt luftfuktighet (fra) er påkrevd.'
-          fromValueIncorrect: 'Målt luftfuktighet (fra) må være et desimaltall med maks 3 desimaler.'
-          toValueIncorrect: 'Målt luftfuktighet (til) må være et desimaltall med maks 3 desimaler.'
-          commentsValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          fromValueRequired: "Målt rel. luftfuktighet (fra) er påkrevd."
+          fromValueIncorrect: "Målt rel. luftfuktighet (fra) må være et tall med maks 3 desimaler."
+          toValueIncorrect: "Målt rel. luftfuktighet (til) må være et tall med maks 3 desimaler."
+          commentsValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Relativ luftfuktighet"
-          fromValueLabelText: "Målt luftfuktighet (fra)"
-          toValueLabelText: "Målt luftfuktighet (til)"
+          fromValueLabelText: "Målt rel. luftfuktighet (fra)"
+          toValueLabelText: "Målt rel. luftfuktighet (til)"
           fromValuePlaceHolder: "%"
           toValuePlaceHolder: "%"
-          fromValueTooltip: "Målt luftfuktighet"
-          toValueTooltip: "Målt luftfuktighet"
+          fromValueTooltip: "Målt rel. luftfuktighet"
+          toValueTooltip: "Målt rel. luftfuktighet"
           note: "Tiltak/Kommentar"
           noteTooltip: "Tiltak som bør iverksettes"
           notePlaceHolder: "Fritekst"
         mold:
-          leftValueRequired: 'Beskrivelse av observert mugg er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av observert mugg kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av observert mugg er påkrevd."
+          leftValueIncorrect: "Beskrivelse av observert mugg kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Mugg"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -597,9 +613,9 @@ no:
           leftLabelToolTip: "Observert mugg"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         cleaning:
-          leftValueRequired: 'Beskrivelse av observert renhold er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av observert renhold kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av observert renhold er påkrevd."
+          leftValueIncorrect: "Beskrivelse av observert renhold kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Renhold"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -608,9 +624,9 @@ no:
           leftLabelToolTip: "Observert renhold"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         gas:
-          leftValueRequired: 'Informasjon om målt verdi er påkrevd.'
-          leftValueIncorrect: 'Informasjon om målt verdi kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Målt verdi er påkrevd."
+          leftValueIncorrect: "Målt verdi kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Gass"
           leftLabelText: "Målt verdi"
           rightLabelText: "Tiltak/Kommentar"
@@ -619,9 +635,9 @@ no:
           leftLabelToolTip: "Målt gass"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         lightConditions:
-          leftValueRequired: 'Informasjon om målt/observert verdi er påkrevd'
-          leftValueIncorrect: 'Informasjon om målt/observert verdi kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Målt/observert verdi er påkrevd"
+          leftValueIncorrect: "Målt/observert verdi kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Lysforhold"
           leftLabelText: "Målt/observert verdi"
           rightLabelText: "Tiltak/Kommentar"
@@ -630,9 +646,9 @@ no:
           leftLabelToolTip: "Målt/observert lysforhold"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         skallsikring:
-          leftValueRequired: 'Beskrivelse av skallsikringens tilstand er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av skallsikringens tilstand kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av skallsikringens tilstand er påkrevd."
+          leftValueIncorrect: "Beskrivelse av skallsikringens tilstand kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Skallsikring"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -641,9 +657,9 @@ no:
           leftLabelToolTip: "Observert skallsikring"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         brannsikring:
-          leftValueRequired: 'Beskrivelse av brannsikringens tilstand er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av brannsikringens tilstand kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av brannsikringens tilstand er påkrevd."
+          leftValueIncorrect: "Beskrivelse av brannsikringens tilstand kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Brannsikring"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -652,9 +668,9 @@ no:
           leftLabelToolTip: "Observert brannsikring"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         vannskaderisiko:
-          leftValueRequired: 'Beskrivelse av vannskaderisiko er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av vannskaderisiko kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av vannskaderisiko er påkrevd."
+          leftValueIncorrect: "Beskrivelse av vannskaderisiko kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Vannskaderisiko"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -663,9 +679,9 @@ no:
           leftLabelToolTip: "Observert vannskaderisiko"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
         tyverisikring:
-          leftValueRequired: 'Beskrivelse av tyverisikringens tilstand er påkrevd.'
-          leftValueIncorrect: 'Beskrivelsen av tyverisikringens tilstand kan ikke være på mer enn 100 tegn.'
-          rightValueIncorrect: 'Tiltak/kommentar kan ikke være på mer enn 250 tegn.'
+          leftValueRequired: "Beskrivelse av tyverisikringens tilstand er påkrevd."
+          leftValueIncorrect: "Beskrivelse av tyverisikringens tilstand kan ha maks 100 tegn."
+          rightValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Tyverisikring"
           leftLabelText: "Beskrivelse"
           rightLabelText: "Tiltak/Kommentar"
@@ -695,33 +711,33 @@ no:
           Organization: "Organisasjon"
       name:
         labelText: "Navn"
-        incorrect: 'Navn kan ikke være på mer enn 100 tegn.'
+        incorrect: "Navn kan ha maks 100 tegn."
         required: "Navn er påkrevd."
         placeHolder: "Fritekst"
         tooltip: "Navn på noden"
       address:
         labelText: "Adresse"
-        incorrect: 'Adresse kan ikke være på mer enn 100 tegn.'
+        incorrect: "Adresse kan ha maks 100 tegn."
         placeHolder: "Gateadr."
         tooltip: "Nodens adresse"
       area:
         labelText: "Areal"
-        incorrect: 'Areal (fra) må være et desimaltall med maks 3 desimaler.'
+        incorrect: "Areal (fra) må være et tall med maks 3 desimaler."
         placeHolder: "fra"
         tooltip: "Nodens areal i m2"
       areaTo:
         labelText: ""
-        incorrect: 'Areal (til) må være et desimaltall med maks 3 desimaler.'
+        incorrect: "Areal (til) må være et tall med maks 3 desimaler."
         placeHolder: "til"
         tooltip: "Nodens areal i m2"
       height:
         labelText: "Høyde"
-        incorrect: 'Høyde (fra) må være et desimaltall med maks 3 desimaler.'
+        incorrect: "Høyde (fra) må være et tall med maks 3 desimaler."
         placeHolder: "fra"
         tooltip: "Nodens høyde i m"
       heightTo:
         labelText: ""
-        incorrect: 'Høyde (til) må være et desimaltall med maks 3 desimaler.'
+        incorrect: "Høyde (til) må være et tall med maks 3 desimaler."
         placeHolder: "til"
         tooltip: "Nodens høyde i m"
       securityAssessment:
@@ -740,47 +756,47 @@ no:
       environmentRequirements:
         temperature:
           labelText: "Temperatur"
-          incorrect: 'Temperatur må være et desimaltall med maks 3 desimaler.'
+          incorrect: "Temperatur må være et tall med maks 3 desimaler."
           tooltip: "Krav til temperatur i °C"
           placeHolder: "\u00b0C"
         temperatureTolerance:
           labelText: ""
-          incorrect: 'Temperatur toleranse må være et heltall.'
+          incorrect: "Temperaturtoleranse må være et heltall."
           tooltip: "Temperatur toleranse"
-          placeHolder: "+/- \u00b0C"
+          placeHolder: "\u00b0C"
         relativeHumidity:
           labelText: "Rel. luftfuktighet"
-          incorrect: 'Relativ luftfuktighet må være et desimaltall med maks 3 desimaler.'
+          incorrect: "Relativ luftfuktighet må være et tall med maks 3 desimaler."
           tooltip: "Krav til relativ luftfuktighet i %"
           placeHolder: "%"
         relativeHumidityTolerance:
           labelText: ""
-          incorrect: 'Relativ luftfuktighet toleranse må være et heltall.'
+          incorrect: "Relativ luftfuktighettoleranse må være et heltall."
           tooltip: "Relativ luftfuktighet toleranse"
-          placeHolder: "+/- %"
+          placeHolder: "%"
         hypoxicAir:
           labelText: "Inertluft"
-          incorrect: 'Inertluft må være et desimaltall med maks 3 desimaler.'
+          incorrect: "Inertluft må være et tall med maks 3 desimaler."
           tooltip: "Krav til inertluft i % O2"
           placeHolder: "% O2"
         hypoxicAirTolerance:
           labelText: ""
-          incorrect: 'Inertluft toleranse må være et heltall.'
+          incorrect: "Inertlufttoleranse må være et heltall."
           tooltip: "Inertluft toleranse"
-          placeHolder: "+/- % O2"
+          placeHolder: "% O2"
         cleaning:
           labelText: "Renhold"
-          incorrect: 'Renhold kan ikke være på mer enn 100 tegn.'
+          incorrect: "Renhold kan ha maks 100 tegn."
           placeHolder: "Fritekst"
           tooltip: "Krav til renhold"
         lightningConditions:
           labelText: "Lysforhold"
-          incorrect: 'Lysforhold kan ikke være på mer enn 100 tegn.'
+          incorrect: "Lysforhold kan ha maks 100 tegn."
           placeHolder: "Fritekst"
           tooltip: "Krav til lysforhold"
         comments:
           labelText: "Kommentar"
-          incorrect: 'Kommentar kan ikke være på mer enn 250 tegn.'
+          incorrect: "Kommentar kan ha maks 250 tegn."
           placeHolder: "Fritekst"
           tooltip: "Kommentar"
     welcomePage:
@@ -806,7 +822,7 @@ no:
         MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom
         Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet,
         Universitetet i Tromsø, og Universitetet i Stavanger.
-        
+
         Samarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014.
 
         MUSIT har som formål «å sikre drift, vedlikehold og utvikling av museenes felles samlingsdatabaser,

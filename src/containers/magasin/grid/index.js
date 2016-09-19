@@ -17,11 +17,7 @@ const mapStateToProps = (state) => ({
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root,
-  path: state.storageGridUnit.root.path ?
-    state.storageGridUnit.root.path.map((s) => {
-      return {
-        id: s.id, name: s.name, type: s.storageType, url: `/magasin/${s.id}` } }) :
-    null,
+  path: state.storageGridUnit.root.path,
   routerState: state.routing
 })
 
@@ -124,7 +120,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-  // Issued on every propchange, including local route changes
+    // Issued on every propchange, including local route changes
     if (newProps.params.splat !== this.props.params.splat) {
       if (newProps.params.splat) {
         this.props.loadChildren(this.resolveCurrentId(newProps.params.splat), {
@@ -135,6 +131,19 @@ export default class StorageUnitsContainer extends React.Component {
         this.props.loadStorageUnits()
       }
     }
+  }
+
+  onClickCrumb(node) {
+    this.showNodes();
+    hashHistory.push(node.url)
+  }
+
+  showNodes() {
+    this.setState({ ...this.state, showNodes: true, showObjects: false })
+  }
+
+  showObjects() {
+    this.setState({ ...this.state, showNodes: false, showObjects: true })
   }
 
   loadNodes() {
@@ -212,20 +221,20 @@ export default class StorageUnitsContainer extends React.Component {
       searchValue={this.state.searchPattern}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
-        this.setState({ ...this.state, showObjects: true, showNodes: false })
+        this.showObjects()
         this.loadObjects();
         blur()
       }}
       clickShowLeft={() => {
-        this.setState({ ...this.state, showObjects: false, showNodes: true })
-        this.loadNodes();
+        this.showNodes()
+        this.loadNodes()
         blur()
       }}
     />)
   }
 
   makeLeftMenu(rootNode, statistics) {
-    const { onEdit, onDelete, history } = this.props
+    const { onEdit, onDelete } = this.props
     const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root')
     return (
       <div style={{ paddingTop: 10 }}>
@@ -235,19 +244,21 @@ export default class StorageUnitsContainer extends React.Component {
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
             if (parentId) {
-              history.push(`/magasin/${parentId}/add?t=${new Date().getTime()}`)
+              hashHistory.push(`/magasin/${parentId}/add`)
             } else {
-              history.push('/magasin/add')
+              hashHistory.push('/magasin/add')
             }
           }}
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
           underNodeCount={statistics ? statistics.underNodeCount : Number.NaN}
           onClickProperties={(id) => onEdit({ id })}
-          onClickControlObservations={(id) => history.push(`/magasin/${id}/controlsobservations`)}
-          onClickObservations={(id) => history.push(`/magasin/${id}/observations`)}
-          onClickController={(id) => history.push(`/magasin/${id}/controls`)}
+
+          onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
+          onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
+          onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={() => this.showModal()}
+
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
@@ -262,9 +273,9 @@ export default class StorageUnitsContainer extends React.Component {
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={this.props.onAction}
         onClick={(row) =>
-            this.props.history.push(
-                `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
-            )
+          hashHistory.push(
+            `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
+          )
         }
       />)
     }
@@ -275,19 +286,11 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} onClickCrumb={(node) => this.props.history.push(node.url)} />)
-  }
-
   render() {
     const { searchPattern } = this.state
     const { children, translate, path } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
-    const nodes = path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
     return (
       <span>
         { this.randerModal(breadcrumb, this.makeContentGrid(searchPattern, rootNodeData, children))}

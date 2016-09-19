@@ -1,3 +1,5 @@
+import { parseFloatFromString, formatFloatToString } from '../../../util'
+
 const INSERT = 'musit/storageunit-container/INSERT';
 const UPDATE = 'musit/storageunit-container/UPDATE';
 const INSERT_SUCCESS = 'musit/storageunit-container/INSERT_SUCCESS';
@@ -7,6 +9,48 @@ const LOAD_SUCCESS = 'musit/storageunit-container/LOAD_SUCCESS';
 const LOAD_FAIL = 'musit/storageunit-container/LOAD_FAIL';
 
 const initialState = {}
+
+const mapToFrontend = (data) => {
+  return {
+    ...data,
+    area: formatFloatToString(data.area),
+    areaTo: formatFloatToString(data.areaTo),
+    height: formatFloatToString(data.height),
+    heightTo: formatFloatToString(data.heightTo),
+    environmentRequirement: data.environmentRequirement ? { ...data.environmentRequirement,
+      temperature: formatFloatToString(data.environmentRequirement.temperature),
+      temperatureTolerance: formatFloatToString(data.environmentRequirement.temperatureTolerance),
+      hypoxicAir: formatFloatToString(data.environmentRequirement.hypoxicAir),
+      hypoxicAirTolerance: formatFloatToString(data.environmentRequirement.hypoxicAirTolerance),
+      relativeHumidity: formatFloatToString(data.environmentRequirement.relativeHumidity),
+      relativeHumidityTolerance: formatFloatToString(data.environmentRequirement.relativeHumidityTolerance)
+    } : {},
+    environmentAssessment: data.environmentAssessment || {},
+    securityAssessment: data.securityAssessment || {}
+  }
+}
+
+const mapToBackend = (data, parentId) => {
+  return {
+    ...data,
+    groupRead: 'foo', // Must be removed
+    isPartOf: parentId ? parentId * 1 : data.isPartOf,
+    area: parseFloatFromString(data.area),
+    areaTo: parseFloatFromString(data.areaTo),
+    height: parseFloatFromString(data.height),
+    heightTo: parseFloatFromString(data.heightTo),
+    environmentRequirement: data.environmentRequirement ? { ...data.environmentRequirement,
+      temperature: parseFloatFromString(data.environmentRequirement.temperature),
+      temperatureTolerance: parseFloatFromString(data.environmentRequirement.temperatureTolerance),
+      hypoxicAir: parseFloatFromString(data.environmentRequirement.hypoxicAir),
+      hypoxicAirTolerance: parseFloatFromString(data.environmentRequirement.hypoxicAirTolerance),
+      relativeHumidity: parseFloatFromString(data.environmentRequirement.relativeHumidity),
+      relativeHumidityTolerance: parseFloatFromString(data.environmentRequirement.relativeHumidityTolerance)
+    } : {},
+    environmentAssessment: data.environmentAssessment || {},
+    securityAssessment: data.securityAssessment || {}
+  }
+}
 
 const storageUnitContainerReducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -20,7 +64,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
         ...state,
         loading: false,
         loaded: true,
-        data: action.result
+        data: mapToFrontend(action.result)
       };
     case INSERT_FAIL:
       return {
@@ -46,7 +90,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
         ...state,
         loading: false,
         loaded: true,
-        data: action.result
+        data: mapToFrontend(action.result)
       };
     case LOAD_FAIL:
       return {
@@ -62,57 +106,30 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
 
 export default storageUnitContainerReducer;
 
-export const isLoaded = (globalState) => {
-  return globalState.storageUnitContainer && globalState.storageUnitContainer.loaded;
-}
-
-export const load = (id) => {
+export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`)
-  };
-}
-
-const mapToBackend = (id, data) => {
-  return {
-    ...data,
-    groupRead: 'foo', // Must be removed
-    isPartOf: data.id ? data.isPartOf : id * 1,
-    area: data.area * 1,
-    areaTo: data.areaTo * 1,
-    height: data.height * 1,
-    heightTo: data.heightTo * 1,
-    environmentRequirement: data.environmentRequirement ? { ...data.environmentRequirement,
-      temperature: data.environmentRequirement.temperature * 1,
-      temperatureTolerance: data.environmentRequirement.temperatureTolerance * 1,
-      hypoxicAir: data.environmentRequirement.hypoxicAir * 1,
-      hypoxicAirTolerance: data.environmentRequirement.hypoxicAirTolerance * 1,
-      relativeHumidity: data.environmentRequirement.relativeHumidity * 1,
-      relativeHumidityTolerance: data.environmentRequirement.relativeHumidityTolerance * 1
-    } : {},
-    environmentAssessment: data.environmentAssessment ? data.environmentAssessment : {},
-    securityAssessment: data.securityAssessment ? data.securityAssessment : {}
-  }
-}
-
-export const insert = (parentId, data, callback) => {
-  let action = 'post'
-  let url = '/api/storageadmin/v1/storageunit';
-  if (data.id) {
-    action = 'put'
-    url += `/${data.id}`
-  }
-  const dataToPost = mapToBackend(parentId, data)
-  return {
-    types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
-    promise: (client) => client[action](url, { data: dataToPost }),
+    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`),
     callback
   };
 }
 
-export const update = (data) => {
+export const update = (data, callback) => {
+  const url = `/api/storageadmin/v1/storageunit/${data.id}`;
+  const dataToPost = mapToBackend(data)
   return {
-    type: UPDATE,
-    data: data
-  }
+    types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
+    promise: (client) => client.put(url, { data: dataToPost }),
+    callback
+  };
+}
+
+export const insert = (parentId, data, callback) => {
+  const url = '/api/storageadmin/v1/storageunit';
+  const dataToPost = mapToBackend(data, parentId)
+  return {
+    types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
+    promise: (client) => client.post(url, { data: dataToPost }),
+    callback
+  };
 }
