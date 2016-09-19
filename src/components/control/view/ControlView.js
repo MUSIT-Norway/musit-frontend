@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import * as ObservationRender from '../../observation/render'
+import { formatFloatToString } from './../../../util'
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -82,8 +83,8 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="temperature"
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
               }}
             />)
@@ -94,7 +95,7 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               valueProps={{
                 statusValue: motivates.condition,
-                volumeValue: JSON.stringify(motivates.volume),
+                volumeValue: formatFloatToString(motivates.volume),
                 commentValue: motivates.note
               }}
             />)
@@ -127,8 +128,8 @@ export default class ControlView extends Component {
               type="hypoxicAir"
               translate={this.props.translate}
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
               }}
             />)
@@ -164,7 +165,7 @@ export default class ControlView extends Component {
                 observations: motivates.lifeCycles.map(lc => {
                   return {
                     lifeCycle: lc.stage,
-                    count: JSON.stringify(lc.number)
+                    count: formatFloatToString(lc.number)
                   }
                 }),
                 identificationValue: motivates.identification,
@@ -178,8 +179,8 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="relativeHumidity"
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
               }}
             />)
