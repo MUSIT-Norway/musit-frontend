@@ -6,11 +6,16 @@ const REMOVE_LIST = 'musit/picklist/REMOVE-LIST'
 const ACTIVATE_LIST = 'musit/picklist/ACTIVATE-LIST'
 const TOGGLE_MARKED = 'musit/picklist/TOGGLE_MARKED'
 
+export const TYPES = {
+  NODE: 'nodes',
+  OBJECT: 'objects'
+}
+
 export const initialState = {
-  active: 'default',
+  active: TYPES.NODE,
   marked: [],
   lists: {
-    default: []
+    [TYPES.NODE]: []
   }
 }
 
@@ -18,7 +23,6 @@ const picklistReducer = (state = initialState, action = {}) => {
   const subStateKey = action.destination
   const activeSubStateKey = state.active
   const subState = state.lists[subStateKey] ? state.lists[subStateKey] : []
-  let newMarked = []
 
   switch (action.type) {
     case CLEAR: {
@@ -54,7 +58,7 @@ const picklistReducer = (state = initialState, action = {}) => {
     case REMOVE_LIST:
       return {
         ...state,
-        active: (subStateKey === state.active) ? 'default' : state.active,
+        active: (subStateKey === state.active) ? TYPES.NODE : state.active,
         marked: (subStateKey === activeSubStateKey) ? [] : state.marked,
         lists: {
           ...state.lists,
@@ -77,17 +81,16 @@ const picklistReducer = (state = initialState, action = {}) => {
         ...state,
         lists: {
           ...state.lists,
-          [subStateKey]: subState.filter((item) => { return item !== action.item })
+          [subStateKey]: subState.filter((item) => item !== action.item)
         }
       }
-    case TOGGLE_MARKED:
+    case TOGGLE_MARKED: {
+      let newMarked = []
       if (action.id) {
         // We operate on one or several spesific entries
         if (state.marked.indexOf(action.id) >= 0) {
           // it exists, so lets toggle off
-          newMarked = state.marked.filter((id) => {
-            return id !== action.id
-          })
+          newMarked = state.marked.filter((id) => id !== action.id)
         } else {
           // it does not exist, so lets add
           newMarked = [...state.marked, action.id]
@@ -97,14 +100,13 @@ const picklistReducer = (state = initialState, action = {}) => {
         newMarked = []
       } else {
         // Lets toggle all on
-        newMarked = state.lists[activeSubStateKey].map((item) => {
-          return item.id
-        })
+        newMarked = state.lists[activeSubStateKey].map((item) => item.id)
       }
       return {
         ...state,
         marked: newMarked
       }
+    }
     default:
       return state
   }
