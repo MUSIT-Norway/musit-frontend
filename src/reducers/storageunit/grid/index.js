@@ -1,3 +1,4 @@
+import { mapToFrontend } from '../mapper'
 const LOAD_SEVERAL = 'musit/storageunit-grid/LOAD_SEVERAL'
 const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-grid/LOAD_SEVERAL_SUCCESS'
 const LOAD_SEVERAL_FAIL = 'musit/storageunit-grid/LOAD_SEVERAL_FAIL'
@@ -13,6 +14,7 @@ const DELETE_SUCCESS = 'musit/storageunit-grid/DELETE_SUCCESS'
 const DELETE_FAIL = 'musit/storageunit-grid/DELETE_FAIL'
 
 const initialState = { root: {} }
+
 
 const storageUnitGridReducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -82,7 +84,7 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
           },
           loading: false,
           loaded: true,
-          data: action.result
+          data: mapToFrontend(action.result)
         }
       }
     case LOAD_ONE_FAIL:
