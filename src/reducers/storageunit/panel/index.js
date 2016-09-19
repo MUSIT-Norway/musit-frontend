@@ -17,14 +17,16 @@ const mapToFrontend = (data) => {
     areaTo: formatFloatToString(data.areaTo),
     height: formatFloatToString(data.height),
     heightTo: formatFloatToString(data.heightTo),
-    environmentRequirement: { ...data.environmentRequirement,
+    environmentRequirement: data.environmentRequirement ? { ...data.environmentRequirement,
       temperature: formatFloatToString(data.environmentRequirement.temperature),
       temperatureTolerance: formatFloatToString(data.environmentRequirement.temperatureTolerance),
       hypoxicAir: formatFloatToString(data.environmentRequirement.hypoxicAir),
       hypoxicAirTolerance: formatFloatToString(data.environmentRequirement.hypoxicAirTolerance),
       relativeHumidity: formatFloatToString(data.environmentRequirement.relativeHumidity),
       relativeHumidityTolerance: formatFloatToString(data.environmentRequirement.relativeHumidityTolerance)
-    }
+    } : {},
+    environmentAssessment: data.environmentAssessment || {},
+    securityAssessment: data.securityAssessment || {}
   }
 }
 
@@ -62,7 +64,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
         ...state,
         loading: false,
         loaded: true,
-        data: action.result
+        data: mapToFrontend(action.result)
       };
     case INSERT_FAIL:
       return {
@@ -104,10 +106,11 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
 
 export default storageUnitContainerReducer;
 
-export const load = (id) => {
+export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`)
+    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`),
+    callback
   };
 }
 

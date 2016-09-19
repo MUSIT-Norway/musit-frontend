@@ -36,7 +36,12 @@ export default class ControlAddContainer extends React.Component {
     params: React.PropTypes.object,
     actor: React.PropTypes.object,
     envReqData: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    loadPath: React.PropTypes.func.isRequired
+  }
+
+  static defaultProps = {
+    loadPath: () => true
   }
 
   constructor(props) {
@@ -67,6 +72,16 @@ export default class ControlAddContainer extends React.Component {
     this.onControlClickOK = this.onControlClickOK.bind(this)
     this.onControlClickNOK = this.onControlClickNOK.bind(this)
     this.onClickSave = this.onClickSave.bind(this)
+  }
+
+  componentWillMount() {
+    this.props.loadPath(this.props.params.id)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.actor && this.props.actor && nextProps.actor.id !== this.props.actor.id) {
+      this.setState({ ...this.state, doneBy: nextProps.actor })
+    }
   }
 
   onControlClick(key, bool) {
@@ -118,16 +133,9 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
-  }
-
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
 
     const renderReadOnly = (leftValue, rightValue) => {

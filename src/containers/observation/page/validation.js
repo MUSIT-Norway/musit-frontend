@@ -59,18 +59,18 @@ export const validatePest = (formProps, index, type) => {
 export const validateAlcohol = (formProps, index, type) => {
   const errors = {}
 
-  if (!formProps.status) {
-    errors[`${type}.status`] = typeFieldRequired(type, 'status')
-  } else if (validateString(formProps.status, 1) === 'error') {
-    errors[`${type}.status`] = typeFieldIncorrect(type, 'status')
+  if (!formProps.statusValue) {
+    errors[`${type}.statusValue`] = typeFieldRequired(type, 'statusValue')
+  } else if (validateString(formProps.statusValue, 1) === 'error') {
+    errors[`${type}.statusValue`] = typeFieldIncorrect(type, 'statusValue')
   }
 
-  if (formProps.volume && validateNumber(formProps.volume, 0, 10, 3) === 'error') {
-    errors[`${type}.volume`] = typeFieldIncorrect(type, 'volume')
+  if (formProps.volumeValue && validateNumber(formProps.volumeValue, 0, 10, 3) === 'error') {
+    errors[`${type}.volumeValue`] = typeFieldIncorrect(type, 'volumeValue')
   }
 
-  if (formProps.comment && validateString(formProps.comment, 1, 250) === 'error') {
-    errors[`${type}.comment`] = typeFieldIncorrect(type, 'comment')
+  if (formProps.commentValue && validateString(formProps.commentValue, 1, 250) === 'error') {
+    errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentValue')
   }
 
   return errors;

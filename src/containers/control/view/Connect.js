@@ -21,16 +21,13 @@ import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import ControlViewContainerImpl from './index'
+import { loadPath } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  path: state.storageGridUnit.root.path ?
-        state.storageGridUnit.root.path.map((s) => {
-          return {
-            id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-    null
+  path: state.storageGridUnit.root.path
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -39,6 +36,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadPersonNameFromId: (id) => {
     dispatch(getActorNameFromId(id))
+  },
+  loadPath: (id) => {
+    dispatch(loadPath(id))
   }
 })
 

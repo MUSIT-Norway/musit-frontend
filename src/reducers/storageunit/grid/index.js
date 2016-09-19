@@ -48,7 +48,14 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
         ...state,
         root: {
           ...state.root,
-          path: action.result,
+          path: action.result.map((s) => {
+            return {
+              id: s.id,
+              name: s.name,
+              type: s.storageType,
+              url: `/magasin/${s.id}`
+            }
+          }),
           loaded: true,
           loading: false
         }
@@ -159,10 +166,11 @@ export const clearRoot = () => {
   }
 }
 
-export const loadPath = (id) => {
+export const loadPath = (id, callback) => {
   const url = `/api/storageadmin/v1/storageunit/${id}/path`
   return {
     types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
-    promise: (client) => client.get(url)
+    promise: (client) => client.get(url),
+    callback
   };
 }

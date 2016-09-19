@@ -32,14 +32,14 @@ const observationControlGridReducer = (state = initialState, action) => {
     case LOAD_ACTOR:
       return {
         ...state,
-        loading: true,
-        loaded: false
+        loadingActors: true,
+        loadedActors: false
       };
     case LOAD_ACTOR_SUCCESS:
       return {
         ...state,
-        loading: false,
-        loaded: true,
+        loadingActors: false,
+        loadedActors: true,
         data: state.data.map((e) => {
           return { ...e,
           doneBy: action.result.find((a) => a.id === e.doneBy) ? action.result.find((a) => a.id === e.doneBy).fn : e.doneBy
@@ -48,8 +48,8 @@ const observationControlGridReducer = (state = initialState, action) => {
     case LOAD_ACTOR_FAILURE:
       return {
         ...state,
-        loading: false,
-        loaded: false,
+        loadingActors: false,
+        loadedActors: false,
         error: action.error
       }
     default:

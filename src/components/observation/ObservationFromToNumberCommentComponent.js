@@ -61,7 +61,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
           <MusitField
             value={this.props.fromValue}
             tooltip={this.props.fromTooltip}
-            placeHolder={this.props.fromPlaceHolder}
+            placeHolder={!this.props.disabled ? this.props.fromPlaceHolder : ''}
             validate={'number'}
             precision={3}
             onChange={this.props.onChangeFrom}
@@ -73,7 +73,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
           <MusitField
             value={this.props.toValue}
             tooltip={this.props.toTooltip}
-            placeHolder={this.props.toPlaceHolder}
+            placeHolder={!this.props.disabled ? this.props.toPlaceHolder : ''}
             validate={'number'}
             precision={3}
             onChange={this.props.onChangeTo}
@@ -85,7 +85,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
           <MusitTextArea
             value={this.props.commentValue}
             tooltip={this.props.commentTooltip}
-            placeHolder={this.props.commentPlaceholder}
+            placeHolder={!this.props.disabled ? this.props.commentPlaceholder : ''}
             validate={'text'}
             maximumLength={250}
             numberOfRows={5}

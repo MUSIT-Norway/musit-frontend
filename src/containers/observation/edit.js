@@ -2,21 +2,18 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
 import ObservationPage from './page'
-import { loadObservation, getActorNameFromId } from '../../reducers/observation'
+import { loadObservation } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { parseISODateNonStrict as parseISODate } from '../../util'
+import { loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path ?
-          state.storageGridUnit.root.path.map((s) => {
-            return {
-              id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-      null
+    path: state.storageGridUnit.root.path
   }
 }
 
@@ -33,8 +30,8 @@ const mapDispatchToProps = (dispatch) => ({
       }))
     }
   },
-  loadPersonNameFromId: (id) => {
-    dispatch(getActorNameFromId(id))
+  loadPath: (id) => {
+    dispatch(loadPath(id))
   }
 })
 
@@ -46,9 +43,13 @@ export default class EditObservationPage extends React.Component {
     translate: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
-    loadPath: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    loadPath: React.PropTypes.func.isRequired
+  }
+
+  componentWillMount() {
+    this.props.loadPath(this.props.params.id)
   }
 
   getObservationsFromLocationState() {
@@ -66,7 +67,7 @@ export default class EditObservationPage extends React.Component {
             return { type: 'hypoxicAir', data: {} }
           case 'gasOK':
             return { type: 'gas', data: {} }
-          case 'lightConditionsOK':
+          case 'lightConditionOK':
             return { type: 'lightConditions', data: {} }
           case 'cleaningOK':
             return { type: 'cleaning', data: {} }
@@ -89,16 +90,9 @@ export default class EditObservationPage extends React.Component {
     return doneDate
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
-  }
-
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
         title={"Magasin"}

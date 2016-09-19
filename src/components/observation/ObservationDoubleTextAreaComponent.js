@@ -51,7 +51,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
           <MusitTextArea
             value={this.props.leftValue}
             tooltip={this.props.leftTooltip}
-            placeHolder={this.props.leftPlaceHolder}
+            placeHolder={!this.props.disabled ? this.props.leftPlaceHolder : ''}
             onChange={this.props.onChangeLeft}
             disabled={this.props.disabled}
             validate={'text'}
@@ -64,7 +64,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
           <MusitTextArea
             value={this.props.rightValue}
             tooltip={this.props.rightTooltip}
-            placeHolder={this.props.rightPlaceHolder}
+            placeHolder={!this.props.disabled ? this.props.rightPlaceHolder : ''}
             onChange={this.props.onChangeRight}
             disabled={this.props.disabled}
             validate={'text'}

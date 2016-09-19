@@ -6,16 +6,13 @@ import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { addObservation } from '../../reducers/observation'
+import { loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
     actor: state.auth.actor,
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path ?
-          state.storageGridUnit.root.path.map((s) => {
-            return {
-              id: s.id, name: s.name, type: s.type, url: `/magasin/${s.id}` } }) :
-      null
+    path: state.storageGridUnit.root.path
   }
 }
 
@@ -27,6 +24,9 @@ const mapDispatchToProps = (dispatch) => {
         onFailure: () => alert('ikke istand til å lagre')
       }))
     },
+    loadPath: (id) => {
+      dispatch(loadPath(id))
+    }
   }
 }
 
@@ -38,19 +38,26 @@ export default class AddObservationPage extends React.Component {
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
     actor: PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    loadPath: React.PropTypes.func.isRequired
   }
 
-  makeBreadcrumb(n, nt) {
-    return (<Breadcrumb nodes={n} nodeTypes={nt} passive />)
+  constructor(props) {
+    super(props)
+    this.onClickCrumb = this.onClickCrumb.bind(this)
+  }
+
+  componentWillMount() {
+    this.props.loadPath(this.props.params.id)
+  }
+
+  onClickCrumb(node) {
+    hashHistory.push(node.url)
   }
 
   render() {
     const nodes = this.props.path
-    const nodeTypes = [{ type: 'Building', iconName: 'folder' },
-                       { type: 'Room', iconName: 'folder' },
-                       { type: 'StorageUnit', iconName: 'folder' }]
-    const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
+    const breadcrumb = <Breadcrumb nodes={nodes} onClickCrumb={this.onClickCrumb} />
     return (
       <Layout
         title="Magasin"
@@ -63,9 +70,8 @@ export default class AddObservationPage extends React.Component {
               id={this.props.params.id}
               onSaveObservation={this.props.onSaveObservation}
               translate={this.props.translate}
-              title="Add new observations"
               mode="ADD"
-              doneBy={(this.props.actor && this.props.actor.fn) ? this.props.actor : ''}
+              doneBy={this.props.actor}
             />
           </div>
         }
