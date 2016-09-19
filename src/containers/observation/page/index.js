@@ -118,7 +118,7 @@ export default class ObservationPage extends React.Component {
       render: this.renderDoubleTextArea,
       validate: validation.validateDoubleTextArea
     },
-    lightConditions: {
+    lightCondition: {
       label: 'lightConditions.labelText',
       render: this.renderDoubleTextArea,
       validate: validation.validateDoubleTextArea

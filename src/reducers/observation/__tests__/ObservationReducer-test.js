@@ -65,7 +65,7 @@ describe('ObservationReducer', () => {
       observations: [
         {
 
-          type: 'lightConditions',
+          type: 'lightCondition',
           data: {
             leftValue: 'Mørkst',
             rightValue: 'Altfor mørkt'
