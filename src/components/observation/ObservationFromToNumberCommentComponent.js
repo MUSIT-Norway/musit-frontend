@@ -28,18 +28,21 @@ export default class ObservationFromToNumberCommentComponent extends Component {
     fromValue: PropTypes.string.isRequired,
     fromTooltip: PropTypes.string.isRequired,
     fromPlaceHolder: PropTypes.string,
+    fromWidth: PropTypes.number.isRequired,
     onChangeFrom: PropTypes.func.isRequired,
     // To
     toLabel: PropTypes.string.isRequired,
     toValue: PropTypes.string.isRequired,
     toTooltip: PropTypes.string.isRequired,
     toPlaceHolder: PropTypes.string,
+    toWidth: PropTypes.number.isRequired,
     onChangeTo: PropTypes.func.isRequired,
     // Comment
     commentLabel: PropTypes.string.isRequired,
     commentValue: PropTypes.string.isRequired,
     commentTooltip: PropTypes.string.isRequired,
     commentPlaceholder: PropTypes.string,
+    commentWidth: PropTypes.number.isRequired,
     onChangeComment: PropTypes.func.isRequired,
     // Other
     disabled: PropTypes.bool
@@ -54,7 +57,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
   render() {
     return (
       <Row>
-        <Col xs={12} sm={3} md={3}>
+        <Col xs={12} sm={this.props.fromWidth} md={this.props.fromWidth}>
           <ControlLabel>
             {this.props.fromLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
           </ControlLabel>
@@ -68,7 +71,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
             disabled={this.props.disabled}
           />
         </Col>
-        <Col xs={12} sm={3} md={3}>
+        <Col xs={12} sm={this.props.toWidth} md={this.props.toWidth}>
           <ControlLabel>{this.props.toLabel}</ControlLabel>
           <MusitField
             value={this.props.toValue}
@@ -80,7 +83,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
             disabled={this.props.disabled}
           />
         </Col>
-        <Col xs={12} sm={4} md={6}>
+        <Col xs={12} sm={this.props.commentWidth} md={this.props.commentWidth}>
           <ControlLabel>{this.props.commentLabel}</ControlLabel>
           <MusitTextArea
             value={this.props.commentValue}

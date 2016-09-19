@@ -9,8 +9,9 @@ import {
 export const RenderAlcohol = (props) => {
   return (
     <ObservationStatusPercentageComment
+      {...props.layoutProps}
+      {...props.valueProps}
       disabled={props.disabled}
-      statusValue={props.valueProps.statusValue}
       statusLabel={props.translate('musit.observation.page.alcohol.statusLabel')}
       statusTooltip={props.translate('musit.observation.page.alcohol.statusTooltip')}
       statusPlaceHolder={props.translate('musit.observation.page.alcohol.statusPlaceHolder')}
@@ -22,12 +23,10 @@ export const RenderAlcohol = (props) => {
         props.translate('musit.observation.page.alcohol.statusItems.satisfactory')
       ]}
       statusOnChange={(value) => props.onChangeField('statusValue', value, props.index)}
-      volumeValue={props.valueProps.volumeValue}
       volumeLabel={props.translate('musit.observation.page.alcohol.volumeLabel')}
       volumeTooltip={props.translate('musit.observation.page.alcohol.volumeTooltip')}
       volumePlaceHolder={props.translate('musit.observation.page.alcohol.volumePlaceHolder')}
       volumeOnChange={(value) => props.onChangeField('volumeValue', value, props.index)}
-      commentValue={props.valueProps.commentValue}
       commentLabel={props.translate('musit.observation.page.alcohol.commentLabel')}
       commentTooltip={props.translate('musit.observation.page.alcohol.commentTooltip')}
       commentPlaceHolder={props.translate('musit.observation.page.alcohol.commentPlaceHolder')}
@@ -45,17 +44,27 @@ RenderAlcohol.propTypes = {
     volumeValue: PropTypes.string,
     commentValue: PropTypes.string
   }).isRequired,
-  disabled: PropTypes.bool,
-  canEdit: PropTypes.bool
+  layoutProps: PropTypes.shape({
+    statusWidth: PropTypes.number.isRequired,
+    volumeWidth: PropTypes.number.isRequired,
+    commentWidth: PropTypes.number.isRequired
+  }),
+  disabled: PropTypes.bool
 }
 
 RenderAlcohol.defaultProps = {
+  layoutProps: {
+    statusWidth: 3,
+    volumeWidth: 3,
+    commentWidth: 4
+  },
   onChangeField: () => true
 }
 
 export const RenderPest = (props) => {
   return (
     <ObservationPest
+      {...props.layoutProps}
       disabled={props.disabled}
       canEdit={props.canEdit}
       observations={props.valueProps.observations}
@@ -104,11 +113,27 @@ RenderPest.propTypes = {
     identificationValue: PropTypes.string,
     commentValue: PropTypes.string
   }).isRequired,
+  layoutProps: PropTypes.shape({
+    lifeCycleWidth: PropTypes.number.isRequired,
+    countWidth: PropTypes.number.isRequired,
+    removeIconWidth: PropTypes.number.isRequired,
+    addIconWidth: PropTypes.number.isRequired,
+    commentsLeftWidth: PropTypes.number.isRequired,
+    commentsRightWidth: PropTypes.number.isRequired
+  }),
   disabled: PropTypes.bool,
   canEdit: PropTypes.bool
 }
 
 RenderPest.defaultProps = {
+  layoutProps: {
+    lifeCycleWidth: 2,
+    countWidth: 2,
+    removeIconWidth: 1,
+    addIconWidth: 1,
+    commentsLeftWidth: 5,
+    commentsRightWidth: 5
+  },
   onChangePestObservation: () => true,
   onClickAddObservation: () => true,
   onRemovePestObservation: () => true,
@@ -118,6 +143,7 @@ RenderPest.defaultProps = {
 export const RenderDoubleTextArea = (props) => {
   return (
     <ObservationDoubleTextAreaComponent
+      {...props.layoutProps}
       {...props.valueProps}
       disabled={props.disabled}
       leftLabel={props.translate(`musit.observation.page.${props.type}.leftLabelText`)}
@@ -140,11 +166,19 @@ RenderDoubleTextArea.propTypes = {
     leftValue: PropTypes.string,
     rightValue: PropTypes.string
   }).isRequired,
+  layoutProps: PropTypes.shape({
+    leftWidth: PropTypes.number.isRequired,
+    rightWidth: PropTypes.number.isRequired
+  }),
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool
 }
 
 RenderDoubleTextArea.defaultProps = {
+  layoutProps: {
+    leftWidth: 5,
+    rightWidth: 5
+  },
   onChangeField: () => true
 }
 
@@ -152,6 +186,7 @@ RenderDoubleTextArea.defaultProps = {
 export const RenderFromToNumberComment = (props) => {
   return (
     <ObservationFromToNumberCommentComponent
+      {...props.layoutProps}
       {...props.valueProps}
       disabled={props.disabled}
       fromLabel={props.translate(`musit.observation.page.${props.type}.fromValueLabelText`)}
@@ -179,10 +214,20 @@ RenderFromToNumberComment.propTypes = {
     toValue: PropTypes.string,
     commentValue: PropTypes.string
   }).isRequired,
+  layoutProps: PropTypes.shape({
+    fromWidth: PropTypes.number.isRequired,
+    toWidth: PropTypes.number.isRequired,
+    commentWidth: PropTypes.number.isRequired
+  }),
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool
 }
 
 RenderFromToNumberComment.defaultProps = {
+  layoutProps: {
+    fromWidth: 3,
+    toWidth: 3,
+    commentWidth: 4
+  },
   onChangeField: () => true
 }
