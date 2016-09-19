@@ -114,7 +114,8 @@ export default class StorageUnitsContainer extends React.Component {
       searchPattern: '',
       showObjects: false,
       showNodes: true,
-      showDeleteModal: false
+      showDeleteModal: false,
+      showModal: false,
     }
   }
 
@@ -179,10 +180,26 @@ export default class StorageUnitsContainer extends React.Component {
     }
     return newUri
   }
-  showModal() {
-    return (
-      <MusitModal valueHeader="Hi" state />
-    )
+
+  showModal= () => {
+    this.setState({ ...this.state, showModal: true })
+  }
+
+  randerModal(a, b) {
+    const lv = (this.state.showModal ?
+      <MusitModal
+        valueHeader="Hi"
+        valueBody={b}
+        valueFooter={a}
+        show={this.state.showModal}
+        onHide={this.hideModal}
+      />
+      : '')
+    return lv
+  }
+
+  hideModal= () => {
+    this.setState({ ...this.state, showModal: false })
   }
 
   makeToolbar() {
@@ -272,14 +289,17 @@ export default class StorageUnitsContainer extends React.Component {
                        { type: 'StorageUnit', iconName: 'folder' }]
     const breadcrumb = nodes ? this.makeBreadcrumb(nodes, nodeTypes) : null
     return (
-      <Layout
-        title={"Magasin"}
-        translate={translate}
-        breadcrumb={breadcrumb}
-        toolbar={this.makeToolbar()}
-        leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
-        content={this.makeContentGrid(searchPattern, rootNodeData, children)}
-      />
+      <span>
+        { this.randerModal(breadcrumb, this.makeContentGrid(searchPattern, rootNodeData, children))}
+        <Layout
+          title={"Magasin"}
+          translate={translate}
+          breadcrumb={breadcrumb}
+          toolbar={this.makeToolbar()}
+          leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
+          content={this.makeContentGrid(searchPattern, rootNodeData, children)}
+        />
+      </span>
     )
   }
 }

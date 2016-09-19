@@ -25,40 +25,29 @@ export default class MusitModal extends Component {
 
   static propTypes = {
     valueHeader: PropTypes.string,
-    state: PropTypes.bool
-  }
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      showModal: this.props.state
-    }
-  }
-
-  getInitialState() {
-    return { showModal: false }
-  }
-
-  close() {
-    this.setState({ showModal: false })
-  }
-
-  open() {
-    this.setState({ showModal: true })
+    valueBody: PropTypes.string,
+    valueFooter: PropTypes.string,
+    show: PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired,
   }
 
   render() {
     return (
       <div>
-        <Modal show={this.state.showModal} onHide={this.close}>
+        <Modal
+          show={this.props.show}
+          onHide={this.props.onHide}
+          bsSize="large"
+          aria-labelledby="contained-modal-title-lg"
+        >
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            {this.props.valueHeader}
           </Modal.Header>
           <Modal.Body>
-            <div>Modal content here </div>
+            {this.props.valueBody}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.close}>Close</Button>
+            {this.props.valueFooter}
           </Modal.Footer>
         </Modal>
       </div>
