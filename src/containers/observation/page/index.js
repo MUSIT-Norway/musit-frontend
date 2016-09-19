@@ -100,7 +100,7 @@ export default class ObservationPage extends React.Component {
     const observations = [...this.state.observations]
     const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
-    pestObservations.unshift({ lifeCycle: '', count: '' })
+    pestObservations.push({ lifeCycle: '', count: '' })
     this.setState({ ...this.state, observations })
   }
 
@@ -203,7 +203,7 @@ export default class ObservationPage extends React.Component {
   validateForm(formProps) {
     let errors = {}
 
-    if (typeof formProps.doneBy !== 'object' || !formProps.doneBy.id) {
+    if (typeof formProps.doneBy !== 'object' || (!formProps.doneBy || !formProps.doneBy.id)) {
       errors.doneBy = 'musit.observation.page.doneByRequired'
     }
 
@@ -300,7 +300,7 @@ export default class ObservationPage extends React.Component {
             <h3 />
             <Row>
               <Col xs={12} sm={5}>
-                <ControlLabel>{this.props.translate('musit.observation.date')}</ControlLabel>
+                <ControlLabel>{this.props.translate('musit.observation.page.date')}</ControlLabel>
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
@@ -319,7 +319,7 @@ export default class ObservationPage extends React.Component {
                 )}
               </Col>
               <Col xs={12} sm={5}>
-                <ControlLabel>{this.props.translate('musit.observation.doneBy')}</ControlLabel>
+                <ControlLabel>{this.props.translate('musit.observation.page.doneBy')}</ControlLabel>
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
@@ -381,10 +381,9 @@ export default class ObservationPage extends React.Component {
                 </Col>
                 <Col xs={4}>
                   <Button
-                    bsStyle="primary"
                     onClick={() => this.addObservationType()}
                   >
-                      Legg til
+                    <FontAwesome name="plus-circle" />&nbsp;{this.props.translate('musit.observation.page.newButtonLabel')}
                   </Button>
                 </Col>
               </Row>
