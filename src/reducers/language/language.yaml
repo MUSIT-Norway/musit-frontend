@@ -67,6 +67,8 @@ en:
       title: "New control"
       date: "Performed date"
       doneBy: "Performed by"
+      dateRequired: "Date of control is required."
+      doneByRequired: "Name of controller is required."
       temperature: "Temperature"
       inertAir: "Hypoxic air"
       relativeHumidity: "Relative humidity"
@@ -77,6 +79,7 @@ en:
       mold: "Mold"
       pest: "Pest"
       envdata: "Environmental Conditions"
+      controlsRequired: 'At least one controltype must be checked OK or Not OK'
     observation:
       page:
         titles:
@@ -478,7 +481,9 @@ no:
     newControl:
       title: "Ny kontroll"
       date: "Utført dato"
+      dateRequired: "Dato for kontrollen er påkrevd."
       doneBy: "Utført av"
+      doneByRequired: "Navn på den som utførte kontrollen er påkrevd."
       temperature: "Temperatur"
       inertAir: "Inertluft"
       relativeHumidity: "Relativ luftfuktighet"
@@ -489,6 +494,7 @@ no:
       mold: "Mugg"
       pest: "Skadedyr"
       envdata: "Miljødata"
+      controlsRequired: 'Minst en kontroll må merkes OK eller Ikke OK'
     observation:
       page:
         titles:
