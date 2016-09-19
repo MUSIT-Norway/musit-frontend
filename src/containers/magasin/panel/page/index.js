@@ -271,8 +271,7 @@ export default class StorageUnitContainer extends Component {
                         </Col>
                         <Col md={5}>
                           {(this.state.unit.type === 'Building'
-                          || this.state.unit.type === 'Organisation'
-                          || this.state.unit.type === 'Organization') &&
+                          || this.state.unit.type === 'Organisation') &&
                             <Form horizontal>
                               <FormGroup>
                                 <label className="col-sm-3 control-label" htmlFor="address">
