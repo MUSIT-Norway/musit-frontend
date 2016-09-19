@@ -137,7 +137,7 @@ export default class ControlView extends Component {
           case 'ControlLightingCondition':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
-              type="lightConditions"
+              type="lightCondition"
               translate={this.props.translate}
               valueProps={{
                 leftValue: motivates.lightingCondition,
