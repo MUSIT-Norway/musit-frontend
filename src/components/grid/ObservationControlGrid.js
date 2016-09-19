@@ -123,10 +123,7 @@ export default class ObservationControlGrid extends Component {
             <tbody>
               {this.props.tableData.map((c, i) => {
                 var parts = c['subEvents-parts'];
-                if (!parts) {
-                  return null;
-                }
-                const types = parts.map(this.getIcon).reduce((f, s) => [...f, ...s])
+                const types = parts ? parts.map(this.getIcon).reduce((f, s) => [...f, ...s]) : null
                 return (
                   <tr
                     style={{ cursor: 'pointer' }}
