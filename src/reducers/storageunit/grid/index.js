@@ -1,3 +1,4 @@
+import { formatFloatToString } from '../../../util'
 const LOAD_SEVERAL = 'musit/storageunit-grid/LOAD_SEVERAL'
 const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-grid/LOAD_SEVERAL_SUCCESS'
 const LOAD_SEVERAL_FAIL = 'musit/storageunit-grid/LOAD_SEVERAL_FAIL'
@@ -13,6 +14,26 @@ const DELETE_SUCCESS = 'musit/storageunit-grid/DELETE_SUCCESS'
 const DELETE_FAIL = 'musit/storageunit-grid/DELETE_FAIL'
 
 const initialState = { root: {} }
+
+const mapToFrontend = (data) => {
+  return {
+    ...data,
+    area: formatFloatToString(data.area),
+    areaTo: formatFloatToString(data.areaTo),
+    height: formatFloatToString(data.height),
+    heightTo: formatFloatToString(data.heightTo),
+    environmentRequirement: data.environmentRequirement ? { ...data.environmentRequirement,
+      temperature: formatFloatToString(data.environmentRequirement.temperature),
+      temperatureTolerance: formatFloatToString(data.environmentRequirement.temperatureTolerance),
+      hypoxicAir: formatFloatToString(data.environmentRequirement.hypoxicAir),
+      hypoxicAirTolerance: formatFloatToString(data.environmentRequirement.hypoxicAirTolerance),
+      relativeHumidity: formatFloatToString(data.environmentRequirement.relativeHumidity),
+      relativeHumidityTolerance: formatFloatToString(data.environmentRequirement.relativeHumidityTolerance)
+    } : {},
+    environmentAssessment: data.environmentAssessment || {},
+    securityAssessment: data.securityAssessment || {}
+  }
+}
 
 const storageUnitGridReducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -82,7 +103,7 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
           },
           loading: false,
           loaded: true,
-          data: action.result
+          data: mapToFrontend(action.result)
         }
       }
     case LOAD_ONE_FAIL:

@@ -100,7 +100,7 @@ export default class ObservationPage extends React.Component {
     const observations = [...this.state.observations]
     const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
-    pestObservations.unshift({ lifeCycle: '', count: '' })
+    pestObservations.push({ lifeCycle: '', count: '' })
     this.setState({ ...this.state, observations })
   }
 
@@ -203,7 +203,7 @@ export default class ObservationPage extends React.Component {
   validateForm(formProps) {
     let errors = {}
 
-    if (typeof formProps.doneBy !== 'object' || !formProps.doneBy.id) {
+    if (typeof formProps.doneBy !== 'object' || (!formProps.doneBy || !formProps.doneBy.id)) {
       errors.doneBy = 'musit.observation.page.doneByRequired'
     }
 
