@@ -300,7 +300,7 @@ export default class ObservationPage extends React.Component {
             <h3 />
             <Row>
               <Col xs={12} sm={5}>
-                <ControlLabel>{this.props.translate('musit.observation.date')}</ControlLabel>
+                <ControlLabel>{this.props.translate('musit.observation.page.date')}</ControlLabel>
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
@@ -319,7 +319,7 @@ export default class ObservationPage extends React.Component {
                 )}
               </Col>
               <Col xs={12} sm={5}>
-                <ControlLabel>{this.props.translate('musit.observation.doneBy')}</ControlLabel>
+                <ControlLabel>{this.props.translate('musit.observation.page.doneBy')}</ControlLabel>
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
@@ -380,11 +380,8 @@ export default class ObservationPage extends React.Component {
                   </FormGroup>
                 </Col>
                 <Col xs={4}>
-                  <Button
-                    bsStyle="primary"
-                    onClick={() => this.addObservationType()}
-                  >
-                      Legg til
+                  <Button onClick={this.addObservationType}>
+                    <FontAwesome name="plus-circle" />&nbsp;{this.props.translate('musit.observation.page.newButtonLabel')}
                   </Button>
                 </Col>
               </Row>
