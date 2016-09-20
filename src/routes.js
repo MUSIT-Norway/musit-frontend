@@ -47,15 +47,15 @@ export default (store) => {
   const redirectIfLoggedIn = (nextState, replace, cb) => {
     const { auth: { user } } = store.getState();
     if (user) {
-      replace('/musit/');
+      replace('/magasin/');
     }
     cb();
   };
 
   return (
-    <Route component={Login}>
+    <Route component={App}>
       <IndexRedirect to="/" />
-      <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
+      <Route path="/" component={Login} onEnter={redirectIfLoggedIn} />
       <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
