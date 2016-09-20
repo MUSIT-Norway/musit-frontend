@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import * as ObservationRender from '../../observation/render'
+import { formatFloatToString } from './../../../util'
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -82,8 +83,8 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="temperature"
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
               }}
             />)
@@ -94,7 +95,7 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               valueProps={{
                 statusValue: motivates.condition,
-                volumeValue: JSON.stringify(motivates.volume),
+                volumeValue: formatFloatToString(motivates.volume),
                 commentValue: motivates.note
               }}
             />)
@@ -124,11 +125,11 @@ export default class ControlView extends Component {
           case 'ControlHypoxicAir':
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
-              type="inertAir"
+              type="hypoxicAir"
               translate={this.props.translate}
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
               }}
             />)
@@ -136,7 +137,7 @@ export default class ControlView extends Component {
           case 'ControlLightingCondition':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
-              type="lux"
+              type="lightCondition"
               translate={this.props.translate}
               valueProps={{
                 leftValue: motivates.lightingCondition,
@@ -164,7 +165,7 @@ export default class ControlView extends Component {
                 observations: motivates.lifeCycles.map(lc => {
                   return {
                     lifeCycle: lc.stage,
-                    count: JSON.stringify(lc.number)
+                    count: formatFloatToString(lc.number)
                   }
                 }),
                 identificationValue: motivates.identification,
@@ -176,10 +177,10 @@ export default class ControlView extends Component {
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
-              type="cleaning"
+              type="relativeHumidity"
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
               }}
             />)
@@ -198,19 +199,19 @@ export default class ControlView extends Component {
     const { id } = this.props
     const observation = (fontName, observationType) => {
       return (
-        <Col xs={5} sm={5} >
+        <Col xs={5} sm={5} md={5} >
           <span className={`icon icon-${fontName}`} />
           {` ${observationType}`}
         </Col>
     ) }
     const controlOk = (
-      <Col xs={5} sm={5} >
+      <Col xs={5} sm={5} md={5} >
         <FontAwesome name="check" />
         {`  ${this.props.translate('musit.texts.ok')}`}
       </Col>
     )
     const controlNotOk = (
-      <Col xs={5} sm={5} >
+      <Col xs={5} sm={5} md={5} >
         <FontAwesome name="close" />
         {`  ${this.props.translate('musit.texts.notOk')}`}
       </Col>
