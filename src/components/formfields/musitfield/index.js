@@ -91,7 +91,7 @@ export default class MusitField extends Component {
       <div
         className={this.classNameOnlyWithInput()}
       >
-          {lcPlaceholder}
+        {lcPlaceholder}
       </div>
       )
   }

@@ -277,10 +277,10 @@ export default class ControlView extends Component {
       return (
         <div key={i}>
           <Row>
-              {observation(ControlView.iconMap[eventType],
-                this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
-              {ok ? controlOk : controlNotOk}
-              {downButton(eventType, ok)}
+            {observation(ControlView.iconMap[eventType],
+              this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
+            {ok ? controlOk : controlNotOk}
+            {downButton(eventType, ok)}
           </Row>
           <Row>
             <Panel collapsible expanded={this.state[eventType].open}>
