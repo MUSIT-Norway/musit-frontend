@@ -11,7 +11,8 @@ import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import { MusitModal } from '../../../components/formfields'
+// import { MusitModal } from '../../../components/formfields'
+import StoringUnitModal from '../../../containers/StoringUnitModal/StoringUnitModal'
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
@@ -195,7 +196,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   randerModal(a, b) {
-    const lv = (this.state.showModal ?
+    /* const lv = (this.state.showModal ?
       <MusitModal
         valueHeader="Hi"
         valueBody={b}
@@ -203,7 +204,9 @@ export default class StorageUnitsContainer extends React.Component {
         show={this.state.showModal}
         onHide={this.hideModal}
       />
-      : '')
+    : '')  */
+    console.log(b)
+    const lv = (this.state.showModal ? <StoringUnitModal params={this.props.params} /> : '')
     return lv
   }
 

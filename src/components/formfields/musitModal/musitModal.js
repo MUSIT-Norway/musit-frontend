@@ -18,7 +18,7 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 
 export default class MusitModal extends Component {
