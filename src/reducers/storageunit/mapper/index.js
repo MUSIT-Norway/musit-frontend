@@ -19,5 +19,5 @@
 import { toFrontend } from './to_frontend'
 import { toBackend } from './to_backend'
 
-export const mapToFrontend = (be) => { return toFrontend(be) }
-export const mapToBackend = (fe) => { return toBackend(fe) }
+export const mapToFrontend = toFrontend
+export const mapToBackend = toBackend
