@@ -32,6 +32,7 @@ import ViewObservationPage from './containers/observation/view'
 import ControlViewContainer from './containers/control/view/Connect'
 import ControlAddContainer from './containers/control/add/Connect'
 import App from './containers/app'
+import Login from './containers/login'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
 export default (store) => {
@@ -52,9 +53,8 @@ export default (store) => {
   };
 
   return (
-    <Route component={App}>
+    <Route component={Login}>
       <IndexRedirect to="/" />
-
       <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
       <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
