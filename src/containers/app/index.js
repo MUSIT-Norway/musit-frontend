@@ -9,6 +9,7 @@ import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
 import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
+import { TYPES as PICK_TYPES } from '../../reducers/picklist'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -16,7 +17,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     pushState: routerActions.push,
-    pickListCount: state.picks.lists[state.picks.active].length
+    pickListNodeCount: state.picks.lists[PICK_TYPES.NODE].length,
+    pickListObjectCount: state.picks.lists[PICK_TYPES.OBJECT] ? state.picks.lists[PICK_TYPES.OBJECT].length : null
   }
 }
 
@@ -53,7 +55,7 @@ class App extends Component {
     user: PropTypes.object,
     pushState: PropTypes.func.isRequired,
     store: PropTypes.object,
-    pickListCount: PropTypes.number.isRequired,
+    pickListNodeCount: PropTypes.number.isRequired,
     clearUser: PropTypes.func.isRequired,
     loadUser: PropTypes.func.isRequired
   }
@@ -72,7 +74,7 @@ class App extends Component {
   }
 
   render() {
-    const { user, pickListCount } = this.props;
+    const { user, pickListNodeCount, pickListObjectCount } = this.props;
     const styles = require('./index.scss')
     const rootPath = user ? '/musit/' : '/'
 
@@ -98,9 +100,14 @@ class App extends Component {
                 </LinkContainer>
               }
               {user &&
-                <LinkContainer to="/picklist">
-                  <NavItem><Badge><FontAwesome name="shopping-cart" /> {pickListCount}</Badge></NavItem>
+                <LinkContainer to={`/picklist/${PICK_TYPES.NODE}`}>
+                  <NavItem><Badge><FontAwesome name="folder" />{' '}{pickListNodeCount}</Badge></NavItem>
                 </LinkContainer>
+              }
+              {user && pickListObjectCount &&
+              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT}`}>
+                <NavItem><Badge><FontAwesome name="rebel" />{' '}{pickListObjectCount}</Badge></NavItem>
+              </LinkContainer>
               }
               {user &&
                 <LinkContainer to="/musit/logout">

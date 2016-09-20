@@ -20,6 +20,16 @@ export default class PickListContainer extends React.Component {
     this.onCloseActionDialog = this.onCloseActionDialog.bind(this)
   }
 
+  componentWillMount() {
+    this.props.activate(this.props.params.type)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.type !==  this.props.params.type) {
+      this.props.activate(nextProps.params.type)
+    }
+  }
+
   onOpenActionDialog() {
     this.setState({ showActionDialog: true })
   }
