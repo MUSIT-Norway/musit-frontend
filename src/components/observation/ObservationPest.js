@@ -34,6 +34,7 @@ export default class ObservationPest extends Component {
     lifeCycleTooltip: PropTypes.string.isRequired,
     lifeCycleValidate: PropTypes.string,
     lifeCycleItems: PropTypes.array.isRequired,
+    lifeCycleWidth: PropTypes.number.isRequired,
     lifeCycleOnChange: PropTypes.func.isRequired,
     lifeCycleOnRemove: PropTypes.func.isRequired,
     // Count
@@ -42,21 +43,27 @@ export default class ObservationPest extends Component {
     countTooltip: PropTypes.string.isRequired,
     countValidate: PropTypes.string,
     countPrecision: PropTypes.number,
+    countWidth: PropTypes.number.isRequired,
     countOnChange: PropTypes.func.isRequired,
     // Comments
     commentsLeftValue: PropTypes.string,
     commentsLeftLabel: PropTypes.string.isRequired,
     commentsLeftTooltip: PropTypes.string.isRequired,
     commentsLeftPlaceHolder: PropTypes.string,
+    commentsLeftWidth: PropTypes.number.isRequired,
     commentsOnChangeLeft: PropTypes.func.isRequired,
     commentsRightValue: PropTypes.string,
     commentsRightLabel: PropTypes.string.isRequired,
     commentsRightTooltip: PropTypes.string.isRequired,
     commentsRightPlaceHolder: PropTypes.string,
+    commentsRightWidth: PropTypes.number.isRequired,
     commentsOnChangeRight: PropTypes.func.isRequired,
     // New button
     newButtonLabel: PropTypes.string.isRequired,
-    newButtonOnClick: PropTypes.func.isRequired
+    newButtonOnClick: PropTypes.func.isRequired,
+    // icons:
+    removeIconWidth: PropTypes.number.isRequired,
+    addIconWidth: PropTypes.number.isRequired
   }
 
   static defaultProps = {
@@ -77,11 +84,13 @@ export default class ObservationPest extends Component {
           leftLabel={this.props.commentsLeftLabel}
           leftTooltip={this.props.commentsLeftTooltip}
           leftPlaceHolder={this.props.commentsLeftPlaceHolder}
+          leftWidth={this.props.commentsLeftWidth}
           onChangeLeft={this.props.commentsOnChangeLeft}
           rightValue={this.props.commentsRightValue}
           rightLabel={this.props.commentsRightLabel}
           rightTooltip={this.props.commentsRightTooltip}
           rightPlaceHolder={this.props.commentsRightPlaceHolder}
+          rightWidth={this.props.commentsRightWidth}
           onChangeRight={this.props.commentsOnChangeRight}
           disabled={this.props.disabled}
         />
@@ -89,7 +98,7 @@ export default class ObservationPest extends Component {
         {this.props.observations.map((observation, index) => {
           return (
             <Row key={index}>
-              <Col xs={6} sm={3} md={3}>
+              <Col xs={6} sm={this.props.lifeCycleWidth} md={this.props.lifeCycleWidth}>
                 <span style={{ height: 50 }}>
                   <ControlLabel>
                     {this.props.lifeCycleLabel}
@@ -105,7 +114,7 @@ export default class ObservationPest extends Component {
                   />
                 </span>
               </Col>
-              <Col xs={6} sm={3} md={3}>
+              <Col xs={6} sm={this.props.countWidth} md={this.props.countWidth}>
                 <span>
                   <ControlLabel>
                     {this.props.countLabel}
@@ -122,13 +131,11 @@ export default class ObservationPest extends Component {
                   />
                 </span>
               </Col>
-              <Col xs={1} sm={1} md={1}>
-                <span style={{ height: 50 }}>
-                  <ControlLabel>{'\u00A0'}</ControlLabel><br />{!this.props.canEdit ? '' :
-                    <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
-                </span>
+              <Col xs={1} sm={this.props.removeIconWidth} md={this.props.removeIconWidth}>
+                <ControlLabel>{'\u00A0'}</ControlLabel><br />
+                {!this.props.canEdit ? '' : <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
               </Col>
-              <Col xs={1} sm={1} md={1}>
+              <Col xs={1} sm={this.props.addIconWidth} md={this.props.addIconWidth}>
                 <span style={{ height: 50 }}>
                   <ControlLabel>{'\u00A0'}</ControlLabel><br />
                   {!this.props.canEdit ? '' :
