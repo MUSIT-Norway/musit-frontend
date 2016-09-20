@@ -99,12 +99,12 @@ class App extends Component {
                   <NavItem>Magasin</NavItem>
                 </LinkContainer>
               }
-              {user &&
+              {user && pickListNodeCount !== 0 &&
                 <LinkContainer to={`/picklist/${PICK_TYPES.NODE}`}>
                   <NavItem><Badge><FontAwesome name="folder" />{' '}{pickListNodeCount}</Badge></NavItem>
                 </LinkContainer>
               }
-              {user && pickListObjectCount &&
+              {user && pickListObjectCount && pickListObjectCount !== 0 &&
               <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT}`}>
                 <NavItem><Badge><FontAwesome name="rebel" />{' '}{pickListObjectCount}</Badge></NavItem>
               </LinkContainer>
