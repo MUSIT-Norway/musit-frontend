@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   loadControls: (id, callback) => {
     dispatch(loadControlsForNode(id, callback))
   },
@@ -84,7 +84,7 @@ export default class ObservationControlGridShow extends React.Component {
   componentWillMount() {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
-        this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy) })
+        this.props.loadActorDetails({ data: result.filter(r => r.doneBy).map(r => r.doneBy) })
         this.props.loadPath(this.props.params.id)
       },
       onFailure: () => true
@@ -135,7 +135,7 @@ export default class ObservationControlGridShow extends React.Component {
 
   render() {
     const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} allActive onClickCrumb={(node) => hashHistory.push(node.url)} />
+    const breadcrumb = <Breadcrumb nodes={nodes} allActive onClickCrumb={node => hashHistory.push(node.url)} />
     return (
       <Layout
         title="Magasin"

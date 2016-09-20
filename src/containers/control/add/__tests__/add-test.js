@@ -11,7 +11,7 @@ describe('Render add control page', () => {
   beforeEach(() => {
     renderer.render(
       <ControlAddContainer
-        translate={(key) => key}
+        translate={key => key}
         params={{ }}
         saveControl={() => true}
       />

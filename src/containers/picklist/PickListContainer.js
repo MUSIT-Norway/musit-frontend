@@ -52,7 +52,7 @@ export default class PickListContainer extends React.Component {
           <Grid>
             <PageHeader>
               {translate('musit.pickList.title', false)}
-              <Button onClick={(e) => onToggleMarked(e, null)}>
+              <Button onClick={e => onToggleMarked(e, null)}>
                 <FontAwesome name={checkSymbol} className={style.normalAction} />
                 {translate('musit.pickList.action.markAll', false)}
               </Button>
@@ -68,7 +68,7 @@ export default class PickListContainer extends React.Component {
               showActionDialog={showActionDialog}
               onCloseActionDialog={() => this.onCloseActionDialog()}
               iconRendrer={() => <FontAwesome name="archive" />}
-              labelRendrer={(pick) => pick.name}
+              labelRendrer={pick => pick.name}
               onToggleMarked={onToggleMarked}
             />
             <div style={{ textAlign: 'right' }}>

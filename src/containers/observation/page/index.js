@@ -331,7 +331,7 @@ export default class ObservationPage extends React.Component {
                     id="doneByField"
                     value={this.state.doneBy ? this.state.doneBy.fn : ''}
                     placeHolder="Find actor"
-                    onChange={doneBy => {
+                    onChange={(doneBy) => {
                       this.setState({ ...this.state, doneBy })
                     }}
                   />

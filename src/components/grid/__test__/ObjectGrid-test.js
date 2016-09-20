@@ -8,7 +8,7 @@ describe('ObjectGrid', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ObjectGrid
         id={1}
-        translate={(key) => key}
+        translate={key => key}
         tableData={[
           {
             id: 1,

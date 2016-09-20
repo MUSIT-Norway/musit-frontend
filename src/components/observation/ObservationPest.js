@@ -110,7 +110,7 @@ export default class ObservationPest extends Component {
                     validate={this.props.lifeCycleValidate}
                     disabled={this.props.disabled}
                     value={observation.lifeCycle}
-                    onChange={(lifeCycleValue) => this.props.lifeCycleOnChange(index, lifeCycleValue)}
+                    onChange={lifeCycleValue => this.props.lifeCycleOnChange(index, lifeCycleValue)}
                   />
                 </span>
               </Col>
@@ -126,7 +126,7 @@ export default class ObservationPest extends Component {
                     precision={this.props.countPrecision}
                     disabled={this.props.disabled}
                     value={observation.count}
-                    onChange={(countValue) => this.props.countOnChange(index, countValue)}
+                    onChange={countValue => this.props.countOnChange(index, countValue)}
                     style={{ height: 36 }}
                   />
                 </span>

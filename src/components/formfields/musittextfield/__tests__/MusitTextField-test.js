@@ -8,7 +8,7 @@ describe('MusitTextField', () => {
         controlId="navn"
         labelText="Navn"
         placeHolderText="skriv inn navn her"
-        validationState={(key) => key}
+        validationState={key => key}
         valueText={() => 'flint'}
         valueType="text"
         onChange={() => null}

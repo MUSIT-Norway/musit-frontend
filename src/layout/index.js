@@ -60,7 +60,7 @@ export default class Layout extends React.Component {
                   <div className="col-md-2 sidenav" style={{ borderTop: '#cdcdcd 1px solid', borderRight: '#cdcdcd 1px solid' }}>
                     {this.props.leftMenu}
                   </div>
-                  <div className="col-md-10" style={{ borderTop: '#cdcdcd 1px solid', borderLeft: '#cdcdcd 1px solid' }}>
+                  <div className="col-md-10" style={{ borderTop: '#cdcdcd 1px solid', minHeight: 100, borderLeft: '#cdcdcd 1px solid' }}>
                     {this.props.content}
                   </div>
                 </div>

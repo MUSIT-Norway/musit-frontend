@@ -4,6 +4,7 @@ import { hashHistory } from 'react-router'
 import { insert } from '../../../reducers/storageunit/panel';
 import StorageUnitContainerImpl from './page'
 import { loadPath } from '../../../reducers/storageunit/grid'
+import { clear, update as updateState } from '../../../reducers/storageunit/panel/state'
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -15,11 +16,19 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadPath: (id) => {
       dispatch(loadPath(id))
-    }
+    },
+    updateState: data => dispatch(updateState(data)),
+    clear: () => dispatch(clear())
   }
 }
 
-@connect(null, mapDispatchToProps)
+const mapStateToProps = (state) => {
+  return {
+    unit: state.storagePanelState
+  }
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class AddStorageUnitContainer extends React.Component {
   static propTypes = {
     onLagreClick: PropTypes.func.isRequired,
@@ -31,17 +40,21 @@ export default class AddStorageUnitContainer extends React.Component {
     if (this.props.params.parentId) {
       this.props.loadPath(this.props.params.parentId)
     }
+    this.props.clear()
   }
 
   render() {
     return (
       <StorageUnitContainerImpl
-        onLagreClick={data => {
+        onLagreClick={(data) => {
           const parentId = this.props.params.parentId;
           this.props.onLagreClick(parentId, data)
         }}
+        update={this.props.updateState}
+        unit={this.props.unit}
         params={this.props.params}
         isAdd
+        loaded={!!this.props.unit}
       />
     )
   }

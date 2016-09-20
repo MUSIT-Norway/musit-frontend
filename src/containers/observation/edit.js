@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   loadObservation: (id) => {
     dispatch(loadObservation(id))
   },
@@ -54,7 +54,7 @@ export default class EditObservationPage extends React.Component {
 
   getObservationsFromLocationState() {
     return Object.keys(this.props.location.state)
-      .filter((o) => o.endsWith('OK') && this.props.location.state[o] === false)
+      .filter(o => o.endsWith('OK') && this.props.location.state[o] === false)
       .map((o) => {
         switch (o) {
           case 'pestOK':

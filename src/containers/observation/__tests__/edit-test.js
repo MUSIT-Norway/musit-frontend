@@ -10,7 +10,7 @@ describe('Render edit observation page', () => {
   beforeEach(() => {
     renderer.render(
       <ObservationPage
-        translate={(key) => key}
+        translate={key => key}
         params={{ }}
         onSaveObservation={() => true}
         doneDate={parseISODate('2016-12-23')}

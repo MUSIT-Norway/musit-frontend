@@ -26,6 +26,7 @@ import languageReducer from './language'
 import autosuggestReducer from './suggest'
 import picklistReducer from './picklist'
 import storagePanelReducer from './storageunit/panel'
+import storagePanelStateReducer from './storageunit/panel/state'
 import storageNodeGridReducer from './storageunit/grid'
 import storageObjectGridReducer from './storageobject/grid'
 import organizationReducer from './organization'
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   picks: picklistReducer,
   storagePanelUnit: storagePanelReducer,
   storageGridUnit: storageNodeGridReducer,
+  storagePanelState: storagePanelStateReducer,
   storageObjectGrid: storageObjectGridReducer,
   organization: organizationReducer,
   observation: observationReducer,

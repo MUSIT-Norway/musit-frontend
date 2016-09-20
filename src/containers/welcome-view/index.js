@@ -22,12 +22,12 @@ import Language from '../../components/language'
 import WelcomeContainer from './WelcomeContainer';
 import { connectUser, loadActor } from '../../reducers/auth';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   user: state.auth.user,
   translate: (key, markdown) => Language.translate(key, markdown)
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   setUser: (user) => {
     dispatch(connectUser(user))
     dispatch(loadActor())

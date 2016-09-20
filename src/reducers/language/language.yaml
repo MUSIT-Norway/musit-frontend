@@ -376,7 +376,7 @@ en:
           incorrect: "Max length for cleaning is 100 char."
           placeHolder: "Free text"
           tooltip: "Cleaning requirement"
-        lightningConditions:
+        lightingCondition:
           labelText: "Lighting condition"
           incorrect: "Max length for lighting condition is 100 char."
           placeHolder: "Free text"
@@ -793,7 +793,7 @@ no:
           incorrect: "Renhold kan ha maks 100 tegn."
           placeHolder: "Fritekst"
           tooltip: "Krav til renhold"
-        lightningConditions:
+        lightingCondition:
           labelText: "Lysforhold"
           incorrect: "Lysforhold kan ha maks 100 tegn."
           placeHolder: "Fritekst"

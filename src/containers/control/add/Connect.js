@@ -22,14 +22,14 @@ import Language from '../../../components/language'
 import ControlAddContainerImpl from './index'
 import { loadPath } from '../../../reducers/storageunit/grid'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   actor: state.auth.actor,
   translate: (key, markdown) => Language.translate(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
   path: state.storageGridUnit.root.path
 })
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   saveControl: (id, data, saveControlCallback) => {
     dispatch(addControl(id, data, {}, saveControlCallback))
   },

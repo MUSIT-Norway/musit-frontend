@@ -70,7 +70,7 @@ export const suggestAddress = (destination, query) => {
   return {
     types: [SUGGEST, SUGGEST_SUCCESS, SUGGEST_FAIL],
     destination,
-    promise: (client) => client.get(`/api/geolocation/v1/address?search=[${query}]`)
+    promise: client => client.get(`/api/geolocation/v1/address?search=[${query}]`)
   }
 }
 
@@ -78,7 +78,7 @@ export const suggestCompany = (destination, query) => {
   return {
     types: [SUGGEST, SUGGEST_SUCCESS, SUGGEST_FAIL],
     destination,
-    promise: (client) => client.get(`/api/actor/v1/organization?search=[${query}]`)
+    promise: client => client.get(`/api/actor/v1/organization?search=[${query}]`)
   }
 }
 
@@ -86,6 +86,6 @@ export const suggestPerson = (destination, query) => {
   return {
     types: [SUGGEST, SUGGEST_SUCCESS, SUGGEST_FAIL],
     destination,
-    promise: (client) => client.get(`/api/actor/v1/person?search=[${query}]`)
+    promise: client => client.get(`/api/actor/v1/person?search=[${query}]`)
   }
 }

@@ -35,7 +35,7 @@ export default class OrganizationContainer extends Component {
         placeHolderText: 'enter organization name here',
         validationState: () => OrganizationContainer.validateString(this.props.org.fn, 3, 60),
         valueText: () => this.props.org.fn,
-        onChange: (fn) => this.props.updateFN(fn)
+        onChange: fn => this.props.updateFN(fn)
       },
       {
         key: 'orgNickname',
@@ -46,7 +46,7 @@ export default class OrganizationContainer extends Component {
         placeHolderText: 'enter organization short name here',
         validationState: () => OrganizationContainer.validateString(this.props.org.nickname, 0, 10),
         valueText: () => this.props.org.nickname,
-        onChange: (nickname) => this.props.updateNickname(nickname)
+        onChange: nickname => this.props.updateNickname(nickname)
       },
       {
         key: 'orgPhone',
@@ -57,7 +57,7 @@ export default class OrganizationContainer extends Component {
         placeHolderText: 'enter phone number here',
         validationState: () => OrganizationContainer.validateString(this.props.org.fn, 0, 12),
         valueText: () => this.props.org.tel,
-        onChange: (tel) => this.props.updateTel(tel)
+        onChange: tel => this.props.updateTel(tel)
       },
       {
         key: 'orgWeb',
@@ -68,7 +68,7 @@ export default class OrganizationContainer extends Component {
         placeHolderText: 'enter web address here',
         validationState: () => OrganizationContainer.validateString(this.props.org.fn, 0, 512),
         valueText: () => this.props.org.web,
-        onChange: (web) => this.props.updateWeb(web)
+        onChange: web => this.props.updateWeb(web)
       }
     ]
   }

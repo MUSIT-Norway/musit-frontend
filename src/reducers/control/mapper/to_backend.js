@@ -8,7 +8,7 @@ export const mapToBackend = (state, observations) => {
       state.doneBy.id
   r.doneDate = observations && observations.doneDate ? observations.doneDate.format(DATE_FORMAT_ISO) :
       state.doneDate.format(DATE_FORMAT_ISO)
-  r['subEvents-parts'] = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
+  r['subEvents-parts'] = Object.keys(state).filter(key => key.endsWith('OK')).map((key) => {
     let control
     switch (key) {
       case 'hypoxicAirOK':

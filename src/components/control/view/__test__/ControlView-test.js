@@ -9,7 +9,7 @@ describe('ControlView', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ControlView
         id="1"
-        translate={(key) => key}
+        translate={key => key}
         controlsJson={[
           {
             eventType: 'ControlTemperature',

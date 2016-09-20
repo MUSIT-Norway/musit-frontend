@@ -14,8 +14,8 @@ describe('EnvironmentRequirementComponent', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <EnvironmentRequirementComponent
         comments={comments}
-        translate={(key) => key}
-        updateEnvRequirements={(s) => s}
+        translate={key => key}
+        updateEnvRequirements={s => s}
       />
     );
     const inputComponent = ReactTestUtils.findRenderedDOMComponentWithTag(myDiv, 'textarea');

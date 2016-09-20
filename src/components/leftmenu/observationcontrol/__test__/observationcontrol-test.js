@@ -7,13 +7,13 @@ describe('ObservationControlComponent', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ObservationControlComponent
         id={1}
-        translate={(key) => key}
-        selectObservation={(key) => key}
-        selectControl={(key) => key}
-        onClickNewObservation={(key) => key}
-        onClickNewControl={(key) => key}
-        onClickSelectObservation={(key) => key}
-        onClickSelectControl={(key) => key}
+        translate={key => key}
+        selectObservation={key => key}
+        selectControl={key => key}
+        onClickNewObservation={key => key}
+        onClickNewControl={key => key}
+        onClickSelectObservation={key => key}
+        onClickSelectControl={key => key}
       />
     );
     buttons = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'button');

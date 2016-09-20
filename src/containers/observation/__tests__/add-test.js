@@ -11,7 +11,7 @@ describe('Render add observation page', () => {
   beforeEach(() => {
     renderer.render(
       <ObservationPage
-        translate={(key) => key}
+        translate={key => key}
         params={{ }}
         onSaveObservation={() => true}
         mode="ADD"
