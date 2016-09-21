@@ -11,7 +11,7 @@ import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import { MusitModal } from '../../../components/formfields/musitModal'
+import MusitModal from '../../../components/formfields/musitModal'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
