@@ -4,11 +4,8 @@ node_js:
  - 6.0.0
 
 build:
-
-  pre_ci_boot:
-   - npm install
-
   ci:
+   - npm install --force
    - npm run lint
    - npm run test:coverage
    - npm run build
