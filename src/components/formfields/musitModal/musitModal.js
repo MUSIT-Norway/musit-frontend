@@ -19,41 +19,24 @@
 
 import React, { Component, PropTypes } from 'react'
 import { Modal } from 'react-bootstrap';
-import Language from '../../../components/language'
-import { loadRoot, clearRoot, loadChildren, loadPath, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { NodeGrid } from '../../../components/grid'
-import { connect } from 'react-redux';
 
-const mapStateToProps = (state) => ({
-  translate: (key, markdown) => Language.translate(key, markdown),
-  children: state.storageUnitModal.data || [],
-  path: state.storageUnitModal.root.path,
-  currentId: state.storageUnitModal.currentId
-})
-
-const mapDispatchToProps = (dispatch) => {
-  return ({
-    clearRoot: () => dispatch(clearRoot()),
-    loadChildren: (id, callback) => {
-      dispatch(loadChildren(id, callback))
-      dispatch(loadRoot(id))
-    },
-    loadPath: (id) => dispatch(loadPath(id)),
-    clearPath: (id) => dispatch(clearPath(id)),
-    loadRoot: () => dispatch(loadRoot()),
-    setCurrentId: (id) => dispatch(setCurrent(id)),
-    clearCurrentId: (id) => dispatch(clearCurrent(id))
-  })
-}
-
-
-@connect(mapStateToProps, mapDispatchToProps)
 export default class MusitModal extends Component {
 
   static propTypes = {
     show: PropTypes.bool.isRequired,
-    onHide: PropTypes.func.isRequired
+    onHide: PropTypes.func.isRequired,
+    loadChildren: PropTypes.func.isRequired,
+    loadPath: PropTypes.func.isRequired,
+    clearPath: PropTypes.func.isRequired,
+    loadRoot: PropTypes.func.isRequired,
+    setCurrentId: PropTypes.func.isRequired,
+    clearCurrentId: PropTypes.func.isRequired,
+    currentId: PropTypes.number,
+    path: PropTypes.arrayOf(PropTypes.object),
+    translate: PropTypes.func,
+    children: PropTypes.arrayOf(PropTypes.object)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -92,11 +75,15 @@ export default class MusitModal extends Component {
             />
           </Modal.Body>
           <Modal.Footer>
-            <span onClick={() => {
-              this.props.clearCurrentId()
-              this.props.clearPath()
-              this.props.loadRoot()
-            }}>Go to top</span><Breadcrumb nodes={path} onClickCrumb={node => this.props.setCurrentId(node.id)} />
+            <span
+              onClick={() => {
+                this.props.clearCurrentId()
+                this.props.clearPath()
+                this.props.loadRoot()
+              }}
+            >
+              Go to top
+            </span><Breadcrumb nodes={path} onClickCrumb={node => this.props.setCurrentId(node.id)} />
           </Modal.Footer>
         </Modal>
       </div>

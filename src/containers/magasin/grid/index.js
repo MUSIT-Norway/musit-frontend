@@ -11,7 +11,7 @@ import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import { MusitModal } from '../../../components/formfields'
+import { MusitModal } from '../../../components/formfields/musitModal'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -105,12 +105,7 @@ export default class StorageUnitsContainer extends React.Component {
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
     loadPath: React.PropTypes.func,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
-    childrenModal: React.PropTypes.arrayOf(React.PropTypes.object),
-    objectsModal: React.PropTypes.arrayOf(React.PropTypes.object),
-    rootNodeModal: React.PropTypes.object,
-    pathModal: React.PropTypes.arrayOf(React.PropTypes.object),
-    routerStateModal: React.PropTypes.object
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   constructor(props) {
@@ -248,12 +243,10 @@ export default class StorageUnitsContainer extends React.Component {
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
           underNodeCount={statistics ? statistics.underNodeCount : Number.NaN}
           onClickProperties={(id) => onEdit({ id })}
-
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={() => this.showModal()}
-
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
