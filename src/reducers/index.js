@@ -19,13 +19,13 @@
 
 import { routerReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'
-import infoReducer from './info'
 import authReducer from './auth'
 import fakeAuthReducer from './fake-auth-info'
 import languageReducer from './language'
 import autosuggestReducer from './suggest'
 import picklistReducer from './picklist'
 import storagePanelReducer from './storageunit/panel'
+import storagePanelStateReducer from './storageunit/panel/state'
 import storageNodeGridReducer from './storageunit/grid'
 import storageObjectGridReducer from './storageobject/grid'
 import organizationReducer from './organization'
@@ -39,7 +39,6 @@ import { reducer as formReducer } from 'redux-form'
 const rootReducer = combineReducers({
   routing: routerReducer,
   form: formReducer,
-  info: infoReducer,
   auth: authReducer,
   fakeAuthInfo: fakeAuthReducer,
   language: languageReducer,
@@ -47,6 +46,7 @@ const rootReducer = combineReducers({
   picks: picklistReducer,
   storagePanelUnit: storagePanelReducer,
   storageGridUnit: storageNodeGridReducer,
+  storagePanelState: storagePanelStateReducer,
   storageObjectGrid: storageObjectGridReducer,
   organization: organizationReducer,
   observation: observationReducer,
