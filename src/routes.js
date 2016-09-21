@@ -56,7 +56,7 @@ export default (store) => {
       <IndexRedirect to="/" />
 
       <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
-      <Route path="/picklist" component={PickListView} />
+      <Route path="/picklist/:type" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />

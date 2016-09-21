@@ -13,15 +13,6 @@ export default class EnvironmentRequirementComponent extends Component {
     super(props)
     this.state = {
       environmentRequirement: {
-        temperature: '',
-        temperatureTolerance: '',
-        relativeHumidity: '',
-        relativeHumidityTolerance: '',
-        hypoxicAir: '',
-        hypoxicAirTolerance: '',
-        cleaning: '',
-        lightingCondition: '',
-        comments: ''
       }
     }
 
@@ -188,10 +179,7 @@ export default class EnvironmentRequirementComponent extends Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState(props.environmentRequirement ?
-      { environmentRequirement: { ...this.state.environmentRequirement, ...props.environmentRequirement } } :
-      { environmentRequirement: {} }
-    )
+    this.setState({ ...this.state, environmentRequirement: props.environmentRequirement })
   }
 
   render() {

@@ -33,6 +33,7 @@ export default class ObervationStatusPercentageComment extends Component {
     statusOnChange: PropTypes.func.isRequired,
     statusValidate: PropTypes.string,
     statusMinimumLength: PropTypes.number,
+    statusWidth: PropTypes.number.isRequired,
     // Volume
     volumeLabel: PropTypes.string,
     volumePlaceHolder: PropTypes.string,
@@ -42,6 +43,7 @@ export default class ObervationStatusPercentageComment extends Component {
     volumeValidate: PropTypes.string,
     volumeMinimumLength: PropTypes.number,
     volumePrecision: PropTypes.number,
+    volumeWidth: PropTypes.number.isRequired,
     // Comment
     commentLabel: PropTypes.string.isRequired,
     commentPlaceHolder: PropTypes.string.isRequired,
@@ -51,6 +53,7 @@ export default class ObervationStatusPercentageComment extends Component {
     commentValidate: PropTypes.string,
     commentMaximumLength: PropTypes.number,
     commentNumberOfRows: PropTypes.number,
+    commentWidth: PropTypes.number.isRequired,
     // Other
     disabled: PropTypes.bool
   }
@@ -77,7 +80,7 @@ export default class ObervationStatusPercentageComment extends Component {
   render() {
     return (
       <Row>
-        <Col xs={12} sm={2}>
+        <Col xs={12} sm={this.props.statusWidth} md={this.props.statusWidth}>
           <ControlLabel>
             {this.props.statusLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
           </ControlLabel>
@@ -92,7 +95,7 @@ export default class ObervationStatusPercentageComment extends Component {
             disabled={this.props.disabled}
           />
         </Col>
-        <Col xs={12} sm={2}>
+        <Col xs={12} sm={this.props.volumeWidth} md={this.props.volumeWidth}>
           <ControlLabel>{this.props.volumeLabel}</ControlLabel>
           <MusitField
             value={this.props.volumeValue}
@@ -105,7 +108,7 @@ export default class ObervationStatusPercentageComment extends Component {
             disabled={this.props.disabled}
           />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={12} sm={this.props.commentWidth} md={this.props.commentWidth}>
           <ControlLabel>{this.props.commentLabel}</ControlLabel>
           <MusitTextArea
             value={this.props.commentValue}

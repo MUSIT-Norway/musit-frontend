@@ -96,7 +96,7 @@ export default class NodeGrid extends Component {
                       href=""
                       onClick={(e) => {
                         e.preventDefault()
-                        this.props.onAction('pick', c)
+                        this.props.onAction('pickNode', c)
                       }}
                     >
                       <FontAwesome name="shopping-cart" />

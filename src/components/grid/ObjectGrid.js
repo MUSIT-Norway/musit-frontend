@@ -12,7 +12,8 @@ export default class ObjectGrid extends Component {
         subNo: PropTypes.string.isRequired,
       }).isRequired,
       displayName: PropTypes.string
-    }))
+    })).isRequired,
+    onAction: PropTypes.func.isRequired
   }
 
   render() {
@@ -53,7 +54,15 @@ export default class ObjectGrid extends Component {
                     <FontAwesome name="truck" />
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_shoppingCart`}>
-                    <FontAwesome name="shopping-cart" />
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault()
+                        this.props.onAction('pickObject', c)
+                      }}
+                    >
+                      <FontAwesome name="shopping-cart" />
+                    </a>
                   </td>
                 </tr>
               )}

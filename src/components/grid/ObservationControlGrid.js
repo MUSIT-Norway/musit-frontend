@@ -90,9 +90,9 @@ export default class ObservationControlGrid extends Component {
 
   icon(ok, index, name) {
     if (ok) {
-      return <span key={index} style={{ padding: '2px' }} className={`icon icon-${name}`} />
+      return <span key={index} style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
     }
-    return <span key={index} style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
+    return <span key={index} style={{ padding: '2px' }} className={`icon icon-${name}`} />
   }
 
   render() {
