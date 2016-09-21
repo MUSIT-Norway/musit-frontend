@@ -17,8 +17,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     pushState: routerActions.push,
-    pickListNodeCount: state.picks.lists[PICK_TYPES.NODE].length,
-    pickListObjectCount: state.picks.lists[PICK_TYPES.OBJECT] ? state.picks.lists[PICK_TYPES.OBJECT].length : null
+    pickListNodeCount: state.picks.lists[PICK_TYPES.NODE] ? state.picks.lists[PICK_TYPES.NODE].length : 0,
+    pickListObjectCount: state.picks.lists[PICK_TYPES.OBJECT] ? state.picks.lists[PICK_TYPES.OBJECT].length : 0
   }
 }
 
@@ -56,6 +56,7 @@ class App extends Component {
     pushState: PropTypes.func.isRequired,
     store: PropTypes.object,
     pickListNodeCount: PropTypes.number.isRequired,
+    pickListObjectCount: PropTypes.number.isRequired,
     clearUser: PropTypes.func.isRequired,
     loadUser: PropTypes.func.isRequired
   }
@@ -99,15 +100,15 @@ class App extends Component {
                   <NavItem>Magasin</NavItem>
                 </LinkContainer>
               }
-              {user && pickListNodeCount !== 0 &&
-                <LinkContainer to={`/picklist/${PICK_TYPES.NODE}`}>
-                  <NavItem><Badge><FontAwesome name="folder" />{' '}{pickListNodeCount}</Badge></NavItem>
-                </LinkContainer>
-              }
-              {user && pickListObjectCount && pickListObjectCount !== 0 &&
+              {user &&
               <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT}`}>
-                <NavItem><Badge><FontAwesome name="rebel" />{' '}{pickListObjectCount}</Badge></NavItem>
+                <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
               </LinkContainer>
+              }
+              {user &&
+                <LinkContainer to={`/picklist/${PICK_TYPES.NODE}`}>
+                  <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
+                </LinkContainer>
               }
               {user &&
                 <LinkContainer to="/musit/logout">
