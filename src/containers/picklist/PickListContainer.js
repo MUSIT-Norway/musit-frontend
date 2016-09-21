@@ -79,8 +79,12 @@ export default class PickListContainer extends React.Component {
               actions={demoActions}
               showActionDialog={showActionDialog}
               onCloseActionDialog={() => this.onCloseActionDialog()}
-              iconRendrer={(pick) => pick.name ? <FontAwesome name="folder" /> : <FontAwesome name="rebel" />}
-              labelRendrer={(pick) => pick.name ? pick.name : pick.displayName}
+              iconRendrer={(pick) => {
+                return pick.name ? <FontAwesome name="folder" /> : <FontAwesome name="rebel" />
+              }}
+              labelRendrer={(pick) => {
+                return pick.name ? pick.name : pick.displayName
+              }}
               onToggleMarked={onToggleMarked}
             />
             <div style={{ textAlign: 'right' }}>

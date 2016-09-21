@@ -101,9 +101,9 @@ class App extends Component {
                 </LinkContainer>
               }
               {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT}`}>
-                <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
-              </LinkContainer>
+                <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT}`}>
+                  <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
+                </LinkContainer>
               }
               {user &&
                 <LinkContainer to={`/picklist/${PICK_TYPES.NODE}`}>
