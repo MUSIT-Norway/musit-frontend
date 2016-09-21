@@ -81,7 +81,7 @@ class App extends Component {
 
     return (
       <div className={styles.app}>
-        <Navbar fixedTop>
+        {user && <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
               <IndexLink to={rootPath} activeStyle={{ color: '#33e0ff' }}>
@@ -119,13 +119,11 @@ class App extends Component {
             {user &&
               <p className={`${styles.loggedInMessage} navbar-text`}>Logged in as <strong>{user.name}</strong>.</p>}
           </Navbar.Collapse>
-        </Navbar>
-
+        </Navbar>}
         <div className={styles.appContent}>
           {this.props.children}
         </div>
 
-        <div className="well text-center">{' '}</div>
       </div>
     );
   }
