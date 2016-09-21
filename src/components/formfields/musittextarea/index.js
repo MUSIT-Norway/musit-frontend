@@ -60,7 +60,7 @@ export default class MusitTextArea extends Component {
 
     return (
       <div className={this.classNameOnlyWithInput()}>
-       {lcPlaceholder}
+        {lcPlaceholder}
       </div>
     )
   }
