@@ -47,7 +47,7 @@ export default class StorageUnitContainer extends Component {
     isAdd: React.PropTypes.bool,
     path: React.PropTypes.arrayOf(React.PropTypes.object),
     loaded: React.PropTypes.bool.isRequired,
-    update: React.PropTypes.func.isRequired
+    updateState: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -146,7 +146,7 @@ export default class StorageUnitContainer extends Component {
   handleSubmit(e) {
     e.preventDefault()
     const errors = this.validateForm(this.props)
-    this.props.update({ ...this.props.unit, errors })
+    this.props.updateState({ ...this.props.unit, errors })
     if (Object.keys(errors).length === 0) {
       this.props.onLagreClick(this.props.unit)
     }
@@ -155,25 +155,25 @@ export default class StorageUnitContainer extends Component {
   updateStorageUnit(data, key, value) {
     const newData = Object.assign({}, data);
     newData[key] = value
-    this.props.update(newData)
+    this.props.updateState(newData)
   }
 
   updateEnvRequirements(data, key, value) {
     const newData = Object.assign({}, data);
     newData.environmentRequirement[key] = value
-    this.props.update(newData)
+    this.props.updateState(newData)
   }
 
   updateEnvAssessments(data, key, value) {
     const newData = Object.assign({}, data);
     newData.environmentAssessment[key] = value
-    this.props.update(newData)
+    this.props.updateState(newData)
   }
 
   updateSecAssessments(data, key, value) {
     const newData = Object.assign({}, data);
     newData.securityAssessment[key] = value
-    this.props.update(newData)
+    this.props.updateState(newData)
   }
 
   translate(field) {
