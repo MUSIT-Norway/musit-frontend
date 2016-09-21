@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     loadPath: (id) => {
       dispatch(loadPath(id))
     },
-    updateState: data => dispatch(updateState(data)),
+    updateState: (data) => dispatch(updateState(data)),
     clearState: () => dispatch(clearState())
   }
 }
