@@ -1,9 +1,14 @@
 language: node_js
+
 node_js:
- - 5.12.0
-install:
- - npm install --force
-script:
- - npm run lint
- - npm run test:coverage
- - npm run build
+ - 6.0.0
+
+build:
+
+  pre_ci_boot:
+   - npm install
+
+  ci:
+   - npm run lint
+   - npm run test:coverage
+   - npm run build
