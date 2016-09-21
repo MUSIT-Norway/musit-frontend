@@ -71,10 +71,10 @@ export default class ControlViewContainer extends React.Component {
         breadcrumb={breadcrumb}
         content={
           <div>
-            <h4 style={{ textAlign: 'center' }}>View control</h4>
+            <h4 style={{ textAlign: 'center' }}>{translate('musit.viewControl.title')}</h4>
             <Grid>
               <Row>
-                <Col sm={4}>
+                <Col sm={4} md={5}>
                   <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
                   <br />
                   <MusitField
@@ -83,7 +83,7 @@ export default class ControlViewContainer extends React.Component {
                     disabled
                   />
                 </Col>
-                <Col sm={4} >
+                <Col sm={4} md={5}>
                   <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
                   <br />
                   <MusitField
@@ -94,7 +94,7 @@ export default class ControlViewContainer extends React.Component {
                 </Col>
               </Row>
               <Row>
-                <Col sm={4}>
+                <Col sm={4} md={5}>
                   <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
                   <br />
                   <MusitField
@@ -103,7 +103,7 @@ export default class ControlViewContainer extends React.Component {
                     disabled
                   />
                 </Col>
-                <Col sm={4} >
+                <Col sm={4} md={5} >
                   <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
                   <br />
                   <MusitField
@@ -117,7 +117,7 @@ export default class ControlViewContainer extends React.Component {
                 <br />
               </Row>
               <Row>
-                <Col sm={8}>
+                <Col sm={8} md={10}>
                   <ControlView
                     id="1"
                     translate={translate}

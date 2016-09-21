@@ -38,7 +38,7 @@ export default class PickListComponent extends Component {
       const rowStyleClass = checkSymbol === 'check-square-o' ? 'highlight' : ''
       return (
         <tr key={pick.id} onClick={(e) => onToggleMarked(e, pick.id)} className={rowStyleClass}>
-          <td className={style.icon}>{iconRendrer()}</td>
+          <td className={style.icon}>{iconRendrer(pick)}</td>
           <td className={style.label}>{labelRendrer(pick)}<FontAwesome className={style.infoAction} name="info-circle" /></td>
           <td className={style.select}><FontAwesome className={style.normalAction} name={checkSymbol} /></td>
           <td className={style.actions}>{actionsComponent}</td>

@@ -58,7 +58,7 @@ export default class Breadcrumb extends React.Component {
           fragment = (
             <span key={index}>
               <span className={styles.crumb}>
-              {iconFragment}{node.name}
+                {iconFragment}{node.name}
               </span>
               <span className={styles.crumb}>{divider}</span>
             </span>

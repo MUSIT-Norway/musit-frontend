@@ -27,11 +27,13 @@ export default class ObservationDoubleTextAreaComponent extends Component {
     leftValue: PropTypes.string.isRequired,
     leftTooltip: PropTypes.string.isRequired,
     leftPlaceHolder: PropTypes.string.isRequired,
+    leftWidth: PropTypes.number.isRequired,
     onChangeLeft: PropTypes.func.isRequired,
     rightLabel: PropTypes.string.isRequired,
     rightValue: PropTypes.string.isRequired,
     rightTooltip: PropTypes.string.isRequired,
     rightPlaceHolder: PropTypes.string.isRequired,
+    rightWidth: PropTypes.number.isRequired,
     onChangeRight: PropTypes.func.isRequired,
     disabled: PropTypes.bool
   }
@@ -44,7 +46,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
   render() {
     return (
       <Row>
-        <Col xs={12} sm={5}>
+        <Col xs={12} sm={this.props.leftWidth}>
           <ControlLabel>
             {this.props.leftLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
           </ControlLabel>
@@ -59,7 +61,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
             numberOfRows={5}
           />
         </Col>
-        <Col xs={12} sm={5}>
+        <Col xs={12} sm={this.props.rightWidth}>
           <ControlLabel>{this.props.rightLabel}</ControlLabel>
           <MusitTextArea
             value={this.props.rightValue}

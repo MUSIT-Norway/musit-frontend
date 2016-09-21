@@ -9,6 +9,7 @@ describe('ObjectGrid', () => {
       <ObjectGrid
         id={1}
         translate={(key) => key}
+        onAction={() => true}
         tableData={[
           {
             id: 1,
