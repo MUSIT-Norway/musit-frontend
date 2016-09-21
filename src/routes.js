@@ -54,6 +54,7 @@ export default (store) => {
 
   return (
     <Route component={App}>
+      <IndexRedirect to="/" />
       <Route path="/" component={Login} onEnter={redirectIfLoggedIn} />
       <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
