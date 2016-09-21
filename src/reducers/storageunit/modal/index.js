@@ -127,7 +127,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
 
 export default storageUnitModalReducer;
 
-export const loadRoot = (id) => {
+export const loadRootModal = (id) => {
   let action = {}
   if (id) {
     action = {
@@ -143,7 +143,7 @@ export const loadRoot = (id) => {
   return action
 }
 
-export const loadChildren = (id, callback) => {
+export const loadChildrenModal = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
     promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}/children`),
@@ -151,7 +151,7 @@ export const loadChildren = (id, callback) => {
   };
 }
 
-export const deleteUnit = (id, callback) => {
+export const deleteUnitModal = (id, callback) => {
   return {
     types: [DELETE, DELETE_SUCCESS, DELETE_FAIL],
     promise: (client) => client.del(`/api/storageadmin/v1/storageunit/${id}`),
@@ -160,13 +160,13 @@ export const deleteUnit = (id, callback) => {
   };
 }
 
-export const clearRoot = () => {
+export const clearRootModal = () => {
   return {
     type: CLEAR_ROOT
   }
 }
 
-export const loadPath = (id, callback) => {
+export const loadPathModal = (id, callback) => {
   const url = `/api/storageadmin/v1/storageunit/${id}/path`
   return {
     types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
