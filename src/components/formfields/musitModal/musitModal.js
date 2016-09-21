@@ -20,7 +20,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Modal } from 'react-bootstrap';
 import Language from '../../../components/language'
-import { loadRoot, clearRoot, loadChildren, loadPath, setCurrent } from '../../../reducers/storageunit/modal'
+import { loadRoot, clearRoot, loadChildren, loadPath, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { NodeGrid } from '../../../components/grid'
 import { connect } from 'react-redux';
@@ -28,24 +28,22 @@ import { connect } from 'react-redux';
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageUnitModal.data || [],
-  rootNode: state.storageUnitModal.root,
   path: state.storageUnitModal.root.path,
   currentId: state.storageUnitModal.currentId
 })
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    clearRoot: () => {
-      dispatch(clearRoot())
-    },
+    clearRoot: () => dispatch(clearRoot()),
     loadChildren: (id, callback) => {
       dispatch(loadChildren(id, callback))
       dispatch(loadRoot(id))
     },
-    loadPath: (id) => {
-      dispatch(loadPath(id))
-    },
-    setCurrentId: (id) => dispatch(setCurrent(id))
+    loadPath: (id) => dispatch(loadPath(id)),
+    clearPath: (id) => dispatch(clearPath(id)),
+    loadRoot: () => dispatch(loadRoot()),
+    setCurrentId: (id) => dispatch(setCurrent(id)),
+    clearCurrentId: (id) => dispatch(clearCurrent(id))
   })
 }
 
@@ -55,28 +53,25 @@ export default class MusitModal extends Component {
 
   static propTypes = {
     show: PropTypes.bool.isRequired,
-    onHide: PropTypes.func.isRequired,
-    initialId: PropTypes.number.isRequired
-  }
-
-  componentWillMount() {
-    this.props.clearRoot()
-    this.props.loadChildren(this.props.currentId || this.props.initialId)
+    onHide: PropTypes.func.isRequired
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.show === false && this.props.show === true) {
-      this.props.clearRoot()
+    if (nextProps.show === true && this.props.show === false) {
+      this.props.loadRoot()
     }
-    if (nextProps.show === true && this.props.show === false && this.props.currentId) {
-      this.props.loadChildren(this.props.currentId || this.props.initialId)
+    if (nextProps.currentId && nextProps.currentId !== this.props.currentId) {
+      this.loadStuff(nextProps.currentId)
     }
+  }
+
+  loadStuff(initialId) {
+    this.props.loadChildren(initialId)
+    this.props.loadPath(initialId)
   }
 
   render() {
     const { children, path } = this.props
-    const { data: rootNodeData } = this.props.rootNode
-    debugger;
     return (
       <div>
         <Modal
@@ -90,7 +85,6 @@ export default class MusitModal extends Component {
           </Modal.Header>
           <Modal.Body>
             <NodeGrid
-              id={rootNodeData ? rootNodeData.id : null}
               translate={this.props.translate}
               tableData={children}
               onAction={() => true}
@@ -98,7 +92,11 @@ export default class MusitModal extends Component {
             />
           </Modal.Body>
           <Modal.Footer>
-            <Breadcrumb nodes={path} onClickCrumb={node => true} />
+            <span onClick={() => {
+              this.props.clearCurrentId()
+              this.props.clearPath()
+              this.props.loadRoot()
+            }}>Go to top</span><Breadcrumb nodes={path} onClickCrumb={node => this.props.setCurrentId(node.id)} />
           </Modal.Footer>
         </Modal>
       </div>

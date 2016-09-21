@@ -278,25 +278,17 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  renderModal(initialId) {
-    return (
-      <MusitModal
-        initialId={initialId}
-        show={this.state.showModal}
-        onHide={this.hideModal}
-      />
-    )
-  }
-
   render() {
     const { searchPattern } = this.state
     const { children, translate, path } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
     const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
-    const initialId = this.resolveCurrentId(this.props.params.splat);
     return (
       <span>
-        {this.renderModal(initialId)}
+        <MusitModal
+          show={this.state.showModal}
+          onHide={this.hideModal}
+        />
         <Layout
           title={"Magasin"}
           translate={translate}

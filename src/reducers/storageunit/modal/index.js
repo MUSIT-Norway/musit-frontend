@@ -173,3 +173,10 @@ export const loadPath = (id, callback) => {
     callback
   };
 }
+
+export const clearPath = () => {
+  return {
+    type: LOAD_PATH_SUCCESS,
+    result: []
+  }
+}
