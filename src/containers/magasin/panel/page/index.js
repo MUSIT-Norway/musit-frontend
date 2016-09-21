@@ -177,7 +177,7 @@ export default class StorageUnitContainer extends Component {
   }
 
   translate(field) {
-    return this.props.translate(`musit.storageUnits.environmentRequirements.${field}`)
+    return this.props.translate(`musit.storageUnits.environmentRequirement.${field}`)
   }
 
   renderStringFieldBlock(field) {
@@ -225,7 +225,7 @@ export default class StorageUnitContainer extends Component {
                 <Col md={9}>
                   <form
                     onKeyDown={(e) => {
-                      if (e.keyCode === 13) {
+                      if (e.keyCode === 13 && e.target.type !== 'textarea') {
                         e.preventDefault()
                       }
                     }}

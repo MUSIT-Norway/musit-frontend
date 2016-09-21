@@ -340,7 +340,7 @@ en:
         temperature: "Temperature"
         lightingCondition: "Lighting condition"
         preventiveConservation: "Preventive conservation"
-      environmentRequirements:
+      environmentRequirement:
         temperature:
           labelText: "Temperature"
           incorrect: "Temperature must be a number with max 3 decimals."
@@ -757,7 +757,7 @@ no:
         temperature: "Temperatur"
         lightingCondition: "Lysforhold"
         preventiveConservation: "Preventiv konservering"
-      environmentRequirements:
+      environmentRequirement:
         temperature:
           labelText: "Temperatur"
           incorrect: "Temperatur må være et tall med maks 3 desimaler."
