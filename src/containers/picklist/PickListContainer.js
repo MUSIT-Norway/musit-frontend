@@ -8,7 +8,9 @@ export default class PickListContainer extends React.Component {
     translate: React.PropTypes.func.isRequired,
     picks: React.PropTypes.array.isRequired,
     marked: React.PropTypes.array.isRequired,
-    onToggleMarked: React.PropTypes.func.isRequired
+    onToggleMarked: React.PropTypes.func.isRequired,
+    activate: React.PropTypes.func.isRequired,
+    params: React.PropTypes.object.isRequired
   }
 
   constructor(props) {
@@ -18,6 +20,16 @@ export default class PickListContainer extends React.Component {
     }
     this.onOpenActionDialog = this.onOpenActionDialog.bind(this)
     this.onCloseActionDialog = this.onCloseActionDialog.bind(this)
+  }
+
+  componentWillMount() {
+    this.props.activate(this.props.params.type)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.type !== this.props.params.type) {
+      this.props.activate(nextProps.params.type)
+    }
   }
 
   onOpenActionDialog() {
@@ -67,8 +79,12 @@ export default class PickListContainer extends React.Component {
               actions={demoActions}
               showActionDialog={showActionDialog}
               onCloseActionDialog={() => this.onCloseActionDialog()}
-              iconRendrer={() => <FontAwesome name="archive" />}
-              labelRendrer={(pick) => pick.name}
+              iconRendrer={(pick) => {
+                return pick.name ? <FontAwesome name="folder" /> : <FontAwesome name="rebel" />
+              }}
+              labelRendrer={(pick) => {
+                return pick.name ? pick.name : pick.displayName
+              }}
               onToggleMarked={onToggleMarked}
             />
             <div style={{ textAlign: 'right' }}>

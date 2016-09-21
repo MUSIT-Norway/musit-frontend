@@ -252,7 +252,8 @@ export default class StorageUnitContainer extends Component {
                           <Form horizontal>
                             <FormGroup>
                               <label className="col-sm-3 control-label" htmlFor="name">
-                                {this.props.translate('musit.storageUnits.name.labelText')}{ <span style={{ color: 'red' }}>*</span> }
+                                {this.props.translate('musit.storageUnits.name.labelText')}
+                                { <span style={{ color: 'red' }}>*</span> }
                               </label>
                               <div class="col-sm-8" is="null">
                                 <MusitField
@@ -269,7 +270,8 @@ export default class StorageUnitContainer extends Component {
                           </Form>
                         </Col>
                         <Col md={5}>
-                          {(this.state.unit.type === 'Building' || this.state.unit.type === 'Organisation') &&
+                          {(this.state.unit.type === 'Building'
+                          || this.state.unit.type === 'Organisation') &&
                             <Form horizontal>
                               <FormGroup>
                                 <label className="col-sm-3 control-label" htmlFor="address">

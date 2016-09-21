@@ -1,19 +1,22 @@
-/*
 import { assert, React, ReactTestUtils } from '../../../../../test/setup';
 import ControlView from '../ControlView';
 
 describe('ControlView', () => {
-//  let temperatureButton;
-//  let relativeHumidityButton;
+  let temperatureButton;
+  let relativeHumidityButton;
 
   before('should render ControlView', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ControlView
         id="1"
         translate={(key) => key}
-        controls={[
+        controlsJson={[
           {
             eventType: 'ControlTemperature',
+            ok: true
+          },
+          {
+            eventType: 'ControlRelativeHumidity',
             ok: true
           }
         ]}
@@ -24,13 +27,10 @@ describe('ControlView', () => {
     relativeHumidityButton = inputComponent[1];
   });
 
-
   it('Check the temperature component is created by checking down button id', () => {
     assert(temperatureButton.getAttribute('id') === '1_ControlTemperature_downButton')
   })
   it('Check the relativeHumidity component is created by checking down button id', () => {
-    assert(relativeHumidityButton.getAttribute('id') === '1_relativeHumidity_downButton')
+    assert(relativeHumidityButton.getAttribute('id') === '1_ControlRelativeHumidity_downButton')
   })
-
 })
-*/

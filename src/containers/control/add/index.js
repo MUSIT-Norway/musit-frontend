@@ -47,16 +47,6 @@ export default class ControlAddContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      temperatureOK: null,
-      inertAirOK: null,
-      gasOK: null,
-      lightConditionsOK: null,
-      cleaningOK: null,
-      alcoholOK: null,
-      moldOK: null,
-      relativeHumidityOK: null,
-      pestOK: null,
-      storageUnit: null,
       temperature: this.props.envReqData ? this.props.envReqData.temperature : ' ',
       temperatureTolerance: this.props.envReqData ? this.props.envReqData.temperatureTolerance : ' ',
       relativeHumidity: this.props.envReqData ? this.props.envReqData.relativeHumidity : ' ',
@@ -301,7 +291,7 @@ export default class ControlAddContainer extends React.Component {
               })}
               <hr />
               <SaveCancel
-                saveLabel={translate(this.oneStateIsNotOK() ? 'musit.observation.registerObservation' : 'musit.texts.save')}
+                saveLabel={translate(this.oneStateIsNotOK() ? 'musit.newControl.registerObservations' : 'musit.texts.save')}
                 translate={translate}
                 onClickSave={(e) => this.handleSubmit(e)}
                 onClickCancel={() => { hashHistory.goBack() }}

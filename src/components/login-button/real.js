@@ -39,7 +39,7 @@ export default class FeideButton extends React.Component {
             checkLoaded();
           }}
         >
-            {this.props.children}
+          {this.props.children}
         </span>
       </Button>
     )

@@ -16,24 +16,8 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+import { toFrontend } from './to_frontend'
+import { toBackend } from './to_backend'
 
-import PickListContainer from './PickListContainer'
-import { connect } from 'react-redux'
-import Language from '../../components/language'
-import { toggleMarked, activatePickList } from '../../reducers/picklist'
-
-
-const mapStateToProps = (state) => ({
-  translate: (key, markdown) => Language.translate(key, markdown),
-  picks: state.picks.lists[state.picks.active],
-  marked: state.picks.marked,
-  activePicks: state.picks.active
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  onToggleMarked: (e, id) => dispatch(toggleMarked(id)),
-  activate: (destination) => dispatch(activatePickList(destination))
-})
-
-@connect(mapStateToProps, mapDispatchToProps)
-export default class PickListPage extends PickListContainer {}
+export const mapToFrontend = toFrontend
+export const mapToBackend = toBackend

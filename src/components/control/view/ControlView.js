@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import * as ObservationRender from '../../observation/render'
+import { formatFloatToString } from './../../../util'
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -82,9 +83,14 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               type="temperature"
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
+              }}
+              layoutProps={{
+                fromWidth: 3,
+                toWidth: 3,
+                commentWidth: 6
               }}
             />)
             break
@@ -94,8 +100,13 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               valueProps={{
                 statusValue: motivates.condition,
-                volumeValue: JSON.stringify(motivates.volume),
+                volumeValue: formatFloatToString(motivates.volume),
                 commentValue: motivates.note
+              }}
+              layoutProps={{
+                statusWidth: 3,
+                volumeWidth: 3,
+                commentWidth: 6
               }}
             />)
             break
@@ -108,6 +119,10 @@ export default class ControlView extends Component {
                 leftValue: motivates.cleaning,
                 rightValue: motivates.note
               }}
+              layoutProps={{
+                leftWidth: 6,
+                rightWidth: 6
+              }}
             />)
             break
           case 'ControlGas':
@@ -119,28 +134,41 @@ export default class ControlView extends Component {
                 leftValue: motivates.gas,
                 rightValue: motivates.note
               }}
+              layoutProps={{
+                leftWidth: 6,
+                rightWidth: 6
+              }}
             />)
             break
           case 'ControlHypoxicAir':
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
-              type="inertAir"
+              type="hypoxicAir"
               translate={this.props.translate}
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
+              }}
+              layoutProps={{
+                fromWidth: 3,
+                toWidth: 3,
+                commentWidth: 6
               }}
             />)
             break
           case 'ControlLightingCondition':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
-              type="lux"
+              type="lightCondition"
               translate={this.props.translate}
               valueProps={{
                 leftValue: motivates.lightingCondition,
                 rightValue: motivates.note
+              }}
+              layoutProps={{
+                leftWidth: 6,
+                rightWidth: 6
               }}
             />)
             break
@@ -153,6 +181,10 @@ export default class ControlView extends Component {
                 leftValue: motivates.mold,
                 rightValue: motivates.note
               }}
+              layoutProps={{
+                leftWidth: 6,
+                rightWidth: 6
+              }}
             />)
             break
           case 'ControlPest':
@@ -164,11 +196,19 @@ export default class ControlView extends Component {
                 observations: motivates.lifeCycles.map(lc => {
                   return {
                     lifeCycle: lc.stage,
-                    count: JSON.stringify(lc.number)
+                    count: formatFloatToString(lc.number)
                   }
                 }),
                 identificationValue: motivates.identification,
                 commentValue: motivates.note
+              }}
+              layoutProps={{
+                lifeCycleWidth: 3,
+                countWidth: 3,
+                removeIconWidth: 1,
+                addIconWidth: 1,
+                commentsLeftWidth: 6,
+                commentsRightWidth: 6
               }}
             />)
             break
@@ -176,11 +216,16 @@ export default class ControlView extends Component {
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
-              type="cleaning"
+              type="relativeHumidity"
               valueProps={{
-                fromValue: JSON.stringify(motivates.from),
-                toValue: JSON.stringify(motivates.to),
+                fromValue: formatFloatToString(motivates.from),
+                toValue: formatFloatToString(motivates.to),
                 commentValue: motivates.note
+              }}
+              layoutProps={{
+                fromWidth: 3,
+                toWidth: 3,
+                commentWidth: 6
               }}
             />)
             break
@@ -198,26 +243,26 @@ export default class ControlView extends Component {
     const { id } = this.props
     const observation = (fontName, observationType) => {
       return (
-        <Col xs={5} sm={5} >
+        <Col xs={5} sm={5} md={5} >
           <span className={`icon icon-${fontName}`} />
           {` ${observationType}`}
         </Col>
     ) }
     const controlOk = (
-      <Col xs={5} sm={5} >
+      <Col xs={5} sm={5} md={5} >
         <FontAwesome name="check" />
         {`  ${this.props.translate('musit.texts.ok')}`}
       </Col>
     )
     const controlNotOk = (
-      <Col xs={5} sm={5} >
+      <Col xs={5} sm={5} md={5} >
         <FontAwesome name="close" />
         {`  ${this.props.translate('musit.texts.notOk')}`}
       </Col>
     )
     const downButton = (observationType, ok) => {
       return (
-        <Col xs={2} sm={2} >
+        <Col xs={1} sm={1} >
           <Button
             id={`${id}_${observationType}_downButton`}
             onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
@@ -247,9 +292,11 @@ export default class ControlView extends Component {
 
     return (
       <FormGroup>
-        {this.props.controlsJson ? this.props.controlsJson.map((c, i) =>
-          oneTableRow(c, i)
-        ) : null}
+        {this.props.controlsJson ? this.props.controlsJson.map((c, i) => {
+          return (
+            oneTableRow(c, i)
+          )
+        }) : null}
       </FormGroup>
     )
   }

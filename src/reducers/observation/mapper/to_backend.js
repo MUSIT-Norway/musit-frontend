@@ -32,7 +32,7 @@ export const parseObservation = (el) => {
         return ret
       })
       break
-    case 'lightConditions':
+    case 'lightCondition':
       re.eventType = 'ObservationLightingCondition'
       re.lightingCondition = el.data.leftValue
       re.note = el.data.rightValue
