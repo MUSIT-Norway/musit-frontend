@@ -19,7 +19,6 @@
 
 import { routerReducer } from 'react-router-redux'
 import { combineReducers } from 'redux'
-import infoReducer from './info'
 import authReducer from './auth'
 import fakeAuthReducer from './fake-auth-info'
 import languageReducer from './language'
@@ -40,7 +39,6 @@ import { reducer as formReducer } from 'redux-form'
 const rootReducer = combineReducers({
   routing: routerReducer,
   form: formReducer,
-  info: infoReducer,
   auth: authReducer,
   fakeAuthInfo: fakeAuthReducer,
   language: languageReducer,

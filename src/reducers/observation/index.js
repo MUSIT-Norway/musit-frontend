@@ -103,7 +103,7 @@ export const addObservation = (id, data, callback) => {
   const dataToPost = mapToBackEnd(data)
   return {
     types: [ADD, 'musit/observation/ADD_SUCCESS', ADD_FAIL],
-    promise: client => client[action](url, { data: dataToPost }),
+    promise: (client) => client[action](url, { data: dataToPost }),
     callback
   };
 }
@@ -111,14 +111,14 @@ export const addObservation = (id, data, callback) => {
 export const getActorNameFromId = (id) => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAIL],
-    promise: client => client.get(`/api/actor/v1/person/${id}`)
+    promise: (client) => client.get(`/api/actor/v1/person/${id}`)
   }
 }
 
 export const loadObservation = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client => client.get(`api/event/v1/event/${id}`),
+    promise: (client) => client.get(`api/event/v1/event/${id}`),
     callback
   }
 }

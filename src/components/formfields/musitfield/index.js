@@ -73,7 +73,7 @@ export default class MusitField extends Component {
         placeholder={this.props.placeHolder}
         value={this.props.value}
         disabled={this.props.disabled}
-        onChange={event => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
+        onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
         onBlur={this.props.onBlur}
         onFocus={this.props.onFocus}
       />);

@@ -37,6 +37,6 @@ export default organizationReducer
 export const createOrganization = (organization) => {
   return {
     types: [CREATE, CREATE_SUCCESS, CREATE_FAIL],
-    promise: client => client.post('/api/actor/v1/organization', { data: organization })
+    promise: (client) => client.post('/api/actor/v1/organization', { data: organization })
   }
 }

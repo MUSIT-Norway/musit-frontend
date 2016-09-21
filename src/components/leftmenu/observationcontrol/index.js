@@ -12,12 +12,12 @@ export default class ObservationControlComponent extends Component {
 
   render() {
     const { id, translate, onClickNewControl, onClickNewObservation } = this.props
-    const getTranslate = term => (translate(`musit.leftMenu.observationControl.${term}`))
+    const getTranslate = (term) => (translate(`musit.leftMenu.observationControl.${term}`))
     const buttonLogic = (type, eventType) => {
       return (
         <Button
           id={`${id}_${type}`}
-          onClick={event => eventType(event.target.value)}
+          onClick={(event) => eventType(event.target.value)}
           style={{ textAlign: 'left', width: '100%' }}
         >
           <FontAwesome name="plus-circle" style={{ padding: '2px' }} />

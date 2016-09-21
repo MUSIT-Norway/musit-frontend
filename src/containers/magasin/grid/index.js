@@ -12,7 +12,7 @@ import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
@@ -197,7 +197,7 @@ export default class StorageUnitsContainer extends React.Component {
       labelLeft="Noder"
       placeHolderSearch="Filtrer i liste"
       searchValue={this.state.searchPattern}
-      onSearchChanged={newPattern => this.setState({ ...this.state, searchPattern: newPattern })}
+      onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
         this.showObjects()
         this.loadObjects();
@@ -230,12 +230,12 @@ export default class StorageUnitsContainer extends React.Component {
           objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
           underNodeCount={statistics ? statistics.underNodeCount : Number.NaN}
-          onClickProperties={id => onEdit({ id })}
-          onClickControlObservations={id => hashHistory.push(`/magasin/${id}/controlsobservations`)}
-          onClickObservations={id => hashHistory.push(`/magasin/${id}/observations`)}
-          onClickController={id => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={id => id/* TODO: Add move action for rootnode*/}
-          onClickDelete={id => onDelete(id, rootNode)}
+          onClickProperties={(id) => onEdit({ id })}
+          onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
+          onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
+          onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
+          onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}
+          onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
     )
@@ -246,9 +246,9 @@ export default class StorageUnitsContainer extends React.Component {
       return (<NodeGrid
         id={rootNode ? rootNode.id : null}
         translate={this.props.translate}
-        tableData={children.filter(row => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
+        tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={this.props.onAction}
-        onClick={row =>
+        onClick={(row) =>
           hashHistory.push(
             `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
           )

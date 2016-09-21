@@ -9,7 +9,7 @@ describe('ObservationDoubleTextAreaComponent', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ObservationDoubleTextAreaComponent
         id="test"
-        translate={key => key}
+        translate={(key) => key}
         leftLabel="Left label"
         leftValue="left"
         leftTooltip="Left tooltip"

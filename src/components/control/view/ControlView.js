@@ -193,7 +193,7 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               canEdit={false}
               valueProps={{
-                observations: motivates.lifeCycles.map((lc) => {
+                observations: motivates.lifeCycles.map(lc => {
                   return {
                     lifeCycle: lc.stage,
                     count: formatFloatToString(lc.number)

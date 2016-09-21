@@ -72,7 +72,7 @@ export default class MusitTextField extends Component {
                     type={this.props.valueType}
                     placeholder={this.props.placeHolderText}
                     value={this.props.valueText()}
-                    onChange={event => this.props.onChange(event.target.value)}
+                    onChange={(event) => this.props.onChange(event.target.value)}
                   />
                   {this.props.tooltip ?
                     <OverlayTrigger
@@ -94,7 +94,7 @@ export default class MusitTextField extends Component {
                     type={this.props.valueType}
                     placeholder={this.props.placeHolderText2}
                     value={this.props.valueText2()}
-                    onChange={event => this.props.onChange2(event.target.value)}
+                    onChange={(event) => this.props.onChange2(event.target.value)}
                   />
                   {this.props.tooltip2 ?
                     <OverlayTrigger
@@ -114,7 +114,7 @@ export default class MusitTextField extends Component {
               type={this.props.valueType}
               placeholder={this.props.placeHolderText}
               value={this.props.valueText()}
-              onChange={event => this.props.onChange(event.target.value)}
+              onChange={(event) => this.props.onChange(event.target.value)}
             />}
         </Col>
       </FormGroup>

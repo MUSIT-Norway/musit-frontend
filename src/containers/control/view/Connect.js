@@ -23,14 +23,14 @@ import { getActorNameFromId } from '../../../reducers/observation'
 import ControlViewContainerImpl from './index'
 import { loadPath } from '../../../reducers/storageunit/grid'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
   path: state.storageGridUnit.root.path
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   loadControl: (id, callback) => {
     dispatch(loadControl(id, callback))
   },

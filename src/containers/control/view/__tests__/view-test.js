@@ -11,7 +11,7 @@ describe('Render view control page', () => {
   beforeEach(() => {
     renderer.render(
       <ControlViewContainer
-        translate={key => key}
+        translate={(key) => key}
         saveControl={() => true}
         loadControl={() => true}
         doneBy={{

@@ -38,6 +38,6 @@ export default fakeAuthInfoReducer
 export const login = () => {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: client => client.get('/musit')
+    promise: (client) => client.get('/musit')
   }
 }

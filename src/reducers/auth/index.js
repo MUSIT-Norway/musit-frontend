@@ -57,7 +57,7 @@ export default authReducer
 export const loadActor = () => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: client => client.get('/api/actor/v1/dataporten/currentUser')
+    promise: (client) => client.get('/api/actor/v1/dataporten/currentUser')
   }
 }
 

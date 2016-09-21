@@ -7,10 +7,7 @@ const LOAD = 'musit/storageunit-container/LOAD';
 const LOAD_SUCCESS = 'musit/storageunit-container/LOAD_SUCCESS';
 const LOAD_FAIL = 'musit/storageunit-container/LOAD_FAIL';
 
-const initialState = {
-  loaded: false,
-  loading: false
-}
+const initialState = {}
 
 const storageUnitContainerReducer = (state = initialState, action = {}) => {
   switch (action.type) {
@@ -18,7 +15,6 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         loading: true,
-        loaded: false
       };
     case INSERT_SUCCESS:
       return {
@@ -45,7 +41,6 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         loading: true,
-        loaded: false
       };
     case LOAD_SUCCESS:
       return {
@@ -71,7 +66,7 @@ export default storageUnitContainerReducer;
 export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client => client.get(`/api/storageadmin/v1/storageunit/${id}`),
+    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`),
     callback
   };
 }
@@ -81,7 +76,7 @@ export const update = (data, callback) => {
   const dataToPost = mapToBackend(data)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
-    promise: client => client.put(url, { data: dataToPost }),
+    promise: (client) => client.put(url, { data: dataToPost }),
     callback
   };
 }
@@ -91,7 +86,7 @@ export const insert = (parentId, data, callback) => {
   const dataToPost = mapToBackend(data, parentId)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
-    promise: client => client.post(url, { data: dataToPost }),
+    promise: (client) => client.post(url, { data: dataToPost }),
     callback
   };
 }

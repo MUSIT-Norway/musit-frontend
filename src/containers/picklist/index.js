@@ -23,14 +23,14 @@ import Language from '../../components/language'
 import { toggleMarked } from '../../reducers/picklist'
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   picks: state.picks.lists[state.picks.active],
   marked: state.picks.marked,
   activePicks: state.picks.active
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onToggleMarked: (e, id) => dispatch(toggleMarked(id))
 })
 

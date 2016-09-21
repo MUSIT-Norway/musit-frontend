@@ -95,14 +95,14 @@ export default class ControlAddContainer extends React.Component {
   }
 
   oneStateIsNotOK() {
-    return Object.keys(this.state).filter(k => k.endsWith('OK') && this.state[k] === false).length > 0
+    return Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] === false).length > 0
   }
 
   onClickSave() {
     // Could extract it, but its only used here and in the method aboveonFailure
     const controls = Object.keys(this.state)
-        .filter(k => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
-        .map(k => ({
+        .filter((k) => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
+        .map((k) => ({
           [k]: this.state[k]
         }))
     // Create a nice representation of the control state
@@ -118,16 +118,17 @@ export default class ControlAddContainer extends React.Component {
         state: controlState
       })
     } else {
-      this.props.saveControl(this.props.params.id, controlState, { onSuccess: () => hashHistory.goBack(),
-                                             onFailure: () => window.alert('Kunne ikke lagre kontroll') },
-                                             this.props.params.id)
+      this.props.saveControl(this.props.params.id, controlState, {
+        onSuccess: () => hashHistory.goBack(),
+        onFailure: () => window.alert('Kunne ikke lagre kontroll')
+      }, this.props.params.id)
     }
   }
 
   handleSubmit(event) {
     event.preventDefault()
     const errors = []
-    const controls = Object.keys(this.state).filter(k => k.endsWith('OK') && this.state[k] !== null)
+    const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null)
     if (controls.length === 0) {
       errors.push(this.props.translate('musit.newControl.controlsRequired'))
     }
@@ -150,7 +151,7 @@ export default class ControlAddContainer extends React.Component {
     const { translate } = this.props
 
     const renderReadOnly = (leftValue, rightValue) => {
-      const make = v => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
+      const make = (v) => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
 
       if (leftValue && rightValue) {
         return (<div>
@@ -226,7 +227,7 @@ export default class ControlAddContainer extends React.Component {
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate.toISOString()}
                           onClear={() => this.setState({ ...this.state, doneDate: moment() })}
-                          onChange={(newValue) => {
+                          onChange={newValue => {
                             if (!newValue) {
                               return;
                             }
@@ -251,7 +252,7 @@ export default class ControlAddContainer extends React.Component {
                         id="doneByField"
                         value={this.state.doneBy ? this.state.doneBy.fn : ''}
                         placeHolder="Find actor"
-                        onChange={(newValue) => {
+                        onChange={newValue => {
                           this.setState({ ...this.state, doneBy: newValue })
                         }}
                       />
@@ -293,7 +294,7 @@ export default class ControlAddContainer extends React.Component {
               <SaveCancel
                 saveLabel={translate(this.oneStateIsNotOK() ? 'musit.newControl.registerObservations' : 'musit.texts.save')}
                 translate={translate}
-                onClickSave={e => this.handleSubmit(e)}
+                onClickSave={(e) => this.handleSubmit(e)}
                 onClickCancel={() => { hashHistory.goBack() }}
               />
             </Grid>

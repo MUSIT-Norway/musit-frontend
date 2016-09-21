@@ -69,7 +69,7 @@ export const addControl = (id, controlData, observations, callback) => {
   }
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
-    promise: client => client.post(url, { data }),
+    promise: (client) => client.post(url, { data }),
     callback
   }
 }
@@ -77,7 +77,7 @@ export const addControl = (id, controlData, observations, callback) => {
 export const loadControl = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client => client.get(`api/event/v1/event/${id}`),
+    promise: (client) => client.get(`api/event/v1/event/${id}`),
     callback
   }
 }

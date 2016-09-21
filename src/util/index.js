@@ -3,7 +3,7 @@ import moment from 'moment'
 export const flatten = (arr) => {
   const obj = {};
 
-  for (let i = 0; i < arr.length; i += 1) {
+  for (let i = 0; i < arr.length; i++) {
     Object.keys(arr[i]).forEach((x) => {
       obj[x] = arr[i][x]
     })
@@ -22,7 +22,7 @@ export const blur = () => {
   }
 }
 
-export const containsObjectWithField = (arr, field, value) => arr.filter(e => e[field] === value).length > 0
+export const containsObjectWithField = (arr, field, value) => arr.filter((e) => e[field] === value).length > 0
 
 export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY'
 export const DATE_FORMAT_ISO = 'YYYY-MM-DD'

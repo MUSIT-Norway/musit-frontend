@@ -7,9 +7,9 @@ describe('NodeGrid', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <NodeGrid
         id={1}
-        translate={key => key}
-        onAction={key => key}
-        onClick={key => key}
+        translate={(key) => key}
+        onAction={(key) => key}
+        onClick={(key) => key}
         tableData={[
           {
             id: 1,

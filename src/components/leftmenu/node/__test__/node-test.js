@@ -10,18 +10,18 @@ describe('NodeLeftMenuComponent', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <NodeLeftMenuComponent
         id={1}
-        translate={key => key}
-        onClickNewNode={key => key}
+        translate={(key) => key}
+        onClickNewNode={(key) => key}
         objectsOnNode={11}
         totalObjectCount={78}
         underNodeCount={5}
         showButtons
-        onClickProperties={key => key}
-        onClickControlObservations={key => key}
-        onClickObservations={key => key}
-        onClickController={key => key}
-        onClickMoveNode={key => key}
-        onClickDelete={key => key}
+        onClickProperties={(key) => key}
+        onClickControlObservations={(key) => key}
+        onClickObservations={(key) => key}
+        onClickController={(key) => key}
+        onClickMoveNode={(key) => key}
+        onClickDelete={(key) => key}
       />
     );
     labels = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'label');

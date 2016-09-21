@@ -36,10 +36,7 @@ export default class AddStorageUnitContainer extends React.Component {
     loadPath: PropTypes.func.isRequired,
     updateState: PropTypes.func.isRequired,
     clearState: PropTypes.func.isRequired,
-    unit: PropTypes.shape({
-      type: PropTypes.string,
-      name: PropTypes.string
-    })
+    unit: PropTypes.object
   }
 
   componentWillMount() {

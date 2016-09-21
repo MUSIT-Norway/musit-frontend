@@ -42,7 +42,7 @@ const observationControlGridReducer = (state = initialState, action) => {
         loadedActors: true,
         data: state.data.map((e) => {
           return { ...e,
-          doneBy: action.result.find(a => a.id === e.doneBy) ? action.result.find(a => a.id === e.doneBy).fn : e.doneBy
+          doneBy: action.result.find((a) => a.id === e.doneBy) ? action.result.find((a) => a.id === e.doneBy).fn : e.doneBy
          } })
       };
     case LOAD_ACTOR_FAILURE:
@@ -60,21 +60,21 @@ const observationControlGridReducer = (state = initialState, action) => {
 export const loadActor = (r) => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: client => client.post('/api/actor/v1/person/details', r)
+    promise: (client) => client.post('/api/actor/v1/person/details', r)
   }
 }
 
 export const loadControlsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client => client.get(`/api/event/v1/node/${id}/controls`),
+    promise: (client) => client.get(`/api/event/v1/node/${id}/controls`),
     callback
   }
 }
 export const loadObservationsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client => client.get(`/api/event/v1/node/${id}/observations`),
+    promise: (client) => client.get(`/api/event/v1/node/${id}/observations`),
     callback
   }
 }
@@ -82,7 +82,7 @@ export const loadObservationsForNode = (id, callback) => {
 export const loadControlsAndObservationsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client => client.get(`/api/event/v1/node/${id}/controlsAndObservations`),
+    promise: (client) => client.get(`/api/event/v1/node/${id}/controlsAndObservations`),
     callback
   }
 }

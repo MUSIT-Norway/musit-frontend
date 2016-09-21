@@ -3,7 +3,7 @@ import { Button, Well } from 'react-bootstrap'
 
 export default (actions) => {
   const style = require('./index.scss')
-  const actionList = actions.map(action => (
+  const actionList = actions.map((action) => (
     <Button key={action.id} onClick={action.func} block>{action.description}</Button>
   ))
   return (

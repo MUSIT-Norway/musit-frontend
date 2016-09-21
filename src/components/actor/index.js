@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
 import { suggestPerson, clearSuggest } from '../../reducers/suggest'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   suggest: state.suggest
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onUpdateRequested: (id, { value, reason }) => {
     if (reason && (reason === 'type') && value && value.length >= 2) {
       dispatch(suggestPerson(id, value))
@@ -71,11 +71,11 @@ export default class ActorSuggest extends React.Component {
       <Autosuggest
         suggestions={this.getSuggestions()}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={update => this.props.onUpdateRequested(this.props.id, update)}
-        getSuggestionValue={suggestion => suggestion.fn}
-        renderSuggestion={suggestion => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
+        onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
+        getSuggestionValue={(suggestion) => suggestion.fn}
+        renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
         inputProps={{ ...this.doneByProps, value: this.state.value }}
-        shouldRenderSuggestions={v => v !== 'undefined'}
+        shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
     )

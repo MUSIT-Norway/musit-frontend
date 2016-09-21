@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
 import { suggestAddress, clearSuggest } from '../../reducers/suggest'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   suggest: state.suggest
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onUpdateRequested: (id, { value, reason }) => {
     if (reason && (reason === 'type') && value && value.length >= 2) {
       dispatch(suggestAddress(id, value))
@@ -90,11 +90,11 @@ export default class AddressSuggest extends React.Component {
       <Autosuggest
         suggestions={this.getSuggestions()}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={update => this.props.onUpdateRequested(this.props.id, update)}
+        onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
         inputProps={{ ...this.doneByProps, value: this.state.value }}
-        shouldRenderSuggestions={v => v !== 'undefined'}
+        shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
     )
