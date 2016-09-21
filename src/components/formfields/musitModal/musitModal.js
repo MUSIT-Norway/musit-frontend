@@ -18,9 +18,10 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import { Modal } from 'react-bootstrap';
+import { Modal, Button, Row, Col } from 'react-bootstrap'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import { NodeGrid } from '../../../components/grid'
+import { ModalNodeGrid } from '../../../components/grid'
+import { SaveCancel } from '../../../components/formfields'
 
 export default class MusitModal extends Component {
 
@@ -64,26 +65,42 @@ export default class MusitModal extends Component {
           aria-labelledby="contained-modal-title-lg"
         >
           <Modal.Header closeButton>
-            {"Flytt gjenstander"}
+            {this.props.translate('musit.moveModal.moveObjects')}
           </Modal.Header>
           <Modal.Body>
-            <NodeGrid
-              translate={this.props.translate}
+            <ModalNodeGrid
               tableData={children}
-              onAction={() => true}
               onClick={(node) => this.props.setCurrentId(node.id)}
             />
           </Modal.Body>
           <Modal.Footer>
-            <span
-              onClick={() => {
-                this.props.clearCurrentId()
-                this.props.clearPath()
-                this.props.loadRoot()
-              }}
-            >
-              Go to top
-            </span><Breadcrumb nodes={path} onClickCrumb={node => this.props.setCurrentId(node.id)} />
+            <Row>
+              <Col xs={6} sm={5} style={{ border: 'none', textAlign: 'center' }}>
+                {this.props.translate('musit.moveModal.currentDestination')}
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} sm={5} style={{ border: 'none', textAlign: 'center' }}>
+                <Button
+                  onClick={() => {
+                    this.props.clearCurrentId()
+                    this.props.clearPath()
+                    this.props.loadRoot()
+                  }}
+                  bsStyle="link"
+                >
+                  {this.props.translate('musit.moveModal.goToRoot')}
+                </Button>
+              </Col>
+              <Col xs={6} sm={5} style={{ border: 'none', textAlign: 'center' }}>
+                <Breadcrumb nodes={path} onClickCrumb={node => this.props.setCurrentId(node.id)} />
+              </Col>
+            </Row>
+            <SaveCancel
+              translate={this.props.translate}
+              saveLabel={this.props.translate('musit.moveModal.move')}
+              onClickSave={() => true}
+            />
           </Modal.Footer>
         </Modal>
       </div>

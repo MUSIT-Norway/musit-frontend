@@ -1,5 +1,10 @@
 en:
   musit:
+    moveModal:
+      move: "Move"
+      moveObjects: "Move objects"
+      goToRoot: "Go to top"
+      currentDestination: "Current destination"
     leftMenu:
       node:
         newNode: "New node"
@@ -417,6 +422,11 @@ en:
     login: Login through Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Login")
 no:
   musit:
+    moveModal:
+      move: "Flytt hit"
+      moveObjects: "Flytt gjenstander"
+      goToRoot: "Gå til toppen"
+      currentDestination: "Destinasjon"
     leftMenu:
       node:
         newNode: "Ny node"
