@@ -4,6 +4,7 @@ import deepFreeze from 'deep-freeze'
 import picklistReducer, {
   clear,
   add,
+  TYPES,
   remove,
   toggleMarked,
   activatePickList,
@@ -13,10 +14,10 @@ import picklistReducer, {
 } from '../index'
 
 const testState = {
-  active: 'default',
+  active: TYPES.NODE,
   marked: [],
   lists: {
-    default: [
+    [TYPES.NODE]: [
       {
         id: 1,
         name: 'Foo'
@@ -50,16 +51,32 @@ describe('PicklistReducer', () => {
       id: 999,
       name: 'Dynamic'
     }
-    const state = picklistReducer(testState, add(testState.active, testItem))
-    assert(state.lists.default.length === 4)
+    const state = picklistReducer(testState, add(TYPES.NODE, testItem))
+    assert(state.lists[TYPES.NODE].length === 4)
     deepFreeze(state)
-    const state2 = picklistReducer(state, remove(testState.active, testItem))
-    assert(state2.lists.default.length === 3)
+    const state2 = picklistReducer(state, remove(TYPES.NODE, testItem))
+    assert(state2.lists[TYPES.NODE].length === 3)
   })
 
   it('Toggle record in list on off', () => {
     const state = picklistReducer(testState, toggleMarked(2))
     assert(state.marked.length === 1)
+  })
+
+  it('Adding the same item multiple times is ignored.', () => {
+    const testItem = {
+      id: 888,
+      name: 'Dynamic'
+    }
+    let newState = picklistReducer(testState, add(TYPES.NODE, testItem))
+    assert(newState.lists[TYPES.NODE].length === 4)
+    newState = picklistReducer(newState, add(TYPES.NODE, testItem))
+    assert(newState.lists[TYPES.NODE].length === 4)
+    newState = picklistReducer(newState, add(TYPES.NODE, testItem))
+    assert(newState.lists[TYPES.NODE].length === 4)
+    deepFreeze(newState)
+    const state2 = picklistReducer(newState, remove(TYPES.NODE, testItem))
+    assert(state2.lists[TYPES.NODE].length === 3)
   })
 
   it('Add, activate and remove extra picklist', () => {
@@ -70,12 +87,12 @@ describe('PicklistReducer', () => {
     assert(state2.active === 'test')
     deepFreeze(state2)
     const state3 = picklistReducer(state2, removePickList('test'))
-    assert(state3.active === 'default')
+    assert(state3.active === TYPES.NODE)
     assert(state3.lists.test.length === 0) // TODO: Find an immutable way of removing a property from an object
   })
 
   it('Fail on activate a list that does not exist', () => {
     const state = picklistReducer(testState, activatePickList('fail'))
-    assert(state.active === 'default')
+    assert(state.active === TYPES.NODE)
   })
 })

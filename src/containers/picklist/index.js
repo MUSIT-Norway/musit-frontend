@@ -20,7 +20,7 @@
 import PickListContainer from './PickListContainer'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
-import { toggleMarked } from '../../reducers/picklist'
+import { toggleMarked, activatePickList } from '../../reducers/picklist'
 
 
 const mapStateToProps = (state) => ({
@@ -31,7 +31,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onToggleMarked: (e, id) => dispatch(toggleMarked(id))
+  onToggleMarked: (e, id) => dispatch(toggleMarked(id)),
+  activate: (destination) => dispatch(activatePickList(destination))
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
