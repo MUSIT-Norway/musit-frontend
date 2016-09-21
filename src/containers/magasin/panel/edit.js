@@ -39,7 +39,8 @@ export default class EditStorageUnitContainer extends React.Component {
     params: PropTypes.object,
     unit: PropTypes.object,
     loadPath: PropTypes.func.isRequired,
-    loaded: React.PropTypes.bool.isRequired
+    loaded: PropTypes.bool.isRequired,
+    updateState: PropTypes.func.isRequired
   }
 
   componentWillMount() {

@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router'
 import { insert } from '../../../reducers/storageunit/panel';
 import StorageUnitContainerImpl from './page'
 import { loadPath } from '../../../reducers/storageunit/grid'
-import { clear, update as updateState } from '../../../reducers/storageunit/panel/state'
+import { clear as clearState, update as updateState } from '../../../reducers/storageunit/panel/state'
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(loadPath(id))
     },
     updateState: data => dispatch(updateState(data)),
-    clear: () => dispatch(clear())
+    clearState: () => dispatch(clearState())
   }
 }
 
@@ -33,14 +33,20 @@ export default class AddStorageUnitContainer extends React.Component {
   static propTypes = {
     onLagreClick: PropTypes.func.isRequired,
     params: PropTypes.object,
-    loadPath: PropTypes.func.isRequired
+    loadPath: PropTypes.func.isRequired,
+    updateState: PropTypes.func.isRequired,
+    clearState: PropTypes.func.isRequired,
+    unit: PropTypes.shape({
+      type: PropTypes.string,
+      name: PropTypes.string
+    })
   }
 
   componentWillMount() {
     if (this.props.params.parentId) {
       this.props.loadPath(this.props.params.parentId)
     }
-    this.props.clear()
+    this.props.clearState()
   }
 
   render() {

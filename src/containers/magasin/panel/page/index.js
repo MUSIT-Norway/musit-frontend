@@ -26,10 +26,9 @@ import Layout from '../../../../layout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
 import Breadcrumb from '../../../../layout/Breadcrumb'
 import Language from '../../../../components/language'
-import { MusitDropDownField, MusitField } from '../../../../components/formfields'
 import AddressSuggest from '../../../../components/address'
 import Loader from 'react-loader';
-import { MusitTextArea as TextArea, MusitField as Field } from '../../../../components/formfields'
+import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../../components/formfields'
 
 const mapStateToProps = (state) => {
   return {
@@ -124,17 +123,18 @@ export default class StorageUnitContainer extends Component {
         ...errors,
         ...this.validateEnvironmentRequirement('environmentRequirement.hypoxicAirTolerance', 0, 10, 0, formProps.unit)
       }
+      const environmentRequirement = formProps.unit.environmentRequirement;
       errors = {
         ...errors,
-        ...this.validateStringField('environmentRequirement.cleaning', formProps.unit.environmentRequirement.cleaning, 100)
+        ...this.validateStringField('environmentRequirement.cleaning', environmentRequirement.cleaning, 100)
       }
       errors = {
         ...errors,
-        ...this.validateStringField('environmentRequirement.lightingCondition', formProps.unit.environmentRequirement.lightingCondition, 100)
+        ...this.validateStringField('environmentRequirement.lightingCondition', environmentRequirement.lightingCondition, 100)
       }
       errors = {
         ...errors,
-        ...this.validateStringField('environmentRequirement.comments', formProps.unit.environmentRequirement.comments, 250)
+        ...this.validateStringField('environmentRequirement.comments', environmentRequirement.comments, 250)
       }
     } else {
       errors.type = this.props.translate('musit.storageUnits.type.required')
@@ -273,7 +273,7 @@ export default class StorageUnitContainer extends Component {
                                   { <span style={{ color: 'red' }}>*</span> }
                                 </label>
                                 <div class="col-sm-8" is="null">
-                                  <MusitField
+                                  <Field
                                     id="name"
                                     tooltip={this.props.translate('musit.storageUnits.name.tooltip')}
                                     validate="text"
@@ -316,7 +316,7 @@ export default class StorageUnitContainer extends Component {
                                 <label className="col-sm-3 control-label" htmlFor="comments2">
                                   {this.props.translate('musit.storageUnits.area.labelText')}</label>
                                 <div class="col-sm-4" is="null">
-                                  <MusitField
+                                  <Field
                                     id="areaFrom"
                                     tooltip={this.props.translate('musit.storageUnits.area.tooltip')}
                                     validate="number"
@@ -327,7 +327,7 @@ export default class StorageUnitContainer extends Component {
                                   />
                                 </div>
                                 <div class="col-sm-4" is="null">
-                                  <MusitField
+                                  <Field
                                     id="areaTo"
                                     tooltip={this.props.translate('musit.storageUnits.areaTo.tooltip')}
                                     validate="number"
@@ -346,7 +346,7 @@ export default class StorageUnitContainer extends Component {
                                 <label className="col-sm-3 control-label" htmlFor="controlId">
                                   {this.props.translate('musit.storageUnits.height.labelText')}</label>
                                 <div class="col-sm-4" is="null">
-                                  <MusitField
+                                  <Field
                                     id="heightFrom"
                                     tooltip={this.props.translate('musit.storageUnits.height.tooltip')}
                                     validate="number"
@@ -357,7 +357,7 @@ export default class StorageUnitContainer extends Component {
                                   />
                                 </div>
                                 <div class="col-sm-4" is="null">
-                                  <MusitField
+                                  <Field
                                     id="heightTo"
                                     tooltip={this.props.translate('musit.storageUnits.heightTo.tooltip')}
                                     validate="number"
