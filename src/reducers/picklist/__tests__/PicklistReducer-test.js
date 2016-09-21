@@ -63,6 +63,22 @@ describe('PicklistReducer', () => {
     assert(state.marked.length === 1)
   })
 
+  it('Adding the same item multiple times is ignored.', () => {
+    const testItem = {
+      id: 888,
+      name: 'Dynamic'
+    }
+    let newState = picklistReducer(testState, add(TYPES.NODE, testItem))
+    assert(newState.lists[TYPES.NODE].length === 4)
+    newState = picklistReducer(newState, add(TYPES.NODE, testItem))
+    assert(newState.lists[TYPES.NODE].length === 4)
+    newState = picklistReducer(newState, add(TYPES.NODE, testItem))
+    assert(newState.lists[TYPES.NODE].length === 4)
+    deepFreeze(newState)
+    const state2 = picklistReducer(newState, remove(TYPES.NODE, testItem))
+    assert(state2.lists[TYPES.NODE].length === 3)
+  })
+
   it('Add, activate and remove extra picklist', () => {
     const state = picklistReducer(testState, createPickList('test'))
     assert(state.lists.test)

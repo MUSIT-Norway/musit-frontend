@@ -65,17 +65,17 @@ const picklistReducer = (state = initialState, action = {}) => {
           [subStateKey]: []
         }
       }
-    case ADD:
+    case ADD: {
+      const existingItem = subState.find(item => item.id === action.item.id)
+      const newState = !existingItem ? [...subState, action.item] : subState
       return {
         ...state,
         lists: {
           ...state.lists,
-          [subStateKey]: [
-            ...subState,
-            action.item
-          ]
+          [subStateKey]: newState
         }
       }
+    }
     case REMOVE:
       return {
         ...state,
