@@ -19,19 +19,64 @@
 
 import React, { Component, PropTypes } from 'react'
 import { Modal } from 'react-bootstrap';
+import Language from '../../../components/language'
+import { loadRoot, clearRoot, loadChildren, loadPath, setCurrent } from '../../../reducers/storageunit/modal'
+import Breadcrumb from '../../../layout/Breadcrumb'
+import { NodeGrid } from '../../../components/grid'
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => ({
+  translate: (key, markdown) => Language.translate(key, markdown),
+  children: state.storageUnitModal.data || [],
+  rootNode: state.storageUnitModal.root,
+  path: state.storageUnitModal.root.path,
+  currentId: state.storageUnitModal.currentId
+})
+
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    clearRoot: () => {
+      dispatch(clearRoot())
+    },
+    loadChildren: (id, callback) => {
+      dispatch(loadChildren(id, callback))
+      dispatch(loadRoot(id))
+    },
+    loadPath: (id) => {
+      dispatch(loadPath(id))
+    },
+    setCurrentId: (id) => dispatch(setCurrent(id))
+  })
+}
 
 
+@connect(mapStateToProps, mapDispatchToProps)
 export default class MusitModal extends Component {
 
   static propTypes = {
-    valueHeader: PropTypes.string,
-    valueBody: PropTypes.string,
-    valueFooter: PropTypes.string,
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
+    initialId: PropTypes.number.isRequired
+  }
+
+  componentWillMount() {
+    this.props.clearRoot()
+    this.props.loadChildren(this.props.currentId || this.props.initialId)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.show === false && this.props.show === true) {
+      this.props.clearRoot()
+    }
+    if (nextProps.show === true && this.props.show === false && this.props.currentId) {
+      this.props.loadChildren(this.props.currentId || this.props.initialId)
+    }
   }
 
   render() {
+    const { children, path } = this.props
+    const { data: rootNodeData } = this.props.rootNode
+    debugger;
     return (
       <div>
         <Modal
@@ -41,13 +86,19 @@ export default class MusitModal extends Component {
           aria-labelledby="contained-modal-title-lg"
         >
           <Modal.Header closeButton>
-            {this.props.valueHeader}
+            {"Flytt gjenstander"}
           </Modal.Header>
           <Modal.Body>
-            {this.props.valueBody}
+            <NodeGrid
+              id={rootNodeData ? rootNodeData.id : null}
+              translate={this.props.translate}
+              tableData={children}
+              onAction={() => true}
+              onClick={(node) => this.props.setCurrentId(node.id)}
+            />
           </Modal.Body>
           <Modal.Footer>
-            {this.props.valueFooter}
+            <Breadcrumb nodes={path} onClickCrumb={node => true} />
           </Modal.Footer>
         </Modal>
       </div>

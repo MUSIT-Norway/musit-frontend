@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux';
 import Language from '../../../components/language'
 import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
-import { loadRootModal, clearRootModal, loadChildrenModal, loadPathModal } from '../../../reducers/storageunit/modal'
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { add } from '../../../reducers/picklist'
 import { hashHistory } from 'react-router'
@@ -13,19 +12,14 @@ import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { MusitModal } from '../../../components/formfields'
-// import StoringUnitModal from '../../../containers/StoringUnitModal/StoringUnitModal'
+
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root,
   path: state.storageGridUnit.root.path,
-  routerState: state.routing,
-  childrenModal: state.storageGridUnit.data || [],
-  objectsModal: state.storageObjectGrid.data || [],
-  rootNodeModal: state.storageGridUnit.root,
-  pathModal: state.storageGridUnit.root.path,
-  routerStateModal: state.routing
+  routerState: state.routing
 })
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -35,8 +29,6 @@ const mapDispatchToProps = (dispatch, props) => {
     loadStorageUnits: () => {
       dispatch(clearRoot())
       dispatch(loadRoot())
-      dispatch(clearRootModal())
-      dispatch(loadRootModal())
     },
     loadStorageObjects: (id) => {
       dispatch(loadObjects(id))
@@ -44,12 +36,9 @@ const mapDispatchToProps = (dispatch, props) => {
     loadChildren: (id, callback) => {
       dispatch(loadChildren(id, callback))
       dispatch(loadRoot(id))
-      dispatch(loadChildrenModal(id, callback))
-      dispatch(loadRootModal(id))
     },
     loadPath: (id) => {
       dispatch(loadPath(id))
-      dispatch(loadPathModal(id))
     },
     onAction: (actionName, unit) => {
       switch (actionName) {
@@ -127,8 +116,7 @@ export default class StorageUnitsContainer extends React.Component {
       searchPattern: '',
       showObjects: false,
       showNodes: true,
-      showDeleteModal: false,
-      showModal: false,
+      showModal: false
     }
   }
 
@@ -211,21 +199,6 @@ export default class StorageUnitsContainer extends React.Component {
     this.setState({ ...this.state, showModal: true })
   }
 
-  randerModal(a, b, c) {
-    const lv = (this.state.showModal ?
-      <MusitModal
-        valueHeader={a}
-        valueBody={c}
-        valueFooter={b}
-        show={this.state.showModal}
-        onHide={this.hideModal}
-      />
-    : '')
-    // console.log(b)
-    // const lv = (this.state.showModal ? <StoringUnitModal /> : '')
-    return lv
-  }
-
   hideModal= () => {
     this.setState({ ...this.state, showModal: false })
   }
@@ -304,30 +277,26 @@ export default class StorageUnitsContainer extends React.Component {
       tableData={this.props.objects}
     />)
   }
-  makeContentGridModal(rootNode, children) {
-    return (<NodeGrid
-      id={rootNode ? rootNode.id : null}
-      translate={this.props.translate}
-      tableData={children}
-      onAction={this.props.onAction}
-      onClick={(row) =>
-        hashHistory.push(
-          `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
-        )
-      }
-    />)
+
+  renderModal(initialId) {
+    return (
+      <MusitModal
+        initialId={initialId}
+        show={this.state.showModal}
+        onHide={this.hideModal}
+      />
+    )
   }
 
   render() {
     const { searchPattern } = this.state
-    const { children, childrenModal, translate, path, pathModal } = this.props
+    const { children, translate, path } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
-    const { data: rootNodeDataModal } = this.props.rootNodeModal
     const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
-    const breadcrumbModal = <Breadcrumb nodes={pathModal} onClickCrumb={node => this.onClickCrumb(node)} />
+    const initialId = this.resolveCurrentId(this.props.params.splat);
     return (
       <span>
-        { this.randerModal(breadcrumb, breadcrumbModal, this.makeContentGridModal(rootNodeDataModal, childrenModal))}
+        {this.renderModal(initialId)}
         <Layout
           title={"Magasin"}
           translate={translate}

@@ -1,21 +1,30 @@
 const LOAD_SEVERAL = 'musit/storageunit-modal/LOAD_SEVERAL'
 const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-modal/LOAD_SEVERAL_SUCCESS'
 const LOAD_SEVERAL_FAIL = 'musit/storageunit-modal/LOAD_SEVERAL_FAIL'
-const LOAD_ONE = 'musit/storageunit-modal/LOAD_ONE'
-const LOAD_ONE_SUCCESS = 'musit/storageunit-modal/LOAD_ONE_SUCCESS'
-const LOAD_ONE_FAIL = 'musit/storageunit-modal/LOAD_ONE_FAIL'
+const LOAD_ROOT = 'musit/storageunit-modal/LOAD_ROOT'
+const LOAD_ROOT_SUCCESS = 'musit/storageunit-modal/LOAD_ROOT_SUCCESS'
+const LOAD_ROOT_FAIL = 'musit/storageunit-modal/LOAD_ROOT_FAIL'
 const LOAD_PATH = 'musit/storageunit-modal/LOAD_PATH'
 const LOAD_PATH_SUCCESS = 'musit/storageunit-modal/LOAD_PATH_SUCCESS'
 const LOAD_PATH_FAIL = 'musit/storageunit-modal/LOAD_PATH_FAIL'
 const CLEAR_ROOT = 'musit/storageunit-modal/CLEAR_ROOT'
-const DELETE = 'musit/storageunit-modal/DELETE'
-const DELETE_SUCCESS = 'musit/storageunit-modal/DELETE_SUCCESS'
-const DELETE_FAIL = 'musit/storageunit-modal/DELETE_FAIL'
+const SET_CURRENT = 'musit/storageunit-modal/SET_CURRENT'
+const CLEAR_CURRENT = 'musit/storageunit-modal/CLEAR_CURRENT'
 
 const initialState = { root: {} }
 
 const storageUnitModalReducer = (state = initialState, action = {}) => {
   switch (action.type) {
+    case SET_CURRENT:
+      return {
+        ...state,
+        currentId: action.id
+      }
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        currentId: null
+      }
     case LOAD_SEVERAL:
       return {
         ...state,
@@ -70,7 +79,12 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
           error: action.error
         }
       }
-    case LOAD_ONE_SUCCESS:
+    case LOAD_ROOT:
+      return {
+        ...state,
+        loading: true
+      }
+    case LOAD_ROOT_SUCCESS:
       return {
         ...state,
         root: {
@@ -85,7 +99,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
           data: action.result
         }
       }
-    case LOAD_ONE_FAIL:
+    case LOAD_ROOT_FAIL:
       return {
         ...state,
         root: {
@@ -101,25 +115,6 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
         root: {}
       }
     }
-    case DELETE:
-      return {
-        ...state,
-        loading: true
-      }
-    case DELETE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-        data: []
-      }
-    case DELETE_FAIL:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error: action.error
-      }
     default:
       return state
   }
@@ -127,11 +122,11 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
 
 export default storageUnitModalReducer;
 
-export const loadRootModal = (id) => {
+export const loadRoot = (id) => {
   let action = {}
   if (id) {
     action = {
-      types: [LOAD_ONE, LOAD_ONE_SUCCESS, LOAD_ONE_FAIL],
+      types: [LOAD_ROOT, LOAD_ROOT_SUCCESS, LOAD_ROOT_FAIL],
       promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`)
     }
   } else {
@@ -143,7 +138,7 @@ export const loadRootModal = (id) => {
   return action
 }
 
-export const loadChildrenModal = (id, callback) => {
+export const loadChildren = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
     promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}/children`),
@@ -151,22 +146,26 @@ export const loadChildrenModal = (id, callback) => {
   };
 }
 
-export const deleteUnitModal = (id, callback) => {
-  return {
-    types: [DELETE, DELETE_SUCCESS, DELETE_FAIL],
-    promise: (client) => client.del(`/api/storageadmin/v1/storageunit/${id}`),
-    id,
-    callback
-  };
-}
-
-export const clearRootModal = () => {
+export const clearRoot = () => {
   return {
     type: CLEAR_ROOT
   }
 }
 
-export const loadPathModal = (id, callback) => {
+export const setCurrent = (id) => {
+  return {
+    type: SET_CURRENT,
+    id
+  }
+}
+
+export const clearCurrent = () => {
+  return {
+    type: CLEAR_CURRENT
+  }
+}
+
+export const loadPath = (id, callback) => {
   const url = `/api/storageadmin/v1/storageunit/${id}/path`
   return {
     types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
