@@ -32,7 +32,7 @@ export default class Login extends Component {
           </div>
           <div className={styles.images}>
             <img className={styles.image} src="../../assets/museum-images/UiS_nor_color_rgb.jpg" role="presentation" />
-            <img className={styles.image} src="../../assets/museum-images/UiO_SAMARB_2_rgb.jpg" role="presentation" />
+            <img className={styles.image} src="../../assets/museum-images/UiO_SAMARB_rgb_gjennomsiktig.png" role="presentation" />
             <img
               className={styles.image} src="../../assets/museum-images/UiT_samarbeidslogo_bokmal_300ppi.png"
               role="presentation"
