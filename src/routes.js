@@ -18,7 +18,7 @@
  */
 
 import React from 'react'
-import { IndexRedirect, Route } from 'react-router'
+import { Route } from 'react-router'
 import NotFound from './components/NotFound'
 import WelcomeView from './containers/login'
 import StorageUnitsTable from './containers/magasin/grid'
@@ -34,15 +34,7 @@ import ControlAddContainer from './containers/control/add/Connect'
 import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
-export default (store) => {
-  const requireLogin = (nextState, replace, cb) => {
-    const { auth: { user } } = store.getState();
-    if (!user) {
-      replace('/');
-    }
-    cb();
-  };
-
+export default () => {
   return (
     <Route component={App}>
       <Route path="/" component={WelcomeView} />
