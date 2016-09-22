@@ -268,7 +268,7 @@ export default class ControlView extends Component {
             onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
             bsStyle="link"
           >
-            {ok ? null : <FontAwesome name="sort-desc" style={{ 'font-size': 'x-large', 'self-align': 'center' }} />}
+            {ok ? null : <FontAwesome name="sort-desc" style={{ 'font-size': 'x-large' }} />}
           </Button>
         </Col>
       ) }
