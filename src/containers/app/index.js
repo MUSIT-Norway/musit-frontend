@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearUser: () => {
       localStorage.removeItem('jwtToken')
+      localStorage.removeItem('fakeToken')
       dispatch(clearUser())
       dispatch(clearActor())
     },
@@ -77,11 +78,11 @@ class App extends Component {
   render() {
     const { user, pickListNodeCount, pickListObjectCount } = this.props;
     const styles = require('./index.scss')
-    const rootPath = user ? '/musit/' : '/'
+    const rootPath = '/musit/'
 
     return (
       <div className={styles.app}>
-        {user && <Navbar fixedTop>
+        <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
               <IndexLink to={rootPath} activeStyle={{ color: '#33e0ff' }}>
@@ -119,7 +120,7 @@ class App extends Component {
             {user &&
               <p className={`${styles.loggedInMessage} navbar-text`}>Logged in as <strong>{user.name}</strong>.</p>}
           </Navbar.Collapse>
-        </Navbar>}
+        </Navbar>
         <div className={styles.appContent}>
           {this.props.children}
         </div>

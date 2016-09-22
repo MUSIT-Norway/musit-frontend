@@ -1,61 +1,57 @@
-const styles = require('./index.scss');
-import 'react-select/dist/react-select.css'
-import React, { Component } from 'react'
-import LoginButton from '../../components/login-button'
-import { connect } from 'react-redux'
-import { I18n } from 'react-i18nify'
+/*
+ *  MUSIT is a museum database to archive natural and cultural history data.
+ *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License,
+ *  or any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License along
+ *  with this program; if not, write to the Free Software Foundation, Inc.,
+ *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+import { connect } from 'react-redux';
 import Language from '../../components/language'
-import { connectUser, loadActor } from '../../reducers/auth'
+import Login from './login';
+import { connectUser, loadActor } from '../../reducers/auth';
+import jwtDecode from 'jwt-decode';
 
+const mapStateToProps = (state) => ({
+  user: state.auth.user,
+  translate: (key, markdown) => Language.translate(key, markdown)
+});
 
-const mapStateToProps = (state) => {
-  I18n.loadTranslations(state.language.data)
-  I18n.setLocale('no')
-  return {
-    translate: (key, markdown) => Language.translate(key, markdown),
-    user: state.auth.user,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, props) => ({
   setUser: (user) => {
     dispatch(connectUser(user))
     dispatch(loadActor())
+    props.history.push('/musit')
   },
+  loadUser: () => {
+    if (localStorage.getItem('jwtToken')) {
+      const user = jwtDecode(localStorage.getItem('jwtToken'))
+      dispatch(connectUser(user));
+      dispatch(loadActor())
+      return true;
+    }
+    if (localStorage.getItem('fakeToken')) {
+      const userId = JSON.parse(localStorage.getItem('fakeToken')).userId
+      const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
+      dispatch(connectUser(user))
+      dispatch(loadActor())
+      return true;
+    }
+    return false;
+  }
 })
 
 @connect(mapStateToProps, mapDispatchToProps)
-
-@connect(mapStateToProps)
-
-export default class Login extends Component {
-  static propTypes = {
-    translate: React.PropTypes.func.isRequired,
-    user: React.PropTypes.object,
-    setUser: React.PropTypes.func.isRequired,
-  };
-  render() {
-    return (
-      <div>
-        <div className={styles.border}>
-          <div className={styles.musittext}>
-            <LoginButton setUser={this.props.setUser}>
-              {this.props.translate('musit.login', true)}
-            </LoginButton>
-            <h3>{this.props.translate('musit.welcomePage.maintitle')}</h3>
-            <h5>{this.props.translate('musit.welcomePage.subtitle')}</h5>
-          </div>
-          <div className={styles.images}>
-            <img className={styles.image} src="../../assets/museum-images/UiS_nor_color_rgb.jpg" role="presentation" />
-            <img className={styles.image} src="../../assets/museum-images/UiO_SAMARB_2_rgb.jpg" role="presentation" />
-            <img
-              className={styles.image} src="../../assets/museum-images/UiT_samarbeidslogo_bokmal_300ppi.png"
-              role="presentation"
-            />
-            <img className={styles.image} src="../../assets/museum-images/UiBmerke_grayscale.png" role="presentation" />
-          </div>
-        </div>
-      </div>
-    );
-  }
+export default class WelcomeView extends Login {
 }

@@ -1,0 +1,28 @@
+.wrap {
+	width: 100%;
+  height: 100%;
+	margin: 50px;
+}
+
+.border {
+  position: static;
+  margin-top: 100px;
+  padding: 70px;
+  border: 1px solid;
+  justify-content: center;
+  text-align: center;
+  height: 85%;
+  width: 85%;
+}
+
+.images {
+  position: static;
+  right: 0;
+  height: 40px;
+  left:0;
+}
+
+.image {
+  width:40px; //min width should give to center the div.
+  margin:32px; //here it will make center
+}
