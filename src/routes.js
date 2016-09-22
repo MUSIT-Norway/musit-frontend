@@ -18,9 +18,9 @@
  */
 
 import React from 'react'
-import { IndexRedirect, Route } from 'react-router'
+import { Route } from 'react-router'
 import NotFound from './components/NotFound'
-import WelcomeView from './containers/welcome-view'
+import WelcomeView from './containers/login'
 import StorageUnitsTable from './containers/magasin/grid'
 import PickListView from './containers/picklist'
 import AddStorageUnitPanel from './containers/magasin/panel/add'
@@ -34,29 +34,11 @@ import ControlAddContainer from './containers/control/add/Connect'
 import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
-export default (store) => {
-  const requireLogin = (nextState, replace, cb) => {
-    const { auth: { user } } = store.getState();
-    if (!user) {
-      replace('/');
-    }
-    cb();
-  };
-
-  const redirectIfLoggedIn = (nextState, replace, cb) => {
-    const { auth: { user } } = store.getState();
-    if (user) {
-      replace('/musit/');
-    }
-    cb();
-  };
-
+export default () => {
   return (
     <Route component={App}>
-      <IndexRedirect to="/" />
-
-      <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
-      <Route path="/picklist/:type" component={PickListView} />
+      <Route path="/" component={WelcomeView} />
+      <Route path="/picklist" component={PickListView} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />
@@ -73,10 +55,11 @@ export default (store) => {
       <Route path="/magasin/*" component={StorageUnitsTable} />
 
       -- Authentication routes
-      <Route path="/musit" component={WelcomeUserView} onEnter={requireLogin} />
+      <Route path="/musit" component={WelcomeUserView} />
 
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />
     </Route>
+
   );
 };

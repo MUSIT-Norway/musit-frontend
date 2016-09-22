@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearUser: () => {
       localStorage.removeItem('jwtToken')
+      localStorage.removeItem('fakeToken')
       dispatch(clearUser())
       dispatch(clearActor())
     },
@@ -77,7 +78,7 @@ class App extends Component {
   render() {
     const { user, pickListNodeCount, pickListObjectCount } = this.props;
     const styles = require('./index.scss')
-    const rootPath = user ? '/musit/' : '/'
+    const rootPath = '/musit/'
 
     return (
       <div className={styles.app}>
@@ -120,12 +121,10 @@ class App extends Component {
               <p className={`${styles.loggedInMessage} navbar-text`}>Logged in as <strong>{user.name}</strong>.</p>}
           </Navbar.Collapse>
         </Navbar>
-
         <div className={styles.appContent}>
           {this.props.children}
         </div>
 
-        <div className="well text-center">{' '}</div>
       </div>
     );
   }

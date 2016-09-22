@@ -50,7 +50,7 @@ export default class Toolbar extends React.Component {
     } else {
       optionalSearch = (
         <div className={styles.searchField}>
-          <span style={{ width: '200px', display: 'inline-block' }}>{' '}</span>
+          <span style={{ width: '180px', display: 'inline-block' }}>{' '}</span>
         </div>
       )
     }
