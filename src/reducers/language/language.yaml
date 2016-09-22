@@ -295,7 +295,7 @@ en:
           StorageUnit: "Storage unit"
           Room: "Room"
           Building: "Building"
-          Organization: "Organisation"
+          Organisation: "Organisation"
       name:
         labelText: "Name"
         incorrect: "Max length for name is 100 char."

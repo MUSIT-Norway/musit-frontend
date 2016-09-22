@@ -50,7 +50,7 @@ export default class Layout extends React.Component {
               <Col md={6} mdOffset={2} style={{ display: 'inline-block', lineHeight: '30px', verticalAlign: 'center' }}>
                 {this.props.breadcrumb}
               </Col>
-              <Col md={3}>
+              <Col md={3} mdOffset={1} >
                 {this.props.toolbar}
               </Col>
             </Row>

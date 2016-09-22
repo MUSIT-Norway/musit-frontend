@@ -48,9 +48,13 @@ export default class Breadcrumb extends React.Component {
         let iconFragment = ''
         if (node.type && nodeTypes) {
           const currentType = nodeTypes.find((nodeType) => nodeType.type === node.type)
-          if (currentType) {
+          if (currentType.type !== 'Top') {
             iconFragment = (
-              <FontAwesome name={currentType.iconName} style={{ padding: '2px' }} />
+              <FontAwesome name={currentType.iconName} style={{ padding: '1px' }} />
+            )
+          } else {
+            iconFragment = (
+              <FontAwesome name={currentType.iconName} style={{ 'font-size': 'x-large', padding: '1px' }} />
             )
           }
         }
