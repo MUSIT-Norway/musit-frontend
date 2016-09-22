@@ -14,10 +14,10 @@ export default class ModalNodeGrid extends Component {
     return (
       <FormGroup>
         <div>
-          <Table responsive hover condensed>
+          <Table responsive hover>
             <tbody>
               {this.props.tableData.map((c, i) =>
-                <tr key={i} id={`${i}`} >
+                <tr key={i} id={`${i}`}>
                   <td id={`${i}_${c.name}`}>
                     <a
                       href=""
