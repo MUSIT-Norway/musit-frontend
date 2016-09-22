@@ -21,6 +21,7 @@ export default class Breadcrumb extends React.Component {
 
   static defaultProps = {
     nodeTypes: [
+      { type: 'Top', iconName: 'home' },
       { type: 'Organisation', iconName: 'folder' },
       { type: 'Building', iconName: 'folder' },
       { type: 'Room', iconName: 'folder' },
@@ -42,7 +43,7 @@ export default class Breadcrumb extends React.Component {
 
     const isLast = (array, index) => (array.length - 1) === index
     const renderCrumb = (nodeArray) => {
-      return nodes.map((node, index) => {
+      return nodeArray.map((node, index) => {
         let fragment = ''
         let iconFragment = ''
         if (node.type && nodeTypes) {
@@ -86,7 +87,7 @@ export default class Breadcrumb extends React.Component {
     }
     return (
       <div>
-        <span className={styles.crumb}>{divider}</span>{renderCrumb(nodes)}
+        <span className={styles.crumb}>{divider}</span>{renderCrumb([{ id: -1, name: '', type: 'Top', url: '/magasin/root' }, ...nodes])}
       </div>
     )
   }
