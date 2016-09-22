@@ -38,6 +38,7 @@ export default class Login extends Component {
               role="presentation"
             />
             <img className={styles.image} src="../../assets/museum-images/UiBmerke_grayscale.png" role="presentation" />
+            <img className={styles.image} src="../../assets/museum-images/ntnu_u-slagord.png" role="presentation" />
           </div>
         </div>
       </div>
