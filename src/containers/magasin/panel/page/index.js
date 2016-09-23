@@ -192,7 +192,7 @@ export default class StorageUnitContainer extends Component {
             validate="text"
             maximumLength={100}
             onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
-            value={this.props.unit.environmentRequirement[field] || ''}
+            value={this.props.unit.environmentRequirement[field] || ''}
           />
         </div>
       </FormGroup>
@@ -213,7 +213,7 @@ export default class StorageUnitContainer extends Component {
             validate="text"
             maximumLength={250}
             onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
-            value={this.props.unit.environmentRequirement[field] || ''}
+            value={this.props.unit.environmentRequirement[field] || ''}
           />
         </div>
       </FormGroup>
@@ -229,7 +229,7 @@ export default class StorageUnitContainer extends Component {
         placeHolder={this.translate(`${field}.placeHolder`)}
         precision={3}
         onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
-        value={unit.environmentRequirement[field] || ''}
+        value={unit.environmentRequirement[field] || ''}
       />
     )
   }
