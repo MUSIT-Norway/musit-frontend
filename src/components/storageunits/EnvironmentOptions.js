@@ -24,27 +24,27 @@ export default class EnvironmentOptions extends React.Component {
 
   renderSecurityAssessmentField(field) {
     return (
-        <div>
-          <Checkbox
-              checked={!!this.props.unit.securityAssessment[field]}
-              onChange={(event) => this.props.updateSecurityAssessment(field, event.target.checked)}
-          >
-            {this.props.translate(`musit.storageUnits.securityAssessment.${field}`)}
-          </Checkbox>
-        </div>
+      <div>
+        <Checkbox
+          checked={!!this.props.unit.securityAssessment[field]}
+          onChange={(event) => this.props.updateSecurityAssessment(field, event.target.checked)}
+        >
+          {this.props.translate(`musit.storageUnits.securityAssessment.${field}`)}
+        </Checkbox>
+      </div>
     )
   }
 
   renderEnvironmentAssessmentField(field) {
     return (
-        <div>
-          <Checkbox
-              checked={!!this.props.unit.environmentAssessment[field]}
-              onChange={(event) => this.props.updateEnvironmentAssessment(field, event.target.checked)}
-          >
-            {this.props.translate(`musit.storageUnits.environmentalAssessment.${field}`)}
-          </Checkbox>
-        </div>
+      <div>
+        <Checkbox
+          checked={!!this.props.unit.environmentAssessment[field]}
+          onChange={(event) => this.props.updateEnvironmentAssessment(field, event.target.checked)}
+        >
+          {this.props.translate(`musit.storageUnits.environmentalAssessment.${field}`)}
+        </Checkbox>
+      </div>
     )
   }
 

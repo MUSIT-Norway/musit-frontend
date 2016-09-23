@@ -208,13 +208,13 @@ export default class StorageUnitContainer extends Component {
         </label>
         <div class="col-sm-8" is="null">
           <TextArea
-              id={field}
-              numberOfRows={4}
-              tooltip={this.translate(`${field}.tooltip`)}
-              validate="text"
-              maximumLength={250}
-              onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
-              value={this.props.unit.environmentRequirement[field]}
+            id={field}
+            numberOfRows={4}
+            tooltip={this.translate(`${field}.tooltip`)}
+            validate="text"
+            maximumLength={250}
+            onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
+            value={this.props.unit.environmentRequirement[field]}
           />
         </div>
       </FormGroup>
