@@ -19,8 +19,7 @@
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
 import { hashHistory } from 'react-router'
-import Options from '../../../../components/storageunits/EnvironmentOptions'
-import { Grid, Row, Col, Form, FormGroup } from 'react-bootstrap'
+import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap'
 import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../../layout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
@@ -232,6 +231,32 @@ export default class StorageUnitContainer extends Component {
         onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
         value={unit.environmentRequirement[field]}
       />
+    )
+  }
+
+  renderSecurityAssessmentField(field) {
+    return (
+      <div>
+        <Checkbox
+          checked={!!this.props.unit.securityAssessment[field]}
+          onChange={(event) => this.updateSecAssessments(this.props.unit, field, event.target.checked)}
+        >
+          {this.props.translate(`musit.storageUnits.securityAssessment.${field}`)}
+        </Checkbox>
+      </div>
+    )
+  }
+
+  renderEnvironmentAssessmentField(field) {
+    return (
+      <div>
+        <Checkbox
+          checked={!!this.props.unit.environmentAssessment[field]}
+          onChange={(event) => this.updateEnvAssessments(this.props.unit, field, event.target.checked)}
+        >
+          {this.props.translate(`musit.storageUnits.environmentalAssessment.${field}`)}
+        </Checkbox>
+      </div>
     )
   }
 
@@ -470,12 +495,27 @@ export default class StorageUnitContainer extends Component {
                         </Grid>
                       </div>
                       {this.props.unit.type === 'Room' &&
-                        <Options
-                          translate={this.props.translate}
-                          unit={this.props.unit}
-                          updateSecurityAssessment={(field, value) => this.updateSecAssessments(this.props.unit, field, value)}
-                          updateEnvironmentAssessment={(field, value) => this.updateEnvAssessments(this.props.unit, field, value)}
-                        />}
+                        <Grid>
+                          <Row>
+                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                              <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}</ControlLabel>
+                              {this.renderSecurityAssessmentField('perimeterSecurity')}
+                              {this.renderSecurityAssessmentField('theftProtection')}
+                              {this.renderSecurityAssessmentField('fireProtection')}
+                              {this.renderSecurityAssessmentField('waterDamageAssessment')}
+                              {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
+                            </Col>
+                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                              <ControlLabel>
+                                {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
+                              </ControlLabel>
+                              {this.renderEnvironmentAssessmentField('relativeHumidity')}
+                              {this.renderEnvironmentAssessmentField('lightingCondition')}
+                              {this.renderEnvironmentAssessmentField('temperatureAssessment')}
+                              {this.renderEnvironmentAssessmentField('preventiveConservation')}
+                            </Col>
+                          </Row>
+                        </Grid>}
                       <Grid>
                         <Row>
                           <br />
