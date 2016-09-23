@@ -34,27 +34,51 @@ import ControlAddContainer from './containers/control/add/Connect'
 import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
-export default () => {
+export default (store) => {
+  const requireLogin = (nextState, replace, cb) => {
+    const { auth: { user } } = store.getState();
+    if (!user) {
+      replace('/');
+    }
+    cb();
+  };
   return (
     <Route component={App}>
       <Route path="/" component={WelcomeView} />
-      <Route path="/picklist" component={PickListView} />
-      <Route path="/magasin" component={StorageUnitsTable} />
-      <Route path="/magasin/root" component={StorageUnitsTable} />
-      <Route path="/magasin/add" add component={AddStorageUnitPanel} />
-      <Route path="/magasin/:parentId/add" add component={AddStorageUnitPanel} />
-      <Route path="/magasin/:id/view" component={EditStorageUnitPanel} />
-      <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/control/add" component={ControlAddContainer} />
-      <Route path="/magasin/:id/control/:controlId" component={ControlViewContainer} />
-      <Route path="/magasin/:id/observations" showObservations showControls={false} component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/controlsobservations" showObservations showControls component={ObservationControlGridShow} />
-      <Route path="/magasin/:id/observation/add" component={AddObservationPage} />
-      <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
-      <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} />
-      <Route path="/magasin/*" component={StorageUnitsTable} />
-
-      -- Authentication routes
+      <Route path="/picklist" component={PickListView} onEnter={requireLogin} />
+      <Route path="/magasin" component={StorageUnitsTable} onEnter={requireLogin} />
+      <Route path="/magasin/root" component={StorageUnitsTable} onEnter={requireLogin} />
+      <Route path="/magasin/add" add component={AddStorageUnitPanel} onEnter={requireLogin} />
+      <Route path="/magasin/:parentId/add" add component={AddStorageUnitPanel} onEnter={requireLogin} />
+      <Route path="/magasin/:id/view" component={EditStorageUnitPanel} onEnter={requireLogin} />
+      <Route
+        path="/magasin/:id/controls"
+        showControls showObservations={false}
+        component={ObservationControlGridShow}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/:id/control/add"
+        component={ControlAddContainer}
+        onEnter={requireLogin}
+      />
+      <Route path="/magasin/:id/control/:controlId" component={ControlViewContainer} onEnter={requireLogin} />
+      <Route
+        path="/magasin/:id/observations"
+        showObservations showControls={false}
+        component={ObservationControlGridShow}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/:id/controlsobservations"
+        showObservations showControls
+        component={ObservationControlGridShow}
+        onEnter={requireLogin}
+      />
+      <Route path="/magasin/:id/observation/add" component={AddObservationPage} onEnter={requireLogin} />
+      <Route path="/magasin/:id/observation/edit" component={EditObservationPage} onEnter={requireLogin} />
+      <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} onEnter={requireLogin} />
+      <Route path="/magasin/*" component={StorageUnitsTable} onEnter={requireLogin} />
       <Route path="/musit" component={WelcomeUserView} />
 
       -- Catch all route
