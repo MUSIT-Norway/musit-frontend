@@ -57,9 +57,6 @@ const mapDispatchToProps = (dispatch, props) => {
         case 'control':
           history.push(`/magasin/${unit.id}/controls`)
           break
-        case 'move':
-          /* TODO: Add move route or action */
-          break
         default:
           break
       }
@@ -114,7 +111,9 @@ export default class StorageUnitsContainer extends React.Component {
       searchPattern: '',
       showObjects: false,
       showNodes: true,
-      showModal: false
+      showModal: false,
+      showModalFromId: '',
+      showModalToId: '',
     }
   }
 
@@ -134,6 +133,10 @@ export default class StorageUnitsContainer extends React.Component {
         this.props.loadStorageUnits()
       }
     }
+  }
+
+  componentDidUpdate() {
+    console.log(this.state)
   }
 
   onClickCrumb(node) {
@@ -193,12 +196,20 @@ export default class StorageUnitsContainer extends React.Component {
     return newUri
   }
 
-  showModal= () => {
-    this.setState({ ...this.state, showModal: true })
+  showModal= (id) => {
+    console.log(this.state)
+    this.setState({ ...this.state, showModal: true, showModalFromId: id, showModalToId: '' })
+    console.log(this.state)
   }
 
   hideModal= () => {
-    this.setState({ ...this.state, showModal: false })
+    this.setState({ ...this.state, showModal: false, showModalFromId: '', showModalToId: '' })
+    console.log(this.state)
+  }
+  moveModal= (id) => {
+    console.log(this.state)
+    this.setState({ ...this.state, showModal: false, showModalFromId: '', showModalToId: id })
+    console.log(this.state)
   }
 
   makeToolbar() {
@@ -246,7 +257,7 @@ export default class StorageUnitsContainer extends React.Component {
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={() => this.showModal()}
+          onClickMoveNode={() => this.showModal(rootNode.id)}
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
@@ -260,6 +271,7 @@ export default class StorageUnitsContainer extends React.Component {
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={this.props.onAction}
+        onMove={(e) => this.showModal(e.id)}
         onClick={(row) =>
           hashHistory.push(
             `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
@@ -285,6 +297,8 @@ export default class StorageUnitsContainer extends React.Component {
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}
+          onMove={(id) => this.moveModal(id)}
+          headerText={this.props.translate('musit.moveModal.moveNodes')}
         />
         <Layout
           title={"Magasin"}

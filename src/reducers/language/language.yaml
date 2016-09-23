@@ -3,8 +3,9 @@ en:
     moveModal:
       move: "Move"
       moveObjects: "Move objects"
+      moveNodes: "Move nodes"
       goToRoot: "Go to top"
-      currentDestination: "Current destination"
+      currentDestination: "destination:"
     leftMenu:
       node:
         newNode: "New node"
@@ -424,9 +425,10 @@ no:
   musit:
     moveModal:
       move: "Flytt hit"
-      moveObjects: "Flytt gjenstander"
+      moveObjects: "Flytt objekter"
+      moveNodes: "Flytt noder"
       goToRoot: "Gå til toppen"
-      currentDestination: "Destinasjon"
+      currentDestination: "Destinasjon:"
     leftMenu:
       node:
         newNode: "Ny node"

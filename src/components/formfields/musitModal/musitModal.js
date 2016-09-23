@@ -28,6 +28,8 @@ export default class MusitModal extends Component {
   static propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
+    onMove: PropTypes.func.isRequired,
+    headerText: PropTypes.string.isRequired,
     loadChildren: PropTypes.func.isRequired,
     loadPath: PropTypes.func.isRequired,
     clearPath: PropTypes.func.isRequired,
@@ -66,7 +68,7 @@ export default class MusitModal extends Component {
         >
           <Modal.Header closeButton style={{ border: 'none' }}>
             <Modal.Title id="title" style={{ textAlign: 'center' }}>
-              {this.props.translate('musit.moveModal.moveObjects')}
+              {this.props.headerText}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>
@@ -92,7 +94,11 @@ export default class MusitModal extends Component {
                 <SaveCancel
                   translate={this.props.translate}
                   saveLabel={this.props.translate('musit.moveModal.move')}
-                  onClickSave={() => true}
+                  onClickSave={(e) => {
+                    e.preventDefault()
+                    this.props.onMove(this.props.currentId)
+                  }
+                  }
                   onClickCancel={this.props.onHide}
                 />
               </Col>

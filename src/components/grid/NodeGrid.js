@@ -17,6 +17,7 @@ export default class NodeGrid extends Component {
       nodeCount: PropTypes.number
     })),
     onAction: PropTypes.func.isRequired,
+    onMove: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired
   }
 
@@ -85,7 +86,7 @@ export default class NodeGrid extends Component {
                       href=""
                       onClick={(e) => {
                         e.preventDefault()
-                        this.props.onAction('move', c)
+                        this.props.onMove(c)
                       }}
                     >
                       <FontAwesome name="truck" />
