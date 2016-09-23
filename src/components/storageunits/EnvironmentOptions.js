@@ -18,15 +18,34 @@ export default class EnvironmentOptions extends React.Component {
         preventiveConservation: React.PropTypes.bool,
       })
     }),
-    updateSkallsikring: React.PropTypes.func.isRequired,
-    updateTyverisikring: React.PropTypes.func.isRequired,
-    updateBrannsikring: React.PropTypes.func.isRequired,
-    updateVannskaderisiko: React.PropTypes.func.isRequired,
-    updateRutinerBeredskap: React.PropTypes.func.isRequired,
-    updateLuftfuktighet: React.PropTypes.func.isRequired,
-    updateLysforhold: React.PropTypes.func.isRequired,
-    updateTemperatur: React.PropTypes.func.isRequired,
-    updatePreventivKonservering: React.PropTypes.func.isRequired,
+    updateSecurityAssessment: React.PropTypes.func.isRequired,
+    updateEnvironmentAssessment: React.PropTypes.func.isRequired
+  }
+
+  renderSecurityAssessmentField(field) {
+    return (
+        <div>
+          <Checkbox
+              checked={!!this.props.unit.securityAssessment[field]}
+              onChange={(event) => this.props.updateSecurityAssessment(field, event.target.checked)}
+          >
+            {this.props.translate(`musit.storageUnits.securityAssessment.${field}`)}
+          </Checkbox>
+        </div>
+    )
+  }
+
+  renderEnvironmentAssessmentField(field) {
+    return (
+        <div>
+          <Checkbox
+              checked={!!this.props.unit.environmentAssessment[field]}
+              onChange={(event) => this.props.updateEnvironmentAssessment(field, event.target.checked)}
+          >
+            {this.props.translate(`musit.storageUnits.environmentalAssessment.${field}`)}
+          </Checkbox>
+        </div>
+    )
   }
 
   render() {
@@ -35,66 +54,20 @@ export default class EnvironmentOptions extends React.Component {
         <Row>
           <Col lg={5} md={5} sm={5} xs={10} offset={1}>
             <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}</ControlLabel>
-            <Checkbox
-              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.perimeterSecurity : null}
-              onChange={(event) => this.props.updateSkallsikring(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.securityAssessment.perimeterSecurity')}
-            </Checkbox>
-            <Checkbox
-              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.theftProtection : null}
-              onChange={(event) => this.props.updateTyverisikring(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.securityAssessment.theftProtection')}
-            </Checkbox>
-            <Checkbox
-              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.fireProtection : null}
-              onChange={(event) => this.props.updateBrannsikring(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.securityAssessment.fireProtection')}
-            </Checkbox>
-            <Checkbox
-              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.waterDamageAssessment : null}
-              onChange={(event) => this.props.updateVannskaderisiko(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.securityAssessment.waterDamageAssessment')}
-            </Checkbox>
-            <Checkbox
-              checked={this.props.unit.securityAssessment ? this.props.unit.securityAssessment.routinesAndContingencyPlan : null}
-              onChange={(event) => this.props.updateRutinerBeredskap(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.securityAssessment.routinesAndContingencyPlan')}
-            </Checkbox>
+            {this.renderSecurityAssessmentField('perimeterSecurity')}
+            {this.renderSecurityAssessmentField('theftProtection')}
+            {this.renderSecurityAssessmentField('fireProtection')}
+            {this.renderSecurityAssessmentField('waterDamageAssessment')}
+            {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
           </Col>
           <Col lg={5} md={5} sm={5} xs={10} offset={1}>
             <ControlLabel>
               {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
             </ControlLabel>
-            <Checkbox
-              checked={this.props.unit.environmentAssessment ? this.props.unit.environmentAssessment.relativeHumidity : null}
-              onChange={(event) => this.props.updateLuftfuktighet(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.environmentalAssessment.relativeHumidity')}
-            </Checkbox>
-            <Checkbox
-              checked={this.props.unit.environmentAssessment ? this.props.unit.environmentAssessment.lightingCondition : null}
-              onChange={(event) => this.props.updateLysforhold(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.environmentalAssessment.lightingCondition')}
-            </Checkbox>
-            <Checkbox
-              checked={this.props.unit.environmentAssessment ? this.props.unit.environmentAssessment.temperatureAssessment : null}
-              onChange={(event) => this.props.updateTemperatur(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.environmentalAssessment.temperature')}
-            </Checkbox>
-            <Checkbox
-              checked={this.props.unit.environmentAssessment ?
-                this.props.unit.environmentAssessment.preventiveConservation : null}
-              onChange={(event) => this.props.updatePreventivKonservering(event.target.checked)}
-            >
-              {this.props.translate('musit.storageUnits.environmentalAssessment.preventiveConservation')}
-            </Checkbox>
+            {this.renderEnvironmentAssessmentField('relativeHumidity')}
+            {this.renderEnvironmentAssessmentField('lightingCondition')}
+            {this.renderEnvironmentAssessmentField('temperatureAssessment')}
+            {this.renderEnvironmentAssessmentField('preventiveConservation')}
           </Col>
         </Row>
       </Grid>

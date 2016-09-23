@@ -337,7 +337,7 @@ en:
       environmentalAssessment:
         environmentalAssessment: "Environmental assessment"
         relativeHumidity: "Relative humidity"
-        temperature: "Temperature"
+        temperatureAssessment: "Temperature"
         lightingCondition: "Lighting condition"
         preventiveConservation: "Preventive conservation"
       environmentRequirement:
@@ -754,7 +754,7 @@ no:
       environmentalAssessment:
         environmentalAssessment: "Bevaring"
         relativeHumidity: "Relativ luftfuktighet"
-        temperature: "Temperatur"
+        temperatureAssessment: "Temperatur"
         lightingCondition: "Lysforhold"
         preventiveConservation: "Preventiv konservering"
       environmentRequirement:

@@ -183,7 +183,9 @@ export default class StorageUnitContainer extends Component {
   renderStringFieldBlock(field) {
     return (
       <FormGroup>
-        <label className="col-sm-3 control-label" htmlFor="comments2">{this.translate(`${field}.labelText`)}</label>
+        <label className="col-sm-3 control-label" htmlFor={field}>
+          {this.translate(`${field}.labelText`)}
+        </label>
         <div class="col-sm-8" is="null">
           <Field
             id={field}
@@ -192,6 +194,27 @@ export default class StorageUnitContainer extends Component {
             maximumLength={100}
             onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
             value={this.props.unit.environmentRequirement[field]}
+          />
+        </div>
+      </FormGroup>
+    )
+  }
+
+  renderTextAreaBlock(field) {
+    return (
+      <FormGroup>
+        <label className="col-sm-3 control-label" htmlFor={field}>
+          {this.translate(`${field}.labelText`)}
+        </label>
+        <div class="col-sm-8" is="null">
+          <TextArea
+              id={field}
+              numberOfRows={4}
+              tooltip={this.translate(`${field}.tooltip`)}
+              validate="text"
+              maximumLength={250}
+              onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
+              value={this.props.unit.environmentRequirement[field]}
           />
         </div>
       </FormGroup>
@@ -440,52 +463,19 @@ export default class StorageUnitContainer extends Component {
                           <Row>
                             <Col md={5}>
                               <Form horizontal>
-                                <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments">
-                                    {this.translate('comments.labelText')}
-                                  </label>
-                                  <div class="col-sm-8" is="null">
-                                    <TextArea
-                                      id="comments"
-                                      numberOfRows={4}
-                                      tooltip={this.translate('comments.tooltip')}
-                                      validate="text"
-                                      maximumLength={250}
-                                      onChange={comments => this.updateEnvRequirements(this.props.unit, 'comments', comments)}
-                                      value={this.props.unit.environmentRequirement.comments}
-                                    />
-                                  </div>
-                                </div>
+                                {this.renderTextAreaBlock('comments')}
                               </Form>
                             </Col>
                           </Row>
                         </Grid>
                       </div>
-                      {this.props.unit.type === 'Room' ?
+                      {this.props.unit.type === 'Room' &&
                         <Options
                           translate={this.props.translate}
                           unit={this.props.unit}
-                          // Disse må fikses (Mappe verdi av sikring fra bool -> {0,1})
-                          updateSkallsikring={perimeterSecurity =>
-                            this.updateSecAssessments(this.props.unit, 'perimeterSecurity', perimeterSecurity)}
-                          updateTyverisikring={theftProtection =>
-                            this.updateSecAssessments(this.props.unit, 'theftProtection', theftProtection)}
-                          updateBrannsikring={fireProtection =>
-                            this.updateSecAssessments(this.props.unit, 'fireProtection', fireProtection)}
-                          updateVannskaderisiko={waterDamageAssessment =>
-                            this.updateSecAssessments(this.props.unit, 'waterDamageAssessment', waterDamageAssessment)}
-                          updateRutinerBeredskap={routinesAndContingencyPlan =>
-                            this.updateSecAssessments(this.props.unit, 'routinesAndContingencyPlan', routinesAndContingencyPlan)}
-                          updateLuftfuktighet={relativeHumidity =>
-                            this.updateEnvAssessments(this.props.unit, 'relativeHumidity', relativeHumidity)}
-                          updateLysforhold={lightingCondition =>
-                            this.updateEnvAssessments(this.props.unit, 'lightingCondition', lightingCondition)}
-                          updateTemperatur={temperatureAssessment =>
-                            this.updateEnvAssessments(this.props.unit, 'temperatureAssessment', temperatureAssessment)}
-                          updatePreventivKonservering={preventiveConservation =>
-                            this.updateEnvAssessments(this.props.unit, 'preventiveConservation', preventiveConservation)}
-                        />
-                        : null}
+                          updateSecurityAssessment={(field, value) => this.updateSecAssessments(this.props.unit, field, value)}
+                          updateEnvironmentAssessment={(field, value) => this.updateEnvAssessments(this.props.unit, field, value)}
+                        />}
                       <Grid>
                         <Row>
                           <br />
