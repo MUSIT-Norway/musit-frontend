@@ -7,9 +7,8 @@ import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
-import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/auth';
-import jwtDecode from 'jwt-decode';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist'
+import { clearUser as cl, loadUser as lu } from '../login/auth'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -24,28 +23,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearUser: () => {
-      localStorage.removeItem('jwtToken')
-      localStorage.removeItem('fakeToken')
-      dispatch(clearUser())
-      dispatch(clearActor())
-    },
-    loadUser: () => {
-      if (localStorage.getItem('jwtToken')) {
-        const user = jwtDecode(localStorage.getItem('jwtToken'))
-        dispatch(connectUser(user));
-        dispatch(loadActor())
-        return true;
-      }
-      if (localStorage.getItem('fakeToken')) {
-        const userId = JSON.parse(localStorage.getItem('fakeToken')).userId
-        const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
-        dispatch(connectUser(user))
-        dispatch(loadActor())
-        return true;
-      }
-      return false;
-    }
+    clearUser: () => cl(dispatch),
+    loadUser: () => lu(dispatch)
   }
 }
 

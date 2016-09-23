@@ -20,8 +20,7 @@
 import { connect } from 'react-redux';
 import Language from '../../components/language';
 import Login from './login';
-import { connectUser, loadActor } from '../../reducers/auth';
-import jwtDecode from 'jwt-decode';
+import { setUser, loadUser } from './auth'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -29,28 +28,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  setUser: (user) => {
-    dispatch(connectUser(user))
-    dispatch(loadActor())
-    props.history.push('/musit')
-  },
-  loadUser: () => {
-    if (localStorage.getItem('jwtToken')) {
-      const user = jwtDecode(localStorage.getItem('jwtToken'))
-      dispatch(connectUser(user));
-      dispatch(loadActor())
-      return true;
-    }
-    if (localStorage.getItem('fakeToken')) {
-      const userId = JSON.parse(localStorage.getItem('fakeToken')).userId
-      const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
-      dispatch(connectUser(user))
-      dispatch(loadActor())
-      return true;
-    }
-    return false;
-  }
-})
+  setUser: (user) => setUser(dispatch, props, user),
+  loadUser: () => loadUser(dispatch)
+}
+)
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class WelcomeView extends Login {
