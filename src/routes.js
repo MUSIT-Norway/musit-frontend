@@ -45,12 +45,36 @@ export default (store) => {
   return (
     <Route component={App}>
       <Route path="/" component={WelcomeView} />
-      <Route path="/picklist" component={PickListView} onEnter={requireLogin} />
-      <Route path="/magasin" component={StorageUnitsTable} onEnter={requireLogin} />
-      <Route path="/magasin/root" component={StorageUnitsTable} onEnter={requireLogin} />
-      <Route path="/magasin/add" add component={AddStorageUnitPanel} onEnter={requireLogin} />
-      <Route path="/magasin/:parentId/add" add component={AddStorageUnitPanel} onEnter={requireLogin} />
-      <Route path="/magasin/:id/view" component={EditStorageUnitPanel} onEnter={requireLogin} />
+      <Route
+        path="/picklist"
+        component={PickListView}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin"
+        component={StorageUnitsTable}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/root"
+        component={StorageUnitsTable}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/add"
+        add component={AddStorageUnitPanel}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/:parentId/add"
+        add component={AddStorageUnitPanel}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/:id/view"
+        component={EditStorageUnitPanel}
+        onEnter={requireLogin}
+      />
       <Route
         path="/magasin/:id/controls"
         showControls showObservations={false}
@@ -62,7 +86,11 @@ export default (store) => {
         component={ControlAddContainer}
         onEnter={requireLogin}
       />
-      <Route path="/magasin/:id/control/:controlId" component={ControlViewContainer} onEnter={requireLogin} />
+      <Route
+        path="/magasin/:id/control/:controlId"
+        component={ControlViewContainer}
+        onEnter={requireLogin}
+      />
       <Route
         path="/magasin/:id/observations"
         showObservations showControls={false}
@@ -75,14 +103,37 @@ export default (store) => {
         component={ObservationControlGridShow}
         onEnter={requireLogin}
       />
-      <Route path="/magasin/:id/observation/add" component={AddObservationPage} onEnter={requireLogin} />
-      <Route path="/magasin/:id/observation/edit" component={EditObservationPage} onEnter={requireLogin} />
-      <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} onEnter={requireLogin} />
-      <Route path="/magasin/*" component={StorageUnitsTable} onEnter={requireLogin} />
-      <Route path="/musit" component={WelcomeUserView} />
+      <Route
+        path="/magasin/:id/observation/add"
+        component={AddObservationPage}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/:id/observation/edit"
+        component={EditObservationPage}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/:id/observation/:obsId"
+        component={ViewObservationPage}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/magasin/*"
+        component={StorageUnitsTable}
+        onEnter={requireLogin}
+      />
+      <Route
+        path="/musit"
+        component={WelcomeUserView}
+      />
 
       -- Catch all route
-      <Route path="/*" component={NotFound} status={404} />
+      <Route
+        path="/*"
+        component={NotFound}
+        status={404}
+      />
     </Route>
 
   );
