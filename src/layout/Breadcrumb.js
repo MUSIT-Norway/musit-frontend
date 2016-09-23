@@ -92,7 +92,7 @@ export default class Breadcrumb extends React.Component {
     return (
       <div>
         <span className={styles.crumb}>{divider}</span>
-          {renderCrumb([{ id: -1, name: '', type: 'Top', url: '/magasin/root' }, ...nodes])}
+        {renderCrumb([{ id: -1, name: '', type: 'Top', url: '/magasin/root' }, ...nodes])}
       </div>
     )
   }
