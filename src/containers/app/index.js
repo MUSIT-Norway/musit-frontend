@@ -8,7 +8,7 @@ import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
 import { TYPES as PICK_TYPES } from '../../reducers/picklist'
-import { clearUser as cl, loadUser as lu } from '../login/auth'
+import { clearUser, loadUser } from '../login/auth'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -23,8 +23,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearUser: () => cl(dispatch),
-    loadUser: () => lu(dispatch)
+    clearUser: () => clearUser(dispatch),
+    loadUser: () => loadUser(dispatch)
   }
 }
 
