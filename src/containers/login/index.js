@@ -18,7 +18,7 @@
  */
 
 import { connect } from 'react-redux';
-import Language from '../../components/language'
+import Language from '../../components/language';
 import Login from './login';
 import { connectUser, loadActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
