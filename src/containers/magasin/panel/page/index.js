@@ -220,14 +220,14 @@ export default class StorageUnitContainer extends Component {
     )
   }
 
-  renderNumberField(field, unit) {
+  renderNumberField(field, unit, precision) {
     return (
       <Field
         id={field}
         tooltip={this.translate(`${field}.tooltip`)}
         validate="number"
         placeHolder={this.translate(`${field}.placeHolder`)}
-        precision={3}
+        precision={precision}
         onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
         value={unit.environmentRequirement[field] || ''}
       />
@@ -434,10 +434,10 @@ export default class StorageUnitContainer extends Component {
                                   <label className="col-sm-3 control-label" htmlFor="comments2">
                                     {this.translate('temperature.labelText')}</label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('temperature', this.props.unit)}
+                                    {this.renderNumberField('temperature', this.props.unit, 3)}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('temperatureTolerance', this.props.unit)}
+                                    {this.renderNumberField('temperatureTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
                               </Form>
@@ -448,10 +448,10 @@ export default class StorageUnitContainer extends Component {
                                   <label className="col-sm-3 control-label" htmlFor="comments2">
                                     {this.translate('relativeHumidity.labelText')}</label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('relativeHumidity', this.props.unit)}
+                                    {this.renderNumberField('relativeHumidity', this.props.unit, 3)}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('relativeHumidityTolerance', this.props.unit)}
+                                    {this.renderNumberField('relativeHumidityTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
                               </Form>
@@ -464,10 +464,10 @@ export default class StorageUnitContainer extends Component {
                                   <label className="col-sm-3 control-label" htmlFor="comments2">
                                     {this.translate('hypoxicAir.labelText')}</label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('hypoxicAir', this.props.unit)}
+                                    {this.renderNumberField('hypoxicAir', this.props.unit, 3)}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('hypoxicAirTolerance', this.props.unit)}
+                                    {this.renderNumberField('hypoxicAirTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
                               </Form>
