@@ -53,10 +53,11 @@ export default class Breadcrumb extends React.Component {
               <FontAwesome name={currentType.iconName} style={{ padding: '1px' }} />
             )
           } else {
-             iconFragment = (
+            iconFragment = (
               <FontAwesome name={currentType.iconName} style={{ 'font-size': 'x-large', padding: '1px' }} />
             )
           }
+        }
 
         if (passive) {
           fragment = (
