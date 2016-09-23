@@ -1,38 +1,38 @@
 .wrap {
-	position: absolute;
-	width: 90%;
-  height: 90%;
-	margin: 50px;
-	padding: 30px;
+		position: absolute;
+		width: 90%;
+	  height: 90%;
+		margin: 50px;
+		padding: 30px;
 }
 
 .border {
-  position: absolute;
-  margin-top: 100px;
-  padding: 70px;
-  border: 2px solid;
-  justify-content: center;
-  text-align: center;
-  height: 85%;
-  width: 85%;
+	  position: absolute;
+	  margin-top: 100px;
+	  padding: 70px;
+	  border: 2px solid;
+	  justify-content: center;
+	  text-align: center;
+	  height: 85%;
+	  width: 85%;
 }
 .text {
-	position: absolute;
-	top: 40%;
-	right: 0;
-	left: 0;
-	text-align: center;
+		position: absolute;
+		top: 40%;
+		right: 0;
+		left: 0;
+		text-align: center;
 }
 
 .images {
-  position: absolute;
-  right: 0;
-  height: 50px;
-  left:0;
-  bottom: 15%;
+	  position: absolute;
+	  right: 0;
+	  height: 50px;
+	  left:0;
+	  bottom: 15%;
 }
 
 .image {
-  width:50px; //min width should give to center the div.
-  margin:32px; //here it will make center
+	  width:50px; //min width should give to center the div.
+	  margin:32px; //here it will make center
 }
