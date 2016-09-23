@@ -133,7 +133,9 @@ export default class ObservationPest extends Component {
               </Col>
               <Col xs={1} sm={this.props.removeIconWidth} md={this.props.removeIconWidth}>
                 <ControlLabel>{'\u00A0'}</ControlLabel><br />
-                {!this.props.canEdit ? '' : <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />}
+                {!this.props.canEdit ? '' : <a href="" >
+                  <FontAwesome onClick={() => this.props.lifeCycleOnRemove(index)} name="times" />
+                </a> }
               </Col>
               <Col xs={1} sm={this.props.addIconWidth} md={this.props.addIconWidth}>
                 <span style={{ height: 50 }}>
