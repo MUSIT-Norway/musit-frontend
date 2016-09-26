@@ -7,9 +7,8 @@ import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
 import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
-import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/auth';
-import jwtDecode from 'jwt-decode';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist'
+import { clearUser, loadUser } from '../login/auth'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -24,27 +23,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearUser: () => {
-      localStorage.removeItem('jwtToken')
-      dispatch(clearUser())
-      dispatch(clearActor())
-    },
-    loadUser: () => {
-      if (localStorage.getItem('jwtToken')) {
-        const user = jwtDecode(localStorage.getItem('jwtToken'))
-        dispatch(connectUser(user));
-        dispatch(loadActor())
-        return true;
-      }
-      if (localStorage.getItem('fakeToken')) {
-        const userId = JSON.parse(localStorage.getItem('fakeToken')).userId
-        const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
-        dispatch(connectUser(user))
-        dispatch(loadActor())
-        return true;
-      }
-      return false;
-    }
+    clearUser: () => clearUser(dispatch),
+    loadUser: () => loadUser(dispatch)
   }
 }
 
@@ -77,7 +57,7 @@ class App extends Component {
   render() {
     const { user, pickListNodeCount, pickListObjectCount } = this.props;
     const styles = require('./index.scss')
-    const rootPath = user ? '/musit/' : '/'
+    const rootPath = '/musit/'
 
     return (
       <div className={styles.app}>
@@ -120,12 +100,10 @@ class App extends Component {
               <p className={`${styles.loggedInMessage} navbar-text`}>Logged in as <strong>{user.name}</strong>.</p>}
           </Navbar.Collapse>
         </Navbar>
-
         <div className={styles.appContent}>
           {this.props.children}
         </div>
 
-        <div className="well text-center">{' '}</div>
       </div>
     );
   }

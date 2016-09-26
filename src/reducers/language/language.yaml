@@ -391,6 +391,8 @@ en:
         MUSIT
 
         Norwegian University Museums' joint Collection Databases
+      maintitle: "MUSIT"
+      subtitle: "Norwegian University Museums' joint Collection Databases"
       body: >
         **Museum of Archaeology, University of Stavanger**
 
@@ -808,6 +810,8 @@ no:
         MUSIT
 
         Universitetsmuseenes samlingsdatabaser
+      maintitle: "MUSIT"
+      subtitle: "Universitetsmuseenes samlingsdatabaser"
       body: >
         **Arkeologisk museum, Universitetet i Stavanger**
 
