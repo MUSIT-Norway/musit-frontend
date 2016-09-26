@@ -19,8 +19,7 @@
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
 import { hashHistory } from 'react-router'
-import Options from '../../../../components/storageunits/EnvironmentOptions'
-import { Grid, Row, Col, Form, FormGroup } from 'react-bootstrap'
+import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap'
 import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../../layout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
@@ -183,7 +182,9 @@ export default class StorageUnitContainer extends Component {
   renderStringFieldBlock(field) {
     return (
       <FormGroup>
-        <label className="col-sm-3 control-label" htmlFor="comments2">{this.translate(`${field}.labelText`)}</label>
+        <label className="col-sm-3 control-label" htmlFor={field}>
+          {this.translate(`${field}.labelText`)}
+        </label>
         <div class="col-sm-8" is="null">
           <Field
             id={field}
@@ -191,24 +192,71 @@ export default class StorageUnitContainer extends Component {
             validate="text"
             maximumLength={100}
             onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
-            value={this.props.unit.environmentRequirement[field]}
+            value={this.props.unit.environmentRequirement[field] || ''}
           />
         </div>
       </FormGroup>
     )
   }
 
-  renderNumberField(field, unit) {
+  renderTextAreaBlock(field) {
+    return (
+      <FormGroup>
+        <label className="col-sm-3 control-label" htmlFor={field}>
+          {this.translate(`${field}.labelText`)}
+        </label>
+        <div class="col-sm-8" is="null">
+          <TextArea
+            id={field}
+            numberOfRows={4}
+            tooltip={this.translate(`${field}.tooltip`)}
+            validate="text"
+            maximumLength={250}
+            onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
+            value={this.props.unit.environmentRequirement[field] || ''}
+          />
+        </div>
+      </FormGroup>
+    )
+  }
+
+  renderNumberField(field, unit, precision) {
     return (
       <Field
         id={field}
         tooltip={this.translate(`${field}.tooltip`)}
         validate="number"
         placeHolder={this.translate(`${field}.placeHolder`)}
-        precision={3}
+        precision={precision}
         onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
-        value={unit.environmentRequirement[field]}
+        value={unit.environmentRequirement[field] || ''}
       />
+    )
+  }
+
+  renderSecurityAssessmentField(field) {
+    return (
+      <div>
+        <Checkbox
+          checked={!!this.props.unit.securityAssessment[field]}
+          onChange={(event) => this.updateSecAssessments(this.props.unit, field, event.target.checked)}
+        >
+          {this.props.translate(`musit.storageUnits.securityAssessment.${field}`)}
+        </Checkbox>
+      </div>
+    )
+  }
+
+  renderEnvironmentAssessmentField(field) {
+    return (
+      <div>
+        <Checkbox
+          checked={!!this.props.unit.environmentAssessment[field]}
+          onChange={(event) => this.updateEnvAssessments(this.props.unit, field, event.target.checked)}
+        >
+          {this.props.translate(`musit.storageUnits.environmentalAssessment.${field}`)}
+        </Checkbox>
+      </div>
     )
   }
 
@@ -386,10 +434,10 @@ export default class StorageUnitContainer extends Component {
                                   <label className="col-sm-3 control-label" htmlFor="comments2">
                                     {this.translate('temperature.labelText')}</label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('temperature', this.props.unit)}
+                                    {this.renderNumberField('temperature', this.props.unit, 3)}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('temperatureTolerance', this.props.unit)}
+                                    {this.renderNumberField('temperatureTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
                               </Form>
@@ -400,10 +448,10 @@ export default class StorageUnitContainer extends Component {
                                   <label className="col-sm-3 control-label" htmlFor="comments2">
                                     {this.translate('relativeHumidity.labelText')}</label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('relativeHumidity', this.props.unit)}
+                                    {this.renderNumberField('relativeHumidity', this.props.unit, 3)}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('relativeHumidityTolerance', this.props.unit)}
+                                    {this.renderNumberField('relativeHumidityTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
                               </Form>
@@ -416,10 +464,10 @@ export default class StorageUnitContainer extends Component {
                                   <label className="col-sm-3 control-label" htmlFor="comments2">
                                     {this.translate('hypoxicAir.labelText')}</label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('hypoxicAir', this.props.unit)}
+                                    {this.renderNumberField('hypoxicAir', this.props.unit, 3)}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('hypoxicAirTolerance', this.props.unit)}
+                                    {this.renderNumberField('hypoxicAirTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
                               </Form>
@@ -440,52 +488,34 @@ export default class StorageUnitContainer extends Component {
                           <Row>
                             <Col md={5}>
                               <Form horizontal>
-                                <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments">
-                                    {this.translate('comments.labelText')}
-                                  </label>
-                                  <div class="col-sm-8" is="null">
-                                    <TextArea
-                                      id="comments"
-                                      numberOfRows={4}
-                                      tooltip={this.translate('comments.tooltip')}
-                                      validate="text"
-                                      maximumLength={250}
-                                      onChange={comments => this.updateEnvRequirements(this.props.unit, 'comments', comments)}
-                                      value={this.props.unit.environmentRequirement.comments}
-                                    />
-                                  </div>
-                                </div>
+                                {this.renderTextAreaBlock('comments')}
                               </Form>
                             </Col>
                           </Row>
                         </Grid>
                       </div>
-                      {this.props.unit.type === 'Room' ?
-                        <Options
-                          translate={this.props.translate}
-                          unit={this.props.unit}
-                          // Disse må fikses (Mappe verdi av sikring fra bool -> {0,1})
-                          updateSkallsikring={perimeterSecurity =>
-                            this.updateSecAssessments(this.props.unit, 'perimeterSecurity', perimeterSecurity)}
-                          updateTyverisikring={theftProtection =>
-                            this.updateSecAssessments(this.props.unit, 'theftProtection', theftProtection)}
-                          updateBrannsikring={fireProtection =>
-                            this.updateSecAssessments(this.props.unit, 'fireProtection', fireProtection)}
-                          updateVannskaderisiko={waterDamageAssessment =>
-                            this.updateSecAssessments(this.props.unit, 'waterDamageAssessment', waterDamageAssessment)}
-                          updateRutinerBeredskap={routinesAndContingencyPlan =>
-                            this.updateSecAssessments(this.props.unit, 'routinesAndContingencyPlan', routinesAndContingencyPlan)}
-                          updateLuftfuktighet={relativeHumidity =>
-                            this.updateEnvAssessments(this.props.unit, 'relativeHumidity', relativeHumidity)}
-                          updateLysforhold={lightingCondition =>
-                            this.updateEnvAssessments(this.props.unit, 'lightingCondition', lightingCondition)}
-                          updateTemperatur={temperatureAssessment =>
-                            this.updateEnvAssessments(this.props.unit, 'temperatureAssessment', temperatureAssessment)}
-                          updatePreventivKonservering={preventiveConservation =>
-                            this.updateEnvAssessments(this.props.unit, 'preventiveConservation', preventiveConservation)}
-                        />
-                        : null}
+                      {this.props.unit.type === 'Room' &&
+                        <Grid>
+                          <Row>
+                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                              <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}</ControlLabel>
+                              {this.renderSecurityAssessmentField('perimeterSecurity')}
+                              {this.renderSecurityAssessmentField('theftProtection')}
+                              {this.renderSecurityAssessmentField('fireProtection')}
+                              {this.renderSecurityAssessmentField('waterDamageAssessment')}
+                              {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
+                            </Col>
+                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                              <ControlLabel>
+                                {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
+                              </ControlLabel>
+                              {this.renderEnvironmentAssessmentField('relativeHumidity')}
+                              {this.renderEnvironmentAssessmentField('lightingCondition')}
+                              {this.renderEnvironmentAssessmentField('temperatureAssessment')}
+                              {this.renderEnvironmentAssessmentField('preventiveConservation')}
+                            </Col>
+                          </Row>
+                        </Grid>}
                       <Grid>
                         <Row>
                           <br />
