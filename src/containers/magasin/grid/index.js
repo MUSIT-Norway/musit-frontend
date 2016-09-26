@@ -4,6 +4,7 @@ import Language from '../../../components/language'
 import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { add, TYPES as PICK_TYPES } from '../../../reducers/picklist'
+import { moveObject, moveNode } from '../../../reducers/move'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
@@ -13,7 +14,11 @@ import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 
+const OBJECT = 'object'
+const NODE = 'node'
+
 const mapStateToProps = (state) => ({
+  user: state.auth.actor,
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
@@ -40,6 +45,12 @@ const mapDispatchToProps = (dispatch, props) => {
     loadPath: (id) => {
       dispatch(loadPath(id))
     },
+    moveObject: (objectId, destinationId, doneBy, callback) => {
+      dispatch(moveObject(objectId, destinationId, doneBy, callback))
+    },
+    moveNode: (nodeId, destinationId, doneBy, callback) => {
+      dispatch(moveNode(nodeId, destinationId, doneBy, callback))
+    },
     onAction: (actionName, unit) => {
       switch (actionName) {
         case 'pickNode':
@@ -56,9 +67,6 @@ const mapDispatchToProps = (dispatch, props) => {
           break
         case 'control':
           history.push(`/magasin/${unit.id}/controls`)
-          break
-        case 'move':
-          /* TODO: Add move route or action */
           break
         default:
           break
@@ -105,7 +113,12 @@ export default class StorageUnitsContainer extends React.Component {
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
     loadPath: React.PropTypes.func,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    moveObject: React.PropTypes.func.isRequired,
+    moveNode: React.PropTypes.func.isRequired,
+    user: React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired
+    }).isRequired,
   }
 
   constructor(props) {
@@ -114,7 +127,9 @@ export default class StorageUnitsContainer extends React.Component {
       searchPattern: '',
       showObjects: false,
       showNodes: true,
-      showModal: false
+      showModal: false,
+      showModalFromId: '',
+      showModalType: '',
     }
   }
 
@@ -193,12 +208,37 @@ export default class StorageUnitsContainer extends React.Component {
     return newUri
   }
 
-  showModal= () => {
-    this.setState({ ...this.state, showModal: true })
+  showModal= (fromId, type) => {
+    this.setState({ ...this.state, showModal: true, showModalFromId: fromId, showModalType: type })
   }
 
   hideModal= () => {
-    this.setState({ ...this.state, showModal: false })
+    this.setState({ ...this.state, showModal: false, showModalFromId: '', showModalType: '' })
+  }
+
+  moveModal= (toId) => {
+    switch (this.state.showModalType) {
+      case NODE:
+        this.props.moveNode(this.state.showModalFromId, toId, this.props.user.id, {
+          onFailure: () => {
+            const fromId = this.state.showModalFromId
+            this.setState({ ...this.state, showModal: false, showModalFromId: '', showModalType: '' })
+            window.alert(`Du har slettet noden med navn ${name}`)
+            hashHistory.push(`/magasin/${fromId}`)
+          }
+        })
+        break;
+      case OBJECT:
+        this.props.moveObject(this.state.showModalFromId, toId, this.props.user.id, {
+          onFailure: () => {
+            this.setState({ ...this.state, showModal: false, showModalFromId: '', showModalType: '' })
+            window.alert(`Du har slettet objektet med navn ${name}`)
+          }
+        })
+        break;
+      default:
+        throw Error(`Invalid type ${this.state.showModalType}`)
+    }
   }
 
   makeToolbar() {
@@ -246,7 +286,7 @@ export default class StorageUnitsContainer extends React.Component {
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={() => this.showModal()}
+          onClickMoveNode={() => this.showModal(rootNode.id, NODE)}
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
@@ -260,6 +300,7 @@ export default class StorageUnitsContainer extends React.Component {
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={this.props.onAction}
+        onMove={(e) => this.showModal(e.id, NODE)}
         onClick={(row) =>
           hashHistory.push(
             `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
@@ -272,6 +313,7 @@ export default class StorageUnitsContainer extends React.Component {
       translate={this.props.translate}
       tableData={this.props.objects}
       onAction={this.props.onAction}
+      onMove={(e) => this.showModal(e.id, OBJECT)}
     />)
   }
 
@@ -285,6 +327,8 @@ export default class StorageUnitsContainer extends React.Component {
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}
+          onMove={(id) => this.moveModal(id)}
+          headerText={this.props.translate('musit.moveModal.moveNodes')}
         />
         <Layout
           title={'Magasin'}
