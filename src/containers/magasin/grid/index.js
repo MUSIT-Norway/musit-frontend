@@ -287,7 +287,7 @@ export default class StorageUnitsContainer extends React.Component {
           onHide={this.hideModal}
         />
         <Layout
-          title={"Magasin"}
+          title={'Magasin'}
           translate={translate}
           breadcrumb={breadcrumb}
           toolbar={this.makeToolbar()}

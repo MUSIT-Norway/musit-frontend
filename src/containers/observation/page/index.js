@@ -310,8 +310,12 @@ export default class ObservationPage extends React.Component {
                 ) : (
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
+                    onClear={() => this.setState({ ...this.state, doneDate: moment() })}
                     value={this.state.doneDate.toISOString()}
-                    onChange={(newValue) => {
+                    onChange={newValue => {
+                      if (!newValue) {
+                        return;
+                      }
                       this.setState({ ...this.state, doneDate: parseISODate(newValue) })
                     }}
                     disabled={this.props.mode === 'VIEW'}
@@ -396,7 +400,13 @@ export default class ObservationPage extends React.Component {
                     {this.props.translate(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
                     {this.props.mode !== 'ADD' ? '' : (
-                      <a onClick={() => this.removeObservation(index)}>
+                      <a
+                        href="" onClick={(e) => {
+                          this.removeObservation(index)
+                          e.preventDefault()
+                        }
+                        }
+                      >
                         <FontAwesome name="times" />
                       </a>
                     )}

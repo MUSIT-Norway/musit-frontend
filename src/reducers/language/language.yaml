@@ -130,7 +130,7 @@ en:
           countPlaceHolder: "Integer"
           countTooltip: "Pest quantity"
         alcohol:
-          statusRequired: "Level is required."
+          statusValueRequired: "Level is required."
           volumeIncorrect: "Volume must be a number with max 3 decimals."
           commentIncorrect: "Max length for Task/Comment is 250 char"
           labelText: "Alcohol"
@@ -300,7 +300,7 @@ en:
           StorageUnit: "Storage unit"
           Room: "Room"
           Building: "Building"
-          Organization: "Organisation"
+          Organisation: "Organisation"
       name:
         labelText: "Name"
         incorrect: "Max length for name is 100 char."
@@ -342,7 +342,7 @@ en:
       environmentalAssessment:
         environmentalAssessment: "Environmental assessment"
         relativeHumidity: "Relative humidity"
-        temperature: "Temperature"
+        temperatureAssessment: "Temperature"
         lightingCondition: "Lighting condition"
         preventiveConservation: "Preventive conservation"
       environmentRequirement:
@@ -552,7 +552,7 @@ no:
           countPlaceHolder: "Heltall"
           countTooltip: "Antall skadedyr"
         alcohol:
-          statusRequired: "Nivå er påkrevd."
+          statusValueRequired: "Nivå er påkrevd."
           volumeIncorrect: "Volum må være et tall med maks 3 desimaler."
           commentIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Sprit"
@@ -722,7 +722,7 @@ no:
           StorageUnit: "Lagringsenhet"
           Room: "Rom"
           Building: "Bygg"
-          Organization: "Organisasjon"
+          Organisation: "Organisasjon"
       name:
         labelText: "Navn"
         incorrect: "Navn kan ha maks 100 tegn."
@@ -764,7 +764,7 @@ no:
       environmentalAssessment:
         environmentalAssessment: "Bevaring"
         relativeHumidity: "Relativ luftfuktighet"
-        temperature: "Temperatur"
+        temperatureAssessment: "Temperatur"
         lightingCondition: "Lysforhold"
         preventiveConservation: "Preventiv konservering"
       environmentRequirement:
