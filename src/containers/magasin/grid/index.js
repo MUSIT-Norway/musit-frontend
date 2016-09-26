@@ -273,7 +273,7 @@ export default class StorageUnitsContainer extends React.Component {
     const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
     return (
       <Layout
-        title={"Magasin"}
+        title={'Magasin'}
         translate={translate}
         breadcrumb={breadcrumb}
         toolbar={this.makeToolbar()}

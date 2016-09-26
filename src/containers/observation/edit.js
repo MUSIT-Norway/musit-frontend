@@ -95,7 +95,7 @@ export default class EditObservationPage extends React.Component {
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
-        title={"Magasin"}
+        title={'Magasin'}
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         content={
