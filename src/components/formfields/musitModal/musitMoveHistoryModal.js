@@ -33,13 +33,9 @@ export default class MusitModal extends Component {
     loadChildren: PropTypes.func.isRequired,
     loadPath: PropTypes.func.isRequired,
     clearPath: PropTypes.func.isRequired,
-    loadRoot: PropTypes.func.isRequired,
-    setCurrentId: PropTypes.func.isRequired,
-    clearCurrentId: PropTypes.func.isRequired,
-    currentId: PropTypes.number,
     path: PropTypes.arrayOf(PropTypes.object),
     translate: PropTypes.func,
-    children: PropTypes.arrayOf(PropTypes.object)
+    moves: PropTypes.arrayOf(PropTypes.object)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -75,7 +71,7 @@ export default class MusitModal extends Component {
           <Modal.Footer style={{ textAlign: 'center' }}>
             <Row style={{ textAlign: 'center' }}>
               <Col>
-                {this.props.translate('musit.moveModal.currentDestination')}
+                {this.props.translate('musit.moveHistoryModal.currentDestination')}
               </Col>
             </Row>
             <Row style={{ textAlign: 'center' }}>
@@ -88,7 +84,7 @@ export default class MusitModal extends Component {
               <Col xs={4} sm={4} smOffset={4}>
                 <SaveCancel
                   translate={this.props.translate}
-                  saveLabel={this.props.translate('musit.moveModal.move')}
+                  saveLabel={this.props.translate('musit.moveHistoryModal.close')}
                   onClickSave={(e) => {
                     e.preventDefault()
                     this.props.onClose()
