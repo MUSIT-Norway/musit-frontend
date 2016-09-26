@@ -34,6 +34,7 @@ import controlReducer from './control'
 import observationControlGridReducer from './grid/observationcontrol'
 import nodeGridReducer from './grid/node'
 import objectGridReducer from './grid/object'
+import moveHistoryReducer from './grid/move'
 import { reducer as formReducer } from 'redux-form'
 
 const rootReducer = combineReducers({
@@ -53,6 +54,7 @@ const rootReducer = combineReducers({
   control: controlReducer,
   observationControlGrid: observationControlGridReducer,
   nodeGrid: nodeGridReducer,
+  movehistory: moveHistoryReducer,
   objectGrid: objectGridReducer
 })
 
