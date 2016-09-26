@@ -20,8 +20,8 @@
 import React, { Component, PropTypes } from 'react'
 import { Modal, Row, Col } from 'react-bootstrap'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import { ModalNodeGrid } from '../../../components/grid'
-import { SaveCancel } from '../../../components/formfields'
+import ModalNodeGrid from '../../../components/grid/ModalNodeGrid'
+import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 
 export default class MusitModal extends Component {
 

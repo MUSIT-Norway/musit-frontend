@@ -14,9 +14,6 @@ import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 
-const OBJECT = 'object'
-const NODE = 'node'
-
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -31,6 +28,9 @@ const mapDispatchToProps = (dispatch, props) => {
   const { history } = props
 
   return ({
+    loadRoot: (id) => {
+      dispatch(loadRoot(id))
+    },
     loadStorageUnits: () => {
       dispatch(clearRoot())
       dispatch(loadRoot())
@@ -119,6 +119,7 @@ export default class StorageUnitsContainer extends React.Component {
     user: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired
     }).isRequired,
+    loadRoot: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -131,6 +132,9 @@ export default class StorageUnitsContainer extends React.Component {
       showModalFromId: '',
       showModalType: '',
     }
+
+    this.loadNodes = this.loadNodes.bind(this)
+    this.loadObjects = this.loadObjects.bind(this)
   }
 
   componentWillMount() {
@@ -208,37 +212,22 @@ export default class StorageUnitsContainer extends React.Component {
     return newUri
   }
 
-  showModal= (fromId, type) => {
-    this.setState({ ...this.state, showModal: true, showModalFromId: fromId, showModalType: type })
+  showModal= (fromId) => {
+    this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
   }
 
-  hideModal= () => {
-    this.setState({ ...this.state, showModal: false, showModalFromId: '', showModalType: '' })
+  hideModal = () => {
+    this.setState({ ...this.state, showModal: false, showModalFromId: '' })
   }
 
   moveModal= (toId) => {
-    switch (this.state.showModalType) {
-      case NODE:
-        this.props.moveNode(this.state.showModalFromId, toId, this.props.user.id, {
-          onFailure: () => {
-            const fromId = this.state.showModalFromId
-            this.setState({ ...this.state, showModal: false, showModalFromId: '', showModalType: '' })
-            window.alert(`Du har slettet noden med navn ${name}`)
-            hashHistory.push(`/magasin/${fromId}`)
-          }
-        })
-        break;
-      case OBJECT:
-        this.props.moveObject(this.state.showModalFromId, toId, this.props.user.id, {
-          onFailure: () => {
-            this.setState({ ...this.state, showModal: false, showModalFromId: '', showModalType: '' })
-            window.alert(`Du har slettet objektet med navn ${name}`)
-          }
-        })
-        break;
-      default:
-        throw Error(`Invalid type ${this.state.showModalType}`)
-    }
+    this.props.moveNode(this.state.showModalFromId, toId, 1, {
+      onFailure: () => {
+        const id = this.state.showModalFromId
+        this.setState({ ...this.state, showModal: false, showModalFromId: '' })
+        this.props.loadPath(id)
+      }
+    })
   }
 
   makeToolbar() {
@@ -269,7 +258,7 @@ export default class StorageUnitsContainer extends React.Component {
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          id={rootNode ? rootNode.id : 0}
+          id={rootNode ? rootNode.id : null}
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
@@ -286,7 +275,7 @@ export default class StorageUnitsContainer extends React.Component {
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={() => this.showModal(rootNode.id, NODE)}
+          onClickMoveNode={() => this.showModal(rootNode.id)}
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
@@ -294,13 +283,18 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   makeContentGrid(filter, rootNode, children) {
+    const nodeId = rootNode ? rootNode.id : null;
     if (this.state.showNodes) {
       return (<NodeGrid
-        id={rootNode ? rootNode.id : null}
+        id={nodeId}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={this.props.onAction}
-        onMove={(e) => this.showModal(e.id, NODE)}
+        onMove={(moveFrom, moveTo, callback) => this.props.moveNode(moveFrom, moveTo, 1, callback)}
+        refresh={() => {
+          this.loadNodes()
+          this.props.loadRoot(nodeId)
+        }}
         onClick={(row) =>
           hashHistory.push(
             `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
@@ -309,11 +303,15 @@ export default class StorageUnitsContainer extends React.Component {
       />)
     }
     return (<ObjectGrid
-      id={rootNode ? rootNode.id : 0}
+      id={nodeId}
       translate={this.props.translate}
       tableData={this.props.objects}
       onAction={this.props.onAction}
-      onMove={(e) => this.showModal(e.id, OBJECT)}
+      onMove={(moveFrom, moveTo, callback) => this.props.moveObject(moveFrom, moveTo, 1, callback)}
+      refresh={() => {
+        this.loadObjects()
+        this.props.loadRoot(nodeId)
+      }}
     />)
   }
 
