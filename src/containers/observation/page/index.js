@@ -396,7 +396,7 @@ export default class ObservationPage extends React.Component {
                     {this.props.translate(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
                     {this.props.mode !== 'ADD' ? '' : (
-                      <a onClick={() => this.removeObservation(index)}>
+                      <a href="" onClick={() => this.removeObservation(index)}>
                         <FontAwesome name="times" />
                       </a>
                     )}

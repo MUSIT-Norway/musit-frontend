@@ -244,19 +244,19 @@ export default class ControlView extends Component {
     const observation = (fontName, observationType) => {
       return (
         <Col xs={5} sm={5} md={5} >
-          <span className={`icon icon-${fontName}`} />
+          <span className={`icon icon-${fontName}`} style={{ 'font-size': 'x-large' }} />
           {` ${observationType}`}
         </Col>
     ) }
     const controlOk = (
       <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="check" />
+        <FontAwesome name="check" style={{ 'font-size': 'x-large' }} />
         {`  ${this.props.translate('musit.texts.ok')}`}
       </Col>
     )
     const controlNotOk = (
       <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="close" />
+        <FontAwesome name="close" style={{ 'font-size': 'x-large' }} />
         {`  ${this.props.translate('musit.texts.notOk')}`}
       </Col>
     )
@@ -268,7 +268,7 @@ export default class ControlView extends Component {
             onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
             bsStyle="link"
           >
-            {ok ? null : <FontAwesome name="sort-desc" />}
+            {ok ? null : <FontAwesome name="sort-desc" style={{ 'font-size': 'x-large' }} />}
           </Button>
         </Col>
       ) }
@@ -276,7 +276,7 @@ export default class ControlView extends Component {
       const { eventType, ok } = control
       return (
         <div key={i}>
-          <Row>
+          <Row style={{ top: '0', bottom: '0' }} >
             {observation(ControlView.iconMap[eventType],
               this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
             {ok ? controlOk : controlNotOk}
