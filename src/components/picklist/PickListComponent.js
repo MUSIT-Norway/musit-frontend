@@ -34,7 +34,7 @@ export default class PickListComponent extends Component {
         <Table responsive striped condensed hover>
           <thead>
             <tr>
-              <th style={{ verticalAlign: 'middle', textAlign: 'right' }} colSpan="3">
+              <th className={style.toolsColumn} colSpan="3">
                 Alle&nbsp;&nbsp;<input type="checkbox" />
                 <FontAwesome className={style.normalAction} name="print" />
                 <FontAwesome className={style.normalAction} name="truck" />
@@ -49,7 +49,7 @@ export default class PickListComponent extends Component {
                 <tr key={pick.id}>
                   <td className={style.icon}>{iconRendrer(pick)}</td>
                   <td className={style.label}>{labelRendrer(pick)}</td>
-                  <td style={{ verticalAlign: 'middle', textAlign: 'right' }}>
+                  <td className={style.toolsColumn}>
                     <input type="checkbox" onClick={(e) => onToggleMarked(e, pick.id)} className={style.normalAction} name={checkSymbol} />
                     <FontAwesome className={style.normalAction} name="print" />
                     <FontAwesome className={style.normalAction} name="truck" />
