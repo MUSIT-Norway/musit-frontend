@@ -81,7 +81,7 @@ export const validateFromTo = (formProps, index, type) => {
 
   if (!formProps.fromValue) {
     errors[`${type}.fromValue`] = typeFieldRequired(type, 'fromValue')
-  } else if (validateString(formProps.fromValue, 1) === 'error') {
+  } else if (validateNumber(formProps.fromValue, 0, 10, 3) === 'error') {
     errors[`${type}.fromValue`] = typeFieldIncorrect(type, 'fromValue')
   }
 
