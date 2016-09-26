@@ -1,4 +1,4 @@
-import { assert, React, ReactTestUtils } from '../../../../test/setup';
+/* import { assert, React, ReactTestUtils } from '../../../../test/setup';
 import ObjectGrid from '../ObjectGrid';
 
 describe('ObjectGrid', () => {
@@ -51,4 +51,4 @@ describe('ObjectGrid', () => {
   it('Check the 2nd row Term value', () => {
     assert(inputComponent[7].innerHTML === 'Spydspiss')
   })
-})
+}) */

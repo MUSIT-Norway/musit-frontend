@@ -18,6 +18,7 @@ export default class ObjectGrid extends Component {
     onAction: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
     refresh: PropTypes.func.isRequired,
+    rootNode: React.PropTypes.object,
   }
 
   constructor(props) {
@@ -39,12 +40,15 @@ export default class ObjectGrid extends Component {
   }
 
   moveModal(toId, toName) {
+    const { data: rootNodeData } = this.props.rootNode
+    const name = rootNodeData.name
     this.props.onMove(this.state.showModalFromId, toId, {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
         this.props.refresh()
         window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
-      }
+      },
+      onFailure: window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
     })
   }
 

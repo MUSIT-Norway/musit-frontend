@@ -226,12 +226,13 @@ export default class StorageUnitsContainer extends React.Component {
     const { data: rootNodeData } = this.props.rootNode
     const name = rootNodeData.name
     this.props.moveNode(this.state.showModalFromId, toId, 1, {
-      onFailure: () => {
+      onSuccess: () => {
         const id = this.state.showModalFromId
         this.setState({ ...this.state, showModal: false, showModalFromId: '' })
         this.props.loadPath(id)
         window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
-      }
+      },
+      onFailure: window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
     })
   }
 
@@ -305,6 +306,7 @@ export default class StorageUnitsContainer extends React.Component {
             `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
           )
         }
+        rootNode={this.props.rootNode}
       />)
     }
     return (<ObjectGrid
@@ -317,6 +319,7 @@ export default class StorageUnitsContainer extends React.Component {
         this.loadObjects()
         this.props.loadRoot(nodeId)
       }}
+      rootNode={this.props.rootNode}
     />)
   }
 
