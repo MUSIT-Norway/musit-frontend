@@ -214,13 +214,14 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  makeLeftMenu(rootNode, statistics) {
+  makeLeftMenu() {
+    const { data: rootNodeData, statistics } = this.props.rootNode
     const { onEdit, onDelete } = this.props
     const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root')
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          id={rootNode ? rootNode.id : 0}
+          id={rootNodeData ? rootNodeData.id : 0}
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
@@ -238,19 +239,26 @@ export default class StorageUnitsContainer extends React.Component {
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}
-          onClickDelete={(id) => onDelete(id, rootNode)}
+          onClickDelete={(id) => onDelete(id, rootNodeData)}
         />
       </div>
     )
   }
 
-  makeContentGrid(filter, rootNode, children) {
+  makeContentGrid(
+    filter = this.state.searchPattern,
+    rootNode = (this.props.rootNode.data ? this.props.rootNode.data.rootNodeData : null),
+    children = this.props.children
+  ) {
     if (this.state.showNodes) {
       return (<NodeGrid
         id={rootNode ? rootNode.id : null}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
-        onAction={this.props.onAction}
+        onAction={(action, unit) => {
+          unit.path = this.props.path
+          this.props.onAction(action, unit)
+        }}
         onClick={(row) =>
           hashHistory.push(
             `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
@@ -262,23 +270,22 @@ export default class StorageUnitsContainer extends React.Component {
       id={rootNode ? rootNode.id : 0}
       translate={this.props.translate}
       tableData={this.props.objects}
-      onAction={this.props.onAction}
+      onAction={(action, unit) => {
+        unit.path = this.props.path
+        this.props.onAction(action, unit)
+      }}
     />)
   }
 
   render() {
-    const { searchPattern } = this.state
-    const { children, translate, path } = this.props
-    const { data: rootNodeData, statistics } = this.props.rootNode
-    const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
     return (
       <Layout
         title={'Magasin'}
-        translate={translate}
-        breadcrumb={breadcrumb}
+        translate={this.props.translate}
+        breadcrumb={<Breadcrumb nodes={this.props.path} onClickCrumb={node => this.onClickCrumb(node)} />}
         toolbar={this.makeToolbar()}
-        leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
-        content={this.makeContentGrid(searchPattern, rootNodeData, children)}
+        leftMenu={this.makeLeftMenu()}
+        content={this.makeContentGrid()}
       />
     )
   }

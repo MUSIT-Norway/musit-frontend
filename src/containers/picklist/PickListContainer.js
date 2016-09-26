@@ -2,6 +2,8 @@ import React from 'react'
 import { PickListComponent } from '../../components/picklist'
 import { PageHeader, Grid, Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import Breadcrumb from '../../layout/Breadcrumb'
+import { hashHistory } from 'react-router'
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -79,11 +81,18 @@ export default class PickListContainer extends React.Component {
               actions={demoActions}
               showActionDialog={showActionDialog}
               onCloseActionDialog={() => this.onCloseActionDialog()}
-              iconRendrer={(pick) => {
-                return pick.name ? <FontAwesome name="folder" /> : <FontAwesome name="rebel" />
-              }}
+              iconRendrer={(pick) => <FontAwesome name={pick.name ? 'folder' : 'rebel'} style={{ fontSize: '3.5em' }} />}
               labelRendrer={(pick) => {
-                return pick.name ? pick.name : pick.displayName
+                return (
+                  <div>
+                    <span style={{ paddingLeft: '1em' }}>{pick.name ? pick.name : pick.displayName}</span>
+                    <Breadcrumb
+                      nodes={pick.path}
+                      onClickCrumb={node => hashHistory.push(`/magasin/${node.id === -1 ? 'root' : node.id}`)}
+                      allActive
+                    />
+                  </div>
+                )
               }}
               onToggleMarked={onToggleMarked}
             />

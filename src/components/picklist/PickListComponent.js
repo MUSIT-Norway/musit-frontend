@@ -27,31 +27,27 @@ export default class PickListComponent extends Component {
       showActionDialog,
       onCloseActionDialog
     } = this.props
-    const actionsComponent = (
-      <span>
-        <FontAwesome className={style.normalAction} name="play-circle" />
-        <FontAwesome className={style.warningAction} name="remove" />
-      </span>
-    )
-    const pickRows = picks.map((pick) => {
-      const checkSymbol = (marked.indexOf(pick.id) >= 0) ? 'check-square-o' : 'square-o'
-      const rowStyleClass = checkSymbol === 'check-square-o' ? 'highlight' : ''
-      return (
-        <tr key={pick.id} onClick={(e) => onToggleMarked(e, pick.id)} className={rowStyleClass}>
-          <td className={style.icon}>{iconRendrer(pick)}</td>
-          <td className={style.label}>{labelRendrer(pick)}<FontAwesome className={style.infoAction} name="info-circle" /></td>
-          <td className={style.select}><FontAwesome className={style.normalAction} name={checkSymbol} /></td>
-          <td className={style.actions}>{actionsComponent}</td>
-        </tr>
-      )
-    })
 
     return (
       <div>
         <ActionListPopupContainer show={showActionDialog} marked={marked} actions={actions} onClose={onCloseActionDialog} />
         <Table responsive striped condensed hover>
           <tbody>
-            {pickRows}
+            {picks.map((pick) => {
+              const checkSymbol = (marked.indexOf(pick.id) >= 0) ? 'check-square-o' : 'square-o'
+              return (
+                <tr key={pick.id}>
+                  <td className={style.icon}>{iconRendrer(pick)}</td>
+                  <td className={style.label}>{labelRendrer(pick)}</td>
+                  <td style={{ verticalAlign: 'middle' }}>
+                    <input type="checkbox" onClick={(e) => onToggleMarked(e, pick.id)} className={style.normalAction} name={checkSymbol} />
+                    <FontAwesome className={style.normalAction} name="print" />
+                    <FontAwesome className={style.normalAction} name="truck" />
+                    <FontAwesome className={style.warningAction} name="remove" />
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </Table>
       </div>
