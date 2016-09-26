@@ -8,9 +8,10 @@ const mapStateToProps = (state) => ({
   moves: state.movehistory.data || [],
 })
 
+
 const mapDispatchToProps = (dispatch) => {
   return ({
-    loadHistory: () => {
+    loadChildren: () => {
       dispatch(loadMoveHistoryForObject())
     } })
 }
