@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 import MusitModalImpl from './musitModal'
 
 const mapStateToProps = (state) => ({
+  user: state.auth.user,
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageUnitModal.data || [],
   path: state.storageUnitModal.root.path,

@@ -45,6 +45,8 @@ export default class MusitModal extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.show === true && this.props.show === false) {
       this.props.loadRoot()
+      this.props.clearPath();
+      this.props.clearCurrentId();
     }
     if (nextProps.currentId && nextProps.currentId !== this.props.currentId) {
       this.loadStuff(nextProps.currentId)
@@ -94,6 +96,7 @@ export default class MusitModal extends Component {
                 <SaveCancel
                   translate={this.props.translate}
                   saveLabel={this.props.translate('musit.moveModal.move')}
+                  saveDisabled={!this.props.currentId}
                   onClickSave={(e) => {
                     e.preventDefault()
                     this.props.onMove(this.props.currentId)
