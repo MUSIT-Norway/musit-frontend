@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import MusitModal from '../../components/formfields/musitModal'
+const I18n = require('react-i18nify').I18n;
 
 export default class NodeGrid extends Component {
   static propTypes = {
@@ -25,6 +26,7 @@ export default class NodeGrid extends Component {
     super(props)
     this.showModal = this.showModal.bind(this)
     this.hideModal = this.hideModal.bind(this)
+    this.moveModal = this.moveModal.bind(this)
     this.state = {
       showModal: false
     }
@@ -38,11 +40,12 @@ export default class NodeGrid extends Component {
     this.setState({ ...this.state, showModal: false, showModalFromId: null })
   }
 
-  moveModal(toId) {
+  moveModal(toId, toName) {
     this.props.onMove(this.state.showModalFromId, toId, {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
         this.props.refresh()
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
       }
     })
   }
@@ -54,7 +57,7 @@ export default class NodeGrid extends Component {
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}
-          onMove={(toMove) => this.moveModal(toMove)}
+          onMove={this.moveModal}
           headerText={this.props.translate('musit.moveModal.moveNodes')}
         />
         <FormGroup>

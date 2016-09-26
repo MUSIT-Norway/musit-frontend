@@ -39,7 +39,8 @@ export default class MusitModal extends Component {
     currentId: PropTypes.number,
     path: PropTypes.arrayOf(PropTypes.object),
     translate: PropTypes.func,
-    children: PropTypes.arrayOf(PropTypes.object)
+    children: PropTypes.arrayOf(PropTypes.object),
+    rootNode: PropTypes.object.isRequired
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,7 +100,7 @@ export default class MusitModal extends Component {
                   saveDisabled={!this.props.currentId}
                   onClickSave={(e) => {
                     e.preventDefault()
-                    this.props.onMove(this.props.currentId)
+                    this.props.onMove(this.props.currentId, this.props.rootNode.data.name)
                   }
                   }
                   onClickCancel={this.props.onHide}

@@ -6,6 +6,9 @@ en:
       moveNodes: "Move nodes"
       goToRoot: "Go to top"
       currentDestination: "destination:"
+      messages:
+        nodeMoved: "The node %{name} was moved to %{destination}"
+        objectMoved: "The object %{name} was moved to %{destination}"
     leftMenu:
       node:
         newNode: "New node"
@@ -429,6 +432,9 @@ no:
       moveNodes: "Flytt noder"
       goToRoot: "Gå til toppen"
       currentDestination: "Destinasjon:"
+      messages:
+        nodeMoved: "Noden %{name} ble flyttet til %{destination}"
+        objectMoved: "Objektet %{name} ble flyttet til %{destination}"
     leftMenu:
       node:
         newNode: "Ny node"

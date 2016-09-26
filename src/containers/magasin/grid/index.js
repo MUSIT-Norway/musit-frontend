@@ -13,6 +13,7 @@ import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
+const I18n = require('react-i18nify').I18n;
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
@@ -135,6 +136,7 @@ export default class StorageUnitsContainer extends React.Component {
 
     this.loadNodes = this.loadNodes.bind(this)
     this.loadObjects = this.loadObjects.bind(this)
+    this.moveModal = this.moveModal.bind(this)
   }
 
   componentWillMount() {
@@ -212,7 +214,7 @@ export default class StorageUnitsContainer extends React.Component {
     return newUri
   }
 
-  showModal= (fromId) => {
+  showModal = (fromId) => {
     this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
   }
 
@@ -220,12 +222,15 @@ export default class StorageUnitsContainer extends React.Component {
     this.setState({ ...this.state, showModal: false, showModalFromId: '' })
   }
 
-  moveModal= (toId) => {
+  moveModal = (toId, toName) => {
+    const { data: rootNodeData } = this.props.rootNode
+    const name = rootNodeData.name
     this.props.moveNode(this.state.showModalFromId, toId, 1, {
       onFailure: () => {
         const id = this.state.showModalFromId
         this.setState({ ...this.state, showModal: false, showModalFromId: '' })
         this.props.loadPath(id)
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
       }
     })
   }
@@ -325,7 +330,7 @@ export default class StorageUnitsContainer extends React.Component {
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}
-          onMove={(id) => this.moveModal(id)}
+          onMove={this.moveModal}
           headerText={this.props.translate('musit.moveModal.moveNodes')}
         />
         <Layout

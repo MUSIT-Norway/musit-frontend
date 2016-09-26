@@ -27,6 +27,7 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageUnitModal.data || [],
   path: state.storageUnitModal.root.path,
+  rootNode: state.storageUnitModal.root,
   currentId: state.storageUnitModal.currentId
 })
 
