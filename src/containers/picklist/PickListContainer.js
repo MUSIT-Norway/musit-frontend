@@ -1,6 +1,6 @@
 import React from 'react'
 import { PickListComponent } from '../../components/picklist'
-import { PageHeader, Grid, Button } from 'react-bootstrap'
+import { PageHeader, Grid } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
@@ -58,22 +58,12 @@ export default class PickListContainer extends React.Component {
     const style = require('../../components/picklist/index.scss')
     const { translate, picks, marked, onToggleMarked } = this.props
     const { showActionDialog } = this.state
-    const checkSymbol = (marked.length > 0) ? 'square-o' : 'check-square-o'
-
     return (
       <div className={style.picklist}>
         <main>
           <Grid>
             <PageHeader>
               {translate('musit.pickList.title', false)}
-              <Button onClick={(e) => onToggleMarked(e, null)}>
-                <FontAwesome name={checkSymbol} className={style.normalAction} />
-                {translate('musit.pickList.action.markAll', false)}
-              </Button>
-              <Button disabled={marked.length <= 0} onClick={() => this.onOpenActionDialog()}>
-                <FontAwesome name="play-circle" className={style.normalAction} />
-                {translate('musit.pickList.action.executeAll', false)}
-              </Button>
             </PageHeader>
             <PickListComponent
               picks={picks}

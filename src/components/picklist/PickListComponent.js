@@ -32,6 +32,16 @@ export default class PickListComponent extends Component {
       <div>
         <ActionListPopupContainer show={showActionDialog} marked={marked} actions={actions} onClose={onCloseActionDialog} />
         <Table responsive striped condensed hover>
+          <thead>
+            <tr>
+              <th style={{ verticalAlign: 'middle', textAlign: 'right' }} colSpan="3">
+                Alle&nbsp;&nbsp;<input type="checkbox" />
+                <FontAwesome className={style.normalAction} name="print" />
+                <FontAwesome className={style.normalAction} name="truck" />
+                <FontAwesome className={style.warningAction} name="remove" />
+              </th>
+            </tr>
+          </thead>
           <tbody>
             {picks.map((pick) => {
               const checkSymbol = (marked.indexOf(pick.id) >= 0) ? 'check-square-o' : 'square-o'
@@ -39,7 +49,7 @@ export default class PickListComponent extends Component {
                 <tr key={pick.id}>
                   <td className={style.icon}>{iconRendrer(pick)}</td>
                   <td className={style.label}>{labelRendrer(pick)}</td>
-                  <td style={{ verticalAlign: 'middle' }}>
+                  <td style={{ verticalAlign: 'middle', textAlign: 'right' }}>
                     <input type="checkbox" onClick={(e) => onToggleMarked(e, pick.id)} className={style.normalAction} name={checkSymbol} />
                     <FontAwesome className={style.normalAction} name="print" />
                     <FontAwesome className={style.normalAction} name="truck" />
