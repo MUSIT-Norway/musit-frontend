@@ -5,8 +5,7 @@ import { Table, FormGroup } from 'react-bootstrap'
 
 export default class ModalMoveHistoryGrid extends Component {
   static propTypes = {
-    tableData: PropTypes.arrayOf(PropTypes.object),
-    onClick: PropTypes.func.isRequired
+    tableData: PropTypes.arrayOf(PropTypes.object)
   }
 
   render() {
