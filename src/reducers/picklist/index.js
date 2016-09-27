@@ -22,9 +22,11 @@ const initialState = {
 };
 
 const toggleItem = (type) => (state, action) => {
-  const nodes = state[type].filter(() => true); // copy array
-  const index = nodes.findIndex(node => node.value.id === action.item.id);
-  nodes[index] = { ...nodes[index], marked: !state[type][index].marked };
+  const items = [].concat(action.item)
+  const nodes = state[type].map(node => ({
+    ...node,
+    marked: items.indexOf(node.value) > -1 ? !node.marked : node.marked
+  }))
   return { ...state, [type]: nodes };
 };
 

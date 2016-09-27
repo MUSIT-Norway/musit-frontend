@@ -239,7 +239,7 @@ describe('PicklistReducer', () => {
   })
 
   it('Toggle node, toggles item in the array', () => {
-    const newState = picklistReducer(testState, toggleNode(node2))
+    const newState = picklistReducer(testState, toggleNode([node2])) // lets try with brackets here
     const expectedState = {
       NODE: [
         {
@@ -263,6 +263,31 @@ describe('PicklistReducer', () => {
     assert.deepStrictEqual(newState, expectedState, 'Should mark item')
   })
 
+  it('Toggle all node, toggles items in the array', () => {
+    const newState = picklistReducer(testState, toggleNode([node1, node2, node3]))
+    const expectedState = {
+      NODE: [
+        {
+          marked: true,
+          path: [],
+          value: node1
+        },
+        {
+          marked: true,
+          path: [],
+          value: node2
+        },
+        {
+          marked: true,
+          path: [],
+          value: node3
+        }
+      ],
+      OBJECT: DEFAULT_OBJECTS
+    }
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
+  })
+
   it('Toggle object, toggles item in the array', () => {
     const newState = picklistReducer(testState, toggleObject(object1))
     const expectedState = {
@@ -275,6 +300,26 @@ describe('PicklistReducer', () => {
         },
         {
           marked: false,
+          path: [],
+          value: object2
+        }
+      ]
+    }
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
+  })
+
+  it('Toggle all object, toggles items in the array', () => {
+    const newState = picklistReducer(testState, toggleObject([object1, object2]))
+    const expectedState = {
+      NODE: DEFAULT_NODES,
+      OBJECT: [
+        {
+          marked: true,
+          path: [],
+          value: object1
+        },
+        {
+          marked: true,
           path: [],
           value: object2
         }
