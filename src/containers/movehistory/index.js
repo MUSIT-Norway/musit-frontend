@@ -1,7 +1,7 @@
-import Language from '../../../components/language'
+import Language from '../../components/language'
 import { loadMoveHistoryForObject } from '../../reducers/grid/move'
 import { connect } from 'react-redux';
-import MusitModalImpl from '../../components/formfields/musitModal/musitModal'
+import MusitHistoryModalImpl from '../../components/formfields/musitModal/musitMoveHistoryModal'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
@@ -18,4 +18,4 @@ const mapDispatchToProps = (dispatch) => {
 
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class MusitModal extends MusitModalImpl {}
+export default class MusitModal extends MusitHistoryModalImpl {}

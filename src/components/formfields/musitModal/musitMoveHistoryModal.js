@@ -18,12 +18,11 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import { Modal, Row, Col } from 'react-bootstrap'
+import { Modal, Row, Col, Button } from 'react-bootstrap'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import { ModalNodeGrid } from '../../../components/grid'
-import { SaveCancel } from '../../../components/formfields'
+import ModalMoveHistoryGrid from '../../../components/grid/ModalMoveHistoryGrid'
 
-export default class MusitModal extends Component {
+export default class MusitHistoryModal extends Component {
 
   static propTypes = {
     show: PropTypes.bool.isRequired,
@@ -55,7 +54,7 @@ export default class MusitModal extends Component {
         <Modal
           show={this.props.show}
           onHide={this.props.onHide}
-          bsSize="modal"
+          bsSize="large"
           aria-labelledby="contained-modal-title-sm"
         >
           <Modal.Header closeButton style={{ border: 'none' }}>
@@ -64,7 +63,7 @@ export default class MusitModal extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>
-            <ModalNodeGrid
+            <ModalMoveHistoryGrid
               tableData={moves}
             />
           </Modal.Body>
@@ -82,16 +81,9 @@ export default class MusitModal extends Component {
             <br />
             <Row style={{ textAlign: 'center' }}>
               <Col xs={4} sm={4} smOffset={4}>
-                <SaveCancel
-                  translate={this.props.translate}
-                  saveLabel={this.props.translate('musit.moveHistoryModal.close')}
-                  onClickSave={(e) => {
-                    e.preventDefault()
-                    this.props.onClose()
-                  }
-                  }
-                  onClickCancel={this.props.onHide}
-                />
+                <Button onClick={this.props.onClose}>
+                  Close
+                </Button>
               </Col>
             </Row>
           </Modal.Footer>
