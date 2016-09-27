@@ -33,7 +33,7 @@ const toggleItem = (type) => (state, action) => {
 
 const removeItem = (type) => (state, action) => {
   const items = [].concat(action.item)
-  const nodes = state[type].filter(node => items.indexOf(node.value) === -1)
+  const nodes = state[type].filter(node => items.findIndex(i => i.id === node.value.id) === -1)
   return { ...state, [type]: nodes }
 };
 
