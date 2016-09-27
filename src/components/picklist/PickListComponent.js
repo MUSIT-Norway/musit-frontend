@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import ActionListPopupContainer from './ActionListPopupContainer'
+const I18n = require('react-i18nify').I18n;
 
 export default class PickListComponent extends Component {
   static propTypes = {
@@ -36,7 +37,7 @@ export default class PickListComponent extends Component {
           <thead>
             <tr>
               <th className={style.toolsColumn} colSpan="3">
-                Alle&nbsp;&nbsp;<input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
+                {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;<input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
                 <FontAwesome className={style.normalAction} name="print" />
                 <FontAwesome
                   className={style.normalAction}
