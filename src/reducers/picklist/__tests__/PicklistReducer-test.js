@@ -327,4 +327,22 @@ describe('PicklistReducer', () => {
     }
     assert.deepStrictEqual(newState, expectedState, 'Should mark item')
   })
+
+  it('Toggle object without item, should still work but have no effect', () => {
+    const newState = picklistReducer(testState, toggleObject())
+    const expectedState = {
+      NODE: DEFAULT_NODES,
+      OBJECT: DEFAULT_OBJECTS
+    }
+    assert.deepStrictEqual(newState, expectedState, 'Should not mark any item')
+  })
+
+  it('Toggle node without item, should still work but have no effect', () => {
+    const newState = picklistReducer(testState, toggleNode())
+    const expectedState = {
+      NODE: DEFAULT_NODES,
+      OBJECT: DEFAULT_OBJECTS
+    }
+    assert.deepStrictEqual(newState, expectedState, 'Should not mark any item')
+  })
 })
