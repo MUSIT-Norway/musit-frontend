@@ -17,8 +17,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     pushState: routerActions.push,
-    pickListNodeCount: state.picks.lists[PICK_TYPES.NODE] ? state.picks.lists[PICK_TYPES.NODE].length : 0,
-    pickListObjectCount: state.picks.lists[PICK_TYPES.OBJECT] ? state.picks.lists[PICK_TYPES.OBJECT].length : 0
+    pickListNodeCount: state.picks[PICK_TYPES.NODE] ? state.picks[PICK_TYPES.NODE].length : 0,
+    pickListObjectCount: state.picks[PICK_TYPES.OBJECT] ? state.picks[PICK_TYPES.OBJECT].length : 0
   }
 }
 
@@ -101,12 +101,12 @@ class App extends Component {
                 </LinkContainer>
               }
               {user &&
-                <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT}`}>
+                <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
                   <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
                 </LinkContainer>
               }
               {user &&
-                <LinkContainer to={`/picklist/${PICK_TYPES.NODE}`}>
+                <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
                   <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
                 </LinkContainer>
               }

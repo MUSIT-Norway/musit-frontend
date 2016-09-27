@@ -8,8 +8,7 @@ import { hashHistory } from 'react-router'
 export default class PickListContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    picks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    marked: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    picks: React.PropTypes.object.isRequired,
     toggleNode: React.PropTypes.func.isRequired,
     toggleObject: React.PropTypes.func.isRequired,
     removeNode: React.PropTypes.func.isRequired,
@@ -48,8 +47,11 @@ export default class PickListContainer extends React.Component {
       }
     ]
     const style = require('../../components/picklist/index.scss')
-    const { translate, picks, marked, toggleNode, toggleObject, removeNode, removeObject } = this.props
-    const { showActionDialog } = this.state
+    const { translate, toggleNode, toggleObject, removeNode, removeObject } = this.props
+    const type = this.props.params.type.toUpperCase();
+    const picks = this.props.picks[type]
+    const marked = picks.filter(p => p.marked).map(p => p.value)
+    const showActionDialog = this.state.showActionDialog
     return (
       <div className={style.picklist}>
         <main>
@@ -63,11 +65,11 @@ export default class PickListContainer extends React.Component {
               actions={demoActions}
               showActionDialog={showActionDialog}
               onCloseActionDialog={() => this.onCloseActionDialog()}
-              iconRendrer={(pick) => <FontAwesome name={pick.name ? 'folder' : 'rebel'} style={{ fontSize: '3.5em' }} />}
+              iconRendrer={(pick) => <FontAwesome name={pick.value.name ? 'folder' : 'rebel'} style={{ fontSize: '3.0em' }} />}
               labelRendrer={(pick) => {
                 return (
                   <div>
-                    <span style={{ paddingLeft: '1em' }}>{pick.name ? pick.name : pick.displayName}</span>
+                    <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.displayName}</span>
                     <Breadcrumb
                       nodes={pick.path}
                       onClickCrumb={node => hashHistory.push(`/magasin/${node.id === -1 ? 'root' : node.id}`)}
@@ -76,11 +78,9 @@ export default class PickListContainer extends React.Component {
                   </div>
                 )
               }}
-              toggleNode={toggleNode}
-              toggleObject={toggleObject}
-              removeNode={removeNode}
-              removeObject={removeObject}
-              onMove={() => console.log('open modal window')}
+              toggle={(item, on) => (type === 'NODE' ? toggleNode(item, on) : toggleObject(item, on))}
+              remove={item => (type === 'NODE' ? removeNode(item) : removeObject(item))}
+              move={() => console.log('open modal window')}
             />
             <div style={{ textAlign: 'right' }}>
               {marked.length}/{picks.length} node(r) valgt.

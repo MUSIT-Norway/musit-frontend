@@ -6,13 +6,13 @@ import ActionListPopupContainer from './ActionListPopupContainer'
 export default class PickListComponent extends Component {
   static propTypes = {
     picks: React.PropTypes.array.isRequired,
-    onMove: React.PropTypes.func.isRequired,
-    onRemove: React.PropTypes.func.isRequired,
+    move: React.PropTypes.func.isRequired,
+    toggle: React.PropTypes.func.isRequired,
+    remove: React.PropTypes.func.isRequired,
     marked: React.PropTypes.array.isRequired,
     actions: React.PropTypes.array.isRequired,
     iconRendrer: React.PropTypes.func.isRequired,
     labelRendrer: React.PropTypes.func.isRequired,
-    onToggleMarked: React.PropTypes.func.isRequired,
     showActionDialog: React.PropTypes.bool.isRequired,
     onCloseActionDialog: React.PropTypes.func.isRequired
   }
@@ -24,7 +24,6 @@ export default class PickListComponent extends Component {
       marked,
       iconRendrer,
       labelRendrer,
-      onToggleMarked,
       actions,
       showActionDialog,
       onCloseActionDialog
@@ -37,24 +36,63 @@ export default class PickListComponent extends Component {
           <thead>
             <tr>
               <th className={style.toolsColumn} colSpan="3">
-                Alle&nbsp;&nbsp;<input type="checkbox" onChange={(e) => this.props.onToggleMarked(e, null)} />
+                Alle&nbsp;&nbsp;<input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
                 <FontAwesome className={style.normalAction} name="print" />
-                <FontAwesome className={style.normalAction} style={{ cursor: 'pointer' }} name="truck" onClick={() => this.props.onMove(marked)} />
-                <FontAwesome className={style.warningAction} style={{ cursor: 'pointer' }} name="remove" onClick={() => this.props.onRemove(marked)} />
+                <FontAwesome
+                  className={style.normalAction}
+                  style={{ cursor: 'pointer' }}
+                  name="truck"
+                  onClick={() => {
+                    if (marked.length > 0) {
+                      this.props.move(marked)
+                    }
+                  }}
+                />
+                <FontAwesome
+                  className={style.normalAction}
+                  style={{ cursor: 'pointer' }}
+                  name="remove"
+                  onClick={() => {
+                    if (marked.length > 0) {
+                      this.props.remove(marked)
+                    }
+                  }}
+                />
               </th>
             </tr>
           </thead>
           <tbody>
-            {picks.map((pick) => {
+            {picks.map((pick, i) => {
+              const item = pick.value
+              const isItemMarked = pick.marked
               return (
-                <tr key={pick.id}>
-                  <td className={style.icon}>{iconRendrer(pick)}</td>
-                  <td className={style.label}>{labelRendrer(pick)}</td>
+                <tr key={i}>
+                  <td className={style.icon}>
+                    {iconRendrer(pick)}
+                  </td>
+                  <td className={style.label}>
+                    {labelRendrer(pick)}
+                  </td>
                   <td className={style.toolsColumn}>
-                    <input type="checkbox" checked={marked.find(m => m.id === pick.id && m.pickType === pick.pickType) ? 'checked' : ''} onClick={(e) => onToggleMarked(e, pick.id)} className={style.normalAction} />
+                    <input
+                      type="checkbox"
+                      checked={isItemMarked ? 'checked' : ''}
+                      onClick={() => this.props.toggle(item)}
+                      className={style.normalAction}
+                    />
                     <FontAwesome className={style.normalAction} name="print" />
-                    <FontAwesome className={style.normalAction} style={{ cursor: 'pointer' }} name="truck" onClick={() => this.props.onMove(pick)} />
-                    <FontAwesome className={style.warningAction} style={{ cursor: 'pointer' }} name="remove" onClick={() => this.props.onRemove(pick)} />
+                    <FontAwesome
+                      className={style.normalAction}
+                      style={{ cursor: 'pointer' }}
+                      name="truck"
+                      onClick={() => this.props.move(item)}
+                    />
+                    <FontAwesome
+                      className={style.normalAction}
+                      style={{ cursor: 'pointer' }}
+                      name="remove"
+                      onClick={() => this.props.remove(item)}
+                    />
                   </td>
                 </tr>
               )

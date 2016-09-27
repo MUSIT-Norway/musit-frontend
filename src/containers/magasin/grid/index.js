@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Language from '../../../components/language'
 import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
 import { loadObjects } from '../../../reducers/storageobject/grid'
-import { add, TYPES as PICK_TYPES } from '../../../reducers/picklist'
+import { addNode, addObject } from '../../../reducers/picklist'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
@@ -39,19 +39,13 @@ const mapDispatchToProps = (dispatch, props) => {
     loadPath: (id) => {
       dispatch(loadPath(id))
     },
-    onAction: (actionName, unit) => {
+    onAction: (actionName, unit, path) => {
       switch (actionName) {
         case 'pickNode':
-          if (!unit.pickType) {
-            unit.pickType = PICK_TYPES.NODE
-          }
-          dispatch(add(unit))
+          dispatch(addNode(unit, path))
           break
         case 'pickObject':
-          if (!unit.pickType) {
-            unit.pickType = PICK_TYPES.OBJECT
-          }
-          dispatch(add(unit))
+          dispatch(addObject(unit, path))
           break
         case 'controlsobservations':
           history.push(`/magasin/${unit.id}/controlsobservations`)
@@ -261,10 +255,7 @@ export default class StorageUnitsContainer extends React.Component {
         id={rootNode ? rootNode.id : null}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
-        onAction={(action, unit) => {
-          unit.path = this.props.path
-          this.props.onAction(action, unit)
-        }}
+        onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
         onClick={(row) =>
           hashHistory.push(
             `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
@@ -276,10 +267,7 @@ export default class StorageUnitsContainer extends React.Component {
       id={rootNode ? rootNode.id : 0}
       translate={this.props.translate}
       tableData={this.props.objects}
-      onAction={(action, unit) => {
-        unit.path = this.props.path
-        this.props.onAction(action, unit)
-      }}
+      onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
     />)
   }
 
