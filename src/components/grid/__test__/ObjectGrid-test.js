@@ -12,6 +12,8 @@ describe('ObjectGrid', () => {
         id={1}
         translate={(key) => key}
         MusitModal={TestModal}
+        onMove={(key) => key}
+        refresh={(key) => key}
         onAction={() => true}
         tableData={[
           {

@@ -66,7 +66,6 @@ export default class MusitModal extends Component {
         <Modal
           show={this.props.show}
           onHide={this.props.onHide}
-          bsSize="modal"
           aria-labelledby="contained-modal-title-sm"
         >
           <Modal.Header closeButton style={{ border: 'none' }}>

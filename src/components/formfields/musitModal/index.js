@@ -20,7 +20,7 @@
 import Language from '../../../components/language'
 import { loadRoot, loadChildren, loadPath, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
 import { connect } from 'react-redux';
-import MusitModalImpl from './musitModal'
+import MusitModalImpl from './MusitModal'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,

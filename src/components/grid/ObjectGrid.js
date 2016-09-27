@@ -60,7 +60,7 @@ export default class ObjectGrid extends Component {
           show={this.state.showModal}
           onHide={this.hideModal}
           onMove={this.moveModal}
-          headerText={this.props.translate('musit.moveModal.moveNodes')}
+          headerText={this.props.translate('musit.moveModal.moveObjects')}
         />
         <FormGroup>
           <div>
