@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-import MusitModal from '../../components/formfields/musitModal'
 const I18n = require('react-i18nify').I18n;
 
 export default class NodeGrid extends Component {
@@ -21,6 +20,7 @@ export default class NodeGrid extends Component {
     refresh: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
+    MusitModal: React.PropTypes.element,
   }
 
   constructor(props) {
@@ -55,7 +55,8 @@ export default class NodeGrid extends Component {
   }
 
   render() {
-    const { id, translate } = this.props
+    const { id, translate, MusitModal } = this.props
+    console.log(MusitModal)
     return (
       <div>
         <MusitModal

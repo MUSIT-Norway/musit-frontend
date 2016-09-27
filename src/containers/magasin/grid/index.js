@@ -307,6 +307,7 @@ export default class StorageUnitsContainer extends React.Component {
           )
         }
         rootNode={this.props.rootNode}
+        MusitModal={MusitModal}
       />)
     }
     return (<ObjectGrid
@@ -320,6 +321,7 @@ export default class StorageUnitsContainer extends React.Component {
         this.props.loadRoot(nodeId)
       }}
       rootNode={this.props.rootNode}
+      MusitModal={MusitModal}
     />)
   }
 

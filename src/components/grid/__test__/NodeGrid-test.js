@@ -1,38 +1,39 @@
-/* import { Provider, assert, React, ReactTestUtils } from '../../../../test/setup';
+import { assert, React, ReactTestUtils } from '../../../../test/setup';
 import NodeGrid from '../NodeGrid';
+
+const TestModal = () => <span>Hello</span>
 
 describe('NodeGrid', () => {
   let inputComponent;
   before('should render NodeGrid', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
-      <Provider>
-        <NodeGrid
-          id={1}
-          translate={(key) => key}
-          onAction={(key) => key}
-          onClick={(key) => key}
-          onMove={(key) => key}
-          refresh={(key) => key}
-          tableData={[
-            {
-              id: 1,
-              name: 'Eske',
-              type: 'StorageUnit',
-              objectCount: 0,
-              totalObjectCount: 12,
-              nodeCount: 0
-            },
-            {
-              id: 2,
-              name: 'Pose',
-              type: 'StorageUnit',
-              objectCount: 0,
-              totalObjectCount: 16,
-              nodeCount: 0
-            }
-          ]}
-        />
-      </Provider>
+      <NodeGrid
+        id={1}
+        translate={(key) => key}
+        onAction={(key) => key}
+        onClick={(key) => key}
+        onMove={(key) => key}
+        refresh={(key) => key}
+        MusitModal={TestModal}
+        tableData={[
+          {
+            id: 1,
+            name: 'Eske',
+            type: 'StorageUnit',
+            objectCount: 0,
+            totalObjectCount: 12,
+            nodeCount: 0
+          },
+          {
+            id: 2,
+            name: 'Pose',
+            type: 'StorageUnit',
+            objectCount: 0,
+            totalObjectCount: 16,
+            nodeCount: 0
+          }
+        ]}
+      />
     );
     inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'td');
   });
@@ -52,4 +53,4 @@ describe('NodeGrid', () => {
   it('Check the value of second row fourth column.', () => {
     assert(inputComponent[11].innerHTML === '16')
   })
-}) */
+})
