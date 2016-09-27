@@ -6,6 +6,7 @@ import MusitHistoryModalImpl from '../../components/formfields/musitModal/musitM
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   moves: state.movehistory.data || [],
+  path: state.storageGridUnit.root.path
 })
 
 

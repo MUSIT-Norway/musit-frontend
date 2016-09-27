@@ -12,7 +12,7 @@ export default class ModalMoveHistoryGrid extends Component {
     return (
       <FormGroup>
         <div>
-          <Table responsive hover>
+          <Table responsive striped bordered condensed hover>
             <thead>
               <tr>
                 <th>
@@ -41,8 +41,8 @@ export default class ModalMoveHistoryGrid extends Component {
                   <td id={`${i}_${c.from.path}`}>
                     {` ${c.from.path}`}
                   </td>
-                  <td id={`${i}_${c.from.path}`}>
-                    {` ${c.from.path}`}
+                  <td id={`${i}_${c.to.path}`}>
+                    {` ${c.to.path}`}
                   </td>
                 </tr>
               )}

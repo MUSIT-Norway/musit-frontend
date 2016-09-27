@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
+require('../../../containers/movehistory/modalStyling.css')
 import React, { Component, PropTypes } from 'react'
 import { Modal, Row, Col, Button } from 'react-bootstrap'
 import Breadcrumb from '../../../layout/Breadcrumb'
@@ -52,6 +52,7 @@ export default class MusitHistoryModal extends Component {
     return (
       <div>
         <Modal
+          dialogClassName="my-modal"
           show={this.props.show}
           onHide={this.props.onHide}
           bsSize="large"
