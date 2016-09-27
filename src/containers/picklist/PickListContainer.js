@@ -8,10 +8,12 @@ import { hashHistory } from 'react-router'
 export default class PickListContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    picks: React.PropTypes.array.isRequired,
-    marked: React.PropTypes.array.isRequired,
-    onToggleMarked: React.PropTypes.func.isRequired,
-    activate: React.PropTypes.func.isRequired,
+    picks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    marked: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    toggleNode: React.PropTypes.func.isRequired,
+    toggleObject: React.PropTypes.func.isRequired,
+    removeNode: React.PropTypes.func.isRequired,
+    removeObject: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired
   }
 
@@ -22,16 +24,6 @@ export default class PickListContainer extends React.Component {
     }
     this.onOpenActionDialog = this.onOpenActionDialog.bind(this)
     this.onCloseActionDialog = this.onCloseActionDialog.bind(this)
-  }
-
-  componentWillMount() {
-    this.props.activate(this.props.params.type)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.params.type !== this.props.params.type) {
-      this.props.activate(nextProps.params.type)
-    }
   }
 
   onOpenActionDialog() {
@@ -56,7 +48,7 @@ export default class PickListContainer extends React.Component {
       }
     ]
     const style = require('../../components/picklist/index.scss')
-    const { translate, picks, marked, onToggleMarked } = this.props
+    const { translate, picks, marked, toggleNode, toggleObject, removeNode, removeObject } = this.props
     const { showActionDialog } = this.state
     return (
       <div className={style.picklist}>
@@ -84,7 +76,11 @@ export default class PickListContainer extends React.Component {
                   </div>
                 )
               }}
-              onToggleMarked={onToggleMarked}
+              toggleNode={toggleNode}
+              toggleObject={toggleObject}
+              removeNode={removeNode}
+              removeObject={removeObject}
+              onMove={() => console.log('open modal window')}
             />
             <div style={{ textAlign: 'right' }}>
               {marked.length}/{picks.length} node(r) valgt.

@@ -42,10 +42,16 @@ const mapDispatchToProps = (dispatch, props) => {
     onAction: (actionName, unit) => {
       switch (actionName) {
         case 'pickNode':
-          dispatch(add(PICK_TYPES.NODE, unit))
+          if (!unit.pickType) {
+            unit.pickType = PICK_TYPES.NODE
+          }
+          dispatch(add(unit))
           break
         case 'pickObject':
-          dispatch(add(PICK_TYPES.OBJECT, unit))
+          if (!unit.pickType) {
+            unit.pickType = PICK_TYPES.OBJECT
+          }
+          dispatch(add(unit))
           break
         case 'controlsobservations':
           history.push(`/magasin/${unit.id}/controlsobservations`)

@@ -6,6 +6,8 @@ import ActionListPopupContainer from './ActionListPopupContainer'
 export default class PickListComponent extends Component {
   static propTypes = {
     picks: React.PropTypes.array.isRequired,
+    onMove: React.PropTypes.func.isRequired,
+    onRemove: React.PropTypes.func.isRequired,
     marked: React.PropTypes.array.isRequired,
     actions: React.PropTypes.array.isRequired,
     iconRendrer: React.PropTypes.func.isRequired,
@@ -35,25 +37,24 @@ export default class PickListComponent extends Component {
           <thead>
             <tr>
               <th className={style.toolsColumn} colSpan="3">
-                Alle&nbsp;&nbsp;<input type="checkbox" />
+                Alle&nbsp;&nbsp;<input type="checkbox" onChange={(e) => this.props.onToggleMarked(e, null)} />
                 <FontAwesome className={style.normalAction} name="print" />
-                <FontAwesome className={style.normalAction} name="truck" />
-                <FontAwesome className={style.warningAction} name="remove" />
+                <FontAwesome className={style.normalAction} style={{ cursor: 'pointer' }} name="truck" onClick={() => this.props.onMove(marked)} />
+                <FontAwesome className={style.warningAction} style={{ cursor: 'pointer' }} name="remove" onClick={() => this.props.onRemove(marked)} />
               </th>
             </tr>
           </thead>
           <tbody>
             {picks.map((pick) => {
-              const checkSymbol = (marked.indexOf(pick.id) >= 0) ? 'check-square-o' : 'square-o'
               return (
                 <tr key={pick.id}>
                   <td className={style.icon}>{iconRendrer(pick)}</td>
                   <td className={style.label}>{labelRendrer(pick)}</td>
                   <td className={style.toolsColumn}>
-                    <input type="checkbox" onClick={(e) => onToggleMarked(e, pick.id)} className={style.normalAction} name={checkSymbol} />
+                    <input type="checkbox" checked={marked.find(m => m.id === pick.id && m.pickType === pick.pickType) ? 'checked' : ''} onClick={(e) => onToggleMarked(e, pick.id)} className={style.normalAction} />
                     <FontAwesome className={style.normalAction} name="print" />
-                    <FontAwesome className={style.normalAction} name="truck" />
-                    <FontAwesome className={style.warningAction} name="remove" />
+                    <FontAwesome className={style.normalAction} style={{ cursor: 'pointer' }} name="truck" onClick={() => this.props.onMove(pick)} />
+                    <FontAwesome className={style.warningAction} style={{ cursor: 'pointer' }} name="remove" onClick={() => this.props.onRemove(pick)} />
                   </td>
                 </tr>
               )
