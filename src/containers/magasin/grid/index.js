@@ -4,7 +4,8 @@ import Language from '../../../components/language'
 import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
 import { loadMoveHistoryForObject } from '../../../reducers/grid/move'
 import { loadObjects } from '../../../reducers/storageobject/grid'
-import { add, TYPES as PICK_TYPES } from '../../../reducers/picklist'
+import { addNode, addObject } from '../../../reducers/picklist'
+import { moveObject, moveNode } from '../../../reducers/move'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
@@ -12,8 +13,11 @@ import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
+import MusitModal from '../../../components/formfields/musitModal'
+const I18n = require('react-i18nify').I18n;
 
 const mapStateToProps = (state) => ({
+  user: state.auth.actor,
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
@@ -26,6 +30,9 @@ const mapDispatchToProps = (dispatch, props) => {
   const { history } = props
 
   return ({
+    loadRoot: (id) => {
+      dispatch(loadRoot(id))
+    },
     loadStorageUnits: () => {
       dispatch(clearRoot())
       dispatch(loadRoot())
@@ -43,13 +50,19 @@ const mapDispatchToProps = (dispatch, props) => {
     loadMoveHistory: (objectId) => {
       dispatch(loadMoveHistoryForObject(objectId))
     },
-    onAction: (actionName, unit) => {
+    moveObject: (objectId, destinationId, doneBy, callback) => {
+      dispatch(moveObject(objectId, destinationId, doneBy, callback))
+    },
+    moveNode: (nodeId, destinationId, doneBy, callback) => {
+      dispatch(moveNode(nodeId, destinationId, doneBy, callback))
+    },
+    onAction: (actionName, unit, path) => {
       switch (actionName) {
         case 'pickNode':
-          dispatch(add(PICK_TYPES.NODE, unit))
+          dispatch(addNode(unit, path))
           break
         case 'pickObject':
-          dispatch(add(PICK_TYPES.OBJECT, unit))
+          dispatch(addObject(unit, path))
           break
         case 'controlsobservations':
           history.push(`/magasin/${unit.id}/controlsobservations`)
@@ -59,9 +72,6 @@ const mapDispatchToProps = (dispatch, props) => {
           break
         case 'control':
           history.push(`/magasin/${unit.id}/controls`)
-          break
-        case 'move':
-          /* TODO: Add move route or action */
           break
         default:
           break
@@ -109,7 +119,13 @@ export default class StorageUnitsContainer extends React.Component {
     loadChildren: React.PropTypes.func,
     loadPath: React.PropTypes.func,
     loadMoveHistory: React.PropTypes.func.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    moveObject: React.PropTypes.func.isRequired,
+    moveNode: React.PropTypes.func.isRequired,
+    user: React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired
+    }),
+    loadRoot: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -118,9 +134,15 @@ export default class StorageUnitsContainer extends React.Component {
       searchPattern: '',
       showObjects: false,
       showNodes: true,
-      showDeleteModal: false,
-      showMoveHistory: false
+      showMoveHistory: false,
+      showModal: false,
+      showModalFromId: '',
+      showModalType: ''
     }
+
+    this.loadNodes = this.loadNodes.bind(this)
+    this.loadObjects = this.loadObjects.bind(this)
+    this.moveModal = this.moveModal.bind(this)
   }
 
   componentWillMount() {
@@ -210,6 +232,28 @@ export default class StorageUnitsContainer extends React.Component {
     return newUri
   }
 
+  showModal = (fromId) => {
+    this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
+  }
+
+  hideModal = () => {
+    this.setState({ ...this.state, showModal: false, showModalFromId: '' })
+  }
+
+  moveModal = (toId, toName) => {
+    const { data: rootNodeData } = this.props.rootNode
+    const name = rootNodeData.name
+    this.props.moveNode(this.state.showModalFromId, toId, 1, {
+      onSuccess: () => {
+        const id = this.state.showModalFromId
+        this.setState({ ...this.state, showModal: false, showModalFromId: '' })
+        this.props.loadPath(id)
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+      },
+      onFailure: window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+    })
+  }
+
   makeToolbar() {
     return (<Toolbar
       showRight={this.state.showObjects}
@@ -238,7 +282,7 @@ export default class StorageUnitsContainer extends React.Component {
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          id={rootNode ? rootNode.id : 0}
+          id={rootNode ? rootNode.id : null}
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
@@ -255,7 +299,7 @@ export default class StorageUnitsContainer extends React.Component {
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}
+          onClickMoveNode={() => this.showModal(rootNode.id)}
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
@@ -263,25 +307,40 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   makeContentGrid(filter, rootNode, children) {
+    const nodeId = rootNode ? rootNode.id : null;
     if (this.state.showNodes) {
       return (<NodeGrid
-        id={rootNode ? rootNode.id : null}
+        id={nodeId}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
-        onAction={this.props.onAction}
+        onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
+        onMove={(moveFrom, moveTo, callback) => this.props.moveNode(moveFrom, moveTo, 1, callback)}
+        refresh={() => {
+          this.loadNodes()
+          this.props.loadRoot(nodeId)
+        }}
         onClick={(row) =>
           hashHistory.push(
             `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
           )
         }
+        rootNode={this.props.rootNode}
+        MusitModal={MusitModal}
       />)
     }
     return (<ObjectGrid
-      id={rootNode ? rootNode.id : 0}
+      id={nodeId}
       translate={this.props.translate}
       tableData={this.props.objects}
-      onAction={this.props.onAction}
       showMoveHistory={this.props.loadMoveHistory}
+      onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
+      onMove={(moveFrom, moveTo, callback) => this.props.moveObject(moveFrom, moveTo, 1, callback)}
+      refresh={() => {
+        this.loadObjects()
+        this.props.loadRoot(nodeId)
+      }}
+      rootNode={this.props.rootNode}
+      MusitModal={MusitModal}
     />)
   }
 
@@ -291,14 +350,22 @@ export default class StorageUnitsContainer extends React.Component {
     const { data: rootNodeData, statistics } = this.props.rootNode
     const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
     return (
-      <Layout
-        title={'Magasin'}
-        translate={translate}
-        breadcrumb={breadcrumb}
-        toolbar={this.makeToolbar()}
-        leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
-        content={this.makeContentGrid(searchPattern, rootNodeData, children)}
-      />
+      <span>
+        <MusitModal
+          show={this.state.showModal}
+          onHide={this.hideModal}
+          onMove={this.moveModal}
+          headerText={this.props.translate('musit.moveModal.moveNodes')}
+        />
+        <Layout
+          title={'Magasin'}
+          translate={translate}
+          breadcrumb={breadcrumb}
+          toolbar={this.makeToolbar()}
+          leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
+          content={this.makeContentGrid(searchPattern, rootNodeData, children)}
+        />
+      </span>
     )
   }
 }

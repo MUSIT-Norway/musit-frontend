@@ -13,7 +13,8 @@ export default class ObjectGrid extends Component {
       }).isRequired,
       displayName: PropTypes.string
     })).isRequired,
-    onAction: PropTypes.func.isRequired
+    onAction: PropTypes.func.isRequired,
+    showMoveHistory: PropTypes.func.isRequired
   }
 
   render() {
@@ -49,6 +50,17 @@ export default class ObjectGrid extends Component {
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_term`}>
                     {c.displayName}
+                  </td>
+                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault()
+                        this.props.showMoveHistory()
+                      }}
+                    >
+                      <span className="icon icon-musitmovehistoryicon" />
+                    </a>
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
                     <FontAwesome name="truck" />

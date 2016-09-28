@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import ActionListPopupContainer from './ActionListPopupContainer'
+const I18n = require('react-i18nify').I18n;
 
 export default class PickListComponent extends Component {
   static propTypes = {
     picks: React.PropTypes.array.isRequired,
+    move: React.PropTypes.func.isRequired,
+    toggle: React.PropTypes.func.isRequired,
+    remove: React.PropTypes.func.isRequired,
     marked: React.PropTypes.array.isRequired,
     actions: React.PropTypes.array.isRequired,
     iconRendrer: React.PropTypes.func.isRequired,
     labelRendrer: React.PropTypes.func.isRequired,
-    onToggleMarked: React.PropTypes.func.isRequired,
     showActionDialog: React.PropTypes.bool.isRequired,
     onCloseActionDialog: React.PropTypes.func.isRequired
   }
@@ -22,36 +25,79 @@ export default class PickListComponent extends Component {
       marked,
       iconRendrer,
       labelRendrer,
-      onToggleMarked,
       actions,
       showActionDialog,
       onCloseActionDialog
     } = this.props
-    const actionsComponent = (
-      <span>
-        <FontAwesome className={style.normalAction} name="play-circle" />
-        <FontAwesome className={style.warningAction} name="remove" />
-      </span>
-    )
-    const pickRows = picks.map((pick) => {
-      const checkSymbol = (marked.indexOf(pick.id) >= 0) ? 'check-square-o' : 'square-o'
-      const rowStyleClass = checkSymbol === 'check-square-o' ? 'highlight' : ''
-      return (
-        <tr key={pick.id} onClick={(e) => onToggleMarked(e, pick.id)} className={rowStyleClass}>
-          <td className={style.icon}>{iconRendrer(pick)}</td>
-          <td className={style.label}>{labelRendrer(pick)}<FontAwesome className={style.infoAction} name="info-circle" /></td>
-          <td className={style.select}><FontAwesome className={style.normalAction} name={checkSymbol} /></td>
-          <td className={style.actions}>{actionsComponent}</td>
-        </tr>
-      )
-    })
 
     return (
       <div>
         <ActionListPopupContainer show={showActionDialog} marked={marked} actions={actions} onClose={onCloseActionDialog} />
         <Table responsive striped condensed hover>
+          <thead>
+            <tr>
+              <th className={style.toolsColumn} colSpan="3">
+                {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;<input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
+                <FontAwesome className={style.normalAction} name="print" />
+                <FontAwesome
+                  className={style.normalAction}
+                  style={{ cursor: 'pointer' }}
+                  name="truck"
+                  onClick={() => {
+                    if (marked.length > 0) {
+                      this.props.move(marked)
+                    }
+                  }}
+                />
+                <FontAwesome
+                  className={style.normalAction}
+                  style={{ cursor: 'pointer' }}
+                  name="remove"
+                  onClick={() => {
+                    if (marked.length > 0) {
+                      this.props.remove(marked)
+                    }
+                  }}
+                />
+              </th>
+            </tr>
+          </thead>
           <tbody>
-            {pickRows}
+            {picks.map((pick, i) => {
+              const item = pick.value
+              const isItemMarked = pick.marked
+              return (
+                <tr key={i}>
+                  <td className={style.icon}>
+                    {iconRendrer(pick)}
+                  </td>
+                  <td className={style.label}>
+                    {labelRendrer(pick)}
+                  </td>
+                  <td className={style.toolsColumn}>
+                    <input
+                      type="checkbox"
+                      checked={isItemMarked ? 'checked' : ''}
+                      onClick={() => this.props.toggle(item)}
+                      className={style.normalAction}
+                    />
+                    <FontAwesome className={style.normalAction} name="print" />
+                    <FontAwesome
+                      className={style.normalAction}
+                      style={{ cursor: 'pointer' }}
+                      name="truck"
+                      onClick={() => this.props.move(item)}
+                    />
+                    <FontAwesome
+                      className={style.normalAction}
+                      style={{ cursor: 'pointer' }}
+                      name="remove"
+                      onClick={() => this.props.remove(item)}
+                    />
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </Table>
       </div>

@@ -1,166 +1,89 @@
-const CLEAR = 'musit/picklist/CLEAR'
-const ADD = 'musit/picklist/ADD'
-const REMOVE = 'musit/picklist/REMOVE'
-const CREATE_LIST = 'musit/picklist/CREATE-LIST'
-const REMOVE_LIST = 'musit/picklist/REMOVE-LIST'
-const ACTIVATE_LIST = 'musit/picklist/ACTIVATE-LIST'
-const TOGGLE_MARKED = 'musit/picklist/TOGGLE_MARKED'
-
 export const TYPES = {
-  NODE: 'nodes',
-  OBJECT: 'objects'
+  NODE: 'NODE',
+  OBJECT: 'OBJECT'
 }
 
-export const initialState = {
-  active: TYPES.NODE,
-  marked: [],
-  lists: {
-    [TYPES.NODE]: []
+// Node
+const CLEAR_NODES = 'musit/picklist/CLEAR_NODES';
+const ADD_NODE = 'musit/picklist/ADD_NODE';
+const REMOVE_NODE = 'musit/picklist/REMOVE_NODE';
+const TOGGLE_NODE = 'musit/picklist/TOGGLE_NODE';
+
+// Object
+const CLEAR_OBJECTS = 'musit/picklist/CLEAR_OBJECTS';
+const ADD_OBJECT = 'musit/picklist/ADD_OBJECT';
+const REMOVE_OBJECT = 'musit/picklist/REMOVE_OBJECT';
+const TOGGLE_OBJECT = 'musit/picklist/TOGGLE_OBJECT';
+
+// Empty state
+const initialState = {
+  [TYPES.NODE]: [],
+  [TYPES.OBJECT]: []
+};
+
+const toggleItem = (type) => (state, action) => {
+  const items = [].concat(action.item)
+  const toggle = (node) => (typeof action.on !== 'undefined' ? action.on : !node.marked)
+  const nodes = state[type].map(node => ({
+    ...node,
+    marked: items.indexOf(node.value) > -1 ? toggle(node) : node.marked
+  }))
+  return { ...state, [type]: nodes };
+};
+
+const removeItem = (type) => (state, action) => {
+  const items = [].concat(action.item)
+  const nodes = state[type].filter(node => items.findIndex(i => i.id === node.value.id) === -1)
+  return { ...state, [type]: nodes }
+};
+
+const addItem = (type) => (state, action) => {
+  if (state[type].findIndex(node => action.item.id === node.value.id) > -1) {
+    return state;
   }
-}
-
-const picklistReducer = (state = initialState, action = {}) => {
-  const subStateKey = action.destination
-  const activeSubStateKey = state.active
-  const subState = state.lists[subStateKey] ? state.lists[subStateKey] : []
-
-  switch (action.type) {
-    case CLEAR: {
-      let retVal = initialState
-      if (subStateKey && subStateKey.length > 0) {
-        retVal = {
-          ...state,
-          marked: (subStateKey === activeSubStateKey) ? [] : state.marked,
-          lists: {
-            ...state.lists,
-            [subStateKey]: []
-          }
-        }
-      } else {
-        retVal = initialState
-      }
-      return retVal
-    }
-    case ACTIVATE_LIST:
-      return {
-        ...state,
-        active: (state.lists[subStateKey]) ? action.destination : state.active,
-        marked: (state.lists[subStateKey]) ? [] : state.marked
-      }
-    case CREATE_LIST:
-      return {
-        ...state,
-        lists: {
-          ...state.lists,
-          [subStateKey]: []
-        }
-      }
-    case REMOVE_LIST:
-      return {
-        ...state,
-        active: (subStateKey === state.active) ? TYPES.NODE : state.active,
-        marked: (subStateKey === activeSubStateKey) ? [] : state.marked,
-        lists: {
-          ...state.lists,
-          [subStateKey]: []
-        }
-      }
-    case ADD: {
-      const existingItem = subState.find(item => item.id === action.item.id)
-      const newState = !existingItem ? [...subState, action.item] : subState
-      return {
-        ...state,
-        lists: {
-          ...state.lists,
-          [subStateKey]: newState
-        }
-      }
-    }
-    case REMOVE:
-      return {
-        ...state,
-        lists: {
-          ...state.lists,
-          [subStateKey]: subState.filter((item) => item !== action.item)
-        }
-      }
-    case TOGGLE_MARKED: {
-      let newMarked = []
-      if (action.id) {
-        // We operate on one or several spesific entries
-        if (state.marked.indexOf(action.id) >= 0) {
-          // it exists, so lets toggle off
-          newMarked = state.marked.filter((id) => id !== action.id)
-        } else {
-          // it does not exist, so lets add
-          newMarked = [...state.marked, action.id]
-        }
-      } else if (state.marked.length > 0) {
-        // Lets toggle all off
-        newMarked = []
-      } else {
-        // Lets toggle all on
-        newMarked = state.lists[activeSubStateKey].map((item) => item.id)
-      }
-      return {
-        ...state,
-        marked: newMarked
-      }
-    }
-    default:
-      return state
-  }
-}
-
-export default picklistReducer
-
-export const clear = (destination = null) => {
   return {
-    type: CLEAR,
-    destination
-  }
-}
+    ...state,
+    [type]: state[type].concat({ marked: false, value: action.item, path: action.path })
+  };
+};
 
-export const add = (destination, item) => {
-  return {
-    type: ADD,
-    destination,
-    item
-  }
-}
+const clearItems = (type) => (state) => ({
+  ...state,
+  [type]: []
+});
 
-export const remove = (destination, item) => {
-  return {
-    type: REMOVE,
-    destination,
-    item
-  }
-}
+const NODE_ACTION_HANDLERS = ({
+  [CLEAR_NODES]: clearItems(TYPES.NODE),
+  [ADD_NODE]: addItem(TYPES.NODE),
+  [REMOVE_NODE]: removeItem(TYPES.NODE),
+  [TOGGLE_NODE]: toggleItem(TYPES.NODE)
+});
 
-export const toggleMarked = (id) => {
-  return {
-    type: TOGGLE_MARKED,
-    id
-  }
-}
+const OBJECT_ACTION_HANDLERS = ({
+  [CLEAR_OBJECTS]: clearItems(TYPES.OBJECT),
+  [ADD_OBJECT]: addItem(TYPES.OBJECT),
+  [REMOVE_OBJECT]: removeItem(TYPES.OBJECT),
+  [TOGGLE_OBJECT]: toggleItem(TYPES.OBJECT)
+});
 
-export const activatePickList = (destination) => {
-  return {
-    type: ACTIVATE_LIST,
-    destination
+export default (state = initialState, action = {}) => {
+  if (NODE_ACTION_HANDLERS[action.type]) {
+    return NODE_ACTION_HANDLERS[action.type](state, action)
   }
-}
+  if (OBJECT_ACTION_HANDLERS[action.type]) {
+    return OBJECT_ACTION_HANDLERS[action.type](state, action)
+  }
+  return state
+};
 
-export const createPickList = (destination) => {
-  return {
-    type: CREATE_LIST,
-    destination
-  }
-}
+// NODES Actions
+export const clearNodes = () => ({ type: CLEAR_NODES })
+export const addNode = (item, path = []) => ({ type: ADD_NODE, item, path })
+export const removeNode = (item) => ({ type: REMOVE_NODE, item })
+export const toggleNode = (item, on) => ({ type: TOGGLE_NODE, item, on })
 
-export const removePickList = (destination) => {
-  return {
-    type: REMOVE_LIST,
-    destination
-  }
-}
+// OBJECTS Actions
+export const clearObjects = () => ({ type: CLEAR_OBJECTS })
+export const addObject = (item, path = []) => ({ type: ADD_OBJECT, item, path })
+export const removeObject = (item) => ({ type: REMOVE_OBJECT, item })
+export const toggleObject = (item, on) => ({ type: TOGGLE_OBJECT, item, on })

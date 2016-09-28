@@ -1,6 +1,8 @@
 import { assert, React, ReactTestUtils } from '../../../../test/setup';
 import ObjectGrid from '../ObjectGrid';
 
+const TestModal = () => <span>Hello</span>
+
 describe('ObjectGrid', () => {
   let inputComponent;
 
@@ -9,6 +11,9 @@ describe('ObjectGrid', () => {
       <ObjectGrid
         id={1}
         translate={(key) => key}
+        MusitModal={TestModal}
+        onMove={(key) => key}
+        refresh={(key) => key}
         onAction={() => true}
         tableData={[
           {

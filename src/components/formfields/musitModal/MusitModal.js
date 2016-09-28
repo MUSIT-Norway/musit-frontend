@@ -20,8 +20,8 @@
 import React, { Component, PropTypes } from 'react'
 import { Modal, Row, Col } from 'react-bootstrap'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import { ModalNodeGrid } from '../../../components/grid'
-import { SaveCancel } from '../../../components/formfields'
+import ModalNodeGrid from '../../../components/grid/ModalNodeGrid'
+import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 
 export default class MusitModal extends Component {
 
@@ -39,12 +39,15 @@ export default class MusitModal extends Component {
     currentId: PropTypes.number,
     path: PropTypes.arrayOf(PropTypes.object),
     translate: PropTypes.func,
-    children: PropTypes.arrayOf(PropTypes.object)
+    children: PropTypes.arrayOf(PropTypes.object),
+    rootNode: PropTypes.object.isRequired
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.show === true && this.props.show === false) {
       this.props.loadRoot()
+      this.props.clearPath();
+      this.props.clearCurrentId();
     }
     if (nextProps.currentId && nextProps.currentId !== this.props.currentId) {
       this.loadStuff(nextProps.currentId)
@@ -63,7 +66,6 @@ export default class MusitModal extends Component {
         <Modal
           show={this.props.show}
           onHide={this.props.onHide}
-          bsSize="modal"
           aria-labelledby="contained-modal-title-sm"
         >
           <Modal.Header closeButton style={{ border: 'none' }}>
@@ -94,9 +96,10 @@ export default class MusitModal extends Component {
                 <SaveCancel
                   translate={this.props.translate}
                   saveLabel={this.props.translate('musit.moveModal.move')}
+                  saveDisabled={!this.props.currentId}
                   onClickSave={(e) => {
                     e.preventDefault()
-                    this.props.onMove(this.props.currentId)
+                    this.props.onMove(this.props.currentId, this.props.rootNode.data.name)
                   }
                   }
                   onClickCancel={this.props.onHide}
