@@ -20,7 +20,7 @@ export default class NodeGrid extends Component {
     refresh: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    MusitModal: React.PropTypes.element,
+    MusitModal: React.PropTypes.func,
   }
 
   constructor(props) {
@@ -56,7 +56,6 @@ export default class NodeGrid extends Component {
 
   render() {
     const { id, translate, MusitModal } = this.props
-    console.log(MusitModal)
     return (
       <div>
         <MusitModal

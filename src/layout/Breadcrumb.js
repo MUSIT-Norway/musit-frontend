@@ -31,6 +31,9 @@ export default class Breadcrumb extends React.Component {
   }
 
   render() {
+    const styles = {
+      crumb: { paddingLeft: '0.5em' }
+    }
     const {
       nodes,
       nodeTypes,
@@ -61,16 +64,16 @@ export default class Breadcrumb extends React.Component {
         if (passive) {
           fragment = (
             <span key={index}>
-              <span style={{ paddingLeft: '0.5em' }}>
+              <span style={styles.crumb}>
                 {iconFragment}{node.name}
               </span>
-              <span style={{ paddingLeft: '0.5em' }}>{divider}</span>
+              <span style={styles.crumb}>{divider}</span>
             </span>
           )
         } else if (!isLast(nodeArray, index) || allActive) {
           fragment = (
             <span key={index}>
-              <span style={{ paddingLeft: '0.5em' }}>
+              <span style={styles.crumb}>
                 <a
                   href=""
                   onClick={(e) => {
@@ -79,18 +82,18 @@ export default class Breadcrumb extends React.Component {
                   }}
                 >{iconFragment}{node.name}</a>
               </span>
-              <span style={{ paddingLeft: '0.5em' }}>{divider}</span>
+              <span style={styles.crumb}>{divider}</span>
             </span>
           )
         } else {
-          fragment = (<span key={index} style={{ paddingLeft: '0.5em' }}>{iconFragment}{node.name}</span>)
+          fragment = (<span key={index} style={styles.crumb}>{iconFragment}{node.name}</span>)
         }
         return fragment
       })
     }
     return (
       <div>
-        <span style={{ paddingLeft: '0.5em' }}>{divider}</span>
+        <span style={styles.crumb}>{divider}</span>
         {renderCrumb([{ id: -1, name: '', type: 'Top', url: '/magasin/root' }, ...nodes])}
       </div>
     )
