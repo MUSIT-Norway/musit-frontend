@@ -127,12 +127,12 @@ export const loadRoot = (id) => {
   if (id) {
     action = {
       types: [LOAD_ROOT, LOAD_ROOT_SUCCESS, LOAD_ROOT_FAIL],
-      promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`)
+      promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}`)
     }
   } else {
     action = {
       types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get('/api/storageadmin/v1/storageunit/root')
+      promise: (client) => client.get('/api/storagefacility/v1/storagenodes/root')
     }
   }
   return action
@@ -141,7 +141,7 @@ export const loadRoot = (id) => {
 export const loadChildren = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}/children`),
+    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}/children`),
     callback
   };
 }
@@ -166,7 +166,7 @@ export const clearCurrent = () => {
 }
 
 export const loadPath = (id, callback) => {
-  const url = `/api/storageadmin/v1/storageunit/${id}/path`
+  const url = `/api/storagefacility/v1/storagenodes/${id}/path`
   return {
     types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
     promise: (client) => client.get(url),

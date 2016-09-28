@@ -15,7 +15,6 @@ const DELETE_FAIL = 'musit/storageunit-grid/DELETE_FAIL'
 
 const initialState = { root: {} }
 
-
 const storageUnitGridReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case LOAD_SEVERAL:
@@ -134,12 +133,12 @@ export const loadRoot = (id) => {
   if (id) {
     action = {
       types: [LOAD_ONE, LOAD_ONE_SUCCESS, LOAD_ONE_FAIL],
-      promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`)
+      promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}`)
     }
   } else {
     action = {
       types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get('/api/storageadmin/v1/storageunit/root')
+      promise: (client) => client.get('/api/storagefacility/v1/storagenodes/1/children')
     }
   }
   return action
@@ -148,7 +147,7 @@ export const loadRoot = (id) => {
 export const loadChildren = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}/children`),
+    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}/children`),
     callback
   };
 }
@@ -156,7 +155,7 @@ export const loadChildren = (id, callback) => {
 export const deleteUnit = (id, callback) => {
   return {
     types: [DELETE, DELETE_SUCCESS, DELETE_FAIL],
-    promise: (client) => client.del(`/api/storageadmin/v1/storageunit/${id}`),
+    promise: (client) => client.del(`/api/storagefacility/v1/storagenodes/${id}`),
     id,
     callback
   };
@@ -168,6 +167,7 @@ export const clearRoot = () => {
   }
 }
 
+// TODO will be removed
 export const loadPath = (id, callback) => {
   const url = `/api/storageadmin/v1/storageunit/${id}/path`
   return {

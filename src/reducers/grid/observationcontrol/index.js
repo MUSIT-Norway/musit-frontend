@@ -6,6 +6,7 @@ const LOAD_ACTOR_SUCCESS = 'musit/observationcontrol/LOAD_ACTOR_SUCCESS'
 const LOAD_ACTOR_FAILURE = 'musit/observationcontrol/LOAD_ACTOR_FAILURE'
 
 const initialState = { data: [] }
+import 'whatwg-fetch';
 
 const observationControlGridReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -64,25 +65,22 @@ export const loadActor = (r) => {
   }
 }
 
-export const loadControlsForNode = (id, callback) => {
-  return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/event/v1/node/${id}/controls`),
-    callback
-  }
-}
-export const loadObservationsForNode = (id, callback) => {
-  return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/event/v1/node/${id}/observations`),
-    callback
-  }
-}
-
 export const loadControlsAndObservationsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/event/v1/node/${id}/controlsAndObservations`),
+    promise: () => {
+      return new Promise((resolve, reject) => {
+        fetch(`/api/storagefacility/v1/storagenodes/${id}/controls`)
+            .then(result => result.json())
+            .then(controls =>
+              fetch(`/api/storagefacility/v1/storagenodes/${id}/observations`)
+                .then(result => result.json())
+                .then(observations => resolve(observations.concat(controls)))
+                .catch(error => reject(error))
+            )
+            .catch(error => reject(error))
+      })
+    },
     callback
   }
 }

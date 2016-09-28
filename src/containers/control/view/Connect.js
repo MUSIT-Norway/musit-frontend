@@ -31,8 +31,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  loadControl: (id, callback) => {
-    dispatch(loadControl(id, callback))
+  loadControl: (nodeId, controlId, callback) => {
+    dispatch(loadControl(nodeId, controlId, callback))
   },
   loadPersonNameFromId: (id) => {
     dispatch(getActorNameFromId(id))
