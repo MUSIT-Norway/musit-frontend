@@ -42,8 +42,6 @@ export default class NodeGrid extends Component {
   }
 
   moveModal(toId, toName) {
-    const { data: rootNodeData } = this.props.rootNode
-    const name = rootNodeData.name
     this.props.onMove(this.state.showModalFromId, toId, {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
