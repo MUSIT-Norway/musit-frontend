@@ -4,6 +4,7 @@ import { PageHeader, Grid } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
+import { TYPES } from '../../reducers/picklist'
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -78,8 +79,8 @@ export default class PickListContainer extends React.Component {
                   </div>
                 )
               }}
-              toggle={(item, on) => (type === 'NODE' ? toggleNode(item, on) : toggleObject(item, on))}
-              remove={item => (type === 'NODE' ? removeNode(item) : removeObject(item))}
+              toggle={(item, on) => (type === TYPES.NODE ? toggleNode(item, on) : toggleObject(item, on))}
+              remove={item => (type === TYPES.NODE ? removeNode(item) : removeObject(item))}
               move={() => console.log('open modal window')}
             />
             <div style={{ textAlign: 'right' }}>
