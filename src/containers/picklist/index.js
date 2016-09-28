@@ -16,24 +16,21 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 import PickListContainer from './PickListContainer'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
-import { toggleMarked, activatePickList } from '../../reducers/picklist'
-
+import { toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
-  picks: state.picks.lists[state.picks.active],
-  marked: state.picks.marked,
-  activePicks: state.picks.active
+  picks: state.picks
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onToggleMarked: (e, id) => dispatch(toggleMarked(id)),
-  activate: (destination) => dispatch(activatePickList(destination))
+  toggleNode: (item, on) => dispatch(toggleNode(item, on)),
+  toggleObject: (item, on) => dispatch(toggleObject(item, on)),
+  removeNode: (item) => dispatch(removeNode(item)),
+  removeObject: (item) => dispatch(removeObject(item))
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class PickListPage extends PickListContainer {}
+export default connect(mapStateToProps, mapDispatchToProps)(PickListContainer)
