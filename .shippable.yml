@@ -9,6 +9,8 @@ integrations:
       type: slack
       recipients:
         - "#travis-builds"
+      on_success: always
+      on_failure: always
 
 build:
   ci:
