@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import Language from '../../../components/language'
 import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
+import { loadMoveHistoryForObject } from '../../../reducers/grid/move'
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { add, TYPES as PICK_TYPES } from '../../../reducers/picklist'
 import { hashHistory } from 'react-router'
@@ -38,6 +39,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     loadPath: (id) => {
       dispatch(loadPath(id))
+    },
+    loadMoveHistory: (objectId) => {
+      dispatch(loadMoveHistoryForObject(objectId))
     },
     onAction: (actionName, unit) => {
       switch (actionName) {
@@ -104,6 +108,7 @@ export default class StorageUnitsContainer extends React.Component {
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
     loadPath: React.PropTypes.func,
+    loadMoveHistory: React.PropTypes.func.isRequired,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
@@ -113,7 +118,8 @@ export default class StorageUnitsContainer extends React.Component {
       searchPattern: '',
       showObjects: false,
       showNodes: true,
-      showDeleteModal: false
+      showDeleteModal: false,
+      showMoveHistory: false
     }
   }
 
@@ -148,6 +154,14 @@ export default class StorageUnitsContainer extends React.Component {
     this.setState({ ...this.state, showNodes: false, showObjects: true })
   }
 
+  showMoveHistory() {
+    this.setState({ ...this.state, showMoveHistory: true })
+  }
+
+  closeMoveHistory() {
+    this.setState({ ...this.state, showMoveHistory: false })
+  }
+
   loadNodes() {
     if (this.props.params.splat) {
       const currentId = this.resolveCurrentId(this.props.params.splat);
@@ -174,6 +188,10 @@ export default class StorageUnitsContainer extends React.Component {
       retVal = ids[ids.length - 1]
     }
     return retVal
+  }
+
+  showModeHisoryForObject(objectId) {
+    return objectId
   }
 
   resolveId(splat) {
@@ -263,6 +281,7 @@ export default class StorageUnitsContainer extends React.Component {
       translate={this.props.translate}
       tableData={this.props.objects}
       onAction={this.props.onAction}
+      showMoveHistory={this.props.loadMoveHistory}
     />)
   }
 

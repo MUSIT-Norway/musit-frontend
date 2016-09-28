@@ -9,7 +9,6 @@ const mapStateToProps = (state) => ({
   path: state.storageGridUnit.root.path
 })
 
-
 const mapDispatchToProps = (dispatch) => {
   return ({
     loadChildren: () => {
