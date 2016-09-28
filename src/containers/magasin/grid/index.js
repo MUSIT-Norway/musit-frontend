@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import Language from '../../../components/language'
 import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
-import { loadMoveHistoryForObject } from '../../../reducers/grid/move'
+import { loadMoveHistoryForObject, clearMoveHistoryForObject } from '../../../reducers/grid/move'
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { addNode, addObject } from '../../../reducers/picklist'
 import { moveObject, moveNode } from '../../../reducers/move'
@@ -14,6 +14,7 @@ import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
+import MusitModalHistory from '../../../components/formfields/musitModalHistory'
 const I18n = require('react-i18nify').I18n;
 
 const mapStateToProps = (state) => ({
@@ -23,7 +24,8 @@ const mapStateToProps = (state) => ({
   objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root,
   path: state.storageGridUnit.root.path,
-  routerState: state.routing
+  routerState: state.routing,
+  moves: state.movehistory.data || []
 })
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -47,8 +49,11 @@ const mapDispatchToProps = (dispatch, props) => {
     loadPath: (id) => {
       dispatch(loadPath(id))
     },
-    loadMoveHistory: (objectId) => {
+    loadMoveHistoryForObject: (objectId) => {
       dispatch(loadMoveHistoryForObject(objectId))
+    },
+    clearMoveHistoryForObject: (objectId) => {
+      dispatch(clearMoveHistoryForObject(objectId))
     },
     moveObject: (objectId, destinationId, doneBy, callback) => {
       dispatch(moveObject(objectId, destinationId, doneBy, callback))
@@ -118,8 +123,12 @@ export default class StorageUnitsContainer extends React.Component {
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
     loadPath: React.PropTypes.func,
-    loadMoveHistory: React.PropTypes.func.isRequired,
+    loadMoveHistoryForObject: React.PropTypes.func.isRequired,
+    loadMoveHistoryForNode: React.PropTypes.func.isRequired,
+    clearMoveHistoryForObject: React.PropTypes.func.isRequired,
+    clearMoveHistoryForNode: React.PropTypes.func.isRequired,
     path: React.PropTypes.arrayOf(React.PropTypes.object),
+    moves: React.PropTypes.arrayOf(React.PropTypes.object),
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
     user: React.PropTypes.shape({
@@ -143,6 +152,8 @@ export default class StorageUnitsContainer extends React.Component {
     this.loadNodes = this.loadNodes.bind(this)
     this.loadObjects = this.loadObjects.bind(this)
     this.moveModal = this.moveModal.bind(this)
+    this.showObjectMoveHistory = this.showObjectMoveHistory.bind(this)
+    this.closeMoveHistory = this.closeMoveHistory.bind(this)
   }
 
   componentWillMount() {
@@ -212,10 +223,6 @@ export default class StorageUnitsContainer extends React.Component {
     return retVal
   }
 
-  showModeHisoryForObject(objectId) {
-    return objectId
-  }
-
   resolveId(splat) {
     let splatList = []
     if (splat) {
@@ -252,6 +259,12 @@ export default class StorageUnitsContainer extends React.Component {
       },
       onFailure: window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
     })
+  }
+
+  showObjectMoveHistory = (id) => {
+    this.props.clearMoveHistoryForObject()
+    this.props.loadMoveHistoryForObject(id)
+    this.setState({ ...this.state, showMoveHistory: true })
   }
 
   makeToolbar() {
@@ -315,6 +328,7 @@ export default class StorageUnitsContainer extends React.Component {
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
         onMove={(moveFrom, moveTo, callback) => this.props.moveNode(moveFrom, moveTo, 1, callback)}
+        showMoveHistory={this.showNodeMoveHistory}
         refresh={() => {
           this.loadNodes()
           this.props.loadRoot(nodeId)
@@ -332,7 +346,7 @@ export default class StorageUnitsContainer extends React.Component {
       id={nodeId}
       translate={this.props.translate}
       tableData={this.props.objects}
-      showMoveHistory={this.props.loadMoveHistory}
+      showMoveHistory={this.showObjectMoveHistory}
       onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
       onMove={(moveFrom, moveTo, callback) => this.props.moveObject(moveFrom, moveTo, 1, callback)}
       refresh={() => {
@@ -346,11 +360,19 @@ export default class StorageUnitsContainer extends React.Component {
 
   render() {
     const { searchPattern } = this.state
-    const { children, translate, path } = this.props
+    const { children, translate, path, moves } = this.props
     const { data: rootNodeData, statistics } = this.props.rootNode
     const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
     return (
       <span>
+        <MusitModalHistory
+          show={this.state.showMoveHistory}
+          onClose={this.closeMoveHistory}
+          translate={translate}
+          path={path}
+          moves={moves}
+          headerText={this.props.translate('musit.moveHistory')}
+        />
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}

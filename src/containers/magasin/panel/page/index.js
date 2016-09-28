@@ -19,7 +19,7 @@
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
 import { hashHistory } from 'react-router'
-import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup, Button } from 'react-bootstrap'
+import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap'
 import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../../layout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
@@ -28,7 +28,6 @@ import Language from '../../../../components/language'
 import AddressSuggest from '../../../../components/address'
 import Loader from 'react-loader';
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../../components/formfields'
-import MusitModal from '../../../movehistory/index'
 
 const mapStateToProps = (state) => {
   return {
@@ -52,7 +51,6 @@ export default class StorageUnitContainer extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { showModal: false }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.translate = this.translate.bind(this)
     this.renderNumberField = this.renderNumberField.bind(this)
@@ -265,12 +263,6 @@ export default class StorageUnitContainer extends Component {
   render() {
     return (
       <span>
-        <MusitModal
-          show={this.state.showModal}
-          onHide={() => this.setState({ ...this.state, showModal: false })}
-          onClose={() => this.setState({ ...this.state, showModal: false })}
-          headerText="Move history"
-        />
         <Layout
           title={this.props.translate('musit.storageUnits.title')}
           translate={this.props.translate}
@@ -539,9 +531,6 @@ export default class StorageUnitContainer extends Component {
                               onClickSave={this.handleSubmit}
                               onClickCancel={() => hashHistory.goBack()}
                             />
-                          </Row>
-                          <Row>
-                            <Button onClick={() => this.setState({ ...this.state, showModal: true })}>Show Modal</Button>
                           </Row>
                         </Grid>
                       </div>

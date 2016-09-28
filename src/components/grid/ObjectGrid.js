@@ -51,7 +51,7 @@ export default class ObjectGrid extends Component {
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_term`}>
                     {c.displayName}
                   </td>
-                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
+                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_moveHistory`}>
                     <a
                       href=""
                       onClick={(e) => {

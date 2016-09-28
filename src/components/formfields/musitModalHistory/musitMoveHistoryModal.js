@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-require('../../../containers/movehistory/modalStyling.css')
+require('./modalStyling.css')
 import React, { Component, PropTypes } from 'react'
 import { Modal, Row, Col, Button } from 'react-bootstrap'
 import Breadcrumb from '../../../layout/Breadcrumb'
@@ -29,22 +29,9 @@ export default class MusitHistoryModal extends Component {
     onHide: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     headerText: PropTypes.string.isRequired,
-    loadChildren: PropTypes.func.isRequired,
-    loadPath: PropTypes.func.isRequired,
-    clearPath: PropTypes.func.isRequired,
     path: PropTypes.arrayOf(PropTypes.object),
     translate: PropTypes.func,
     moves: PropTypes.arrayOf(PropTypes.object)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.show === true && this.props.show === false) {
-      this.loadStuff()
-    }
-  }
-
-  loadStuff() {
-    this.props.loadChildren()
   }
 
   render() {

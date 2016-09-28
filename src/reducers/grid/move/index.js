@@ -1,6 +1,9 @@
 const LOAD = 'musit/movehistory/LOAD'
 const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS'
 const LOAD_FAIL = 'musit/movehistory/LOAD_FAIL'
+const CLEAR = 'musit/movehistory/CLEAR_SUCCESS'
+const CLEAR_SUCCESS = 'musit/movehistory/CLEAR'
+const CLEAR_FAIL = 'musit/movehistory/CLEAR_FAIL'
 
 const initialState = { data: [
   { doneBy: 'Kjell Kjellstad',
@@ -99,6 +102,26 @@ const moveHistoryReducer = (state = initialState, action) => {
         loaded: false,
         error: action.error
       }
+    case CLEAR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        data: action.result
+      }
+    case CLEAR:
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      }
+    case CLEAR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error
+      }
     default:
       return state;
   }
@@ -110,5 +133,11 @@ export const loadMoveHistoryForObject = () => {
   return {
     type: LOAD_SUCCESS,
     result: initialState.data
+  }
+}
+export const clearMoveHistoryForObject = () => {
+  return {
+    type: CLEAR_SUCCESS,
+    result: []
   }
 }
