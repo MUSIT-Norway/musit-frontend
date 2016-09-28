@@ -288,7 +288,9 @@ en:
           leftLabelToolTip: "Observed theft protection"
           rightLabelPlaceToolTip: "Task that should be performed"
     pickList:
-      title: "Picklist"
+      title:
+        node: "Picklist (unit)"
+        object: "Picklist (objects)"
       action:
         markAll: "All"
         executeAll: "Execute (all)"
@@ -716,7 +718,9 @@ no:
           leftLabelToolTip: "Observert tyverisikring"
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
     pickList:
-      title: "Plukkliste"
+      title:
+        node: "Plukkliste (enheter)"
+        object: "Plukkliste (objekter)"
       action:
         markAll: "Alle"
         executeAll: "Utfør (alle)"

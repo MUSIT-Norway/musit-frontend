@@ -29,7 +29,7 @@ export const moveObject = (objectId, destination, doneBy, callback) => {
   }
   return {
     types: [MOVE_OBJECT, MOVE_OBJECT_SUCCESS, MOVE_OBJECT_FAILURE],
-    promise: (client) => client.post('/api/event/v1/moveObject', { data }),
+    promise: (client) => client.put('/api/storagefacility/v1/storagenodes/moveObject', { data }),
     callback
   }
 }
@@ -42,7 +42,7 @@ export const moveNode = (nodeId, destination, doneBy, callback) => {
   }
   return {
     types: [MOVE_OBJECT, MOVE_OBJECT_SUCCESS, MOVE_OBJECT_FAILURE],
-    promise: (client) => client.post('/api/event/v1/moveNode', { data }),
+    promise: (client) => client.put('/api/storagefacility/v1/storagenodes/moveNode', { data }),
     callback
   }
 }
