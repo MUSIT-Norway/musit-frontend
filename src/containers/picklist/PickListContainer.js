@@ -1,15 +1,19 @@
 import React from 'react'
 import { PickListComponent } from '../../components/picklist'
-import { PageHeader, Grid, Button } from 'react-bootstrap'
+import { PageHeader, Grid } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import Breadcrumb from '../../layout/Breadcrumb'
+import { hashHistory } from 'react-router'
+import { TYPES } from '../../reducers/picklist'
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
-    picks: React.PropTypes.array.isRequired,
-    marked: React.PropTypes.array.isRequired,
-    onToggleMarked: React.PropTypes.func.isRequired,
-    activate: React.PropTypes.func.isRequired,
+    picks: React.PropTypes.object.isRequired,
+    toggleNode: React.PropTypes.func.isRequired,
+    toggleObject: React.PropTypes.func.isRequired,
+    removeNode: React.PropTypes.func.isRequired,
+    removeObject: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired
   }
 
@@ -20,16 +24,6 @@ export default class PickListContainer extends React.Component {
     }
     this.onOpenActionDialog = this.onOpenActionDialog.bind(this)
     this.onCloseActionDialog = this.onCloseActionDialog.bind(this)
-  }
-
-  componentWillMount() {
-    this.props.activate(this.props.params.type)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.params.type !== this.props.params.type) {
-      this.props.activate(nextProps.params.type)
-    }
   }
 
   onOpenActionDialog() {
@@ -54,24 +48,17 @@ export default class PickListContainer extends React.Component {
       }
     ]
     const style = require('../../components/picklist/index.scss')
-    const { translate, picks, marked, onToggleMarked } = this.props
-    const { showActionDialog } = this.state
-    const checkSymbol = (marked.length > 0) ? 'square-o' : 'check-square-o'
-
+    const { translate, toggleNode, toggleObject, removeNode, removeObject } = this.props
+    const type = this.props.params.type.toUpperCase();
+    const picks = this.props.picks[type]
+    const marked = picks.filter(p => p.marked).map(p => p.value)
+    const showActionDialog = this.state.showActionDialog
     return (
       <div className={style.picklist}>
         <main>
           <Grid>
             <PageHeader>
               {translate('musit.pickList.title', false)}
-              <Button onClick={(e) => onToggleMarked(e, null)}>
-                <FontAwesome name={checkSymbol} className={style.normalAction} />
-                {translate('musit.pickList.action.markAll', false)}
-              </Button>
-              <Button disabled={marked.length <= 0} onClick={() => this.onOpenActionDialog()}>
-                <FontAwesome name="play-circle" className={style.normalAction} />
-                {translate('musit.pickList.action.executeAll', false)}
-              </Button>
             </PageHeader>
             <PickListComponent
               picks={picks}
@@ -79,13 +66,22 @@ export default class PickListContainer extends React.Component {
               actions={demoActions}
               showActionDialog={showActionDialog}
               onCloseActionDialog={() => this.onCloseActionDialog()}
-              iconRendrer={(pick) => {
-                return pick.name ? <FontAwesome name="folder" /> : <FontAwesome name="rebel" />
-              }}
+              iconRendrer={(pick) => <FontAwesome name={pick.value.name ? 'folder' : 'rebel'} style={{ fontSize: '3.0em' }} />}
               labelRendrer={(pick) => {
-                return pick.name ? pick.name : pick.displayName
+                return (
+                  <div>
+                    <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.displayName}</span>
+                    <Breadcrumb
+                      nodes={pick.path}
+                      onClickCrumb={node => hashHistory.push(`/magasin/${node.id === -1 ? 'root' : node.id}`)}
+                      allActive
+                    />
+                  </div>
+                )
               }}
-              onToggleMarked={onToggleMarked}
+              toggle={(item, on) => (type === TYPES.NODE ? toggleNode(item, on) : toggleObject(item, on))}
+              remove={item => (type === TYPES.NODE ? removeNode(item) : removeObject(item))}
+              move={() => console.log('open modal window')}
             />
             <div style={{ textAlign: 'right' }}>
               {marked.length}/{picks.length} node(r) valgt.

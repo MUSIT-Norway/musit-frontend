@@ -16,21 +16,35 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import PickListContainer from './PickListContainer'
-import { connect } from 'react-redux'
-import Language from '../../components/language'
-import { toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
+
+import Language from '../../../components/language'
+import { loadRoot, loadChildren, loadPath, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
+import { connect } from 'react-redux';
+import MusitModalImpl from './MusitModal'
 
 const mapStateToProps = (state) => ({
+  user: state.auth.user,
   translate: (key, markdown) => Language.translate(key, markdown),
-  picks: state.picks
+  children: state.storageUnitModal.data || [],
+  path: state.storageUnitModal.root.path,
+  rootNode: state.storageUnitModal.root,
+  currentId: state.storageUnitModal.currentId
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  toggleNode: (item, on) => dispatch(toggleNode(item, on)),
-  toggleObject: (item, on) => dispatch(toggleObject(item, on)),
-  removeNode: (item) => dispatch(removeNode(item)),
-  removeObject: (item) => dispatch(removeObject(item))
-})
+const mapDispatchToProps = (dispatch) => {
+  return ({
+    loadChildren: (id, callback) => {
+      dispatch(loadChildren(id, callback))
+      dispatch(loadRoot(id))
+    },
+    loadPath: (id) => dispatch(loadPath(id)),
+    clearPath: (id) => dispatch(clearPath(id)),
+    loadRoot: () => dispatch(loadRoot()),
+    setCurrentId: (id) => dispatch(setCurrent(id)),
+    clearCurrentId: (id) => dispatch(clearCurrent(id))
+  })
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(PickListContainer)
+
+@connect(mapStateToProps, mapDispatchToProps)
+export default class MusitModal extends MusitModalImpl {}

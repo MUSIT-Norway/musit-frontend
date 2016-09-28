@@ -31,7 +31,9 @@ export default class Breadcrumb extends React.Component {
   }
 
   render() {
-    const styles = require('./Breadcrumb.scss')
+    const styles = {
+      crumb: { paddingLeft: '0.5em' }
+    }
     const {
       nodes,
       nodeTypes,
@@ -54,7 +56,7 @@ export default class Breadcrumb extends React.Component {
             )
           } else {
             iconFragment = (
-              <FontAwesome name={currentType.iconName} style={{ 'font-size': 'x-large', padding: '1px' }} />
+              <FontAwesome name={currentType.iconName} style={{ fontSize: 'x-large', padding: '1px' }} />
             )
           }
         }
@@ -62,16 +64,16 @@ export default class Breadcrumb extends React.Component {
         if (passive) {
           fragment = (
             <span key={index}>
-              <span className={styles.crumb}>
+              <span style={styles.crumb}>
                 {iconFragment}{node.name}
               </span>
-              <span className={styles.crumb}>{divider}</span>
+              <span style={styles.crumb}>{divider}</span>
             </span>
           )
         } else if (!isLast(nodeArray, index) || allActive) {
           fragment = (
             <span key={index}>
-              <span className={styles.crumb}>
+              <span style={styles.crumb}>
                 <a
                   href=""
                   onClick={(e) => {
@@ -80,18 +82,18 @@ export default class Breadcrumb extends React.Component {
                   }}
                 >{iconFragment}{node.name}</a>
               </span>
-              <span className={styles.crumb}>{divider}</span>
+              <span style={styles.crumb}>{divider}</span>
             </span>
           )
         } else {
-          fragment = (<span key={index} className={styles.crumb}>{iconFragment}{node.name}</span>)
+          fragment = (<span key={index} style={styles.crumb}>{iconFragment}{node.name}</span>)
         }
         return fragment
       })
     }
     return (
       <div>
-        <span className={styles.crumb}>{divider}</span>
+        <span style={styles.crumb}>{divider}</span>
         {renderCrumb([{ id: -1, name: '', type: 'Top', url: '/magasin/root' }, ...nodes])}
       </div>
     )
