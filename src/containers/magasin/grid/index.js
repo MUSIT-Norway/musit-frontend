@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Language from '../../../components/language'
 import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
 import { loadObjects } from '../../../reducers/storageobject/grid'
-import { add, TYPES as PICK_TYPES } from '../../../reducers/picklist'
+import { addNode, addObject } from '../../../reducers/picklist'
 import { moveObject, moveNode } from '../../../reducers/move'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
@@ -52,13 +52,13 @@ const mapDispatchToProps = (dispatch, props) => {
     moveNode: (nodeId, destinationId, doneBy, callback) => {
       dispatch(moveNode(nodeId, destinationId, doneBy, callback))
     },
-    onAction: (actionName, unit) => {
+    onAction: (actionName, unit, path) => {
       switch (actionName) {
         case 'pickNode':
-          dispatch(add(PICK_TYPES.NODE, unit))
+          dispatch(addNode(unit, path))
           break
         case 'pickObject':
-          dispatch(add(PICK_TYPES.OBJECT, unit))
+          dispatch(addObject(unit, path))
           break
         case 'controlsobservations':
           history.push(`/magasin/${unit.id}/controlsobservations`)
@@ -295,7 +295,7 @@ export default class StorageUnitsContainer extends React.Component {
         id={nodeId}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
-        onAction={this.props.onAction}
+        onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
         onMove={(moveFrom, moveTo, callback) => this.props.moveNode(moveFrom, moveTo, 1, callback)}
         refresh={() => {
           this.loadNodes()
@@ -314,7 +314,7 @@ export default class StorageUnitsContainer extends React.Component {
       id={nodeId}
       translate={this.props.translate}
       tableData={this.props.objects}
-      onAction={this.props.onAction}
+      onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
       onMove={(moveFrom, moveTo, callback) => this.props.moveObject(moveFrom, moveTo, 1, callback)}
       refresh={() => {
         this.loadObjects()
