@@ -1,6 +1,8 @@
 import { assert, React, ReactTestUtils } from '../../../../test/setup';
 import NodeGrid from '../NodeGrid';
 
+const TestModal = () => <span>Hello</span>
+
 describe('NodeGrid', () => {
   let inputComponent;
   before('should render NodeGrid', () => {
@@ -10,6 +12,9 @@ describe('NodeGrid', () => {
         translate={(key) => key}
         onAction={(key) => key}
         onClick={(key) => key}
+        onMove={(key) => key}
+        refresh={(key) => key}
+        MusitModal={TestModal}
         tableData={[
           {
             id: 1,

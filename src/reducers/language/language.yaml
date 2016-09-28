@@ -1,5 +1,16 @@
 en:
   musit:
+    moveModal:
+      move: "Move"
+      moveObjects: "Move objects"
+      moveNodes: "Move nodes"
+      goToRoot: "Go to top"
+      currentDestination: "destination:"
+      messages:
+        nodeMoved: "The node %{name} was moved to %{destination}"
+        objectMoved: "The object %{name} was moved to %{destination}"
+        errorNode: "Error in node %{name} move to %{destination}"
+        errorObject: "Error in object %{name} move to %{destination}"
     leftMenu:
       node:
         newNode: "New node"
@@ -417,6 +428,17 @@ en:
     login: Login through Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Login")
 no:
   musit:
+    moveModal:
+      move: "Flytt hit"
+      moveObjects: "Flytt objekter"
+      moveNodes: "Flytt noder"
+      goToRoot: "Gå til toppen"
+      currentDestination: "Destinasjon:"
+      messages:
+        nodeMoved: "Noden %{name} ble flyttet til %{destination}"
+        objectMoved: "Objektet %{name} ble flyttet til %{destination}"
+        errorNode: "Error å flytte node %{name} til %{destination}"
+        errorObject: "Error å flytte objektet %{name} til %{destination}"
     leftMenu:
       node:
         newNode: "Ny node"
