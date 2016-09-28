@@ -94,15 +94,10 @@ export default observationReducer;
 
 export const addObservation = (id, data, callback) => {
   const action = 'post'
-  let url = ''
-  if (id) {
-    url = `/api/event/v1/node/${id}/observation`
-  } else {
-    url = '/api/event/v1/event'
-  }
+  let url = `/api/storagefacility/v1/storagenodes/${id}/observations`
   const dataToPost = mapToBackEnd(data)
   return {
-    types: [ADD, 'musit/observation/ADD_SUCCESS', ADD_FAIL],
+    types: [ADD, ADD_SUCCESS, ADD_FAIL],
     promise: (client) => client[action](url, { data: dataToPost }),
     callback
   };
@@ -115,10 +110,10 @@ export const getActorNameFromId = (id) => {
   }
 }
 
-export const loadObservation = (id, callback) => {
+export const loadObservation = (nodeId, observationId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`api/event/v1/event/${id}`),
+    promise: (client) => client.get(`api/storagefacility/v1/storagenodes/${nodeId}/observations/${observationId}`),
     callback
   }
 }

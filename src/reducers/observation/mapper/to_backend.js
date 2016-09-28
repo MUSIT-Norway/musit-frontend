@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { DATE_FORMAT_ISO_SHORT, parseFloatFromString } from './../../../util'
+import { DATE_FORMAT_ISO_FULL, parseFloatFromString } from './../../../util'
 
 export const parseObservation = (el) => {
   const re = {}
@@ -107,8 +107,8 @@ export const parseObservation = (el) => {
 const wrap = (e) => {
   const r = {}
   r.eventType = 'Observation'
-  r.doneBy = e.doneBy.id
-  r.doneDate = e.doneDate.format(DATE_FORMAT_ISO_SHORT)
+  r.doneBy = { actorId: e.doneBy.id, roleId: 1 }
+  r.doneDate = e.doneDate.format(DATE_FORMAT_ISO_FULL)
   r['subEvents-parts'] = e.observations ? e.observations.filter((f) => { return f.data }).map(parseObservation) : []
   return r
 }
