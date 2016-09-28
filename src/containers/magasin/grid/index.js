@@ -214,14 +214,13 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  makeLeftMenu() {
-    const { data: rootNodeData, statistics } = this.props.rootNode
+  makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete } = this.props
     const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root')
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          id={rootNodeData ? rootNodeData.id : 0}
+          id={rootNode ? rootNode.id : 0}
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
@@ -239,17 +238,13 @@ export default class StorageUnitsContainer extends React.Component {
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={(id) => id/* TODO: Add move action for rootnode*/}
-          onClickDelete={(id) => onDelete(id, rootNodeData)}
+          onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
     )
   }
 
-  makeContentGrid(
-    filter = this.state.searchPattern,
-    rootNode = (this.props.rootNode.data ? this.props.rootNode.data.rootNodeData : null),
-    children = this.props.children
-  ) {
+  makeContentGrid(filter, rootNode, children) {
     if (this.state.showNodes) {
       return (<NodeGrid
         id={rootNode ? rootNode.id : null}
@@ -272,14 +267,18 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   render() {
+    const { searchPattern } = this.state
+    const { children, translate, path } = this.props
+    const { data: rootNodeData, statistics } = this.props.rootNode
+    const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
     return (
       <Layout
-        title={'Magasin'}
-        translate={this.props.translate}
-        breadcrumb={<Breadcrumb nodes={this.props.path} onClickCrumb={node => this.onClickCrumb(node)} />}
+        title={"Magasin"}
+        translate={translate}
+        breadcrumb={breadcrumb}
         toolbar={this.makeToolbar()}
-        leftMenu={this.makeLeftMenu()}
-        content={this.makeContentGrid()}
+        leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
+        content={this.makeContentGrid(searchPattern, rootNodeData, children)}
       />
     )
   }
