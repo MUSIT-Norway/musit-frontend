@@ -5,6 +5,7 @@ import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../.
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { addNode, addObject } from '../../../reducers/picklist'
 import { moveObject, moveNode } from '../../../reducers/move'
+import { loadStats, clearStats } from '../../../reducers/storageunit/stats'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
@@ -17,6 +18,7 @@ const I18n = require('react-i18nify').I18n;
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
+  stats: state.storageUnitStats.stats,
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
@@ -31,10 +33,13 @@ const mapDispatchToProps = (dispatch, props) => {
   return ({
     loadRoot: (id) => {
       dispatch(loadRoot(id))
+      dispatch(clearStats())
+      dispatch(loadStats(id))
     },
     loadStorageUnits: () => {
       dispatch(clearRoot())
       dispatch(loadRoot())
+      dispatch(clearStats())
     },
     loadStorageObjects: (id) => {
       dispatch(loadObjects(id))
@@ -42,6 +47,8 @@ const mapDispatchToProps = (dispatch, props) => {
     loadChildren: (id, callback) => {
       dispatch(loadChildren(id, callback))
       dispatch(loadRoot(id))
+      dispatch(clearStats())
+      dispatch(loadStats(id))
     },
     loadPath: (id) => {
       dispatch(loadPath(id))
@@ -85,6 +92,7 @@ const mapDispatchToProps = (dispatch, props) => {
                 hashHistory.replace(`/magasin/${currentNode.isPartOf}`)
               } else {
                 dispatch(loadRoot())
+                dispatch(clearStats())
               }
               window.alert(`Du har slettet noden med navn ${name}`)
             }
@@ -120,7 +128,12 @@ export default class StorageUnitsContainer extends React.Component {
     user: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired
     }),
-    loadRoot: React.PropTypes.func.isRequired
+    loadRoot: React.PropTypes.func.isRequired,
+    stats: React.PropTypes.shape({
+      nodes: React.PropTypes.number.isRequired,
+      objects: React.PropTypes.number.isRequired,
+      totalObjects: React.PropTypes.number.isRequired
+    })
   }
 
   constructor(props) {
@@ -274,9 +287,9 @@ export default class StorageUnitsContainer extends React.Component {
               hashHistory.push('/magasin/add')
             }
           }}
-          objectsOnNode={statistics ? statistics.objectsOnNode : Number.NaN}
-          totalObjectCount={statistics ? statistics.totalObjectCount : Number.NaN}
-          underNodeCount={statistics ? statistics.underNodeCount : Number.NaN}
+          objectsOnNode={statistics ? statistics.objects : Number.NaN}
+          totalObjectCount={statistics ? statistics.totalObjects : Number.NaN}
+          underNodeCount={statistics ? statistics.nodes : Number.NaN}
           onClickProperties={(id) => onEdit({ id })}
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
@@ -328,7 +341,7 @@ export default class StorageUnitsContainer extends React.Component {
   render() {
     const { searchPattern } = this.state
     const { children, translate, path } = this.props
-    const { data: rootNodeData, statistics } = this.props.rootNode
+    const { data: rootNodeData } = this.props.rootNode
     const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />
     return (
       <span>
@@ -343,7 +356,7 @@ export default class StorageUnitsContainer extends React.Component {
           translate={translate}
           breadcrumb={breadcrumb}
           toolbar={this.makeToolbar()}
-          leftMenu={this.makeLeftMenu(rootNodeData, statistics)}
+          leftMenu={this.makeLeftMenu(rootNodeData, this.props.stats)}
           content={this.makeContentGrid(searchPattern, rootNodeData, children)}
         />
       </span>
