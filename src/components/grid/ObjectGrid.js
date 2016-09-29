@@ -96,7 +96,15 @@ export default class ObjectGrid extends Component {
                     </a>
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
-                    <FontAwesome name="truck" />
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault()
+                        this.moveModal(c.id)
+                      }}
+                    >
+                      <FontAwesome name="truck" />
+                    </a>
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_shoppingCart`}>
                     <a
