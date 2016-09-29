@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch, props) => {
     onDelete: (id, currentNode) => { // TODO: Problems with delete slower than callback (async)
       if (id === currentNode.id) {
         const name = currentNode.name
-        if (window.confirm(`Vil du virkelig slette node med navn ${name}`)) {
+        if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', { name }))) {
           dispatch(deleteUnit(id, {
             onSuccess: () => {
               dispatch(clearRoot())
@@ -94,7 +94,14 @@ const mapDispatchToProps = (dispatch, props) => {
                 dispatch(loadRoot())
                 dispatch(clearStats())
               }
-              window.alert(`Du har slettet noden med navn ${name}`)
+              window.alert(I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', { name }))
+            },
+            onFailure: (e) => {
+              if (e.status === 405) {
+                window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
+              } else {
+                window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorCommon'))
+              }
             }
           }))
         }
