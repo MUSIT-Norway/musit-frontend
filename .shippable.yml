@@ -12,6 +12,10 @@ integrations:
       on_success: always
       on_failure: always
 
+branches:
+  only:
+    - master
+
 build:
   ci:
    - npm install --force
