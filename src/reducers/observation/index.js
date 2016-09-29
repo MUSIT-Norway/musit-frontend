@@ -1,4 +1,5 @@
-import { mapToFrontEnd, mapToBackEnd } from './mapper'
+import mapToBackEnd from './mapper/to_backend'
+import mapToFrontEnd from './mapper/to_frontend'
 const ADD = 'musit/observation/ADD'
 const ADD_SUCCESS = 'musit/observation/ADD_SUCCESS'
 const ADD_FAIL = 'musit/observation/ADD_FAIL'
@@ -92,17 +93,12 @@ const observationReducer = (state = initialState, action = {}) => {
 
 export default observationReducer;
 
-export const addObservation = (id, data, callback) => {
+export const addObservation = (nodeId, data, callback) => {
   const action = 'post'
-  let url = ''
-  if (id) {
-    url = `/api/event/v1/node/${id}/observation`
-  } else {
-    url = '/api/event/v1/event'
-  }
-  const dataToPost = mapToBackEnd(data)
+  const url = `/api/storagefacility/v1/storagenodes/${nodeId}/observations`
+  const dataToPost = mapToBackEnd(data, nodeId)
   return {
-    types: [ADD, 'musit/observation/ADD_SUCCESS', ADD_FAIL],
+    types: [ADD, ADD_SUCCESS, ADD_FAIL],
     promise: (client) => client[action](url, { data: dataToPost }),
     callback
   };
@@ -115,10 +111,10 @@ export const getActorNameFromId = (id) => {
   }
 }
 
-export const loadObservation = (id, callback) => {
+export const loadObservation = (nodeId, observationId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`api/event/v1/event/${id}`),
+    promise: (client) => client.get(`api/storagefacility/v1/storagenodes/${nodeId}/observations/${observationId}`),
     callback
   }
 }

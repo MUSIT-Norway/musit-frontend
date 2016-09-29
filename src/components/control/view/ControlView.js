@@ -74,8 +74,7 @@ export default class ControlView extends Component {
       let lv = ''
       const { eventType, ok } = control
       if (!ok) {
-        const motivatesArr = control['subEvents-motivates'];
-        const motivates = motivatesArr ? motivatesArr[0] : {}
+        const motivates = control.motivates;
         switch (eventType) {
           case 'ControlTemperature':
             lv = (<ObservationRender.RenderFromToNumberComment
@@ -193,10 +192,10 @@ export default class ControlView extends Component {
               translate={this.props.translate}
               canEdit={false}
               valueProps={{
-                observations: motivates.lifeCycles.map(lc => {
+                observations: motivates.lifecycles.map(lc => {
                   return {
                     lifeCycle: lc.stage,
-                    count: formatFloatToString(lc.number)
+                    count: formatFloatToString(lc.quantity)
                   }
                 }),
                 identificationValue: motivates.identification,
