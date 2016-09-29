@@ -25,8 +25,8 @@ en:
         deleteMessages:
           askForDeleteConfirmation: "Will you really delete %{name} node?"
           confirmDelete: "You have deleted %{name} node."
-          errorComman: "Delete operation got some error."
-          errorNotAllowedHadChild: "Not allow to delete the node with children. Please delete childen first."
+          errorCommon: "Delete operation got some error."
+          errorNotAllowedHadChild: "Not allow to delete the node with children. Please delete child first."
         controlsobservations: "Contr./Observ."
       observationControl:
         newObservation: "New observation"
@@ -460,7 +460,7 @@ no:
         deleteMessages:
           askForDeleteConfirmation: "Vil du virkelig slette %{name} node."
           confirmDelete: "Du har slettet %{name} noden"
-          errorComman: "Fikk feil på slette."
+          errorCommon: "Fikk feil på slette."
           errorNotAllowedHadChild: "Ikke tillate å slette noden med barn. Vennligst slett barn først."
         controlsobservations: "Kontr./Observ."
       observationControl:

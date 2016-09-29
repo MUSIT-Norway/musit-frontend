@@ -92,7 +92,7 @@ const mapDispatchToProps = (dispatch, props) => {
               if (e.status === 405) {
                 window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
               } else {
-                window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorComman'))
+                window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorCommon'))
               }
             }
           }))
