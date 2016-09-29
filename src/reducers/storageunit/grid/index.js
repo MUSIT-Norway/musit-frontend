@@ -169,7 +169,7 @@ export const clearRoot = () => {
 
 // TODO will be removed
 export const loadPath = (id, callback) => {
-  const url = `/api/storageadmin/v1/storageunit/${id}/path`
+  const url = `/api/storagefacility/v1/storagenodes/${id}/path`
   return {
     types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
     promise: (client) => client.get(url),
