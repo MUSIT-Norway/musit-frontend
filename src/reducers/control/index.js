@@ -60,7 +60,7 @@ const controlReducer = (state = initialState, action = {}) => {
 export default controlReducer;
 
 export const addControl = (nodeId, controlData, observations, callback) => {
-  const data = mapToBackend(controlData, observations)
+  const data = mapToBackend(controlData, observations, nodeId)
   const url = `/api/storagefacility/v1/storagenodes/${nodeId}/controls`
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],

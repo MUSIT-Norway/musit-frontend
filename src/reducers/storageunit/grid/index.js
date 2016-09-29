@@ -49,7 +49,7 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
         ...state,
         root: {
           ...state.root,
-          path: action.result.map((s) => {
+          path: action.result.filter(s => s.name !== 'root-node').map((s) => {
             return {
               id: s.id,
               name: s.name,

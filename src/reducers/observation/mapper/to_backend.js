@@ -18,71 +18,93 @@
  */
 import { DATE_FORMAT_ISO_FULL, parseFloatFromString } from './../../../util'
 
-export const parseObservation = (el) => {
+export const parseObservation = (r) => (el) => {
   const re = {}
   switch (el.type) {
     case 'pest':
       re.eventType = 'ObservationPest'
       re.identification = el.data.identificationValue
       re.note = el.data.commentValue
-      re.lifeCycles = el.data.observations.map((o) => {
+      re.lifecycles = el.data.observations.map((o) => {
         const ret = {}
         ret.stage = o.lifeCycle
-        ret.number = parseFloatFromString(o.count)
+        ret.quantity = parseFloatFromString(o.count)
         return ret
       })
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'lightCondition':
       re.eventType = 'ObservationLightingCondition'
       re.lightingCondition = el.data.leftValue
       re.note = el.data.rightValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'gas':
       re.eventType = 'ObservationGas'
       re.gas = el.data.leftValue
       re.note = el.data.rightValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'cleaning':
       re.eventType = 'ObservationCleaning'
       re.cleaning = el.data.leftValue
       re.note = el.data.rightValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'relativeHumidity':
       re.eventType = 'observationRelativeHumidity'
       re.from = parseFloatFromString(el.data.fromValue)
       re.to = parseFloatFromString(el.data.toValue)
       re.note = el.data.commentValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'mold':
       re.eventType = 'ObservationMold'
       re.mold = el.data.leftValue
       re.note = el.data.rightValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'skallsikring':
       re.eventType = 'ObservationPerimeterSecurity'
       re.perimeterSecurity = el.data.leftValue
       re.note = el.data.rightValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'tyverisikring':
       re.eventType = 'ObservationTheftProtection'
       re.theftProtection = el.data.leftValue
       re.note = el.data.rightValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'brannsikring':
       re.eventType = 'ObservationFireProtection'
       re.fireProtection = el.data.leftValue
       re.note = el.data.rightValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'vannskaderisiko':
       re.eventType = 'ObservationWaterDamageAssessment'
       re.waterDamageAssessment = el.data.leftValue
       re.note = el.data.rightValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'hypoxicAir':
       re.eventType = 'ObservationHypoxicAir'
       re.from = parseFloatFromString(el.data.fromValue)
       re.to = parseFloatFromString(el.data.toValue)
       re.note = el.data.commentValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     case 'alcohol': {
       re.eventType = 'ObservationAlcohol'
@@ -90,6 +112,8 @@ export const parseObservation = (el) => {
       re.condition = el.data.statusValue || el.data.status
       const volumeValue = el.data.volumeValue || el.data.volume
       re.volume = parseFloatFromString(volumeValue)
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     }
     case 'temperature':
@@ -97,6 +121,8 @@ export const parseObservation = (el) => {
       re.from = parseFloatFromString(el.data.fromValue)
       re.to = parseFloatFromString(el.data.toValue)
       re.note = el.data.commentValue
+      re.doneBy = r.doneBy
+      re.doneDate = r.doneDate
       break
     default:
       throw Error(`Invalid type ${el.type.toLowerCase()}`)
@@ -104,17 +130,15 @@ export const parseObservation = (el) => {
   return re
 }
 
-const wrap = (e) => {
+export default (observation, nodeId) => {
   const r = {}
   r.eventType = 'Observation'
-  r.doneBy = { actorId: e.doneBy.id, roleId: 1 }
-  r.doneDate = e.doneDate.format(DATE_FORMAT_ISO_FULL)
-  r['subEvents-parts'] = e.observations ? e.observations.filter((f) => { return f.data }).map(parseObservation) : []
+  r.doneBy = { actorId: observation.doneBy.id, roleId: 1 }
+  r.doneDate = observation.doneDate.format(DATE_FORMAT_ISO_FULL)
+  r.affectedThing = {
+    roleId: 1,
+    objectId: nodeId * 1
+  }
+  r.parts = observation.observations ? observation.observations.filter((f) => { return f.data }).map(parseObservation(r)) : []
   return r
 }
-
-const toBackEnd = (fe) => {
-  return wrap(fe)
-}
-
-export default toBackEnd

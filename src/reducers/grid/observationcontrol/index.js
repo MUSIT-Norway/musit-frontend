@@ -42,9 +42,11 @@ const observationControlGridReducer = (state = initialState, action) => {
         loadingActors: false,
         loadedActors: true,
         data: state.data.map((e) => {
+          const actor = action.result.find((a) => a.id === e.doneBy.actorId);
           return { ...e,
-          doneBy: action.result.find((a) => a.id === e.doneBy) ? action.result.find((a) => a.id === e.doneBy).fn : e.doneBy
-         } })
+            doneBy: actor ? actor.fn : e.doneBy
+          }
+        })
       };
     case LOAD_ACTOR_FAILURE:
       return {
@@ -68,19 +70,7 @@ export const loadActor = (r) => {
 export const loadControlsAndObservationsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: () => {
-      return new Promise((resolve, reject) => {
-        fetch(`/api/storagefacility/v1/storagenodes/${id}/controls`)
-            .then(result => result.json())
-            .then(controls =>
-              fetch(`/api/storagefacility/v1/storagenodes/${id}/observations`)
-                .then(result => result.json())
-                .then(observations => resolve(observations.concat(controls)))
-                .catch(error => reject(error))
-            )
-            .catch(error => reject(error))
-      })
-    },
+    promise: () => fetch(`/api/storagefacility/v1/storagenodes/${id}/events`).then(result => result.json()),
     callback
   }
 }

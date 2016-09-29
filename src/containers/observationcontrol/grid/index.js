@@ -75,7 +75,7 @@ export default class ObservationControlGridShow extends React.Component {
   componentWillMount() {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
-        this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy) })
+        this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy.actorId) })
         this.props.loadPath(this.props.params.id)
       },
       onFailure: () => true

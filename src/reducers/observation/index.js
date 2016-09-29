@@ -1,4 +1,5 @@
-import { mapToFrontEnd, mapToBackEnd } from './mapper'
+import mapToBackEnd from './mapper/to_backend'
+import mapToFrontEnd from './mapper/to_frontend'
 const ADD = 'musit/observation/ADD'
 const ADD_SUCCESS = 'musit/observation/ADD_SUCCESS'
 const ADD_FAIL = 'musit/observation/ADD_FAIL'
@@ -92,10 +93,10 @@ const observationReducer = (state = initialState, action = {}) => {
 
 export default observationReducer;
 
-export const addObservation = (id, data, callback) => {
+export const addObservation = (nodeId, data, callback) => {
   const action = 'post'
-  let url = `/api/storagefacility/v1/storagenodes/${id}/observations`
-  const dataToPost = mapToBackEnd(data)
+  const url = `/api/storagefacility/v1/storagenodes/${nodeId}/observations`
+  const dataToPost = mapToBackEnd(data, nodeId)
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
     promise: (client) => client[action](url, { data: dataToPost }),
