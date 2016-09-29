@@ -78,7 +78,7 @@ export default class ObjectGrid extends Component {
                     <FontAwesome name="rebel" />
                     {` ${c.identifier.museumNo}`}
                   </td>
-                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_uNumber2`}>
+                  <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_uNumber`}>
                     {c.identifier.subNo}
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_term`}>
