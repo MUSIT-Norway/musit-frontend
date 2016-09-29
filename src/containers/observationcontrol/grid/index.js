@@ -22,8 +22,7 @@ import React from 'react'
 import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import Language from '../../../components/language'
-import { loadControlsForNode, loadControlsAndObservationsForNode,
-  loadObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
+import { loadControlsAndObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
 import { loadPath } from '../../../reducers/storageunit/grid/index'
 import Breadcrumb from '../../../layout/Breadcrumb'
@@ -40,12 +39,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loadControls: (id, callback) => {
-    dispatch(loadControlsForNode(id, callback))
-  },
-  loadObservations: (id, callback) => {
-    dispatch(loadObservationsForNode(id, callback))
-  },
   loadControlAndObservations: (id, callback) => {
     dispatch(loadControlsAndObservationsForNode(id, callback))
   },
@@ -64,10 +57,8 @@ export default class ObservationControlGridShow extends React.Component {
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
     params: React.PropTypes.object,
     route: React.PropTypes.object,
-    loadControls: React.PropTypes.func.isRequired,
     loadActorDetails: React.PropTypes.func.isRequired,
     loadPath: React.PropTypes.func.isRequired,
-    loadObservations: React.PropTypes.func.isRequired,
     loadControlAndObservations: React.PropTypes.func.isRequired,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
@@ -84,7 +75,7 @@ export default class ObservationControlGridShow extends React.Component {
   componentWillMount() {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
-        this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy) })
+        this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy.actorId) })
         this.props.loadPath(this.props.params.id)
       },
       onFailure: () => true

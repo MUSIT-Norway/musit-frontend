@@ -66,13 +66,13 @@ export default storageUnitContainerReducer;
 export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`),
+    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}`),
     callback
   };
 }
 
 export const update = (data, callback) => {
-  const url = `/api/storageadmin/v1/storageunit/${data.id}`;
+  const url = `/api/storagefacility/v1/storagenodes/${data.id}`;
   const dataToPost = mapToBackend(data)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
@@ -82,7 +82,7 @@ export const update = (data, callback) => {
 }
 
 export const insert = (parentId, data, callback) => {
-  const url = '/api/storageadmin/v1/storageunit';
+  const url = `/api/storagefacility/v1/storagenodes${!parentId ? '/root' : ''}`;
   const dataToPost = mapToBackend(data, parentId)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],

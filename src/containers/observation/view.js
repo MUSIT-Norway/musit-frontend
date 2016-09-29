@@ -22,11 +22,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadObservation: (id, callback) => {
-      dispatch(loadObservation(id, callback))
+    loadObservation: (nodeId, observationId, callback) => {
+      dispatch(loadObservation(nodeId, observationId, callback))
     },
-    loadPersonNameFromId: (id) => {
-      dispatch(getActorNameFromId(id))
+    loadPersonNameFromId: (actorId) => {
+      dispatch(getActorNameFromId(actorId))
     },
     loadPath: (id) => {
       dispatch(loadPath(id))
@@ -53,9 +53,9 @@ export default class ViewObservationPage extends React.Component {
 
   componentWillMount() {
     if (this.props.params.obsId) {
-      this.props.loadObservation(this.props.params.obsId, {
+      this.props.loadObservation(this.props.params.id, this.props.params.obsId, {
         onSuccess: (r) => {
-          this.props.loadPersonNameFromId(r.doneBy)
+          this.props.loadPersonNameFromId(r.doneBy.actorId)
           this.props.loadPath(this.props.params.id)
         }
       })
