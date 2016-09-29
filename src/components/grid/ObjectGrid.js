@@ -105,6 +105,7 @@ export default class ObjectGrid extends Component {
                     >
                       <FontAwesome name="truck" />
                     </a>
+
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_shoppingCart`}>
                     <a
