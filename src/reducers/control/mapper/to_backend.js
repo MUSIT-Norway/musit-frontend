@@ -95,7 +95,7 @@ export const mapToBackend = (state, observations, nodeId) => {
       const index = observations.observations.findIndex(o => o.type === observationKey)
       if (index >= 0) {
         const observation = observations.observations[index]
-        control.motivates = [parseObservation(observation)]
+        control.motivates = parseObservation(control)(observation)
       }
     }
     return control;
