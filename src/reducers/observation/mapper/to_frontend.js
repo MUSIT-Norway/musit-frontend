@@ -32,11 +32,11 @@ const wrapAlcoholState = ((s) => {
 const wrap = (be) => {
   const ret = {}
   ret.doneBy = {}
-  ret.doneBy.id = be.doneBy
+  ret.doneBy.id = be.doneBy.actorId
   ret.doneDate = parseISODate(be.doneDate)
   ret.registeredDate = be.registeredDate
   ret.registeredBy = be.registeredBy
-  ret.observations = be['subEvents-parts'] ? be['subEvents-parts'].map((o) => {
+  ret.observations = be.parts ? be.parts.map((o) => {
     const retobs = {}
     retobs.type = ''
     retobs.data = {}
@@ -103,10 +103,10 @@ const wrap = (be) => {
         retobs.type = 'pest'
         retobs.data.identificationValue = o.identification
         retobs.data.commentValue = o.note
-        retobs.data.observations = o.lifeCycles ? o.lifeCycles.map((l) => {
+        retobs.data.observations = o.lifecycles ? o.lifecycles.map((l) => {
           const obs = {}
           obs.lifeCycle = l.stage
-          obs.count = formatFloatToString(l.number)
+          obs.count = formatFloatToString(l.quantity)
           return obs
         }
       ) : []

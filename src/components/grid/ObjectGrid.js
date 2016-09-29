@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+const I18n = require('react-i18nify').I18n;
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -14,7 +15,40 @@ export default class ObjectGrid extends Component {
       displayName: PropTypes.string
     })).isRequired,
     onAction: PropTypes.func.isRequired,
-    showMoveHistory: PropTypes.func.isRequired
+    showMoveHistory: PropTypes.func.isRequired,
+    onMove: PropTypes.func.isRequired,
+    refresh: PropTypes.func.isRequired,
+    rootNode: React.PropTypes.object,
+    MusitModal: React.PropTypes.element,
+  }
+
+  constructor(props) {
+    super(props)
+    this.showModal = this.showModal.bind(this)
+    this.hideModal = this.hideModal.bind(this)
+    this.moveModal = this.moveModal.bind(this)
+    this.state = {
+      showModal: false
+    }
+  }
+
+  showModal(fromId) {
+    this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
+  }
+
+  hideModal() {
+    this.setState({ ...this.state, showModal: false, showModalFromId: null })
+  }
+
+  moveModal(toId, toName) {
+    this.props.onMove(this.state.showModalFromId, toId, {
+      onSuccess: () => {
+        this.setState({ ...this.state, showModal: false, showModalFromId: null })
+        this.props.refresh()
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+      },
+      onFailure: window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+    })
   }
 
   render() {
@@ -63,7 +97,15 @@ export default class ObjectGrid extends Component {
                     </a>
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
-                    <FontAwesome name="truck" />
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault()
+                        this.moveModal(c.id)
+                      }}
+                    >
+                      <FontAwesome name="truck" />
+                    </a>
                   </td>
                   <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_shoppingCart`}>
                     <a

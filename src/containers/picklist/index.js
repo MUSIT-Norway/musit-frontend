@@ -18,11 +18,11 @@
  */
 import PickListContainer from './PickListContainer'
 import { connect } from 'react-redux'
-import Language from '../../components/language'
 import { toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
+import { moveObject, moveNode } from '../../reducers/move'
 
 const mapStateToProps = (state) => ({
-  translate: (key, markdown) => Language.translate(key, markdown),
+  user: state.auth.actor,
   picks: state.picks
 })
 
@@ -30,7 +30,13 @@ const mapDispatchToProps = (dispatch) => ({
   toggleNode: (item, on) => dispatch(toggleNode(item, on)),
   toggleObject: (item, on) => dispatch(toggleObject(item, on)),
   removeNode: (item) => dispatch(removeNode(item)),
-  removeObject: (item) => dispatch(removeObject(item))
+  removeObject: (item) => dispatch(removeObject(item)),
+  moveObject: (objectId, destinationId, doneBy, callback) => {
+    dispatch(moveObject(objectId, destinationId, doneBy, callback))
+  },
+  moveNode: (nodeId, destinationId, doneBy, callback) => {
+    dispatch(moveNode(nodeId, destinationId, doneBy, callback))
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PickListContainer)

@@ -84,6 +84,7 @@ export default class ObservationControlGrid extends Component {
         arr.push(this.icon(data.ok, index, 'musitperimetersecurityicon'))
         break;
       default:
+        console.log(`Did not match ${data.eventType}`)
     }
     return arr
   }
@@ -122,8 +123,7 @@ export default class ObservationControlGrid extends Component {
             </thead>
             <tbody>
               {this.props.tableData.map((c, i) => {
-                const parts = c['subEvents-parts'];
-                const types = parts ? parts.map(this.getIcon).reduce((f, s) => [...f, ...s]) : null
+                const types = c.parts ? c.parts.map(this.getIcon).reduce((f, s) => [...f, ...s]) : null
                 return (
                   <tr
                     style={{ cursor: 'pointer' }}
@@ -148,7 +148,7 @@ export default class ObservationControlGrid extends Component {
                       {types}
                     </td>
                     <td id={`${c.id}_${c.doneDate}_doneBy`}>
-                      {c.doneBy}
+                      {c.doneBy.actorId ? c.doneBy.actorId : c.doneBy}
                     </td>
                     <td id={`${c.id}_${c.doneDate}_registeredDate`}>
                       {parseISODate(c.registeredDate).format(DATE_FORMAT_DISPLAY)}

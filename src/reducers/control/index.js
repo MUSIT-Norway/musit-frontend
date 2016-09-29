@@ -59,14 +59,9 @@ const controlReducer = (state = initialState, action = {}) => {
 
 export default controlReducer;
 
-export const addControl = (id, controlData, observations, callback) => {
-  const data = mapToBackend(controlData, observations)
-  let url = ''
-  if (id) {
-    url = `/api/event/v1/node/${id}/control`
-  } else {
-    url = '/api/event/v1/event'
-  }
+export const addControl = (nodeId, controlData, observations, callback) => {
+  const data = mapToBackend(controlData, observations, nodeId)
+  const url = `/api/storagefacility/v1/storagenodes/${nodeId}/controls`
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
     promise: (client) => client.post(url, { data }),
@@ -74,10 +69,10 @@ export const addControl = (id, controlData, observations, callback) => {
   }
 }
 
-export const loadControl = (id, callback) => {
+export const loadControl = (nodeId, controlId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`api/event/v1/event/${id}`),
+    promise: (client) => client.get(`api/storagefacility/v1/storagenodes/${nodeId}/controls/${controlId}`),
     callback
   }
 }

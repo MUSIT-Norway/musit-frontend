@@ -6,6 +6,7 @@ const LOAD_ACTOR_SUCCESS = 'musit/observationcontrol/LOAD_ACTOR_SUCCESS'
 const LOAD_ACTOR_FAILURE = 'musit/observationcontrol/LOAD_ACTOR_FAILURE'
 
 const initialState = { data: [] }
+import 'whatwg-fetch';
 
 const observationControlGridReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -41,9 +42,11 @@ const observationControlGridReducer = (state = initialState, action) => {
         loadingActors: false,
         loadedActors: true,
         data: state.data.map((e) => {
+          const actor = action.result.find((a) => a.id === e.doneBy.actorId);
           return { ...e,
-          doneBy: action.result.find((a) => a.id === e.doneBy) ? action.result.find((a) => a.id === e.doneBy).fn : e.doneBy
-         } })
+            doneBy: actor ? actor.fn : e.doneBy
+          }
+        })
       };
     case LOAD_ACTOR_FAILURE:
       return {
@@ -64,25 +67,10 @@ export const loadActor = (r) => {
   }
 }
 
-export const loadControlsForNode = (id, callback) => {
-  return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/event/v1/node/${id}/controls`),
-    callback
-  }
-}
-export const loadObservationsForNode = (id, callback) => {
-  return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/event/v1/node/${id}/observations`),
-    callback
-  }
-}
-
 export const loadControlsAndObservationsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/event/v1/node/${id}/controlsAndObservations`),
+    promise: () => fetch(`/api/storagefacility/v1/storagenodes/${id}/events`).then(result => result.json()),
     callback
   }
 }

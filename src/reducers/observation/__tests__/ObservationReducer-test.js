@@ -3,7 +3,8 @@ import observationReducer, {
   loadObservation,
   initialState
 } from '../index'
-import { mapToFrontEnd, mapToBackEnd } from '../mapper'
+import mapToFrontEnd from '../mapper/to_frontend'
+import mapToBackEnd from '../mapper/to_backend'
 import { parseISODateNonStrict as parseISODate } from '../../../util'
 
 describe('ObservationReducer', () => {

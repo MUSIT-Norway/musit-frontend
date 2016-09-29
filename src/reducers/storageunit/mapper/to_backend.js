@@ -9,15 +9,24 @@ export const toBackend = (data, parentId) => {
     areaTo: parseFloatFromString(data.areaTo),
     height: parseFloatFromString(data.height),
     heightTo: parseFloatFromString(data.heightTo),
-    environmentRequirement: data.environmentRequirement ? { ...data.environmentRequirement,
-      temperature: parseFloatFromString(data.environmentRequirement.temperature),
-      temperatureTolerance: parseFloatFromString(data.environmentRequirement.temperatureTolerance),
-      hypoxicAir: parseFloatFromString(data.environmentRequirement.hypoxicAir),
-      hypoxicAirTolerance: parseFloatFromString(data.environmentRequirement.hypoxicAirTolerance),
-      relativeHumidity: parseFloatFromString(data.environmentRequirement.relativeHumidity),
-      relativeHumidityTolerance: parseFloatFromString(data.environmentRequirement.relativeHumidityTolerance)
+    environmentRequirement: data.environmentRequirement ? {
+      cleaning: data.environmentRequirement.cleaning,
+      lightingCondition: data.environmentRequirement.lightingCondition,
+      comment: data.environmentRequirement.comments,
+      temperature: data.environmentRequirement.temperature && {
+        base: parseFloatFromString(data.environmentRequirement.temperature) * 1.0,
+        tolerance: parseFloatFromString(data.environmentRequirement.temperatureTolerance)
+      },
+      hypoxicAir: data.environmentRequirement.hypoxicAir && {
+        base: parseFloatFromString(data.environmentRequirement.hypoxicAir),
+        tolerance: parseFloatFromString(data.environmentRequirement.hypoxicAirTolerance),
+      },
+      relativeHumidity: data.environmentRequirement.relativeHumidity && {
+        base: parseFloatFromString(data.environmentRequirement.relativeHumidity),
+        tolerance: parseFloatFromString(data.environmentRequirement.relativeHumidityTolerance)
+      }
     } : {},
-    environmentAssessment: data.environmentAssessment || {},
-    securityAssessment: data.securityAssessment || {}
+    environmentAssessment: data.environmentAssessment.base ? data.environmentAssessment : null,
+    securityAssessment: data.securityAssessment.base ? data.securityAssessment : null
   }
 }
