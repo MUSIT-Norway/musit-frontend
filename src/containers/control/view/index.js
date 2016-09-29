@@ -43,7 +43,7 @@ export default class ControlViewContainer extends React.Component {
 
   componentWillMount() {
     if (this.props.params.controlId) {
-      this.props.loadControl(this.props.params.controlId, {
+      this.props.loadControl(this.props.params.id, this.props.params.controlId, {
         onSuccess: (r) => {
           this.props.loadPersonNameFromId(r.doneBy)
           this.props.loadPath(this.props.params.id)
@@ -121,7 +121,7 @@ export default class ControlViewContainer extends React.Component {
                   <ControlView
                     id="1"
                     translate={translate}
-                    controlsJson={data && data['subEvents-parts'] ? data['subEvents-parts'] : null}
+                    controlsJson={data && data.parts ? data.parts : null}
                   />
                 </Col>
               </Row>

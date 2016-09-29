@@ -57,7 +57,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
         ...state,
         root: {
           ...state.root,
-          path: action.result.map((s) => {
+          path: action.result.filter(s => s.name !== 'root-node').map((s) => {
             return {
               id: s.id,
               name: s.name,
@@ -127,12 +127,12 @@ export const loadRoot = (id) => {
   if (id) {
     action = {
       types: [LOAD_ROOT, LOAD_ROOT_SUCCESS, LOAD_ROOT_FAIL],
-      promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}`)
+      promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}`)
     }
   } else {
     action = {
       types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get('/api/storageadmin/v1/storageunit/root')
+      promise: (client) => client.get('/api/storagefacility/v1/storagenodes/1/children')
     }
   }
   return action
@@ -141,7 +141,7 @@ export const loadRoot = (id) => {
 export const loadChildren = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}/children`),
+    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}/children`),
     callback
   };
 }
