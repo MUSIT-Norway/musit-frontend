@@ -369,8 +369,8 @@ export default class StorageUnitsContainer extends React.Component {
           show={this.state.showMoveHistory}
           onClose={this.closeMoveHistory}
           translate={translate}
-          path={path}
           moves={moves}
+          onHide={this.closeMoveHistory}
           headerText={this.props.translate('musit.moveHistory')}
         />
         <MusitModal

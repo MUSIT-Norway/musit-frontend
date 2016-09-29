@@ -19,7 +19,6 @@
 require('./modalStyling.css')
 import React, { Component, PropTypes } from 'react'
 import { Modal, Row, Col, Button } from 'react-bootstrap'
-import Breadcrumb from '../../../layout/Breadcrumb'
 import ModalMoveHistoryGrid from '../../../components/grid/ModalMoveHistoryGrid'
 
 export default class MusitHistoryModal extends Component {
@@ -29,13 +28,12 @@ export default class MusitHistoryModal extends Component {
     onHide: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     headerText: PropTypes.string.isRequired,
-    path: PropTypes.arrayOf(PropTypes.object),
     translate: PropTypes.func,
     moves: PropTypes.arrayOf(PropTypes.object)
   }
 
   render() {
-    const { moves, path } = this.props
+    const { moves } = this.props
     return (
       <div>
         <Modal
@@ -56,16 +54,6 @@ export default class MusitHistoryModal extends Component {
             />
           </Modal.Body>
           <Modal.Footer style={{ textAlign: 'center' }}>
-            <Row style={{ textAlign: 'center' }}>
-              <Col>
-                {this.props.translate('musit.moveHistoryModal.currentDestination')}
-              </Col>
-            </Row>
-            <Row style={{ textAlign: 'center' }}>
-              <Col>
-                <Breadcrumb nodes={path} />
-              </Col>
-            </Row>
             <br />
             <Row style={{ textAlign: 'center' }}>
               <Col xs={4} sm={4} smOffset={4}>

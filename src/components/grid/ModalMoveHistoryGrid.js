@@ -12,7 +12,7 @@ export default class ModalMoveHistoryGrid extends Component {
     return (
       <FormGroup>
         <div>
-          <Table responsive striped bordered condensed hover>
+          <Table responsive hover condensed>
             <thead>
               <tr>
                 <th>
@@ -29,7 +29,7 @@ export default class ModalMoveHistoryGrid extends Component {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{ 'font-size': '12px', padding: '10px' }}>
               {this.props.tableData.map((c, i) =>
                 <tr key={i} id={`${i}`}>
                   <td id={`${i}_${c.doneDate}`}>
