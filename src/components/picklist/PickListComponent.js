@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-import ActionListPopupContainer from './ActionListPopupContainer'
 const I18n = require('react-i18nify').I18n;
 
 export default class PickListComponent extends Component {
@@ -11,11 +10,8 @@ export default class PickListComponent extends Component {
     toggle: React.PropTypes.func.isRequired,
     remove: React.PropTypes.func.isRequired,
     marked: React.PropTypes.array.isRequired,
-    actions: React.PropTypes.array.isRequired,
     iconRendrer: React.PropTypes.func.isRequired,
-    labelRendrer: React.PropTypes.func.isRequired,
-    showActionDialog: React.PropTypes.bool.isRequired,
-    onCloseActionDialog: React.PropTypes.func.isRequired
+    labelRendrer: React.PropTypes.func.isRequired
   }
 
   render() {
@@ -24,21 +20,22 @@ export default class PickListComponent extends Component {
       picks,
       marked,
       iconRendrer,
-      labelRendrer,
-      actions,
-      showActionDialog,
-      onCloseActionDialog
+      labelRendrer
     } = this.props
 
     return (
       <div>
-        <ActionListPopupContainer show={showActionDialog} marked={marked} actions={actions} onClose={onCloseActionDialog} />
         <Table responsive striped condensed hover>
           <thead>
             <tr>
               <th className={style.toolsColumn} colSpan="3">
                 {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;<input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
-                <FontAwesome className={style.normalAction} name="print" />
+                <FontAwesome
+                  className={style.normalAction}
+                  style={{ cursor: 'pointer' }}
+                  name="truck"
+                  onClick={() => this.props.move(marked)}
+                />
                 <FontAwesome
                   className={style.normalAction}
                   style={{ cursor: 'pointer' }}
