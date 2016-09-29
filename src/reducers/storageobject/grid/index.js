@@ -2,6 +2,37 @@ export const LOAD_SEVERAL = 'musit/storageobject-grid/LOAD_SEVERAL'
 export const LOAD_SEVERAL_SUCCESS = 'musit/storageobject-grid/LOAD_SEVERAL_SUCCESS'
 export const LOAD_SEVERAL_FAIL = 'musit/storageobject-grid/LOAD_SEVERAL_FAIL'
 
+const mockData = [
+  {
+    id: 1,
+    displayName: 'Carex',
+    identifier: {
+      museumNo: 'TRH-V-233',
+      subNo: 1 }
+  },
+  {
+    id: 2,
+    displayName: 'Salix',
+    identifier: {
+      museumNo: 'TRH-V-2333',
+      subNo: 1 }
+  },
+  {
+    id: 3,
+    displayName: 'Betula',
+    identifier: {
+      museumNo: 'TRH-V-33',
+      subNo: 1 }
+  },
+  {
+    id: 4,
+    displayName: 'Pinus',
+    identifier: {
+      museumNo: 'TRH-V-11',
+      subNo: 1 }
+  }
+]
+
 const storageObjectGridReducer = (state = {}, action = {}) => {
   switch (action.type) {
     case LOAD_SEVERAL:
@@ -21,7 +52,7 @@ const storageObjectGridReducer = (state = {}, action = {}) => {
         ...state,
         loading: false,
         loaded: false,
-        error: action.error
+        data: mockData
       }
     default:
       return state

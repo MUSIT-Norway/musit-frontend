@@ -28,9 +28,19 @@ export default class NodeGrid extends Component {
     this.showModal = this.showModal.bind(this)
     this.hideModal = this.hideModal.bind(this)
     this.moveModal = this.moveModal.bind(this)
+    this.showMoveHistory = this.showMoveHistory.bind(this)
+    this.hideMoveHistory = this.hideMoveHistory.bind(this)
     this.state = {
-      showModal: false
+      showModal: false,
+      showMoveHistory: false
     }
+  }
+
+  showMoveHistory(nodeId) {
+    this.setState({ ...this.state, showMoveHistory: true, nodeId: nodeId })
+  }
+  hideMoveHistory() {
+    this.setState({ ...this.state, showMoveHistory: false, nodeId: null })
   }
 
   showModal(fromId) {
