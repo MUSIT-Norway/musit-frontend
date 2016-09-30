@@ -347,15 +347,15 @@ en:
         tooltip: "Node height in m"
       securityAssessment:
         securityAssessment: "Security assessment"
-        perimeterSecurity: "Perimeter security"
+        perimeter: "Perimeter security"
         theftProtection: "Theft protection"
         fireProtection: "Fire protection"
-        waterDamageAssessment: "Water damage assessment"
+        waterDamage: "Water damage assessment"
         routinesAndContingencyPlan: "Routines and contingency plan"
       environmentalAssessment:
         environmentalAssessment: "Environmental assessment"
         relativeHumidity: "Relative humidity"
-        temperatureAssessment: "Temperature"
+        temperature: "Temperature"
         lightingCondition: "Lighting condition"
         preventiveConservation: "Preventive conservation"
       environmentRequirement:
@@ -782,15 +782,15 @@ no:
         tooltip: "Nodens høyde i m"
       securityAssessment:
         securityAssessment: "Sikring"
-        perimeterSecurity: "Skallsikring"
+        perimeter: "Skallsikring"
         theftProtection: "Tyverisikring"
         fireProtection: "Brannsikring"
-        waterDamageAssessment: "Vannskaderisiko"
+        waterDamage: "Vannskaderisiko"
         routinesAndContingencyPlan: "Rutiner og beredskap"
       environmentalAssessment:
         environmentalAssessment: "Bevaring"
         relativeHumidity: "Relativ luftfuktighet"
-        temperatureAssessment: "Temperatur"
+        temperature: "Temperatur"
         lightingCondition: "Lysforhold"
         preventiveConservation: "Preventiv konservering"
       environmentRequirement:
