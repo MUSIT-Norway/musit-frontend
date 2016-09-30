@@ -499,10 +499,10 @@ export default class StorageUnitContainer extends Component {
                           <Row>
                             <Col lg={5} md={5} sm={5} xs={10} offset={1}>
                               <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}</ControlLabel>
-                              {this.renderSecurityAssessmentField('perimeterSecurity')}
+                              {this.renderSecurityAssessmentField('perimeter')}
                               {this.renderSecurityAssessmentField('theftProtection')}
                               {this.renderSecurityAssessmentField('fireProtection')}
-                              {this.renderSecurityAssessmentField('waterDamageAssessment')}
+                              {this.renderSecurityAssessmentField('waterDamage')}
                               {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
                             </Col>
                             <Col lg={5} md={5} sm={5} xs={10} offset={1}>
@@ -511,7 +511,7 @@ export default class StorageUnitContainer extends Component {
                               </ControlLabel>
                               {this.renderEnvironmentAssessmentField('relativeHumidity')}
                               {this.renderEnvironmentAssessmentField('lightingCondition')}
-                              {this.renderEnvironmentAssessmentField('temperatureAssessment')}
+                              {this.renderEnvironmentAssessmentField('temperature')}
                               {this.renderEnvironmentAssessmentField('preventiveConservation')}
                             </Col>
                           </Row>
