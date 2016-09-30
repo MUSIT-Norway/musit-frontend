@@ -43,3 +43,7 @@ export const parseFloatFromString = (value) => {
 export const formatFloatToString = (number) => {
   return typeof number === 'number' ? number.toString().replace('.', ',') : number
 }
+
+export const hasProp = (obj, prop) => {
+  return {}.hasOwnProperty.call(obj, prop)
+}

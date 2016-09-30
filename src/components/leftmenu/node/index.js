@@ -56,15 +56,19 @@ export default class NodeLeftMenuComponent extends Component {
     }
 
     const showCount = (type, typeText) => {
-      return (
-        <div style={{ border: 'none', textAlign: 'center' }}>
-          {translate(`musit.leftMenu.node.${typeText}`)}
-          <br />
-          <ControlLabel id={`${id}_${typeText}`}>
-            {Number.isNaN(type) ? <FontAwesome name="spinner" /> : type}
-          </ControlLabel>
-        </div>
-      )
+      let fragment = null
+      if (Number.isInteger(id)) {
+        fragment = (
+          <div style={{ border: 'none', textAlign: 'center' }}>
+            {translate(`musit.leftMenu.node.${typeText}`)}
+            <br />
+            <ControlLabel id={`${id}_${typeText}`}>
+              {Number.isNaN(type) ? <FontAwesome name="spinner" /> : type}
+            </ControlLabel>
+          </div>
+        )
+      }
+      return fragment
     }
 
     const newButton = (identity) => {
