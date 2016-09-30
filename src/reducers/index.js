@@ -28,6 +28,7 @@ import storagePanelReducer from './storageunit/panel'
 import storagePanelStateReducer from './storageunit/panel/state'
 import storageNodeGridReducer from './storageunit/grid'
 import storageUnitModalReducer from './storageunit/modal'
+import storageUnitStatsReducer from './storageunit/stats'
 import storageObjectGridReducer from './storageobject/grid'
 import organizationReducer from './organization'
 import observationReducer from './observation'
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   storagePanelUnit: storagePanelReducer,
   storageGridUnit: storageNodeGridReducer,
   storageUnitModal: storageUnitModalReducer,
+  storageUnitStats: storageUnitStatsReducer,
   storagePanelState: storagePanelStateReducer,
   storageObjectGrid: storageObjectGridReducer,
   organization: organizationReducer,

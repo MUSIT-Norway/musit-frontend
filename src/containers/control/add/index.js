@@ -24,7 +24,7 @@ import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
-import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
+import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY, hasProp } from '../../../util'
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
@@ -183,7 +183,7 @@ export default class ControlAddContainer extends React.Component {
     const renderReadOnly = (e) => {
       const make = (v) => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
 
-      if ({}.hasOwnProperty.call(e, 'leftValue') && {}.hasOwnProperty.call(e, 'rightValue')) {
+      if (hasProp(e, 'leftValue') && hasProp(e, 'rightValue')) {
         return (<div>
           <Col xs={5}>
             {make(e.leftValue)}
@@ -194,7 +194,7 @@ export default class ControlAddContainer extends React.Component {
         </div>)
       }
 
-      if ({}.hasOwnProperty.call(e, 'leftValue')) {
+      if (hasProp(e, 'leftValue')) {
         return <Col md={9}>{make(e.leftValue)}</Col>
       }
 
@@ -276,7 +276,7 @@ export default class ControlAddContainer extends React.Component {
                     <Col xs={9}>
                       <Row>
                         <Col xs={5}>
-                          {{}.hasOwnProperty.call(e, 'leftValue') ?
+                          {hasProp(e, 'leftValue') ?
                             <label> {translate('musit.newControl.envdata')} </label> : ''
                           }
                         </Col>

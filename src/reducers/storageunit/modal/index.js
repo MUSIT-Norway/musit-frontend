@@ -89,11 +89,6 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
         ...state,
         root: {
           ...state.root,
-          statistics: {
-            objectsOnNode: Number.NaN,
-            totalObjectCount: Number.NaN,
-            underNodeCount: Number.NaN
-          },
           loading: false,
           loaded: true,
           data: action.result
