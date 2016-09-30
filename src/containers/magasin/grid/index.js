@@ -294,9 +294,9 @@ export default class StorageUnitsContainer extends React.Component {
               hashHistory.push('/magasin/add')
             }
           }}
-          objectsOnNode={statistics ? statistics.objects : Number.NaN}
+          objectsOnNode={statistics ? statistics.numObjects : Number.NaN}
           totalObjectCount={statistics ? statistics.totalObjects : Number.NaN}
-          underNodeCount={statistics ? statistics.nodes : Number.NaN}
+          underNodeCount={statistics ? statistics.numNodes : Number.NaN}
           onClickProperties={(id) => onEdit({ id })}
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}

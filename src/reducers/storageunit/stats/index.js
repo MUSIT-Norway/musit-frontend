@@ -50,7 +50,7 @@ export default storageUnitStatsReducer
 export const loadStats = (id) => {
   return {
     types: [LOAD_STATS, LOAD_STATS_SUCCESS, LOAD_STATS_FAILURE],
-    promise: (client) => client.get(`/api/storageadmin/v1/storageunit/${id}/stats`)
+    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}/stats`)
   }
 }
 
