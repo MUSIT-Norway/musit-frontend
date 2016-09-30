@@ -96,7 +96,7 @@ export default class ObjectGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault()
-                          this.moveModal(c.id)
+                          this.showModal(c.id)
                         }}
                       >
                         <FontAwesome name="truck" />
