@@ -14,7 +14,7 @@ export const toBackend = (data, parentId) => {
       lightingCondition: data.environmentRequirement.lightingCondition,
       comment: data.environmentRequirement.comments,
       temperature: data.environmentRequirement.temperature && {
-        base: parseFloatFromString(data.environmentRequirement.temperature) * 1.0,
+        base: parseFloatFromString(data.environmentRequirement.temperature),
         tolerance: parseFloatFromString(data.environmentRequirement.temperatureTolerance)
       },
       hypoxicAir: data.environmentRequirement.hypoxicAir && {
@@ -26,7 +26,7 @@ export const toBackend = (data, parentId) => {
         tolerance: parseFloatFromString(data.environmentRequirement.relativeHumidityTolerance)
       }
     } : {},
-    environmentAssessment: data.environmentAssessment.base ? data.environmentAssessment : null,
-    securityAssessment: data.securityAssessment.base ? data.securityAssessment : null
+    environmentAssessment: data.environmentAssessment || null,
+    securityAssessment: data.securityAssessment || null
   }
 }
