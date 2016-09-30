@@ -150,27 +150,6 @@ export default class ControlAddContainer extends React.Component {
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
 
-    const renderReadOnly = (leftValue, rightValue) => {
-      const make = (v) => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
-
-      if (leftValue && rightValue) {
-        return (<div>
-          <Col xs={5}>
-            {make(leftValue)}
-          </Col>
-          <Col xs={4}>
-            {make(rightValue)}
-          </Col>
-        </div>)
-      }
-
-      if (leftValue) {
-        return <Col md={9}>{make(leftValue)}</Col>
-      }
-
-      return (<Col md={9}>{null}</Col>)
-    }
-
     const fields = [
       {
         key: 'temperature',
@@ -200,6 +179,27 @@ export default class ControlAddContainer extends React.Component {
       { key: 'mold' },
       { key: 'pest' }
     ]
+
+    const renderReadOnly = (e) => {
+      const make = (v) => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
+
+      if ({}.hasOwnProperty.call(e, 'leftValue') && {}.hasOwnProperty.call(e, 'rightValue')) {
+        return (<div>
+          <Col xs={5}>
+            {make(e.leftValue)}
+          </Col>
+          <Col xs={4}>
+            {make(e.rightValue)}
+          </Col>
+        </div>)
+      }
+
+      if ({}.hasOwnProperty.call(e, 'leftValue')) {
+        return <Col md={9}>{make(e.leftValue)}</Col>
+      }
+
+      return (<Col md={9}>{null}</Col>)
+    }
 
     return (
       <Layout
@@ -276,11 +276,13 @@ export default class ControlAddContainer extends React.Component {
                     <Col xs={9}>
                       <Row>
                         <Col xs={5}>
-                          <label> {translate('musit.newControl.envdata')} </label>
+                          {{}.hasOwnProperty.call(e, 'leftValue') ?
+                            <label> {translate('musit.newControl.envdata')} </label> : ''
+                          }
                         </Col>
                       </Row>
                       <Row>
-                        {renderReadOnly(e.leftValue, e.rightValue)}
+                        {renderReadOnly(e)}
                       </Row>
                     </Col>
                   </Row>
