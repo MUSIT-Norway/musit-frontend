@@ -145,6 +145,16 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
+  dateSet = (newValue) => {
+    if (newValue) {
+      if (moment().toDate() < moment(newValue).toDate()) {
+        window.alert('Big date. Please select lower date')
+      } else {
+        this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+      }
+    }
+  }
+
   render() {
     const nodes = this.props.path
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
@@ -228,10 +238,7 @@ export default class ControlAddContainer extends React.Component {
                           value={this.state.doneDate.toISOString()}
                           onClear={() => this.setState({ ...this.state, doneDate: moment() })}
                           onChange={newValue => {
-                            if (!newValue) {
-                              return;
-                            }
-                            this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+                            this.dateSet(newValue)
                           }}
                         />
                       </Col>
