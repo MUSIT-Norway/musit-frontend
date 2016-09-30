@@ -38,7 +38,7 @@ export const moveNode = (nodeId, destination, doneBy, callback) => {
   const data = {
     doneBy,
     destination,
-    items: [nodeId]
+    items: Array.isArray(nodeId) ? nodeId : [nodeId]
   }
   return {
     types: [MOVE_OBJECT, MOVE_OBJECT_SUCCESS, MOVE_OBJECT_FAILURE],
