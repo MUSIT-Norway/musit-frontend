@@ -46,7 +46,9 @@ export default class ObjectGrid extends Component {
         this.props.refresh()
         window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
       },
-      onFailure: window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+      onFailure: () => {
+        window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+      }
     })
   }
 
