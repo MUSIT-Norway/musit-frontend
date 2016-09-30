@@ -29,6 +29,8 @@ import WelcomeUserView from './containers/welcome-user'
 import AddObservationPage from './containers/observation/add'
 import EditObservationPage from './containers/observation/edit'
 import ViewObservationPage from './containers/observation/view'
+import Reports from './containers/reports'
+import KDReport from './containers/reports/reportkd'
 import ControlViewContainer from './containers/control/view/Connect'
 import ControlAddContainer from './containers/control/add/Connect'
 import App from './containers/app'
@@ -57,6 +59,8 @@ export default (store) => {
 
       <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
       <Route path="/picklist/:type" component={PickListView} />
+      <Route path="/reports" component={Reports} />
+      <Route path="/reports/kd" component={KDReport} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />
