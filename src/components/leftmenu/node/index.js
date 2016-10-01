@@ -15,8 +15,7 @@ export default class NodeLeftMenuComponent extends Component {
     onClickControlObservations: PropTypes.func.isRequired,
     onClickController: PropTypes.func,
     onClickMoveNode: PropTypes.func.isRequired,
-    onClickDelete: PropTypes.func.isRequired,
-    showButtons: PropTypes.bool.isRequired
+    onClickDelete: PropTypes.func.isRequired
   }
   render() {
     const {
@@ -29,8 +28,7 @@ export default class NodeLeftMenuComponent extends Component {
       onClickProperties,
       onClickControlObservations,
       onClickMoveNode,
-      onClickDelete,
-      showButtons
+      onClickDelete
     } = this.props
 
     const buttonLink = (type, icon, eventType, MusitIconType) => {
@@ -88,16 +86,16 @@ export default class NodeLeftMenuComponent extends Component {
 
     return (
       <div>
-        {Number.isInteger(id) ? newButton(id) : null}
-        {(Number.isInteger(id)) ? (<hr />) : null}
+        {Number.isInteger(id) && newButton(id)}
+        {Number.isInteger(id) && <hr />}
         {showCount(objectsOnNode, 'objectsOnNode')}
         {showCount(totalObjectCount, 'totalObjectCount')}
         {showCount(underNodeCount, 'underNodeCount')}
-        {(Number.isInteger(id)) ? (<hr />) : null}
-        {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
-        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
-        {showButtons ? buttonLink('moveNode', 'truck', onClickMoveNode) : null}
-        {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
+        {Number.isInteger(id) && <hr />}
+        {buttonLink('properties', 'cog', onClickProperties)}
+        {buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1)}
+        {buttonLink('moveNode', 'truck', onClickMoveNode)}
+        {buttonLink('delete', 'trash-o', onClickDelete)}
       </div>
     )
   }

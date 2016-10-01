@@ -280,12 +280,10 @@ export default class StorageUnitsContainer extends React.Component {
 
   makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete } = this.props
-    const showButtons = true
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           id={rootNode ? rootNode.id : null}
-          showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
             if (parentId) {
