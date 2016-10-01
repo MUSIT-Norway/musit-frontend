@@ -34,6 +34,9 @@ export const validatePest = (formProps, index, type) => {
     errors[`${type}.identificationValue`] = typeFieldRequired(type, 'identificationValue')
   }
 
+  if (validateString(formProps.identificationValue, 0, 100) === 'error') {
+    errors[`${type}.identificationValue`] = typeFieldIncorrect(type, 'identificationValue')
+  }
   if (validateString(formProps.commentValue, 0, 250) === 'error') {
     errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentsValue')
   }

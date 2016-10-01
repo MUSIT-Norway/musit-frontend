@@ -24,7 +24,7 @@ import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
-import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
+import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY, hasProp } from '../../../util'
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
@@ -150,27 +150,6 @@ export default class ControlAddContainer extends React.Component {
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
 
-    const renderReadOnly = (leftValue, rightValue) => {
-      const make = (v) => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
-
-      if (leftValue && rightValue) {
-        return (<div>
-          <Col xs={5}>
-            {make(leftValue)}
-          </Col>
-          <Col xs={4}>
-            {make(rightValue)}
-          </Col>
-        </div>)
-      }
-
-      if (leftValue) {
-        return <Col md={9}>{make(leftValue)}</Col>
-      }
-
-      return (<Col md={9}>{null}</Col>)
-    }
-
     const fields = [
       {
         key: 'temperature',
@@ -200,6 +179,27 @@ export default class ControlAddContainer extends React.Component {
       { key: 'mold' },
       { key: 'pest' }
     ]
+
+    const renderReadOnly = (e) => {
+      const make = (v) => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
+
+      if (hasProp(e, 'leftValue') && hasProp(e, 'rightValue')) {
+        return (<div>
+          <Col xs={5}>
+            {make(e.leftValue)}
+          </Col>
+          <Col xs={4}>
+            {make(e.rightValue)}
+          </Col>
+        </div>)
+      }
+
+      if (hasProp(e, 'leftValue')) {
+        return <Col md={9}>{make(e.leftValue)}</Col>
+      }
+
+      return (<Col md={9}>{null}</Col>)
+    }
 
     return (
       <Layout
@@ -276,11 +276,13 @@ export default class ControlAddContainer extends React.Component {
                     <Col xs={9}>
                       <Row>
                         <Col xs={5}>
-                          <label> {translate('musit.newControl.envdata')} </label>
+                          {hasProp(e, 'leftValue') ?
+                            <label> {translate('musit.newControl.envdata')} </label> : ''
+                          }
                         </Col>
                       </Row>
                       <Row>
-                        {renderReadOnly(e.leftValue, e.rightValue)}
+                        {renderReadOnly(e)}
                       </Row>
                     </Col>
                   </Row>

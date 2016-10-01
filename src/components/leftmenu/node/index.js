@@ -62,7 +62,9 @@ export default class NodeLeftMenuComponent extends Component {
           <div style={{ border: 'none', textAlign: 'center' }}>
             {translate(`musit.leftMenu.node.${typeText}`)}
             <br />
-            <ControlLabel id={`${id}_${typeText}`}>{Number.isNaN(type) ? 'N/A' : type}</ControlLabel>
+            <ControlLabel id={`${id}_${typeText}`}>
+              {Number.isNaN(type) ? <FontAwesome name="spinner" /> : type}
+            </ControlLabel>
           </div>
         )
       }
@@ -96,7 +98,6 @@ export default class NodeLeftMenuComponent extends Component {
         {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
         {showButtons ? buttonLink('moveNode', 'truck', onClickMoveNode) : null}
         {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
-
       </div>
     )
   }

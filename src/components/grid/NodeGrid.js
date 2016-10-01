@@ -58,7 +58,9 @@ export default class NodeGrid extends Component {
         this.props.refresh()
         window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
       },
-      onFailure: window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+      onFailure: () => {
+        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+      }
     })
   }
 

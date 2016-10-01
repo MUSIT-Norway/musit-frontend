@@ -18,9 +18,7 @@
  */
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
-import { hashHistory } from 'react-router'
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap'
-import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../../layout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
 import Breadcrumb from '../../../../layout/Breadcrumb'
@@ -521,16 +519,24 @@ export default class StorageUnitContainer extends Component {
                           </Grid>}
                         <Grid>
                           <Row>
-                            <br />
-                            {this.props.unit.errors && Object.values(this.props.unit.errors).map((error, index) => {
-                              return <p style={{ color: 'red' }} key={index}>{error}</p>
-                            })}
-                            <br />
-                            <SaveCancel
-                              translate={this.props.translate}
-                              onClickSave={this.handleSubmit}
-                              onClickCancel={() => hashHistory.goBack()}
-                            />
+                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                              <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}
+                              </ControlLabel>
+                              {this.renderSecurityAssessmentField('perimeter')}
+                              {this.renderSecurityAssessmentField('theftProtection')}
+                              {this.renderSecurityAssessmentField('fireProtection')}
+                              {this.renderSecurityAssessmentField('waterDamage')}
+                              {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
+                            </Col>
+                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                              <ControlLabel>
+                                {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
+                              </ControlLabel>
+                              {this.renderEnvironmentAssessmentField('relativeHumidity')}
+                              {this.renderEnvironmentAssessmentField('lightingCondition')}
+                              {this.renderEnvironmentAssessmentField('temperature')}
+                              {this.renderEnvironmentAssessmentField('preventiveConservation')}
+                            </Col>
                           </Row>
                         </Grid>
                       </div>
