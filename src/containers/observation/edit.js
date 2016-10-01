@@ -7,7 +7,7 @@ import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
-import { parseISODateNonStrict as parseISODate } from '../../util'
+import { parseISODateNonStrict as parseISODate } from '../../utils'
 import { loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {

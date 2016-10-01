@@ -1,5 +1,5 @@
 import { parseObservation } from '../../observation/mapper/to_backend'
-import { DATE_FORMAT_ISO_FULL } from './../../../util'
+import { DATE_FORMAT_ISO_FULL } from './../../../utils'
 
 export const mapToBackend = (state, observations, nodeId) => {
   const r = {}

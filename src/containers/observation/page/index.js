@@ -6,7 +6,7 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from '../../../components/observation/render'
-import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
+import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../utils'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'

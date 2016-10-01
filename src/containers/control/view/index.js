@@ -23,7 +23,7 @@ import { ControlView } from '../../../components/control/view'
 import { MusitField } from '../../../components/formfields'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../utils'
 
 export default class ControlViewContainer extends React.Component {
   static propTypes = {

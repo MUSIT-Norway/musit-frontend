@@ -1,4 +1,4 @@
-import { parseFloatFromString } from '../../../util'
+import { parseFloatFromString } from '../../../utils'
 
 export const toBackend = (data, parentId) => {
   return {

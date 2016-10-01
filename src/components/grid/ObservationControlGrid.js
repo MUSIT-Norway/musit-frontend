@@ -3,7 +3,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import { hashHistory } from 'react-router'
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../utils'
 
 export default class ObservationControlGrid extends Component {
   static propTypes = {

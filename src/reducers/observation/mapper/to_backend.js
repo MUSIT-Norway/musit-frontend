@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { DATE_FORMAT_ISO_FULL, parseFloatFromString } from './../../../util'
+import { DATE_FORMAT_ISO_FULL, parseFloatFromString } from './../../../utils'
 
 export const parseObservation = (r) => (el) => {
   const re = {}

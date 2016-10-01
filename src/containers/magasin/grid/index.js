@@ -11,7 +11,7 @@ import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
-import { blur } from '../../../util'
+import { blur } from '../../../utils'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 const I18n = require('react-i18nify').I18n;

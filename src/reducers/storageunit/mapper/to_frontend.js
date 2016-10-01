@@ -1,4 +1,4 @@
-import { formatFloatToString } from '../../../util'
+import { formatFloatToString } from '../../../utils'
 
 
 const mapRequirement = (envReq, field) => {

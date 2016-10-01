@@ -4,7 +4,7 @@ import Language from '../../components/language'
 import ObservationPage from './page'
 import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import { parseISODateNonStrict as parseISODate } from '../../util'
+import { parseISODateNonStrict as parseISODate } from '../../utils'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { loadPath } from '../../reducers/storageunit/grid'
 
