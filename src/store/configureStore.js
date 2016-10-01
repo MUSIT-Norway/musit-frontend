@@ -1,56 +1,50 @@
-/*
- *  MUSIT is a museum database to archive natural and cultural history data.
- *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License,
- *  or any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License along
- *  with this program; if not, write to the Free Software Foundation, Inc.,
- *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
-
-import { applyMiddleware, createStore as _createStore, compose } from 'redux'
-import rootReducer from '../reducers'
+import { applyMiddleware, compose, createStore } from 'redux'
+import { browserHistory } from 'react-router'
+import makeRootReducer from './reducers'
 import createMiddleware from '../middleware/clientMiddleware'
-const createLogger = require('redux-logger')
-const { persistState } = require('redux-devtools')
-const DevTools = require('../components/dev-tools')
-const reducers = require('../reducers')
+import ApiClient from '../helpers/ApiClient'
+const client = new ApiClient();
+import { updateLocation } from './location'
 
-const createStore = (client, data) => {
+export default (initialState = {}) => {
+  // ======================================================
+  // Middleware Configuration
+  // ======================================================
   const middleware = [createMiddleware(client)]
 
-  let finalCreateStore;
+  // ======================================================
+  // Store Enhancers
+  // ======================================================
+  const enhancers = []
   if (__DEVELOPMENT__) {
-    const logger = createLogger()
-    finalCreateStore = compose(
-      applyMiddleware(...middleware, logger),
-      window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument(),
-      persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
-    )(_createStore)
-  } else {
-    finalCreateStore = applyMiddleware(...middleware)(_createStore)
+    const devToolsExtension = window.devToolsExtension
+    if (typeof devToolsExtension === 'function') {
+      enhancers.push(devToolsExtension())
+    }
   }
 
-  const store = finalCreateStore(rootReducer, data)
+  // ======================================================
+  // Store Instantiation and HMR Setup
+  // ======================================================
+  const store = createStore(
+      makeRootReducer(),
+      initialState,
+      compose(
+          applyMiddleware(...middleware),
+          ...enhancers
+      )
+  )
+  store.asyncReducers = {}
 
-  // reduxRouterMiddleware.listenForReplays(store);
+  // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
+  store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
 
-  if (__DEVELOPMENT__ && module.hot) {
-    module.hot.accept('../reducers', () => {
-      store.replaceReducer(reducers)
+  if (module.hot) {
+    module.hot.accept('./reducers', () => {
+      const reducers = require('./reducers').default
+      store.replaceReducer(reducers(store.asyncReducers))
     })
   }
 
   return store
-};
-
-export default createStore;
+}

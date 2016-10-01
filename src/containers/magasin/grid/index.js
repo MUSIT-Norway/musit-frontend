@@ -280,7 +280,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete } = this.props
-    const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root')
+    const showButtons = true
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
