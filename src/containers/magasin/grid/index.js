@@ -97,7 +97,8 @@ const mapDispatchToProps = (dispatch, props) => {
               window.alert(I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', { name }))
             },
             onFailure: (e) => {
-              if (e.status === 405) {
+              console.log(e)
+              if (e.status === 400) {
                 window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
               } else {
                 window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorCommon'))
