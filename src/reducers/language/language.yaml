@@ -442,10 +442,10 @@ no:
       goToRoot: "Gå til toppen"
       currentDestination: "Destinasjon:"
       messages:
-        nodeMoved: "Noden %{name} ble flyttet til %{destination}"
-        objectMoved: "Objektet %{name} ble flyttet til %{destination}"
-        errorNode: "Error å flytte node %{name} til %{destination}"
-        errorObject: "Error å flytte objektet %{name} til %{destination}"
+        nodeMoved: "%{name} ble flyttet til %{destination}."
+        objectMoved: "%{name} ble flyttet til %{destination}."
+        errorNode: "Flytting av %{name} til %{destination} feilet."
+        errorObject: "Flytting av %{name} til %{destination} feilet."
     leftMenu:
       node:
         newNode: "Ny node"
@@ -458,10 +458,10 @@ no:
         moveNode: "Flytt node"
         delete: "Slett"
         deleteMessages:
-          askForDeleteConfirmation: "Vil du virkelig slette %{name} node."
-          confirmDelete: "Du har slettet %{name} noden"
-          errorCommon: "Fikk feil på slette."
-          errorNotAllowedHadChild: "Ikke tillate å slette noden med barn. Vennligst slett barn først."
+          askForDeleteConfirmation: "Vil du slette %{name}?"
+          confirmDelete: "%{name} er slettet."
+          errorCommon: "Slettingen feilet."
+          errorNotAllowedHadChild: "Noden er ikke tom, og kan derfor ikke slettes."
         controlsobservations: "Kontr./Observ."
       observationControl:
         newObservation: "Ny observasjon"
