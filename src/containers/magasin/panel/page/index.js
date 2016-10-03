@@ -18,7 +18,9 @@
  */
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
+import { hashHistory } from 'react-router'
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap'
+import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../../layout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
 import Breadcrumb from '../../../../layout/Breadcrumb'
@@ -537,6 +539,20 @@ export default class StorageUnitContainer extends Component {
                               {this.renderEnvironmentAssessmentField('temperature')}
                               {this.renderEnvironmentAssessmentField('preventiveConservation')}
                             </Col>
+                          </Row>
+                        </Grid>
+                        <Grid>
+                          <Row>
+                            <br />
+                            {this.props.unit.errors && Object.values(this.props.unit.errors).map((error, index) => {
+                              return <p style={{ color: 'red' }} key={index}>{error}</p>
+                            })}
+                            <br />
+                            <SaveCancel
+                              translate={this.props.translate}
+                              onClickSave={this.handleSubmit}
+                              onClickCancel={() => hashHistory.goBack()}
+                            />
                           </Row>
                         </Grid>
                       </div>
