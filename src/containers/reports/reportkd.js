@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => (
   {
-    loadReports: () => dispatch(loadKDReport())
+    loadKDReport: () => dispatch(loadKDReport())
   })
 
 @connect(mapStateToProps, mapDispatchToProps)

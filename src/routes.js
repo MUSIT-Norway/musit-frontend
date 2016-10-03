@@ -60,7 +60,7 @@ export default (store) => {
       <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
       <Route path="/picklist/:type" component={PickListView} />
       <Route path="/reports" component={Reports} />
-      <Route path="/reports/kd" component={KDReport} />
+      <Route path="/reports/kdreport" component={KDReport} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />
