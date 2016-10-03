@@ -7,10 +7,10 @@ en:
       goToRoot: "Go to top"
       currentDestination: "destination:"
       messages:
-        nodeMoved: "The node %{name} was moved to %{destination}"
-        objectMoved: "The object %{name} was moved to %{destination}"
-        errorNode: "Error in node %{name} move to %{destination}"
-        errorObject: "Error in object %{name} move to %{destination}"
+        nodeMoved: "%{name} was moved to %{destination}."
+        objectMoved: "%{name} was moved to %{destination}."
+        errorNode: "Moving node %{name} to %{destination} failed."
+        errorObject: "Moving object %{name} to %{destination} failed."
     leftMenu:
       node:
         newNode: "New node"
@@ -22,6 +22,11 @@ en:
         controller: "Controls"
         moveNode: "Move node"
         delete: "Delete"
+        deleteMessages:
+          askForDeleteConfirmation: "Would you like to delete %{name}?"
+          confirmDelete: "%{name} has been deleted."
+          errorCommon: "Delete failed."
+          errorNotAllowedHadChild: "Not allowed to delete a node that is not empty."
         controlsobservations: "Contr./Observ."
       observationControl:
         newObservation: "New observation"
@@ -137,8 +142,8 @@ en:
           countTooltip: "Pest quantity"
         alcohol:
           statusValueRequired: "Level is required."
-          volumeIncorrect: "Volume must be a number with max 3 decimals."
-          commentIncorrect: "Max length for Task/Comment is 250 char"
+          volumeValueIncorrect: "Volume must be a number with max 3 decimals."
+          commentValueIncorrect: "Max length for Task/Comment is 250 char"
           labelText: "Alcohol"
           volumeLabel: "Volume"
           volumePlaceHolder: "%"
@@ -289,7 +294,7 @@ en:
           rightLabelPlaceToolTip: "Task that should be performed"
     pickList:
       title:
-        node: "Picklist (unit)"
+        node: "Picklist (nodes)"
         object: "Picklist (objects)"
       action:
         markAll: "All"
@@ -342,15 +347,15 @@ en:
         tooltip: "Node height in m"
       securityAssessment:
         securityAssessment: "Security assessment"
-        perimeterSecurity: "Perimeter security"
+        perimeter: "Perimeter security"
         theftProtection: "Theft protection"
         fireProtection: "Fire protection"
-        waterDamageAssessment: "Water damage assessment"
+        waterDamage: "Water damage assessment"
         routinesAndContingencyPlan: "Routines and contingency plan"
       environmentalAssessment:
         environmentalAssessment: "Environmental assessment"
         relativeHumidity: "Relative humidity"
-        temperatureAssessment: "Temperature"
+        temperature: "Temperature"
         lightingCondition: "Lighting condition"
         preventiveConservation: "Preventive conservation"
       environmentRequirement:
@@ -362,7 +367,7 @@ en:
         temperatureTolerance:
           labelText: ""
           incorrect: "Temperature tolerance must be an integer."
-          tooltip: "Temperature tolerance"
+          tooltip: "Tolerance"
           placeHolder: "\u00b0C"
         relativeHumidity:
           labelText: "Rel. humidity"
@@ -372,7 +377,7 @@ en:
         relativeHumidityTolerance:
           labelText: ""
           incorrect: "Relative humidity tolerance must be an integer."
-          tooltip: "Relative humidity tolerance"
+          tooltip: "Tolerance"
           placeHolder: "%"
         hypoxicAir:
           labelText: "Hypoxic air"
@@ -382,7 +387,7 @@ en:
         hypoxicAirTolerance:
           labelText: ""
           incorrect: "Hypoxic air tolerance must be an integer."
-          tooltip: "Hypoxic air tolerance"
+          tooltip: "Tolerance"
           placeHolder: "% O2"
         cleaning:
           labelText: "Cleaning"
@@ -437,10 +442,10 @@ no:
       goToRoot: "Gå til toppen"
       currentDestination: "Destinasjon:"
       messages:
-        nodeMoved: "Noden %{name} ble flyttet til %{destination}"
-        objectMoved: "Objektet %{name} ble flyttet til %{destination}"
-        errorNode: "Error å flytte node %{name} til %{destination}"
-        errorObject: "Error å flytte objektet %{name} til %{destination}"
+        nodeMoved: "%{name} ble flyttet til %{destination}."
+        objectMoved: "%{name} ble flyttet til %{destination}."
+        errorNode: "Flytting av %{name} til %{destination} feilet."
+        errorObject: "Flytting av %{name} til %{destination} feilet."
     leftMenu:
       node:
         newNode: "Ny node"
@@ -452,6 +457,11 @@ no:
         controller: "Kontroller"
         moveNode: "Flytt node"
         delete: "Slett"
+        deleteMessages:
+          askForDeleteConfirmation: "Vil du slette %{name}?"
+          confirmDelete: "%{name} er slettet."
+          errorCommon: "Slettingen feilet."
+          errorNotAllowedHadChild: "Noden er ikke tom, og kan derfor ikke slettes."
         controlsobservations: "Kontr./Observ."
       observationControl:
         newObservation: "Ny observasjon"
@@ -567,8 +577,8 @@ no:
           countTooltip: "Antall skadedyr"
         alcohol:
           statusValueRequired: "Nivå er påkrevd."
-          volumeIncorrect: "Volum må være et tall med maks 3 desimaler."
-          commentIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
+          volumeValueIncorrect: "Volum må være et tall med maks 3 desimaler."
+          commentValueIncorrect: "Tiltak/kommentar kan ha maks 250 tegn."
           labelText: "Sprit"
           volumeLabel: "Volum"
           volumePlaceHolder: "%"
@@ -719,7 +729,7 @@ no:
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
     pickList:
       title:
-        node: "Plukkliste (enheter)"
+        node: "Plukkliste (noder)"
         object: "Plukkliste (objekter)"
       action:
         markAll: "Alle"
@@ -772,15 +782,15 @@ no:
         tooltip: "Nodens høyde i m"
       securityAssessment:
         securityAssessment: "Sikring"
-        perimeterSecurity: "Skallsikring"
+        perimeter: "Skallsikring"
         theftProtection: "Tyverisikring"
         fireProtection: "Brannsikring"
-        waterDamageAssessment: "Vannskaderisiko"
+        waterDamage: "Vannskaderisiko"
         routinesAndContingencyPlan: "Rutiner og beredskap"
       environmentalAssessment:
         environmentalAssessment: "Bevaring"
         relativeHumidity: "Relativ luftfuktighet"
-        temperatureAssessment: "Temperatur"
+        temperature: "Temperatur"
         lightingCondition: "Lysforhold"
         preventiveConservation: "Preventiv konservering"
       environmentRequirement:
@@ -792,7 +802,7 @@ no:
         temperatureTolerance:
           labelText: ""
           incorrect: "Temperaturtoleranse må være et heltall."
-          tooltip: "Temperatur toleranse"
+          tooltip: "Toleranse"
           placeHolder: "\u00b0C"
         relativeHumidity:
           labelText: "Rel. luftfuktighet"
@@ -802,7 +812,7 @@ no:
         relativeHumidityTolerance:
           labelText: ""
           incorrect: "Relativ luftfuktighettoleranse må være et heltall."
-          tooltip: "Relativ luftfuktighet toleranse"
+          tooltip: "Toleranse"
           placeHolder: "%"
         hypoxicAir:
           labelText: "Inertluft"
@@ -812,7 +822,7 @@ no:
         hypoxicAirTolerance:
           labelText: ""
           incorrect: "Inertlufttoleranse må være et heltall."
-          tooltip: "Inertluft toleranse"
+          tooltip: "Toleranse"
           placeHolder: "% O2"
         cleaning:
           labelText: "Renhold"
