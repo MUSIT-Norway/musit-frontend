@@ -93,7 +93,7 @@ export default class PickListContainer extends React.Component {
             <PickListComponent
               picks={picks}
               marked={marked}
-              isnode={this.isTypeNode() ? true : false}
+              isnode={this.isTypeNode()}
               iconRendrer={(pick) => <FontAwesome
                 name={pick.value.name ? 'folder' : 'rebel'}
                 style={{ fontSize: '3.0em' }}
