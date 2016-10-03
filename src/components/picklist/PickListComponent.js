@@ -11,7 +11,8 @@ export default class PickListComponent extends Component {
     remove: React.PropTypes.func.isRequired,
     marked: React.PropTypes.array.isRequired,
     iconRendrer: React.PropTypes.func.isRequired,
-    labelRendrer: React.PropTypes.func.isRequired
+    labelRendrer: React.PropTypes.func.isRequired,
+    isnode: React.PropTypes.bool
   }
 
   render() {
@@ -20,7 +21,8 @@ export default class PickListComponent extends Component {
       picks,
       marked,
       iconRendrer,
-      labelRendrer
+      labelRendrer,
+      isnode
     } = this.props
 
     return (
@@ -29,13 +31,11 @@ export default class PickListComponent extends Component {
           <thead>
             <tr>
               <th className={style.toolsColumn} colSpan="3">
-                {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;<input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
-                <FontAwesome
-                  className={style.normalAction}
-                  style={{ cursor: 'pointer' }}
-                  name="truck"
-                  onClick={() => this.props.move(marked)}
-                />
+                {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;
+                <input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
+               {isnode ?
+                 <FontAwesome className={style.normalAction} name="print" /> : null
+                }
                 <FontAwesome
                   className={style.normalAction}
                   style={{ cursor: 'pointer' }}
@@ -78,7 +78,9 @@ export default class PickListComponent extends Component {
                       onClick={() => this.props.toggle(item)}
                       className={style.normalAction}
                     />
-                    <FontAwesome className={style.normalAction} name="print" />
+                    {isnode ?
+                      <FontAwesome className={style.normalAction} name="print" /> : null
+                    }
                     <FontAwesome
                       className={style.normalAction}
                       style={{ cursor: 'pointer' }}
