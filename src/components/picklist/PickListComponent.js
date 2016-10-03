@@ -33,8 +33,8 @@ export default class PickListComponent extends Component {
               <th className={style.toolsColumn} colSpan="3">
                 {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;
                 <input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
-               {isnode ?
-                 <FontAwesome className={style.normalAction} name="print" /> : null
+                {isnode ?
+                  <FontAwesome className={style.normalAction} name="print" /> : null
                 }
                 <FontAwesome
                   className={style.normalAction}
