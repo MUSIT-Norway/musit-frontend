@@ -498,7 +498,8 @@ export default class StorageUnitContainer extends Component {
                         <Grid>
                           <Row>
                             <Col lg={5} md={5} sm={5} xs={10} offset={1}>
-                              <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}</ControlLabel>
+                              <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}
+                              </ControlLabel>
                               {this.renderSecurityAssessmentField('perimeter')}
                               {this.renderSecurityAssessmentField('theftProtection')}
                               {this.renderSecurityAssessmentField('fireProtection')}
