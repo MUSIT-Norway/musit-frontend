@@ -294,7 +294,7 @@ en:
           rightLabelPlaceToolTip: "Task that should be performed"
     pickList:
       title:
-        node: "Picklist (unit)"
+        node: "Picklist (nodes)"
         object: "Picklist (objects)"
       action:
         markAll: "All"
@@ -729,7 +729,7 @@ no:
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
     pickList:
       title:
-        node: "Plukkliste (enheter)"
+        node: "Plukkliste (noder)"
         object: "Plukkliste (objekter)"
       action:
         markAll: "Alle"
