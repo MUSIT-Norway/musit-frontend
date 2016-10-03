@@ -25,7 +25,7 @@ export const moveObject = (objectId, destination, doneBy, callback) => {
   const data = {
     doneBy,
     destination,
-    items: [objectId]
+    items: [].concat(objectId)
   }
   return {
     types: [MOVE_OBJECT, MOVE_OBJECT_SUCCESS, MOVE_OBJECT_FAILURE],
@@ -38,7 +38,7 @@ export const moveNode = (nodeId, destination, doneBy, callback) => {
   const data = {
     doneBy,
     destination,
-    items: Array.isArray(nodeId) ? nodeId : [nodeId]
+    items: [].concat(nodeId)
   }
   return {
     types: [MOVE_OBJECT, MOVE_OBJECT_SUCCESS, MOVE_OBJECT_FAILURE],
