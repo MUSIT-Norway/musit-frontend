@@ -46,7 +46,9 @@ export default class ObjectGrid extends Component {
         this.props.refresh()
         window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
       },
-      onFailure: window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+      onFailure: () => {
+        window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+      }
     })
   }
 
@@ -96,7 +98,7 @@ export default class ObjectGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault()
-                          this.moveModal(c.id)
+                          this.showModal(c.id)
                         }}
                       >
                         <FontAwesome name="truck" />

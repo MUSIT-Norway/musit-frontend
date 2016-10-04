@@ -7,10 +7,10 @@ en:
       goToRoot: "Go to top"
       currentDestination: "destination:"
       messages:
-        nodeMoved: "The node %{name} was moved to %{destination}"
-        objectMoved: "The object %{name} was moved to %{destination}"
-        errorNode: "Error in node %{name} move to %{destination}"
-        errorObject: "Error in object %{name} move to %{destination}"
+        nodeMoved: "%{name} was moved to %{destination}."
+        objectMoved: "%{name} was moved to %{destination}."
+        errorNode: "Moving node %{name} to %{destination} failed."
+        errorObject: "Moving object %{name} to %{destination} failed."
     leftMenu:
       node:
         newNode: "New node"
@@ -23,10 +23,10 @@ en:
         moveNode: "Move node"
         delete: "Delete"
         deleteMessages:
-          askForDeleteConfirmation: "Will you really delete %{name} node?"
-          confirmDelete: "You have deleted %{name} node."
-          errorCommon: "Delete operation got some error."
-          errorNotAllowedHadChild: "Not allow to delete the node with children. Please delete child first."
+          askForDeleteConfirmation: "Would you like to delete %{name}?"
+          confirmDelete: "%{name} has been deleted."
+          errorCommon: "Delete failed."
+          errorNotAllowedHadChild: "Not allowed to delete a node that is not empty."
         controlsobservations: "Contr./Observ."
       observationControl:
         newObservation: "New observation"
@@ -294,7 +294,7 @@ en:
           rightLabelPlaceToolTip: "Task that should be performed"
     pickList:
       title:
-        node: "Picklist (unit)"
+        node: "Picklist (nodes)"
         object: "Picklist (objects)"
       action:
         markAll: "All"
@@ -367,7 +367,7 @@ en:
         temperatureTolerance:
           labelText: ""
           incorrect: "Temperature tolerance must be an integer."
-          tooltip: "Temperature tolerance"
+          tooltip: "Tolerance"
           placeHolder: "\u00b0C"
         relativeHumidity:
           labelText: "Rel. humidity"
@@ -377,7 +377,7 @@ en:
         relativeHumidityTolerance:
           labelText: ""
           incorrect: "Relative humidity tolerance must be an integer."
-          tooltip: "Relative humidity tolerance"
+          tooltip: "Tolerance"
           placeHolder: "%"
         hypoxicAir:
           labelText: "Hypoxic air"
@@ -387,7 +387,7 @@ en:
         hypoxicAirTolerance:
           labelText: ""
           incorrect: "Hypoxic air tolerance must be an integer."
-          tooltip: "Hypoxic air tolerance"
+          tooltip: "Tolerance"
           placeHolder: "% O2"
         cleaning:
           labelText: "Cleaning"
@@ -442,10 +442,10 @@ no:
       goToRoot: "Gå til toppen"
       currentDestination: "Destinasjon:"
       messages:
-        nodeMoved: "Noden %{name} ble flyttet til %{destination}"
-        objectMoved: "Objektet %{name} ble flyttet til %{destination}"
-        errorNode: "Error å flytte node %{name} til %{destination}"
-        errorObject: "Error å flytte objektet %{name} til %{destination}"
+        nodeMoved: "%{name} ble flyttet til %{destination}."
+        objectMoved: "%{name} ble flyttet til %{destination}."
+        errorNode: "Flytting av %{name} til %{destination} feilet."
+        errorObject: "Flytting av %{name} til %{destination} feilet."
     leftMenu:
       node:
         newNode: "Ny node"
@@ -458,10 +458,10 @@ no:
         moveNode: "Flytt node"
         delete: "Slett"
         deleteMessages:
-          askForDeleteConfirmation: "Vil du virkelig slette %{name} node."
-          confirmDelete: "Du har slettet %{name} noden"
-          errorCommon: "Fikk feil på slette."
-          errorNotAllowedHadChild: "Ikke tillate å slette noden med barn. Vennligst slett barn først."
+          askForDeleteConfirmation: "Vil du slette %{name}?"
+          confirmDelete: "%{name} er slettet."
+          errorCommon: "Slettingen feilet."
+          errorNotAllowedHadChild: "Noden er ikke tom, og kan derfor ikke slettes."
         controlsobservations: "Kontr./Observ."
       observationControl:
         newObservation: "Ny observasjon"
@@ -729,7 +729,7 @@ no:
           rightLabelPlaceToolTip: "Tiltak som bør iverksettes"
     pickList:
       title:
-        node: "Plukkliste (enheter)"
+        node: "Plukkliste (noder)"
         object: "Plukkliste (objekter)"
       action:
         markAll: "Alle"
@@ -802,7 +802,7 @@ no:
         temperatureTolerance:
           labelText: ""
           incorrect: "Temperaturtoleranse må være et heltall."
-          tooltip: "Temperatur toleranse"
+          tooltip: "Toleranse"
           placeHolder: "\u00b0C"
         relativeHumidity:
           labelText: "Rel. luftfuktighet"
@@ -812,7 +812,7 @@ no:
         relativeHumidityTolerance:
           labelText: ""
           incorrect: "Relativ luftfuktighettoleranse må være et heltall."
-          tooltip: "Relativ luftfuktighet toleranse"
+          tooltip: "Toleranse"
           placeHolder: "%"
         hypoxicAir:
           labelText: "Inertluft"
@@ -822,7 +822,7 @@ no:
         hypoxicAirTolerance:
           labelText: ""
           incorrect: "Inertlufttoleranse må være et heltall."
-          tooltip: "Inertluft toleranse"
+          tooltip: "Toleranse"
           placeHolder: "% O2"
         cleaning:
           labelText: "Renhold"

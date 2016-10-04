@@ -24,7 +24,6 @@ const storageUnitPanelStateReducer = (state = {
 export default storageUnitPanelStateReducer;
 
 export const update = (data) => {
-  console.log(data)
   return {
     type: UPDATE,
     data: mapToFrontend(data)

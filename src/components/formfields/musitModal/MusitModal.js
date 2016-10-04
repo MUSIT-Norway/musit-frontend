@@ -45,13 +45,17 @@ export default class MusitModal extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.show === true && this.props.show === false) {
-      this.props.loadRoot()
-      this.props.clearPath();
-      this.props.clearCurrentId();
+      this.loadHome()
     }
     if (nextProps.currentId && nextProps.currentId !== this.props.currentId) {
       this.loadStuff(nextProps.currentId)
     }
+  }
+
+  loadHome() {
+    this.props.loadRoot()
+    this.props.clearPath();
+    this.props.clearCurrentId();
   }
 
   loadStuff(initialId) {
@@ -87,7 +91,11 @@ export default class MusitModal extends Component {
             </Row>
             <Row style={{ textAlign: 'center' }}>
               <Col>
-                <Breadcrumb nodes={path} onClickCrumb={node => this.props.setCurrentId(node.id)} />
+                <Breadcrumb
+                  nodes={path}
+                  onClickCrumb={node => (node.id === -1 ?
+                    this.loadHome() : this.props.setCurrentId(node.id))}
+                />
               </Col>
             </Row>
             <br />
