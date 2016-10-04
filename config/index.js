@@ -30,6 +30,7 @@ const config = {
   // Compiler Configuration
   // ----------------------------------
   compiler_babel : {
+    compact: false,
     cacheDirectory : true,
     presets: [
       'react',
