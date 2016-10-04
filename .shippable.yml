@@ -23,6 +23,8 @@ build:
     pull: true
     options: "-e HOME=/root"
   ci:
+    - npm -v
+    - node -v
     - npm install
     - npm run deploy:dev
     - npm run deploy:prod
