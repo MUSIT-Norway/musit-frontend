@@ -2,7 +2,7 @@ language: node_js
 
 node_js:
  - 6.0.0
- 
+
 integrations:
   notifications:
     - integrationName: MUSIT-Slack
@@ -18,7 +18,8 @@ branches:
 
 build:
   ci:
-   - npm install --force
-   - npm run lint
-   - npm run test:coverage
-   - npm run build
+   - npm install
+   - npm run deploy:dev
+   - npm run deploy:prod
+  on_success:
+   - npm run codecov
