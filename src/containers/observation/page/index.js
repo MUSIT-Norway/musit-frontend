@@ -221,6 +221,16 @@ export default class ObservationPage extends React.Component {
     return errors
   }
 
+  setDate = (newValue) => {
+    if (newValue) {
+      if (moment().format('DD/MM/YYYY') < moment(newValue).format('DD/MM/YYYY')) {
+        window.alert(this.props.translate('musit.observation.page.dateValidation'))
+        this.setState({ ...this.state, doneDate: moment() })
+      } else {
+        this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+      }
+    }
+  }
   handleSubmit(e) {
     e.preventDefault()
     const errors = this.validateForm(this.state)
@@ -313,10 +323,7 @@ export default class ObservationPage extends React.Component {
                     onClear={() => this.setState({ ...this.state, doneDate: moment() })}
                     value={this.state.doneDate.toISOString()}
                     onChange={newValue => {
-                      if (!newValue) {
-                        return;
-                      }
-                      this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+                      this.setDate(newValue)
                     }}
                     disabled={this.props.mode === 'VIEW'}
                   />

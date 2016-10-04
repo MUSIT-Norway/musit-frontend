@@ -145,10 +145,11 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
-  dateSet = (newValue) => {
+  setDate = (newValue) => {
     if (newValue) {
-      if (moment().toDate() < moment(newValue).toDate()) {
-        window.alert('Big date. Please select lower date')
+      if (moment().format('DD/MM/YYYY') < moment(newValue).format('DD/MM/YYYY')) {
+        window.alert(this.props.translate('musit.newControl.dateValidation'))
+        this.setState({ ...this.state, doneDate: moment() })
       } else {
         this.setState({ ...this.state, doneDate: parseISODate(newValue) })
       }
@@ -238,7 +239,7 @@ export default class ControlAddContainer extends React.Component {
                           value={this.state.doneDate.toISOString()}
                           onClear={() => this.setState({ ...this.state, doneDate: moment() })}
                           onChange={newValue => {
-                            this.dateSet(newValue)
+                            this.setDate(newValue)
                           }}
                         />
                       </Col>
