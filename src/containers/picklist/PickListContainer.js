@@ -20,7 +20,13 @@ export default class PickListContainer extends React.Component {
     params: React.PropTypes.object.isRequired,
     user: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired
-    })
+    }),
+    addNode: React.PropTypes.func.isRequired,
+    addObject: React.PropTypes.func.isRequired,
+    loadRoot: React.PropTypes.func.isRequired,
+    loadPath: React.PropTypes.func.isRequired,
+    rootNode: React.PropTypes.object,
+    path: React.PropTypes.arrayOf(React.PropTypes.object),
   }
 
   constructor(props) {
@@ -46,6 +52,10 @@ export default class PickListContainer extends React.Component {
   nodeCallback = (toName) => ({
     onSuccess: () => {
       this.hideModal()
+      this.props.loadRoot(7)
+      this.props.loadPath(7)
+      this.props.removeNode(7)
+      this.props.addNode(this.props.rootNode, this.props.path)
       window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
     },
     onFailure: () => {

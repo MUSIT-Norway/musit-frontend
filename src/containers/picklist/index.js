@@ -18,12 +18,15 @@
  */
 import PickListContainer from './PickListContainer'
 import { connect } from 'react-redux'
-import { toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
+import { addNode, addObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
 import { moveObject, moveNode } from '../../reducers/move'
+import { loadRoot, loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
-  picks: state.picks
+  picks: state.picks,
+  rootNode: state.storageGridUnit.root,
+  path: state.storageGridUnit.root.path,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -36,6 +39,18 @@ const mapDispatchToProps = (dispatch) => ({
   },
   moveNode: (nodeId, destinationId, doneBy, callback) => {
     dispatch(moveNode(nodeId, destinationId, doneBy, callback))
+  },
+  addNode: (unit, path) => {
+    dispatch(addNode(unit, path))
+  },
+  addObject: (unit, path) => {
+    dispatch(addObject(unit, path))
+  },
+  loadRoot: (id) => {
+    dispatch(loadRoot(id))
+  },
+  loadPath: (id) => {
+    dispatch(loadPath(id))
   }
 })
 
