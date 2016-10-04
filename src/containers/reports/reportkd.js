@@ -5,7 +5,7 @@ import { loadKDReport } from '../../reducers/reports'
 
 const mapStateToProps = (state) => {
   return {
-    data: state.reports.data.kdreport.data
+    data: state.reports && state.reports.data ? state.reports.data.kdreport.data : null
   }
 }
 
@@ -35,22 +35,22 @@ export default class KDReport extends React.Component {
         <Table>
           <tbody>
             <tr>
-              <td> Areal:</td><td>{data.totalArea}</td>
+              <td> Areal:</td><td>{data ? data.totalArea : null}</td>
             </tr>
             <tr>
-              <td> Skallsikring: </td><td>{data.perimeterSecurity}</td>
+              <td> Skallsikring: </td><td>{data ? data.perimeterSecurity : null}</td>
             </tr>
             <tr>
-              <td> Tyverisikring: </td><td>{data.theftProtection}</td>
+              <td> Tyverisikring: </td><td>{data ? data.theftProtection : null}</td>
             </tr>
             <tr>
-              <td> Brannsikring: </td><td>{data.fireProtection}</td>
+              <td> Brannsikring: </td><td>{data ? data.fireProtection : null}</td>
             </tr>
             <tr>
-              <td> Vannsikring: </td><td>{data.waterDamageAssessment}</td>
+              <td> Vannsikring: </td><td>{data ? data.waterDamageAssessment : null}</td>
             </tr>
             <tr>
-              <td> Rutiner og beredskap: </td><td>{data.routinesAndContingencyPlan}</td>
+              <td> Rutiner og beredskap: </td><td>{data ? data.routinesAndContingencyPlan : null}</td>
             </tr>
           </tbody>
         </Table>
