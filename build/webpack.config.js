@@ -100,7 +100,7 @@ if (!__TEST__) {
 webpackConfig.module.loaders = [{
   test    : /\.(js|jsx)$/,
   exclude : /node_modules/,
-  loader  : 'babel',
+  loader  : 'babel-loader',
   query   : config.compiler_babel
 }, {
   test   : /\.json$/,
