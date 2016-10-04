@@ -111,6 +111,16 @@ export default class ObservationPage extends React.Component {
     })
   }
 
+  setDate = (newValue) => {
+    if (newValue) {
+      if (moment().format('DD/MM/YYYY') < moment(newValue).format('DD/MM/YYYY')) {
+        window.alert(this.props.translate('musit.observation.page.dateValidation'))
+        this.setState({ ...this.state, doneDate: moment() })
+      } else {
+        this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+      }
+    }
+  }
   typeDefinitions = {
     '': { label: 'typeSelect.labelText' },
     gas: {
@@ -221,16 +231,6 @@ export default class ObservationPage extends React.Component {
     return errors
   }
 
-  setDate = (newValue) => {
-    if (newValue) {
-      if (moment().format('DD/MM/YYYY') < moment(newValue).format('DD/MM/YYYY')) {
-        window.alert(this.props.translate('musit.observation.page.dateValidation'))
-        this.setState({ ...this.state, doneDate: moment() })
-      } else {
-        this.setState({ ...this.state, doneDate: parseISODate(newValue) })
-      }
-    }
-  }
   handleSubmit(e) {
     e.preventDefault()
     const errors = this.validateForm(this.state)
