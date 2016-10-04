@@ -12,7 +12,7 @@ export const mapToBackend = (state, observations, nodeId) => {
     roleId: 1,
     objectId: nodeId * 1
   }
-  r.parts = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
+  r.parts = Object.keys(state).filter((key) => key.indexOf('OK') > 0).map((key) => {
     let control
     switch (key) {
       case 'hypoxicAirOK':

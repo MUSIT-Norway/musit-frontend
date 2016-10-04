@@ -1,8 +1,8 @@
 import assert from 'assert'
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
-import Layout from '../../../../src/layout'
-import Breadcrumb from '../../../../src/layout/Breadcrumb'
+import Layout from '../../../../src/layouts/MagasinLayout'
+import Breadcrumb from '../../../../src/layouts/MagasinLayout/Breadcrumb'
 
 describe('StorageUnitsContainer_Breadcrumb_test', () => {
   let myDiv = {}

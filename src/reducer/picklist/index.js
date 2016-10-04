@@ -33,12 +33,13 @@ const toggleItem = (type) => (state, action) => {
 
 const removeItem = (type) => (state, action) => {
   const items = [].concat(action.item)
-  const nodes = state[type].filter(node => items.findIndex(i => i.id === node.value.id) === -1)
+  const itemIds = items.map(item => item.id)
+  const nodes = state[type].filter(node => itemIds.indexOf(node.value.id) === -1)
   return { ...state, [type]: nodes }
 }
 
 const addItem = (type) => (state, action) => {
-  if (state[type].findIndex(node => action.item.id === node.value.id) > -1) {
+  if (state[type].filter(node => action.item.id === node.value.id).length > 0) {
     return state
   }
   return {

@@ -1,4 +1,4 @@
-const MusitTextArea = require('../../../../src/components/formfields/musittextarea/index')
+import MusitTextArea from '../../../../src/components/formfields/musittextarea'
 
 import assert from 'assert'
 import React from 'react'

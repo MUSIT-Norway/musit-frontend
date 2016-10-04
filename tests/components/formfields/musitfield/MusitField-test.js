@@ -2,7 +2,7 @@ import assert from 'assert'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactTestUtils from 'react-addons-test-utils'
-const MusitField = require('../../../../src/components/formfields/musitfield/index')
+import MusitField from '../../../../src/components/formfields/musitfield'
 
 describe('MusitField', () => {
   it('should render MusitField 1', () => {

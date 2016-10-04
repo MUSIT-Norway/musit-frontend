@@ -95,13 +95,13 @@ export default class ControlAddContainer extends React.Component {
   }
 
   oneStateIsNotOK () {
-    return Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] === false).length > 0
+    return Object.keys(this.state).filter((k) => k.indexOf('OK') > 0 && this.state[k] === false).length > 0
   }
 
   onClickSave () {
     // Could extract it, but its only used here and in the method aboveonFailure
     const controls = Object.keys(this.state)
-        .filter((k) => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
+        .filter((k) => k.indexOf('OK') > 0 && this.state[k] !== null && typeof this.state[k] !== 'undefined')
         .map((k) => ({
           [k]: this.state[k]
         }))
@@ -138,7 +138,7 @@ export default class ControlAddContainer extends React.Component {
   handleSubmit (event) {
     event.preventDefault()
     const errors = []
-    const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null)
+    const controls = Object.keys(this.state).filter((k) => k.indexOf('OK') > 0 && this.state[k] !== null)
     if (controls.length === 0) {
       errors.push(this.props.translate('musit.newControl.controlsRequired'))
     }
