@@ -32,22 +32,22 @@ export default class FakeLoginSelector extends Component {
   static propTypes = {
     users: PropTypes.arrayOf(PropTypes.object),
     setUser: PropTypes.func.isRequired,
-    loadActor: PropTypes.func.isRequired,
+    loadActor: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props);
-    this.onSelect = this.onSelect.bind(this);
+  constructor (props) {
+    super(props)
+    this.onSelect = this.onSelect.bind(this)
   }
 
-  onSelect(user) {
+  onSelect (user) {
     localStorage.setItem('fakeToken', JSON.stringify(user))
-    this.props.setUser(user);
+    this.props.setUser(user)
   }
 
-  render() {
+  render () {
     return (
-      <DropdownButton title="Fake User" onSelect={this.onSelect}>
+      <DropdownButton title='Fake User' onSelect={this.onSelect}>
         {this.props.users.map((user) => <MenuItem eventKey={user}>{user.name}</MenuItem>)}
       </DropdownButton>
     )

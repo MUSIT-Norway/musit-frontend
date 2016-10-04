@@ -2,7 +2,7 @@
  * Created by steinaol on 5/31/16.
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import Select from 'react-select'
 import validate from '../common/validators'
 
@@ -31,14 +31,14 @@ export default class MusitDropDownField extends Component {
     placeHolder: 'Choose ...'
   }
 
-  getOptions() {
+  getOptions () {
     return this.props.items.map((el) => ({
       value: el,
       label: this.props.translateKeyPrefix ? this.props.translate(this.props.translateKeyPrefix.concat(el)) : el
     }))
   }
 
-  classNameOnlyWithInput() {
+  classNameOnlyWithInput () {
     let lvString = ''
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'has-error'
@@ -48,7 +48,7 @@ export default class MusitDropDownField extends Component {
     return lvString
   }
 
-  classNameWithSpan() {
+  classNameWithSpan () {
     let lvString = ' '
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'input-group has-error'
@@ -58,8 +58,8 @@ export default class MusitDropDownField extends Component {
     return lvString
   }
 
-  render() {
-    const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
+  render () {
+    const lcAddOnPrefix = this.props.addOnPrefix ? <span className='input-group-addon' >{this.props.addOnPrefix}</span> : null
 
     const lcPlaceholder = (
       <Select
@@ -68,12 +68,12 @@ export default class MusitDropDownField extends Component {
         value={this.props.value}
         options={this.getOptions()}
         onChange={(el) => this.props.onChange(el.value)}
-        data-toggle="tooltip"
+        data-toggle='tooltip'
         title={this.props.tooltip}
         clearable={false}
-      />);
+      />)
 
-    const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
+    const lcHelp = this.props.help ? <span className='input-group-addon' >?</span> : null
 
     return (lcAddOnPrefix !== null || lcHelp !== null) ? (
       <div

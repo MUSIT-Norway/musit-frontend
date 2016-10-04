@@ -7,10 +7,10 @@ export default class ObservationControlComponent extends Component {
     id: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
     onClickNewObservation: PropTypes.func.isRequired,
-    onClickNewControl: PropTypes.func.isRequired,
+    onClickNewControl: PropTypes.func.isRequired
   }
 
-  render() {
+  render () {
     const { id, translate, onClickNewControl, onClickNewObservation } = this.props
     const getTranslate = (term) => (translate(`musit.leftMenu.observationControl.${term}`))
     const buttonLogic = (type, eventType) => {
@@ -20,7 +20,7 @@ export default class ObservationControlComponent extends Component {
           onClick={(event) => eventType(event.target.value)}
           style={{ textAlign: 'left', width: '100%' }}
         >
-          <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
+          <FontAwesome name='plus-circle' style={{ padding: '2px' }} />
           {getTranslate(type)}
         </Button>
       )

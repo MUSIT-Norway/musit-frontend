@@ -76,7 +76,7 @@ export default class ObservationPest extends Component {
     commentsRightValue: ''
   }
 
-  render() {
+  render () {
     return (
       <div>
         <ObservationDoubleTextAreaComponent
@@ -133,14 +133,14 @@ export default class ObservationPest extends Component {
               </Col>
               <Col xs={1} sm={this.props.removeIconWidth} md={this.props.removeIconWidth}>
                 <ControlLabel>{'\u00A0'}</ControlLabel><br />
-                {!this.props.canEdit ? '' : <a href="" >
+                {!this.props.canEdit ? '' : <a href='' >
                   <
                     FontAwesome onClick={(e) => {
                       this.props.lifeCycleOnRemove(index)
                       e.preventDefault()
                     }
                   }
-                    name="times"
+                    name='times'
                   />
                 </a> }
               </Col>
@@ -149,7 +149,7 @@ export default class ObservationPest extends Component {
                   <ControlLabel>{'\u00A0'}</ControlLabel><br />
                   {!this.props.canEdit ? '' :
                     <Button onClick={this.props.newButtonOnClick}>
-                      <FontAwesome name="plus-circle" />&nbsp;{this.props.newButtonLabel}
+                      <FontAwesome name='plus-circle' />&nbsp;{this.props.newButtonLabel}
                     </Button>
                   }
                 </span>

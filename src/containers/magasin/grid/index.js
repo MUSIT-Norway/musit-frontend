@@ -1,20 +1,20 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import Language from '../../../components/language'
-import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
-import { loadObjects } from '../../../reducers/storageobject/grid'
-import { addNode, addObject } from '../../../reducers/picklist'
-import { moveObject, moveNode } from '../../../reducers/move'
-import { loadStats, clearStats } from '../../../reducers/storageunit/stats'
+import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducer/storageunit/grid'
+import { loadObjects } from '../../../reducer/storageobject/grid'
+import { addNode, addObject } from '../../../reducer/picklist'
+import { moveObject, moveNode } from '../../../reducer/move'
+import { loadStats, clearStats } from '../../../reducer/storageunit/stats'
 import { hashHistory } from 'react-router'
 import { NodeGrid, ObjectGrid } from '../../../components/grid'
-import Layout from '../../../layout'
+import Layout from '../../../layouts/MagasinLayouts/MagasinLayout/index'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
-import Toolbar from '../../../layout/Toolbar'
+import Toolbar from '../../../layouts/MagasinLayouts/MagasinLayout/Toolbar'
 import { blur } from '../../../utils'
-import Breadcrumb from '../../../layout/Breadcrumb'
+import Breadcrumb from '../../../layouts/MagasinLayouts/MagasinLayout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
-const I18n = require('react-i18nify').I18n;
+const I18n = require('react-i18nify').I18n
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
@@ -111,7 +111,6 @@ const mapDispatchToProps = (dispatch, props) => {
   })
 }
 
-
 @connect(mapStateToProps, mapDispatchToProps)
 export default class StorageUnitsContainer extends React.Component {
   static propTypes = {
@@ -144,7 +143,7 @@ export default class StorageUnitsContainer extends React.Component {
     })
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       searchPattern: '',
@@ -152,7 +151,7 @@ export default class StorageUnitsContainer extends React.Component {
       showNodes: true,
       showModal: false,
       showModalFromId: '',
-      showModalType: '',
+      showModalType: ''
     }
 
     this.loadNodes = this.loadNodes.bind(this)
@@ -160,11 +159,11 @@ export default class StorageUnitsContainer extends React.Component {
     this.moveModal = this.moveModal.bind(this)
   }
 
-  componentWillMount() {
-    this.loadNodes();
+  componentWillMount () {
+    this.loadNodes()
   }
 
-  componentWillReceiveProps(newProps) {
+  componentWillReceiveProps (newProps) {
     // Issued on every propchange, including local route changes
     if (newProps.params.splat !== this.props.params.splat) {
       if (newProps.params.splat) {
@@ -178,22 +177,22 @@ export default class StorageUnitsContainer extends React.Component {
     }
   }
 
-  onClickCrumb(node) {
-    this.showNodes();
+  onClickCrumb (node) {
+    this.showNodes()
     hashHistory.push(node.url)
   }
 
-  showNodes() {
+  showNodes () {
     this.setState({ ...this.state, showNodes: true, showObjects: false })
   }
 
-  showObjects() {
+  showObjects () {
     this.setState({ ...this.state, showNodes: false, showObjects: true })
   }
 
-  loadNodes() {
+  loadNodes () {
     if (this.props.params.splat) {
-      const currentId = this.resolveCurrentId(this.props.params.splat);
+      const currentId = this.resolveCurrentId(this.props.params.splat)
       this.props.loadChildren(currentId, {
         onSuccess: () => this.props.loadPath(currentId),
         onFailure: true
@@ -203,14 +202,14 @@ export default class StorageUnitsContainer extends React.Component {
     }
   }
 
-  loadObjects() {
+  loadObjects () {
     if (this.props.params.splat) {
-      const currentId = this.resolveCurrentId(this.props.params.splat);
+      const currentId = this.resolveCurrentId(this.props.params.splat)
       this.props.loadStorageObjects(currentId)
     }
   }
 
-  resolveCurrentId(splat) {
+  resolveCurrentId (splat) {
     const ids = this.resolveId(splat)
     let retVal = null
     if (ids && ids.length > 0) {
@@ -219,7 +218,7 @@ export default class StorageUnitsContainer extends React.Component {
     return retVal
   }
 
-  resolveId(splat) {
+  resolveId (splat) {
     let splatList = []
     if (splat) {
       splatList = splat.split('/')
@@ -227,7 +226,7 @@ export default class StorageUnitsContainer extends React.Component {
     return splatList
   }
 
-  pathChild(splat, id) {
+  pathChild (splat, id) {
     let newUri = `${id}`
     if (splat) {
       newUri = `${splat}/${id}`
@@ -257,18 +256,18 @@ export default class StorageUnitsContainer extends React.Component {
     })
   }
 
-  makeToolbar() {
+  makeToolbar () {
     return (<Toolbar
       showRight={this.state.showObjects}
       showLeft={this.state.showNodes}
-      labelRight="Objekter"
-      labelLeft="Noder"
-      placeHolderSearch="Filtrer i liste"
+      labelRight='Objekter'
+      labelLeft='Noder'
+      placeHolderSearch='Filtrer i liste'
       searchValue={this.state.searchPattern}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
         this.showObjects()
-        this.loadObjects();
+        this.loadObjects()
         blur()
       }}
       clickShowLeft={() => {
@@ -279,7 +278,7 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  makeLeftMenu(rootNode, statistics) {
+  makeLeftMenu (rootNode, statistics) {
     const { onEdit, onDelete } = this.props
     return (
       <div style={{ paddingTop: 10 }}>
@@ -307,8 +306,8 @@ export default class StorageUnitsContainer extends React.Component {
     )
   }
 
-  makeContentGrid(filter, rootNode, children) {
-    const nodeId = rootNode ? rootNode.id : null;
+  makeContentGrid (filter, rootNode, children) {
+    const nodeId = rootNode ? rootNode.id : null
     if (this.state.showNodes) {
       return (<NodeGrid
         id={nodeId}
@@ -344,7 +343,7 @@ export default class StorageUnitsContainer extends React.Component {
     />)
   }
 
-  render() {
+  render () {
     const { searchPattern } = this.state
     const { children, translate, path } = this.props
     const { data: rootNodeData } = this.props.rootNode

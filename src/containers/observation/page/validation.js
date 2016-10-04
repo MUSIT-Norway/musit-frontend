@@ -76,7 +76,7 @@ export const validateAlcohol = (formProps, index, type) => {
     errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentValue')
   }
 
-  return errors;
+  return errors
 }
 
 export const validateFromTo = (formProps, index, type) => {
@@ -96,5 +96,5 @@ export const validateFromTo = (formProps, index, type) => {
     errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentsValue')
   }
 
-  return errors;
+  return errors
 }

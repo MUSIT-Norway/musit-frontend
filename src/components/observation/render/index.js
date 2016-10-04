@@ -182,7 +182,6 @@ RenderDoubleTextArea.defaultProps = {
   onChangeField: () => true
 }
 
-
 export const RenderFromToNumberComment = (props) => {
   return (
     <ObservationFromToNumberCommentComponent

@@ -17,6 +17,6 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import LanguageComponent from './LanguageComponent';
+import LanguageComponent from './LanguageComponent'
 
 export default class Language extends LanguageComponent {}

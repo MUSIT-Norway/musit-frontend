@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-const I18n = require('react-i18nify').I18n;
+const I18n = require('react-i18nify').I18n
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -10,7 +10,7 @@ export default class ObjectGrid extends Component {
     tableData: PropTypes.arrayOf(PropTypes.shape({
       identifier: PropTypes.shape({
         museumNo: PropTypes.string.isRequired,
-        subNo: PropTypes.string.isRequired,
+        subNo: PropTypes.string.isRequired
       }).isRequired,
       displayName: PropTypes.string
     })).isRequired,
@@ -18,10 +18,10 @@ export default class ObjectGrid extends Component {
     onMove: PropTypes.func.isRequired,
     refresh: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    MusitModal: React.PropTypes.element,
+    MusitModal: React.PropTypes.element
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.showModal = this.showModal.bind(this)
     this.hideModal = this.hideModal.bind(this)
@@ -31,15 +31,15 @@ export default class ObjectGrid extends Component {
     }
   }
 
-  showModal(fromId) {
+  showModal (fromId) {
     this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
   }
 
-  hideModal() {
+  hideModal () {
     this.setState({ ...this.state, showModal: false, showModalFromId: null })
   }
 
-  moveModal(toId, toName) {
+  moveModal (toId, toName) {
     this.props.onMove(this.state.showModalFromId, toId, {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
@@ -52,7 +52,7 @@ export default class ObjectGrid extends Component {
     })
   }
 
-  render() {
+  render () {
     const { id, translate, tableData, MusitModal } = this.props
     return (
       <div>
@@ -84,7 +84,7 @@ export default class ObjectGrid extends Component {
                 {tableData.map((c, i) =>
                   <tr key={i} id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}`} >
                     <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_museumNumber`}>
-                      <FontAwesome name="rebel" />
+                      <FontAwesome name='rebel' />
                       {` ${c.identifier.museumNo}`}
                     </td>
                     <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_uNumber`}>
@@ -95,24 +95,24 @@ export default class ObjectGrid extends Component {
                     </td>
                     <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
                       <a
-                        href=""
+                        href=''
                         onClick={(e) => {
                           e.preventDefault()
                           this.showModal(c.id)
                         }}
                       >
-                        <FontAwesome name="truck" />
+                        <FontAwesome name='truck' />
                       </a>
                     </td>
                     <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_shoppingCart`}>
                       <a
-                        href=""
+                        href=''
                         onClick={(e) => {
                           e.preventDefault()
                           this.props.onAction('pickObject', c)
                         }}
                       >
-                        <FontAwesome name="shopping-cart" />
+                        <FontAwesome name='shopping-cart' />
                       </a>
                     </td>
                   </tr>

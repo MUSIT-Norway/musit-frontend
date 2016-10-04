@@ -8,7 +8,7 @@ export default class OrganizationContainer extends Component {
       fn: React.PropTypes.string,
       nickname: React.PropTypes.string,
       tel: React.PropTypes.string,
-      web: React.PropTypes.string,
+      web: React.PropTypes.string
     }),
     updateFN: React.PropTypes.func.isRequired,
     updateNickname: React.PropTypes.func.isRequired,
@@ -16,13 +16,13 @@ export default class OrganizationContainer extends Component {
     updateWeb: React.PropTypes.func.isRequired
   }
 
-  static validateString(value, minimumLength = 3, maximumLength = 20) {
+  static validateString (value, minimumLength = 3, maximumLength = 20) {
     const isSomething = value.length >= minimumLength
     const isValid = isSomething ? 'success' : null
     return value.length > maximumLength ? 'error' : isValid
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.fields = [
@@ -73,7 +73,7 @@ export default class OrganizationContainer extends Component {
     ]
   }
 
-  render() {
+  render () {
     return (
       <Form horizontal>
         {this.fields.map(field => <TextField {...field} />)}

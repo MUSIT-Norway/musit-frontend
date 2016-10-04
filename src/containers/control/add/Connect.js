@@ -17,10 +17,10 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import { connect } from 'react-redux'
-import { addControl } from '../../../reducers/control'
+import { addControl } from '../../../reducer/control'
 import Language from '../../../components/language'
 import ControlAddContainerImpl from './index'
-import { loadPath } from '../../../reducers/storageunit/grid'
+import { loadPath } from '../../../reducer/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   actor: state.auth.actor,

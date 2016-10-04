@@ -43,7 +43,7 @@ export default class ObservationDoubleTextAreaComponent extends Component {
     rightValue: ''
   }
 
-  render() {
+  render () {
     return (
       <Row>
         <Col xs={12} sm={this.props.leftWidth}>

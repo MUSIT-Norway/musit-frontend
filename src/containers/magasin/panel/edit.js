@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { hashHistory } from 'react-router'
-import { load, update } from '../../../reducers/storageunit/panel';
+import { load, update } from '../../../reducer/storageunit/panel'
 import StorageUnitContainerImpl from './page'
-import { loadPath } from '../../../reducers/storageunit/grid'
-import { update as updateState } from '../../../reducers/storageunit/panel/state'
+import { loadPath } from '../../../reducer/storageunit/grid'
+import { update as updateState } from '../../../reducer/storageunit/panel/state'
 
 const mapStateToProps = (state) => {
   return {
@@ -43,7 +43,7 @@ export default class EditStorageUnitContainer extends React.Component {
     updateState: PropTypes.func.isRequired
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.props.loadStorageUnit(this.props.params.id, {
       onSuccess: (result) => {
         this.props.updateState(result)
@@ -52,7 +52,7 @@ export default class EditStorageUnitContainer extends React.Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <StorageUnitContainerImpl
         unit={this.props.unit}

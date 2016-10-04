@@ -17,7 +17,7 @@ export default class NodeLeftMenuComponent extends Component {
     onClickMoveNode: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired
   }
-  render() {
+  render () {
     const {
       id,
       translate,
@@ -37,7 +37,7 @@ export default class NodeLeftMenuComponent extends Component {
         fragment = (
           <div style={{ border: 'none', textAlign: 'center' }}>
             <Button
-              bsStyle="link"
+              bsStyle='link'
               id={`${id}_${type}`}
               onClick={() => eventType(id)}
               style={{ color: 'black' }}
@@ -61,7 +61,7 @@ export default class NodeLeftMenuComponent extends Component {
             {translate(`musit.leftMenu.node.${typeText}`)}
             <br />
             <ControlLabel id={`${id}_${typeText}`}>
-              {Number.isNaN(type) ? <FontAwesome name="spinner" /> : type}
+              {Number.isNaN(type) ? <FontAwesome name='spinner' /> : type}
             </ControlLabel>
           </div>
         )
@@ -77,7 +77,7 @@ export default class NodeLeftMenuComponent extends Component {
             onClick={() => onClickNewNode(identity)}
             style={{ textAlign: 'left' }}
           >
-            <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
+            <FontAwesome name='plus-circle' style={{ padding: '2px' }} />
             {translate('musit.leftMenu.node.newNode')}
           </Button>
         </div>

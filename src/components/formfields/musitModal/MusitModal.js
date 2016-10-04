@@ -19,7 +19,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import { Modal, Row, Col } from 'react-bootstrap'
-import Breadcrumb from '../../../layout/Breadcrumb'
+import Breadcrumb from '../../../layouts/MagasinLayout/Breadcrumb'
 import ModalNodeGrid from '../../../components/grid/ModalNodeGrid'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 
@@ -43,7 +43,7 @@ export default class MusitModal extends Component {
     rootNode: PropTypes.object.isRequired
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.show === true && this.props.show === false) {
       this.loadHome()
     }
@@ -52,28 +52,28 @@ export default class MusitModal extends Component {
     }
   }
 
-  loadHome() {
+  loadHome () {
     this.props.loadRoot()
-    this.props.clearPath();
-    this.props.clearCurrentId();
+    this.props.clearPath()
+    this.props.clearCurrentId()
   }
 
-  loadStuff(initialId) {
+  loadStuff (initialId) {
     this.props.loadChildren(initialId)
     this.props.loadPath(initialId)
   }
 
-  render() {
+  render () {
     const { children, path } = this.props
     return (
       <div>
         <Modal
           show={this.props.show}
           onHide={this.props.onHide}
-          aria-labelledby="contained-modal-title-sm"
+          aria-labelledby='contained-modal-title-sm'
         >
           <Modal.Header closeButton style={{ border: 'none' }}>
-            <Modal.Title id="title" style={{ textAlign: 'center' }}>
+            <Modal.Title id='title' style={{ textAlign: 'center' }}>
               {this.props.headerText}
             </Modal.Title>
           </Modal.Header>
@@ -117,6 +117,6 @@ export default class MusitModal extends Component {
           </Modal.Footer>
         </Modal>
       </div>
-  );
+  )
   }
 }

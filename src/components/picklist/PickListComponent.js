@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-const I18n = require('react-i18nify').I18n;
+const I18n = require('react-i18nify').I18n
 
 export default class PickListComponent extends Component {
   static propTypes = {
@@ -15,7 +15,7 @@ export default class PickListComponent extends Component {
     isnode: React.PropTypes.bool
   }
 
-  render() {
+  render () {
     const style = require('./index.scss')
     const {
       picks,
@@ -30,16 +30,16 @@ export default class PickListComponent extends Component {
         <Table responsive striped condensed hover>
           <thead>
             <tr>
-              <th className={style.toolsColumn} colSpan="3">
+              <th className={style.toolsColumn} colSpan='3'>
                 {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;
-                <input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
+                <input type='checkbox' onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
                 {isnode ?
-                  <FontAwesome className={style.normalAction} name="print" /> : null
+                  <FontAwesome className={style.normalAction} name='print' /> : null
                 }
                 <FontAwesome
                   className={style.normalAction}
                   style={{ cursor: 'pointer' }}
-                  name="truck"
+                  name='truck'
                   onClick={() => {
                     if (marked.length > 0) {
                       this.props.move(marked)
@@ -49,7 +49,7 @@ export default class PickListComponent extends Component {
                 <FontAwesome
                   className={style.normalAction}
                   style={{ cursor: 'pointer' }}
-                  name="remove"
+                  name='remove'
                   onClick={() => {
                     if (marked.length > 0) {
                       this.props.remove(marked)
@@ -73,24 +73,24 @@ export default class PickListComponent extends Component {
                   </td>
                   <td className={style.toolsColumn}>
                     <input
-                      type="checkbox"
+                      type='checkbox'
                       checked={isItemMarked ? 'checked' : ''}
                       onClick={() => this.props.toggle(item)}
                       className={style.normalAction}
                     />
                     {isnode ?
-                      <FontAwesome className={style.normalAction} name="print" /> : null
+                      <FontAwesome className={style.normalAction} name='print' /> : null
                     }
                     <FontAwesome
                       className={style.normalAction}
                       style={{ cursor: 'pointer' }}
-                      name="truck"
+                      name='truck'
                       onClick={() => this.props.move(item)}
                     />
                     <FontAwesome
                       className={style.normalAction}
                       style={{ cursor: 'pointer' }}
-                      name="remove"
+                      name='remove'
                       onClick={() => this.props.remove(item)}
                     />
                   </td>

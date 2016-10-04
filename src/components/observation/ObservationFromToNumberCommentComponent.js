@@ -54,7 +54,7 @@ export default class ObservationFromToNumberCommentComponent extends Component {
     commentValue: ''
   }
 
-  render() {
+  render () {
     return (
       <Row>
         <Col xs={12} sm={this.props.fromWidth} md={this.props.fromWidth}>

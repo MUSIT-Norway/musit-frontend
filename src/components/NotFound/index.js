@@ -16,13 +16,12 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React from 'react';
+import React from 'react'
 
 const NotFound = () =>
-  <div className="container">
+  <div className='container'>
     <h1>Not found! 404!</h1>
     <p>The route you are looking for does not exist!</p>
   </div>
 
-
-export default NotFound;
+export default NotFound

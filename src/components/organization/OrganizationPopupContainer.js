@@ -8,7 +8,7 @@ export default class OrganizationPopupContainer extends Component {
       fn: React.PropTypes.string,
       nickname: React.PropTypes.string,
       tel: React.PropTypes.string,
-      web: React.PropTypes.string,
+      web: React.PropTypes.string
     }),
     show: React.PropTypes.bool.isRequired,
     onClose: React.PropTypes.func.isRequired,
@@ -19,7 +19,7 @@ export default class OrganizationPopupContainer extends Component {
     updateWeb: React.PropTypes.func.isRequired
   }
 
-  render() {
+  render () {
     const { onSave, show, onClose, org, updateFN, updateNickname, updateWeb, updateTel } = this.props
     return (
       <Modal show={show} onHide={onClose}>
@@ -39,7 +39,7 @@ export default class OrganizationPopupContainer extends Component {
 
         <Modal.Footer>
           <Button onClick={onClose}>Avbryt</Button>
-          <Button bsStyle="primary" onClick={onSave}>Opprett</Button>
+          <Button bsStyle='primary' onClick={onSave}>Opprett</Button>
         </Modal.Footer>
       </Modal>
     )

@@ -1,8 +1,9 @@
+.DS_STORE
+*.log
+
 node_modules
-public/assets/js/bundle.js
-public/assets/css/bundle.css
-public/assets/css/fontawesome-*
-public/assets/css/glyphicons-*
+
+dist
+coverage
+
 .idea/
-coverage/
-*.iml

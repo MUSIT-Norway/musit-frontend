@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 export const flatten = (arr) => {
-  const obj = {};
+  const obj = {}
 
   for (let i = 0; i < arr.length; i++) {
     Object.keys(arr[i]).forEach((x) => {
@@ -14,11 +14,11 @@ export const flatten = (arr) => {
 
 export const blur = () => {
   // Give the document focus
-  window.focus();
+  window.focus()
 
   // Remove focus from any focused element
   if (document.activeElement) {
-    document.activeElement.blur();
+    document.activeElement.blur()
   }
 }
 

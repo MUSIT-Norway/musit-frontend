@@ -1,5 +1,4 @@
 
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -22,12 +21,12 @@ import React from 'react'
 import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import Language from '../../../components/language'
-import { loadControlsAndObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
-import Layout from '../../../layout'
-import { loadPath } from '../../../reducers/storageunit/grid/index'
-import Breadcrumb from '../../../layout/Breadcrumb'
+import { loadControlsAndObservationsForNode, loadActor } from '../../../reducer/grid/observationcontrol'
+import Layout from '../../../layouts/MagasinLayout'
+import { loadPath } from '../../../reducer/storageunit/grid/index'
+import Breadcrumb from '../../../layouts/MagasinLayout/Breadcrumb'
 import { connect } from 'react-redux'
-import Toolbar from '../../../layout/Toolbar'
+import Toolbar from '../../../layouts/MagasinLayout/Toolbar'
 import { hashHistory } from 'react-router'
 
 const mapStateToProps = (state) => {
@@ -63,7 +62,7 @@ export default class ObservationControlGridShow extends React.Component {
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.props.params.id = this.props.params.id * 1
     this.state = {
@@ -72,7 +71,7 @@ export default class ObservationControlGridShow extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
         this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy.actorId) })
@@ -82,19 +81,19 @@ export default class ObservationControlGridShow extends React.Component {
     })
   }
 
-  makeToolbar() {
+  makeToolbar () {
     return (<Toolbar
       showRight={this.state.showControls}
       showLeft={this.state.showObservations}
-      labelRight="Kontroller"
-      labelLeft="Observasjoner"
-      placeHolderSearch="Filtrer i liste"
+      labelRight='Kontroller'
+      labelLeft='Observasjoner'
+      placeHolderSearch='Filtrer i liste'
       clickShowRight={() => { this.setState({ ...this.state, showControls: !this.state.showControls }) }}
       clickShowLeft={() => { this.setState({ ...this.state, showObservations: !this.state.showObservations }) }}
     />)
   }
 
-  makeLeftMenu() {
+  makeLeftMenu () {
     return (<div style={{ paddingTop: 10 }}>
       <ObservationControlComponent
         id={this.props.params.id}
@@ -107,7 +106,7 @@ export default class ObservationControlGridShow extends React.Component {
     </div>)
   }
 
-  makeContent() {
+  makeContent () {
     return (<ObservationControlGrid
       id={this.props.params.id}
       translate={this.props.translate}
@@ -124,12 +123,12 @@ export default class ObservationControlGridShow extends React.Component {
     />)
   }
 
-  render() {
+  render () {
     const nodes = this.props.path
     const breadcrumb = <Breadcrumb nodes={nodes} allActive onClickCrumb={(node) => hashHistory.push(node.url)} />
     return (
       <Layout
-        title="Magasin"
+        title='Magasin'
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         toolbar={this.makeToolbar()}
