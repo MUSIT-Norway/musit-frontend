@@ -5,7 +5,7 @@ import { loadKDReport } from '../../reducers/reports'
 
 const mapStateToProps = (state) => {
   return {
-    data: state.reports.kdreport
+    data: state.reports.data.kdreport.data
   }
 }
 
@@ -21,7 +21,6 @@ export default class KDReport extends React.Component {
     data: React.PropTypes.object,
     loadKDReport: React.PropTypes.func
   }
-
   componentWillMount() {
     this.props.loadKDReport()
   }

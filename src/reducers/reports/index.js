@@ -11,8 +11,7 @@ const initialState = {
     url: '/#/reports/kdreport',
     description: 'Sikringstilstand',
     data: {}
-  },
-  kadreport: {}
+  }
 }
 
 const reportReducer = (state, action) => {
@@ -52,7 +51,10 @@ const reportReducer = (state, action) => {
         ...state,
         loading: false,
         loaded: false,
-        data: action.error
+        data: { ...state.data,
+               kdreport: { ...state.data.kdreport, data: action.error
+            }
+        }
       }
     }
     case LOAD_KD_REPORT_SUCESS: {
@@ -81,9 +83,10 @@ export const loadReports = () => {
   };
 }
 
-export const loadKDReports = () => {
+export const loadKDReport = (cb) => {
   return {
     types: [LOAD_KD_REPORT, LOAD_KD_REPORT_SUCESS, LOAD_KD_REPORT_FAIL],
-    promise: (client) => client.get('/api/storagefacility/v1/storagenodes/report')
+    promise: (client) => client.get('/api/storagefacility/v1/storagenodes/report'),
+    cb
   };
 }
