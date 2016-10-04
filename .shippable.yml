@@ -1,7 +1,7 @@
+sudo: false
 language: node_js
-
 node_js:
- - 6.0.0
+  - "6"
 
 integrations:
   notifications:
@@ -17,11 +17,6 @@ branches:
     - master
 
 build:
-  pre_ci_boot:
-    image_name: jarlah/node-shippable
-    image_tag: latest
-    pull: true
-    options: "-e HOME=/root"
   ci:
     - npm -v
     - node -v
