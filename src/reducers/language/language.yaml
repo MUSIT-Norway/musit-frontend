@@ -98,6 +98,7 @@ en:
       envdata: "Environmental Conditions"
       controlsRequired: 'At least one controltype must be checked OK or Not OK'
       registerObservations: "Register observations"
+      dateValidation: "Selected control date must not be bigger than present date. Please select lower date."
     observation:
       page:
         titles:
@@ -113,6 +114,7 @@ en:
         registeredDate: "Registered date"
         registeredBy: "Registered by"
         newButtonLabel: "Add new"
+        dateValidation: "Selected observation date must not be bigger than present date. Please select lower date."
         typeSelect:
           labelText: "Choose type"
         pest:
@@ -533,6 +535,7 @@ no:
       envdata: "Miljødata"
       controlsRequired: 'Minst en kontroll må merkes OK eller Ikke OK'
       registerObservations: "Registrer observasjoner"
+      dateValidation: "Valgt kontroll datoen må ikke være større enn dagens dato. Velg lavere dato."
     observation:
       page:
         titles:
@@ -548,6 +551,7 @@ no:
         registeredDate: "Registrert dato"
         registeredBy: "Registrert av"
         newButtonLabel: "Legg til ny"
+        dateValidation: "Valgt observasjon datoen må ikke være større enn dagens dato. Velg lavere dato."
         typeSelect:
           labelText: "Velg type"
         pest:
