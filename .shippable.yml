@@ -17,9 +17,14 @@ branches:
     - master
 
 build:
+  pre_ci_boot:
+    image_name: jarlah/node-shippable
+    image_tag: latest
+    pull: true
+    options: "-e HOME=/root"
   ci:
-   - npm install
-   - npm run deploy:dev
-   - npm run deploy:prod
-  on_success:
-   - npm run codecov
+    - npm install
+    - npm run deploy:dev
+    - npm run deploy:prod
+#  on_success:
+#    - npm run codecov
