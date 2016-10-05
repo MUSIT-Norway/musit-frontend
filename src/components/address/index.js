@@ -52,6 +52,7 @@ export default class AddressSuggest extends React.Component {
 
   onChange(event, { newValue }) {
     this.setState({ ...this.state, value: newValue })
+    this.props.onChange(newValue)
   }
 
   onSuggestionSelected(event, { suggestion }) {
