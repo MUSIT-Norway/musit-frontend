@@ -44,7 +44,7 @@ export default class ObjectGrid extends Component {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
         this.props.refresh()
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name: this.state.displayName, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.moveObject', { name: this.state.displayName, destination: toName }))
       },
       onFailure: () => {
         window.alert(I18n.t('musit.moveModal.messages.errorObject', { name: this.state.displayName, destination: toName }))
