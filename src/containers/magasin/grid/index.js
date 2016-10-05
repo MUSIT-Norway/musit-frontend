@@ -95,7 +95,6 @@ const mapDispatchToProps = (dispatch, props) => {
               window.alert(I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', { name }))
             },
             onFailure: (e) => {
-              console.log(e)
               if (e.status === 400) {
                 window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
               } else {
@@ -238,10 +237,10 @@ export default class StorageUnitsContainer extends React.Component {
     this.props.moveNode(this.state.showModalFromId, toId, this.props.user.id, {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: '' })
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.data.name, destination: toName }))
       },
       onFailure: () => {
-        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name: this.props.rootNode.data.name, destination: toName }))
       }
     })
   }
