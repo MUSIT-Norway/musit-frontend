@@ -100,7 +100,7 @@ export default class PickListContainer extends React.Component {
           show={this.state.showModal}
           onHide={this.hideModal}
           onMove={this.moveModal}
-          headerText={I18n.t('musit.moveModal.moveNodes')}
+          headerText={this.isTypeNode() ? I18n.t('musit.moveModal.moveNodes') : I18n.t('musit.moveModal.moveObjects')}
         />
         <main>
           <Grid>
@@ -118,6 +118,8 @@ export default class PickListContainer extends React.Component {
               labelRendrer={(pick) => {
                 return (
                   <div>
+                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.identifier.museumNo}</span> : null}
+                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.identifier.subNo}</span> : null}
                     <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.displayName}</span>
                     <Breadcrumb
                       nodes={pick.path}
@@ -132,7 +134,9 @@ export default class PickListContainer extends React.Component {
               move={this.showModal}
             />
             <div style={{ textAlign: 'right' }}>
-              {marked.length}/{picks.length} node(r) valgt.
+              {marked.length}/{picks.length} &nbsp;
+              {this.isTypeNode() ? I18n.t('musit.pickList.footer.nodeSelected')
+                : I18n.t('musit.pickList.footer.objectSelected') }
             </div>
           </Grid>
         </main>
