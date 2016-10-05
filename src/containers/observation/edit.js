@@ -7,13 +7,13 @@ import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
-import { parseISODateNonStrict as parseISODate } from '../../util'
+import { parseISODateNonStrict as parseISODate, createBreadcrumbPath } from '../../util'
 import { loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path
+    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
   }
 }
 

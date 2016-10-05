@@ -21,12 +21,13 @@ import { addControl } from '../../../reducers/control'
 import Language from '../../../components/language'
 import ControlAddContainerImpl from './index'
 import { loadPath } from '../../../reducers/storageunit/grid'
+import { createBreadcrumbPath } from '../../../util'
 
 const mapStateToProps = (state) => ({
   actor: state.auth.actor,
   translate: (key, markdown) => Language.translate(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
-  path: state.storageGridUnit.root.path
+  path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
 })
 
 const mapDispatchToProps = (dispatch) => ({

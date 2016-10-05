@@ -20,13 +20,15 @@
 import Language from '../../../components/language'
 import { loadRoot, loadChildren, loadPath, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
 import { connect } from 'react-redux';
+import { createBreadcrumbPath } from '../../../util'
 import MusitModalImpl from './MusitModal'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   translate: (key, markdown) => Language.translate(key, markdown),
   children: state.storageUnitModal.data || [],
-  path: state.storageUnitModal.root.path,
+  path: state.storageUnitModal.root.data ?
+    createBreadcrumbPath(state.storageUnitModal.root.data.path, state.storageUnitModal.root.data.pathNames) : [],
   rootNode: state.storageUnitModal.root,
   currentId: state.storageUnitModal.currentId
 })

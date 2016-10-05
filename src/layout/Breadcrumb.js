@@ -52,13 +52,17 @@ export default class Breadcrumb extends React.Component {
           const currentType = nodeTypes.find((nodeType) => nodeType.type === node.type)
           if (currentType.type !== 'Top') {
             iconFragment = (
-              <FontAwesome name={currentType.iconName} style={{ padding: '1px' }} />
+              <FontAwesome name={currentType.iconName} style={{ size: 'x-large', padding: '1px' }} />
             )
           } else {
             iconFragment = (
-              <FontAwesome name={currentType.iconName} style={{ fontSize: 'x-large', padding: '1px' }} />
+              <FontAwesome name={currentType.iconName} style={{ padding: '1px' }} />
             )
           }
+        } else {
+          iconFragment = (
+            <FontAwesome name="folder" style={{ padding: '1px' }} />
+          )
         }
 
         if (passive) {

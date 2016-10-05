@@ -4,7 +4,7 @@ import Language from '../../components/language'
 import ObservationPage from './page'
 import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import { parseISODateNonStrict as parseISODate } from '../../util'
+import { parseISODateNonStrict as parseISODate, createBreadcrumbPath } from '../../util'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { loadPath } from '../../reducers/storageunit/grid'
 
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
     registeredDate: state.observation.data.registeredDate,
     registeredBy: state.observation.data.registeredBy,
     observations: state.observation.data.observations,
-    path: state.storageGridUnit.root.path
+    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
   }
 }
 
