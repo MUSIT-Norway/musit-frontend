@@ -302,6 +302,9 @@ en:
       title:
         node: "Picklist (nodes)"
         object: "Picklist (objects)"
+      footer:
+        nodeSelected: "Node(s) selected."
+        objectSelected: "Object(s) selected."
       action:
         markAll: "All"
         executeAll: "Execute (all)"
@@ -743,6 +746,9 @@ no:
       title:
         node: "Plukkliste (noder)"
         object: "Plukkliste (objekter)"
+      footer:
+        nodeSelected: "node(r) valgt."
+        objectSelected: "objekte(r) valgt."
       action:
         markAll: "Alle"
         executeAll: "Utfør (alle)"
