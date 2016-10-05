@@ -31,12 +31,12 @@ export default class ObjectGrid extends Component {
     }
   }
 
-  showModal(fromId) {
-    this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
+  showModal(fromId, displayName) {
+    this.setState({ ...this.state, showModal: true, showModalFromId: fromId, displayName: displayName })
   }
 
   hideModal() {
-    this.setState({ ...this.state, showModal: false, showModalFromId: null })
+    this.setState({ ...this.state, showModal: false, showModalFromId: null, displayName: null })
   }
 
   moveModal(toId, toName) {
@@ -44,10 +44,10 @@ export default class ObjectGrid extends Component {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
         this.props.refresh()
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.moveObject', { name: this.state.displayName, destination: toName }))
       },
       onFailure: () => {
-        window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.errorObject', { name: this.state.displayName, destination: toName }))
       }
     })
   }
@@ -98,7 +98,7 @@ export default class ObjectGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault()
-                          this.showModal(c.id)
+                          this.showModal(c.id, c.displayName)
                         }}
                       >
                         <FontAwesome name="truck" />

@@ -11,6 +11,10 @@ en:
         objectMoved: "%{name} was moved to %{destination}."
         errorNode: "Moving node %{name} to %{destination} failed."
         errorObject: "Moving object %{name} to %{destination} failed."
+        nodesMoved: "%{count} nodes were moved to %{destination}"
+        objecstMoved: "%{count} objects were moved to %{destination}"
+        errorNodes: "Error in %{count} nodes move to %{destination}"
+        errorObjects: "Error in %{count} objects move to %{destination}"
     leftMenu:
       node:
         newNode: "New node"
@@ -298,6 +302,9 @@ en:
       title:
         node: "Picklist (nodes)"
         object: "Picklist (objects)"
+      footer:
+        nodeSelected: "Node(s) selected."
+        objectSelected: "Object(s) selected."
       action:
         markAll: "All"
         executeAll: "Execute (all)"
@@ -448,6 +455,10 @@ no:
         objectMoved: "%{name} ble flyttet til %{destination}."
         errorNode: "Flytting av %{name} til %{destination} feilet."
         errorObject: "Flytting av %{name} til %{destination} feilet."
+        nodesMoved: "%{count} noder ble flyttet til %{destination}"
+        objectsMoved: "%{count} objekter ble flyttet til %{destination}"
+        errorNodes: "Error å flytte %{count} noder til %{destination}"
+        errorObjects: "Error å flytte %{count} objekter til %{destination}"
     leftMenu:
       node:
         newNode: "Ny node"
@@ -735,6 +746,9 @@ no:
       title:
         node: "Plukkliste (noder)"
         object: "Plukkliste (objekter)"
+      footer:
+        nodeSelected: "node(r) valgt."
+        objectSelected: "objekte(r) valgt."
       action:
         markAll: "Alle"
         executeAll: "Utfør (alle)"
