@@ -24,11 +24,7 @@ const webpackConfig = {
 // ------------------------------------
 // Entry Points
 // ------------------------------------
-const APP_ENTRY = [
-  'bootstrap-sass!./theme/bootstrap.config.js',
-  'font-awesome-webpack!./theme/font-awesome.config.js',
-  paths.client('main.js')
-]
+const APP_ENTRY = [paths.client('main.js')]
 
 webpackConfig.entry = {
   app : __DEV__
@@ -98,7 +94,7 @@ if (!__TEST__) {
 // ------------------------------------
 // JavaScript / JSON
 webpackConfig.module.loaders = [{
-  test    : /\.(js|jsx)$/,
+  test    : /\.js$/,
   exclude : /node_modules/,
   loader  : 'babel-loader',
   query   : config.compiler_babel

@@ -7,6 +7,10 @@ import FontAwesome from 'react-fontawesome'
 import { TYPES as PICK_TYPES } from '../../reducer/picklist'
 import './index.scss'
 import logo from './assets/unimus_transparent100x100.png'
+import './variables.scss'
+import 'bootstrap-sass/assets/stylesheets/_bootstrap.scss'
+import './bootstrap.overrides.scss'
+import 'font-awesome/scss/font-awesome.scss'
 
 export default class App extends Component {
   static propTypes = {

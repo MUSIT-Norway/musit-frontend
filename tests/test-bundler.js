@@ -35,3 +35,4 @@ if (__COVERAGE__) {
   const componentsContext = require.context('../src/', true, /^((?!main|reducers).)*\.js$/)
   componentsContext.keys().forEach(componentsContext)
 }
+
