@@ -2,13 +2,13 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
 import ObservationPage from './page'
-import { loadObservation } from '../../reducers/observation'
-import { addControl } from '../../reducers/control'
-import Layout from '../../layout'
-import Breadcrumb from '../../layout/Breadcrumb'
+import { loadObservation } from '../../reducer/observation'
+import { addControl } from '../../reducer/control'
+import Layout from '../../layouts/MagasinLayout/index'
+import Breadcrumb from '../../layouts/MagasinLayout/Breadcrumb'
 import { hashHistory } from 'react-router'
-import { parseISODateNonStrict as parseISODate } from '../../util'
-import { loadPath } from '../../reducers/storageunit/grid'
+import { parseISODateNonStrict as parseISODate } from '../../utils'
+import { loadPath } from '../../reducer/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
@@ -35,7 +35,6 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-
 @connect(mapStateToProps, mapDispatchToProps)
 export default class EditObservationPage extends React.Component {
 
@@ -48,11 +47,11 @@ export default class EditObservationPage extends React.Component {
     loadPath: React.PropTypes.func.isRequired
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.props.loadPath(this.props.params.id)
   }
 
-  getObservationsFromLocationState() {
+  getObservationsFromLocationState () {
     return Object.keys(this.props.location.state)
       .filter((o) => o.endsWith('OK') && this.props.location.state[o] === false)
       .map((o) => {
@@ -82,7 +81,7 @@ export default class EditObservationPage extends React.Component {
     )
   }
 
-  parseDoneDateFromLocationState() {
+  parseDoneDateFromLocationState () {
     let doneDate = this.props.location.state.doneDate
     if (typeof doneDate === 'string') {
       doneDate = parseISODate(doneDate)
@@ -90,7 +89,7 @@ export default class EditObservationPage extends React.Component {
     return doneDate
   }
 
-  render() {
+  render () {
     const nodes = this.props.path
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
@@ -108,7 +107,7 @@ export default class EditObservationPage extends React.Component {
               doneBy={this.props.location.state.doneBy}
               onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
               translate={this.props.translate}
-              mode="EDIT"
+              mode='EDIT'
             />
           </div>
         }

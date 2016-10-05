@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-const I18n = require('react-i18nify').I18n;
+const I18n = require('react-i18nify').I18n
 
 export default class NodeGrid extends Component {
   static propTypes = {
@@ -20,10 +20,10 @@ export default class NodeGrid extends Component {
     refresh: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    MusitModal: React.PropTypes.func,
+    MusitModal: React.PropTypes.func
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.showModal = this.showModal.bind(this)
     this.hideModal = this.hideModal.bind(this)
@@ -33,15 +33,15 @@ export default class NodeGrid extends Component {
     }
   }
 
-  showModal(fromId) {
+  showModal (fromId) {
     this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
   }
 
-  hideModal() {
+  hideModal () {
     this.setState({ ...this.state, showModal: false, showModalFromId: null })
   }
 
-  moveModal(toId, toName) {
+  moveModal (toId, toName) {
     this.props.onMove(this.state.showModalFromId, toId, {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
@@ -54,7 +54,7 @@ export default class NodeGrid extends Component {
     })
   }
 
-  render() {
+  render () {
     const { id, translate, MusitModal } = this.props
     return (
       <div>
@@ -88,13 +88,13 @@ export default class NodeGrid extends Component {
                   <tr key={i} id={`${id}_${c.name}_${c.type}`} >
                     <td id={`${id}_${c.name}_${c.type}_nodeName`}>
                       <a
-                        href=""
+                        href=''
                         onClick={(e) => {
                           e.preventDefault()
                           this.props.onClick(c)
                         }}
                       >
-                        <FontAwesome name="folder" />
+                        <FontAwesome name='folder' />
                         {` ${c.name}`}
                       </a>
                     </td>
@@ -112,35 +112,35 @@ export default class NodeGrid extends Component {
                     </td>
                     <td id={`${id}_${c.name}_${c.type}_eye`}>
                       <a
-                        href=""
+                        href=''
                         onClick={(e) => {
                           e.preventDefault()
                           this.props.onAction('controlsobservations', c)
                         }}
                       >
-                        <span className="icon icon-musitcontrolobsicon" />
+                        <span className='icon icon-musitcontrolobsicon' />
                       </a>
                     </td>
                     <td id={`${id}_${c.name}_${c.type}_truck`}>
                       <a
-                        href=""
+                        href=''
                         onClick={(e) => {
                           e.preventDefault()
                           this.showModal(c.id)
                         }}
                       >
-                        <FontAwesome name="truck" />
+                        <FontAwesome name='truck' />
                       </a>
                     </td>
                     <td id={`${id}_${c.name}_${c.type}_shoppingCart`}>
                       <a
-                        href=""
+                        href=''
                         onClick={(e) => {
                           e.preventDefault()
                           this.props.onAction('pickNode', c)
                         }}
                       >
-                        <FontAwesome name="shopping-cart" />
+                        <FontAwesome name='shopping-cart' />
                       </a>
                     </td>
                   </tr>

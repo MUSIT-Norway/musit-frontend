@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
 import ObservationPage from './page'
-import Layout from '../../layout'
-import Breadcrumb from '../../layout/Breadcrumb'
+import Layout from '../../layouts/MagasinLayout/index'
+import Breadcrumb from '../../layouts/MagasinLayout/Breadcrumb'
 import { hashHistory } from 'react-router'
-import { addObservation } from '../../reducers/observation'
-import { loadPath } from '../../reducers/storageunit/grid'
+import { addObservation } from '../../reducer/observation'
+import { loadPath } from '../../reducer/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
@@ -42,25 +42,25 @@ export default class AddObservationPage extends React.Component {
     loadPath: React.PropTypes.func.isRequired
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.onClickCrumb = this.onClickCrumb.bind(this)
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.props.loadPath(this.props.params.id)
   }
 
-  onClickCrumb(node) {
+  onClickCrumb (node) {
     hashHistory.push(node.url)
   }
 
-  render() {
+  render () {
     const nodes = this.props.path
     const breadcrumb = <Breadcrumb nodes={nodes} onClickCrumb={this.onClickCrumb} />
     return (
       <Layout
-        title="Magasin"
+        title='Magasin'
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         content={
@@ -70,7 +70,7 @@ export default class AddObservationPage extends React.Component {
               id={this.props.params.id}
               onSaveObservation={this.props.onSaveObservation}
               translate={this.props.translate}
-              mode="ADD"
+              mode='ADD'
               doneBy={this.props.actor}
             />
           </div>

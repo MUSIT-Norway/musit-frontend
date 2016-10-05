@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
 import ObservationPage from './page'
-import Layout from '../../layout'
-import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import { parseISODateNonStrict as parseISODate } from '../../util'
-import Breadcrumb from '../../layout/Breadcrumb'
-import { loadPath } from '../../reducers/storageunit/grid'
+import Layout from '../../layouts/MagasinLayout'
+import { loadObservation, getActorNameFromId } from '../../reducer/observation'
+import { parseISODateNonStrict as parseISODate } from '../../utils'
+import Breadcrumb from '../../layouts/MagasinLayout/Breadcrumb'
+import { loadPath } from '../../reducer/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
@@ -51,7 +51,7 @@ export default class ViewObservationPage extends React.Component {
     loadPath: React.PropTypes.func.isRequired
   }
 
-  componentWillMount() {
+  componentWillMount () {
     if (this.props.params.obsId) {
       this.props.loadObservation(this.props.params.id, this.props.params.obsId, {
         onSuccess: (r) => {
@@ -62,16 +62,16 @@ export default class ViewObservationPage extends React.Component {
     }
   }
 
-  render() {
+  render () {
     if (!this.props.observations) {
-      return null; // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
+      return null // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
     }
 
     const nodes = this.props.path
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
-        title="Magasin"
+        title='Magasin'
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         content={
@@ -87,7 +87,7 @@ export default class ViewObservationPage extends React.Component {
               registeredBy={this.props.registeredBy}
               registeredDate={this.props.registeredDate}
               saveDisabled
-              mode="VIEW"
+              mode='VIEW'
             />
           </div>
         }

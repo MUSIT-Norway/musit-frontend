@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { hashHistory } from 'react-router'
-import { insert } from '../../../reducers/storageunit/panel';
+import { insert } from '../../../reducer/storageunit/panel'
 import StorageUnitContainerImpl from './page'
-import { loadPath } from '../../../reducers/storageunit/grid'
-import { clear as clearState, update as updateState } from '../../../reducers/storageunit/panel/state'
+import { loadPath } from '../../../reducer/storageunit/grid'
+import { clear as clearState, update as updateState } from '../../../reducer/storageunit/panel/state'
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -39,18 +39,18 @@ export default class AddStorageUnitContainer extends React.Component {
     unit: PropTypes.object
   }
 
-  componentWillMount() {
+  componentWillMount () {
     if (this.props.params.parentId) {
       this.props.loadPath(this.props.params.parentId)
     }
     this.props.clearState()
   }
 
-  render() {
+  render () {
     return (
       <StorageUnitContainerImpl
         onLagreClick={(data) => {
-          const parentId = this.props.params.parentId;
+          const parentId = this.props.params.parentId
           this.props.onLagreClick(parentId, data)
         }}
         updateState={this.props.updateState}

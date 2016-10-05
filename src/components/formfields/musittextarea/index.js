@@ -17,7 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import validate from '../common/validators'
 
 export default class MusitTextArea extends Component {
@@ -35,7 +35,7 @@ export default class MusitTextArea extends Component {
     disabled: PropTypes.bool
   }
 
-  classNameOnlyWithInput() {
+  classNameOnlyWithInput () {
     let lvString = ''
     if (validate(this.props) === 'error') {
       lvString = 'has-error'
@@ -45,10 +45,10 @@ export default class MusitTextArea extends Component {
     return lvString
   }
 
-  render() {
+  render () {
     const lcPlaceholder = (
       <textarea
-        className="form-control"
+        className='form-control'
         placeholder={this.props.placeHolder}
         value={this.props.value}
         rows={this.props.numberOfRows}

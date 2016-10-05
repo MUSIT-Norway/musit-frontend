@@ -6,7 +6,7 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from '../../../components/observation/render'
-import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
+import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../utils'
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
@@ -28,7 +28,7 @@ export default class ObservationPage extends React.Component {
     onSaveObservation: PropTypes.func.isRequired,
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: React.PropTypes.bool,
-    cancelDisabled: React.PropTypes.bool,
+    cancelDisabled: React.PropTypes.bool
   }
 
   static defaultProps = {
@@ -37,11 +37,11 @@ export default class ObservationPage extends React.Component {
     cancelDisabled: false
   }
 
-  static createDefaultPestData() {
+  static createDefaultPestData () {
     return { observations: [{ lifeCycle: '', count: '' }] }
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       selectedType: null,
@@ -58,7 +58,7 @@ export default class ObservationPage extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (this.props.mode === 'VIEW') {
       this.setState({
         ...this.state,
@@ -75,13 +75,13 @@ export default class ObservationPage extends React.Component {
     }
   }
 
-  onChangeField(field, value, index) {
+  onChangeField (field, value, index) {
     const observations = [...this.state.observations]
     observations[index] = { ...observations[index], data: { ...observations[index].data, [field]: value } }
     this.setState({ ...this.state, observations })
   }
 
-  onChangePestObservation(pestObservationIndex, field, value, pestIndex) {
+  onChangePestObservation (pestObservationIndex, field, value, pestIndex) {
     const observations = [...this.state.observations]
     const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
@@ -89,14 +89,14 @@ export default class ObservationPage extends React.Component {
     this.setState({ ...this.state, observations })
   }
 
-  onRemovePestObservation(pestObservationIndex, pestIndex) {
+  onRemovePestObservation (pestObservationIndex, pestIndex) {
     const observations = [...this.state.observations]
     const pestObj = observations[pestIndex]
     pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex)
     this.setState({ ...this.state, observations })
   }
 
-  onClickAddObservation(pestIndex) {
+  onClickAddObservation (pestIndex) {
     const observations = [...this.state.observations]
     const pestObj = observations[pestIndex]
     const pestObservations = pestObj.data.observations
@@ -104,7 +104,7 @@ export default class ObservationPage extends React.Component {
     this.setState({ ...this.state, observations })
   }
 
-  onChangeTypeSelect(e) {
+  onChangeTypeSelect (e) {
     this.setState({
       ...this.state,
       selectedType: e.target.options[e.target.selectedIndex].value
@@ -191,7 +191,7 @@ export default class ObservationPage extends React.Component {
     }
   }
 
-  addObservationType(typeToAdd, data = {}) {
+  addObservationType (typeToAdd, data = {}) {
     const type = typeToAdd || this.state.selectedType
     if (!type || type === '') {
       return
@@ -201,16 +201,16 @@ export default class ObservationPage extends React.Component {
     this.setState({ ...this.state, observations, selectedType: null })
   }
 
-  isTypeSelectable(typeStr) {
+  isTypeSelectable (typeStr) {
     return !containsObjectWithField(this.state.observations, 'type', typeStr)
   }
 
-  removeObservation(index) {
+  removeObservation (index) {
     const observations = this.state.observations
     this.setState({ ...this.state, observations: observations.filter((o, i) => i !== index) })
   }
 
-  validateForm(formProps) {
+  validateForm (formProps) {
     let errors = {}
 
     if (typeof formProps.doneBy !== 'object' || (!formProps.doneBy || !formProps.doneBy.id)) {
@@ -222,7 +222,7 @@ export default class ObservationPage extends React.Component {
     }
 
     formProps.observations.forEach((observation, index) => {
-      const typeDefinition = this.typeDefinitions[observation.type];
+      const typeDefinition = this.typeDefinitions[observation.type]
       if (typeDefinition.validate) {
         errors = { ...errors, ...typeDefinition.validate.bind(this)(observation.data, index, observation.type) }
       }
@@ -231,7 +231,7 @@ export default class ObservationPage extends React.Component {
     return errors
   }
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault()
     const errors = this.validateForm(this.state)
     this.setState({ ...this.state, errors })
@@ -240,12 +240,12 @@ export default class ObservationPage extends React.Component {
     }
   }
 
-  renderObservation(observation, index) {
-    const typeDefinition = this.typeDefinitions[observation.type];
+  renderObservation (observation, index) {
+    const typeDefinition = this.typeDefinitions[observation.type]
     return typeDefinition.render.bind(this)(observation.type, observation.data, index)
   }
 
-  renderAlcohol(id, valueProps, index) {
+  renderAlcohol (id, valueProps, index) {
     return (<RenderAlcohol
       disabled={this.props.mode === 'VIEW'}
       valueProps={valueProps}
@@ -256,7 +256,7 @@ export default class ObservationPage extends React.Component {
     />)
   }
 
-  renderPest(id, valueProps, index) {
+  renderPest (id, valueProps, index) {
     return (<RenderPest
       disabled={this.props.mode === 'VIEW'}
       canEdit={this.props.mode !== 'VIEW'}
@@ -271,7 +271,7 @@ export default class ObservationPage extends React.Component {
     />)
   }
 
-  renderDoubleTextArea(id, valueProps, index) {
+  renderDoubleTextArea (id, valueProps, index) {
     return (<RenderDoubleTextArea
       disabled={this.props.mode === 'VIEW'}
       type={id}
@@ -283,7 +283,7 @@ export default class ObservationPage extends React.Component {
     />)
   }
 
-  renderFromToNumberComment(id, valueProps, index) {
+  renderFromToNumberComment (id, valueProps, index) {
     return (<RenderFromToNumberComment
       disabled={this.props.mode === 'VIEW'}
       type={id}
@@ -295,7 +295,7 @@ export default class ObservationPage extends React.Component {
     />)
   }
 
-  render() {
+  render () {
     return (
       <form
         onKeyDown={(e) => {
@@ -313,7 +313,7 @@ export default class ObservationPage extends React.Component {
                 <ControlLabel>{this.props.translate('musit.observation.page.date')}</ControlLabel>
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
-                    componentClass="input"
+                    componentClass='input'
                     value={this.state.doneDate.format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
@@ -333,15 +333,15 @@ export default class ObservationPage extends React.Component {
                 <ControlLabel>{this.props.translate('musit.observation.page.doneBy')}</ControlLabel>
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
-                    componentClass="input"
+                    componentClass='input'
                     value={this.state.doneBy ? this.state.doneBy.fn : ''}
                     disabled
                   />
                 ) : (
                   <ActorSuggest
-                    id="doneByField"
+                    id='doneByField'
                     value={this.state.doneBy ? this.state.doneBy.fn : ''}
-                    placeHolder="Find actor"
+                    placeHolder='Find actor'
                     onChange={doneBy => {
                       this.setState({ ...this.state, doneBy })
                     }}
@@ -354,7 +354,7 @@ export default class ObservationPage extends React.Component {
                 <Col sm={5}>
                   <ControlLabel>{this.props.translate('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
-                    componentClass="input"
+                    componentClass='input'
                     value={parseISODate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
@@ -362,7 +362,7 @@ export default class ObservationPage extends React.Component {
                 <Col sm={5} >
                   <ControlLabel>{this.props.translate('musit.texts.registeredBy')}</ControlLabel>
                   <FormControl
-                    componentClass="input"
+                    componentClass='input'
                     value={this.props.registeredBy}
                     disabled
                   />
@@ -373,10 +373,10 @@ export default class ObservationPage extends React.Component {
             {this.props.mode !== 'ADD' ? '' : (
               <Row>
                 <Col xs={2}>
-                  <FormGroup controlId="formControlsSelect">
+                  <FormGroup controlId='formControlsSelect'>
                     <FormControl
-                      componentClass="select"
-                      placeholder="select"
+                      componentClass='select'
+                      placeholder='select'
                       onChange={this.onChangeTypeSelect}
                       value={this.state.selectedType ? this.state.selectedType : ''}
                     >
@@ -394,13 +394,13 @@ export default class ObservationPage extends React.Component {
                   <Button
                     onClick={() => this.addObservationType()}
                   >
-                    <FontAwesome name="plus-circle" />&nbsp;{this.props.translate('musit.observation.page.newButtonLabel')}
+                    <FontAwesome name='plus-circle' />&nbsp;{this.props.translate('musit.observation.page.newButtonLabel')}
                   </Button>
                 </Col>
               </Row>
             )}
             {this.state.observations.map((observation, index) => {
-              const typeDefinition = this.typeDefinitions[observation.type];
+              const typeDefinition = this.typeDefinitions[observation.type]
               return (
                 <div key={index}>
                   <h3>
@@ -408,13 +408,13 @@ export default class ObservationPage extends React.Component {
                     &nbsp;
                     {this.props.mode !== 'ADD' ? '' : (
                       <a
-                        href="" onClick={(e) => {
+                        href='' onClick={(e) => {
                           this.removeObservation(index)
                           e.preventDefault()
                         }
                         }
                       >
-                        <FontAwesome name="times" />
+                        <FontAwesome name='times' />
                       </a>
                     )}
                   </h3>
@@ -425,7 +425,7 @@ export default class ObservationPage extends React.Component {
             })}
           </Row>
           <br />
-          <Row className="row-centered" style={{ textAlign: 'center' }}>
+          <Row className='row-centered' style={{ textAlign: 'center' }}>
             {this.state.errors && Object.values(this.state.errors).map((error, index) => {
               return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>
             })}

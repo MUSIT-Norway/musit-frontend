@@ -1,9 +1,8 @@
 
-
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import { hashHistory } from 'react-router'
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../utils'
 
 export default class ObservationControlGrid extends Component {
   static propTypes = {
@@ -23,80 +22,80 @@ export default class ObservationControlGrid extends Component {
     }))
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.getIcon = this.getIcon.bind(this)
   }
 
-  getIcon(data, index) {
+  getIcon (data, index) {
     const arr = []
     switch (data.eventType) {
       case 'ObservationLightingCondition':
       case 'ControlLightingCondition':
         arr.push(this.icon(data.ok, index, 'musitlightingcondicon'))
-        break;
+        break
       case 'ObservationTemperature':
       case 'ControlTemperature':
         arr.push(this.icon(data.ok, index, 'musittemperatureicon'))
-        break;
+        break
       case 'ObservationHypoxicAir':
       case 'ControlHypoxicAir':
         arr.push(this.icon(data.ok, index, 'musithypoxicairicon'))
-        break;
+        break
       case 'ObservationRelativeHumidity':
       case 'ControlRelativeHumidity':
         arr.push(this.icon(data.ok, index, 'musitrelhumidityicon'))
-        break;
+        break
       case 'ObservationCleaning':
       case 'ControlCleaning':
         arr.push(this.icon(data.ok, index, 'musitcleaningicon'))
-        break;
+        break
       case 'ObservationMold':
       case 'ControlMold':
         arr.push(this.icon(data.ok, index, 'musitmoldicon'))
-        break;
+        break
       case 'ObservationPest':
       case 'ControlPest':
         arr.push(this.icon(data.ok, index, 'musitpesticon'))
-        break;
+        break
       case 'ObservationAlcohol':
       case 'ControlAlcohol':
         arr.push(this.icon(data.ok, index, 'musitalcoholicon'))
-        break;
+        break
       case 'ObservationGas':
       case 'ControlGas':
         arr.push(this.icon(data.ok, index, 'musitgasicon'))
-        break;
+        break
       case 'ObservationWaterDamageAssessment':
       case 'ControlWaterDamageAssessment':
         arr.push(this.icon(data.ok, index, 'musitwaterdamageicon'))
-        break;
+        break
       case 'ObservationFireProtection':
       case 'ControlFireProtection':
         arr.push(this.icon(data.ok, index, 'musitfireprotectionicon'))
-        break;
+        break
       case 'ObservationTheftProtection':
       case 'ControlTheftProtection':
         arr.push(this.icon(data.ok, index, 'musittheftprotectionicon'))
-        break;
+        break
       case 'ObservationPerimeterSecurity':
       case 'ControlPerimeterSecurity':
         arr.push(this.icon(data.ok, index, 'musitperimetersecurityicon'))
-        break;
+        break
       default:
         console.log(`Did not match ${data.eventType}`)
     }
     return arr
   }
 
-  icon(ok, index, name) {
+  icon (ok, index, name) {
     if (ok) {
       return <span key={index} style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
     }
     return <span key={index} style={{ padding: '2px' }} className={`icon icon-${name}`} />
   }
 
-  render() {
+  render () {
     return (
       <FormGroup>
         <div>
@@ -138,8 +137,8 @@ export default class ObservationControlGrid extends Component {
                     }}
                   >
                     <td id={`${c.id}_${c.doneDate}_type`}>
-                      {c.eventType.toLowerCase() === 'control' ? <div className="icon icon-musitcontrolicon" /> : ''}
-                      {c.eventType.toLowerCase() === 'observation' ? <div className="icon icon-musitobservationicon" /> : ''}
+                      {c.eventType.toLowerCase() === 'control' ? <div className='icon icon-musitcontrolicon' /> : ''}
+                      {c.eventType.toLowerCase() === 'observation' ? <div className='icon icon-musitobservationicon' /> : ''}
                     </td>
                     <td id={`${c.id}_${c.doneDate}_date`}>
                       {parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}

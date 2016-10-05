@@ -24,10 +24,10 @@ import DatePicker from 'react-bootstrap-date-picker'
 import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
-import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY, hasProp } from '../../../util'
+import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY, hasProp } from '../../../utils'
 import ActorSuggest from '../../../components/actor'
-import Layout from '../../../layout'
-import Breadcrumb from '../../../layout/Breadcrumb'
+import Layout from '../../../layouts/MagasinLayout'
+import Breadcrumb from '../../../layouts/MagasinLayout/Breadcrumb'
 
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
@@ -44,7 +44,7 @@ export default class ControlAddContainer extends React.Component {
     loadPath: () => true
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       temperature: this.props.envReqData ? this.props.envReqData.temperature : ' ',
@@ -65,17 +65,17 @@ export default class ControlAddContainer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentWillMount() {
+  componentWillMount () {
     this.props.loadPath(this.props.params.id)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.actor && this.props.actor && nextProps.actor.id !== this.props.actor.id) {
       this.setState({ ...this.state, doneBy: nextProps.actor })
     }
   }
 
-  onControlClick(key, bool) {
+  onControlClick (key, bool) {
     const me = this
     return () => {
       if (me.state[key] != null && me.state[key] === bool) {
@@ -86,22 +86,22 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
-  onControlClickOK(key) {
+  onControlClickOK (key) {
     return this.onControlClick(key, true)
   }
 
-  onControlClickNOK(key) {
+  onControlClickNOK (key) {
     return this.onControlClick(key, false)
   }
 
-  oneStateIsNotOK() {
-    return Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] === false).length > 0
+  oneStateIsNotOK () {
+    return Object.keys(this.state).filter((k) => k.indexOf('OK') > 0 && this.state[k] === false).length > 0
   }
 
-  onClickSave() {
+  onClickSave () {
     // Could extract it, but its only used here and in the method aboveonFailure
     const controls = Object.keys(this.state)
-        .filter((k) => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
+        .filter((k) => k.indexOf('OK') > 0 && this.state[k] !== null && typeof this.state[k] !== 'undefined')
         .map((k) => ({
           [k]: this.state[k]
         }))
@@ -135,10 +135,10 @@ export default class ControlAddContainer extends React.Component {
       }
     }
   }
-  handleSubmit(event) {
+  handleSubmit (event) {
     event.preventDefault()
     const errors = []
-    const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null)
+    const controls = Object.keys(this.state).filter((k) => k.indexOf('OK') > 0 && this.state[k] !== null)
     if (controls.length === 0) {
       errors.push(this.props.translate('musit.newControl.controlsRequired'))
     }
@@ -155,7 +155,7 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const nodes = this.props.path
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
@@ -213,7 +213,7 @@ export default class ControlAddContainer extends React.Component {
 
     return (
       <Layout
-        title="Magasin"
+        title='Magasin'
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         content={
@@ -256,9 +256,9 @@ export default class ControlAddContainer extends React.Component {
                   <Row>
                     <Col xs={9}>
                       <ActorSuggest
-                        id="doneByField"
+                        id='doneByField'
                         value={this.state.doneBy ? this.state.doneBy.fn : ''}
-                        placeHolder="Find actor"
+                        placeHolder='Find actor'
                         onChange={newValue => {
                           this.setState({ ...this.state, doneBy: newValue })
                         }}

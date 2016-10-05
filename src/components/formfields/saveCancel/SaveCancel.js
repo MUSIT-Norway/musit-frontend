@@ -29,10 +29,10 @@ export default class SaveCancel extends Component {
     onClickSave: PropTypes.func.isRequired,
     cancelLabel: PropTypes.string,
     cancelDisabled: PropTypes.bool,
-    onClickCancel: PropTypes.func.isRequired,
+    onClickCancel: PropTypes.func.isRequired
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     const {
       id,
@@ -55,7 +55,7 @@ export default class SaveCancel extends Component {
     }
   }
 
-  render() {
+  render () {
     const { saveLabel, cancelLabel, translate } = this.props
     const showButton = (data) => {
       return (

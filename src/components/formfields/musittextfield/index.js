@@ -17,9 +17,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component, PropTypes } from 'react';
-import { FormGroup, FormControl, Popover, ControlLabel, Row, Col, InputGroup, OverlayTrigger } from 'react-bootstrap';
-
+import React, { Component, PropTypes } from 'react'
+import { FormGroup, FormControl, Popover, ControlLabel, Row, Col, InputGroup, OverlayTrigger } from 'react-bootstrap'
 
 export default class MusitTextField extends Component {
 
@@ -38,18 +37,18 @@ export default class MusitTextField extends Component {
     validationState: PropTypes.func.isRequired,
     validationState2: PropTypes.func,
     onChange: PropTypes.func.isRequired,
-    onChange2: PropTypes.func,
+    onChange2: PropTypes.func
   }
 
-  static helpText(tip) {
+  static helpText (tip) {
     return (
-      <Popover id="InputLinkPopover" title="Info">
+      <Popover id='InputLinkPopover' title='Info'>
         {tip}
       </Popover>
     )
   }
 
-  render() {
+  render () {
     return (
       <FormGroup
         controlId={this.props.controlId}
@@ -78,7 +77,7 @@ export default class MusitTextField extends Component {
                     <OverlayTrigger
                       trigger={['click']}
                       rootClose
-                      placement="right"
+                      placement='right'
                       overlay={MusitTextField.helpText(this.props.tooltip)}
                     >
                       <InputGroup.Addon>?</InputGroup.Addon>
@@ -100,7 +99,7 @@ export default class MusitTextField extends Component {
                     <OverlayTrigger
                       trigger={['click']}
                       rootClose
-                      placement="right"
+                      placement='right'
                       overlay={MusitTextField.helpText(this.props.tooltip2)}
                     >
                       <InputGroup.Addon>?</InputGroup.Addon>

@@ -77,7 +77,7 @@ export default class ObervationStatusPercentageComment extends Component {
     commentNumberOfRows: 5
   }
 
-  render() {
+  render () {
     return (
       <Row>
         <Col xs={12} sm={this.props.statusWidth} md={this.props.statusWidth}>

@@ -17,22 +17,22 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-export default function clientMiddleware(client) {
+export default function clientMiddleware (client) {
   return ({ dispatch, getState }) => {
     return next => action => {
       if (typeof action === 'function') {
-        return action(dispatch, getState);
+        return action(dispatch, getState)
       }
 
-      const { promise, types, callback, ...rest } = action; // eslint-disable-line no-redeclare
+      const { promise, types, callback, ...rest } = action // eslint-disable-line no-redeclare
       if (!promise) {
-        return next(action);
+        return next(action)
       }
 
-      const [REQUEST, SUCCESS, FAILURE] = types;
-      next({ ...rest, type: REQUEST });
+      const [REQUEST, SUCCESS, FAILURE] = types
+      next({ ...rest, type: REQUEST })
 
-      const actionPromise = promise(client);
+      const actionPromise = promise(client)
       actionPromise.then(
         (result) => {
           next({ ...rest, result, type: SUCCESS })
@@ -49,14 +49,14 @@ export default function clientMiddleware(client) {
           }
         }
       ).catch((error) => {
-        next({ ...rest, error, type: FAILURE });
+        next({ ...rest, error, type: FAILURE })
         if (callback) {
           const { onFailure } = callback
           if (typeof onFailure === 'function') onFailure(error)
         }
-      });
+      })
 
-      return actionPromise;
-    };
-  };
+      return actionPromise
+    }
+  }
 }

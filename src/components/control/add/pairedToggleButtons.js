@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import FontAwesome from 'react-fontawesome';
-import { Button, Row, Col } from 'react-bootstrap';
+import React, { Component, PropTypes } from 'react'
+import FontAwesome from 'react-fontawesome'
+import { Button, Row, Col } from 'react-bootstrap'
 
 export default class PairedToogleButtons extends Component {
   static propTypes = {
@@ -10,8 +10,8 @@ export default class PairedToogleButtons extends Component {
     updatevalueNotOK: PropTypes.func.isRequired
   }
 
-  render() {
-    const { label, value } = this.props;
+  render () {
+    const { label, value } = this.props
     const style = require('./index.scss')
 
     return (
@@ -39,7 +39,7 @@ export default class PairedToogleButtons extends Component {
               className={value ? style.buttonpaddingtrue : style.buttonpaddingfalse}
               onClick={this.props.updatevalueOK}
             >
-              <FontAwesome name="check" />
+              <FontAwesome name='check' />
               <span>&nbsp;</span>
               OK
             </Button>
@@ -47,7 +47,7 @@ export default class PairedToogleButtons extends Component {
               className={value != null && !value ? style.buttonpaddingtrue : style.buttonpaddingfalse}
               onClick={this.props.updatevalueNotOK}
             >
-              <FontAwesome name="times" />
+              <FontAwesome name='times' />
               <span>&nbsp;</span>
               Ikke OK
             </Button>

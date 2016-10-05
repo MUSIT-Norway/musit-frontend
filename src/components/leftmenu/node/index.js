@@ -15,10 +15,9 @@ export default class NodeLeftMenuComponent extends Component {
     onClickControlObservations: PropTypes.func.isRequired,
     onClickController: PropTypes.func,
     onClickMoveNode: PropTypes.func.isRequired,
-    onClickDelete: PropTypes.func.isRequired,
-    showButtons: PropTypes.bool.isRequired
+    onClickDelete: PropTypes.func.isRequired
   }
-  render() {
+  render () {
     const {
       id,
       translate,
@@ -29,8 +28,7 @@ export default class NodeLeftMenuComponent extends Component {
       onClickProperties,
       onClickControlObservations,
       onClickMoveNode,
-      onClickDelete,
-      showButtons
+      onClickDelete
     } = this.props
 
     const buttonLink = (type, icon, eventType, MusitIconType) => {
@@ -39,7 +37,7 @@ export default class NodeLeftMenuComponent extends Component {
         fragment = (
           <div style={{ border: 'none', textAlign: 'center' }}>
             <Button
-              bsStyle="link"
+              bsStyle='link'
               id={`${id}_${type}`}
               onClick={() => eventType(id)}
               style={{ color: 'black' }}
@@ -63,7 +61,7 @@ export default class NodeLeftMenuComponent extends Component {
             {translate(`musit.leftMenu.node.${typeText}`)}
             <br />
             <ControlLabel id={`${id}_${typeText}`}>
-              {Number.isNaN(type) ? <FontAwesome name="spinner" /> : type}
+              {Number.isNaN(type) ? <FontAwesome name='spinner' /> : type}
             </ControlLabel>
           </div>
         )
@@ -79,7 +77,7 @@ export default class NodeLeftMenuComponent extends Component {
             onClick={() => onClickNewNode(identity)}
             style={{ textAlign: 'left' }}
           >
-            <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
+            <FontAwesome name='plus-circle' style={{ padding: '2px' }} />
             {translate('musit.leftMenu.node.newNode')}
           </Button>
         </div>
@@ -88,16 +86,16 @@ export default class NodeLeftMenuComponent extends Component {
 
     return (
       <div>
-        {Number.isInteger(id) ? newButton(id) : null}
-        {(Number.isInteger(id)) ? (<hr />) : null}
+        {Number.isInteger(id) && newButton(id)}
+        {Number.isInteger(id) && <hr />}
         {showCount(objectsOnNode, 'objectsOnNode')}
         {showCount(totalObjectCount, 'totalObjectCount')}
         {showCount(underNodeCount, 'underNodeCount')}
-        {(Number.isInteger(id)) ? (<hr />) : null}
-        {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
-        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
-        {showButtons ? buttonLink('moveNode', 'truck', onClickMoveNode) : null}
-        {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
+        {Number.isInteger(id) && <hr />}
+        {buttonLink('properties', 'cog', onClickProperties)}
+        {buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1)}
+        {buttonLink('moveNode', 'truck', onClickMoveNode)}
+        {buttonLink('delete', 'trash-o', onClickDelete)}
       </div>
     )
   }

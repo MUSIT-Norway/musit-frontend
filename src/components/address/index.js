@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
-import { suggestAddress, clearSuggest } from '../../reducers/suggest'
+import { suggestAddress, clearSuggest } from '../../reducer/suggest'
 
 const mapStateToProps = (state) => ({
   suggest: state.suggest
@@ -36,7 +36,7 @@ export default class AddressSuggest extends React.Component {
     value: ''
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
     this.state = {
@@ -44,30 +44,30 @@ export default class AddressSuggest extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.value !== this.props.value) {
       this.setState({ ...this.state, value: nextProps.value })
     }
   }
 
-  onChange(event, { newValue }) {
+  onChange (event, { newValue }) {
     this.setState({ ...this.state, value: newValue })
   }
 
-  onSuggestionSelected(event, { suggestion }) {
+  onSuggestionSelected (event, { suggestion }) {
     if (event.keyCode === 13) {
       event.preventDefault()
     }
-    const value = this.getAddressSuggestionValue(suggestion);
+    const value = this.getAddressSuggestionValue(suggestion)
     this.props.onChange(value)
   }
 
-  getSuggestions() {
-    const suggest = this.props.suggest[this.props.id];
+  getSuggestions () {
+    const suggest = this.props.suggest[this.props.id]
     return suggest && suggest.data ? suggest.data : []
   }
 
-  getAddressSuggestionValue(suggestion) {
+  getAddressSuggestionValue (suggestion) {
     return `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`
   }
 
@@ -78,14 +78,14 @@ export default class AddressSuggest extends React.Component {
     onChange: this.onChange.bind(this)
   }
 
-  renderAddressSuggestion(suggestion) {
+  renderAddressSuggestion (suggestion) {
     const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`
     return (
       <span className={'suggestion-content'}>{suggestionText}</span>
     )
   }
 
-  render() {
+  render () {
     return (
       <Autosuggest
         suggestions={this.getSuggestions()}

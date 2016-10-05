@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
-import { suggestPerson, clearSuggest } from '../../reducers/suggest'
+import { suggestPerson, clearSuggest } from '../../reducer/suggest'
 
 const mapStateToProps = (state) => ({
   suggest: state.suggest
@@ -32,10 +32,10 @@ export default class ActorSuggest extends React.Component {
 
   static defaultProps = {
     id: 'doneByField',
-    disabled: false,
+    disabled: false
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
     this.state = {
@@ -43,19 +43,19 @@ export default class ActorSuggest extends React.Component {
     }
   }
 
-  onChange(event, { newValue }) {
+  onChange (event, { newValue }) {
     this.setState({ ...this.state, value: newValue })
   }
 
-  onSuggestionSelected(event, { suggestion }) {
+  onSuggestionSelected (event, { suggestion }) {
     if (event.keyCode === 13) {
       event.preventDefault()
     }
     this.props.onChange(suggestion)
   }
 
-  getSuggestions() {
-    const suggest = this.props.suggest[this.props.id];
+  getSuggestions () {
+    const suggest = this.props.suggest[this.props.id]
     return suggest && suggest.data ? suggest.data : []
   }
 
@@ -66,7 +66,7 @@ export default class ActorSuggest extends React.Component {
     onChange: this.onChange.bind(this)
   }
 
-  render() {
+  render () {
     return (
       <Autosuggest
         suggestions={this.getSuggestions()}

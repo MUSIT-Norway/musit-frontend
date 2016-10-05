@@ -18,8 +18,8 @@
  */
 
 import Language from '../../../components/language'
-import { loadRoot, loadChildren, loadPath, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
-import { connect } from 'react-redux';
+import { loadRoot, loadChildren, loadPath, setCurrent, clearCurrent, clearPath } from '../../../reducer/storageunit/modal'
+import { connect } from 'react-redux'
 import MusitModalImpl from './MusitModal'
 
 const mapStateToProps = (state) => ({
@@ -44,7 +44,6 @@ const mapDispatchToProps = (dispatch) => {
     clearCurrentId: (id) => dispatch(clearCurrent(id))
   })
 }
-
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class MusitModal extends MusitModalImpl {}

@@ -12,7 +12,7 @@ marked.setOptions({
   sanitize: true,
   smartLists: false,
   smartypants: false
-});
+})
 
 export default class Language extends Component {
   static propTypes = {
@@ -30,10 +30,10 @@ export default class Language extends Component {
         // TODO error handling
       }
     }
-    return text;
+    return text
   }
 
-  render() {
+  render () {
     const text = Language.translate(this.props.key, this.props.markdown)
     return (
       <div>{text}</div>

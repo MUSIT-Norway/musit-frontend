@@ -18,10 +18,10 @@
  */
 import Language from '../../../components/language'
 import { connect } from 'react-redux'
-import { loadControl } from '../../../reducers/control'
-import { getActorNameFromId } from '../../../reducers/observation'
+import { loadControl } from '../../../reducer/control'
+import { getActorNameFromId } from '../../../reducer/observation'
 import ControlViewContainerImpl from './index'
-import { loadPath } from '../../../reducers/storageunit/grid'
+import { loadPath } from '../../../reducer/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),

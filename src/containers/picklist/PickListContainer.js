@@ -2,10 +2,10 @@ import React from 'react'
 import { PickListComponent } from '../../components/picklist'
 import { PageHeader, Grid } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-import Breadcrumb from '../../layout/Breadcrumb'
+import Breadcrumb from '../../layouts/MagasinLayout/Breadcrumb'
 import { hashHistory } from 'react-router'
-import { TYPES } from '../../reducers/picklist'
-const I18n = require('react-i18nify').I18n;
+import { TYPES } from '../../reducer/picklist'
+const I18n = require('react-i18nify').I18n
 import MusitModal from '../../components/formfields/musitModal'
 
 export default class PickListContainer extends React.Component {
@@ -23,15 +23,15 @@ export default class PickListContainer extends React.Component {
     })
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       showModal: false
     }
   }
 
-  isTypeNode() {
-    const type = this.props.params.type.toUpperCase();
+  isTypeNode () {
+    const type = this.props.params.type.toUpperCase()
     return type === TYPES.NODE
   }
 
@@ -66,19 +66,18 @@ export default class PickListContainer extends React.Component {
   moveModal = (toId, toName) => {
     const moveFunction = this.isTypeNode() ? this.props.moveNode : this.props.moveObject
     const callback = this.isTypeNode() ? this.nodeCallback(toName) : this.objectCallback(toName)
-    this.state.itemsToMove.forEach((itemToMove => {
+    this.state.itemsToMove.forEach(itemToMove => {
       moveFunction(itemToMove.id, toId, this.props.user.id, callback)
-    }))
+    })
   }
 
-  render() {
-    const style = require('../../components/picklist/index.scss')
+  render () {
     const { toggleNode, toggleObject, removeNode, removeObject } = this.props
-    const type = this.props.params.type.toUpperCase();
+    const type = this.props.params.type.toUpperCase()
     const picks = this.props.picks[type]
     const marked = picks.filter(p => p.marked).map(p => p.value)
     return (
-      <div className={style.picklist}>
+      <div>
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}

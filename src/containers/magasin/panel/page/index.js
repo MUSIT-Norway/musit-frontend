@@ -16,17 +16,17 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import React, { Component, PropTypes } from 'react'
 import { hashHistory } from 'react-router'
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap'
 import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
-import Layout from '../../../../layout'
+import Layout from '../../../../layouts/MagasinLayout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
-import Breadcrumb from '../../../../layout/Breadcrumb'
+import Breadcrumb from '../../../../layouts/MagasinLayout/Breadcrumb'
 import Language from '../../../../components/language'
 import AddressSuggest from '../../../../components/address'
-import Loader from 'react-loader';
+import Loader from 'react-loader'
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../../components/formfields'
 
 const mapStateToProps = (state) => {
@@ -49,7 +49,7 @@ export default class StorageUnitContainer extends Component {
     updateState: React.PropTypes.func.isRequired
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.translate = this.translate.bind(this)
@@ -61,7 +61,7 @@ export default class StorageUnitContainer extends Component {
     errors[`${field}`] = this.props.translate(`musit.storageUnits.${field}.incorrect`)
   }
 
-  validateStringField(field, value, maxLength = 100) {
+  validateStringField (field, value, maxLength = 100) {
     const errors = {}
     if (validateString(value, 0, maxLength) === 'error') {
       this.errorAddMessage(errors, field)
@@ -69,7 +69,7 @@ export default class StorageUnitContainer extends Component {
     return errors
   }
 
-  validateNumberField(field, value = '', minimumLength = 0, maximumLength = 10, precision = 3) {
+  validateNumberField (field, value = '', minimumLength = 0, maximumLength = 10, precision = 3) {
     const errors = {}
     if (validateNumber(value, minimumLength, maximumLength, precision) === 'error') {
       this.errorAddMessage(errors, field)
@@ -77,12 +77,12 @@ export default class StorageUnitContainer extends Component {
     return errors
   }
 
-  validateEnvironmentRequirement(field, min, max, pres, formProps) {
+  validateEnvironmentRequirement (field, min, max, pres, formProps) {
     const key = field.split('.').reduce((a, b) => formProps[a][b])
     return this.validateNumberField(field, key, min, max, pres)
   }
 
-  validateForm(formProps) {
+  validateForm (formProps) {
     let errors = {}
     if (formProps && formProps.unit) {
       if (!formProps.unit.type || formProps.unit.type.trim().length === 0) {
@@ -122,7 +122,7 @@ export default class StorageUnitContainer extends Component {
         ...errors,
         ...this.validateEnvironmentRequirement('environmentRequirement.hypoxicAirTolerance', 0, 10, 0, formProps.unit)
       }
-      const environmentRequirement = formProps.unit.environmentRequirement;
+      const environmentRequirement = formProps.unit.environmentRequirement
       errors = {
         ...errors,
         ...this.validateStringField('environmentRequirement.cleaning', environmentRequirement.cleaning, 100)
@@ -142,7 +142,7 @@ export default class StorageUnitContainer extends Component {
     return errors
   }
 
-  handleSubmit(e) {
+  handleSubmit (e) {
     e.preventDefault()
     const errors = this.validateForm(this.props)
     this.props.updateState({ ...this.props.unit, errors })
@@ -151,45 +151,45 @@ export default class StorageUnitContainer extends Component {
     }
   }
 
-  updateStorageUnit(data, key, value) {
-    const newData = Object.assign({}, data);
+  updateStorageUnit (data, key, value) {
+    const newData = Object.assign({}, data)
     newData[key] = value
     this.props.updateState(newData)
   }
 
-  updateEnvRequirements(data, key, value) {
-    const newData = Object.assign({}, data);
+  updateEnvRequirements (data, key, value) {
+    const newData = Object.assign({}, data)
     newData.environmentRequirement[key] = value
     this.props.updateState(newData)
   }
 
-  updateEnvAssessments(data, key, value) {
-    const newData = Object.assign({}, data);
+  updateEnvAssessments (data, key, value) {
+    const newData = Object.assign({}, data)
     newData.environmentAssessment[key] = value
     this.props.updateState(newData)
   }
 
-  updateSecAssessments(data, key, value) {
-    const newData = Object.assign({}, data);
+  updateSecAssessments (data, key, value) {
+    const newData = Object.assign({}, data)
     newData.securityAssessment[key] = value
     this.props.updateState(newData)
   }
 
-  translate(field) {
+  translate (field) {
     return this.props.translate(`musit.storageUnits.environmentRequirement.${field}`)
   }
 
-  renderStringFieldBlock(field) {
+  renderStringFieldBlock (field) {
     return (
       <FormGroup>
-        <label className="col-sm-3 control-label" htmlFor={field}>
+        <label className='col-sm-3 control-label' htmlFor={field}>
           {this.translate(`${field}.labelText`)}
         </label>
-        <div class="col-sm-8" is="null">
+        <div class='col-sm-8' is='null'>
           <Field
             id={field}
             tooltip={this.translate(`${field}.tooltip`)}
-            validate="text"
+            validate='text'
             maximumLength={100}
             onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
             value={this.props.unit.environmentRequirement[field] || ''}
@@ -199,18 +199,18 @@ export default class StorageUnitContainer extends Component {
     )
   }
 
-  renderTextAreaBlock(field) {
+  renderTextAreaBlock (field) {
     return (
       <FormGroup>
-        <label className="col-sm-3 control-label" htmlFor={field}>
+        <label className='col-sm-3 control-label' htmlFor={field}>
           {this.translate(`${field}.labelText`)}
         </label>
-        <div class="col-sm-8" is="null">
+        <div class='col-sm-8' is='null'>
           <TextArea
             id={field}
             numberOfRows={4}
             tooltip={this.translate(`${field}.tooltip`)}
-            validate="text"
+            validate='text'
             maximumLength={250}
             onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
             value={this.props.unit.environmentRequirement[field] || ''}
@@ -220,12 +220,12 @@ export default class StorageUnitContainer extends Component {
     )
   }
 
-  renderNumberField(field, unit, precision) {
+  renderNumberField (field, unit, precision) {
     return (
       <Field
         id={field}
         tooltip={this.translate(`${field}.tooltip`)}
-        validate="number"
+        validate='number'
         placeHolder={this.translate(`${field}.placeHolder`)}
         precision={precision}
         onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
@@ -234,7 +234,7 @@ export default class StorageUnitContainer extends Component {
     )
   }
 
-  renderSecurityAssessmentField(field) {
+  renderSecurityAssessmentField (field) {
     return (
       <div>
         <Checkbox
@@ -247,7 +247,7 @@ export default class StorageUnitContainer extends Component {
     )
   }
 
-  renderEnvironmentAssessmentField(field) {
+  renderEnvironmentAssessmentField (field) {
     return (
       <div>
         <Checkbox
@@ -260,7 +260,7 @@ export default class StorageUnitContainer extends Component {
     )
   }
 
-  render() {
+  render () {
     return (
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
@@ -285,18 +285,18 @@ export default class StorageUnitContainer extends Component {
                         {this.props.translate('musit.storageUnits.header')}
                       </h4>
                       <Grid>
-                        <Row className="row-centered">
+                        <Row className='row-centered'>
                           <Col md={5}>
                             <Form horizontal>
-                              <div className="form-group">
-                                <label className="col-sm-3 control-label" htmlFor="storageUnitType">
+                              <div className='form-group'>
+                                <label className='col-sm-3 control-label' htmlFor='storageUnitType'>
                                   {this.props.translate('musit.storageUnits.type.labelText')}
                                   { <span style={{ color: 'red' }}>*</span> }
                                 </label>
-                                <div class="col-sm-4" is="null">
+                                <div class='col-sm-4' is='null'>
                                   <MusitDropDownField
-                                    id="type"
-                                    validate="text"
+                                    id='type'
+                                    validate='text'
                                     tooltip={this.props.translate('musit.storageUnits.type.tooltip')}
                                     placeHolder={this.props.translate('musit.storageUnits.type.placeHolder')}
                                     maximumLength={100}
@@ -316,15 +316,15 @@ export default class StorageUnitContainer extends Component {
                           <Col md={5}>
                             <Form horizontal>
                               <FormGroup>
-                                <label className="col-sm-3 control-label" htmlFor="name">
+                                <label className='col-sm-3 control-label' htmlFor='name'>
                                   {this.props.translate('musit.storageUnits.name.labelText')}
                                   { <span style={{ color: 'red' }}>*</span> }
                                 </label>
-                                <div class="col-sm-8" is="null">
+                                <div class='col-sm-8' is='null'>
                                   <Field
-                                    id="name"
+                                    id='name'
                                     tooltip={this.props.translate('musit.storageUnits.name.tooltip')}
-                                    validate="text"
+                                    validate='text'
                                     placeHolder={this.props.translate('musit.storageUnits.name.placeHolder')}
                                     onChange={storageUnitName => this.updateStorageUnit(this.props.unit, 'name', storageUnitName)}
                                     maximumLength={100}
@@ -339,14 +339,14 @@ export default class StorageUnitContainer extends Component {
                             || this.props.unit.type === 'Organisation') &&
                               <Form horizontal>
                                 <FormGroup>
-                                  <label className="col-sm-3 control-label" htmlFor="address">
+                                  <label className='col-sm-3 control-label' htmlFor='address'>
                                     {this.props.translate('musit.storageUnits.address.labelText')}
                                   </label>
-                                  <div class="col-sm-8" is="null">
+                                  <div class='col-sm-8' is='null'>
                                     <AddressSuggest
-                                      id="addressField"
+                                      id='addressField'
                                       value={this.props.unit.address}
-                                      placeHolder="Find address"
+                                      placeHolder='Find address'
                                       onChange={(address) => {
                                         this.updateStorageUnit(this.props.unit, 'address', address)
                                       }}
@@ -357,28 +357,28 @@ export default class StorageUnitContainer extends Component {
                             }
                           </Col>
                         </Row>
-                        <Row className="row-centered">
+                        <Row className='row-centered'>
                           <Col md={5}>
                             <Form horizontal>
-                              <div className="form-group">
-                                <label className="col-sm-3 control-label" htmlFor="comments2">
+                              <div className='form-group'>
+                                <label className='col-sm-3 control-label' htmlFor='comments2'>
                                   {this.props.translate('musit.storageUnits.area.labelText')}</label>
-                                <div class="col-sm-4" is="null">
+                                <div class='col-sm-4' is='null'>
                                   <Field
-                                    id="areaFrom"
+                                    id='areaFrom'
                                     tooltip={this.props.translate('musit.storageUnits.area.tooltip')}
-                                    validate="number"
+                                    validate='number'
                                     placeHolder={this.props.translate('musit.storageUnits.area.placeHolder')}
                                     onChange={areaFrom => this.updateStorageUnit(this.props.unit, 'area', areaFrom)}
                                     precision={3}
                                     value={this.props.unit.area}
                                   />
                                 </div>
-                                <div class="col-sm-4" is="null">
+                                <div class='col-sm-4' is='null'>
                                   <Field
-                                    id="areaTo"
+                                    id='areaTo'
                                     tooltip={this.props.translate('musit.storageUnits.areaTo.tooltip')}
-                                    validate="number"
+                                    validate='number'
                                     placeHolder={this.props.translate('musit.storageUnits.areaTo.placeHolder')}
                                     onChange={areaTo => this.updateStorageUnit(this.props.unit, 'areaTo', areaTo)}
                                     precision={3}
@@ -390,25 +390,25 @@ export default class StorageUnitContainer extends Component {
                           </Col>
                           <Col md={5}>
                             <Form horizontal>
-                              <div className="form-group">
-                                <label className="col-sm-3 control-label" htmlFor="controlId">
+                              <div className='form-group'>
+                                <label className='col-sm-3 control-label' htmlFor='controlId'>
                                   {this.props.translate('musit.storageUnits.height.labelText')}</label>
-                                <div class="col-sm-4" is="null">
+                                <div class='col-sm-4' is='null'>
                                   <Field
-                                    id="heightFrom"
+                                    id='heightFrom'
                                     tooltip={this.props.translate('musit.storageUnits.height.tooltip')}
-                                    validate="number"
+                                    validate='number'
                                     placeHolder={this.props.translate('musit.storageUnits.height.placeHolder')}
                                     onChange={heightFrom => this.updateStorageUnit(this.props.unit, 'height', heightFrom)}
                                     precision={3}
                                     value={this.props.unit.height}
                                   />
                                 </div>
-                                <div class="col-sm-4" is="null">
+                                <div class='col-sm-4' is='null'>
                                   <Field
-                                    id="heightTo"
+                                    id='heightTo'
                                     tooltip={this.props.translate('musit.storageUnits.heightTo.tooltip')}
-                                    validate="number"
+                                    validate='number'
                                     placeHolder={this.props.translate('musit.storageUnits.heightTo.placeHolder')}
                                     onChange={heightTo => this.updateStorageUnit(this.props.unit, 'heightTo', heightTo)}
                                     precision={3}
@@ -427,16 +427,16 @@ export default class StorageUnitContainer extends Component {
                       </Row>
                       <div>
                         <Grid>
-                          <Row className="row-centered">
+                          <Row className='row-centered'>
                             <Col md={5}>
                               <Form horizontal>
-                                <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                                <div className='form-group'>
+                                  <label className='col-sm-3 control-label' htmlFor='comments2'>
                                     {this.translate('temperature.labelText')}</label>
-                                  <div class="col-sm-4" is="null">
+                                  <div class='col-sm-4' is='null'>
                                     {this.renderNumberField('temperature', this.props.unit, 3)}
                                   </div>
-                                  <div class="col-sm-4" is="null">
+                                  <div class='col-sm-4' is='null'>
                                     {this.renderNumberField('temperatureTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
@@ -444,29 +444,29 @@ export default class StorageUnitContainer extends Component {
                             </Col>
                             <Col md={5}>
                               <Form horizontal>
-                                <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                                <div className='form-group'>
+                                  <label className='col-sm-3 control-label' htmlFor='comments2'>
                                     {this.translate('relativeHumidity.labelText')}</label>
-                                  <div class="col-sm-4" is="null">
+                                  <div class='col-sm-4' is='null'>
                                     {this.renderNumberField('relativeHumidity', this.props.unit, 3)}
                                   </div>
-                                  <div class="col-sm-4" is="null">
+                                  <div class='col-sm-4' is='null'>
                                     {this.renderNumberField('relativeHumidityTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
                               </Form>
                             </Col>
                           </Row>
-                          <Row className="row-centered">
+                          <Row className='row-centered'>
                             <Col md={5}>
                               <Form horizontal>
-                                <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                                <div className='form-group'>
+                                  <label className='col-sm-3 control-label' htmlFor='comments2'>
                                     {this.translate('hypoxicAir.labelText')}</label>
-                                  <div class="col-sm-4" is="null">
+                                  <div class='col-sm-4' is='null'>
                                     {this.renderNumberField('hypoxicAir', this.props.unit, 3)}
                                   </div>
-                                  <div class="col-sm-4" is="null">
+                                  <div class='col-sm-4' is='null'>
                                     {this.renderNumberField('hypoxicAirTolerance', this.props.unit, 0)}
                                   </div>
                                 </div>
@@ -478,7 +478,7 @@ export default class StorageUnitContainer extends Component {
                               </Form>
                             </Col>
                           </Row>
-                          <Row className="row-centered">
+                          <Row className='row-centered'>
                             <Col md={5}>
                               <Form horizontal>
                                 {this.renderStringFieldBlock('lightingCondition')}
@@ -539,6 +539,6 @@ export default class StorageUnitContainer extends Component {
           </Loader>
         }
       />
-    );
+    )
   }
 }

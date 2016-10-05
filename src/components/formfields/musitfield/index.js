@@ -44,7 +44,7 @@ export default class MusitField extends Component {
     value: ''
   }
 
-  classNameWithSpan() {
+  classNameWithSpan () {
     let lvString = ' '
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'input-group has-error'
@@ -54,7 +54,7 @@ export default class MusitField extends Component {
     return lvString
   }
 
-  classNameOnlyWithInput() {
+  classNameOnlyWithInput () {
     let lvString = ''
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
       lvString = 'has-error'
@@ -64,20 +64,20 @@ export default class MusitField extends Component {
     return lvString
   }
 
-  render() {
-    const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
+  render () {
+    const lcAddOnPrefix = this.props.addOnPrefix ? <span className='input-group-addon' >{this.props.addOnPrefix}</span> : null
     const lcPlaceholder = (
       <input
         style={this.props.style}
-        type="text" className="form-control"
+        type='text' className='form-control'
         placeholder={this.props.placeHolder}
         value={this.props.value}
         disabled={this.props.disabled}
-        onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
+        onChange={(event) => this.props.onChange(event.target.value)} data-toggle='tooltip' title={this.props.tooltip}
         onBlur={this.props.onBlur}
         onFocus={this.props.onFocus}
-      />);
-    const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
+      />)
+    const lcHelp = this.props.help ? <span className='input-group-addon' >?</span> : null
 
     return (lcAddOnPrefix !== null || lcHelp !== null) ? (
       <div

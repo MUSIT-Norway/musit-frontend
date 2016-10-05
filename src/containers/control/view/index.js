@@ -21,9 +21,9 @@ import { hashHistory } from 'react-router'
 import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap'
 import { ControlView } from '../../../components/control/view'
 import { MusitField } from '../../../components/formfields'
-import Layout from '../../../layout'
-import Breadcrumb from '../../../layout/Breadcrumb'
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
+import Layout from '../../../layouts/MagasinLayout'
+import Breadcrumb from '../../../layouts/MagasinLayout/Breadcrumb'
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../utils'
 
 export default class ControlViewContainer extends React.Component {
   static propTypes = {
@@ -41,7 +41,7 @@ export default class ControlViewContainer extends React.Component {
     loadPath: () => true
   }
 
-  componentWillMount() {
+  componentWillMount () {
     if (this.props.params.controlId) {
       this.props.loadControl(this.props.params.id, this.props.params.controlId, {
         onSuccess: (r) => {
@@ -52,21 +52,21 @@ export default class ControlViewContainer extends React.Component {
     }
   }
 
-  getDate(data, field) {
-    return data && data[field] ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
+  getDate (data, field) {
+    return data && data[field] ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY) : ''
   }
 
-  render() {
+  render () {
     if (!this.props.controls) {
-      return null;  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
+      return null  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
     }
     const nodes = this.props.path
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
-    const data = this.props.controls.data;
+    const data = this.props.controls.data
     return (
       <Layout
-        title="Magasin"
+        title='Magasin'
         translate={this.props.translate}
         breadcrumb={breadcrumb}
         content={
@@ -119,13 +119,13 @@ export default class ControlViewContainer extends React.Component {
               <Row>
                 <Col sm={8} md={10}>
                   <ControlView
-                    id="1"
+                    id='1'
                     translate={translate}
                     controlsJson={data && data.parts ? data.parts : null}
                   />
                 </Col>
               </Row>
-              <Row className="row-centered" style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}>
+              <Row className='row-centered' style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}>
                 <Col xs={10}>
                   <Button onClick={() => { hashHistory.goBack() }}>
                     Lukk

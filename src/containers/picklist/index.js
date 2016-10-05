@@ -18,8 +18,8 @@
  */
 import PickListContainer from './PickListContainer'
 import { connect } from 'react-redux'
-import { toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
-import { moveObject, moveNode } from '../../reducers/move'
+import { toggleNode, toggleObject, removeNode, removeObject } from '../../reducer/picklist'
+import { moveObject, moveNode } from '../../reducer/move'
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,

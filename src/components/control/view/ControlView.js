@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import * as ObservationRender from '../../observation/render'
-import { formatFloatToString } from './../../../util'
+import { formatFloatToString } from './../../../utils'
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -11,7 +11,7 @@ export default class ControlView extends Component {
     controlsJson: PropTypes.arrayOf(PropTypes.shape({
       eventType: PropTypes.string,
       ok: PropTypes.string.bool
-    })),
+    }))
   }
 
   static iconMap = {
@@ -38,8 +38,8 @@ export default class ControlView extends Component {
     ControlTemperature: 'controlTemperature'
   }
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       ControlAlcohol: {
         open: false
@@ -68,19 +68,19 @@ export default class ControlView extends Component {
       ControlTemperature: {
         open: false
       }
-    };
+    }
 
     this.showObservation = (control) => {
       let lv = ''
       const { eventType, ok } = control
       if (!ok) {
-        const motivates = control.motivates;
+        const motivates = control.motivates
         switch (eventType) {
           case 'ControlTemperature':
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
-              type="temperature"
+              type='temperature'
               valueProps={{
                 fromValue: formatFloatToString(motivates.from),
                 toValue: formatFloatToString(motivates.to),
@@ -113,7 +113,7 @@ export default class ControlView extends Component {
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
               translate={this.props.translate}
-              type="cleaning"
+              type='cleaning'
               valueProps={{
                 leftValue: motivates.cleaning,
                 rightValue: motivates.note
@@ -127,7 +127,7 @@ export default class ControlView extends Component {
           case 'ControlGas':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
-              type="gas"
+              type='gas'
               translate={this.props.translate}
               valueProps={{
                 leftValue: motivates.gas,
@@ -142,7 +142,7 @@ export default class ControlView extends Component {
           case 'ControlHypoxicAir':
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
-              type="hypoxicAir"
+              type='hypoxicAir'
               translate={this.props.translate}
               valueProps={{
                 fromValue: formatFloatToString(motivates.from),
@@ -159,7 +159,7 @@ export default class ControlView extends Component {
           case 'ControlLightingCondition':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
-              type="lightCondition"
+              type='lightCondition'
               translate={this.props.translate}
               valueProps={{
                 leftValue: motivates.lightingCondition,
@@ -174,7 +174,7 @@ export default class ControlView extends Component {
           case 'ControlMold':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
-              type="mold"
+              type='mold'
               translate={this.props.translate}
               valueProps={{
                 leftValue: motivates.mold,
@@ -215,7 +215,7 @@ export default class ControlView extends Component {
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
-              type="relativeHumidity"
+              type='relativeHumidity'
               valueProps={{
                 fromValue: formatFloatToString(motivates.from),
                 toValue: formatFloatToString(motivates.to),
@@ -237,25 +237,24 @@ export default class ControlView extends Component {
     }
   }
 
-
-  render() {
+  render () {
     const { id } = this.props
     const observation = (fontName, observationType) => {
       return (
         <Col xs={5} sm={5} md={5} >
-          <span className={`icon icon-${fontName}`} style={{ 'font-size': 'x-large' }} />
+          <span className={`icon icon-${fontName}`} style={{ fontSize: 'x-large' }} />
           {` ${observationType}`}
         </Col>
     ) }
     const controlOk = (
       <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="check" style={{ 'font-size': 'x-large' }} />
+        <FontAwesome name='check' style={{ fontSize: 'x-large' }} />
         {`  ${this.props.translate('musit.texts.ok')}`}
       </Col>
     )
     const controlNotOk = (
       <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="close" style={{ 'font-size': 'x-large' }} />
+        <FontAwesome name='close' style={{ fontSize: 'x-large' }} />
         {`  ${this.props.translate('musit.texts.notOk')}`}
       </Col>
     )
@@ -265,9 +264,9 @@ export default class ControlView extends Component {
           <Button
             id={`${id}_${observationType}_downButton`}
             onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
-            bsStyle="link"
+            bsStyle='link'
           >
-            {ok ? null : <FontAwesome name="sort-desc" style={{ 'font-size': 'x-large' }} />}
+            {ok ? null : <FontAwesome name='sort-desc' style={{ fontSize: 'x-large' }} />}
           </Button>
         </Col>
       ) }
