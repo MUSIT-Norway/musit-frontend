@@ -100,7 +100,7 @@ export default class PickListContainer extends React.Component {
           show={this.state.showModal}
           onHide={this.hideModal}
           onMove={this.moveModal}
-          headerText={I18n.t('musit.moveModal.moveNodes')}
+          headerText={this.isTypeNode() ? I18n.t('musit.moveModal.moveNodes') : I18n.t('musit.moveModal.moveObjects')}
         />
         <main>
           <Grid>
