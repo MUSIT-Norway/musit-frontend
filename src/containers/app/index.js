@@ -111,7 +111,7 @@ class App extends Component {
                 </LinkContainer>
               }
               {user &&
-                <LinkContainer to={"/reports"}>
+                <LinkContainer to="/reports">
                   <NavItem>Rapporter</NavItem>
                 </LinkContainer>
               }
