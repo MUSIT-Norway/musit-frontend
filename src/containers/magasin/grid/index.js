@@ -97,7 +97,6 @@ const mapDispatchToProps = (dispatch, props) => {
               window.alert(I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', { name }))
             },
             onFailure: (e) => {
-              console.log(e)
               if (e.status === 400) {
                 window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
               } else {
@@ -170,7 +169,7 @@ export default class StorageUnitsContainer extends React.Component {
       if (newProps.params.splat) {
         this.props.loadChildren(this.resolveCurrentId(newProps.params.splat), {
           onSuccess: () => this.props.loadPath(this.resolveCurrentId(newProps.params.splat)),
-          onFailure: true
+          onFailure: () => true
         })
       } else {
         this.props.loadStorageUnits()
@@ -196,7 +195,7 @@ export default class StorageUnitsContainer extends React.Component {
       const currentId = this.resolveCurrentId(this.props.params.splat);
       this.props.loadChildren(currentId, {
         onSuccess: () => this.props.loadPath(currentId),
-        onFailure: true
+        onFailure: () => true
       })
     } else {
       this.props.loadStorageUnits()
@@ -249,10 +248,10 @@ export default class StorageUnitsContainer extends React.Component {
         const id = this.state.showModalFromId
         this.setState({ ...this.state, showModal: false, showModalFromId: '' })
         this.props.loadPath(id)
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.data.name, destination: toName }))
       },
       onFailure: () => {
-        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name: this.props.rootNode.data.name, destination: toName }))
       }
     })
   }

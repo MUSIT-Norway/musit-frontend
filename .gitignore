@@ -6,3 +6,4 @@ public/assets/css/glyphicons-*
 .idea/
 coverage/
 *.iml
+*.orig
