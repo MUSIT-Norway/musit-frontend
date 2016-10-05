@@ -49,36 +49,53 @@ export default class PickListContainer extends React.Component {
     this.setState({ ...this.state, showModal: false, itemsToMove: [] })
   }
 
-  nodeCallback = (toName) => ({
+  nodeCallback = (toName, toMoveLenght, name) => ({
     onSuccess: () => {
       this.hideModal()
       this.props.loadRoot(7)
       this.props.loadPath(7)
       this.props.removeNode(7)
       this.props.addNode(this.props.rootNode, this.props.path)
-      window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+      if (toMoveLenght === 1) {
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+      } else {
+        window.alert(I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLenght, destination: toName }))
+      }
     },
     onFailure: () => {
-      window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+      if (toMoveLenght === 1) {
+        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+      } else {
+        window.alert(I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLenght, destination: toName }))
+      }
     }
   })
-
-  objectCallback = (toName) => ({
+  objectCallback = (toName, toMoveLenght, name) => ({
     onSuccess: () => {
       this.hideModal()
-      window.alert(I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName }))
+      if (toMoveLenght === 1) {
+        window.alert(I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName }))
+      } else {
+        window.alert(I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLenght, destination: toName }))
+      }
     },
     onFailure: () => {
-      window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+      if (toMoveLenght === 1) {
+        window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+      } else {
+        window.alert(I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLenght, destination: toName }))
+      }
     }
   })
 
   moveModal = (toId, toName) => {
     const moveFunction = this.isTypeNode() ? this.props.moveNode : this.props.moveObject
-    const callback = this.isTypeNode() ? this.nodeCallback(toName) : this.objectCallback(toName)
-    this.state.itemsToMove.forEach((itemToMove => {
-      moveFunction(itemToMove.id, toId, this.props.user.id, callback)
-    }))
+    const toMove = this.state.itemsToMove.map(itemToMove => itemToMove.id)
+    const toMoveLenght = toMove.length
+    const name = this.isTypeNode() ? this.state.itemsToMove[0].name : this.state.itemsToMove[0].displayName
+    const callback = this.isTypeNode() ?
+    this.nodeCallback(toName, toMoveLenght, name) : this.objectCallback(toName, toMoveLenght, name)
+    moveFunction(toMove, toId, this.props.user.id, callback)
   }
 
   render() {
