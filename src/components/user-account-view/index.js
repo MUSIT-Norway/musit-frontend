@@ -39,9 +39,9 @@ export default class MusitUserAccount extends Component {
       <Col md={1}>{t2}</Col>
     </Row>)
     return (
-      <Dropdown id="dropdown-custom-1">
+      <Dropdown id="dropdown-custom-1" bsSize="lg" style={{ 'background-color': 'Transparent', 'border-color': 'Transparent'}}>
         <Dropdown.Toggle>
-          <FontAwesome name="user" size="3x" />
+          <FontAwesome name="user" size="5x" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <MenuItem eventKey="1">Min konto</MenuItem>
