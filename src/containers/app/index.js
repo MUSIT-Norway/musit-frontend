@@ -9,7 +9,8 @@ import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
 import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
-import { TYPES as PICK_TYPES } from '../../reducers/picklist'
+import { TYPES as PICK_TYPES } from '../../reducers/picklist';
+import MusitUserAccount from '../../components/user-account-view'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -115,14 +116,12 @@ class App extends Component {
                   <NavItem>Rapporter</NavItem>
                 </LinkContainer>
               }
+            </Nav>
+            <Nav pullRight>
               {user &&
-                <LinkContainer to="/musit/logout">
-                  <NavItem className="logout-link" onClick={this.handleLogout}>Logout</NavItem>
-                </LinkContainer>
+                <NavItem><MusitUserAccount /></NavItem>
               }
             </Nav>
-            {user &&
-              <p className={`${styles.loggedInMessage} navbar-text`}>Logged in as <strong>{user.name}</strong>.</p>}
           </Navbar.Collapse>
         </Navbar>
 
