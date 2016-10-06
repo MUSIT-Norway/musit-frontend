@@ -7,12 +7,13 @@ import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { addObservation } from '../../reducers/observation'
 import { loadPath } from '../../reducers/storageunit/grid'
+import { createBreadcrumbPath } from '../../util'
 
 const mapStateToProps = (state) => {
   return {
     actor: state.auth.actor,
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path
+    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
   }
 }
 

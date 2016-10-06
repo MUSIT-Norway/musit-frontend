@@ -22,12 +22,13 @@ import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import ControlViewContainerImpl from './index'
 import { loadPath } from '../../../reducers/storageunit/grid'
+import { createBreadcrumbPath } from '../../../util'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  path: state.storageGridUnit.root.path
+  path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
 })
 
 const mapDispatchToProps = (dispatch) => ({

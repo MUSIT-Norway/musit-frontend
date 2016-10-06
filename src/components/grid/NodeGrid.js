@@ -33,12 +33,12 @@ export default class NodeGrid extends Component {
     }
   }
 
-  showModal(fromId) {
-    this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
+  showModal(fromId, name) {
+    this.setState({ ...this.state, showModal: true, showModalFromId: fromId, name: name })
   }
 
   hideModal() {
-    this.setState({ ...this.state, showModal: false, showModalFromId: null })
+    this.setState({ ...this.state, showModal: false, showModalFromId: null, name: null })
   }
 
   moveModal(toId, toName) {
@@ -46,10 +46,10 @@ export default class NodeGrid extends Component {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
         this.props.refresh()
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name: this.state.name, destination: toName }))
       },
       onFailure: () => {
-        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name: this.state.name, destination: toName }))
       }
     })
   }
@@ -126,7 +126,7 @@ export default class NodeGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault()
-                          this.showModal(c.id)
+                          this.showModal(c.id, c.name)
                         }}
                       >
                         <FontAwesome name="truck" />

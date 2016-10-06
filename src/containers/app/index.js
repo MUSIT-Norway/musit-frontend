@@ -111,6 +111,11 @@ class App extends Component {
                 </LinkContainer>
               }
               {user &&
+                <LinkContainer to="/reports">
+                  <NavItem>Rapporter</NavItem>
+                </LinkContainer>
+              }
+              {user &&
                 <LinkContainer to="/musit/logout">
                   <NavItem className="logout-link" onClick={this.handleLogout}>Logout</NavItem>
                 </LinkContainer>
