@@ -27,12 +27,13 @@ import Breadcrumb from '../../../../layout/Breadcrumb'
 import Language from '../../../../components/language'
 import AddressSuggest from '../../../../components/address'
 import Loader from 'react-loader';
+import { createBreadcrumbPath } from '../../../../util'
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../../components/formfields'
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path
+    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
   }
 }
 
