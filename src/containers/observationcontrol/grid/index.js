@@ -24,7 +24,6 @@ import ObservationControlComponent from '../../../components/leftmenu/observatio
 import Language from '../../../components/language'
 import { loadControlsAndObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
-import { loadPath } from '../../../reducers/storageunit/grid/index'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
@@ -45,9 +44,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadActorDetails: (data) => {
     dispatch(loadActor(data))
-  },
-  loadPath: (id, callback) => {
-    dispatch(loadPath(id, callback))
   }
 })
 
