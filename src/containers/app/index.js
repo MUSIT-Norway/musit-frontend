@@ -69,8 +69,8 @@ class App extends Component {
     }
   }
 
-  handleLogout = (event) => {
-    event.preventDefault()
+  handleLogout = () => {
+  //  event.preventDefault()
     this.props.clearUser()
     hashHistory.replace('/')
   }
@@ -119,7 +119,7 @@ class App extends Component {
             </Nav>
             <Nav pullRight>
               {user &&
-                <NavItem><MusitUserAccount /></NavItem>
+                <NavItem><MusitUserAccount handleLogout={this.handleLogout} /></NavItem>
               }
             </Nav>
           </Navbar.Collapse>
