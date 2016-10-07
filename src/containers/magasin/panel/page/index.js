@@ -522,28 +522,6 @@ export default class StorageUnitContainer extends Component {
                           </Grid>}
                         <Grid>
                           <Row>
-                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
-                              <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}
-                              </ControlLabel>
-                              {this.renderSecurityAssessmentField('perimeter')}
-                              {this.renderSecurityAssessmentField('theftProtection')}
-                              {this.renderSecurityAssessmentField('fireProtection')}
-                              {this.renderSecurityAssessmentField('waterDamage')}
-                              {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
-                            </Col>
-                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
-                              <ControlLabel>
-                                {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
-                              </ControlLabel>
-                              {this.renderEnvironmentAssessmentField('relativeHumidity')}
-                              {this.renderEnvironmentAssessmentField('lightingCondition')}
-                              {this.renderEnvironmentAssessmentField('temperature')}
-                              {this.renderEnvironmentAssessmentField('preventiveConservation')}
-                            </Col>
-                          </Row>
-                        </Grid>
-                        <Grid>
-                          <Row>
                             <br />
                             {this.props.unit.errors && Object.values(this.props.unit.errors).map((error, index) => {
                               return <p style={{ color: 'red' }} key={index}>{error}</p>
