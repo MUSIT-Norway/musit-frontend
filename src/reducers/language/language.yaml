@@ -338,12 +338,12 @@ en:
         labelText: "Area"
         incorrect: "Area (from) must be a number with max 3 decimals."
         placeHolder: "from"
-        tooltip: "Node area in m2"
+        tooltip: "Node area in m\u00b2"
       areaTo:
         labelText: ""
         incorrect: "Area (to) must be a number with max 3 decimals."
         placeHolder: "to"
-        tooltip: "Node area in m2"
+        tooltip: "Node area in m\u00b2"
       height:
         labelText: "Height"
         incorrect: "Height (from) must be a number with max 3 decimals."
@@ -782,12 +782,12 @@ no:
         labelText: "Areal"
         incorrect: "Areal (fra) må være et tall med maks 3 desimaler."
         placeHolder: "fra"
-        tooltip: "Nodens areal i m2"
+        tooltip: "Nodens areal i m\u00b2"
       areaTo:
         labelText: ""
         incorrect: "Areal (til) må være et tall med maks 3 desimaler."
         placeHolder: "til"
-        tooltip: "Nodens areal i m2"
+        tooltip: "Nodens areal i m\u00b2"
       height:
         labelText: "Høyde"
         incorrect: "Høyde (fra) må være et tall med maks 3 desimaler."
