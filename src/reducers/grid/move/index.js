@@ -5,80 +5,61 @@ const CLEAR = 'musit/movehistory/CLEAR_SUCCESS'
 const CLEAR_SUCCESS = 'musit/movehistory/CLEAR'
 const CLEAR_FAIL = 'musit/movehistory/CLEAR_FAIL'
 
-const initialState = { data: [
-  { doneBy: 'Kjell Kjellstad',
-    doneDate: '23.12.2001',
-    name: 'Arne And',
-    from: { path: 'NHM/3etg/Rom 3/Skap 4/Skuff 4/Eske 3' },
-    to: { path: 'NHM/3etg/Rom 3/Skap 2/Skuff 1/Eske 8' }
-  },
-  { doneBy: 'Bjørn Bjørnsen',
-    doneDate: '21.12.2005',
-    name: 'Arne And',
-    from: { path: 'NHM/1 etg/Rom 4/Skap 14/Skuff 1/Eske 10' },
-    to: { path: 'NHM/3 etg/Rom 1/Skap 6/Skuff 4/Eske 18/Boks 3/Mappe 3' }
-  },
-  { doneBy: 'Jan Pettersen',
-    doneDate: '12.01.2015',
-    name: 'Arne And',
-    from: { path: 'KHM/1 etg/Rom 4/Skap 4/Skuff 1/Eske 10' },
-    to: { path: 'NHM/3 etg/Rom 1/Skap 6/Skuff 4/Eske 18/Boks 3/Mappe 3' }
-  },
-  { doneBy: 'Kjell Kjellstad',
-      doneDate: '23.12.2001',
-      name: 'Arne And',
-      from: { path: 'NHM/3etg/Rom 3/Skap 4/Skuff 4/Eske 3' },
-      to: { path: 'NHM/3etg/Rom 3/Skap 2/Skuff 1/Eske 8' }
+const initialState = { data:
+[
+  {
+    doneBy: 2,
+    doneDate: '2016-10-06T00:00:00+00:00',
+    registeredBy: 'Darth Vader',
+    registeredDate: '2016-10-06T05:55:52+00:00',
+    from: {
+      path: ',1,2,3,6,7,',
+      pathNames: [
+        {
+          name: 'root-node',
+          nodeId: 1
+        },
+        {
+          name: 'Utviklingsmuseet',
+          nodeId: 2
+        },
+        {
+          name: 'Forskningens hus',
+          nodeId: 3
+        },
+        {
+          name: 'Forskningsværelset',
+          nodeId: 6
+        },
+        {
+          name: 'Foo',
+          nodeId: 7
+        }
+      ]
     },
-    { doneBy: 'Bjørn Bjørnsen',
-      doneDate: '21.12.2005',
-      name: 'Arne And',
-      from: { path: 'NHM/1 etg/Rom 4/Skap 14/Skuff 1/Eske 10' },
-      to: { path: 'NHM/3 etg/Rom 1/Skap 6/Skuff 4/Eske 18/Boks 3/Mappe 3' }
-    },
-    { doneBy: 'Jan Pettersen',
-      doneDate: '12.01.2015',
-      name: 'Arne And',
-      from: { path: 'KHM/1 etg/Rom 4/Skap 4/Skuff 1/Eske 10' },
-      to: { path: 'NHM/3 etg/Rom 1/Skap 6/Skuff 4/Eske 18/Boks 3/Mappe 3' }
-    },
-    { doneBy: 'Kjell Kjellstad',
-      doneDate: '23.12.2001',
-      name: 'Arne And',
-      from: { path: 'NHM/3etg/Rom 3/Skap 4/Skuff 4/Es55555555555555555555555555ke 3' },
-      to: { path: 'NHM/3etg/Rom 3/Skap 2/Skuff 1/Eske 8' }
-    },
-    { doneBy: 'Bjørn Bjørnsen',
-      doneDate: '21.12.2005',
-      name: 'Arne And',
-      from: { path: 'NHM/1 etg/Rom 4/Skap 14/Skuff 1/Eske 10' },
-      to: { path: 'NHM/3 etg/Rom 1/Skap 6/Skuff 4/Eske 18/Boks 3/Mappe 3' }
-    },
-    { doneBy: 'Jan Pettersen',
-      doneDate: '12.01.2015',
-      name: 'Arne And',
-      from: { path: 'KHM/1 etg/Rom 4/Skap 4/Skuff 1/Eske 10' },
-      to: { path: 'NHM/3 etg/Rom 1/Skap 6/Skuff 4/Eske 18/Boks 3/Mappe 355555555555555555555555555555555555555555555555555555555' }
-    },
-    { doneBy: 'Kjell Kjellstad',
-      doneDate: '23.12.2001',
-      name: 'Arne And',
-      from: { path: 'NHM/3etg/Rom 3/Skap 4/Skuff 4/Eske 3' },
-      to: { path: 'NHM/3etg/Rom 3/Skap 2/Skuff 1/Eske 8' }
-    },
-    { doneBy: 'Bjørn Bjørnsen',
-      doneDate: '21.12.2005',
-      name: 'Arne And',
-      from: { path: 'NHM/1 etg/Rom 4/Skap 14/Skuff 1/Eske 10' },
-      to: { path: 'NHM/3 etg/Rom 1/Skap 6/Skuff 4/Eske 18/Boks 3/Mappe 3' }
-    },
-    { doneBy: 'Jan Pettersen',
-      doneDate: '12.01.2015',
-      name: 'Arne And',
-      from: { path: 'KHM/1 etg/Rom 4/Skap 4/Skuff 1/Eske 10' },
-      to: { path: 'NHM/3 etg/Ro5555555555555555555555555555555555555555555555555555555m 1/Skap 6/Skuff 4/Eske 18/Boks 3/Mappe 3' }
+    to: {
+      path: ',1,2,3,6,',
+      pathNames: [
+        {
+          name: 'root-node',
+          nodeId: 1
+        },
+        {
+          name: 'Utviklingsmuseet',
+          nodeId: 2
+        },
+        {
+          name: 'Forskningens hus',
+          nodeId: 3
+        },
+        {
+          name: 'Forskningsværelset',
+          nodeId: 6
+        }
+      ]
     }
-] }
+  }]
+}
 
 const moveHistoryReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -99,8 +80,8 @@ const moveHistoryReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        loaded: false,
-        error: action.error
+        loaded: true,
+        data: initialState.data
       }
     case CLEAR_SUCCESS:
       return {
@@ -129,10 +110,10 @@ const moveHistoryReducer = (state = initialState, action) => {
 
 export default moveHistoryReducer;
 
-export const loadMoveHistoryForObject = () => {
+export const loadMoveHistoryForObject = (id) => {
   return {
-    type: LOAD_SUCCESS,
-    result: initialState.data
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.put(`/api/storagefacility/v1/storagenodes/${id}/locations`)
   }
 }
 export const clearMoveHistoryForObject = () => {

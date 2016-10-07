@@ -92,7 +92,7 @@ export default class ObjectGrid extends Component {
                       href=""
                       onClick={(e) => {
                         e.preventDefault()
-                        this.props.showMoveHistory()
+                        this.props.showMoveHistory(id)
                       }}
                     >
                       <span className="icon icon-musitmovehistoryicon" />

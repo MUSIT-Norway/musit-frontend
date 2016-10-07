@@ -334,8 +334,6 @@ export default class StorageUnitsContainer extends React.Component {
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
-        showMoveHistory={this.showNodeMoveHistory}
-
         onMove={(moveFrom, moveTo, callback) => this.props.moveNode(moveFrom, moveTo, this.props.user.id, callback)}
         showMoveHistory={this.showNodeMoveHistory}
         refresh={() => {
