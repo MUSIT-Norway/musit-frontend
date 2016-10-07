@@ -23,6 +23,7 @@ import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import Language from '../../../components/language'
 import { loadControlsAndObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
+import { loadRoot } from '../../../reducers/storageunit/grid'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { connect } from 'react-redux'
@@ -33,7 +34,8 @@ import { createBreadcrumbPath } from '../../../util'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames),
+    path: state.storageGridUnit.root.data ?
+      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
     observationControlGridData: state.observationControlGrid.data
   }
 }
@@ -44,6 +46,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadActorDetails: (data) => {
     dispatch(loadActor(data))
+  },
+  loadStorageObj: (id) => {
+    dispatch(loadRoot(id))
   }
 })
 
@@ -55,8 +60,8 @@ export default class ObservationControlGridShow extends React.Component {
     params: React.PropTypes.object,
     route: React.PropTypes.object,
     loadActorDetails: React.PropTypes.func.isRequired,
-    loadPath: React.PropTypes.func.isRequired,
     loadControlAndObservations: React.PropTypes.func.isRequired,
+    loadStorageObj: React.PropTypes.func.isRequired,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
@@ -73,7 +78,7 @@ export default class ObservationControlGridShow extends React.Component {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
         this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy.actorId) })
-        this.props.loadPath(this.props.params.id)
+        this.props.loadStorageObj(this.props.params.id)
       },
       onFailure: () => true
     })
