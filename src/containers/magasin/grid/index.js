@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import Language from '../../../components/language'
-import { loadRoot, clearRoot, loadChildren, deleteUnit, loadPath } from '../../../reducers/storageunit/grid'
+import { loadRoot, clearRoot, loadChildren, deleteUnit } from '../../../reducers/storageunit/grid'
 import { loadMoveHistoryForObject, clearMoveHistoryForObject } from '../../../reducers/grid/move'
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { addNode, addObject } from '../../../reducers/picklist'
@@ -12,7 +12,7 @@ import { NodeGrid, ObjectGrid } from '../../../components/grid'
 import Layout from '../../../layout'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
-import { blur } from '../../../util'
+import { blur, createBreadcrumbPath } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 import MusitModalHistory from '../../../components/formfields/musitModalHistory'
@@ -25,9 +25,10 @@ const mapStateToProps = (state) => ({
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root,
-  path: state.storageGridUnit.root.path,
   routerState: state.routing,
-  moves: state.movehistory.data || []
+  moves: state.movehistory.data || [],
+  path: state.storageGridUnit.root.data ?
+    createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : {}
 })
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -52,9 +53,6 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(loadRoot(id))
       dispatch(clearStats())
       dispatch(loadStats(id))
-    },
-    loadPath: (id) => {
-      dispatch(loadPath(id))
     },
     loadMoveHistoryForObject: (objectId) => {
       dispatch(loadMoveHistoryForObject(objectId))
@@ -106,7 +104,7 @@ const mapDispatchToProps = (dispatch, props) => {
               window.alert(I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', { name }))
             },
             onFailure: (e) => {
-              if (e.status === 405) {
+              if (e.status === 400) {
                 window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
               } else {
                 window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorCommon'))
@@ -137,7 +135,6 @@ export default class StorageUnitsContainer extends React.Component {
     history: React.PropTypes.object,
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
-    loadPath: React.PropTypes.func,
     loadMoveHistoryForObject: React.PropTypes.func.isRequired,
     clearMoveHistoryForObject: React.PropTypes.func.isRequired,
     path: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -182,10 +179,7 @@ export default class StorageUnitsContainer extends React.Component {
     // Issued on every propchange, including local route changes
     if (newProps.params.splat !== this.props.params.splat) {
       if (newProps.params.splat) {
-        this.props.loadChildren(this.resolveCurrentId(newProps.params.splat), {
-          onSuccess: () => this.props.loadPath(this.resolveCurrentId(newProps.params.splat)),
-          onFailure: true
-        })
+        this.props.loadChildren(this.resolveCurrentId(newProps.params.splat))
       } else {
         this.props.loadStorageUnits()
       }
@@ -216,10 +210,7 @@ export default class StorageUnitsContainer extends React.Component {
   loadNodes() {
     if (this.props.params.splat) {
       const currentId = this.resolveCurrentId(this.props.params.splat);
-      this.props.loadChildren(currentId, {
-        onSuccess: () => this.props.loadPath(currentId),
-        onFailure: true
-      })
+      this.props.loadChildren(currentId)
     } else {
       this.props.loadStorageUnits()
     }
@@ -268,13 +259,11 @@ export default class StorageUnitsContainer extends React.Component {
   moveModal = (toId, toName) => {
     this.props.moveNode(this.state.showModalFromId, toId, this.props.user.id, {
       onSuccess: () => {
-        const id = this.state.showModalFromId
         this.setState({ ...this.state, showModal: false, showModalFromId: '' })
-        this.props.loadPath(id)
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.data.name, destination: toName }))
       },
       onFailure: () => {
-        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name: this.props.rootNode.data.name, destination: toName }))
       }
     })
   }

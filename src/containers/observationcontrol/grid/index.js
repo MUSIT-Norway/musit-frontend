@@ -29,11 +29,12 @@ import Breadcrumb from '../../../layout/Breadcrumb'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
+import { createBreadcrumbPath } from '../../../util'
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => Language.translate(key, markdown),
-    path: state.storageGridUnit.root.path,
+    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames),
     observationControlGridData: state.observationControlGrid.data
   }
 }

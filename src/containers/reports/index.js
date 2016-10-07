@@ -27,26 +27,24 @@ export default class Reports extends React.Component {
   }
 
   renderReports = (reports) => {
-    let a;
     if (reports) {
-      reports.forEach((r) => a.push(r))
-      if (a) {
-        return a.map((r) =>
-          <tr id={r.id}>
-            <td>
-              <a href={r.url}>
-                {r.title}
-              </a>
-            </td>
-            <td>
-              {r.description}
-            </td>
-          </tr>)
-      }
-      return null
+      return Object.keys(reports).map((k) => {
+        const r = reports[k];
+        return (<tr id={r.id}>
+          <td>
+            <a href={r.url}>
+              {r.title}
+            </a>
+          </td>
+          <td>
+            {r.description}
+          </td>
+        </tr>) }
+        )
     }
     return null
   }
+
   render() {
     const { reports } = this.props
     return (

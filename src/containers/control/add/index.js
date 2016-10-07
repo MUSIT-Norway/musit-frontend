@@ -125,6 +125,16 @@ export default class ControlAddContainer extends React.Component {
     }
   }
 
+  setDate = (newValue) => {
+    if (newValue) {
+      if (moment().format('DD/MM/YYYY') < moment(newValue).format('DD/MM/YYYY')) {
+        window.alert(this.props.translate('musit.newControl.dateValidation'))
+        this.setState({ ...this.state, doneDate: moment() })
+      } else {
+        this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+      }
+    }
+  }
   handleSubmit(event) {
     event.preventDefault()
     const errors = []
@@ -228,10 +238,7 @@ export default class ControlAddContainer extends React.Component {
                           value={this.state.doneDate.toISOString()}
                           onClear={() => this.setState({ ...this.state, doneDate: moment() })}
                           onChange={newValue => {
-                            if (!newValue) {
-                              return;
-                            }
-                            this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+                            this.setDate(newValue)
                           }}
                         />
                       </Col>

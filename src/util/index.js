@@ -22,6 +22,13 @@ export const blur = () => {
   }
 }
 
+export const createBreadcrumbPath = (pathStr, pathNames) => {
+  const pathIds = pathStr.slice(1, -1).split(',').slice(1)
+  const r = pathIds.map((i) => (pathNames.find(e => e.nodeId === parseFloat(i))))
+  return r.map(e => ({ id: e.nodeId, name: e.name, url: `/magasin/${e.nodeId}` }))
+}
+
+
 export const containsObjectWithField = (arr, field, value) => arr.filter((e) => e[field] === value).length > 0
 
 export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY'
