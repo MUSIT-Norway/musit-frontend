@@ -92,7 +92,7 @@ export default class ObjectGrid extends Component {
                       href=""
                       onClick={(e) => {
                         e.preventDefault()
-                        this.props.showMoveHistory(id)
+                        this.props.showMoveHistory(c.id)
                       }}
                     >
                       <span className="icon icon-musitmovehistoryicon" />
@@ -103,7 +103,7 @@ export default class ObjectGrid extends Component {
                       href=""
                       onClick={(e) => {
                         e.preventDefault()
-                        this.moveModal(c.id)
+                        this.showModal(c.id, c.displayName)
                       }}
                     >
                       <FontAwesome name="truck" />

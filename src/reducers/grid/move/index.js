@@ -113,7 +113,7 @@ export default moveHistoryReducer;
 export const loadMoveHistoryForObject = (id) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.put(`/api/storagefacility/v1/storagenodes/${id}/locations`)
+    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/objects/${id}/locations`)
   }
 }
 export const clearMoveHistoryForObject = () => {
