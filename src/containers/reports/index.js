@@ -50,7 +50,7 @@ export default class Reports extends React.Component {
     return (
       <div style={{ padding: '50px' }}>
         <PageHeader>
-          Rapporter
+          {this.props.translate('musit.reports.title')}
         </PageHeader>
         <Table>
           <thead>

@@ -1,5 +1,9 @@
 en:
   musit:
+    reports:
+      title: "Reports"
+      KDReport:
+        title: "Security assessment report til KD"
     moveModal:
       move: "Move"
       moveObjects: "Move objects"
@@ -444,6 +448,10 @@ en:
     login: Login through Dataporten ![feide-logo-button](/assets/images/feide-login-icon.png "Feide Login")
 no:
   musit:
+    reports:
+      title: "Rapporter"
+      KDReport:
+        title: "Rapport om sikringstilstand til KD"
     moveModal:
       move: "Flytt hit"
       moveObjects: "Flytt objekter"
