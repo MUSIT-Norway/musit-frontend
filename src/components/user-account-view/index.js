@@ -14,10 +14,6 @@ export default class MusitUserAccount extends Component {
     handleLogout: React.PropTypes.func
   }
   static defaultProps = {
-    user:
-    {
-      userName: 'steinaol'
-    },
     collections: [
       {
         id: 1,
@@ -35,7 +31,7 @@ export default class MusitUserAccount extends Component {
 
   render() {
     const tooltip = (
-      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userName}</strong></Tooltip>
+      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>
     );
     const menuText = (t1, t2) =>
     (<Row>
