@@ -84,11 +84,11 @@ export default class MusitDropDownField extends Component {
         {lcHelp}
       </div>
      ) : (
-       <div
-         className={this.classNameOnlyWithInput()}
-       >
-         {lcPlaceholder}
-       </div>
+      <div
+        className={this.classNameOnlyWithInput()}
+      >
+        {lcPlaceholder}
+      </div>
       )
   }
 }
