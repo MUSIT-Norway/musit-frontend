@@ -338,23 +338,23 @@ export default class StorageUnitContainer extends Component {
                           <Col md={5}>
                             {(this.props.unit.type === 'Building'
                             || this.props.unit.type === 'Organisation') &&
-                              <Form horizontal>
-                                <FormGroup>
-                                  <label className="col-sm-3 control-label" htmlFor="address">
-                                    {this.props.translate('musit.storageUnits.address.labelText')}
-                                  </label>
-                                  <div class="col-sm-8" is="null">
-                                    <AddressSuggest
-                                      id="addressField"
-                                      value={this.props.unit.address}
-                                      placeHolder="Find address"
-                                      onChange={(address) => {
-                                        this.updateStorageUnit(this.props.unit, 'address', address)
-                                      }}
-                                    />
-                                  </div>
-                                </FormGroup>
-                              </Form>
+                            <Form horizontal>
+                              <FormGroup>
+                                <label className="col-sm-3 control-label" htmlFor="address">
+                                  {this.props.translate('musit.storageUnits.address.labelText')}
+                                </label>
+                                <div class="col-sm-8" is="null">
+                                  <AddressSuggest
+                                    id="addressField"
+                                    value={this.props.unit.address}
+                                    placeHolder="Find address"
+                                    onChange={(address) => {
+                                      this.updateStorageUnit(this.props.unit, 'address', address)
+                                    }}
+                                  />
+                                </div>
+                              </FormGroup>
+                            </Form>
                             }
                           </Col>
                         </Row>
@@ -496,28 +496,28 @@ export default class StorageUnitContainer extends Component {
                         </Grid>
                       </div>
                       {this.props.unit.type === 'Room' &&
-                        <Grid>
-                          <Row>
-                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
-                              <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}
-                              </ControlLabel>
-                              {this.renderSecurityAssessmentField('perimeter')}
-                              {this.renderSecurityAssessmentField('theftProtection')}
-                              {this.renderSecurityAssessmentField('fireProtection')}
-                              {this.renderSecurityAssessmentField('waterDamage')}
-                              {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
-                            </Col>
-                            <Col lg={5} md={5} sm={5} xs={10} offset={1}>
-                              <ControlLabel>
-                                {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
-                              </ControlLabel>
-                              {this.renderEnvironmentAssessmentField('relativeHumidity')}
-                              {this.renderEnvironmentAssessmentField('lightingCondition')}
-                              {this.renderEnvironmentAssessmentField('temperature')}
-                              {this.renderEnvironmentAssessmentField('preventiveConservation')}
-                            </Col>
-                          </Row>
-                        </Grid>}
+                      <Grid>
+                        <Row>
+                          <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                            <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}
+                            </ControlLabel>
+                            {this.renderSecurityAssessmentField('perimeter')}
+                            {this.renderSecurityAssessmentField('theftProtection')}
+                            {this.renderSecurityAssessmentField('fireProtection')}
+                            {this.renderSecurityAssessmentField('waterDamage')}
+                            {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
+                          </Col>
+                          <Col lg={5} md={5} sm={5} xs={10} offset={1}>
+                            <ControlLabel>
+                              {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
+                            </ControlLabel>
+                            {this.renderEnvironmentAssessmentField('relativeHumidity')}
+                            {this.renderEnvironmentAssessmentField('lightingCondition')}
+                            {this.renderEnvironmentAssessmentField('temperature')}
+                            {this.renderEnvironmentAssessmentField('preventiveConservation')}
+                          </Col>
+                        </Row>
+                      </Grid>}
                       <Grid>
                         <Row>
                           <br />

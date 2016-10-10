@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearUser: () => {
       localStorage.removeItem('jwtToken')
+      localStorage.removeItem('fakeToken')
       dispatch(clearUser())
       dispatch(clearActor())
     },
@@ -70,7 +71,6 @@ class App extends Component {
   }
 
   handleLogout = () => {
-  //  event.preventDefault()
     this.props.clearUser()
     hashHistory.replace('/')
   }
@@ -117,9 +117,9 @@ class App extends Component {
                 </LinkContainer>
               }
             </Nav>
-            <Nav pullRight navbar style={{ 'vertical-align': 'middle' }} >
+            <Nav pullRight>
               {user &&
-                <MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} />
+                <NavItem><MusitUserAccount handleLogout={this.handleLogout} /></NavItem>
               }
             </Nav>
           </Navbar.Collapse>
