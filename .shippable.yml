@@ -12,10 +12,6 @@ integrations:
       on_success: always
       on_failure: always
 
-branches:
-  only:
-    - master
-
 build:
   ci:
    - rm -rf node_modules
