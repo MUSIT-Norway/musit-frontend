@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearUser: () => {
       localStorage.removeItem('jwtToken')
+      localStorage.removeItem('fakeToken')
       dispatch(clearUser())
       dispatch(clearActor())
     },
@@ -70,7 +71,6 @@ class App extends Component {
   }
 
   handleLogout = () => {
-  //  event.preventDefault()
     this.props.clearUser()
     hashHistory.replace('/')
   }

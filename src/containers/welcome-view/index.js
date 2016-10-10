@@ -27,10 +27,11 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => Language.translate(key, markdown)
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, props) => ({
   setUser: (user) => {
     dispatch(connectUser(user))
     dispatch(loadActor())
+    props.history.replace('/magasin/root')
   },
 })
 
