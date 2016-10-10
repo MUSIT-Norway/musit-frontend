@@ -24,9 +24,8 @@ export default class PickListContainer extends React.Component {
     addNode: React.PropTypes.func.isRequired,
     addObject: React.PropTypes.func.isRequired,
     loadRoot: React.PropTypes.func.isRequired,
-    loadPath: React.PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
+    refreshNodes: React.PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -36,11 +35,23 @@ export default class PickListContainer extends React.Component {
     }
   }
 
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.rootNode.root && this.state.updatePath) {
+  //     const value = this.props.picks[this.props.params.type.toUpperCase()][0].value
+  //     this.props.loadRoot(value.id)
+  //     const pathSplit = `${this.props.rootNode.root.data.path.split(',').slice(0, -1)},`
+  //     // const pathSplit = this.props.rootNode.root.data.path.split(',').slice(0, -2)
+  //     const path = createBreadcrumbPath(pathSplit, this.props.rootNode.root.data.pathNames)
+  //     this.props.removeNode(value)
+  //     this.props.addNode(this.props.rootNode.data[0], path)
+  //   }
+  //   this.setState({ ...this.state, updatePath: false })
+  // }
+
   isTypeNode() {
     const type = this.props.params.type.toUpperCase();
     return type === TYPES.NODE
   }
-
   showModal = (items) => {
     this.setState({ ...this.state, showModal: true, itemsToMove: [].concat(items) })
   }
@@ -51,11 +62,12 @@ export default class PickListContainer extends React.Component {
 
   nodeCallback = (toName, toMoveLenght, name) => ({
     onSuccess: () => {
+      const items = this.state.itemsToMove
+      this.props.refreshNodes(items.map(item => item.id))
       this.hideModal()
-      this.props.loadRoot(7)
-      this.props.loadPath(7)
-      this.props.removeNode(7)
-      this.props.addNode(this.props.rootNode, this.props.path)
+      // const value = this.props.picks[this.props.params.type.toUpperCase()][0].value
+      // this.props.loadRoot(value.id)
+      // this.setState({ ...this.state, updatePath: true })
       if (toMoveLenght === 1) {
         window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
       } else {
@@ -70,6 +82,7 @@ export default class PickListContainer extends React.Component {
       }
     }
   })
+
   objectCallback = (toName, toMoveLenght, name) => ({
     onSuccess: () => {
       this.hideModal()

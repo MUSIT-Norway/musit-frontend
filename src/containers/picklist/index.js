@@ -18,15 +18,14 @@
  */
 import PickListContainer from './PickListContainer'
 import { connect } from 'react-redux'
-import { addNode, addObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
+import { refreshNode, addNode, addObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
 import { moveObject, moveNode } from '../../reducers/move'
-import { loadRoot, loadPath } from '../../reducers/storageunit/grid'
+import { loadRoot } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   picks: state.picks,
-  rootNode: state.storageGridUnit.root,
-  path: state.storageGridUnit.root.path,
+  rootNode: state.storageGridUnit
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -39,6 +38,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   moveNode: (nodeId, destinationId, doneBy, callback) => {
     dispatch(moveNode(nodeId, destinationId, doneBy, callback))
+    dispatch(refreshNode('20'))
   },
   addNode: (unit, path) => {
     dispatch(addNode(unit, path))
@@ -49,9 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
   loadRoot: (id) => {
     dispatch(loadRoot(id))
   },
-  loadPath: (id) => {
-    dispatch(loadPath(id))
-  }
+  refreshNodes: (ids) => ids.forEach(id => dispatch(refreshNode(id)))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PickListContainer)

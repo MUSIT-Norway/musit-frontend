@@ -6,6 +6,7 @@ import picklistReducer, {
   toggleNode, toggleObject,
   removeNode, removeObject,
   clearNodes, clearObjects,
+  LOAD_ONE_NODE_SUCCESS
 } from '../index'
 
 const node1 = {
@@ -481,5 +482,43 @@ describe('PicklistReducer', () => {
       OBJECT: DEFAULT_OBJECTS
     }
     assert.deepStrictEqual(newState, expectedState, 'Should not mark any item')
+  })
+
+  it('Refresh node updates path', () => {
+    const newState = picklistReducer(testState, {
+      type: LOAD_ONE_NODE_SUCCESS,
+      result: [{
+        id: 1,
+        name: 'Hoho'
+      }],
+      id: 1
+    })
+    const expectedState = {
+      NODE: [
+        {
+          marked: false,
+          path: [],
+          value: {
+            ...node1,
+            path: [{
+              id: 1,
+              name: 'Hoho'
+            }]
+          }
+        },
+        {
+          marked: false,
+          path: [],
+          value: node2
+        },
+        {
+          marked: false,
+          path: [],
+          value: node3
+        }
+      ],
+      OBJECT: DEFAULT_OBJECTS
+    }
+    assert.deepStrictEqual(expectedState, newState, 'Should update path for node 1')
   })
 })

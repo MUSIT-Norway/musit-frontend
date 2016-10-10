@@ -18,7 +18,7 @@
  */
 
 import Language from '../../../components/language'
-import { loadRoot, loadChildren, loadPath, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
+import { loadRoot, loadChildren, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
 import { connect } from 'react-redux';
 import { createBreadcrumbPath } from '../../../util'
 import MusitModalImpl from './MusitModal'
@@ -39,7 +39,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(loadChildren(id, callback))
       dispatch(loadRoot(id))
     },
-    loadPath: (id) => dispatch(loadPath(id)),
     clearPath: (id) => dispatch(clearPath(id)),
     loadRoot: () => dispatch(loadRoot()),
     setCurrentId: (id) => dispatch(setCurrent(id)),
