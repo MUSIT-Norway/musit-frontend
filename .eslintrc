@@ -51,6 +51,7 @@
     }
   },
   "globals": {
+    "expect": true,
     "__DEVELOPMENT__": true,
     "__FAKE_FEIDE__": true,
     "__CLIENT__": true,
