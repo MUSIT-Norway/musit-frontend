@@ -117,9 +117,9 @@ class App extends Component {
                 </LinkContainer>
               }
             </Nav>
-            <Nav pullRight>
+            <Nav pullRight navbar style={{ 'vertical-align': 'middle' }} >
               {user &&
-                <NavItem><MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} /></NavItem>
+                <MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} />
               }
             </Nav>
           </Navbar.Collapse>

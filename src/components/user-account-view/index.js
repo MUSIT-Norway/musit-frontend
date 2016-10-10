@@ -44,8 +44,8 @@ export default class MusitUserAccount extends Component {
     </Row>)
     return (
       <OverlayTrigger overlay={tooltip}>
-        <Dropdown id="dropdown-custom-1" padding-bottom="5px">
-          <Dropdown.Toggle style={{ 'background-color': 'Transparent', 'border-color': 'Transparent' }}>
+        <Dropdown id="dropdown-custom-1" style={{ 'padding-top': '10px' }} >
+          <Dropdown.Toggle style={{ 'background-color': 'Transparent', 'border-color': '#edededed' }}>
             <FontAwesome name="user" size="2x" />
           </Dropdown.Toggle>
           <Dropdown.Menu>
