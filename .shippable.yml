@@ -3,6 +3,19 @@ language: node_js
 node_js:
  - 6.7.0
 
+integrations:
+  notifications:
+    - integrationName: MUSIT-Slack
+      type: slack
+      recipients:
+        - "#travis-builds"
+      on_success: always
+      on_failure: always
+
+branches:
+  only:
+    - master
+
 build:
   ci:
    - rm -rf node_modules
