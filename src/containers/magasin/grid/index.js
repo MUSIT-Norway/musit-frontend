@@ -259,6 +259,7 @@ export default class StorageUnitsContainer extends React.Component {
   moveModal = (toId, toName) => {
     this.props.moveNode(this.state.showModalFromId, toId, this.props.user.id, {
       onSuccess: () => {
+        this.loadNodes()
         this.setState({ ...this.state, showModal: false, showModalFromId: '' })
         window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.data.name, destination: toName }))
       },
@@ -376,6 +377,7 @@ export default class StorageUnitsContainer extends React.Component {
           show={this.state.showMoveHistory}
           onClose={this.closeMoveHistory}
           translate={translate}
+          path={path}
           moves={moves}
           onHide={this.closeMoveHistory}
           headerText={this.props.translate('musit.moveHistory')}
@@ -383,6 +385,7 @@ export default class StorageUnitsContainer extends React.Component {
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}
+          path={path}
           onMove={this.moveModal}
           headerText={this.props.translate('musit.moveModal.moveNodes')}
         />
