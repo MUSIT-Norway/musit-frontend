@@ -97,29 +97,29 @@ class App extends Component {
           <Navbar.Collapse>
             <Nav navbar>
               {user &&
-                <LinkContainer to="/magasin/root">
-                  <NavItem>Magasin</NavItem>
-                </LinkContainer>
+              <LinkContainer to="/magasin/root">
+                <NavItem>Magasin</NavItem>
+              </LinkContainer>
               }
               {user &&
-                <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
-                  <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
+                <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
+              </LinkContainer>
               }
               {user &&
-                <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
-                  <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
+                <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
+              </LinkContainer>
               }
               {user &&
-                <LinkContainer to="/reports">
-                  <NavItem>Rapporter</NavItem>
-                </LinkContainer>
+              <LinkContainer to="/reports">
+                <NavItem>Rapporter</NavItem>
+              </LinkContainer>
               }
             </Nav>
             <Nav pullRight>
               {user &&
-                <NavItem><MusitUserAccount handleLogout={this.handleLogout} /></NavItem>
+              <NavItem><MusitUserAccount handleLogout={this.handleLogout} /></NavItem>
               }
             </Nav>
           </Navbar.Collapse>

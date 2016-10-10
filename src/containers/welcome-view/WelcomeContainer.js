@@ -25,11 +25,11 @@ export default class WelcomeContainer extends React.Component {
                 <div className={styles.welcomePanel}>
                   <div>
                     {!this.props.user &&
-                      <LoginButton
-                        setUser={this.props.setUser}
-                      >
-                        {this.props.translate('musit.login', true)}
-                      </LoginButton>
+                    <LoginButton
+                      setUser={this.props.setUser}
+                    >
+                      {this.props.translate('musit.login', true)}
+                    </LoginButton>
                     }
 
                     <div className={styles.title}>

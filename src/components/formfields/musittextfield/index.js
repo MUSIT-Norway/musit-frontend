@@ -110,12 +110,12 @@ export default class MusitTextField extends Component {
               </Col>
             </Row>
             :
-            <FormControl
-              type={this.props.valueType}
-              placeholder={this.props.placeHolderText}
-              value={this.props.valueText()}
-              onChange={(event) => this.props.onChange(event.target.value)}
-            />}
+              <FormControl
+                type={this.props.valueType}
+                placeholder={this.props.placeHolderText}
+                value={this.props.valueText()}
+                onChange={(event) => this.props.onChange(event.target.value)}
+              />}
         </Col>
       </FormGroup>
     )
