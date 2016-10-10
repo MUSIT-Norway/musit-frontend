@@ -31,8 +31,6 @@ export default class MusitModal extends Component {
     onMove: PropTypes.func.isRequired,
     headerText: PropTypes.string.isRequired,
     loadChildren: PropTypes.func.isRequired,
-    loadPath: PropTypes.func.isRequired,
-    clearPath: PropTypes.func.isRequired,
     loadRoot: PropTypes.func.isRequired,
     setCurrentId: PropTypes.func.isRequired,
     clearCurrentId: PropTypes.func.isRequired,
@@ -54,13 +52,11 @@ export default class MusitModal extends Component {
 
   loadHome() {
     this.props.loadRoot()
-    this.props.clearPath();
     this.props.clearCurrentId();
   }
 
   loadStuff(initialId) {
     this.props.loadChildren(initialId)
-    this.props.loadPath(initialId)
   }
 
   render() {
