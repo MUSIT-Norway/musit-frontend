@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
- - 6.0.0
+ - 6.7.0
  
 integrations:
   notifications:
@@ -18,7 +18,7 @@ branches:
 
 build:
   ci:
-   - npm install --force
+   - npm install
    - npm run lint
    - npm run test:coverage
    - npm run build
