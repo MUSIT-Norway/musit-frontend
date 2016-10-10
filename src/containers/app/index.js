@@ -11,6 +11,7 @@ import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/au
 import jwtDecode from 'jwt-decode';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import MusitUserAccount from '../../components/user-account-view'
+import './index.css'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -50,7 +51,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
 class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -77,16 +77,15 @@ class App extends Component {
 
   render() {
     const { user, pickListNodeCount, pickListObjectCount } = this.props;
-    const styles = require('./index.scss')
     const rootPath = user ? '/musit/' : '/'
 
     return (
-      <div className={styles.app}>
+      <div>
         <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
               <IndexLink to={rootPath} activeStyle={{ color: '#33e0ff' }}>
-                <div className={styles.brand}>
+                <div className="brand">
                   <img height="40" alt="logo" src="/assets/images/favicons/unimus_transparent100x100.png" />
                 </div>
                 <span>MUSIT</span>
@@ -125,7 +124,7 @@ class App extends Component {
           </Navbar.Collapse>
         </Navbar>
 
-        <div className={styles.appContent}>
+        <div className="appContent">
           {this.props.children}
         </div>
 
@@ -135,4 +134,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default connect(mapStateToProps, mapDispatchToProps)(App)

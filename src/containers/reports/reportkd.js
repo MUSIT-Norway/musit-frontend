@@ -14,9 +14,7 @@ const mapDispatchToProps = (dispatch) => (
     loadKDReport: () => dispatch(loadKDReport())
   })
 
-@connect(mapStateToProps, mapDispatchToProps)
-
-export default class KDReport extends React.Component {
+class KDReport extends React.Component {
   static propTypes= {
     data: React.PropTypes.object,
     loadKDReport: React.PropTypes.func
@@ -59,3 +57,5 @@ export default class KDReport extends React.Component {
   }
 
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(KDReport)

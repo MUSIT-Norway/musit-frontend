@@ -39,5 +39,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ControlAddContainer extends ControlAddContainerImpl {}
+export default connect(mapStateToProps, mapDispatchToProps)(ControlAddContainerImpl)

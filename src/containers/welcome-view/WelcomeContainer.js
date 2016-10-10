@@ -1,4 +1,4 @@
-const styles = require('./WelcomeContainer.scss')
+import './style.css'
 import React from 'react'
 import { Panel, Grid, Row } from 'react-bootstrap'
 import LoginButton from '../../components/login-button'
@@ -22,7 +22,7 @@ export default class WelcomeContainer extends React.Component {
           <Panel>
             <Grid>
               <Row className="row-centered">
-                <div className={styles.welcomePanel}>
+                <div className="welcomePanel">
                   <div>
                     {!this.props.user &&
                     <LoginButton
@@ -32,12 +32,12 @@ export default class WelcomeContainer extends React.Component {
                     </LoginButton>
                     }
 
-                    <div className={styles.title}>
+                    <div className="title">
                       <p>MUSIT</p>
                       <p>Universitetsmuseenes samlingsdatabaser</p>
                     </div>
 
-                    <div className={styles.logos}>
+                    <div className="logos">
                       <img style={{ height: '60px' }} alt="logo" src={Logo1} />
                       <img style={{ height: '60px' }} alt="logo" src={Logo2} />
                       <img style={{ height: '60px' }} alt="logo" src={Logo3} />

@@ -1,5 +1,5 @@
 import { assert, React, ReactDOM, ReactTestUtils } from '../../../../../test/setup';
-const MusitTextField = require('../index');
+const MusitTextField = require('../index').default;
 
 describe('MusitTextField', () => {
   it('should render MusitTextField', () => {

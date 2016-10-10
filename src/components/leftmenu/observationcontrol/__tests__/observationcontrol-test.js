@@ -3,7 +3,7 @@ import ObservationControlComponent from '../index';
 
 describe('ObservationControlComponent', () => {
   let buttons
-  before('should render ObservationControlComponent', () => {
+  const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ObservationControlComponent
         id={1}
@@ -17,11 +17,13 @@ describe('ObservationControlComponent', () => {
       />
     );
     buttons = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'button');
-  });
+  };
   it('Check the new observation button is created.', () => {
+    setup()
     assert(buttons[0].getAttribute('id') === '1_newObservation')
   })
   it('Check the new control button is created.', () => {
+    setup()
     assert(buttons[1].getAttribute('id') === '1_newControl')
   })
 })

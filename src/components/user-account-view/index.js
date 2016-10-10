@@ -46,7 +46,7 @@ export default class MusitUserAccount extends Component {
       <OverlayTrigger overlay={tooltip}>
         <Dropdown id="dropdown-custom-1" bsSize="lg">
           <Dropdown.Toggle style={{ 'background-color': 'Transparent', 'border-color': 'Transparent' }}>
-            <FontAwesome name="user" size="5x" />
+            <FontAwesome name="user" size="1x" />
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <MenuItem eventKey={1}>Min konto</MenuItem>

@@ -51,8 +51,7 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ObservationControlGridShow extends React.Component {
+class ObservationControlGridShow extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -140,3 +139,5 @@ export default class ObservationControlGridShow extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ObservationControlGridShow)

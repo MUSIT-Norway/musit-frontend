@@ -31,8 +31,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class AddObservationPage extends React.Component {
+class AddObservationPage extends React.Component {
 
   static propTypes = {
     translate: PropTypes.func.isRequired,
@@ -71,3 +70,5 @@ export default class AddObservationPage extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddObservationPage)

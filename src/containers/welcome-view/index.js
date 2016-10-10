@@ -35,6 +35,4 @@ const mapDispatchToProps = (dispatch, props) => ({
   },
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class WelcomeView extends WelcomeContainer {
-}
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeContainer)

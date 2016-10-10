@@ -17,8 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class AddressSuggest extends React.Component {
+class AddressSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
@@ -101,3 +100,5 @@ export default class AddressSuggest extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddressSuggest)

@@ -18,7 +18,7 @@ export default class ObjectGrid extends Component {
     onMove: PropTypes.func.isRequired,
     refresh: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    MusitModal: React.PropTypes.element,
+    MusitModal: React.PropTypes.func,
   }
 
   constructor(props) {

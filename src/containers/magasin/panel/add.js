@@ -24,8 +24,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class AddStorageUnitContainer extends React.Component {
+class AddStorageUnitContainer extends React.Component {
   static propTypes = {
     onLagreClick: PropTypes.func.isRequired,
     params: PropTypes.object,
@@ -54,3 +53,5 @@ export default class AddStorageUnitContainer extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddStorageUnitContainer)

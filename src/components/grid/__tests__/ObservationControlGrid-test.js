@@ -3,7 +3,7 @@ import ObjectGrid from '../ObservationControlGrid';
 
 describe('ObservationControlGrid', () => {
   let inputComponent
-  before('should render ObservationControlGrid', () => {
+  const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ObjectGrid
         id={1}
@@ -37,17 +37,22 @@ describe('ObservationControlGrid', () => {
       />
     );
     inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'td');
-  });
+  };
+
   it('Check the 1st row Date value', () => {
+    setup()
     assert(inputComponent[1].innerHTML === '01.01.1983')
   })
   it('Check the 1st row registered date value', () => {
+    setup()
     assert(inputComponent[4].innerHTML === '04.01.1983')
   })
   it('Check the 2nd row Date value', () => {
+    setup()
     assert(inputComponent[7].innerHTML === '01.01.1984')
   })
   it('Check the 2nd row registered date value', () => {
+    setup()
     assert(inputComponent[10].innerHTML === '04.01.1984')
   })
 })

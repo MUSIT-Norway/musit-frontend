@@ -48,5 +48,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class MusitModal extends MusitModalImpl {}
+export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl)

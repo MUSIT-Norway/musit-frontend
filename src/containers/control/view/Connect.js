@@ -43,5 +43,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ControlViewContainer extends ControlViewContainerImpl {}
+export default connect(mapStateToProps, mapDispatchToProps)(ControlViewContainerImpl)

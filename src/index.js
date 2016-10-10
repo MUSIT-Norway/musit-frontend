@@ -21,7 +21,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './store/configureStore.js';
-import ApiClient from './helpers/ApiClient';
+import ApiClient from './middleware/ApiClient';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
@@ -32,6 +32,12 @@ const client = new ApiClient();
 const dest = document.getElementById('content');
 const store = createStore(client);
 const history = syncHistoryWithStore(hashHistory, store);
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
+import './style.css'
+
+import config from './config'
 
 const component = (
   <Router
@@ -49,11 +55,11 @@ ReactDOM.render(
   dest
 );
 
-if (__DEVELOPMENT__) {
+if (config.isDev) {
   window.React = React; // enable debugger
 }
 
-if (__DEVTOOLS__ && !window.devToolsExtension) {
+if (config.useDevTools && !window.devToolsExtension) {
   ReactDOM.render(
     <Provider store={store} key="provider">
       <div>

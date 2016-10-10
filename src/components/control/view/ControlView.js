@@ -243,19 +243,19 @@ export default class ControlView extends Component {
     const observation = (fontName, observationType) => {
       return (
         <Col xs={5} sm={5} md={5} >
-          <span className={`icon icon-${fontName}`} style={{ 'font-size': 'x-large' }} />
+          <span className={`icon icon-${fontName}`} style={{ 'fontSize': 'x-large' }} />
           {` ${observationType}`}
         </Col>
     ) }
     const controlOk = (
       <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="check" style={{ 'font-size': 'x-large' }} />
+        <FontAwesome name="check" style={{ 'fontSize': 'x-large' }} />
         {`  ${this.props.translate('musit.texts.ok')}`}
       </Col>
     )
     const controlNotOk = (
       <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="close" style={{ 'font-size': 'x-large' }} />
+        <FontAwesome name="close" style={{ 'fontSize': 'x-large' }} />
         {`  ${this.props.translate('musit.texts.notOk')}`}
       </Col>
     )
@@ -267,7 +267,7 @@ export default class ControlView extends Component {
             onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
             bsStyle="link"
           >
-            {ok ? null : <FontAwesome name="sort-desc" style={{ 'font-size': 'x-large' }} />}
+            {ok ? null : <FontAwesome name="sort-desc" style={{ 'fontSize': 'x-large' }} />}
           </Button>
         </Col>
       ) }

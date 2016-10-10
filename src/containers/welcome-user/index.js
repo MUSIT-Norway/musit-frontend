@@ -26,8 +26,7 @@ const mapStateToProps = () => ({
   translate: (key, markdown) => Language.translate(key, markdown)
 })
 
-@connect(mapStateToProps)
-export default class WelcomeUser extends Component {
+class WelcomeUser extends Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
   }
@@ -48,3 +47,6 @@ export default class WelcomeUser extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps)(WelcomeUser)
+

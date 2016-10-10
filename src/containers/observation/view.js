@@ -34,8 +34,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ViewObservationPage extends React.Component {
+class ViewObservationPage extends React.Component {
 
   static propTypes = {
     observations: PropTypes.arrayOf(PropTypes.object),
@@ -95,3 +94,5 @@ export default class ViewObservationPage extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewObservationPage)

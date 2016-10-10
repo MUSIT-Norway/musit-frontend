@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 const I18n = require('react-i18nify').I18n;
+import './index.css'
 
 export default class PickListComponent extends Component {
   static propTypes = {
@@ -16,7 +17,6 @@ export default class PickListComponent extends Component {
   }
 
   render() {
-    const style = require('./index.scss')
     const {
       picks,
       marked,
@@ -30,14 +30,14 @@ export default class PickListComponent extends Component {
         <Table responsive striped condensed hover>
           <thead>
             <tr>
-              <th className={style.toolsColumn} colSpan="3">
+              <th className="toolsColumn" colSpan="3">
                 {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;
                 <input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
                 {isnode ?
-                  <FontAwesome className={style.normalAction} name="print" /> : null
+                  <FontAwesome className="normalAction" name="print" /> : null
                 }
                 <FontAwesome
-                  className={style.normalAction}
+                  className="normalAction"
                   style={{ cursor: 'pointer' }}
                   name="truck"
                   onClick={() => {
@@ -47,7 +47,7 @@ export default class PickListComponent extends Component {
                   }}
                 />
                 <FontAwesome
-                  className={style.normalAction}
+                  className="normalAction"
                   style={{ cursor: 'pointer' }}
                   name="remove"
                   onClick={() => {
@@ -65,30 +65,30 @@ export default class PickListComponent extends Component {
               const isItemMarked = pick.marked
               return (
                 <tr key={i}>
-                  <td className={style.icon}>
+                  <td className="icon">
                     {iconRendrer(pick)}
                   </td>
-                  <td className={style.label}>
+                  <td className="label">
                     {labelRendrer(pick)}
                   </td>
-                  <td className={style.toolsColumn}>
+                  <td className="toolsColumn">
                     <input
                       type="checkbox"
                       checked={isItemMarked ? 'checked' : ''}
                       onClick={() => this.props.toggle(item)}
-                      className={style.normalAction}
+                      className="normalAction"
                     />
                     {isnode ?
-                      <FontAwesome className={style.normalAction} name="print" /> : null
+                      <FontAwesome className="normalAction" name="print" /> : null
                     }
                     <FontAwesome
-                      className={style.normalAction}
+                      className="normalAction"
                       style={{ cursor: 'pointer' }}
                       name="truck"
                       onClick={() => this.props.move(item)}
                     />
                     <FontAwesome
-                      className={style.normalAction}
+                      className="normalAction"
                       style={{ cursor: 'pointer' }}
                       name="remove"
                       onClick={() => this.props.remove(item)}

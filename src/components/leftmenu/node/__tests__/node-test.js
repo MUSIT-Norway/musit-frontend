@@ -6,7 +6,7 @@ import NodeLeftMenuComponent from '../index';
 describe('NodeLeftMenuComponent', () => {
   let labels
   let buttons
-  before('should render ObservationControlComponent', () => {
+  const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <NodeLeftMenuComponent
         id={1}
@@ -26,17 +26,21 @@ describe('NodeLeftMenuComponent', () => {
     );
     labels = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'label');
     buttons = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'button');
-  });
+  };
   it('Check the New newNode button is created.', () => {
+    setup()
     assert(buttons[0].getAttribute('id') === '1_newNode')
   })
   it('Check the New properties button is created.', () => {
+    setup()
     assert(buttons[1].getAttribute('id') === '1_properties')
   })
   it('Check the objectsOnNode label is created.', () => {
+    setup()
     assert(labels[0].getAttribute('id') === '1_objectsOnNode')
   })
   it('Check the totalObjectCount label is created.', () => {
+    setup()
     assert(labels[1].getAttribute('id') === '1_totalObjectCount')
   })
 })

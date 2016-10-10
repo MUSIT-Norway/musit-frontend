@@ -5,7 +5,7 @@ describe('ObservationDoubleTextAreaComponent', () => {
   let inputElementLeft;
   let inputElementRight;
 
-  before('should render ObservationDoubleTextAreaComponent', () => {
+  const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ObservationDoubleTextAreaComponent
         id="test"
@@ -27,21 +27,25 @@ describe('ObservationDoubleTextAreaComponent', () => {
     const inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'textarea');
     inputElementLeft = inputComponent[0];
     inputElementRight = inputComponent[1];
-  });
+  };
 
   it('Check the left text area number of row', () => {
+    setup()
     assert(inputElementLeft.getAttribute('rows') === '5')
   })
 
   it('Check the left text area Tooltip', () => {
+    setup()
     assert(inputElementLeft.getAttribute('title') === 'Left tooltip')
   })
 
   it('Check left value', () => {
+    setup()
     assert(inputElementLeft.value === 'left')
   })
 
   it('Check the right text area number of row', () => {
+    setup()
     assert(inputElementRight.getAttribute('rows') === '5')
   })
 })

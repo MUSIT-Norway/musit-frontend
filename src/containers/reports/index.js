@@ -15,8 +15,7 @@ const mapDispatchToProps = (dispatch) => (
     loadReports: () => dispatch(loadReports())
   })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Reports extends React.Component {
+class Reports extends React.Component {
   static propTypes = {
     reports: React.PropTypes.object,
     translate: React.PropTypes.func.isRequired,
@@ -64,3 +63,5 @@ export default class Reports extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Reports)

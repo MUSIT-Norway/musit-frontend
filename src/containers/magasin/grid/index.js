@@ -108,9 +108,7 @@ const mapDispatchToProps = (dispatch, props) => {
   })
 }
 
-
-@connect(mapStateToProps, mapDispatchToProps)
-export default class StorageUnitsContainer extends React.Component {
+class StorageUnitsContainer extends React.Component {
   static propTypes = {
     children: React.PropTypes.arrayOf(React.PropTypes.object),
     objects: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -359,3 +357,5 @@ export default class StorageUnitsContainer extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(StorageUnitsContainer)

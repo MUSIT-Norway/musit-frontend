@@ -1,4 +1,5 @@
-const languageData = require('./language.yaml')
+import languageData from './language.json'
+
 const initialState = {
   data: languageData
 };

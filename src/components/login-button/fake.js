@@ -27,8 +27,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-@connect(mapStateToProps)
-export default class FakeLoginSelector extends Component {
+class FakeLoginSelector extends Component {
   static propTypes = {
     users: PropTypes.arrayOf(PropTypes.object),
     setUser: PropTypes.func.isRequired,
@@ -53,3 +52,5 @@ export default class FakeLoginSelector extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps)(FakeLoginSelector)

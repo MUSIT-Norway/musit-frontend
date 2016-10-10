@@ -25,6 +25,8 @@ const { persistState } = require('redux-devtools')
 const DevTools = require('../components/dev-tools')
 const reducers = require('../reducers')
 
+const __DEVELOPMENT__ = global.__DEVELOPMENT__;
+
 const createStore = (client, data) => {
   const middleware = [createMiddleware(client)]
 
