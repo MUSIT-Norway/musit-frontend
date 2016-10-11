@@ -154,7 +154,9 @@ export const loadMoveHistoryForObject = (id, callback) => {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/objects/${id}/locations`),
     callback
+  }
 }
+
 export const clearMoveHistoryForObject = () => {
   return {
     type: CLEAR_SUCCESS,
