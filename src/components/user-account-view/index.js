@@ -35,7 +35,7 @@ export default class MusitUserAccount extends Component {
 
   render() {
     const tooltip = (
-      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userName}</strong></Tooltip>
+      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>
     );
     const menuText = (t1, t2) =>
     (<Row>
@@ -44,9 +44,9 @@ export default class MusitUserAccount extends Component {
     </Row>)
     return (
       <OverlayTrigger overlay={tooltip}>
-        <Dropdown id="dropdown-custom-1" bsSize="lg">
-          <Dropdown.Toggle style={{ 'background-color': 'Transparent', 'border-color': 'Transparent' }}>
-            <FontAwesome name="user" size="5x" />
+        <Dropdown id="dropdown-custom-1" style={{ 'padding-top': '10px' }} >
+          <Dropdown.Toggle style={{ 'background-color': 'Transparent', 'border-color': '#edededed' }}>
+            <FontAwesome name="user" size="2x" />
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <MenuItem eventKey={1}>Min konto</MenuItem>
