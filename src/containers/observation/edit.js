@@ -8,7 +8,6 @@ import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { parseISODateNonStrict as parseISODate, createBreadcrumbPath } from '../../util'
-import { loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
@@ -29,9 +28,6 @@ const mapDispatchToProps = (dispatch) => ({
         onFailure: () => alert('This went terribly wrong!')
       }))
     }
-  },
-  loadPath: (id) => {
-    dispatch(loadPath(id))
   }
 })
 
@@ -44,13 +40,9 @@ export default class EditObservationPage extends React.Component {
     location: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
-    loadPath: React.PropTypes.func.isRequired
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
-  componentWillMount() {
-    this.props.loadPath(this.props.params.id)
-  }
 
   getObservationsFromLocationState() {
     return Object.keys(this.props.location.state)

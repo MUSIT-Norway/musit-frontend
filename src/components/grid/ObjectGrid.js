@@ -20,6 +20,7 @@ export default class ObjectGrid extends Component {
     refresh: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
     MusitModal: React.PropTypes.element,
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   constructor(props) {
@@ -54,13 +55,14 @@ export default class ObjectGrid extends Component {
   }
 
   render() {
-    const { id, translate, tableData, MusitModal } = this.props
+    const { id, translate, tableData, MusitModal, path } = this.props
     return (
       <div>
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}
           onMove={this.moveModal}
+          path={path}
           headerText={this.props.translate('musit.moveModal.moveObjects')}
         />
         <FormGroup>

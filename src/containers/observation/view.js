@@ -6,7 +6,6 @@ import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { parseISODateNonStrict as parseISODate, createBreadcrumbPath } from '../../util'
 import Breadcrumb from '../../layout/Breadcrumb'
-import { loadPath } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
@@ -27,9 +26,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadPersonNameFromId: (actorId) => {
       dispatch(getActorNameFromId(actorId))
-    },
-    loadPath: (id) => {
-      dispatch(loadPath(id))
     }
   }
 }
@@ -47,8 +43,7 @@ export default class ViewObservationPage extends React.Component {
     params: PropTypes.object.isRequired,
     loadPersonNameFromId: PropTypes.func.isRequired,
     loadObservation: PropTypes.func.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
-    loadPath: React.PropTypes.func.isRequired
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   componentWillMount() {
@@ -56,7 +51,6 @@ export default class ViewObservationPage extends React.Component {
       this.props.loadObservation(this.props.params.id, this.props.params.obsId, {
         onSuccess: (r) => {
           this.props.loadPersonNameFromId(r.doneBy.actorId)
-          this.props.loadPath(this.props.params.id)
         }
       })
     }

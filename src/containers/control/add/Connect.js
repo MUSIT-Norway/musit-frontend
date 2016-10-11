@@ -20,7 +20,6 @@ import { connect } from 'react-redux'
 import { addControl } from '../../../reducers/control'
 import Language from '../../../components/language'
 import ControlAddContainerImpl from './index'
-import { loadPath } from '../../../reducers/storageunit/grid'
 import { createBreadcrumbPath } from '../../../util'
 
 const mapStateToProps = (state) => ({
@@ -33,9 +32,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   saveControl: (id, data, saveControlCallback) => {
     dispatch(addControl(id, data, {}, saveControlCallback))
-  },
-  loadPath: (id) => {
-    dispatch(loadPath(id))
   }
 })
 

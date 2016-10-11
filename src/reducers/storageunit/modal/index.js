@@ -4,9 +4,6 @@ const LOAD_SEVERAL_FAIL = 'musit/storageunit-modal/LOAD_SEVERAL_FAIL'
 const LOAD_ROOT = 'musit/storageunit-modal/LOAD_ROOT'
 const LOAD_ROOT_SUCCESS = 'musit/storageunit-modal/LOAD_ROOT_SUCCESS'
 const LOAD_ROOT_FAIL = 'musit/storageunit-modal/LOAD_ROOT_FAIL'
-const LOAD_PATH = 'musit/storageunit-modal/LOAD_PATH'
-const LOAD_PATH_SUCCESS = 'musit/storageunit-modal/LOAD_PATH_SUCCESS'
-const LOAD_PATH_FAIL = 'musit/storageunit-modal/LOAD_PATH_FAIL'
 const CLEAR_ROOT = 'musit/storageunit-modal/CLEAR_ROOT'
 const SET_CURRENT = 'musit/storageunit-modal/SET_CURRENT'
 const CLEAR_CURRENT = 'musit/storageunit-modal/CLEAR_CURRENT'
@@ -44,41 +41,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
         loaded: false,
         error: action.error
       }
-    case LOAD_PATH:
-      return {
-        ...state,
-        root: {
-          ...state.root,
-          loading: true
-        }
-      }
-    case LOAD_PATH_SUCCESS:
-      return {
-        ...state,
-        root: {
-          ...state.root,
-          path: action.result.filter(s => s.name !== 'root-node').map((s) => {
-            return {
-              id: s.id,
-              name: s.name,
-              type: s.storageType,
-              url: `/magasin/${s.id}`
-            }
-          }),
-          loaded: true,
-          loading: false
-        }
-      }
-    case LOAD_PATH_FAIL:
-      return {
-        ...state,
-        root: {
-          ...state.root,
-          loading: false,
-          loaded: false,
-          error: action.error
-        }
-      }
+
     case LOAD_ROOT:
       return {
         ...state,
@@ -157,21 +120,5 @@ export const setCurrent = (id) => {
 export const clearCurrent = () => {
   return {
     type: CLEAR_CURRENT
-  }
-}
-
-export const loadPath = (id, callback) => {
-  const url = `/api/storageadmin/v1/storageunit/${id}/path`
-  return {
-    types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
-    promise: (client) => client.get(url),
-    callback
-  };
-}
-
-export const clearPath = () => {
-  return {
-    type: LOAD_PATH_SUCCESS,
-    result: []
   }
 }
