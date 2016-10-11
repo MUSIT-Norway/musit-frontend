@@ -32,12 +32,12 @@ const client = new ApiClient();
 const dest = document.getElementById('content');
 const store = createStore(client);
 const history = syncHistoryWithStore(hashHistory, store);
+import config from './config'
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import './style.css'
-
-import config from './config'
+import 'font-awesome/css/font-awesome.css'
+import './index.css'
 
 const component = (
   <Router
