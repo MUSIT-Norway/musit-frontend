@@ -440,13 +440,13 @@ export default class ObservationPage extends React.Component {
                   Lukk
                 </Button>
               </Col> :
-                <SaveCancel
-                  translate={this.props.translate}
-                  onClickSave={this.handleSubmit}
-                  onClickCancel={() => hashHistory.goBack()}
-                  saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
-                  cancelDisabled={this.props.cancelDisabled}
-                />
+              <SaveCancel
+                translate={this.props.translate}
+                onClickSave={this.handleSubmit}
+                onClickCancel={() => hashHistory.goBack()}
+                saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
+                cancelDisabled={this.props.cancelDisabled}
+              />
             }
           </Row>
         </Grid>
