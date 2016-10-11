@@ -32,6 +32,7 @@ export default class MusitModal extends Component {
     headerText: PropTypes.string.isRequired,
     loadChildren: PropTypes.func.isRequired,
     loadRoot: PropTypes.func.isRequired,
+    clearRoot: PropTypes.func.isRequired,
     setCurrentId: PropTypes.func.isRequired,
     clearCurrentId: PropTypes.func.isRequired,
     currentId: PropTypes.number,
@@ -51,6 +52,7 @@ export default class MusitModal extends Component {
   }
 
   loadHome() {
+    this.props.clearRoot()
     this.props.loadRoot()
     this.props.clearCurrentId();
   }
