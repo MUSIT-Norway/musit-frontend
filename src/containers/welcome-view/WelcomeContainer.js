@@ -8,6 +8,8 @@ import Logo2 from './assets/UiO_SAMARB_rgb_gjennomsiktig.png'
 import Logo3 from './assets/UiT_samarbeidslogo_bokmal_300ppi.png'
 import Logo4 from './assets/UiBmerke_grayscale.png'
 import Logo5 from './assets/ntnu_u-slagord.png'
+import FeideLogo from './assets/feide-login-icon.png'
+const I18n = require('react-i18nify').I18n;
 
 export default class WelcomeContainer extends React.Component {
   static propTypes = {
@@ -29,7 +31,7 @@ export default class WelcomeContainer extends React.Component {
                       <LoginButton
                         setUser={this.props.setUser}
                       >
-                        {this.props.translate('musit.login', true)}
+                        {I18n.t('musit.login')}<img src={FeideLogo} alt="feide-logo-button" title="Feide Login" />
                       </LoginButton>
                     }
 
