@@ -12,6 +12,7 @@ import jwtDecode from 'jwt-decode';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import MusitUserAccount from '../../components/user-account-view'
 import './index.css'
+import Logo from './assets/logo.png'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -86,7 +87,7 @@ class App extends Component {
             <Navbar.Brand>
               <IndexLink to={rootPath} activeStyle={{ color: '#33e0ff' }}>
                 <div className="brand">
-                  <img height="40" alt="logo" src="/assets/images/favicons/unimus_transparent100x100.png" />
+                  <img height="40" alt="logo" src={Logo} />
                 </div>
                 <span>MUSIT</span>
               </IndexLink>

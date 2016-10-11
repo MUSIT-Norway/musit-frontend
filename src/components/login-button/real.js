@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
+import FeideLogo from './assets/feide-login-icon.png'
 
 export default class FeideButton extends React.Component {
   static propTypes = {
@@ -14,7 +15,7 @@ export default class FeideButton extends React.Component {
         bsStyle="default"
         style={{ marginTop: '1em' }}
         height="20"
-        src="feide-login-icon.png"
+        src={FeideLogo}
       >
         <span
           onClick={() => {
