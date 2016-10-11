@@ -20,4 +20,5 @@ build:
   ci:
    - npm install
    - npm test -- --coverage
+   - npm run codacy
    - npm run build
