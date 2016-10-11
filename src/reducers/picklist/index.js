@@ -1,4 +1,4 @@
-// import { createBreadcrumbPath } from '../../util'
+import { createBreadcrumbPath } from '../../util'
 
 export const TYPES = {
   NODE: 'NODE',
@@ -59,21 +59,33 @@ const clearItems = (type) => (state) => ({
   [type]: []
 });
 
+export const getPath = (pathStr) => {
+  const pathStrArr = pathStr.substr(1, pathStr.length - 2).split(',')
+  // EX: ,1,2,3,19, will be transformed to 1,2,3,19
+  return `,${pathStrArr.slice(0, -1).join(',').toString()},`
+}
 
-const loadNode = () => (state) => state
+const loadNode = (state) => state
 
-const loadNodeFail = (action) => (state) => ({ ...state, error: action.error })
+const loadNodeFail = (state, action) => ({ ...state, error: action.error })
 
-const loadNodeSuccess = (state, action) => {
-  const modifiedNodes = state[TYPES.NODE].map((n) => {
+const loadNodeSuccess = (type) => (state, action) => {
+  const modifiedNodes = state[type].map((n) => {
     if (n.value.id === action.id) {
-      return { ...n, value: { ...n.value, path: action.result } }
+      const newPath = createBreadcrumbPath(
+        getPath(action.result.path),
+        action.result.pathNames
+      )
+      return {
+        ...n,
+        path: newPath
+      }
     }
     return n
   })
   return {
     ...state,
-    [TYPES.NODE]: modifiedNodes
+    [type]: modifiedNodes
   }
 };
 
@@ -83,7 +95,7 @@ const NODE_ACTION_HANDLERS = ({
   [REMOVE_NODE]: removeItem(TYPES.NODE),
   [TOGGLE_NODE]: toggleItem(TYPES.NODE),
   [LOAD_ONE_NODE]: loadNode,
-  [LOAD_ONE_NODE_SUCCESS]: loadNodeSuccess,
+  [LOAD_ONE_NODE_SUCCESS]: loadNodeSuccess(TYPES.NODE),
   [LOAD_ONE_NODE_FAIL]: loadNodeFail,
 });
 

@@ -38,7 +38,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   moveNode: (nodeId, destinationId, doneBy, callback) => {
     dispatch(moveNode(nodeId, destinationId, doneBy, callback))
-    dispatch(refreshNode('20'))
   },
   addNode: (unit, path) => {
     dispatch(addNode(unit, path))
