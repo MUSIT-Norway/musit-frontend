@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "deep-freeze": "0.0.1",
-    "jsdom": "^9.6.0",
-    "react-addons-test-utils": "^15.3.2",
     "react-scripts": "0.6.1"
   },
   "dependencies": {
@@ -15,10 +12,13 @@
     "chai-as-promised": "^6.0.0",
     "chai-enzyme": "^0.5.2",
     "cheerio": "^0.22.0",
+    "deep-freeze": "0.0.1",
     "enzyme": "^2.4.1",
     "font-awesome": "^4.6.3",
+    "jsdom": "^9.6.0",
     "jwt-decode": "^2.1.0",
     "react": "^15.3.2",
+    "react-addons-test-utils": "^15.3.2",
     "react-autosuggest": "^6.0.4",
     "react-bootstrap": "^0.30.5",
     "react-bootstrap-date-picker": "^3.7.0",
