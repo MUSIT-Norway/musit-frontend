@@ -1,3 +1,4 @@
+/* @flow */
 import React, { Component, PropTypes } from 'react'
 import { Button, Row, Col } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'

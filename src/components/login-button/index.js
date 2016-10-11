@@ -1,4 +1,5 @@
-const real = require('./real')
-const fake = require('./fake')
-const Button = __FAKE_FEIDE__ ? fake : real;
+import config from '../../config'
+const real = require('./real').default
+const fake = require('./fake').default
+const Button = config.isFake ? fake : real;
 export default Button;

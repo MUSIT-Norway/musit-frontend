@@ -1,3 +1,4 @@
+/* @flow */
 const LOAD_SEVERAL = 'musit/storageunit-modal/LOAD_SEVERAL'
 const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-modal/LOAD_SEVERAL_SUCCESS'
 const LOAD_SEVERAL_FAIL = 'musit/storageunit-modal/LOAD_SEVERAL_FAIL'

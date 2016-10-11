@@ -1,3 +1,4 @@
+/* @flow */
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -110,12 +111,12 @@ export default class MusitTextField extends Component {
               </Col>
             </Row>
             :
-              <FormControl
-                type={this.props.valueType}
-                placeholder={this.props.placeHolderText}
-                value={this.props.valueText()}
-                onChange={(event) => this.props.onChange(event.target.value)}
-              />}
+            <FormControl
+              type={this.props.valueType}
+              placeholder={this.props.placeHolderText}
+              value={this.props.valueText()}
+              onChange={(event) => this.props.onChange(event.target.value)}
+            />}
         </Col>
       </FormGroup>
     )

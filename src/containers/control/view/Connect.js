@@ -1,3 +1,4 @@
+/* @flow */
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -39,5 +40,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ControlViewContainer extends ControlViewContainerImpl {}
+export default connect(mapStateToProps, mapDispatchToProps)(ControlViewContainerImpl)

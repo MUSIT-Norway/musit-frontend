@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react'
 import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
@@ -17,8 +18,7 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ActorSuggest extends React.Component {
+class ActorSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
@@ -81,3 +81,5 @@ export default class ActorSuggest extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActorSuggest)

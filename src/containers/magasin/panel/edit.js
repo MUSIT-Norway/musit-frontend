@@ -1,3 +1,4 @@
+/* @flow */
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router'
@@ -27,8 +28,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class EditStorageUnitContainer extends React.Component {
+class EditStorageUnitContainer extends React.Component {
   static propTypes = {
     onLagreClick: PropTypes.func.isRequired,
     loadStorageUnit: PropTypes.func.isRequired,
@@ -58,3 +58,5 @@ export default class EditStorageUnitContainer extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditStorageUnitContainer)

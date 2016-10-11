@@ -40,6 +40,7 @@ import objectGridReducer from './grid/object'
 import moveHistoryReducer from './grid/move'
 import { reducer as formReducer } from 'redux-form'
 
+
 const rootReducer = combineReducers({
   routing: routerReducer,
   form: formReducer,
@@ -62,6 +63,6 @@ const rootReducer = combineReducers({
   nodeGrid: nodeGridReducer,
   movehistory: moveHistoryReducer,
   objectGrid: objectGridReducer
-})
+});
 
-export default rootReducer
+export default rootReducer;

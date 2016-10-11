@@ -1,3 +1,4 @@
+/* @flow */
 import { mapToFrontend } from '../mapper'
 const LOAD_SEVERAL = 'musit/storageunit-grid/LOAD_SEVERAL'
 const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-grid/LOAD_SEVERAL_SUCCESS'

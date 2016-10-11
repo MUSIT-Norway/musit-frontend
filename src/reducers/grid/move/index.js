@@ -1,6 +1,10 @@
+/* @flow */
 const LOAD = 'musit/movehistory/LOAD'
 const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS'
 const LOAD_FAIL = 'musit/movehistory/LOAD_FAIL'
+const LOAD_ACTOR = 'musit/movehistory/LOAD_ACTOR'
+const LOAD_ACTOR_SUCCESS = 'musit/movehistory/LOAD_ACTOR_SUCCESS'
+const LOAD_ACTOR_FAIL = 'musit/movehistory/LOAD_ACTOR_FAIL'
 const CLEAR = 'musit/movehistory/CLEAR_SUCCESS'
 const CLEAR_SUCCESS = 'musit/movehistory/CLEAR'
 const CLEAR_FAIL = 'musit/movehistory/CLEAR_FAIL'
@@ -81,7 +85,33 @@ const moveHistoryReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        data: initialState.data
+        data: action.error
+
+      };
+    case LOAD_ACTOR:
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    case LOAD_ACTOR_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: state.data.map((e) => {
+          const actor = action.result.find((a) => a.id === e.doneBy);
+          return { ...e,
+            doneBy: actor ? actor.fn : e.doneBy
+          }
+        })
+      };
+    case LOAD_ACTOR_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: { ...state.data, actor: action.error }
       }
     case CLEAR_SUCCESS:
       return {
@@ -110,11 +140,20 @@ const moveHistoryReducer = (state = initialState, action) => {
 
 export default moveHistoryReducer;
 
-export const loadMoveHistoryForObject = (id) => {
+
+export const loadActor = (r) => {
+  console.log(r)
+  return {
+    types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAIL],
+    promise: (client) => client.post('/api/actor/v1/person/details', r)
+  }
+}
+
+export const loadMoveHistoryForObject = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/objects/${id}/locations`)
-  }
+    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/objects/${id}/locations`),
+    callback
 }
 export const clearMoveHistoryForObject = () => {
   return {

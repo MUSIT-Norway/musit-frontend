@@ -1,43 +1,43 @@
-const LOGIN = 'musit/fake-auth-info/LOGIN'
-const LOGIN_SUCCESS = 'musit/fake-auth-info/LOGIN_SUCCESS'
-const LOGIN_FAIL = 'musit/fake-auth-info/LOGIN_FAIL'
+const LOGIN = 'musit/fake-auth-info/LOGIN';
+const LOGIN_SUCCESS = 'musit/fake-auth-info/LOGIN_SUCCESS';
+const LOGIN_FAIL = 'musit/fake-auth-info/LOGIN_FAIL';
 
-const fakeAuthInfo = require('../../../fake_security.json')
+const fakeAuthInfo = require('../../../fake_security.json');
 const initialState = {
-  ...fakeAuthInfo
-}
+  ...fakeAuthInfo,
+};
 
 const fakeAuthInfoReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case LOGIN:
       return {
         ...state,
-        loading: true
-      }
+        loading: true,
+      };
     case LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
         loaded: true,
-        user: action.result.user
-      }
+        user: action.result.user,
+      };
     case LOGIN_FAIL:
       return {
         ...state,
         loading: false,
         loaded: false,
-        error: action.error
-      }
+        error: action.error,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default fakeAuthInfoReducer
+export default fakeAuthInfoReducer;
 
 export const login = () => {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.get('/musit')
-  }
-}
+    promise: client => client.get('/musit'),
+  };
+};

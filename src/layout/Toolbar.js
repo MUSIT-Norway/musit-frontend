@@ -1,11 +1,9 @@
+/* @flow */
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { MusitField } from '../components/formfields'
-let styles = {}
-if (process.env.NODE_ENV !== 'test') {
-  styles = require('./Toolbar.scss')
-}
 import FontAwesome from 'react-fontawesome'
+import './Toolbar.css'
 
 export default class Toolbar extends React.Component {
   static propTypes = {
@@ -35,7 +33,7 @@ export default class Toolbar extends React.Component {
     } = this.props
     if (onSearchChanged) {
       optionalSearch = (
-        <div className={styles.searchField}>
+        <div className="searchField">
           <MusitField
             style={{ width: '200px' }}
             id={'search'}
@@ -49,15 +47,15 @@ export default class Toolbar extends React.Component {
       )
     } else {
       optionalSearch = (
-        <div className={styles.searchField}>
+        <div className="searchField">
           <span style={{ width: '180px', display: 'inline-block' }}>{' '}</span>
         </div>
       )
     }
     return (
-      <div className={styles.wrapper}>
+      <div className="wrapper">
         {optionalSearch}
-        <div className={styles.toolBarButtons}>
+        <div className="toolBarButtons">
           <Button active={showLeft} onClick={() => clickShowLeft()}>
             <FontAwesome name={showLeft ? 'check-square-o' : 'square-o'} />{' '}{labelLeft}
           </Button>

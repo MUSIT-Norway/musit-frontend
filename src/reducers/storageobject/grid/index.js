@@ -1,3 +1,4 @@
+/* @flow */
 export const LOAD_SEVERAL = 'musit/storageobject-grid/LOAD_SEVERAL'
 export const LOAD_SEVERAL_SUCCESS = 'musit/storageobject-grid/LOAD_SEVERAL_SUCCESS'
 export const LOAD_SEVERAL_FAIL = 'musit/storageobject-grid/LOAD_SEVERAL_FAIL'

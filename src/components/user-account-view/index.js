@@ -1,7 +1,4 @@
-/**
- * Created by steinaol on 06.10.16.
- */
-
+/* @flow */
 import { MenuItem, Dropdown, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
@@ -40,9 +37,9 @@ export default class MusitUserAccount extends Component {
     </Row>)
     return (
       <OverlayTrigger overlay={tooltip}>
-        <Dropdown id="dropdown-custom-1" bsSize="lg">
-          <Dropdown.Toggle style={{ 'background-color': 'Transparent', 'border-color': 'Transparent' }}>
-            <FontAwesome name="user" size="5x" />
+        <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
+          <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed' }}>
+            <FontAwesome name="user" size="1x" />
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <MenuItem eventKey={1}>Min konto</MenuItem>
@@ -54,9 +51,9 @@ export default class MusitUserAccount extends Component {
                 <MenuItem eventKey={`coll_${cc.id}`}>
                   {menuText(<FontAwesome name="check" />, cc.collection)}
                 </MenuItem> :
-                  <MenuItem>
-                    {menuText('', cc.collection)}
-                  </MenuItem>))
+                <MenuItem>
+                  {menuText('', cc.collection)}
+                </MenuItem>))
               }
             <MenuItem divider />
             <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>

@@ -1,3 +1,4 @@
+/* @flow */
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -37,8 +38,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-@connect(mapStateToProps)
-export default class StorageUnitContainer extends Component {
+class StorageUnitContainer extends Component {
   static propTypes = {
     unit: PropTypes.object.isRequired,
     params: PropTypes.object,
@@ -618,3 +618,5 @@ export default class StorageUnitContainer extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(StorageUnitContainer)

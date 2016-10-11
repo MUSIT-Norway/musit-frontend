@@ -1,66 +1,51 @@
+/* @flow */
 import React from 'react'
-import { connect } from 'react-redux';
-import Language from '../../components/language'
-import { Table, PageHeader } from 'react-bootstrap'
-import { loadReports } from '../../reducers/reports'
+import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
 
-
-const mapStateToProps = (state) => ({
-  reports: state.reports.data,
-  translate: (key, markdown) => Language.translate(key, markdown)
-})
-
-const mapDispatchToProps = (dispatch) => (
+const reports = [
   {
-    loadReports: () => dispatch(loadReports())
-  })
+    title: 'Sikring av samlinger',
+    url: '/#/reports/kdreport',
+    description: 'Sikringsindikatorer som rapporteres til KD.',
+  }
+]
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Reports extends React.Component {
-  static propTypes = {
-    reports: React.PropTypes.object,
-    translate: React.PropTypes.func.isRequired,
-    loadReports: React.PropTypes.func.isRequired
-  }
-  componentWillMount() {
-    this.props.loadReports()
-  }
-
-  renderReports = (reports) => {
-    if (reports) {
-      return Object.keys(reports).map((k) => {
-        const r = reports[k];
-        return (<tr id={r.id}>
-          <td>
-            <a href={r.url}>
-              {r.title}
-            </a>
-          </td>
-          <td>
-            {r.description}
-          </td>
-        </tr>) }
-        )
-    }
-    return null
-  }
-
-  render() {
-    const { reports } = this.props
-    return (
-      <div style={{ padding: '50px' }}>
-        <PageHeader>
-          {this.props.translate('musit.reports.title')}
-        </PageHeader>
-        <Table>
-          <thead>
-            <tr><th>Tittel</th> <th> Beskrivelse </th> </tr>
-          </thead>
-          <tbody>
-            {this.renderReports(reports)}
-          </tbody>
-        </Table>
-      </div>
-    )
-  }
+export default () => {
+  return (
+    <div>
+      <main>
+        <Panel>
+          <Grid>
+            <Row className="row-centered">
+              <PageHeader>
+                Rapporter
+              </PageHeader>
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Tittel</th>
+                    <th>Beskrivelse</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {reports.map((report, index) =>
+                    <tr key={index} id={report.id}>
+                      <td>
+                        <a href={report.url}>
+                          {report.title}
+                        </a>
+                      </td>
+                      <td>
+                        {report.description}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </Table>
+            </Row>
+          </Grid>
+        </Panel>
+      </main>
+    </div>
+  )
 }

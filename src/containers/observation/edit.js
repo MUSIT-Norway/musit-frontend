@@ -1,3 +1,4 @@
+/* @flow */
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
@@ -31,9 +32,7 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-
-@connect(mapStateToProps, mapDispatchToProps)
-export default class EditObservationPage extends React.Component {
+class EditObservationPage extends React.Component {
 
   static propTypes = {
     translate: PropTypes.func.isRequired,
@@ -108,3 +107,5 @@ export default class EditObservationPage extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditObservationPage)

@@ -1,4 +1,4 @@
-const MusitTextArea = require('../index');
+const MusitTextArea = require('../index').default;
 
 import { assert, React, ReactDOM, ReactTestUtils } from '../../../../../test/setup';
 
@@ -12,7 +12,7 @@ describe('MusitTextArea', () => {
         value="flint"
         onChange={() => null}
       />
-      );
+    );
 
     const actualDiv = ReactDOM.findDOMNode(myDiv);
     const field = actualDiv.querySelectorAll('textarea')[0];

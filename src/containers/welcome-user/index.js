@@ -1,3 +1,4 @@
+/* @flow */
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -26,8 +27,7 @@ const mapStateToProps = () => ({
   translate: (key, markdown) => Language.translate(key, markdown)
 })
 
-@connect(mapStateToProps)
-export default class WelcomeUser extends Component {
+class WelcomeUser extends Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
   }
@@ -48,3 +48,6 @@ export default class WelcomeUser extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps)(WelcomeUser)
+
