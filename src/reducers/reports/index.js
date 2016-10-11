@@ -1,3 +1,4 @@
+/* @flow */
 const LOAD_KD_REPORT = 'musit/reports/LOAD_KD_REPORT'
 const LOAD_KD_REPORT_FAIL = 'musit/reports/LOAD_KD_REPORT_FAIL'
 const LOAD_KD_REPORT_SUCESS = 'musit/reports/LOAD_KD_REPORT_SUCESS'

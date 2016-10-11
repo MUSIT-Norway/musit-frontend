@@ -1,7 +1,4 @@
-/**
- * Created by steinaol on 5/31/16.
- */
-
+/* @flow */
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select'
 import validate from '../common/validators'

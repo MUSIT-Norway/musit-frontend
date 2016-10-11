@@ -1,3 +1,4 @@
+/* @flow */
 import 'react-select/dist/react-select.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
@@ -34,14 +35,16 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(clearActor())
     },
     loadUser: () => {
-      if (localStorage.getItem('jwtToken')) {
-        const user = jwtDecode(localStorage.getItem('jwtToken'))
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const user = jwtDecode(jwtToken)
         dispatch(connectUser(user));
         dispatch(loadActor())
         return true;
       }
-      if (localStorage.getItem('fakeToken')) {
-        const userId = JSON.parse(localStorage.getItem('fakeToken')).userId
+      const fakeToken = localStorage.getItem('fakeToken');
+      if (fakeToken) {
+        const userId = JSON.parse(fakeToken).userId
         const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
         dispatch(connectUser(user))
         dispatch(loadActor())

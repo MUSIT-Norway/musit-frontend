@@ -1,3 +1,4 @@
+/* @flow */
 import languageData from './language.json'
 
 const initialState = {

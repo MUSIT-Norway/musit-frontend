@@ -1,3 +1,4 @@
+/* @flow */
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -28,7 +29,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  setUser: (user) => {
+  setUser: (user: any) => {
     dispatch(connectUser(user))
     dispatch(loadActor())
     props.history.replace('/magasin/root')
