@@ -119,7 +119,7 @@ export const toggleObject = (item, on) => ({ type: TOGGLE_OBJECT, item, on })
 // Action for load node
 export const refreshNode = (id) => {
   return {
-    type: [LOAD_ONE_NODE, LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE_FAIL],
+    types: [LOAD_ONE_NODE, LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE_FAIL],
     promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}`),
     id
   }
