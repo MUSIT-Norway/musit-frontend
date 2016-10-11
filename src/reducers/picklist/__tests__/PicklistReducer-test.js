@@ -487,23 +487,18 @@ describe('PicklistReducer', () => {
   it('Refresh node updates path', () => {
     const newState = picklistReducer(testState, {
       type: LOAD_ONE_NODE_SUCCESS,
-      result: [{
-        id: 1,
-        name: 'Hoho'
-      }],
+      result:{
+        path: ',1,',
+        pathNames: [{ id: 1}] },
       id: 1
     })
-    const expectedState = {
+    const expectedState =  {
       NODE: [
         {
           marked: false,
           path: [],
           value: {
-            ...node1,
-            path: [{
-              id: 1,
-              name: 'Hoho'
-            }]
+            ...node1
           }
         },
         {
@@ -519,6 +514,40 @@ describe('PicklistReducer', () => {
       ],
       OBJECT: DEFAULT_OBJECTS
     }
-    assert.deepStrictEqual(expectedState, newState, 'Should update path for node 1')
+    assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1')
   })
+
+it('Refresh node updates path works', () => {
+  const newState = picklistReducer(testState, {
+    type: LOAD_ONE_NODE_SUCCESS,
+    result:{
+      path: ',1,2,3,',
+      pathNames: [{ id: 1},{ id: 2},{ id: 3}] },
+    id: 1
+  })
+  const expectedState =  {
+    NODE: [
+      {
+        marked: false,
+        path: [null],
+        value: {
+          ...node1
+        }
+      },
+      {
+        marked: false,
+        path: [],
+        value: node2
+      },
+      {
+        marked: false,
+        path: [],
+        value: node3
+      }
+    ],
+    OBJECT: DEFAULT_OBJECTS
+  }
+  console.log(JSON.stringify(newState))
+  assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1')
+})
 })
