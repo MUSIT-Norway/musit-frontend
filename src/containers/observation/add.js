@@ -43,22 +43,13 @@ export default class AddObservationPage extends React.Component {
     loadPath: React.PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props)
-    this.onClickCrumb = this.onClickCrumb.bind(this)
-  }
-
   componentWillMount() {
     this.props.loadPath(this.props.params.id)
   }
 
-  onClickCrumb(node) {
-    hashHistory.push(node.url)
-  }
-
   render() {
     const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} onClickCrumb={this.onClickCrumb} />
+    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
         title="Magasin"

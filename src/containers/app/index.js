@@ -9,7 +9,8 @@ import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
 import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
-import { TYPES as PICK_TYPES } from '../../reducers/picklist'
+import { TYPES as PICK_TYPES } from '../../reducers/picklist';
+import MusitUserAccount from '../../components/user-account-view'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -26,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearUser: () => {
       localStorage.removeItem('jwtToken')
+      localStorage.removeItem('fakeToken')
       dispatch(clearUser())
       dispatch(clearActor())
     },
@@ -68,8 +70,7 @@ class App extends Component {
     }
   }
 
-  handleLogout = (event) => {
-    event.preventDefault()
+  handleLogout = () => {
     this.props.clearUser()
     hashHistory.replace('/')
   }
@@ -96,33 +97,31 @@ class App extends Component {
           <Navbar.Collapse>
             <Nav navbar>
               {user &&
-                <LinkContainer to="/magasin/root">
-                  <NavItem>Magasin</NavItem>
-                </LinkContainer>
+              <LinkContainer to="/magasin/root">
+                <NavItem>Magasin</NavItem>
+              </LinkContainer>
               }
               {user &&
-                <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
-                  <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
+                <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
+              </LinkContainer>
               }
               {user &&
-                <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
-                  <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
-                </LinkContainer>
+              <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
+                <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
+              </LinkContainer>
               }
               {user &&
-                <LinkContainer to="/reports">
-                  <NavItem>Rapporter</NavItem>
-                </LinkContainer>
-              }
-              {user &&
-                <LinkContainer to="/musit/logout">
-                  <NavItem className="logout-link" onClick={this.handleLogout}>Logout</NavItem>
-                </LinkContainer>
+              <LinkContainer to="/reports">
+                <NavItem>Rapporter</NavItem>
+              </LinkContainer>
               }
             </Nav>
-            {user &&
-              <p className={`${styles.loggedInMessage} navbar-text`}>Logged in as <strong>{user.name}</strong>.</p>}
+            <Nav pullRight>
+              {user &&
+              <NavItem><MusitUserAccount handleLogout={this.handleLogout} /></NavItem>
+              }
+            </Nav>
           </Navbar.Collapse>
         </Navbar>
 
