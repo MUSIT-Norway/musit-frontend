@@ -1,7 +1,15 @@
 {
-  "name": "my-app-2",
-  "version": "0.1.0",
-  "private": true,
+  "name": "MUSIT-Frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MUSIT-Norway/musit-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
     "flow-bin": "^0.33.0",
     "react-scripts": "0.6.1"
