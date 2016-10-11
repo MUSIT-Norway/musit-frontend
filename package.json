@@ -11,20 +11,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "chai-enzyme": "^0.5.2",
+    "deep-freeze": "0.0.1",
+    "enzyme": "^2.4.1",
     "flow-bin": "^0.33.0",
-    "react-scripts": "0.6.1"
+    "jsdom": "^9.6.0",
+    "react-scripts": "0.6.1",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.16.0",
     "bootstrap": "^3.3.7",
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
-    "chai-enzyme": "^0.5.2",
     "cheerio": "^0.22.0",
-    "deep-freeze": "0.0.1",
-    "enzyme": "^2.4.1",
     "font-awesome": "^4.6.3",
-    "jsdom": "^9.6.0",
     "jwt-decode": "^2.1.0",
     "react": "^15.3.2",
     "react-addons-test-utils": "^15.3.2",
@@ -46,8 +48,6 @@
     "redux-devtools-log-monitor": "^1.0.11",
     "redux-form": "^6.1.0",
     "redux-logger": "^2.7.0",
-    "sinon": "^1.17.6",
-    "sinon-chai": "^2.8.0",
     "superagent": "^2.3.0"
   },
   "scripts": {
