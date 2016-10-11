@@ -1,3 +1,4 @@
+/* @flow */
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Language from '../../components/language'
@@ -34,8 +35,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ViewObservationPage extends React.Component {
+class ViewObservationPage extends React.Component {
 
   static propTypes = {
     observations: PropTypes.arrayOf(PropTypes.object),
@@ -95,3 +95,5 @@ export default class ViewObservationPage extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewObservationPage)

@@ -1,4 +1,5 @@
-while [ ! -s src/client.js ]
+#!/usr/bin/env bash
+while [ ! -s src/index.js ]
   do
   printf ""
 done
@@ -8,4 +9,7 @@ while [ ! -s public/index.html ]
   printf ""
 done
 echo "found public"
-npm run start:${MILJO:-"dev"}
+npm run build
+npm install -g pushstate-server
+pushstate-server build 8000
+

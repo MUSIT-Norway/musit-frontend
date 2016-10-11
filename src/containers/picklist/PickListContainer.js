@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react'
 import { PickListComponent } from '../../components/picklist'
 import { PageHeader, Grid } from 'react-bootstrap'
@@ -94,13 +95,12 @@ export default class PickListContainer extends React.Component {
   }
 
   render() {
-    const style = require('../../components/picklist/index.scss')
     const { toggleNode, toggleObject, removeNode, removeObject } = this.props
     const type = this.props.params.type.toUpperCase();
     const picks = this.props.picks[type]
     const marked = picks.filter(p => p.marked).map(p => p.value)
     return (
-      <div className={style.picklist}>
+      <div>
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}

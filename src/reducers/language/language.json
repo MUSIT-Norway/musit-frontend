@@ -1,0 +1,970 @@
+{
+  "en": {
+    "musit": {
+      "moveModal": {
+        "move": "Move",
+        "moveObjects": "Move objects",
+        "moveNodes": "Move nodes",
+        "goToRoot": "Go to top",
+        "currentDestination": "destination:",
+        "messages": {
+          "nodeMoved": "%{name} was moved to %{destination}.",
+          "objectMoved": "%{name} was moved to %{destination}.",
+          "errorNode": "Moving node %{name} to %{destination} failed.",
+          "errorObject": "Moving object %{name} to %{destination} failed.",
+          "nodesMoved": "%{count} nodes were moved to %{destination}",
+          "objecstMoved": "%{count} objects were moved to %{destination}",
+          "errorNodes": "Error in %{count} nodes move to %{destination}",
+          "errorObjects": "Error in %{count} objects move to %{destination}"
+        }
+      },
+      "leftMenu": {
+        "node": {
+          "newNode": "New node",
+          "objectsOnNode": "No. of objects:",
+          "totalObjectCount": "Total no. of objects:",
+          "underNodeCount": "No. of sub nodes:",
+          "properties": "Properties",
+          "observations": "Observations",
+          "controller": "Controls",
+          "moveNode": "Move node",
+          "delete": "Delete",
+          "deleteMessages": {
+            "askForDeleteConfirmation": "Would you like to delete %{name}?",
+            "confirmDelete": "%{name} has been deleted.",
+            "errorCommon": "Delete failed.",
+            "errorNotAllowedHadChild": "Not allowed to delete a node that is not empty."
+          },
+          "controlsobservations": "Contr./Observ."
+        },
+        "observationControl": {
+          "newObservation": "New observation",
+          "newControl": "New control",
+          "selectObservation": "Observations",
+          "selectControl": "Controls"
+        }
+      },
+      "grid": {
+        "observation": {
+          "date": "Date",
+          "types": "Types",
+          "doneBy": "Performed by",
+          "registeredDate": "Reg. date",
+          "registeredBy": "Reg. by",
+          "header": "Controls and observations"
+        },
+        "node": {
+          "nodeName": "Name",
+          "nodeType": "Type",
+          "nodeTypeItems": {
+            "StorageUnit": "Storage unit",
+            "Room": "Room",
+            "Building": "Building",
+            "Organisation": "Organisation"
+          },
+          "objectCount": "No. of obj.",
+          "totalObjectCount": "Tot. no. of obj.",
+          "nodeCount": "No. of nodes"
+        },
+        "object": {
+          "museumsNumber": "Museum No.",
+          "uNumber": "U. No.",
+          "term": "Artefact/Species"
+        }
+      },
+      "texts": {
+        "freetext": "Free text",
+        "makeChoice": "Please choose...",
+        "datePerformed": "Performed date",
+        "dateRegistered": "Registered date",
+        "registeredBy": "Registered by",
+        "performedBy": "Performed by",
+        "ok": "OK",
+        "notOk": "Not OK",
+        "save": "Save",
+        "saveTooltip": "Save registration",
+        "cancel": "Cancel",
+        "cancelTooltip": "Cancel registration"
+      },
+      "viewControl": {
+        "title": "View control",
+        "controlAlcohol": "Alcohol",
+        "controlCleaning": "Cleaning",
+        "controlGas": "Gas",
+        "controlHypoxicAir": "Hypoxic air",
+        "controlLightingCondition": "Lighting condition",
+        "controlMold": "Mold",
+        "controlPest": "Pest",
+        "controlRelativeHumidity": "Relative humidity",
+        "controlTemperature": "Temperature"
+      },
+      "newControl": {
+        "title": "New control",
+        "date": "Performed date",
+        "doneBy": "Performed by",
+        "dateRequired": "Date of control is required.",
+        "doneByRequired": "Name of controller is required.",
+        "temperature": "Temperature",
+        "hypoxicAir": "Hypoxic air",
+        "relativeHumidity": "Relative humidity",
+        "cleaning": "Cleaning",
+        "lightCondition": "Lighting condition",
+        "alcohol": "Alcohol",
+        "gas": "Gas",
+        "mold": "Mold",
+        "pest": "Pest",
+        "envdata": "Environmental Conditions",
+        "controlsRequired": "At least one controltype must be checked OK or Not OK",
+        "registerObservations": "Register observations",
+        "dateValidation": "Selected control date must not be bigger than present date. Please select lower date."
+      },
+      "observation": {
+        "page": {
+          "titles": {
+            "add": "New observation",
+            "edit": "Register observations",
+            "view": "Observation"
+          },
+          "registerObservation": "Register observation",
+          "registerObservations": "Register observations",
+          "date": "Performed date",
+          "dateRequired": "Date of observation is required.",
+          "doneByRequired": "Name of observer is required.",
+          "doneBy": "Performed by",
+          "registeredDate": "Registered date",
+          "registeredBy": "Registered by",
+          "newButtonLabel": "Add new",
+          "dateValidation": "Selected observation date must not be bigger than present date. Please select lower date.",
+          "typeSelect": {
+            "labelText": "Choose type"
+          },
+          "pest": {
+            "identificationValueRequired": "Identification is required.",
+            "identificationValueIncorrect": "Max length for identification is 100 char.",
+            "commentsValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "countIncorrect": "Quantity must be an integer.",
+            "lifeCycleRequired": "Stage is required when quantity is specified.",
+            "labelText": "Pest",
+            "identificationLabel": "Identification",
+            "identificationTooltip": "Pest identification",
+            "identificationPlaceHolder": "Free text",
+            "commentsLabel": "Task/Comment",
+            "commentsTooltip": "Task that should be performed",
+            "commentsPlaceHolder": "Free text",
+            "lifeCycleLabel": "Stage",
+            "lifeCycleLabelMenu": {
+              "adult": "Adult",
+              "puppe": "Pupa",
+              "puppeskin": "Pupa skin",
+              "larva": "Larva",
+              "egg": "Egg"
+            },
+            "lifeCyclePlaceholder": "Please choose...",
+            "lifeCycleTooltip": "Pest stage",
+            "countLabel": "Quantity",
+            "countPlaceHolder": "Integer",
+            "countTooltip": "Pest quantity"
+          },
+          "alcohol": {
+            "statusValueRequired": "Level is required.",
+            "volumeValueIncorrect": "Volume must be a number with max 3 decimals.",
+            "commentValueIncorrect": "Max length for Task/Comment is 250 char",
+            "labelText": "Alcohol",
+            "volumeLabel": "Volume",
+            "volumePlaceHolder": "%",
+            "volumeTooltip": "Measured volume %",
+            "statusLabel": "Level",
+            "statusPlaceHolder": "Please choose...",
+            "commentLabel": "Task/Comment",
+            "commentPlaceHolder": "Free text",
+            "commentTooltip": "Task that should be performed",
+            "statusItems": {
+              "dryed": "Dehydrated",
+              "allmostDryed": "Almost dehydrated",
+              "someDryed": "A bit dehydrated",
+              "minorDryed": "A little dehydated",
+              "satisfactory": "Satisfactory"
+            }
+          },
+          "temperature": {
+            "fromValueRequired": "Measured value (from) is required.",
+            "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
+            "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
+            "commentsValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Temperature",
+            "fromValueLabelText": "Measured value (from)",
+            "toValueLabelText": "Measured value (to)",
+            "fromValuePlaceHolder": "°C",
+            "toValuePlaceHolder": "°C",
+            "fromValueTooltip": "Measured temperature",
+            "toValueTooltip": "Measured temperature",
+            "note": "Task/Comment",
+            "noteTooltip": "Task that should be performed",
+            "notePlaceHolder": "Free text"
+          },
+          "hypoxicAir": {
+            "fromValueRequired": "Measured value (from) is required.",
+            "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
+            "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
+            "commentsValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Hypoxic air",
+            "fromValueLabelText": "Measured value (from)",
+            "toValueLabelText": "Measured value (to)",
+            "fromValuePlaceHolder": "% O₂",
+            "toValuePlaceHolder": "% O₂",
+            "fromValueTooltip": "Measured hypoxic air",
+            "toValueTooltip": "Measured hypoxic air",
+            "note": "Task/Comment",
+            "noteTooltip": "Task that should be performed",
+            "notePlaceHolder": "Free text"
+          },
+          "relativeHumidity": {
+            "fromValueRequired": "Measured value (from) is required.",
+            "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
+            "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
+            "commentsValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Relative humidity",
+            "fromValueLabelText": "Measured value (from)",
+            "toValueLabelText": "Measured value (to)",
+            "fromValuePlaceHolder": "%",
+            "toValuePlaceHolder": "%",
+            "fromValueTooltip": "Measured rel. humidity",
+            "toValueTooltip": "Measured rel. humidity",
+            "note": "Task/Comment",
+            "noteTooltip": "Task that should be performed",
+            "notePlaceHolder": "Free text"
+          },
+          "mold": {
+            "leftValueRequired": "Description of observed mold is required.",
+            "leftValueIncorrect": "Max length for Description is 100 char.",
+            "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Mold",
+            "leftLabelText": "Description",
+            "rightLabelText": "Task/Comment",
+            "leftLabelPlaceHolder": "Free text",
+            "rightLabelPlaceHolder": "Free text",
+            "leftLabelToolTip": "Observed mold",
+            "rightLabelPlaceToolTip": "Task that should be performed"
+          },
+          "cleaning": {
+            "leftValueRequired": "Description of observed cleaning is required.",
+            "leftValueIncorrect": "Max length for Description is 100 char.",
+            "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Cleaning",
+            "leftLabelText": "Description",
+            "rightLabelText": "Task/Comment",
+            "leftLabelPlaceHolder": "Free text",
+            "rightLabelPlaceHolder": "Free text",
+            "leftLabelToolTip": "Observed cleaning",
+            "rightLabelPlaceToolTip": "Task that should be performed"
+          },
+          "gas": {
+            "leftValueRequired": "Measured value is required.",
+            "leftValueIncorrect": "Max length for measured value is 100 char.",
+            "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Gas",
+            "leftLabelText": "Measured value",
+            "rightLabelText": "Task/Comment",
+            "leftLabelPlaceHolder": "Free text",
+            "rightLabelPlaceHolder": "Free text",
+            "leftLabelToolTip": "Measured gas",
+            "rightLabelPlaceToolTip": "Task that should be performed"
+          },
+          "lightCondition": {
+            "leftValueRequired": "Measured/observed value is required.",
+            "leftValueIncorrect": "Max length for measured/observed value is 100 char.",
+            "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Lighting condition",
+            "leftLabelText": "Measured/observed value",
+            "rightLabelText": "Task/Comment",
+            "leftLabelPlaceHolder": "Free text",
+            "rightLabelPlaceHolder": "Free text",
+            "leftLabelToolTip": "Measured/observed lighting condition",
+            "rightLabelPlaceToolTip": "Task that should be performed"
+          },
+          "skallsikring": {
+            "leftValueRequired": "Description of observed perimeter security status is required.",
+            "leftValueIncorrect": "Max length for description is 100 char.",
+            "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Perimeter security",
+            "leftLabelText": "Description",
+            "rightLabelText": "Task/Comment",
+            "leftLabelPlaceHolder": "Free text",
+            "rightLabelPlaceHolder": "Free text",
+            "leftLabelToolTip": "Observed perimeter security",
+            "rightLabelPlaceToolTip": "Task that should be performed"
+          },
+          "brannsikring": {
+            "leftValueRequired": "Description of observed fire protection status is required.",
+            "leftValueIncorrect": "Max length for description is 100 char.",
+            "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Fire protection",
+            "leftLabelText": "Description",
+            "rightLabelText": "Task/Comment",
+            "leftLabelPlaceHolder": "Free text",
+            "rightLabelPlaceHolder": "Free text",
+            "leftLabelToolTip": "Observed fire protection",
+            "rightLabelPlaceToolTip": "Task that should be performed"
+          },
+          "vannskaderisiko": {
+            "leftValueRequired": "Description of observed water damage assessment is required.",
+            "leftValueIncorrect": "Max length for descriptionis 100 char.",
+            "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Water damage assessment",
+            "leftLabelText": "Description",
+            "rightLabelText": "Task/Comment",
+            "leftLabelPlaceHolder": "Free text",
+            "rightLabelPlaceHolder": "Free text",
+            "leftLabelToolTip": "Observed water damage assessment",
+            "rightLabelPlaceToolTip": "Task that should be performed"
+          },
+          "tyverisikring": {
+            "leftValueRequired": "Description of theft protection status is required.",
+            "leftValueIncorrect": "Max length for description is 100 char.",
+            "rightValueIncorrect": "Max length for Task/Comment is 250 char.",
+            "labelText": "Theft protection",
+            "leftLabelText": "Description",
+            "rightLabelText": "Task/Comment",
+            "leftLabelPlaceHolder": "Free text",
+            "rightLabelPlaceHolder": "Free text",
+            "leftLabelToolTip": "Observed theft protection",
+            "rightLabelPlaceToolTip": "Task that should be performed"
+          }
+        }
+      },
+      "pickList": {
+        "title": {
+          "node": "Picklist (nodes)",
+          "object": "Picklist (objects)"
+        },
+        "footer": {
+          "nodeSelected": "Node(s) selected.",
+          "objectSelected": "Object(s) selected."
+        },
+        "action": {
+          "markAll": "All",
+          "executeAll": "Execute (all)"
+        }
+      },
+      "storageUnits": {
+        "title": "Storage facility",
+        "header": "Properties",
+        "newNode": "New node",
+        "environmentalData": "Environmental conditions",
+        "type": {
+          "labelText": "Type",
+          "required": "Type is required.",
+          "placeHolder": "Please choose...",
+          "tooltip": "Type of node",
+          "items": {
+            "StorageUnit": "Storage unit",
+            "Room": "Room",
+            "Building": "Building",
+            "Organisation": "Organisation"
+          }
+        },
+        "name": {
+          "labelText": "Name",
+          "incorrect": "Max length for name is 100 char.",
+          "required": "Name is required.",
+          "placeHolder": "Free text",
+          "tooltip": "Node name"
+        },
+        "address": {
+          "labelText": "Address",
+          "incorrect": "Max length for address is 100 char.",
+          "placeHolder": "Street adr.",
+          "tooltip": "Node address"
+        },
+        "area": {
+          "labelText": "Area",
+          "incorrect": "Area (from) must be a number with max 3 decimals.",
+          "placeHolder": "from",
+          "tooltip": "Node area in m²"
+        },
+        "areaTo": {
+          "labelText": "",
+          "incorrect": "Area (to) must be a number with max 3 decimals.",
+          "placeHolder": "to",
+          "tooltip": "Node area in m²"
+        },
+        "height": {
+          "labelText": "Height",
+          "incorrect": "Height (from) must be a number with max 3 decimals.",
+          "placeHolder": "from",
+          "tooltip": "Node height in m"
+        },
+        "heightTo": {
+          "labelText": "",
+          "incorrect": "Height (to) must be a number with max 3 decimals.",
+          "placeHolder": "to",
+          "tooltip": "Node height in m"
+        },
+        "securityAssessment": {
+          "securityAssessment": "Security assessment",
+          "perimeter": "Perimeter security",
+          "theftProtection": "Theft protection",
+          "fireProtection": "Fire protection",
+          "waterDamage": "Water damage assessment",
+          "routinesAndContingencyPlan": "Routines and contingency plan"
+        },
+        "environmentalAssessment": {
+          "environmentalAssessment": "Environmental assessment",
+          "relativeHumidity": "Relative humidity",
+          "temperature": "Temperature",
+          "lightingCondition": "Lighting condition",
+          "preventiveConservation": "Preventive conservation"
+        },
+        "environmentRequirement": {
+          "temperature": {
+            "labelText": "Temperature",
+            "incorrect": "Temperature must be a number with max 3 decimals.",
+            "tooltip": "Temperature requirement in °C",
+            "placeHolder": "°C"
+          },
+          "temperatureTolerance": {
+            "labelText": "",
+            "incorrect": "Temperature tolerance must be an integer.",
+            "tooltip": "Tolerance",
+            "placeHolder": "°C"
+          },
+          "relativeHumidity": {
+            "labelText": "Rel. humidity",
+            "incorrect": "Relative humidity must be a number with max 3 decimals.",
+            "tooltip": "Relative humidity requirement in %",
+            "placeHolder": "%"
+          },
+          "relativeHumidityTolerance": {
+            "labelText": "",
+            "incorrect": "Relative humidity tolerance must be an integer.",
+            "tooltip": "Tolerance",
+            "placeHolder": "%"
+          },
+          "hypoxicAir": {
+            "labelText": "Hypoxic air",
+            "incorrect": "Hypoxic air must be a number with max 3 decimals.",
+            "tooltip": "Hypoxic air requirement in % O&#8322;",
+            "placeHolder": "% O₂"
+          },
+          "hypoxicAirTolerance": {
+            "labelText": "",
+            "incorrect": "Hypoxic air tolerance must be an integer.",
+            "tooltip": "Tolerance",
+            "placeHolder": "% O₂"
+          },
+          "cleaning": {
+            "labelText": "Cleaning",
+            "incorrect": "Max length for cleaning is 100 char.",
+            "placeHolder": "Free text",
+            "tooltip": "Cleaning requirement"
+          },
+          "lightingCondition": {
+            "labelText": "Lighting condition",
+            "incorrect": "Max length for lighting condition is 100 char.",
+            "placeHolder": "Free text",
+            "tooltip": "Lighting condition requirement"
+          },
+          "comments": {
+            "labelText": "Comment",
+            "incorrect": "Max length for comment is 250 char.",
+            "placeHolder": "Free text",
+            "tooltip": "Comment"
+          }
+        }
+      },
+      "welcomePage": {
+        "title": "MUSIT \nNorwegian University Museums' joint Collection Databases\n",
+        "body": "**Museum of Archaeology, University of Stavanger** \n**University Museum of Bergen, University of Bergen** \n**Museum of Cultural History, University of Oslo** \n**Natural History Museum, University of Oslo** \n**Tromsø University Museum, University of Tromsø** \n**NTNU University Museum, Norwegian University of Science and Technology**\n",
+        "noAccess": "Your account does not have access to MUSIT. Contact your local MUSIT administrator."
+      },
+      "welcomeUserPage": {
+        "body": "The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger, University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the Norwegian University of Science and Technology. \nThe University museums of Norway hold in trust regional and global scientific collections of natural and cultural history. \nThe cooperative aims to ensure the operation, maintenance and development of the university museums' joint collection databases, and to facilitate sharing dissemination of data for research, education, management and the public.\n"
+      },
+      "login": "Login through Dataporten"
+    }
+  },
+  "no": {
+    "musit": {
+      "moveModal": {
+        "move": "Flytt hit",
+        "moveObjects": "Flytt objekter",
+        "moveNodes": "Flytt noder",
+        "goToRoot": "Gå til toppen",
+        "currentDestination": "Destinasjon:",
+        "messages": {
+          "nodeMoved": "%{name} ble flyttet til %{destination}.",
+          "objectMoved": "%{name} ble flyttet til %{destination}.",
+          "errorNode": "Flytting av %{name} til %{destination} feilet.",
+          "errorObject": "Flytting av %{name} til %{destination} feilet.",
+          "nodesMoved": "%{count} noder ble flyttet til %{destination}",
+          "objectsMoved": "%{count} objekter ble flyttet til %{destination}",
+          "errorNodes": "Error å flytte %{count} noder til %{destination}",
+          "errorObjects": "Error å flytte %{count} objekter til %{destination}"
+        }
+      },
+      "leftMenu": {
+        "node": {
+          "newNode": "Ny node",
+          "objectsOnNode": "Objekter på node:",
+          "totalObjectCount": "Totalt ant. objekter:",
+          "underNodeCount": "Antall undernoder:",
+          "properties": "Egenskaper",
+          "observations": "Observasjoner",
+          "controller": "Kontroller",
+          "moveNode": "Flytt node",
+          "delete": "Slett",
+          "deleteMessages": {
+            "askForDeleteConfirmation": "Vil du slette %{name}?",
+            "confirmDelete": "%{name} er slettet.",
+            "errorCommon": "Slettingen feilet.",
+            "errorNotAllowedHadChild": "Noden er ikke tom, og kan derfor ikke slettes."
+          },
+          "controlsobservations": "Kontr./Observ."
+        },
+        "observationControl": {
+          "newObservation": "Ny observasjon",
+          "newControl": "Ny kontroll",
+          "selectObservation": "Observasjoner",
+          "selectControl": "Kontroller"
+        }
+      },
+      "grid": {
+        "observation": {
+          "date": "Dato",
+          "types": "Typer",
+          "doneBy": "Utført av",
+          "registeredDate": "Reg. dato",
+          "registeredBy": "Reg. av",
+          "header": "Kontroller og observasjoner"
+        },
+        "node": {
+          "nodeName": "Navn",
+          "nodeType": "Type",
+          "nodeTypeItems": {
+            "StorageUnit": "Lagringsenhet",
+            "Room": "Rom",
+            "Building": "Bygg",
+            "Organisation": "Organisasjon"
+          },
+          "objectCount": "Ant. obj.",
+          "totalObjectCount": "Tot. ant. obj.",
+          "nodeCount": "Ant. noder"
+        },
+        "object": {
+          "museumsNumber": "Museumsnr.",
+          "uNumber": "Unr.",
+          "term": "Term/Artsnavn"
+        }
+      },
+      "texts": {
+        "freetext": "Fritekst",
+        "makeChoice": "Vennligst velg...",
+        "datePerformed": "Utført dato",
+        "dateRegistered": "Registrert dato",
+        "registeredBy": "Registrert av",
+        "performedBy": "Utført av",
+        "ok": "OK",
+        "notOk": "Ikke OK",
+        "save": "Lagre",
+        "saveTooltip": "Lagre",
+        "cancel": "Avbryt",
+        "cancelTooltip": "Avbryt registreringen"
+      },
+      "viewControl": {
+        "title": "Vis kontroll",
+        "controlAlcohol": "Sprit",
+        "controlCleaning": "Renhold",
+        "controlGas": "Gass",
+        "controlHypoxicAir": "Inertluft",
+        "controlLightingCondition": "Lysforhold",
+        "controlMold": "Mugg",
+        "controlPest": "Skadedyr",
+        "controlRelativeHumidity": "Relativ luftfuktighet",
+        "controlTemperature": "Temperatur"
+      },
+      "newControl": {
+        "title": "Ny kontroll",
+        "date": "Utført dato",
+        "dateRequired": "Dato for kontrollen er påkrevd.",
+        "doneBy": "Utført av",
+        "doneByRequired": "Navn på den som utførte kontrollen er påkrevd.",
+        "temperature": "Temperatur",
+        "hypoxicAir": "Inertluft",
+        "relativeHumidity": "Relativ luftfuktighet",
+        "cleaning": "Renhold",
+        "lightCondition": "Lysforhold",
+        "alcohol": "Sprit",
+        "gas": "Gass",
+        "mold": "Mugg",
+        "pest": "Skadedyr",
+        "envdata": "Miljødata",
+        "controlsRequired": "Minst en kontroll må merkes OK eller Ikke OK",
+        "registerObservations": "Registrer observasjoner",
+        "dateValidation": "Valgt kontroll datoen må ikke være større enn dagens dato. Velg lavere dato."
+      },
+      "observation": {
+        "page": {
+          "titles": {
+            "add": "Ny observasjon",
+            "edit": "Registrer observasjoner",
+            "view": "Observasjon"
+          },
+          "registerObservation": "Registrer observasjon",
+          "registerObservations": "Registrer observasjoner",
+          "date": "Utført dato",
+          "dateRequired": "Dato for observasjonen er påkrevd.",
+          "doneByRequired": "Navn på den som gjorde observasjonen er påkrevd.",
+          "doneBy": "Utført av",
+          "registeredDate": "Registrert dato",
+          "registeredBy": "Registrert av",
+          "newButtonLabel": "Legg til ny",
+          "dateValidation": "Valgt observasjon datoen må ikke være større enn dagens dato. Velg lavere dato.",
+          "typeSelect": {
+            "labelText": "Velg type"
+          },
+          "pest": {
+            "identificationValueRequired": "Identifikasjon er påkrevd.",
+            "identificationValueIncorrect": "Identifikasjon kan ha maks 100 tegn.",
+            "commentsValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "countIncorrect": "Antall må være et heltall.",
+            "lifeCycleRequired": "Stadie er påkrevd når antall er oppgitt.",
+            "labelText": "Skadedyr",
+            "identificationLabel": "Identifikasjon",
+            "identificationTooltip": "Identifikasjon av skadedyr",
+            "identificationPlaceHolder": "Fritekst",
+            "commentsLabel": "Tiltak/Kommentar",
+            "commentsTooltip": "Tiltak som bør iverksettes",
+            "commentsPlaceHolder": "Fritekst",
+            "lifeCycleLabel": "Stadie",
+            "lifeCycleLabelMenu": {
+              "adult": "Adult",
+              "puppe": "Puppe",
+              "puppeskin": "Puppeskinn",
+              "larva": "Larve",
+              "egg": "Egg"
+            },
+            "lifeCyclePlaceholder": "Vennligst velg...",
+            "lifeCycleTooltip": "Skadedyrets stadie",
+            "countLabel": "Antall",
+            "countPlaceHolder": "Heltall",
+            "countTooltip": "Antall skadedyr"
+          },
+          "alcohol": {
+            "statusValueRequired": "Nivå er påkrevd.",
+            "volumeValueIncorrect": "Volum må være et tall med maks 3 desimaler.",
+            "commentValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Sprit",
+            "volumeLabel": "Volum",
+            "volumePlaceHolder": "%",
+            "volumeTooltip": "Målt volum %",
+            "statusLabel": "Nivå",
+            "statusPlaceHolder": "Vennligst velg...",
+            "commentLabel": "Tiltak/Kommentar",
+            "commentPlaceHolder": "Fritekst",
+            "commentTooltip": "Tiltak som bør iverksettes",
+            "statusItems": {
+              "dryed": "Uttørket",
+              "allmostDryed": "Nesten uttørket",
+              "someDryed": "Noe uttørket",
+              "minorDryed": "Litt uttørket",
+              "satisfactory": "Tilfredsstillende"
+            }
+          },
+          "temperature": {
+            "fromValueRequired": "Målt temperatur (fra) er påkrevd.",
+            "fromValueIncorrect": "Målt temperatur (fra) må være et tall med maks 3 desimaler.",
+            "toValueIncorrect": "Målt temperatur (til) må være et tall med maks 3 desimaler.",
+            "commentsValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Temperatur",
+            "fromValueLabelText": "Målt temperatur (fra)",
+            "toValueLabelText": "Målt temperatur (til)",
+            "fromValuePlaceHolder": "°C",
+            "toValuePlaceHolder": "°C",
+            "fromValueTooltip": "Målt temperatur",
+            "toValueTooltip": "Målt temperatur",
+            "note": "Tiltak/Kommentar",
+            "noteTooltip": "Tiltak som bør iverksettes",
+            "notePlaceHolder": "Fritekst"
+          },
+          "hypoxicAir": {
+            "fromValueRequired": "Målt inertluft (fra) er påkrevd.",
+            "fromValueIncorrect": "Målt inertluft (fra) må være et tall med maks 3 desimaler.",
+            "toValueIncorrect": "Målt inertluft (til) må være et tall med maks 3 desimaler.",
+            "commentsValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Inertluft",
+            "fromValueLabelText": "Målt inertluft (fra)",
+            "toValueLabelText": "Målt inertluft (til)",
+            "fromValuePlaceHolder": "% O₂",
+            "toValuePlaceHolder": "% O₂",
+            "fromValueTooltip": "Målt inertluft",
+            "toValueTooltip": "Målt inertluft",
+            "note": "Tiltak/Kommentar",
+            "noteTooltip": "Tiltak som bør iverksettes",
+            "notePlaceHolder": "Fritekst"
+          },
+          "relativeHumidity": {
+            "fromValueRequired": "Målt rel. luftfuktighet (fra) er påkrevd.",
+            "fromValueIncorrect": "Målt rel. luftfuktighet (fra) må være et tall med maks 3 desimaler.",
+            "toValueIncorrect": "Målt rel. luftfuktighet (til) må være et tall med maks 3 desimaler.",
+            "commentsValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Relativ luftfuktighet",
+            "fromValueLabelText": "Målt rel. luftfuktighet (fra)",
+            "toValueLabelText": "Målt rel. luftfuktighet (til)",
+            "fromValuePlaceHolder": "%",
+            "toValuePlaceHolder": "%",
+            "fromValueTooltip": "Målt rel. luftfuktighet",
+            "toValueTooltip": "Målt rel. luftfuktighet",
+            "note": "Tiltak/Kommentar",
+            "noteTooltip": "Tiltak som bør iverksettes",
+            "notePlaceHolder": "Fritekst"
+          },
+          "mold": {
+            "leftValueRequired": "Beskrivelse av observert mugg er påkrevd.",
+            "leftValueIncorrect": "Beskrivelse av observert mugg kan ha maks 100 tegn.",
+            "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Mugg",
+            "leftLabelText": "Beskrivelse",
+            "rightLabelText": "Tiltak/Kommentar",
+            "leftLabelPlaceHolder": "Fritekst",
+            "rightLabelPlaceHolder": "Fritekst",
+            "leftLabelToolTip": "Observert mugg",
+            "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
+          },
+          "cleaning": {
+            "leftValueRequired": "Beskrivelse av observert renhold er påkrevd.",
+            "leftValueIncorrect": "Beskrivelse av observert renhold kan ha maks 100 tegn.",
+            "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Renhold",
+            "leftLabelText": "Beskrivelse",
+            "rightLabelText": "Tiltak/Kommentar",
+            "leftLabelPlaceHolder": "Fritekst",
+            "rightLabelPlaceHolder": "Fritekst",
+            "leftLabelToolTip": "Observert renhold",
+            "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
+          },
+          "gas": {
+            "leftValueRequired": "Målt verdi er påkrevd.",
+            "leftValueIncorrect": "Målt verdi kan ha maks 100 tegn.",
+            "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Gass",
+            "leftLabelText": "Målt verdi",
+            "rightLabelText": "Tiltak/Kommentar",
+            "leftLabelPlaceHolder": "Fritekst",
+            "rightLabelPlaceHolder": "Fritekst",
+            "leftLabelToolTip": "Målt gass",
+            "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
+          },
+          "lightCondition": {
+            "leftValueRequired": "Målt/observert verdi er påkrevd",
+            "leftValueIncorrect": "Målt/observert verdi kan ha maks 100 tegn.",
+            "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Lysforhold",
+            "leftLabelText": "Målt/observert verdi",
+            "rightLabelText": "Tiltak/Kommentar",
+            "leftLabelPlaceHolder": "Fritekst",
+            "rightLabelPlaceHolder": "Fritekst",
+            "leftLabelToolTip": "Målt/observert lysforhold",
+            "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
+          },
+          "skallsikring": {
+            "leftValueRequired": "Beskrivelse av skallsikringens tilstand er påkrevd.",
+            "leftValueIncorrect": "Beskrivelse av skallsikringens tilstand kan ha maks 100 tegn.",
+            "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Skallsikring",
+            "leftLabelText": "Beskrivelse",
+            "rightLabelText": "Tiltak/Kommentar",
+            "leftLabelPlaceHolder": "Fritekst",
+            "rightLabelPlaceHolder": "Fritekst",
+            "leftLabelToolTip": "Observert skallsikring",
+            "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
+          },
+          "brannsikring": {
+            "leftValueRequired": "Beskrivelse av brannsikringens tilstand er påkrevd.",
+            "leftValueIncorrect": "Beskrivelse av brannsikringens tilstand kan ha maks 100 tegn.",
+            "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Brannsikring",
+            "leftLabelText": "Beskrivelse",
+            "rightLabelText": "Tiltak/Kommentar",
+            "leftLabelPlaceHolder": "Fritekst",
+            "rightLabelPlaceHolder": "Fritekst",
+            "leftLabelToolTip": "Observert brannsikring",
+            "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
+          },
+          "vannskaderisiko": {
+            "leftValueRequired": "Beskrivelse av vannskaderisiko er påkrevd.",
+            "leftValueIncorrect": "Beskrivelse av vannskaderisiko kan ha maks 100 tegn.",
+            "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Vannskaderisiko",
+            "leftLabelText": "Beskrivelse",
+            "rightLabelText": "Tiltak/Kommentar",
+            "leftLabelPlaceHolder": "Fritekst",
+            "rightLabelPlaceHolder": "Fritekst",
+            "leftLabelToolTip": "Observert vannskaderisiko",
+            "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
+          },
+          "tyverisikring": {
+            "leftValueRequired": "Beskrivelse av tyverisikringens tilstand er påkrevd.",
+            "leftValueIncorrect": "Beskrivelse av tyverisikringens tilstand kan ha maks 100 tegn.",
+            "rightValueIncorrect": "Tiltak/kommentar kan ha maks 250 tegn.",
+            "labelText": "Tyverisikring",
+            "leftLabelText": "Beskrivelse",
+            "rightLabelText": "Tiltak/Kommentar",
+            "leftLabelPlaceHolder": "Fritekst",
+            "rightLabelPlaceHolder": "Fritekst",
+            "leftLabelToolTip": "Observert tyverisikring",
+            "rightLabelPlaceToolTip": "Tiltak som bør iverksettes"
+          }
+        }
+      },
+      "pickList": {
+        "title": {
+          "node": "Plukkliste (noder)",
+          "object": "Plukkliste (objekter)"
+        },
+        "footer": {
+          "nodeSelected": "node(r) valgt.",
+          "objectSelected": "objekte(r) valgt."
+        },
+        "action": {
+          "markAll": "Alle",
+          "executeAll": "Utfør (alle)"
+        }
+      },
+      "storageUnits": {
+        "title": "Magasin",
+        "header": "Egenskaper",
+        "newNode": "Ny node",
+        "environmentalData": "Miljødata",
+        "type": {
+          "labelText": "Type",
+          "required": "Type er påkrevd.",
+          "placeHolder": "Vennligst velg...",
+          "tooltip": "Nodens type",
+          "items": {
+            "StorageUnit": "Lagringsenhet",
+            "Room": "Rom",
+            "Building": "Bygg",
+            "Organisation": "Organisasjon"
+          }
+        },
+        "name": {
+          "labelText": "Navn",
+          "incorrect": "Navn kan ha maks 100 tegn.",
+          "required": "Navn er påkrevd.",
+          "placeHolder": "Fritekst",
+          "tooltip": "Navn på noden"
+        },
+        "address": {
+          "labelText": "Adresse",
+          "incorrect": "Adresse kan ha maks 100 tegn.",
+          "placeHolder": "Gateadr.",
+          "tooltip": "Nodens adresse"
+        },
+        "area": {
+          "labelText": "Areal",
+          "incorrect": "Areal (fra) må være et tall med maks 3 desimaler.",
+          "placeHolder": "fra",
+          "tooltip": "Nodens areal i m²"
+        },
+        "areaTo": {
+          "labelText": "",
+          "incorrect": "Areal (til) må være et tall med maks 3 desimaler.",
+          "placeHolder": "til",
+          "tooltip": "Nodens areal i m²"
+        },
+        "height": {
+          "labelText": "Høyde",
+          "incorrect": "Høyde (fra) må være et tall med maks 3 desimaler.",
+          "placeHolder": "fra",
+          "tooltip": "Nodens høyde i m"
+        },
+        "heightTo": {
+          "labelText": "",
+          "incorrect": "Høyde (til) må være et tall med maks 3 desimaler.",
+          "placeHolder": "til",
+          "tooltip": "Nodens høyde i m"
+        },
+        "securityAssessment": {
+          "securityAssessment": "Sikring",
+          "perimeter": "Skallsikring",
+          "theftProtection": "Tyverisikring",
+          "fireProtection": "Brannsikring",
+          "waterDamage": "Vannskaderisiko",
+          "routinesAndContingencyPlan": "Rutiner og beredskap"
+        },
+        "environmentalAssessment": {
+          "environmentalAssessment": "Bevaring",
+          "relativeHumidity": "Relativ luftfuktighet",
+          "temperature": "Temperatur",
+          "lightingCondition": "Lysforhold",
+          "preventiveConservation": "Preventiv konservering"
+        },
+        "environmentRequirement": {
+          "temperature": {
+            "labelText": "Temperatur",
+            "incorrect": "Temperatur må være et tall med maks 3 desimaler.",
+            "tooltip": "Krav til temperatur i °C",
+            "placeHolder": "°C"
+          },
+          "temperatureTolerance": {
+            "labelText": "",
+            "incorrect": "Temperaturtoleranse må være et heltall.",
+            "tooltip": "Toleranse",
+            "placeHolder": "°C"
+          },
+          "relativeHumidity": {
+            "labelText": "Rel. luftfuktighet",
+            "incorrect": "Relativ luftfuktighet må være et tall med maks 3 desimaler.",
+            "tooltip": "Krav til relativ luftfuktighet i %",
+            "placeHolder": "%"
+          },
+          "relativeHumidityTolerance": {
+            "labelText": "",
+            "incorrect": "Relativ luftfuktighettoleranse må være et heltall.",
+            "tooltip": "Toleranse",
+            "placeHolder": "%"
+          },
+          "hypoxicAir": {
+            "labelText": "Inertluft",
+            "incorrect": "Inertluft må være et tall med maks 3 desimaler.",
+            "tooltip": "Krav til inertluft i % O&#8322;",
+            "placeHolder": "% O₂"
+          },
+          "hypoxicAirTolerance": {
+            "labelText": "",
+            "incorrect": "Inertlufttoleranse må være et heltall.",
+            "tooltip": "Toleranse",
+            "placeHolder": "% O₂"
+          },
+          "cleaning": {
+            "labelText": "Renhold",
+            "incorrect": "Renhold kan ha maks 100 tegn.",
+            "placeHolder": "Fritekst",
+            "tooltip": "Krav til renhold"
+          },
+          "lightingCondition": {
+            "labelText": "Lysforhold",
+            "incorrect": "Lysforhold kan ha maks 100 tegn.",
+            "placeHolder": "Fritekst",
+            "tooltip": "Krav til lysforhold"
+          },
+          "comments": {
+            "labelText": "Kommentar",
+            "incorrect": "Kommentar kan ha maks 250 tegn.",
+            "placeHolder": "Fritekst",
+            "tooltip": "Kommentar"
+          }
+        }
+      },
+      "welcomePage": {
+        "title": "MUSIT \nUniversitetsmuseenes samlingsdatabaser\n",
+        "body": "**Arkeologisk museum, Universitetet i Stavanger** \n**Universitetsmuseet i Bergen, Universitetet i Bergen** \n**Kulturhistorisk museum, Universitetet i Oslo** \n**Naturhistorisk museum, Universitetet i Oslo** \n**Tromsø Museum - Universitetetsmuseet, Universitetet i Tromsø** \n**Vitenskapsmuseet - NTNU, Norges Teknisk-Naturvitenskapelige Universitet**\n"
+      },
+      "noAccess": "Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil",
+      "welcomeUserPage": {
+        "body": "MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet, Universitetet i Tromsø, og Universitetet i Stavanger. \nSamarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014. \nMUSIT har som formål «å sikre drift, vedlikehold og utvikling av museenes felles samlingsdatabaser, og å legge til rette for deling av data for forskning, utdanning, forvaltning og allmennhet». \nMUSIT forvalter samlinger innenfor en rekke fagfelt innen naturhistorie og kulturhistorie (se http://www.unimus.no/).\n"
+      },
+      "login": "Logg inn via Dataporten"
+    }
+  }
+}

@@ -1,3 +1,4 @@
+/* @flow */
 const CREATE = 'musit/organization/CREATE'
 const CREATE_SUCCESS = 'musit/organization/CREATE_SUCCESS'
 const CREATE_FAIL = 'musit/organization/CREATE_FAIL'

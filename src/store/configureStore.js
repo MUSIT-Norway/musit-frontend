@@ -24,12 +24,13 @@ const createLogger = require('redux-logger')
 const { persistState } = require('redux-devtools')
 const DevTools = require('../components/dev-tools')
 const reducers = require('../reducers')
+import config from '../config'
 
 const createStore = (client, data) => {
   const middleware = [createMiddleware(client)]
 
   let finalCreateStore;
-  if (__DEVELOPMENT__) {
+  if (config.isDev) {
     const logger = createLogger()
     finalCreateStore = compose(
       applyMiddleware(...middleware, logger),
@@ -42,9 +43,7 @@ const createStore = (client, data) => {
 
   const store = finalCreateStore(rootReducer, data)
 
-  // reduxRouterMiddleware.listenForReplays(store);
-
-  if (__DEVELOPMENT__ && module.hot) {
+  if (config.isDev && module.hot) {
     module.hot.accept('../reducers', () => {
       store.replaceReducer(reducers)
     })

@@ -1,3 +1,4 @@
+/* @flow */
 export const validateString = (value = '', minimumLength = 0, maximumLength = 20) => {
   return value.length < minimumLength || value.length > maximumLength ? 'error' : 'success'
 }

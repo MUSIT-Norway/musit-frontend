@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import jwtDecode from 'jwt-decode';
@@ -14,7 +15,6 @@ export default class FeideButton extends React.Component {
         bsStyle="default"
         style={{ marginTop: '1em' }}
         height="20"
-        src="feide-login-icon.png"
       >
         <span
           onClick={() => {

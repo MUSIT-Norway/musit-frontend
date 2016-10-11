@@ -1,3 +1,4 @@
+/* @flow */
 import { createBreadcrumbPath } from '../../util'
 
 export const TYPES = {

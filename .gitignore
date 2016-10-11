@@ -1,9 +1,17 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# dependencies
 node_modules
-public/assets/js/bundle.js
-public/assets/css/bundle.css
-public/assets/css/fontawesome-*
-public/assets/css/glyphicons-*
-.idea/
-coverage/
-*.iml
-*.orig
+
+# testing
+coverage
+
+# production
+build
+
+# misc
+.DS_Store
+.env
+npm-debug.log
+
+.idea

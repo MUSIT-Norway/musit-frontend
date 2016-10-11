@@ -1,5 +1,4 @@
-
-
+/* @flow */
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -51,8 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class ObservationControlGridShow extends React.Component {
+class ObservationControlGridShow extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -140,3 +138,5 @@ export default class ObservationControlGridShow extends React.Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ObservationControlGridShow)

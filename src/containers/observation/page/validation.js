@@ -1,3 +1,4 @@
+/* @flow */
 import { validateString, validateNumber } from '../../../components/formfields/common/validators'
 
 const typeFieldIncorrect = (type, field) => {

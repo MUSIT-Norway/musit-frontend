@@ -1,3 +1,4 @@
+/* @flow */
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -88,11 +89,11 @@ export default class MusitField extends Component {
         {lcHelp}
       </div>
      ) : (
-       <div
-         className={this.classNameOnlyWithInput()}
-       >
-         {lcPlaceholder}
-       </div>
+      <div
+        className={this.classNameOnlyWithInput()}
+      >
+       {lcPlaceholder}
+      </div>
       )
   }
 }
