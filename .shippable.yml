@@ -18,7 +18,6 @@ branches:
 
 build:
   ci:
-   - rm -rf node_modules
    - npm install
    - npm test -- --coverage
    - npm run build
