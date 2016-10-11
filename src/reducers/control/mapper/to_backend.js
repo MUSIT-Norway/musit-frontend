@@ -1,3 +1,4 @@
+/* @flow */
 import { parseObservation } from '../../observation/mapper/to_backend'
 import { DATE_FORMAT_ISO_FULL } from './../../../util'
 

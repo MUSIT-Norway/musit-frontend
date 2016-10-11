@@ -1,3 +1,4 @@
+/* @flow */
 import 'react-select/dist/react-select.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
@@ -11,6 +12,8 @@ import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/au
 import jwtDecode from 'jwt-decode';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import MusitUserAccount from '../../components/user-account-view'
+import './index.css'
+import Logo from './assets/logo.png'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -32,14 +35,16 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(clearActor())
     },
     loadUser: () => {
-      if (localStorage.getItem('jwtToken')) {
-        const user = jwtDecode(localStorage.getItem('jwtToken'))
+      const jwtToken = localStorage.getItem('jwtToken');
+      if (jwtToken) {
+        const user = jwtDecode(jwtToken)
         dispatch(connectUser(user));
         dispatch(loadActor())
         return true;
       }
-      if (localStorage.getItem('fakeToken')) {
-        const userId = JSON.parse(localStorage.getItem('fakeToken')).userId
+      const fakeToken = localStorage.getItem('fakeToken');
+      if (fakeToken) {
+        const userId = JSON.parse(fakeToken).userId
         const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
         dispatch(connectUser(user))
         dispatch(loadActor())
@@ -50,7 +55,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-@connect(mapStateToProps, mapDispatchToProps)
 class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -77,17 +81,16 @@ class App extends Component {
 
   render() {
     const { user, pickListNodeCount, pickListObjectCount } = this.props;
-    const styles = require('./index.scss')
     const rootPath = user ? '/musit/' : '/'
 
     return (
-      <div className={styles.app}>
+      <div>
         <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
               <IndexLink to={rootPath} activeStyle={{ color: '#33e0ff' }}>
-                <div className={styles.brand}>
-                  <img height="40" alt="logo" src="/assets/images/favicons/unimus_transparent100x100.png" />
+                <div className="brand">
+                  <img height="40" alt="logo" src={Logo} />
                 </div>
                 <span>MUSIT</span>
               </IndexLink>
@@ -97,35 +100,35 @@ class App extends Component {
           <Navbar.Collapse>
             <Nav navbar>
               {user &&
-              <LinkContainer to="/magasin/root">
-                <NavItem>Magasin</NavItem>
-              </LinkContainer>
+                <LinkContainer to="/magasin/root">
+                  <NavItem>Magasin</NavItem>
+                </LinkContainer>
               }
               {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
-                <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
-              </LinkContainer>
+                <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
+                  <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
+                </LinkContainer>
               }
               {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
-                <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
-              </LinkContainer>
+                <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
+                  <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
+                </LinkContainer>
               }
               {user &&
-              <LinkContainer to="/reports">
-                <NavItem>Rapporter</NavItem>
-              </LinkContainer>
+                <LinkContainer to="/reports">
+                  <NavItem>Rapporter</NavItem>
+                </LinkContainer>
               }
             </Nav>
             <Nav pullRight>
               {user &&
-              <NavItem><MusitUserAccount handleLogout={this.handleLogout} /></NavItem>
+                <MusitUserAccount user={user} handleLogout={this.handleLogout} />
               }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
 
-        <div className={styles.appContent}>
+        <div className="appContent">
           {this.props.children}
         </div>
 
@@ -135,4 +138,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default connect(mapStateToProps, mapDispatchToProps)(App)

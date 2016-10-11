@@ -1,3 +1,4 @@
+/* @flow */
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
@@ -18,7 +19,7 @@ export default class ObjectGrid extends Component {
     onMove: PropTypes.func.isRequired,
     refresh: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    MusitModal: React.PropTypes.element,
+    MusitModal: React.PropTypes.func,
   }
 
   constructor(props) {

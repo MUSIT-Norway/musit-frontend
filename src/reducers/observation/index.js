@@ -1,3 +1,4 @@
+/* @flow */
 import mapToBackEnd from './mapper/to_backend'
 import mapToFrontEnd from './mapper/to_frontend'
 const ADD = 'musit/observation/ADD'

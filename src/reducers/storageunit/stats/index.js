@@ -1,3 +1,4 @@
+/* @flow */
 const LOAD_STATS = 'musit/strageunit-stats/LOAD_STATS'
 const LOAD_STATS_SUCCESS = 'musit/strageunit-stats/LOAD_STATS_SUCCESS'
 const LOAD_STATS_FAILURE = 'musit/strageunit-stats/LOAD_STATS_FAILURE'

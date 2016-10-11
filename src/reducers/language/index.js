@@ -1,4 +1,6 @@
-const languageData = require('./language.yaml')
+/* @flow */
+import languageData from './language.json'
+
 const initialState = {
   data: languageData
 };

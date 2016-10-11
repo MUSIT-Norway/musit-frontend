@@ -1,6 +1,8 @@
+/* @flow */
 import React, { Component, PropTypes } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Button, Row, Col } from 'react-bootstrap';
+import './index.css'
 
 export default class PairedToogleButtons extends Component {
   static propTypes = {
@@ -12,10 +14,9 @@ export default class PairedToogleButtons extends Component {
 
   render() {
     const { label, value } = this.props;
-    const style = require('./index.scss')
 
     return (
-      <div className={style.pageMargin}>
+      <div className="pageMargin">
         <Row>
           <Col xs={2} />
           <Col xs={10}>
@@ -36,7 +37,7 @@ export default class PairedToogleButtons extends Component {
           </Col>
           <Col xs={10}>
             <Button
-              className={value ? style.buttonpaddingtrue : style.buttonpaddingfalse}
+              className={value ? "buttonpaddingtrue" : "buttonpaddingfalse"}
               onClick={this.props.updatevalueOK}
             >
               <FontAwesome name="check" />
@@ -44,7 +45,7 @@ export default class PairedToogleButtons extends Component {
               OK
             </Button>
             <Button
-              className={value != null && !value ? style.buttonpaddingtrue : style.buttonpaddingfalse}
+              className={value != null && !value ? "buttonpaddingtrue" : "buttonpaddingfalse"}
               onClick={this.props.updatevalueNotOK}
             >
               <FontAwesome name="times" />

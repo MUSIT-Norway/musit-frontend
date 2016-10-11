@@ -1,0 +1,21 @@
+nav.fa {
+  font-size: 1em;
+  line-height: 20px;
+}
+
+.brand {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: inline-block;
+
+  width: 20px;
+  height: 20px;
+  background-size: 80%;
+  margin: 0 10px 0 0;
+  border-radius: 10px;
+}
+
+.appContent {
+  margin: 50px 0;
+}

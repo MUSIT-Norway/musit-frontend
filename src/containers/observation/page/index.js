@@ -1,3 +1,4 @@
+/* @flow */
 import React, { PropTypes } from 'react'
 import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import {
@@ -440,13 +441,13 @@ export default class ObservationPage extends React.Component {
                   Lukk
                 </Button>
               </Col> :
-                <SaveCancel
-                  translate={this.props.translate}
-                  onClickSave={this.handleSubmit}
-                  onClickCancel={() => hashHistory.goBack()}
-                  saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
-                  cancelDisabled={this.props.cancelDisabled}
-                />
+              <SaveCancel
+                translate={this.props.translate}
+                onClickSave={this.handleSubmit}
+                onClickCancel={() => hashHistory.goBack()}
+                saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
+                cancelDisabled={this.props.cancelDisabled}
+              />
             }
           </Row>
         </Grid>

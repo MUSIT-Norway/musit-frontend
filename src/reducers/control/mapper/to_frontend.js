@@ -1,3 +1,4 @@
+/* @flow */
 const wrap = (be) => {
   return { ...be };
 }

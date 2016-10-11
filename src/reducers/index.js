@@ -17,33 +17,33 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { routerReducer } from 'react-router-redux'
-import { combineReducers } from 'redux'
-import authReducer from './auth'
-import fakeAuthReducer from './fake-auth-info'
-import languageReducer from './language'
-import autosuggestReducer from './suggest'
-import picklistReducer from './picklist'
-import storagePanelReducer from './storageunit/panel'
-import storagePanelStateReducer from './storageunit/panel/state'
-import storageNodeGridReducer from './storageunit/grid'
-import storageUnitModalReducer from './storageunit/modal'
-import storageUnitStatsReducer from './storageunit/stats'
-import storageObjectGridReducer from './storageobject/grid'
-import organizationReducer from './organization'
-import observationReducer from './observation'
-import reportReducer from './reports'
-import controlReducer from './control'
-import observationControlGridReducer from './grid/observationcontrol'
-import nodeGridReducer from './grid/node'
-import objectGridReducer from './grid/object'
-import { reducer as formReducer } from 'redux-form'
+import { routerReducer } from 'react-router-redux';
+import { combineReducers } from 'redux';
+import authReducer from './auth';
+import fakeAuthInfoReducer from './fake-auth-info';
+import languageReducer from './language';
+import autosuggestReducer from './suggest';
+import picklistReducer from './picklist';
+import storagePanelReducer from './storageunit/panel';
+import storagePanelStateReducer from './storageunit/panel/state';
+import storageNodeGridReducer from './storageunit/grid';
+import storageUnitModalReducer from './storageunit/modal';
+import storageUnitStatsReducer from './storageunit/stats';
+import storageObjectGridReducer from './storageobject/grid';
+import organizationReducer from './organization';
+import observationReducer from './observation';
+import reportReducer from './reports';
+import controlReducer from './control';
+import observationControlGridReducer from './grid/observationcontrol';
+import nodeGridReducer from './grid/node';
+import objectGridReducer from './grid/object';
+import { reducer as formReducer } from 'redux-form';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
   form: formReducer,
   auth: authReducer,
-  fakeAuthInfo: fakeAuthReducer,
+  fakeAuthInfo: fakeAuthInfoReducer,
   language: languageReducer,
   suggest: autosuggestReducer,
   picks: picklistReducer,
@@ -59,7 +59,7 @@ const rootReducer = combineReducers({
   control: controlReducer,
   observationControlGrid: observationControlGridReducer,
   nodeGrid: nodeGridReducer,
-  objectGrid: objectGridReducer
-})
+  objectGrid: objectGridReducer,
+});
 
-export default rootReducer
+export default rootReducer;
