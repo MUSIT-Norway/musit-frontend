@@ -88,11 +88,11 @@ export default class MusitField extends Component {
         {lcHelp}
       </div>
      ) : (
-      <div
-        className={this.classNameOnlyWithInput()}
-      >
-        {lcPlaceholder}
-      </div>
+       <div
+         className={this.classNameOnlyWithInput()}
+       >
+         {lcPlaceholder}
+       </div>
       )
   }
 }

@@ -54,9 +54,9 @@ export default class MusitUserAccount extends Component {
                 <MenuItem eventKey={`coll_${cc.id}`}>
                   {menuText(<FontAwesome name="check" />, cc.collection)}
                 </MenuItem> :
-                <MenuItem>
-                  {menuText('', cc.collection)}
-                </MenuItem>))
+                  <MenuItem>
+                    {menuText('', cc.collection)}
+                  </MenuItem>))
               }
             <MenuItem divider />
             <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>
@@ -64,5 +64,4 @@ export default class MusitUserAccount extends Component {
         </Dropdown>
       </OverlayTrigger>)
   }
-
 }
