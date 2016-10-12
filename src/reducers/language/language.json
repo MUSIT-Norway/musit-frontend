@@ -1,6 +1,22 @@
 {
   "en": {
     "musit": {
+      "reports": {
+        "reports": "Rapporter",
+        "titleHeader": "Tittel",
+        "descriptionHeader": "Beskrivelse",
+        "securingCollections": {
+          "title": "Sikring av samlinger",
+          "description": "Sikringsindikatorer som rapporteres til KD.",
+          "header": "Rapport - Sikring av samlinger",
+          "totalArea": "Totalt areal:",
+          "perimeter": "Skallsikring:",
+          "theftProtection": "Tyverisikring:",
+          "fireProtection": "Brannsikring:",
+          "waterDamage": "Vannskaderisiko:",
+          "routinesAndContingencyPlan": "Rutiner og beredskap:"
+        }
+      },
       "moveModal": {
         "move": "Move",
         "moveObjects": "Move objects",
@@ -485,6 +501,22 @@
   },
   "no": {
     "musit": {
+      "reports": {
+        "reports": "Rapporter",
+        "titleHeader": "Tittel",
+        "descriptionHeader": "Beskrivelse",
+        "securingCollections": {
+          "title": "Sikring av samlinger",
+          "description": "Sikringsindikatorer som rapporteres til KD.",
+          "header": "Rapport - Sikring av samlinger",
+          "totalArea": "Totalt areal:",
+          "perimeter": "Skallsikring:",
+          "theftProtection": "Tyverisikring:",
+          "fireProtection": "Brannsikring:",
+          "waterDamage": "Vannskaderisiko:",
+          "routinesAndContingencyPlan": "Rutiner og beredskap:"
+        }
+      },
       "moveModal": {
         "move": "Flytt hit",
         "moveObjects": "Flytt objekter",

@@ -1,12 +1,13 @@
 
 import React from 'react'
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
+const I18n = require('react-i18nify').I18n
 
 const reports = [
   {
-    title: 'Sikring av samlinger',
+    title: I18n.t('musit.reports.securingCollections.title'),
     url: '/#/reports/kdreport',
-    description: 'Sikringsindikatorer som rapporteres til KD.',
+    description: I18n.t('musit.reports.securingCollections.description')
   }
 ]
 
