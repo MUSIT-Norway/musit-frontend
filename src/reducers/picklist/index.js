@@ -62,7 +62,7 @@ const clearItems = (type) => (state) => ({
 
 export const getPath = (pathStr) => {
   const pathStrArr = pathStr.substr(1, pathStr.length - 2).split(',')
-  // EX: ,1,2,3,19, will be transformed to 1,2,3,19
+  // EX: ,1,2,3,19, will be transformed to 1,2,3,
   return `,${pathStrArr.slice(0, -1).join(',').toString()},`
 }
 
