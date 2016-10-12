@@ -7,6 +7,12 @@ class TestModal extends React.Component {
   }
 }
 
+class TestModalMoveHistory extends React.Component {
+  render() {
+    return <span>Hello</span>
+  }
+}
+
 describe('ObjectGrid', () => {
   let inputComponent;
 
@@ -16,6 +22,7 @@ describe('ObjectGrid', () => {
         id={1}
         translate={(key) => key}
         MusitModal={TestModal}
+        showMoveHistory={TestModalMoveHistory}
         onMove={(key) => key}
         refresh={(key) => key}
         onAction={() => true}
@@ -60,10 +67,10 @@ describe('ObjectGrid', () => {
   })
   it('Check the 2nd row Unr value', () => {
     setup()
-    assert(inputComponent[6].innerHTML === '2')
+    assert(inputComponent[7].innerHTML === '2')
   })
   it('Check the 2nd row Term value', () => {
     setup()
-    assert(inputComponent[7].innerHTML === 'Spydspiss')
+    assert(inputComponent[8].innerHTML === 'Spydspiss')
   })
 })
