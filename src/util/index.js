@@ -1,7 +1,7 @@
 /* @flow */
 import moment from 'moment'
 
-export const flatten = (arr: any[]) => {
+export const flatten = (arr: []) => {
   const obj = {};
 
   for (let i = 0; i < arr.length; i++) {
@@ -23,15 +23,32 @@ export const blur = () => {
   }
 }
 
-export const createBreadcrumbPath = (pathStr: string, pathNames: any[]): any[]  => {
-  const pathIds = pathStr.slice(1, -1).split(',').slice(1)
-  const r = pathIds.map((i) => (pathNames.find(e => e.nodeId === parseFloat(i))))
-  return r.map(e => {
-    if (e) {
-      return { id: e.nodeId, name: e.name, url: `/magasin/${e.nodeId}`}
+class PathName {
+  nodeId: number;
+  name: string;
+
+  constructor(nodeId: number, name: string) {
+    this.nodeId = nodeId
+    this.name = name;
+  }
+}
+
+class BreadCrumb {
+  id: number;
+  name: string;
+  url: string;
+
+  constructor(pathName: ?PathName) {
+    if (pathName) {
+      this.id = pathName.nodeId;
+      this.name = pathName.name;
+      this.url = '/magasin/' + pathName.nodeId;
     }
-    return e
-  })
+  }
+}
+
+export const createBreadcrumbPath = (pathStr: string, pathNames: PathName[]): BreadCrumb[]  => {
+  return pathStr.slice(1, -1).split(',').slice(1).map(pathId => new BreadCrumb(pathNames.find(e => e.nodeId === parseFloat(pathId))))
 }
 
 export const containsObjectWithField = (arr: any[], field: string, value: string): boolean => arr.filter((e) => e[field] === value).length > 0
@@ -40,15 +57,15 @@ export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY'
 export const DATE_FORMAT_ISO_SHORT = 'YYYY-MM-DD'
 export const DATE_FORMAT_ISO_FULL = 'YYYY-MM-DDTHH:mm:ss.SSSZZ'
 
-export const parseISODateNonStrict = (dateStr: string): any => {
+export const parseISODateNonStrict = (dateStr: string) => {
   return moment(dateStr, [DATE_FORMAT_ISO_SHORT])
 }
 
-export const parseISODateStrict = (dateStr: string): any => {
+export const parseISODateStrict = (dateStr: string) => {
   return moment(dateStr, [DATE_FORMAT_ISO_SHORT], true)
 }
 
-export const parseFloatFromString = (value: string): any => {
+export const parseFloatFromString = (value: string): number => {
   return typeof value === 'string' ? window.parseFloat(value.replace(',', '.')) : value
 }
 

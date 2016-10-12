@@ -1,4 +1,4 @@
-/* @flow */
+
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -28,6 +28,10 @@ export default function clientMiddleware(client) {
       const { promise, types, callback, ...rest } = action; // eslint-disable-line no-redeclare
       if (!promise) {
         return next(action);
+      }
+
+      if (!types) {
+        throw Error('This middleware needs a field "types" of string[]. Ex. { types: [LOAD, LOAD_SUCCESS, lOAD_FAIL] }')
       }
 
       const [REQUEST, SUCCESS, FAILURE] = types;

@@ -1,4 +1,4 @@
-/* @flow */
+
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -32,7 +32,6 @@ export default class MusitModal extends Component {
     onMove: PropTypes.func.isRequired,
     headerText: PropTypes.string.isRequired,
     loadChildren: PropTypes.func.isRequired,
-    loadPath: PropTypes.func.isRequired,
     clearPath: PropTypes.func.isRequired,
     loadRoot: PropTypes.func.isRequired,
     setCurrentId: PropTypes.func.isRequired,
@@ -61,7 +60,6 @@ export default class MusitModal extends Component {
 
   loadStuff(initialId) {
     this.props.loadChildren(initialId)
-    this.props.loadPath(initialId)
   }
 
   render() {

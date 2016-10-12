@@ -1,4 +1,4 @@
-/* @flow */
+
 import { mapToFrontend } from '../mapper'
 const UPDATE = 'musit/storageunit-panel-state/UPDATE';
 const CLEAR = 'musit/storageunit-panel-state/CLEAR';

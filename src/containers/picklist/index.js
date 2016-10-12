@@ -1,4 +1,4 @@
-/* @flow */
+
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -19,12 +19,14 @@
  */
 import PickListContainer from './PickListContainer'
 import { connect } from 'react-redux'
-import { toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
+import { refreshNode, addNode, addObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
 import { moveObject, moveNode } from '../../reducers/move'
+import { loadRoot } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
-  picks: state.picks
+  picks: state.picks,
+  rootNode: state.storageGridUnit
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,7 +39,17 @@ const mapDispatchToProps = (dispatch) => ({
   },
   moveNode: (nodeId, destinationId, doneBy, callback) => {
     dispatch(moveNode(nodeId, destinationId, doneBy, callback))
-  }
+  },
+  addNode: (unit, path) => {
+    dispatch(addNode(unit, path))
+  },
+  addObject: (unit, path) => {
+    dispatch(addObject(unit, path))
+  },
+  loadRoot: (id) => {
+    dispatch(loadRoot(id))
+  },
+  refreshNodes: (ids) => ids.forEach(id => dispatch(refreshNode(id)))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(PickListContainer)

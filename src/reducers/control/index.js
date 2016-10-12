@@ -1,4 +1,4 @@
-/* @flow */
+
 import { mapToBackend } from './mapper/to_backend'
 
 const ADD = 'musit/control/ADD'
