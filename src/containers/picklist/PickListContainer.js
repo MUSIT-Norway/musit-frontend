@@ -21,7 +21,12 @@ export default class PickListContainer extends React.Component {
     params: React.PropTypes.object.isRequired,
     user: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired
-    })
+    }),
+    addNode: React.PropTypes.func.isRequired,
+    addObject: React.PropTypes.func.isRequired,
+    loadRoot: React.PropTypes.func.isRequired,
+    rootNode: React.PropTypes.object,
+    refreshNodes: React.PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -35,7 +40,6 @@ export default class PickListContainer extends React.Component {
     const type = this.props.params.type.toUpperCase();
     return type === TYPES.NODE
   }
-
   showModal = (items) => {
     this.setState({ ...this.state, showModal: true, itemsToMove: [].concat(items) })
   }
@@ -46,6 +50,7 @@ export default class PickListContainer extends React.Component {
 
   nodeCallback = (toName, toMoveLenght, name) => ({
     onSuccess: () => {
+      this.props.refreshNodes(this.state.itemsToMove.map(item => item.id))
       this.hideModal()
       if (toMoveLenght === 1) {
         window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))

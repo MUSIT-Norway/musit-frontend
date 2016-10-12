@@ -6,6 +6,7 @@ import picklistReducer, {
   toggleNode, toggleObject,
   removeNode, removeObject,
   clearNodes, clearObjects,
+  LOAD_ONE_NODE_SUCCESS
 } from '../index'
 
 const node1 = {
@@ -482,4 +483,67 @@ describe('PicklistReducer', () => {
     }
     assert.deepStrictEqual(newState, expectedState, 'Should not mark any item')
   })
+
+  it('Refresh node updates path. Do not show root if only root is there.', () => {
+    const newState = picklistReducer(testState, {
+      type: LOAD_ONE_NODE_SUCCESS,
+      result:{
+        path: ',1,',
+        pathNames: [{ nodeId: 1}] },
+      id: 1
+    })
+    const expectedState =  {
+      NODE: [
+        {
+          marked: false,
+          path: [],
+          value: node1
+        },
+        {
+          marked: false,
+          path: [],
+          value: node2
+        },
+        {
+          marked: false,
+          path: [],
+          value: node3
+        }
+      ],
+      OBJECT: DEFAULT_OBJECTS
+    }
+    assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1')
+  })
+
+it('Refresh node updates path. Will only show the second node. First(root) and last node(child) will not show.', () => {
+  const newState = picklistReducer(testState, {
+    type: LOAD_ONE_NODE_SUCCESS,
+    result:{
+      path: ',1,2,3,',
+      pathNames: [{ nodeId: 1},{ nodeId: 2},{ nodeId: 3}]
+    },
+    id: 1
+  })
+  const expectedState =  {
+    NODE: [
+      {
+        marked: false,
+        path: [{id : 2, url: "/magasin/2"}],
+        value: node1
+      },
+      {
+        marked: false,
+        path: [],
+        value: node2
+      },
+      {
+        marked: false,
+        path: [],
+        value: node3
+      }
+    ],
+    OBJECT: DEFAULT_OBJECTS
+  }
+  assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1')
+})
 })

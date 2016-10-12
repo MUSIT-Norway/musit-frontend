@@ -30,6 +30,10 @@ export default function clientMiddleware(client) {
         return next(action);
       }
 
+      if (!types) {
+        throw Error('This middleware needs a field "types" of string[]. Ex. { types: [LOAD, LOAD_SUCCESS, lOAD_FAIL] }')
+      }
+
       const [REQUEST, SUCCESS, FAILURE] = types;
       next({ ...rest, type: REQUEST });
 

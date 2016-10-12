@@ -32,6 +32,7 @@ export default class MusitModal extends Component {
     onMove: PropTypes.func.isRequired,
     headerText: PropTypes.string.isRequired,
     loadChildren: PropTypes.func.isRequired,
+    clearPath: PropTypes.func.isRequired,
     loadRoot: PropTypes.func.isRequired,
     clearRoot: PropTypes.func.isRequired,
     setCurrentId: PropTypes.func.isRequired,
