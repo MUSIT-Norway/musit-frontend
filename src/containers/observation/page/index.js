@@ -1,4 +1,4 @@
-/* @flow */
+
 import React, { PropTypes } from 'react'
 import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import {
