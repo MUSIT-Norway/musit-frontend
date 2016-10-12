@@ -1,4 +1,4 @@
-/* @flow */
+
 const LOAD = 'musit/observationcontrol/LOAD'
 const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS'
 const LOAD_FAIL = 'musit/observationcontrol/LOAD_FAIL'

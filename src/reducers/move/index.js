@@ -1,4 +1,4 @@
-/* @flow */
+
 const MOVE_OBJECT = 'musit/move/object/start'
 const MOVE_OBJECT_SUCCESS = 'musit/move/object/succes'
 const MOVE_OBJECT_FAILURE = 'musit/move/object/failure'

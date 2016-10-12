@@ -1,4 +1,4 @@
-/* @flow */
+
 import { parseFloatFromString } from '../../../util'
 
 export const toBackend = (data, parentId) => {

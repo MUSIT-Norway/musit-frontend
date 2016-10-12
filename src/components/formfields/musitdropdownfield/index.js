@@ -1,4 +1,4 @@
-/* @flow */
+
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select'
 import validate from '../common/validators'
