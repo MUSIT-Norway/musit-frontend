@@ -1,4 +1,4 @@
-/* @flow */
+
 import React from 'react'
 import { PickListComponent } from '../../components/picklist'
 import { PageHeader, Grid } from 'react-bootstrap'

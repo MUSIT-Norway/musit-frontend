@@ -1,4 +1,4 @@
-/* @flow */
+
 const SET_USER = 'musit/auth/SET_USER';
 const CLEAR_USER = 'musit/auth/CLEAR_USER';
 const LOAD_ACTOR = 'musit/auth/LOAD_ACTOR'

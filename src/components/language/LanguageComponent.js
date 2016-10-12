@@ -1,4 +1,4 @@
-/* @flow */
+
 import React, { Component, PropTypes } from 'react'
 
 import { I18n } from 'react-i18nify'

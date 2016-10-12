@@ -1,4 +1,4 @@
-/* @flow */
+
 import { mapToFrontend, mapToBackend } from '../mapper'
 const INSERT = 'musit/storageunit-container/INSERT';
 const UPDATE = 'musit/storageunit-container/UPDATE';

@@ -1,4 +1,4 @@
-/* @flow */
+
 import { MenuItem, Dropdown, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import React, { Component } from 'react'
 import FontAwesome from 'react-fontawesome'
