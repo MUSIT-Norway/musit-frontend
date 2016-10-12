@@ -1,3 +1,4 @@
+import { createBreadcrumbPath } from '../../util'
 
 export const TYPES = {
   NODE: 'NODE',
@@ -9,6 +10,11 @@ const CLEAR_NODES = 'musit/picklist/CLEAR_NODES';
 const ADD_NODE = 'musit/picklist/ADD_NODE';
 const REMOVE_NODE = 'musit/picklist/REMOVE_NODE';
 const TOGGLE_NODE = 'musit/picklist/TOGGLE_NODE';
+
+// Load Node
+export const LOAD_ONE_NODE = 'musit/picklist/LOAD_ONE_NODE'
+export const LOAD_ONE_NODE_SUCCESS = 'musit/picklist/LOAD_ONE_NODE_SUCCESS'
+export const LOAD_ONE_NODE_FAIL = 'musit/picklist/LOAD_ONE_NODE_FAIL'
 
 // Object
 const CLEAR_OBJECTS = 'musit/picklist/CLEAR_OBJECTS';
@@ -53,11 +59,44 @@ const clearItems = (type) => (state) => ({
   [type]: []
 });
 
+export const getPath = (pathStr) => {
+  const pathStrArr = pathStr.substr(1, pathStr.length - 2).split(',')
+  // EX: ,1,2,3,19, will be transformed to 1,2,3,
+  return `,${pathStrArr.slice(0, -1).join(',').toString()},`
+}
+
+const loadNode = (state) => state
+
+const loadNodeFail = (state, action) => ({ ...state, error: action.error })
+
+const loadNodeSuccess = (type) => (state, action) => {
+  const modifiedNodes = state[type].map((n) => {
+    if (n.value.id === action.id) {
+      const newPath = createBreadcrumbPath(
+        getPath(action.result.path),
+        action.result.pathNames
+      )
+      return {
+        ...n,
+        path: newPath
+      }
+    }
+    return n
+  })
+  return {
+    ...state,
+    [type]: modifiedNodes
+  }
+};
+
 const NODE_ACTION_HANDLERS = ({
   [CLEAR_NODES]: clearItems(TYPES.NODE),
   [ADD_NODE]: addItem(TYPES.NODE),
   [REMOVE_NODE]: removeItem(TYPES.NODE),
-  [TOGGLE_NODE]: toggleItem(TYPES.NODE)
+  [TOGGLE_NODE]: toggleItem(TYPES.NODE),
+  [LOAD_ONE_NODE]: loadNode,
+  [LOAD_ONE_NODE_SUCCESS]: loadNodeSuccess(TYPES.NODE),
+  [LOAD_ONE_NODE_FAIL]: loadNodeFail,
 });
 
 const OBJECT_ACTION_HANDLERS = ({
@@ -88,3 +127,12 @@ export const clearObjects = () => ({ type: CLEAR_OBJECTS })
 export const addObject = (item, path = []) => ({ type: ADD_OBJECT, item, path })
 export const removeObject = (item) => ({ type: REMOVE_OBJECT, item })
 export const toggleObject = (item, on) => ({ type: TOGGLE_OBJECT, item, on })
+
+// Action for load node
+export const refreshNode = (id) => {
+  return {
+    types: [LOAD_ONE_NODE, LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE_FAIL],
+    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}`),
+    id
+  }
+}

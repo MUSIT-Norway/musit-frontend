@@ -42,7 +42,7 @@ export const moveNode = (nodeId, destination, doneBy, callback) => {
     items: [].concat(nodeId)
   }
   return {
-    types: [MOVE_OBJECT, MOVE_OBJECT_SUCCESS, MOVE_OBJECT_FAILURE],
+    types: [MOVE_NODE, MOVE_NODE_SUCCESS, MOVE_NODE_FAILURE],
     promise: (client) => client.put('/api/storagefacility/v1/storagenodes/moveNode', { data }),
     callback
   }
