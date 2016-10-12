@@ -3,6 +3,10 @@ language: node_js
 node_js:
  - 6.7.0
 
+env:
+  global:
+    - secure: h64Lt+V0lbUNklDGEVTtJ+uWTHLSfnSEcUk95tFZG62kdv9WCjkXxnuVUdfttcgmUdrOFSt/n6Wsn1HJoB3UyeZc++4ZFsNxZnlNLmqv/41OgA6bgIb3WRSOduJv4Q4Uv1YpMqv3SBZ1ZXPfuhfgJOopXD61+f0x6GUK+KWqIVFwwUEJ/SCDt6zs/TX1FVS5nETtG/qvULthFe+I+0UdvMg1xYMc3IOEYshpxhScDXaMMH2Hvql6rotHDBncbPGafeLKpQBXqocD1y9/tQjOsdfPWM7jdlBqA7z1gxlN7PDHaVdXm7OiFi8d7laxsPhJ9RNaVB5BQ5q4TQoZ4RRJoA==
+
 integrations:
   notifications:
     - integrationName: MUSIT-Slack
@@ -20,4 +24,5 @@ build:
   ci:
    - npm install
    - npm test -- --coverage
+   - npm run codacy
    - npm run build
