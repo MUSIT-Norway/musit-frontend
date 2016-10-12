@@ -1,4 +1,4 @@
-/* @flow */
+
 export const TYPES = {
   NODE: 'NODE',
   OBJECT: 'OBJECT'

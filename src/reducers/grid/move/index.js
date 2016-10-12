@@ -1,4 +1,4 @@
-/* @flow */
+
 const LOAD = 'musit/movehistory/LOAD'
 const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS'
 const LOAD_FAIL = 'musit/movehistory/LOAD_FAIL'

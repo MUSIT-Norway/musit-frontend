@@ -1,4 +1,4 @@
-/* @flow */
+
 import 'react-select/dist/react-select.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'

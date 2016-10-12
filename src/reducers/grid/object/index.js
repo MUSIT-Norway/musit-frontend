@@ -1,4 +1,4 @@
-/* @flow */
+
 const initialState = {
   data: {
     row_1: {

@@ -1,4 +1,4 @@
-/* @flow */
+
 import React from 'react'
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
 

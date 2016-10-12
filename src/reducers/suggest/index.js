@@ -1,4 +1,4 @@
-/* @flow */
+
 const CLEAR = 'musit/suggest/CLEAR'
 const SUGGEST = 'musit/suggest/LOAD'
 const SUGGEST_SUCCESS = 'musit/suggest/LOAD_SUCCESS'
