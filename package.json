@@ -32,7 +32,7 @@
     "jwt-decode": "^2.1.0",
     "react": "^15.3.2",
     "react-addons-test-utils": "^15.3.2",
-    "react-autosuggest": "^6.0.4",
+    "react-autosuggest": "3.7.4",
     "react-bootstrap": "^0.30.5",
     "react-bootstrap-date-picker": "^3.7.0",
     "react-dom": "^15.3.2",

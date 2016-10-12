@@ -30,7 +30,6 @@ import storageNodeGridReducer from './storageunit/grid';
 import storageUnitModalReducer from './storageunit/modal';
 import storageUnitStatsReducer from './storageunit/stats';
 import storageObjectGridReducer from './storageobject/grid';
-import organizationReducer from './organization';
 import observationReducer from './observation';
 import reportReducer from './reports';
 import controlReducer from './control';
@@ -53,7 +52,6 @@ const rootReducer = combineReducers({
   storageUnitStats: storageUnitStatsReducer,
   storagePanelState: storagePanelStateReducer,
   storageObjectGrid: storageObjectGridReducer,
-  organization: organizationReducer,
   observation: observationReducer,
   reports: reportReducer,
   control: controlReducer,

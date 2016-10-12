@@ -1,3 +1,4 @@
+import Config from '../../../config'
 
 const LOAD_SEVERAL = 'musit/storageunit-modal/LOAD_SEVERAL'
 const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-modal/LOAD_SEVERAL_SUCCESS'
@@ -123,12 +124,12 @@ export const loadRoot = (id) => {
   if (id) {
     action = {
       types: [LOAD_ROOT, LOAD_ROOT_SUCCESS, LOAD_ROOT_FAIL],
-      promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}`)
+      promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`)
     }
   } else {
     action = {
       types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get('/api/storagefacility/v1/storagenodes/1/children')
+      promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/1/children`)
     }
   }
   return action
@@ -137,7 +138,7 @@ export const loadRoot = (id) => {
 export const loadChildren = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}/children`),
+    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`),
     callback
   };
 }
@@ -159,15 +160,6 @@ export const clearCurrent = () => {
   return {
     type: CLEAR_CURRENT
   }
-}
-
-export const loadPath = (id, callback) => {
-  const url = `/api/storageadmin/v1/storageunit/${id}/path`
-  return {
-    types: [LOAD_PATH, LOAD_PATH_SUCCESS, LOAD_PATH_FAIL],
-    promise: (client) => client.get(url),
-    callback
-  };
 }
 
 export const clearPath = () => {

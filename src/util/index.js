@@ -48,7 +48,8 @@ class BreadCrumb {
 }
 
 export const createBreadcrumbPath = (pathStr: string, pathNames: PathName[]): BreadCrumb[]  => {
-  return pathStr.slice(1, -1).split(',').slice(1).map(pathId => new BreadCrumb(pathNames.find(e => e.nodeId === parseFloat(pathId))))
+  const pathStrIds = (pathStr != null ? pathStr : '').slice(1, -1).split(',').slice(1).map(p => parseFloat(p));
+  return pathStrIds.map(pathId => new BreadCrumb(pathNames.find(e => e.nodeId === pathId)))
 }
 
 export const containsObjectWithField = (arr: any[], field: string, value: string): boolean => arr.filter((e) => e[field] === value).length > 0

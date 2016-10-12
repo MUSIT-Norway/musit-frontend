@@ -1,3 +1,4 @@
+import Config from '../../../config'
 
 const LOAD = 'musit/movehistory/LOAD'
 const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS'
@@ -151,7 +152,7 @@ export const loadActor = (r) => {
 export const loadMoveHistoryForObject = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/objects/${id}/locations`),
+    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/locations`),
     callback
   }
 }

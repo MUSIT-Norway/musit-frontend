@@ -1,3 +1,4 @@
+import Config from '../../../config'
 
 import { mapToFrontend, mapToBackend } from '../mapper'
 const INSERT = 'musit/storageunit-container/INSERT';
@@ -67,13 +68,13 @@ export default storageUnitContainerReducer;
 export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/${id}`),
+    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`),
     callback
   };
 }
 
 export const update = (data, callback) => {
-  const url = `/api/storagefacility/v1/storagenodes/${data.id}`;
+  const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${data.id}`;
   const dataToPost = mapToBackend(data)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
@@ -83,7 +84,7 @@ export const update = (data, callback) => {
 }
 
 export const insert = (parentId, data, callback) => {
-  const url = `/api/storagefacility/v1/storagenodes${!parentId ? '/root' : ''}`;
+  const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}${!parentId ? '/root' : ''}`;
   const dataToPost = mapToBackend(data, parentId)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
