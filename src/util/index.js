@@ -76,3 +76,12 @@ export const formatFloatToString = (number: number): string => {
 export const hasProp = (obj: any, prop: string): boolean => {
   return {}.hasOwnProperty.call(obj, prop)
 }
+
+export const isDateBiggerThanToday = (newDate: any): boolean => {
+  if (newDate) {
+    // uses YYYY/MM/DD format to make string comparison right 
+    return (moment().format('YYYY/MM/DD') < moment(newDate).format('YYYY/MM/DD')) ? true : false
+  } else {
+    return false
+  }
+}

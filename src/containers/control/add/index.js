@@ -29,6 +29,7 @@ import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY, ha
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
+import { isDateBiggerThanToday } from '../../../util'
 
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
@@ -128,7 +129,7 @@ export default class ControlAddContainer extends React.Component {
 
   setDate = (newValue) => {
     if (newValue) {
-      if (moment().format('DD/MM/YYYY') < moment(newValue).format('DD/MM/YYYY')) {
+      if (isDateBiggerThanToday(newValue)) {
         window.alert(this.props.translate('musit.newControl.dateValidation'))
         this.setState({ ...this.state, doneDate: moment() })
       } else {
