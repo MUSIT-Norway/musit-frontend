@@ -20,7 +20,7 @@
 
 import Language from '../../../components/language'
 import { loadRoot, loadChildren, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 import { createBreadcrumbPath } from '../../../util'
 import MusitModalImpl from './MusitModal'
 
