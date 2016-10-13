@@ -13,7 +13,7 @@
           "errorNode": "Moving node %{name} to %{destination} failed.",
           "errorObject": "Moving object %{name} to %{destination} failed.",
           "nodesMoved": "%{count} nodes were moved to %{destination}",
-          "objecstMoved": "%{count} objects were moved to %{destination}",
+          "objectsMoved": "%{count} objects were moved to %{destination}",
           "errorNodes": "Error in %{count} nodes move to %{destination}",
           "errorObjects": "Error in %{count} objects move to %{destination}"
         }
