@@ -1,3 +1,4 @@
+import Config from '../../config'
 
 import mapToBackEnd from './mapper/to_backend'
 import mapToFrontEnd from './mapper/to_frontend'
@@ -96,7 +97,7 @@ export default observationReducer;
 
 export const addObservation = (nodeId, data, callback) => {
   const action = 'post'
-  const url = `/api/storagefacility/v1/storagenodes/${nodeId}/observations`
+  const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations`
   const dataToPost = mapToBackEnd(data, nodeId)
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
@@ -115,7 +116,7 @@ export const getActorNameFromId = (id) => {
 export const loadObservation = (nodeId, observationId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`api/storagefacility/v1/storagenodes/${nodeId}/observations/${observationId}`),
+    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations/${observationId}`),
     callback
   }
 }
