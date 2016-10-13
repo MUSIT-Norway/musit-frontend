@@ -15,6 +15,7 @@ import DatePicker from 'react-bootstrap-date-picker'
 import ActorSuggest from '../../../components/actor'
 import moment from 'moment'
 import * as validation from './validation'
+import { isDateBiggerThanToday } from '../../../util'
 
 export default class ObservationPage extends React.Component {
 
@@ -114,7 +115,7 @@ export default class ObservationPage extends React.Component {
 
   setDate = (newValue) => {
     if (newValue) {
-      if (moment().format('DD/MM/YYYY') < moment(newValue).format('DD/MM/YYYY')) {
+      if (isDateBiggerThanToday(newValue)) {
         window.alert(this.props.translate('musit.observation.page.dateValidation'))
         this.setState({ ...this.state, doneDate: moment() })
       } else {

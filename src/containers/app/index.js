@@ -101,7 +101,7 @@ class App extends Component {
             <Nav navbar>
               {user &&
                 <LinkContainer to="/magasin/root">
-                  <NavItem>Magasin</NavItem>
+                  <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
                 </LinkContainer>
               }
               {user &&
@@ -116,7 +116,7 @@ class App extends Component {
               }
               {user &&
                 <LinkContainer to="/reports">
-                  <NavItem>Rapporter</NavItem>
+                  <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
                 </LinkContainer>
               }
             </Nav>
