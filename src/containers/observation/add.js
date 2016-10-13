@@ -7,7 +7,6 @@ import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { addObservation } from '../../reducers/observation'
-import { loadPath } from '../../reducers/storageunit/grid'
 import { createBreadcrumbPath } from '../../util'
 
 const mapStateToProps = (state) => {
@@ -25,9 +24,6 @@ const mapDispatchToProps = (dispatch) => {
         onSuccess: () => hashHistory.goBack(),
         onFailure: () => alert('ikke istand til å lagre')
       }))
-    },
-    loadPath: (id) => {
-      dispatch(loadPath(id))
     }
   }
 }
@@ -39,12 +35,7 @@ class AddObservationPage extends React.Component {
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
     actor: PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
-    loadPath: React.PropTypes.func.isRequired
-  }
-
-  componentWillMount() {
-    this.props.loadPath(this.props.params.id)
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   render() {

@@ -34,12 +34,7 @@ export default class ControlViewContainer extends React.Component {
     params: React.PropTypes.object,
     loadPersonNameFromId: React.PropTypes.func.isRequired,
     doneBy: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
-    loadPath: React.PropTypes.func.isRequired
-  }
-
-  static defaultProps = {
-    loadPath: () => true
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   componentWillMount() {
@@ -47,7 +42,6 @@ export default class ControlViewContainer extends React.Component {
       this.props.loadControl(this.props.params.id, this.props.params.controlId, {
         onSuccess: (r) => {
           this.props.loadPersonNameFromId(r.doneBy)
-          this.props.loadPath(this.props.params.id)
         }
       })
     }
@@ -122,7 +116,7 @@ export default class ControlViewContainer extends React.Component {
                   <ControlView
                     id="1"
                     translate={translate}
-                    controlsJson={data && data.parts ? data.parts : null}
+                    controlsJson={data}
                   />
                 </Col>
               </Row>
