@@ -5,6 +5,8 @@ import FontAwesome from 'react-fontawesome'
 import * as ObservationRender from '../../observation/render'
 import { formatFloatToString } from './../../../util'
 import reduce from 'lodash/reduce'
+import keys from 'lodash/keys'
+import map from 'lodash/map'
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -271,10 +273,10 @@ export default class ControlView extends Component {
         </Col>
       ) }
 
-    const oneTableRow = (control, eventType) => {
+    const oneTableRow = (control, eventType, index) => {
       const { ok } = control
       return (
-        <div>
+        <div key={index}>
           <Row style={{ top: '0', bottom: '0' }} >
             {observation(ControlView.iconMap[eventType],
               this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
@@ -290,9 +292,13 @@ export default class ControlView extends Component {
       ) }
 
     const getControls = () => {
-      return reduce(this.props.controlsJson, (result, control, type) => {
-        if (ControlView.typeMap[type]) {
-          result.push(oneTableRow(control, type))
+      const controls = this.props.controlsJson;
+      const withIndexAndKey = map(keys(controls), (type, index) => {
+        return { index, item: this.props.controlsJson[type], type }
+      })
+      return reduce(withIndexAndKey, (result, withIndex) => {
+        if (ControlView.typeMap[withIndex.type]) {
+          result.push(oneTableRow(withIndex.item, withIndex.type, withIndex.index))
         }
         return result;
       }, [])
