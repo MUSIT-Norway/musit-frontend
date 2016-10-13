@@ -78,9 +78,5 @@ export const hasProp = (obj: any, prop: string): boolean => {
 }
 
 export const isDateBiggerThanToday = (newDate: any): boolean => {
-  if (newDate) {
-    return (moment(newDate).isAfter()) ? true : false
-  } else {
-    return false
-  }
+  return (moment(newDate).isAfter())
 }
