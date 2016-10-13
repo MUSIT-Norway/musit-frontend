@@ -19,7 +19,7 @@ export default () => {
           <Grid>
             <Row className="row-centered">
               <PageHeader>
-                Rapporter
+                { I18n.t('musit.reports.reports') }
               </PageHeader>
               <Table>
                 <thead>
