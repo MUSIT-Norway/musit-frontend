@@ -72,6 +72,71 @@ export default class ControlView extends Component {
       }
     };
 
+    this.observation = (fontName, observationType) => {
+      return (
+          <Col xs={5} sm={5} md={5} >
+            <span className={`icon icon-${fontName}`} style={{ 'fontSize': 'x-large' }} />
+            {` ${observationType}`}
+          </Col>
+      )
+    }
+
+    this.controlOk = (
+        <Col xs={5} sm={5} md={5} >
+          <FontAwesome name="check" style={{ 'fontSize': 'x-large' }} />
+          {`  ${this.props.translate('musit.texts.ok')}`}
+        </Col>
+    )
+
+    this.controlNotOk = (
+        <Col xs={5} sm={5} md={5} >
+          <FontAwesome name="close" style={{ 'fontSize': 'x-large' }} />
+          {`  ${this.props.translate('musit.texts.notOk')}`}
+        </Col>
+    )
+
+    this.downButton = (observationType, ok) => {
+      return (
+          <Col xs={1} sm={1} >
+            <Button
+                id={`${this.props.id}_${observationType}_downButton`}
+                onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
+                bsStyle="link"
+            >
+              {ok ? null : <FontAwesome name="sort-desc" style={{ 'fontSize': 'x-large' }} />}
+            </Button>
+          </Col>
+      ) }
+
+    this.oneTableRow = (control, eventType, index) => {
+      return (
+          <div key={index}>
+            <Row style={{ top: '0', bottom: '0' }} >
+              {this.observation(ControlView.iconMap[eventType],
+                  this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
+              {control.ok ? this.controlOk : this.controlNotOk}
+              {this.downButton(eventType, control.ok)}
+            </Row>
+            <Row>
+              <Panel collapsible expanded={this.state[eventType].open}>
+                {this.showObservation(control, eventType)}
+              </Panel>
+            </Row>
+          </div>
+      ) }
+
+    this.getControls = (controls) => {
+      const withIndexAndKey = map(keys({...controls}), (type, index) => {
+        return { index, item: controls[type], type }
+      })
+      return reduce(withIndexAndKey, (result, withIndex) => {
+        if (ControlView.typeMap[withIndex.type]) {
+          result.push(this.oneTableRow(withIndex.item, withIndex.type, withIndex.index))
+        }
+        return result;
+      }, [])
+    }
+
     this.showObservation = (control, controlType) => {
       let lv;
       const { ok } = control
@@ -240,73 +305,9 @@ export default class ControlView extends Component {
   }
 
   render() {
-    const { id } = this.props
-    const observation = (fontName, observationType) => {
-      return (
-        <Col xs={5} sm={5} md={5} >
-          <span className={`icon icon-${fontName}`} style={{ 'fontSize': 'x-large' }} />
-          {` ${observationType}`}
-        </Col>
-    ) }
-    const controlOk = (
-      <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="check" style={{ 'fontSize': 'x-large' }} />
-        {`  ${this.props.translate('musit.texts.ok')}`}
-      </Col>
-    )
-    const controlNotOk = (
-      <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="close" style={{ 'fontSize': 'x-large' }} />
-        {`  ${this.props.translate('musit.texts.notOk')}`}
-      </Col>
-    )
-    const downButton = (observationType, ok) => {
-      return (
-        <Col xs={1} sm={1} >
-          <Button
-            id={`${id}_${observationType}_downButton`}
-            onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
-            bsStyle="link"
-          >
-            {ok ? null : <FontAwesome name="sort-desc" style={{ 'fontSize': 'x-large' }} />}
-          </Button>
-        </Col>
-      ) }
-
-    const oneTableRow = (control, eventType, index) => {
-      const { ok } = control
-      return (
-        <div key={index}>
-          <Row style={{ top: '0', bottom: '0' }} >
-            {observation(ControlView.iconMap[eventType],
-              this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
-            {ok ? controlOk : controlNotOk}
-            {downButton(eventType, ok)}
-          </Row>
-          <Row>
-            <Panel collapsible expanded={this.state[eventType].open}>
-              {this.showObservation(control, eventType)}
-            </Panel>
-          </Row>
-        </div>
-      ) }
-
-    const getControls = () => {
-      const controls = this.props.controlsJson;
-      const withIndexAndKey = map(keys(controls), (type, index) => {
-        return { index, item: this.props.controlsJson[type], type }
-      })
-      return reduce(withIndexAndKey, (result, withIndex) => {
-        if (ControlView.typeMap[withIndex.type]) {
-          result.push(oneTableRow(withIndex.item, withIndex.type, withIndex.index))
-        }
-        return result;
-      }, [])
-    }
-
     return (
       <FormGroup>
-        {this.props.controlsJson && getControls()}
+        {this.getControls(this.props.controlsJson)}
       </FormGroup>
     )
   }
