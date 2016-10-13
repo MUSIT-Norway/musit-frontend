@@ -22,7 +22,6 @@ import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import ControlViewContainerImpl from './index'
-import { loadPath } from '../../../reducers/storageunit/grid'
 import { createBreadcrumbPath } from '../../../util'
 
 const mapStateToProps = (state) => ({
@@ -37,10 +36,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loadControl(nodeId, controlId, callback))
   },
   loadPersonNameFromId: (doneBy) => {
-    dispatch(getActorNameFromId(doneBy.actorId))
-  },
-  loadPath: (id) => {
-    dispatch(loadPath(id))
+    dispatch(getActorNameFromId(doneBy))
   }
 })
 
