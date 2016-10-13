@@ -1,3 +1,5 @@
+import drop from 'lodash/drop'
+import moment from 'moment'
 import { assert } from '../../../../test/setup'
 import observationReducer, {
   loadObservation,
@@ -40,10 +42,11 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const fe = mapToFrontEnd(mapToBackEnd(frontEnd))
-    const feStr = JSON.stringify(fe)
-    const beStr = JSON.stringify(frontEnd)
-    assert(feStr === beStr)
+    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontEnd))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'year'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'month'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'day'))
+    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontEnd, 'doneDate'))
   })
 
   it('Valid action from calling actor service for finding actor should update state correctly', () => {
@@ -59,10 +62,148 @@ describe('ObservationReducer', () => {
     assert(state.type !== 'LOAD_ACTOR_SUCCESS' || state.data.fn === 'Arne And1')
   })
 
-  it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
-    const completeFrontEnd = {
+  it('test alcohol status: Uttørket', () => {
+    const frontend = {
       doneBy: { id: '1' },
-      doneDate: parseISODate('1999-11-11'),
+      doneDate: moment(),
+      observations: [
+        {
+
+          type: 'alcohol',
+          data: {
+            statusValue: 'Uttørket',
+            volumeValue: '4',
+            commentValue: 'Drita full'
+          }
+        }
+      ]
+    }
+    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
+    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+  })
+
+  it('test alcohol status: nesten uttørket', () => {
+    const frontend = {
+      doneBy: { id: '1' },
+      doneDate: moment(),
+      observations: [
+        {
+
+          type: 'alcohol',
+          data: {
+            statusValue: 'nesten uttørket',
+            volumeValue: '4',
+            commentValue: 'Drita full'
+          }
+        }
+      ]
+    }
+    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
+    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+  })
+
+  it('test alcohol status: litt uttørket', () => {
+    const frontend = {
+      doneBy: { id: '1' },
+      doneDate: moment(),
+      observations: [
+        {
+
+          type: 'alcohol',
+          data: {
+            statusValue: 'litt uttørket',
+            volumeValue: '4',
+            commentValue: 'Drita full'
+          }
+        }
+      ]
+    }
+    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
+    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+  })
+
+  it('test alcohol status: noe uttørket', () => {
+    const frontend = {
+      doneBy: { id: '1' },
+      doneDate: moment(),
+      observations: [
+        {
+
+          type: 'alcohol',
+          data: {
+            statusValue: 'noe uttørket',
+            volumeValue: '4',
+            commentValue: 'Drita full'
+          }
+        }
+      ]
+    }
+    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
+    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+  })
+
+  it('test alcohol status: tilfredsstillende', () => {
+    const frontend = {
+      doneBy: { id: '1' },
+      doneDate: moment(),
+      observations: [
+        {
+
+          type: 'alcohol',
+          data: {
+            statusValue: 'tilfredsstillende',
+            volumeValue: '4',
+            commentValue: 'Drita full'
+          }
+        }
+      ]
+    }
+    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
+    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+  })
+
+  it('test invalid alcohol status', () => {
+    const frontend = {
+      doneBy: { id: '1' },
+      doneDate: moment(),
+      observations: [
+        {
+
+          type: 'alcohol',
+          data: {
+            statusValue: 'xxxddudyudydydydydyd',
+            volumeValue: '4',
+            commentValue: 'Drita full'
+          }
+        }
+      ]
+    }
+    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
+    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+  })
+
+  it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
+    const frontend = {
+      doneBy: { id: '1' },
+      doneDate: moment(),
       observations: [
         {
 
@@ -111,6 +252,14 @@ describe('ObservationReducer', () => {
           data: {
             leftValue: 'Brann',
             rightValue: 'Altfor vått'
+          }
+        },
+        {
+
+          type: 'skallsikring',
+          data: {
+            leftValue: 'skall',
+            rightValue: 'Altfor skallet'
           }
         },
         {
@@ -166,9 +315,10 @@ describe('ObservationReducer', () => {
             commentValue: 'Altfor fuktig' }
         }
       ] }
-    const s = mapToFrontEnd(mapToBackEnd(completeFrontEnd))
-    const stringify1 = JSON.stringify(s);
-    const stringify2 = JSON.stringify(completeFrontEnd);
-    assert(stringify1 === stringify2)
+    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
+    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
+    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
   })
 })

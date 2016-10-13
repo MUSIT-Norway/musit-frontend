@@ -37,12 +37,7 @@ export default class ControlAddContainer extends React.Component {
     params: React.PropTypes.object,
     actor: React.PropTypes.object,
     envReqData: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
-    loadPath: React.PropTypes.func.isRequired
-  }
-
-  static defaultProps = {
-    loadPath: () => true
+    path: React.PropTypes.arrayOf(React.PropTypes.object)
   }
 
   constructor(props) {
@@ -64,10 +59,6 @@ export default class ControlAddContainer extends React.Component {
     this.onControlClickNOK = this.onControlClickNOK.bind(this)
     this.onClickSave = this.onClickSave.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  componentWillMount() {
-    this.props.loadPath(this.props.params.id)
   }
 
   componentWillReceiveProps(nextProps) {

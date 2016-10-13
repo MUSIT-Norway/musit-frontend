@@ -204,6 +204,7 @@
             }
           },
           "temperature": {
+            "toValueSmallerThanFromValue": "To value cannot be smaller than From value",
             "fromValueRequired": "Measured value (from) is required.",
             "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
             "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
@@ -220,6 +221,7 @@
             "notePlaceHolder": "Free text"
           },
           "hypoxicAir": {
+            "toValueSmallerThanFromValue": "To value cannot be smaller than From value",
             "fromValueRequired": "Measured value (from) is required.",
             "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
             "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
@@ -236,6 +238,7 @@
             "notePlaceHolder": "Free text"
           },
           "relativeHumidity": {
+            "toValueSmallerThanFromValue": "To value cannot be smaller than From value",
             "fromValueRequired": "Measured value (from) is required.",
             "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
             "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
@@ -705,6 +708,7 @@
             }
           },
           "temperature": {
+            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
             "fromValueRequired": "Målt temperatur (fra) er påkrevd.",
             "fromValueIncorrect": "Målt temperatur (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt temperatur (til) må være et tall med maks 3 desimaler.",
@@ -721,6 +725,7 @@
             "notePlaceHolder": "Fritekst"
           },
           "hypoxicAir": {
+            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
             "fromValueRequired": "Målt inertluft (fra) er påkrevd.",
             "fromValueIncorrect": "Målt inertluft (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt inertluft (til) må være et tall med maks 3 desimaler.",
@@ -737,6 +742,7 @@
             "notePlaceHolder": "Fritekst"
           },
           "relativeHumidity": {
+            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
             "fromValueRequired": "Målt rel. luftfuktighet (fra) er påkrevd.",
             "fromValueIncorrect": "Målt rel. luftfuktighet (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt rel. luftfuktighet (til) må være et tall med maks 3 desimaler.",

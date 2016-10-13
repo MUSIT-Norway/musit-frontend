@@ -1,3 +1,4 @@
+import Config from '../../config'
 
 const LOAD_KD_REPORT = 'musit/reports/LOAD_KD_REPORT'
 const LOAD_KD_REPORT_FAIL = 'musit/reports/LOAD_KD_REPORT_FAIL'
@@ -46,7 +47,7 @@ export default reportReducer
 export const loadKDReport = (cb) => {
   return {
     types: [LOAD_KD_REPORT, LOAD_KD_REPORT_SUCESS, LOAD_KD_REPORT_FAIL],
-    promise: (client) => client.get('/api/storagefacility/v1/storagenodes/report'),
+    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/report`),
     cb
   };
 }
