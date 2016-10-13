@@ -4,88 +4,87 @@ import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import * as ObservationRender from '../../observation/render'
 import { formatFloatToString } from './../../../util'
+import reduce from 'lodash/reduce'
 
 export default class ControlView extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     translate: PropTypes.func.isRequired,
-    controlsJson: PropTypes.arrayOf(PropTypes.shape({
-      eventType: PropTypes.string,
-      ok: PropTypes.string.bool
-    })),
+    controlsJson: PropTypes.object
   }
 
   static iconMap = {
-    ControlAlcohol: 'musitalcoholicon',
-    ControlCleaning: 'musitcleaningicon',
-    ControlGas: 'musitgasicon',
-    ControlHypoxicAir: 'musithypoxicairicon',
-    ControlLightingCondition: 'musitlightingcondicon',
-    ControlMold: 'musitmoldicon',
-    ControlPest: 'musitpesticon',
-    ControlRelativeHumidity: 'musitrelhumidityicon',
-    ControlTemperature: 'musittemperatureicon'
+    alcohol: 'musitalcoholicon',
+    cleaning: 'musitcleaningicon',
+    gas: 'musitgasicon',
+    hypoxicAir: 'musithypoxicairicon',
+    lightingCondition: 'musitlightingcondicon',
+    mold: 'musitmoldicon',
+    pest: 'musitpesticon',
+    relativeHumidity: 'musitrelhumidityicon',
+    temperature: 'musittemperatureicon'
 
   }
+
   static typeMap = {
-    ControlAlcohol: 'controlAlcohol',
-    ControlCleaning: 'controlCleaning',
-    ControlGas: 'controlGas',
-    ControlHypoxicAir: 'controlHypoxicAir',
-    ControlLightingCondition: 'controlLightingCondition',
-    ControlMold: 'controlMold',
-    ControlPest: 'controlPest',
-    ControlRelativeHumidity: 'controlRelativeHumidity',
-    ControlTemperature: 'controlTemperature'
+    alcohol: 'controlAlcohol',
+    cleaning: 'controlCleaning',
+    gas: 'controlGas',
+    hypoxicAir: 'controlHypoxicAir',
+    lightingCondition: 'controlLightingCondition',
+    mold: 'controlMold',
+    pest: 'controlPest',
+    relativeHumidity: 'controlRelativeHumidity',
+    temperature: 'controlTemperature'
   }
 
   constructor(props) {
     super(props);
     this.state = {
-      ControlAlcohol: {
+      alcohol: {
         open: false
       },
-      ControlCleaning: {
+      cleaning: {
         open: false
       },
-      ControlGas: {
+      gas: {
         open: false
       },
-      ControlHypoxicAir: {
+      hypoxicAir: {
         open: false
       },
-      ControlLightingCondition: {
+      lightingCondition: {
         open: false
       },
-      ControlMold: {
+      mold: {
         open: false
       },
-      ControlPest: {
+      pest: {
         open: false
       },
-      ControlRelativeHumidity: {
+      relativeHumidity: {
         open: false
       },
-      ControlTemperature: {
+      temperature: {
         open: false
       }
     };
 
-    this.showObservation = (control) => {
-      let lv = ''
-      const { eventType, ok } = control
+    this.showObservation = (control, controlType) => {
+      let lv;
+      const { ok } = control
       if (!ok) {
-        const motivates = control.motivates;
-        switch (eventType) {
-          case 'ControlTemperature':
+        const observation = control.observation;
+        switch (controlType) {
+          case 'temperature':
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
               type="temperature"
               valueProps={{
-                fromValue: formatFloatToString(motivates.from),
-                toValue: formatFloatToString(motivates.to),
-                commentValue: motivates.note
+                fromValue: formatFloatToString(observation.range.from),
+                toValue: formatFloatToString(observation.range.to),
+                commentValue: observation.note
               }}
               layoutProps={{
                 fromWidth: 3,
@@ -94,14 +93,14 @@ export default class ControlView extends Component {
               }}
             />)
             break
-          case 'ControlAlcohol':
+          case 'alcohol':
             lv = (<ObservationRender.RenderAlcohol
               disabled
               translate={this.props.translate}
               valueProps={{
-                statusValue: motivates.condition,
-                volumeValue: formatFloatToString(motivates.volume),
-                commentValue: motivates.note
+                statusValue: observation.condition,
+                volumeValue: formatFloatToString(observation.volume),
+                commentValue: observation.note
               }}
               layoutProps={{
                 statusWidth: 3,
@@ -110,14 +109,14 @@ export default class ControlView extends Component {
               }}
             />)
             break
-          case 'ControlCleaning':
+          case 'cleaning':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
               translate={this.props.translate}
               type="cleaning"
               valueProps={{
-                leftValue: motivates.cleaning,
-                rightValue: motivates.note
+                leftValue: observation.cleaning,
+                rightValue: observation.note
               }}
               layoutProps={{
                 leftWidth: 6,
@@ -125,14 +124,14 @@ export default class ControlView extends Component {
               }}
             />)
             break
-          case 'ControlGas':
+          case 'gas':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
               type="gas"
               translate={this.props.translate}
               valueProps={{
-                leftValue: motivates.gas,
-                rightValue: motivates.note
+                leftValue: observation.gas,
+                rightValue: observation.note
               }}
               layoutProps={{
                 leftWidth: 6,
@@ -140,15 +139,15 @@ export default class ControlView extends Component {
               }}
             />)
             break
-          case 'ControlHypoxicAir':
+          case 'hypoxicAir':
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
               type="hypoxicAir"
               translate={this.props.translate}
               valueProps={{
-                fromValue: formatFloatToString(motivates.from),
-                toValue: formatFloatToString(motivates.to),
-                commentValue: motivates.note
+                fromValue: formatFloatToString(observation.range.from),
+                toValue: formatFloatToString(observation.range.to),
+                commentValue: observation.note
               }}
               layoutProps={{
                 fromWidth: 3,
@@ -157,14 +156,14 @@ export default class ControlView extends Component {
               }}
             />)
             break
-          case 'ControlLightingCondition':
+          case 'lightingCondition':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
               type="lightCondition"
               translate={this.props.translate}
               valueProps={{
-                leftValue: motivates.lightingCondition,
-                rightValue: motivates.note
+                leftValue: observation.lightingCondition,
+                rightValue: observation.note
               }}
               layoutProps={{
                 leftWidth: 6,
@@ -172,14 +171,14 @@ export default class ControlView extends Component {
               }}
             />)
             break
-          case 'ControlMold':
+          case 'mold':
             lv = (<ObservationRender.RenderDoubleTextArea
               disabled
               type="mold"
               translate={this.props.translate}
               valueProps={{
-                leftValue: motivates.mold,
-                rightValue: motivates.note
+                leftValue: observation.mold,
+                rightValue: observation.note
               }}
               layoutProps={{
                 leftWidth: 6,
@@ -187,20 +186,20 @@ export default class ControlView extends Component {
               }}
             />)
             break
-          case 'ControlPest':
+          case 'pest':
             lv = (<ObservationRender.RenderPest
               disabled
               translate={this.props.translate}
               canEdit={false}
               valueProps={{
-                observations: motivates.lifecycles.map(lc => {
+                observations: observation.lifecycles.map(lc => {
                   return {
                     lifeCycle: lc.stage,
                     count: formatFloatToString(lc.quantity)
                   }
                 }),
-                identificationValue: motivates.identification,
-                commentValue: motivates.note
+                identificationValue: observation.identification,
+                commentValue: observation.note
               }}
               layoutProps={{
                 lifeCycleWidth: 3,
@@ -212,15 +211,15 @@ export default class ControlView extends Component {
               }}
             />)
             break
-          case 'ControlRelativeHumidity':
+          case 'relativeHumidity':
             lv = (<ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
               type="relativeHumidity"
               valueProps={{
-                fromValue: formatFloatToString(motivates.from),
-                toValue: formatFloatToString(motivates.to),
-                commentValue: motivates.note
+                fromValue: formatFloatToString(observation.range.from),
+                toValue: formatFloatToString(observation.range.to),
+                commentValue: observation.note
               }}
               layoutProps={{
                 fromWidth: 3,
@@ -237,7 +236,6 @@ export default class ControlView extends Component {
       return lv
     }
   }
-
 
   render() {
     const { id } = this.props
@@ -272,10 +270,11 @@ export default class ControlView extends Component {
           </Button>
         </Col>
       ) }
-    const oneTableRow = (control, i) => {
-      const { eventType, ok } = control
+
+    const oneTableRow = (control, eventType) => {
+      const { ok } = control
       return (
-        <div key={i}>
+        <div>
           <Row style={{ top: '0', bottom: '0' }} >
             {observation(ControlView.iconMap[eventType],
               this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
@@ -284,19 +283,24 @@ export default class ControlView extends Component {
           </Row>
           <Row>
             <Panel collapsible expanded={this.state[eventType].open}>
-              {this.showObservation(control)}
+              {this.showObservation(control, eventType)}
             </Panel>
           </Row>
         </div>
       ) }
 
+    const getControls = () => {
+      return reduce(this.props.controlsJson, (result, control, type) => {
+        if (ControlView.typeMap[type]) {
+          result.push(oneTableRow(control, type))
+        }
+        return result;
+      }, [])
+    }
+
     return (
       <FormGroup>
-        {this.props.controlsJson ? this.props.controlsJson.map((c, i) => {
-          return (
-            oneTableRow(c, i)
-          )
-        }) : null}
+        {this.props.controlsJson && getControls()}
       </FormGroup>
     )
   }

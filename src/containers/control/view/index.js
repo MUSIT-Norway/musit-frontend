@@ -116,7 +116,7 @@ export default class ControlViewContainer extends React.Component {
                   <ControlView
                     id="1"
                     translate={translate}
-                    controlsJson={data && data.parts ? data.parts : null}
+                    controlsJson={data}
                   />
                 </Col>
               </Row>

@@ -1,4 +1,4 @@
-
+import reduce from 'lodash/reduce'
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import { hashHistory } from 'react-router'
@@ -27,72 +27,43 @@ export default class ObservationControlGrid extends Component {
     this.getIcon = this.getIcon.bind(this)
   }
 
-  getIcon(data, index) {
-    const arr = []
-    switch (data.eventType) {
-      case 'ObservationLightingCondition':
-      case 'ControlLightingCondition':
-        arr.push(this.icon(data.ok, index, 'musitlightingcondicon'))
-        break;
-      case 'ObservationTemperature':
-      case 'ControlTemperature':
-        arr.push(this.icon(data.ok, index, 'musittemperatureicon'))
-        break;
-      case 'ObservationHypoxicAir':
-      case 'ControlHypoxicAir':
-        arr.push(this.icon(data.ok, index, 'musithypoxicairicon'))
-        break;
-      case 'ObservationRelativeHumidity':
-      case 'ControlRelativeHumidity':
-        arr.push(this.icon(data.ok, index, 'musitrelhumidityicon'))
-        break;
-      case 'ObservationCleaning':
-      case 'ControlCleaning':
-        arr.push(this.icon(data.ok, index, 'musitcleaningicon'))
-        break;
-      case 'ObservationMold':
-      case 'ControlMold':
-        arr.push(this.icon(data.ok, index, 'musitmoldicon'))
-        break;
-      case 'ObservationPest':
-      case 'ControlPest':
-        arr.push(this.icon(data.ok, index, 'musitpesticon'))
-        break;
-      case 'ObservationAlcohol':
-      case 'ControlAlcohol':
-        arr.push(this.icon(data.ok, index, 'musitalcoholicon'))
-        break;
-      case 'ObservationGas':
-      case 'ControlGas':
-        arr.push(this.icon(data.ok, index, 'musitgasicon'))
-        break;
-      case 'ObservationWaterDamageAssessment':
-      case 'ControlWaterDamageAssessment':
-        arr.push(this.icon(data.ok, index, 'musitwaterdamageicon'))
-        break;
-      case 'ObservationFireProtection':
-      case 'ControlFireProtection':
-        arr.push(this.icon(data.ok, index, 'musitfireprotectionicon'))
-        break;
-      case 'ObservationTheftProtection':
-      case 'ControlTheftProtection':
-        arr.push(this.icon(data.ok, index, 'musittheftprotectionicon'))
-        break;
-      case 'ObservationPerimeterSecurity':
-      case 'ControlPerimeterSecurity':
-        arr.push(this.icon(data.ok, index, 'musitperimetersecurityicon'))
-        break;
+  getIcon(ok, type) {
+    switch (type) {
+      case 'lightingCondition':
+        return this.icon(ok, 'musitlightingcondicon')
+      case 'temperature':
+        return this.icon(ok, 'musittemperatureicon')
+      case 'hypoxicAir':
+        return this.icon(ok, 'musithypoxicairicon')
+      case 'relativeHumidity':
+        return this.icon(ok, 'musitrelhumidityicon')
+      case 'cleaning':
+        return this.icon(ok, 'musitcleaningicon')
+      case 'mold':
+        return this.icon(ok, 'musitmoldicon')
+      case 'pest':
+        return this.icon(ok, 'musitpesticon')
+      case 'alcohol':
+        return this.icon(ok, 'musitalcoholicon')
+      case 'gas':
+        return this.icon(ok, 'musitgasicon')
+      case 'waterDamageAssessment':
+        return this.icon(ok, 'musitwaterdamageicon')
+      case 'fireProtection':
+        return this.icon(ok, 'musitfireprotectionicon')
+      case 'theftProtection':
+        return this.icon(ok, 'musittheftprotectionicon')
+      case 'perimeterSecurity':
+        return this.icon(ok, 'musitperimetersecurityicon')
       default:
-        console.log(`Did not match ${data.eventType}`)
     }
-    return arr
   }
 
-  icon(ok, index, name) {
-    if (ok) {
-      return <span key={index} style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
+  icon(ok, name) {
+    if (!ok) {
+      return <span style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
     }
-    return <span key={index} style={{ padding: '2px' }} className={`icon icon-${name}`} />
+    return <span style={{ padding: '2px' }} className={`icon icon-${name}`} />
   }
 
   render() {
@@ -121,39 +92,42 @@ export default class ObservationControlGrid extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.props.tableData.map((c, i) => {
-                const types = c.parts ? c.parts.map(this.getIcon).reduce((f, s) => [...f, ...s]) : null
+              {this.props.tableData.map((controlOrObservation, i) => {
+                const icons = reduce(controlOrObservation, (result, value, key) => {
+                  result.push(this.getIcon(value.ok, key))
+                  return result;
+                }, [])
                 return (
                   <tr
                     style={{ cursor: 'pointer' }}
                     key={i}
-                    id={`${c.id}_${c.doneDate}`}
+                    id={`${controlOrObservation.id}_${controlOrObservation.doneDate}`}
                     onClick={() => {
-                      if (c.eventType.toLowerCase() === 'control') {
-                        hashHistory.push(`magasin/${this.props.id}/control/${c.id}`)
+                      if (controlOrObservation.eventType.toLowerCase() === 'control') {
+                        hashHistory.push(`magasin/${this.props.id}/control/${controlOrObservation.id}`)
                       } else {
-                        hashHistory.push(`magasin/${this.props.id}/observation/${c.id}`)
+                        hashHistory.push(`magasin/${this.props.id}/observation/${controlOrObservation.id}`)
                       }
                     }}
                   >
-                    <td id={`${c.id}_${c.doneDate}_type`}>
-                      {c.eventType.toLowerCase() === 'control' ? <div className="icon icon-musitcontrolicon" /> : ''}
-                      {c.eventType.toLowerCase() === 'observation' ? <div className="icon icon-musitobservationicon" /> : ''}
+                    <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_type`}>
+                      {controlOrObservation.eventType.toLowerCase() === 'control' ? <div className="icon icon-musitcontrolicon" /> : ''}
+                      {controlOrObservation.eventType.toLowerCase() === 'observation' ? <div className="icon icon-musitobservationicon" /> : ''}
                     </td>
-                    <td id={`${c.id}_${c.doneDate}_date`}>
-                      {parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}
+                    <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_date`}>
+                      {parseISODate(controlOrObservation.doneDate).format(DATE_FORMAT_DISPLAY)}
                     </td>
-                    <td id={`${c.id}_${c.doneDate}_types`}>
-                      {types}
+                    <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_types`}>
+                      {icons}
                     </td>
-                    <td id={`${c.id}_${c.doneDate}_doneBy`}>
-                      {c.doneBy.actorId ? c.doneBy.actorId : c.doneBy}
+                    <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_doneBy`}>
+                      {controlOrObservation.doneBy}
                     </td>
-                    <td id={`${c.id}_${c.doneDate}_registeredDate`}>
-                      {parseISODate(c.registeredDate).format(DATE_FORMAT_DISPLAY)}
+                    <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_registeredDate`}>
+                      {parseISODate(controlOrObservation.registeredDate).format(DATE_FORMAT_DISPLAY)}
                     </td>
-                    <td id={`${c.id}_${c.doneDate}_registeredBy`}>
-                      {c.registeredBy}
+                    <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_registeredBy`}>
+                      {controlOrObservation.registeredBy}
                     </td>
                   </tr>
                 )

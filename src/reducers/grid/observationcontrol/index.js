@@ -43,10 +43,11 @@ const observationControlGridReducer = (state = initialState, action) => {
         ...state,
         loadingActors: false,
         loadedActors: true,
-        data: state.data.map((e) => {
-          const actor = action.result.find((a) => a.id === e.doneBy.actorId);
-          return { ...e,
-            doneBy: actor ? actor.fn : e.doneBy
+        data: state.data.map((data) => {
+          const actor = action.result.find((a) => a.id === data.doneBy);
+          return {
+            ...data,
+            doneBy: actor ? actor.fn : data.doneBy
           }
         })
       };

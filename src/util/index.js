@@ -77,3 +77,18 @@ export const formatFloatToString = (number: number): string => {
 export const hasProp = (obj: any, prop: string): boolean => {
   return {}.hasOwnProperty.call(obj, prop)
 }
+
+export class Option {
+  value = null;
+
+  constructor(value: any) {
+    this.value = value;
+  }
+
+  map<U>(func: (a: any) => U): ?U {
+    if (this.value == null) {
+      return; // return undefined/void
+    }
+    return func(this.value)
+  }
+}

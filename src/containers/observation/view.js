@@ -25,8 +25,8 @@ const mapDispatchToProps = (dispatch) => {
     loadObservation: (nodeId, observationId, callback) => {
       dispatch(loadObservation(nodeId, observationId, callback))
     },
-    loadPersonNameFromId: (actorId) => {
-      dispatch(getActorNameFromId(actorId))
+    loadPersonNameFromId: (doneBy) => {
+      dispatch(getActorNameFromId(doneBy))
     }
   }
 }
@@ -50,7 +50,7 @@ class ViewObservationPage extends React.Component {
     if (this.props.params.obsId) {
       this.props.loadObservation(this.props.params.id, this.props.params.obsId, {
         onSuccess: (r) => {
-          this.props.loadPersonNameFromId(r.doneBy.actorId)
+          this.props.loadPersonNameFromId(r.doneBy)
         }
       })
     }

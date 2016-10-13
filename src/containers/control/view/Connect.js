@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loadControl(nodeId, controlId, callback))
   },
   loadPersonNameFromId: (doneBy) => {
-    dispatch(getActorNameFromId(doneBy.actorId))
+    dispatch(getActorNameFromId(doneBy))
   }
 })
 

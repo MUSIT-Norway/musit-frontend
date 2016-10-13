@@ -5,7 +5,7 @@ import {
 } from '../to_backend'
 
 describe('ControlMapperReducer', () => {
-  it('maps to correct backend structure', () => {
+  it('maps to correct backend structure with no observations', () => {
     const state = {
       doneBy: 'jarl',
       doneDate: parseISODate('2016-11-01'),
@@ -19,24 +19,50 @@ describe('ControlMapperReducer', () => {
       pestOK: false,
       moldOK: true
     }
-    const transformed = mapToBackend(state)
-    assert(transformed.parts[0].eventType === 'ControlTemperature')
-    assert(transformed.parts[0].ok === true)
-    assert(transformed.parts[1].eventType === 'ControlHypoxicAir')
-    assert(transformed.parts[1].ok === false)
-    assert(transformed.parts[2].eventType === 'ControlGas')
-    assert(transformed.parts[2].ok === true)
-    assert(transformed.parts[3].eventType === 'ControlCleaning')
-    assert(transformed.parts[3].ok === true)
-    assert(transformed.parts[4].eventType === 'ControlRelativeHumidity')
-    assert(transformed.parts[4].ok === true)
-    assert(transformed.parts[5].eventType === 'ControlLightingCondition')
-    assert(transformed.parts[5].ok === true)
-    assert(transformed.parts[6].eventType === 'ControlAlcohol')
-    assert(transformed.parts[6].ok === true)
-    assert(transformed.parts[7].eventType === 'ControlPest')
-    assert(transformed.parts[7].ok === false)
-    assert(transformed.parts[8].eventType === 'ControlMold')
-    assert(transformed.parts[8].ok === true)
+    const nodeId = 54
+    const observations = {
+      observations: [
+        {
+          type: 'hypoxicAir',
+          data: {
+
+          }
+        },
+        {
+          type: 'pest',
+          data: {
+            observations: []
+          }
+        }
+      ]
+    }
+    const transformed = mapToBackend(state, observations, nodeId)
+    assert.ok(transformed.temperature)
+    assert.ok(transformed.temperature.ok === true)
+    assert.ok(!transformed.temperature.observation)
+    assert.ok(transformed.hypoxicAir)
+    assert.ok(transformed.hypoxicAir.ok === false)
+    assert.ok(transformed.hypoxicAir.observation)
+    assert.ok(transformed.gas)
+    assert.ok(transformed.gas.ok === true)
+    assert.ok(!transformed.gas.observation)
+    assert.ok(transformed.cleaning)
+    assert.ok(transformed.cleaning.ok === true)
+    assert.ok(!transformed.cleaning.observation)
+    assert.ok(transformed.relativeHumidity)
+    assert.ok(transformed.relativeHumidity.ok === true)
+    assert.ok(!transformed.relativeHumidity.observation)
+    assert.ok(transformed.lightingCondition)
+    assert.ok(transformed.lightingCondition.ok === true)
+    assert.ok(!transformed.lightingCondition.observation)
+    assert.ok(transformed.alcohol)
+    assert.ok(transformed.alcohol.ok === true)
+    assert.ok(!transformed.alcohol.observation)
+    assert.ok(transformed.pest)
+    assert.ok(transformed.pest.ok === false)
+    assert.ok(transformed.pest.observation)
+    assert.ok(transformed.mold)
+    assert.ok(transformed.mold.ok === true)
+    assert.ok(!transformed.mold.observation)
   })
 })
