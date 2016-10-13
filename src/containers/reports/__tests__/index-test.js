@@ -7,6 +7,6 @@ describe('Reports overview', () => {
     const report = render(<ReportsOverview />)
     const a = report.find('td > a')
     chai.expect(a.attr('href')).to.equal('/#/reports/kdreport')
-    chai.expect(a.text()).to.equal('Sikring av samlinger')
+    chai.expect(a.text()).to.equal('Title')
   })
 })
