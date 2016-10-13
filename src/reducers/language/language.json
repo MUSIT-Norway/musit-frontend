@@ -100,7 +100,8 @@
         "save": "Save",
         "saveTooltip": "Save registration",
         "cancel": "Cancel",
-        "cancelTooltip": "Cancel registration"
+        "cancelTooltip": "Cancel registration",
+        "magazine": "Magazine"
       },
       "viewControl": {
         "title": "View control",
@@ -600,7 +601,8 @@
         "save": "Lagre",
         "saveTooltip": "Lagre",
         "cancel": "Avbryt",
-        "cancelTooltip": "Avbryt registreringen"
+        "cancelTooltip": "Avbryt registreringen",
+        "magazine": "Magasin"
       },
       "viewControl": {
         "title": "Vis kontroll",

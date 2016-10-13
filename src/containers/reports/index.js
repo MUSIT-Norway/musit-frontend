@@ -3,15 +3,16 @@ import React from 'react'
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
 const I18n = require('react-i18nify').I18n
 
-const reports = [
-  {
-    title: I18n.t('musit.reports.securingCollections.title'),
-    url: '/#/reports/kdreport',
-    description: I18n.t('musit.reports.securingCollections.description')
-  }
-]
+
 
 export default () => {
+  const reports = [
+    {
+      title: I18n.t('musit.reports.securingCollections.title'),
+      url: '/#/reports/kdreport',
+      description: I18n.t('musit.reports.securingCollections.description')
+    }
+  ]
   return (
     <div>
       <main>
@@ -24,8 +25,8 @@ export default () => {
               <Table>
                 <thead>
                   <tr>
-                    <th>Tittel</th>
-                    <th>Beskrivelse</th>
+                    <th>{ I18n.t('musit.reports.titleHeader') }</th>
+                    <th>{ I18n.t('musit.reports.descriptionHeader') }</th>
                   </tr>
                 </thead>
                 <tbody>
