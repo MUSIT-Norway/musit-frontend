@@ -78,6 +78,14 @@ export const hasProp = (obj: any, prop: string): boolean => {
   return {}.hasOwnProperty.call(obj, prop)
 }
 
+export const isDateBiggerThanToday = (newDate: any): boolean => {
+  const today = moment()
+  const isAfterYear = moment(newDate).isAfter(today, 'year')
+  const isAfterMonth = moment(newDate).isAfter(today, 'month')
+  const isAfterDay = moment(newDate).isAfter(today, 'day')
+  return isAfterDay || isAfterMonth || isAfterYear
+}
+
 export class Option {
   value = null;
 
@@ -91,4 +99,5 @@ export class Option {
     }
     return func(this.value)
   }
+
 }
