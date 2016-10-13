@@ -62,6 +62,12 @@ export default class ControlAddContainer extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentWillMount() {
+    if (this.props.path.length === 0) {
+      this.props.loadStorageObj(this.props.params.id)
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.actor && this.props.actor && nextProps.actor.id !== this.props.actor.id) {
       this.setState({ ...this.state, doneBy: nextProps.actor })

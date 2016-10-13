@@ -19,8 +19,8 @@
  */
 
 import { I18n } from 'react-i18nify'
-import { loadRoot, loadChildren, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
-import { connect } from 'react-redux';
+import { loadRoot, clearRoot, loadChildren, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
+import { connect } from 'react-redux'
 import { createBreadcrumbPath } from '../../../util'
 import MusitModalImpl from './MusitModal'
 
@@ -32,20 +32,21 @@ const mapStateToProps = (state) => ({
     createBreadcrumbPath(state.storageUnitModal.root.data.path, state.storageUnitModal.root.data.pathNames) : [],
   rootNode: state.storageUnitModal.root,
   currentId: state.storageUnitModal.currentId
-})
+});
 
 const mapDispatchToProps = (dispatch) => {
   return ({
     loadChildren: (id, callback) => {
-      dispatch(loadChildren(id, callback))
+      dispatch(loadChildren(id, callback));
       dispatch(loadRoot(id))
     },
+    clearRoot: () => dispatch(clearRoot()),
     clearPath: (id) => dispatch(clearPath(id)),
     loadRoot: () => dispatch(loadRoot()),
     setCurrentId: (id) => dispatch(setCurrent(id)),
     clearCurrentId: (id) => dispatch(clearCurrent(id))
   })
-}
+};
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl)

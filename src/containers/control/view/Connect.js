@@ -23,12 +23,14 @@ import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import ControlViewContainerImpl from './index'
 import { createBreadcrumbPath } from '../../../util'
+import { loadRoot } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => I18n.t(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
+  path: state.storageGridUnit.root.data ?
+      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,6 +39,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadPersonNameFromId: (doneBy) => {
     dispatch(getActorNameFromId(doneBy))
+  },
+  loadStorageObj: (id) => {
+    dispatch(loadRoot(id))
   }
 })
 

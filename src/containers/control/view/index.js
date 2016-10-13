@@ -42,6 +42,9 @@ export default class ControlViewContainer extends React.Component {
       this.props.loadControl(this.props.params.id, this.props.params.controlId, {
         onSuccess: (r) => {
           this.props.loadPersonNameFromId(r.doneBy)
+          if (this.props.path.length === 0) {
+            this.props.loadStorageObj(this.props.params.id)
+          }
         }
       })
     }

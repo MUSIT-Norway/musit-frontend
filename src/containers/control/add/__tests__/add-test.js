@@ -14,6 +14,8 @@ describe('Render add control page', () => {
         translate={(key) => key}
         params={{ }}
         saveControl={() => true}
+        path={[]}
+        loadStorageObj={() => true}
       />
     )
     observationPage = renderer.getRenderOutput()

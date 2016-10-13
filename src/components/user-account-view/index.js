@@ -11,10 +11,6 @@ export default class MusitUserAccount extends Component {
     handleLogout: React.PropTypes.func
   }
   static defaultProps = {
-    user:
-    {
-      userName: 'steinaol'
-    },
     collections: [
       {
         id: 1,
@@ -65,5 +61,4 @@ export default class MusitUserAccount extends Component {
         </Dropdown>
       </OverlayTrigger>)
   }
-
 }

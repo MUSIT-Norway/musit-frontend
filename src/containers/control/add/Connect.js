@@ -22,17 +22,22 @@ import { addControl } from '../../../reducers/control'
 import { I18n } from 'react-i18nify'
 import ControlAddContainerImpl from './index'
 import { createBreadcrumbPath } from '../../../util'
+import { loadRoot } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   actor: state.auth.actor,
   translate: (key, markdown) => I18n.t(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
-  path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
+  path: state.storageGridUnit.root.data ?
+      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
 })
 
 const mapDispatchToProps = (dispatch) => ({
   saveControl: (id, data, saveControlCallback) => {
     dispatch(addControl(id, data, {}, saveControlCallback))
+  },
+  loadStorageObj: (id) => {
+    dispatch(loadRoot(id))
   }
 })
 

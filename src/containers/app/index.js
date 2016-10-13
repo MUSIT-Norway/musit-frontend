@@ -122,7 +122,8 @@ class App extends Component {
             </Nav>
             <Nav pullRight>
               {user &&
-                <MusitUserAccount user={user} handleLogout={this.handleLogout} />
+                <NavItem><MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} /></NavItem>
+
               }
             </Nav>
           </Navbar.Collapse>
