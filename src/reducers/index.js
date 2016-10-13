@@ -17,29 +17,27 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { routerReducer } from 'react-router-redux'
-import { combineReducers } from 'redux'
-import authReducer from './auth'
-import fakeAuthReducer from './fake-auth-info'
-import languageReducer from './language'
-import autosuggestReducer from './suggest'
-import picklistReducer from './picklist'
-import storagePanelReducer from './storageunit/panel'
-import storagePanelStateReducer from './storageunit/panel/state'
-import storageNodeGridReducer from './storageunit/grid'
-import storageUnitModalReducer from './storageunit/modal'
-import storageUnitStatsReducer from './storageunit/stats'
-import storageObjectGridReducer from './storageobject/grid'
-import organizationReducer from './organization'
-import observationReducer from './observation'
-import reportReducer from './reports'
-import controlReducer from './control'
-import observationControlGridReducer from './grid/observationcontrol'
-import nodeGridReducer from './grid/node'
-import objectGridReducer from './grid/object'
+import { routerReducer } from 'react-router-redux';
+import { combineReducers } from 'redux';
+import authReducer from './auth';
+import fakeAuthReducer from './fake-auth-info';
+import languageReducer from './language';
+import autosuggestReducer from './suggest';
+import picklistReducer from './picklist';
+import storagePanelReducer from './storageunit/panel';
+import storagePanelStateReducer from './storageunit/panel/state';
+import storageNodeGridReducer from './storageunit/grid';
+import storageUnitModalReducer from './storageunit/modal';
+import storageUnitStatsReducer from './storageunit/stats';
+import storageObjectGridReducer from './storageobject/grid';
+import observationReducer from './observation';
+import reportReducer from './reports';
+import controlReducer from './control';
+import observationControlGridReducer from './grid/observationcontrol';
+import nodeGridReducer from './grid/node';
+import objectGridReducer from './grid/object';
 import moveHistoryReducer from './grid/move'
-import { reducer as formReducer } from 'redux-form'
-
+import { reducer as formReducer } from 'redux-form';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -55,7 +53,6 @@ const rootReducer = combineReducers({
   storageUnitStats: storageUnitStatsReducer,
   storagePanelState: storagePanelStateReducer,
   storageObjectGrid: storageObjectGridReducer,
-  organization: organizationReducer,
   observation: observationReducer,
   reports: reportReducer,
   control: controlReducer,

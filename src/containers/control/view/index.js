@@ -42,6 +42,9 @@ export default class ControlViewContainer extends React.Component {
       this.props.loadControl(this.props.params.id, this.props.params.controlId, {
         onSuccess: (r) => {
           this.props.loadPersonNameFromId(r.doneBy)
+          if (this.props.path.length === 0) {
+            this.props.loadStorageObj(this.props.params.id)
+          }
         }
       })
     }
@@ -116,7 +119,7 @@ export default class ControlViewContainer extends React.Component {
                   <ControlView
                     id="1"
                     translate={translate}
-                    controlsJson={data && data.parts ? data.parts : null}
+                    controlsJson={data}
                   />
                 </Col>
               </Row>

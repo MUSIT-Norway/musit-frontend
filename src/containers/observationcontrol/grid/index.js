@@ -20,7 +20,6 @@
 import React from 'react'
 import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
-import Language from '../../../components/language'
 import { loadControlsAndObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import { loadRoot } from '../../../reducers/storageunit/grid'
 import Layout from '../../../layout'
@@ -29,10 +28,11 @@ import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
 import { createBreadcrumbPath } from '../../../util'
+import { I18n } from 'react-i18nify'
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown),
+    translate: (key, markdown) => I18n.t(key, markdown),
     path: state.storageGridUnit.root.data ?
       createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
     observationControlGridData: state.observationControlGrid.data
@@ -75,7 +75,7 @@ class ObservationControlGridShow extends React.Component {
   componentWillMount() {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
-        this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map((r) => r.doneBy.actorId) })
+        this.props.loadActorDetails({ data: result.map(r => r.doneBy) })
         this.props.loadStorageObj(this.props.params.id)
       },
       onFailure: () => true

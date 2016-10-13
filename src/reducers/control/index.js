@@ -1,3 +1,4 @@
+import Config from '../../config'
 
 import { mapToBackend } from './mapper/to_backend'
 
@@ -62,7 +63,7 @@ export default controlReducer;
 
 export const addControl = (nodeId, controlData, observations, callback) => {
   const data = mapToBackend(controlData, observations, nodeId)
-  const url = `/api/storagefacility/v1/storagenodes/${nodeId}/controls`
+  const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/controls`
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
     promise: (client) => client.post(url, { data }),
@@ -73,7 +74,7 @@ export const addControl = (nodeId, controlData, observations, callback) => {
 export const loadControl = (nodeId, controlId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`api/storagefacility/v1/storagenodes/${nodeId}/controls/${controlId}`),
+    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/controls/${controlId}`),
     callback
   }
 }

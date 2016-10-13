@@ -10,7 +10,6 @@ describe('MusitModal', () => {
             onMove={(key) => key}
             headerText="Hi"
             loadChildren={(key) => key}
-            loadPath={() => []}
             clearPath={() => []}
             clearRoot={(key) => key}
             loadRoot={(key) => key}

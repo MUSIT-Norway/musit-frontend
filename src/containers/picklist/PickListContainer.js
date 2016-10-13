@@ -6,8 +6,9 @@ import FontAwesome from 'react-fontawesome'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { TYPES } from '../../reducers/picklist'
-const I18n = require('react-i18nify').I18n;
+import { I18n } from 'react-i18nify'
 import MusitModal from '../../components/formfields/musitModal'
+import './PickListContainer.css'
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -118,7 +119,7 @@ export default class PickListContainer extends React.Component {
               isnode={this.isTypeNode()}
               iconRendrer={(pick) => <FontAwesome
                 name={pick.value.name ? 'folder' : 'rebel'}
-                style={{ fontSize: '3.0em' }}
+                style={{ fontSize: '1.5em' }}
               />}
               labelRendrer={(pick) => {
                 return (
@@ -126,11 +127,13 @@ export default class PickListContainer extends React.Component {
                     {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.identifier.museumNo}</span> : null}
                     {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.identifier.subNo}</span> : null}
                     <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.displayName}</span>
-                    <Breadcrumb
-                      nodes={pick.path}
-                      onClickCrumb={node => hashHistory.push(`/magasin/${node.id === -1 ? 'root' : node.id}`)}
-                      allActive
-                    />
+                    <div className="labelText">
+                      <Breadcrumb
+                        nodes={pick.path}
+                        onClickCrumb={node => hashHistory.push(`/magasin/${node.id === -1 ? 'root' : node.id}`)}
+                        allActive
+                      />
+                    </div>
                   </div>
                 )
               }}

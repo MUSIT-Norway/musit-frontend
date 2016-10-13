@@ -65,7 +65,7 @@ export default storageObjectGridReducer
 export const loadObjects = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(`/api/thingaggregate/node/${id}/objects`),
+    promise: (client) => client.get(`/api/thingaggregate/museum/1/node/${id}/objects`),
     callback
   };
 }
