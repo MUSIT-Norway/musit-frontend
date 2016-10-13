@@ -1,3 +1,4 @@
+import Config from '../../../config'
 
 const LOAD = 'musit/movehistory/LOAD'
 const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS'
@@ -138,26 +139,3 @@ const moveHistoryReducer = (state = initialState, action) => {
 }
 
 export default moveHistoryReducer;
-
-
-export const loadActor = (r) => {
-  console.log(r)
-  return {
-    types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAIL],
-    promise: (client) => client.post('/api/actor/v1/person/details', r)
-  }
-}
-
-export const loadMoveHistoryForObject = (id, callback) => {
-  return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/api/storagefacility/v1/storagenodes/objects/${id}/locations`),
-    callback
-  }
-}
-export const clearMoveHistoryForObject = () => {
-  return {
-    type: CLEAR_SUCCESS,
-    result: []
-  }
-}

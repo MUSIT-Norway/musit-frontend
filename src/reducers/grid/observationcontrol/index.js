@@ -1,3 +1,4 @@
+import Config from '../../../config'
 
 const LOAD = 'musit/observationcontrol/LOAD'
 const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS'
@@ -42,10 +43,11 @@ const observationControlGridReducer = (state = initialState, action) => {
         ...state,
         loadingActors: false,
         loadedActors: true,
-        data: state.data.map((e) => {
-          const actor = action.result.find((a) => a.id === e.doneBy.actorId);
-          return { ...e,
-            doneBy: actor ? actor.fn : e.doneBy
+        data: state.data.map((data) => {
+          const actor = action.result.find((a) => a.id === data.doneBy);
+          return {
+            ...data,
+            doneBy: actor ? actor.fn : data.doneBy
           }
         })
       };
@@ -71,7 +73,7 @@ export const loadActor = (r) => {
 export const loadControlsAndObservationsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: () => fetch(`/api/storagefacility/v1/storagenodes/${id}/events`).then(result => result.json()),
+    promise: () => fetch(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/events`).then(result => result.json()),
     callback
   }
 }

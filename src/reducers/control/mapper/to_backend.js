@@ -1,105 +1,55 @@
+import find from 'lodash/find'
+import {
+    parseAlcohol,
+    parseCleaning,
+    parseRangeObservation,
+    parsePest,
+    parseLightCondition,
+    parseGas,
+    parseMold
+} from '../../observation/mapper/to_backend'
+import { DATE_FORMAT_ISO_FULL, Option } from './../../../util'
 
-import { parseObservation } from '../../observation/mapper/to_backend'
-import { DATE_FORMAT_ISO_FULL } from './../../../util'
+function parseDoneDate(observations, state) {
+  return observations && observations.doneDate
+      ? observations.doneDate.format(DATE_FORMAT_ISO_FULL)
+      : state.doneDate.format(DATE_FORMAT_ISO_FULL);
+}
+
+function getDoneBy(observations, state) {
+  return observations && observations.doneBy ? observations.doneBy : state.doneBy;
+}
+
+function getObservation(observations, field): Option {
+  return new Option(observations && observations.observations && find(observations.observations, ['type', field]))
+}
+
+function parseObservation(observations, field, parseFn) {
+  return getObservation(observations, field).map(obs => parseFn(obs.data))
+}
+
+function getControl(ok, observations, field, parseFn) {
+  return {
+    ok,
+    observation: parseObservation(observations, field, parseFn)
+  };
+}
 
 export const mapToBackend = (state, observations, nodeId) => {
   const r = {}
   r.eventType = 'Control'
-  r.doneBy = observations && observations.doneBy ? observations.doneBy : state.doneBy
-  r.doneBy = { actorId: r.doneBy.id, roleId: 1 }
-  r.doneDate = observations && observations.doneDate ? observations.doneDate.format(DATE_FORMAT_ISO_FULL) :
-      state.doneDate.format(DATE_FORMAT_ISO_FULL)
-  r.affectedThing = {
-    roleId: 1,
-    objectId: nodeId * 1
-  }
-  r.parts = Object.keys(state).filter((key) => key.endsWith('OK')).map((key) => {
-    let control
-    switch (key) {
-      case 'hypoxicAirOK':
-        control = {
-          eventType: 'ControlHypoxicAir',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      case 'temperatureOK':
-        control = {
-          eventType: 'ControlTemperature',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      case 'gasOK':
-        control = {
-          eventType: 'ControlGas',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      case 'cleaningOK':
-        control = {
-          eventType: 'ControlCleaning',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      case 'relativeHumidityOK':
-        control = {
-          eventType: 'ControlRelativeHumidity',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      case 'lightConditionOK':
-        control = {
-          eventType: 'ControlLightingCondition',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      case 'alcoholOK':
-        control = {
-          eventType: 'ControlAlcohol',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      case 'pestOK':
-        control = {
-          eventType: 'ControlPest',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      case 'moldOK':
-        control = {
-          eventType: 'ControlMold',
-          ok: state[key],
-          doneBy: r.doneBy,
-          doneDate: r.doneDate
-        }
-        break;
-      default:
-        throw Error(`Unsupported control state key: ${key}`)
-    }
-    if (observations && observations.observations) {
-      const observationKey = key.substring(0, key.length - 2)
-      const index = observations.observations.findIndex(o => o.type === observationKey)
-      if (index >= 0) {
-        const observation = observations.observations[index]
-        control.motivates = parseObservation(control)(observation)
-      }
-    }
-    return control;
-  })
+  r.doneBy = getDoneBy(observations, state)
+  r.doneBy = r.doneBy.id
+  r.doneDate = parseDoneDate(observations, state)
+  r.affectedThing = nodeId * 1
+  r.temperature = new Option(state.temperatureOK).map(ok => getControl(ok, observations, 'temperature', parseRangeObservation))
+  r.hypoxicAir = new Option(state.hypoxicAirOK).map(ok => getControl(ok, observations, 'hypoxicAir', parseRangeObservation))
+  r.gas = new Option(state.gasOK).map(ok => getControl(ok, observations, 'gas', parseGas))
+  r.cleaning = new Option(state.cleaningOK).map(ok => getControl(ok, observations, 'cleaning', parseCleaning))
+  r.relativeHumidity = new Option(state.relativeHumidityOK).map(ok => getControl(ok, observations, 'relativeHumidity', parseRangeObservation))
+  r.lightingCondition = new Option(state.lightConditionOK).map(ok => getControl(ok, observations, 'lightingCondition', parseLightCondition))
+  r.alcohol = new Option(state.alcoholOK).map(ok => getControl(ok, observations, 'alcohol', parseAlcohol))
+  r.pest = new Option(state.pestOK).map(ok => getControl(ok, observations, 'pest', parsePest))
+  r.mold = new Option(state.moldOK).map(ok => getControl(ok, observations, 'mold', parseMold))
   return r
 }
