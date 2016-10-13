@@ -48,7 +48,8 @@ class BreadCrumb {
 }
 
 export const createBreadcrumbPath = (pathStr: string, pathNames: PathName[]): BreadCrumb[]  => {
-  return pathStr.slice(1, -1).split(',').slice(1).map(pathId => new BreadCrumb(pathNames.find(e => e.nodeId === parseFloat(pathId))))
+  const pathStrIds = (pathStr != null ? pathStr : '').slice(1, -1).split(',').slice(1).map(p => parseFloat(p));
+  return pathStrIds.map(pathId => new BreadCrumb(pathNames.find(e => e.nodeId === pathId)))
 }
 
 export const containsObjectWithField = (arr: any[], field: string, value: string): boolean => arr.filter((e) => e[field] === value).length > 0
@@ -83,4 +84,20 @@ export const isDateBiggerThanToday = (newDate: any): boolean => {
   const isAfterMonth = moment(newDate).isAfter(today, 'month')
   const isAfterDay = moment(newDate).isAfter(today, 'day')
   return isAfterDay || isAfterMonth || isAfterYear
+}
+
+export class Option {
+  value = null;
+
+  constructor(value: any) {
+    this.value = value;
+  }
+
+  map<U>(func: (a: any) => U): ?U {
+    if (this.value == null) {
+      return; // return undefined/void
+    }
+    return func(this.value)
+  }
+
 }

@@ -17,7 +17,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { parseISODateNonStrict as parseISODate, formatFloatToString } from './../../../util'
+import { parseISODateNonStrict as parseISODate, formatFloatToString, Option } from './../../../util'
 
 const wrapAlcoholState = ((s) => {
   switch (s) {
@@ -30,101 +30,146 @@ const wrapAlcoholState = ((s) => {
   }
 })
 
+function parseLightingCondition(o) {
+  const retobs = {}
+  retobs.type = 'lightCondition'
+  retobs.data = {}
+  retobs.data.leftValue = o.lightingCondition
+  retobs.data.rightValue = o.note
+  return retobs
+}
+function parseGas(o) {
+  const retobs = {}
+  retobs.type = 'gas'
+  retobs.data = {}
+  retobs.data.leftValue = o.gas
+  retobs.data.rightValue = o.note
+  return retobs
+}
+function parseMold(o) {
+  const retobs = {}
+  retobs.type = 'mold'
+  retobs.data = {}
+  retobs.data.leftValue = o.mold
+  retobs.data.rightValue = o.note
+  return retobs
+}
+function parseCleaning(o) {
+  const retobs = {}
+  retobs.type = 'cleaning'
+  retobs.data = {}
+  retobs.data.leftValue = o.cleaning
+  retobs.data.rightValue = o.note
+  return retobs
+}
+function parsePerimeterSecurity(o) {
+  const retobs = {}
+  retobs.type = 'skallsikring'
+  retobs.data = {}
+  retobs.data.leftValue = o.perimeterSecurity
+  retobs.data.rightValue = o.note
+  return retobs
+}
+function parseFireProtection(o) {
+  const retobs = {}
+  retobs.type = 'brannsikring'
+  retobs.data = {}
+  retobs.data.leftValue = o.fireProtection
+  retobs.data.rightValue = o.note
+  return retobs
+}
+function parseTheftProtection(o) {
+  const retobs = {}
+  retobs.type = 'tyverisikring'
+  retobs.data = {}
+  retobs.data.leftValue = o.theftProtection
+  retobs.data.rightValue = o.note
+  return retobs
+}
+function parseWaterDamageAssessment(o) {
+  const retobs = {}
+  retobs.type = 'vannskaderisiko'
+  retobs.data = {}
+  retobs.data.leftValue = o.waterDamageAssessment
+  retobs.data.rightValue = o.note
+  return retobs
+}
+function parseHypoxicAir(o) {
+  const retobs = {}
+  retobs.type = 'hypoxicAir'
+  retobs.data = {}
+  retobs.data.fromValue = formatFloatToString(o.range.from)
+  retobs.data.toValue = formatFloatToString(o.range.to)
+  retobs.data.commentValue = o.note
+  return retobs
+}
+function parseTemperature(o) {
+  const retobs = {}
+  retobs.type = 'temperature'
+  retobs.data = {}
+  retobs.data.fromValue = formatFloatToString(o.range.from)
+  retobs.data.toValue = formatFloatToString(o.range.to)
+  retobs.data.commentValue = o.note
+  return retobs
+}
+function parseRelativeHumidity(o) {
+  const retobs = {}
+  retobs.type = 'relativeHumidity'
+  retobs.data = {}
+  retobs.data.fromValue = formatFloatToString(o.range.from)
+  retobs.data.toValue = formatFloatToString(o.range.to)
+  retobs.data.commentValue = o.note
+  return retobs
+}
+function parsePest(o) {
+  const retobs = {}
+  retobs.type = 'pest'
+  retobs.data = {}
+  retobs.data.identificationValue = o.identification
+  retobs.data.commentValue = o.note
+  retobs.data.observations = [].concat(o.lifecycles).map((l) => {
+    const obs = {}
+    obs.lifeCycle = l.stage
+    obs.count = formatFloatToString(l.quantity)
+    return obs
+  })
+  return retobs
+}
+function parseAlcohol(o) {
+  const retobs = {}
+  retobs.type = 'alcohol'
+  retobs.data = {}
+  retobs.data.statusValue = wrapAlcoholState(o.condition)
+  retobs.data.volumeValue = formatFloatToString(o.volume)
+  retobs.data.commentValue = o.note
+  return retobs
+}
+
 const wrap = (be) => {
   const ret = {}
   ret.doneBy = {}
-  ret.doneBy.id = be.doneBy.actorId
+  ret.doneBy.id = be.doneBy
   ret.doneDate = parseISODate(be.doneDate)
   ret.registeredDate = be.registeredDate
   ret.registeredBy = be.registeredBy
-  ret.observations = be.parts ? be.parts.map((o) => {
-    const retobs = {}
-    retobs.type = ''
-    retobs.data = {}
-    switch (o.eventType.toLowerCase()) {
-      case 'observationlightingcondition':
-        retobs.type = 'lightCondition'
-        retobs.data.leftValue = o.lightingCondition
-        retobs.data.rightValue = o.note
-        return retobs
-      case 'observationgas':
-        retobs.type = 'gas'
-        retobs.data.leftValue = o.gas
-        retobs.data.rightValue = o.note
-        return retobs
-      case 'observationmold':
-        retobs.type = 'mold'
-        retobs.data.leftValue = o.mold
-        retobs.data.rightValue = o.note
-        return retobs
-      case 'observationcleaning':
-        retobs.type = 'cleaning'
-        retobs.data.leftValue = o.cleaning
-        retobs.data.rightValue = o.note
-        return retobs
-      case 'observationperimetersecurity':
-        retobs.type = 'skallsikring'
-        retobs.data.leftValue = o.perimeterSecurity
-        retobs.data.rightValue = o.note
-        return retobs
-      case 'observationfireprotection':
-        retobs.type = 'brannsikring'
-        retobs.data.leftValue = o.fireProtection
-        retobs.data.rightValue = o.note
-        return retobs
-      case 'observationtheftprotection':
-        retobs.type = 'tyverisikring'
-        retobs.data.leftValue = o.theftProtection
-        retobs.data.rightValue = o.note
-        return retobs
-      case 'observationwaterdamageassessment':
-        retobs.type = 'vannskaderisiko'
-        retobs.data.leftValue = o.waterDamageAssessment
-        retobs.data.rightValue = o.note
-        return retobs
-      case 'observationhypoxicair':
-        retobs.type = 'hypoxicAir'
-        retobs.data.fromValue = formatFloatToString(o.from)
-        retobs.data.toValue = formatFloatToString(o.to)
-        retobs.data.commentValue = o.note
-        return retobs
-      case 'observationtemperature':
-        retobs.type = 'temperature'
-        retobs.data.fromValue = formatFloatToString(o.from)
-        retobs.data.toValue = formatFloatToString(o.to)
-        retobs.data.commentValue = o.note
-        return retobs
-      case 'observationrelativehumidity':
-        retobs.type = 'relativeHumidity'
-        retobs.data.fromValue = formatFloatToString(o.from)
-        retobs.data.toValue = formatFloatToString(o.to)
-        retobs.data.commentValue = o.note
-        return retobs
-      case 'observationpest':
-        retobs.type = 'pest'
-        retobs.data.identificationValue = o.identification
-        retobs.data.commentValue = o.note
-        retobs.data.observations = o.lifecycles ? o.lifecycles.map((l) => {
-          const obs = {}
-          obs.lifeCycle = l.stage
-          obs.count = formatFloatToString(l.quantity)
-          return obs
-        }
-      ) : []
-        return retobs
-      case 'observationalcohol':
-        retobs.type = 'alcohol'
-        retobs.data.statusValue = wrapAlcoholState(o.condition)
-        retobs.data.volumeValue = formatFloatToString(o.volume)
-        retobs.data.commentValue = o.note
-        return retobs
-      default:
-        retobs.data.error = `Not supported / ikke støttet : ${o.eventType.toLowerCase()}`
-        return retobs
-    }
-  }) : []
+  ret.observations = [
+    new Option(be.temperature).map(parseTemperature),
+    new Option(be.hypoxicAir).map(parseHypoxicAir),
+    new Option(be.alcohol).map(parseAlcohol),
+    new Option(be.cleaning).map(parseCleaning),
+    new Option(be.lightingCondition).map(parseLightingCondition),
+    new Option(be.fireProtection).map(parseFireProtection),
+    new Option(be.waterDamageAssessment).map(parseWaterDamageAssessment),
+    new Option(be.gas).map(parseGas),
+    new Option(be.mold).map(parseMold),
+    new Option(be.pest).map(parsePest),
+    new Option(be.theftProtection).map(parseTheftProtection),
+    new Option(be.perimeterSecurity).map(parsePerimeterSecurity),
+    new Option(be.relativeHumidity).map(parseRelativeHumidity)
+  ].filter(o => o)
   return ret
 }
+
 const toFrontEnd = (be) => {
   return wrap(be)
 }
