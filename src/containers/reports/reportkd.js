@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
 import { loadKDReport } from '../../reducers/reports'
-// const I18n = require('react-i18nify').I18n;
+const I18n = require('react-i18nify').I18n
 
 export class KDReport extends React.Component {
   static propTypes= {
@@ -24,32 +24,32 @@ export class KDReport extends React.Component {
             <Grid>
               <Row className="row-centered">
                 <PageHeader>
-                    Rapport - Sikring av samlinger
+                  {I18n.t('musit.reports.securingCollections.header')}
                 </PageHeader>
                 <Table style={{ width: 700 }}>
                   <tbody>
                     <tr>
-                      <td>Totalt areal:</td>
+                      <td>{I18n.t('musit.reports.securingCollections.totalArea')}</td>
                       <td>{data ? data.totalArea : null} m&sup2;</td>
                     </tr>
                     <tr>
-                      <td>Skallsikring:</td>
+                      <td>{I18n.t('musit.reports.securingCollections.perimeter')}</td>
                       <td>{data ? data.perimeterSecurity : null} m&sup2;</td>
                     </tr>
                     <tr>
-                      <td>Tyverisikring:</td>
+                      <td>{I18n.t('musit.reports.securingCollections.theftProtection')}</td>
                       <td>{data ? data.theftProtection : null} m&sup2;</td>
                     </tr>
                     <tr>
-                      <td>Brannsikring:</td>
+                      <td>{I18n.t('musit.reports.securingCollections.fireProtection')}</td>
                       <td>{data ? data.fireProtection : null} m&sup2;</td>
                     </tr>
                     <tr>
-                      <td>Vannskaderisiko:</td>
+                      <td>{I18n.t('musit.reports.securingCollections.waterDamage')}</td>
                       <td>{data ? data.waterDamageAssessment : null} m&sup2;</td>
                     </tr>
                     <tr>
-                      <td>Rutiner og beredskap:</td>
+                      <td>{I18n.t('musit.reports.securingCollections.routinesAndContingencyPlan')}</td>
                       <td>{data ? data.routinesAndContingencyPlan : null} m&sup2;</td>
                     </tr>
                   </tbody>
