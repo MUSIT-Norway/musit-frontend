@@ -5,6 +5,10 @@ const typeFieldIncorrect = (type, field) => {
   return `musit.observation.page.${type}.${field}Incorrect`
 }
 
+const toSmallerThanFromValue = (type, field) => {
+  return `musit.observation.page.${type}.${field}SmallerThanFromValue`
+}
+
 const typeFieldRequired = (type, field) => {
   return `musit.observation.page.${type}.${field}Required`
 }
@@ -96,6 +100,15 @@ export const validateFromTo = (formProps, index, type) => {
   if (formProps.commentValue && validateString(formProps.commentValue, 1, 250) === 'error') {
     errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentsValue')
   }
+
+  if (formProps.toValue &&  formProps.fromValue) {
+    const fromValue = parseFloat(formProps.fromValue);
+    const toValue = parseFloat(formProps.toValue);
+    if (fromValue > toValue) {
+      errors[`${type}.toValue`] = toSmallerThanFromValue(type, 'toValue')
+    }
+  }
+
 
   return errors;
 }
