@@ -20,13 +20,13 @@ export default () => {
           <Grid>
             <Row className="row-centered">
               <PageHeader>
-                { I18n.t('musit.reports.reports') }
+                {I18n.t('musit.reports.reports')}
               </PageHeader>
               <Table>
                 <thead>
                   <tr>
-                    <th>{ I18n.t('musit.reports.titleHeader') }</th>
-                    <th>{ I18n.t('musit.reports.descriptionHeader') }</th>
+                    <th>{I18n.t('musit.reports.titleHeader')}</th>
+                    <th>{I18n.t('musit.reports.descriptionHeader')}</th>
                   </tr>
                 </thead>
                 <tbody>
