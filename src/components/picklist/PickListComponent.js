@@ -31,16 +31,17 @@ export default class PickListComponent extends Component {
         <Table responsive striped condensed hover>
           <thead>
             <tr>
-              <th className="toolsColumn" colSpan="3">
+              <th />
+              <th style={{ verticalAlign: "bottom", textAlign: "right" }}>
                 {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;
-                <input type="checkbox" onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
+                <input type="checkbox" style={{ fontSize: '1.5em' }} onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
                 {isnode ?
-                  <FontAwesome className="normalAction" name="print" /> : null
+                  <FontAwesome className="normalAction" style={{ fontSize: '1.5em' }} name="print" /> : null
                 }
                 <FontAwesome
                   className="normalAction"
-                  style={{ cursor: 'pointer' }}
                   name="truck"
+                  style={{ fontSize: '1.5em' }}
                   onClick={() => {
                     if (marked.length > 0) {
                       this.props.move(marked)
@@ -49,7 +50,7 @@ export default class PickListComponent extends Component {
                 />
                 <FontAwesome
                   className="normalAction"
-                  style={{ cursor: 'pointer' }}
+                  style={{ fontSize: '1.5em' }}
                   name="remove"
                   onClick={() => {
                     if (marked.length > 0) {
@@ -67,30 +68,28 @@ export default class PickListComponent extends Component {
               return (
                 <tr key={i}>
                   <td className="icon">
-                    {iconRendrer(pick)}
+                    {iconRendrer(pick)} {labelRendrer(pick)}
                   </td>
-                  <td className="label">
-                    {labelRendrer(pick)}
-                  </td>
-                  <td className="toolsColumn">
+                  <td style={{ verticalAlign: "bottom", textAlign: "right" }}>
                     <input
                       type="checkbox"
+                      style={{ fontSize: '1.5em' }}
                       checked={isItemMarked ? 'checked' : ''}
                       onClick={() => this.props.toggle(item)}
                       className="normalAction"
                     />
                     {isnode ?
-                      <FontAwesome className="normalAction" name="print" /> : null
+                      <FontAwesome className="normalAction" style={{ fontSize: '1.5em' }} name="print" /> : null
                     }
                     <FontAwesome
                       className="normalAction"
-                      style={{ cursor: 'pointer' }}
+                      style={{ fontSize: '1.5em' }}
                       name="truck"
                       onClick={() => this.props.move(item)}
                     />
                     <FontAwesome
                       className="normalAction"
-                      style={{ cursor: 'pointer' }}
+                      style={{ fontSize: '1.5em' }}
                       name="remove"
                       onClick={() => this.props.remove(item)}
                     />
