@@ -9,7 +9,7 @@ import Logo3 from './assets/UiT_samarbeidslogo_bokmal_300ppi.png'
 import Logo4 from './assets/UiBmerke_grayscale.png'
 import Logo5 from './assets/ntnu_u-slagord.png'
 import FeideLogo from './assets/feide-login-icon.png'
-const I18n = require('react-i18nify').I18n;
+import { I18n } from 'react-i18nify'
 
 export default class WelcomeContainer extends React.Component {
   static propTypes = {

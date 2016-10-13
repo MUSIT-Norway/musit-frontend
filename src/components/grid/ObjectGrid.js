@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-const I18n = require('react-i18nify').I18n;
+import { I18n } from 'react-i18nify'
 
 export default class ObjectGrid extends Component {
   static propTypes = {

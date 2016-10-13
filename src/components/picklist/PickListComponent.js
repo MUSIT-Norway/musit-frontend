@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { Table } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-const I18n = require('react-i18nify').I18n;
+import { I18n } from 'react-i18nify'
 import './index.css'
 
 export default class PickListComponent extends Component {
@@ -67,7 +67,7 @@ export default class PickListComponent extends Component {
               const isItemMarked = pick.marked
               return (
                 <tr key={i}>
-                  <td className="icon">
+                  <td className="pickListIcon">
                     {iconRendrer(pick)} {labelRendrer(pick)}
                   </td>
                   <td style={{ verticalAlign: "bottom", textAlign: "right" }}>

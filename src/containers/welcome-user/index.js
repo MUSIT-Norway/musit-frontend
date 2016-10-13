@@ -21,10 +21,11 @@
 import React, { Component } from 'react'
 import { Panel, Grid, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import Language from '../../components/language'
+import { I18n } from 'react-i18nify'
+import marked from 'react-marked'
 
 const mapStateToProps = () => ({
-  translate: (key, markdown) => Language.translate(key, markdown)
+  translate: (key, markdown) => I18n.t(key, markdown)
 })
 
 class WelcomeUser extends Component {
@@ -39,7 +40,7 @@ class WelcomeUser extends Component {
             <Col xs={10} md={10}>
               <br />
               <Panel>
-                {this.props.translate('musit.welcomeUserPage.body', true)}
+                {marked(this.props.translate('musit.welcomeUserPage.body', true))}
               </Panel>
             </Col>
           </Row>

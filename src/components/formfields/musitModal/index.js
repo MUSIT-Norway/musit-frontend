@@ -18,7 +18,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import Language from '../../../components/language'
+import { I18n } from 'react-i18nify'
 import { loadRoot, loadChildren, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
 import { connect } from 'react-redux';
 import { createBreadcrumbPath } from '../../../util'
@@ -26,7 +26,7 @@ import MusitModalImpl from './MusitModal'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  translate: (key, markdown) => Language.translate(key, markdown),
+  translate: (key, markdown) => I18n.t(key, markdown),
   children: state.storageUnitModal.data || [],
   path: state.storageUnitModal.root.data ?
     createBreadcrumbPath(state.storageUnitModal.root.data.path, state.storageUnitModal.root.data.pathNames) : [],

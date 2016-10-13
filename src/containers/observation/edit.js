@@ -1,7 +1,7 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Language from '../../components/language'
+import { I18n } from 'react-i18nify'
 import ObservationPage from './page'
 import { loadObservation } from '../../reducers/observation'
 import { addControl } from '../../reducers/control'
@@ -12,7 +12,7 @@ import { parseISODateNonStrict as parseISODate, createBreadcrumbPath } from '../
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown),
+    translate: (key, markdown) => I18n.t(key, markdown),
     path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
   }
 }

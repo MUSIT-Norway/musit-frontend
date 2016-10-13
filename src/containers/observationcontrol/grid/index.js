@@ -20,7 +20,6 @@
 import React from 'react'
 import { ObservationControlGrid } from '../../../components/grid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
-import Language from '../../../components/language'
 import { loadControlsAndObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
@@ -28,10 +27,11 @@ import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
 import { createBreadcrumbPath } from '../../../util'
+import { I18n } from 'react-i18nify'
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown),
+    translate: (key, markdown) => I18n.t(key, markdown),
     path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames),
     observationControlGridData: state.observationControlGrid.data
   }

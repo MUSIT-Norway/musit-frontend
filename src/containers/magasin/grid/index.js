@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux';
-import Language from '../../../components/language'
+import { I18n } from 'react-i18nify'
 import { loadRoot, clearRoot, loadChildren, deleteUnit } from '../../../reducers/storageunit/grid'
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { addNode, addObject } from '../../../reducers/picklist'
@@ -15,12 +15,11 @@ import Toolbar from '../../../layout/Toolbar'
 import { blur, createBreadcrumbPath } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
-const I18n = require('react-i18nify').I18n;
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   stats: state.storageUnitStats.stats,
-  translate: (key, markdown) => Language.translate(key, markdown),
+  translate: (key, markdown) => I18n.t(key, markdown),
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root,

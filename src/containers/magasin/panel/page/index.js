@@ -25,7 +25,7 @@ import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../../layout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
 import Breadcrumb from '../../../../layout/Breadcrumb'
-import Language from '../../../../components/language'
+import { I18n } from 'react-i18nify'
 import AddressSuggest from '../../../../components/address'
 import Loader from 'react-loader';
 import { createBreadcrumbPath } from '../../../../util'
@@ -33,7 +33,7 @@ import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } fr
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown),
+    translate: (key, markdown) => I18n.t(key, markdown),
     path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
   }
 }

@@ -6,7 +6,7 @@ import FontAwesome from 'react-fontawesome'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { TYPES } from '../../reducers/picklist'
-const I18n = require('react-i18nify').I18n;
+import { I18n } from 'react-i18nify'
 import MusitModal from '../../components/formfields/musitModal'
 import './PickListContainer.css'
 

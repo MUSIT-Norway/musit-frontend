@@ -19,13 +19,13 @@
  */
 import { connect } from 'react-redux'
 import { addControl } from '../../../reducers/control'
-import Language from '../../../components/language'
+import { I18n } from 'react-i18nify'
 import ControlAddContainerImpl from './index'
 import { createBreadcrumbPath } from '../../../util'
 
 const mapStateToProps = (state) => ({
   actor: state.auth.actor,
-  translate: (key, markdown) => Language.translate(key, markdown),
+  translate: (key, markdown) => I18n.t(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
   path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
 })
