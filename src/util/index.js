@@ -82,5 +82,5 @@ export const isDateBiggerThanToday = (newDate: any): boolean => {
   const isAfterYear = moment(newDate).isAfter(today, 'year')
   const isAfterMonth = moment(newDate).isAfter(today, 'month')
   const isAfterDay = moment(newDate).isAfter(today, 'day')
-  return isAfter = isAfterDay || isAfterMonth || isAfterYear
+  return isAfterDay || isAfterMonth || isAfterYear
 }
