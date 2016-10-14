@@ -17,18 +17,20 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import Language from '../../../components/language'
+import { I18n } from 'react-i18nify'
 import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import ControlViewContainerImpl from './index'
 import { createBreadcrumbPath } from '../../../util'
+import { loadRoot } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
-  translate: (key, markdown) => Language.translate(key, markdown),
+  translate: (key, markdown) => I18n.t(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
+  path: state.storageGridUnit.root.data ?
+      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,6 +39,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadPersonNameFromId: (doneBy) => {
     dispatch(getActorNameFromId(doneBy))
+  },
+  loadStorageObj: (id) => {
+    dispatch(loadRoot(id))
   }
 })
 

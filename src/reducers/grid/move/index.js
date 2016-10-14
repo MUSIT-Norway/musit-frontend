@@ -86,7 +86,8 @@ const moveHistoryReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        data: initialState.data
+        data: action.error
+
       };
     case LOAD_ACTOR:
       return {
@@ -118,7 +119,7 @@ const moveHistoryReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: false,
-        data: []
+        data: action.result
       }
     case CLEAR:
       return {
@@ -139,3 +140,18 @@ const moveHistoryReducer = (state = initialState, action) => {
 }
 
 export default moveHistoryReducer;
+
+export const loadMoveHistoryForObject = (id, callback) => {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/locations`),
+    callback
+  }
+}
+
+export const clearMoveHistoryForObject = () => {
+  return {
+    type: CLEAR_SUCCESS,
+    result: []
+  }
+}

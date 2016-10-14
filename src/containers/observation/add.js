@@ -1,18 +1,19 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Language from '../../components/language'
+import { I18n } from 'react-i18nify'
 import ObservationPage from './page'
 import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { addObservation } from '../../reducers/observation'
 import { createBreadcrumbPath } from '../../util'
+import { loadRoot } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
     actor: state.auth.actor,
-    translate: (key, markdown) => Language.translate(key, markdown),
+    translate: (key, markdown) => I18n.t(key, markdown),
     path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
   }
 }
@@ -24,6 +25,9 @@ const mapDispatchToProps = (dispatch) => {
         onSuccess: () => hashHistory.goBack(),
         onFailure: () => alert('ikke istand til å lagre')
       }))
+    },
+    loadStorageObj: (id) => {
+      dispatch(loadRoot(id))
     }
   }
 }
@@ -36,6 +40,12 @@ class AddObservationPage extends React.Component {
     onSaveObservation: PropTypes.func.isRequired,
     actor: PropTypes.object,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
+  }
+
+  componentWillMount() {
+    if (this.props.path.length === 0) {
+      this.props.loadStorageObj(this.props.params.id)
+    }
   }
 
   render() {

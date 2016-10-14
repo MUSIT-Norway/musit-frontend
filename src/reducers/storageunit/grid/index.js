@@ -6,9 +6,6 @@ const LOAD_SEVERAL_FAIL = 'musit/storageunit-grid/LOAD_SEVERAL_FAIL'
 const LOAD_ONE = 'musit/storageunit-grid/LOAD_ONE'
 const LOAD_ONE_SUCCESS = 'musit/storageunit-grid/LOAD_ONE_SUCCESS'
 const LOAD_ONE_FAIL = 'musit/storageunit-grid/LOAD_ONE_FAIL'
-const LOAD_PATH = 'musit/storageunit-grid/LOAD_PATH'
-const LOAD_PATH_SUCCESS = 'musit/storageunit-grid/LOAD_PATH_SUCCESS'
-const LOAD_PATH_FAIL = 'musit/storageunit-grid/LOAD_PATH_FAIL'
 const CLEAR_ROOT = 'musit/storageunit-grid/CLEAR_ROOT'
 const DELETE = 'musit/storageunit-grid/DELETE'
 const DELETE_SUCCESS = 'musit/storageunit-grid/DELETE_SUCCESS'
@@ -40,41 +37,6 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
         loading: false,
         loaded: false,
         error: action.error
-      }
-    case LOAD_PATH:
-      return {
-        ...state,
-        root: {
-          ...state.root,
-          loading: true
-        }
-      }
-    case LOAD_PATH_SUCCESS:
-      return {
-        ...state,
-        root: {
-          ...state.root,
-          path: action.result.filter(s => s.name !== 'root-node').map((s) => {
-            return {
-              id: s.id,
-              name: s.name,
-              type: s.storageType,
-              url: `/magasin/${s.id}`
-            }
-          }),
-          loaded: true,
-          loading: false
-        }
-      }
-    case LOAD_PATH_FAIL:
-      return {
-        ...state,
-        root: {
-          ...state.root,
-          loading: false,
-          loaded: false,
-          error: action.error
-        }
       }
     case LOAD_ONE_SUCCESS:
       return {

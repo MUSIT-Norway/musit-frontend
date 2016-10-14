@@ -1,8 +1,10 @@
-.icon {
-  width: 1%;
+.pickListIcon {
+  flex: 1 0 0;
+  display: flex;
+  flex-direction: row;
 }
 .label {
-  width: 80%;
+  width: 100%;
 }
 .select {
   width: 1%;
@@ -11,7 +13,7 @@
   margin: 0px;
 }
 .toolsColumn {
-  vertical-align: middle;
+  vertical-align: bottom;
   text-align: right;
 }
 .actions {
@@ -23,10 +25,10 @@
   margin: 0 auto 10px;
 }
 .normalAction {
-  font-size: 1.5em;
-  padding-left: 0.5em;
-  color: #337ab7
-
+  padding-left: 1em;
+  cursor: pointer;
+  vertical-align: middle;
+  color: #337ab7;
 }
 .infoAction {
   color: #0000aa;

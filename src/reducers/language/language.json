@@ -1,6 +1,22 @@
 {
   "en": {
     "musit": {
+      "reports": {
+        "reports": "Rapporter",
+        "titleHeader": "Tittel",
+        "descriptionHeader": "Beskrivelse",
+        "securingCollections": {
+          "title": "Sikring av samlinger",
+          "description": "Sikringsindikatorer som rapporteres til KD.",
+          "header": "Rapport - Sikring av samlinger",
+          "totalArea": "Totalt areal:",
+          "perimeter": "Skallsikring:",
+          "theftProtection": "Tyverisikring:",
+          "fireProtection": "Brannsikring:",
+          "waterDamage": "Vannskaderisiko:",
+          "routinesAndContingencyPlan": "Rutiner og beredskap:"
+        }
+      },
       "moveModal": {
         "move": "Move",
         "moveObjects": "Move objects",
@@ -84,7 +100,8 @@
         "save": "Save",
         "saveTooltip": "Save registration",
         "cancel": "Cancel",
-        "cancelTooltip": "Cancel registration"
+        "cancelTooltip": "Cancel registration",
+        "magazine": "Magazine"
       },
       "viewControl": {
         "title": "View control",
@@ -488,6 +505,22 @@
   },
   "no": {
     "musit": {
+      "reports": {
+        "reports": "Rapporter",
+        "titleHeader": "Tittel",
+        "descriptionHeader": "Beskrivelse",
+        "securingCollections": {
+          "title": "Sikring av samlinger",
+          "description": "Sikringsindikatorer som rapporteres til KD.",
+          "header": "Rapport - Sikring av samlinger",
+          "totalArea": "Totalt areal:",
+          "perimeter": "Skallsikring:",
+          "theftProtection": "Tyverisikring:",
+          "fireProtection": "Brannsikring:",
+          "waterDamage": "Vannskaderisiko:",
+          "routinesAndContingencyPlan": "Rutiner og beredskap:"
+        }
+      },
       "moveModal": {
         "move": "Flytt hit",
         "moveObjects": "Flytt objekter",
@@ -571,7 +604,8 @@
         "save": "Lagre",
         "saveTooltip": "Lagre",
         "cancel": "Avbryt",
-        "cancelTooltip": "Avbryt registreringen"
+        "cancelTooltip": "Avbryt registreringen",
+        "magazine": "Magasin"
       },
       "viewControl": {
         "title": "Vis kontroll",

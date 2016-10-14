@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-const I18n = require('react-i18nify').I18n;
+import { I18n } from 'react-i18nify'
 
 export default class NodeGrid extends Component {
   static propTypes = {
@@ -29,9 +29,19 @@ export default class NodeGrid extends Component {
     this.showModal = this.showModal.bind(this)
     this.hideModal = this.hideModal.bind(this)
     this.moveModal = this.moveModal.bind(this)
+    this.showMoveHistory = this.showMoveHistory.bind(this)
+    this.hideMoveHistory = this.hideMoveHistory.bind(this)
     this.state = {
-      showModal: false
+      showModal: false,
+      showMoveHistory: false
     }
+  }
+
+  showMoveHistory(nodeId) {
+    this.setState({ ...this.state, showMoveHistory: true, nodeId: nodeId })
+  }
+  hideMoveHistory() {
+    this.setState({ ...this.state, showMoveHistory: false, nodeId: null })
   }
 
   showModal(fromId, name) {

@@ -1,16 +1,17 @@
 
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Language from '../../components/language'
+import { I18n } from 'react-i18nify'
 import ObservationPage from './page'
 import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
 import { parseISODateNonStrict as parseISODate, createBreadcrumbPath } from '../../util'
 import Breadcrumb from '../../layout/Breadcrumb'
+import { loadRoot } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown),
+    translate: (key, markdown) => I18n.t(key, markdown),
     doneBy: state.observation.data.doneBy,
     doneDate: state.observation.data.doneDate,
     registeredDate: state.observation.data.registeredDate,
@@ -27,6 +28,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadPersonNameFromId: (doneBy) => {
       dispatch(getActorNameFromId(doneBy))
+    },
+    loadStorageObj: (id) => {
+      dispatch(loadRoot(id))
     }
   }
 }
@@ -51,6 +55,9 @@ class ViewObservationPage extends React.Component {
       this.props.loadObservation(this.props.params.id, this.props.params.obsId, {
         onSuccess: (r) => {
           this.props.loadPersonNameFromId(r.doneBy)
+          if (this.props.path.length === 0) {
+            this.props.loadStorageObj(this.props.params.id)
+          }
         }
       })
     }

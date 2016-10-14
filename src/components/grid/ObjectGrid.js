@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-const I18n = require('react-i18nify').I18n;
+import { I18n } from 'react-i18nify'
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -16,10 +16,10 @@ export default class ObjectGrid extends Component {
       displayName: PropTypes.string
     })).isRequired,
     onAction: PropTypes.func.isRequired,
+    showMoveHistory: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
     refresh: PropTypes.func.isRequired,
-    rootNode: React.PropTypes.object,
-    MusitModal: React.PropTypes.func,
+    rootNode: React.PropTypes.object
   }
 
   constructor(props) {
@@ -54,13 +54,14 @@ export default class ObjectGrid extends Component {
   }
 
   render() {
-    const { id, translate, tableData, MusitModal } = this.props
+    const { id, translate, tableData, MusitModal, path } = this.props
     return (
       <div>
         <MusitModal
           show={this.state.showModal}
           onHide={this.hideModal}
           onMove={this.moveModal}
+          path={path}
           headerText={this.props.translate('musit.moveModal.moveObjects')}
         />
         <FormGroup>
@@ -93,6 +94,17 @@ export default class ObjectGrid extends Component {
                     </td>
                     <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_term`}>
                       {c.displayName}
+                    </td>
+                    <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_moveHistory`}>
+                      <a
+                        href=""
+                        onClick={(e) => {
+                          e.preventDefault()
+                          this.props.showMoveHistory(c.id)
+                        }}
+                      >
+                        <span className="icon icon-musitmovehistoryicon" />
+                      </a>
                     </td>
                     <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
                       <a

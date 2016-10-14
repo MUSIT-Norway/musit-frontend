@@ -11,6 +11,7 @@ describe('MusitModal', () => {
             headerText="Hi"
             loadChildren={(key) => key}
             clearPath={() => []}
+            clearRoot={(key) => key}
             loadRoot={(key) => key}
             setCurrentId={(key) => key}
             clearCurrentId={(key) => key}

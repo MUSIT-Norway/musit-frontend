@@ -5,6 +5,7 @@ const LOAD_KD_REPORT_FAIL = 'musit/reports/LOAD_KD_REPORT_FAIL'
 const LOAD_KD_REPORT_SUCESS = 'musit/reports/LOAD_KD_REPORT_SUCESS'
 
 const initialState = {
+
   data: {
     kdreport: {
       data: {}
@@ -43,6 +44,7 @@ const reportReducer = (state = initialState, action) => {
 }
 
 export default reportReducer
+
 
 export const loadKDReport = (cb) => {
   return {

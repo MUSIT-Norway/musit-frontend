@@ -25,7 +25,7 @@ import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
 import Layout from '../../../../layout'
 import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
 import Breadcrumb from '../../../../layout/Breadcrumb'
-import Language from '../../../../components/language'
+import { I18n } from 'react-i18nify'
 import AddressSuggest from '../../../../components/address'
 import Loader from 'react-loader';
 import { createBreadcrumbPath } from '../../../../util'
@@ -33,7 +33,7 @@ import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } fr
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => Language.translate(key, markdown),
+    translate: (key, markdown) => I18n.t(key, markdown),
     path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
   }
 }
@@ -263,6 +263,7 @@ class StorageUnitContainer extends Component {
 
   render() {
     return (
+
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
         translate={this.props.translate}
@@ -427,69 +428,143 @@ class StorageUnitContainer extends Component {
                         </Col>
                       </Row>
                       <div>
+                        <h4 style={{ textAlign: 'center' }}>
+                          {this.props.isAdd ? `${this.props.translate('musit.storageUnits.newNode')} - ` : ''}
+                          {this.props.translate('musit.storageUnits.header')}
+                        </h4>
                         <Grid>
                           <Row className="row-centered">
                             <Col md={5}>
                               <Form horizontal>
                                 <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
-                                    {this.translate('temperature.labelText')}</label>
+                                  <label className="col-sm-3 control-label" htmlFor="storageUnitType">
+                                    {this.props.translate('musit.storageUnits.type.labelText')}
+                                    { <span style={{ color: 'red' }}>*</span> }
+                                  </label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('temperature', this.props.unit, 3)}
-                                  </div>
-                                  <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('temperatureTolerance', this.props.unit, 0)}
-                                  </div>
-                                </div>
-                              </Form>
-                            </Col>
-                            <Col md={5}>
-                              <Form horizontal>
-                                <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
-                                    {this.translate('relativeHumidity.labelText')}</label>
-                                  <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('relativeHumidity', this.props.unit, 3)}
-                                  </div>
-                                  <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('relativeHumidityTolerance', this.props.unit, 0)}
+                                    <MusitDropDownField
+                                      id="type"
+                                      validate="text"
+                                      tooltip={this.props.translate('musit.storageUnits.type.tooltip')}
+                                      placeHolder={this.props.translate('musit.storageUnits.type.placeHolder')}
+                                      maximumLength={100}
+                                      items={['StorageUnit', 'Room', 'Building', 'Organisation']}
+                                      translate={this.props.translate}
+                                      translateKeyPrefix={'musit.storageUnits.type.items.'}
+                                      onChange={storageType => this.updateStorageUnit(this.props.unit, 'type', storageType)}
+                                      value={this.props.unit.type}
+                                      disabled={!this.props.isAdd}
+                                    />
                                   </div>
                                 </div>
-                              </Form>
-                            </Col>
-                          </Row>
-                          <Row className="row-centered">
-                            <Col md={5}>
-                              <Form horizontal>
-                                <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
-                                    {this.translate('hypoxicAir.labelText')}</label>
-                                  <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('hypoxicAir', this.props.unit, 3)}
-                                  </div>
-                                  <div class="col-sm-4" is="null">
-                                    {this.renderNumberField('hypoxicAirTolerance', this.props.unit, 0)}
-                                  </div>
-                                </div>
-                              </Form>
-                            </Col>
-                            <Col md={5}>
-                              <Form horizontal>
-                                {this.renderStringFieldBlock('cleaning')}
-                              </Form>
-                            </Col>
-                          </Row>
-                          <Row className="row-centered">
-                            <Col md={5}>
-                              <Form horizontal>
-                                {this.renderStringFieldBlock('lightingCondition')}
                               </Form>
                             </Col>
                           </Row>
                           <Row>
                             <Col md={5}>
                               <Form horizontal>
-                                {this.renderTextAreaBlock('comments')}
+                                <FormGroup>
+                                  <label className="col-sm-3 control-label" htmlFor="name">
+                                    {this.props.translate('musit.storageUnits.name.labelText')}
+                                    { <span style={{ color: 'red' }}>*</span> }
+                                  </label>
+                                  <div class="col-sm-8" is="null">
+                                    <Field
+                                      id="name"
+                                      tooltip={this.props.translate('musit.storageUnits.name.tooltip')}
+                                      validate="text"
+                                      placeHolder={this.props.translate('musit.storageUnits.name.placeHolder')}
+                                      onChange={storageUnitName =>
+                                        this.updateStorageUnit(this.props.unit, 'name', storageUnitName)}
+                                      maximumLength={100}
+                                      value={this.props.unit.name || ''}
+                                    />
+                                  </div>
+                                </FormGroup>
+                              </Form>
+                            </Col>
+                            <Col md={5}>
+                              {(this.props.unit.type === 'Building'
+                              || this.props.unit.type === 'Organisation') &&
+                                <Form horizontal>
+                                  <FormGroup>
+                                    <label className="col-sm-3 control-label" htmlFor="address">
+                                      {this.props.translate('musit.storageUnits.address.labelText')}
+                                    </label>
+                                    <div class="col-sm-8" is="null">
+                                      <AddressSuggest
+                                        id="addressField"
+                                        value={this.props.unit.address}
+                                        placeHolder="Find address"
+                                        onChange={(address) => {
+                                          this.updateStorageUnit(this.props.unit, 'address', address)
+                                        }}
+                                      />
+                                    </div>
+                                  </FormGroup>
+                                </Form>
+                              }
+                            </Col>
+                          </Row>
+                          <Row className="row-centered">
+                            <Col md={5}>
+                              <Form horizontal>
+                                <div className="form-group">
+                                  <label className="col-sm-3 control-label" htmlFor="comments2">
+                                    {this.props.translate('musit.storageUnits.area.labelText')}</label>
+                                  <div class="col-sm-4" is="null">
+                                    <Field
+                                      id="areaFrom"
+                                      tooltip={this.props.translate('musit.storageUnits.area.tooltip')}
+                                      validate="number"
+                                      placeHolder={this.props.translate('musit.storageUnits.area.placeHolder')}
+                                      onChange={areaFrom => this.updateStorageUnit(this.props.unit, 'area', areaFrom)}
+                                      precision={3}
+                                      value={this.props.unit.area}
+                                    />
+                                  </div>
+                                  <div class="col-sm-4" is="null">
+                                    <Field
+                                      id="areaTo"
+                                      tooltip={this.props.translate('musit.storageUnits.areaTo.tooltip')}
+                                      validate="number"
+                                      placeHolder={this.props.translate('musit.storageUnits.areaTo.placeHolder')}
+                                      onChange={areaTo => this.updateStorageUnit(this.props.unit, 'areaTo', areaTo)}
+                                      precision={3}
+                                      value={this.props.unit.areaTo}
+                                    />
+                                  </div>
+                                </div>
+                              </Form>
+                            </Col>
+                            <Col md={5}>
+                              <Form horizontal>
+                                <div className="form-group">
+                                  <label className="col-sm-3 control-label" htmlFor="controlId">
+                                    {this.props.translate('musit.storageUnits.height.labelText')}</label>
+                                  <div class="col-sm-4" is="null">
+                                    <Field
+                                      id="heightFrom"
+                                      tooltip={this.props.translate('musit.storageUnits.height.tooltip')}
+                                      validate="number"
+                                      placeHolder={this.props.translate('musit.storageUnits.height.placeHolder')}
+                                      onChange={heightFrom => this.updateStorageUnit(this.props.unit, 'height', heightFrom)}
+                                      precision={3}
+                                      value={this.props.unit.height}
+                                    />
+                                  </div>
+                                  <div class="col-sm-4" is="null">
+                                    <Field
+                                      id="heightTo"
+                                      tooltip={this.props.translate('musit.storageUnits.heightTo.tooltip')}
+                                      validate="number"
+                                      placeHolder={this.props.translate('musit.storageUnits.heightTo.placeHolder')}
+                                      onChange={heightTo => this.updateStorageUnit(this.props.unit, 'heightTo', heightTo)}
+                                      precision={3}
+                                      value={this.props.unit.heightTo}
+                                    />
+                                  </div>
+                                </div>
                               </Form>
                             </Col>
                           </Row>

@@ -19,13 +19,13 @@
  */
 
 import { connect } from 'react-redux';
-import Language from '../../components/language'
 import WelcomeContainer from './WelcomeContainer';
 import { connectUser, loadActor } from '../../reducers/auth';
+import { I18n } from 'react-i18nify'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  translate: (key, markdown) => Language.translate(key, markdown)
+  translate: (key, markdown) => I18n.t(key, markdown)
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
