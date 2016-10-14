@@ -150,6 +150,7 @@ export default class NodeGrid extends Component {
                           e.preventDefault()
                           this.props.onAction('pickNode', c)
                         }}
+                        title="Hi"
                       >
                         <FontAwesome name="shopping-cart" />
                       </a>
