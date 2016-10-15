@@ -1,8 +1,10 @@
-import reduce from 'lodash/reduce'
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import { hashHistory } from 'react-router'
 import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
+import reduce from 'lodash/reduce'
+import keys from 'lodash/keys'
+import map from 'lodash/map'
 
 export default class ObservationControlGrid extends Component {
   static propTypes = {
@@ -27,43 +29,43 @@ export default class ObservationControlGrid extends Component {
     this.getIcon = this.getIcon.bind(this)
   }
 
-  getIcon(ok, type) {
+  getIcon(ok, type, index) {
     switch (type) {
       case 'lightingCondition':
-        return this.icon(ok, 'musitlightingcondicon')
+        return this.icon(ok, 'musitlightingcondicon', index)
       case 'temperature':
-        return this.icon(ok, 'musittemperatureicon')
+        return this.icon(ok, 'musittemperatureicon', index)
       case 'hypoxicAir':
-        return this.icon(ok, 'musithypoxicairicon')
+        return this.icon(ok, 'musithypoxicairicon', index)
       case 'relativeHumidity':
-        return this.icon(ok, 'musitrelhumidityicon')
+        return this.icon(ok, 'musitrelhumidityicon', index)
       case 'cleaning':
-        return this.icon(ok, 'musitcleaningicon')
+        return this.icon(ok, 'musitcleaningicon', index)
       case 'mold':
-        return this.icon(ok, 'musitmoldicon')
+        return this.icon(ok, 'musitmoldicon', index)
       case 'pest':
-        return this.icon(ok, 'musitpesticon')
+        return this.icon(ok, 'musitpesticon', index)
       case 'alcohol':
-        return this.icon(ok, 'musitalcoholicon')
+        return this.icon(ok, 'musitalcoholicon', index)
       case 'gas':
-        return this.icon(ok, 'musitgasicon')
+        return this.icon(ok, 'musitgasicon', index)
       case 'waterDamageAssessment':
-        return this.icon(ok, 'musitwaterdamageicon')
+        return this.icon(ok, 'musitwaterdamageicon', index)
       case 'fireProtection':
-        return this.icon(ok, 'musitfireprotectionicon')
+        return this.icon(ok, 'musitfireprotectionicon', index)
       case 'theftProtection':
-        return this.icon(ok, 'musittheftprotectionicon')
+        return this.icon(ok, 'musittheftprotectionicon', index)
       case 'perimeterSecurity':
-        return this.icon(ok, 'musitperimetersecurityicon')
+        return this.icon(ok, 'musitperimetersecurityicon', index)
       default:
     }
   }
 
-  icon(ok, name) {
+  icon(ok, name, index) {
     if (!ok) {
-      return <span style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
+      return <span key={index} style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
     }
-    return <span style={{ padding: '2px' }} className={`icon icon-${name}`} />
+    return <span key={index} style={{ padding: '2px' }} className={`icon icon-${name}`} />
   }
 
   render() {
@@ -93,8 +95,11 @@ export default class ObservationControlGrid extends Component {
             </thead>
             <tbody>
               {this.props.tableData.map((controlOrObservation, i) => {
-                const icons = reduce(controlOrObservation, (result, value, key) => {
-                  result.push(this.getIcon(value.ok, key))
+                const withIndexAndKey = map(keys({...controlOrObservation}), (type, index) => {
+                  return { index, item: controlOrObservation[type], type }
+                })
+                const icons = reduce(withIndexAndKey, (result, withIndex) => {
+                  result.push(this.getIcon(withIndex.item.ok, withIndex.type, withIndex.index))
                   return result;
                 }, [])
                 return (

@@ -336,13 +336,13 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ? (
                   <FormControl
                     componentClass="input"
-                    value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                    value={this.state.doneBy ? (this.state.doneBy.fn || '') : ''}
                     disabled
                   />
                 ) : (
                   <ActorSuggest
                     id="doneByField"
-                    value={this.state.doneBy ? this.state.doneBy.fn : ''}
+                    value={this.state.doneBy ? (this.state.doneBy.fn || '') : ''}
                     placeHolder="Find actor"
                     onChange={doneBy => {
                       this.setState({ ...this.state, doneBy })
@@ -365,7 +365,7 @@ export default class ObservationPage extends React.Component {
                   <ControlLabel>{this.props.translate('musit.texts.registeredBy')}</ControlLabel>
                   <FormControl
                     componentClass="input"
-                    value={this.props.registeredBy}
+                    value={this.props.registeredBy || ''}
                     disabled
                   />
                 </Col>
