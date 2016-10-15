@@ -30,7 +30,7 @@ export default class PairedToogleButtons extends Component {
             {value != null ?
               <FontAwesome
                 name={value ? 'check' : 'times'}
-                style={{ padding: '2px', 'fontSize': 'x-large' }}
+                style={{ padding: '2px', fontSize: 'x-large' }}
               /> :
               null}
           </Col>
