@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
-const I18n = require('react-i18nify').I18n
+import { I18n } from 'react-i18nify'
 
 const reports = [
   {
