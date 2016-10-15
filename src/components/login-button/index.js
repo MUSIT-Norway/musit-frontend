@@ -1,5 +1,5 @@
 import config from '../../config'
-const real = require('./real').default
-const fake = require('./fake').default
+import real from './real'
+import fake from './fake'
 const Button = config.isFake ? fake : real;
 export default Button;
