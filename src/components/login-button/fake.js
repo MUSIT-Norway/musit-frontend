@@ -19,20 +19,13 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
+import fakeUserInfo from '../../../fake_security.json'
 
-const mapStateToProps = (state) => {
-  return {
-    users: state.fakeAuthInfo.users || []
-  }
-}
-
-class FakeLoginSelector extends Component {
+export default class FakeLoginSelector extends Component {
   static propTypes = {
     users: PropTypes.arrayOf(PropTypes.object),
-    setUser: PropTypes.func.isRequired,
-    loadActor: PropTypes.func.isRequired,
+    setUser: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -47,11 +40,9 @@ class FakeLoginSelector extends Component {
 
   render() {
     return (
-      <DropdownButton title="Fake User" onSelect={this.onSelect}>
-        {this.props.users.map((user) => <MenuItem eventKey={user}>{user.name}</MenuItem>)}
+      <DropdownButton id="fake-user-select" title="Fake User" onSelect={this.onSelect}>
+        {fakeUserInfo.users.map((user, i) => <MenuItem key={i} eventKey={user}>{user.name}</MenuItem>)}
       </DropdownButton>
     )
   }
 }
-
-export default connect(mapStateToProps)(FakeLoginSelector)

@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
   routerState: state.routing,
   moves: state.movehistory.data || [],
   path: state.storageGridUnit.root.data ?
-    createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : {}
+    createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : []
 });
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -147,9 +147,9 @@ class StorageUnitsContainer extends React.Component {
     }),
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
-      nodes: React.PropTypes.number.isRequired,
-      objects: React.PropTypes.number.isRequired,
-      totalObjects: React.PropTypes.number.isRequired
+      nodes: React.PropTypes.number,
+      objects: React.PropTypes.number,
+      totalObjects: React.PropTypes.number
     })
   };
 

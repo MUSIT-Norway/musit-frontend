@@ -25,7 +25,6 @@ import StorageUnitsTable from './containers/magasin/grid'
 import PickListView from './containers/picklist'
 import AddStorageUnitPanel from './containers/magasin/panel/add'
 import EditStorageUnitPanel from './containers/magasin/panel/edit'
-import WelcomeUserView from './containers/welcome-user'
 import AddObservationPage from './containers/observation/add'
 import EditObservationPage from './containers/observation/edit'
 import ViewObservationPage from './containers/observation/view'
@@ -37,27 +36,11 @@ import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
 export default (store) => {
-  const requireLogin = (nextState, replace, cb) => {
-    const { auth: { user } } = store.getState();
-    if (!user) {
-      replace('/');
-    }
-    cb();
-  };
-
-  const redirectIfLoggedIn = (nextState, replace, cb) => {
-    const { auth: { user } } = store.getState();
-    if (user) {
-      replace('/musit/');
-    }
-    cb();
-  };
-
   return (
     <Route component={App}>
       <IndexRedirect to="/" />
 
-      <Route path="/" component={WelcomeView} onEnter={redirectIfLoggedIn} />
+      <Route path="/" component={WelcomeView} />
       <Route path="/picklist/:type" component={PickListView} />
       <Route path="/reports" component={Reports} />
       <Route path="/reports/kdreport" component={KDReportContainer} />
@@ -75,9 +58,6 @@ export default (store) => {
       <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
       <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} />
       <Route path="/magasin/*" component={StorageUnitsTable} />
-
-      -- Authentication routes
-      <Route path="/musit" component={WelcomeUserView} onEnter={requireLogin} />
 
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />

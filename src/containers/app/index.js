@@ -82,14 +82,12 @@ class App extends Component {
 
   render() {
     const { user, pickListNodeCount, pickListObjectCount } = this.props;
-    const rootPath = user ? '/musit/' : '/'
-
     return (
       <div>
         <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
-              <IndexLink to={rootPath} activeStyle={{ color: '#33e0ff' }}>
+              <IndexLink to={'/'} activeStyle={{ color: '#33e0ff' }}>
                 <div className="brand">
                   <img height="40" alt="logo" src={Logo} />
                 </div>
