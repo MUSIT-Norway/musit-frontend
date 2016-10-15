@@ -22,38 +22,14 @@ All code is protected under the [GPL v2 or later](http://www.gnu.org/licenses/ol
 
 ## Installation Steps
 
-### Develop
+### Develop without backend
 1. Clone repo
 2. Run `npm install`
 4. Run `npm run start`
-5. Open `http://localhost:8000`
+5. Open `http://localhost:3000`
 
 ### Deploy
 1. Clone repo
 2. Run `npm install`
 3. Run `npm run build`
 4. Copy files under `public` to web server (nginx/apache)
-
-
-## TODO Magasin
-
-#### Edit, add node er ikke komplett.
-
-Du kan ikke adde med parent node.
-Når du legger til en node, henger state ofte med siste state.
-Har oppdatert ruter så du kan legge til rot node, legge til undernoder og hente spesifik node.
-
-#### Flytting
-Ikke lagt til
-
-#### Sletting
-Ikke lagt til
-
-#### MouseOvers/Hjelpetekster
-Mangler over alt
-
-#### Valgt node mangler statistikkdata
-Mangler metode for å fylle inn statistikk data for en valgt node i nodetreet.
-
-#### Breadcrumb
-Mangler en skikkelig breadcrumb

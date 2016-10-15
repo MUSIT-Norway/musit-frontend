@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-require('./modalStyling.css')
+import './modalStyling.css'
 import React, { Component, PropTypes } from 'react'
 import { Modal, Row, Col, Button } from 'react-bootstrap'
 import ModalMoveHistoryGrid from '../../../components/grid/ModalMoveHistoryGrid'

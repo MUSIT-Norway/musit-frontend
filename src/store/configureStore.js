@@ -20,10 +20,10 @@
 import { applyMiddleware, createStore as _createStore, compose } from 'redux'
 import rootReducer from '../reducers'
 import createMiddleware from '../middleware/clientMiddleware'
-const createLogger = require('redux-logger')
-const { persistState } = require('redux-devtools')
-const DevTools = require('../components/dev-tools')
-const reducers = require('../reducers')
+import createLogger from 'redux-logger'
+import { persistState } from 'redux-devtools'
+import DevTools from '../components/dev-tools'
+import reducers from '../reducers'
 import config from '../config'
 
 const createStore = (client, data) => {
