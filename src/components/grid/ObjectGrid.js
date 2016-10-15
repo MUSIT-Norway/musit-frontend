@@ -6,7 +6,7 @@ import { I18n } from 'react-i18nify'
 
 export default class ObjectGrid extends Component {
   static propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       identifier: PropTypes.shape({
