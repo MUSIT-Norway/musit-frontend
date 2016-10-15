@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
 import { loadKDReport } from '../../reducers/reports'
-const I18n = require('react-i18nify').I18n
+import { I18n } from 'react-i18nify'
 
 export class KDReport extends React.Component {
   static propTypes= {
