@@ -18,7 +18,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React from 'react'
-import { ObservationControlGrid } from '../../../components/grid'
+import ObservationControlGrid from '../../../components/grid/ObservationControlGrid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import { loadControlsAndObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import { loadRoot } from '../../../reducers/storageunit/grid'
