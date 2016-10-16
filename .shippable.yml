@@ -27,6 +27,7 @@ build:
     - $SHIPPABLE_BUILD_DIR/.git
   ci:
    - npm install
+   - npm run lint
    - npm run flow
    - npm test -- --coverage
    - npm run codacy

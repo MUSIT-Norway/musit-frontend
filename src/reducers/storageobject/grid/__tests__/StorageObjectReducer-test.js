@@ -1,4 +1,4 @@
-import { assert } from '../../../../../test/setup'
+import assert from 'assert'
 
 import storageObjectReducer, { LOAD_SEVERAL_SUCCESS } from '../index'
 

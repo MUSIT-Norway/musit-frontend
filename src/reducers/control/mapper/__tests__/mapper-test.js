@@ -1,4 +1,4 @@
-import { assert } from '../../../../../test/setup'
+import assert from 'assert'
 import { parseISODateNonStrict as parseISODate } from '../../../../util'
 import {
   mapToBackend

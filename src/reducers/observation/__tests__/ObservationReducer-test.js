@@ -1,6 +1,6 @@
 import drop from 'lodash/drop'
 import moment from 'moment'
-import { assert } from '../../../../test/setup'
+import assert from 'assert'
 import observationReducer, {
   loadObservation,
   initialState

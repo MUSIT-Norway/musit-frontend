@@ -1,4 +1,4 @@
-import { assert } from '../../../../test/setup'
+import assert from 'assert'
 import deepFreeze from 'deep-freeze'
 
 import picklistReducer, {

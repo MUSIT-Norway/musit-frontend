@@ -1,5 +1,5 @@
- import { assert } from '../../../../../test/setup'
- import validate from '../validators'
+import assert from 'assert'
+import validate from '../validators'
 
  const numberTestProps = ({
    id: 'Test_1',

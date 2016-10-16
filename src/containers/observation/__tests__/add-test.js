@@ -1,5 +1,6 @@
+import assert from 'assert'
 import React from 'react'
-import { ReactTestUtils, assert } from '../../../../test/setup'
+import ReactTestUtils from 'react-addons-test-utils'
 import ObservationPage from '../page'
 import moment from 'moment'
 import { DATE_FORMAT_DISPLAY } from './../../../util'
