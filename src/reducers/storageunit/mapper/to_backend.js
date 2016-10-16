@@ -20,7 +20,7 @@ export const toBackend = (data, parentId) => {
       },
       hypoxicAir: data.environmentRequirement.hypoxicAir && {
         base: parseFloatFromString(data.environmentRequirement.hypoxicAir),
-        tolerance: parseFloatFromString(data.environmentRequirement.hypoxicAirTolerance),
+        tolerance: parseFloatFromString(data.environmentRequirement.hypoxicAirTolerance)
       },
       relativeHumidity: data.environmentRequirement.relativeHumidity && {
         base: parseFloatFromString(data.environmentRequirement.relativeHumidity),

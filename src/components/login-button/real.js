@@ -6,7 +6,7 @@ import jwtDecode from 'jwt-decode';
 export default class FeideButton extends React.Component {
   static propTypes = {
     children: React.PropTypes.element,
-    setUser: React.PropTypes.func.isRequired,
+    setUser: React.PropTypes.func.isRequired
   }
 
   render() {

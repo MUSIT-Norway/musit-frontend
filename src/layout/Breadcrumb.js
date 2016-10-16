@@ -17,7 +17,7 @@ export default class Breadcrumb extends React.Component {
     onClickCrumb: React.PropTypes.func,
     passive: React.PropTypes.bool,
     allActive: React.PropTypes.bool,
-    divider: React.PropTypes.string,
+    divider: React.PropTypes.string
   }
 
   static defaultProps = {

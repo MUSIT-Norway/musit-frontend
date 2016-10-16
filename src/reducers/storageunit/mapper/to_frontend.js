@@ -6,13 +6,13 @@ const mapRequirement = (envReq, field) => {
   if (envReq[field] && (envReq[field].base || envReq[field].tolerance)) {
     return {
       [field]: formatFloatToString(envReq[field].base),
-      [`${field}Tolerance`]: formatFloatToString(envReq[field].tolerance),
+      [`${field}Tolerance`]: formatFloatToString(envReq[field].tolerance)
     };
   }
   if (envReq[field] || envReq[`${field}Tolerance`]) {
     return {
       [field]: formatFloatToString(envReq[field]),
-      [`${field}Tolerance`]: formatFloatToString(envReq[`${field}Tolerance`]),
+      [`${field}Tolerance`]: formatFloatToString(envReq[`${field}Tolerance`])
     };
   }
   return null;

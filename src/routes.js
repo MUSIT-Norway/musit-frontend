@@ -35,7 +35,7 @@ import ControlAddContainer from './containers/control/add/Connect'
 import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
 
-export default (store) => {
+export default () => {
   return (
     <Route component={App}>
       <IndexRedirect to="/" />

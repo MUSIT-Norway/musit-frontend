@@ -30,7 +30,7 @@ const mapStateToProps = (state) => ({
   controls: state.control,
   doneBy: state.observation.data.doneBy,
   path: state.storageGridUnit.root.data ?
-      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
+      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : []
 })
 
 const mapDispatchToProps = (dispatch) => ({

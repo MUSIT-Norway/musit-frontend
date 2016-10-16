@@ -15,7 +15,7 @@ export default class WelcomeContainer extends React.Component {
   static propTypes = {
     translate: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
-    setUser: React.PropTypes.func.isRequired,
+    setUser: React.PropTypes.func.isRequired
   };
 
   render() {

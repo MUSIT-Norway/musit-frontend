@@ -21,7 +21,7 @@ export default class NodeGrid extends Component {
     refresh: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    MusitModal: React.PropTypes.func,
+    MusitModal: React.PropTypes.func
   }
 
   constructor(props) {

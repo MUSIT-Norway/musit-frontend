@@ -15,12 +15,12 @@ export default class MusitUserAccount extends Component {
       {
         id: 1,
         collection: 'Lav',
-        museum: 'O',
+        museum: 'O'
       },
       {
         id: 3,
         collection: 'Sopp',
-        museum: 'NHM',
+        museum: 'NHM'
       }
     ],
     selectedCollection: 1

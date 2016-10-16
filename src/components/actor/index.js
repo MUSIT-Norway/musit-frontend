@@ -32,7 +32,7 @@ class ActorSuggest extends React.Component {
 
   static defaultProps = {
     id: 'doneByField',
-    disabled: false,
+    disabled: false
   }
 
   constructor(props) {

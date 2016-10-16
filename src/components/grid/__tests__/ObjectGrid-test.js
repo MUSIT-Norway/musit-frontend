@@ -33,7 +33,7 @@ describe('ObjectGrid', () => {
             id: 1,
             identifier: {
               museumNo: 'C10001',
-              subNo: '1',
+              subNo: '1'
             },
             displayName: 'Gråstein'
           },
@@ -41,7 +41,7 @@ describe('ObjectGrid', () => {
             id: 1,
             identifier: {
               museumNo: 'C10002',
-              subNo: '2',
+              subNo: '2'
             },
             displayName: 'Spydspiss'
           }

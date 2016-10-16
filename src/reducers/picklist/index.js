@@ -97,7 +97,7 @@ const NODE_ACTION_HANDLERS = ({
   [TOGGLE_NODE]: toggleItem(TYPES.NODE),
   [LOAD_ONE_NODE]: loadNode,
   [LOAD_ONE_NODE_SUCCESS]: loadNodeSuccess(TYPES.NODE),
-  [LOAD_ONE_NODE_FAIL]: loadNodeFail,
+  [LOAD_ONE_NODE_FAIL]: loadNodeFail
 });
 
 const OBJECT_ACTION_HANDLERS = ({

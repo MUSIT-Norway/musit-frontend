@@ -11,7 +11,7 @@ export default class ObjectGrid extends Component {
     tableData: PropTypes.arrayOf(PropTypes.shape({
       identifier: PropTypes.shape({
         museumNo: PropTypes.string.isRequired,
-        subNo: PropTypes.string.isRequired,
+        subNo: PropTypes.string.isRequired
       }).isRequired,
       displayName: PropTypes.string
     })).isRequired,

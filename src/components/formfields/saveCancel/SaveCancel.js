@@ -30,7 +30,7 @@ export default class SaveCancel extends Component {
     onClickSave: PropTypes.func.isRequired,
     cancelLabel: PropTypes.string,
     cancelDisabled: PropTypes.bool,
-    onClickCancel: PropTypes.func.isRequired,
+    onClickCancel: PropTypes.func.isRequired
   }
 
   constructor(props) {

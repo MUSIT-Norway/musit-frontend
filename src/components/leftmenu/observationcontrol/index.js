@@ -8,7 +8,7 @@ export default class ObservationControlComponent extends Component {
     id: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
     onClickNewObservation: PropTypes.func.isRequired,
-    onClickNewControl: PropTypes.func.isRequired,
+    onClickNewControl: PropTypes.func.isRequired
   }
 
   render() {
