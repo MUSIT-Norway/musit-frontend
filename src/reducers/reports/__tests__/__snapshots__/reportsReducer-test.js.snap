@@ -1,0 +1,66 @@
+exports[`KD Report creates LOAD_KD_REPORT_SUCESS when fetching reports has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/reports/LOAD_KD_REPORT"
+  },
+  Object {
+    "result": Object {
+      "fireProtection": 13,
+      "perimeterSecurity": 3,
+      "routinesAndContingencyPlan": 10,
+      "theftProtection": 123,
+      "totalArea": 1,
+      "waterDamageAssessment": 55
+    },
+    "type": "musit/reports/LOAD_KD_REPORT_SUCESS"
+  }
+]
+`;
+
+exports[`KD Report fail action 1`] = `
+Object {
+  "data": Object {
+    "kdreport": Object {
+      "data": [Error: Some error here]
+    }
+  },
+  "loaded": false,
+  "loading": false
+}
+`;
+
+exports[`KD Report initial action 1`] = `
+Object {
+  "data": Object {
+    "kdreport": Object {
+      "data": Object {}
+    }
+  },
+  "loaded": false,
+  "loading": true
+}
+`;
+
+exports[`KD Report no action 1`] = `
+Object {
+  "data": Object {
+    "kdreport": Object {
+      "data": Object {}
+    }
+  }
+}
+`;
+
+exports[`KD Report success action 1`] = `
+Object {
+  "data": Object {
+    "kdreport": Object {
+      "data": Object {
+        "someField": 1
+      }
+    }
+  },
+  "loaded": true,
+  "loading": false
+}
+`;

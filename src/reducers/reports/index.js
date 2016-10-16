@@ -1,11 +1,11 @@
 import Config from '../../config'
+import { apiUrl } from '../../util'
 
-const LOAD_KD_REPORT = 'musit/reports/LOAD_KD_REPORT'
-const LOAD_KD_REPORT_FAIL = 'musit/reports/LOAD_KD_REPORT_FAIL'
-const LOAD_KD_REPORT_SUCESS = 'musit/reports/LOAD_KD_REPORT_SUCESS'
+export const LOAD_KD_REPORT = 'musit/reports/LOAD_KD_REPORT'
+export const LOAD_KD_REPORT_FAIL = 'musit/reports/LOAD_KD_REPORT_FAIL'
+export const LOAD_KD_REPORT_SUCESS = 'musit/reports/LOAD_KD_REPORT_SUCESS'
 
 const initialState = {
-
   data: {
     kdreport: {
       data: {}
@@ -13,7 +13,7 @@ const initialState = {
   }
 }
 
-const reportReducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case LOAD_KD_REPORT: {
       return {
@@ -43,13 +43,10 @@ const reportReducer = (state = initialState, action) => {
   }
 }
 
-export default reportReducer
-
-
-export const loadKDReport = (cb) => {
+export const loadKDReport = () => {
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/report`)
   return {
     types: [LOAD_KD_REPORT, LOAD_KD_REPORT_SUCESS, LOAD_KD_REPORT_FAIL],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/report`),
-    cb
+    promise: (client) => client.get(url)
   };
 }
