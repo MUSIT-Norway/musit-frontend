@@ -30,11 +30,12 @@ export default class MusitUserAccount extends Component {
     const tooltip = (
       <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>
     );
-    const menuText = (t1, t2) =>
-    (<Row>
-      <Col md={1}>{t1}</Col>
-      <Col md={1}>{t2}</Col>
-    </Row>)
+    const menuText = (t1, t2) =>(
+      <Row>
+        <Col md={1}>{t1}</Col>
+        <Col md={1}>{t2}</Col>
+      </Row>
+    );
     return (
       <OverlayTrigger overlay={tooltip}>
         <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >

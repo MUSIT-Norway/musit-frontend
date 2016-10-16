@@ -101,3 +101,9 @@ export class Option {
   }
 
 }
+
+const testing = process.env.NODE_ENV === 'test';
+
+export const apiUrl = (url: string): string => {
+  return `${testing ? 'http://localhost' : ''}${url}`;
+}
