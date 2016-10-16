@@ -3,20 +3,17 @@ FROM node:5
 ENV PUBLIC_PORT $PUBLIC_PORT
 ENV PUBLIC_PORT $PUBLIC_PORT
 
-VOLUME ["/usr/src/app/src"]
-VOLUME ["/usr/src/app/public"]
-
 WORKDIR "/usr/src/app"
 
+ADD src src
+ADD public public
 ADD package.json package.json
-
-RUN npm install
-
 ADD fake_security.json fake_security.json
 
-ADD start.sh start.sh
-RUN chmod +x start.sh
+RUN npm install -g pushstate-server
+RUN npm install
+RUN npm run build
 
 EXPOSE 8000
 
-ENTRYPOINT ./start.sh
+CMD pushstate-server build 8000
