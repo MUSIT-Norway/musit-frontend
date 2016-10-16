@@ -1,4 +1,4 @@
-import { assert } from '../../../test/setup'
+import assert from 'assert'
 import { isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict } from '../'
 import moment from 'moment'
 
