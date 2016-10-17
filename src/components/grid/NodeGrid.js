@@ -128,6 +128,7 @@ export default class NodeGrid extends Component {
                           e.preventDefault()
                           this.props.onAction('controlsobservations', c)
                         }}
+                        title={I18n.t('musit.grid.node.iconTooltip.observationAndControl')}
                       >
                         <span className="icon icon-musitcontrolobsicon" />
                       </a>
@@ -139,6 +140,7 @@ export default class NodeGrid extends Component {
                           e.preventDefault()
                           this.showModal(c.id, c.name)
                         }}
+                        title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                       >
                         <FontAwesome name="truck" />
                       </a>
@@ -150,6 +152,7 @@ export default class NodeGrid extends Component {
                           e.preventDefault()
                           this.props.onAction('pickNode', c)
                         }}
+                        title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                       >
                         <FontAwesome name="shopping-cart" />
                       </a>
