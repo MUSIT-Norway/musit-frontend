@@ -1,5 +1,6 @@
 
-export const validateString = (value = '', minimumLength = 0, maximumLength = 20) => {
+export const validateString = (inValue = '', minimumLength = 0, maximumLength = 20) => {
+  const value = inValue.trim()
   return value.length < minimumLength || value.length > maximumLength ? 'error' : 'success'
 }
 
