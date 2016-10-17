@@ -1,0 +1,5 @@
+exports[`Validation util validateFromTo should work with decimal numbers 1`] = `
+Object {
+  "type.toValue": "musit.observation.page.type.toValueSmallerThanFromValue"
+}
+`;

@@ -1,4 +1,4 @@
-
+import { parseFloatFromString } from '../../../util'
 import { validateString, validateNumber } from '../../../components/formfields/common/validators'
 
 const typeFieldIncorrect = (type, field) => {
@@ -102,8 +102,8 @@ export const validateFromTo = (formProps, index, type) => {
   }
 
   if (formProps.toValue && formProps.fromValue) {
-    const fromValue = parseFloat(formProps.fromValue);
-    const toValue = parseFloat(formProps.toValue);
+    const fromValue = parseFloatFromString(formProps.fromValue);
+    const toValue = parseFloatFromString(formProps.toValue);
     if (fromValue > toValue) {
       errors[`${type}.toValue`] = toSmallerThanFromValue(type, 'toValue')
     }
