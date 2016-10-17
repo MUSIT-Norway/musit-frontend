@@ -33,37 +33,38 @@ export default class ObservationControlGrid extends Component {
   getIcon(ok, type, index) {
     switch (type) {
       case 'lightingCondition':
-        return this.icon(ok, 'musitlightingcondicon', 'lightCondition')
+        return this.icon(ok, 'musitlightingcondicon', 'lightCondition', index)
       case 'temperature':
-        return this.icon(ok, 'musittemperatureicon', 'temperature')
+        return this.icon(ok, 'musittemperatureicon', 'temperature', index)
       case 'hypoxicAir':
-        return this.icon(ok, 'musithypoxicairicon', 'hypoxicAir')
+        return this.icon(ok, 'musithypoxicairicon', 'hypoxicAir', index)
       case 'relativeHumidity':
-        return this.icon(ok, 'musitrelhumidityicon', 'relativeHumidity')
+        return this.icon(ok, 'musitrelhumidityicon', 'relativeHumidity', index)
       case 'cleaning':
-        return this.icon(ok, 'musitcleaningicon', 'cleaning')
+        return this.icon(ok, 'musitcleaningicon', 'cleaning', index)
       case 'mold':
-        return this.icon(ok, 'musitmoldicon', 'mold')
+        return this.icon(ok, 'musitmoldicon', 'mold', index)
       case 'pest':
-        return this.icon(ok, 'musitpesticon', 'pest')
+        return this.icon(ok, 'musitpesticon', 'pest', index)
       case 'alcohol':
-        return this.icon(ok, 'musitalcoholicon', 'alcohol')
+        return this.icon(ok, 'musitalcoholicon', 'alcohol', index)
       case 'gas':
-        return this.icon(ok, 'musitgasicon', 'gas')
+        return this.icon(ok, 'musitgasicon', 'gas', index)
       case 'waterDamageAssessment':
-        return this.icon(ok, 'musitwaterdamageicon', 'vannskaderisiko')
+        return this.icon(ok, 'musitwaterdamageicon', 'vannskaderisiko', index)
       case 'fireProtection':
-        return this.icon(ok, 'musitfireprotectionicon', 'brannsikring')
+        return this.icon(ok, 'musitfireprotectionicon', 'brannsikring', index)
       case 'theftProtection':
-        return this.icon(ok, 'musittheftprotectionicon', 'tyverisikring')
+        return this.icon(ok, 'musittheftprotectionicon', 'tyverisikring', index)
       case 'perimeterSecurity':
-        return this.icon(ok, 'musitperimetersecurityicon', 'skallsikring')
+        return this.icon(ok, 'musitperimetersecurityicon', 'skallsikring', index)
       default:
     }
   }
 
-  icon(ok, name, tooltip) {
+  icon(ok, name, tooltip, index) {
     return <span
+      key={index}
       style={ok ? { color: 'gray', padding: '2px' } : { padding: '2px' }}
       className={`icon icon-${name}`}
       title={I18n.t(`musit.observation.page.${tooltip}.labelText`)}
