@@ -39,7 +39,7 @@ class ViewObservationPage extends React.Component {
 
   static propTypes = {
     observations: PropTypes.arrayOf(PropTypes.object),
-    doneDate: PropTypes.string,
+    doneDate: PropTypes.object,
     doneBy: PropTypes.object,
     registeredBy: PropTypes.string,
     registeredDate: PropTypes.string,

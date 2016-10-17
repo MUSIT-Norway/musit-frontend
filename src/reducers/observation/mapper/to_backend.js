@@ -106,10 +106,10 @@ export function parsePest(el) {
 }
 
 function getData(observations, field) {
-  return (observations.find(f => f.type === field) || {}).data;
+  return (observations.find(f => f.type === field) || {}).data;
 }
 
-export default (observation: any, nodeId: string | number) => {
+export default (observation: any, nodeId: string | number) => {
   const r = {}
   r.eventType = 'Observation'
   r.doneBy = observation.doneBy.id

@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onUpdateRequested: (id, { value, reason }) => {
-    if (reason && (reason === 'type') && value && value.length >= 2) {
+    if (reason && reason === 'type' && value && value.length >= 2) {
       dispatch(suggestPerson(id, value))
     } else {
       dispatch(clearSuggest(id))
@@ -32,7 +32,7 @@ class ActorSuggest extends React.Component {
 
   static defaultProps = {
     id: 'doneByField',
-    disabled: false,
+    disabled: false
   }
 
   constructor(props) {

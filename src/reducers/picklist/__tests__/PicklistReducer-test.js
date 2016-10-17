@@ -1,4 +1,4 @@
-import { assert } from '../../../../test/setup'
+import assert from 'assert'
 import deepFreeze from 'deep-freeze'
 
 import picklistReducer, {
@@ -492,7 +492,7 @@ describe('PicklistReducer', () => {
         pathNames: [{ nodeId: 1}] },
       id: 1
     })
-    const expectedState =  {
+    const expectedState = {
       NODE: [
         {
           marked: false,
@@ -524,7 +524,7 @@ it('Refresh node updates path. Will only show the second node. First(root) and l
     },
     id: 1
   })
-  const expectedState =  {
+  const expectedState = {
     NODE: [
       {
         marked: false,

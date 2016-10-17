@@ -1,4 +1,6 @@
-import { assert, React, ReactTestUtils } from '../../../../test/setup';
+import assert from 'assert'
+import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
 import NodeGrid from '../NodeGrid';
 
 const TestModal = () => <span>Hello</span>

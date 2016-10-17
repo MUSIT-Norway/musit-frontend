@@ -16,7 +16,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
     case INSERT:
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case INSERT_SUCCESS:
       return {
@@ -42,7 +42,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
     case LOAD:
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case LOAD_SUCCESS:
       return {

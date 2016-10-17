@@ -8,7 +8,8 @@ import { addNode, addObject } from '../../../reducers/picklist'
 import { moveObject, moveNode } from '../../../reducers/move'
 import { loadStats, clearStats } from '../../../reducers/storageunit/stats'
 import { hashHistory } from 'react-router'
-import { NodeGrid, ObjectGrid } from '../../../components/grid'
+import NodeGrid from '../../../components/grid/NodeGrid'
+import ObjectGrid from '../../../components/grid/ObjectGrid'
 import Layout from '../../../layout'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
@@ -28,7 +29,7 @@ const mapStateToProps = (state) => ({
   routerState: state.routing,
   moves: state.movehistory.data || [],
   path: state.storageGridUnit.root.data ?
-    createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : {}
+    createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : []
 });
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -146,9 +147,9 @@ class StorageUnitsContainer extends React.Component {
     }),
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
-      nodes: React.PropTypes.number.isRequired,
-      objects: React.PropTypes.number.isRequired,
-      totalObjects: React.PropTypes.number.isRequired
+      nodes: React.PropTypes.number,
+      objects: React.PropTypes.number,
+      totalObjects: React.PropTypes.number
     })
   };
 
@@ -272,7 +273,7 @@ class StorageUnitsContainer extends React.Component {
   };
 
   makeToolbar() {
-    return (<Toolbar
+    return <Toolbar
       showRight={this.state.showObjects}
       showLeft={this.state.showNodes}
       labelRight="Objekter"
@@ -290,12 +291,12 @@ class StorageUnitsContainer extends React.Component {
         this.loadNodes();
         blur()
       }}
-    />)
+    />
   }
 
   makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete } = this.props;
-    const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root');
+    const showButtons = this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root';
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
@@ -326,7 +327,7 @@ class StorageUnitsContainer extends React.Component {
   makeContentGrid(filter, rootNode, children) {
     const nodeId = rootNode ? rootNode.id : null;
     if (this.state.showNodes) {
-      return (<NodeGrid
+      return <NodeGrid
         id={nodeId}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
@@ -343,9 +344,9 @@ class StorageUnitsContainer extends React.Component {
         }
         rootNode={this.props.rootNode}
         MusitModal={MusitModal}
-      />)
+      />
     }
-    return (<ObjectGrid
+    return <ObjectGrid
       id={nodeId}
       translate={this.props.translate}
       tableData={this.props.objects}
@@ -358,7 +359,7 @@ class StorageUnitsContainer extends React.Component {
       }}
       rootNode={this.props.rootNode}
       MusitModal={MusitModal}
-    />)
+    />
   }
 
   render() {

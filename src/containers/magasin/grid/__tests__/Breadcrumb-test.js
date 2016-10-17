@@ -1,4 +1,6 @@
-import { assert, React, ReactTestUtils } from '../../../../../test/setup'
+import assert from 'assert'
+import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
 import Layout from '../../../../layout'
 import Breadcrumb from '../../../../layout/Breadcrumb'
 

@@ -1,12 +1,12 @@
- import { assert } from '../../../../../test/setup'
- import validate from '../validators'
+import assert from 'assert'
+import validate from '../validators'
 
- const numberTestProps = ({
+ const numberTestProps = {
    id: 'Test_1',
    validate: 'number',
    minimumLength: 2,
    maximumLength: 5
- })
+ }
 
  describe('Vaidation', () => {
    it('Number validation', () => {

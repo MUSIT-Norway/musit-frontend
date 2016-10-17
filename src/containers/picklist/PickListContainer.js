@@ -27,7 +27,7 @@ export default class PickListContainer extends React.Component {
     addObject: React.PropTypes.func.isRequired,
     loadRoot: React.PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    refreshNodes: React.PropTypes.func.isRequired,
+    refreshNodes: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -137,8 +137,8 @@ export default class PickListContainer extends React.Component {
                   </div>
                 )
               }}
-              toggle={(item, on) => (this.isTypeNode() ? toggleNode(item, on) : toggleObject(item, on))}
-              remove={item => (this.isTypeNode() ? removeNode(item) : removeObject(item))}
+              toggle={(item, on) => this.isTypeNode() ? toggleNode(item, on) : toggleObject(item, on)}
+              remove={item => this.isTypeNode() ? removeNode(item) : removeObject(item)}
               move={this.showModal}
             />
             <div style={{ textAlign: 'right' }}>

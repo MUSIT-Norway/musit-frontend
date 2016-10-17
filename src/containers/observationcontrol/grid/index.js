@@ -18,7 +18,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React from 'react'
-import { ObservationControlGrid } from '../../../components/grid'
+import ObservationControlGrid from '../../../components/grid/ObservationControlGrid'
 import ObservationControlComponent from '../../../components/leftmenu/observationcontrol'
 import { loadControlsAndObservationsForNode, loadActor } from '../../../reducers/grid/observationcontrol'
 import { loadRoot } from '../../../reducers/storageunit/grid'
@@ -83,7 +83,7 @@ class ObservationControlGridShow extends React.Component {
   }
 
   makeToolbar() {
-    return (<Toolbar
+    return <Toolbar
       showRight={this.state.showControls}
       showLeft={this.state.showObservations}
       labelRight="Kontroller"
@@ -91,11 +91,11 @@ class ObservationControlGridShow extends React.Component {
       placeHolderSearch="Filtrer i liste"
       clickShowRight={() => { this.setState({ ...this.state, showControls: !this.state.showControls }) }}
       clickShowLeft={() => { this.setState({ ...this.state, showObservations: !this.state.showObservations }) }}
-    />)
+    />
   }
 
   makeLeftMenu() {
-    return (<div style={{ paddingTop: 10 }}>
+    return <div style={{ paddingTop: 10 }}>
       <ObservationControlComponent
         id={this.props.params.id}
         translate={this.props.translate}
@@ -104,11 +104,11 @@ class ObservationControlGridShow extends React.Component {
         onClickNewObservation={() => hashHistory.push(`/magasin/${this.props.params.id}/observation/add`)}
         onClickNewControl={() => hashHistory.push(`/magasin/${this.props.params.id}/control/add`)}
       />
-    </div>)
+    </div>
   }
 
   makeContent() {
-    return (<ObservationControlGrid
+    return <ObservationControlGrid
       id={this.props.params.id}
       translate={this.props.translate}
       tableData={this.props.observationControlGridData.filter((e) => {
@@ -121,7 +121,7 @@ class ObservationControlGridShow extends React.Component {
         }
         return false
       })}
-    />)
+    />
   }
 
   render() {

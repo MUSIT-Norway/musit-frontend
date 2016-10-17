@@ -1,4 +1,6 @@
-import { assert, React, ReactTestUtils } from '../../../../../test/setup';
+import assert from 'assert'
+import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
 import MusitModal from '../MusitModal';
 
 describe('MusitModal', () => {
@@ -21,7 +23,7 @@ describe('MusitModal', () => {
             path={[{ id: 1, name: 'Museum', type: 'Building' }]}
         />
     );
-    let inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'div');
+    const inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'div');
     assert(inputComponent[0].innerHTML === '<!-- react-empty: 2 -->')
   })
 })

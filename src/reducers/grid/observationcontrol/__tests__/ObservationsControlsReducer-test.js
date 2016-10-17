@@ -1,4 +1,4 @@
-import { assert } from '../../../../../test/setup'
+import assert from 'assert'
 import observationControlGridReducer from '../index'
 
 const initialState = {

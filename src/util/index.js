@@ -47,7 +47,7 @@ class BreadCrumb {
   }
 }
 
-export const createBreadcrumbPath = (pathStr: string, pathNames: PathName[]): BreadCrumb[]  => {
+export const createBreadcrumbPath = (pathStr: string, pathNames: PathName[]): BreadCrumb[] => {
   const pathStrIds = (pathStr != null ? pathStr : '').slice(1, -1).split(',').slice(1).map(p => parseFloat(p));
   return pathStrIds.map(pathId => new BreadCrumb(pathNames.find(e => e.nodeId === pathId)))
 }
@@ -100,4 +100,10 @@ export class Option {
     return func(this.value)
   }
 
+}
+
+const testing = process.env.NODE_ENV === 'test';
+
+export const apiUrl = (url: string): string => {
+  return `${testing ? 'http://localhost' : ''}${url}`;
 }

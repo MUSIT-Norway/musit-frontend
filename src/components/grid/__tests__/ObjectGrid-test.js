@@ -1,4 +1,6 @@
-import { assert, React, ReactTestUtils } from '../../../../test/setup';
+import assert from 'assert'
+import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
 import ObjectGrid from '../ObjectGrid';
 
 class TestModal extends React.Component {
@@ -31,7 +33,7 @@ describe('ObjectGrid', () => {
             id: 1,
             identifier: {
               museumNo: 'C10001',
-              subNo: '1',
+              subNo: '1'
             },
             displayName: 'Gråstein'
           },
@@ -39,7 +41,7 @@ describe('ObjectGrid', () => {
             id: 1,
             identifier: {
               museumNo: 'C10002',
-              subNo: '2',
+              subNo: '2'
             },
             displayName: 'Spydspiss'
           }

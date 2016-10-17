@@ -1,6 +1,8 @@
-const MusitTextArea = require('../index').default;
-
-import { assert, React, ReactDOM, ReactTestUtils } from '../../../../../test/setup';
+import assert from 'assert'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReactTestUtils from 'react-addons-test-utils'
+import MusitTextArea from '../index';
 
 describe('MusitTextArea', () => {
   it('should render MusitTextArea', () => {

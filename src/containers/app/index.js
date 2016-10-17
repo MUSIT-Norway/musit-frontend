@@ -14,6 +14,7 @@ import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import MusitUserAccount from '../../components/user-account-view'
 import './index.css'
 import Logo from './assets/logo.png'
+import fakeUserInfo from '../../../fake_security.json'
 
 const mapStateToProps = (state) => {
   I18n.loadTranslations(state.language.data)
@@ -45,7 +46,7 @@ const mapDispatchToProps = (dispatch) => {
       const fakeToken = localStorage.getItem('fakeToken');
       if (fakeToken) {
         const userId = JSON.parse(fakeToken).userId
-        const user = require('../../../fake_security.json').users.find(u => u.userId === userId)
+        const user = fakeUserInfo.users.find(u => u.userId === userId)
         dispatch(connectUser(user))
         dispatch(loadActor())
         return true;
@@ -81,14 +82,12 @@ class App extends Component {
 
   render() {
     const { user, pickListNodeCount, pickListObjectCount } = this.props;
-    const rootPath = user ? '/musit/' : '/'
-
     return (
       <div>
         <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
-              <IndexLink to={rootPath} activeStyle={{ color: '#33e0ff' }}>
+              <IndexLink to={'/'} activeStyle={{ color: '#33e0ff' }}>
                 <div className="brand">
                   <img height="40" alt="logo" src={Logo} />
                 </div>

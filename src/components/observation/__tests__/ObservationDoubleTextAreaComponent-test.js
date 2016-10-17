@@ -1,4 +1,6 @@
-import { assert, React, ReactTestUtils } from '../../../../test/setup';
+import assert from 'assert'
+import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
 import ObservationDoubleTextAreaComponent from '../ObservationDoubleTextAreaComponent';
 
 describe('ObservationDoubleTextAreaComponent', () => {
@@ -16,12 +18,12 @@ describe('ObservationDoubleTextAreaComponent', () => {
         leftPlaceHolder="Left placeholder"
         leftWidth={3}
         rightPlaceHolder="Right placeholder"
-        onChangeLeft={() => ('ji')}
+        onChangeLeft={() => 'ji'}
         rightLabel="Right label"
         rightValue="right"
         rightTooltip="Right tooltip"
         rightWidth={3}
-        onChangeRight={() => ('ji')}
+        onChangeRight={() => 'ji'}
       />
     );
     const inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'textarea');

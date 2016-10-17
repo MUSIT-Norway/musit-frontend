@@ -1,9 +1,11 @@
-import reduce from 'lodash/reduce'
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import { hashHistory } from 'react-router'
 import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
 import { I18n } from 'react-i18nify'
+import reduce from 'lodash/reduce'
+import keys from 'lodash/keys'
+import map from 'lodash/map'
 
 export default class ObservationControlGrid extends Component {
   static propTypes = {
@@ -28,7 +30,7 @@ export default class ObservationControlGrid extends Component {
     this.getIcon = this.getIcon.bind(this)
   }
 
-  getIcon(ok, type) {
+  getIcon(ok, type, index) {
     switch (type) {
       case 'lightingCondition':
         return this.icon(ok, 'musitlightingcondicon', 'lightCondition')
@@ -95,8 +97,11 @@ export default class ObservationControlGrid extends Component {
             </thead>
             <tbody>
               {this.props.tableData.map((controlOrObservation, i) => {
-                const icons = reduce(controlOrObservation, (result, value, key) => {
-                  result.push(this.getIcon(value.ok, key))
+                const withIndexAndKey = map(keys({...controlOrObservation}), (type, index) => {
+                  return { index, item: controlOrObservation[type], type }
+                })
+                const icons = reduce(withIndexAndKey, (result, withIndex) => {
+                  result.push(this.getIcon(withIndex.item.ok, withIndex.type, withIndex.index))
                   return result;
                 }, [])
                 return (

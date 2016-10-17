@@ -16,8 +16,6 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './store/configureStore.js';
@@ -39,14 +37,14 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css'
 import './index.css'
 
-const component = (
+const component = 
   <Router
     onUpdate={() => window.scrollTo(0, 0)}
     history={history}
   >
     {getRoutes(store)}
   </Router>
-);
+;
 
 ReactDOM.render(
   <Provider store={store} key="provider">

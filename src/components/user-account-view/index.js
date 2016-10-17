@@ -15,45 +15,46 @@ export default class MusitUserAccount extends Component {
       {
         id: 1,
         collection: 'Lav',
-        museum: 'O',
+        museum: 'O'
       },
       {
         id: 3,
         collection: 'Sopp',
-        museum: 'NHM',
+        museum: 'NHM'
       }
     ],
     selectedCollection: 1
   }
 
   render() {
-    const tooltip = (
+    const tooltip = 
       <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>
-    );
+    ;
     const menuText = (t1, t2) =>
-    (<Row>
-      <Col md={1}>{t1}</Col>
-      <Col md={1}>{t2}</Col>
-    </Row>)
+      <Row>
+        <Col md={1}>{t1}</Col>
+        <Col md={1}>{t2}</Col>
+      </Row>
+    ;
     return (
       <OverlayTrigger overlay={tooltip}>
         <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
           <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed' }}>
-            <FontAwesome name="user" size="1x" />
+            <FontAwesome name="user" size="lg" />
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <MenuItem eventKey={1}>Min konto</MenuItem>
             <MenuItem divider />
             <MenuItem eventKey={2}>Samlinger</MenuItem>
             {this.props.collections.map(
-              (cc) =>
-              ((this.props.selectedCollection === cc.id) ?
-                <MenuItem eventKey={`coll_${cc.id}`}>
+              (cc, i) =>
+              this.props.selectedCollection === cc.id ?
+                <MenuItem key={i} eventKey={`coll_${cc.id}`}>
                   {menuText(<FontAwesome name="check" />, cc.collection)}
                 </MenuItem> :
-                <MenuItem>
+                <MenuItem key={i}>
                   {menuText('', cc.collection)}
-                </MenuItem>))
+                </MenuItem>)
               }
             <MenuItem divider />
             <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>

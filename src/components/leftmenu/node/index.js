@@ -37,7 +37,7 @@ export default class NodeLeftMenuComponent extends Component {
     const buttonLink = (type, icon, eventType, MusitIconType) => {
       let fragment = null
       if (Number.isInteger(id)) {
-        fragment = (
+        fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
             <Button
               bsStyle="link"
@@ -51,7 +51,7 @@ export default class NodeLeftMenuComponent extends Component {
               {translate(`musit.leftMenu.node.${type}`)}
             </Button>
           </div>
-        )
+        
       }
       return fragment
     }
@@ -59,7 +59,7 @@ export default class NodeLeftMenuComponent extends Component {
     const showCount = (type, typeText) => {
       let fragment = null
       if (Number.isInteger(id)) {
-        fragment = (
+        fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
             {translate(`musit.leftMenu.node.${typeText}`)}
             <br />
@@ -67,7 +67,7 @@ export default class NodeLeftMenuComponent extends Component {
               {Number.isNaN(type) ? <FontAwesome name="spinner" /> : type}
             </ControlLabel>
           </div>
-        )
+        
       }
       return fragment
     }
@@ -90,11 +90,11 @@ export default class NodeLeftMenuComponent extends Component {
     return (
       <div>
         {Number.isInteger(id) ? newButton(id) : null}
-        {(Number.isInteger(id)) ? (<hr />) : null}
+        {Number.isInteger(id) ? <hr /> : null}
         {showCount(objectsOnNode, 'objectsOnNode')}
         {showCount(totalObjectCount, 'totalObjectCount')}
         {showCount(underNodeCount, 'underNodeCount')}
-        {(Number.isInteger(id)) ? (<hr />) : null}
+        {Number.isInteger(id) ? <hr /> : null}
         {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
         {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
         {showButtons ? buttonLink('moveNode', 'truck', onClickMoveNode) : null}

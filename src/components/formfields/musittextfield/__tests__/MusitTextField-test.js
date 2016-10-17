@@ -1,5 +1,8 @@
-import { assert, React, ReactDOM, ReactTestUtils } from '../../../../../test/setup';
-const MusitTextField = require('../index').default;
+import assert from 'assert'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import ReactTestUtils from 'react-addons-test-utils'
+import MusitTextField from '../index';
 
 describe('MusitTextField', () => {
   it('should render MusitTextField', () => {

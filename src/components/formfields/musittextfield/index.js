@@ -39,7 +39,7 @@ export default class MusitTextField extends Component {
     validationState: PropTypes.func.isRequired,
     validationState2: PropTypes.func,
     onChange: PropTypes.func.isRequired,
-    onChange2: PropTypes.func,
+    onChange2: PropTypes.func
   }
 
   static helpText(tip) {

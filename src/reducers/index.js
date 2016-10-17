@@ -20,7 +20,6 @@
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import authReducer from './auth';
-import fakeAuthReducer from './fake-auth-info';
 import languageReducer from './language';
 import autosuggestReducer from './suggest';
 import picklistReducer from './picklist';
@@ -43,7 +42,6 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   form: formReducer,
   auth: authReducer,
-  fakeAuthInfo: fakeAuthReducer,
   language: languageReducer,
   suggest: autosuggestReducer,
   picks: picklistReducer,
