@@ -18,12 +18,12 @@ describe('ObservationDoubleTextAreaComponent', () => {
         leftPlaceHolder="Left placeholder"
         leftWidth={3}
         rightPlaceHolder="Right placeholder"
-        onChangeLeft={() => ('ji')}
+        onChangeLeft={() => 'ji'}
         rightLabel="Right label"
         rightValue="right"
         rightTooltip="Right tooltip"
         rightWidth={3}
-        onChangeRight={() => ('ji')}
+        onChangeRight={() => 'ji'}
       />
     );
     const inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'textarea');

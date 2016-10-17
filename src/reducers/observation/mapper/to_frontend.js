@@ -19,7 +19,7 @@
  */
 import { parseISODateNonStrict as parseISODate, formatFloatToString, Option } from './../../../util'
 
-const wrapAlcoholState = ((s) => {
+const wrapAlcoholState = (s) => {
   switch (s) {
     case 'Uttørket': return 'Uttørket'
     case 'nesten uttørket': return 'Nesten uttørket'
@@ -28,7 +28,7 @@ const wrapAlcoholState = ((s) => {
     case 'tilfredsstillende': return 'Tilfredsstillende'
     default: return s
   }
-})
+}
 
 function parseLightingCondition(o) {
   const retobs = {}

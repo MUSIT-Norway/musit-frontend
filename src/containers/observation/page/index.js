@@ -248,18 +248,18 @@ export default class ObservationPage extends React.Component {
   }
 
   renderAlcohol(id, valueProps, index) {
-    return (<RenderAlcohol
+    return <RenderAlcohol
       disabled={this.props.mode === 'VIEW'}
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />)
+    />
   }
 
   renderPest(id, valueProps, index) {
-    return (<RenderPest
+    return <RenderPest
       disabled={this.props.mode === 'VIEW'}
       canEdit={this.props.mode !== 'VIEW'}
       valueProps={valueProps}
@@ -270,11 +270,11 @@ export default class ObservationPage extends React.Component {
       onChangePestObservation={this.onChangePestObservation}
       onRemovePestObservation={this.onRemovePestObservation}
       onClickAddObservation={this.onClickAddObservation}
-    />)
+    />
   }
 
   renderDoubleTextArea(id, valueProps, index) {
-    return (<RenderDoubleTextArea
+    return <RenderDoubleTextArea
       disabled={this.props.mode === 'VIEW'}
       type={id}
       valueProps={valueProps}
@@ -282,11 +282,11 @@ export default class ObservationPage extends React.Component {
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />)
+    />
   }
 
   renderFromToNumberComment(id, valueProps, index) {
-    return (<RenderFromToNumberComment
+    return <RenderFromToNumberComment
       disabled={this.props.mode === 'VIEW'}
       type={id}
       valueProps={valueProps}
@@ -294,7 +294,7 @@ export default class ObservationPage extends React.Component {
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />)
+    />
   }
 
   render() {
@@ -313,13 +313,13 @@ export default class ObservationPage extends React.Component {
             <Row>
               <Col xs={12} sm={5}>
                 <ControlLabel>{this.props.translate('musit.observation.page.date')}</ControlLabel>
-                {this.props.mode !== 'ADD' ? (
+                {this.props.mode !== 'ADD' ? 
                   <FormControl
                     componentClass="input"
                     value={this.state.doneDate.format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
-                ) : (
+                 : 
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
                     onClear={() => this.setState({ ...this.state, doneDate: moment() })}
@@ -329,26 +329,26 @@ export default class ObservationPage extends React.Component {
                     }}
                     disabled={this.props.mode === 'VIEW'}
                   />
-                )}
+                }
               </Col>
               <Col xs={12} sm={5}>
                 <ControlLabel>{this.props.translate('musit.observation.page.doneBy')}</ControlLabel>
-                {this.props.mode !== 'ADD' ? (
+                {this.props.mode !== 'ADD' ? 
                   <FormControl
                     componentClass="input"
-                    value={this.state.doneBy ? (this.state.doneBy.fn || '') : ''}
+                    value={this.state.doneBy ? this.state.doneBy.fn || '' : ''}
                     disabled
                   />
-                ) : (
+                 : 
                   <ActorSuggest
                     id="doneByField"
-                    value={this.state.doneBy ? (this.state.doneBy.fn || '') : ''}
+                    value={this.state.doneBy ? this.state.doneBy.fn || '' : ''}
                     placeHolder="Find actor"
                     onChange={doneBy => {
                       this.setState({ ...this.state, doneBy })
                     }}
                   />
-                )}
+                }
               </Col>
             </Row>
             {this.props.mode === 'VIEW' ?
@@ -372,7 +372,7 @@ export default class ObservationPage extends React.Component {
               </Row>
             : ''}
             <h3 />
-            {this.props.mode !== 'ADD' ? '' : (
+            {this.props.mode !== 'ADD' ? '' : 
               <Row>
                 <Col xs={2}>
                   <FormGroup controlId="formControlsSelect">
@@ -400,7 +400,7 @@ export default class ObservationPage extends React.Component {
                   </Button>
                 </Col>
               </Row>
-            )}
+            }
             {this.state.observations.map((observation, index) => {
               const typeDefinition = this.typeDefinitions[observation.type];
               return (
@@ -408,7 +408,7 @@ export default class ObservationPage extends React.Component {
                   <h3>
                     {this.props.translate(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
-                    {this.props.mode !== 'ADD' ? '' : (
+                    {this.props.mode !== 'ADD' ? '' : 
                       <a
                         href="" onClick={(e) => {
                           this.removeObservation(index)
@@ -418,7 +418,7 @@ export default class ObservationPage extends React.Component {
                       >
                         <FontAwesome name="times" />
                       </a>
-                    )}
+                    }
                   </h3>
                   {this.renderObservation(observation, index)}
                   <hr />

@@ -37,14 +37,14 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css'
 import './index.css'
 
-const component = (
+const component = 
   <Router
     onUpdate={() => window.scrollTo(0, 0)}
     history={history}
   >
     {getRoutes(store)}
   </Router>
-);
+;
 
 ReactDOM.render(
   <Provider store={store} key="provider">

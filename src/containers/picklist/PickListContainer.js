@@ -137,8 +137,8 @@ export default class PickListContainer extends React.Component {
                   </div>
                 )
               }}
-              toggle={(item, on) => (this.isTypeNode() ? toggleNode(item, on) : toggleObject(item, on))}
-              remove={item => (this.isTypeNode() ? removeNode(item) : removeObject(item))}
+              toggle={(item, on) => this.isTypeNode() ? toggleNode(item, on) : toggleObject(item, on)}
+              remove={item => this.isTypeNode() ? removeNode(item) : removeObject(item)}
               move={this.showModal}
             />
             <div style={{ textAlign: 'right' }}>

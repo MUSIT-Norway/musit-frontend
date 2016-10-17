@@ -44,7 +44,7 @@ export default (state = initialState, action) => {
 }
 
 export const loadKDReport = () => {
-  let url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/report`)
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/report`)
   return {
     types: [LOAD_KD_REPORT, LOAD_KD_REPORT_SUCESS, LOAD_KD_REPORT_FAIL],
     promise: (client) => client.get(url)

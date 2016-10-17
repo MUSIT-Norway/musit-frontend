@@ -27,15 +27,15 @@ export default class MusitUserAccount extends Component {
   }
 
   render() {
-    const tooltip = (
+    const tooltip = 
       <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>
-    );
-    const menuText = (t1, t2) =>(
+    ;
+    const menuText = (t1, t2) =>
       <Row>
         <Col md={1}>{t1}</Col>
         <Col md={1}>{t2}</Col>
       </Row>
-    );
+    ;
     return (
       <OverlayTrigger overlay={tooltip}>
         <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
@@ -48,13 +48,13 @@ export default class MusitUserAccount extends Component {
             <MenuItem eventKey={2}>Samlinger</MenuItem>
             {this.props.collections.map(
               (cc, i) =>
-              ((this.props.selectedCollection === cc.id) ?
+              this.props.selectedCollection === cc.id ?
                 <MenuItem key={i} eventKey={`coll_${cc.id}`}>
                   {menuText(<FontAwesome name="check" />, cc.collection)}
                 </MenuItem> :
                 <MenuItem key={i}>
                   {menuText('', cc.collection)}
-                </MenuItem>))
+                </MenuItem>)
               }
             <MenuItem divider />
             <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>

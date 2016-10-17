@@ -32,7 +32,7 @@ export default class Toolbar extends React.Component {
       clickShowRight
     } = this.props
     if (onSearchChanged) {
-      optionalSearch = (
+      optionalSearch = 
         <div className="searchField">
           <MusitField
             style={{ width: '200px' }}
@@ -44,13 +44,13 @@ export default class Toolbar extends React.Component {
             onChange={onSearchChanged}
           />
         </div>
-      )
+      
     } else {
-      optionalSearch = (
+      optionalSearch = 
         <div className="searchField">
           <span style={{ width: '180px', display: 'inline-block' }}>{' '}</span>
         </div>
-      )
+      
     }
     return (
       <div className="wrapper">

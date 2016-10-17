@@ -44,7 +44,7 @@ export default class Breadcrumb extends React.Component {
       divider // Fragment splitter
     } = this.props
 
-    const isLast = (array, index) => (array.length - 1) === index
+    const isLast = (array, index) => array.length - 1 === index
     const renderCrumb = (nodeArray) => {
       return nodeArray.map((node, index) => {
         let fragment = ''
@@ -52,31 +52,31 @@ export default class Breadcrumb extends React.Component {
         if (node.type && nodeTypes) {
           const currentType = nodeTypes.find((nodeType) => nodeType.type === node.type)
           if (currentType.type !== 'Top') {
-            iconFragment = (
+            iconFragment = 
               <FontAwesome name={currentType.iconName} style={{ padding: '1px' }} />
-            )
+            
           } else {
-            iconFragment = (
+            iconFragment = 
               <FontAwesome name={currentType.iconName} style={{ fontSize: '1.5em', padding: '1px' }} />
-            )
+            
           }
         } else {
-          iconFragment = (
+          iconFragment = 
             <FontAwesome name="folder" style={{ padding: '1px' }} />
-          )
+          
         }
 
         if (passive) {
-          fragment = (
+          fragment = 
             <span key={index}>
               <span style={styles.crumb}>
                 {iconFragment}{node.name}
               </span>
               <span style={styles.crumb}>{divider}</span>
             </span>
-          )
+          
         } else if (!isLast(nodeArray, index) || allActive) {
-          fragment = (
+          fragment = 
             <span key={index}>
               <span style={styles.crumb}>
                 <a
@@ -89,9 +89,9 @@ export default class Breadcrumb extends React.Component {
               </span>
               <span style={styles.crumb}>{divider}</span>
             </span>
-          )
+          
         } else {
-          fragment = (<span key={index} style={styles.crumb}>{iconFragment}{node.name}</span>)
+          fragment = <span key={index} style={styles.crumb}>{iconFragment}{node.name}</span>
         }
         return fragment
       })

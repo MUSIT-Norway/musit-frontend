@@ -31,7 +31,7 @@ const initialState = {
 
 const toggleItem = (type) => (state, action) => {
   const items = [].concat(action.item)
-  const toggle = (node) => (typeof action.on !== 'undefined' ? action.on : !node.marked)
+  const toggle = (node) => typeof action.on !== 'undefined' ? action.on : !node.marked
   const nodes = state[type].map(node => ({
     ...node,
     marked: items.indexOf(node.value) > -1 ? toggle(node) : node.marked
@@ -90,7 +90,7 @@ const loadNodeSuccess = (type) => (state, action) => {
   }
 };
 
-const NODE_ACTION_HANDLERS = ({
+const NODE_ACTION_HANDLERS = {
   [CLEAR_NODES]: clearItems(TYPES.NODE),
   [ADD_NODE]: addItem(TYPES.NODE),
   [REMOVE_NODE]: removeItem(TYPES.NODE),
@@ -98,14 +98,14 @@ const NODE_ACTION_HANDLERS = ({
   [LOAD_ONE_NODE]: loadNode,
   [LOAD_ONE_NODE_SUCCESS]: loadNodeSuccess(TYPES.NODE),
   [LOAD_ONE_NODE_FAIL]: loadNodeFail
-});
+};
 
-const OBJECT_ACTION_HANDLERS = ({
+const OBJECT_ACTION_HANDLERS = {
   [CLEAR_OBJECTS]: clearItems(TYPES.OBJECT),
   [ADD_OBJECT]: addItem(TYPES.OBJECT),
   [REMOVE_OBJECT]: removeItem(TYPES.OBJECT),
   [TOGGLE_OBJECT]: toggleItem(TYPES.OBJECT)
-});
+};
 
 export default (state = initialState, action = {}) => {
   if (NODE_ACTION_HANDLERS[action.type]) {

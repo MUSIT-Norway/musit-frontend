@@ -47,7 +47,7 @@ export default class MusitTextArea extends Component {
   }
 
   render() {
-    const lcPlaceholder = (
+    const lcPlaceholder = 
       <textarea
         className="form-control"
         placeholder={this.props.placeHolder}
@@ -57,7 +57,7 @@ export default class MusitTextArea extends Component {
         onChange={(event) => this.props.onChange(event.target.value)}
         title={this.props.tooltip}
       />
-    )
+    
 
     return (
       <div className={this.classNameOnlyWithInput()}>

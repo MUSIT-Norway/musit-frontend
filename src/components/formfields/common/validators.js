@@ -10,7 +10,7 @@ export const validateNumber = (value = '', minimumLength = 0, maximumLength = 10
     ',' +
     maximumLength +
     '})(' +
-    ((precision > 0) ? ',' : '') +
+    (precision > 0 ? ',' : '') +
     '\\d{0,' +
     precision +
     '})?$'
