@@ -1,4 +1,19 @@
-exports[`Validation util validateFromTo should work with decimal numbers 1`] = `
+exports[`Validation.validateFromTo should not accept fromValue or toValue with dots as comma 1`] = `
+Object {
+  "type.fromValue": "musit.observation.page.type.fromValueIncorrect",
+  "type.toValue": "musit.observation.page.type.toValueIncorrect"
+}
+`;
+
+exports[`Validation.validateFromTo should validate correct values 1`] = `Object {}`;
+
+exports[`Validation.validateFromTo should validate that commentsValue cannot be longer than 250 chars 1`] = `
+Object {
+  "type.commentValue": "musit.observation.page.type.commentsValueIncorrect"
+}
+`;
+
+exports[`Validation.validateFromTo should verify that toValue must be greater than fromValue 1`] = `
 Object {
   "type.toValue": "musit.observation.page.type.toValueSmallerThanFromValue"
 }
