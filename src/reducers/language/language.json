@@ -67,7 +67,11 @@
           "doneBy": "Performed by",
           "registeredDate": "Reg. date",
           "registeredBy": "Reg. by",
-          "header": "Controls and observations"
+          "header": "Controls and observations",
+          "iconTooltip": {
+            "observation": "Observasjon",
+            "control": "Kontroll"
+          }
         },
         "node": {
           "nodeName": "Name",
@@ -80,12 +84,22 @@
           },
           "objectCount": "No. of obj.",
           "totalObjectCount": "Tot. no. of obj.",
-          "nodeCount": "No. of nodes"
+          "nodeCount": "No. of nodes",
+          "iconTooltip": {
+            "observationAndControl": "Observasjoner og kontroller",
+            "moveNode": "Flytt noden",
+            "addToPickList": "Legg til plukklisten"
+          }
         },
         "object": {
           "museumsNumber": "Museum No.",
           "uNumber": "U. No.",
-          "term": "Artefact/Species"
+          "term": "Artefact/Species",
+          "iconTooltip": {
+            "moveObjectHistory": "Flyttehistorikk",
+            "moveObject": "Flytt objektet",
+            "addToPickList": "Legg til plukklisten"
+          }
         }
       },
       "texts": {
@@ -571,7 +585,11 @@
           "doneBy": "Utført av",
           "registeredDate": "Reg. dato",
           "registeredBy": "Reg. av",
-          "header": "Kontroller og observasjoner"
+          "header": "Kontroller og observasjoner",
+          "iconTooltip": {
+            "observation": "Observasjon",
+            "control": "Kontroll"
+          }
         },
         "node": {
           "nodeName": "Navn",
@@ -584,12 +602,22 @@
           },
           "objectCount": "Ant. obj.",
           "totalObjectCount": "Tot. ant. obj.",
-          "nodeCount": "Ant. noder"
+          "nodeCount": "Ant. noder",
+          "iconTooltip": {
+            "observationAndControl": "Observasjoner og kontroller",
+            "moveNode": "Flytt noden",
+            "addToPickList": "Legg til plukklisten"
+          }
         },
         "object": {
           "museumsNumber": "Museumsnr.",
           "uNumber": "Unr.",
-          "term": "Term/Artsnavn"
+          "term": "Term/Artsnavn",
+          "iconTooltip": {
+            "moveObjectHistory": "Flyttehistorikk",
+            "moveObject": "Flytt objektet",
+            "addToPickList": "Legg til plukklisten"
+          }
         }
       },
       "texts": {
