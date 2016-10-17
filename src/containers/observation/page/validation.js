@@ -101,7 +101,7 @@ export const validateFromTo = (formProps, index, type) => {
     errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentsValue')
   }
 
-  if (formProps.toValue &&  formProps.fromValue) {
+  if (formProps.toValue && formProps.fromValue) {
     const fromValue = parseFloat(formProps.fromValue);
     const toValue = parseFloat(formProps.toValue);
     if (fromValue > toValue) {

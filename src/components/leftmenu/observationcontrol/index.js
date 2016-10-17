@@ -8,12 +8,12 @@ export default class ObservationControlComponent extends Component {
     id: PropTypes.number.isRequired,
     translate: PropTypes.func.isRequired,
     onClickNewObservation: PropTypes.func.isRequired,
-    onClickNewControl: PropTypes.func.isRequired,
+    onClickNewControl: PropTypes.func.isRequired
   }
 
   render() {
     const { id, translate, onClickNewControl, onClickNewObservation } = this.props
-    const getTranslate = (term) => (translate(`musit.leftMenu.observationControl.${term}`))
+    const getTranslate = (term) => translate(`musit.leftMenu.observationControl.${term}`)
     const buttonLogic = (type, eventType) => {
       return (
         <Button

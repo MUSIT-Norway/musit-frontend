@@ -193,21 +193,21 @@ export default class ControlAddContainer extends React.Component {
       const make = (v) => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
 
       if (hasProp(e, 'leftValue') && hasProp(e, 'rightValue')) {
-        return (<div>
+        return <div>
           <Col xs={5}>
             {make(e.leftValue)}
           </Col>
           <Col xs={4}>
             {make(e.rightValue)}
           </Col>
-        </div>)
+        </div>
       }
 
       if (hasProp(e, 'leftValue')) {
         return <Col md={9}>{make(e.leftValue)}</Col>
       }
 
-      return (<Col md={9}>{null}</Col>)
+      return <Col md={9}>{null}</Col>
     }
 
     return (

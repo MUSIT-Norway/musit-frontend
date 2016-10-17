@@ -273,7 +273,7 @@ class StorageUnitsContainer extends React.Component {
   };
 
   makeToolbar() {
-    return (<Toolbar
+    return <Toolbar
       showRight={this.state.showObjects}
       showLeft={this.state.showNodes}
       labelRight="Objekter"
@@ -291,12 +291,12 @@ class StorageUnitsContainer extends React.Component {
         this.loadNodes();
         blur()
       }}
-    />)
+    />
   }
 
   makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete } = this.props;
-    const showButtons = (this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root');
+    const showButtons = this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root';
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
@@ -327,7 +327,7 @@ class StorageUnitsContainer extends React.Component {
   makeContentGrid(filter, rootNode, children) {
     const nodeId = rootNode ? rootNode.id : null;
     if (this.state.showNodes) {
-      return (<NodeGrid
+      return <NodeGrid
         id={nodeId}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
@@ -344,9 +344,9 @@ class StorageUnitsContainer extends React.Component {
         }
         rootNode={this.props.rootNode}
         MusitModal={MusitModal}
-      />)
+      />
     }
-    return (<ObjectGrid
+    return <ObjectGrid
       id={nodeId}
       translate={this.props.translate}
       tableData={this.props.objects}
@@ -359,7 +359,7 @@ class StorageUnitsContainer extends React.Component {
       }}
       rootNode={this.props.rootNode}
       MusitModal={MusitModal}
-    />)
+    />
   }
 
   render() {

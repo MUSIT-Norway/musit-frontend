@@ -67,7 +67,7 @@ export default class MusitField extends Component {
 
   render() {
     const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
-    const lcPlaceholder = (
+    const lcPlaceholder = 
       <input
         style={this.props.style}
         type="text" className="form-control"
@@ -77,10 +77,10 @@ export default class MusitField extends Component {
         onChange={(event) => this.props.onChange(event.target.value)} data-toggle="tooltip" title={this.props.tooltip}
         onBlur={this.props.onBlur}
         onFocus={this.props.onFocus}
-      />);
+      />;
     const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
 
-    return (lcAddOnPrefix !== null || lcHelp !== null) ? (
+    return lcAddOnPrefix !== null || lcHelp !== null ? 
       <div
         className={this.classNameWithSpan()}
       >
@@ -88,12 +88,12 @@ export default class MusitField extends Component {
         {lcPlaceholder}
         {lcHelp}
       </div>
-     ) : (
+      : 
       <div
         className={this.classNameOnlyWithInput()}
       >
        {lcPlaceholder}
       </div>
-      )
+      
   }
 }

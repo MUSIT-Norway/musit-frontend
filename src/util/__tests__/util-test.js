@@ -85,15 +85,15 @@ describe('isDateBiggerThanToday', () => {
     assert(isDateBiggerThanToday(newDate) === true)
   })
   it('Check blank', () => {
-    let newDate = ''
+    const newDate = ''
     assert(isDateBiggerThanToday(newDate) === false)
   })
   it('Check null', () => {
-    let newDate = null
+    const newDate = null
     assert(isDateBiggerThanToday(newDate) === false)
   })
   it('Check undefined', () => {
-    let newDate = undefined
+    const newDate = undefined
     assert(isDateBiggerThanToday(newDate) === false)
   })
 })

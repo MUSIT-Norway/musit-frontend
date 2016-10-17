@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onUpdateRequested: (id, { value, reason }) => {
-    if (reason && (reason === 'type') && value && value.length >= 2) {
+    if (reason && reason === 'type' && value && value.length >= 2) {
       dispatch(suggestAddress(id, value))
     } else {
       dispatch(clearSuggest(id))

@@ -29,12 +29,12 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => I18n.t(key, markdown)
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
+const mapDispatchToProps = (dispatch) => ({
   setUser: (user: any) => {
     dispatch(connectUser(user))
     dispatch(loadActor())
     hashHistory.replace('/magasin/root')
-  },
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(WelcomeContainer)

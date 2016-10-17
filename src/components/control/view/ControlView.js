@@ -151,7 +151,7 @@ export default class ControlView extends Component {
       const observation = control.observation;
       switch (controlType) {
         case 'temperature':
-          lv = (
+          lv = 
             <ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
@@ -167,10 +167,10 @@ export default class ControlView extends Component {
                 commentWidth: 6
               }}
             />
-          )
+          
           break
         case 'alcohol':
-          lv = (
+          lv = 
             <ObservationRender.RenderAlcohol
               disabled
               translate={this.props.translate}
@@ -185,10 +185,10 @@ export default class ControlView extends Component {
                 commentWidth: 6
               }}
             />
-          )
+          
           break
         case 'cleaning':
-          lv = (
+          lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
               translate={this.props.translate}
@@ -202,10 +202,10 @@ export default class ControlView extends Component {
                 rightWidth: 6
               }}
             />
-          )
+          
           break
         case 'gas':
-          lv = (
+          lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="gas"
@@ -219,10 +219,10 @@ export default class ControlView extends Component {
                 rightWidth: 6
               }}
             />
-          )
+          
           break
         case 'hypoxicAir':
-          lv = (
+          lv = 
             <ObservationRender.RenderFromToNumberComment
               disabled
               type="hypoxicAir"
@@ -238,10 +238,10 @@ export default class ControlView extends Component {
                 commentWidth: 6
               }}
             />
-          )
+          
           break
         case 'lightingCondition':
-          lv = (
+          lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="lightCondition"
@@ -255,10 +255,10 @@ export default class ControlView extends Component {
                 rightWidth: 6
               }}
             />
-          )
+          
           break
         case 'mold':
-          lv = (
+          lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="mold"
@@ -272,10 +272,10 @@ export default class ControlView extends Component {
                 rightWidth: 6
               }}
             />
-          )
+          
           break
         case 'pest':
-          lv = (
+          lv = 
             <ObservationRender.RenderPest
               disabled
               translate={this.props.translate}
@@ -299,10 +299,10 @@ export default class ControlView extends Component {
                 commentsRightWidth: 6
               }}
             />
-          )
+          
           break
         case 'relativeHumidity':
-          lv = (
+          lv = 
             <ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
@@ -318,7 +318,7 @@ export default class ControlView extends Component {
                 commentWidth: 6
               }}
             />
-          )
+          
           break
         default:
           lv = ''

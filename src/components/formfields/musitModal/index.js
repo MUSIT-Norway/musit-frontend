@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return ({
+  return {
     loadChildren: (id, callback) => {
       dispatch(loadChildren(id, callback));
       dispatch(loadRoot(id))
@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch) => {
     loadRoot: () => dispatch(loadRoot()),
     setCurrentId: (id) => dispatch(setCurrent(id)),
     clearCurrentId: (id) => dispatch(clearCurrent(id))
-  })
+  }
 };
 
 
