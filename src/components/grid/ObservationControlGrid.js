@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import { hashHistory } from 'react-router'
 import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
+import { I18n } from 'react-i18nify'
 import reduce from 'lodash/reduce'
 import keys from 'lodash/keys'
 import map from 'lodash/map'
@@ -32,40 +33,42 @@ export default class ObservationControlGrid extends Component {
   getIcon(ok, type, index) {
     switch (type) {
       case 'lightingCondition':
-        return this.icon(ok, 'musitlightingcondicon', index)
+        return this.icon(ok, 'musitlightingcondicon', 'lightCondition', index)
       case 'temperature':
-        return this.icon(ok, 'musittemperatureicon', index)
+        return this.icon(ok, 'musittemperatureicon', 'temperature', index)
       case 'hypoxicAir':
-        return this.icon(ok, 'musithypoxicairicon', index)
+        return this.icon(ok, 'musithypoxicairicon', 'hypoxicAir', index)
       case 'relativeHumidity':
-        return this.icon(ok, 'musitrelhumidityicon', index)
+        return this.icon(ok, 'musitrelhumidityicon', 'relativeHumidity', index)
       case 'cleaning':
-        return this.icon(ok, 'musitcleaningicon', index)
+        return this.icon(ok, 'musitcleaningicon', 'cleaning', index)
       case 'mold':
-        return this.icon(ok, 'musitmoldicon', index)
+        return this.icon(ok, 'musitmoldicon', 'mold', index)
       case 'pest':
-        return this.icon(ok, 'musitpesticon', index)
+        return this.icon(ok, 'musitpesticon', 'pest', index)
       case 'alcohol':
-        return this.icon(ok, 'musitalcoholicon', index)
+        return this.icon(ok, 'musitalcoholicon', 'alcohol', index)
       case 'gas':
-        return this.icon(ok, 'musitgasicon', index)
+        return this.icon(ok, 'musitgasicon', 'gas', index)
       case 'waterDamageAssessment':
-        return this.icon(ok, 'musitwaterdamageicon', index)
+        return this.icon(ok, 'musitwaterdamageicon', 'vannskaderisiko', index)
       case 'fireProtection':
-        return this.icon(ok, 'musitfireprotectionicon', index)
+        return this.icon(ok, 'musitfireprotectionicon', 'brannsikring', index)
       case 'theftProtection':
-        return this.icon(ok, 'musittheftprotectionicon', index)
+        return this.icon(ok, 'musittheftprotectionicon', 'tyverisikring', index)
       case 'perimeterSecurity':
-        return this.icon(ok, 'musitperimetersecurityicon', index)
+        return this.icon(ok, 'musitperimetersecurityicon', 'skallsikring', index)
       default:
     }
   }
 
-  icon(ok, name, index) {
-    if (!ok) {
-      return <span key={index} style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
-    }
-    return <span key={index} style={{ padding: '2px' }} className={`icon icon-${name}`} />
+  icon(ok, name, tooltip, index) {
+    return <span
+      key={index}
+      style={ok ? { color: 'gray', padding: '2px' } : { padding: '2px' }}
+      className={`icon icon-${name}`}
+      title={I18n.t(`musit.observation.page.${tooltip}.labelText`)}
+    />
   }
 
   render() {
@@ -116,8 +119,10 @@ export default class ObservationControlGrid extends Component {
                     }}
                   >
                     <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_type`}>
-                      {controlOrObservation.eventType.toLowerCase() === 'control' ? <div className="icon icon-musitcontrolicon" /> : ''}
-                      {controlOrObservation.eventType.toLowerCase() === 'observation' ? <div className="icon icon-musitobservationicon" /> : ''}
+                      {controlOrObservation.eventType.toLowerCase() === 'control' ?
+                          <div className="icon icon-musitcontrolicon" title={I18n.t('musit.grid.observation.iconTooltip.control')}/> : ''}
+                      {controlOrObservation.eventType.toLowerCase() === 'observation' ?
+                          <div className="icon icon-musitobservationicon" title={I18n.t('musit.grid.observation.iconTooltip.observation')}/> : ''}
                     </td>
                     <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_date`}>
                       {parseISODate(controlOrObservation.doneDate).format(DATE_FORMAT_DISPLAY)}
