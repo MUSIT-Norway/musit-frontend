@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import { hashHistory } from 'react-router'
 import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
+import { I18n } from 'react-i18nify'
 
 export default class ObservationControlGrid extends Component {
   static propTypes = {
@@ -30,40 +31,41 @@ export default class ObservationControlGrid extends Component {
   getIcon(ok, type) {
     switch (type) {
       case 'lightingCondition':
-        return this.icon(ok, 'musitlightingcondicon')
+        return this.icon(ok, 'musitlightingcondicon', 'lightCondition')
       case 'temperature':
-        return this.icon(ok, 'musittemperatureicon')
+        return this.icon(ok, 'musittemperatureicon', 'temperature')
       case 'hypoxicAir':
-        return this.icon(ok, 'musithypoxicairicon')
+        return this.icon(ok, 'musithypoxicairicon', 'hypoxicAir')
       case 'relativeHumidity':
-        return this.icon(ok, 'musitrelhumidityicon')
+        return this.icon(ok, 'musitrelhumidityicon', 'relativeHumidity')
       case 'cleaning':
-        return this.icon(ok, 'musitcleaningicon')
+        return this.icon(ok, 'musitcleaningicon', 'cleaning')
       case 'mold':
-        return this.icon(ok, 'musitmoldicon')
+        return this.icon(ok, 'musitmoldicon', 'mold')
       case 'pest':
-        return this.icon(ok, 'musitpesticon')
+        return this.icon(ok, 'musitpesticon', 'pest')
       case 'alcohol':
-        return this.icon(ok, 'musitalcoholicon')
+        return this.icon(ok, 'musitalcoholicon', 'alcohol')
       case 'gas':
-        return this.icon(ok, 'musitgasicon')
+        return this.icon(ok, 'musitgasicon', 'gas')
       case 'waterDamageAssessment':
-        return this.icon(ok, 'musitwaterdamageicon')
+        return this.icon(ok, 'musitwaterdamageicon', 'vannskaderisiko')
       case 'fireProtection':
-        return this.icon(ok, 'musitfireprotectionicon')
+        return this.icon(ok, 'musitfireprotectionicon', 'brannsikring')
       case 'theftProtection':
-        return this.icon(ok, 'musittheftprotectionicon')
+        return this.icon(ok, 'musittheftprotectionicon', 'tyverisikring')
       case 'perimeterSecurity':
-        return this.icon(ok, 'musitperimetersecurityicon')
+        return this.icon(ok, 'musitperimetersecurityicon', 'skallsikring')
       default:
     }
   }
 
-  icon(ok, name) {
-    if (!ok) {
-      return <span style={{ color: 'gray', padding: '2px' }} className={`icon icon-${name}`} />
-    }
-    return <span style={{ padding: '2px' }} className={`icon icon-${name}`} />
+  icon(ok, name, tooltip) {
+    return <span
+      style={ok ? { color: 'gray', padding: '2px' } : { padding: '2px' }}
+      className={`icon icon-${name}`}
+      title={I18n.t(`musit.observation.page.${tooltip}.labelText`)}
+    />
   }
 
   render() {
@@ -111,8 +113,10 @@ export default class ObservationControlGrid extends Component {
                     }}
                   >
                     <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_type`}>
-                      {controlOrObservation.eventType.toLowerCase() === 'control' ? <div className="icon icon-musitcontrolicon" /> : ''}
-                      {controlOrObservation.eventType.toLowerCase() === 'observation' ? <div className="icon icon-musitobservationicon" /> : ''}
+                      {controlOrObservation.eventType.toLowerCase() === 'control' ?
+                          <div className="icon icon-musitcontrolicon" title={I18n.t('musit.grid.observation.iconTooltip.control')}/> : ''}
+                      {controlOrObservation.eventType.toLowerCase() === 'observation' ?
+                          <div className="icon icon-musitobservationicon" title={I18n.t('musit.grid.observation.iconTooltip.observation')}/> : ''}
                     </td>
                     <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_date`}>
                       {parseISODate(controlOrObservation.doneDate).format(DATE_FORMAT_DISPLAY)}

@@ -96,6 +96,7 @@
           "uNumber": "U. No.",
           "term": "Artefact/Species",
           "iconTooltip": {
+            "moveObjectHistory": "Flyttehistorikk",
             "moveObject": "Flytt objektet",
             "addToPickList": "Legg til plukklisten"
           }
@@ -613,6 +614,7 @@
           "uNumber": "Unr.",
           "term": "Term/Artsnavn",
           "iconTooltip": {
+            "moveObjectHistory": "Flyttehistorikk",
             "moveObject": "Flytt objektet",
             "addToPickList": "Legg til plukklisten"
           }

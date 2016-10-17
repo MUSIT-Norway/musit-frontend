@@ -102,6 +102,7 @@ export default class ObjectGrid extends Component {
                           e.preventDefault()
                           this.props.showMoveHistory(c.id)
                         }}
+                        title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
                       >
                         <span className="icon icon-musitmovehistoryicon" />
                       </a>
@@ -113,6 +114,7 @@ export default class ObjectGrid extends Component {
                           e.preventDefault()
                           this.showModal(c.id, c.displayName)
                         }}
+                        title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
                       >
                         <FontAwesome name="truck" />
                       </a>
@@ -124,6 +126,7 @@ export default class ObjectGrid extends Component {
                           e.preventDefault()
                           this.props.onAction('pickObject', c)
                         }}
+                        title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
                       >
                         <FontAwesome name="shopping-cart" />
                       </a>
