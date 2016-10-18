@@ -2,11 +2,12 @@
 
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
-import { createBreadcrumbPath } from '../../util'
+import { createBreadcrumbPath, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
 
 export default class ModalMoveHistoryGrid extends Component {
   static propTypes = {
-    tableData: PropTypes.arrayOf(PropTypes.object)
+    tableData: PropTypes.arrayOf(PropTypes.object),
+    translate: PropTypes.func.isRequired
   }
 
   render() {
@@ -21,16 +22,16 @@ export default class ModalMoveHistoryGrid extends Component {
             <thead>
               <tr>
                 <th>
-                  Done date
+                  {this.props.translate('musit.moveHistory.doneDate')}
                 </th>
                 <th>
-                  Done by
+                  {this.props.translate('musit.moveHistory.doneBy')}
                 </th>
                 <th>
-                  From
+                  {this.props.translate('musit.moveHistory.from')}
                 </th>
                 <th>
-                  To
+                  {this.props.translate('musit.moveHistory.to')}
                 </th>
               </tr>
             </thead>
@@ -38,7 +39,7 @@ export default class ModalMoveHistoryGrid extends Component {
               {this.props.tableData.map((c, i) =>
                 <tr key={i} id={`${i}`}>
                   <td id={`${i}_${c.doneDate}`}>
-                    {` ${c.doneDate}`}
+                    {` ${parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}`}
                   </td>
                   <td id={`${i}_${c.doneBy}`}>
                     {` ${c.doneBy}`}

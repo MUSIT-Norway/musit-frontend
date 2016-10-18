@@ -30,10 +30,10 @@ export default class MusitHistoryModal extends Component {
     headerText: PropTypes.string.isRequired,
     translate: PropTypes.func,
     moves: PropTypes.arrayOf(PropTypes.object)
-  }
+  };
 
   render() {
-    const { moves } = this.props
+    const { moves } = this.props;
     return (
       <div>
         <Modal

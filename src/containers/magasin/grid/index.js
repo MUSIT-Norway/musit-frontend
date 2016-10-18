@@ -17,7 +17,7 @@ import { blur, createBreadcrumbPath } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 import MusitModalHistory from '../../../components/formfields/musitModalHistory'
-import { I18n } from 'react-i18nify'
+const I18n = require('react-i18nify').I18n;
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
@@ -376,7 +376,7 @@ class StorageUnitsContainer extends React.Component {
           path={path}
           moves={moves}
           onHide={this.closeMoveHistory}
-          headerText={this.props.translate('musit.moveHistory')}
+          headerText={this.props.translate('musit.moveHistory.title')}
         />
         <MusitModal
           show={this.state.showModal}
