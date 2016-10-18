@@ -21,6 +21,7 @@ import validate from '../validators'
      const toSmallNumberFormat = { ...numberTestProps, value: '1', precision: 3 }
      const emptyNumberFormat = { ...numberTestProps, value: '', precision: 3 }
      const emptyPassingNumberFormat = { ...numberTestProps, value: '', minimumLength: 0, precision: 3 }
+     const defaultValidator = { ...numberTestProps, validator: 'error'}
 
      assert.equal(validate(naturalFormat), 'success', 'naturalFormat is not working.')
      assert.equal(validate(naturalWithErrorFormat), 'error', 'naturalWithErrorFormat is working.')
@@ -34,5 +35,6 @@ import validate from '../validators'
      assert.equal(validate(emptyNumberFormat), 'error', 'emptyNumberFormat is working.')
      assert.equal(validate(emptyPassingNumberFormat), 'success', 'emptyPassingNumberFormat is not working.')
      assert.equal(validate(numberTestProps), 'error', 'missing important props is working.')
+     assert.equal(validate(defaultValidator), 'error', 'should return error')
    })
  })
