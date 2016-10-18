@@ -34,6 +34,7 @@ import ControlViewContainer from './containers/control/view/Connect'
 import ControlAddContainer from './containers/control/add/Connect'
 import App from './containers/app'
 import ObservationControlGridShow from './containers/observationcontrol/grid'
+import ObjectSearchContainer from './containers/objectsearch/ObjectSearchContainer'
 
 export default () => {
   return (
@@ -44,6 +45,7 @@ export default () => {
       <Route path="/picklist/:type" component={PickListView} />
       <Route path="/reports" component={Reports} />
       <Route path="/reports/kdreport" component={KDReportContainer} />
+      <Route path="/search/objects" component={ObjectSearchContainer} />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />

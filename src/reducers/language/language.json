@@ -102,6 +102,9 @@
           }
         }
       },
+      "objectsearch": {
+        "title": "Object search"
+      },
       "texts": {
         "freetext": "Free text",
         "makeChoice": "Please choose...",
@@ -619,6 +622,9 @@
             "addToPickList": "Legg til plukklisten"
           }
         }
+      },
+      "objectsearch": {
+        "title": "Objektsøk"
       },
       "texts": {
         "freetext": "Fritekst",

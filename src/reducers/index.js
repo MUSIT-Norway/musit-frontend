@@ -19,6 +19,7 @@
 
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
 import authReducer from './auth';
 import languageReducer from './language';
 import autosuggestReducer from './suggest';
@@ -36,7 +37,7 @@ import observationControlGridReducer from './grid/observationcontrol';
 import nodeGridReducer from './grid/node';
 import objectGridReducer from './grid/object';
 import moveHistoryReducer from './grid/move'
-import { reducer as formReducer } from 'redux-form';
+import ObjectSearchReducer from './objectsearch/reducer'
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -57,7 +58,8 @@ const rootReducer = combineReducers({
   observationControlGrid: observationControlGridReducer,
   nodeGrid: nodeGridReducer,
   movehistory: moveHistoryReducer,
-  objectGrid: objectGridReducer
+  objectGrid: objectGridReducer,
+  objectSearch: ObjectSearchReducer
 });
 
 export default rootReducer;
