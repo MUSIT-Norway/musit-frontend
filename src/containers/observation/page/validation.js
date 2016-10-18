@@ -1,4 +1,4 @@
-
+import { parseFloatFromString } from '../../../util'
 import { validateString, validateNumber } from '../../../components/formfields/common/validators'
 
 const typeFieldIncorrect = (type, field) => {
@@ -37,9 +37,7 @@ export const validatePest = (formProps, index, type) => {
 
   if (!formProps.identificationValue) {
     errors[`${type}.identificationValue`] = typeFieldRequired(type, 'identificationValue')
-  }
-
-  if (validateString(formProps.identificationValue, 0, 100) === 'error') {
+  } else if (validateString(formProps.identificationValue, 1, 100) === 'error') {
     errors[`${type}.identificationValue`] = typeFieldIncorrect(type, 'identificationValue')
   }
   if (validateString(formProps.commentValue, 0, 250) === 'error') {
@@ -102,8 +100,8 @@ export const validateFromTo = (formProps, index, type) => {
   }
 
   if (formProps.toValue && formProps.fromValue) {
-    const fromValue = parseFloat(formProps.fromValue);
-    const toValue = parseFloat(formProps.toValue);
+    const fromValue = parseFloatFromString(formProps.fromValue);
+    const toValue = parseFloatFromString(formProps.toValue);
     if (fromValue > toValue) {
       errors[`${type}.toValue`] = toSmallerThanFromValue(type, 'toValue')
     }

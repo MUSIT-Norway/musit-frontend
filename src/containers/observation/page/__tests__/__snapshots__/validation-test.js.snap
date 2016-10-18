@@ -1,0 +1,136 @@
+exports[`Validate.validateDoubleTextArea should fail with empty space leftValue 1`] = `
+Object {
+  "type.leftValue": "musit.observation.page.type.leftValueIncorrect"
+}
+`;
+
+exports[`Validate.validateDoubleTextArea should fail with no leftValue 1`] = `
+Object {
+  "type.leftValue": "musit.observation.page.type.leftValueRequired"
+}
+`;
+
+exports[`Validate.validateDoubleTextArea should work with correct data 1`] = `Object {}`;
+
+exports[`Validation.validateAlcohol should validate correct values 1`] = `Object {}`;
+
+exports[`Validation.validateAlcohol should validate that commentsValue cannot be longer than 250 chars 1`] = `
+Object {
+  "type.commentValue": "musit.observation.page.type.commentValueIncorrect"
+}
+`;
+
+exports[`Validation.validateAlcohol should verify that statusValue cannot be empty 1`] = `
+Object {
+  "type.statusValue": "musit.observation.page.type.statusValueRequired"
+}
+`;
+
+exports[`Validation.validateAlcohol should verify that statusValue cannot be empty space 1`] = `
+Object {
+  "type.statusValue": "musit.observation.page.type.statusValueIncorrect"
+}
+`;
+
+exports[`Validation.validateAlcohol should verify that statusValue cannot be null 1`] = `
+Object {
+  "type.statusValue": "musit.observation.page.type.statusValueRequired"
+}
+`;
+
+exports[`Validation.validateAlcohol should verify that volumeValue cannot be greater than 10 1`] = `
+Object {
+  "type.volumeValue": "musit.observation.page.type.volumeValueIncorrect"
+}
+`;
+
+exports[`Validation.validateAlcohol should verify that volumeValue cannot contain dots 1`] = `
+Object {
+  "type.volumeValue": "musit.observation.page.type.volumeValueIncorrect"
+}
+`;
+
+exports[`Validation.validateFromTo should not accept fromValue or toValue with dots as comma 1`] = `
+Object {
+  "type.fromValue": "musit.observation.page.type.fromValueIncorrect",
+  "type.toValue": "musit.observation.page.type.toValueIncorrect"
+}
+`;
+
+exports[`Validation.validateFromTo should validate correct values 1`] = `Object {}`;
+
+exports[`Validation.validateFromTo should validate that commentsValue cannot be longer than 250 chars 1`] = `
+Object {
+  "type.commentValue": "musit.observation.page.type.commentsValueIncorrect"
+}
+`;
+
+exports[`Validation.validateFromTo should verify that fromValue cannot be empty 1`] = `
+Object {
+  "type.fromValue": "musit.observation.page.type.fromValueRequired"
+}
+`;
+
+exports[`Validation.validateFromTo should verify that fromValue cannot be empty space 1`] = `
+Object {
+  "type.fromValue": "musit.observation.page.type.fromValueIncorrect"
+}
+`;
+
+exports[`Validation.validateFromTo should verify that fromValue cannot be null 1`] = `
+Object {
+  "type.fromValue": "musit.observation.page.type.fromValueRequired"
+}
+`;
+
+exports[`Validation.validateFromTo should verify that toValue must be greater than fromValue 1`] = `
+Object {
+  "type.toValue": "musit.observation.page.type.toValueSmallerThanFromValue"
+}
+`;
+
+exports[`Validation.validatePest should verify correct values 1`] = `Object {}`;
+
+exports[`Validation.validatePest should verify that an observation with count and not lifecycle is not allowed 1`] = `
+Object {
+  "type.observations[0].observations.lifeCycleRequired": "musit.observation.page.type.lifeCycleRequired"
+}
+`;
+
+exports[`Validation.validatePest should verify that an observation with count larger than 10 numbers is not allowed 1`] = `
+Object {
+  "type.observations[0].observations.count": "musit.observation.page.type.countIncorrect"
+}
+`;
+
+exports[`Validation.validatePest should verify that an observation with empty lifeCycle is not allowed 1`] = `
+Object {
+  "type.observations[0].observations.lifeCycle": "musit.observation.page.type.observations.lifeCycleIncorrect"
+}
+`;
+
+exports[`Validation.validatePest should verify that an observation with only lifecycle is allowed 1`] = `Object {}`;
+
+exports[`Validation.validatePest should verify that commentValue cannot be longer than 250 chars 1`] = `
+Object {
+  "type.commentValue": "musit.observation.page.type.commentsValueIncorrect"
+}
+`;
+
+exports[`Validation.validatePest should verify that identificationValue cannot be empty 1`] = `
+Object {
+  "type.identificationValue": "musit.observation.page.type.identificationValueRequired"
+}
+`;
+
+exports[`Validation.validatePest should verify that identificationValue cannot be empty space 1`] = `
+Object {
+  "type.identificationValue": "musit.observation.page.type.identificationValueIncorrect"
+}
+`;
+
+exports[`Validation.validatePest should verify that identificationValue cannot be null 1`] = `
+Object {
+  "type.identificationValue": "musit.observation.page.type.identificationValueRequired"
+}
+`;
