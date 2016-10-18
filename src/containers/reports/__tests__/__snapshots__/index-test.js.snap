@@ -1,0 +1,57 @@
+exports[`Reports overview should display correctly 1`] = `
+<div>
+  <main>
+    <Panel
+      bsClass="panel"
+      bsStyle="default"
+      defaultExpanded={false}>
+      <Grid
+        bsClass="container"
+        componentClass="div"
+        fluid={false}>
+        <Row
+          bsClass="row"
+          className="row-centered"
+          componentClass="div">
+          <PageHeader
+            bsClass="page-header">
+            Reports
+          </PageHeader>
+          <Table
+            bordered={false}
+            bsClass="table"
+            condensed={false}
+            hover={false}
+            responsive={false}
+            striped={false}>
+            <thead>
+              <tr>
+                <th>
+                  Title Header
+                </th>
+                <th>
+                  Description Header
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                id={undefined}>
+                <td>
+                  <a
+                    href="/#/reports/kdreport">
+                    Title
+                  </a>
+                </td>
+                <td>
+                  Description
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
+      </Grid>
+    </Panel>
+  </main>
+</div>
+`;

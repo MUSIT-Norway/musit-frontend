@@ -1,0 +1,192 @@
+exports[`ObjectSearchComponent should display object 1 1`] = `
+<div
+  style={
+    Object {
+      "paddingTop": 20
+    }
+  }>
+  <main>
+    <Grid
+      bsClass="container"
+      componentClass="div"
+      fluid={false}>
+      <div>
+        <h2>
+          Title
+        </h2>
+        <Form
+          bsClass="form"
+          componentClass="form"
+          horizontal={false}
+          inline={true}>
+          <FormGroup
+            bsClass="form-group"
+            controlId="formInlineName">
+            <ControlLabel
+              bsClass="control-label"
+              srOnly={false}>
+              Museumnr.
+            </ControlLabel>
+             
+            <FormControl
+              bsClass="form-control"
+              componentClass="input"
+              placeholder=""
+              type="text" />
+          </FormGroup>
+           
+          <FormGroup
+            bsClass="form-group"
+            controlId="formInlineName">
+            <ControlLabel
+              bsClass="control-label"
+              srOnly={false}>
+              Unr.
+            </ControlLabel>
+             
+            <FormControl
+              bsClass="form-control"
+              componentClass="input"
+              placeholder=""
+              type="text" />
+          </FormGroup>
+           
+          <FormGroup
+            bsClass="form-group"
+            controlId="formInlineName">
+            <ControlLabel
+              bsClass="control-label"
+              srOnly={false}>
+              Term/Artsnavn
+            </ControlLabel>
+             
+            <FormControl
+              bsClass="form-control"
+              componentClass="input"
+              placeholder=""
+              type="text" />
+          </FormGroup>
+           
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="default"
+            disabled={false}
+            type="submit">
+            Search
+          </Button>
+        </Form>
+        <div>
+          <br />
+          <h4>
+            Resultat - søket ga x treff:
+          </h4>
+          <Table
+            bordered={false}
+            bsClass="table"
+            condensed={false}
+            hover={false}
+            responsive={false}
+            striped={false}>
+            <thead>
+              <th>
+                Museumnr.
+              </th>
+              <th>
+                Unr.
+              </th>
+              <th>
+                Term/Artsnavn
+              </th>
+              <th>
+                Plassering
+              </th>
+              <th />
+            </thead>
+            <tbody>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  / Museum / Bygg 1 / Rommet
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12
+                </td>
+                <td
+                  className="subNo">
+                  46
+                </td>
+                <td
+                  className="term">
+                  Stol
+                </td>
+                <td
+                  className="path">
+                  / Museum / Bygg 1 / Rommet
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  123
+                </td>
+                <td
+                  className="subNo">
+                  48
+                </td>
+                <td
+                  className="term">
+                  Kasse
+                </td>
+                <td
+                  className="path">
+                  / Museum / Bygg 1 / Rommet
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+          <span
+            style={
+              Object {
+                "float": "right"
+              }
+            }>
+            1 2 3 Neste side
+          </span>
+        </div>
+      </div>
+    </Grid>
+  </main>
+</div>
+`;

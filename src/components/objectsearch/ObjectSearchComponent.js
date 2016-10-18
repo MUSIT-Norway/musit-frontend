@@ -45,13 +45,13 @@ const ObjectSearchComponent = (props) =>
                   <th />
                 </thead>
                 <tbody>
-                {props.data.map(data =>
-                  <tr>
-                    <td>{data.museumNo}</td>
-                    <td>{data.subNo}</td>
-                    <td>{data.term}</td>
-                    <td>/ Museum / Bygg 1 / Rommet</td>
-                    <td><FontAwesome name="truck" /></td>
+                {props.data.map((data, i) =>
+                  <tr key={i}>
+                    <td className="museumNo">{data.museumNo}</td>
+                    <td className="subNo">{data.subNo}</td>
+                    <td className="term">{data.term}</td>
+                    <td className="path">/ Museum / Bygg 1 / Rommet</td>
+                    <td className="move"><FontAwesome name="truck" /></td>
                   </tr>
                 )}
                 </tbody>

@@ -80,7 +80,7 @@ export default class Breadcrumb extends React.Component {
             <span key={index}>
               <span style={styles.crumb}>
                 <a
-                  href=""
+                  href={node.url}
                   onClick={(e) => {
                     e.preventDefault()
                     onClickCrumb(node, index)
