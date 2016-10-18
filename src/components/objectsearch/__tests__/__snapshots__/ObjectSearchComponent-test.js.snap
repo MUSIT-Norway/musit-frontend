@@ -31,8 +31,10 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             <FormControl
               bsClass="form-control"
               componentClass="input"
+              onChange={[Function onChangeMuseumNo]}
               placeholder=""
-              type="text" />
+              type="text"
+              value="1234" />
           </FormGroup>
            
           <FormGroup
@@ -47,8 +49,10 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             <FormControl
               bsClass="form-control"
               componentClass="input"
+              onChange={[Function onChangeSubNo]}
               placeholder=""
-              type="text" />
+              type="text"
+              value="455" />
           </FormGroup>
            
           <FormGroup
@@ -63,8 +67,10 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             <FormControl
               bsClass="form-control"
               componentClass="input"
+              onChange={[Function onChangeTerm]}
               placeholder=""
-              type="text" />
+              type="text"
+              value="Lololol" />
           </FormGroup>
            
           <Button
@@ -73,6 +79,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             bsClass="btn"
             bsStyle="default"
             disabled={false}
+            onClick={[Function onClick]}
             type="submit">
             Search
           </Button>

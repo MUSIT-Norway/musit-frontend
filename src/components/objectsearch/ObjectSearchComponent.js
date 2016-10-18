@@ -13,22 +13,40 @@ const ObjectSearchComponent = (props) =>
             <FormGroup controlId="formInlineName">
               <ControlLabel>Museumnr.</ControlLabel>
               {' '}
-              <FormControl type="text" placeholder="" />
+              <FormControl
+                type="text"
+                placeholder=""
+                value={props.museumNo || ''}
+                onChange={props.onChangeMuseumNo}
+              />
             </FormGroup>
             {' '}
             <FormGroup controlId="formInlineName">
               <ControlLabel>Unr.</ControlLabel>
               {' '}
-              <FormControl type="text" placeholder="" />
+              <FormControl
+                type="text"
+                placeholder=""
+                value={props.subNo || ''}
+                onChange={props.onChangeSubNo}
+              />
             </FormGroup>
             {' '}
             <FormGroup controlId="formInlineName">
               <ControlLabel>Term/Artsnavn</ControlLabel>
               {' '}
-              <FormControl type="text" placeholder="" />
+              <FormControl
+                type="text"
+                placeholder=""
+                value={props.term || ''}
+                onChange={props.onChangeTerm}
+              />
             </FormGroup>
             {' '}
-            <Button type="submit">
+            <Button
+              type="submit"
+              onClick={() => props.searchForNodes(props.museumNo, props.subNo, props.term)}
+            >
               Search
             </Button>
           </Form>

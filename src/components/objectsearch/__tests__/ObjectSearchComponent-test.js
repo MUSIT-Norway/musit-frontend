@@ -26,7 +26,17 @@ describe('ObjectSearchComponent', () => {
   ]
 
   it('should display object 1', () => {
-    const wrapper = shallow(<ObjectSearchComponent data={testData} />)
+    const wrapper = shallow(
+      <ObjectSearchComponent
+        data={testData}
+        museumNo="1234"
+        onChangeMuseumNo={() => true}
+        subNo="455"
+        onChangeSubNo={() => true}
+        term="Lololol"
+        onChangeTerm={() => true}
+      />
+    )
     expect(shallowToJson(wrapper)).toMatchSnapshot()
   })
 })
