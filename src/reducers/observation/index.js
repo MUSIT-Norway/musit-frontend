@@ -1,16 +1,17 @@
 import Config from '../../config'
+import { apiUrl } from '../../util'
 
 import mapToBackEnd from './mapper/to_backend'
 import mapToFrontEnd from './mapper/to_frontend'
-const ADD = 'musit/observation/ADD'
-const ADD_SUCCESS = 'musit/observation/ADD_SUCCESS'
-const ADD_FAIL = 'musit/observation/ADD_FAIL'
-const LOAD = 'musit/observation/LOAD'
-const LOAD_SUCCESS = 'musit/observation/LOAD_SUCCESS'
-const LOAD_FAIL = 'musit/observation/LOAD_FAIL'
-const LOAD_ACTOR = 'musit/observation/actor/LOAD'
-const LOAD_ACTOR_SUCCESS = 'musit/observation/actor/LOAD_SUCCESS'
-const LOAD_ACTOR_FAIL = 'musit/observation/actor/LOAD_FAIL'
+export const ADD = 'musit/observation/ADD'
+export const ADD_SUCCESS = 'musit/observation/ADD_SUCCESS'
+export const ADD_FAIL = 'musit/observation/ADD_FAIL'
+export const LOAD = 'musit/observation/LOAD'
+export const LOAD_SUCCESS = 'musit/observation/LOAD_SUCCESS'
+export const LOAD_FAIL = 'musit/observation/LOAD_FAIL'
+export const LOAD_ACTOR = 'musit/observation/actor/LOAD'
+export const LOAD_ACTOR_SUCCESS = 'musit/observation/actor/LOAD_SUCCESS'
+export const LOAD_ACTOR_FAIL = 'musit/observation/actor/LOAD_FAIL'
 export const initialState = {
   data: {
     observations: []
@@ -93,7 +94,7 @@ export default observationReducer;
 
 export const addObservation = (nodeId, data, callback) => {
   const action = 'post'
-  const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations`
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations`)
   const dataToPost = mapToBackEnd(data, nodeId)
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
@@ -105,14 +106,15 @@ export const addObservation = (nodeId, data, callback) => {
 export const getActorNameFromId = (id) => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAIL],
-    promise: (client) => client.get(`/api/actor/v1/person/${id}`)
+    promise: (client) => client.get(apiUrl(`/api/actor/v1/person/${id}`))
   }
 }
 
 export const loadObservation = (nodeId, observationId, callback) => {
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations/${observationId}`)
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations/${observationId}`),
+    promise: (client) => client.get(url),
     callback
   }
 }

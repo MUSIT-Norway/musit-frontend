@@ -236,7 +236,6 @@ export default class ControlAddContainer extends React.Component {
                           value={this.state.doneDate}
                           onClear={() => this.setState({ ...this.state, doneDate: new Date().toISOString() })}
                           onChange={newValue => {
-                            console.log(newValue)
                             this.setDate(newValue)
                           }}
                         />
