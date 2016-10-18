@@ -16,7 +16,7 @@ import picklistReducer, {
   toggleNode, toggleObject,
   removeNode, removeObject,
   clearNodes, clearObjects,
-  refreshNode, loadNode, loadNodeFail,
+  refreshNode,
   LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE, LOAD_ONE_NODE_FAIL
 } from '../index'
 
