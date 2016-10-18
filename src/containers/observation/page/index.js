@@ -1,4 +1,4 @@
-
+import { values } from 'lodash'
 import React, { PropTypes } from 'react'
 import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
 import {
@@ -13,7 +13,6 @@ import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import DatePicker from 'react-bootstrap-date-picker'
 import ActorSuggest from '../../../components/actor'
-import moment from 'moment'
 import * as validation from './validation'
 import { isDateBiggerThanToday } from '../../../util'
 
@@ -48,7 +47,7 @@ export default class ObservationPage extends React.Component {
     this.state = {
       selectedType: null,
       observations: props.observations,
-      doneDate: props.doneDate || moment(),
+      doneDate: props.doneDate || new Date().toISOString(),
       doneBy: props.doneBy
     }
     this.isTypeSelectable = this.isTypeSelectable.bind(this)
@@ -117,9 +116,9 @@ export default class ObservationPage extends React.Component {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
         window.alert(this.props.translate('musit.observation.page.dateValidation'))
-        this.setState({ ...this.state, doneDate: moment() })
+        this.setState({ ...this.state, doneDate: new Date().toISOString() })
       } else {
-        this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+        this.setState({ ...this.state, doneDate: newValue })
       }
     }
   }
@@ -316,14 +315,14 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ? 
                   <FormControl
                     componentClass="input"
-                    value={this.state.doneDate.format(DATE_FORMAT_DISPLAY)}
+                    value={parseISODate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                  : 
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
-                    onClear={() => this.setState({ ...this.state, doneDate: moment() })}
-                    value={this.state.doneDate.toISOString()}
+                    onClear={() => this.setState({ ...this.state, doneDate: new Date().toISOString() })}
+                    value={this.state.doneDate}
                     onChange={newValue => {
                       this.setDate(newValue)
                     }}
@@ -428,7 +427,7 @@ export default class ObservationPage extends React.Component {
           </Row>
           <br />
           <Row className="row-centered" style={{ textAlign: 'center' }}>
-            {this.state.errors && Object.values(this.state.errors).map((error, index) => {
+            {this.state.errors && values(this.state.errors).map((error, index) => {
               return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>
             })}
             <br />
