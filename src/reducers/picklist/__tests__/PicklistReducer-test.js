@@ -1,12 +1,23 @@
 import assert from 'assert'
 import deepFreeze from 'deep-freeze'
+import configureMockStore from 'redux-mock-store'
+import createMiddleware from '../../../middleware/clientMiddleware'
+import ApiClient from '../../../middleware/ApiClient'
+import Config from '../../../config'
+import request from 'superagent';
+import nocker from 'superagent-nock';
+const nock = nocker(request);
+
+const middlewares = [ createMiddleware(new ApiClient()) ]
+const mockStore = configureMockStore(middlewares)
 
 import picklistReducer, {
   addObject, addNode,
   toggleNode, toggleObject,
   removeNode, removeObject,
   clearNodes, clearObjects,
-  LOAD_ONE_NODE_SUCCESS
+  refreshNode, loadNode, loadNodeFail,
+  LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE, LOAD_ONE_NODE_FAIL
 } from '../index'
 
 const node1 = {
@@ -74,6 +85,44 @@ describe('PicklistReducer', () => {
       OBJECT: DEFAULT_OBJECTS
     }
     deepFreeze(testState)
+  })
+
+  it('refreshNode works as expected when it gets data', () => {
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/1`
+    nock('http://localhost')
+      .get(url)
+      .reply(200, {
+        id: 1,
+        name: 'The special room',
+        type: 'Room'
+      })
+
+    const store = mockStore()
+
+    return store.dispatch(refreshNode(1))
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot()
+      })
+  })
+
+  it('load node returns same state', () => {
+    const state = picklistReducer(testState, {
+      type: LOAD_ONE_NODE
+    })
+    assert(state === testState)
+  })
+
+  it('load node fail returns state with error', () => {
+    const state = picklistReducer(testState, {
+      type: LOAD_ONE_NODE_FAIL,
+      error: Error('Some error')
+    })
+    assert.deepStrictEqual(state, { ...testState, error: Error('Some error')})
+  })
+
+  it('New state is set untouched', () => {
+    const state = picklistReducer(testState, {})
+    assert(state === testState)
   })
 
   it('Initial state is set', () => {

@@ -1,4 +1,4 @@
-import { createBreadcrumbPath } from '../../util'
+import { createBreadcrumbPath, apiUrl } from '../../util'
 import Config from '../../config'
 
 export const TYPES = {
@@ -66,9 +66,9 @@ export const getPath = (pathStr) => {
   return `,${pathStrArr.slice(0, -1).join(',').toString()},`
 }
 
-const loadNode = (state) => state
+export const loadNode = (state) => state
 
-const loadNodeFail = (state, action) => ({ ...state, error: action.error })
+export const loadNodeFail = (state, action) => ({ ...state, error: action.error })
 
 const loadNodeSuccess = (type) => (state, action) => {
   const modifiedNodes = state[type].map((n) => {
@@ -131,9 +131,10 @@ export const toggleObject = (item, on) => ({ type: TOGGLE_OBJECT, item, on })
 
 // Action for load node
 export const refreshNode = (id) => {
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`)
   return {
     types: [LOAD_ONE_NODE, LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE_FAIL],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`),
+    promise: (client) => client.get(url),
     id
   }
 }
