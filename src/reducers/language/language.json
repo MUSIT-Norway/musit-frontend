@@ -538,7 +538,6 @@
         "move": "Flytt hit",
         "moveObjects": "Flytt objekter",
         "moveNodes": "Flytt noder",
-        "goToRoot": "Gå til toppen",
         "currentDestination": "Destinasjon:",
         "messages": {
           "nodeMoved": "%{name} ble flyttet til %{destination}.",
@@ -664,7 +663,7 @@
         "envdata": "Miljødata",
         "controlsRequired": "Minst en kontroll må merkes OK eller Ikke OK",
         "registerObservations": "Registrer observasjoner",
-        "dateValidation": "Valgt kontroll datoen må ikke være større enn dagens dato. Velg lavere dato."
+        "dateValidation": "Dato for kontrollen kan ikke være større enn dagens dato."
       },
       "observation": {
         "page": {
@@ -682,7 +681,7 @@
           "registeredDate": "Registrert dato",
           "registeredBy": "Registrert av",
           "newButtonLabel": "Legg til ny",
-          "dateValidation": "Valgt observasjon datoen må ikke være større enn dagens dato. Velg lavere dato.",
+          "dateValidation": "Dato for observasjonen kan ikke være større enn dagens dato.",
           "typeSelect": {
             "labelText": "Velg type"
           },
@@ -735,7 +734,7 @@
             }
           },
           "temperature": {
-            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
+            "toValueSmallerThanFromValue": "Målt temperatur (til) må være større enn Målt temperatur (fra).",
             "fromValueRequired": "Målt temperatur (fra) er påkrevd.",
             "fromValueIncorrect": "Målt temperatur (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt temperatur (til) må være et tall med maks 3 desimaler.",
@@ -752,7 +751,7 @@
             "notePlaceHolder": "Fritekst"
           },
           "hypoxicAir": {
-            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
+            "toValueSmallerThanFromValue": "Målt inertluft (til) må være større enn Målt inertluft (fra).",
             "fromValueRequired": "Målt inertluft (fra) er påkrevd.",
             "fromValueIncorrect": "Målt inertluft (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt inertluft (til) må være et tall med maks 3 desimaler.",
@@ -769,7 +768,7 @@
             "notePlaceHolder": "Fritekst"
           },
           "relativeHumidity": {
-            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
+            "toValueSmallerThanFromValue": "Målt rel. luftfuktighet (til) må være større enn Målt rel. luftfuktighet (fra).",
             "fromValueRequired": "Målt rel. luftfuktighet (fra) er påkrevd.",
             "fromValueIncorrect": "Målt rel. luftfuktighet (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt rel. luftfuktighet (til) må være et tall med maks 3 desimaler.",
@@ -994,7 +993,7 @@
           "hypoxicAir": {
             "labelText": "Inertluft",
             "incorrect": "Inertluft må være et tall med maks 3 desimaler.",
-            "tooltip": "Krav til inertluft i % O&#8322;",
+            "tooltip": "Krav til inertluft i % O₂",
             "placeHolder": "% O₂"
           },
           "hypoxicAirTolerance": {
