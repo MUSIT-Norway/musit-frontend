@@ -6,7 +6,6 @@ import observationReducer, {
 } from '../index'
 import mapToFrontEnd from '../mapper/to_frontend'
 import mapToBackEnd from '../mapper/to_backend'
-import { parseISODateNonStrict as parseISODate } from '../../../util/index'
 
 import configureMockStore from 'redux-mock-store'
 import createMiddleware from '../../../middleware/clientMiddleware'
