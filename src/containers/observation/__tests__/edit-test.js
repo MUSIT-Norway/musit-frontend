@@ -2,7 +2,6 @@ import assert from 'assert'
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
 import ObservationPage from '../page'
-import { parseISODateNonStrict as parseISODate } from '../../../util'
 
 describe('Render edit observation page', () => {
   const renderer = ReactTestUtils.createRenderer();
@@ -14,7 +13,7 @@ describe('Render edit observation page', () => {
         translate={(key) => key}
         params={{ }}
         onSaveObservation={() => true}
-        doneDate={parseISODate('2016-12-23')}
+        doneDate={new Date(2016,11,23).toISOString()}
         mode="EDIT"
         id="1"
       />

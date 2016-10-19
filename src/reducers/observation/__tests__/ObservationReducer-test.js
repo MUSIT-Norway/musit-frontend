@@ -38,7 +38,7 @@ describe('ObservationReducer', () => {
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = {
       doneBy: { id: '1' },
-      doneDate: parseISODate('2016-09-07'),
+      doneDate: new Date().toISOString(),
       observations: [
         {
           type: 'hypoxicAir',
@@ -46,6 +46,13 @@ describe('ObservationReducer', () => {
             fromValue: '19',
             toValue: '23',
             commentValue: 'Test comments.'
+          },
+        },
+        {
+          type: 'lightingCondition',
+          data: {
+            leftValue: 'Light',
+            rightValue: 'Test comments.'
           }
         },
         {
@@ -57,7 +64,11 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontEnd))
+    const backEnd = mapToBackEnd(frontEnd);
+    assert(backEnd.lightingCondition)
+    assert(backEnd.hypoxicAir)
+    assert(backEnd.cleaning)
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
     assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'year'))
     assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'month'))
     assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'day'))
@@ -80,7 +91,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: Uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: new Date().toISOString(),
       observations: [
         {
 
@@ -103,7 +114,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: nesten uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: new Date().toISOString(),
       observations: [
         {
 
@@ -126,7 +137,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: litt uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: new Date().toISOString(),
       observations: [
         {
 
@@ -149,7 +160,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: noe uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: new Date().toISOString(),
       observations: [
         {
 
@@ -172,7 +183,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: tilfredsstillende', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: new Date().toISOString(),
       observations: [
         {
 
@@ -195,7 +206,7 @@ describe('ObservationReducer', () => {
   it('test invalid alcohol status', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: new Date().toISOString(),
       observations: [
         {
 
@@ -218,7 +229,7 @@ describe('ObservationReducer', () => {
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: new Date().toISOString(),
       observations: [
         {
 

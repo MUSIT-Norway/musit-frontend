@@ -70,7 +70,7 @@ Object {
     "doneBy": Object {
       "id": undefined
     },
-    "doneDate": null,
+    "doneDate": undefined,
     "observations": Array [],
     "registeredBy": undefined,
     "registeredDate": undefined
@@ -110,7 +110,7 @@ Object {
     "doneBy": Object {
       "id": undefined
     },
-    "doneDate": null,
+    "doneDate": undefined,
     "observations": Array [],
     "registeredBy": undefined,
     "registeredDate": undefined
