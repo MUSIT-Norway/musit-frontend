@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
     unit: state.storagePanelState,
     loaded: !!state.storagePanelUnit.loaded
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateState: (data) => dispatch(updateState(data))
   }
-}
+};
 
 class EditStorageUnitContainer extends React.Component {
   static propTypes = {
@@ -36,7 +36,7 @@ class EditStorageUnitContainer extends React.Component {
     unit: PropTypes.object,
     loaded: PropTypes.bool.isRequired,
     updateState: PropTypes.func.isRequired
-  }
+  };
 
   componentWillMount() {
     this.props.loadStorageUnit(this.props.params.id, {

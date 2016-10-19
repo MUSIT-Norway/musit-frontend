@@ -1,6 +1,13 @@
 {
   "en": {
     "musit": {
+      "moveHistory": {
+        "title": "Moving history for object",
+        "from": "From",
+        "to": "To",
+        "doneBy": "Performed by",
+        "doneDate": "Performed date"
+      },
       "reports": {
         "reports": "Reports",
         "titleHeader": "Title",
@@ -518,6 +525,13 @@
   },
   "no": {
     "musit": {
+      "moveHistory": {
+        "title": "Flyttehistorikk for objekt",
+        "from": "Fra",
+        "to": "Til",
+        "doneBy": "Utført av",
+        "doneDate": "Utført dato"
+      },
       "reports": {
         "reports": "Rapporter",
         "titleHeader": "Tittel",

@@ -30,10 +30,10 @@ export default class MusitHistoryModal extends Component {
     headerText: PropTypes.string.isRequired,
     translate: PropTypes.func,
     moves: PropTypes.arrayOf(PropTypes.object)
-  }
+  };
 
   render() {
-    const { moves } = this.props
+    const { moves, translate } = this.props;
     return (
       <div>
         <Modal
@@ -51,6 +51,7 @@ export default class MusitHistoryModal extends Component {
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>
             <ModalMoveHistoryGrid
               tableData={moves}
+              translate={translate}
             />
           </Modal.Body>
           <Modal.Footer style={{ textAlign: 'center' }}>
