@@ -9,7 +9,7 @@ const reports = [
     url: '/#/reports/kdreport',
     description: 'musit.reports.securingCollections.description'
   }
-]
+];
 
 export default () => {
   return (

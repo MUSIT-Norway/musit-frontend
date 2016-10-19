@@ -1,28 +1,34 @@
 {
   "en": {
     "musit": {
+      "moveHistory": {
+        "title": "Moving history for object",
+        "from": "From",
+        "to": "To",
+        "doneBy": "Performed by",
+        "doneDate": "Performed date"
+      },
       "reports": {
-        "reports": "Rapporter",
-        "titleHeader": "Tittel",
-        "descriptionHeader": "Beskrivelse",
+        "reports": "Reports",
+        "titleHeader": "Title",
+        "descriptionHeader": "Description",
         "securingCollections": {
-          "title": "Sikring av samlinger",
-          "description": "Sikringsindikatorer som rapporteres til KD.",
-          "header": "Rapport - Sikring av samlinger",
-          "totalArea": "Totalt areal:",
-          "perimeter": "Skallsikring:",
-          "theftProtection": "Tyverisikring:",
-          "fireProtection": "Brannsikring:",
-          "waterDamage": "Vannskaderisiko:",
-          "routinesAndContingencyPlan": "Rutiner og beredskap:"
+          "title": "Security assessment of collections",
+          "description": "Security assessment indicators reported to KD.",
+          "header": "Report - Security assessment of collections",
+          "totalArea": "Total area:",
+          "perimeter": "Perimeter security:",
+          "theftProtection": "Theft protection:",
+          "fireProtection": "Fire protection:",
+          "waterDamage": "Water damage assessment:",
+          "routinesAndContingencyPlan": "Routines and contingency plan:"
         }
       },
       "moveModal": {
         "move": "Move",
         "moveObjects": "Move objects",
         "moveNodes": "Move nodes",
-        "goToRoot": "Go to top",
-        "currentDestination": "destination:",
+        "currentDestination": "Destination:",
         "messages": {
           "nodeMoved": "%{name} was moved to %{destination}.",
           "objectMoved": "%{name} was moved to %{destination}.",
@@ -69,8 +75,8 @@
           "registeredBy": "Reg. by",
           "header": "Controls and observations",
           "iconTooltip": {
-            "observation": "Observasjon",
-            "control": "Kontroll"
+            "observation": "Observation",
+            "control": "Control"
           }
         },
         "node": {
@@ -86,9 +92,9 @@
           "totalObjectCount": "Tot. no. of obj.",
           "nodeCount": "No. of nodes",
           "iconTooltip": {
-            "observationAndControl": "Observasjoner og kontroller",
-            "moveNode": "Flytt noden",
-            "addToPickList": "Legg til plukklisten"
+            "observationAndControl": "Observations and controls",
+            "moveNode": "Move node",
+            "addToPickList": "Add to picklist"
           }
         },
         "object": {
@@ -96,9 +102,9 @@
           "uNumber": "U. No.",
           "term": "Artefact/Species",
           "iconTooltip": {
-            "moveObjectHistory": "Flyttehistorikk",
-            "moveObject": "Flytt objektet",
-            "addToPickList": "Legg til plukklisten"
+            "moveObjectHistory": "Move history",
+            "moveObject": "Move object",
+            "addToPickList": "Add to picklist"
           }
         }
       },
@@ -136,7 +142,7 @@
         "saveTooltip": "Save registration",
         "cancel": "Cancel",
         "cancelTooltip": "Cancel registration",
-        "magazine": "Magazine"
+        "magazine": "Storage facility"
       },
       "viewControl": {
         "title": "View control",
@@ -166,9 +172,9 @@
         "mold": "Mold",
         "pest": "Pest",
         "envdata": "Environmental Conditions",
-        "controlsRequired": "At least one controltype must be checked OK or Not OK",
+        "controlsRequired": "At least one control type must be checked OK or Not OK",
         "registerObservations": "Register observations",
-        "dateValidation": "Selected control date must not be bigger than present date. Please select lower date."
+        "dateValidation": "Date of control can not be later than present date."
       },
       "observation": {
         "page": {
@@ -186,7 +192,7 @@
           "registeredDate": "Registered date",
           "registeredBy": "Registered by",
           "newButtonLabel": "Add new",
-          "dateValidation": "Selected observation date must not be bigger than present date. Please select lower date.",
+          "dateValidation": "Date of observation can not be later than present date.",
           "typeSelect": {
             "labelText": "Choose type"
           },
@@ -239,7 +245,7 @@
             }
           },
           "temperature": {
-            "toValueSmallerThanFromValue": "To value cannot be smaller than From value",
+            "toValueSmallerThanFromValue": "Measured value (to) must be bigger than measured value (from).",
             "fromValueRequired": "Measured value (from) is required.",
             "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
             "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
@@ -256,7 +262,7 @@
             "notePlaceHolder": "Free text"
           },
           "hypoxicAir": {
-            "toValueSmallerThanFromValue": "To value cannot be smaller than From value",
+            "toValueSmallerThanFromValue": "Measured value (to) must be bigger than measured value (from).",
             "fromValueRequired": "Measured value (from) is required.",
             "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
             "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
@@ -273,7 +279,7 @@
             "notePlaceHolder": "Free text"
           },
           "relativeHumidity": {
-            "toValueSmallerThanFromValue": "To value cannot be smaller than From value",
+            "toValueSmallerThanFromValue": "Measured value (to) must be bigger than measured value (from).",
             "fromValueRequired": "Measured value (from) is required.",
             "fromValueIncorrect": "Measured value (from) must be a number with max 3 decimals.",
             "toValueIncorrect": "Measured value (to) must be a number with max 3 decimals.",
@@ -498,7 +504,7 @@
           "hypoxicAir": {
             "labelText": "Hypoxic air",
             "incorrect": "Hypoxic air must be a number with max 3 decimals.",
-            "tooltip": "Hypoxic air requirement in % O&#8322;",
+            "tooltip": "Hypoxic air requirement in % O₂",
             "placeHolder": "% O₂"
           },
           "hypoxicAirTolerance": {
@@ -540,6 +546,13 @@
   },
   "no": {
     "musit": {
+      "moveHistory": {
+        "title": "Flyttehistorikk for objekt",
+        "from": "Fra",
+        "to": "Til",
+        "doneBy": "Utført av",
+        "doneDate": "Utført dato"
+      },
       "reports": {
         "reports": "Rapporter",
         "titleHeader": "Tittel",
@@ -560,7 +573,6 @@
         "move": "Flytt hit",
         "moveObjects": "Flytt objekter",
         "moveNodes": "Flytt noder",
-        "goToRoot": "Gå til toppen",
         "currentDestination": "Destinasjon:",
         "messages": {
           "nodeMoved": "%{name} ble flyttet til %{destination}.",
@@ -707,7 +719,7 @@
         "envdata": "Miljødata",
         "controlsRequired": "Minst en kontroll må merkes OK eller Ikke OK",
         "registerObservations": "Registrer observasjoner",
-        "dateValidation": "Valgt kontroll datoen må ikke være større enn dagens dato. Velg lavere dato."
+        "dateValidation": "Dato for kontrollen kan ikke være større enn dagens dato."
       },
       "observation": {
         "page": {
@@ -725,7 +737,7 @@
           "registeredDate": "Registrert dato",
           "registeredBy": "Registrert av",
           "newButtonLabel": "Legg til ny",
-          "dateValidation": "Valgt observasjon datoen må ikke være større enn dagens dato. Velg lavere dato.",
+          "dateValidation": "Dato for observasjonen kan ikke være større enn dagens dato.",
           "typeSelect": {
             "labelText": "Velg type"
           },
@@ -778,7 +790,7 @@
             }
           },
           "temperature": {
-            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
+            "toValueSmallerThanFromValue": "Målt temperatur (til) må være større enn Målt temperatur (fra).",
             "fromValueRequired": "Målt temperatur (fra) er påkrevd.",
             "fromValueIncorrect": "Målt temperatur (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt temperatur (til) må være et tall med maks 3 desimaler.",
@@ -795,7 +807,7 @@
             "notePlaceHolder": "Fritekst"
           },
           "hypoxicAir": {
-            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
+            "toValueSmallerThanFromValue": "Målt inertluft (til) må være større enn Målt inertluft (fra).",
             "fromValueRequired": "Målt inertluft (fra) er påkrevd.",
             "fromValueIncorrect": "Målt inertluft (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt inertluft (til) må være et tall med maks 3 desimaler.",
@@ -812,7 +824,7 @@
             "notePlaceHolder": "Fritekst"
           },
           "relativeHumidity": {
-            "toValueSmallerThanFromValue": "Til-verdi kan ikke være mindre enn Fra-verdi",
+            "toValueSmallerThanFromValue": "Målt rel. luftfuktighet (til) må være større enn Målt rel. luftfuktighet (fra).",
             "fromValueRequired": "Målt rel. luftfuktighet (fra) er påkrevd.",
             "fromValueIncorrect": "Målt rel. luftfuktighet (fra) må være et tall med maks 3 desimaler.",
             "toValueIncorrect": "Målt rel. luftfuktighet (til) må være et tall med maks 3 desimaler.",
@@ -1037,7 +1049,7 @@
           "hypoxicAir": {
             "labelText": "Inertluft",
             "incorrect": "Inertluft må være et tall med maks 3 desimaler.",
-            "tooltip": "Krav til inertluft i % O&#8322;",
+            "tooltip": "Krav til inertluft i % O₂",
             "placeHolder": "% O₂"
           },
           "hypoxicAirTolerance": {

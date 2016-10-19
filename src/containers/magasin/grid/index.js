@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { loadRoot, clearRoot, loadChildren, deleteUnit } from '../../../reducers/storageunit/grid'
-import { loadMoveHistoryForObject, clearMoveHistoryForObject } from '../../../reducers/grid/move'
+import { loadMoveHistoryForObject, clearMoveHistoryForObject, loadActor } from '../../../reducers/grid/move'
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { addNode, addObject } from '../../../reducers/picklist'
 import { moveObject, moveNode } from '../../../reducers/move'
@@ -55,8 +55,8 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(clearStats());
       dispatch(loadStats(id))
     },
-    loadMoveHistoryForObject: (objectId) => {
-      dispatch(loadMoveHistoryForObject(objectId))
+    loadMoveHistoryForObject: (objectId, cb) => {
+      dispatch(loadMoveHistoryForObject(objectId, cb))
     },
     clearMoveHistoryForObject: (objectId) => {
       dispatch(clearMoveHistoryForObject(objectId))
@@ -66,6 +66,9 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     moveNode: (nodeId, destinationId, doneBy, callback) => {
       dispatch(moveNode(nodeId, destinationId, doneBy, callback))
+    },
+    loadActorDetails: (data) => {
+      dispatch(loadActor(data))
     },
     onAction: (actionName, unit, path) => {
       switch (actionName) {
@@ -267,10 +270,13 @@ class StorageUnitsContainer extends React.Component {
   };
 
   showObjectMoveHistory = (id) => {
-    this.props.clearMoveHistoryForObject();
-    this.props.loadMoveHistoryForObject(id);
+    this.props.clearMoveHistoryForObject()
+    this.props.loadMoveHistoryForObject(id, {
+      onSuccess: (result) => this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map(r => r.doneBy) }),
+      onFailure: true
+    })
     this.setState({ ...this.state, showMoveHistory: true })
-  };
+  }
 
   makeToolbar() {
     return <Toolbar
@@ -376,7 +382,7 @@ class StorageUnitsContainer extends React.Component {
           path={path}
           moves={moves}
           onHide={this.closeMoveHistory}
-          headerText={this.props.translate('musit.moveHistory')}
+          headerText={this.props.translate('musit.moveHistory.title')}
         />
         <MusitModal
           show={this.state.showModal}
