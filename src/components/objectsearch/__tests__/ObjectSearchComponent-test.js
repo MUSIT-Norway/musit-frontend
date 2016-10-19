@@ -2,6 +2,7 @@ import { shallow } from 'enzyme'
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react'
 import ObjectSearchComponent from '../ObjectSearchComponent'
+import { renderBreadcrumb } from '../ObjectSearchComponent'
 
 describe('ObjectSearchComponent', () => {
   const testData = [
@@ -9,19 +10,73 @@ describe('ObjectSearchComponent', () => {
       museumNo: '12345',
       subNo: '45',
       term: 'Fuglekasse',
-      id: 1
+      id: 1,
+      path: ',1,2,3,',
+      pathNames: [
+        {
+          nodeId: 1,
+          name: "Root",
+          type: "Organization"
+        },
+        {
+          nodeId: 2,
+          name: "Musit",
+          type: "Building"
+        },
+        {
+          nodeId: 3,
+          name: "Kontoret",
+          type: "Room"
+        }
+      ]
     },
     {
       museumNo: '12',
       subNo: '46',
       term: 'Stol',
-      id: 2
+      id: 2,
+      path: ',1,2,3,',
+      pathNames: [
+        {
+          nodeId: 1,
+          name: "Root",
+          type: "Organization"
+        },
+        {
+          nodeId: 2,
+          name: "Musit",
+          type: "Building"
+        },
+        {
+          nodeId: 3,
+          name: "Kontoret",
+          type: "Room"
+        }
+      ]
     },
     {
       museumNo: '123',
       subNo: '48',
       term: 'Kasse',
-      id: 3
+      id: 3,
+      path: ',1,2,3,',
+      pathNames: [
+        {
+          nodeId: 1,
+          name: "Root",
+          type: "Organization"
+        },
+        {
+          nodeId: 2,
+          name: "Musit",
+          type: "Building"
+        },
+        {
+          nodeId: 3,
+          name: "Kontoret",
+          type: "Room"
+        }
+      ]
     }
   ]
 
@@ -29,14 +84,37 @@ describe('ObjectSearchComponent', () => {
     const wrapper = shallow(
       <ObjectSearchComponent
         data={testData}
-        museumNo="1234"
-        onChangeMuseumNo={() => true}
-        subNo="455"
-        onChangeSubNo={() => true}
-        term="Lololol"
-        onChangeTerm={() => true}
+        onChangeField={() => true}
+        params={{
+          museumNo: "1234",
+          subNo: "455",
+          term: "Lololol"
+        }}
       />
     )
+    expect(shallowToJson(wrapper)).toMatchSnapshot()
+  })
+
+  it('should display breadcrumb correctly', () => {
+    const path = ',1,2,3,'
+    const pathNames = [
+      {
+        nodeId: 1,
+        name: "Root",
+        type: "Organization"
+      },
+      {
+        nodeId: 2,
+        name: "Musit",
+        type: "Building"
+      },
+      {
+        nodeId: 3,
+        name: "Kontoret",
+        type: "Room"
+      }
+    ]
+    const wrapper = shallow(renderBreadcrumb(path, pathNames))
     expect(shallowToJson(wrapper)).toMatchSnapshot()
   })
 })

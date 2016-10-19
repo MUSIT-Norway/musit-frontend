@@ -103,7 +103,25 @@
         }
       },
       "objectsearch": {
-        "title": "Object search"
+        "title": "Object search",
+        "museumNo": {
+          "label": "Museumnr.",
+          "placeHolder": " "
+        },
+        "subNo": {
+          "label": "Unr.",
+          "placeHolder": " "
+        },
+        "term": {
+          "label": "Term/Artsnavn",
+          "placeHolder": " "
+        },
+        "location": {
+          "label": "Plassering"
+        },
+        "results": {
+          "title": "Resultat - søket ga %{count} treff:"
+        }
       },
       "texts": {
         "freetext": "Free text",
@@ -624,7 +642,25 @@
         }
       },
       "objectsearch": {
-        "title": "Objektsøk"
+        "title": "Objektsøk",
+        "museumNo": {
+          "label": "Museumnr.",
+          "placeHolder": " "
+        },
+        "subNo": {
+          "label": "Unr.",
+          "placeHolder": " "
+        },
+        "term": {
+          "label": "Term/Artsnavn",
+          "placeHolder": " "
+        },
+        "location": {
+          "label": "Plassering"
+        },
+        "results": {
+          "title": "Resultat - søket ga %{count} treff:"
+        }
       },
       "texts": {
         "freetext": "Fritekst",

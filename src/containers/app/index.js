@@ -1,4 +1,4 @@
-
+import { I18n } from 'react-i18nify'
 import 'react-select/dist/react-select.css'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
@@ -6,7 +6,6 @@ import { IndexLink, hashHistory } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
 import { routerActions } from 'react-router-redux'
-import { I18n } from 'react-i18nify'
 import FontAwesome from 'react-fontawesome'
 import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
@@ -17,8 +16,6 @@ import Logo from './assets/logo.png'
 import fakeUserInfo from '../../../fake_security.json'
 
 const mapStateToProps = (state) => {
-  I18n.loadTranslations(state.language.data)
-  I18n.setLocale('no')
   return {
     user: state.auth.user,
     pushState: routerActions.push,

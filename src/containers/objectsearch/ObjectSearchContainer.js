@@ -4,13 +4,15 @@ import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
   return {
-    data: state.objectSearch.data
+    data: state.objectSearch.data,
+    params: state.objectSearch.params
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchForObjects: (museumNo, uNo, term) => dispatch(actions.searchForObjects(museumNo, uNo, term))
+    searchForObjects: (museumNo, uNo, term) => dispatch(actions.searchForObjects(museumNo, uNo, term)),
+    onChangeField: (field, value) => dispatch(actions.onChangeField(field, value))
   }
 }
 

@@ -15,7 +15,7 @@ exports[`Reports overview should display correctly 1`] = `
           componentClass="div">
           <PageHeader
             bsClass="page-header">
-            Reports
+            Rapporter
           </PageHeader>
           <Table
             bordered={false}
@@ -27,10 +27,10 @@ exports[`Reports overview should display correctly 1`] = `
             <thead>
               <tr>
                 <th>
-                  Title Header
+                  Tittel
                 </th>
                 <th>
-                  Description Header
+                  Beskrivelse
                 </th>
               </tr>
             </thead>
@@ -40,11 +40,11 @@ exports[`Reports overview should display correctly 1`] = `
                 <td>
                   <a
                     href="/#/reports/kdreport">
-                    Title
+                    Sikring av samlinger
                   </a>
                 </td>
                 <td>
-                  Description
+                  Sikringsindikatorer som rapporteres til KD.
                 </td>
               </tr>
             </tbody>

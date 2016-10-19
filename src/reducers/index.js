@@ -19,9 +19,7 @@
 
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import { reducer as formReducer } from 'redux-form';
 import authReducer from './auth';
-import languageReducer from './language';
 import autosuggestReducer from './suggest';
 import picklistReducer from './picklist';
 import storagePanelReducer from './storageunit/panel';
@@ -41,9 +39,7 @@ import ObjectSearchReducer from './objectsearch/reducer'
 
 const rootReducer = combineReducers({
   routing: routerReducer,
-  form: formReducer,
   auth: authReducer,
-  language: languageReducer,
   suggest: autosuggestReducer,
   picks: picklistReducer,
   storagePanelUnit: storagePanelReducer,
