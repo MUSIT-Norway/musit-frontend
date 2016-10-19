@@ -22,10 +22,9 @@ import React from 'react'
 import { Grid, Row, Col, FormControl } from 'react-bootstrap'
 import PairedToogleButtons from '../../../components/control/add'
 import DatePicker from 'react-bootstrap-date-picker'
-import moment from 'moment'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
-import { flatten, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY, hasProp } from '../../../util'
+import { flatten, DATE_FORMAT_DISPLAY, hasProp } from '../../../util'
 import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
@@ -52,7 +51,7 @@ export default class ControlAddContainer extends React.Component {
       inertAirInterval: this.props.envReqData ? this.props.envReqData.hypoxicAirTolerance : ' ',
       light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
       cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
-      doneDate: moment(),
+      doneDate: new Date().toISOString(),
       doneBy: this.props.actor
     }
     this.onControlClick = this.onControlClick.bind(this)
@@ -128,9 +127,9 @@ export default class ControlAddContainer extends React.Component {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
         window.alert(this.props.translate('musit.newControl.dateValidation'))
-        this.setState({ ...this.state, doneDate: moment() })
+        this.setState({ ...this.state, doneDate: new Date().toISOString() })
       } else {
-        this.setState({ ...this.state, doneDate: parseISODate(newValue) })
+        this.setState({ ...this.state, doneDate: newValue })
       }
     }
   }
@@ -234,8 +233,8 @@ export default class ControlAddContainer extends React.Component {
                       <Col xs={12}>
                         <DatePicker
                           dateFormat={DATE_FORMAT_DISPLAY}
-                          value={this.state.doneDate.toISOString()}
-                          onClear={() => this.setState({ ...this.state, doneDate: moment() })}
+                          value={this.state.doneDate}
+                          onClear={() => this.setState({ ...this.state, doneDate: new Date().toISOString() })}
                           onChange={newValue => {
                             this.setDate(newValue)
                           }}
