@@ -23,7 +23,7 @@ import { Modal, Row, Col } from 'react-bootstrap'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import ModalNodeGrid from '../../../components/grid/ModalNodeGrid'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
-import
+import NodeSuggest from '../../../components/nodesearch'
 
 export default class MusitModal extends Component {
 
@@ -77,9 +77,16 @@ export default class MusitModal extends Component {
             <Modal.Title id="title" style={{ textAlign: 'center' }}>
               {this.props.headerText}
             </Modal.Title>
-
+            <Row>
+              <Col sm={4} />
+              <Col sm={4}>
+                <NodeSuggest label="Search" id="nodeSearch" onChange=""/>
+              </Col>
+              <Col sm={4} />
+            </Row>
           </Modal.Header>
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>
+
             <ModalNodeGrid
               tableData={children}
               onClick={(node) => this.props.setCurrentId(node.id)}
