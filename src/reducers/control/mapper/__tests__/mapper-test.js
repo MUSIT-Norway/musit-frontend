@@ -14,7 +14,7 @@ describe('ControlMapperReducer', () => {
       gasOK: true,
       cleaningOK: true,
       relativeHumidityOK: true,
-      lightConditionOK: true,
+      lightConditionOK: false,
       alcoholOK: true,
       pestOK: false,
       moldOK: true
@@ -26,6 +26,12 @@ describe('ControlMapperReducer', () => {
           type: 'hypoxicAir',
           data: {
 
+          }
+        },
+        {
+          type: 'lightCondition',
+          data: {
+            leftValue: 'Some light'
           }
         },
         {
@@ -53,8 +59,8 @@ describe('ControlMapperReducer', () => {
     assert.ok(transformed.relativeHumidity.ok === true)
     assert.ok(!transformed.relativeHumidity.observation)
     assert.ok(transformed.lightingCondition)
-    assert.ok(transformed.lightingCondition.ok === true)
-    assert.ok(!transformed.lightingCondition.observation)
+    assert.ok(transformed.lightingCondition.ok === false)
+    assert.ok(transformed.lightingCondition.observation)
     assert.ok(transformed.alcohol)
     assert.ok(transformed.alcohol.ok === true)
     assert.ok(!transformed.alcohol.observation)
