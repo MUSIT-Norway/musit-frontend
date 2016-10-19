@@ -49,7 +49,7 @@ describe('ObservationReducer', () => {
           },
         },
         {
-          type: 'lightingCondition',
+          type: 'lightCondition',
           data: {
             leftValue: 'Light',
             rightValue: 'Test comments.'
