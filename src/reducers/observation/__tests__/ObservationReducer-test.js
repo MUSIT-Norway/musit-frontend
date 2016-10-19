@@ -226,7 +226,7 @@ describe('ObservationReducer', () => {
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: new Date().toISOString(),
+      doneDate: new Date(2016,8,23).toISOString(),
       observations: [
         {
 
@@ -338,7 +338,9 @@ describe('ObservationReducer', () => {
             commentValue: 'Altfor fuktig' }
         }
       ] }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
+    const backEnd = mapToBackEnd(frontend);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
     assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
     assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
     assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
@@ -463,7 +465,7 @@ describe('ObservationReducer', () => {
   it('creates ADD_SUCCESS when observation data is added', () => {
     const observationAddData = {
       doneBy: { id: '1' },
-      doneDate: parseISODate('2016-09-07'),
+      doneDate: new Date(2016,9,18).toISOString(),
       observations: [
         {
           type: 'hypoxicAir',

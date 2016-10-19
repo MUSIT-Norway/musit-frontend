@@ -183,6 +183,87 @@ Array [
 ]
 `;
 
+exports[`ObservationReducer mapToFrontEnd and mapToBackEnd are inverse with complete data 1`] = `
+Object {
+  "affectedThing": NaN,
+  "alcohol": Object {
+    "condition": "Uttørket",
+    "note": "Drita full",
+    "volume": 4
+  },
+  "cleaning": Object {
+    "cleaning": "Urent",
+    "note": "Altfor lyst"
+  },
+  "doneBy": "1",
+  "doneDate": "2016-09-22T22:00:00.000Z",
+  "eventType": "Observation",
+  "fireProtection": Object {
+    "fireProtection": "Brann",
+    "note": "Altfor vått"
+  },
+  "gas": Object {
+    "gas": "Vannskade",
+    "note": "Altfor vått"
+  },
+  "hypoxicAir": Object {
+    "note": "Altfor fuktig",
+    "range": Object {
+      "from": 1.4,
+      "to": 4.4
+    }
+  },
+  "lightingCondition": Object {
+    "lightingCondition": "Mørkst",
+    "note": "Altfor mørkt"
+  },
+  "mold": Object {
+    "mold": "Muggent",
+    "note": "Altfor mye mugg"
+  },
+  "perimeterSecurity": Object {
+    "note": "Altfor skallet",
+    "perimeterSecurity": "skall"
+  },
+  "pest": Object {
+    "identification": "Mye skadedyr",
+    "lifecycles": Array [
+      Object {
+        "quantity": 4,
+        "stage": "Larva"
+      },
+      Object {
+        "quantity": 32,
+        "stage": "Puppe"
+      }
+    ],
+    "note": "Ikke gjort noe med"
+  },
+  "relativeHumidity": Object {
+    "note": "Altfor fuktig",
+    "range": Object {
+      "from": 1.4,
+      "to": 4.4
+    }
+  },
+  "temperature": Object {
+    "note": "Altfor fuktig",
+    "range": Object {
+      "from": 1.4,
+      "to": 4.4
+    }
+  },
+  "theftProtection": Object {
+    "note": "Altfor mye tyver",
+    "theftProtection": "Mye tyver"
+  },
+  "waterDamageAssessment": Object {
+    "note": "Altfor vått",
+    "waterDamageAssessment": "Vannskade"
+  }
+}
+`;
+
 exports[`ObservationReducer mapToFrontEnd and mapToBackEnd shoud be inverse functions 1`] = `
 Object {
   "affectedThing": NaN,
