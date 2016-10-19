@@ -23,6 +23,11 @@ const ADD_OBJECT = 'musit/picklist/ADD_OBJECT';
 const REMOVE_OBJECT = 'musit/picklist/REMOVE_OBJECT';
 const TOGGLE_OBJECT = 'musit/picklist/TOGGLE_OBJECT';
 
+// Load object
+export const LOAD_ONE_OBJECT = 'musit/picklist/LOAD_ONE_OBJECT'
+export const LOAD_ONE_OBJECT_SUCCESS = 'musit/picklist/LOAD_ONE_OBJECT_SUCCESS'
+export const LOAD_ONE_OBJECT_FAIL = 'musit/picklist/LOAD_ONE_OBJECT_FAIL'
+
 // Empty state
 const initialState = {
   [TYPES.NODE]: [],
@@ -90,6 +95,30 @@ const loadNodeSuccess = (type) => (state, action) => {
   }
 };
 
+const loadObject = (state) => state
+
+const loadObjectFail = (state, action) => ({ ...state, error: action.error })
+
+const loadObjectSuccess = (type) => (state, action) => {
+  const modifiedNodes = state[type].map((n) => {
+    if (n.value.id === action.id) {
+      const newPath = createBreadcrumbPath(
+          getPath(action.result.path),
+          action.result.pathNames
+      )
+      return {
+        ...n,
+        path: newPath
+      }
+    }
+    return n
+  })
+  return {
+    ...state,
+    [type]: modifiedNodes
+  }
+};
+
 const NODE_ACTION_HANDLERS = {
   [CLEAR_NODES]: clearItems(TYPES.NODE),
   [ADD_NODE]: addItem(TYPES.NODE),
@@ -104,7 +133,10 @@ const OBJECT_ACTION_HANDLERS = {
   [CLEAR_OBJECTS]: clearItems(TYPES.OBJECT),
   [ADD_OBJECT]: addItem(TYPES.OBJECT),
   [REMOVE_OBJECT]: removeItem(TYPES.OBJECT),
-  [TOGGLE_OBJECT]: toggleItem(TYPES.OBJECT)
+  [TOGGLE_OBJECT]: toggleItem(TYPES.OBJECT),
+  [LOAD_ONE_OBJECT]: loadObject,
+  [LOAD_ONE_OBJECT_SUCCESS]: loadObjectSuccess(TYPES.OBJECT),
+  [LOAD_ONE_OBJECT_FAIL]: loadObjectFail
 };
 
 export default (state = initialState, action = {}) => {
@@ -134,6 +166,15 @@ export const refreshNode = (id) => {
   return {
     types: [LOAD_ONE_NODE, LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE_FAIL],
     promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`),
+    id
+  }
+}
+
+// Action for load object
+export const refreshObject = (id) => {
+  return {
+    types: [LOAD_ONE_OBJECT, LOAD_ONE_OBJECT_SUCCESS, LOAD_ONE_OBJECT_FAIL],
+    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}`),
     id
   }
 }
