@@ -182,3 +182,37 @@ Array [
   }
 ]
 `;
+
+exports[`ObservationReducer mapToFrontEnd and mapToBackEnd shoud be inverse functions 1`] = `
+Object {
+  "affectedThing": NaN,
+  "alcohol": undefined,
+  "cleaning": Object {
+    "cleaning": "Test cleaning value.",
+    "note": "Test comments."
+  },
+  "doneBy": "1",
+  "doneDate": "2016-09-22T22:00:00.000Z",
+  "eventType": "Observation",
+  "fireProtection": undefined,
+  "gas": undefined,
+  "hypoxicAir": Object {
+    "note": "Test comments.",
+    "range": Object {
+      "from": 19,
+      "to": 23
+    }
+  },
+  "lightingCondition": Object {
+    "lightingCondition": "Light",
+    "note": "Test comments."
+  },
+  "mold": undefined,
+  "perimeterSecurity": undefined,
+  "pest": undefined,
+  "relativeHumidity": undefined,
+  "temperature": undefined,
+  "theftProtection": undefined,
+  "waterDamageAssessment": undefined
+}
+`;

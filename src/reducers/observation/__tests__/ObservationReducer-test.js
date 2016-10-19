@@ -38,7 +38,7 @@ describe('ObservationReducer', () => {
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = {
       doneBy: { id: '1' },
-      doneDate: new Date().toISOString(),
+      doneDate: new Date(2016,8,23).toISOString(),
       observations: [
         {
           type: 'hypoxicAir',
@@ -65,9 +65,7 @@ describe('ObservationReducer', () => {
       ]
     }
     const backEnd = mapToBackEnd(frontEnd);
-    assert(backEnd.lightingCondition)
-    assert(backEnd.hypoxicAir)
-    assert(backEnd.cleaning)
+    expect(backEnd).toMatchSnapshot()
     const thereAndBackAgain = mapToFrontEnd(backEnd)
     assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'year'))
     assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'month'))
