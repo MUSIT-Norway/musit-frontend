@@ -8,7 +8,7 @@ import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
-import { parseISODateNonStrict as parseISODate, createBreadcrumbPath } from '../../util'
+import { createBreadcrumbPath } from '../../util'
 import { loadRoot } from '../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
@@ -82,14 +82,6 @@ class EditObservationPage extends React.Component {
     )
   }
 
-  parseDoneDateFromLocationState() {
-    let doneDate = this.props.location.state.doneDate
-    if (typeof doneDate === 'string') {
-      doneDate = parseISODate(doneDate)
-    }
-    return doneDate
-  }
-
   render() {
     const nodes = this.props.path
     const breadcrumb = <Breadcrumb nodes={nodes} passive />
@@ -104,7 +96,7 @@ class EditObservationPage extends React.Component {
             <ObservationPage
               id={this.props.params.id}
               observations={this.getObservationsFromLocationState()}
-              doneDate={this.parseDoneDateFromLocationState()}
+              doneDate={this.props.location.state.doneDate}
               doneBy={this.props.location.state.doneBy}
               onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
               translate={this.props.translate}

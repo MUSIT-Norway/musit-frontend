@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import {DATE_FORMAT_ISO_FULL, parseFloatFromString, Option} from "./../../../util";
+import {parseFloatFromString, Option, parseISODateNonStrict } from "./../../../util";
 
 export function parseRangeObservation(el) {
   const re = {}
@@ -113,7 +113,7 @@ export default (observation: any, nodeId: string | number) => {
   const r = {}
   r.eventType = 'Observation'
   r.doneBy = observation.doneBy.id
-  r.doneDate = observation.doneDate.format(DATE_FORMAT_ISO_FULL)
+  r.doneDate = parseISODateNonStrict(observation.doneDate)
   r.affectedThing = nodeId * 1
   const observations = observation.observations;
   r.temperature = new Option(getData(observations, 'temperature')).map(parseRangeObservation)

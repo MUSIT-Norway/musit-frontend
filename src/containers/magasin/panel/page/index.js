@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -17,6 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+import { values } from 'lodash'
 import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
 import { hashHistory } from 'react-router'
@@ -504,7 +504,7 @@ class StorageUnitContainer extends Component {
                       <Grid>
                         <Row>
                           <br />
-                          {this.props.unit.errors && Object.values(this.props.unit.errors).map((error, index) => {
+                          {this.props.unit.errors && values(this.props.unit.errors).map((error, index) => {
                             return <p style={{ color: 'red' }} key={index}>{error}</p>
                           })}
                           <br />
