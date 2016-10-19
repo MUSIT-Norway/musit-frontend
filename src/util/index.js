@@ -59,7 +59,7 @@ export const DATE_FORMAT_ISO_SHORT = 'YYYY-MM-DD'
 export const DATE_FORMAT_ISO_FULL = 'YYYY-MM-DDTHH:mm:ss.SSSZZ'
 
 export const parseISODateNonStrict = (dateStr: string) => {
-  return moment(dateStr, [DATE_FORMAT_ISO_SHORT])
+  return moment(dateStr, [DATE_FORMAT_ISO_FULL])
 }
 
 export const parseISODateStrict = (dateStr: string) => {

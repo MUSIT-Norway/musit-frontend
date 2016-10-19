@@ -5,7 +5,7 @@ import { I18n } from 'react-i18nify'
 import ObservationPage from './page'
 import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import { parseISODateNonStrict as parseISODate, createBreadcrumbPath } from '../../util'
+import { createBreadcrumbPath } from '../../util'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { loadRoot } from '../../reducers/storageunit/grid'
 
@@ -84,7 +84,7 @@ class ViewObservationPage extends React.Component {
               observations={this.props.observations}
               translate={this.props.translate}
               doneBy={this.props.doneBy}
-              doneDate={parseISODate(this.props.doneDate)}
+              doneDate={this.props.doneDate}
               registeredBy={this.props.registeredBy}
               registeredDate={this.props.registeredDate}
               saveDisabled

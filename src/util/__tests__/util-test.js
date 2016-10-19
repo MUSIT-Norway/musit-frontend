@@ -4,9 +4,9 @@ import moment from 'moment'
 
 describe('parseISODateNonStrict', () => {
   it('should accept full iso timestamp', () => {
-    const date = '2016-09-07T22:56:00+00:00'
+    const date = '2016-09-07T22:56:00.000Z'
     const parsed = parseISODateNonStrict(date)
-    assert(parsed.isValid() === true)
+    expect(parsed).toMatchSnapshot()
   })
 
   it('should accept standard simple ISO date format', () => {
