@@ -1,5 +1,4 @@
 import drop from 'lodash/drop'
-import moment from 'moment'
 import assert from 'assert'
 import observationReducer, {
   loadObservation,
@@ -46,7 +45,7 @@ describe('ObservationReducer', () => {
             fromValue: '19',
             toValue: '23',
             commentValue: 'Test comments.'
-          },
+          }
         },
         {
           type: 'lightCondition',
