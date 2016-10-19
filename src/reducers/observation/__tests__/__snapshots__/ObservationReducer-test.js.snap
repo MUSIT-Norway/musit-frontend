@@ -1,0 +1,184 @@
+exports[`ObservationReducer Actor fail action 1`] = `
+Object {
+  "data": Object {
+    "doneBy": [Error: Some error occurred to load actor data.],
+    "observations": Array []
+  },
+  "loaded": false,
+  "loading": false
+}
+`;
+
+exports[`ObservationReducer Actor initial action 1`] = `
+Object {
+  "data": Object {
+    "observations": Array []
+  },
+  "loaded": false,
+  "loading": true
+}
+`;
+
+exports[`ObservationReducer Actor no action 1`] = `
+Object {
+  "data": Object {
+    "observations": Array []
+  }
+}
+`;
+
+exports[`ObservationReducer Actor success action 1`] = `
+Object {
+  "data": Object {
+    "doneBy": Object {
+      "someField": 1
+    },
+    "observations": Array []
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
+exports[`ObservationReducer Add observation fail action 1`] = `
+Object {
+  "data": [Error: Some error occurred in the add observation data method.],
+  "loaded": false,
+  "loading": false
+}
+`;
+
+exports[`ObservationReducer Add observation initial action 1`] = `
+Object {
+  "data": Object {},
+  "loaded": false,
+  "loading": true
+}
+`;
+
+exports[`ObservationReducer Add observation no action 1`] = `
+Object {
+  "data": Object {
+    "observations": Array []
+  }
+}
+`;
+
+exports[`ObservationReducer Add observation success action 1`] = `
+Object {
+  "data": Object {
+    "doneBy": Object {
+      "id": undefined
+    },
+    "doneDate": null,
+    "observations": Array [],
+    "registeredBy": undefined,
+    "registeredDate": undefined
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
+exports[`ObservationReducer Observation fail action 1`] = `
+Object {
+  "data": [Error: Some error occurred to load observation data.],
+  "loaded": false,
+  "loading": false
+}
+`;
+
+exports[`ObservationReducer Observation initial action 1`] = `
+Object {
+  "data": Object {},
+  "loaded": false,
+  "loading": true
+}
+`;
+
+exports[`ObservationReducer Observation no action 1`] = `
+Object {
+  "data": Object {
+    "observations": Array []
+  }
+}
+`;
+
+exports[`ObservationReducer Observation success action 1`] = `
+Object {
+  "data": Object {
+    "doneBy": Object {
+      "id": undefined
+    },
+    "doneDate": null,
+    "observations": Array [],
+    "registeredBy": undefined,
+    "registeredDate": undefined
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
+exports[`ObservationReducer creates ADD_SUCCESS when observation data is added 1`] = `
+Array [
+  Object {
+    "type": "musit/observation/ADD"
+  },
+  Object {
+    "result": Object {
+      "affectedThing": 4,
+      "doneBy": 1,
+      "doneDate": "2016-10-18T00:00:00+00:00",
+      "eventType": "Observation",
+      "gas": Object {
+        "gas": "test Gas",
+        "note": "Gas comments"
+      },
+      "id": 10,
+      "registeredBy": "Darth Vader",
+      "registeredDate": "2016-10-18T13:42:10+00:00"
+    },
+    "type": "musit/observation/ADD_SUCCESS"
+  }
+]
+`;
+
+exports[`ObservationReducer creates LOAD_ACTOR_SUCCESS when actor data is imported 1`] = `
+Array [
+  Object {
+    "type": "musit/observation/actor/LOAD"
+  },
+  Object {
+    "result": Object {
+      "dataportenId": "jarle",
+      "fn": "Jarle Stabell",
+      "id": 1
+    },
+    "type": "musit/observation/actor/LOAD_SUCCESS"
+  }
+]
+`;
+
+exports[`ObservationReducer creates LOAD_SUCCESS when observation data is loaded 1`] = `
+Array [
+  Object {
+    "type": "musit/observation/LOAD"
+  },
+  Object {
+    "result": Object {
+      "affectedThing": 2,
+      "doneBy": 1,
+      "doneDate": "2016-09-29T00:00:00+00:00",
+      "eventType": "Observation",
+      "gas": Object {
+        "gas": "Gas test"
+      },
+      "id": 50,
+      "registeredBy": "Darth Vader",
+      "registeredDate": "2016-10-17T14:22:39+00:00"
+    },
+    "type": "musit/observation/LOAD_SUCCESS"
+  }
+]
+`;

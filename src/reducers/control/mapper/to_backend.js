@@ -8,12 +8,11 @@ import {
     parseGas,
     parseMold
 } from '../../observation/mapper/to_backend'
-import { DATE_FORMAT_ISO_FULL, Option } from './../../../util'
+import { Option, parseISODateNonStrict } from './../../../util'
 
 function parseDoneDate(observations, state) {
-  return observations && observations.doneDate
-      ? observations.doneDate.format(DATE_FORMAT_ISO_FULL)
-      : state.doneDate.format(DATE_FORMAT_ISO_FULL);
+  const date = observations && observations.doneDate ? observations.doneDate : state.doneDate
+  return parseISODateNonStrict(date)
 }
 
 function getDoneBy(observations, state) {
