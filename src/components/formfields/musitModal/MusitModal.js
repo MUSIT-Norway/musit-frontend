@@ -23,6 +23,7 @@ import { Modal, Row, Col } from 'react-bootstrap'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import ModalNodeGrid from '../../../components/grid/ModalNodeGrid'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
+import
 
 export default class MusitModal extends Component {
 
@@ -76,6 +77,7 @@ export default class MusitModal extends Component {
             <Modal.Title id="title" style={{ textAlign: 'center' }}>
               {this.props.headerText}
             </Modal.Title>
+
           </Modal.Header>
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>
             <ModalNodeGrid
