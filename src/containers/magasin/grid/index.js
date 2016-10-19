@@ -17,7 +17,7 @@ import { blur, createBreadcrumbPath } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 import MusitModalHistory from '../../../components/formfields/musitModalHistory'
-const I18n = require('react-i18nify').I18n;
+import { I18n } from 'react-i18nify'
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
