@@ -35,7 +35,7 @@ describe('ObservationReducer', () => {
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = {
       doneBy: { id: '1' },
-      doneDate: new Date(2016,8,23).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
           type: 'hypoxicAir',
@@ -452,7 +452,7 @@ describe('ObservationReducer', () => {
   it('creates ADD_SUCCESS when observation data is added', () => {
     const observationAddData = {
       doneBy: { id: '1' },
-      doneDate: new Date(2016,9,18).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
           type: 'hypoxicAir',

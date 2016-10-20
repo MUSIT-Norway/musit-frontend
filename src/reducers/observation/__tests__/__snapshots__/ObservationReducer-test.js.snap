@@ -391,7 +391,7 @@ Object {
     "note": "Test comments."
   },
   "doneBy": "1",
-  "doneDate": "2016-09-22T22:00:00.000Z",
+  "doneDate": "2016-10-31T23:00:00.000Z",
   "eventType": "Observation",
   "fireProtection": undefined,
   "gas": undefined,
@@ -421,7 +421,7 @@ Object {
   "doneBy": Object {
     "id": "1"
   },
-  "doneDate": "2016-09-22T22:00:00.000Z",
+  "doneDate": "2016-10-31T23:00:00.000Z",
   "observations": Array [
     Object {
       "data": Object {
