@@ -2,10 +2,6 @@ import React, { PropTypes } from 'react'
 import { range } from 'lodash'
 
 class PagingToolbar extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     const numPages = this.props.numItems / this.props.perPage
     const currentPage = this.props.currentPage

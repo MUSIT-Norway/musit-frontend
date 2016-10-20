@@ -117,6 +117,9 @@ class App extends Component {
               }
             </Nav>
             <Nav pullRight>
+              <LinkContainer to={'/search/objects'}>
+                <NavItem><Badge><FontAwesome name="search" /></Badge></NavItem>
+              </LinkContainer>
               {user &&
                 <MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} />
               }
