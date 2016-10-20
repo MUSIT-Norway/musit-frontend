@@ -8,11 +8,10 @@ import {
     parseGas,
     parseMold
 } from '../../observation/mapper/to_backend'
-import { Option, parseISODateNonStrict } from './../../../util'
+import { Option } from './../../../util'
 
-function parseDoneDate(observations, state) {
-  const date = observations && observations.doneDate ? observations.doneDate : state.doneDate
-  return parseISODateNonStrict(date)
+function getDoneDate(observations, state) {
+  return observations && observations.doneDate ? observations.doneDate : state.doneDate
 }
 
 function getDoneBy(observations, state) {
@@ -39,7 +38,7 @@ export const mapToBackend = (state, observations, nodeId) => {
   r.eventType = 'Control'
   r.doneBy = getDoneBy(observations, state)
   r.doneBy = r.doneBy.id
-  r.doneDate = parseDoneDate(observations, state)
+  r.doneDate = getDoneDate(observations, state)
   r.affectedThing = nodeId * 1
   r.temperature = new Option(state.temperatureOK).map(ok => getControl(ok, observations, 'temperature', parseRangeObservation))
   r.hypoxicAir = new Option(state.hypoxicAirOK).map(ok => getControl(ok, observations, 'hypoxicAir', parseRangeObservation))
