@@ -4,6 +4,8 @@ import { Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table } from 
 import FontAwesome from 'react-fontawesome'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { createBreadcrumbPath } from '../../util'
+import PagingToolbar from '../../util/paging'
+import { hashHistory } from 'react-router'
 
 export function renderParam(id, props) {
   return (
@@ -72,7 +74,13 @@ export default (props) =>
                 )}
                 </tbody>
               </Table>
-              <span style={{ float: 'right' }}>1 2 3 Neste side</span>
+              <PagingToolbar
+                currentPage={props.location.query.page}
+                numItems={props.data.length}
+                baseUrl={props.location.pathname}
+                history={hashHistory}
+                perPage={10}
+              />
             </div>
           }
         </div>
