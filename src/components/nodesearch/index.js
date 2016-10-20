@@ -59,8 +59,7 @@ class NodeSuggest extends React.Component {
         if (event.keyCode === 13) {
             event.preventDefault()
         }
-        const value = this.getNodeSuggestionValue(suggestion);
-        this.props.onChange(value)
+        this.props.onChange(suggestion.id)
     }
 
     getSuggestions() {
@@ -69,7 +68,7 @@ class NodeSuggest extends React.Component {
     }
 
     getNodeSuggestionValue(suggestion) {
-        return `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`
+        return `${suggestion.type}: ${suggestion.name}`
     }
 
     doneByProps = {
@@ -80,7 +79,7 @@ class NodeSuggest extends React.Component {
     };
 
     renderNodeSuggestion(suggestion) {
-        const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
+        const suggestionText = `${suggestion.name} , ${suggestion.type}`;
         return (
             <span className={'suggestion-content'}>{suggestionText}</span>
         )

@@ -78,11 +78,11 @@ export default class MusitModal extends Component {
               {this.props.headerText}
             </Modal.Title>
             <Row>
-              <Col sm={4} />
-              <Col sm={4}>
-                <NodeSuggest label="Search" id="nodeSearch" onChange={ (x) => x } />
+              <Col sm={2} />
+              <Col sm={8}>
+                <NodeSuggest label="Search" id="nodeSearch" onChange={ (v) => v ? this.loadStuff(v) : null } />
               </Col>
-              <Col sm={4} />
+              <Col sm={2} />
             </Row>
           </Modal.Header>
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>
