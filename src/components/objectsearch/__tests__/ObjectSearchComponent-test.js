@@ -5,7 +5,7 @@ import ObjectSearchComponent from '../ObjectSearchComponent'
 import { renderBreadcrumb } from '../ObjectSearchComponent'
 
 describe('ObjectSearchComponent', () => {
-  const testData = [
+  const testData = Array(20).fill(
     {
       museumNo: '12345',
       subNo: '45',
@@ -29,60 +29,18 @@ describe('ObjectSearchComponent', () => {
           type: "Room"
         }
       ]
-    },
-    {
-      museumNo: '12',
-      subNo: '46',
-      term: 'Stol',
-      id: 2,
-      path: ',1,2,3,',
-      pathNames: [
-        {
-          nodeId: 1,
-          name: "Root",
-          type: "Organization"
-        },
-        {
-          nodeId: 2,
-          name: "Musit",
-          type: "Building"
-        },
-        {
-          nodeId: 3,
-          name: "Kontoret",
-          type: "Room"
-        }
-      ]
-    },
-    {
-      museumNo: '123',
-      subNo: '48',
-      term: 'Kasse',
-      id: 3,
-      path: ',1,2,3,',
-      pathNames: [
-        {
-          nodeId: 1,
-          name: "Root",
-          type: "Organization"
-        },
-        {
-          nodeId: 2,
-          name: "Musit",
-          type: "Building"
-        },
-        {
-          nodeId: 3,
-          name: "Kontoret",
-          type: "Room"
-        }
-      ]
     }
-  ]
+  )
 
   it('should display object 1', () => {
     const wrapper = shallow(
       <ObjectSearchComponent
+        location={{
+          query: {
+            page: '1'
+          },
+          pathname: '/#/search/objects'
+        }}
         data={testData}
         onChangeField={() => true}
         params={{

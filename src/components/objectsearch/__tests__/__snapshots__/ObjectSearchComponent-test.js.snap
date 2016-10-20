@@ -179,7 +179,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
         <div>
           <br />
           <h4>
-            Resultat - søket ga 3 treff:
+            Resultat - søket ga 20 treff:
           </h4>
           <Table
             bordered={false}
@@ -271,15 +271,15 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               <tr>
                 <td
                   className="museumNo">
-                  12
+                  12345
                 </td>
                 <td
                   className="subNo">
-                  46
+                  45
                 </td>
                 <td
                   className="term">
-                  Stol
+                  Fuglekasse
                 </td>
                 <td
                   className="path">
@@ -334,15 +334,1086 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               <tr>
                 <td
                   className="museumNo">
-                  123
+                  12345
                 </td>
                 <td
                   className="subNo">
-                  48
+                  45
                 </td>
                 <td
                   className="term">
-                  Kasse
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
+                </td>
+                <td
+                  className="path">
+                  <Breadcrumb
+                    allActive={true}
+                    nodeTypes={
+                      Array [
+                        Object {
+                          "iconName": "home",
+                          "type": "Top"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Organisation"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Building"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "Room"
+                        },
+                        Object {
+                          "iconName": "folder",
+                          "type": "StorageUnit"
+                        }
+                      ]
+                    }
+                    nodes={
+                      Array [
+                        BreadCrumb {
+                          "id": 2,
+                          "name": "Musit",
+                          "url": "/magasin/2"
+                        },
+                        BreadCrumb {
+                          "id": 3,
+                          "name": "Kontoret",
+                          "url": "/magasin/3"
+                        }
+                      ]
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
+                </td>
+                <td
+                  className="move">
+                  <FontAwesome
+                    name="truck" />
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="museumNo">
+                  12345
+                </td>
+                <td
+                  className="subNo">
+                  45
+                </td>
+                <td
+                  className="term">
+                  Fuglekasse
                 </td>
                 <td
                   className="path">
@@ -396,14 +1467,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               </tr>
             </tbody>
           </Table>
-          <span
-            style={
+          <PagingToolbar
+            baseUrl="/#/search/objects"
+            currentPage="1"
+            history={
               Object {
-                "float": "right"
+                "__v2_compatible__": true,
+                "createHref": [Function createHref],
+                "createKey": [Function createKey],
+                "createLocation": [Function createLocation],
+                "createPath": [Function createPath],
+                "go": [Function go],
+                "goBack": [Function goBack],
+                "goForward": [Function goForward],
+                "listen": [Function listen],
+                "listenBefore": [Function listenBefore],
+                "push": [Function push],
+                "pushState": [Function anonymous],
+                "registerTransitionHook": [Function registerTransitionHook],
+                "replace": [Function replace],
+                "replaceState": [Function anonymous],
+                "setState": [Function anonymous],
+                "transitionTo": [Function transitionTo],
+                "unregisterTransitionHook": [Function unregisterTransitionHook]
               }
-            }>
-            1 2 3 Neste side
-          </span>
+            }
+            numItems={20}
+            perPage={10} />
         </div>
       </div>
     </Grid>
