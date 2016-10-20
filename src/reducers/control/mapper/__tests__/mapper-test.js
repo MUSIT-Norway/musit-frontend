@@ -6,7 +6,7 @@ describe('ControlMapperReducer', () => {
   it('maps to correct backend structure with no observations', () => {
     const state = {
       doneBy: 'jarl',
-      doneDate: new Date(2016,10,1).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       temperatureOK: true,
       hypoxicAirOK: false,
       gasOK: true,
