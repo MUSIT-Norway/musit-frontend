@@ -80,7 +80,7 @@ export default class MusitModal extends Component {
             <Row>
               <Col sm={4} />
               <Col sm={4}>
-                <NodeSuggest label="Search" id="nodeSearch" onChange=""/>
+                <NodeSuggest label="Search" id="nodeSearch" onChange={ (x) => x } />
               </Col>
               <Col sm={4} />
             </Row>
