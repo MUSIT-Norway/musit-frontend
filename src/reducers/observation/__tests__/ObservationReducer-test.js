@@ -83,7 +83,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: Uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: new Date(2014,3,3).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -105,7 +105,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: nesten uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: new Date(2012,3,3).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -127,7 +127,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: litt uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: new Date(2016,4,3).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -149,7 +149,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: noe uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: new Date(2016,2,12).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -171,7 +171,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: tilfredsstillende', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: new Date(2012,3,2).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -194,7 +194,7 @@ describe('ObservationReducer', () => {
   it('test invalid alcohol status', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: new Date(2015,3,4).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -216,7 +216,7 @@ describe('ObservationReducer', () => {
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: new Date(2016,8,23).toISOString(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
