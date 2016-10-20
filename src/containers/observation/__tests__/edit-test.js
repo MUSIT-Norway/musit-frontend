@@ -13,7 +13,7 @@ describe('Render edit observation page', () => {
         translate={(key) => key}
         params={{ }}
         onSaveObservation={() => true}
-        doneDate={new Date(2016,11,23).toISOString()}
+        doneDate={'2016-12-23T00:00:00.000Z'}
         mode="EDIT"
         id="1"
       />
