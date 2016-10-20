@@ -1,5 +1,3 @@
-import drop from 'lodash/drop'
-import moment from 'moment'
 import assert from 'assert'
 import observationReducer, {
   loadObservation,
@@ -7,7 +5,6 @@ import observationReducer, {
 } from '../index'
 import mapToFrontEnd from '../mapper/to_frontend'
 import mapToBackEnd from '../mapper/to_backend'
-import { parseISODateNonStrict as parseISODate } from '../../../util/index'
 
 import configureMockStore from 'redux-mock-store'
 import createMiddleware from '../../../middleware/clientMiddleware'
@@ -37,7 +34,7 @@ describe('ObservationReducer', () => {
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = {
       doneBy: { id: '1' },
-      doneDate: parseISODate('2016-09-07'),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
           type: 'hypoxicAir',
@@ -45,6 +42,13 @@ describe('ObservationReducer', () => {
             fromValue: '19',
             toValue: '23',
             commentValue: 'Test comments.'
+          }
+        },
+        {
+          type: 'lightCondition',
+          data: {
+            leftValue: 'Light',
+            rightValue: 'Test comments.'
           }
         },
         {
@@ -56,11 +60,10 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontEnd))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'year'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'month'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontEnd.doneDate, 'day'))
-    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontEnd, 'doneDate'))
+    const backEnd = mapToBackEnd(frontEnd);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
+    expect(thereAndBackAgain).toMatchSnapshot()
   })
 
   it('Valid action from calling actor service for finding actor should update state correctly', () => {
@@ -79,7 +82,7 @@ describe('ObservationReducer', () => {
   it('test alcohol status: Uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -92,17 +95,16 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
-    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+    const backEnd = mapToBackEnd(frontend);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
+    expect(thereAndBackAgain).toMatchSnapshot()
   })
 
   it('test alcohol status: nesten uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -115,17 +117,16 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
-    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+    const backEnd = mapToBackEnd(frontend);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
+    expect(thereAndBackAgain).toMatchSnapshot()
   })
 
   it('test alcohol status: litt uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -138,17 +139,16 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
-    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+    const backEnd = mapToBackEnd(frontend);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
+    expect(thereAndBackAgain).toMatchSnapshot()
   })
 
   it('test alcohol status: noe uttørket', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -161,17 +161,16 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
-    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+    const backEnd = mapToBackEnd(frontend);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
+    expect(thereAndBackAgain).toMatchSnapshot()
   })
 
   it('test alcohol status: tilfredsstillende', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -184,17 +183,17 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
-    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+    const backEnd = mapToBackEnd(frontend);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
+    expect(thereAndBackAgain).toMatchSnapshot()
+
   })
 
   it('test invalid alcohol status', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -207,17 +206,16 @@ describe('ObservationReducer', () => {
         }
       ]
     }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
-    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+    const backEnd = mapToBackEnd(frontend);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
+    expect(thereAndBackAgain).toMatchSnapshot()
   })
 
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const frontend = {
       doneBy: { id: '1' },
-      doneDate: moment(),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
 
@@ -329,11 +327,10 @@ describe('ObservationReducer', () => {
             commentValue: 'Altfor fuktig' }
         }
       ] }
-    const thereAndBackAgain = mapToFrontEnd(mapToBackEnd(frontend))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'year'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'month'))
-    assert.ok(thereAndBackAgain.doneDate.isSame(frontend.doneDate, 'day'))
-    assert.deepEqual(drop(thereAndBackAgain, 'doneDate'), drop(frontend, 'doneDate'))
+    const backEnd = mapToBackEnd(frontend);
+    expect(backEnd).toMatchSnapshot()
+    const thereAndBackAgain = mapToFrontEnd(backEnd)
+    expect(thereAndBackAgain).toMatchSnapshot()
   })
 
 
@@ -454,7 +451,7 @@ describe('ObservationReducer', () => {
   it('creates ADD_SUCCESS when observation data is added', () => {
     const observationAddData = {
       doneBy: { id: '1' },
-      doneDate: parseISODate('2016-09-07'),
+      doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
           type: 'hypoxicAir',

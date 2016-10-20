@@ -141,6 +141,13 @@ const moveHistoryReducer = (state = initialState, action) => {
 
 export default moveHistoryReducer;
 
+export const loadActor = (r) => {
+  return {
+    types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAIL],
+    promise: (client) => client.post('/api/actor/v1/person/details', r)
+  }
+}
+
 export const loadMoveHistoryForObject = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],

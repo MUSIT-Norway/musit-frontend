@@ -8,11 +8,10 @@ import {
     parseGas,
     parseMold
 } from '../../observation/mapper/to_backend'
-import { Option, parseISODateNonStrict } from './../../../util'
+import { Option } from './../../../util'
 
-function parseDoneDate(observations, state) {
-  const date = observations && observations.doneDate ? observations.doneDate : state.doneDate
-  return parseISODateNonStrict(date)
+function getDoneDate(observations, state) {
+  return observations && observations.doneDate ? observations.doneDate : state.doneDate
 }
 
 function getDoneBy(observations, state) {
@@ -39,14 +38,14 @@ export const mapToBackend = (state, observations, nodeId) => {
   r.eventType = 'Control'
   r.doneBy = getDoneBy(observations, state)
   r.doneBy = r.doneBy.id
-  r.doneDate = parseDoneDate(observations, state)
+  r.doneDate = getDoneDate(observations, state)
   r.affectedThing = nodeId * 1
   r.temperature = new Option(state.temperatureOK).map(ok => getControl(ok, observations, 'temperature', parseRangeObservation))
   r.hypoxicAir = new Option(state.hypoxicAirOK).map(ok => getControl(ok, observations, 'hypoxicAir', parseRangeObservation))
   r.gas = new Option(state.gasOK).map(ok => getControl(ok, observations, 'gas', parseGas))
   r.cleaning = new Option(state.cleaningOK).map(ok => getControl(ok, observations, 'cleaning', parseCleaning))
   r.relativeHumidity = new Option(state.relativeHumidityOK).map(ok => getControl(ok, observations, 'relativeHumidity', parseRangeObservation))
-  r.lightingCondition = new Option(state.lightConditionOK).map(ok => getControl(ok, observations, 'lightingCondition', parseLightCondition))
+  r.lightingCondition = new Option(state.lightConditionOK).map(ok => getControl(ok, observations, 'lightCondition', parseLightCondition))
   r.alcohol = new Option(state.alcoholOK).map(ok => getControl(ok, observations, 'alcohol', parseAlcohol))
   r.pest = new Option(state.pestOK).map(ok => getControl(ok, observations, 'pest', parsePest))
   r.mold = new Option(state.moldOK).map(ok => getControl(ok, observations, 'mold', parseMold))

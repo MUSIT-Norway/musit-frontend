@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import {parseFloatFromString, Option, parseISODateNonStrict } from "./../../../util";
+import {parseFloatFromString, Option } from "./../../../util";
 
 export function parseRangeObservation(el) {
   const re = {}
@@ -109,25 +109,24 @@ function getData(observations, field) {
   return (observations.find(f => f.type === field) || {}).data;
 }
 
-export default (observation: any, nodeId: string | number) => {
+export default (state: any, nodeId: string | number) => {
   const r = {}
   r.eventType = 'Observation'
-  r.doneBy = observation.doneBy.id
-  r.doneDate = parseISODateNonStrict(observation.doneDate)
+  r.doneBy = state.doneBy.id
+  r.doneDate = state.doneDate
   r.affectedThing = nodeId * 1
-  const observations = observation.observations;
-  r.temperature = new Option(getData(observations, 'temperature')).map(parseRangeObservation)
-  r.hypoxicAir = new Option(getData(observations, 'hypoxicAir')).map(parseRangeObservation)
-  r.alcohol = new Option(getData(observations, 'alcohol')).map(parseAlcohol)
-  r.cleaning = new Option(getData(observations, 'cleaning')).map(parseCleaning)
-  r.lightingCondition = new Option(getData(observations, 'lightCondition')).map(parseLightCondition)
-  r.fireProtection = new Option(getData(observations, 'brannsikring')).map(parseFireProtection)
-  r.waterDamageAssessment = new Option(getData(observations, 'vannskaderisiko')).map(parseWaterDamageAssessment)
-  r.gas = new Option(getData(observations, 'gas')).map(parseGas)
-  r.mold = new Option(getData(observations, 'mold')).map(parseMold)
-  r.pest = new Option(getData(observations, 'pest')).map(parsePest)
-  r.theftProtection = new Option(getData(observations, 'tyverisikring')).map(parseTheftProtection)
-  r.perimeterSecurity = new Option(getData(observations, 'skallsikring')).map(parsePerimeterSecurity)
-  r.relativeHumidity = new Option(getData(observations, 'relativeHumidity')).map(parseRangeObservation)
+  r.temperature = new Option(getData(state.observations, 'temperature')).map(parseRangeObservation)
+  r.hypoxicAir = new Option(getData(state.observations, 'hypoxicAir')).map(parseRangeObservation)
+  r.alcohol = new Option(getData(state.observations, 'alcohol')).map(parseAlcohol)
+  r.cleaning = new Option(getData(state.observations, 'cleaning')).map(parseCleaning)
+  r.lightingCondition = new Option(getData(state.observations, 'lightCondition')).map(parseLightCondition)
+  r.fireProtection = new Option(getData(state.observations, 'brannsikring')).map(parseFireProtection)
+  r.waterDamageAssessment = new Option(getData(state.observations, 'vannskaderisiko')).map(parseWaterDamageAssessment)
+  r.gas = new Option(getData(state.observations, 'gas')).map(parseGas)
+  r.mold = new Option(getData(state.observations, 'mold')).map(parseMold)
+  r.pest = new Option(getData(state.observations, 'pest')).map(parsePest)
+  r.theftProtection = new Option(getData(state.observations, 'tyverisikring')).map(parseTheftProtection)
+  r.perimeterSecurity = new Option(getData(state.observations, 'skallsikring')).map(parsePerimeterSecurity)
+  r.relativeHumidity = new Option(getData(state.observations, 'relativeHumidity')).map(parseRangeObservation)
   return r
 }

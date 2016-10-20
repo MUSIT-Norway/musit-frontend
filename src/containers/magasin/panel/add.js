@@ -17,13 +17,13 @@ const mapDispatchToProps = (dispatch) => {
     updateState: (data) => dispatch(updateState(data)),
     clearState: () => dispatch(clearState())
   }
-}
+};
 
 const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState
   }
-}
+};
 
 class AddStorageUnitContainer extends React.Component {
   static propTypes = {
@@ -32,7 +32,7 @@ class AddStorageUnitContainer extends React.Component {
     updateState: PropTypes.func.isRequired,
     clearState: PropTypes.func.isRequired,
     unit: PropTypes.object
-  }
+  };
 
   componentWillMount() {
     this.props.clearState()

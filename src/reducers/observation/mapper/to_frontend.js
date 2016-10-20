@@ -17,7 +17,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { parseISODateNonStrict as parseISODate, formatFloatToString, Option } from './../../../util'
+import { formatFloatToString, Option } from './../../../util'
 
 const wrapAlcoholState = (s) => {
   switch (s) {
@@ -149,7 +149,7 @@ const wrap = (be) => {
   const ret = {}
   ret.doneBy = {}
   ret.doneBy.id = be.doneBy
-  ret.doneDate = parseISODate(be.doneDate)
+  ret.doneDate = be.doneDate
   ret.registeredDate = be.registeredDate
   ret.registeredBy = be.registeredBy
   ret.observations = [

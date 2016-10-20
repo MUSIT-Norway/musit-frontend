@@ -9,14 +9,14 @@ export class KDReport extends React.Component {
   static propTypes= {
     data: React.PropTypes.object,
     loadKDReport: React.PropTypes.func
-  }
+  };
 
   componentWillMount() {
     this.props.loadKDReport()
   }
 
   render() {
-    const { data } = this.props
+    const { data } = this.props;
     return (
       <div>
         <main>
@@ -68,10 +68,10 @@ const mapStateToProps = (state) => {
   return {
     data: state.reports && state.reports.data ? state.reports.data.kdreport.data : null
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => ({
   loadKDReport: () => dispatch(loadKDReport())
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(KDReport)
