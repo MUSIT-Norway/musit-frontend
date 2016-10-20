@@ -1,5 +1,6 @@
 import { createBreadcrumbPath } from '../../util'
 import Config from '../../config'
+import { apiUrl } from '../../util'
 
 export const TYPES = {
   NODE: 'NODE',
@@ -7,10 +8,10 @@ export const TYPES = {
 }
 
 // Node
-const CLEAR_NODES = 'musit/picklist/CLEAR_NODES';
-const ADD_NODE = 'musit/picklist/ADD_NODE';
-const REMOVE_NODE = 'musit/picklist/REMOVE_NODE';
-const TOGGLE_NODE = 'musit/picklist/TOGGLE_NODE';
+export const CLEAR_NODES = 'musit/picklist/CLEAR_NODES';
+export const ADD_NODE = 'musit/picklist/ADD_NODE';
+export const REMOVE_NODE = 'musit/picklist/REMOVE_NODE';
+export const TOGGLE_NODE = 'musit/picklist/TOGGLE_NODE';
 
 // Load Node
 export const LOAD_ONE_NODE = 'musit/picklist/LOAD_ONE_NODE'
@@ -18,10 +19,10 @@ export const LOAD_ONE_NODE_SUCCESS = 'musit/picklist/LOAD_ONE_NODE_SUCCESS'
 export const LOAD_ONE_NODE_FAIL = 'musit/picklist/LOAD_ONE_NODE_FAIL'
 
 // Object
-const CLEAR_OBJECTS = 'musit/picklist/CLEAR_OBJECTS';
-const ADD_OBJECT = 'musit/picklist/ADD_OBJECT';
-const REMOVE_OBJECT = 'musit/picklist/REMOVE_OBJECT';
-const TOGGLE_OBJECT = 'musit/picklist/TOGGLE_OBJECT';
+export const CLEAR_OBJECTS = 'musit/picklist/CLEAR_OBJECTS';
+export const ADD_OBJECT = 'musit/picklist/ADD_OBJECT';
+export const REMOVE_OBJECT = 'musit/picklist/REMOVE_OBJECT';
+export const TOGGLE_OBJECT = 'musit/picklist/TOGGLE_OBJECT';
 
 // Load object
 export const LOAD_ONE_OBJECT = 'musit/picklist/LOAD_ONE_OBJECT'
@@ -71,39 +72,15 @@ export const getPath = (pathStr) => {
   return `,${pathStrArr.slice(0, -1).join(',').toString()},`
 }
 
-const loadNode = (state) => state
+const loadItem = (state) => state
 
-const loadNodeFail = (state, action) => ({ ...state, error: action.error })
+const loadItemFail = (state, action) => ({ ...state, error: action.error })
 
-const loadNodeSuccess = (type) => (state, action) => {
-  const modifiedNodes = state[type].map((n) => {
+const loadItemSuccess = (type) => (state, action) => {
+  const modifiedItems = state[type].map((n) => {
     if (n.value.id === action.id) {
       const newPath = createBreadcrumbPath(
-        getPath(action.result.path),
-        action.result.pathNames
-      )
-      return {
-        ...n,
-        path: newPath
-      }
-    }
-    return n
-  })
-  return {
-    ...state,
-    [type]: modifiedNodes
-  }
-};
-
-const loadObject = (state) => state
-
-const loadObjectFail = (state, action) => ({ ...state, error: action.error })
-
-const loadObjectSuccess = (type) => (state, action) => {
-  const modifiedNodes = state[type].map((n) => {
-    if (n.value.id === action.id) {
-      const newPath = createBreadcrumbPath(
-          getPath(action.result.path),
+          type === TYPES.OBJECT ? action.result.path : getPath(action.result.path),
           action.result.pathNames
       )
       return {
@@ -115,7 +92,7 @@ const loadObjectSuccess = (type) => (state, action) => {
   })
   return {
     ...state,
-    [type]: modifiedNodes
+    [type]: modifiedItems
   }
 };
 
@@ -124,9 +101,9 @@ const NODE_ACTION_HANDLERS = {
   [ADD_NODE]: addItem(TYPES.NODE),
   [REMOVE_NODE]: removeItem(TYPES.NODE),
   [TOGGLE_NODE]: toggleItem(TYPES.NODE),
-  [LOAD_ONE_NODE]: loadNode,
-  [LOAD_ONE_NODE_SUCCESS]: loadNodeSuccess(TYPES.NODE),
-  [LOAD_ONE_NODE_FAIL]: loadNodeFail
+  [LOAD_ONE_NODE]: loadItem,
+  [LOAD_ONE_NODE_SUCCESS]: loadItemSuccess(TYPES.NODE),
+  [LOAD_ONE_NODE_FAIL]: loadItemFail
 };
 
 const OBJECT_ACTION_HANDLERS = {
@@ -134,9 +111,9 @@ const OBJECT_ACTION_HANDLERS = {
   [ADD_OBJECT]: addItem(TYPES.OBJECT),
   [REMOVE_OBJECT]: removeItem(TYPES.OBJECT),
   [TOGGLE_OBJECT]: toggleItem(TYPES.OBJECT),
-  [LOAD_ONE_OBJECT]: loadObject,
-  [LOAD_ONE_OBJECT_SUCCESS]: loadObjectSuccess(TYPES.OBJECT),
-  [LOAD_ONE_OBJECT_FAIL]: loadObjectFail
+  [LOAD_ONE_OBJECT]: loadItem,
+  [LOAD_ONE_OBJECT_SUCCESS]: loadItemSuccess(TYPES.OBJECT),
+  [LOAD_ONE_OBJECT_FAIL]: loadItemFail
 };
 
 export default (state = initialState, action = {}) => {
@@ -165,7 +142,7 @@ export const toggleObject = (item, on) => ({ type: TOGGLE_OBJECT, item, on })
 export const refreshNode = (id) => {
   return {
     types: [LOAD_ONE_NODE, LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE_FAIL],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`)),
     id
   }
 }
@@ -174,7 +151,7 @@ export const refreshNode = (id) => {
 export const refreshObject = (id) => {
   return {
     types: [LOAD_ONE_OBJECT, LOAD_ONE_OBJECT_SUCCESS, LOAD_ONE_OBJECT_FAIL],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}`),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/currentlocation`)),
     id
   }
 }
