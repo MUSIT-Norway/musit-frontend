@@ -1,16 +1,21 @@
 import React, { PropTypes } from 'react'
 import { range } from 'lodash'
 
-const PagingToolbar = (props) => {
-  const numPages = props.numItems / props.perPage
-  const currentPage = props.currentPage
-  return (
-    <div
-      style={{
+class PagingToolbar extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const numPages = this.props.numItems / this.props.perPage
+    const currentPage = this.props.currentPage
+    return (
+      <div
+        style={{
         float: 'right',
         marginRight: '30px'
       }}
-    >
+      >
       <span
         style={{
           fontWeight: 'bold'
@@ -21,7 +26,7 @@ const PagingToolbar = (props) => {
             href="/page/back"
             onClick={(e) => {
               e.preventDefault()
-              props.onClick(currentPage-1)
+              this.props.onClick(currentPage-1)
             }}
           >
             {'<'}
@@ -29,14 +34,14 @@ const PagingToolbar = (props) => {
           : '<'
         }
       </span>
-      {range(1, numPages + 1).map((page, i) => {
-        return (
-          <span
-            key={i}
-            style={{
+        {range(1, numPages + 1).map((page, i) => {
+          return (
+            <span
+              key={i}
+              style={{
               padding: '5px'
             }}
-          >
+            >
             {currentPage === page ?
               page
               :
@@ -44,26 +49,26 @@ const PagingToolbar = (props) => {
                 href={`/page/${page}`}
                 onClick={(e) => {
                   e.preventDefault()
-                  props.onClick(page)
+                  this.props.onClick(page)
                 }}
               >
                 {page}
               </a>
             }
           </span>
-        )
-      })}
-      <span
-        style={{
+          )
+        })}
+        <span
+          style={{
           fontWeight: 'bold'
         }}
-      >
+        >
         {numPages > 1 && currentPage < numPages ?
           <a
             href="/page/next"
             onClick={(e) => {
               e.preventDefault()
-              props.onClick(currentPage+1)
+              this.props.onClick(currentPage+1)
             }}
           >
             {'>'}
@@ -71,8 +76,9 @@ const PagingToolbar = (props) => {
           : '>'
         }
       </span>
-    </div>
-  )
+      </div>
+    )
+  }
 }
 
 PagingToolbar.propTypes = {

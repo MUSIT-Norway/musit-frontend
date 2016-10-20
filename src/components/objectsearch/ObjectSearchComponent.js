@@ -21,8 +21,8 @@ export function renderParam(id, props) {
   )
 }
 
-export function renderBreadcrumb(path: [], pathNames: []) {
-  return <Breadcrumb nodes={createBreadcrumbPath(path, pathNames)} allActive />
+export function renderBreadcrumb(nodes: []) {
+  return <Breadcrumb nodes={nodes} allActive />
 }
 
 export default (props) =>
@@ -62,15 +62,29 @@ export default (props) =>
                   </tr>
                 </thead>
                 <tbody>
-                {props.data.matches.map((data, i) =>
-                  <tr key={i}>
-                    <td className="museumNo">{data.museumNo}</td>
-                    <td className="subNo">{data.subNo}</td>
-                    <td className="term">{data.term}</td>
-                    <td className="path">{renderBreadcrumb(data.path, data.pathNames)}</td>
-                    <td className="move"><FontAwesome name="truck" /></td>
-                  </tr>
-                )}
+                {props.data.matches.map((data, i) => {
+                  const path = createBreadcrumbPath(data.path, data.pathNames)
+                  return (
+                    <tr key={i}>
+                      <td className="museumNo">{data.museumNo}</td>
+                      <td className="subNo">{data.subNo}</td>
+                      <td className="term">{data.term}</td>
+                      <td className="path">{renderBreadcrumb(path)}</td>
+                      <td className="move">
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault()
+                            props.pickObject(data, path)
+                          }}
+                          title={I18n.t('musit.objectsearch.addToPickList')}
+                        >
+                          <FontAwesome name="shopping-cart"/>
+                        </a>
+                      </td>
+                    </tr>
+                  )
+                })}
                 </tbody>
               </Table>
               <PagingToolbar

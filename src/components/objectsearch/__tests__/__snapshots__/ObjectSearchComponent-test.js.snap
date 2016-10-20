@@ -264,8 +264,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -327,8 +332,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -390,8 +400,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -453,8 +468,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -516,8 +536,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -579,8 +604,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -642,8 +672,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -705,8 +740,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -768,8 +808,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -831,8 +876,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -894,8 +944,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -957,8 +1012,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -1020,8 +1080,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -1083,8 +1148,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -1146,8 +1216,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -1209,8 +1284,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -1272,8 +1352,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -1335,8 +1420,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -1398,8 +1488,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
               <tr>
@@ -1461,8 +1556,13 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="move">
-                  <FontAwesome
-                    name="truck" />
+                  <a
+                    href=""
+                    onClick={[Function onClick]}
+                    title="Add To Pick List">
+                    <FontAwesome
+                      name="shopping-cart" />
+                  </a>
                 </td>
               </tr>
             </tbody>
