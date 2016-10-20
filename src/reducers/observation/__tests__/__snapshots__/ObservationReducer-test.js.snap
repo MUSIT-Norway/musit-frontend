@@ -264,6 +264,124 @@ Object {
 }
 `;
 
+exports[`ObservationReducer mapToFrontEnd and mapToBackEnd are inverse with complete data 2`] = `
+Object {
+  "doneBy": Object {
+    "id": "1"
+  },
+  "doneDate": "2016-09-22T22:00:00.000Z",
+  "observations": Array [
+    Object {
+      "data": Object {
+        "commentValue": "Altfor fuktig",
+        "fromValue": "1,4",
+        "toValue": "4,4"
+      },
+      "type": "temperature"
+    },
+    Object {
+      "data": Object {
+        "commentValue": "Altfor fuktig",
+        "fromValue": "1,4",
+        "toValue": "4,4"
+      },
+      "type": "hypoxicAir"
+    },
+    Object {
+      "data": Object {
+        "commentValue": "Drita full",
+        "statusValue": "Uttørket",
+        "volumeValue": "4"
+      },
+      "type": "alcohol"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Urent",
+        "rightValue": "Altfor lyst"
+      },
+      "type": "cleaning"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Mørkst",
+        "rightValue": "Altfor mørkt"
+      },
+      "type": "lightCondition"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Brann",
+        "rightValue": "Altfor vått"
+      },
+      "type": "brannsikring"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Vannskade",
+        "rightValue": "Altfor vått"
+      },
+      "type": "vannskaderisiko"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Vannskade",
+        "rightValue": "Altfor vått"
+      },
+      "type": "gas"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Muggent",
+        "rightValue": "Altfor mye mugg"
+      },
+      "type": "mold"
+    },
+    Object {
+      "data": Object {
+        "commentValue": "Ikke gjort noe med",
+        "identificationValue": "Mye skadedyr",
+        "observations": Array [
+          Object {
+            "count": "4",
+            "lifeCycle": "Larva"
+          },
+          Object {
+            "count": "32",
+            "lifeCycle": "Puppe"
+          }
+        ]
+      },
+      "type": "pest"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Mye tyver",
+        "rightValue": "Altfor mye tyver"
+      },
+      "type": "tyverisikring"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "skall",
+        "rightValue": "Altfor skallet"
+      },
+      "type": "skallsikring"
+    },
+    Object {
+      "data": Object {
+        "commentValue": "Altfor fuktig",
+        "fromValue": "1,4",
+        "toValue": "4,4"
+      },
+      "type": "relativeHumidity"
+    }
+  ],
+  "registeredBy": undefined,
+  "registeredDate": undefined
+}
+`;
+
 exports[`ObservationReducer mapToFrontEnd and mapToBackEnd shoud be inverse functions 1`] = `
 Object {
   "affectedThing": NaN,
@@ -295,5 +413,322 @@ Object {
   "temperature": undefined,
   "theftProtection": undefined,
   "waterDamageAssessment": undefined
+}
+`;
+
+exports[`ObservationReducer mapToFrontEnd and mapToBackEnd shoud be inverse functions 2`] = `
+Object {
+  "doneBy": Object {
+    "id": "1"
+  },
+  "doneDate": "2016-09-22T22:00:00.000Z",
+  "observations": Array [
+    Object {
+      "data": Object {
+        "commentValue": "Test comments.",
+        "fromValue": "19",
+        "toValue": "23"
+      },
+      "type": "hypoxicAir"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Test cleaning value.",
+        "rightValue": "Test comments."
+      },
+      "type": "cleaning"
+    },
+    Object {
+      "data": Object {
+        "leftValue": "Light",
+        "rightValue": "Test comments."
+      },
+      "type": "lightCondition"
+    }
+  ],
+  "registeredBy": undefined,
+  "registeredDate": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: Uttørket 1`] = `
+Object {
+  "affectedThing": NaN,
+  "alcohol": Object {
+    "condition": "Uttørket",
+    "note": "Drita full",
+    "volume": 4
+  },
+  "cleaning": undefined,
+  "doneBy": "1",
+  "doneDate": "2014-04-02T22:00:00.000Z",
+  "eventType": "Observation",
+  "fireProtection": undefined,
+  "gas": undefined,
+  "hypoxicAir": undefined,
+  "lightingCondition": undefined,
+  "mold": undefined,
+  "perimeterSecurity": undefined,
+  "pest": undefined,
+  "relativeHumidity": undefined,
+  "temperature": undefined,
+  "theftProtection": undefined,
+  "waterDamageAssessment": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: Uttørket 2`] = `
+Object {
+  "doneBy": Object {
+    "id": "1"
+  },
+  "doneDate": "2014-04-02T22:00:00.000Z",
+  "observations": Array [
+    Object {
+      "data": Object {
+        "commentValue": "Drita full",
+        "statusValue": "Uttørket",
+        "volumeValue": "4"
+      },
+      "type": "alcohol"
+    }
+  ],
+  "registeredBy": undefined,
+  "registeredDate": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: litt uttørket 1`] = `
+Object {
+  "affectedThing": NaN,
+  "alcohol": Object {
+    "condition": "litt uttørket",
+    "note": "Drita full",
+    "volume": 4
+  },
+  "cleaning": undefined,
+  "doneBy": "1",
+  "doneDate": "2016-05-02T22:00:00.000Z",
+  "eventType": "Observation",
+  "fireProtection": undefined,
+  "gas": undefined,
+  "hypoxicAir": undefined,
+  "lightingCondition": undefined,
+  "mold": undefined,
+  "perimeterSecurity": undefined,
+  "pest": undefined,
+  "relativeHumidity": undefined,
+  "temperature": undefined,
+  "theftProtection": undefined,
+  "waterDamageAssessment": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: litt uttørket 2`] = `
+Object {
+  "doneBy": Object {
+    "id": "1"
+  },
+  "doneDate": "2016-05-02T22:00:00.000Z",
+  "observations": Array [
+    Object {
+      "data": Object {
+        "commentValue": "Drita full",
+        "statusValue": "Litt uttørket",
+        "volumeValue": "4"
+      },
+      "type": "alcohol"
+    }
+  ],
+  "registeredBy": undefined,
+  "registeredDate": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: nesten uttørket 1`] = `
+Object {
+  "affectedThing": NaN,
+  "alcohol": Object {
+    "condition": "nesten uttørket",
+    "note": "Drita full",
+    "volume": 4
+  },
+  "cleaning": undefined,
+  "doneBy": "1",
+  "doneDate": "2012-04-02T22:00:00.000Z",
+  "eventType": "Observation",
+  "fireProtection": undefined,
+  "gas": undefined,
+  "hypoxicAir": undefined,
+  "lightingCondition": undefined,
+  "mold": undefined,
+  "perimeterSecurity": undefined,
+  "pest": undefined,
+  "relativeHumidity": undefined,
+  "temperature": undefined,
+  "theftProtection": undefined,
+  "waterDamageAssessment": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: nesten uttørket 2`] = `
+Object {
+  "doneBy": Object {
+    "id": "1"
+  },
+  "doneDate": "2012-04-02T22:00:00.000Z",
+  "observations": Array [
+    Object {
+      "data": Object {
+        "commentValue": "Drita full",
+        "statusValue": "Nesten uttørket",
+        "volumeValue": "4"
+      },
+      "type": "alcohol"
+    }
+  ],
+  "registeredBy": undefined,
+  "registeredDate": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: noe uttørket 1`] = `
+Object {
+  "affectedThing": NaN,
+  "alcohol": Object {
+    "condition": "noe uttørket",
+    "note": "Drita full",
+    "volume": 4
+  },
+  "cleaning": undefined,
+  "doneBy": "1",
+  "doneDate": "2016-03-11T23:00:00.000Z",
+  "eventType": "Observation",
+  "fireProtection": undefined,
+  "gas": undefined,
+  "hypoxicAir": undefined,
+  "lightingCondition": undefined,
+  "mold": undefined,
+  "perimeterSecurity": undefined,
+  "pest": undefined,
+  "relativeHumidity": undefined,
+  "temperature": undefined,
+  "theftProtection": undefined,
+  "waterDamageAssessment": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: noe uttørket 2`] = `
+Object {
+  "doneBy": Object {
+    "id": "1"
+  },
+  "doneDate": "2016-03-11T23:00:00.000Z",
+  "observations": Array [
+    Object {
+      "data": Object {
+        "commentValue": "Drita full",
+        "statusValue": "Noe uttrørket",
+        "volumeValue": "4"
+      },
+      "type": "alcohol"
+    }
+  ],
+  "registeredBy": undefined,
+  "registeredDate": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: tilfredsstillende 1`] = `
+Object {
+  "affectedThing": NaN,
+  "alcohol": Object {
+    "condition": "tilfredsstillende",
+    "note": "Drita full",
+    "volume": 4
+  },
+  "cleaning": undefined,
+  "doneBy": "1",
+  "doneDate": "2012-04-01T22:00:00.000Z",
+  "eventType": "Observation",
+  "fireProtection": undefined,
+  "gas": undefined,
+  "hypoxicAir": undefined,
+  "lightingCondition": undefined,
+  "mold": undefined,
+  "perimeterSecurity": undefined,
+  "pest": undefined,
+  "relativeHumidity": undefined,
+  "temperature": undefined,
+  "theftProtection": undefined,
+  "waterDamageAssessment": undefined
+}
+`;
+
+exports[`ObservationReducer test alcohol status: tilfredsstillende 2`] = `
+Object {
+  "doneBy": Object {
+    "id": "1"
+  },
+  "doneDate": "2012-04-01T22:00:00.000Z",
+  "observations": Array [
+    Object {
+      "data": Object {
+        "commentValue": "Drita full",
+        "statusValue": "Tilfredsstillende",
+        "volumeValue": "4"
+      },
+      "type": "alcohol"
+    }
+  ],
+  "registeredBy": undefined,
+  "registeredDate": undefined
+}
+`;
+
+exports[`ObservationReducer test invalid alcohol status 1`] = `
+Object {
+  "affectedThing": NaN,
+  "alcohol": Object {
+    "condition": "xxxddudyudydydydydyd",
+    "note": "Drita full",
+    "volume": 4
+  },
+  "cleaning": undefined,
+  "doneBy": "1",
+  "doneDate": "2015-04-03T22:00:00.000Z",
+  "eventType": "Observation",
+  "fireProtection": undefined,
+  "gas": undefined,
+  "hypoxicAir": undefined,
+  "lightingCondition": undefined,
+  "mold": undefined,
+  "perimeterSecurity": undefined,
+  "pest": undefined,
+  "relativeHumidity": undefined,
+  "temperature": undefined,
+  "theftProtection": undefined,
+  "waterDamageAssessment": undefined
+}
+`;
+
+exports[`ObservationReducer test invalid alcohol status 2`] = `
+Object {
+  "doneBy": Object {
+    "id": "1"
+  },
+  "doneDate": "2015-04-03T22:00:00.000Z",
+  "observations": Array [
+    Object {
+      "data": Object {
+        "commentValue": "Drita full",
+        "statusValue": "xxxddudyudydydydydyd",
+        "volumeValue": "4"
+      },
+      "type": "alcohol"
+    }
+  ],
+  "registeredBy": undefined,
+  "registeredDate": undefined
 }
 `;
