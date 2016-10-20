@@ -1,6 +1,7 @@
 
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
+import { hashHistory } from 'react-router'
 
 export default class Breadcrumb extends React.Component {
   static propTypes = {
@@ -28,7 +29,8 @@ export default class Breadcrumb extends React.Component {
       { type: 'Room', iconName: 'folder' },
       { type: 'StorageUnit', iconName: 'folder' }
     ],
-    nodes: []
+    nodes: [],
+    onClickCrumb: (node) => hashHistory.push(node.url)
   }
 
   render() {
@@ -80,7 +82,7 @@ export default class Breadcrumb extends React.Component {
             <span key={index}>
               <span style={styles.crumb}>
                 <a
-                  href=""
+                  href={node.url}
                   onClick={(e) => {
                     e.preventDefault()
                     onClickCrumb(node, index)

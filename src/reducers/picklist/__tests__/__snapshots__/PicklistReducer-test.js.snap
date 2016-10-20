@@ -1,0 +1,17 @@
+exports[`PicklistReducer refreshNode works as expected when it gets data 1`] = `
+Array [
+  Object {
+    "id": 1,
+    "type": "musit/picklist/LOAD_ONE_NODE"
+  },
+  Object {
+    "id": 1,
+    "result": Object {
+      "id": 1,
+      "name": "The special room",
+      "type": "Room"
+    },
+    "type": "musit/picklist/LOAD_ONE_NODE_SUCCESS"
+  }
+]
+`;

@@ -124,9 +124,9 @@ export default class PickListContainer extends React.Component {
               labelRendrer={(pick) => {
                 return (
                   <div>
-                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.identifier.museumNo}</span> : null}
-                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.identifier.subNo}</span> : null}
-                    <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.displayName}</span>
+                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span> : null}
+                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.subNo}</span> : null}
+                    <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.term}</span>
                     <div className="labelText">
                       <Breadcrumb
                         nodes={pick.path}
