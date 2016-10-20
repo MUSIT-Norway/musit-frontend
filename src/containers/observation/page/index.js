@@ -22,7 +22,7 @@ export default class ObservationPage extends React.Component {
     id: PropTypes.string.isRequired,
     translate: PropTypes.func.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
-    doneDate: PropTypes.object,
+    doneDate: PropTypes.string,
     doneBy: PropTypes.object,
     registeredDate: PropTypes.string,
     registeredBy: PropTypes.string,
