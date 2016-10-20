@@ -3,7 +3,7 @@ import { range } from 'lodash'
 
 const PagingToolbar = (props) => {
   const numPages = props.numItems / props.perPage
-  const currentPage = (props.currentPage || 1) * 1
+  const currentPage = props.currentPage
   return (
     <div
       style={{
@@ -16,12 +16,12 @@ const PagingToolbar = (props) => {
           fontWeight: 'bold'
         }}
       >
-        {numPages > 1 && currentPage >= numPages ?
+        {numPages > 1 && currentPage > 1 ?
           <a
             href="/page/back"
             onClick={(e) => {
               e.preventDefault()
-              props.history.push(`${props.baseUrl}?page=${currentPage-1}`)
+              props.onClick(currentPage-1)
             }}
           >
             {'<'}
@@ -29,7 +29,7 @@ const PagingToolbar = (props) => {
           : '<'
         }
       </span>
-      {range(1, numPages + 1).map((n, i) => {
+      {range(1, numPages + 1).map((page, i) => {
         return (
           <span
             key={i}
@@ -37,17 +37,17 @@ const PagingToolbar = (props) => {
               padding: '5px'
             }}
           >
-            {currentPage === n ?
-              n
+            {currentPage === page ?
+              page
               :
               <a
-                href={`/page/${n}`}
+                href={`/page/${page}`}
                 onClick={(e) => {
                   e.preventDefault()
-                  props.history.push(`${props.baseUrl}?page=${n}`)
+                  props.onClick(page)
                 }}
               >
-                {n}
+                {page}
               </a>
             }
           </span>
@@ -63,7 +63,7 @@ const PagingToolbar = (props) => {
             href="/page/next"
             onClick={(e) => {
               e.preventDefault()
-              props.history.push(`${props.baseUrl}?page=${currentPage+1}`)
+              props.onClick(currentPage+1)
             }}
           >
             {'>'}
@@ -76,13 +76,11 @@ const PagingToolbar = (props) => {
 }
 
 PagingToolbar.propTypes = {
-  currentPage: PropTypes.string.isRequired,
+  currentPage: PropTypes.number.isRequired,
   numItems: PropTypes.number.isRequired,
   baseUrl: PropTypes.string.isRequired,
   perPage: PropTypes.number,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired
+  onClick: PropTypes.func.isRequired
 }
 
 PagingToolbar.defaultProps = {

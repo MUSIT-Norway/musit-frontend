@@ -1469,31 +1469,10 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
           </Table>
           <PagingToolbar
             baseUrl="/#/search/objects"
-            currentPage="1"
-            history={
-              Object {
-                "__v2_compatible__": true,
-                "createHref": [Function createHref],
-                "createKey": [Function createKey],
-                "createLocation": [Function createLocation],
-                "createPath": [Function createPath],
-                "go": [Function go],
-                "goBack": [Function goBack],
-                "goForward": [Function goForward],
-                "listen": [Function listen],
-                "listenBefore": [Function listenBefore],
-                "push": [Function push],
-                "pushState": [Function anonymous],
-                "registerTransitionHook": [Function registerTransitionHook],
-                "replace": [Function replace],
-                "replaceState": [Function anonymous],
-                "setState": [Function anonymous],
-                "transitionTo": [Function transitionTo],
-                "unregisterTransitionHook": [Function unregisterTransitionHook]
-              }
-            }
+            currentPage={1}
             numItems={20}
-            perPage={10} />
+            onClick={[Function onClick]}
+            perPage={50} />
         </div>
       </div>
     </Grid>

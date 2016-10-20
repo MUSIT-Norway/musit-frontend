@@ -5,7 +5,6 @@ import FontAwesome from 'react-fontawesome'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { createBreadcrumbPath } from '../../util'
 import PagingToolbar from '../../util/paging'
-import { hashHistory } from 'react-router'
 
 export function renderParam(id, props) {
   return (
@@ -49,10 +48,10 @@ export default (props) =>
               Search
             </Button>
           </Form>
-          {props.data.length > 0 &&
+          {props.data.matches.length > 0 &&
             <div>
               <br />
-              <h4>{I18n.t('musit.objectsearch.results.title', { count: props.data.length })}</h4>
+              <h4>{I18n.t('musit.objectsearch.results.title', { count: props.data.matches.length })}</h4>
               <Table>
                 <thead>
                   <tr>
@@ -63,7 +62,7 @@ export default (props) =>
                   </tr>
                 </thead>
                 <tbody>
-                {props.data.map((data, i) =>
+                {props.data.matches.map((data, i) =>
                   <tr key={i}>
                     <td className="museumNo">{data.museumNo}</td>
                     <td className="subNo">{data.subNo}</td>
@@ -75,11 +74,11 @@ export default (props) =>
                 </tbody>
               </Table>
               <PagingToolbar
-                currentPage={props.location.query.page}
-                numItems={props.data.length}
+                numItems={props.data.totalMatches}
                 baseUrl={props.location.pathname}
-                history={hashHistory}
-                perPage={10}
+                currentPage={props.params.currentPage}
+                perPage={props.params.perPage}
+                onClick={(page) => props.searchForObjects(props.params, page)}
               />
             </div>
           }

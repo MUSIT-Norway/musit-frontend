@@ -3,32 +3,13 @@ import { omit } from 'lodash'
 import * as types from './constants'
 
 const initialState = {
-  data: Array(50).fill({
-    museumNo: '12345',
-    subNo: '45',
-    term: 'Fuglekasse',
-    id: 1,
-    path: ',1,2,3,',
-    pathNames: [
-      {
-        nodeId: 1,
-        name: "Root",
-        type: "Organization"
-      },
-      {
-        nodeId: 2,
-        name: "Musit",
-        type: "Building"
-      },
-      {
-        nodeId: 3,
-        name: "Kontoret",
-        type: "Room"
-      }
-    ]
-  }),
+  data: {
+    totalMatches: 0,
+    matches: []
+  },
   params: {
-
+    currentPage: 1,
+    perPage: 50
   }
 }
 
@@ -47,7 +28,14 @@ export default (state = initialState, action) => {
         ...omit(state, 'error'),
         loading: true,
         loaded: false,
-        data: []
+        data: {
+          totalMatches: 0,
+          matches: []
+        },
+        params: {
+          ...state.params,
+          currentPage: action.page
+        }
       }
     case types.SEARCH_OBJECTS_FAIL:
       return {
