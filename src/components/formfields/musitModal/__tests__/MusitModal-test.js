@@ -8,7 +8,7 @@ describe('MusitModal', () => {
   it('Check the div', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <Provider
-        store={global.mockStore({
+        store={mockStore({
           suggest: {}
         })}
       >
