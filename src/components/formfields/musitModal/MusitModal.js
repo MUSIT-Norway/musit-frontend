@@ -64,6 +64,11 @@ export default class MusitModal extends Component {
     this.props.loadChildren(initialId)
   }
 
+  loadStuffAndSetCurrentId(initialId) {
+    this.loadStuff(initialId)
+    this.props.setCurrentId(initialId)
+  }
+
   render() {
     const { children, path } = this.props
     return (
@@ -85,17 +90,18 @@ export default class MusitModal extends Component {
             <Row>
               <Col sm={2} />
               <Col sm={8}>
-                <NodeSuggest label="Search" id="nodeSearch" onChange={ (v) => v ? this.loadStuff(v) : null } />
+                <NodeSuggest label="Search" id="nodeSearch" onChange={ (v) => v ? this.loadStuffAndSetCurrentId(v) : null } placeHolder={this.props.translate('musit.moveModal.nodeSuggestPlaceholder')} />
               </Col>
               <Col sm={2} />
             </Row>
           </Modal.Header>
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>
-
-            <ModalNodeGrid
-              tableData={children}
-              onClick={(node) => this.props.setCurrentId(node.id)}
-            />
+            { (children && children.length > 0) ?
+                <ModalNodeGrid
+                    tableData={children}
+                    onClick={(node) => this.props.setCurrentId(node.id)}
+                /> : <h1 style={{ textAlign: 'center' }}>{this.props.translate('musit.moveModal.noData')}</h1>
+            }
           </Modal.Body>
           <Modal.Footer style={{ textAlign: 'center' }}>
             <Row style={{ textAlign: 'center' }}>

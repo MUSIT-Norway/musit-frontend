@@ -29,6 +29,8 @@
         "moveObjects": "Move objects",
         "moveNodes": "Move nodes",
         "currentDestination": "Destination:",
+        "noData": "No data here",
+        "nodeSuggestPlaceholder": "Search for node",
         "messages": {
           "nodeMoved": "%{name} was moved to %{destination}.",
           "objectMoved": "%{name} was moved to %{destination}.",
@@ -574,6 +576,8 @@
         "moveObjects": "Flytt objekter",
         "moveNodes": "Flytt noder",
         "currentDestination": "Destinasjon:",
+        "noData": "Ingen noder her",
+        "nodeSuggestPlaceholder": "Søk etter node",
         "messages": {
           "nodeMoved": "%{name} ble flyttet til %{destination}.",
           "objectMoved": "%{name} ble flyttet til %{destination}.",

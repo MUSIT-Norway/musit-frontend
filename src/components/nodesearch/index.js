@@ -70,7 +70,7 @@ class NodeSuggest extends React.Component {
         return `${suggestion.type}: ${suggestion.name}`
     }
 
-    doneByProps = {
+    nodeProps = {
         id: this.props.id,
         placeholder: this.props.placeHolder,
         type: 'search',
@@ -92,7 +92,7 @@ class NodeSuggest extends React.Component {
                 onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
                 getSuggestionValue={this.getNodeSuggestionValue}
                 renderSuggestion={this.renderNodeSuggestion}
-                inputProps={{ ...this.doneByProps, value: this.state.value }}
+                inputProps={{ ...this.nodeProps, value: this.state.value }}
                 shouldRenderSuggestions={(v) => v !== 'undefined'}
                 onSuggestionSelected={this.onSuggestionSelected}
             />
