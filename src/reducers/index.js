@@ -33,8 +33,6 @@ import observationReducer from './observation';
 import reportReducer from './reports';
 import controlReducer from './control';
 import observationControlGridReducer from './grid/observationcontrol';
-import nodeGridReducer from './grid/node';
-import objectGridReducer from './grid/object';
 import moveHistoryReducer from './grid/move'
 import { reducer as formReducer } from 'redux-form';
 
@@ -55,9 +53,7 @@ const rootReducer = combineReducers({
   reports: reportReducer,
   control: controlReducer,
   observationControlGrid: observationControlGridReducer,
-  nodeGrid: nodeGridReducer,
-  movehistory: moveHistoryReducer,
-  objectGrid: objectGridReducer
+  movehistory: moveHistoryReducer
 });
 
 export default rootReducer;

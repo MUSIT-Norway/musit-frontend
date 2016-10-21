@@ -1,0 +1,46 @@
+exports[`Auth creates LOAD_ACTOR_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/movehistory/LOAD_ACTOR"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "dataportenId": "jarle",
+        "fn": "Jarle Stabell",
+        "id": 1
+      },
+      Object {
+        "dataportenId": "stein",
+        "fn": "Stein A. Olsen",
+        "id": 2
+      }
+    ],
+    "type": "musit/movehistory/LOAD_ACTOR_SUCCESS"
+  }
+]
+`;
+
+exports[`Auth fail action 1`] = `
+Object {
+  "data": Object {
+    "actor": [Error: Some error here.]
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
+exports[`Auth initial action 1`] = `
+Object {
+  "data": Array [],
+  "loaded": false,
+  "loading": true
+}
+`;
+
+exports[`Auth no action 1`] = `
+Object {
+  "data": Array []
+}
+`;
