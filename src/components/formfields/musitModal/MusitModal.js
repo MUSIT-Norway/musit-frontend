@@ -90,13 +90,18 @@ export default class MusitModal extends Component {
             <Row>
               <Col sm={2} />
               <Col sm={8}>
-                <NodeSuggest label="Search" id="nodeSearch" onChange={ (v) => v ? this.loadStuffAndSetCurrentId(v) : null } placeHolder={this.props.translate('musit.moveModal.nodeSuggestPlaceholder')} />
+                <NodeSuggest
+                    label="Search"
+                    id="nodeSearch"
+                    onChange={ (v) => v ? this.loadStuffAndSetCurrentId(v) : null }
+                    placeHolder={this.props.translate('musit.moveModal.nodeSuggestPlaceholder')}
+                />
               </Col>
               <Col sm={2} />
             </Row>
           </Modal.Header>
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>
-            { (children && children.length > 0) ?
+            { children && children.length > 0 ?
                 <ModalNodeGrid
                     tableData={children}
                     onClick={(node) => this.props.setCurrentId(node.id)}
