@@ -9,11 +9,10 @@ export default class ObjectGrid extends Component {
     id: PropTypes.number,
     translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
-      identifier: PropTypes.shape({
-        museumNo: PropTypes.string.isRequired,
-        subNo: PropTypes.string.isRequired
-      }).isRequired,
-      displayName: PropTypes.string
+      id: PropTypes.number.isRequired,
+      museumNo: PropTypes.string.isRequired,
+      subNo: PropTypes.string,
+      term: PropTypes.string.isRequired
     })).isRequired,
     onAction: PropTypes.func.isRequired,
     showMoveHistory: PropTypes.func.isRequired,
@@ -84,18 +83,18 @@ export default class ObjectGrid extends Component {
               </thead>
               <tbody>
                 {tableData.map((c, i) =>
-                  <tr key={i} id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}`} >
-                    <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_museumNumber`}>
+                  <tr key={i} id={`${id}_${c.museumNo}_${c.subNo}`} >
+                    <td id={`${id}_${c.museumNo}_${c.subNo}_museumNumber`}>
                       <FontAwesome name="rebel" />
-                      {` ${c.identifier.museumNo}`}
+                      {` ${c.museumNo}`}
                     </td>
-                    <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_uNumber`}>
-                      {c.identifier.subNo}
+                    <td id={`${id}_${c.museumNo}_${c.subNo}_uNumber`}>
+                      {c.subNo}
                     </td>
-                    <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_term`}>
-                      {c.displayName}
+                    <td id={`${id}_${c.museumNo}_${c.subNo}_term`}>
+                      {c.term}
                     </td>
-                    <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_moveHistory`}>
+                    <td id={`${id}_${c.museumNo}_${c.subNo}_moveHistory`}>
                       <a
                         href=""
                         onClick={(e) => {
@@ -107,19 +106,19 @@ export default class ObjectGrid extends Component {
                         <span className="icon icon-musitmovehistoryicon" />
                       </a>
                     </td>
-                    <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_truck`}>
+                    <td id={`${id}_${c.museumNo}_${c.subNo}_truck`}>
                       <a
                         href=""
                         onClick={(e) => {
                           e.preventDefault()
-                          this.showModal(c.id, c.displayName)
+                          this.showModal(c.id, c.term)
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
                       >
                         <FontAwesome name="truck" />
                       </a>
                     </td>
-                    <td id={`${id}_${c.identifier.museumNo}_${c.identifier.subNo}_shoppingCart`}>
+                    <td id={`${id}_${c.museumNo}_${c.subNo}_shoppingCart`}>
                       <a
                         href=""
                         onClick={(e) => {

@@ -21,7 +21,7 @@
 import React from 'react'
 import { Grid, Row, Col, FormControl } from 'react-bootstrap'
 import PairedToogleButtons from '../../../components/control/add'
-import DatePicker from 'react-bootstrap-date-picker'
+import DatePicker from '../../../util/datePicker'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'
 import { flatten, DATE_FORMAT_DISPLAY, hasProp } from '../../../util'
@@ -234,7 +234,7 @@ export default class ControlAddContainer extends React.Component {
                         <DatePicker
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate}
-                          onClear={() => this.setState({ ...this.state, doneDate: new Date().toISOString() })}
+                          onClear={(newValue) => this.setState({ ...this.state, doneDate: newValue })}
                           onChange={newValue => {
                             this.setDate(newValue)
                           }}

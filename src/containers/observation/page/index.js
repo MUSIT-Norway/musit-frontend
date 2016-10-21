@@ -11,7 +11,7 @@ import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FO
 import FontAwesome from 'react-fontawesome'
 import { hashHistory } from 'react-router'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
-import DatePicker from 'react-bootstrap-date-picker'
+import DatePicker from '../../../util/datePicker'
 import ActorSuggest from '../../../components/actor'
 import * as validation from './validation'
 import { isDateBiggerThanToday } from '../../../util'
@@ -321,11 +321,9 @@ export default class ObservationPage extends React.Component {
                  : 
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
-                    onClear={() => this.setState({ ...this.state, doneDate: new Date().toISOString() })}
+                    onClear={(newValue) => this.setState({ ...this.state, doneDate: newValue })}
                     value={this.state.doneDate}
-                    onChange={newValue => {
-                      this.setDate(newValue)
-                    }}
+                    onChange={newValue => this.setDate(newValue)}
                     disabled={this.props.mode === 'VIEW'}
                   />
                 }
