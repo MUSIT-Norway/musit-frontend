@@ -45,6 +45,7 @@ describe('ObjectSearchComponent', () => {
           },
           pathname: '/#/search/objects'
         }}
+        loaded={true}
         data={testData}
         onChangeField={() => true}
         params={{
