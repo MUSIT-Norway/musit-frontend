@@ -20,6 +20,7 @@ import './modalStyling.css'
 import React, { Component, PropTypes } from 'react'
 import { Modal, Row, Col, Button } from 'react-bootstrap'
 import ModalMoveHistoryGrid from '../../../components/grid/ModalMoveHistoryGrid'
+import { I18n } from 'react-i18nify'
 
 export default class MusitHistoryModal extends Component {
 
@@ -59,7 +60,7 @@ export default class MusitHistoryModal extends Component {
             <Row style={{ textAlign: 'center' }}>
               <Col xs={4} sm={4} smOffset={4}>
                 <Button onClick={this.props.onClose}>
-                  Close
+                  {I18n.t('musit.texts.close')}
                 </Button>
               </Col>
             </Row>

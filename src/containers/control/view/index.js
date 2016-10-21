@@ -25,6 +25,7 @@ import { MusitField } from '../../../components/formfields'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
+import { I18n } from 'react-i18nify'
 
 export default class ControlViewContainer extends React.Component {
   static propTypes = {
@@ -126,7 +127,7 @@ export default class ControlViewContainer extends React.Component {
               <Row className="row-centered" style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}>
                 <Col xs={10}>
                   <Button onClick={() => { hashHistory.goBack() }}>
-                    Lukk
+                    {I18n.t('musit.texts.close')}
                   </Button>
                 </Col>
               </Row>
