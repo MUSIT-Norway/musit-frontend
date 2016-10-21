@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     onUpdateRequested: (id, { value, reason }) => {
-        if (reason && reason === 'type' && value && value.length >= 2) {
+        if (reason && reason === 'type' && value && value.length > 2) {
             dispatch(suggestNode(id, value))
         } else {
             dispatch(clearSuggest(id))
@@ -52,7 +52,6 @@ class NodeSuggest extends React.Component {
 
     onChange(event, { newValue }) {
         this.setState({ ...this.state, value: newValue });
-        this.props.onChange(newValue)
     }
 
     onSuggestionSelected(event, { suggestion }) {
