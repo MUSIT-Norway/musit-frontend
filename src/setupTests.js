@@ -7,3 +7,9 @@ import LanguageJson from '../language.json'
 import { I18n } from 'react-i18nify'
 I18n.loadTranslations(LanguageJson)
 I18n.setLocale('no')
+
+import configureMockStore from 'redux-mock-store'
+import createMiddleware from './middleware/clientMiddleware'
+import ApiClient from './middleware/ApiClient'
+const middlewares = [ createMiddleware(new ApiClient()) ]
+global.mockStore = configureMockStore(middlewares)
