@@ -1,6 +1,6 @@
-import assert from 'assert'
+import { shallow } from 'enzyme'
+import { shallowToJson } from 'enzyme-to-json';
 import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils'
 import ObjectGrid from '../ObjectGrid';
 
 class TestModal extends React.Component {
@@ -16,10 +16,8 @@ class TestModalMoveHistory extends React.Component {
 }
 
 describe('ObjectGrid', () => {
-  let inputComponent;
-
-  const setup = () => {
-    const myDiv = ReactTestUtils.renderIntoDocument(
+  it('renders correctly', () => {
+    const wrapper = shallow(
       <ObjectGrid
         id={1}
         translate={(key) => key}
@@ -31,48 +29,19 @@ describe('ObjectGrid', () => {
         tableData={[
           {
             id: 1,
-            identifier: {
-              museumNo: 'C10001',
-              subNo: '1'
-            },
-            displayName: 'Gråstein'
+            museumNo: 'C10001',
+            subNo: '1',
+            term: 'Gråstein'
           },
           {
             id: 1,
-            identifier: {
-              museumNo: 'C10002',
-              subNo: '2'
-            },
-            displayName: 'Spydspiss'
+            museumNo: 'C10002',
+            subNo: '2',
+            term: 'Spydspiss'
           }
         ]}
       />
     );
-    inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'td');
-  };
-
-  it('Check the 1st row Museum number id.', () => {
-    setup()
-    assert(inputComponent[0].getAttribute('id') === '1_C10001_1_museumNumber')
-  })
-  it('Check the 1st row Unr id', () => {
-    setup()
-    assert(inputComponent[1].getAttribute('id') === '1_C10001_1_uNumber')
-  })
-  it('Check the 1st row Unr value', () => {
-    setup()
-    assert(inputComponent[1].innerHTML === '1')
-  })
-  it('Check the 1st row Term value', () => {
-    setup()
-    assert(inputComponent[2].innerHTML === 'Gråstein')
-  })
-  it('Check the 2nd row Unr value', () => {
-    setup()
-    assert(inputComponent[7].innerHTML === '2')
-  })
-  it('Check the 2nd row Term value', () => {
-    setup()
-    assert(inputComponent[8].innerHTML === 'Spydspiss')
-  })
+    expect(shallowToJson(wrapper)).toMatchSnapshot()
+  });
 })

@@ -1,0 +1,106 @@
+exports[`StorageUnitsContainer_Breadcrumb_test Breadcrumb first element should have name "Museum":  1`] = `
+<div>
+  <span
+    style={
+      Object {
+        "paddingLeft": "0.5em"
+      }
+    } />
+  <span>
+    <span
+      style={
+        Object {
+          "paddingLeft": "0.5em"
+        }
+      }>
+      <a
+        href="/magasin/root"
+        onClick={[Function onClick]}>
+        <FontAwesome
+          name="home"
+          style={
+            Object {
+              "fontSize": "1.5em",
+              "padding": "1px"
+            }
+          } />
+      </a>
+    </span>
+    <span
+      style={
+        Object {
+          "paddingLeft": "0.5em"
+        }
+      } />
+  </span>
+  <span>
+    <span
+      style={
+        Object {
+          "paddingLeft": "0.5em"
+        }
+      }>
+      <a
+        href="/test/1"
+        onClick={[Function onClick]}>
+        <FontAwesome
+          name="folder"
+          style={
+            Object {
+              "padding": "1px"
+            }
+          } />
+        Museum
+      </a>
+    </span>
+    <span
+      style={
+        Object {
+          "paddingLeft": "0.5em"
+        }
+      } />
+  </span>
+  <span>
+    <span
+      style={
+        Object {
+          "paddingLeft": "0.5em"
+        }
+      }>
+      <a
+        href="/test/2"
+        onClick={[Function onClick]}>
+        <FontAwesome
+          name="folder"
+          style={
+            Object {
+              "padding": "1px"
+            }
+          } />
+        Bygg1
+      </a>
+    </span>
+    <span
+      style={
+        Object {
+          "paddingLeft": "0.5em"
+        }
+      } />
+  </span>
+  <span
+    style={
+      Object {
+        "paddingLeft": "0.5em"
+      }
+    }>
+    <FontAwesome
+      name="folder"
+      style={
+        Object {
+          "padding": "1px"
+        }
+      } />
+    Pauserom
+  </span>
+</div>
+`;
