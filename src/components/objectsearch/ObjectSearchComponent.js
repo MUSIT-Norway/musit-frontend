@@ -6,15 +6,16 @@ import Breadcrumb from '../../layout/Breadcrumb'
 import { createBreadcrumbPath } from '../../util'
 import PagingToolbar from '../../util/paging'
 
-export function renderParam(id, props) {
+export function renderParam(id, props, style) {
   return (
     <FormGroup controlId={id}>
       <ControlLabel>{I18n.t(`musit.objectsearch.${id}.label`)}</ControlLabel>
       {' '}
       <FormControl
+        style={{ ...style }}
         type="text"
         placeholder={I18n.t(`musit.objectsearch.${id}.placeHolder`)}
-        value={props.params[id] || ''}
+        value={props.params[id] || ''}
         onChange={(e) => props.onChangeField(id, e.target.value)}
       />
     </FormGroup>
@@ -36,7 +37,7 @@ export default (props) =>
             {' '}
             {renderParam('subNo', props)}
             {' '}
-            {renderParam('term', props)}
+            {renderParam('term', props, { width: '470px' })}
             {' '}
             <Button
               type="submit"
@@ -45,13 +46,28 @@ export default (props) =>
                 props.searchForObjects(props.params)
               }}
             >
-              Search
+              <FontAwesome name="search" style={{ fontSize: '1.3em' }} />
             </Button>
           </Form>
+          <br />
+          <h4>
+          {props.loaded &&
+            (props.data.totalMatches > 0 ?
+              I18n.t('musit.objectsearch.results.title', { count: props.data.totalMatches })
+              :
+              I18n.t('musit.objectsearch.results.noHit')
+            )
+          }
+          </h4>
           {props.data.matches.length > 0 &&
             <div>
-              <br />
-              <h4>{I18n.t('musit.objectsearch.results.title', { count: props.data.matches.length })}</h4>
+              <PagingToolbar
+                numItems={props.data.totalMatches}
+                baseUrl={props.location.pathname}
+                currentPage={props.params.currentPage}
+                perPage={props.params.perPage}
+                onClick={(page) => props.searchForObjects(props.params, page)}
+              />
               <Table>
                 <thead>
                   <tr>
@@ -79,7 +95,7 @@ export default (props) =>
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >
-                          <FontAwesome name="shopping-cart"/>
+                          <FontAwesome name="shopping-cart" style={{ fontSize: '1.3em' }} />
                         </a>
                       </td>
                     </tr>

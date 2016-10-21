@@ -125,6 +125,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               componentClass="input"
               onChange={[Function onChange]}
               placeholder=" "
+              style={Object {}}
               type="text"
               value="1234" />
           </FormGroup>
@@ -143,6 +144,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               componentClass="input"
               onChange={[Function onChange]}
               placeholder=" "
+              style={Object {}}
               type="text"
               value="455" />
           </FormGroup>
@@ -161,6 +163,11 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               componentClass="input"
               onChange={[Function onChange]}
               placeholder=" "
+              style={
+                Object {
+                  "width": "470px"
+                }
+              }
               type="text"
               value="Lololol" />
           </FormGroup>
@@ -173,14 +180,26 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             disabled={false}
             onClick={[Function onClick]}
             type="submit">
-            Search
+            <FontAwesome
+              name="search"
+              style={
+                Object {
+                  "fontSize": "1.3em"
+                }
+              } />
           </Button>
         </Form>
+        <br />
+        <h4>
+          Søket ga 20 treff:
+        </h4>
         <div>
-          <br />
-          <h4>
-            Resultat - søket ga 20 treff:
-          </h4>
+          <PagingToolbar
+            baseUrl="/#/search/objects"
+            currentPage={1}
+            numItems={20}
+            onClick={[Function onClick]}
+            perPage={50} />
           <Table
             bordered={false}
             bsClass="table"
@@ -269,7 +288,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -337,7 +361,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -405,7 +434,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -473,7 +507,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -541,7 +580,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -609,7 +653,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -677,7 +726,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -745,7 +799,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -813,7 +872,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -881,7 +945,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -949,7 +1018,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1017,7 +1091,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1085,7 +1164,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1153,7 +1237,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1221,7 +1310,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1289,7 +1383,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1357,7 +1456,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1425,7 +1529,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1493,7 +1602,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
@@ -1561,7 +1675,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     onClick={[Function onClick]}
                     title="Add To Pick List">
                     <FontAwesome
-                      name="shopping-cart" />
+                      name="shopping-cart"
+                      style={
+                        Object {
+                          "fontSize": "1.3em"
+                        }
+                      } />
                   </a>
                 </td>
               </tr>
