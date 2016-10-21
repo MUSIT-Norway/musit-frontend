@@ -7,9 +7,7 @@ WORKDIR "/usr/src/app"
 
 ADD src src
 ADD public public
-ADD package.json package.json
-ADD fake_security.json fake_security.json
-
+ADD *.json ./
 RUN npm install -g pushstate-server
 RUN npm install
 RUN npm run build
