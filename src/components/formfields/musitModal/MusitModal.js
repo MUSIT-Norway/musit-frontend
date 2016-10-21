@@ -100,7 +100,7 @@ export default class MusitModal extends Component {
                 <ModalNodeGrid
                     tableData={children}
                     onClick={(node) => this.props.setCurrentId(node.id)}
-                /> : <h1 style={{ textAlign: 'center' }}>{this.props.translate('musit.moveModal.noData')}</h1>
+                /> : <h1 style={{ textAlign: 'center', color: 'grey' }}>{this.props.translate('musit.moveModal.noData')}</h1>
             }
           </Modal.Body>
           <Modal.Footer style={{ textAlign: 'center' }}>
