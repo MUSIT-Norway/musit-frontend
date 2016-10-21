@@ -84,7 +84,7 @@ export default class MusitModal extends Component {
             </Modal.Title>
             <Row>
               <Col sm={12}>
-                <hr/>
+                <hr />
               </Col>
             </Row>
             <Row>
