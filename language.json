@@ -126,7 +126,8 @@
           "label": "Plassering"
         },
         "results": {
-          "title": "Resultat - søket ga %{count} treff:"
+          "title": "Søket ga %{count} treff:",
+          "noHit": "Søket ga ingen treff."
         }
       },
       "texts": {
@@ -671,7 +672,8 @@
           "label": "Plassering"
         },
         "results": {
-          "title": "Resultat - søket ga %{count} treff:"
+          "title": "Søket ga %{count} treff:",
+          "noHit": "Søket ga ingen treff."
         }
       },
       "texts": {
