@@ -16,7 +16,6 @@ import reducer from '../../../reducers/observation/index'
 import * as actions from '../../../reducers/observation/index'
 
 const nock = nocker(request);
-
 const middlewares = [ createMiddleware(new ApiClient()) ]
 const mockStore = configureMockStore(middlewares)
 
