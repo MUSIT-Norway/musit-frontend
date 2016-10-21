@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     data: state.objectSearch.data,
     params: state.objectSearch.params,
-    currentPage: state.objectSearch.currentPage
+    currentPage: state.objectSearch.currentPage,
+    loaded: state.objectSearch.loaded
   }
 }
 

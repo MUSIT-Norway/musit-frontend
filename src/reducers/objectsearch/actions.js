@@ -4,7 +4,7 @@ import Config from '../../config'
 
 export const searchForObjects = (params, page) => {
   const baseUrl = apiUrl(Config.magasin.urls.objectsearch.baseUrl(1));
-  const museumNoQuery = `museumNo=${params.museumNo || ''}`
+  const museumNoQuery = `museumNo=${params.museumNo || ''}`
   const subNoQuery = `subNo=${params.subNo || ''}`
   const termQuery = `term=${params.term || ''}`
   const pageQuery = `page=${page}`
