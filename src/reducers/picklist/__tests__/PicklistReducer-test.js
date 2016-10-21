@@ -20,6 +20,10 @@ import picklistReducer, {
   LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE, LOAD_ONE_NODE_FAIL
 } from '../index'
 
+
+import reducer from '../../../reducers/picklist/index'
+import * as actions from '../../../reducers/picklist/index'
+
 const node1 = {
   id: 1,
   name: 'Test 1'
@@ -595,4 +599,141 @@ it('Refresh node updates path. Will only show the second node. First(root) and l
   }
   assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1')
 })
+  it('invokes LOAD_ONE_OBJECT_SUCCESS when object path is loaded.', () => {
+    const id = 1
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/currentlocation`
+    nock('http://localhost')
+        .get(url)
+        .reply(200, {
+          id: 3,
+          name: 'Forskningens hus',
+          isPartOf: 2,
+          path: ',1,2,3,',
+          pathNames: [
+            {
+              nodeId: 1,
+              name: 'root-node'
+            },
+            {
+              nodeId: 2,
+              name: 'Utviklingsmuseet'
+            },
+            {
+              nodeId: 3,
+              name: 'Forskningens hus'
+            }
+          ],
+          type: 'Building'
+        })
+    const store = mockStore()
+
+    return store.dispatch(actions.refreshObject(1))
+        .then(() => {
+          expect(store.getActions()).toMatchSnapshot()
+        })
+  })
+
+  it('Refresh object: no action', () => {
+    expect(
+        reducer(undefined, {})
+    ).toMatchSnapshot()
+  })
+
+  it('Refresh object: initial action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_ONE_OBJECT
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('Refresh object: success action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_ONE_OBJECT_SUCCESS,
+          result: {
+            someField: 1
+          }
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('Refresh object: fail action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_ONE_OBJECT_FAIL,
+          error: Error('Some error occurred to load object path.')
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('invokes LOAD_ONE_NODE_SUCCESS when node path is loaded.', () => {
+    const id = 3
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`
+    nock('http://localhost')
+        .get(url)
+        .reply(200, {
+          id: 3,
+          name: 'Forskningens hus',
+          isPartOf: 2,
+          path: ',1,2,3,',
+          pathNames: [
+            {
+              nodeId: 1,
+              name: 'root-node'
+            },
+            {
+              nodeId: 2,
+              name: 'Utviklingsmuseet'
+            },
+            {
+              nodeId: 3,
+              name: 'Forskningens hus'
+            }
+          ],
+          type: 'Building'
+        })
+    const store = mockStore()
+
+    return store.dispatch(actions.refreshNode(3))
+        .then(() => {
+          expect(store.getActions()).toMatchSnapshot()
+        })
+  })
+
+  it('Refresh node: no action', () => {
+    expect(
+        reducer(undefined, {})
+    ).toMatchSnapshot()
+  })
+
+  it('Refresh node: initial action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_ONE_NODE
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('Refresh node: success action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_ONE_NODE_SUCCESS,
+          result: {
+            someField: 1
+          }
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('Refresh node: fail action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_ONE_NODE_FAIL,
+          error: Error('Some error occurred to load node path.')
+        })
+    ).toMatchSnapshot()
+  })
+
+
 })
