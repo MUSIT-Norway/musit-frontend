@@ -28,7 +28,7 @@ import Breadcrumb from '../../../../layout/Breadcrumb'
 import { I18n } from 'react-i18nify'
 import AddressSuggest from '../../../../components/address'
 import Loader from 'react-loader';
-import { createBreadcrumbPath } from '../../../../util'
+import { createBreadcrumbPath, parseISODateNonStrict } from '../../../../util'
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../../components/formfields'
 
 const mapStateToProps = (state) => {
@@ -276,13 +276,13 @@ class StorageUnitContainer extends Component {
   }
 
   renderLastChangeData(updatedBy, updatedDate, unit) {
-    const lastUpdateBy = unit[updatedBy]
-    const lastUpdateDate = unit[updatedDate]
+    const lastUpdateDate = parseISODateNonStrict(unit[updatedDate]).format("DD.MM.YYYY")
+    const lastUpdateBy = unit[updatedBy] // TODO når dette er i orden, autentisering er i orden
     return (
         <span>
-          {this.props.translate(`musit.storageUnits.tooltip.lastUpdateByText${lastUpdateBy}`)}
+          <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b>Darth Wader
           <br />
-          {this.props.translate(`musit.storageUnits.tooltip.lastUpdateDateText${lastUpdateDate}`)}
+          <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{lastUpdateDate}
        </span>
     )
   }
@@ -525,9 +525,14 @@ class StorageUnitContainer extends Component {
                             onClickSave={this.handleSubmit}
                             onClickCancel={() => hashHistory.goBack()}
                           />
-                          {this.renderLastChangeData('updateBy', 'updatedDate', this.props.unit)}
                         </Row>
-                      </Grid>
+                        <Row>
+                          <Col sm={8} />
+                          <Col sm={4}>
+                            {this.renderLastChangeData('updatedBy', 'updatedDate', this.props.unit)}
+                          </Col>
+                        </Row>
+                        </Grid>
                     </div>
                   </form>
                 </Col>

@@ -30,7 +30,8 @@ export default class SaveCancel extends Component {
     onClickSave: PropTypes.func.isRequired,
     cancelLabel: PropTypes.string,
     cancelDisabled: PropTypes.bool,
-    onClickCancel: PropTypes.func.isRequired
+    onClickCancel: PropTypes.func.isRequired,
+    updated: PropTypes.object
   }
 
   constructor(props) {
@@ -40,7 +41,8 @@ export default class SaveCancel extends Component {
       saveDisabled,
       onClickSave,
       cancelDisabled,
-      onClickCancel
+      onClickCancel,
+      updated
     } = props
     this.fields = {
       save: {
@@ -57,7 +59,7 @@ export default class SaveCancel extends Component {
   }
 
   render() {
-    const { saveLabel, cancelLabel, translate } = this.props
+    const { saveLabel, cancelLabel, translate, updated } = this.props
     const showButton = (data) => {
       return (
         <Col xs={6} sm={5} style={{ border: 'none', textAlign: 'center' }}>
@@ -65,6 +67,7 @@ export default class SaveCancel extends Component {
         </Col>
       )
     }
+
 
     return (
       <Row>
