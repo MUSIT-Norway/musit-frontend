@@ -1,5 +1,8 @@
 {
   "extends": "react-app",
+  "globals": {
+    "mockStore": true
+  },
   "rules": {
     "no-alert": "warn",
     "no-array-constructor": "error",
