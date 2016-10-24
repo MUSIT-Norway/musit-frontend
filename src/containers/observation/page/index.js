@@ -15,6 +15,7 @@ import DatePicker from '../../../util/datePicker'
 import ActorSuggest from '../../../components/actor'
 import * as validation from './validation'
 import { isDateBiggerThanToday } from '../../../util'
+import { I18n } from 'react-i18nify'
 
 export default class ObservationPage extends React.Component {
 
@@ -436,7 +437,7 @@ export default class ObservationPage extends React.Component {
                     hashHistory.goBack()
                   }}
                 >
-                  Lukk
+                  {I18n.t('musit.texts.close')}
                 </Button>
               </Col> :
               <SaveCancel

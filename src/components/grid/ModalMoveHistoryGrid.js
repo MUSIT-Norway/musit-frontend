@@ -13,7 +13,7 @@ export default class ModalMoveHistoryGrid extends Component {
   render() {
     const toPathStr = (pathStr, pathNames) => {
       const pathArr = createBreadcrumbPath(pathStr, pathNames)
-      return pathArr.map(o => o.name).join('/')
+      return pathArr.map(o => o.name).join('  /  ')
     }
     return (
       <FormGroup>
