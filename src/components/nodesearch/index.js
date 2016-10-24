@@ -67,7 +67,7 @@ class NodeSuggest extends React.Component {
     }
 
     getNodeSuggestionValue(suggestion) {
-        return `${suggestion.type}: ${suggestion.name}`
+        return suggestion.name
     }
 
     nodeProps = {
@@ -78,7 +78,7 @@ class NodeSuggest extends React.Component {
     };
 
     renderNodeSuggestion(suggestion) {
-        const suggestionText = `${suggestion.name} , ${suggestion.type}`;
+        const suggestionText = suggestion.name;
         return (
             <span className={'suggestion-content'}>{suggestionText}</span>
         )
