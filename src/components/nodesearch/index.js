@@ -80,7 +80,7 @@ class NodeSuggest extends React.Component {
     renderNodeSuggestion(suggestion) {
         const suggestionText = suggestion.name;
         return (
-            <span style={{ width: '100%' }} className={'suggestion-content'} textWidth="100px">{suggestionText}</span>
+            <span className={'suggestion-content'}>{suggestionText}</span>
         )
     }
 
