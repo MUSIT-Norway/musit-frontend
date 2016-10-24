@@ -29,6 +29,8 @@
         "moveObjects": "Move objects",
         "moveNodes": "Move nodes",
         "currentDestination": "Destination:",
+        "noData": "No data here",
+        "nodeSuggestPlaceholder": "Search for node",
         "messages": {
           "nodeMoved": "%{name} was moved to %{destination}.",
           "objectMoved": "%{name} was moved to %{destination}.",
@@ -108,6 +110,28 @@
           }
         }
       },
+      "objectsearch": {
+        "title": "Object search",
+        "museumNo": {
+          "label": "Museumnr.",
+          "placeHolder": " "
+        },
+        "subNo": {
+          "label": "Unr.",
+          "placeHolder": " "
+        },
+        "term": {
+          "label": "Term/Artsnavn",
+          "placeHolder": " "
+        },
+        "location": {
+          "label": "Plassering"
+        },
+        "results": {
+          "title": "Søket ga %{count} treff:",
+          "noHit": "Søket ga ingen treff."
+        }
+      },
       "texts": {
         "freetext": "Free text",
         "makeChoice": "Please choose...",
@@ -118,6 +142,7 @@
         "ok": "OK",
         "notOk": "Not OK",
         "save": "Save",
+        "close": "Close",
         "saveTooltip": "Save registration",
         "cancel": "Cancel",
         "cancelTooltip": "Cancel registration",
@@ -553,6 +578,8 @@
         "moveObjects": "Flytt objekter",
         "moveNodes": "Flytt noder",
         "currentDestination": "Destinasjon:",
+        "noData": "Ingen noder her",
+        "nodeSuggestPlaceholder": "Søk etter node",
         "messages": {
           "nodeMoved": "%{name} ble flyttet til %{destination}.",
           "objectMoved": "%{name} ble flyttet til %{destination}.",
@@ -632,6 +659,28 @@
           }
         }
       },
+      "objectsearch": {
+        "title": "Objektsøk",
+        "museumNo": {
+          "label": "Museumnr.",
+          "placeHolder": " "
+        },
+        "subNo": {
+          "label": "Unr.",
+          "placeHolder": " "
+        },
+        "term": {
+          "label": "Term/Artsnavn",
+          "placeHolder": " "
+        },
+        "location": {
+          "label": "Plassering"
+        },
+        "results": {
+          "title": "Søket ga %{count} treff:",
+          "noHit": "Søket ga ingen treff."
+        }
+      },
       "texts": {
         "freetext": "Fritekst",
         "makeChoice": "Vennligst velg...",
@@ -642,6 +691,7 @@
         "ok": "OK",
         "notOk": "Ikke OK",
         "save": "Lagre",
+        "close": "Lukk",
         "saveTooltip": "Lagre",
         "cancel": "Avbryt",
         "cancelTooltip": "Avbryt registreringen",

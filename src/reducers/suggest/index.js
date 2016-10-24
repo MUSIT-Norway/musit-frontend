@@ -75,6 +75,14 @@ export const suggestAddress = (destination, query) => {
   }
 }
 
+export const suggestNode = (destination, query) => {
+  return {
+    types: [SUGGEST, SUGGEST_SUCCESS, SUGGEST_FAIL],
+    destination,
+    promise: (client) => client.get(`/api/storagefacility/v1/museum/1/storagenodes/search?searchStr=${query}`)
+  }
+}
+
 export const suggestPerson = (destination, query) => {
   return {
     types: [SUGGEST, SUGGEST_SUCCESS, SUGGEST_FAIL],

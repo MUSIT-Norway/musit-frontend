@@ -1,8 +1,8 @@
 import configureMockStore from 'redux-mock-store'
 import createMiddleware from '../../../middleware/clientMiddleware'
 import ApiClient from '../../../middleware/ApiClient'
-import * as actions from '../../../reducers/reports'
-import reducer from '../../../reducers/reports'
+import * as actions from '../index'
+import reducer from '../index'
 import Config from '../../../config'
 import request from 'superagent';
 import nocker from 'superagent-nock';

@@ -27,7 +27,8 @@ export default class PickListContainer extends React.Component {
     addObject: React.PropTypes.func.isRequired,
     loadRoot: React.PropTypes.func.isRequired,
     rootNode: React.PropTypes.object,
-    refreshNodes: React.PropTypes.func.isRequired
+    refreshNodes: React.PropTypes.func.isRequired,
+    refreshObjects: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -69,6 +70,7 @@ export default class PickListContainer extends React.Component {
   })
   objectCallback = (toName, toMoveLenght, name) => ({
     onSuccess: () => {
+      this.props.refreshObjects(this.state.itemsToMove.map(item => item.id))
       this.hideModal()
       if (toMoveLenght === 1) {
         window.alert(I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName }))
@@ -124,9 +126,9 @@ export default class PickListContainer extends React.Component {
               labelRendrer={(pick) => {
                 return (
                   <div>
-                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.identifier.museumNo}</span> : null}
-                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.identifier.subNo}</span> : null}
-                    <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.displayName}</span>
+                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span> : null}
+                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.subNo}</span> : null}
+                    <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.term}</span>
                     <div className="labelText">
                       <Breadcrumb
                         nodes={pick.path}
