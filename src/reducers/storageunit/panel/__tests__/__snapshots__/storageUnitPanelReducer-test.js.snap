@@ -69,6 +69,73 @@ Array [
 ]
 `;
 
+exports[`ReducerStoragUnitPanel insert INSERT_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-container/INSERT"
+  },
+  Object {
+    "result": Object {
+      "environmentAssessment": Object {},
+      "environmentRequirement": Object {},
+      "groupRead": "foo",
+      "id": 2,
+      "isPartOf": 1,
+      "name": "p5",
+      "path": ",1,2,",
+      "pathNames": Array [
+        Object {
+          "name": "root-node",
+          "nodeId": 1
+        },
+        Object {
+          "name": "Utviklingsmuseet",
+          "nodeId": 2
+        }
+      ],
+      "securityAssessment": Object {},
+      "type": "Room",
+      "updatedBy": 123,
+      "updatedDate": "2016-10-24T16:13:24+00:00"
+    },
+    "type": "musit/storageunit-container/INSERT_SUCCESS"
+  }
+]
+`;
+
+exports[`ReducerStoragUnitPanel insert: fail action 1`] = `
+Object {
+  "data": [Error: Some error in insert.],
+  "loaded": false,
+  "loading": false
+}
+`;
+
+exports[`ReducerStoragUnitPanel insert: initial action 1`] = `
+Object {
+  "loading": true
+}
+`;
+
+exports[`ReducerStoragUnitPanel insert: no action 1`] = `Object {}`;
+
+exports[`ReducerStoragUnitPanel insert: success action 1`] = `
+Object {
+  "data": Object {
+    "area": undefined,
+    "areaTo": undefined,
+    "environmentAssessment": Object {},
+    "environmentRequirement": Object {},
+    "height": undefined,
+    "heightTo": undefined,
+    "securityAssessment": Object {},
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
 exports[`ReducerStoragUnitPanel update INSERT_SUCCESS when fetching data has been done 1`] = `
 Array [
   Object {

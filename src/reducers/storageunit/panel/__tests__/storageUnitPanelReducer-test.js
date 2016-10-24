@@ -81,31 +81,30 @@ describe('ReducerStoragUnitPanel', () => {
             })
         ).toMatchSnapshot()
     })
-
+    const putData = {
+        id: 2,
+        name: "p5",
+        isPartOf:1,
+        groupRead: 'foo',
+        path: ',1,2,',
+        pathNames:[
+            {
+                nodeId: 1,
+                name: 'root-node'
+            },
+            {
+                nodeId: 2,
+                name: 'Utviklingsmuseet'
+            }
+        ],
+        environmentRequirement: {},
+        securityAssessment: {},
+        environmentAssessment: {},
+        updatedBy: 123,
+        updatedDate: '2016-10-24T16:13:24+00:00',
+        type: 'Room'
+    }
     it('update INSERT_SUCCESS when fetching data has been done', () => {
-        const putData = {
-            id: 2,
-            name: "p5",
-            isPartOf:1,
-            groupRead: 'foo',
-            path: ',1,2,',
-            pathNames:[
-                {
-                    nodeId: 1,
-                    name: 'root-node'
-                },
-                {
-                    nodeId: 2,
-                    name: 'Utviklingsmuseet'
-                }
-            ],
-            environmentRequirement: {},
-            securityAssessment: {},
-            environmentAssessment: {},
-            updatedBy: 123,
-            updatedDate: '2016-10-24T16:13:24+00:00',
-            type: 'Room'
-        }
         const id = 2
         const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`
         nock('http://localhost')
@@ -150,6 +149,65 @@ describe('ReducerStoragUnitPanel', () => {
             reducer(undefined, {
                 type: actions.INSERT_FAIL,
                 error: Error('Some error in update.')
+            })
+        ).toMatchSnapshot()
+    })
+
+    it('insert INSERT_SUCCESS when fetching data has been done', () => {
+        const postData = {
+            name: "p5",
+            isPartOf:1,
+            groupRead: 'foo',
+            environmentRequirement: {},
+            securityAssessment: {},
+            environmentAssessment: {},
+            type: 'Room',
+            area: 1
+        }
+        const parentId = 1
+        const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}${!parentId ? '/root' : ''}`
+        nock('http://localhost')
+            .post(url, postData)
+            .reply(201, putData)
+        const store = mockStore()
+
+        return store.dispatch(actions.insert(1, postData))
+            .then(() => {
+                expect(store.getActions()).toMatchSnapshot()
+            })
+    })
+
+
+    it('insert: no action', () => {
+        expect(
+            reducer(undefined, {})
+        ).toMatchSnapshot()
+    })
+
+    it('insert: initial action', () => {
+        expect(
+            reducer(undefined, {
+                type: actions.INSERT
+            })
+        ).toMatchSnapshot()
+    })
+
+    it('insert: success action', () => {
+        expect(
+            reducer(undefined, {
+                type: actions.INSERT_SUCCESS,
+                result: {
+                    someField: 1
+                }
+            })
+        ).toMatchSnapshot()
+    })
+
+    it('insert: fail action', () => {
+        expect(
+            reducer(undefined, {
+                type: actions.INSERT_FAIL,
+                error: Error('Some error in insert.')
             })
         ).toMatchSnapshot()
     })
