@@ -33,3 +33,7 @@ All code is protected under the [GPL v2 or later](http://www.gnu.org/licenses/ol
 2. Run `npm install`
 3. Run `npm run build`
 4. Copy files under `public` to web server (nginx/apache)
+
+# Credits
+
+We would like to thank [JetBrains](https://www.jetbrains.com) for free OSS licenses to [IntelliJ IDEA](https://www.jetbrains.com/idea/)![](https://raw.githubusercontent.com/MUSIT-Norway/guidelines/master/images/icon_IntelliJIDEA.png)
