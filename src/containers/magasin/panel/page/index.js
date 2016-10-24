@@ -48,7 +48,7 @@ class StorageUnitContainer extends Component {
     path: React.PropTypes.arrayOf(React.PropTypes.object),
     loaded: React.PropTypes.bool.isRequired,
     updateState: React.PropTypes.func.isRequired
-  }
+}
 
   constructor(props) {
     super(props)
@@ -272,6 +272,18 @@ class StorageUnitContainer extends Component {
         precision={precision}
         value={unit[field]}
       />
+    )
+  }
+
+  renderLastChangeData(updatedBy, updatedDate, unit) {
+    const lastUpdateBy = unit[updatedBy]
+    const lastUpdateDate = unit[updatedDate]
+    return (
+        <span>
+          {this.props.translate(`musit.storageUnits.tooltip.lastUpdateByText${lastUpdateBy}`)}
+          <br />
+          {this.props.translate(`musit.storageUnits.tooltip.lastUpdateDateText${lastUpdateDate}`)}
+       </span>
     )
   }
 
@@ -513,6 +525,7 @@ class StorageUnitContainer extends Component {
                             onClickSave={this.handleSubmit}
                             onClickCancel={() => hashHistory.goBack()}
                           />
+                          {this.renderLastChangeData('updateBy', 'updatedDate', this.props.unit)}
                         </Row>
                       </Grid>
                     </div>
