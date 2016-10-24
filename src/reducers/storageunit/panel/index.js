@@ -1,13 +1,14 @@
 import Config from '../../../config'
+import { apiUrl } from '../../../util'
 
 import { mapToFrontend, mapToBackend } from '../mapper'
-const INSERT = 'musit/storageunit-container/INSERT';
-const UPDATE = 'musit/storageunit-container/UPDATE';
-const INSERT_SUCCESS = 'musit/storageunit-container/INSERT_SUCCESS';
-const INSERT_FAIL = 'musit/storageunit-container/INSERT_FAIL';
-const LOAD = 'musit/storageunit-container/LOAD';
-const LOAD_SUCCESS = 'musit/storageunit-container/LOAD_SUCCESS';
-const LOAD_FAIL = 'musit/storageunit-container/LOAD_FAIL';
+export const INSERT = 'musit/storageunit-container/INSERT';
+export const UPDATE = 'musit/storageunit-container/UPDATE';
+export const INSERT_SUCCESS = 'musit/storageunit-container/INSERT_SUCCESS';
+export const INSERT_FAIL = 'musit/storageunit-container/INSERT_FAIL';
+export const LOAD = 'musit/storageunit-container/LOAD';
+export const LOAD_SUCCESS = 'musit/storageunit-container/LOAD_SUCCESS';
+export const LOAD_FAIL = 'musit/storageunit-container/LOAD_FAIL';
 
 const initialState = {}
 
@@ -68,13 +69,13 @@ export default storageUnitContainerReducer;
 export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`)),
     callback
   };
 }
 
 export const update = (data, callback) => {
-  const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${data.id}`;
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${data.id}`);
   const dataToPost = mapToBackend(data)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
@@ -84,7 +85,7 @@ export const update = (data, callback) => {
 }
 
 export const insert = (parentId, data, callback) => {
-  const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}${!parentId ? '/root' : ''}`;
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}${!parentId ? '/root' : ''}`);
   const dataToPost = mapToBackend(data, parentId)
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],

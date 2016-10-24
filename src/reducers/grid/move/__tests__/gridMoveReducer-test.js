@@ -7,6 +7,7 @@ import nocker from 'superagent-nock';
 const nock = nocker(request);
 
 describe('GridMoveHistory', () => {
+
     it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
         const actorPostData = [1,2]
         const url = '/api/actor/v1/person/details'
@@ -169,4 +170,65 @@ describe('GridMoveHistory', () => {
             })
         ).toMatchSnapshot()
     })
+
+    it('CLEAR_SUCCESS action', () => {
+        expect(
+            reducer({ data:
+                [
+                    {
+                        doneBy: 2,
+                        doneDate: '2016-10-06T00:00:00+00:00',
+                        registeredBy: 'Darth Vader',
+                        registeredDate: '2016-10-06T05:55:52+00:00',
+                        from: {
+                            path: ',1,2,3,6,7,',
+                            pathNames: [
+                                {
+                                    name: 'root-node',
+                                    nodeId: 1
+                                },
+                                {
+                                    name: 'Utviklingsmuseet',
+                                    nodeId: 2
+                                },
+                                {
+                                    name: 'Forskningens hus',
+                                    nodeId: 3
+                                },
+                                {
+                                    name: 'Forskningsværelset',
+                                    nodeId: 6
+                                },
+                                {
+                                    name: 'Foo',
+                                    nodeId: 7
+                                }
+                            ]
+                        },
+                        to: {
+                            path: ',1,2,3,6,',
+                            pathNames: [
+                                {
+                                    name: 'root-node',
+                                    nodeId: 1
+                                },
+                                {
+                                    name: 'Utviklingsmuseet',
+                                    nodeId: 2
+                                },
+                                {
+                                    name: 'Forskningens hus',
+                                    nodeId: 3
+                                },
+                                {
+                                    name: 'Forskningsværelset',
+                                    nodeId: 6
+                                }
+                            ]
+                        }
+                    }]
+            }, actions.clearMoveHistoryForObject())
+        ).toMatchSnapshot()
+    })
+
 })

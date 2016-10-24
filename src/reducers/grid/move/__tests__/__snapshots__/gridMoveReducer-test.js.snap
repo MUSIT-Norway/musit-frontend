@@ -1,3 +1,11 @@
+exports[`GridMoveHistory CLEAR_SUCCESS action 1`] = `
+Object {
+  "data": Array [],
+  "loaded": false,
+  "loading": false
+}
+`;
+
 exports[`GridMoveHistory Move history: fail action 1`] = `
 Object {
   "data": [Error: Some error to load history data.],

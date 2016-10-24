@@ -1,4 +1,4 @@
-
+import { apiUrl } from '../../../util'
 export const LOAD_SEVERAL = 'musit/storageobject-grid/LOAD_SEVERAL'
 export const LOAD_SEVERAL_SUCCESS = 'musit/storageobject-grid/LOAD_SEVERAL_SUCCESS'
 export const LOAD_SEVERAL_FAIL = 'musit/storageobject-grid/LOAD_SEVERAL_FAIL'
@@ -34,7 +34,7 @@ export default storageObjectGridReducer
 export const loadObjects = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(`/api/thingaggregate/museum/1/node/${id}/objects`),
+    promise: (client) => client.get(apiUrl(`/api/thingaggregate/museum/1/node/${id}/objects`)),
     callback
   };
 }

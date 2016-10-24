@@ -63,4 +63,44 @@ describe('Auth', () => {
             })
         ).toMatchSnapshot()
     })
+
+    const initialState = {
+        user: {
+          userId: 'jarle',
+          name: 'Jarle Stabell',
+          emails: ['foo@bar.bas'],
+          groups: ['EtnoLes', 'FotoLes'],
+          accessToken: 'fake-token-zab-xy-jarle'
+        },
+        actor: {
+          id: 1,
+          fn: 'Jarle Stabell',
+          dataportenId: 'jarle'
+        }
+    }
+
+    it('CLEAR_ACTOR action', () => {
+        expect(
+            reducer(initialState, actions.clearActor())
+        ).toMatchSnapshot()
+    })
+
+    it('SET_USER action', () => {
+        expect(
+            reducer(initialState, actions.connectUser('TEST_USER'))
+        ).toMatchSnapshot()
+    })
+
+    it('CLEAR_USER action', () => {
+        expect(
+            reducer(initialState, actions.clearUser())
+        ).toMatchSnapshot()
+    })
+
+
+    it('undefined action', () => {
+        expect(
+            reducer(initialState, undefined)
+        ).toMatchSnapshot()
+    })
 })

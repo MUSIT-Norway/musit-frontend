@@ -7,9 +7,7 @@ export const LOAD_FAIL = 'musit/movehistory/LOAD_FAIL'
 export const LOAD_ACTOR = 'musit/movehistory/LOAD_ACTOR'
 export const LOAD_ACTOR_SUCCESS = 'musit/movehistory/LOAD_ACTOR_SUCCESS'
 export const LOAD_ACTOR_FAIL = 'musit/movehistory/LOAD_ACTOR_FAIL'
-export const CLEAR = 'musit/movehistory/CLEAR_SUCCESS'
-export const CLEAR_SUCCESS = 'musit/movehistory/CLEAR'
-export const CLEAR_FAIL = 'musit/movehistory/CLEAR_FAIL'
+export const CLEAR_SUCCESS = 'musit/movehistory/CLEAR_SUCCESS'
 
 const initialState = { data:[] }
 
@@ -67,19 +65,6 @@ const moveHistoryReducer = (state = initialState, action) => {
         loading: false,
         loaded: false,
         data: action.result
-      }
-    case CLEAR:
-      return {
-        ...state,
-        loading: true,
-        loaded: false
-      }
-    case CLEAR_FAIL:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error: action.error
       }
     default:
       return state;

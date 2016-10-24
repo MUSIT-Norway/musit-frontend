@@ -1,3 +1,43 @@
+exports[`Auth CLEAR_ACTOR action 1`] = `
+Object {
+  "actor": null,
+  "user": Object {
+    "accessToken": "fake-token-zab-xy-jarle",
+    "emails": Array [
+      "foo@bar.bas"
+    ],
+    "groups": Array [
+      "EtnoLes",
+      "FotoLes"
+    ],
+    "name": "Jarle Stabell",
+    "userId": "jarle"
+  }
+}
+`;
+
+exports[`Auth CLEAR_USER action 1`] = `
+Object {
+  "actor": Object {
+    "dataportenId": "jarle",
+    "fn": "Jarle Stabell",
+    "id": 1
+  },
+  "user": null
+}
+`;
+
+exports[`Auth SET_USER action 1`] = `
+Object {
+  "actor": Object {
+    "dataportenId": "jarle",
+    "fn": "Jarle Stabell",
+    "id": 1
+  },
+  "user": "TEST_USER"
+}
+`;
+
 exports[`Auth creates LOAD_ACTOR_SUCCESS when fetching data has been done 1`] = `
 Array [
   Object {
@@ -48,5 +88,27 @@ Object {
   "loaded": true,
   "loading": false,
   "user": null
+}
+`;
+
+exports[`Auth undefined action 1`] = `
+Object {
+  "actor": Object {
+    "dataportenId": "jarle",
+    "fn": "Jarle Stabell",
+    "id": 1
+  },
+  "user": Object {
+    "accessToken": "fake-token-zab-xy-jarle",
+    "emails": Array [
+      "foo@bar.bas"
+    ],
+    "groups": Array [
+      "EtnoLes",
+      "FotoLes"
+    ],
+    "name": "Jarle Stabell",
+    "userId": "jarle"
+  }
 }
 `;
