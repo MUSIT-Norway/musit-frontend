@@ -275,9 +275,9 @@ class StorageUnitContainer extends Component {
     )
   }
 
-  renderLastChangeData(updatedBy, updatedDate, unit) {
-    const lastUpdateDate = parseISODateNonStrict(unit[updatedDate]).format("DD.MM.YYYY")
-    // const lastUpdateBy = unit[updatedBy] // TODO når dette er i orden, autentisering er i orden
+  renderLastChangeData(unit) {
+    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format("DD.MM.YYYY")
+    // const lastUpdateBy = unit.updatedBy // TODO når dette er i orden, autentisering er i orden
     return (
         <span>
           <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> Darth Wader
@@ -529,7 +529,7 @@ class StorageUnitContainer extends Component {
                         <Row>
                           <Col sm={8} />
                           <Col sm={4}>
-                            {this.renderLastChangeData('updatedBy', 'updatedDate', this.props.unit)}
+                            {this.renderLastChangeData(this.props.unit)}
                           </Col>
                         </Row>
                         </Grid>
