@@ -69,6 +69,40 @@ Array [
 ]
 `;
 
+exports[`ReducerStoragUnitPanel update INSERT_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-container/INSERT"
+  },
+  Object {
+    "result": Object {
+      "environmentAssessment": Object {},
+      "environmentRequirement": Object {},
+      "groupRead": "foo",
+      "id": 2,
+      "isPartOf": 1,
+      "name": "p5",
+      "path": ",1,2,",
+      "pathNames": Array [
+        Object {
+          "name": "root-node",
+          "nodeId": 1
+        },
+        Object {
+          "name": "Utviklingsmuseet",
+          "nodeId": 2
+        }
+      ],
+      "securityAssessment": Object {},
+      "type": "Room",
+      "updatedBy": 123,
+      "updatedDate": "2016-10-24T16:13:24+00:00"
+    },
+    "type": "musit/storageunit-container/INSERT_SUCCESS"
+  }
+]
+`;
+
 exports[`ReducerStoragUnitPanel update: fail action 1`] = `
 Object {
   "data": [Error: Some error in update.],

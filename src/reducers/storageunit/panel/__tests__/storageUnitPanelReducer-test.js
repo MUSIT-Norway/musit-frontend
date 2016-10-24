@@ -106,7 +106,7 @@ describe('ReducerStoragUnitPanel', () => {
             updatedDate: '2016-10-24T16:13:24+00:00',
             type: 'Room'
         }
-        const id = 3
+        const id = 2
         const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`
         nock('http://localhost')
             .put(url, putData)
