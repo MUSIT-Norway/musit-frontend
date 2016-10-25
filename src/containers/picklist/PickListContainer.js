@@ -91,7 +91,7 @@ export default class PickListContainer extends React.Component {
     const moveFunction = this.isTypeNode() ? this.props.moveNode : this.props.moveObject
     const toMove = this.state.itemsToMove.map(itemToMove => itemToMove.id)
     const toMoveLength = toMove.length
-    const name = this.isTypeNode() ? this.state.itemsToMove[0].name : this.state.itemsToMove[0].museumNo
+    const name = this.isTypeNode() ? this.state.itemsToMove[0].name : this.state.itemsToMove[0].term
     const callback = this.isTypeNode() ?
     this.nodeCallback(toName, toMoveLength, name) : this.objectCallback(toName, toMoveLength, name)
     moveFunction(toMove, toId, this.props.user.id, callback)
