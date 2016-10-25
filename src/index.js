@@ -42,34 +42,62 @@ import { I18n } from 'react-i18nify'
 I18n.loadTranslations(LanguageJson)
 I18n.setLocale('no')
 
-const component = 
-  <Router
-    onUpdate={() => window.scrollTo(0, 0)}
-    history={history}
-  >
-    {getRoutes(store)}
-  </Router>
-;
+import NotificationSystem from 'react-notification-system';
 
-ReactDOM.render(
-  <Provider store={store} key="provider">
-    {component}
-  </Provider>,
-  dest
-);
+const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'))
 
-if (config.isDev) {
-  window.React = React; // enable debugger
-}
+import { source, emitError } from './errors/emitter'
 
-if (config.useDevTools && !window.devToolsExtension) {
+source.subscribe((e) => {
+  switch(e.type) {
+    case 'network':
+      notificationSystem.addNotification({
+        message: e.error.response.req.url,
+        level: 'error'
+      });
+      break;
+    default:
+      notificationSystem.addNotification({
+        message: 'something happened',
+        level: 'error'
+      });
+  }
+});
+
+try {
+  const component =
+      <Router
+        onUpdate={() => window.scrollTo(0, 0)}
+        history={history}
+      >
+        {getRoutes(store)}
+      </Router>
+    ;
+
   ReactDOM.render(
     <Provider store={store} key="provider">
-      <div>
-        {component}
-        <DevTools />
-      </div>
+      {component}
     </Provider>,
     dest
   );
+
+  if (config.isDev) {
+    window.React = React; // enable debugger
+  }
+
+  if (config.useDevTools && !window.devToolsExtension) {
+    ReactDOM.render(
+      <Provider store={store} key="provider">
+        <div>
+          {component}
+          <DevTools />
+        </div>
+      </Provider>,
+      dest
+    );
+  }
+} catch(e) {
+  emitError({ type: 'annet', e })
 }
+
+
