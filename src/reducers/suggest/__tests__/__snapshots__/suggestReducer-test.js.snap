@@ -1,0 +1,230 @@
+exports[`Suggest reducer CLEAR action 1`] = `
+Object {
+  "Search": Object {
+    "loaded": false,
+    "loading": false
+  },
+  "data": Object {
+    "someData": 1
+  }
+}
+`;
+
+exports[`Suggest reducer CLEAR without destination action 1`] = `Object {}`;
+
+exports[`Suggest reducer address SUGGEST_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "destination": "search",
+    "type": "musit/suggest/LOAD"
+  },
+  Object {
+    "destination": "search",
+    "result": Array [
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "12",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "17",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "37",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "13",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "18",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "15",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "22",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "14",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "20",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "3",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "7",
+        "zip": "192"
+      },
+      Object {
+        "place": "OSLO",
+        "street": "Oslo gate",
+        "streetNo": "16",
+        "zip": "192"
+      }
+    ],
+    "type": "musit/suggest/LOAD_SUCCESS"
+  }
+]
+`;
+
+exports[`Suggest reducer address: fail action 1`] = `
+Object {
+  "undefined": Object {
+    "error": [Error: address has some error.],
+    "loaded": false,
+    "loading": false
+  }
+}
+`;
+
+exports[`Suggest reducer address: initial action 1`] = `
+Object {
+  "undefined": Object {
+    "loading": true
+  }
+}
+`;
+
+exports[`Suggest reducer address: no action 1`] = `Object {}`;
+
+exports[`Suggest reducer address: success action 1`] = `
+Object {
+  "undefined": Object {
+    "data": Object {
+      "someField": 1
+    },
+    "loaded": true,
+    "loading": false
+  }
+}
+`;
+
+exports[`Suggest reducer node SUGGEST_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "destination": "search",
+    "type": "musit/suggest/LOAD"
+  },
+  Object {
+    "destination": "search",
+    "result": Array [],
+    "type": "musit/suggest/LOAD_SUCCESS"
+  }
+]
+`;
+
+exports[`Suggest reducer node: fail action 1`] = `
+Object {
+  "undefined": Object {
+    "error": [Error: node has some error.],
+    "loaded": false,
+    "loading": false
+  }
+}
+`;
+
+exports[`Suggest reducer node: initial action 1`] = `
+Object {
+  "undefined": Object {
+    "loading": true
+  }
+}
+`;
+
+exports[`Suggest reducer node: no action 1`] = `Object {}`;
+
+exports[`Suggest reducer node: success action 1`] = `
+Object {
+  "undefined": Object {
+    "data": Object {
+      "someField": 1
+    },
+    "loaded": true,
+    "loading": false
+  }
+}
+`;
+
+exports[`Suggest reducer person SUGGEST_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "destination": "search",
+    "type": "musit/suggest/LOAD"
+  },
+  Object {
+    "destination": "search",
+    "result": Array [
+      Object {
+        "dataportenId": "jarle",
+        "fn": "Jarle Stabell",
+        "id": 1
+      }
+    ],
+    "type": "musit/suggest/LOAD_SUCCESS"
+  }
+]
+`;
+
+exports[`Suggest reducer person: fail action 1`] = `
+Object {
+  "undefined": Object {
+    "error": [Error: person has some error.],
+    "loaded": false,
+    "loading": false
+  }
+}
+`;
+
+exports[`Suggest reducer person: initial action 1`] = `
+Object {
+  "undefined": Object {
+    "loading": true
+  }
+}
+`;
+
+exports[`Suggest reducer person: no action 1`] = `Object {}`;
+
+exports[`Suggest reducer person: success action 1`] = `
+Object {
+  "undefined": Object {
+    "data": Object {
+      "someField": 1
+    },
+    "loaded": true,
+    "loading": false
+  }
+}
+`;

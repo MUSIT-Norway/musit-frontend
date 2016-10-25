@@ -1,8 +1,8 @@
 
-const CLEAR = 'musit/suggest/CLEAR'
-const SUGGEST = 'musit/suggest/LOAD'
-const SUGGEST_SUCCESS = 'musit/suggest/LOAD_SUCCESS'
-const SUGGEST_FAIL = 'musit/suggest/LOAD_FAIL'
+export const CLEAR = 'musit/suggest/CLEAR'
+export const SUGGEST = 'musit/suggest/LOAD'
+export const SUGGEST_SUCCESS = 'musit/suggest/LOAD_SUCCESS'
+export const SUGGEST_FAIL = 'musit/suggest/LOAD_FAIL'
 
 const initialState = {
 }
