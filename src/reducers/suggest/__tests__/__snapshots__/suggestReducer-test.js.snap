@@ -23,75 +23,9 @@ Array [
     "result": Array [
       Object {
         "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "12",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "17",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "37",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "13",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "18",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "15",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "22",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "14",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "20",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "3",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "7",
-        "zip": "192"
-      },
-      Object {
-        "place": "OSLO",
-        "street": "Oslo gate",
-        "streetNo": "16",
-        "zip": "192"
+        "street": "Oscarshallveien",
+        "streetNo": 13,
+        "zip": 287
       }
     ],
     "type": "musit/suggest/LOAD_SUCCESS"
@@ -139,7 +73,28 @@ Array [
   },
   Object {
     "destination": "search",
-    "result": Array [],
+    "result": Array [
+      Object {
+        "groupRead": "foo",
+        "id": 7,
+        "isPartOf": 3,
+        "name": "test",
+        "path": ",1,2,3,7,",
+        "type": "Room",
+        "updatedBy": 123,
+        "updatedDate": "2016-10-24T12:07:21+00:00"
+      },
+      Object {
+        "groupRead": "foo",
+        "id": 10,
+        "isPartOf": 7,
+        "name": "test",
+        "path": ",1,2,3,7,10,",
+        "type": "Room",
+        "updatedBy": 123,
+        "updatedDate": "2016-10-24T16:12:46+00:00"
+      }
+    ],
     "type": "musit/suggest/LOAD_SUCCESS"
   }
 ]
