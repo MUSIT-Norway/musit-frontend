@@ -21,7 +21,7 @@ export default class ObservationControlComponent extends Component {
           onClick={(event) => eventType(event.target.value)}
           style={{ textAlign: 'left', width: '100%' }}
         >
-          <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
+          <FontAwesome  name="plus-circle" style={{ padding: '2px' }} />
           {getTranslate(type)}
         </Button>
       )
