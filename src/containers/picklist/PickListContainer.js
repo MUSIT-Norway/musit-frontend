@@ -143,7 +143,7 @@ export default class PickListContainer extends React.Component {
               remove={item => this.isTypeNode() ? removeNode(item) : removeObject(item)}
               move={this.showModal}
             />
-            <div style={{ textAlign: 'right' }}>
+            <div style={{ textAlign: 'left' }}>
               {marked.length}/{picks.length} &nbsp;
               {this.isTypeNode() ? I18n.t('musit.pickList.footer.nodeSelected')
                 : I18n.t('musit.pickList.footer.objectSelected') }
