@@ -398,6 +398,15 @@
         }
       },
       "pickList": {
+        "tooltip": {
+          "checkBoxMarkAll": "Select all",
+          "moveSelectedNodes": "Move selected nodes",
+          "moveSelectedObjects": "Move selected objects",
+          "removeSelectedNodesFromList": "Remove selected nodes from list",
+          "removeSelectedObjectsFromList": "Remove selected objects from list",
+          "selectedNodeCount": "Selected node(s) count",
+          "selectedObjectCount": "Selected object(s) count"
+        },
         "title": {
           "node": "Picklist (nodes)",
           "object": "Picklist (objects)"
@@ -947,6 +956,15 @@
         }
       },
       "pickList": {
+        "tooltip": {
+          "checkBoxMarkAll": "Velg alle",
+          "moveSelectedNodes": "Flytt valgte noder",
+          "moveSelectedObjects": "Flytt valgte objekter",
+          "removeSelectedNodesFromList": "Fjern valgte noder fra listen",
+          "removeSelectedObjectsFromList": "Fjern valgte objekter fra listen",
+          "selectedNodeCount": "Valgt node(r)",
+          "selectedObjectCount": "Valgt objekte(r)"
+        },
         "title": {
           "node": "Plukkliste (noder)",
           "object": "Plukkliste (objekter)"

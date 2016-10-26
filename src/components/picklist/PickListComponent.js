@@ -33,10 +33,8 @@ export default class PickListComponent extends Component {
             <tr>
               <th />
               <th style={{ verticalAlign: "bottom", textAlign: "right" }}>
-                {I18n.t('musit.pickList.action.markAll')}&nbsp;&nbsp;
-                <input type="checkbox" style={{ fontSize: '1.5em' }} onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)} />
-                {isnode ?
-                  <FontAwesome className="normalAction" style={{ fontSize: '1.5em' }} name="print" /> : null
+                {// isnode ?
+                 // <FontAwesome className="normalAction" style={{ fontSize: '1.5em' }} name="print" /> : null
                 }
                 <FontAwesome
                   className="normalAction"
@@ -47,6 +45,7 @@ export default class PickListComponent extends Component {
                       this.props.move(marked)
                     }
                   }}
+                  title={I18n.t(`musit.pickList.tooltip.${isnode ? 'moveSelectedNodes' : 'moveSelectedObjects'}`)}
                 />
                 <FontAwesome
                   className="normalAction"
@@ -57,6 +56,22 @@ export default class PickListComponent extends Component {
                       this.props.remove(marked)
                     }
                   }}
+                  title={I18n.t(`musit.pickList.tooltip.${isnode ? 'removeSelectedNodesFromList' : 'removeSelectedObjectsFromList'}`)}
+                />
+                <span
+                  className="normalAction"
+                  style={{ fontSize: '1em' }}
+                  title={I18n.t(`musit.pickList.tooltip.${isnode ? 'selectedNodeCount' : 'selectedObjectCount'}`)}
+                >
+                  {`(${marked.length})`}
+                </span>
+                <span className="normalAction" />
+                <input
+                  className="normalAction"
+                  type="checkbox"
+                  checked={marked.length===picks.length && picks.length != 0}
+                  onChange={(e) => this.props.toggle(picks.map(p => p.value), e.target.checked)}
+                  title={I18n.t('musit.pickList.tooltip.checkBoxMarkAll')}
                 />
               </th>
             </tr>
@@ -77,21 +92,6 @@ export default class PickListComponent extends Component {
                       checked={isItemMarked ? 'checked' : ''}
                       onClick={() => this.props.toggle(item)}
                       className="normalAction"
-                    />
-                    {isnode ?
-                      <FontAwesome className="normalAction" style={{ fontSize: '1.5em' }} name="print" /> : null
-                    }
-                    <FontAwesome
-                      className="normalAction"
-                      style={{ fontSize: '1.5em' }}
-                      name="truck"
-                      onClick={() => this.props.move(item)}
-                    />
-                    <FontAwesome
-                      className="normalAction"
-                      style={{ fontSize: '1.5em' }}
-                      name="remove"
-                      onClick={() => this.props.remove(item)}
                     />
                   </td>
                 </tr>
