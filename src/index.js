@@ -46,14 +46,73 @@ import NotificationSystem from 'react-notification-system';
 
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'))
 
-import { source, emitError } from './errors/emitter'
+import { source, successSource,  emitError } from './errors/emitter'
+
+successSource.subscribe ((s) => {
+  switch(s.type) {
+    case 'deleteSuccess':
+      notificationSystem.addNotification({
+        message: s.message,
+        level: 'success',
+        title: 'Sletting',
+        position: 'tr'
+      });
+      break;
+    case 'movedSuccess':
+      notificationSystem.addNotification({
+        message: s.message,
+        level: 'success',
+        title: 'Flytting',
+        position: 'tr'
+      });
+      break;
+    default:
+      notificationSystem.addNotification({
+        message: 'something happened',
+        level: 'error'
+      });
+  }
+});
 
 source.subscribe((e) => {
   switch(e.type) {
     case 'network':
       notificationSystem.addNotification({
         message: e.error.response.req.url,
-        level: 'error'
+        level: 'error',
+        title: 'Network error'
+      });
+      break;
+    case 'dateValidationError':
+      notificationSystem.addNotification({
+        message: e.message,
+        level: 'error',
+        title: 'Applikasjonsfeil',
+        position: 'br'
+      });
+      break;
+    case 'errorOnDelete':
+      notificationSystem.addNotification({
+        message: e.message,
+        level: 'error',
+        title: 'Applikasjonsfeil',
+        position: 'br'
+      });
+      break;
+    case 'errorOnMove':
+      notificationSystem.addNotification({
+        message: e.message,
+        level: 'error',
+        title: 'Applikasjonsfeil',
+        position: 'br'
+      });
+      break;
+    case 'errorOnSave':
+      notificationSystem.addNotification({
+        message: e.message,
+        level: 'error',
+        title: 'Applikasjonsfeil',
+        position: 'br'
       });
       break;
     default:
