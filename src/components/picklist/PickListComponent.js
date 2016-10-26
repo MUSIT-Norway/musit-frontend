@@ -28,7 +28,7 @@ export default class PickListComponent extends Component {
     const count =
       <span
         className="normalActionNoPadding"
-        style={{ fontSize: '1em' }}
+        style={{ fontSize: '0.8em' }}
         title={I18n.t(`musit.pickList.tooltip.${isnode ? 'selectedNodeCount' : 'selectedObjectCount'}`)}
       >
         {`(${marked.length})`}
