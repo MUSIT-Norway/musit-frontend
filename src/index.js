@@ -48,77 +48,92 @@ const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getE
 
 import { source, successSource,  emitError } from './errors/emitter'
 
+
+const children = (message) =>
+    <div style={{margin: '30px'}}>
+      <p>
+        {message}
+      </p>
+    </div>
+
 successSource.subscribe ((s) => {
   switch(s.type) {
     case 'deleteSuccess':
       notificationSystem.addNotification({
-        message: s.message,
         level: 'success',
         title: 'Sletting',
-        position: 'tr'
+        position: 'tc',
+        children: children(s.message)
       });
       break;
     case 'movedSuccess':
       notificationSystem.addNotification({
-        message: s.message,
         level: 'success',
         title: 'Flytting',
-        position: 'tr'
+        position: 'tc',
+        children: children(s.message)
       });
       break;
     default:
       notificationSystem.addNotification({
-        message: 'something happened',
-        level: 'error'
+        level: 'success',
+        children: children(s.message)
       });
   }
 });
 
+
+
 source.subscribe((e) => {
+
+
   switch(e.type) {
     case 'network':
       notificationSystem.addNotification({
         message: e.error.response.req.url,
         level: 'error',
-        title: 'Network error'
+        title: 'Network error',
+        position: 'tc',
+        children: children(e.error.response.req.url)
       });
       break;
     case 'dateValidationError':
       notificationSystem.addNotification({
-        message: e.message,
         level: 'error',
         title: 'Applikasjonsfeil',
-        position: 'br'
+        position: 'tc',
+        children: children(e.message)
       });
       break;
     case 'errorOnDelete':
       notificationSystem.addNotification({
-        message: e.message,
         level: 'error',
         title: 'Applikasjonsfeil',
-        position: 'br'
+        position: 'tc',
+        children: children(e.message)
       });
       break;
     case 'errorOnMove':
       notificationSystem.addNotification({
-        message: e.message,
         level: 'error',
         title: 'Applikasjonsfeil',
-        position: 'br'
+        position: 'tc',
+        children: children(e.message)
       });
       break;
     case 'errorOnSave':
       notificationSystem.addNotification({
-        message: e.message,
         level: 'error',
         title: 'Applikasjonsfeil',
-        position: 'br'
+        position: 'tc',
+        children: children(e.message)
       });
       break;
     default:
       notificationSystem.addNotification({
         message: 'something happened',
-        level: 'error'
+        level: 'error',
+        position: 'tc'
       });
   }
 });
