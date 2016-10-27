@@ -415,6 +415,8 @@
         "title": "Storage facility",
         "header": "Properties",
         "newNode": "New node",
+        "lastUpdateBy" : "Last updated by: ",
+        "lastUpdateDate" : "Last updated: ",
         "environmentalData": "Environmental conditions",
         "type": {
           "labelText": "Type",
@@ -964,6 +966,8 @@
         "title": "Magasin",
         "header": "Egenskaper",
         "newNode": "Ny node",
+        "lastUpdateBy" : "Sist endret av: ",
+        "lastUpdateDate" : "Sist endret dato: ",
         "environmentalData": "Miljødata",
         "type": {
           "labelText": "Type",
