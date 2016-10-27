@@ -1,5 +1,4 @@
 .pickListIcon {
-  flex: 1 0 0;
   display: flex;
   flex-direction: row;
 }
@@ -26,6 +25,11 @@
 }
 .normalAction {
   padding-left: 1em;
+  cursor: pointer;
+  vertical-align: middle;
+  color: #337ab7;
+}
+.normalActionNoPadding {
   cursor: pointer;
   vertical-align: middle;
   color: #337ab7;
