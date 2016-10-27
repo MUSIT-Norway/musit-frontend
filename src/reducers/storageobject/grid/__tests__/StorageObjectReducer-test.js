@@ -1,6 +1,11 @@
 import assert from 'assert'
 
 import storageObjectReducer, { LOAD_SEVERAL_SUCCESS } from '../index'
+import * as actions from '../index'
+import reducer from '../index'
+import request from 'superagent';
+import nocker from 'superagent-nock';
+const nock = nocker(request);
 
 const comingFromBackend = [
   {
@@ -38,4 +43,53 @@ describe('StorageUnitReducer', () => {
     })
     assert(state.data === comingFromBackend)
   })
+
+  it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
+    const id = 1
+    const url = `/api/thingaggregate/museum/1/node/${id}/objects`
+    nock('http://localhost')
+        .get(url)
+        .reply(200, comingFromBackend)
+    const store = mockStore()
+
+    return store.dispatch(actions.loadObjects(1))
+        .then(() => {
+          expect(store.getActions()).toMatchSnapshot()
+        })
+  })
+
+  it('no action', () => {
+    expect(
+        reducer(undefined, undefined)
+    ).toMatchSnapshot()
+  })
+
+  it('initial action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_SEVERAL
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('success action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_SEVERAL_SUCCESS,
+          result: {
+            someField: 1
+          }
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('fail action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_SEVERAL_FAIL,
+          error: Error('Some error here.')
+        })
+    ).toMatchSnapshot()
+  })
+
 })

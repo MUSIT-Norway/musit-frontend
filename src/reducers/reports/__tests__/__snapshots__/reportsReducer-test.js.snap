@@ -7,7 +7,7 @@ Array [
     "result": Object {
       "fireProtection": 13,
       "perimeterSecurity": 3,
-      "routinesAndContingencyPlan": 10,
+      "routinesAndContingencyPlan": 12,
       "theftProtection": 123,
       "totalArea": 1,
       "waterDamageAssessment": 55
