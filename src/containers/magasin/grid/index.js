@@ -95,7 +95,7 @@ const mapDispatchToProps = (dispatch, props) => {
     onEdit: (unit) => {
       hashHistory.push(`/magasin/${unit.id}/view`)
     },
-    onDelete: (id, currentNode) => { // TODO: Problems with delete slower than callback (async)
+    onDelete: (id, currentNode) => {
       if (id === currentNode.id) {
         const name = currentNode.name;
         global.bootbox.confirm({
@@ -112,8 +112,7 @@ const mapDispatchToProps = (dispatch, props) => {
             }
           },
           callback: (result) => {
-            if (!result) {
-            } else {
+            if (result) {
               dispatch(deleteUnit(id, {
                 onSuccess: () => {
                   dispatch(clearRoot());
@@ -143,29 +142,8 @@ const mapDispatchToProps = (dispatch, props) => {
                 }
               }))
             }
-            }})
-
-        /*    if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}))) {
-          dispatch(deleteUnit(id, {
-            onSuccess: () => {
-              dispatch(clearRoot());
-              if (currentNode.isPartOf) {
-                hashHistory.replace(`/magasin/${currentNode.isPartOf}`)
-              } else {
-                dispatch(loadRoot());
-                dispatch(clearStats())
-              }
-              emitSuccess({ type: 'deleteSuccess', message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name})})
-            },
-            onFailure: (e) => {
-              if (e.status === 400) {
-                emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')} )
-              } else {
-                emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')} )
-              }
-            }
-          }))
-        }*/
+          }
+        })
       }
     }
   }
