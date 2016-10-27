@@ -17,7 +17,9 @@ import { blur, createBreadcrumbPath } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 import MusitModalHistory from '../../../components/formfields/musitModalHistory'
-import { I18n } from 'react-i18nify'
+import sweetAlert from 'sweetalert'
+import { I18n } from 'react-i18nify';
+
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
@@ -97,7 +99,40 @@ const mapDispatchToProps = (dispatch, props) => {
     onDelete: (id, currentNode) => { // TODO: Problems with delete slower than callback (async)
       if (id === currentNode.id) {
         const name = currentNode.name;
-        if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}))) {
+        sweetAlert(
+            {
+             title: 'Vil du virkelig slette?',
+              type: 'warning',
+              confirmButtonText: 'Ok',
+              cancelButtonText: 'Avbryt',
+              closeOnConfirm: true,
+              closeOnCancel: true
+            },
+            function(isConfirm) {
+              if (isConfirm) {
+                dispatch(deleteUnit(id, {
+                  onSuccess: () => {
+                    dispatch(clearRoot());
+                    if (currentNode.isPartOf) {
+                      hashHistory.replace(`/magasin/${currentNode.isPartOf}`)
+                    } else {
+                      dispatch(loadRoot());
+                      dispatch(clearStats())
+                    }
+                    window.alert(I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name}))
+                  },
+                  onFailure: (e) => {
+                    if (e.status === 400) {
+                      window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
+                    } else {
+                      window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorCommon'))
+                    }
+                  }
+                }))
+              }
+            }
+        )
+    /*    if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}))) {
           dispatch(deleteUnit(id, {
             onSuccess: () => {
               dispatch(clearRoot());
@@ -117,7 +152,7 @@ const mapDispatchToProps = (dispatch, props) => {
               }
             }
           }))
-        }
+        }*/
       }
     }
   }
