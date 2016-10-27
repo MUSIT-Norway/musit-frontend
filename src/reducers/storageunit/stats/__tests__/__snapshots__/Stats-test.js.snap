@@ -1,0 +1,52 @@
+exports[`Stats reducer LOAD_STATS: fail action 1`] = `
+Object {
+  "error": [Error: LOAD_STATS has some error.],
+  "loaded": false,
+  "loading": false,
+  "stats": null
+}
+`;
+
+exports[`Stats reducer LOAD_STATS: initial action 1`] = `
+Object {
+  "loaded": false,
+  "loading": true,
+  "stats": null
+}
+`;
+
+exports[`Stats reducer LOAD_STATS: no action 1`] = `
+Object {
+  "stats": Object {
+    "nodes": null,
+    "objects": null,
+    "totalObjects": null
+  }
+}
+`;
+
+exports[`Stats reducer LOAD_STATS: success action 1`] = `
+Object {
+  "loaded": true,
+  "loading": false,
+  "stats": Object {
+    "someField": 1
+  }
+}
+`;
+
+exports[`Stats reducer creates LOAD_STATS_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/strageunit-stats/LOAD_STATS"
+  },
+  Object {
+    "result": Object {
+      "numNodes": 6,
+      "numObjects": 0,
+      "totalObjects": 12
+    },
+    "type": "musit/strageunit-stats/LOAD_STATS_SUCCESS"
+  }
+]
+`;
