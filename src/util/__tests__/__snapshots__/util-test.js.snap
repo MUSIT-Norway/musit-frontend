@@ -1,1 +1,494 @@
+exports[`SortObject Check blank 1`] = `"{}"`;
+
+exports[`SortObject Check null 1`] = `"{}"`;
+
+exports[`SortObject Check undefined 1`] = `"{}"`;
+
+exports[`SortObject Sort date value 1`] = `
+Array [
+  Object {
+    "date": "1982-10-31T23:00:00.000Z",
+    "float": 2.5,
+    "floatInStr": "2.5",
+    "int": 100,
+    "intInStr": "211",
+    "string": "ååå"
+  },
+  Object {
+    "date": "2003-06-31T23:00:00.000Z",
+    "float": 452.5,
+    "floatInStr": "33232.5",
+    "int": 190,
+    "intInStr": "23333",
+    "string": "a"
+  },
+  Object {
+    "date": "2016-10-01T23:00:00.000Z",
+    "float": 26.5,
+    "floatInStr": "26.5",
+    "int": 22,
+    "intInStr": "222",
+    "string": "ZZ"
+  },
+  Object {
+    "date": "2016-10-11T23:00:00.000Z",
+    "float": 12.5,
+    "floatInStr": "13232.5",
+    "int": 333,
+    "intInStr": "11111",
+    "string": "zz"
+  },
+  Object {
+    "date": "2016-10-22T23:00:00.000Z",
+    "float": 2.6,
+    "floatInStr": "2.6",
+    "int": 0,
+    "intInStr": "0",
+    "string": ""
+  },
+  Object {
+    "date": "2016-11-31T23:00:00.000Z",
+    "float": 222.5,
+    "floatInStr": "22332.5",
+    "int": 190,
+    "intInStr": "23",
+    "string": "a"
+  },
+  Object {},
+  Object {
+    "floatInStr": "2.2"
+  }
+]
+`;
+
+exports[`SortObject Sort float (floatInStr) in string value 1`] = `
+Array [
+  Object {
+    "date": "1982-10-31T23:00:00.000Z",
+    "float": 2.5,
+    "floatInStr": "2.5",
+    "int": 100,
+    "intInStr": "211",
+    "string": "ååå"
+  },
+  Object {
+    "date": "2016-10-22T23:00:00.000Z",
+    "float": 2.6,
+    "floatInStr": "2.6",
+    "int": 0,
+    "intInStr": "0",
+    "string": ""
+  },
+  Object {
+    "date": "2016-10-01T23:00:00.000Z",
+    "float": 26.5,
+    "floatInStr": "26.5",
+    "int": 22,
+    "intInStr": "222",
+    "string": "ZZ"
+  },
+  Object {
+    "date": "2016-10-11T23:00:00.000Z",
+    "float": 12.5,
+    "floatInStr": "13232.5",
+    "int": 333,
+    "intInStr": "11111",
+    "string": "zz"
+  },
+  Object {
+    "date": "2016-11-31T23:00:00.000Z",
+    "float": 222.5,
+    "floatInStr": "22332.5",
+    "int": 190,
+    "intInStr": "23",
+    "string": "a"
+  },
+  Object {
+    "date": "2003-06-31T23:00:00.000Z",
+    "float": 452.5,
+    "floatInStr": "33232.5",
+    "int": 190,
+    "intInStr": "23333",
+    "string": "a"
+  },
+  Object {},
+  Object {
+    "floatInStr": "2.2"
+  }
+]
+`;
+
+exports[`SortObject Sort float in string value 1`] = `
+Array [
+  Object {
+    "date": "1982-10-31T23:00:00.000Z",
+    "float": 2.5,
+    "floatInStr": "2.5",
+    "int": 100,
+    "intInStr": "211",
+    "string": "ååå"
+  },
+  Object {
+    "date": "2016-10-22T23:00:00.000Z",
+    "float": 2.6,
+    "floatInStr": "2.6",
+    "int": 0,
+    "intInStr": "0",
+    "string": ""
+  },
+  Object {
+    "date": "2016-10-11T23:00:00.000Z",
+    "float": 12.5,
+    "floatInStr": "13232.5",
+    "int": 333,
+    "intInStr": "11111",
+    "string": "zz"
+  },
+  Object {
+    "date": "2016-10-01T23:00:00.000Z",
+    "float": 26.5,
+    "floatInStr": "26.5",
+    "int": 22,
+    "intInStr": "222",
+    "string": "ZZ"
+  },
+  Object {
+    "date": "2016-11-31T23:00:00.000Z",
+    "float": 222.5,
+    "floatInStr": "22332.5",
+    "int": 190,
+    "intInStr": "23",
+    "string": "a"
+  },
+  Object {
+    "date": "2003-06-31T23:00:00.000Z",
+    "float": 452.5,
+    "floatInStr": "33232.5",
+    "int": 190,
+    "intInStr": "23333",
+    "string": "a"
+  },
+  Object {},
+  Object {
+    "floatInStr": "2.2"
+  }
+]
+`;
+
+exports[`SortObject Sort inputJsonObject on displayName 1`] = `
+Array [
+  Object {
+    "displayName": "Sommerfugl",
+    "id": 3,
+    "identifier": Object {
+      "museumNo": "C333",
+      "subNo": "38"
+    }
+  },
+  Object {
+    "displayName": "Sverd",
+    "id": 2,
+    "identifier": Object {
+      "museumNo": "C222",
+      "subNo": "31"
+    }
+  },
+  Object {
+    "displayName": "Øks",
+    "id": 5,
+    "identifier": Object {
+      "museumNo": "C666",
+      "subNo": "3"
+    }
+  }
+]
+`;
+
+exports[`SortObject Sort inputJsonObject on id 1`] = `
+Array [
+  Object {
+    "displayName": "Sverd",
+    "id": 2,
+    "identifier": Object {
+      "museumNo": "C222",
+      "subNo": "31"
+    }
+  },
+  Object {
+    "displayName": "Sommerfugl",
+    "id": 3,
+    "identifier": Object {
+      "museumNo": "C333",
+      "subNo": "38"
+    }
+  },
+  Object {
+    "displayName": "Øks",
+    "id": 5,
+    "identifier": Object {
+      "museumNo": "C666",
+      "subNo": "3"
+    }
+  }
+]
+`;
+
+exports[`SortObject Sort inputJsonObject on identifier 1`] = `
+Array [
+  Object {
+    "displayName": "Øks",
+    "id": 5,
+    "identifier": Object {
+      "museumNo": "C666",
+      "subNo": "3"
+    }
+  },
+  Object {
+    "displayName": "Sverd",
+    "id": 2,
+    "identifier": Object {
+      "museumNo": "C222",
+      "subNo": "31"
+    }
+  },
+  Object {
+    "displayName": "Sommerfugl",
+    "id": 3,
+    "identifier": Object {
+      "museumNo": "C333",
+      "subNo": "38"
+    }
+  }
+]
+`;
+
+exports[`SortObject Sort inputJsonObject on museumNo 1`] = `
+Array [
+  Object {
+    "displayName": "Øks",
+    "id": 5,
+    "identifier": Object {
+      "museumNo": "C666",
+      "subNo": "3"
+    }
+  },
+  Object {
+    "displayName": "Sverd",
+    "id": 2,
+    "identifier": Object {
+      "museumNo": "C222",
+      "subNo": "31"
+    }
+  },
+  Object {
+    "displayName": "Sommerfugl",
+    "id": 3,
+    "identifier": Object {
+      "museumNo": "C333",
+      "subNo": "38"
+    }
+  }
+]
+`;
+
+exports[`SortObject Sort inputJsonObject on subNo 1`] = `
+Array [
+  Object {
+    "displayName": "Øks",
+    "id": 5,
+    "identifier": Object {
+      "museumNo": "C666",
+      "subNo": "3"
+    }
+  },
+  Object {
+    "displayName": "Sverd",
+    "id": 2,
+    "identifier": Object {
+      "museumNo": "C222",
+      "subNo": "31"
+    }
+  },
+  Object {
+    "displayName": "Sommerfugl",
+    "id": 3,
+    "identifier": Object {
+      "museumNo": "C333",
+      "subNo": "38"
+    }
+  }
+]
+`;
+
+exports[`SortObject Sort int (intInStr) in string value 1`] = `
+Array [
+  Object {
+    "date": "2016-10-22T23:00:00.000Z",
+    "float": 2.6,
+    "floatInStr": "2.6",
+    "int": 0,
+    "intInStr": "0",
+    "string": ""
+  },
+  Object {
+    "date": "2016-11-31T23:00:00.000Z",
+    "float": 222.5,
+    "floatInStr": "22332.5",
+    "int": 190,
+    "intInStr": "23",
+    "string": "a"
+  },
+  Object {
+    "date": "1982-10-31T23:00:00.000Z",
+    "float": 2.5,
+    "floatInStr": "2.5",
+    "int": 100,
+    "intInStr": "211",
+    "string": "ååå"
+  },
+  Object {
+    "date": "2016-10-01T23:00:00.000Z",
+    "float": 26.5,
+    "floatInStr": "26.5",
+    "int": 22,
+    "intInStr": "222",
+    "string": "ZZ"
+  },
+  Object {
+    "date": "2016-10-11T23:00:00.000Z",
+    "float": 12.5,
+    "floatInStr": "13232.5",
+    "int": 333,
+    "intInStr": "11111",
+    "string": "zz"
+  },
+  Object {
+    "date": "2003-06-31T23:00:00.000Z",
+    "float": 452.5,
+    "floatInStr": "33232.5",
+    "int": 190,
+    "intInStr": "23333",
+    "string": "a"
+  },
+  Object {},
+  Object {
+    "floatInStr": "2.2"
+  }
+]
+`;
+
+exports[`SortObject Sort int value 1`] = `
+Array [
+  Object {
+    "date": "2016-10-22T23:00:00.000Z",
+    "float": 2.6,
+    "floatInStr": "2.6",
+    "int": 0,
+    "intInStr": "0",
+    "string": ""
+  },
+  Object {
+    "date": "2016-10-01T23:00:00.000Z",
+    "float": 26.5,
+    "floatInStr": "26.5",
+    "int": 22,
+    "intInStr": "222",
+    "string": "ZZ"
+  },
+  Object {
+    "date": "1982-10-31T23:00:00.000Z",
+    "float": 2.5,
+    "floatInStr": "2.5",
+    "int": 100,
+    "intInStr": "211",
+    "string": "ååå"
+  },
+  Object {
+    "date": "2016-11-31T23:00:00.000Z",
+    "float": 222.5,
+    "floatInStr": "22332.5",
+    "int": 190,
+    "intInStr": "23",
+    "string": "a"
+  },
+  Object {
+    "date": "2003-06-31T23:00:00.000Z",
+    "float": 452.5,
+    "floatInStr": "33232.5",
+    "int": 190,
+    "intInStr": "23333",
+    "string": "a"
+  },
+  Object {
+    "date": "2016-10-11T23:00:00.000Z",
+    "float": 12.5,
+    "floatInStr": "13232.5",
+    "int": 333,
+    "intInStr": "11111",
+    "string": "zz"
+  },
+  Object {},
+  Object {
+    "floatInStr": "2.2"
+  }
+]
+`;
+
+exports[`SortObject Sort string value 1`] = `
+Array [
+  Object {
+    "date": "2016-10-22T23:00:00.000Z",
+    "float": 2.6,
+    "floatInStr": "2.6",
+    "int": 0,
+    "intInStr": "0",
+    "string": ""
+  },
+  Object {
+    "date": "2016-11-31T23:00:00.000Z",
+    "float": 222.5,
+    "floatInStr": "22332.5",
+    "int": 190,
+    "intInStr": "23",
+    "string": "a"
+  },
+  Object {
+    "date": "2003-06-31T23:00:00.000Z",
+    "float": 452.5,
+    "floatInStr": "33232.5",
+    "int": 190,
+    "intInStr": "23333",
+    "string": "a"
+  },
+  Object {
+    "date": "2016-10-01T23:00:00.000Z",
+    "float": 26.5,
+    "floatInStr": "26.5",
+    "int": 22,
+    "intInStr": "222",
+    "string": "ZZ"
+  },
+  Object {
+    "date": "2016-10-11T23:00:00.000Z",
+    "float": 12.5,
+    "floatInStr": "13232.5",
+    "int": 333,
+    "intInStr": "11111",
+    "string": "zz"
+  },
+  Object {
+    "date": "1982-10-31T23:00:00.000Z",
+    "float": 2.5,
+    "floatInStr": "2.5",
+    "int": 100,
+    "intInStr": "211",
+    "string": "ååå"
+  },
+  Object {},
+  Object {
+    "floatInStr": "2.2"
+  }
+]
+`;
+
 exports[`parseISODateNonStrict should accept full iso timestamp 1`] = `"2016-09-07T22:56:00.000Z"`;

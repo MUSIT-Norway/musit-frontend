@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict } from '../'
+import { sortObject, isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict } from '../'
 import moment from 'moment'
 
 describe('parseISODateNonStrict', () => {
@@ -96,4 +96,90 @@ describe('isDateBiggerThanToday', () => {
     const newDate = undefined;
     assert(isDateBiggerThanToday(newDate) === false)
   })
+});
+
+describe('SortObject', () => {
+  it('Check blank', () => {
+    const newObject = {}
+    expect(JSON.stringify(sortObject(newObject))).toMatchSnapshot()
+  });
+  it('Check null', () => {
+    const newObject = null
+    expect(JSON.stringify(sortObject(newObject))).toMatchSnapshot()
+  });
+  it('Check undefined', () => {
+    const newObject = undefined
+    expect(JSON.stringify(sortObject(newObject))).toMatchSnapshot()
+  });
+
+  const inputObject = [
+    {date:'1982-10-31T23:00:00.000Z', string: 'ååå', int: 100, intInStr: '211', float: 2.5, floatInStr: '2.5'},
+    {date:'2016-10-01T23:00:00.000Z',string: 'ZZ', int: 22, intInStr: '222', float: 26.5, floatInStr: '26.5'},
+    {date:'2016-10-11T23:00:00.000Z',string: 'zz', int: 333, intInStr: '11111', float: 12.5, floatInStr: '13232.5'},
+    {date:'2016-11-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23', float: 222.5, floatInStr: '22332.5'},
+    {date:'2003-06-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23333', float: 452.5, floatInStr: '33232.5'},
+    {date:'2016-10-22T23:00:00.000Z',string: '', int: 0, intInStr: '0', float: 2.6, floatInStr: '2.6'},
+    {},
+    {floatInStr: '2.2'}
+  ];
+  it('Sort date value', () => {
+    expect(sortObject(inputObject, 'date')).toMatchSnapshot()
+  });
+  it('Sort string value', () => {
+    expect(sortObject(inputObject, 'string')).toMatchSnapshot()
+  });
+  it('Sort int value', () => {
+    expect(sortObject(inputObject, 'int')).toMatchSnapshot()
+  });
+  it('Sort int (intInStr) in string value', () => {
+    expect(sortObject(inputObject, 'intInStr', 'number')).toMatchSnapshot()
+  });
+  it('Sort float in string value', () => {
+    expect(sortObject(inputObject, 'float')).toMatchSnapshot()
+  });
+  it('Sort float (floatInStr) in string value', () => {
+    expect(sortObject(inputObject, 'floatInStr', 'number')).toMatchSnapshot()
+  });
+  const inputJsonObject = [
+    {
+      id: 5,
+      identifier: {
+        museumNo: 'C666',
+        subNo: '3'
+      },
+      displayName: 'Øks'
+    },
+    {
+      id: 2,
+      identifier: {
+        museumNo: 'C222',
+        subNo: '31'
+      },
+      displayName: 'Sverd'
+    },
+    {
+      id: 3,
+      identifier: {
+        museumNo: 'C333',
+        subNo: '38'
+      },
+      displayName: 'Sommerfugl'
+    }
+  ]
+
+  it('Sort inputJsonObject on id', () => {
+    expect(sortObject(inputJsonObject, 'id')).toMatchSnapshot()
+  });
+  it('Sort inputJsonObject on identifier', () => {
+    expect(sortObject(inputJsonObject, 'identifier')).toMatchSnapshot()
+  });
+  it('Sort inputJsonObject on museumNo', () => {
+    expect(sortObject(inputJsonObject, 'museumNo')).toMatchSnapshot()
+  });
+  it('Sort inputJsonObject on subNo', () => {
+    expect(sortObject(inputJsonObject, 'subNo', 'number')).toMatchSnapshot()
+  });
+  it('Sort inputJsonObject on displayName', () => {
+    expect(sortObject(inputJsonObject, 'displayName')).toMatchSnapshot()
+  });
 });

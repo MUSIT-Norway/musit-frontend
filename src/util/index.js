@@ -107,3 +107,23 @@ const testing = process.env.NODE_ENV === 'test';
 export const apiUrl = (url: string): string => {
   return `${testing ? 'http://localhost' : ''}${url}`;
 }
+
+export const sortObject = (obj: any, key: string, inputKeyType: string = ''): any => {
+  function compare(a, b) {
+    a = a[key];
+    b = b[key];
+    let type = (typeof(a) === 'string' ||  typeof(b) === 'string') ? 'string' : 'number';
+    let result;
+
+    type = inputKeyType ? inputKeyType : type
+    if (type === 'string') result = (a ? a.toLowerCase() : a) > (b ? b.toLowerCase() : b)
+    else result = a - b;
+    return result;
+  }
+  if (obj && JSON.stringify(obj) !== '{}') {
+    // console.log(Object.keys(obj))
+    return [].slice.call(obj).sort(compare)
+  } else {
+    return {}
+  }
+}

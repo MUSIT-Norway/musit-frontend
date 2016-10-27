@@ -1,4 +1,4 @@
-import { apiUrl } from '../../../util'
+import { sortObject, apiUrl } from '../../../util'
 export const LOAD_SEVERAL = 'musit/storageobject-grid/LOAD_SEVERAL'
 export const LOAD_SEVERAL_SUCCESS = 'musit/storageobject-grid/LOAD_SEVERAL_SUCCESS'
 export const LOAD_SEVERAL_FAIL = 'musit/storageobject-grid/LOAD_SEVERAL_FAIL'
@@ -15,7 +15,7 @@ const storageObjectGridReducer = (state = {}, action = {}) => {
         ...state,
         loading: false,
         loaded: true,
-        data: action.result
+        data: sortObject(sortObject(sortObject(action.result, 'term'), 'subNo', 'number'), 'museumNo')
       }
     case LOAD_SEVERAL_FAIL:
       return {
