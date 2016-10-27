@@ -75,11 +75,12 @@ class ObservationControlGridShow extends React.Component {
   componentWillMount() {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
-        this.props.loadActorDetails({ data: result.map(r => r.doneBy) })
-        this.props.loadStorageObj(this.props.params.id)
-      },
-      onFailure: () => true
+        if (result && result.length > 0) {
+          this.props.loadActorDetails({ data: result.map(r => r.doneBy) })
+        }
+      }
     })
+    this.props.loadStorageObj(this.props.params.id)
   }
 
   makeToolbar() {
