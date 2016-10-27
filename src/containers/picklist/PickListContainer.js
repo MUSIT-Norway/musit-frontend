@@ -9,6 +9,7 @@ import { TYPES } from '../../reducers/picklist'
 import { I18n } from 'react-i18nify'
 import MusitModal from '../../components/formfields/musitModal'
 import './PickListContainer.css'
+import { emitError, emitSuccess } from '../../errors/emitter'
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -50,39 +51,39 @@ export default class PickListContainer extends React.Component {
     this.setState({ ...this.state, showModal: false, itemsToMove: [] })
   }
 
-  nodeCallback = (toName, toMoveLenght, name) => ({
+  nodeCallback = (toName, toMoveLength, name) => ({
     onSuccess: () => {
       this.props.refreshNodes(this.state.itemsToMove.map(item => item.id))
       this.hideModal()
-      if (toMoveLenght === 1) {
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+      if (toMoveLength === 1) {
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })})
       } else {
-        window.alert(I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLenght, destination: toName }))
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })})
       }
     },
     onFailure: () => {
-      if (toMoveLenght === 1) {
-        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+      if (toMoveLength === 1) {
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })})
       } else {
-        window.alert(I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLenght, destination: toName }))
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })})
       }
     }
   })
-  objectCallback = (toName, toMoveLenght, name) => ({
+  objectCallback = (toName, toMoveLength, name) => ({
     onSuccess: () => {
       this.props.refreshObjects(this.state.itemsToMove.map(item => item.id))
       this.hideModal()
-      if (toMoveLenght === 1) {
-        window.alert(I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName }))
+      if (toMoveLength === 1) {
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })})
       } else {
-        window.alert(I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLenght, destination: toName }))
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLength, destination: toName })})
       }
     },
     onFailure: () => {
-      if (toMoveLenght === 1) {
-        window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+      if (toMoveLength === 1) {
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName })})
       } else {
-        window.alert(I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLenght, destination: toName }))
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName })})
       }
     }
   })
@@ -90,10 +91,10 @@ export default class PickListContainer extends React.Component {
   moveModal = (toId, toName) => {
     const moveFunction = this.isTypeNode() ? this.props.moveNode : this.props.moveObject
     const toMove = this.state.itemsToMove.map(itemToMove => itemToMove.id)
-    const toMoveLenght = toMove.length
-    const name = this.isTypeNode() ? this.state.itemsToMove[0].name : this.state.itemsToMove[0].displayName
+    const toMoveLength = toMove.length
+    const name = this.isTypeNode() ? this.state.itemsToMove[0].name : this.state.itemsToMove[0].term
     const callback = this.isTypeNode() ?
-    this.nodeCallback(toName, toMoveLenght, name) : this.objectCallback(toName, toMoveLenght, name)
+    this.nodeCallback(toName, toMoveLength, name) : this.objectCallback(toName, toMoveLength, name)
     moveFunction(toMove, toId, this.props.user.id, callback)
   }
 
@@ -143,7 +144,7 @@ export default class PickListContainer extends React.Component {
               remove={item => this.isTypeNode() ? removeNode(item) : removeObject(item)}
               move={this.showModal}
             />
-            <div style={{ textAlign: 'right' }}>
+            <div style={{ textAlign: 'left' }}>
               {marked.length}/{picks.length} &nbsp;
               {this.isTypeNode() ? I18n.t('musit.pickList.footer.nodeSelected')
                 : I18n.t('musit.pickList.footer.objectSelected') }

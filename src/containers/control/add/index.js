@@ -29,6 +29,7 @@ import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { isDateBiggerThanToday } from '../../../util'
+import { emitError } from '../../../errors/emitter'
 
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
@@ -118,7 +119,7 @@ export default class ControlAddContainer extends React.Component {
     } else {
       this.props.saveControl(this.props.params.id, controlState, {
         onSuccess: () => hashHistory.goBack(),
-        onFailure: () => window.alert('Kunne ikke lagre kontroll')
+        onFailure: () => emitError({ type: 'errorOnSave', message: this.props.translate('musit.newControl.saveControlError')})
       }, this.props.params.id)
     }
   }
@@ -126,7 +127,7 @@ export default class ControlAddContainer extends React.Component {
   setDate = (newValue) => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
-        window.alert(this.props.translate('musit.newControl.dateValidation'))
+        emitError({ type: 'dateValidationError', message: this.props.translate('musit.newControl.dateValidation') })
         this.setState({ ...this.state, doneDate: new Date().toISOString() })
       } else {
         this.setState({ ...this.state, doneDate: newValue })

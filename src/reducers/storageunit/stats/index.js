@@ -1,9 +1,10 @@
 import Config from '../../../config'
+import { apiUrl } from '../../../util'
 
-const LOAD_STATS = 'musit/strageunit-stats/LOAD_STATS'
-const LOAD_STATS_SUCCESS = 'musit/strageunit-stats/LOAD_STATS_SUCCESS'
-const LOAD_STATS_FAILURE = 'musit/strageunit-stats/LOAD_STATS_FAILURE'
-const CLEAR_STATS = 'musit/strageunit-stats/CLEAR_STATS'
+export const LOAD_STATS = 'musit/strageunit-stats/LOAD_STATS'
+export const LOAD_STATS_SUCCESS = 'musit/strageunit-stats/LOAD_STATS_SUCCESS'
+export const LOAD_STATS_FAILURE = 'musit/strageunit-stats/LOAD_STATS_FAILURE'
+export const CLEAR_STATS = 'musit/strageunit-stats/CLEAR_STATS'
 
 const initialState = {
   stats: {
@@ -52,7 +53,7 @@ export default storageUnitStatsReducer
 export const loadStats = (id) => {
   return {
     types: [LOAD_STATS, LOAD_STATS_SUCCESS, LOAD_STATS_FAILURE],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/stats`)
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/stats`))
   }
 }
 

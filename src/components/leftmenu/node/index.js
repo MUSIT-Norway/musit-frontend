@@ -46,7 +46,7 @@ export default class NodeLeftMenuComponent extends Component {
               style={{ color: 'black' }}
             >
               {MusitIconType ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
-                <FontAwesome name={`${icon}`} style={{ padding: '2px' }} />}
+                <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />}
               <br />
               {translate(`musit.leftMenu.node.${type}`)}
             </Button>
@@ -64,7 +64,7 @@ export default class NodeLeftMenuComponent extends Component {
             {translate(`musit.leftMenu.node.${typeText}`)}
             <br />
             <ControlLabel id={`${id}_${typeText}`}>
-              {Number.isNaN(type) ? <FontAwesome name="spinner" /> : type}
+              {Number.isNaN(type) ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : type}
             </ControlLabel>
           </div>
         

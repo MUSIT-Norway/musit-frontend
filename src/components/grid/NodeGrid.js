@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { I18n } from 'react-i18nify'
+import { emitError, emitSuccess } from '../../errors/emitter'
 
 export default class NodeGrid extends Component {
   static propTypes = {
@@ -57,10 +58,12 @@ export default class NodeGrid extends Component {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
         this.props.refresh()
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name: this.state.name, destination: toName }))
+        emitSuccess({ type: 'movedSuccess',
+                      message: I18n.t('musit.moveModal.messages.nodeMoved', { name: this.state.name, destination: toName }) })
       },
       onFailure: () => {
-        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name: this.state.name, destination: toName }))
+        emitError({ type: 'errorOnMove',
+                    message: I18n.t('musit.moveModal.messages.errorNode', { name: this.state.name, destination: toName }) })
       }
     })
   }
@@ -142,7 +145,7 @@ export default class NodeGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                       >
-                        <FontAwesome name="truck" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
                       </a>
                     </td>
                     <td id={`${id}_${c.name}_${c.type}_shoppingCart`}>
@@ -154,7 +157,7 @@ export default class NodeGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                       >
-                        <FontAwesome name="shopping-cart" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />
                       </a>
                     </td>
                   </tr>

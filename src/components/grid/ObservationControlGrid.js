@@ -65,7 +65,7 @@ export default class ObservationControlGrid extends Component {
   icon(ok, name, tooltip, index) {
     return <span
       key={index}
-      style={ok ? { color: 'gray', padding: '2px' } : { padding: '2px' }}
+      style={ok ? { color: 'darkgray', padding: '2px' } : { padding: '2px' }}
       className={`icon icon-${name}`}
       title={I18n.t(`musit.observation.page.${tooltip}.labelText`)}
     />

@@ -16,6 +16,7 @@ import ActorSuggest from '../../../components/actor'
 import * as validation from './validation'
 import { isDateBiggerThanToday } from '../../../util'
 import { I18n } from 'react-i18nify'
+import { emitError } from '../../../errors/emitter'
 
 export default class ObservationPage extends React.Component {
 
@@ -116,7 +117,8 @@ export default class ObservationPage extends React.Component {
   setDate = (newValue) => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
-        window.alert(this.props.translate('musit.observation.page.dateValidation'))
+        emitError({ type: 'dateValidationError', message: this.props.translate('musit.observation.page.dateValidation') })
+
         this.setState({ ...this.state, doneDate: new Date().toISOString() })
       } else {
         this.setState({ ...this.state, doneDate: newValue })

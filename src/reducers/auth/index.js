@@ -1,10 +1,11 @@
 
-const SET_USER = 'musit/auth/SET_USER';
-const CLEAR_USER = 'musit/auth/CLEAR_USER';
-const LOAD_ACTOR = 'musit/auth/LOAD_ACTOR'
-const LOAD_ACTOR_SUCCESS = 'musit/auth/LOAD_ACTOR_SUCCESS'
-const LOAD_ACTOR_FAILURE = 'musit/auth/LOAD_ACTOR_FAILURE'
-const CLEAR_ACTOR = 'musit/auth/CLEAR_ACTOR'
+export const SET_USER = 'musit/auth/SET_USER';
+export const CLEAR_USER = 'musit/auth/CLEAR_USER';
+export const LOAD_ACTOR = 'musit/auth/LOAD_ACTOR'
+export const LOAD_ACTOR_SUCCESS = 'musit/auth/LOAD_ACTOR_SUCCESS'
+export const LOAD_ACTOR_FAILURE = 'musit/auth/LOAD_ACTOR_FAILURE'
+export const CLEAR_ACTOR = 'musit/auth/CLEAR_ACTOR'
+import { apiUrl } from '../../util'
 
 const initialState = {
   user: null,
@@ -58,7 +59,7 @@ export default authReducer
 export const loadActor = () => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: (client) => client.get('/api/actor/v1/dataporten/currentUser')
+    promise: (client) => client.get(apiUrl('/api/actor/v1/dataporten/currentUser'))
   }
 }
 

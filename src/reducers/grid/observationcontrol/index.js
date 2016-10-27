@@ -1,11 +1,12 @@
 import Config from '../../../config'
+import { apiUrl } from '../../../util'
 
-const LOAD = 'musit/observationcontrol/LOAD'
-const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS'
-const LOAD_FAIL = 'musit/observationcontrol/LOAD_FAIL'
-const LOAD_ACTOR = 'musit/observationcontrol/LOAD_ACTOR'
-const LOAD_ACTOR_SUCCESS = 'musit/observationcontrol/LOAD_ACTOR_SUCCESS'
-const LOAD_ACTOR_FAILURE = 'musit/observationcontrol/LOAD_ACTOR_FAILURE'
+export const LOAD = 'musit/observationcontrol/LOAD'
+export const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS'
+export const LOAD_FAIL = 'musit/observationcontrol/LOAD_FAIL'
+export const LOAD_ACTOR = 'musit/observationcontrol/LOAD_ACTOR'
+export const LOAD_ACTOR_SUCCESS = 'musit/observationcontrol/LOAD_ACTOR_SUCCESS'
+export const LOAD_ACTOR_FAILURE = 'musit/observationcontrol/LOAD_ACTOR_FAILURE'
 
 const initialState = { data: [] }
 import 'whatwg-fetch';
@@ -66,14 +67,14 @@ const observationControlGridReducer = (state = initialState, action) => {
 export const loadActor = (r) => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: (client) => client.post('/api/actor/v1/person/details', r)
+    promise: (client) => client.post(apiUrl('/api/actor/v1/person/details', r))
   }
 }
 
 export const loadControlsAndObservationsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: () => fetch(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/events`).then(result => result.json()),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/events`)),
     callback
   }
 }

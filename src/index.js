@@ -16,6 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+import 'es6-shim';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './store/configureStore.js';
@@ -42,34 +43,136 @@ import { I18n } from 'react-i18nify'
 I18n.loadTranslations(LanguageJson)
 I18n.setLocale('no')
 
-const component = 
-  <Router
-    onUpdate={() => window.scrollTo(0, 0)}
-    history={history}
-  >
-    {getRoutes(store)}
-  </Router>
-;
+import NotificationSystem from 'react-notification-system';
 
-ReactDOM.render(
-  <Provider store={store} key="provider">
-    {component}
-  </Provider>,
-  dest
-);
+const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'))
 
-if (config.isDev) {
-  window.React = React; // enable debugger
-}
+import { source, successSource, emitError } from './errors/emitter'
 
-if (config.useDevTools && !window.devToolsExtension) {
+
+const children = (message) =>
+    <div style={{margin: '30px'}}>
+      <p>
+        {message}
+      </p>
+    </div>
+
+successSource.subscribe ((s) => {
+  switch(s.type) {
+    case 'deleteSuccess':
+      notificationSystem.addNotification({
+        level: 'success',
+        title: I18n.t('musit.notificationMessages.deleting'),
+        position: 'tc',
+        children: children(s.message)
+      });
+      break;
+    case 'movedSuccess':
+      notificationSystem.addNotification({
+        level: 'success',
+        title: I18n.t('musit.notificationMessages.moving'),
+        position: 'tc',
+        children: children(s.message)
+      });
+      break;
+    default:
+      notificationSystem.addNotification({
+        level: 'success',
+        children: children(s.message)
+      });
+  }
+});
+
+
+
+source.subscribe((e) => {
+
+
+  switch(e.type) {
+    case 'network':
+      notificationSystem.addNotification({
+        message: e.error.response.req.url,
+        level: 'error',
+        title: I18n.t('musit.errorMainMessages.networkError'),
+        position: 'tc',
+        children: children(e.error.response.req.url)
+      });
+      break;
+    case 'dateValidationError':
+      notificationSystem.addNotification({
+        level: 'error',
+        title: I18n.t('musit.errorMainMessages.applicationError'),
+        position: 'tc',
+        children: children(e.message)
+      });
+      break;
+    case 'errorOnDelete':
+      notificationSystem.addNotification({
+        level: 'error',
+        title: I18n.t('musit.errorMainMessages.applicationError'),
+        position: 'tc',
+        children: children(e.message)
+      });
+      break;
+    case 'errorOnMove':
+      notificationSystem.addNotification({
+        level: 'error',
+        title: I18n.t('musit.errorMainMessages.applicationError'),
+        position: 'tc',
+        children: children(e.message)
+      });
+      break;
+    case 'errorOnSave':
+      notificationSystem.addNotification({
+        level: 'error',
+        title: I18n.t('musit.errorMainMessages.applicationError'),
+        position: 'tc',
+        children: children(e.message)
+      });
+      break;
+    default:
+      notificationSystem.addNotification({
+        message: 'something happened',
+        level: 'error',
+        position: 'tc'
+      });
+  }
+});
+
+try {
+  const component =
+      <Router
+        onUpdate={() => window.scrollTo(0, 0)}
+        history={history}
+      >
+        {getRoutes(store)}
+      </Router>
+    ;
+
   ReactDOM.render(
     <Provider store={store} key="provider">
-      <div>
-        {component}
-        <DevTools />
-      </div>
+      {component}
     </Provider>,
     dest
   );
+
+  if (config.isDev) {
+    window.React = React; // enable debugger
+  }
+
+  if (config.useDevTools && !window.devToolsExtension) {
+    ReactDOM.render(
+      <Provider store={store} key="provider">
+        <div>
+          {component}
+          <DevTools />
+        </div>
+      </Provider>,
+      dest
+    );
+  }
+} catch(e) {
+  emitError({ type: 'annet', e })
 }
+
+

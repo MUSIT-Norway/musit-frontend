@@ -32,8 +32,6 @@ import observationReducer from './observation';
 import reportReducer from './reports';
 import controlReducer from './control';
 import observationControlGridReducer from './grid/observationcontrol';
-import nodeGridReducer from './grid/node';
-import objectGridReducer from './grid/object';
 import moveHistoryReducer from './grid/move'
 import ObjectSearchReducer from './objectsearch/reducer'
 
@@ -52,9 +50,7 @@ const rootReducer = combineReducers({
   reports: reportReducer,
   control: controlReducer,
   observationControlGrid: observationControlGridReducer,
-  nodeGrid: nodeGridReducer,
   movehistory: moveHistoryReducer,
-  objectGrid: objectGridReducer,
   objectSearch: ObjectSearchReducer
 });
 

@@ -10,6 +10,7 @@ import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { createBreadcrumbPath } from '../../util'
 import { loadRoot } from '../../reducers/storageunit/grid'
+import { emitError } from '../../errors/emitter'
 
 const mapStateToProps = (state) => {
   return {
@@ -27,7 +28,7 @@ const mapDispatchToProps = (dispatch) => ({
     return (id, observationState) => {
       dispatch(addControl(id, controlState, observationState, {
         onSuccess: () => hashHistory.goBack(),
-        onFailure: () => alert('This went terribly wrong!')
+        onFailure: () => emitError({ type: 'errorOnSave', message: this.props.translate('musit.observation.messages.saveError') })
       }))
     }
   },

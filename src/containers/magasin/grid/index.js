@@ -18,8 +18,8 @@ import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 import MusitModalHistory from '../../../components/formfields/musitModalHistory'
 import sweetAlert from 'sweetalert'
-import { I18n } from 'react-i18nify';
-
+import { I18n } from 'react-i18nify'
+import { emitError, emitSuccess } from '../../../errors/emitter'
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
@@ -99,40 +99,7 @@ const mapDispatchToProps = (dispatch, props) => {
     onDelete: (id, currentNode) => { // TODO: Problems with delete slower than callback (async)
       if (id === currentNode.id) {
         const name = currentNode.name;
-        sweetAlert(
-            {
-             title: 'Vil du virkelig slette?',
-              type: 'warning',
-              confirmButtonText: 'Ok',
-              cancelButtonText: 'Avbryt',
-              closeOnConfirm: true,
-              closeOnCancel: true
-            },
-            function(isConfirm) {
-              if (isConfirm) {
-                dispatch(deleteUnit(id, {
-                  onSuccess: () => {
-                    dispatch(clearRoot());
-                    if (currentNode.isPartOf) {
-                      hashHistory.replace(`/magasin/${currentNode.isPartOf}`)
-                    } else {
-                      dispatch(loadRoot());
-                      dispatch(clearStats())
-                    }
-                    window.alert(I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name}))
-                  },
-                  onFailure: (e) => {
-                    if (e.status === 400) {
-                      window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
-                    } else {
-                      window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorCommon'))
-                    }
-                  }
-                }))
-              }
-            }
-        )
-    /*    if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}))) {
+        if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}))) {
           dispatch(deleteUnit(id, {
             onSuccess: () => {
               dispatch(clearRoot());
@@ -142,17 +109,17 @@ const mapDispatchToProps = (dispatch, props) => {
                 dispatch(loadRoot());
                 dispatch(clearStats())
               }
-              window.alert(I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name}))
+              emitSuccess({ type: 'deleteSuccess', message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name})})
             },
             onFailure: (e) => {
               if (e.status === 400) {
-                window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'))
+                emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')} )
               } else {
-                window.alert(I18n.t('musit.leftMenu.node.deleteMessages.errorCommon'))
+                emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')} )
               }
             }
           }))
-        }*/
+        }
       }
     }
   }
@@ -296,10 +263,14 @@ class StorageUnitsContainer extends React.Component {
       onSuccess: () => {
         this.loadNodes();
         this.setState({ ...this.state, showModal: false, showModalFromId: '' });
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.data.name, destination: toName }))
+        emitSuccess({ type: 'movedSuccess',
+                      message: I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.data.name, destination: toName })})
       },
       onFailure: () => {
-        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name: this.props.rootNode.data.name, destination: toName }))
+        emitError({ type: 'errorOnMove',
+                    message: I18n.t('musit.moveModal.messages.errorNode',
+                      { name: this.props.rootNode.data.name, destination: toName })})
+
       }
     })
   };

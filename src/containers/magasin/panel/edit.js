@@ -5,6 +5,7 @@ import { hashHistory } from 'react-router'
 import { load, update } from '../../../reducers/storageunit/panel';
 import StorageUnitContainerImpl from './page'
 import { update as updateState } from '../../../reducers/storageunit/panel/state'
+import { emitError } from '../../../errors/emitter'
 
 const mapStateToProps = (state) => {
   return {
@@ -18,13 +19,14 @@ const mapDispatchToProps = (dispatch) => {
     onLagreClick: (data) => {
       dispatch(update(data, {
         onSuccess: () => hashHistory.goBack(),
-        onFailure: () => { alert('Kunne ikke lagre node') }
+        onFailure: () => { emitError( { type: 'errorOnSave', message: this.props.translate('musit.storageUnits.messages.saveNodeError') })}
       }))
     },
     loadStorageUnit: (id, callback) => {
       dispatch(load(id, callback))
     },
     updateState: (data) => dispatch(updateState(data))
+
   }
 };
 

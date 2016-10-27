@@ -65,7 +65,12 @@ exports[`ObjectGrid renders correctly 1`] = `
                 onClick={[Function onClick]}
                 title="Flytt objektet">
                 <FontAwesome
-                  name="truck" />
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
               </a>
             </td>
             <td
@@ -75,7 +80,12 @@ exports[`ObjectGrid renders correctly 1`] = `
                 onClick={[Function onClick]}
                 title="Legg til plukklisten">
                 <FontAwesome
-                  name="shopping-cart" />
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
               </a>
             </td>
           </tr>
@@ -112,7 +122,12 @@ exports[`ObjectGrid renders correctly 1`] = `
                 onClick={[Function onClick]}
                 title="Flytt objektet">
                 <FontAwesome
-                  name="truck" />
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
               </a>
             </td>
             <td
@@ -122,7 +137,12 @@ exports[`ObjectGrid renders correctly 1`] = `
                 onClick={[Function onClick]}
                 title="Legg til plukklisten">
                 <FontAwesome
-                  name="shopping-cart" />
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
               </a>
             </td>
           </tr>
