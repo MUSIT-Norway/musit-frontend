@@ -98,19 +98,21 @@ const mapDispatchToProps = (dispatch, props) => {
     onDelete: (id, currentNode) => {
       if (id === currentNode.id) {
         const name = currentNode.name;
+        const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name})
         global.bootbox.confirm({
-          message: I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}),
+          message: (`<b> ${message} </b>`),
+          size: 'small',
           buttons: {
             confirm: {
-              label: I18n.t('musit.texts.ok'),
-              className: 'btn-success'
+              label: I18n.t('musit.texts.ok')
             },
             cancel: {
-              label: I18n.t('musit.texts.cancel'),
-              className: 'btn-danger'
+              label: I18n.t('musit.texts.cancel')
 
             }
           },
+          animate: true,
+          closeButton: false,
           callback: (result) => {
             if (result) {
               dispatch(deleteUnit(id, {
