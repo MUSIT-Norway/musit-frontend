@@ -115,7 +115,7 @@ export default class ObjectGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
                       >
-                        <FontAwesome name="truck" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
                       </a>
                     </td>
                     <td id={`${id}_${c.museumNo}_${c.subNo}_shoppingCart`}>
@@ -127,7 +127,7 @@ export default class ObjectGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
                       >
-                        <FontAwesome name="shopping-cart" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />
                       </a>
                     </td>
                   </tr>
