@@ -17,7 +17,6 @@ import { blur, createBreadcrumbPath } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 import MusitModalHistory from '../../../components/formfields/musitModalHistory'
-import sweetAlert from 'sweetalert'
 import { I18n } from 'react-i18nify'
 import { emitError, emitSuccess } from '../../../errors/emitter'
 
@@ -99,7 +98,54 @@ const mapDispatchToProps = (dispatch, props) => {
     onDelete: (id, currentNode) => { // TODO: Problems with delete slower than callback (async)
       if (id === currentNode.id) {
         const name = currentNode.name;
-        if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}))) {
+        global.bootbox.confirm({
+          message: I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}),
+          buttons: {
+            confirm: {
+              label: I18n.t('musit.texts.ok'),
+              className: 'btn-success'
+            },
+            cancel: {
+              label: I18n.t('musit.texts.cancel'),
+              className: 'btn-danger'
+
+            }
+          },
+          callback: (result) => {
+            if (!result) {
+            } else {
+              dispatch(deleteUnit(id, {
+                onSuccess: () => {
+                  dispatch(clearRoot());
+                  if (currentNode.isPartOf) {
+                    hashHistory.replace(`/magasin/${currentNode.isPartOf}`)
+                  } else {
+                    dispatch(loadRoot());
+                    dispatch(clearStats())
+                  }
+                  emitSuccess({
+                    type: 'deleteSuccess',
+                    message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name})
+                  })
+                },
+                onFailure: (e) => {
+                  if (e.status === 400) {
+                    emitError({
+                      type: 'errorOnDelete',
+                      message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')
+                    })
+                  } else {
+                    emitError({
+                      type: 'errorOnDelete',
+                      message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')
+                    })
+                  }
+                }
+              }))
+            }
+            }})
+
+        /*    if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}))) {
           dispatch(deleteUnit(id, {
             onSuccess: () => {
               dispatch(clearRoot());
@@ -119,7 +165,7 @@ const mapDispatchToProps = (dispatch, props) => {
               }
             }
           }))
-        }
+        }*/
       }
     }
   }
