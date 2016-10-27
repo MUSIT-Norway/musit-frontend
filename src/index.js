@@ -16,6 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+import 'es6-shim';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './store/configureStore.js';
