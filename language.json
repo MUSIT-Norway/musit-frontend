@@ -1,6 +1,15 @@
 {
   "en": {
     "musit": {
+      "errorMainMessages": {
+        "applicationError": "Application error",
+        "networkError": "Network error"
+      },
+      "notificationMessages": {
+        "deleting": "Delete",
+        "saving": "Save",
+        "moving": "Move"
+      },
       "moveHistory": {
         "title": "Moving history for object",
         "from": "From",
@@ -178,7 +187,8 @@
         "envdata": "Environmental Conditions",
         "controlsRequired": "At least one control type must be checked OK or Not OK",
         "registerObservations": "Register observations",
-        "dateValidation": "Date of control can not be later than present date."
+        "dateValidation": "Date of control can not be later than present date.",
+        "saveControlError": "Unable to save control"
       },
       "observation": {
         "page": {
@@ -546,6 +556,10 @@
             "placeHolder": "Free text",
             "tooltip": "Comment"
           }
+        },
+        "messages": {
+          "saveNodeError": "Kunne ikke lagre noden",
+          "saveNodeSuccess": "Noden er lagret"
         }
       },
       "welcomePage": {
@@ -561,6 +575,15 @@
   },
   "no": {
     "musit": {
+      "errorMainMessages": {
+        "applicationError": "Applikasjonsfeil",
+        "networkError": "Nettverksfeil"
+      },
+      "notificationMessages": {
+        "deleting": "Sletting",
+        "saving": "Lagre",
+        "moving": "Flytting"
+      },
       "moveHistory": {
         "title": "Flyttehistorikk for objekt",
         "from": "Fra",
@@ -738,7 +761,8 @@
         "envdata": "Miljødata",
         "controlsRequired": "Minst en kontroll må merkes OK eller Ikke OK",
         "registerObservations": "Registrer observasjoner",
-        "dateValidation": "Dato for kontrollen kan ikke være større enn dagens dato."
+        "dateValidation": "Dato for kontrollen kan ikke være større enn dagens dato.",
+        "saveControlError": "Kunne ikke lagre kontrollen"
       },
       "observation": {
         "page": {
@@ -759,6 +783,9 @@
           "dateValidation": "Dato for observasjonen kan ikke være større enn dagens dato.",
           "typeSelect": {
             "labelText": "Velg type"
+          },
+          "messages": {
+            "saveError": "Could not save observation"
           },
           "pest": {
             "identificationValueRequired": "Identifikasjon er påkrevd.",
@@ -1106,6 +1133,10 @@
             "placeHolder": "Fritekst",
             "tooltip": "Kommentar"
           }
+        },
+        "messages": {
+          "saveNodeError": "Kunne ikke lagre noden",
+          "saveNodeSuccess": "Noden er lagret"
         }
       },
       "welcomePage": {

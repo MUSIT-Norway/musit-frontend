@@ -9,6 +9,7 @@ import { TYPES } from '../../reducers/picklist'
 import { I18n } from 'react-i18nify'
 import MusitModal from '../../components/formfields/musitModal'
 import './PickListContainer.css'
+import { emitError, emitSuccess } from '../../errors/emitter'
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -55,16 +56,16 @@ export default class PickListContainer extends React.Component {
       this.props.refreshNodes(this.state.itemsToMove.map(item => item.id))
       this.hideModal()
       if (toMoveLength === 1) {
-        window.alert(I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName }))
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })})
       } else {
-        window.alert(I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName }))
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })})
       }
     },
     onFailure: () => {
       if (toMoveLength === 1) {
-        window.alert(I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName }))
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })})
       } else {
-        window.alert(I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName }))
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })})
       }
     }
   })
@@ -73,16 +74,16 @@ export default class PickListContainer extends React.Component {
       this.props.refreshObjects(this.state.itemsToMove.map(item => item.id))
       this.hideModal()
       if (toMoveLength === 1) {
-        window.alert(I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName }))
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })})
       } else {
-        window.alert(I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLength, destination: toName }))
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLength, destination: toName })})
       }
     },
     onFailure: () => {
       if (toMoveLength === 1) {
-        window.alert(I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName }))
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName })})
       } else {
-        window.alert(I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName }))
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName })})
       }
     }
   })

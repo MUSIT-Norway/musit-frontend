@@ -17,6 +17,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+import { emitError } from '../errors/emitter'
 
 export default function clientMiddleware(client) {
   return ({ dispatch, getState }) => {
@@ -49,16 +50,21 @@ export default function clientMiddleware(client) {
         (error) => {
           next({ ...rest, error, type: FAILURE })
           if (callback) {
-            const { onFailure } = callback
-            if (typeof onFailure === 'function') onFailure(error)
+            const {onFailure} = callback
+            if (typeof onFailure === 'function')
+              return onFailure(error)
           }
+          emitError({ type: 'network', error })
         }
       ).catch((error) => {
         next({ ...rest, error, type: FAILURE });
+        emitError({ type: 'network', error })
         if (callback) {
           const { onFailure } = callback
-          if (typeof onFailure === 'function') onFailure(error)
+          if (typeof onFailure === 'function')
+            onFailure(error)
         }
+        emitError({ type: 'network', error })
       });
 
       return actionPromise;

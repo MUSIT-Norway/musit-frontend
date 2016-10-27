@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { I18n } from 'react-i18nify'
+import { emitError, emitSuccess } from '../../errors/emitter'
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -44,10 +45,12 @@ export default class ObjectGrid extends Component {
       onSuccess: () => {
         this.setState({ ...this.state, showModal: false, showModalFromId: null })
         this.props.refresh()
-        window.alert(I18n.t('musit.moveModal.messages.objectMoved', { name: this.state.displayName, destination: toName }))
+        emitSuccess({ type: 'movedSuccess',
+                      message: I18n.t('musit.moveModal.messages.objectMoved', { name: this.state.displayName, destination: toName })})
       },
       onFailure: () => {
-        window.alert(I18n.t('musit.moveModal.messages.errorObject', { name: this.state.displayName, destination: toName }))
+        emitError({ type: 'errorDelete',
+                    message: I18n.t('musit.moveModal.messages.errorObject', { name: this.state.displayName, destination: toName })})
       }
     })
   }
