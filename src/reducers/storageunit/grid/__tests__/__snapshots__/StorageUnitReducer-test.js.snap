@@ -1,0 +1,256 @@
+exports[`StorageUnitReducer DELETE: fail action 1`] = `
+Object {
+  "error": [Error: DELETE has error.],
+  "loaded": false,
+  "loading": false,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer DELETE: initial action 1`] = `
+Object {
+  "loading": true,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer DELETE: no action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer DELETE: success action 1`] = `
+Object {
+  "data": Array [],
+  "loaded": true,
+  "loading": false,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_ONE: fail action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {},
+    "error": [Error: LOAD_ONE: has error.],
+    "loaded": false,
+    "loading": false
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_ONE: initial action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_ONE: no action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_ONE: success action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {
+      "area": undefined,
+      "areaTo": undefined,
+      "environmentAssessment": Object {},
+      "environmentRequirement": Object {},
+      "height": undefined,
+      "heightTo": undefined,
+      "securityAssessment": Object {},
+      "someField": 1
+    },
+    "loaded": true,
+    "loading": false
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_SEVERAL child: fail action 1`] = `
+Object {
+  "error": [Error: LOAD_SEVERAL child has error.],
+  "loaded": false,
+  "loading": false,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_SEVERAL child: initial action 1`] = `
+Object {
+  "loading": true,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_SEVERAL child: no action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_SEVERAL child: success action 1`] = `
+Object {
+  "data": Object {
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_SEVERAL: fail action 1`] = `
+Object {
+  "error": [Error: LOAD_SEVERAL has error.],
+  "loaded": false,
+  "loading": false,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_SEVERAL: initial action 1`] = `
+Object {
+  "loading": true,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_SEVERAL: no action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer LOAD_SEVERAL: success action 1`] = `
+Object {
+  "data": Object {
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false,
+  "root": Object {
+    "data": Object {}
+  }
+}
+`;
+
+exports[`StorageUnitReducer creates DELETE_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "id": 2,
+    "type": "musit/storageunit-grid/DELETE"
+  },
+  Object {
+    "id": 2,
+    "result": Object {
+      "message": "Deleted 1 storage nodes."
+    },
+    "type": "musit/storageunit-grid/DELETE_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitReducer creates LOAD_ONE_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-grid/LOAD_ONE"
+  },
+  Object {
+    "result": Object {
+      "id": 2,
+      "isPartOf": 1,
+      "name": "Utviklingsmuseet",
+      "path": ",1,2,",
+      "pathNames": Array [
+        Object {
+          "name": "root-node",
+          "nodeId": 1
+        },
+        Object {
+          "name": "Utviklingsmuseet",
+          "nodeId": 2
+        }
+      ],
+      "type": "Organisation",
+      "updatedBy": 123,
+      "updatedDate": "2016-01-01T00:00:00+00:00"
+    },
+    "type": "musit/storageunit-grid/LOAD_ONE_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-grid/LOAD_SEVERAL"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "id": 3,
+        "isPartOf": 2,
+        "name": "Forskningens hus",
+        "path": ",1,2,3,",
+        "type": "Building",
+        "updatedBy": 123,
+        "updatedDate": "2016-01-01T00:00:00+00:00"
+      }
+    ],
+    "type": "musit/storageunit-grid/LOAD_SEVERAL_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-grid/LOAD_SEVERAL"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "id": 3,
+        "isPartOf": 2,
+        "name": "Forskningens hus",
+        "path": ",1,2,3,",
+        "type": "Building",
+        "updatedBy": 123,
+        "updatedDate": "2016-01-01T00:00:00+00:00"
+      }
+    ],
+    "type": "musit/storageunit-grid/LOAD_SEVERAL_SUCCESS"
+  }
+]
+`;

@@ -1,0 +1,161 @@
+exports[`GridMoveHistory CLEAR_SUCCESS action 1`] = `
+Object {
+  "data": Array [],
+  "loaded": false,
+  "loading": false
+}
+`;
+
+exports[`GridMoveHistory Move history: fail action 1`] = `
+Object {
+  "data": [Error: Some error to load history data.],
+  "loaded": true,
+  "loading": false
+}
+`;
+
+exports[`GridMoveHistory Move history: initial action 1`] = `
+Object {
+  "data": Array [],
+  "loaded": false,
+  "loading": true
+}
+`;
+
+exports[`GridMoveHistory Move history: no action 1`] = `
+Object {
+  "data": Array []
+}
+`;
+
+exports[`GridMoveHistory Move history: success action 1`] = `
+Object {
+  "data": Object {
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
+exports[`GridMoveHistory creates LOAD_ACTOR_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/movehistory/LOAD_ACTOR"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "dataportenId": "jarle",
+        "fn": "Jarle Stabell",
+        "id": 1
+      },
+      Object {
+        "dataportenId": "stein",
+        "fn": "Stein A. Olsen",
+        "id": 2
+      }
+    ],
+    "type": "musit/movehistory/LOAD_ACTOR_SUCCESS"
+  }
+]
+`;
+
+exports[`GridMoveHistory creates LOAD_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/movehistory/LOAD"
+  },
+  Object {
+    "result": Object {
+      "data": Array [
+        Object {
+          "doneBy": 2,
+          "doneDate": "2016-10-06T00:00:00+00:00",
+          "from": Object {
+            "path": ",1,2,3,6,7,",
+            "pathNames": Array [
+              Object {
+                "name": "root-node",
+                "nodeId": 1
+              },
+              Object {
+                "name": "Utviklingsmuseet",
+                "nodeId": 2
+              },
+              Object {
+                "name": "Forskningens hus",
+                "nodeId": 3
+              },
+              Object {
+                "name": "Forskningsværelset",
+                "nodeId": 6
+              },
+              Object {
+                "name": "Foo",
+                "nodeId": 7
+              }
+            ]
+          },
+          "registeredBy": "Darth Vader",
+          "registeredDate": "2016-10-06T05:55:52+00:00",
+          "to": Object {
+            "path": ",1,2,3,6,",
+            "pathNames": Array [
+              Object {
+                "name": "root-node",
+                "nodeId": 1
+              },
+              Object {
+                "name": "Utviklingsmuseet",
+                "nodeId": 2
+              },
+              Object {
+                "name": "Forskningens hus",
+                "nodeId": 3
+              },
+              Object {
+                "name": "Forskningsværelset",
+                "nodeId": 6
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "type": "musit/movehistory/LOAD_SUCCESS"
+  }
+]
+`;
+
+exports[`GridMoveHistory fail action 1`] = `
+Object {
+  "data": Object {
+    "actor": [Error: Some error here.]
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
+exports[`GridMoveHistory initial action 1`] = `
+Object {
+  "data": Array [],
+  "loaded": false,
+  "loading": true
+}
+`;
+
+exports[`GridMoveHistory no action 1`] = `
+Object {
+  "data": Array []
+}
+`;
+
+exports[`GridMoveHistory success action 1`] = `
+Object {
+  "data": Array [],
+  "loaded": true,
+  "loading": false
+}
+`;

@@ -2,6 +2,13 @@ import assert from 'assert'
 import deepFreeze from 'deep-freeze'
 import statsReducer, { loadStats, clearStats } from '../index'
 
+import * as actions from '../index'
+import reducer from '../index'
+import Config from '../../../../config'
+import request from 'superagent';
+import nocker from 'superagent-nock';
+const nock = nocker(request);
+
 const initialState = {
   stats: {
     nodes: 1100,
@@ -56,4 +63,57 @@ describe('Stats reducer', () => {
     const newstate = statsReducer(initialState, clearStats())
     assert(JSON.stringify(newstate) === JSON.stringify(nullState))
   })
+
+  it('creates LOAD_STATS_SUCCESS when fetching data has been done', () => {
+    const id = 3
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/stats`
+    nock('http://localhost')
+        .get(url)
+        .reply(200, {
+          numNodes: 6,
+          numObjects: 0,
+          totalObjects: 12
+        })
+    const store = mockStore()
+
+    return store.dispatch(actions.loadStats(3))
+        .then(() => {
+          expect(store.getActions()).toMatchSnapshot()
+        })
+  })
+
+  it('LOAD_STATS: no action', () => {
+    expect(
+        reducer(undefined, undefined)
+    ).toMatchSnapshot()
+  })
+
+  it('LOAD_STATS: initial action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_STATS
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('LOAD_STATS: success action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_STATS_SUCCESS,
+          result: {
+            someField: 1
+          }
+        })
+    ).toMatchSnapshot()
+  })
+
+  it('LOAD_STATS: fail action', () => {
+    expect(
+        reducer(undefined, {
+          type: actions.LOAD_STATS_FAILURE,
+          error: Error('LOAD_STATS has some error.')
+        })
+    ).toMatchSnapshot()
+  })
+
 })

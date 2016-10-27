@@ -1,14 +1,15 @@
 import Config from '../../../config'
+import { apiUrl } from '../../../util'
 
-const LOAD_SEVERAL = 'musit/storageunit-modal/LOAD_SEVERAL'
-const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-modal/LOAD_SEVERAL_SUCCESS'
-const LOAD_SEVERAL_FAIL = 'musit/storageunit-modal/LOAD_SEVERAL_FAIL'
-const LOAD_ROOT = 'musit/storageunit-modal/LOAD_ROOT'
-const LOAD_ROOT_SUCCESS = 'musit/storageunit-modal/LOAD_ROOT_SUCCESS'
-const LOAD_ROOT_FAIL = 'musit/storageunit-modal/LOAD_ROOT_FAIL'
-const CLEAR_ROOT = 'musit/storageunit-modal/CLEAR_ROOT'
-const SET_CURRENT = 'musit/storageunit-modal/SET_CURRENT'
-const CLEAR_CURRENT = 'musit/storageunit-modal/CLEAR_CURRENT'
+export const LOAD_SEVERAL = 'musit/storageunit-modal/LOAD_SEVERAL'
+export const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-modal/LOAD_SEVERAL_SUCCESS'
+export const LOAD_SEVERAL_FAIL = 'musit/storageunit-modal/LOAD_SEVERAL_FAIL'
+export const LOAD_ROOT = 'musit/storageunit-modal/LOAD_ROOT'
+export const LOAD_ROOT_SUCCESS = 'musit/storageunit-modal/LOAD_ROOT_SUCCESS'
+export const LOAD_ROOT_FAIL = 'musit/storageunit-modal/LOAD_ROOT_FAIL'
+export const CLEAR_ROOT = 'musit/storageunit-modal/CLEAR_ROOT'
+export const SET_CURRENT = 'musit/storageunit-modal/SET_CURRENT'
+export const CLEAR_CURRENT = 'musit/storageunit-modal/CLEAR_CURRENT'
 
 const initialState = { root: {} }
 
@@ -87,12 +88,12 @@ export const loadRoot = (id) => {
   if (id) {
     action = {
       types: [LOAD_ROOT, LOAD_ROOT_SUCCESS, LOAD_ROOT_FAIL],
-      promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`)
+      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`))
     }
   } else {
     action = {
       types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/1/children`)
+      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/1/children`))
     }
   }
   return action
@@ -101,7 +102,7 @@ export const loadRoot = (id) => {
 export const loadChildren = (id, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`)),
     callback
   };
 }

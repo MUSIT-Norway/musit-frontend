@@ -1,8 +1,9 @@
 
-const CLEAR = 'musit/suggest/CLEAR'
-const SUGGEST = 'musit/suggest/LOAD'
-const SUGGEST_SUCCESS = 'musit/suggest/LOAD_SUCCESS'
-const SUGGEST_FAIL = 'musit/suggest/LOAD_FAIL'
+export const CLEAR = 'musit/suggest/CLEAR'
+export const SUGGEST = 'musit/suggest/LOAD'
+export const SUGGEST_SUCCESS = 'musit/suggest/LOAD_SUCCESS'
+export const SUGGEST_FAIL = 'musit/suggest/LOAD_FAIL'
+import { apiUrl } from '../../util'
 
 const initialState = {
 }
@@ -71,7 +72,7 @@ export const suggestAddress = (destination, query) => {
   return {
     types: [SUGGEST, SUGGEST_SUCCESS, SUGGEST_FAIL],
     destination,
-    promise: (client) => client.get(`/api/geolocation/v1/address?search=[${query}]`)
+    promise: (client) => client.get(apiUrl(`/api/geolocation/v1/address?search=[${query}]`))
   }
 }
 
@@ -79,7 +80,7 @@ export const suggestNode = (destination, query) => {
   return {
     types: [SUGGEST, SUGGEST_SUCCESS, SUGGEST_FAIL],
     destination,
-    promise: (client) => client.get(`/api/storagefacility/v1/museum/1/storagenodes/search?searchStr=${query}`)
+    promise: (client) => client.get(apiUrl(`/api/storagefacility/v1/museum/1/storagenodes/search?searchStr=${query}`))
   }
 }
 
@@ -87,6 +88,6 @@ export const suggestPerson = (destination, query) => {
   return {
     types: [SUGGEST, SUGGEST_SUCCESS, SUGGEST_FAIL],
     destination,
-    promise: (client) => client.get(`/api/actor/v1/person?search=[${query}]&museumId=1`)
+    promise: (client) => client.get(apiUrl(`/api/actor/v1/person?search=[${query}]&museumId=1`))
   }
 }
