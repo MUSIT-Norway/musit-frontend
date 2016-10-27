@@ -145,7 +145,7 @@ export default class NodeGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                       >
-                        <FontAwesome name="truck" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
                       </a>
                     </td>
                     <td id={`${id}_${c.name}_${c.type}_shoppingCart`}>
@@ -157,7 +157,7 @@ export default class NodeGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                       >
-                        <FontAwesome name="shopping-cart" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />
                       </a>
                     </td>
                   </tr>

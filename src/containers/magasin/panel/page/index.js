@@ -28,7 +28,7 @@ import Breadcrumb from '../../../../layout/Breadcrumb'
 import { I18n } from 'react-i18nify'
 import AddressSuggest from '../../../../components/address'
 import Loader from 'react-loader';
-import { createBreadcrumbPath } from '../../../../util'
+import { createBreadcrumbPath, parseISODateNonStrict } from '../../../../util'
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../../components/formfields'
 
 const mapStateToProps = (state) => {
@@ -48,7 +48,7 @@ class StorageUnitContainer extends Component {
     path: React.PropTypes.arrayOf(React.PropTypes.object),
     loaded: React.PropTypes.bool.isRequired,
     updateState: React.PropTypes.func.isRequired
-  }
+}
 
   constructor(props) {
     super(props)
@@ -272,6 +272,18 @@ class StorageUnitContainer extends Component {
         precision={precision}
         value={unit[field]}
       />
+    )
+  }
+
+  renderLastChangeData(unit) {
+    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format("DD.MM.YYYY")
+    // const lastUpdateBy = unit.updatedBy // TODO når dette er i orden, autentisering er i orden
+    return (
+        <span>
+          <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> Darth Wader
+          <br />
+          <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{lastUpdateDate}
+       </span>
     )
   }
 
@@ -514,7 +526,13 @@ class StorageUnitContainer extends Component {
                             onClickCancel={() => hashHistory.goBack()}
                           />
                         </Row>
-                      </Grid>
+                        <Row>
+                          <Col sm={8} />
+                          <Col sm={4}>
+                            {this.renderLastChangeData(this.props.unit)}
+                          </Col>
+                        </Row>
+                        </Grid>
                     </div>
                   </form>
                 </Col>
