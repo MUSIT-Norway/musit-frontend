@@ -118,12 +118,14 @@ class App extends Component {
             </Nav>
             <Nav pullRight>
               {user &&
-                <LinkContainer to={'/search/objects'}>
-                  <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
-                </LinkContainer>
+              <MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} />
               }
+            </Nav>
+            <Nav pullRight>
               {user &&
-                <MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} />
+              <LinkContainer to={'/search/objects'}>
+                <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
+              </LinkContainer>
               }
             </Nav>
           </Navbar.Collapse>
