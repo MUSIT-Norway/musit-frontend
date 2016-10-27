@@ -1,6 +1,15 @@
 {
   "en": {
     "musit": {
+      "errorMainMessages": {
+        "applicationError": "Application error",
+        "networkError": "Network error"
+      },
+      "notificationMessages": {
+        "deleting": "Delete",
+        "saving": "Save",
+        "moving": "Move"
+      },
       "moveHistory": {
         "title": "Moving history for object",
         "from": "From",
@@ -566,6 +575,15 @@
   },
   "no": {
     "musit": {
+      "errorMainMessages": {
+        "applicationError": "Applikasjonsfeil",
+        "networkError": "Nettverksfeil"
+      },
+      "notificationMessages": {
+        "deleting": "Sletting",
+        "saving": "Lagre",
+        "moving": "Flytting"
+      },
       "moveHistory": {
         "title": "Flyttehistorikk for objekt",
         "from": "Fra",

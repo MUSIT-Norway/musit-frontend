@@ -62,7 +62,7 @@ successSource.subscribe ((s) => {
     case 'deleteSuccess':
       notificationSystem.addNotification({
         level: 'success',
-        title: 'Sletting',
+        title: I18n.t('musit.notificationMessages.deleting'),
         position: 'tc',
         children: children(s.message)
       });
@@ -70,7 +70,7 @@ successSource.subscribe ((s) => {
     case 'movedSuccess':
       notificationSystem.addNotification({
         level: 'success',
-        title: 'Flytting',
+        title: I18n.t('musit.notificationMessages.moving'),
         position: 'tc',
         children: children(s.message)
       });
@@ -93,7 +93,7 @@ source.subscribe((e) => {
       notificationSystem.addNotification({
         message: e.error.response.req.url,
         level: 'error',
-        title: 'Network error',
+        title: I18n.t('musit.errorMainMessages.networkError'),
         position: 'tc',
         children: children(e.error.response.req.url)
       });
@@ -101,7 +101,7 @@ source.subscribe((e) => {
     case 'dateValidationError':
       notificationSystem.addNotification({
         level: 'error',
-        title: 'Applikasjonsfeil',
+        title: I18n.t('musit.errorMainMessages.applicationError'),
         position: 'tc',
         children: children(e.message)
       });
@@ -109,7 +109,7 @@ source.subscribe((e) => {
     case 'errorOnDelete':
       notificationSystem.addNotification({
         level: 'error',
-        title: 'Applikasjonsfeil',
+        title: I18n.t('musit.errorMainMessages.applicationError'),
         position: 'tc',
         children: children(e.message)
       });
@@ -117,7 +117,7 @@ source.subscribe((e) => {
     case 'errorOnMove':
       notificationSystem.addNotification({
         level: 'error',
-        title: 'Applikasjonsfeil',
+        title: I18n.t('musit.errorMainMessages.applicationError'),
         position: 'tc',
         children: children(e.message)
       });
@@ -125,7 +125,7 @@ source.subscribe((e) => {
     case 'errorOnSave':
       notificationSystem.addNotification({
         level: 'error',
-        title: 'Applikasjonsfeil',
+        title: I18n.t('musit.errorMainMessages.applicationError'),
         position: 'tc',
         children: children(e.message)
       });
