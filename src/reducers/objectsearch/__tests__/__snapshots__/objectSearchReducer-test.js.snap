@@ -1,0 +1,83 @@
+exports[`Object search reducer creates SEARCH_OBJECTS_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "page": Object {
+      "page": 1,
+      "perPage": 50
+    },
+    "type": "musit/objectSearch/SEARCH"
+  },
+  Object {
+    "page": Object {
+      "page": 1,
+      "perPage": 50
+    },
+    "result": Object {
+      "matches": Array [
+        Object {
+          "id": 51,
+          "museumNo": "MusN11",
+          "term": "Solsikke"
+        }
+      ],
+      "totalMatches": 1
+    },
+    "type": "musit/objectSearch/SEARCH_SUCCESS"
+  }
+]
+`;
+
+exports[`Object search reducer search objects: fail action 1`] = `
+Object {
+  "data": Array [],
+  "error": [Error: search objects has some error.],
+  "loaded": false,
+  "loading": false,
+  "params": Object {
+    "currentPage": 1,
+    "perPage": 50
+  }
+}
+`;
+
+exports[`Object search reducer search objects: initial action 1`] = `
+Object {
+  "data": Object {
+    "matches": Array [],
+    "totalMatches": 0
+  },
+  "loaded": false,
+  "loading": true,
+  "params": Object {
+    "currentPage": undefined,
+    "perPage": 50
+  }
+}
+`;
+
+exports[`Object search reducer search objects: no action 1`] = `
+Object {
+  "data": Object {
+    "matches": Array [],
+    "totalMatches": 0
+  },
+  "params": Object {
+    "currentPage": 1,
+    "perPage": 50
+  }
+}
+`;
+
+exports[`Object search reducer search objects: success action 1`] = `
+Object {
+  "data": Object {
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false,
+  "params": Object {
+    "currentPage": 1,
+    "perPage": 50
+  }
+}
+`;
