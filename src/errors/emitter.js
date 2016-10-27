@@ -12,4 +12,4 @@ export const emitSuccess = (success) => emitter.emit('success', success);
 export const source = Rx.Observable.fromEvent(emitter, 'error');
 
 // Success source
-export const successSource  = Rx.Observable.fromEvent(emitter, 'success');
+export const successSource = Rx.Observable.fromEvent(emitter, 'success');

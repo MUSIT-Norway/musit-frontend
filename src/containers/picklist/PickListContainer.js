@@ -55,18 +55,17 @@ export default class PickListContainer extends React.Component {
     onSuccess: () => {
       this.props.refreshNodes(this.state.itemsToMove.map(item => item.id))
       this.hideModal()
-      if (toMoveLenght === 1) {
+      if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })})
       } else {
-        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLenght, destination: toName })})
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })})
       }
     },
     onFailure: () => {
-      if (toMoveLenght === 1) {
+      if (toMoveLength === 1) {
         emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })})
       } else {
-        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLenght, destination: toName })})
-
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })})
       }
     }
   })
@@ -74,18 +73,17 @@ export default class PickListContainer extends React.Component {
     onSuccess: () => {
       this.props.refreshObjects(this.state.itemsToMove.map(item => item.id))
       this.hideModal()
-      if (toMoveLenght === 1) {
+      if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })})
       } else {
-        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLenght, destination: toName })})
+        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLength, destination: toName })})
       }
     },
     onFailure: () => {
-      if (toMoveLenght === 1) {
+      if (toMoveLength === 1) {
         emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName })})
       } else {
-        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLenght, destination: toName })})
-
+        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName })})
       }
     }
   })

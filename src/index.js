@@ -47,7 +47,7 @@ import NotificationSystem from 'react-notification-system';
 
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'))
 
-import { source, successSource,  emitError } from './errors/emitter'
+import { source, successSource, emitError } from './errors/emitter'
 
 
 const children = (message) =>
