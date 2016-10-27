@@ -22,7 +22,7 @@ describe('KD Report', () => {
                 theftProtection: 123,
                 fireProtection: 13,
                 waterDamageAssessment: 55,
-                routinesAndContingencyPlan: 10
+                routinesAndContingencyPlan: 12
             })
 
         const store = mockStore()

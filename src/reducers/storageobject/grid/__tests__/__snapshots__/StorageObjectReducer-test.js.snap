@@ -1,0 +1,62 @@
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageobject-grid/LOAD_SEVERAL"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "displayName": "Øks",
+        "id": 1,
+        "identifier": Object {
+          "museumNo": "C666",
+          "subNo": "34"
+        }
+      },
+      Object {
+        "displayName": "Sverd",
+        "id": 2,
+        "identifier": Object {
+          "museumNo": "C666",
+          "subNo": "31"
+        }
+      },
+      Object {
+        "displayName": "Sommerfugl",
+        "id": 3,
+        "identifier": Object {
+          "museumNo": "C666",
+          "subNo": "38"
+        }
+      }
+    ],
+    "type": "musit/storageobject-grid/LOAD_SEVERAL_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitReducer fail action 1`] = `
+Object {
+  "data": Array [],
+  "loaded": false,
+  "loading": false
+}
+`;
+
+exports[`StorageUnitReducer initial action 1`] = `
+Object {
+  "loading": true
+}
+`;
+
+exports[`StorageUnitReducer no action 1`] = `Object {}`;
+
+exports[`StorageUnitReducer success action 1`] = `
+Object {
+  "data": Object {
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
