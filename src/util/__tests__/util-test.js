@@ -112,13 +112,19 @@ describe('SortObject', () => {
     expect(JSON.stringify(sortObject(newObject))).toMatchSnapshot()
   });
 
+  it('Check null array', () => {
+    const newObject = []
+    expect(JSON.stringify(sortObject(newObject))).toMatchSnapshot()
+  });
+
   const inputObject = [
-    {date:'1982-10-31T23:00:00.000Z', string: 'ååå', int: 100, intInStr: '211', float: 2.5, floatInStr: '2.5'},
+    {date:'1982-10-31T23:00:00.000Z', string: 'ååå', int: 200, intInStr: '211', float: 2.5, floatInStr: '2.5'},
     {date:'2016-10-01T23:00:00.000Z',string: 'ZZ', int: 22, intInStr: '222', float: 26.5, floatInStr: '26.5'},
     {date:'2016-10-11T23:00:00.000Z',string: 'zz', int: 333, intInStr: '11111', float: 12.5, floatInStr: '13232.5'},
     {date:'2016-11-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23', float: 222.5, floatInStr: '22332.5'},
     {date:'2003-06-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23333', float: 452.5, floatInStr: '33232.5'},
-    {date:'2016-10-22T23:00:00.000Z',string: '', int: 0, intInStr: '0', float: 2.6, floatInStr: '2.6'},
+    {date:'2016-10-22T23:00:00.000Z',string: '', int: 0, intInStr: '0', float: 2.6, floatInStr: '2.8'},
+    {},
     {},
     {floatInStr: '2.2'}
   ];
@@ -140,6 +146,26 @@ describe('SortObject', () => {
   it('Sort float (floatInStr) in string value', () => {
     expect(sortObject(inputObject, 'floatInStr', 'number')).toMatchSnapshot()
   });
+
+  it('Sort date value descending', () => {
+    expect(sortObject(inputObject, 'date', null, false)).toMatchSnapshot()
+  });
+  it('Sort string value descending', () => {
+    expect(sortObject(inputObject, 'string', null, false)).toMatchSnapshot()
+  });
+  it('Sort int value descending', () => {
+    expect(sortObject(inputObject, 'int', null, false)).toMatchSnapshot()
+  });
+  it('Sort int (intInStr) in string value descending', () => {
+    expect(sortObject(inputObject, 'intInStr', 'number', false)).toMatchSnapshot()
+  });
+  it('Sort float in string value descending', () => {
+    expect(sortObject(inputObject, 'float', null, false)).toMatchSnapshot()
+  });
+  it('Sort float (floatInStr) in string value descending', () => {
+    expect(sortObject(inputObject, 'floatInStr', 'number', false)).toMatchSnapshot()
+  });
+
   const inputJsonObject = [
     {
       id: 5,

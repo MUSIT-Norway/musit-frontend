@@ -23,6 +23,7 @@ import { refreshObject, refreshNode, addNode, addObject, toggleNode, toggleObjec
 import { moveObject, moveNode } from '../../reducers/move'
 import { loadRoot } from '../../reducers/storageunit/grid'
 
+
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   picks: state.picks,

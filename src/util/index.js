@@ -108,22 +108,35 @@ export const apiUrl = (url: string): string => {
   return `${testing ? 'http://localhost' : ''}${url}`;
 }
 
-export const sortObject = (obj: any, key: string, inputKeyType: string = ''): any => {
+export const sortObject = (obj: any, key: string, inputKeyType: string = '', sortAscending: bool = true ): any => {
   function compare(a, b) {
-    a = a[key];
-    b = b[key];
-    let type = (typeof(a) === 'string' ||  typeof(b) === 'string') ? 'string' : 'number';
-    let result;
+    a = a[key] ? a[key] : ''
+    b = b[key] ? b[key] : ''
 
+    let type = typeof a === 'string' ||  typeof b === 'string' ? 'string' : 'number'
     type = inputKeyType ? inputKeyType : type
-    if (type === 'string') result = (a ? a.toLowerCase() : a) > (b ? b.toLowerCase() : b)
-    else result = a - b;
+
+    function valueLowerCase(v) {
+      try {
+        return v && v !== '' && typeof v === 'string' ? v.toLowerCase() : v
+      } catch (err) {
+        // console.log(err.message)
+        throw err
+      }
+    }
+
+    let result
+    if (type === 'string') {
+      if (sortAscending) {
+        result = valueLowerCase(a) > valueLowerCase(b)
+      } else {
+        result = valueLowerCase(b) > valueLowerCase(a)
+    }}
+    else result = sortAscending ? a - b : b - a
     return result;
+
   }
-  if (obj && JSON.stringify(obj) !== '{}') {
-    // console.log(Object.keys(obj))
-    return [].slice.call(obj).sort(compare)
-  } else {
-    return {}
-  }
+
+  return obj && JSON.stringify(obj) !== '{}' ? [].slice.call(obj).sort(compare) : {}
+
 }

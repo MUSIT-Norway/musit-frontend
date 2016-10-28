@@ -211,9 +211,7 @@ Object {
 
 exports[`ObservationControlGridReducer observation control: success action 1`] = `
 Object {
-  "data": Object {
-    "someField": 1
-  },
+  "data": Array [],
   "loaded": true,
   "loading": false
 }

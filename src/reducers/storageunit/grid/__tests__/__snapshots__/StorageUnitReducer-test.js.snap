@@ -113,9 +113,7 @@ Object {
 
 exports[`StorageUnitReducer LOAD_SEVERAL child: success action 1`] = `
 Object {
-  "data": Object {
-    "someField": 1
-  },
+  "data": Array [],
   "loaded": true,
   "loading": false,
   "root": Object {
@@ -154,9 +152,7 @@ Object {
 
 exports[`StorageUnitReducer LOAD_SEVERAL: success action 1`] = `
 Object {
-  "data": Object {
-    "someField": 1
-  },
+  "data": Array [],
   "loaded": true,
   "loading": false,
   "root": Object {
