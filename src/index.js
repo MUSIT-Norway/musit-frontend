@@ -75,6 +75,14 @@ successSource.subscribe ((s) => {
         children: children(s.message)
       });
       break;
+    case 'saveSuccess':
+    notificationSystem.addNotification({
+      level: 'success',
+      title: I18n.t('musit.notificationMessages.saving'),
+      position: 'tc',
+      children: children(s.message)
+    });
+    break;
     default:
       notificationSystem.addNotification({
         level: 'success',

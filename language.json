@@ -558,8 +558,8 @@
           }
         },
         "messages": {
-          "saveNodeError": "Kunne ikke lagre noden",
-          "saveNodeSuccess": "Noden er lagret"
+          "saveNodeError": "Could not save the node",
+          "saveNodeSuccess": "Node is saved"
         }
       },
       "welcomePage": {
