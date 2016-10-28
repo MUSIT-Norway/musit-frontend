@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch, props) => {
         const name = currentNode.name;
         const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name})
         global.bootbox.confirm({
-          message: (`<b> ${message} </b>`),
+          message: `<b> ${message} </b>`,
           size: 'small',
           buttons: {
             confirm: {
