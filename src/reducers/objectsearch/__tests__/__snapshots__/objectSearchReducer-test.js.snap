@@ -67,3 +67,164 @@ Object {
   }
 }
 `;
+
+exports[`Object search reducer search objects: success action 1`] = `
+Object {
+  "data": Object {
+    "matches": Array [
+      Object {
+        "currentLocationId": 5,
+        "id": 51,
+        "museumNo": "MusN11",
+        "path": Array [
+          Object {
+            "id": 2,
+            "name": "Utviklingsmuseet",
+            "url": "/magasin/2"
+          },
+          Object {
+            "id": 3,
+            "name": "Forskningens hus",
+            "url": "/magasin/3"
+          },
+          Object {
+            "id": 4,
+            "name": "Kulturværelset",
+            "url": "/magasin/4"
+          },
+          Object {
+            "id": 5,
+            "name": "Naturværelset",
+            "url": "/magasin/5"
+          }
+        ],
+        "pathNames": Array [
+          Object {
+            "name": "root-node",
+            "nodeId": 1
+          },
+          Object {
+            "name": "Utviklingsmuseet",
+            "nodeId": 2
+          },
+          Object {
+            "name": "Forskningens hus",
+            "nodeId": 3
+          },
+          Object {
+            "name": "Kulturværelset",
+            "nodeId": 4
+          },
+          Object {
+            "name": "Naturværelset",
+            "nodeId": 5
+          }
+        ],
+        "term": "Solsikke"
+      },
+      Object {
+        "id": 54,
+        "museumNo": "MusN13",
+        "path": Array [],
+        "term": "Makrellsopp"
+      },
+      Object {
+        "id": 19,
+        "museumNo": "MusN20",
+        "path": Array [],
+        "term": "Ukjent mygg"
+      },
+      Object {
+        "id": 17,
+        "museumNo": "MusN21",
+        "path": Array [],
+        "subNo": "2",
+        "term": "Snilebille"
+      },
+      Object {
+        "id": 18,
+        "museumNo": "MusN22",
+        "path": Array [],
+        "term": "Fluesopp"
+      },
+      Object {
+        "id": 14,
+        "museumNo": "MusK23",
+        "path": Array [],
+        "term": "Lite skaft av ben"
+      },
+      Object {
+        "id": 15,
+        "museumNo": "MusK24",
+        "path": Array [],
+        "subNo": "a",
+        "term": "Lendeklede"
+      },
+      Object {
+        "id": 16,
+        "museumNo": "MusK24",
+        "path": Array [],
+        "subNo": "b",
+        "term": "Kokekar"
+      },
+      Object {
+        "currentLocationId": 5,
+        "id": 9,
+        "museumNo": "MusN28",
+        "path": Array [
+          Object {
+            "id": 2,
+            "name": "Utviklingsmuseet",
+            "url": "/magasin/2"
+          },
+          Object {
+            "id": 3,
+            "name": "Forskningens hus",
+            "url": "/magasin/3"
+          },
+          Object {
+            "id": 4,
+            "name": "Kulturværelset",
+            "url": "/magasin/4"
+          },
+          Object {
+            "id": 5,
+            "name": "Naturværelset",
+            "url": "/magasin/5"
+          }
+        ],
+        "pathNames": Array [
+          Object {
+            "name": "root-node",
+            "nodeId": 1
+          },
+          Object {
+            "name": "Utviklingsmuseet",
+            "nodeId": 2
+          },
+          Object {
+            "name": "Forskningens hus",
+            "nodeId": 3
+          },
+          Object {
+            "name": "Kulturværelset",
+            "nodeId": 4
+          },
+          Object {
+            "name": "Naturværelset",
+            "nodeId": 5
+          }
+        ],
+        "term": "Tusenben"
+      }
+    ],
+    "totalMatches": 55
+  },
+  "loaded": true,
+  "loading": false,
+  "params": Object {
+    "currentPage": 1,
+    "perPage": 50
+  }
+}
+`;

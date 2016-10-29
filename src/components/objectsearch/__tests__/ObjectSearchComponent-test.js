@@ -2,8 +2,6 @@ import { shallow } from 'enzyme'
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react'
 import ObjectSearchComponent from '../ObjectSearchComponent'
-import { renderBreadcrumb } from '../ObjectSearchComponent'
-import { createBreadcrumbPath } from '../../../util'
 
 describe('ObjectSearchComponent', () => {
   const testData = {
@@ -56,29 +54,6 @@ describe('ObjectSearchComponent', () => {
         }}
       />
     )
-    expect(shallowToJson(wrapper)).toMatchSnapshot()
-  })
-
-  it('should display breadcrumb correctly', () => {
-    const path = ',1,2,3,'
-    const pathNames = [
-      {
-        nodeId: 1,
-        name: "Root",
-        type: "Organization"
-      },
-      {
-        nodeId: 2,
-        name: "Musit",
-        type: "Building"
-      },
-      {
-        nodeId: 3,
-        name: "Kontoret",
-        type: "Room"
-      }
-    ]
-    const wrapper = shallow(renderBreadcrumb(createBreadcrumbPath(path, pathNames)))
     expect(shallowToJson(wrapper)).toMatchSnapshot()
   })
 })

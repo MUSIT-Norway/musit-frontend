@@ -1,48 +1,38 @@
-import assert from 'assert'
+import { shallow } from 'enzyme'
+import { shallowToJson } from 'enzyme-to-json';
 import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils'
 import ControlAddContainer from '../index'
-import moment from 'moment'
-import { DATE_FORMAT_DISPLAY } from './../../../../util'
+
+function wrapWithContext(context, contextTypes, child){
+
+  class WrapperWithContext extends React.Component {
+    static childContextTypes = contextTypes;
+    getChildContext() { return context; }
+    render() {
+      return child
+    }
+  }
+
+  return <WrapperWithContext />;
+}
 
 describe('Render add control page', () => {
-  const renderer = ReactTestUtils.createRenderer();
-  let observationPage;
-
-  beforeEach(() => {
-    renderer.render(
-      <ControlAddContainer
-        translate={(key) => key}
-        params={{ }}
-        saveControl={() => true}
-        path={[]}
-        loadStorageObj={() => true}
-      />
-    )
-    observationPage = renderer.getRenderOutput()
-  })
-
   it('should set default date and have correct date format', () => {
-    const dateProps = observationPage
-            .props
-            .content
-            .props
-            .children[1]
-            .props
-            .children[0]
-            .props
-            .children[0]
-            .props
-            .children[1]
-            .props
-            .children[1]
-            .props
-            .children
-            .props
-            .children
-            .props
-
-    assert(dateProps.dateFormat === DATE_FORMAT_DISPLAY)
-    assert(moment(dateProps.value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid())
+    const container = <ControlAddContainer
+      doneDate={new Date(2016, 10, 10, 22).toISOString()}
+      translate={(key) => key}
+      params={{ }}
+      saveControl={() => true}
+      loadStorageObj={() => true}
+      rootNode={{
+        path: ',1,'
+      }}
+    />;
+    const context = { closeModal: () => true };
+    const contextTypes = { closeModal: React.PropTypes.func };
+    const wrapper = shallow(
+      wrapWithContext(context, contextTypes, container)
+    )
+    expect(shallowToJson(wrapper)).toMatchSnapshot()
   })
 })

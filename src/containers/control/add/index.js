@@ -52,7 +52,7 @@ export default class ControlAddContainer extends React.Component {
       inertAirInterval: this.props.envReqData ? this.props.envReqData.hypoxicAirTolerance : ' ',
       light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
       cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
-      doneDate: new Date().toISOString(),
+      doneDate: this.props.doneDate ? this.props.doneDate : new Date().toISOString(),
       doneBy: this.props.actor
     }
     this.onControlClick = this.onControlClick.bind(this)

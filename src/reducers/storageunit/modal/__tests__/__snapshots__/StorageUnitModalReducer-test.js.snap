@@ -36,6 +36,19 @@ Object {
 }
 `;
 
+exports[`StorageUnitModalReducer LOAD_ROOT: success action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {
+      "path": Array [],
+      "someField": 1
+    },
+    "loaded": true,
+    "loading": false
+  }
+}
+`;
+
 exports[`StorageUnitModalReducer LOAD_SEVERAL child: fail action 1`] = `
 Object {
   "error": [Error: LOAD_SEVERAL child has error.],
@@ -117,6 +130,36 @@ Object {
 }
 `;
 
+exports[`StorageUnitModalReducer creates LOAD_ROOT_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-modal/LOAD_ROOT"
+  },
+  Object {
+    "result": Object {
+      "id": 2,
+      "isPartOf": 1,
+      "name": "Utviklingsmuseet",
+      "path": ",1,2,",
+      "pathNames": Array [
+        Object {
+          "name": "root-node",
+          "nodeId": 1
+        },
+        Object {
+          "name": "Utviklingsmuseet",
+          "nodeId": 2
+        }
+      ],
+      "type": "Organisation",
+      "updatedBy": 123,
+      "updatedDate": "2016-01-01T00:00:00+00:00"
+    },
+    "type": "musit/storageunit-modal/LOAD_ROOT_SUCCESS"
+  }
+]
+`;
+
 exports[`StorageUnitModalReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 1`] = `
 Array [
   Object {
@@ -135,6 +178,28 @@ Array [
       }
     ],
     "type": "musit/storageunit-modal/LOAD_SEVERAL_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitModalReducer creates LOAD_SEVERAL_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-modal/LOAD_ROOT"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "id": 3,
+        "isPartOf": 2,
+        "name": "Forskningens hus",
+        "path": ",1,2,3,",
+        "type": "Building",
+        "updatedBy": 123,
+        "updatedDate": "2016-01-01T00:00:00+00:00"
+      }
+    ],
+    "type": "musit/storageunit-modal/LOAD_ROOT_SUCCESS"
   }
 ]
 `;

@@ -64,6 +64,26 @@ Object {
 }
 `;
 
+exports[`StorageUnitReducer LOAD_ONE: success action 1`] = `
+Object {
+  "root": Object {
+    "data": Object {
+      "area": undefined,
+      "areaTo": undefined,
+      "environmentAssessment": Object {},
+      "environmentRequirement": Object {},
+      "height": undefined,
+      "heightTo": undefined,
+      "path": Array [],
+      "securityAssessment": Object {},
+      "someField": 1
+    },
+    "loaded": true,
+    "loading": false
+  }
+}
+`;
+
 exports[`StorageUnitReducer LOAD_SEVERAL child: fail action 1`] = `
 Object {
   "error": [Error: LOAD_SEVERAL child has error.],

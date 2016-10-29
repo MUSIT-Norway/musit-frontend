@@ -28,6 +28,77 @@ Object {
 }
 `;
 
+exports[`GridMoveHistory Move history: success action 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "from": Object {
+        "id": 4,
+        "name": "Test 2",
+        "path": Array [
+          Object {
+            "id": 2,
+            "name": "Building 1",
+            "url": "/magasin/2"
+          },
+          Object {
+            "id": 4,
+            "name": "Room 4",
+            "url": "/magasin/4"
+          }
+        ],
+        "pathNames": Array [
+          Object {
+            "name": "Museum 1",
+            "nodeId": 1
+          },
+          Object {
+            "name": "Building 1",
+            "nodeId": 2
+          },
+          Object {
+            "name": "Room 4",
+            "nodeId": 4
+          }
+        ]
+      },
+      "to": Object {
+        "id": 3,
+        "name": "Test 1",
+        "path": Array [
+          Object {
+            "id": 2,
+            "name": "Building 1",
+            "url": "/magasin/2"
+          },
+          Object {
+            "id": 3,
+            "name": "Room 1",
+            "url": "/magasin/3"
+          }
+        ],
+        "pathNames": Array [
+          Object {
+            "name": "Museum 1",
+            "nodeId": 1
+          },
+          Object {
+            "name": "Building 1",
+            "nodeId": 2
+          },
+          Object {
+            "name": "Room 1",
+            "nodeId": 3
+          }
+        ]
+      }
+    }
+  ],
+  "loaded": true,
+  "loading": false
+}
+`;
+
 exports[`GridMoveHistory creates LOAD_ACTOR_SUCCESS when fetching data has been done 1`] = `
 Array [
   Object {

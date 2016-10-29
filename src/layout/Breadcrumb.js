@@ -22,35 +22,36 @@ const CrumbItem = (props) => {
 
 const crumbLimit: number = 3;
 
-export default (props) => {
-  const clickCrumb = (node) => (evt) => {
-    evt.preventDefault();
-    props.onClickCrumb(node)
-  };
+class Breadcrumb extends React.Component {
+  render() {
+    const clickCrumb = (node) => (evt) => {
+      evt.preventDefault();
+      this.props.onClickCrumb(node)
+    };
 
-  let path = [];
-  if (props.node && props.node.path && props.node.path.length) {
-    path = props.node.path;
-  } else if (props.node && props.node.length) {
-    path = props.node;
-  }
+    let path = [];
+    if (this.props.node && this.props.node.path && this.props.node.path.length) {
+      path = this.props.node.path;
+    } else if (this.props.node && this.props.node.length) {
+      path = this.props.node;
+    }
 
-  const itemsWithIndex = map(path, (item, index) => ({...item, index}));
-  const itemsCropped = takeRight(itemsWithIndex, crumbLimit);
-  // Emulating lazy val by making it a function
-  const dotdotdot = () => itemsWithIndex[itemsCropped[0].index - 1];
-  return (
-    <div>
-      {CrumbItem({
-        url: itemsWithIndex.length > 0 && !props.disabled ? '/magasin/root' : null,
-        onClick: clickCrumb({ url: '/magasin/root' }),
-        name: 'Magasin',
-        displayName: ' ',
-        icon: 'home',
-        style: { fontSize: '1.5em' },
-        delimiter: itemsWithIndex.length > 0 ? ' / ' : null
-      })}
-      {itemsWithIndex > itemsCropped &&
+    const itemsWithIndex = map(path, (item, index) => ({...item, index}));
+    const itemsCropped = takeRight(itemsWithIndex, crumbLimit);
+    // Emulating lazy val by making it a function
+    const dotdotdot = () => itemsWithIndex[itemsCropped[0].index - 1];
+    return (
+      <div>
+        {CrumbItem({
+          url: itemsWithIndex.length > 0 && !this.props.disabled ? '/magasin/root' : null,
+          onClick: clickCrumb({url: '/magasin/root'}),
+          name: 'Magasin',
+          displayName: ' ',
+          icon: 'home',
+          style: {fontSize: '1.5em'},
+          delimiter: itemsWithIndex.length > 0 ? ' / ' : null
+        })}
+        {itemsWithIndex > itemsCropped &&
         CrumbItem({
           url: dotdotdot().url,
           onClick: clickCrumb(dotdotdot()),
@@ -58,12 +59,12 @@ export default (props) => {
           displayName: '\u2026',
           delimiter: ' / '
         })
-      }
-      {itemsCropped.map((item, i, arr) => {
-        const notLast = i < arr.length - 1;
-        const enabled = notLast && !props.disabled;
-        return (
-          <span key={i}>
+        }
+        {itemsCropped.map((item, i, arr) => {
+          const notLast = i < arr.length - 1;
+          const enabled = notLast && !this.props.disabled;
+          return (
+            <span key={i}>
             {CrumbItem({
               url: enabled ? item.url : null,
               name: item.name,
@@ -72,8 +73,11 @@ export default (props) => {
               delimiter: notLast ? ' / ' : null
             })}
           </span>
-        );
-      })}
-    </div>
-  );
+          );
+        })}
+      </div>
+    );
+  }
 }
+
+export default Breadcrumb

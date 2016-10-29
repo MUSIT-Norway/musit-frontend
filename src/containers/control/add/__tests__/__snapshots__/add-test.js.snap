@@ -1,0 +1,13 @@
+exports[`Render add control page should set default date and have correct date format 1`] = `
+<ControlAddContainer
+  doneDate="2016-11-10T21:00:00.000Z"
+  loadStorageObj={[Function loadStorageObj]}
+  params={Object {}}
+  rootNode={
+    Object {
+      "path": ",1,"
+    }
+  }
+  saveControl={[Function saveControl]}
+  translate={[Function translate]} />
+`;

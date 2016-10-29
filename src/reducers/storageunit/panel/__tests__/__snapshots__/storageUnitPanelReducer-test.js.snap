@@ -14,6 +14,24 @@ Object {
 
 exports[`ReducerStoragUnitPanel LOAD: no action 1`] = `Object {}`;
 
+exports[`ReducerStoragUnitPanel LOAD: success action 1`] = `
+Object {
+  "data": Object {
+    "area": undefined,
+    "areaTo": undefined,
+    "environmentAssessment": Object {},
+    "environmentRequirement": Object {},
+    "height": undefined,
+    "heightTo": undefined,
+    "path": Array [],
+    "securityAssessment": Object {},
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
 exports[`ReducerStoragUnitPanel creates LOAD_SUCCESS when fetching data has been done 1`] = `
 Array [
   Object {
@@ -102,6 +120,24 @@ Object {
 
 exports[`ReducerStoragUnitPanel insert: no action 1`] = `Object {}`;
 
+exports[`ReducerStoragUnitPanel insert: success action 1`] = `
+Object {
+  "data": Object {
+    "area": undefined,
+    "areaTo": undefined,
+    "environmentAssessment": Object {},
+    "environmentRequirement": Object {},
+    "height": undefined,
+    "heightTo": undefined,
+    "path": Array [],
+    "securityAssessment": Object {},
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false
+}
+`;
+
 exports[`ReducerStoragUnitPanel update INSERT_SUCCESS when fetching data has been done 1`] = `
 Array [
   Object {
@@ -151,3 +187,21 @@ Object {
 `;
 
 exports[`ReducerStoragUnitPanel update: no action 1`] = `Object {}`;
+
+exports[`ReducerStoragUnitPanel update: success action 1`] = `
+Object {
+  "data": Object {
+    "area": undefined,
+    "areaTo": undefined,
+    "environmentAssessment": Object {},
+    "environmentRequirement": Object {},
+    "height": undefined,
+    "heightTo": undefined,
+    "path": Array [],
+    "securityAssessment": Object {},
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false
+}
+`;

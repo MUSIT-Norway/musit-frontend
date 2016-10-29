@@ -1,16 +1,12 @@
-import assert from 'assert'
+import { shallow } from 'enzyme'
+import { shallowToJson } from 'enzyme-to-json';
 import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils'
 import ControlViewContainer from '../index'
-import moment from 'moment'
-import { DATE_FORMAT_DISPLAY } from './../../../../util'
 
 describe('Render view control page', () => {
-  const renderer = ReactTestUtils.createRenderer();
-  let observationPage;
 
-  beforeEach(() => {
-    renderer.render(
+  it('should set default date and have correct date format for doneDate', () => {
+    const wrapper = shallow(
       <ControlViewContainer
         translate={(key) => key}
         saveControl={() => true}
@@ -25,48 +21,17 @@ describe('Render view control page', () => {
         controls={{
           data: {
             doneBy: { id: 1, fn: 'Arne And' },
-            doneDate: moment().toISOString(),
+            doneDate: new Date(2016, 30, 1).toISOString(),
             registeredBy: 'Stein Olsen',
-            registeredDate: moment().toISOString()
+            registeredDate: new Date(2016, 30, 1).toISOString()
           }
+        }}
+        rootNode={{
+          path: ',1,'
         }}
         loadPersonNameFromId={() => true}
       />
     )
-    observationPage = renderer.getRenderOutput()
-  })
-
-  it('should set default date and have correct date format for doneDate', () => {
-    const dateProps = observationPage
-            .props
-            .content
-            .props
-            .children[1]
-            .props
-            .children[0] // done by
-            .props
-            .children[0]
-            .props
-            .children[2]
-            .props
-
-    assert(moment(dateProps.value, DATE_FORMAT_DISPLAY, true).isValid())
-  })
-
-  it('should set default date and have correct date format for registeredBy', () => {
-    const dateProps = observationPage
-            .props
-            .content
-            .props
-            .children[1]
-            .props
-            .children[1] // registered by
-            .props
-            .children[0]
-            .props
-            .children[2]
-            .props
-
-    assert(moment(dateProps.value, DATE_FORMAT_DISPLAY, true).isValid())
+    expect(shallowToJson(wrapper)).toMatchSnapshot()
   })
 })
