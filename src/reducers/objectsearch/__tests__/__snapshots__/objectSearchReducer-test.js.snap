@@ -67,17 +67,3 @@ Object {
   }
 }
 `;
-
-exports[`Object search reducer search objects: success action 1`] = `
-Object {
-  "data": Object {
-    "someField": 1
-  },
-  "loaded": true,
-  "loading": false,
-  "params": Object {
-    "currentPage": 1,
-    "perPage": 50
-  }
-}
-`;

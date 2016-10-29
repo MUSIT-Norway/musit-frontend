@@ -1,11 +1,5 @@
 exports[`ObjectGrid renders correctly 1`] = `
 <div>
-  <TestModal
-    headerText="musit.moveModal.moveObjects"
-    onHide={[Function bound hideModal]}
-    onMove={[Function bound moveModal]}
-    path={undefined}
-    show={false} />
   <FormGroup
     bsClass="form-group">
     <div>

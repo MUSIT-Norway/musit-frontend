@@ -1,95 +1,3 @@
-exports[`ObjectSearchComponent should display breadcrumb correctly 1`] = `
-<div>
-  <span
-    style={
-      Object {
-        "paddingLeft": "0.5em"
-      }
-    } />
-  <span>
-    <span
-      style={
-        Object {
-          "paddingLeft": "0.5em"
-        }
-      }>
-      <a
-        href="/magasin/root"
-        onClick={[Function onClick]}>
-        <FontAwesome
-          name="home"
-          style={
-            Object {
-              "fontSize": "1.5em",
-              "padding": "1px"
-            }
-          } />
-      </a>
-    </span>
-    <span
-      style={
-        Object {
-          "paddingLeft": "0.5em"
-        }
-      } />
-  </span>
-  <span>
-    <span
-      style={
-        Object {
-          "paddingLeft": "0.5em"
-        }
-      }>
-      <a
-        href="/magasin/2"
-        onClick={[Function onClick]}>
-        <FontAwesome
-          name="folder"
-          style={
-            Object {
-              "padding": "1px"
-            }
-          } />
-        Musit
-      </a>
-    </span>
-    <span
-      style={
-        Object {
-          "paddingLeft": "0.5em"
-        }
-      } />
-  </span>
-  <span>
-    <span
-      style={
-        Object {
-          "paddingLeft": "0.5em"
-        }
-      }>
-      <a
-        href="/magasin/3"
-        onClick={[Function onClick]}>
-        <FontAwesome
-          name="folder"
-          style={
-            Object {
-              "padding": "1px"
-            }
-          } />
-        Kontoret
-      </a>
-    </span>
-    <span
-      style={
-        Object {
-          "paddingLeft": "0.5em"
-        }
-      } />
-  </span>
-</div>
-`;
-
 exports[`ObjectSearchComponent should display object 1 1`] = `
 <div
   style={
@@ -239,47 +147,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -312,47 +206,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -385,47 +265,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -458,47 +324,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -531,47 +383,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -604,47 +442,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -677,47 +501,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -750,47 +560,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -823,47 +619,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -896,47 +678,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -969,47 +737,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1042,47 +796,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1115,47 +855,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1188,47 +914,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1261,47 +973,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1334,47 +1032,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1407,47 +1091,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1480,47 +1150,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1553,47 +1209,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
@@ -1626,47 +1268,33 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </td>
                 <td
                   className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    nodeTypes={
-                      Array [
-                        Object {
-                          "iconName": "home",
-                          "type": "Top"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Organisation"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Building"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "Room"
-                        },
-                        Object {
-                          "iconName": "folder",
-                          "type": "StorageUnit"
-                        }
-                      ]
-                    }
-                    nodes={
-                      Array [
-                        BreadCrumb {
-                          "id": 2,
-                          "name": "Musit",
-                          "url": "/magasin/2"
-                        },
-                        BreadCrumb {
-                          "id": 3,
-                          "name": "Kontoret",
-                          "url": "/magasin/3"
-                        }
-                      ]
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
+                  <Component
+                    node={
+                      Object {
+                        "id": 1,
+                        "museumNo": "12345",
+                        "path": ",1,2,3,",
+                        "pathNames": Array [
+                          Object {
+                            "name": "Root",
+                            "nodeId": 1,
+                            "type": "Organization"
+                          },
+                          Object {
+                            "name": "Musit",
+                            "nodeId": 2,
+                            "type": "Building"
+                          },
+                          Object {
+                            "name": "Kontoret",
+                            "nodeId": 3,
+                            "type": "Room"
+                          }
+                        ],
+                        "subNo": "45",
+                        "term": "Fuglekasse"
+                      }
+                    } />
                 </td>
                 <td
                   className="move">
