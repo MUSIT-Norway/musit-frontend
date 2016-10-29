@@ -10,7 +10,6 @@ import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import MusitUserAccount from '../../components/user-account-view'
 import './index.css'
 import Logo from './assets/logo.png'
-import { Provider } from 'react-redux'
 const $ = global.jQuery
 import { emitSuccess, emitError } from '../../errors/emitter'
 import * as loglevel from 'loglevel'

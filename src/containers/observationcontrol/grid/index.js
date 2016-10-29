@@ -27,7 +27,6 @@ import Breadcrumb from '../../../layout/Breadcrumb'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
-import { createBreadcrumbPath } from '../../../util'
 import { I18n } from 'react-i18nify'
 
 const mapStateToProps = (state) => {

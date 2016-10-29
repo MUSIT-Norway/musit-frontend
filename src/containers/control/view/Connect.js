@@ -22,7 +22,6 @@ import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import ControlViewContainerImpl from './index'
-import { createBreadcrumbPath } from '../../../util'
 import { loadRoot } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({

@@ -21,7 +21,6 @@
 import { I18n } from 'react-i18nify'
 import { loadChildren, clearRoot, loadNode, setCurrent, clearCurrent } from '../../../reducers/storageunit/modal'
 import { connect } from 'react-redux'
-import { createBreadcrumbPath } from '../../../util'
 import MusitModalImpl from './MusitModal'
 
 const mapStateToProps = (state) => ({

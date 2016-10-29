@@ -3,7 +3,6 @@ import { I18n } from 'react-i18nify'
 import { Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Breadcrumb from '../../layout/Breadcrumb'
-import { createBreadcrumbPath } from '../../util'
 import PagingToolbar from '../../util/paging'
 
 export function renderParam(id, props, style) {

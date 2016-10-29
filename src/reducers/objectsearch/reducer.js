@@ -51,12 +51,15 @@ export default (state = initialState, action) => {
         ...omit(state, 'error'),
         loading: false,
         loaded: true,
-        data: action.result.map(data => {
-          return {
-            ...data,
-            path: getPath(data.path, data.pathNames)
-          }
-        })
+        data: {
+          totalMatches: action.result.totalMatches,
+          matches: action.result.matches.map(data => {
+            return {
+              ...data,
+              path: getPath(data.path || '', data.pathNames)
+            }
+          })
+        }
       }
     default:
       return state;

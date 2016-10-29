@@ -99,7 +99,7 @@ export default class MusitModal extends Component {
               <Breadcrumb
                 node={rootNode}
                 onClickCrumb={(node) => {
-                  node.id === -1 || !node.id ? this.loadHome() : this.loadNode(node.id)
+                  return node.id === -1 || !node.id ? this.loadHome() : this.loadNode(node.id)
                 }}
               />
             </Col>

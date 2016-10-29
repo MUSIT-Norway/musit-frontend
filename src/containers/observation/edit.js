@@ -8,7 +8,6 @@ import { addControl } from '../../reducers/control'
 import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
-import { createBreadcrumbPath } from '../../util'
 import { loadRoot } from '../../reducers/storageunit/grid'
 import { emitError } from '../../errors/emitter'
 

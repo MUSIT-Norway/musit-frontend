@@ -21,7 +21,6 @@ import { connect } from 'react-redux'
 import { addControl } from '../../../reducers/control'
 import { I18n } from 'react-i18nify'
 import ControlAddContainerImpl from './index'
-import { createBreadcrumbPath } from '../../../util'
 import { loadRoot } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
