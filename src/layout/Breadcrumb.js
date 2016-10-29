@@ -27,8 +27,15 @@ export default (props) => {
     evt.preventDefault();
     props.onClickCrumb(node)
   };
-  const { path } = props.node || {};
-  const itemsWithIndex = map(path || [], (item, index) => ({...item, index}));
+
+  let path = [];
+  if (props.node && props.node.path && props.node.path.length) {
+    path = props.node.path;
+  } else if (props.node && props.node.length) {
+    path = props.node;
+  }
+
+  const itemsWithIndex = map(path, (item, index) => ({...item, index}));
   const itemsCropped = takeRight(itemsWithIndex, crumbLimit);
   // Emulating lazy val by making it a function
   const dotdotdot = () => itemsWithIndex[itemsCropped[0].index - 1];
@@ -69,4 +76,4 @@ export default (props) => {
       })}
     </div>
   );
-};
+}

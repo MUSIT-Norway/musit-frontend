@@ -57,9 +57,9 @@ class ViewObservationPage extends React.Component {
           this.props.loadPersonNameFromId(r.doneBy)
         }
       })
-      if (!this.props.rootNode.path) {
-        this.props.loadStorageObj(this.props.params.id)
-      }
+    }
+    if (!this.props.rootNode.path) {
+      this.props.loadStorageObj(this.props.params.id)
     }
   }
 

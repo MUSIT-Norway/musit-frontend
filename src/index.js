@@ -85,7 +85,6 @@ successSource.subscribe ((s) => {
 source.subscribe((e) => {
   switch(e.type) {
     case 'network':
-      console.log(e.error)
       const { response } = e.error
       const { req } = response || {}
       const msg = req ? req.url : e.error.message

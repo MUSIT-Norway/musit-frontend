@@ -13,6 +13,14 @@ import Logo from './assets/logo.png'
 import { Provider } from 'react-redux'
 const $ = global.jQuery
 import { emitSuccess, emitError } from '../../errors/emitter'
+import * as loglevel from 'loglevel'
+import config from '../../config'
+
+if (config.isDev) {
+  loglevel.setLevel('debug')
+} else {
+  loglevel.setLevel('error')
+}
 
 export default class App extends Component {
   static propTypes = {
@@ -33,14 +41,16 @@ export default class App extends Component {
   static childContextTypes = {
     showModal: PropTypes.func,
     showError: PropTypes.func,
-    showNotification: PropTypes.func
+    showNotification: PropTypes.func,
+    logger: PropTypes.object
   }
 
   getChildContext() {
     return {
       showModal: this.showModal,
       showError: emitError,
-      showNotification: emitSuccess
+      showNotification: emitSuccess,
+      logger: loglevel
     }
   }
 
@@ -59,25 +69,24 @@ export default class App extends Component {
       }
     });
 
-    const appStore = this.context.store;
+    const appContext = this.context;
 
     class ClosableAndProvided extends React.Component {
       static childContextTypes = {
+        ...App.childContextTypes,
+        store: React.PropTypes.object,
         closeModal: React.PropTypes.func
       }
 
       getChildContext() {
         return {
+          ...appContext,
           closeModal: () => $dialog.dialog('close')
         }
       }
 
       render() {
-        return (
-          <Provider store={appStore}>
-            {componentToRender}
-          </Provider>
-        )
+        return componentToRender
       }
     }
 

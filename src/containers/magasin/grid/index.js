@@ -341,7 +341,7 @@ class StorageUnitsContainer extends React.Component {
         id={nodeId}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
-        onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode)}
+        onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.path)}
         onMove={(moveFrom, moveTo, callback) => this.props.moveNode(moveFrom, moveTo, this.props.user.id, callback)}
         refresh={() => {
           this.loadNodes();
@@ -360,7 +360,7 @@ class StorageUnitsContainer extends React.Component {
       translate={this.props.translate}
       tableData={this.props.objects}
       showMoveHistory={this.showObjectMoveHistory}
-      onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode)}
+      onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.path)}
       onMove={(moveFrom, moveTo, callback) => this.props.moveObject(moveFrom, moveTo, this.props.user.id, callback)}
       refresh={() => {
         this.loadObjects();
@@ -373,16 +373,15 @@ class StorageUnitsContainer extends React.Component {
   render() {
     const { searchPattern } = this.state;
     const { children, translate, rootNode } = this.props;
-    const rootNodeData = rootNode || {}
     return (
       <div>
         <Layout
           title={'Magasin'}
           translate={translate}
-          breadcrumb={<Breadcrumb node={rootNodeData} onClickCrumb={this.onClickCrumb} />}
+          breadcrumb={<Breadcrumb node={rootNode} onClickCrumb={this.onClickCrumb} />}
           toolbar={this.makeToolbar()}
-          leftMenu={this.makeLeftMenu(rootNodeData, this.props.stats)}
-          content={this.makeContentGrid(searchPattern, rootNodeData, children)}
+          leftMenu={this.makeLeftMenu(rootNode, this.props.stats)}
+          content={this.makeContentGrid(searchPattern, rootNode, children)}
         />
       </div>
     )

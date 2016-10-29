@@ -79,7 +79,9 @@ class ObservationControlGridShow extends React.Component {
         }
       }
     });
-    this.props.loadStorageObj(this.props.params.id)
+    if (!this.props.rootNode.path) {
+      this.props.loadStorageObj(this.props.params.id)
+    }
   }
 
   makeToolbar() {
@@ -125,13 +127,11 @@ class ObservationControlGridShow extends React.Component {
   }
 
   render() {
-    const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} allActive onClickCrumb={(node) => hashHistory.push(node.url)} />
     return (
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={breadcrumb}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={(node) => hashHistory.push(node.url)} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContent()}

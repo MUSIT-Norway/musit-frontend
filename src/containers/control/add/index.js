@@ -63,7 +63,7 @@ export default class ControlAddContainer extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.path.length === 0) {
+    if (!this.props.rootNode.path) {
       this.props.loadStorageObj(this.props.params.id)
     }
   }
@@ -155,8 +155,7 @@ export default class ControlAddContainer extends React.Component {
   }
 
   render() {
-    const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} passive />
+    const breadcrumb = <Breadcrumb node={this.props.rootNode} disabled />
     const { translate } = this.props
 
     const fields = [
