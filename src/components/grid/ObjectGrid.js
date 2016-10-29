@@ -56,16 +56,9 @@ export default class ObjectGrid extends Component {
   }
 
   render() {
-    const { id, translate, tableData, MusitModal, path } = this.props
+    const { id, translate, tableData } = this.props
     return (
       <div>
-        <MusitModal
-          show={this.state.showModal}
-          onHide={this.hideModal}
-          onMove={this.moveModal}
-          path={path}
-          headerText={this.props.translate('musit.moveModal.moveObjects')}
-        />
         <FormGroup>
           <div>
             <Table responsive hover condensed>

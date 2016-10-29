@@ -49,7 +49,6 @@ const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getE
 
 import { source, successSource, emitError } from './errors/emitter'
 
-
 const children = (message) =>
     <div style={{margin: '30px'}}>
       <p>
@@ -83,19 +82,19 @@ successSource.subscribe ((s) => {
   }
 });
 
-
-
 source.subscribe((e) => {
-
-
   switch(e.type) {
     case 'network':
+      console.log(e.error)
+      const { response } = e.error
+      const { req } = response || {}
+      const msg = req ? req.url : e.error.message
       notificationSystem.addNotification({
-        message: e.error.response.req.url,
+        message: msg,
         level: 'error',
         title: I18n.t('musit.errorMainMessages.networkError'),
         position: 'tc',
-        children: children(e.error.response.req.url)
+        children: children(msg)
       });
       break;
     case 'dateValidationError':
@@ -132,7 +131,7 @@ source.subscribe((e) => {
       break;
     default:
       notificationSystem.addNotification({
-        message: 'something happened',
+        message: e.message,
         level: 'error',
         position: 'tc'
       });

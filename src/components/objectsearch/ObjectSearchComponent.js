@@ -22,10 +22,6 @@ export function renderParam(id, props, style) {
   )
 }
 
-export function renderBreadcrumb(nodes: []) {
-  return <Breadcrumb nodes={nodes} allActive />
-}
-
 export default (props) =>
   <div style={{ paddingTop: 20 }}>
     <main>
@@ -79,19 +75,18 @@ export default (props) =>
                 </thead>
                 <tbody>
                 {props.data.matches.map((data, i) => {
-                  const path = createBreadcrumbPath(data.path, data.pathNames)
                   return (
                     <tr key={i}>
                       <td className="museumNo">{data.museumNo}</td>
                       <td className="subNo">{data.subNo}</td>
                       <td className="term">{data.term}</td>
-                      <td className="path">{path.length > 0 ? renderBreadcrumb(path) : ''}</td>
+                      <td className="path">{data.path ? <Breadcrumb node={data} /> : ''}</td>
                       <td className="move">
                         <a
                           href=""
                           onClick={(e) => {
                             e.preventDefault()
-                            props.pickObject(data, path)
+                            props.pickObject(data, data.path)
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >

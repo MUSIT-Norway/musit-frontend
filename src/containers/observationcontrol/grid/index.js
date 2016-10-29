@@ -33,9 +33,8 @@ import { I18n } from 'react-i18nify'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
-    path: state.storageGridUnit.root.data ?
-      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
-    observationControlGridData: state.observationControlGrid.data
+    observationControlGridData: state.observationControlGrid.data,
+    rootNode: state.storageGridUnit.root.data
   }
 }
 
@@ -76,10 +75,10 @@ class ObservationControlGridShow extends React.Component {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
         if (result && result.length > 0) {
-          this.props.loadActorDetails({ data: result.map(r => r.doneBy) })
+          this.props.loadActorDetails({data: result.map(r => r.doneBy)})
         }
       }
-    })
+    });
     this.props.loadStorageObj(this.props.params.id)
   }
 

@@ -1,4 +1,5 @@
 import { omit } from 'lodash'
+import { getPath } from '../helper'
 
 import * as types from './constants'
 
@@ -50,7 +51,12 @@ export default (state = initialState, action) => {
         ...omit(state, 'error'),
         loading: false,
         loaded: true,
-        data: action.result
+        data: action.result.map(data => {
+          return {
+            ...data,
+            path: getPath(data.path, data.pathNames)
+          }
+        })
       }
     default:
       return state;

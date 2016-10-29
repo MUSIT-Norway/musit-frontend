@@ -28,8 +28,7 @@ const mapStateToProps = (state) => ({
   actor: state.auth.actor,
   translate: (key, markdown) => I18n.t(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
-  path: state.storageGridUnit.root.data ?
-      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : []
+  rootNode: state.storageGridUnit.root.data
 })
 
 const mapDispatchToProps = (dispatch) => ({

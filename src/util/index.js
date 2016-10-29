@@ -23,35 +23,6 @@ export const blur = () => {
   }
 }
 
-class PathName {
-  nodeId: number;
-  name: string;
-
-  constructor(nodeId: number, name: string) {
-    this.nodeId = nodeId
-    this.name = name;
-  }
-}
-
-class BreadCrumb {
-  id: number;
-  name: string;
-  url: string;
-
-  constructor(pathName: ?PathName) {
-    if (pathName) {
-      this.id = pathName.nodeId;
-      this.name = pathName.name;
-      this.url = '/magasin/' + pathName.nodeId;
-    }
-  }
-}
-
-export const createBreadcrumbPath = (pathStr: string, pathNames: PathName[]): BreadCrumb[] => {
-  const pathStrIds = (pathStr != null ? pathStr : '').slice(1, -1).split(',').slice(1).map(p => parseFloat(p));
-  return pathStrIds.map(pathId => new BreadCrumb(pathNames.find(e => e.nodeId === pathId)))
-}
-
 export const containsObjectWithField = (arr: any[], field: string, value: string): boolean => arr.filter((e) => e[field] === value).length > 0
 
 export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY'

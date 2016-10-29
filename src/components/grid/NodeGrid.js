@@ -69,15 +69,9 @@ export default class NodeGrid extends Component {
   }
 
   render() {
-    const { id, translate, MusitModal } = this.props
+    const { id, translate } = this.props
     return (
       <div>
-        <MusitModal
-          show={this.state.showModal}
-          onHide={this.hideModal}
-          onMove={this.moveModal}
-          headerText={this.props.translate('musit.moveModal.moveNodes')}
-        />
         <FormGroup>
           <div>
             <Table responsive hover condensed>

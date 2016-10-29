@@ -13,10 +13,9 @@ import ObjectGrid from '../../../components/grid/ObjectGrid'
 import Layout from '../../../layout'
 import NodeLeftMenuComponent from '../../../components/leftmenu/node'
 import Toolbar from '../../../layout/Toolbar'
-import { blur, createBreadcrumbPath } from '../../../util'
+import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
-import MusitModalHistory from '../../../components/formfields/musitModalHistory'
 import { I18n } from 'react-i18nify'
 import { emitError, emitSuccess } from '../../../errors/emitter'
 
@@ -26,11 +25,9 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => I18n.t(key, markdown),
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
-  rootNode: state.storageGridUnit.root,
+  rootNode: state.storageGridUnit.root.data,
   routerState: state.routing,
-  moves: state.movehistory.data || [],
-  path: state.storageGridUnit.root.data ?
-    createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : []
+  moves: state.movehistory.data || []
 });
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -142,7 +139,6 @@ class StorageUnitsContainer extends React.Component {
     loadChildren: React.PropTypes.func,
     loadMoveHistoryForObject: React.PropTypes.func.isRequired,
     clearMoveHistoryForObject: React.PropTypes.func.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
     moves: React.PropTypes.arrayOf(React.PropTypes.object),
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
@@ -156,6 +152,10 @@ class StorageUnitsContainer extends React.Component {
       totalObjects: React.PropTypes.number
     })
   };
+
+  static contextTypes = {
+    showModal: React.PropTypes.func.isRequired
+  }
 
   constructor(props) {
     super(props);
@@ -174,6 +174,7 @@ class StorageUnitsContainer extends React.Component {
     this.moveModal = this.moveModal.bind(this);
     this.showObjectMoveHistory = this.showObjectMoveHistory.bind(this);
     this.closeMoveHistory = this.closeMoveHistory.bind(this)
+    this.onClickCrumb = this.onClickCrumb.bind(this)
   }
 
   componentWillMount() {
@@ -249,27 +250,26 @@ class StorageUnitsContainer extends React.Component {
     return newUri
   }
 
-  showModal = (fromId) => {
-    this.setState({ ...this.state, showModal: true, showModalFromId: fromId })
-  };
+  showModal() {
+    const title = this.props.translate('musit.moveModal.moveNodes');
+    this.context.showModal(title, 700, <MusitModal onMove={this.moveModal} />)
+  }
 
-  hideModal = () => {
-    this.setState({ ...this.state, showModal: false, showModalFromId: '' })
-  };
-
-  moveModal = (toId, toName) => {
-    this.props.moveNode(this.state.showModalFromId, toId, this.props.user.id, {
+  moveModal = (toId, toName, onSuccess) => {
+    this.props.moveNode(this.props.rootNode.id, toId, this.props.user.id, {
       onSuccess: () => {
+        onSuccess()
         this.loadNodes();
-        this.setState({ ...this.state, showModal: false, showModalFromId: '' });
-        emitSuccess({ type: 'movedSuccess',
-                      message: I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.data.name, destination: toName })})
+        emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.name, destination: toName })
+        })
       },
       onFailure: () => {
-        emitError({ type: 'errorOnMove',
-                    message: I18n.t('musit.moveModal.messages.errorNode',
-                      { name: this.props.rootNode.data.name, destination: toName })})
-
+        emitError({
+          type: 'errorOnMove',
+          message: I18n.t('musit.moveModal.messages.errorNode', { name: this.props.rootNode.name, destination: toName })
+        })
       }
     })
   };
@@ -277,8 +277,7 @@ class StorageUnitsContainer extends React.Component {
   showObjectMoveHistory = (id) => {
     this.props.clearMoveHistoryForObject()
     this.props.loadMoveHistoryForObject(id, {
-      onSuccess: (result) => this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map(r => r.doneBy) }),
-      onFailure: true
+      onSuccess: (result) => this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map(r => r.doneBy) })
     })
     this.setState({ ...this.state, showMoveHistory: true })
   }
@@ -342,7 +341,7 @@ class StorageUnitsContainer extends React.Component {
         id={nodeId}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
-        onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
+        onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode)}
         onMove={(moveFrom, moveTo, callback) => this.props.moveNode(moveFrom, moveTo, this.props.user.id, callback)}
         refresh={() => {
           this.loadNodes();
@@ -354,7 +353,6 @@ class StorageUnitsContainer extends React.Component {
           )
         }
         rootNode={this.props.rootNode}
-        MusitModal={MusitModal}
       />
     }
     return <ObjectGrid
@@ -362,44 +360,26 @@ class StorageUnitsContainer extends React.Component {
       translate={this.props.translate}
       tableData={this.props.objects}
       showMoveHistory={this.showObjectMoveHistory}
-      onAction={(action, unit) => this.props.onAction(action, unit, this.props.path)}
+      onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode)}
       onMove={(moveFrom, moveTo, callback) => this.props.moveObject(moveFrom, moveTo, this.props.user.id, callback)}
       refresh={() => {
         this.loadObjects();
         this.props.loadRoot(nodeId)
       }}
       rootNode={this.props.rootNode}
-      MusitModal={MusitModal}
     />
   }
 
   render() {
     const { searchPattern } = this.state;
-    const { children, translate, path, moves } = this.props;
-    const { data: rootNodeData } = this.props.rootNode;
-    const breadcrumb = <Breadcrumb nodes={path} onClickCrumb={node => this.onClickCrumb(node)} />;
+    const { children, translate, rootNode } = this.props;
+    const rootNodeData = rootNode || {}
     return (
       <div>
-        <MusitModalHistory
-          show={this.state.showMoveHistory}
-          onClose={this.closeMoveHistory}
-          translate={translate}
-          path={path}
-          moves={moves}
-          onHide={this.closeMoveHistory}
-          headerText={this.props.translate('musit.moveHistory.title')}
-        />
-        <MusitModal
-          show={this.state.showModal}
-          onHide={this.hideModal}
-          path={path}
-          onMove={this.moveModal}
-          headerText={this.props.translate('musit.moveModal.moveNodes')}
-        />
         <Layout
           title={'Magasin'}
           translate={translate}
-          breadcrumb={breadcrumb}
+          breadcrumb={<Breadcrumb node={rootNodeData} onClickCrumb={this.onClickCrumb} />}
           toolbar={this.makeToolbar()}
           leftMenu={this.makeLeftMenu(rootNodeData, this.props.stats)}
           content={this.makeContentGrid(searchPattern, rootNodeData, children)}

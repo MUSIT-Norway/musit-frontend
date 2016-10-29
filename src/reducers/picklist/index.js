@@ -1,4 +1,5 @@
-import { createBreadcrumbPath, apiUrl } from '../../util'
+import { apiUrl } from '../../util'
+import { getPath } from '../helper'
 import Config from '../../config'
 
 export const TYPES = {
@@ -65,7 +66,7 @@ const clearItems = (type) => (state) => ({
   [type]: []
 });
 
-export const getPath = (pathStr) => {
+export const getPathString = (pathStr) => {
   const pathStrArr = pathStr.substr(1, pathStr.length - 2).split(',')
   // EX: ,1,2,3,19, will be transformed to 1,2,3,
   return `,${pathStrArr.slice(0, -1).join(',').toString()},`
@@ -79,13 +80,12 @@ const loadItemFail = (state, action) => ({ ...state, error: action.error })
 const loadItemSuccess = (type) => (state, action) => {
   const modifiedItems = state[type].map((n) => {
     if (n.value.id === action.id) {
-      const newPath = createBreadcrumbPath(
-          type === TYPES.OBJECT ? action.result.path : getPath(action.result.path),
-          action.result.pathNames
-      )
       return {
         ...n,
-        path: newPath
+        path: getPath(
+          type === TYPES.OBJECT ? action.result.path : getPathString(action.result.path),
+          action.result.pathNames
+        )
       }
     }
     return n

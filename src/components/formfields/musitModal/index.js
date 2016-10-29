@@ -19,7 +19,7 @@
  */
 
 import { I18n } from 'react-i18nify'
-import { loadRoot, clearRoot, loadChildren, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
+import { loadChildren, clearRoot, loadNode, setCurrent, clearCurrent } from '../../../reducers/storageunit/modal'
 import { connect } from 'react-redux'
 import { createBreadcrumbPath } from '../../../util'
 import MusitModalImpl from './MusitModal'
@@ -28,21 +28,16 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   translate: (key, markdown) => I18n.t(key, markdown),
   children: state.storageUnitModal.data || [],
-  path: state.storageUnitModal.root.data ?
-    createBreadcrumbPath(state.storageUnitModal.root.data.path, state.storageUnitModal.root.data.pathNames) : [],
-  rootNode: state.storageUnitModal.root,
+  rootNode: state.storageUnitModal.root.data || {},
   currentId: state.storageUnitModal.currentId
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadChildren: (id, callback) => {
-      dispatch(loadChildren(id, callback));
-      dispatch(loadRoot(id))
-    },
     clearRoot: () => dispatch(clearRoot()),
-    clearPath: (id) => dispatch(clearPath(id)),
-    loadRoot: () => dispatch(loadRoot()),
+    loadNode: (id) => dispatch(loadNode(id)),
+    loadRootChildren: () => dispatch(loadChildren(1)),
+    loadChildren: (id) => dispatch(loadChildren(id)),
     setCurrentId: (id) => dispatch(setCurrent(id)),
     clearCurrentId: (id) => dispatch(clearCurrent(id))
   }

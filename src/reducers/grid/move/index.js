@@ -1,5 +1,6 @@
 import Config from '../../../config'
 import { apiUrl } from '../../../util'
+import { getPath } from '../../helper'
 
 export const LOAD = 'musit/movehistory/LOAD'
 export const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS'
@@ -24,7 +25,19 @@ const moveHistoryReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        data: action.result
+        data: action.result.map(data => {
+          return {
+            ...data,
+            from: {
+              ...data.from,
+              path: getPath(data.from.path, data.from.pathNames)
+            },
+            to: {
+              ...data.to,
+              path: getPath(data.to.path, data.to.pathNames)
+            }
+          }
+        })
       };
     case LOAD_FAIL:
       return {

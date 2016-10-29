@@ -32,29 +32,33 @@ export default class PickListContainer extends React.Component {
     refreshObjects: React.PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      showModal: false
-    }
+  static contextTypes = {
+    showModal: React.PropTypes.func.isRequired
+  }
+
+  constructor(props, context) {
+    super(props, context);
+    this.moveModal = this.moveModal.bind(this)
   }
 
   isTypeNode() {
     const type = this.props.params.type.toUpperCase();
     return type === TYPES.NODE
   }
+
   showModal = (items) => {
-    this.setState({ ...this.state, showModal: true, itemsToMove: [].concat(items) })
+    let title;
+    if (this.isTypeNode())
+      title = I18n.t('musit.moveModal.moveNodes');
+    else
+      I18n.t('musit.moveModal.moveObjects');
+    this.context.showModal(title, 700, <MusitModal onMove={this.moveModal(items)}/>)
   }
 
-  hideModal = () => {
-    this.setState({ ...this.state, showModal: false, itemsToMove: [] })
-  }
-
-  nodeCallback = (toName, toMoveLength, name) => ({
+  nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshNodes(this.state.itemsToMove.map(item => item.id))
-      this.hideModal()
+      this.props.refreshNodes(items.map(p => p.value).map(item => item.id))
+      onSuccess()
       if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })})
       } else {
@@ -69,10 +73,11 @@ export default class PickListContainer extends React.Component {
       }
     }
   })
-  objectCallback = (toName, toMoveLength, name) => ({
+
+  objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshObjects(this.state.itemsToMove.map(item => item.id))
-      this.hideModal()
+      this.props.refreshObjects(items.map(p => p.value).map(item => item.id))
+      onSuccess()
       if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })})
       } else {
@@ -88,13 +93,18 @@ export default class PickListContainer extends React.Component {
     }
   })
 
-  moveModal = (toId, toName) => {
-    const moveFunction = this.isTypeNode() ? this.props.moveNode : this.props.moveObject
-    const toMove = this.state.itemsToMove.map(itemToMove => itemToMove.id)
+  moveModal = (items) => (toId, toName, onSuccess) => {
+    const isNode = this.isTypeNode();
+    const moveFunction = isNode ? this.props.moveNode : this.props.moveObject;
+    const toMove = items.map(itemToMove => itemToMove.value.id)
     const toMoveLength = toMove.length
-    const name = this.isTypeNode() ? this.state.itemsToMove[0].name : this.state.itemsToMove[0].term
-    const callback = this.isTypeNode() ?
-    this.nodeCallback(toName, toMoveLength, name) : this.objectCallback(toName, toMoveLength, name)
+    const first = items[0].value;
+    const name = isNode ? first.name : first.term
+    let callback;
+    if (isNode)
+      callback = this.nodeCallback(toName, toMoveLength, name, items, onSuccess)
+    else
+      callback = this.objectCallback(toName, toMoveLength, name, items, onSuccess)
     moveFunction(toMove, toId, this.props.user.id, callback)
   }
 
@@ -102,15 +112,10 @@ export default class PickListContainer extends React.Component {
     const { toggleNode, toggleObject, removeNode, removeObject } = this.props
     const type = this.props.params.type.toUpperCase();
     const picks = this.props.picks[type]
-    const marked = picks.filter(p => p.marked).map(p => p.value)
+    const marked = picks.filter(p => p.marked)
+    const markedValues = marked.map(p => p.value)
     return (
       <div>
-        <MusitModal
-          show={this.state.showModal}
-          onHide={this.hideModal}
-          onMove={this.moveModal}
-          headerText={this.isTypeNode() ? I18n.t('musit.moveModal.moveNodes') : I18n.t('musit.moveModal.moveObjects')}
-        />
         <main>
           <Grid>
             <PageHeader>
@@ -118,7 +123,7 @@ export default class PickListContainer extends React.Component {
             </PageHeader>
             <PickListComponent
               picks={picks}
-              marked={marked}
+              marked={markedValues}
               isnode={this.isTypeNode()}
               iconRendrer={(pick) => <FontAwesome
                 name={pick.value.name ? 'folder' : 'rebel'}
@@ -132,9 +137,8 @@ export default class PickListContainer extends React.Component {
                     <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.term}</span>
                     <div className="labelText">
                       <Breadcrumb
-                        nodes={pick.path}
+                        node={pick.path}
                         onClickCrumb={node => hashHistory.push(`/magasin/${node.id === -1 ? 'root' : node.id}`)}
-                        allActive
                       />
                     </div>
                   </div>
@@ -142,7 +146,7 @@ export default class PickListContainer extends React.Component {
               }}
               toggle={(item, on) => this.isTypeNode() ? toggleNode(item, on) : toggleObject(item, on)}
               remove={item => this.isTypeNode() ? removeNode(item) : removeObject(item)}
-              move={this.showModal}
+              move={() => this.showModal(marked)}
             />
             <div style={{ textAlign: 'left' }}>
               {marked.length}/{picks.length} &nbsp;

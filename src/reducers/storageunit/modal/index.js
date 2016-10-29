@@ -1,5 +1,6 @@
 import Config from '../../../config'
 import { apiUrl } from '../../../util'
+import { getPath } from '../../helper'
 
 export const LOAD_SEVERAL = 'musit/storageunit-modal/LOAD_SEVERAL'
 export const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-modal/LOAD_SEVERAL_SUCCESS'
@@ -57,7 +58,10 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
           ...state.root,
           loading: false,
           loaded: true,
-          data: action.result
+          data: {
+            ...action.result,
+            path: getPath(action.result.path, action.result.pathNames)
+          }
         }
       }
     case LOAD_ROOT_FAIL:
@@ -83,20 +87,11 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
 
 export default storageUnitModalReducer;
 
-export const loadRoot = (id) => {
-  let action = {}
-  if (id) {
-    action = {
-      types: [LOAD_ROOT, LOAD_ROOT_SUCCESS, LOAD_ROOT_FAIL],
-      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`))
-    }
-  } else {
-    action = {
-      types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/1/children`))
-    }
+export const loadNode = (id) => {
+  return {
+    types: [LOAD_ROOT, LOAD_ROOT_SUCCESS, LOAD_ROOT_FAIL],
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`))
   }
-  return action
 }
 
 export const loadChildren = (id, callback) => {

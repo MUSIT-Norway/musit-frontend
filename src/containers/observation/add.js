@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   return {
     actor: state.auth.actor,
     translate: (key, markdown) => I18n.t(key, markdown),
-    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
+    rootNode: state.storageGridUnit.root.data
   }
 }
 
@@ -40,23 +40,21 @@ class AddObservationPage extends React.Component {
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
     actor: PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    rootNode: React.PropTypes.object
   }
 
   componentWillMount() {
-    if (this.props.path.length === 0) {
+    if (!this.props.rootNode.path) {
       this.props.loadStorageObj(this.props.params.id)
     }
   }
 
   render() {
-    const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={breadcrumb}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <div>
             <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.add')}</h4>

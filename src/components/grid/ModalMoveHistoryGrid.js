@@ -2,7 +2,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
-import { createBreadcrumbPath, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
 
 export default class ModalMoveHistoryGrid extends Component {
   static propTypes = {
@@ -11,10 +11,7 @@ export default class ModalMoveHistoryGrid extends Component {
   }
 
   render() {
-    const toPathStr = (pathStr, pathNames) => {
-      const pathArr = createBreadcrumbPath(pathStr, pathNames)
-      return pathArr.map(o => o.name).join('  /  ')
-    }
+    const toPathStr = (pathArr) => pathArr.map(o => o.name).join('  /  ')
     return (
       <FormGroup>
         <div>
@@ -45,10 +42,10 @@ export default class ModalMoveHistoryGrid extends Component {
                     {` ${c.doneBy}`}
                   </td>
                   <td id={`${i}_${c.from.path}`}>
-                    {` ${toPathStr(c.from.path, c.from.pathNames)}`}
+                    {` ${toPathStr(c.from.path)}`}
                   </td>
                   <td id={`${i}_${c.to.path}`}>
-                    {` ${toPathStr(c.to.path, c.to.pathNames)}`}
+                    {` ${toPathStr(c.to.path)}`}
                   </td>
                 </tr>
               )}

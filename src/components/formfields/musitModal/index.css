@@ -1,0 +1,28 @@
+.musit-modal {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* 1, 3 */
+}
+
+.musit-modal-header,
+.musit-modal-footer {
+    flex: none; /* 2 */
+}
+
+.musit-modal-body {
+    flex: 1 0 auto; /* 2 */
+    width: 100%;
+}
+.musit-modal-body::after {
+    content: '\00a0'; /* &nbsp; */
+    display: block;
+    height: 0px;
+    visibility: hidden;
+}
+
+.Site-content--full {
+    padding: 0;
+}
+.Site-content--full::after {
+    content: none;
+}

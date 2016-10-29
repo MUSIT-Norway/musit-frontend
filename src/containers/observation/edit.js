@@ -15,7 +15,7 @@ import { emitError } from '../../errors/emitter'
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
-    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
+    rootNode: state.storageGridUnit.root.data
   }
 }
 
@@ -44,11 +44,11 @@ class EditObservationPage extends React.Component {
     location: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    rootNode: React.PropTypes.object
   }
 
   componentWillMount() {
-    if (this.props.path.length === 0) {
+    if (!this.props.rootNode.path) {
       this.props.loadStorageObj(this.props.params.id)
     }
   }
@@ -84,13 +84,11 @@ class EditObservationPage extends React.Component {
   }
 
   render() {
-    const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
         title={'Magasin'}
         translate={this.props.translate}
-        breadcrumb={breadcrumb}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <div>
             <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.edit')}</h4>

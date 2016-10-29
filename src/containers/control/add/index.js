@@ -38,7 +38,7 @@ export default class ControlAddContainer extends React.Component {
     params: React.PropTypes.object,
     actor: React.PropTypes.object,
     envReqData: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    rootNode: React.PropTypes.object
   }
 
   constructor(props) {

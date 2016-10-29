@@ -35,7 +35,7 @@ export default class ControlViewContainer extends React.Component {
     params: React.PropTypes.object,
     loadPersonNameFromId: React.PropTypes.func.isRequired,
     doneBy: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    rootNode: React.PropTypes.object
   }
 
   componentWillMount() {
@@ -43,7 +43,7 @@ export default class ControlViewContainer extends React.Component {
       this.props.loadControl(this.props.params.id, this.props.params.controlId, {
         onSuccess: (r) => {
           this.props.loadPersonNameFromId(r.doneBy)
-          if (this.props.path.length === 0) {
+          if (!this.props.rootNode.path) {
             this.props.loadStorageObj(this.props.params.id)
           }
         }
@@ -59,15 +59,13 @@ export default class ControlViewContainer extends React.Component {
     if (!this.props.controls) {
       return null;  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
     }
-    const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     const { translate } = this.props
     const data = this.props.controls.data;
     return (
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={breadcrumb}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <div>
             <h4 style={{ textAlign: 'center' }}>{translate('musit.viewControl.title')}</h4>
