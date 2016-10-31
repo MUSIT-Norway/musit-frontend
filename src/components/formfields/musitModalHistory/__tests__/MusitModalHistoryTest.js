@@ -71,6 +71,12 @@ describe('MusitModalHistory', () => {
             }
     ]
 
+    const object={
+        id: 1,
+        museumNo: 'TRH/V/233',
+        subNo: '0',
+        term: 'Carex saxatilis'
+    }
     it('should display object 1', () => {
         const wrapper = shallow(
             <MusitModalHistory
@@ -79,6 +85,7 @@ describe('MusitModalHistory', () => {
                 headerText="Flyttehistorikk"
                 onClose={() => true}
                 onHide={() => true}
+                object={object}
                 translate={() => true }
             />
         )
