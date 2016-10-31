@@ -102,7 +102,7 @@ export default class ObjectGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault()
-                          this.props.showMoveHistory(c.id)
+                          this.props.showMoveHistory(c)
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
                       >

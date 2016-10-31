@@ -9,7 +9,7 @@ import { hashHistory } from 'react-router'
 import { addObservation } from '../../reducers/observation'
 import { createBreadcrumbPath } from '../../util'
 import { loadRoot } from '../../reducers/storageunit/grid'
-import { emitError } from '../../errors/emitter'
+import { emitError, emitSuccess } from '../../errors/emitter'
 
 const mapStateToProps = (state) => {
   return {
@@ -23,8 +23,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSaveObservation: (id, data) => {
       dispatch(addObservation(id, data, {
-        onSuccess: () => hashHistory.goBack(),
-        onFailure: () => emitError( { type: 'errorOnSave', message: this.props.translate('musit.observation.messages.saveError') })
+        onSuccess: () => {
+          hashHistory.goBack()
+          emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') })
+        },
+        onFailure: () => emitError( { type: 'errorOnSave', message: I18n.t('musit.observation.page.messages.saveError') })
       }))
     },
     loadStorageObj: (id) => {

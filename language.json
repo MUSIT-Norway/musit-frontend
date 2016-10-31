@@ -11,7 +11,7 @@
         "moving": "Move"
       },
       "moveHistory": {
-        "title": "Moving history for object",
+        "title": "Moving history for",
         "from": "From",
         "to": "To",
         "doneBy": "Performed by",
@@ -47,8 +47,8 @@
           "errorObject": "Moving object %{name} to %{destination} failed.",
           "nodesMoved": "%{count} nodes were moved to %{destination}",
           "objectsMoved": "%{count} objects were moved to %{destination}",
-          "errorNodes": "Error in %{count} nodes move to %{destination}",
-          "errorObjects": "Error in %{count} objects move to %{destination}"
+          "errorNodes": "Moving %{count} nodes to %{destination} failed.",
+          "errorObjects": "Moving %{count} objects to %{destination} failed."
         }
       },
       "leftMenu": {
@@ -188,7 +188,8 @@
         "controlsRequired": "At least one control type must be checked OK or Not OK",
         "registerObservations": "Register observations",
         "dateValidation": "Date of control can not be later than present date.",
-        "saveControlError": "Unable to save control"
+        "saveControlError": "Unable to save control",
+        "saveControlSuccess": "Control saved"
       },
       "observation": {
         "page": {
@@ -209,6 +210,10 @@
           "dateValidation": "Date of observation can not be later than present date.",
           "typeSelect": {
             "labelText": "Choose type"
+          },
+          "messages": {
+            "saveError": "Could not save observation",
+            "saveSuccess": "Observation saved"
           },
           "pest": {
             "identificationValueRequired": "Identification is required.",
@@ -558,8 +563,8 @@
           }
         },
         "messages": {
-          "saveNodeError": "Kunne ikke lagre noden",
-          "saveNodeSuccess": "Noden er lagret"
+          "saveNodeError": "Could not save the node",
+          "saveNodeSuccess": "Node is saved"
         }
       },
       "welcomePage": {
@@ -585,7 +590,7 @@
         "moving": "Flytting"
       },
       "moveHistory": {
-        "title": "Flyttehistorikk for objekt",
+        "title": "Flyttehistorikk for",
         "from": "Fra",
         "to": "Til",
         "doneBy": "Utført av",
@@ -621,8 +626,8 @@
           "errorObject": "Flytting av %{name} til %{destination} feilet.",
           "nodesMoved": "%{count} noder ble flyttet til %{destination}",
           "objectsMoved": "%{count} objekter ble flyttet til %{destination}",
-          "errorNodes": "Error å flytte %{count} noder til %{destination}",
-          "errorObjects": "Error å flytte %{count} objekter til %{destination}"
+          "errorNodes": "Flytting av %{count} noder til %{destination} feilet.",
+          "errorObjects": "Flytting av %{count} objekter til %{destination} feilet."
         }
       },
       "leftMenu": {
@@ -762,7 +767,8 @@
         "controlsRequired": "Minst en kontroll må merkes OK eller Ikke OK",
         "registerObservations": "Registrer observasjoner",
         "dateValidation": "Dato for kontrollen kan ikke være større enn dagens dato.",
-        "saveControlError": "Kunne ikke lagre kontrollen"
+        "saveControlError": "Kunne ikke lagre kontrollen",
+        "saveControlSuccess": "Kontrollen ble lagret"
       },
       "observation": {
         "page": {
@@ -785,7 +791,8 @@
             "labelText": "Velg type"
           },
           "messages": {
-            "saveError": "Could not save observation"
+            "saveError": "Kunne ikke lagre observationen",
+            "saveSuccess": "Observasjonen ble lagret"
           },
           "pest": {
             "identificationValueRequired": "Identifikasjon er påkrevd.",
