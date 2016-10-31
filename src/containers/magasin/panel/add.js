@@ -5,14 +5,18 @@ import { hashHistory } from 'react-router'
 import { insert } from '../../../reducers/storageunit/panel';
 import StorageUnitContainerImpl from './page'
 import { clear as clearState, update as updateState } from '../../../reducers/storageunit/panel/state'
-import { emitError } from '../../../errors/emitter'
+import { emitError, emitSuccess } from '../../../errors/emitter'
+import { I18n } from 'react-i18nify'
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onLagreClick: (parentId, data) => {
       dispatch(insert(parentId, data, {
-        onSuccess: () => hashHistory.goBack(),
-        onFailure: () => { emitError( { type: 'errorOnSave', message: this.props.translate('musit.storageUnits.messages.saveNodeError') }) }
+        onSuccess: () => {
+          hashHistory.goBack()
+          emitSuccess({ type: 'saveSuccess', message:  I18n.t('musit.storageUnits.messages.saveNodeSuccess')})
+        },
+        onFailure: () => { emitError( { type: 'errorOnSave', message: I18n.t('musit.storageUnits.messages.saveNodeError') }) }
       }))
     },
     updateState: (data) => dispatch(updateState(data)),
