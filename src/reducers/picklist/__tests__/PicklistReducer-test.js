@@ -167,14 +167,16 @@ describe('PicklistReducer', () => {
       name: 'special node'
     }
     const newState = picklistReducer(testState, addNode(item))
+    const newNode = [{
+      marked: false,
+      path: [],
+      value: item
+    }]
     const expectedState = {
-      NODE: DEFAULT_NODES.concat({
-        marked: false,
-        path: [],
-        value: item
-      }),
+      NODE: newNode.concat(DEFAULT_NODES),
       OBJECT: DEFAULT_OBJECTS
     }
+
     assert.deepStrictEqual(newState, expectedState, 'Node should be added')
   })
 
@@ -185,12 +187,13 @@ describe('PicklistReducer', () => {
     }
     const newState1 = picklistReducer(testState, addNode(item))
     const newState2 = picklistReducer(newState1, addNode(item))
+    const newNode = [{
+      marked: false,
+      path: [],
+      value: item
+    }]
     const expectedState = {
-      NODE: DEFAULT_NODES.concat({
-        marked: false,
-        path: [],
-        value: item
-      }),
+      NODE: newNode.concat(DEFAULT_NODES),
       OBJECT: DEFAULT_OBJECTS
     }
     assert.deepStrictEqual(newState2, expectedState, 'Node should be added')
@@ -213,14 +216,17 @@ describe('PicklistReducer', () => {
       }
     ]
     const newState = picklistReducer(testState, addNode(item, path))
+
+    const newNode = [{
+      marked: false,
+      path: path,
+      value: item
+    }]
     const expectedState = {
-      NODE: DEFAULT_NODES.concat({
-        marked: false,
-        path: path,
-        value: item
-      }),
+      NODE: newNode.concat(DEFAULT_NODES),
       OBJECT: DEFAULT_OBJECTS
     }
+
     assert.deepStrictEqual(newState, expectedState, 'Node should be added')
   })
 

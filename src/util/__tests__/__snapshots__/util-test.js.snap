@@ -731,6 +731,159 @@ Array [
 ]
 `;
 
+exports[`SortObject Sort node Pics on value and name 1`] = `
+Array [
+  Object {
+    "marked": false,
+    "path": Array [
+      Object {
+        "id": 2,
+        "name": "Utviklingsmuseet",
+        "url": "/magasin/2"
+      },
+      Object {
+        "id": 3,
+        "name": "Forskningens hus ",
+        "url": "/magasin/3"
+      }
+    ],
+    "value": Object {
+      "groupRead": "foo",
+      "id": 12,
+      "isPartOf": 3,
+      "name": "aaa",
+      "path": ",1,2,3,12,",
+      "type": "Room",
+      "updatedBy": 123,
+      "updatedDate": "2016-10-24T16:49:13+00:00"
+    }
+  },
+  Object {
+    "marked": false,
+    "path": Array [
+      Object {
+        "id": 2,
+        "name": "Utviklingsmuseet",
+        "url": "/magasin/2"
+      },
+      Object {
+        "id": 3,
+        "name": "Forskningens hus",
+        "url": "/magasin/3"
+      }
+    ],
+    "value": Object {
+      "groupRead": "foo",
+      "id": 7,
+      "isPartOf": 3,
+      "name": "bbb ",
+      "path": ",1,2,3,7,",
+      "type": "Room",
+      "updatedBy": 123,
+      "updatedDate": "2016-10-24T12:07:21+00:00"
+    }
+  },
+  Object {
+    "marked": false,
+    "path": Array [
+      Object {
+        "id": 2,
+        "name": "Utviklingsmuseet",
+        "url": "/magasin/2"
+      },
+      Object {
+        "id": 3,
+        "name": "Forskningens hus",
+        "url": "/magasin/3"
+      }
+    ],
+    "value": Object {
+      "groupRead": "foo",
+      "id": 15,
+      "isPartOf": 3,
+      "name": "ccc",
+      "path": ",1,2,3,15,",
+      "type": "StorageUnit",
+      "updatedBy": 123,
+      "updatedDate": "2016-10-28T13:43:15+00:00"
+    }
+  }
+]
+`;
+
+exports[`SortObject Sort object Pics on value and museumNo 1`] = `
+Array [
+  Object {
+    "marked": true,
+    "path": Array [
+      Object {
+        "id": 2,
+        "name": "Utviklingsmuseet",
+        "url": "/magasin/2"
+      },
+      Object {
+        "id": 3,
+        "name": "Forskningens hus",
+        "url": "/magasin/3"
+      },
+      Object {
+        "id": 4,
+        "name": "Kulturværelset",
+        "url": "/magasin/4"
+      }
+    ],
+    "value": Object {
+      "id": 3,
+      "museumNo": "MusK58 1",
+      "subNo": "3",
+      "term": "Spenne"
+    }
+  },
+  Object {
+    "marked": true,
+    "path": Array [
+      Object {
+        "id": 2,
+        "name": "Utviklingsmuseet",
+        "url": "/magasin/2"
+      },
+      Object {
+        "id": 3,
+        "name": "Forskningens hus",
+        "url": "/magasin/3"
+      },
+      Object {
+        "id": 4,
+        "name": "Kulturværelset",
+        "url": "/magasin/4"
+      }
+    ],
+    "value": Object {
+      "id": 4,
+      "museumNo": "MusK58 22",
+      "subNo": "4",
+      "term": "Briller"
+    }
+  },
+  Object {
+    "marked": true,
+    "path": Array [
+      Object {
+        "id": 2,
+        "name": "Utviklingsmuseet",
+        "url": "/magasin/2"
+      }
+    ],
+    "value": Object {
+      "id": 2,
+      "museumNo": "MusK58 3",
+      "subNo": "2",
+      "term": "Mansjettknapp"
+    }
+  }
+]
+`;
+
 exports[`SortObject Sort string value 1`] = `
 Array [
   Object {

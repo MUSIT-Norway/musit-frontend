@@ -208,4 +208,161 @@ describe('SortObject', () => {
   it('Sort inputJsonObject on displayName', () => {
     expect(sortObject(inputJsonObject, 'displayName')).toMatchSnapshot()
   });
+
+  const pics = {
+    NODE: [
+      {
+        marked: false,
+        value: {
+          id: 15,
+          name: 'ccc',
+          isPartOf: 3,
+          groupRead: 'foo',
+          path: ',1,2,3,15,',
+          type: 'StorageUnit',
+          updatedBy: 123,
+          updatedDate: '2016-10-28T13:43:15+00:00'
+        },
+        path: [
+          {
+            id: 2,
+            name: 'Utviklingsmuseet',
+            url: '/magasin/2'
+          },
+          {
+            id: 3,
+            name: 'Forskningens hus',
+            url: '/magasin/3'
+          }
+        ]
+      },
+      {
+        marked: false,
+        value: {
+          id: 7,
+          name: 'bbb ',
+          isPartOf: 3,
+          groupRead: 'foo',
+          path: ',1,2,3,7,',
+          type: 'Room',
+          updatedBy: 123,
+          updatedDate: '2016-10-24T12:07:21+00:00'
+        },
+        path: [
+          {
+            id: 2,
+            name: 'Utviklingsmuseet',
+            url: '/magasin/2'
+          },
+          {
+            id: 3,
+            name: 'Forskningens hus',
+            url: '/magasin/3'
+          }
+        ]
+      },
+      {
+        marked: false,
+        value: {
+          id: 12,
+          name: 'aaa',
+          isPartOf: 3,
+          groupRead: 'foo',
+          path: ',1,2,3,12,',
+          type: 'Room',
+          updatedBy: 123,
+          updatedDate: '2016-10-24T16:49:13+00:00'
+        },
+        path: [
+          {
+            id: 2,
+            name: 'Utviklingsmuseet',
+            url: '/magasin/2'
+          },
+          {
+            id: 3,
+            name: 'Forskningens hus ',
+            url: '/magasin/3'
+          }
+        ]
+      }
+    ],
+    OBJECT: [
+      {
+        marked: true,
+        value: {
+          id: 2,
+          museumNo: 'MusK58 3',
+          subNo: '2',
+          term: 'Mansjettknapp'
+        },
+        path: [
+          {
+            id: 2,
+            name: 'Utviklingsmuseet',
+            url: '/magasin/2'
+          }
+        ]
+      },
+      {
+        marked: true,
+        value: {
+          id: 3,
+          museumNo: 'MusK58 1',
+          subNo: '3',
+          term: 'Spenne'
+        },
+        path: [
+          {
+            id: 2,
+            name: 'Utviklingsmuseet',
+            url: '/magasin/2'
+          },
+          {
+            id: 3,
+            name: 'Forskningens hus',
+            url: '/magasin/3'
+          },
+          {
+            id: 4,
+            name: 'Kulturværelset',
+            url: '/magasin/4'
+          }
+        ]
+      },
+      {
+        marked: true,
+        value: {
+          id: 4,
+          museumNo: 'MusK58 22',
+          subNo: '4',
+          term: 'Briller'
+        },
+        path: [
+          {
+            id: 2,
+            name: 'Utviklingsmuseet',
+            url: '/magasin/2'
+          },
+          {
+            id: 3,
+            name: 'Forskningens hus',
+            url: '/magasin/3'
+          },
+          {
+            id: 4,
+            name: 'Kulturværelset',
+            url: '/magasin/4'
+          }
+        ]
+      }
+    ]
+  }
+  it('Sort node Pics on value and name', () => {
+    expect(sortObject(pics.NODE, 'value', null, true, 'name')).toMatchSnapshot()
+  });
+  it('Sort object Pics on value and museumNo', () => {
+    expect(sortObject(pics.OBJECT, 'value', null, true, 'museumNo')).toMatchSnapshot()
+  });
+
 });
