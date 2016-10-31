@@ -11,7 +11,7 @@
         "moving": "Move"
       },
       "moveHistory": {
-        "title": "Moving history for object",
+        "title": "Moving history for",
         "from": "From",
         "to": "To",
         "doneBy": "Performed by",
@@ -47,8 +47,8 @@
           "errorObject": "Moving object %{name} to %{destination} failed.",
           "nodesMoved": "%{count} nodes were moved to %{destination}",
           "objectsMoved": "%{count} objects were moved to %{destination}",
-          "errorNodes": "Error in %{count} nodes move to %{destination}",
-          "errorObjects": "Error in %{count} objects move to %{destination}"
+          "errorNodes": "Moving %{count} nodes to %{destination} failed.",
+          "errorObjects": "Moving %{count} objects to %{destination} failed."
         }
       },
       "leftMenu": {
@@ -585,7 +585,7 @@
         "moving": "Flytting"
       },
       "moveHistory": {
-        "title": "Flyttehistorikk for objekt",
+        "title": "Flyttehistorikk for",
         "from": "Fra",
         "to": "Til",
         "doneBy": "Utført av",
@@ -621,8 +621,8 @@
           "errorObject": "Flytting av %{name} til %{destination} feilet.",
           "nodesMoved": "%{count} noder ble flyttet til %{destination}",
           "objectsMoved": "%{count} objekter ble flyttet til %{destination}",
-          "errorNodes": "Error å flytte %{count} noder til %{destination}",
-          "errorObjects": "Error å flytte %{count} objekter til %{destination}"
+          "errorNodes": "Flytting av %{count} noder til %{destination} feilet.",
+          "errorObjects": "Flytting av %{count} objekter til %{destination} feilet."
         }
       },
       "leftMenu": {
