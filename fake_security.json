@@ -1,89 +1,62 @@
-{
-  "groups": [
-    {
-      "name": "EtnoLes",
-      "description": "Lesetilgang til etnobasen"
-    },
-    {
-      "name": "FotoLes",
-      "description": "Lesetilgang til fotobasen"
-    }
-  ],
-  "users": [
-    {
-      "userId": "jarle",
-      "name": "Jarle Stabell",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-jarle"
-    },
-    {
-      "userId": "stein",
-      "name": "Stein A. Olsen",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-stein"
-    },
-    {
-      "userId": "musitTestUser",
-      "name": "Fake Musit Test User",
-      "emails": [ "foo@bar.bas" ],
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-musitTestUser"
-    },
-    {
-      "userId": "DawnWilliams",
-      "name": "Dawn Williams",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-DawnWilliams"
-    },
-    {
-      "userId": "EspenUleberg",
-      "name": "Espen Uleberg",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-EspenUleberg"
-    },
-    {
-      "userId": "HeiniEmilia",
-      "name": "Heini Emilia Rämä",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-HeiniEmilia"
-    },
-    {
-      "userId": "Karsten",
-      "name": "Karsten Hårsaker",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-Karsten"
-    },
-    {
-      "userId": "MarielleBergh",
-      "name": "Marielle Bergh",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-MarielleBergh"
-    },
-    {
-      "userId": "WencheBrun",
-      "name": "Wenche Brun",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-WencheBrun"
-    },
-    {
-      "userId": "SusanMatland",
-      "name": "Susan Matland",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-SusanMatland"
-    },
-    {
-      "userId": "KjellGunnarMobekk",
-      "name": "Kjell Gunnar Mobekk",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-KjellGunnarMobekk"
-    },
-    {
-      "userId": "LineArildSjo",
-      "name": "Line Arild Sjo",
-      "groups": ["EtnoLes", "FotoLes"],
-      "accessToken": "fake-token-zab-xy-LineArildSjo"
-    }
-  ]
-}
+[
+  {
+    "userId": "guest",
+    "name": "Gjestebruker",
+    "accessToken": "fake-token-zab-xy-guest"
+  },
+  {
+    "userId": "stein",
+    "name": "Stein A. Olsen",
+    "accessToken": "fake-token-zab-xy-stein"
+  },
+  {
+    "userId": "musitTestUser",
+    "name": "Fake Musit Test User",
+    "accessToken": "fake-token-zab-xy-musitTestUser"
+  },
+  {
+    "userId": "DawnWilliams",
+    "name": "Dawn Williams",
+    "accessToken": "fake-token-zab-xy-DawnWilliams"
+  },
+  {
+    "userId": "EspenUleberg",
+    "name": "Espen Uleberg",
+    "accessToken": "fake-token-zab-xy-EspenUleberg"
+  },
+  {
+    "userId": "HeiniEmilia",
+    "name": "Heini Emilia Rämä",
+    "accessToken": "fake-token-zab-xy-HeiniEmilia"
+  },
+  {
+    "userId": "Karsten",
+    "name": "Karsten Hårsaker",
+    "accessToken": "fake-token-zab-xy-Karsten"
+  },
+  {
+    "userId": "MarielleBergh",
+    "name": "Marielle Bergh",
+    "accessToken": "fake-token-zab-xy-MarielleBergh"
+  },
+  {
+    "userId": "WencheBrun",
+    "name": "Wenche Brun",
+    "accessToken": "fake-token-zab-xy-WencheBrun"
+  },
+  {
+    "userId": "SusanMatland",
+    "name": "Susan Matland",
+    "accessToken": "fake-token-zab-xy-SusanMatland"
+  },
+  {
+    "userId": "KjellGunnarMobekk",
+    "name": "Kjell Gunnar Mobekk",
+    "accessToken": "fake-token-zab-xy-KjellGunnarMobekk"
+  },
+  {
+    "userId": "LineArildSjo",
+    "name": "Line Arild Sjo",
+    "accessToken": "fake-token-zab-xy-LineArildSjo"
+  }
+]

@@ -41,7 +41,7 @@ export default class FakeLoginSelector extends Component {
   render() {
     return (
       <DropdownButton id="fake-user-select" title="Fake User" onSelect={this.onSelect}>
-        {fakeUserInfo.users.map((user, i) => <MenuItem key={i} eventKey={user}>{user.name}</MenuItem>)}
+        {fakeUserInfo.map((user, i) => <MenuItem key={i} eventKey={user}>{user.name}</MenuItem>)}
       </DropdownButton>
     )
   }
