@@ -36,7 +36,7 @@ export default class MusitHistoryModal extends Component {
 
   render() {
     const { moves, translate, object } = this.props;
-    let objstr = object && object.museumNo ?  `${object.museumNo}`: null
+    let objstr = object && object.museumNo ? `${object.museumNo}`: null
     objstr = objstr && object.subNo ? `${objstr} - ${object.subNo}` : objstr
     objstr = objstr && object.term ? `${objstr} - ${object.term}` : objstr
 
