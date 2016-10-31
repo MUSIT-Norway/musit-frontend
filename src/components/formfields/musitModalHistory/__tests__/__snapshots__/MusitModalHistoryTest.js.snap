@@ -40,7 +40,7 @@ exports[`MusitModalHistory should display object 1 1`] = `
             "textAlign": "center"
           }
         }>
-        Flyttehistorikk
+        Flyttehistorikk null
       </ModalTitle>
     </ModalHeader>
     <ModalBody
