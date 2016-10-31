@@ -2,11 +2,11 @@
 import React, { Component, PropTypes } from 'react'
 import { ControlLabel, Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import { I18n } from 'react-i18nify'
 
 export default class NodeLeftMenuComponent extends Component {
   static propTypes = {
     rootNode: PropTypes.object,
-    translate: PropTypes.func.isRequired,
     onClickNewNode: PropTypes.func.isRequired,
     objectsOnNode: PropTypes.number,
     totalObjectCount: PropTypes.number,
@@ -22,7 +22,6 @@ export default class NodeLeftMenuComponent extends Component {
   render() {
     const {
       rootNode,
-      translate,
       onClickNewNode,
       objectsOnNode,
       totalObjectCount,
@@ -48,7 +47,7 @@ export default class NodeLeftMenuComponent extends Component {
               {MusitIconType ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
                 <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />}
               <br />
-              {translate(`musit.leftMenu.node.${type}`)}
+              {I18n.t(`musit.leftMenu.node.${type}`)}
             </Button>
           </div>
         
@@ -61,7 +60,7 @@ export default class NodeLeftMenuComponent extends Component {
       if (rootNode) {
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
-            {translate(`musit.leftMenu.node.${typeText}`)}
+            {I18n.t(`musit.leftMenu.node.${typeText}`)}
             <br />
             <ControlLabel id={`${rootNode.id}_${typeText}`}>
               {Number.isNaN(type) ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : type}
@@ -81,7 +80,7 @@ export default class NodeLeftMenuComponent extends Component {
             style={{ textAlign: 'left' }}
           >
             <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
-            {translate('musit.leftMenu.node.newNode')}
+            {I18n.t('musit.leftMenu.node.newNode')}
           </Button>
         </div>
       )

@@ -7,7 +7,6 @@ import { I18n } from 'react-i18nify'
 export default class ObjectGrid extends Component {
   static propTypes = {
     id: PropTypes.number,
-    translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       museumNo: PropTypes.string.isRequired,
@@ -21,7 +20,7 @@ export default class ObjectGrid extends Component {
   }
 
   render() {
-    const { id, translate, tableData } = this.props
+    const { id, tableData } = this.props
     return (
       <div>
         <FormGroup>
@@ -30,13 +29,13 @@ export default class ObjectGrid extends Component {
               <thead>
                 <tr>
                   <th>
-                    {translate('musit.grid.object.museumsNumber')}
+                    {I18n.t('musit.grid.object.museumsNumber')}
                   </th>
                   <th>
-                    {translate('musit.grid.object.uNumber')}
+                    {I18n.t('musit.grid.object.uNumber')}
                   </th>
                   <th>
-                    {translate('musit.grid.object.term')}
+                    {I18n.t('musit.grid.object.term')}
                   </th>
                   <th />
                   <th />
@@ -60,7 +59,7 @@ export default class ObjectGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault()
-                          this.props.showMoveHistory(c.id)
+                          this.props.showMoveHistory(c)
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
                       >

@@ -22,7 +22,6 @@ import MusitModalHistory from '../../../components/formfields/musitModalHistory/
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   stats: state.storageUnitStats.stats,
-  translate: (key, markdown) => I18n.t(key, markdown),
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root.data,
@@ -116,7 +115,6 @@ class StorageUnitsContainer extends React.Component {
     children: React.PropTypes.arrayOf(React.PropTypes.object),
     objects: React.PropTypes.arrayOf(React.PropTypes.object),
     rootNode: React.PropTypes.object,
-    translate: React.PropTypes.func.isRequired,
     loadStorageUnits: React.PropTypes.func.isRequired,
     loadStorageObjects: React.PropTypes.func.isRequired,
     onDelete: React.PropTypes.func.isRequired,
@@ -152,6 +150,7 @@ class StorageUnitsContainer extends React.Component {
       showObjects: false,
       showNodes: true,
       showMoveHistory: false,
+      objectData: null,
       showModal: false,
       showModalFromId: '',
       showModalType: ''
@@ -210,7 +209,7 @@ class StorageUnitsContainer extends React.Component {
   }
 
   showMoveNodeModal = (nodeToMove) => {
-    const title = this.props.translate('musit.moveModal.moveNodes');
+    const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
     this.context.showModal(title, 700, <MusitModal onMove={this.moveNode(nodeToMove)} />)
   }
 
@@ -234,9 +233,17 @@ class StorageUnitsContainer extends React.Component {
     })
   };
 
-  showMoveObjectModal = (objectToMove) => {
-    const title = this.props.translate('musit.moveModal.moveObjects');
-    this.context.showModal(title, 700, <MusitModal onMove={this.moveObject(objectToMove)} />)
+  getObjectDescription(object) {
+    let objStr = object.museumNo ? `${object.museumNo}` : ''
+    objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr
+    objStr = object.term ? `${objStr} - ${object.term}` : objStr
+    return objStr;
+  }
+
+  showMoveObjectModal = (object) => {
+    const objStr = this.getObjectDescription(object);
+    const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
+    this.context.showModal(title, 700, <MusitModal onMove={this.moveObject(object)} />)
   }
 
   moveObject = (fromObject) => (toId, toName, onSuccess) => {
@@ -259,10 +266,10 @@ class StorageUnitsContainer extends React.Component {
     })
   };
 
-  showObjectMoveHistory = (id) => {
-    const componentToRender =
-      <MusitModalHistory objectId={id} />
-    const title = this.props.translate('musit.moveHistory.title');
+  showObjectMoveHistory = (object) => {
+    const objStr = this.getObjectDescription(object);
+    const componentToRender = <MusitModalHistory objectId={object.id} />
+    const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
     this.context.showModal(title, 700, componentToRender)
   }
 
@@ -296,7 +303,6 @@ class StorageUnitsContainer extends React.Component {
         <NodeLeftMenuComponent
           rootNode={rootNode}
           showButtons={showButtons}
-          translate={this.props.translate}
           onClickNewNode={(parentId) => {
             if (parentId) {
               hashHistory.push(`/magasin/${parentId}/add`)
@@ -323,7 +329,6 @@ class StorageUnitsContainer extends React.Component {
     if (this.state.showNodes) {
       return <NodeGrid
         id={nodeId}
-        translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.breadcrumb)}
         onMove={this.showMoveNodeModal}
@@ -337,7 +342,6 @@ class StorageUnitsContainer extends React.Component {
     }
     return <ObjectGrid
       id={nodeId}
-      translate={this.props.translate}
       tableData={this.props.objects}
       showMoveHistory={this.showObjectMoveHistory}
       onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.breadcrumb)}
@@ -348,12 +352,11 @@ class StorageUnitsContainer extends React.Component {
 
   render() {
     const { searchPattern } = this.state;
-    const { children, translate, rootNode } = this.props;
+    const { children, rootNode } = this.props;
     return (
       <div>
         <Layout
           title={'Magasin'}
-          translate={translate}
           breadcrumb={<Breadcrumb node={rootNode} onClickCrumb={this.onClickCrumb} />}
           toolbar={this.makeToolbar()}
           leftMenu={this.makeLeftMenu(rootNode, this.props.stats)}

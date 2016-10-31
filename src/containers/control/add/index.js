@@ -29,7 +29,7 @@ import ActorSuggest from '../../../components/actor'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import { isDateBiggerThanToday } from '../../../util'
-import { emitError } from '../../../errors/emitter'
+import { emitError, emitSuccess } from '../../../errors/emitter'
 
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
@@ -118,7 +118,10 @@ export default class ControlAddContainer extends React.Component {
       })
     } else {
       this.props.saveControl(this.props.params.id, controlState, {
-        onSuccess: () => hashHistory.goBack(),
+        onSuccess: () => {
+          hashHistory.goBack()
+          emitSuccess({ type: 'saveSuccess', message: this.props.translate('musit.newControl.saveControlSuccess')})
+        },
         onFailure: () => emitError({ type: 'errorOnSave', message: this.props.translate('musit.newControl.saveControlError')})
       }, this.props.params.id)
     }

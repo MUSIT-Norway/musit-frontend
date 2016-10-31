@@ -7,7 +7,6 @@ import { I18n } from 'react-i18nify'
 export default class NodeGrid extends Component {
   static propTypes = {
     id: PropTypes.number,
-    translate: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
@@ -22,7 +21,7 @@ export default class NodeGrid extends Component {
   }
 
   render() {
-    const { id, translate } = this.props
+    const { id } = this.props
     return (
       <div>
         <FormGroup>
@@ -31,10 +30,10 @@ export default class NodeGrid extends Component {
               <thead>
                 <tr>
                   <th>
-                    {translate('musit.grid.node.nodeName')}
+                    {I18n.t('musit.grid.node.nodeName')}
                   </th>
                   <th>
-                    {translate('musit.grid.node.nodeType')}
+                    {I18n.t('musit.grid.node.nodeType')}
                   </th>
                   <th />
                   <th />
@@ -60,7 +59,7 @@ export default class NodeGrid extends Component {
                       </a>
                     </td>
                     <td id={`${id}_${c.name}_${c.type}_nodeType`}>
-                      {translate(`musit.grid.node.nodeTypeItems.${c.type}`)}
+                      {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
                     </td>
                     <td id={`${id}_${c.name}_${c.type}_objectCount`}>
                       {c.objectCount}
