@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import './modalStyling.css'
+import './MoveHistoryModal.css'
 import React, { Component, PropTypes } from 'react'
 import ModalMoveHistoryGrid from '../../../components/grid/ModalMoveHistoryGrid'
 import Modal from '../../modal/MusitModal'
@@ -45,12 +45,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-class MusitHistoryModal extends Component {
+class MoveHistoryModal extends Component {
 
   static propTypes = {
-    show: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    headerText: PropTypes.string.isRequired,
     moves: PropTypes.arrayOf(PropTypes.object),
     objectId: PropTypes.number.isRequired
   };
@@ -69,24 +66,22 @@ class MusitHistoryModal extends Component {
   render() {
     const { moves } = this.props;
     return (
-      <div>
-        <Modal
-          className="my-modal"
-          body={
-            <ModalMoveHistoryGrid
-              tableData={moves}
-            />
-          }
-          footer={
-            <CancelButton
-              onClick={this.context.closeModal}
-              label={I18n.t('musit.texts.close')}
-            />
-          }
-        />
-      </div>
-  );
+      <Modal
+        className="my-modal"
+        body={
+          <ModalMoveHistoryGrid
+            tableData={moves}
+          />
+        }
+        footer={
+          <CancelButton
+            onClick={this.context.closeModal}
+            label={I18n.t('musit.texts.close')}
+          />
+        }
+      />
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MusitHistoryModal)
+export default connect(mapStateToProps, mapDispatchToProps)(MoveHistoryModal)

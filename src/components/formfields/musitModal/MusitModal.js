@@ -61,7 +61,7 @@ export default class MusitModal extends Component {
     const isSelected = Object.keys({...selectedNode}).length > 0
 
     const header =
-      <div style={{ width: '500', paddingBottom: '10px' }}>
+      <div style={{ width: '500px', paddingBottom: '10px' }}>
         <NodeSuggest
           label="Search"
           id="nodeSearch"

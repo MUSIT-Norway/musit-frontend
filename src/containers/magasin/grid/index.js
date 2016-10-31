@@ -127,8 +127,6 @@ class StorageUnitsContainer extends React.Component {
     history: React.PropTypes.object,
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
-    loadMoveHistoryForObject: React.PropTypes.func.isRequired,
-    clearMoveHistoryForObject: React.PropTypes.func.isRequired,
     moves: React.PropTypes.arrayOf(React.PropTypes.object),
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
@@ -161,10 +159,12 @@ class StorageUnitsContainer extends React.Component {
 
     this.loadNodes = this.loadNodes.bind(this);
     this.loadObjects = this.loadObjects.bind(this);
-    this.moveModal = this.moveModal.bind(this);
+    this.moveNode = this.moveNode.bind(this);
+    this.moveObject = this.moveObject.bind(this);
     this.showObjectMoveHistory = this.showObjectMoveHistory.bind(this);
-    this.closeMoveHistory = this.closeMoveHistory.bind(this)
     this.onClickCrumb = this.onClickCrumb.bind(this)
+    this.showMoveNodeModal = this.showMoveNodeModal.bind(this)
+    this.showMoveObjectModal = this.showMoveObjectModal.bind(this)
   }
 
   componentWillMount() {
@@ -173,9 +173,9 @@ class StorageUnitsContainer extends React.Component {
 
   componentWillReceiveProps(newProps) {
     // Issued on every propchange, including local route changes
-    if (newProps.params.splat !== this.props.params.splat) {
-      if (newProps.params.splat) {
-        this.props.loadChildren(this.resolveCurrentId(newProps.params.splat))
+    if (newProps.params.id !== this.props.params.id) {
+      if (newProps.params.id) {
+        this.props.loadChildren(newProps.params.id)
       } else {
         this.props.loadStorageUnits()
       }
@@ -195,70 +195,65 @@ class StorageUnitsContainer extends React.Component {
     this.setState({ ...this.state, showNodes: false, showObjects: true })
   }
 
-  closeMoveHistory() {
-    this.setState({ ...this.state, showMoveHistory: false })
-  }
-
   loadNodes() {
-    if (this.props.params.splat) {
-      const currentId = this.resolveCurrentId(this.props.params.splat);
-      this.props.loadChildren(currentId)
+    if (this.props.params.id) {
+      this.props.loadChildren(this.props.params.id)
     } else {
       this.props.loadStorageUnits()
     }
   }
 
   loadObjects() {
-    if (this.props.params.splat) {
-      const currentId = this.resolveCurrentId(this.props.params.splat);
-      this.props.loadStorageObjects(currentId)
+    if (this.props.params.id) {
+      this.props.loadStorageObjects(this.props.params.id)
     }
   }
 
-  resolveCurrentId(splat) {
-    const ids = this.resolveId(splat);
-    let retVal = null;
-    if (ids && ids.length > 0) {
-      retVal = ids[ids.length - 1]
-    }
-    return retVal
-  }
-
-  resolveId(splat) {
-    let splatList = [];
-    if (splat) {
-      splatList = splat.split('/')
-    }
-    return splatList
-  }
-
-  pathChild(splat, id) {
-    let newUri = `${id}`;
-    if (splat) {
-      newUri = `${splat}/${id}`
-    }
-    return newUri
-  }
-
-  showModal() {
+  showMoveNodeModal = (nodeToMove) => {
     const title = this.props.translate('musit.moveModal.moveNodes');
-    this.context.showModal(title, 700, <MusitModal onMove={this.moveModal} />)
+    this.context.showModal(title, 700, <MusitModal onMove={this.moveNode(nodeToMove)} />)
   }
 
-  moveModal = (toId, toName, onSuccess) => {
-    this.props.moveNode(this.props.rootNode.id, toId, this.props.user.id, {
+  moveNode = (fromNode) => (toId, toName, onSuccess) => {
+    this.props.moveNode(fromNode.id, toId, this.props.user.id, {
       onSuccess: () => {
         onSuccess()
         this.loadNodes();
+        this.props.loadRoot(this.props.rootNode.id)
         emitSuccess({
           type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.nodeMoved', { name: this.props.rootNode.name, destination: toName })
+          message: I18n.t('musit.moveModal.messages.nodeMoved', { name: fromNode.name, destination: toName })
         })
       },
       onFailure: () => {
         emitError({
           type: 'errorOnMove',
-          message: I18n.t('musit.moveModal.messages.errorNode', { name: this.props.rootNode.name, destination: toName })
+          message: I18n.t('musit.moveModal.messages.errorNode', { name: fromNode.name, destination: toName })
+        })
+      }
+    })
+  };
+
+  showMoveObjectModal = (objectToMove) => {
+    const title = this.props.translate('musit.moveModal.moveObjects');
+    this.context.showModal(title, 700, <MusitModal onMove={this.moveObject(objectToMove)} />)
+  }
+
+  moveObject = (fromObject) => (toId, toName, onSuccess) => {
+    this.props.moveObject(fromObject.id, toId, this.props.user.id, {
+      onSuccess: () => {
+        onSuccess()
+        this.loadObjects();
+        this.props.loadRoot(this.props.rootNode.id)
+        emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.objectMoved', { name: fromObject.name, destination: toName })
+        })
+      },
+      onFailure: () => {
+        emitError({
+          type: 'errorOnMove',
+          message: I18n.t('musit.moveModal.messages.errorObject', { name: fromObject.name, destination: toName })
         })
       }
     })
@@ -266,12 +261,7 @@ class StorageUnitsContainer extends React.Component {
 
   showObjectMoveHistory = (id) => {
     const componentToRender =
-      <MusitModalHistory
-        objectId={id}
-        show={this.state.showMoveHistory}
-        onClose={this.closeMoveHistory}
-        moves={this.props.moves}
-      />
+      <MusitModalHistory objectId={id} />
     const title = this.props.translate('musit.moveHistory.title');
     this.context.showModal(title, 700, componentToRender)
   }
@@ -304,7 +294,7 @@ class StorageUnitsContainer extends React.Component {
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          id={rootNode ? rootNode.id : null}
+          rootNode={rootNode}
           showButtons={showButtons}
           translate={this.props.translate}
           onClickNewNode={(parentId) => {
@@ -321,7 +311,7 @@ class StorageUnitsContainer extends React.Component {
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={() => this.showModal(rootNode.id)}
+          onClickMoveNode={this.showMoveNodeModal}
           onClickDelete={(id) => onDelete(id, rootNode)}
         />
       </div>
@@ -335,15 +325,11 @@ class StorageUnitsContainer extends React.Component {
         id={nodeId}
         translate={this.props.translate}
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
-        onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.path)}
-        onMove={(moveFrom, moveTo, callback) => this.props.moveNode(moveFrom, moveTo, this.props.user.id, callback)}
-        refresh={() => {
-          this.loadNodes();
-          this.props.loadRoot(nodeId)
-        }}
+        onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.breadcrumb)}
+        onMove={this.showMoveNodeModal}
         onClick={(row) =>
           hashHistory.push(
-            `/magasin/${this.pathChild(this.props.params.splat, row.id)}`
+            `/magasin/${row.id}`
           )
         }
         rootNode={this.props.rootNode}
@@ -354,12 +340,8 @@ class StorageUnitsContainer extends React.Component {
       translate={this.props.translate}
       tableData={this.props.objects}
       showMoveHistory={this.showObjectMoveHistory}
-      onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.path)}
-      onMove={(moveFrom, moveTo, callback) => this.props.moveObject(moveFrom, moveTo, this.props.user.id, callback)}
-      refresh={() => {
-        this.loadObjects();
-        this.props.loadRoot(nodeId)
-      }}
+      onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.breadcrumb)}
+      onMove={this.showMoveObjectModal}
       rootNode={this.props.rootNode}
     />
   }

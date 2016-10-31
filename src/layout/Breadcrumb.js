@@ -30,8 +30,8 @@ class Breadcrumb extends React.Component {
     };
 
     let path = [];
-    if (this.props.node && this.props.node.path && this.props.node.path.length) {
-      path = this.props.node.path;
+    if (this.props.node && this.props.node.breadcrumb && this.props.node.breadcrumb.length) {
+      path = this.props.node.breadcrumb;
     } else if (this.props.node && this.props.node.length) {
       path = this.props.node;
     }

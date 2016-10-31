@@ -85,7 +85,7 @@ export default (props) =>
                           href=""
                           onClick={(e) => {
                             e.preventDefault()
-                            props.pickObject(data, data.path)
+                            props.pickObject(data, data.breadcrumb)
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >

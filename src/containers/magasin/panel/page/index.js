@@ -279,11 +279,11 @@ class StorageUnitContainer extends Component {
     const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format("DD.MM.YYYY")
     // const lastUpdateBy = unit.updatedBy // TODO når dette er i orden, autentisering er i orden
     return (
-        <span>
-          <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> Darth Wader
-          <br />
-          <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{lastUpdateDate}
-       </span>
+      <span>
+        <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> Darth Wader
+        <br />
+        <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{lastUpdateDate}
+      </span>
     )
   }
 

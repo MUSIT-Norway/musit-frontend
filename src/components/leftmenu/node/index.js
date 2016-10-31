@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome'
 
 export default class NodeLeftMenuComponent extends Component {
   static propTypes = {
-    id: PropTypes.number,
+    rootNode: PropTypes.object,
     translate: PropTypes.func.isRequired,
     onClickNewNode: PropTypes.func.isRequired,
     objectsOnNode: PropTypes.number,
@@ -21,7 +21,7 @@ export default class NodeLeftMenuComponent extends Component {
   }
   render() {
     const {
-      id,
+      rootNode,
       translate,
       onClickNewNode,
       objectsOnNode,
@@ -36,13 +36,13 @@ export default class NodeLeftMenuComponent extends Component {
 
     const buttonLink = (type, icon, eventType, MusitIconType) => {
       let fragment = null
-      if (Number.isInteger(id)) {
+      if (rootNode) {
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
             <Button
               bsStyle="link"
-              id={`${id}_${type}`}
-              onClick={() => eventType(id)}
+              id={`${rootNode.id}_${type}`}
+              onClick={() => eventType(rootNode.id)}
               style={{ color: 'black' }}
             >
               {MusitIconType ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
@@ -58,12 +58,12 @@ export default class NodeLeftMenuComponent extends Component {
 
     const showCount = (type, typeText) => {
       let fragment = null
-      if (Number.isInteger(id)) {
+      if (rootNode) {
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
             {translate(`musit.leftMenu.node.${typeText}`)}
             <br />
-            <ControlLabel id={`${id}_${typeText}`}>
+            <ControlLabel id={`${rootNode.id}_${typeText}`}>
               {Number.isNaN(type) ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : type}
             </ControlLabel>
           </div>
@@ -89,15 +89,15 @@ export default class NodeLeftMenuComponent extends Component {
 
     return (
       <div>
-        {Number.isInteger(id) ? newButton(id) : null}
-        {Number.isInteger(id) ? <hr /> : null}
+        {rootNode ? newButton(rootNode.id) : null}
+        {rootNode ? <hr /> : null}
         {showCount(objectsOnNode, 'objectsOnNode')}
         {showCount(totalObjectCount, 'totalObjectCount')}
         {showCount(underNodeCount, 'underNodeCount')}
-        {Number.isInteger(id) ? <hr /> : null}
+        {rootNode ? <hr /> : null}
         {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
         {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
-        {showButtons ? buttonLink('moveNode', 'truck', onClickMoveNode) : null}
+        {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode)) : null}
         {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
       </div>
     )

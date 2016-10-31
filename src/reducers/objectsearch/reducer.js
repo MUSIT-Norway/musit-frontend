@@ -56,7 +56,7 @@ export default (state = initialState, action) => {
           matches: action.result.matches.map(data => {
             return {
               ...data,
-              path: getPath(data.path || '', data.pathNames)
+              breadcrumb: getPath(data.path || '', data.pathNames)
             }
           })
         }

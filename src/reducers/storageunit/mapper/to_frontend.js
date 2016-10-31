@@ -21,7 +21,7 @@ const mapRequirement = (envReq, field) => {
 export const toFrontend = (data) => {
   return {
     ...data,
-    path: getPath(data.path, data.pathNames),
+    breadcrumb: getPath(data.path, data.pathNames),
     area: formatFloatToString(data.area),
     areaTo: formatFloatToString(data.areaTo),
     height: formatFloatToString(data.height),

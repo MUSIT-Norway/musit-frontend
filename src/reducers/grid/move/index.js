@@ -30,11 +30,11 @@ const moveHistoryReducer = (state = initialState, action) => {
             ...data,
             from: {
               ...data.from,
-              path: getPath(data.from.path, data.from.pathNames)
+              breadcrumb: getPath(data.from.path, data.from.pathNames)
             },
             to: {
               ...data.to,
-              path: getPath(data.to.path, data.to.pathNames)
+              breadcrumb: getPath(data.to.path, data.to.pathNames)
             }
           }
         })

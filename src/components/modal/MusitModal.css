@@ -15,8 +15,6 @@
 .musit-modal-body {
     flex: 1 0 auto;
     min-height: 300px;
-    position: relative;
-    display: inline-block;
 }
 
 .musit-modal-body::after {

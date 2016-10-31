@@ -1,3 +1,3 @@
-import MusitHistoryModalImpl from './musitMoveHistoryModal'
+import MoveHistoryModal from './MoveHistoryModal'
 
-export default class MusitModalHistory extends MusitHistoryModalImpl {}
+export default MoveHistoryModal

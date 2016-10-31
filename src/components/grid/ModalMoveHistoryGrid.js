@@ -40,10 +40,10 @@ export default class ModalMoveHistoryGrid extends Component {
                     {` ${c.doneBy}`}
                   </td>
                   <td id={`${i}_${c.from.path}`}>
-                    {` ${toPathStr(c.from.path)}`}
+                    {` ${toPathStr(c.from.breadcrumb)}`}
                   </td>
                   <td id={`${i}_${c.to.path}`}>
-                    {` ${toPathStr(c.to.path)}`}
+                    {` ${toPathStr(c.to.breadcrumb)}`}
                   </td>
                 </tr>
               )}

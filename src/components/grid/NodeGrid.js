@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { I18n } from 'react-i18nify'
-import { emitError, emitSuccess } from '../../errors/emitter'
 
 export default class NodeGrid extends Component {
   static propTypes = {
@@ -19,53 +18,7 @@ export default class NodeGrid extends Component {
     })),
     onAction: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
-    refresh: PropTypes.func.isRequired,
-    onClick: PropTypes.func.isRequired,
-    rootNode: React.PropTypes.object,
-    MusitModal: React.PropTypes.func
-  }
-
-  constructor(props) {
-    super(props)
-    this.showModal = this.showModal.bind(this)
-    this.hideModal = this.hideModal.bind(this)
-    this.moveModal = this.moveModal.bind(this)
-    this.showMoveHistory = this.showMoveHistory.bind(this)
-    this.hideMoveHistory = this.hideMoveHistory.bind(this)
-    this.state = {
-      showModal: false,
-      showMoveHistory: false
-    }
-  }
-
-  showMoveHistory(nodeId) {
-    this.setState({ ...this.state, showMoveHistory: true, nodeId: nodeId })
-  }
-  hideMoveHistory() {
-    this.setState({ ...this.state, showMoveHistory: false, nodeId: null })
-  }
-
-  showModal(fromId, name) {
-    this.setState({ ...this.state, showModal: true, showModalFromId: fromId, name: name })
-  }
-
-  hideModal() {
-    this.setState({ ...this.state, showModal: false, showModalFromId: null, name: null })
-  }
-
-  moveModal(toId, toName) {
-    this.props.onMove(this.state.showModalFromId, toId, {
-      onSuccess: () => {
-        this.setState({ ...this.state, showModal: false, showModalFromId: null })
-        this.props.refresh()
-        emitSuccess({ type: 'movedSuccess',
-                      message: I18n.t('musit.moveModal.messages.nodeMoved', { name: this.state.name, destination: toName }) })
-      },
-      onFailure: () => {
-        emitError({ type: 'errorOnMove',
-                    message: I18n.t('musit.moveModal.messages.errorNode', { name: this.state.name, destination: toName }) })
-      }
-    })
+    onClick: PropTypes.func.isRequired
   }
 
   render() {
@@ -135,7 +88,7 @@ export default class NodeGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault()
-                          this.showModal(c.id, c.name)
+                          this.props.onMove(c)
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                       >

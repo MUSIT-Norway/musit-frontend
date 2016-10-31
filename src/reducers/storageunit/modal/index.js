@@ -48,7 +48,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
           loaded: true,
           data: {
             ...action.result,
-            path: getPath(action.result.path, action.result.pathNames)
+            breadcrumb: getPath(action.result.path, action.result.pathNames)
           }
         }
       }
