@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -17,24 +16,34 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { loadChildren, clear, loadNode } from '../../../reducers/storageunit/modal'
-import { connect } from 'react-redux'
-import MusitModalImpl from './MusitModal'
 
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  children: state.storageUnitModal.data || [],
-  selectedNode: state.storageUnitModal.root.data
-});
+import React, {PropTypes} from 'react'
+import './MusitModal.css'
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clear: () => dispatch(clear()),
-    loadNode: (id) => dispatch(loadNode(id)),
-    loadRootChildren: () => dispatch(loadChildren(1)),
-    loadChildren: (id) => dispatch(loadChildren(id))
-  }
+const MusitModal = (props) => {
+  const extraClassName = props.className ? ' ' + props.className : '';
+  return (
+    <div
+      className={`musit-modal${extraClassName}`}
+      style={{...props.style}}
+    >
+      {props.header &&
+        <div className="musit-modal-header">
+          {props.header}
+        </div>
+      }
+      <div className="musit-modal-body">
+        {props.body}
+      </div>
+      <div className="musit-modal-footer">
+        {props.footer}
+      </div>
+    </div>
+  );
 };
 
+MusitModal.contextTypes = {
+  closeModal: PropTypes.func.isRequired
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl)
+export default MusitModal;

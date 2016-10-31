@@ -2,43 +2,31 @@ import Config from '../../../config'
 import { apiUrl } from '../../../util'
 import { getPath } from '../../helper'
 
-export const LOAD_SEVERAL = 'musit/storageunit-modal/LOAD_SEVERAL'
-export const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-modal/LOAD_SEVERAL_SUCCESS'
-export const LOAD_SEVERAL_FAIL = 'musit/storageunit-modal/LOAD_SEVERAL_FAIL'
-export const LOAD_ROOT = 'musit/storageunit-modal/LOAD_ROOT'
-export const LOAD_ROOT_SUCCESS = 'musit/storageunit-modal/LOAD_ROOT_SUCCESS'
-export const LOAD_ROOT_FAIL = 'musit/storageunit-modal/LOAD_ROOT_FAIL'
-export const CLEAR_ROOT = 'musit/storageunit-modal/CLEAR_ROOT'
-export const SET_CURRENT = 'musit/storageunit-modal/SET_CURRENT'
-export const CLEAR_CURRENT = 'musit/storageunit-modal/CLEAR_CURRENT'
+export const LOAD_CHILDREN = 'musit/storageunit-modal/LOAD_CHILDREN'
+export const LOAD_CHILDREN_SUCCESS = 'musit/storageunit-modal/LOAD_CHILDREN_SUCCESS'
+export const LOAD_CHILDREN_FAIL = 'musit/storageunit-modal/LOAD_CHILDREN_FAIL'
+export const LOAD_NODE = 'musit/storageunit-modal/LOAD_NODE'
+export const LOAD_NODE_SUCCESS = 'musit/storageunit-modal/LOAD_NODE_SUCCESS'
+export const LOAD_NODE_FAIL = 'musit/storageunit-modal/LOAD_NODE_FAIL'
+export const CLEAR = 'musit/storageunit-modal/CLEAR'
 
 const initialState = { root: {} }
 
 const storageUnitModalReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case SET_CURRENT:
-      return {
-        ...state,
-        currentId: action.id
-      }
-    case CLEAR_CURRENT:
-      return {
-        ...state,
-        currentId: null
-      }
-    case LOAD_SEVERAL:
+    case LOAD_CHILDREN:
       return {
         ...state,
         loading: true
       }
-    case LOAD_SEVERAL_SUCCESS:
+    case LOAD_CHILDREN_SUCCESS:
       return {
         ...state,
         loading: false,
         loaded: true,
         data: action.result
       }
-    case LOAD_SEVERAL_FAIL:
+    case LOAD_CHILDREN_FAIL:
       return {
         ...state,
         loading: false,
@@ -46,12 +34,12 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
         error: action.error
       }
 
-    case LOAD_ROOT:
+    case LOAD_NODE:
       return {
         ...state,
         loading: true
       }
-    case LOAD_ROOT_SUCCESS:
+    case LOAD_NODE_SUCCESS:
       return {
         ...state,
         root: {
@@ -64,7 +52,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
           }
         }
       }
-    case LOAD_ROOT_FAIL:
+    case LOAD_NODE_FAIL:
       return {
         ...state,
         root: {
@@ -74,10 +62,12 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
           error: action.error
         }
       }
-    case CLEAR_ROOT: {
+    case CLEAR: {
       return {
         ...state,
-        root: {}
+        root: {},
+        data: [],
+        currentId: null
       }
     }
     default:
@@ -90,7 +80,7 @@ export default storageUnitModalReducer;
 export const loadNode = (id) => {
   const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`);
   return {
-    types: [LOAD_ROOT, LOAD_ROOT_SUCCESS, LOAD_ROOT_FAIL],
+    types: [LOAD_NODE, LOAD_NODE_SUCCESS, LOAD_NODE_FAIL],
     promise: (client) => client.get(url)
   }
 }
@@ -98,27 +88,14 @@ export const loadNode = (id) => {
 export const loadChildren = (id, callback) => {
   const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`);
   return {
-    types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
+    types: [LOAD_CHILDREN, LOAD_CHILDREN_SUCCESS, LOAD_CHILDREN_FAIL],
     promise: (client) => client.get(url),
     callback
   };
 }
 
-export const clearRoot = () => {
+export const clear = () => {
   return {
-    type: CLEAR_ROOT
-  }
-}
-
-export const setCurrent = (id) => {
-  return {
-    type: SET_CURRENT,
-    id
-  }
-}
-
-export const clearCurrent = () => {
-  return {
-    type: CLEAR_CURRENT
+    type: CLEAR
   }
 }

@@ -18,55 +18,75 @@
  */
 import './modalStyling.css'
 import React, { Component, PropTypes } from 'react'
-import { Modal, Row, Col, Button } from 'react-bootstrap'
 import ModalMoveHistoryGrid from '../../../components/grid/ModalMoveHistoryGrid'
+import Modal from '../../modal/MusitModal'
+import CancelButton from '../../buttons/cancel'
 import { I18n } from 'react-i18nify'
+import { connect } from 'react-redux';
+import { loadMoveHistoryForObject, clearMoveHistoryForObject, loadActor } from '../../../reducers/grid/move'
 
-export default class MusitHistoryModal extends Component {
+const mapStateToProps = (state) => {
+  return {
+    moves: state.movehistory.data || []
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadMoveHistoryForObject: (objectId, cb) => {
+      dispatch(loadMoveHistoryForObject(objectId, cb))
+    },
+    clearMoveHistoryForObject: (objectId) => {
+      dispatch(clearMoveHistoryForObject(objectId))
+    },
+    loadActorDetails: (data) => {
+      dispatch(loadActor(data))
+    }
+  }
+}
+
+class MusitHistoryModal extends Component {
 
   static propTypes = {
     show: PropTypes.bool.isRequired,
-    onHide: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     headerText: PropTypes.string.isRequired,
-    translate: PropTypes.func,
-    moves: PropTypes.arrayOf(PropTypes.object)
+    moves: PropTypes.arrayOf(PropTypes.object),
+    objectId: PropTypes.number.isRequired
   };
 
+  static contextTypes = {
+    closeModal: PropTypes.func.isRequired
+  };
+
+  componentDidMount() {
+    this.props.clearMoveHistoryForObject()
+    this.props.loadMoveHistoryForObject(this.props.objectId, {
+      onSuccess: (result) => this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map(r => r.doneBy) })
+    })
+  }
+
   render() {
-    const { moves, translate } = this.props;
+    const { moves } = this.props;
     return (
       <div>
         <Modal
-          dialogClassName="my-modal"
-          show={this.props.show}
-          onHide={this.props.onHide}
-          bsSize="large"
-          aria-labelledby="contained-modal-title-sm"
-        >
-          <Modal.Header closeButton style={{ border: 'none' }}>
-            <Modal.Title id="title" style={{ textAlign: 'center' }}>
-              {this.props.headerText}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body style={{ height: 300, overflow: 'auto' }}>
+          className="my-modal"
+          body={
             <ModalMoveHistoryGrid
               tableData={moves}
-              translate={translate}
             />
-          </Modal.Body>
-          <Modal.Footer style={{ textAlign: 'center' }}>
-            <br />
-            <Row style={{ textAlign: 'center' }}>
-              <Col xs={4} sm={4} smOffset={4}>
-                <Button onClick={this.props.onClose}>
-                  {I18n.t('musit.texts.close')}
-                </Button>
-              </Col>
-            </Row>
-          </Modal.Footer>
-        </Modal>
+          }
+          footer={
+            <CancelButton
+              onClick={this.context.closeModal}
+              label={I18n.t('musit.texts.close')}
+            />
+          }
+        />
       </div>
   );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(MusitHistoryModal)

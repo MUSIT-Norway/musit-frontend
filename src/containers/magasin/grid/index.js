@@ -2,7 +2,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { loadRoot, clearRoot, loadChildren, deleteUnit } from '../../../reducers/storageunit/grid'
-import { loadMoveHistoryForObject, clearMoveHistoryForObject, loadActor } from '../../../reducers/grid/move'
 import { loadObjects } from '../../../reducers/storageobject/grid'
 import { addNode, addObject } from '../../../reducers/picklist'
 import { moveObject, moveNode } from '../../../reducers/move'
@@ -18,6 +17,7 @@ import Breadcrumb from '../../../layout/Breadcrumb'
 import MusitModal from '../../../components/formfields/musitModal'
 import { I18n } from 'react-i18nify'
 import { emitError, emitSuccess } from '../../../errors/emitter'
+import MusitModalHistory from '../../../components/formfields/musitModalHistory/index'
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
@@ -26,8 +26,7 @@ const mapStateToProps = (state) => ({
   children: state.storageGridUnit.data || [],
   objects: state.storageObjectGrid.data || [],
   rootNode: state.storageGridUnit.root.data,
-  routerState: state.routing,
-  moves: state.movehistory.data || []
+  routerState: state.routing
 });
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -53,20 +52,11 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(clearStats());
       dispatch(loadStats(id))
     },
-    loadMoveHistoryForObject: (objectId, cb) => {
-      dispatch(loadMoveHistoryForObject(objectId, cb))
-    },
-    clearMoveHistoryForObject: (objectId) => {
-      dispatch(clearMoveHistoryForObject(objectId))
-    },
     moveObject: (objectId, destinationId, doneBy, callback) => {
       dispatch(moveObject(objectId, destinationId, doneBy, callback))
     },
     moveNode: (nodeId, destinationId, doneBy, callback) => {
       dispatch(moveNode(nodeId, destinationId, doneBy, callback))
-    },
-    loadActorDetails: (data) => {
-      dispatch(loadActor(data))
     },
     onAction: (actionName, unit, path) => {
       switch (actionName) {
@@ -275,11 +265,15 @@ class StorageUnitsContainer extends React.Component {
   };
 
   showObjectMoveHistory = (id) => {
-    this.props.clearMoveHistoryForObject()
-    this.props.loadMoveHistoryForObject(id, {
-      onSuccess: (result) => this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map(r => r.doneBy) })
-    })
-    this.setState({ ...this.state, showMoveHistory: true })
+    const componentToRender =
+      <MusitModalHistory
+        objectId={id}
+        show={this.state.showMoveHistory}
+        onClose={this.closeMoveHistory}
+        moves={this.props.moves}
+      />
+    const title = this.props.translate('musit.moveHistory.title');
+    this.context.showModal(title, 700, componentToRender)
   }
 
   makeToolbar() {

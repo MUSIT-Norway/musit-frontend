@@ -61,7 +61,7 @@ export default class App extends Component {
       autoResize: true,
       minHeight: "auto",
       resizable: false,
-      width: width,
+      width: 'auto',
       close: function() {
         ReactDOM.unmountComponentAtNode(this);
         $( this ).remove();
