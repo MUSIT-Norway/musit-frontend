@@ -29,12 +29,19 @@ export default class MusitHistoryModal extends Component {
     onHide: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     headerText: PropTypes.string.isRequired,
+    object: PropTypes.object.isRequired,
     translate: PropTypes.func,
     moves: PropTypes.arrayOf(PropTypes.object)
   };
 
   render() {
-    const { moves, translate } = this.props;
+    const { moves, translate, object } = this.props
+
+    let objStr = object.museumNo ? `${object.museumNo}`: ''
+    objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr
+    objStr = object.term ? `${objStr} - ${object.term}` : objStr
+
+
     return (
       <div>
         <Modal
@@ -46,7 +53,7 @@ export default class MusitHistoryModal extends Component {
         >
           <Modal.Header closeButton style={{ border: 'none' }}>
             <Modal.Title id="title" style={{ textAlign: 'center' }}>
-              {this.props.headerText}
+              {`${this.props.headerText} ${objStr}`}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{ height: 300, overflow: 'auto' }}>

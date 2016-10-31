@@ -11,7 +11,7 @@
         "moving": "Move"
       },
       "moveHistory": {
-        "title": "Moving history for object",
+        "title": "Moving history for",
         "from": "From",
         "to": "To",
         "doneBy": "Performed by",
@@ -585,7 +585,7 @@
         "moving": "Flytting"
       },
       "moveHistory": {
-        "title": "Flyttehistorikk for objekt",
+        "title": "Flyttehistorikk for",
         "from": "Fra",
         "to": "Til",
         "doneBy": "Utført av",

@@ -164,6 +164,7 @@ class StorageUnitsContainer extends React.Component {
       showObjects: false,
       showNodes: true,
       showMoveHistory: false,
+      objectData: null,
       showModal: false,
       showModalFromId: '',
       showModalType: ''
@@ -274,13 +275,13 @@ class StorageUnitsContainer extends React.Component {
     })
   };
 
-  showObjectMoveHistory = (id) => {
+  showObjectMoveHistory = (o) => {
     this.props.clearMoveHistoryForObject()
-    this.props.loadMoveHistoryForObject(id, {
+    this.props.loadMoveHistoryForObject(o.id, {
       onSuccess: (result) => this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map(r => r.doneBy) }),
       onFailure: true
     })
-    this.setState({ ...this.state, showMoveHistory: true })
+    this.setState({ ...this.state, showMoveHistory: true, objectData: o })
   }
 
   makeToolbar() {
@@ -385,6 +386,7 @@ class StorageUnitsContainer extends React.Component {
           onClose={this.closeMoveHistory}
           translate={translate}
           path={path}
+          object={this.state.objectData}
           moves={moves}
           onHide={this.closeMoveHistory}
           headerText={this.props.translate('musit.moveHistory.title')}
