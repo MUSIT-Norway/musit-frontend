@@ -1,4 +1,5 @@
-import { sortObject, createBreadcrumbPath, apiUrl } from '../../util'
+import { createBreadcrumbPath, apiUrl } from '../../util'
+import { sortObject } from '../../util/sort'
 import Config from '../../config'
 
 export const TYPES = {

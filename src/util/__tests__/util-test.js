@@ -1,5 +1,6 @@
 import assert from 'assert'
-import { sortObject, isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict } from '../'
+import { isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict } from '../'
+import { sortObject } from '../sort'
 import moment from 'moment'
 
 describe('parseISODateNonStrict', () => {

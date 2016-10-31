@@ -1,6 +1,7 @@
 import Config from '../../../config'
 import { mapToFrontend } from '../mapper'
-import { sortObject, apiUrl } from '../../../util'
+import { apiUrl } from '../../../util'
+import { sortObject } from '../../../util/sort'
 
 export const LOAD_SEVERAL = 'musit/storageunit-grid/LOAD_SEVERAL'
 export const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-grid/LOAD_SEVERAL_SUCCESS'
