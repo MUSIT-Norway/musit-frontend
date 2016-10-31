@@ -1,5 +1,5 @@
 import Config from '../../../config'
-import {  apiUrl } from '../../../util'
+import { apiUrl } from '../../../util'
 import { sortObject } from '../../../util/sort'
 
 export const LOAD = 'musit/observationcontrol/LOAD'
