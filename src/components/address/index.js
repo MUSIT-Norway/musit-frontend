@@ -15,7 +15,8 @@ const mapDispatchToProps = (dispatch) => ({
     } else {
       dispatch(clearSuggest(id))
     }
-  }
+  },
+  clearSuggest: () => dispatch(clearSuggest())
 })
 
 class AddressSuggest extends React.Component {
@@ -27,7 +28,8 @@ class AddressSuggest extends React.Component {
     suggest: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
     onUpdateRequested: React.PropTypes.func,
-    disabled: React.PropTypes.bool
+    disabled: React.PropTypes.bool,
+    clearSuggest: React.PropTypes.func
   }
 
   static defaultProps = {
@@ -39,6 +41,7 @@ class AddressSuggest extends React.Component {
   constructor(props) {
     super(props)
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
+    this.onBlur = this.onBlur.bind(this)
     this.state = {
       value: this.props.value
     }
@@ -85,6 +88,9 @@ class AddressSuggest extends React.Component {
       <span className={'suggestion-content'}>{suggestionText}</span>
     )
   }
+  onBlur() {
+    return this.props.clearSuggest
+  }
 
   render() {
     return (
@@ -94,7 +100,7 @@ class AddressSuggest extends React.Component {
         onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
-        inputProps={{ ...this.doneByProps, value: this.state.value }}
+        inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.onBlur() }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />

@@ -1,14 +1,4 @@
-exports[`Suggest reducer CLEAR action 1`] = `
-Object {
-  "Search": Object {
-    "loaded": false,
-    "loading": false
-  },
-  "data": Object {
-    "someData": 1
-  }
-}
-`;
+exports[`Suggest reducer CLEAR action 1`] = `Object {}`;
 
 exports[`Suggest reducer CLEAR without destination action 1`] = `Object {}`;
 
