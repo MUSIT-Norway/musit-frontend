@@ -1,11 +1,9 @@
 import assert from 'assert'
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
-import ObservationPage from '../page'
-import moment from 'moment'
-import { DATE_FORMAT_DISPLAY } from './../../../util'
+import ObservationPage from '../index'
 
-describe('Render add observation page', () => {
+describe('Render edit observation page', () => {
   const renderer = ReactTestUtils.createRenderer();
   let observationPage;
 
@@ -15,7 +13,8 @@ describe('Render add observation page', () => {
         translate={(key) => key}
         params={{ }}
         onSaveObservation={() => true}
-        mode="ADD"
+        doneDate={'2016-12-23T00:00:00.000Z'}
+        mode="EDIT"
         id="1"
       />
     )
@@ -23,7 +22,7 @@ describe('Render add observation page', () => {
   })
 
   it('should set default date and have correct date format', () => {
-    const date = observationPage
+    const dateProps = observationPage
             .props
             .children
             .props
@@ -34,7 +33,9 @@ describe('Render add observation page', () => {
             .children[0]
             .props
             .children[1]
-    assert(date.props.dateFormat === DATE_FORMAT_DISPLAY)
-    assert(moment(date.props.value, 'YYYY-MM-DDTHH:mm:ss.SSSZ', true).isValid())
+            .props
+
+    assert(dateProps.value === '23.12.2016')
+    assert(dateProps.disabled === true)
   })
 })

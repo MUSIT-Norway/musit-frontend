@@ -30,11 +30,11 @@ import EditObservationPage from './containers/observation/edit'
 import ViewObservationPage from './containers/observation/view'
 import Reports from './containers/reports'
 import KDReportContainer from './containers/reports/reportkd'
-import ControlViewContainer from './containers/control/view/Connect'
-import ControlAddContainer from './containers/control/add/Connect'
+import ControlViewContainer from './containers/control/view'
+import ControlAddContainer from './containers/control/add'
 import App from './containers/app'
-import ObservationControlGridShow from './containers/observationcontrol/grid'
-import ObjectSearchContainer from './containers/objectsearch/ObjectSearchContainer'
+import ObservationControlGridShow from './containers/observationcontrol'
+import ObjectSearchContainer from './containers/objectsearch'
 
 export default () => {
   return (

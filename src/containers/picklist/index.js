@@ -17,7 +17,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import PickListContainer from './PickListContainer'
+import PickListContainer from '../../components/picklist/PickListContainer'
 import { connect } from 'react-redux'
 import { refreshObject, refreshNode, addNode, addObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist'
 import { moveObject, moveNode } from '../../reducers/move'

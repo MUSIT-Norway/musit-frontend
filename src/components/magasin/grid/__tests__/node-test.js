@@ -1,7 +1,7 @@
 import assert from 'assert'
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
-import NodeLeftMenuComponent from '../index';
+import NodeLeftMenuComponent from '../LeftMenu';
 
 describe('NodeLeftMenuComponent', () => {
   let labels

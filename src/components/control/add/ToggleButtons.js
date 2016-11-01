@@ -2,9 +2,9 @@
 import React, { Component, PropTypes } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Button, Row, Col } from 'react-bootstrap';
-import './index.css'
+import './ToggleButtons.css'
 
-export default class PairedToogleButtons extends Component {
+export default class ToogleButtons extends Component {
   static propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.bool,

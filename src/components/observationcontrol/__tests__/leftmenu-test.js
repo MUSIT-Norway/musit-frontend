@@ -1,13 +1,13 @@
 import assert from 'assert'
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
-import ObservationControlComponent from '../index';
+import LeftMenu from '../LeftMenu';
 
-describe('ObservationControlComponent', () => {
+describe('LeftMenu', () => {
   let buttons
   const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
-      <ObservationControlComponent
+      <LeftMenu
         id={1}
         translate={(key) => key}
         selectObservation={(key) => key}

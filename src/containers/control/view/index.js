@@ -17,123 +17,30 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React from 'react'
-import { hashHistory } from 'react-router'
-import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap'
-import { ControlView } from '../../../components/control/view'
-import { MusitField } from '../../../components/formfields'
-import Layout from '../../../layout'
-import Breadcrumb from '../../../layout/Breadcrumb'
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
 import { I18n } from 'react-i18nify'
+import { connect } from 'react-redux'
+import { loadControl } from '../../../reducers/control'
+import { getActorNameFromId } from '../../../reducers/observation'
+import ControlViewContainerImpl from '../../../components/control/view'
+import { loadRoot } from '../../../reducers/storageunit/grid'
 
-export default class ControlViewContainer extends React.Component {
-  static propTypes = {
-    translate: React.PropTypes.func.isRequired,
-    controls: React.PropTypes.object,
-    loadControl: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object,
-    loadPersonNameFromId: React.PropTypes.func.isRequired,
-    doneBy: React.PropTypes.object,
-    rootNode: React.PropTypes.object
+const mapStateToProps = (state) => ({
+  translate: (key, markdown) => I18n.t(key, markdown),
+  controls: state.control,
+  doneBy: state.observation.data.doneBy,
+  rootNode: state.storageGridUnit.root.data
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadControl: (nodeId, controlId, callback) => {
+    dispatch(loadControl(nodeId, controlId, callback))
+  },
+  loadPersonNameFromId: (doneBy) => {
+    dispatch(getActorNameFromId(doneBy))
+  },
+  loadStorageObj: (id) => {
+    dispatch(loadRoot(id))
   }
+})
 
-  componentWillMount() {
-    if (this.props.params.controlId) {
-      this.props.loadControl(this.props.params.id, this.props.params.controlId, {
-        onSuccess: (r) => {
-          this.props.loadPersonNameFromId(r.doneBy)
-        }
-      })
-    }
-    if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id)
-    }
-  }
-
-  getDate(data, field) {
-    return data && data[field] ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
-  }
-
-  render() {
-    if (!this.props.controls) {
-      return null;  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
-    }
-    const { translate } = this.props
-    const data = this.props.controls.data;
-    return (
-      <Layout
-        title="Magasin"
-        translate={this.props.translate}
-        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
-        content={
-          <div>
-            <h4 style={{ textAlign: 'center' }}>{translate('musit.viewControl.title')}</h4>
-            <Grid>
-              <Row>
-                <Col sm={4} md={5}>
-                  <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
-                  <br />
-                  <MusitField
-                    onChange={() => true}
-                    value={this.getDate(data, 'doneDate')}
-                    disabled
-                  />
-                </Col>
-                <Col sm={4} md={5}>
-                  <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
-                  <br />
-                  <MusitField
-                    onChange={() => true}
-                    value={this.props.doneBy ? this.props.doneBy.fn : ''}
-                    disabled
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col sm={4} md={5}>
-                  <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
-                  <br />
-                  <MusitField
-                    onChange={() => true}
-                    value={this.getDate(data, 'registeredDate')}
-                    disabled
-                  />
-                </Col>
-                <Col sm={4} md={5} >
-                  <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
-                  <br />
-                  <MusitField
-                    onChange={() => true}
-                    value={data ? data.registeredBy : ''}
-                    disabled
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <br />
-              </Row>
-              <Row>
-                <Col sm={8} md={10}>
-                  <ControlView
-                    id="1"
-                    translate={translate}
-                    controlsJson={data}
-                  />
-                </Col>
-              </Row>
-              <Row className="row-centered" style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}>
-                <Col xs={10}>
-                  <Button onClick={() => { hashHistory.goBack() }}>
-                    {I18n.t('musit.texts.close')}
-                  </Button>
-                </Col>
-              </Row>
-            </Grid>
-          </div>
-        }
-      />
-
-    )
-  }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(ControlViewContainerImpl)

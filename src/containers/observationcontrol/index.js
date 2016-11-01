@@ -17,26 +17,30 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { connect } from 'react-redux'
-import { addControl } from '../../../reducers/control'
 import { I18n } from 'react-i18nify'
-import ControlAddContainerImpl from './index'
-import { loadRoot } from '../../../reducers/storageunit/grid'
+import { connect } from 'react-redux'
+import { loadControlsAndObservationsForNode, loadActor } from '../../reducers/grid/observationcontrol'
+import { loadRoot } from '../../reducers/storageunit/grid'
+import ObservationControlGridShow from '../../components/observationcontrol'
 
-const mapStateToProps = (state) => ({
-  actor: state.auth.actor,
-  translate: (key, markdown) => I18n.t(key, markdown),
-  envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
-  rootNode: state.storageGridUnit.root.data
-})
+const mapStateToProps = (state) => {
+  return {
+    translate: (key, markdown) => I18n.t(key, markdown),
+    observationControlGridData: state.observationControlGrid.data,
+    rootNode: state.storageGridUnit.root.data
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (id, data, saveControlCallback) => {
-    dispatch(addControl(id, data, {}, saveControlCallback))
+  loadControlAndObservations: (id, callback) => {
+    dispatch(loadControlsAndObservationsForNode(id, callback))
+  },
+  loadActorDetails: (data) => {
+    dispatch(loadActor(data))
   },
   loadStorageObj: (id) => {
     dispatch(loadRoot(id))
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ControlAddContainerImpl)
+export default connect(mapStateToProps, mapDispatchToProps)(ObservationControlGridShow)

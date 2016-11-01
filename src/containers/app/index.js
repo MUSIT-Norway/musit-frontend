@@ -4,9 +4,8 @@ import { routerActions } from 'react-router-redux'
 import { clearUser, connectUser, clearActor, loadActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
-import './index.css'
 import fakeUserInfo from '../../../fake_security.json'
-import App from './app'
+import App from '../../components/app'
 
 const mapStateToProps = (state) => {
   return {

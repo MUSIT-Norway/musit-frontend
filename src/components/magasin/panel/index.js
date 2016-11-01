@@ -17,28 +17,19 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import { values } from 'lodash'
-import { connect } from 'react-redux';
 import React, { Component, PropTypes } from 'react'
 import { hashHistory } from 'react-router'
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap'
-import SaveCancel from '../../../../components/formfields/saveCancel/SaveCancel'
-import Layout from '../../../../layout'
-import { validateString, validateNumber } from '../../../../components/formfields/common/validators'
-import Breadcrumb from '../../../../layout/Breadcrumb'
-import { I18n } from 'react-i18nify'
-import AddressSuggest from '../../../../components/address'
+import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
+import Layout from '../../../layout'
+import Breadcrumb from '../../../layout/Breadcrumb'
+import AddressSuggest from '../../../components/address'
 import Loader from 'react-loader';
-import { parseISODateNonStrict } from '../../../../util'
-import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../../components/formfields'
+import { parseISODateNonStrict } from '../../../util'
+import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../components/formfields'
+import validateForm from './validator'
 
-const mapStateToProps = (state) => {
-  return {
-    translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data
-  }
-}
-
-class StorageUnitContainer extends Component {
+export default class StorageUnitContainer extends Component {
   static propTypes = {
     unit: PropTypes.object.isRequired,
     params: PropTypes.object,
@@ -58,94 +49,9 @@ class StorageUnitContainer extends Component {
     this.renderEnvReqStringFieldBlock = this.renderEnvReqStringFieldBlock.bind(this)
   }
 
-  errorAddMessage = (errors, field) => {
-    errors[`${field}`] = this.props.translate(`musit.storageUnits.${field}.incorrect`)
-  }
-
-  validateStringField(field, value, maxLength = 100) {
-    const errors = {}
-    if (validateString(value, 0, maxLength) === 'error') {
-      this.errorAddMessage(errors, field)
-    }
-    return errors
-  }
-
-  validateNumberField(field, value = '', minimumLength = 0, maximumLength = 10, precision = 3) {
-    const errors = {}
-    if (validateNumber(value, minimumLength, maximumLength, precision) === 'error') {
-      this.errorAddMessage(errors, field)
-    }
-    return errors
-  }
-
-  validateEnvironmentRequirement(field, min, max, pres, formProps) {
-    const key = field.split('.').reduce((a, b) => formProps[a][b])
-    return this.validateNumberField(field, key, min, max, pres)
-  }
-
-  validateForm(formProps) {
-    let errors = {}
-    if (formProps && formProps.unit) {
-      if (!formProps.unit.type || formProps.unit.type.trim().length === 0) {
-        errors.type = this.props.translate('musit.storageUnits.type.required')
-      }
-      if (!formProps.unit.name || formProps.unit.name.trim().length === 0) {
-        errors.name = this.props.translate('musit.storageUnits.name.required')
-      }
-      errors = { ...errors, ...this.validateStringField('type', formProps.unit.type, 100) }
-      errors = { ...errors, ...this.validateStringField('name', formProps.unit.name, 100) }
-      errors = { ...errors, ...this.validateStringField('address', formProps.unit.address, 100) }
-      errors = { ...errors, ...this.validateNumberField('area', formProps.unit.area, 0, 10, 3) }
-      errors = { ...errors, ...this.validateNumberField('areaTo', formProps.unit.areaTo, 0, 10, 3) }
-      errors = { ...errors, ...this.validateNumberField('height', formProps.unit.height, 0, 10, 3) }
-      errors = { ...errors, ...this.validateNumberField('heightTo', formProps.unit.heightTo, 0, 10, 3) }
-      errors = {
-        ...errors,
-        ...this.validateEnvironmentRequirement('environmentRequirement.temperature', 0, 10, 3, formProps.unit)
-      }
-      errors = {
-        ...errors,
-        ...this.validateEnvironmentRequirement('environmentRequirement.temperatureTolerance', 0, 10, 0, formProps.unit)
-      }
-      errors = {
-        ...errors,
-        ...this.validateEnvironmentRequirement('environmentRequirement.relativeHumidity', 0, 10, 3, formProps.unit)
-      }
-      errors = {
-        ...errors,
-        ...this.validateEnvironmentRequirement('environmentRequirement.relativeHumidityTolerance', 0, 10, 0, formProps.unit)
-      }
-      errors = {
-        ...errors,
-        ...this.validateEnvironmentRequirement('environmentRequirement.hypoxicAir', 0, 10, 3, formProps.unit)
-      }
-      errors = {
-        ...errors,
-        ...this.validateEnvironmentRequirement('environmentRequirement.hypoxicAirTolerance', 0, 10, 0, formProps.unit)
-      }
-      const environmentRequirement = formProps.unit.environmentRequirement;
-      errors = {
-        ...errors,
-        ...this.validateStringField('environmentRequirement.cleaning', environmentRequirement.cleaning, 100)
-      }
-      errors = {
-        ...errors,
-        ...this.validateStringField('environmentRequirement.lightingCondition', environmentRequirement.lightingCondition, 100)
-      }
-      errors = {
-        ...errors,
-        ...this.validateStringField('environmentRequirement.comments', environmentRequirement.comments, 250)
-      }
-    } else {
-      errors.type = this.props.translate('musit.storageUnits.type.required')
-      errors.name = this.props.translate('musit.storageUnits.name.required')
-    }
-    return errors
-  }
-
   handleSubmit(e) {
     e.preventDefault()
-    const errors = this.validateForm(this.props)
+    const errors = validateForm(this.props)
     this.props.updateState({ ...this.props.unit, errors })
     if (Object.keys(errors).length === 0) {
       this.props.onLagreClick(this.props.unit)
@@ -543,5 +449,3 @@ class StorageUnitContainer extends Component {
     );
   }
 }
-
-export default connect(mapStateToProps)(StorageUnitContainer)

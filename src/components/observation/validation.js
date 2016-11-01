@@ -1,5 +1,5 @@
-import { parseFloatFromString } from '../../../util'
-import { validateString, validateNumber } from '../../../components/formfields/common/validators'
+import { parseFloatFromString } from '../../util'
+import { validateString, validateNumber } from '../formfields/common/validators'
 
 const typeFieldIncorrect = (type, field) => {
   return `musit.observation.page.${type}.${field}Incorrect`
