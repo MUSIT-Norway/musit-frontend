@@ -29,7 +29,7 @@ export default class MusitHistoryModal extends Component {
     onHide: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     headerText: PropTypes.string.isRequired,
-    object: PropTypes.object.isRequired,
+    object: PropTypes.object,
     translate: PropTypes.func,
     moves: PropTypes.arrayOf(PropTypes.object)
   };
@@ -37,9 +37,9 @@ export default class MusitHistoryModal extends Component {
   render() {
     const { moves, translate, object } = this.props
 
-    let objStr = object.museumNo ? `${object.museumNo}`: ''
-    objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr
-    objStr = object.term ? `${objStr} - ${object.term}` : objStr
+    let objStr = object && object.museumNo ? `${object.museumNo}`: ''
+    objStr = object && object.subNo ? `${objStr} - ${object.subNo}` : objStr
+    objStr = object && object.term ? `${objStr} - ${object.term}` : objStr
 
 
     return (
