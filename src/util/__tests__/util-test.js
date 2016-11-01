@@ -1,7 +1,8 @@
 import assert from 'assert'
 import { isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict } from '../'
-import { sortObject } from '../sort'
+import { orderByLodash, sortObject } from '../sort'
 import moment from 'moment'
+import orderBy from 'lodash/orderBy'
 
 describe('parseISODateNonStrict', () => {
   it('should accept full iso timestamp', () => {
@@ -124,16 +125,81 @@ describe('SortObject', () => {
     {date:'2016-10-11T23:00:00.000Z',string: 'zz', int: 333, intInStr: '11111', float: 12.5, floatInStr: '13232.5'},
     {date:'2016-11-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23', float: 222.5, floatInStr: '22332.5'},
     {date:'2003-06-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23333', float: 452.5, floatInStr: '33232.5'},
-    {date:'2016-10-22T23:00:00.000Z',string: '', int: 0, intInStr: '0', float: 2.6, floatInStr: '2.8'},
+    {date:'2011-10-22T23:00:00.000Z',string: '', int: 0, intInStr: '0', float: 2.6, floatInStr: '2.8'},
     {},
     {},
     {floatInStr: '2.2'}
   ];
   it('Sort date value', () => {
-    expect(sortObject(inputObject, 'date')).toMatchSnapshot()
+    const inputObjectDate = [
+      {date:'1982-10-31T23:00:00.000Z', string: 'ååå', int: 200, intInStr: '211', float: 2.5, floatInStr: '2.5'},
+      {date:'2016-10-01T23:00:00.000Z',string: 'ZZ', int: 22, intInStr: '222', float: 26.5, floatInStr: '26.5'},
+      {date:'2016-10-11T23:00:00.000Z',string: 'zz', int: 333, intInStr: '11111', float: 12.5, floatInStr: '13232.5'},
+      {date:'2016-11-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23', float: 222.5, floatInStr: '22332.5'},
+      {date:'2003-06-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23333', float: 452.5, floatInStr: '33232.5'},
+      {date:'2011-10-25T23:00:00.000Z',string: '', int: 0, intInStr: '0', float: 2.6, floatInStr: '2.8'},
+      {},
+      {},
+      {floatInStr: '2.2'}
+    ];
+    expect(sortObject(inputObjectDate, 'date')).toMatchSnapshot()
   });
   it('Sort string value', () => {
-    expect(sortObject(inputObject, 'string')).toMatchSnapshot()
+    const inputObject = [
+      {stringTest: 'ZZ'},
+      {stringTest: 'aa'},
+      {stringTest: 'ååå'},
+      {stringTest: 'AAA'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'ååå'},
+      {stringTest: 'ååå'},
+      {stringTest: 'ååå'},
+      {stringTest: '22'}
+    ];
+    const inputObject2 = [
+      {stringTest: 'ååå'},
+      {stringTest: 'ååå'},
+      {stringTest: 'ZZ'},
+      {stringTest: 'aa'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: '1'}
+    ];
+    const inputObject3 = [
+      {stringTest: 'ZZ'},
+      {stringTest: 'aa'},
+      {stringTest: 'ååå'},
+      {stringTest: 'AAA'},
+      {stringTest: 'bb'},
+      {stringTest: '1'}
+    ];
+    expect(orderBy([inputObject], ['stringTest'], ['desc'])).toMatchSnapshot()
+  });
+  it('Sort string value lodash2', () => {
+    const inputObject = [
+      {stringTest: 'ZZ'},
+      {stringTest: 'aa'},
+      {stringTest: 'ååå'},
+      {stringTest: 'AAA'},
+      {stringTest: 'NNN'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'bb'},
+      {stringTest: 'ååå'},
+      {stringTest: 'ååå'},
+      {stringTest: 'ååå'},
+      {stringTest: '22'}
+    ];
+    expect(orderBy([inputObject], ['stringTest'], ['desc'])).toMatchSnapshot()
   });
   it('Sort int value', () => {
     expect(sortObject(inputObject, 'int')).toMatchSnapshot()
@@ -149,8 +215,373 @@ describe('SortObject', () => {
   });
 
   it('Sort date value descending', () => {
-    expect(sortObject(inputObject, 'date', null, false)).toMatchSnapshot()
+    const inputObjectDateDes = [
+      {date:'1982-10-31T23:00:00.000Z', string: 'ååå', int: 200, intInStr: '211', float: 2.5, floatInStr: '2.5'},
+      {date:'2016-10-01T23:00:00.000Z',string: 'ZZ', int: 22, intInStr: '222', float: 26.5, floatInStr: '26.5'},
+      {date:'2016-10-11T23:00:00.000Z',string: 'zz', int: 333, intInStr: '11111', float: 12.5, floatInStr: '13232.5'},
+      {date:'2016-11-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23', float: 222.5, floatInStr: '22332.5'},
+      {date:'2003-06-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23333', float: 452.5, floatInStr: '33232.5'},
+      {date:'2011-10-25T23:00:00.000Z',string: '', int: 0, intInStr: '0', float: 2.6, floatInStr: '2.8'},
+      {},
+      {},
+      {floatInStr: '2.2'}
+    ];
+    const input = [
+      {
+        "id": 44,
+        "doneBy": 1,
+        "doneDate": "2016-10-28T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-28T13:18:09+00:00",
+        "eventType": "Control",
+        "relativeHumidity": {
+          "ok": true
+        },
+        "temperature": {
+          "ok": true
+        }
+      },
+      {
+        "id": 79,
+        "doneBy": 3,
+        "doneDate": "2016-10-31T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-11-01T10:40:58+00:00",
+        "eventType": "Observation",
+        "gas": {
+          "gas": "ølæløæ"
+        }
+      },
+      {
+        "id": 73,
+        "doneBy": 2,
+        "doneDate": "2016-10-31T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-31T13:49:41+00:00",
+        "eventType": "Observation",
+        "gas": {
+          "gas": "jkhjkhjkjh"
+        }
+      },
+      {
+        "id": 77,
+        "doneBy": 3,
+        "doneDate": "2016-11-01T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-11-01T10:08:29+00:00",
+        "eventType": "Observation",
+        "lightingCondition": {
+          "lightingCondition": "ffgdfgdfg"
+        }
+      },
+      {
+        "id": 49,
+        "doneBy": 1,
+        "doneDate": "2016-10-28T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-28T13:21:04+00:00",
+        "eventType": "Control",
+        "alcohol": {
+          "ok": true
+        },
+        "cleaning": {
+          "ok": true
+        },
+        "gas": {
+          "ok": true
+        },
+        "hypoxicAir": {
+          "ok": true
+        },
+        "lightingCondition": {
+          "ok": true
+        },
+        "mold": {
+          "ok": true
+        },
+        "pest": {
+          "ok": true
+        },
+        "relativeHumidity": {
+          "ok": true
+        },
+        "temperature": {
+          "ok": true
+        }
+      },
+      {
+        "id": 47,
+        "doneBy": 1,
+        "doneDate": "2016-10-28T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-28T13:18:24+00:00",
+        "eventType": "Observation",
+        "gas": {
+          "gas": "ghgfhghfgh"
+        }
+      },
+      {
+        "id": 59,
+        "doneBy": 1,
+        "doneDate": "2016-10-28T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-28T13:30:58+00:00",
+        "eventType": "Control",
+        "cleaning": {
+          "ok": true
+        },
+        "hypoxicAir": {
+          "ok": true
+        },
+        "relativeHumidity": {
+          "ok": true
+        },
+        "temperature": {
+          "ok": true
+        }
+      },
+      {
+        "id": 42,
+        "doneBy": 1,
+        "doneDate": "2016-10-28T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-28T13:17:50+00:00",
+        "eventType": "Observation",
+        "lightingCondition": {
+          "lightingCondition": "hfghfghgfh"
+        }
+      },
+      {
+        "id": 38,
+        "doneBy": 1,
+        "doneDate": "2016-10-28T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-28T13:07:07+00:00",
+        "eventType": "Control",
+        "hypoxicAir": {
+          "ok": true
+        },
+        "relativeHumidity": {
+          "ok": true
+        },
+        "temperature": {
+          "ok": true
+        }
+      },
+      {
+        "id": 28,
+        "doneBy": 1,
+        "doneDate": "2016-10-25T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-25T11:33:51+00:00",
+        "eventType": "Control",
+        "alcohol": {
+          "ok": true
+        },
+        "cleaning": {
+          "ok": true
+        },
+        "gas": {
+          "ok": true
+        },
+        "hypoxicAir": {
+          "ok": true
+        },
+        "lightingCondition": {
+          "ok": true
+        },
+        "mold": {
+          "ok": true
+        },
+        "pest": {
+          "ok": true
+        },
+        "relativeHumidity": {
+          "ok": true
+        },
+        "temperature": {
+          "ok": true
+        }
+      },
+      {
+        "id": 8,
+        "doneBy": 1,
+        "doneDate": "2015-10-24T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-24T11:15:17+00:00",
+        "eventType": "Control",
+        "alcohol": {
+          "ok": true
+        },
+        "cleaning": {
+          "ok": true
+        },
+        "gas": {
+          "ok": true
+        },
+        "lightingCondition": {
+          "ok": true
+        },
+        "mold": {
+          "ok": false,
+          "observation": {
+            "note": "dfsdf",
+            "mold": "dfsdfdsf"
+          }
+        },
+        "pest": {
+          "ok": false,
+          "observation": {
+            "note": "dfsdfsdf",
+            "identification": "dfsdfsd",
+            "lifecycles": [
+              {
+                "stage": "Adult",
+                "quantity": 2
+              }
+            ]
+          }
+        },
+        "relativeHumidity": {
+          "ok": true
+        },
+        "temperature": {
+          "ok": true
+        }
+      },
+      {
+        "id": 4,
+        "doneBy": 1,
+        "doneDate": "2016-10-24T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-24T11:14:49+00:00",
+        "eventType": "Control",
+        "lightingCondition": {
+          "ok": true
+        },
+        "relativeHumidity": {
+          "ok": true
+        },
+        "temperature": {
+          "ok": true
+        }
+      },
+      {
+        "id": 2,
+        "doneBy": 1,
+        "doneDate": "2016-10-24T00:00:00+00:00",
+        "affectedThing": 2,
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-24T11:14:41+00:00",
+        "eventType": "Observation",
+        "gas": {
+          "gas": "dsfdf"
+        }
+      }
+    ]
+    expect(sortObject(input, 'doneDate', null, false)).toMatchSnapshot()
   });
+
+
+  it('Sort date value descending 2', () => {
+
+    const input = [
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-31T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-31T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-11-01T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2017-10-25T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-24T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-24T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-24T00:00:00+00:00"
+      }
+    ]
+    const input2 = [
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-31T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-31T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-11-01T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-28T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2017-10-25T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-24T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-24T00:00:00+00:00"
+      },
+      {
+        "doneDateOnly": "2016-10-24T00:00:00+00:00"
+      }
+    ]
+    expect(sortObject(input2, 'doneDateOnly', null, false)).toMatchSnapshot()
+  });
+
   it('Sort string value descending', () => {
     expect(sortObject(inputObject, 'string', null, false)).toMatchSnapshot()
   });

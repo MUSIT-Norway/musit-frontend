@@ -1,7 +1,6 @@
 import Config from '../../../config'
 import { mapToFrontend } from '../mapper'
 import { apiUrl } from '../../../util'
-import { sortObject } from '../../../util/sort'
 
 export const LOAD_SEVERAL = 'musit/storageunit-grid/LOAD_SEVERAL'
 export const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-grid/LOAD_SEVERAL_SUCCESS'
@@ -32,7 +31,7 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
         ...state,
         loading: false,
         loaded: true,
-        data: sortObject(sortObject(action.result, 'name'), 'type')
+        data: action.result
       }
     case LOAD_SEVERAL_FAIL:
       return {

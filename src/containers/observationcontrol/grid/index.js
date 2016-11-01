@@ -29,13 +29,22 @@ import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
 import { createBreadcrumbPath } from '../../../util'
 import { I18n } from 'react-i18nify'
+import { createSelector } from 'reselect'
+import orderBy from 'lodash/orderBy'
+
+const getObservationControl = (state) => state.observationControlGrid.data
+
+const getSortedObservationControl = createSelector(
+    [ getObservationControl ],
+    (observationControl) => orderBy(observationControl, ['doneDate', 'id'], ['desc', 'desc'])
+)
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
     path: state.storageGridUnit.root.data ?
       createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
-    observationControlGridData: state.observationControlGrid.data
+      observationControlGridData: getSortedObservationControl(state)
   }
 }
 

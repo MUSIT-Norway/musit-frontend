@@ -30,6 +30,14 @@ Array [
     "string": "a"
   },
   Object {
+    "date": "2011-10-25T23:00:00.000Z",
+    "float": 2.6,
+    "floatInStr": "2.8",
+    "int": 0,
+    "intInStr": "0",
+    "string": ""
+  },
+  Object {
     "date": "2016-10-01T23:00:00.000Z",
     "float": 26.5,
     "floatInStr": "26.5",
@@ -44,14 +52,6 @@ Array [
     "int": 333,
     "intInStr": "11111",
     "string": "zz"
-  },
-  Object {
-    "date": "2016-10-22T23:00:00.000Z",
-    "float": 2.6,
-    "floatInStr": "2.8",
-    "int": 0,
-    "intInStr": "0",
-    "string": ""
   },
   Object {
     "date": "2016-11-31T23:00:00.000Z",
@@ -67,57 +67,311 @@ Array [
 exports[`SortObject Sort date value descending 1`] = `
 Array [
   Object {
-    "date": "2016-11-31T23:00:00.000Z",
-    "float": 222.5,
-    "floatInStr": "22332.5",
-    "int": 190,
-    "intInStr": "23",
-    "string": "a"
+    "affectedThing": 2,
+    "cleaning": Object {
+      "ok": true
+    },
+    "doneBy": 1,
+    "doneDate": "2016-10-28T00:00:00+00:00",
+    "eventType": "Control",
+    "hypoxicAir": Object {
+      "ok": true
+    },
+    "id": 59,
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-28T13:30:58+00:00",
+    "relativeHumidity": Object {
+      "ok": true
+    },
+    "temperature": Object {
+      "ok": true
+    }
   },
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
-    "float": 2.6,
-    "floatInStr": "2.8",
-    "int": 0,
-    "intInStr": "0",
-    "string": ""
+    "affectedThing": 2,
+    "doneBy": 1,
+    "doneDate": "2016-10-28T00:00:00+00:00",
+    "eventType": "Control",
+    "id": 44,
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-28T13:18:09+00:00",
+    "relativeHumidity": Object {
+      "ok": true
+    },
+    "temperature": Object {
+      "ok": true
+    }
   },
   Object {
-    "date": "2016-10-11T23:00:00.000Z",
-    "float": 12.5,
-    "floatInStr": "13232.5",
-    "int": 333,
-    "intInStr": "11111",
-    "string": "zz"
+    "affectedThing": 2,
+    "doneBy": 2,
+    "doneDate": "2016-10-31T00:00:00+00:00",
+    "eventType": "Observation",
+    "gas": Object {
+      "gas": "jkhjkhjkjh"
+    },
+    "id": 73,
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-31T13:49:41+00:00"
   },
   Object {
-    "date": "2016-10-01T23:00:00.000Z",
-    "float": 26.5,
-    "floatInStr": "26.5",
-    "int": 22,
-    "intInStr": "222",
-    "string": "ZZ"
+    "affectedThing": 2,
+    "doneBy": 3,
+    "doneDate": "2016-11-01T00:00:00+00:00",
+    "eventType": "Observation",
+    "id": 77,
+    "lightingCondition": Object {
+      "lightingCondition": "ffgdfgdfg"
+    },
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-11-01T10:08:29+00:00"
   },
   Object {
-    "date": "2003-06-31T23:00:00.000Z",
-    "float": 452.5,
-    "floatInStr": "33232.5",
-    "int": 190,
-    "intInStr": "23333",
-    "string": "a"
+    "affectedThing": 2,
+    "alcohol": Object {
+      "ok": true
+    },
+    "cleaning": Object {
+      "ok": true
+    },
+    "doneBy": 1,
+    "doneDate": "2016-10-28T00:00:00+00:00",
+    "eventType": "Control",
+    "gas": Object {
+      "ok": true
+    },
+    "hypoxicAir": Object {
+      "ok": true
+    },
+    "id": 49,
+    "lightingCondition": Object {
+      "ok": true
+    },
+    "mold": Object {
+      "ok": true
+    },
+    "pest": Object {
+      "ok": true
+    },
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-28T13:21:04+00:00",
+    "relativeHumidity": Object {
+      "ok": true
+    },
+    "temperature": Object {
+      "ok": true
+    }
   },
   Object {
-    "date": "1982-10-31T23:00:00.000Z",
-    "float": 2.5,
-    "floatInStr": "2.5",
-    "int": 200,
-    "intInStr": "211",
-    "string": "ååå"
+    "affectedThing": 2,
+    "doneBy": 1,
+    "doneDate": "2016-10-28T00:00:00+00:00",
+    "eventType": "Observation",
+    "gas": Object {
+      "gas": "ghgfhghfgh"
+    },
+    "id": 47,
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-28T13:18:24+00:00"
   },
-  Object {},
-  Object {},
   Object {
-    "floatInStr": "2.2"
+    "affectedThing": 2,
+    "doneBy": 3,
+    "doneDate": "2016-10-31T00:00:00+00:00",
+    "eventType": "Observation",
+    "gas": Object {
+      "gas": "ølæløæ"
+    },
+    "id": 79,
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-11-01T10:40:58+00:00"
+  },
+  Object {
+    "affectedThing": 2,
+    "doneBy": 1,
+    "doneDate": "2016-10-28T00:00:00+00:00",
+    "eventType": "Observation",
+    "id": 42,
+    "lightingCondition": Object {
+      "lightingCondition": "hfghfghgfh"
+    },
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-28T13:17:50+00:00"
+  },
+  Object {
+    "affectedThing": 2,
+    "doneBy": 1,
+    "doneDate": "2016-10-28T00:00:00+00:00",
+    "eventType": "Control",
+    "hypoxicAir": Object {
+      "ok": true
+    },
+    "id": 38,
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-28T13:07:07+00:00",
+    "relativeHumidity": Object {
+      "ok": true
+    },
+    "temperature": Object {
+      "ok": true
+    }
+  },
+  Object {
+    "affectedThing": 2,
+    "alcohol": Object {
+      "ok": true
+    },
+    "cleaning": Object {
+      "ok": true
+    },
+    "doneBy": 1,
+    "doneDate": "2016-10-25T00:00:00+00:00",
+    "eventType": "Control",
+    "gas": Object {
+      "ok": true
+    },
+    "hypoxicAir": Object {
+      "ok": true
+    },
+    "id": 28,
+    "lightingCondition": Object {
+      "ok": true
+    },
+    "mold": Object {
+      "ok": true
+    },
+    "pest": Object {
+      "ok": true
+    },
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-25T11:33:51+00:00",
+    "relativeHumidity": Object {
+      "ok": true
+    },
+    "temperature": Object {
+      "ok": true
+    }
+  },
+  Object {
+    "affectedThing": 2,
+    "doneBy": 1,
+    "doneDate": "2016-10-24T00:00:00+00:00",
+    "eventType": "Control",
+    "id": 4,
+    "lightingCondition": Object {
+      "ok": true
+    },
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-24T11:14:49+00:00",
+    "relativeHumidity": Object {
+      "ok": true
+    },
+    "temperature": Object {
+      "ok": true
+    }
+  },
+  Object {
+    "affectedThing": 2,
+    "doneBy": 1,
+    "doneDate": "2016-10-24T00:00:00+00:00",
+    "eventType": "Observation",
+    "gas": Object {
+      "gas": "dsfdf"
+    },
+    "id": 2,
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-24T11:14:41+00:00"
+  },
+  Object {
+    "affectedThing": 2,
+    "alcohol": Object {
+      "ok": true
+    },
+    "cleaning": Object {
+      "ok": true
+    },
+    "doneBy": 1,
+    "doneDate": "2015-10-24T00:00:00+00:00",
+    "eventType": "Control",
+    "gas": Object {
+      "ok": true
+    },
+    "id": 8,
+    "lightingCondition": Object {
+      "ok": true
+    },
+    "mold": Object {
+      "observation": Object {
+        "mold": "dfsdfdsf",
+        "note": "dfsdf"
+      },
+      "ok": false
+    },
+    "pest": Object {
+      "observation": Object {
+        "identification": "dfsdfsd",
+        "lifecycles": Array [
+          Object {
+            "quantity": 2,
+            "stage": "Adult"
+          }
+        ],
+        "note": "dfsdfsdf"
+      },
+      "ok": false
+    },
+    "registeredBy": "Darth Vader",
+    "registeredDate": "2016-10-24T11:15:17+00:00",
+    "relativeHumidity": Object {
+      "ok": true
+    },
+    "temperature": Object {
+      "ok": true
+    }
+  }
+]
+`;
+
+exports[`SortObject Sort date value descending 2 1`] = `
+Array [
+  Object {
+    "doneDateOnly": "2016-10-28T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-28T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-31T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-11-01T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-28T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-28T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-31T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-28T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-28T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2017-10-25T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-24T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-24T00:00:00+00:00"
+  },
+  Object {
+    "doneDateOnly": "2016-10-24T00:00:00+00:00"
   }
 ]
 `;
@@ -138,7 +392,7 @@ Array [
     "string": "ååå"
   },
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -215,7 +469,7 @@ Array [
     "string": "ZZ"
   },
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -254,7 +508,7 @@ Array [
     "string": "ååå"
   },
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -331,7 +585,7 @@ Array [
     "string": "zz"
   },
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -502,7 +756,7 @@ Array [
 exports[`SortObject Sort int (intInStr) in string value 1`] = `
 Array [
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -600,7 +854,7 @@ Array [
     "string": "a"
   },
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -618,7 +872,7 @@ Array [
 exports[`SortObject Sort int value 1`] = `
 Array [
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -716,7 +970,7 @@ Array [
     "string": "ZZ"
   },
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -886,59 +1140,47 @@ Array [
 
 exports[`SortObject Sort string value 1`] = `
 Array [
-  Object {
-    "date": "2016-10-22T23:00:00.000Z",
-    "float": 2.6,
-    "floatInStr": "2.8",
-    "int": 0,
-    "intInStr": "0",
-    "string": ""
-  },
-  Object {},
-  Object {},
-  Object {
-    "floatInStr": "2.2"
-  },
-  Object {
-    "date": "2016-11-31T23:00:00.000Z",
-    "float": 222.5,
-    "floatInStr": "22332.5",
-    "int": 190,
-    "intInStr": "23",
-    "string": "a"
-  },
-  Object {
-    "date": "2003-06-31T23:00:00.000Z",
-    "float": 452.5,
-    "floatInStr": "33232.5",
-    "int": 190,
-    "intInStr": "23333",
-    "string": "a"
-  },
-  Object {
-    "date": "2016-10-01T23:00:00.000Z",
-    "float": 26.5,
-    "floatInStr": "26.5",
-    "int": 22,
-    "intInStr": "222",
-    "string": "ZZ"
-  },
-  Object {
-    "date": "2016-10-11T23:00:00.000Z",
-    "float": 12.5,
-    "floatInStr": "13232.5",
-    "int": 333,
-    "intInStr": "11111",
-    "string": "zz"
-  },
-  Object {
-    "date": "1982-10-31T23:00:00.000Z",
-    "float": 2.5,
-    "floatInStr": "2.5",
-    "int": 200,
-    "intInStr": "211",
-    "string": "ååå"
-  }
+  Array [
+    Object {
+      "stringTest": "ZZ"
+    },
+    Object {
+      "stringTest": "aa"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "AAA"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "2"
+    }
+  ]
 ]
 `;
 
@@ -985,7 +1227,7 @@ Array [
     "string": "a"
   },
   Object {
-    "date": "2016-10-22T23:00:00.000Z",
+    "date": "2011-10-22T23:00:00.000Z",
     "float": 2.6,
     "floatInStr": "2.8",
     "int": 0,
@@ -997,6 +1239,98 @@ Array [
   Object {
     "floatInStr": "2.2"
   }
+]
+`;
+
+exports[`SortObject Sort string value lodash 1`] = `
+Array [
+  Array [
+    Object {
+      "stringTest": "ZZ"
+    },
+    Object {
+      "stringTest": "aa"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "AAA"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "22"
+    }
+  ]
+]
+`;
+
+exports[`SortObject Sort string value lodash2 1`] = `
+Array [
+  Array [
+    Object {
+      "stringTest": "ZZ"
+    },
+    Object {
+      "stringTest": "aa"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "AAA"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "bb"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "ååå"
+    },
+    Object {
+      "stringTest": "22"
+    }
+  ]
 ]
 `;
 

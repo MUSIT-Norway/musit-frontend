@@ -19,13 +19,30 @@ import MusitModal from '../../../components/formfields/musitModal'
 import MusitModalHistory from '../../../components/formfields/musitModalHistory'
 import { I18n } from 'react-i18nify'
 import { emitError, emitSuccess } from '../../../errors/emitter'
+import { createSelector } from 'reselect'
+import orderBy from 'lodash/orderBy'
+
+const getStorageGridUnit = (state) => state.storageGridUnit.data || []
+
+const getSortedStorageGridUnit = createSelector(
+    [ getStorageGridUnit ],
+    (storageGridUnit) => orderBy(storageGridUnit, ['name', 'type'])
+)
+
+
+const getStorageObjectGrid = (state) => state.storageObjectGrid.data || []
+
+const getSortedStorageObjectGrid = createSelector(
+    [ getStorageObjectGrid ],
+    (storageObjectGrid) => orderBy(storageObjectGrid, ['museumNo', 'subNo', 'term'])
+)
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   stats: state.storageUnitStats.stats,
   translate: (key, markdown) => I18n.t(key, markdown),
-  children: state.storageGridUnit.data || [],
-  objects: state.storageObjectGrid.data || [],
+  children: getSortedStorageGridUnit(state),
+  objects: getSortedStorageObjectGrid(state),
   rootNode: state.storageGridUnit.root,
   routerState: state.routing,
   moves: state.movehistory.data || [],

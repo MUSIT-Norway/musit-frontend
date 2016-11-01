@@ -1,6 +1,5 @@
 import Config from '../../../config'
 import { apiUrl } from '../../../util'
-import { sortObject } from '../../../util/sort'
 
 export const LOAD = 'musit/observationcontrol/LOAD'
 export const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS'
@@ -25,7 +24,7 @@ const observationControlGridReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         loaded: true,
-        data: sortObject(sortObject(action.result, 'id', 'number', false), 'doneDate', null, false)
+        data: action.result
       };
     case LOAD_FAIL:
       return {

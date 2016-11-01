@@ -1,5 +1,4 @@
 import { createBreadcrumbPath, apiUrl } from '../../util'
-import { sortObject } from '../../util/sort'
 import Config from '../../config'
 
 export const TYPES = {
@@ -57,13 +56,9 @@ const addItem = (type) => (state, action) => {
     return state;
   }
   const nodes = state[type].concat({ marked: false, value: action.item, path: action.path})
-
-  const sortedNodes = type === TYPES.NODE ? sortObject(sortObject(nodes, 'value', null, true, 'name'), 'value', null, true, 'type') :
-      sortObject(sortObject(sortObject(nodes, 'value', null, true, 'term'), 'value', 'number', true, 'subNo'), 'value', null, true, 'museumNo')
-
   return {
     ...state,
-    [type]: sortedNodes
+    [type]: nodes
   };
 };
 
