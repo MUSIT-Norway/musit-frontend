@@ -15,7 +15,8 @@ const mapDispatchToProps = (dispatch) => ({
     } else {
       dispatch(clearSuggest(id))
     }
-  }
+  },
+  clearSuggest: () => dispatch(clearSuggest())
 })
 
 class ActorSuggest extends React.Component {
@@ -27,7 +28,8 @@ class ActorSuggest extends React.Component {
     suggest: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
     onUpdateRequested: React.PropTypes.func,
-    disabled: React.PropTypes.bool
+    disabled: React.PropTypes.bool,
+    clearSuggest: React.PropTypes.func
   }
 
   static defaultProps = {
@@ -38,6 +40,7 @@ class ActorSuggest extends React.Component {
   constructor(props) {
     super(props)
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
+    this.onBlur = this.onBlur.bind(this)
     this.state = {
       value: this.props.value
     }
@@ -66,6 +69,10 @@ class ActorSuggest extends React.Component {
     onChange: this.onChange.bind(this)
   }
 
+  onBlur() {
+    return this.props.clearSuggest
+  }
+
   render() {
     return (
       <Autosuggest
@@ -74,7 +81,7 @@ class ActorSuggest extends React.Component {
         onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
         getSuggestionValue={(suggestion) => suggestion.fn}
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
-        inputProps={{ ...this.doneByProps, value: this.state.value }}
+        inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.onBlur() }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
