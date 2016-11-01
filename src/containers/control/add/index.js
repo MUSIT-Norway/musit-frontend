@@ -38,7 +38,7 @@ export default class ControlAddContainer extends React.Component {
     params: React.PropTypes.object,
     actor: React.PropTypes.object,
     envReqData: React.PropTypes.object,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    rootNode: React.PropTypes.object
   }
 
   constructor(props) {
@@ -52,7 +52,7 @@ export default class ControlAddContainer extends React.Component {
       inertAirInterval: this.props.envReqData ? this.props.envReqData.hypoxicAirTolerance : ' ',
       light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
       cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
-      doneDate: new Date().toISOString(),
+      doneDate: this.props.doneDate ? this.props.doneDate : new Date().toISOString(),
       doneBy: this.props.actor
     }
     this.onControlClick = this.onControlClick.bind(this)
@@ -63,7 +63,7 @@ export default class ControlAddContainer extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.path.length === 0) {
+    if (!this.props.rootNode.path) {
       this.props.loadStorageObj(this.props.params.id)
     }
   }
@@ -158,8 +158,7 @@ export default class ControlAddContainer extends React.Component {
   }
 
   render() {
-    const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} passive />
+    const breadcrumb = <Breadcrumb node={this.props.rootNode} disabled />
     const { translate } = this.props
 
     const fields = [

@@ -22,15 +22,13 @@ import { connect } from 'react-redux'
 import { loadControl } from '../../../reducers/control'
 import { getActorNameFromId } from '../../../reducers/observation'
 import ControlViewContainerImpl from './index'
-import { createBreadcrumbPath } from '../../../util'
 import { loadRoot } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => I18n.t(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  path: state.storageGridUnit.root.data ?
-      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : []
+  rootNode: state.storageGridUnit.root.data
 })
 
 const mapDispatchToProps = (dispatch) => ({

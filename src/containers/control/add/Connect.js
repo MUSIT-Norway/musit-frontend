@@ -21,15 +21,13 @@ import { connect } from 'react-redux'
 import { addControl } from '../../../reducers/control'
 import { I18n } from 'react-i18nify'
 import ControlAddContainerImpl from './index'
-import { createBreadcrumbPath } from '../../../util'
 import { loadRoot } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => ({
   actor: state.auth.actor,
   translate: (key, markdown) => I18n.t(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
-  path: state.storageGridUnit.root.data ?
-      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : []
+  rootNode: state.storageGridUnit.root.data
 })
 
 const mapDispatchToProps = (dispatch) => ({

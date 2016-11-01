@@ -9,7 +9,7 @@ describe('NodeLeftMenuComponent', () => {
   const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <NodeLeftMenuComponent
-        id={1}
+        rootNode={{ id: 1}}
         translate={(key) => key}
         onClickNewNode={(key) => key}
         objectsOnNode={11}

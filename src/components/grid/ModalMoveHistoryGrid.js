@@ -1,20 +1,15 @@
-
-
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
-import { createBreadcrumbPath, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
+import { I18n } from 'react-i18nify'
 
 export default class ModalMoveHistoryGrid extends Component {
   static propTypes = {
-    tableData: PropTypes.arrayOf(PropTypes.object),
-    translate: PropTypes.func.isRequired
+    tableData: PropTypes.arrayOf(PropTypes.object)
   }
 
   render() {
-    const toPathStr = (pathStr, pathNames) => {
-      const pathArr = createBreadcrumbPath(pathStr, pathNames)
-      return pathArr.map(o => o.name).join('  /  ')
-    }
+    const toPathStr = (pathArr) => pathArr.map(o => o.name).join('  /  ')
     return (
       <FormGroup>
         <div>
@@ -22,16 +17,16 @@ export default class ModalMoveHistoryGrid extends Component {
             <thead>
               <tr>
                 <th>
-                  {this.props.translate('musit.moveHistory.doneDate')}
+                  {I18n.t('musit.moveHistory.doneDate')}
                 </th>
                 <th>
-                  {this.props.translate('musit.moveHistory.doneBy')}
+                  {I18n.t('musit.moveHistory.doneBy')}
                 </th>
                 <th>
-                  {this.props.translate('musit.moveHistory.from')}
+                  {I18n.t('musit.moveHistory.from')}
                 </th>
                 <th>
-                  {this.props.translate('musit.moveHistory.to')}
+                  {I18n.t('musit.moveHistory.to')}
                 </th>
               </tr>
             </thead>
@@ -45,10 +40,10 @@ export default class ModalMoveHistoryGrid extends Component {
                     {` ${c.doneBy}`}
                   </td>
                   <td id={`${i}_${c.from.path}`}>
-                    {` ${toPathStr(c.from.path, c.from.pathNames)}`}
+                    {` ${toPathStr(c.from.breadcrumb)}`}
                   </td>
                   <td id={`${i}_${c.to.path}`}>
-                    {` ${toPathStr(c.to.path, c.to.pathNames)}`}
+                    {` ${toPathStr(c.to.breadcrumb)}`}
                   </td>
                 </tr>
               )}

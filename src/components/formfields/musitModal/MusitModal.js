@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -17,131 +16,103 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-import React, { Component, PropTypes } from 'react'
-import { Modal, Row, Col } from 'react-bootstrap'
+import React, {Component, PropTypes} from 'react'
 import Breadcrumb from '../../../layout/Breadcrumb'
 import ModalNodeGrid from '../../../components/grid/ModalNodeGrid'
-import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import NodeSuggest from '../../../components/nodesearch'
+import Modal from '../../modal/MusitModal'
+import SubmitButton from '../../buttons/submit'
+import CancelButton from '../../buttons/cancel'
+import { I18n } from 'react-i18nify'
 
 export default class MusitModal extends Component {
 
   static propTypes = {
-    show: PropTypes.bool.isRequired,
-    onHide: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
-    headerText: PropTypes.string.isRequired,
+    loadNode: PropTypes.func.isRequired,
     loadChildren: PropTypes.func.isRequired,
-    clearPath: PropTypes.func.isRequired,
-    loadRoot: PropTypes.func.isRequired,
-    clearRoot: PropTypes.func.isRequired,
-    setCurrentId: PropTypes.func.isRequired,
-    clearCurrentId: PropTypes.func.isRequired,
-    currentId: PropTypes.number,
-    path: PropTypes.arrayOf(PropTypes.object),
-    translate: PropTypes.func,
+    loadRootChildren: PropTypes.func.isRequired,
+    clear: PropTypes.func.isRequired,
     children: PropTypes.arrayOf(PropTypes.object),
-    rootNode: PropTypes.object.isRequired
+    selectedNode: PropTypes.object
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.show === true && this.props.show === false) {
-      this.loadHome()
-    }
-    if (nextProps.currentId && nextProps.currentId !== this.props.currentId) {
-      this.loadStuff(nextProps.currentId)
-    }
+  static contextTypes = {
+    closeModal: PropTypes.func.isRequired
+  };
+
+  componentDidMount() {
+    this.loadHome()
   }
 
   loadHome() {
-    this.props.clearRoot()
-    this.props.loadRoot()
-    this.props.clearCurrentId();
+    this.props.clear()
+    this.props.loadRootChildren();
   }
 
-  loadStuff(initialId) {
-    this.props.loadChildren(initialId)
-  }
-
-  loadStuffAndSetCurrentId(initialId) {
-    this.loadStuff(initialId)
-    this.props.setCurrentId(initialId)
+  loadNode(id) {
+    this.props.loadNode(id)
+    this.props.loadChildren(id)
   }
 
   render() {
-    const { children, path } = this.props
-    return (
+    const {children, selectedNode} = this.props
+
+    const isSelected = Object.keys({...selectedNode}).length > 0
+
+    const header =
+      <div style={{ width: '500px', paddingBottom: '10px' }}>
+        <NodeSuggest
+          label="Search"
+          id="nodeSearch"
+          onChange={ (v) => v ? this.loadNode(v) : null }
+          placeHolder={I18n.t('musit.moveModal.nodeSuggestPlaceholder')}
+        />
+      </div>;
+
+    let body =
+      <div style={{ textAlign: 'center', color: 'grey' }}>
+        {I18n.t('musit.moveModal.noData')}
+      </div>;
+
+    if (children.length > 0) {
+      body =
+        <ModalNodeGrid
+          tableData={children}
+          onClick={(n) => this.loadNode(n.id)}
+        />;
+    }
+
+    const footer =
       <div>
-        <Modal
-          show={this.props.show}
-          onHide={this.props.onHide}
-          aria-labelledby="contained-modal-title-sm"
-        >
-          <Modal.Header closeButton style={{ border: 'none' }}>
-            <Modal.Title id="title" style={{ textAlign: 'center' }}>
-              {this.props.headerText}
-            </Modal.Title>
-            <Row>
-              <Col sm={12}>
-                <hr />
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={2} />
-              <Col sm={8}>
-                <NodeSuggest
-                    label="Search"
-                    id="nodeSearch"
-                    onChange={ (v) => v ? this.loadStuffAndSetCurrentId(v) : null }
-                    placeHolder={this.props.translate('musit.moveModal.nodeSuggestPlaceholder')}
-                />
-              </Col>
-              <Col sm={2} />
-            </Row>
-          </Modal.Header>
-          <Modal.Body style={{ height: 300, overflow: 'auto' }}>
-            { children && children.length > 0 ?
-                <ModalNodeGrid
-                    tableData={children}
-                    onClick={(node) => this.props.setCurrentId(node.id)}
-                /> : <div style={{ textAlign: 'center', color: 'grey' }}>{this.props.translate('musit.moveModal.noData')}</div>
-            }
-          </Modal.Body>
-          <Modal.Footer style={{ textAlign: 'center' }}>
-            <Row style={{ textAlign: 'center' }}>
-              <Col>
-                {this.props.translate('musit.moveModal.currentDestination')}
-              </Col>
-            </Row>
-            <Row style={{ textAlign: 'center' }}>
-              <Col>
-                <Breadcrumb
-                  nodes={path}
-                  onClickCrumb={node => node.id === -1 ?
-                    this.loadHome() : this.props.setCurrentId(node.id)}
-                />
-              </Col>
-            </Row>
-            <br />
-            <Row style={{ textAlign: 'center' }}>
-              <Col xs={4} sm={4} smOffset={4}>
-                <SaveCancel
-                  translate={this.props.translate}
-                  saveLabel={this.props.translate('musit.moveModal.move')}
-                  saveDisabled={!this.props.currentId}
-                  onClickSave={(e) => {
-                    e.preventDefault()
-                    this.props.onMove(this.props.currentId, this.props.rootNode.data.name)
-                  }
-                  }
-                  onClickCancel={this.props.onHide}
-                />
-              </Col>
-            </Row>
-          </Modal.Footer>
-        </Modal>
-      </div>
-  );
+        {I18n.t('musit.moveModal.currentDestination')}
+        <Breadcrumb
+          node={selectedNode}
+          onClickCrumb={(node) => {
+            return node.id === -1 || !node.id ? this.loadHome() : this.loadNode(node.id)
+          }}
+        />
+        <div style={{ paddingTop: '10px' }}>
+          <SubmitButton
+            disabled={!isSelected}
+            onClick={() => this.props.onMove(selectedNode.id, selectedNode.name, this.context.closeModal)}
+            label={I18n.t('musit.moveModal.move')}
+          />
+          &nbsp;
+          <CancelButton
+            onClick={this.context.closeModal}
+            label={I18n.t('musit.texts.close')}
+          />
+        </div>
+      </div>;
+
+    return (
+      <Modal
+        style={{ minWidth: 700}}
+        header={header}
+        body={body}
+        footer={footer}
+      />
+    );
   }
 }

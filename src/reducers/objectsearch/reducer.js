@@ -1,4 +1,5 @@
 import { omit } from 'lodash'
+import { getPath } from '../helper'
 
 import * as types from './constants'
 
@@ -50,7 +51,15 @@ export default (state = initialState, action) => {
         ...omit(state, 'error'),
         loading: false,
         loaded: true,
-        data: action.result
+        data: {
+          totalMatches: action.result.totalMatches,
+          matches: action.result.matches.map(data => {
+            return {
+              ...data,
+              breadcrumb: getPath(data.path || '', data.pathNames)
+            }
+          })
+        }
       }
     default:
       return state;

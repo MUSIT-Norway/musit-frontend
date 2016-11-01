@@ -1,108 +1,84 @@
-
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
-import { hashHistory } from 'react-router'
+import takeRight from 'lodash/takeRight'
+import map from 'lodash/map'
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
-export default class Breadcrumb extends React.Component {
-  static propTypes = {
-    nodes: React.PropTypes.arrayOf(React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
-      name: React.PropTypes.string.isRequired,
-      type: React.PropTypes.string,
-      url: React.PropTypes.string
-    })),
-    nodeTypes: React.PropTypes.arrayOf(React.PropTypes.shape({
-      type: React.PropTypes.string.isRequired,
-      iconName: React.PropTypes.string.isRequired
-    })),
-    onClickCrumb: React.PropTypes.func,
-    passive: React.PropTypes.bool,
-    allActive: React.PropTypes.bool,
-    divider: React.PropTypes.string
-  }
+const tooltip = (tipText, child) =>
+  <OverlayTrigger placement="top" overlay={<Popover id={"breadcrumb tooltip"}>{tipText}</Popover>}>
+    {child}
+  </OverlayTrigger>;
 
-  static defaultProps = {
-    nodeTypes: [
-      { type: 'Top', iconName: 'home' },
-      { type: 'Organisation', iconName: 'folder' },
-      { type: 'Building', iconName: 'folder' },
-      { type: 'Room', iconName: 'folder' },
-      { type: 'StorageUnit', iconName: 'folder' }
-    ],
-    nodes: [],
-    onClickCrumb: (node) => hashHistory.push(node.url)
-  }
+const CrumbItem = (props) => {
+  const name = props.displayName || (props.name && props.name.length > 20 + 2 ? props.name.substring(0, 20) + '..' : props.name);
+  const icon = props.icon && <FontAwesome name={props.icon} style={{ ...props.style, padding: '1px' }} />;
+  const item =
+    <span>
+      {props.url ? <a href={props.url} onClick={props.onClick}>{icon}{name}</a> : <span>{icon}{name}</span>}
+      {props.delimiter ? ' / ' : ''}
+    </span>;
+  return tooltip(props.name, item);
+};
 
+const crumbLimit: number = 3;
+
+class Breadcrumb extends React.Component {
   render() {
-    const styles = {
-      crumb: { paddingLeft: '0.5em' }
-    }
-    const {
-      nodes,
-      nodeTypes,
-      onClickCrumb,
-      passive, // All nodes are unclickable
-      allActive, // All nodes are clickable, also current node
-      divider // Fragment splitter
-    } = this.props
+    const clickCrumb = (node) => (evt) => {
+      evt.preventDefault();
+      this.props.onClickCrumb(node)
+    };
 
-    const isLast = (array, index) => array.length - 1 === index
-    const renderCrumb = (nodeArray) => {
-      return nodeArray.map((node, index) => {
-        let fragment = ''
-        let iconFragment = ''
-        if (node.type && nodeTypes) {
-          const currentType = nodeTypes.find((nodeType) => nodeType.type === node.type)
-          if (currentType.type !== 'Top') {
-            iconFragment = 
-              <FontAwesome name={currentType.iconName} style={{ padding: '1px' }} />
-            
-          } else {
-            iconFragment = 
-              <FontAwesome name={currentType.iconName} style={{ fontSize: '1.5em', padding: '1px' }} />
-            
-          }
-        } else {
-          iconFragment = 
-            <FontAwesome name="folder" style={{ padding: '1px' }} />
-          
-        }
-
-        if (passive) {
-          fragment = 
-            <span key={index}>
-              <span style={styles.crumb}>
-                {iconFragment}{node.name}
-              </span>
-              <span style={styles.crumb}>{divider}</span>
-            </span>
-          
-        } else if (!isLast(nodeArray, index) || allActive) {
-          fragment = 
-            <span key={index}>
-              <span style={styles.crumb}>
-                <a
-                  href={node.url}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onClickCrumb(node, index)
-                  }}
-                >{iconFragment}{node.name}</a>
-              </span>
-              <span style={styles.crumb}>{divider}</span>
-            </span>
-          
-        } else {
-          fragment = <span key={index} style={styles.crumb}>{iconFragment}{node.name}</span>
-        }
-        return fragment
-      })
+    let path = [];
+    if (this.props.node && this.props.node.breadcrumb && this.props.node.breadcrumb.length) {
+      path = this.props.node.breadcrumb;
+    } else if (this.props.node && this.props.node.length) {
+      path = this.props.node;
     }
+
+    const itemsWithIndex = map(path, (item, index) => ({...item, index}));
+    const itemsCropped = takeRight(itemsWithIndex, crumbLimit);
+    // Emulating lazy val by making it a function
+    const dotdotdot = () => itemsWithIndex[itemsCropped[0].index - 1];
     return (
       <div>
-        <span style={styles.crumb}>{divider}</span>
-        {renderCrumb([{ id: -1, name: '', type: 'Top', url: '/magasin/root' }, ...nodes])}
+        {CrumbItem({
+          url: itemsWithIndex.length > 0 && !this.props.disabled ? '/magasin/root' : null,
+          onClick: clickCrumb({url: '/magasin/root'}),
+          name: 'Magasin',
+          displayName: ' ',
+          icon: 'home',
+          style: {fontSize: '1.5em'},
+          delimiter: itemsWithIndex.length > 0 ? ' / ' : null
+        })}
+        {itemsWithIndex > itemsCropped &&
+        CrumbItem({
+          url: dotdotdot().url,
+          onClick: clickCrumb(dotdotdot()),
+          name: dotdotdot().name,
+          displayName: '\u2026',
+          delimiter: ' / '
+        })
+        }
+        {itemsCropped.map((item, i, arr) => {
+          const notLast = i < arr.length - 1;
+          const enableLast = notLast && !this.props.disabled;
+          const enableLink = this.props.allActive || enableLast
+          return (
+            <span key={i}>
+            {CrumbItem({
+              url: enableLink ? item.url : null,
+              name: item.name,
+              onClick: clickCrumb(item),
+              icon: 'folder',
+              delimiter: notLast ? ' / ' : null
+            })}
+          </span>
+          );
+        })}
       </div>
-    )
+    );
   }
 }
+
+export default Breadcrumb
