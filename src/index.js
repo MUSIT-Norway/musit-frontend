@@ -37,6 +37,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css'
 import './index.css'
+import 'jquery/dist/jquery'
+import 'bootstrap/dist/js/bootstrap'
 
 import LanguageJson from '../language.json'
 import { I18n } from 'react-i18nify'
