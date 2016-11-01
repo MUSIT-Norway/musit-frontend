@@ -14,17 +14,7 @@ const suggestionReducer = (state = initialState, action = {}) => {
 
   switch (action.type) {
     case CLEAR: {
-      let retVal = initialState
-      if (subStateKey && subStateKey.length > 0) {
-        retVal = {
-          ...state,
-          [subStateKey]: {
-            loading: false,
-            loaded: false
-          }
-        }
-      }
-      return retVal
+      return initialState
     }
     case SUGGEST:
       return {
