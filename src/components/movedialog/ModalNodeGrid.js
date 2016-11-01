@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'

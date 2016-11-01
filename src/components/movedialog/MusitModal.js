@@ -18,7 +18,7 @@
  */
 import React, {Component, PropTypes} from 'react'
 import Breadcrumb from '../../layout/Breadcrumb'
-import ModalNodeGrid from '../grid/ModalNodeGrid'
+import ModalNodeGrid from './ModalNodeGrid'
 import NodeSuggest from '../nodesearch'
 import Modal from '../modal/MusitModal'
 import SubmitButton from '../buttons/submit'
