@@ -18,7 +18,7 @@
  */
 import './MoveHistoryModal.css'
 import React, { Component, PropTypes } from 'react'
-import ModalMoveHistoryGrid from '../grid/ModalMoveHistoryGrid'
+import ModalMoveHistoryGrid from './ModalMoveHistoryGrid'
 import Modal from '../modal/MusitModal'
 import CancelButton from '../buttons/cancel'
 import { I18n } from 'react-i18nify'
