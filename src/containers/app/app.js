@@ -39,6 +39,7 @@ export default class App extends Component {
 
   static childContextTypes = {
     showModal: PropTypes.func,
+    showConfirm: PropTypes.func,
     showError: PropTypes.func,
     showNotification: PropTypes.func,
     logger: PropTypes.object
@@ -47,13 +48,41 @@ export default class App extends Component {
   getChildContext() {
     return {
       showModal: this.showModal,
+      showConfirm: this.showConfirm,
       showError: emitError,
       showNotification: emitSuccess,
       logger: loglevel
     }
   }
 
-  showModal(title, width, componentToRender) {
+  showConfirm(title, onYes) {
+    const prompt = '<div title="Confirmation Required">Are you sure about this?</div>'
+    const $dialog = $(prompt).dialog({
+      autoOpen: false,
+      modal: true,
+      title: title,
+      autoResize: true,
+      resizable: false,
+      close: function() {
+        $( this ).remove();
+      }
+    })
+    $dialog.dialog({
+      buttons : {
+        "Confirm" : function() {
+          onYes();
+          $(this).dialog("close");
+        },
+        "Cancel" : function() {
+          $(this).dialog("close");
+        }
+      }
+    });
+    $dialog.dialog('open')
+  }
+
+
+  showModal(title, componentToRender) {
     const $dialog = $('<div>').dialog({
       autoOpen: false,
       modal: true,

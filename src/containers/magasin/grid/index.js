@@ -81,30 +81,30 @@ const mapDispatchToProps = (dispatch, props) => {
     onEdit: (unit) => {
       hashHistory.push(`/magasin/${unit.id}/view`)
     },
-    onDelete: (id, currentNode) => { // TODO: Problems with delete slower than callback (async)
+    onDelete: (id, currentNode) => {
       if (id === currentNode.id) {
-        const name = currentNode.name;
-        if (window.confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name}))) {
-          dispatch(deleteUnit(id, {
-            onSuccess: () => {
-              dispatch(clearRoot());
-              if (currentNode.isPartOf) {
-                hashHistory.replace(`/magasin/${currentNode.isPartOf}`)
-              } else {
-                dispatch(loadRoot());
-                dispatch(clearStats())
-              }
-              emitSuccess({ type: 'deleteSuccess', message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name})})
-            },
-            onFailure: (e) => {
-              if (e.status === 400) {
-                emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')} )
-              } else {
-                emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')} )
-              }
+        dispatch(deleteUnit(id, {
+          onSuccess: () => {
+            dispatch(clearRoot());
+            if (currentNode.isPartOf) {
+              hashHistory.replace(`/magasin/${currentNode.isPartOf}`)
+            } else {
+              dispatch(loadRoot());
+              dispatch(clearStats())
             }
-          }))
-        }
+            emitSuccess({
+              type: 'deleteSuccess',
+              message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name: currentNode.name})
+            })
+          },
+          onFailure: (e) => {
+            if (e.status === 400) {
+              emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')} )
+            } else {
+              emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')} )
+            }
+          }
+        }))
       }
     }
   }
@@ -140,7 +140,8 @@ class StorageUnitsContainer extends React.Component {
   };
 
   static contextTypes = {
-    showModal: React.PropTypes.func.isRequired
+    showModal: React.PropTypes.func.isRequired,
+    showConfirm: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -210,7 +211,7 @@ class StorageUnitsContainer extends React.Component {
 
   showMoveNodeModal = (nodeToMove) => {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    this.context.showModal(title, 700, <MusitModal onMove={this.moveNode(nodeToMove)} />)
+    this.context.showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />)
   }
 
   moveNode = (fromNode) => (toId, toName, onSuccess) => {
@@ -243,7 +244,7 @@ class StorageUnitsContainer extends React.Component {
   showMoveObjectModal = (object) => {
     const objStr = this.getObjectDescription(object);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    this.context.showModal(title, 700, <MusitModal onMove={this.moveObject(object)} />)
+    this.context.showModal(title, <MusitModal onMove={this.moveObject(object)} />)
   }
 
   moveObject = (fromObject) => (toId, toName, onSuccess) => {
@@ -270,7 +271,7 @@ class StorageUnitsContainer extends React.Component {
     const objStr = this.getObjectDescription(object);
     const componentToRender = <MusitModalHistory objectId={object.id} />
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
-    this.context.showModal(title, 700, componentToRender)
+    this.context.showModal(title, componentToRender)
   }
 
   makeToolbar() {
@@ -318,7 +319,11 @@ class StorageUnitsContainer extends React.Component {
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={this.showMoveNodeModal}
-          onClickDelete={(id) => onDelete(id, rootNode)}
+          onClickDelete={(id) => {
+            const title = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name: rootNode.name})
+            debugger;
+            this.context.showConfirm(title, () => onDelete(id, rootNode))
+          }}
         />
       </div>
     )
