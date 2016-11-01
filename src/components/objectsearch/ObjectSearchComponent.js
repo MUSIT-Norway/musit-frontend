@@ -3,7 +3,6 @@ import { I18n } from 'react-i18nify'
 import { Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import Breadcrumb from '../../layout/Breadcrumb'
-import { createBreadcrumbPath } from '../../util'
 import PagingToolbar from '../../util/paging'
 
 export function renderParam(id, props, style) {
@@ -20,10 +19,6 @@ export function renderParam(id, props, style) {
       />
     </FormGroup>
   )
-}
-
-export function renderBreadcrumb(nodes: []) {
-  return <Breadcrumb nodes={nodes} allActive />
 }
 
 export default (props) =>
@@ -79,19 +74,18 @@ export default (props) =>
                 </thead>
                 <tbody>
                 {props.data.matches.map((data, i) => {
-                  const path = createBreadcrumbPath(data.path, data.pathNames)
                   return (
                     <tr key={i}>
                       <td className="museumNo">{data.museumNo}</td>
                       <td className="subNo">{data.subNo}</td>
                       <td className="term">{data.term}</td>
-                      <td className="path">{path.length > 0 ? renderBreadcrumb(path) : ''}</td>
+                      <td className="path">{data.breadcrumb.length > 0 ? <Breadcrumb node={data} allActive /> : ''}</td>
                       <td className="move">
                         <a
                           href=""
                           onClick={(e) => {
                             e.preventDefault()
-                            props.pickObject(data, path)
+                            props.pickObject(data, data.breadcrumb)
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >

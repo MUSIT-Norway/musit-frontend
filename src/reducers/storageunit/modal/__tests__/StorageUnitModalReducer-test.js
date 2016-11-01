@@ -9,7 +9,7 @@ import nocker from 'superagent-nock';
 const nock = nocker(request);
 
 import suReducer, {
-  clearRoot
+  clear
 } from '../index'
 
 const testRootState = {
@@ -74,30 +74,7 @@ const testSubRootState = {
 }
 deepFreeze(testSubRootState)
 const testSubNoRootState = {
-  data: [
-    {
-      id: 2,
-      type: 'Room',
-      area: 1,
-      name: 'R1',
-      areaTo: 1,
-      groupRead: 'foo',
-      height: 1,
-      heightTo: 1,
-      groupWrite: 'bar'
-    },
-    {
-      id: 3,
-      type: 'Room',
-      area: 1,
-      name: 'R2',
-      areaTo: 1,
-      groupRead: 'foo',
-      height: 1,
-      heightTo: 1,
-      groupWrite: 'bar'
-    }
-  ],
+  data: [],
   root: {}
 }
 deepFreeze(testSubNoRootState)
@@ -110,7 +87,7 @@ describe('StorageUnitModalReducer', () => {
   })
 
   it('Clear StorageUnitModalReducer root', () => {
-    const state = suReducer(testSubRootState, clearRoot())
+    const state = suReducer(testSubRootState, clear())
     assert(JSON.stringify(state) === JSON.stringify(testSubNoRootState))
   })
 
@@ -141,30 +118,36 @@ describe('StorageUnitModalReducer', () => {
         .reply(200, loadOneState)
     const store = mockStore()
 
-    return store.dispatch(actions.loadRoot(2))
+    return store.dispatch(actions.loadNode(2))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot()
         })
   })
 
-  it('LOAD_ROOT: no action', () => {
+  it('Reducer: no action', () => {
     expect(
-        reducer(undefined, {})
+      reducer(undefined, {})
     ).toMatchSnapshot()
   })
 
-  it('LOAD_ROOT: initial action', () => {
+  it('Reducer: nothing at all', () => {
+    expect(
+      reducer(undefined, undefined)
+    ).toMatchSnapshot()
+  })
+
+  it('LOAD_NODE: initial action', () => {
     expect(
         reducer(undefined, {
-          type: actions.LOAD_ROOT
+          type: actions.LOAD_NODE
         })
     ).toMatchSnapshot()
   })
 
-  it('LOAD_ROOT: success action', () => {
+  it('LOAD_NODE: success action', () => {
     expect(
         reducer(undefined, {
-          type: actions.LOAD_ROOT_SUCCESS,
+          type: actions.LOAD_NODE_SUCCESS,
           result: {
             someField: 1
           }
@@ -172,10 +155,10 @@ describe('StorageUnitModalReducer', () => {
     ).toMatchSnapshot()
   })
 
-  it('LOAD_ROOT: fail action', () => {
+  it('LOAD_NODE: fail action', () => {
     expect(
         reducer(undefined, {
-          type: actions.LOAD_ROOT_FAIL,
+          type: actions.LOAD_NODE_FAIL,
           error: Error('LOAD_ROOT: has error.')
         })
     ).toMatchSnapshot()
@@ -192,36 +175,30 @@ describe('StorageUnitModalReducer', () => {
       updatedDate: '2016-01-01T00:00:00+00:00'
     }]
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/1/children`
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/1`
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState)
     const store = mockStore()
 
-    return store.dispatch(actions.loadRoot())
+    return store.dispatch(actions.loadNode(1))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot()
         })
   })
 
-  it('LOAD_SEVERAL: no action', () => {
-    expect(
-        reducer(undefined, undefined)
-    ).toMatchSnapshot()
-  })
-
-  it('LOAD_SEVERAL: initial action', () => {
+  it('LOAD_CHILDREN: initial action', () => {
     expect(
         reducer(undefined, {
-          type: actions.LOAD_SEVERAL
+          type: actions.LOAD_CHILDREN
         })
     ).toMatchSnapshot()
   })
 
-  it('LOAD_SEVERAL: success action', () => {
+  it('LOAD_CHILDREN: success action', () => {
     expect(
         reducer(undefined, {
-          type: actions.LOAD_SEVERAL_SUCCESS,
+          type: actions.LOAD_CHILDREN_SUCCESS,
           result: {
             someField: 1
           }
@@ -229,73 +206,26 @@ describe('StorageUnitModalReducer', () => {
     ).toMatchSnapshot()
   })
 
-  it('LOAD_SEVERAL: fail action', () => {
+  it('LOAD_CHILDREN: fail action', () => {
     expect(
         reducer(undefined, {
-          type: actions.LOAD_SEVERAL_FAIL,
-          error: Error('LOAD_SEVERAL has error.')
+          type: actions.LOAD_CHILDREN_FAIL,
+          error: Error('LOAD_CHILDREN has error.')
         })
     ).toMatchSnapshot()
   })
 
-  it('creates LOAD_SEVERAL_SUCCESS child when fetching data has been done', () => {
-    const id =1
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`
+  it('creates LOAD_CHILDREN_SUCCESS child when fetching data has been done', () => {
+    const id = 2;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState)
     const store = mockStore()
 
-    return store.dispatch(actions.loadChildren(1))
+    return store.dispatch(actions.loadChildren(id))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot()
         })
-  })
-
-  it('LOAD_SEVERAL child: no action', () => {
-    expect(
-        reducer(undefined, undefined)
-    ).toMatchSnapshot()
-  })
-
-  it('LOAD_SEVERAL child: initial action', () => {
-    expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL
-        })
-    ).toMatchSnapshot()
-  })
-
-  it('LOAD_SEVERAL child: success action', () => {
-    expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
-    ).toMatchSnapshot()
-  })
-
-  it('LOAD_SEVERAL child: fail action', () => {
-    expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL_FAIL,
-          error: Error('LOAD_SEVERAL child has error.')
-        })
-    ).toMatchSnapshot()
-  })
-
-
-  it('SET_CURRENT action', () => {
-    expect(
-        reducer(loadSeveralChildState, actions.setCurrent(1))
-    ).toMatchSnapshot()
-  })
-
-  it('CLEAR_CURRENT action', () => {
-    expect(
-        reducer(loadSeveralChildState, actions.clearCurrent())
-    ).toMatchSnapshot()
   })
 })

@@ -17,34 +17,22 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-import { I18n } from 'react-i18nify'
-import { loadRoot, clearRoot, loadChildren, setCurrent, clearCurrent, clearPath } from '../../../reducers/storageunit/modal'
+import { loadChildren, clear, loadNode } from '../../../reducers/storageunit/modal'
 import { connect } from 'react-redux'
-import { createBreadcrumbPath } from '../../../util'
 import MusitModalImpl from './MusitModal'
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  translate: (key, markdown) => I18n.t(key, markdown),
   children: state.storageUnitModal.data || [],
-  path: state.storageUnitModal.root.data ?
-    createBreadcrumbPath(state.storageUnitModal.root.data.path, state.storageUnitModal.root.data.pathNames) : [],
-  rootNode: state.storageUnitModal.root,
-  currentId: state.storageUnitModal.currentId
+  selectedNode: state.storageUnitModal.root.data
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadChildren: (id, callback) => {
-      dispatch(loadChildren(id, callback));
-      dispatch(loadRoot(id))
-    },
-    clearRoot: () => dispatch(clearRoot()),
-    clearPath: (id) => dispatch(clearPath(id)),
-    loadRoot: () => dispatch(loadRoot()),
-    setCurrentId: (id) => dispatch(setCurrent(id)),
-    clearCurrentId: (id) => dispatch(clearCurrent(id))
+    clear: () => dispatch(clear()),
+    loadNode: (id) => dispatch(loadNode(id)),
+    loadRootChildren: () => dispatch(loadChildren(1)),
+    loadChildren: (id) => dispatch(loadChildren(id))
   }
 };
 

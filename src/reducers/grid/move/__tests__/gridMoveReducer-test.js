@@ -155,9 +155,48 @@ describe('GridMoveHistory', () => {
         expect(
             reducer(undefined, {
                 type: actions.LOAD_SUCCESS,
-                result: {
-                    someField: 1
-                }
+                result: [
+                    {
+                        to: {
+                            id: 3,
+                            name: 'Test 1',
+                            path: ',1,2,3,',
+                            pathNames: [
+                                {
+                                    nodeId: 1,
+                                    name: 'Museum 1'
+                                },
+                                {
+                                    nodeId: 2,
+                                    name: 'Building 1'
+                                },
+                                {
+                                    nodeId: 3,
+                                    name: 'Room 1'
+                                }
+                            ]
+                        },
+                        from: {
+                            id: 4,
+                            name: 'Test 2',
+                            path: ',1,2,4,',
+                            pathNames: [
+                                {
+                                    nodeId: 1,
+                                    name: 'Museum 1'
+                                },
+                                {
+                                    nodeId: 2,
+                                    name: 'Building 1'
+                                },
+                                {
+                                    nodeId: 4,
+                                    name: 'Room 4'
+                                }
+                            ]
+                        }
+                    }
+                ]
             })
         ).toMatchSnapshot()
     })

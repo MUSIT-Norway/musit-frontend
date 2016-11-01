@@ -1,0 +1,7 @@
+.my-modal {
+  min-width: 900px;
+}
+.my-modal .table {
+  white-space: nowrap;
+  padding: 5px;
+}

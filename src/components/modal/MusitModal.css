@@ -1,0 +1,25 @@
+.musit-modal {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.musit-modal-header,
+.musit-modal-footer {
+    flex: none;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.musit-modal-body {
+    flex: 1 0 auto;
+    min-height: 300px;
+}
+
+.musit-modal-body::after {
+    content: '\00a0';
+    display: block;
+    height: 0px;
+    visibility: hidden;
+}

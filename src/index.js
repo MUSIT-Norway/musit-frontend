@@ -49,7 +49,6 @@ const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getE
 
 import { source, successSource, emitError } from './errors/emitter'
 
-
 const children = (message) =>
     <div style={{margin: '30px'}}>
       <p>
@@ -76,13 +75,13 @@ successSource.subscribe ((s) => {
       });
       break;
     case 'saveSuccess':
-    notificationSystem.addNotification({
-      level: 'success',
-      title: I18n.t('musit.notificationMessages.saving'),
-      position: 'tc',
-      children: children(s.message)
-    });
-    break;
+      notificationSystem.addNotification({
+        level: 'success',
+        title: I18n.t('musit.notificationMessages.saving'),
+        position: 'tc',
+        children: children(s.message)
+      });
+      break;
     default:
       notificationSystem.addNotification({
         level: 'success',
@@ -91,19 +90,18 @@ successSource.subscribe ((s) => {
   }
 });
 
-
-
 source.subscribe((e) => {
-
-
   switch(e.type) {
     case 'network':
+      const { response } = e.error
+      const { req } = response || {}
+      const msg = req ? req.url : e.error.message
       notificationSystem.addNotification({
-        message: e.error.response.req.url,
+        message: msg,
         level: 'error',
         title: I18n.t('musit.errorMainMessages.networkError'),
         position: 'tc',
-        children: children(e.error.response.req.url)
+        children: children(msg)
       });
       break;
     case 'dateValidationError':
@@ -140,7 +138,7 @@ source.subscribe((e) => {
       break;
     default:
       notificationSystem.addNotification({
-        message: 'something happened',
+        message: e.message,
         level: 'error',
         position: 'tc'
       });
@@ -165,7 +163,7 @@ try {
   );
 
   if (config.isDev) {
-    window.React = React; // enable debugger
+    window.React = React;
   }
 
   if (config.useDevTools && !window.devToolsExtension) {
@@ -180,7 +178,7 @@ try {
     );
   }
 } catch(e) {
-  emitError({ type: 'annet', e })
+  emitError({ type: 'other', e })
 }
 
 

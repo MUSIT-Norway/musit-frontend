@@ -27,7 +27,6 @@ import Breadcrumb from '../../../layout/Breadcrumb'
 import { connect } from 'react-redux'
 import Toolbar from '../../../layout/Toolbar'
 import { hashHistory } from 'react-router'
-import { createBreadcrumbPath } from '../../../util'
 import { I18n } from 'react-i18nify'
 import { createSelector } from 'reselect'
 import orderBy from 'lodash/orderBy'
@@ -42,9 +41,8 @@ const getSortedObservationControl = createSelector(
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
-    path: state.storageGridUnit.root.data ?
-      createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames) : [],
-      observationControlGridData: getSortedObservationControl(state)
+    observationControlGridData: getSortedObservationControl(state),
+    rootNode: state.storageGridUnit.root.data
   }
 }
 
@@ -85,11 +83,13 @@ class ObservationControlGridShow extends React.Component {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
         if (result && result.length > 0) {
-          this.props.loadActorDetails({ data: result.map(r => r.doneBy) })
+          this.props.loadActorDetails({data: result.map(r => r.doneBy)})
         }
       }
-    })
-    this.props.loadStorageObj(this.props.params.id)
+    });
+    if (!this.props.rootNode.path) {
+      this.props.loadStorageObj(this.props.params.id)
+    }
   }
 
   makeToolbar() {
@@ -135,13 +135,11 @@ class ObservationControlGridShow extends React.Component {
   }
 
   render() {
-    const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} allActive onClickCrumb={(node) => hashHistory.push(node.url)} />
     return (
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={breadcrumb}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={(node) => hashHistory.push(node.url)} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContent()}

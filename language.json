@@ -35,7 +35,9 @@
       },
       "moveModal": {
         "move": "Move",
+        "moveObject": "Move object %{name}",
         "moveObjects": "Move objects",
+        "moveNode": "Move node %{name}",
         "moveNodes": "Move nodes",
         "currentDestination": "Destination:",
         "noData": "No sub nodes",
@@ -614,7 +616,9 @@
       },
       "moveModal": {
         "move": "Flytt hit",
+        "moveObject": "Flytt objekt %{name}",
         "moveObjects": "Flytt objekter",
+        "moveNode": "Flytt node %{name}",
         "moveNodes": "Flytt noder",
         "currentDestination": "Destinasjon:",
         "noData": "Ingen undernoder",

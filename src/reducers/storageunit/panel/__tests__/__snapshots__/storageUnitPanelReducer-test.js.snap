@@ -19,6 +19,7 @@ Object {
   "data": Object {
     "area": undefined,
     "areaTo": undefined,
+    "breadcrumb": Array [],
     "environmentAssessment": Object {},
     "environmentRequirement": Object {},
     "height": undefined,
@@ -124,6 +125,7 @@ Object {
   "data": Object {
     "area": undefined,
     "areaTo": undefined,
+    "breadcrumb": Array [],
     "environmentAssessment": Object {},
     "environmentRequirement": Object {},
     "height": undefined,
@@ -191,6 +193,7 @@ Object {
   "data": Object {
     "area": undefined,
     "areaTo": undefined,
+    "breadcrumb": Array [],
     "environmentAssessment": Object {},
     "environmentRequirement": Object {},
     "height": undefined,

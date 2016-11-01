@@ -28,13 +28,13 @@ import Breadcrumb from '../../../../layout/Breadcrumb'
 import { I18n } from 'react-i18nify'
 import AddressSuggest from '../../../../components/address'
 import Loader from 'react-loader';
-import { createBreadcrumbPath, parseISODateNonStrict } from '../../../../util'
+import { parseISODateNonStrict } from '../../../../util'
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../../components/formfields'
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
-    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
+    rootNode: state.storageGridUnit.root.data
   }
 }
 
@@ -48,7 +48,7 @@ class StorageUnitContainer extends Component {
     path: React.PropTypes.arrayOf(React.PropTypes.object),
     loaded: React.PropTypes.bool.isRequired,
     updateState: React.PropTypes.func.isRequired
-}
+  }
 
   constructor(props) {
     super(props)
@@ -279,21 +279,20 @@ class StorageUnitContainer extends Component {
     const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format("DD.MM.YYYY")
     // const lastUpdateBy = unit.updatedBy // TODO når dette er i orden, autentisering er i orden
     return (
-        <span>
-          <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> Darth Wader
-          <br />
-          <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{lastUpdateDate}
-       </span>
+      <span>
+        <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> Darth Wader
+        <br />
+        <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{lastUpdateDate}
+      </span>
     )
   }
 
   render() {
     return (
-
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
         translate={this.props.translate}
-        breadcrumb={<Breadcrumb nodes={this.props.path} passive />}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <Loader loaded={this.props.loaded}>
             <Grid>

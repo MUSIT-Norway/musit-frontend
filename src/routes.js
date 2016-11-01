@@ -46,7 +46,6 @@ export default () => {
       <Route path="/reports" component={Reports} />
       <Route path="/reports/kdreport" component={KDReportContainer} />
       <Route path="/search/objects" component={ObjectSearchContainer} />
-      <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />
       <Route path="/magasin/:parentId/add" add component={AddStorageUnitPanel} />
@@ -59,7 +58,7 @@ export default () => {
       <Route path="/magasin/:id/observation/add" component={AddObservationPage} />
       <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
       <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} />
-      <Route path="/magasin/*" component={StorageUnitsTable} />
+      <Route path="/magasin/:id" component={StorageUnitsTable} />
 
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />

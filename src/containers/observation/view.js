@@ -5,7 +5,6 @@ import { I18n } from 'react-i18nify'
 import ObservationPage from './page'
 import Layout from '../../layout'
 import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import { createBreadcrumbPath } from '../../util'
 import Breadcrumb from '../../layout/Breadcrumb'
 import { loadRoot } from '../../reducers/storageunit/grid'
 
@@ -17,7 +16,7 @@ const mapStateToProps = (state) => {
     registeredDate: state.observation.data.registeredDate,
     registeredBy: state.observation.data.registeredBy,
     observations: state.observation.data.observations,
-    path: createBreadcrumbPath(state.storageGridUnit.root.data.path, state.storageGridUnit.root.data.pathNames)
+    rootNode: state.storageGridUnit.root.data
   }
 }
 
@@ -47,7 +46,7 @@ class ViewObservationPage extends React.Component {
     params: PropTypes.object.isRequired,
     loadPersonNameFromId: PropTypes.func.isRequired,
     loadObservation: PropTypes.func.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    rootNode: React.PropTypes.object
   }
 
   componentWillMount() {
@@ -55,11 +54,11 @@ class ViewObservationPage extends React.Component {
       this.props.loadObservation(this.props.params.id, this.props.params.obsId, {
         onSuccess: (r) => {
           this.props.loadPersonNameFromId(r.doneBy)
-          if (this.props.path.length === 0) {
-            this.props.loadStorageObj(this.props.params.id)
-          }
         }
       })
+    }
+    if (!this.props.rootNode.path) {
+      this.props.loadStorageObj(this.props.params.id)
     }
   }
 
@@ -67,14 +66,11 @@ class ViewObservationPage extends React.Component {
     if (!this.props.observations) {
       return null; // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
     }
-
-    const nodes = this.props.path
-    const breadcrumb = <Breadcrumb nodes={nodes} passive />
     return (
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={breadcrumb}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <div>
             <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.view')}</h4>
