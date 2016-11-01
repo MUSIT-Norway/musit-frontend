@@ -1,9 +1,3 @@
-import orderBy from 'lodash/orderBy'
-
-export const orderByLodash = (a: any, b: any): any => {
-    return orderBy(a, b)
-}
-
 export const sortObject = (obj: any, key: string, inputKeyType: string = '', sortAscending: bool = true, keyChild: string): any => {
     function valueLowerCase(v) {
         try {

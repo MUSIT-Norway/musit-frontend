@@ -24,12 +24,13 @@ import { moveObject, moveNode } from '../../reducers/move'
 import { loadRoot } from '../../reducers/storageunit/grid'
 import { createSelector } from 'reselect'
 import orderBy from 'lodash/orderBy'
+import toLower from 'lodash/toLower'
 
 const getNodes = (state) => state.picks.NODE || []
 
 const getSortedNodes = createSelector(
     [ getNodes ],
-    (nodes) => orderBy(nodes, ['value.name', 'value.type'])
+    (nodes) => orderBy(nodes, [(o) => toLower(o.value.name), 'value.type'])
 )
 
 
@@ -37,14 +38,14 @@ const getObjects = (state) => state.picks.OBJECT || []
 
 const getSortedObjects = createSelector(
     [ getObjects ],
-    (objects) => orderBy(objects, ['value.museumNo', 'value.subNo', 'value.term'])
+    (objects) => orderBy(objects, [(o) => toLower(o.value.museumNo), (o) => toLower(o.value.subNo), (o) => toLower(o.value.term)])
 )
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   picks: {
     NODE: getSortedNodes(state) ,
-    OBJECTS: getSortedObjects(state)
+    OBJECT: getSortedObjects(state)
   },
   rootNode: state.storageGridUnit
 })

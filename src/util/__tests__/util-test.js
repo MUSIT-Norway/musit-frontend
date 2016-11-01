@@ -1,8 +1,7 @@
 import assert from 'assert'
 import { isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict } from '../'
-import { orderByLodash, sortObject } from '../sort'
+import { sortObject } from '../sort'
 import moment from 'moment'
-import orderBy from 'lodash/orderBy'
 
 describe('parseISODateNonStrict', () => {
   it('should accept full iso timestamp', () => {
@@ -145,7 +144,7 @@ describe('SortObject', () => {
     expect(sortObject(inputObjectDate, 'date')).toMatchSnapshot()
   });
   it('Sort string value', () => {
-    const inputObject = [
+    const inputObject1 = [
       {stringTest: 'ZZ'},
       {stringTest: 'aa'},
       {stringTest: 'ååå'},
@@ -158,48 +157,9 @@ describe('SortObject', () => {
       {stringTest: 'ååå'},
       {stringTest: 'ååå'},
       {stringTest: 'ååå'},
-      {stringTest: '22'}
+      {stringTest: '2'}
     ];
-    const inputObject2 = [
-      {stringTest: 'ååå'},
-      {stringTest: 'ååå'},
-      {stringTest: 'ZZ'},
-      {stringTest: 'aa'},
-      {stringTest: 'bb'},
-      {stringTest: 'bb'},
-      {stringTest: 'bb'},
-      {stringTest: 'bb'},
-      {stringTest: 'bb'},
-      {stringTest: '1'}
-    ];
-    const inputObject3 = [
-      {stringTest: 'ZZ'},
-      {stringTest: 'aa'},
-      {stringTest: 'ååå'},
-      {stringTest: 'AAA'},
-      {stringTest: 'bb'},
-      {stringTest: '1'}
-    ];
-    expect(orderBy([inputObject], ['stringTest'], ['desc'])).toMatchSnapshot()
-  });
-  it('Sort string value lodash2', () => {
-    const inputObject = [
-      {stringTest: 'ZZ'},
-      {stringTest: 'aa'},
-      {stringTest: 'ååå'},
-      {stringTest: 'AAA'},
-      {stringTest: 'NNN'},
-      {stringTest: 'bb'},
-      {stringTest: 'bb'},
-      {stringTest: 'bb'},
-      {stringTest: 'bb'},
-      {stringTest: 'bb'},
-      {stringTest: 'ååå'},
-      {stringTest: 'ååå'},
-      {stringTest: 'ååå'},
-      {stringTest: '22'}
-    ];
-    expect(orderBy([inputObject], ['stringTest'], ['desc'])).toMatchSnapshot()
+    expect(sortObject(inputObject1, 'stringTest', null, true)).toMatchSnapshot()
   });
   it('Sort int value', () => {
     expect(sortObject(inputObject, 'int')).toMatchSnapshot()
@@ -215,17 +175,6 @@ describe('SortObject', () => {
   });
 
   it('Sort date value descending', () => {
-    const inputObjectDateDes = [
-      {date:'1982-10-31T23:00:00.000Z', string: 'ååå', int: 200, intInStr: '211', float: 2.5, floatInStr: '2.5'},
-      {date:'2016-10-01T23:00:00.000Z',string: 'ZZ', int: 22, intInStr: '222', float: 26.5, floatInStr: '26.5'},
-      {date:'2016-10-11T23:00:00.000Z',string: 'zz', int: 333, intInStr: '11111', float: 12.5, floatInStr: '13232.5'},
-      {date:'2016-11-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23', float: 222.5, floatInStr: '22332.5'},
-      {date:'2003-06-31T23:00:00.000Z',string: 'a', int: 190, intInStr: '23333', float: 452.5, floatInStr: '33232.5'},
-      {date:'2011-10-25T23:00:00.000Z',string: '', int: 0, intInStr: '0', float: 2.6, floatInStr: '2.8'},
-      {},
-      {},
-      {floatInStr: '2.2'}
-    ];
     const input = [
       {
         "id": 44,
@@ -538,48 +487,7 @@ describe('SortObject', () => {
         "doneDateOnly": "2016-10-24T00:00:00+00:00"
       }
     ]
-    const input2 = [
-      {
-        "doneDateOnly": "2016-10-28T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-31T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-31T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-11-01T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-28T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-28T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-28T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-28T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-28T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2017-10-25T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-24T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-24T00:00:00+00:00"
-      },
-      {
-        "doneDateOnly": "2016-10-24T00:00:00+00:00"
-      }
-    ]
-    expect(sortObject(input2, 'doneDateOnly', null, false)).toMatchSnapshot()
+    expect(sortObject(input, 'doneDateOnly', null, false)).toMatchSnapshot()
   });
 
   it('Sort string value descending', () => {

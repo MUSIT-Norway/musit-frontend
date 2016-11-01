@@ -53,7 +53,9 @@ exports[`StorageUnitReducer no action 1`] = `Object {}`;
 
 exports[`StorageUnitReducer success action 1`] = `
 Object {
-  "data": Array [],
+  "data": Object {
+    "someField": 1
+  },
   "loaded": true,
   "loading": false
 }

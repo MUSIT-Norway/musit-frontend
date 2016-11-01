@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLagreClick: (data) => {
       dispatch(update(data, {
-        onSuccess: () =>  {
+        onSuccess: () => {
           hashHistory.goBack()
           emitSuccess({ type: 'saveSuccess', message:  I18n.t('musit.storageUnits.messages.saveNodeSuccess')})
         },

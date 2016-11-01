@@ -21,12 +21,13 @@ import { I18n } from 'react-i18nify'
 import { emitError, emitSuccess } from '../../../errors/emitter'
 import { createSelector } from 'reselect'
 import orderBy from 'lodash/orderBy'
+import toLower from 'lodash/toLower'
 
 const getStorageGridUnit = (state) => state.storageGridUnit.data || []
 
 const getSortedStorageGridUnit = createSelector(
     [ getStorageGridUnit ],
-    (storageGridUnit) => orderBy(storageGridUnit, ['name', 'type'])
+    (storageGridUnit) => orderBy(storageGridUnit, [(o) => toLower(o.name), 'type'])
 )
 
 
@@ -34,7 +35,7 @@ const getStorageObjectGrid = (state) => state.storageObjectGrid.data || []
 
 const getSortedStorageObjectGrid = createSelector(
     [ getStorageObjectGrid ],
-    (storageObjectGrid) => orderBy(storageObjectGrid, ['museumNo', 'subNo', 'term'])
+    (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
 )
 
 const mapStateToProps = (state) => ({

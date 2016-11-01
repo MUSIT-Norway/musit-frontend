@@ -1140,47 +1140,45 @@ Array [
 
 exports[`SortObject Sort string value 1`] = `
 Array [
-  Array [
-    Object {
-      "stringTest": "ZZ"
-    },
-    Object {
-      "stringTest": "aa"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "AAA"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "2"
-    }
-  ]
+  Object {
+    "stringTest": "bb"
+  },
+  Object {
+    "stringTest": "2"
+  },
+  Object {
+    "stringTest": "bb"
+  },
+  Object {
+    "stringTest": "ZZ"
+  },
+  Object {
+    "stringTest": "bb"
+  },
+  Object {
+    "stringTest": "bb"
+  },
+  Object {
+    "stringTest": "aa"
+  },
+  Object {
+    "stringTest": "AAA"
+  },
+  Object {
+    "stringTest": "bb"
+  },
+  Object {
+    "stringTest": "ååå"
+  },
+  Object {
+    "stringTest": "ååå"
+  },
+  Object {
+    "stringTest": "ååå"
+  },
+  Object {
+    "stringTest": "ååå"
+  }
 ]
 `;
 
@@ -1239,98 +1237,6 @@ Array [
   Object {
     "floatInStr": "2.2"
   }
-]
-`;
-
-exports[`SortObject Sort string value lodash 1`] = `
-Array [
-  Array [
-    Object {
-      "stringTest": "ZZ"
-    },
-    Object {
-      "stringTest": "aa"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "AAA"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "22"
-    }
-  ]
-]
-`;
-
-exports[`SortObject Sort string value lodash2 1`] = `
-Array [
-  Array [
-    Object {
-      "stringTest": "ZZ"
-    },
-    Object {
-      "stringTest": "aa"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "AAA"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "bb"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "ååå"
-    },
-    Object {
-      "stringTest": "22"
-    }
-  ]
 ]
 `;
 
