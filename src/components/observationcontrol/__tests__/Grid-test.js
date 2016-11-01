@@ -1,13 +1,13 @@
 import assert from 'assert'
 import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
-import ObjectGrid from '../ObservationControlGrid';
+import ObservationControlGrid from '../Grid';
 
 describe('ObservationControlGrid', () => {
   let inputComponent
   const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
-      <ObjectGrid
+      <ObservationControlGrid
         id={1}
         translate={(key) => key}
         tableData={[

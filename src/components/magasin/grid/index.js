@@ -8,10 +8,10 @@ import NodeLeftMenuComponent from './LeftMenu'
 import Toolbar from '../../../layout/Toolbar'
 import { blur } from '../../../util'
 import Breadcrumb from '../../../layout/Breadcrumb'
-import MusitModal from '../../../components/formfields/musitModal'
+import MusitModal from '../../movedialog'
 import { I18n } from 'react-i18nify'
 import { emitError, emitSuccess } from '../../../errors/emitter'
-import MusitModalHistory from '../../../components/formfields/musitModalHistory/index'
+import MusitModalHistory from '../../movehistory'
 
 export default class StorageUnitsContainer extends React.Component {
   static propTypes = {

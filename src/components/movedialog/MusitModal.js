@@ -17,12 +17,12 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React, {Component, PropTypes} from 'react'
-import Breadcrumb from '../../../layout/Breadcrumb'
-import ModalNodeGrid from '../../../components/grid/ModalNodeGrid'
-import NodeSuggest from '../../../components/nodesearch'
-import Modal from '../../modal/MusitModal'
-import SubmitButton from '../../buttons/submit'
-import CancelButton from '../../buttons/cancel'
+import Breadcrumb from '../../layout/Breadcrumb'
+import ModalNodeGrid from '../grid/ModalNodeGrid'
+import NodeSuggest from '../nodesearch'
+import Modal from '../modal/MusitModal'
+import SubmitButton from '../buttons/submit'
+import CancelButton from '../buttons/cancel'
 import { I18n } from 'react-i18nify'
 
 export default class MusitModal extends Component {

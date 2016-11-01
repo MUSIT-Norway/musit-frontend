@@ -1,5 +1,5 @@
 import MoveHistoryModal from './MoveHistoryModal'
-import { loadMoveHistoryForObject, clearMoveHistoryForObject, loadActor } from '../../../reducers/grid/move'
+import { loadMoveHistoryForObject, clearMoveHistoryForObject, loadActor } from '../../reducers/grid/move'
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {

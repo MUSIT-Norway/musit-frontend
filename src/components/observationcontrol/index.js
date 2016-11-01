@@ -1,5 +1,5 @@
 import React from 'react'
-import ObservationControlGrid from '../grid/ObservationControlGrid'
+import ObservationControlGrid from './Grid'
 import ObservationControlComponent from './LeftMenu'
 import Layout from '../../layout'
 import Breadcrumb from '../../layout/Breadcrumb'

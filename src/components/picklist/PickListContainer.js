@@ -7,7 +7,7 @@ import Breadcrumb from '../../layout/Breadcrumb'
 import { hashHistory } from 'react-router'
 import { TYPES } from '../../reducers/picklist'
 import { I18n } from 'react-i18nify'
-import MusitModal from '../../components/formfields/musitModal'
+import MusitModal from '../movedialog'
 import './PickListContainer.css'
 import { emitError, emitSuccess } from '../../errors/emitter'
 
