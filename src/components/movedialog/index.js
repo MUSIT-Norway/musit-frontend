@@ -17,30 +17,24 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { I18n } from 'react-i18nify'
+import { loadChildren, clear, loadNode } from '../../reducers/storageunit/modal'
 import { connect } from 'react-redux'
-import { loadControl } from '../../../reducers/control'
-import { getActorNameFromId } from '../../../reducers/observation'
-import ControlViewContainerImpl from '../../../components/control/view'
-import { loadRoot } from '../../../reducers/storageunit/grid'
+import MusitModalImpl from './MusitModal'
 
 const mapStateToProps = (state) => ({
-  translate: (key, markdown) => I18n.t(key, markdown),
-  controls: state.control,
-  doneBy: state.observation.data.doneBy,
-  rootNode: state.storageGridUnit.root.data
-})
+  user: state.auth.user,
+  children: state.storageUnitModal.data || [],
+  selectedNode: state.storageUnitModal.root.data
+});
 
-const mapDispatchToProps = (dispatch) => ({
-  loadControl: (nodeId, controlId, callback) => {
-    dispatch(loadControl(nodeId, controlId, callback))
-  },
-  loadPersonNameFromId: (doneBy) => {
-    dispatch(getActorNameFromId(doneBy))
-  },
-  loadStorageObj: (id) => {
-    dispatch(loadRoot(id))
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clear: () => dispatch(clear()),
+    loadNode: (id) => dispatch(loadNode(id)),
+    loadRootChildren: () => dispatch(loadChildren(1)),
+    loadChildren: (id) => dispatch(loadChildren(id))
   }
-})
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ControlViewContainerImpl)
+
+export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl)

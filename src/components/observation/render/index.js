@@ -1,11 +1,9 @@
 
 import React, { PropTypes } from 'react'
-import {
-  ObservationFromToNumberCommentComponent,
-  ObservationDoubleTextAreaComponent,
-  ObservationStatusPercentageComment,
-  ObservationPest
-} from '../../../components/observation'
+import ObservationFromToNumberCommentComponent from '../ObservationFromToNumberCommentComponent'
+import ObservationDoubleTextAreaComponent from '../ObservationDoubleTextAreaComponent'
+import ObservationStatusPercentageComment from '../ObservationStatusPercentageComment'
+import ObservationPest from '../ObservationPest'
 
 export const RenderAlcohol = (props) => {
   return (
