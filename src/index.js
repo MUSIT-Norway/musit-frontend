@@ -75,13 +75,13 @@ successSource.subscribe ((s) => {
       });
       break;
     case 'saveSuccess':
-    notificationSystem.addNotification({
-      level: 'success',
-      title: I18n.t('musit.notificationMessages.saving'),
-      position: 'tc',
-      children: children(s.message)
-    });
-    break;
+      notificationSystem.addNotification({
+        level: 'success',
+        title: I18n.t('musit.notificationMessages.saving'),
+        position: 'tc',
+        children: children(s.message)
+      });
+      break;
     default:
       notificationSystem.addNotification({
         level: 'success',
@@ -163,7 +163,7 @@ try {
   );
 
   if (config.isDev) {
-    window.React = React; // enable debugger
+    window.React = React;
   }
 
   if (config.useDevTools && !window.devToolsExtension) {
@@ -178,7 +178,7 @@ try {
     );
   }
 } catch(e) {
-  emitError({ type: 'annet', e })
+  emitError({ type: 'other', e })
 }
 
 

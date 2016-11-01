@@ -62,11 +62,12 @@ class Breadcrumb extends React.Component {
         }
         {itemsCropped.map((item, i, arr) => {
           const notLast = i < arr.length - 1;
-          const enabled = notLast && !this.props.disabled;
+          const enableLast = notLast && !this.props.disabled;
+          const enableLink = this.props.allActive || enableLast
           return (
             <span key={i}>
             {CrumbItem({
-              url: enabled ? item.url : null,
+              url: enableLink ? item.url : null,
               name: item.name,
               onClick: clickCrumb(item),
               icon: 'folder',

@@ -148,8 +148,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -207,8 +220,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -266,8 +292,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -325,8 +364,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -384,8 +436,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -443,8 +508,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -502,8 +580,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -561,8 +652,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -620,8 +724,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -679,8 +796,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -738,8 +868,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -797,8 +940,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -856,8 +1012,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -915,8 +1084,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -974,8 +1156,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -1033,8 +1228,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -1092,8 +1300,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -1151,8 +1372,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -1210,8 +1444,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",
@@ -1269,8 +1516,21 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 <td
                   className="path">
                   <Breadcrumb
+                    allActive={true}
                     node={
                       Object {
+                        "breadcrumb": Array [
+                          Object {
+                            "id": 2,
+                            "name": "Musit",
+                            "url": "/magasin/2"
+                          },
+                          Object {
+                            "id": 3,
+                            "name": "Kontoret",
+                            "url": "/magasin/3"
+                          }
+                        ],
                         "id": 1,
                         "museumNo": "12345",
                         "path": ",1,2,3,",

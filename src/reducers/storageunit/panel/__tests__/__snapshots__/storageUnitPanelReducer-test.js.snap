@@ -19,11 +19,11 @@ Object {
   "data": Object {
     "area": undefined,
     "areaTo": undefined,
+    "breadcrumb": Array [],
     "environmentAssessment": Object {},
     "environmentRequirement": Object {},
     "height": undefined,
     "heightTo": undefined,
-    "path": Array [],
     "securityAssessment": Object {},
     "someField": 1
   },
@@ -125,11 +125,11 @@ Object {
   "data": Object {
     "area": undefined,
     "areaTo": undefined,
+    "breadcrumb": Array [],
     "environmentAssessment": Object {},
     "environmentRequirement": Object {},
     "height": undefined,
     "heightTo": undefined,
-    "path": Array [],
     "securityAssessment": Object {},
     "someField": 1
   },
@@ -193,11 +193,11 @@ Object {
   "data": Object {
     "area": undefined,
     "areaTo": undefined,
+    "breadcrumb": Array [],
     "environmentAssessment": Object {},
     "environmentRequirement": Object {},
     "height": undefined,
     "heightTo": undefined,
-    "path": Array [],
     "securityAssessment": Object {},
     "someField": 1
   },

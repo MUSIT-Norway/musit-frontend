@@ -321,7 +321,6 @@ class StorageUnitsContainer extends React.Component {
           onClickMoveNode={this.showMoveNodeModal}
           onClickDelete={(id) => {
             const title = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name: rootNode.name})
-            debugger;
             this.context.showConfirm(title, () => onDelete(id, rootNode))
           }}
         />

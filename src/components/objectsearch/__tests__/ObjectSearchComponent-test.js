@@ -2,8 +2,27 @@ import { shallow } from 'enzyme'
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react'
 import ObjectSearchComponent from '../ObjectSearchComponent'
+import { getPath } from '../../../reducers/helper'
 
 describe('ObjectSearchComponent', () => {
+  const path = ',1,2,3,';
+  const pathNames = [
+    {
+      nodeId: 1,
+      name: "Root",
+      type: "Organization"
+    },
+    {
+      nodeId: 2,
+      name: "Musit",
+      type: "Building"
+    },
+    {
+      nodeId: 3,
+      name: "Kontoret",
+      type: "Room"
+    }
+  ];
   const testData = {
     totalMatches: 20,
     matches: Array(20).fill(
@@ -12,24 +31,9 @@ describe('ObjectSearchComponent', () => {
         subNo: '45',
         term: 'Fuglekasse',
         id: 1,
-        path: ',1,2,3,',
-        pathNames: [
-          {
-            nodeId: 1,
-            name: "Root",
-            type: "Organization"
-          },
-          {
-            nodeId: 2,
-            name: "Musit",
-            type: "Building"
-          },
-          {
-            nodeId: 3,
-            name: "Kontoret",
-            type: "Room"
-          }
-        ]
+        breadcrumb: getPath(path, pathNames),
+        path: path,
+        pathNames: pathNames
       }
     )
   }

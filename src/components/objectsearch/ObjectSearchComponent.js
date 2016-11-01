@@ -79,7 +79,7 @@ export default (props) =>
                       <td className="museumNo">{data.museumNo}</td>
                       <td className="subNo">{data.subNo}</td>
                       <td className="term">{data.term}</td>
-                      <td className="path">{data.breadcrumb.length > 0 ? <Breadcrumb node={data} /> : ''}</td>
+                      <td className="path">{data.breadcrumb.length > 0 ? <Breadcrumb node={data} allActive /> : ''}</td>
                       <td className="move">
                         <a
                           href=""

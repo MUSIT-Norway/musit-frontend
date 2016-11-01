@@ -66,8 +66,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
       return {
         ...state,
         root: {},
-        data: [],
-        currentId: null
+        data: []
       }
     }
     default:

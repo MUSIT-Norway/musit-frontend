@@ -73,10 +73,7 @@ Object {
   "data": Object {
     "matches": Array [
       Object {
-        "currentLocationId": 5,
-        "id": 51,
-        "museumNo": "MusN11",
-        "path": Array [
+        "breadcrumb": Array [
           Object {
             "id": 2,
             "name": "Utviklingsmuseet",
@@ -98,6 +95,10 @@ Object {
             "url": "/magasin/5"
           }
         ],
+        "currentLocationId": 5,
+        "id": 51,
+        "museumNo": "MusN11",
+        "path": ",1,2,3,4,5,",
         "pathNames": Array [
           Object {
             "name": "root-node",
@@ -123,55 +124,52 @@ Object {
         "term": "Solsikke"
       },
       Object {
+        "breadcrumb": Array [],
         "id": 54,
         "museumNo": "MusN13",
-        "path": Array [],
         "term": "Makrellsopp"
       },
       Object {
+        "breadcrumb": Array [],
         "id": 19,
         "museumNo": "MusN20",
-        "path": Array [],
         "term": "Ukjent mygg"
       },
       Object {
+        "breadcrumb": Array [],
         "id": 17,
         "museumNo": "MusN21",
-        "path": Array [],
         "subNo": "2",
         "term": "Snilebille"
       },
       Object {
+        "breadcrumb": Array [],
         "id": 18,
         "museumNo": "MusN22",
-        "path": Array [],
         "term": "Fluesopp"
       },
       Object {
+        "breadcrumb": Array [],
         "id": 14,
         "museumNo": "MusK23",
-        "path": Array [],
         "term": "Lite skaft av ben"
       },
       Object {
+        "breadcrumb": Array [],
         "id": 15,
         "museumNo": "MusK24",
-        "path": Array [],
         "subNo": "a",
         "term": "Lendeklede"
       },
       Object {
+        "breadcrumb": Array [],
         "id": 16,
         "museumNo": "MusK24",
-        "path": Array [],
         "subNo": "b",
         "term": "Kokekar"
       },
       Object {
-        "currentLocationId": 5,
-        "id": 9,
-        "museumNo": "MusN28",
-        "path": Array [
+        "breadcrumb": Array [
           Object {
             "id": 2,
             "name": "Utviklingsmuseet",
@@ -193,6 +191,10 @@ Object {
             "url": "/magasin/5"
           }
         ],
+        "currentLocationId": 5,
+        "id": 9,
+        "museumNo": "MusN28",
+        "path": ",1,2,3,4,5,",
         "pathNames": Array [
           Object {
             "name": "root-node",

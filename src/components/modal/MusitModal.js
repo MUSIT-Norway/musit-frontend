@@ -17,7 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, {PropTypes} from 'react'
+import React from 'react'
 import './MusitModal.css'
 
 const MusitModal = (props) => {
@@ -40,10 +40,6 @@ const MusitModal = (props) => {
       </div>
     </div>
   );
-};
-
-MusitModal.contextTypes = {
-  closeModal: PropTypes.func.isRequired
 };
 
 export default MusitModal;

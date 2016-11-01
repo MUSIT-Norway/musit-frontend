@@ -33,9 +33,7 @@ Object {
   "data": Array [
     Object {
       "from": Object {
-        "id": 4,
-        "name": "Test 2",
-        "path": Array [
+        "breadcrumb": Array [
           Object {
             "id": 2,
             "name": "Building 1",
@@ -47,6 +45,9 @@ Object {
             "url": "/magasin/4"
           }
         ],
+        "id": 4,
+        "name": "Test 2",
+        "path": ",1,2,4,",
         "pathNames": Array [
           Object {
             "name": "Museum 1",
@@ -63,9 +64,7 @@ Object {
         ]
       },
       "to": Object {
-        "id": 3,
-        "name": "Test 1",
-        "path": Array [
+        "breadcrumb": Array [
           Object {
             "id": 2,
             "name": "Building 1",
@@ -77,6 +76,9 @@ Object {
             "url": "/magasin/3"
           }
         ],
+        "id": 3,
+        "name": "Test 1",
+        "path": ",1,2,3,",
         "pathNames": Array [
           Object {
             "name": "Museum 1",

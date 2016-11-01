@@ -1,19 +1,31 @@
-exports[`StorageUnitModalReducer CLEAR_CURRENT action 1`] = `
+exports[`StorageUnitModalReducer LOAD_CHILDREN: fail action 1`] = `
 Object {
-  "0": Object {
-    "id": 3,
-    "isPartOf": 2,
-    "name": "Forskningens hus",
-    "path": ",1,2,3,",
-    "type": "Building",
-    "updatedBy": 123,
-    "updatedDate": "2016-01-01T00:00:00+00:00"
-  },
-  "currentId": null
+  "error": [Error: LOAD_CHILDREN has error.],
+  "loaded": false,
+  "loading": false,
+  "root": Object {}
 }
 `;
 
-exports[`StorageUnitModalReducer LOAD_ROOT: fail action 1`] = `
+exports[`StorageUnitModalReducer LOAD_CHILDREN: initial action 1`] = `
+Object {
+  "loading": true,
+  "root": Object {}
+}
+`;
+
+exports[`StorageUnitModalReducer LOAD_CHILDREN: success action 1`] = `
+Object {
+  "data": Object {
+    "someField": 1
+  },
+  "loaded": true,
+  "loading": false,
+  "root": Object {}
+}
+`;
+
+exports[`StorageUnitModalReducer LOAD_NODE: fail action 1`] = `
 Object {
   "root": Object {
     "error": [Error: LOAD_ROOT: has error.],
@@ -23,24 +35,18 @@ Object {
 }
 `;
 
-exports[`StorageUnitModalReducer LOAD_ROOT: initial action 1`] = `
+exports[`StorageUnitModalReducer LOAD_NODE: initial action 1`] = `
 Object {
   "loading": true,
   "root": Object {}
 }
 `;
 
-exports[`StorageUnitModalReducer LOAD_ROOT: no action 1`] = `
-Object {
-  "root": Object {}
-}
-`;
-
-exports[`StorageUnitModalReducer LOAD_ROOT: success action 1`] = `
+exports[`StorageUnitModalReducer LOAD_NODE: success action 1`] = `
 Object {
   "root": Object {
     "data": Object {
-      "path": Array [],
+      "breadcrumb": Array [],
       "someField": 1
     },
     "loaded": true,
@@ -49,91 +55,44 @@ Object {
 }
 `;
 
-exports[`StorageUnitModalReducer LOAD_SEVERAL child: fail action 1`] = `
-Object {
-  "error": [Error: LOAD_SEVERAL child has error.],
-  "loaded": false,
-  "loading": false,
-  "root": Object {}
-}
-`;
-
-exports[`StorageUnitModalReducer LOAD_SEVERAL child: initial action 1`] = `
-Object {
-  "loading": true,
-  "root": Object {}
-}
-`;
-
-exports[`StorageUnitModalReducer LOAD_SEVERAL child: no action 1`] = `
+exports[`StorageUnitModalReducer Reducer: no action 1`] = `
 Object {
   "root": Object {}
 }
 `;
 
-exports[`StorageUnitModalReducer LOAD_SEVERAL child: success action 1`] = `
+exports[`StorageUnitModalReducer Reducer: nothing at all 1`] = `
 Object {
-  "data": Object {
-    "someField": 1
+  "root": Object {}
+}
+`;
+
+exports[`StorageUnitModalReducer creates LOAD_CHILDREN_SUCCESS child when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-modal/LOAD_CHILDREN"
   },
-  "loaded": true,
-  "loading": false,
-  "root": Object {}
-}
-`;
-
-exports[`StorageUnitModalReducer LOAD_SEVERAL: fail action 1`] = `
-Object {
-  "error": [Error: LOAD_SEVERAL has error.],
-  "loaded": false,
-  "loading": false,
-  "root": Object {}
-}
-`;
-
-exports[`StorageUnitModalReducer LOAD_SEVERAL: initial action 1`] = `
-Object {
-  "loading": true,
-  "root": Object {}
-}
-`;
-
-exports[`StorageUnitModalReducer LOAD_SEVERAL: no action 1`] = `
-Object {
-  "root": Object {}
-}
-`;
-
-exports[`StorageUnitModalReducer LOAD_SEVERAL: success action 1`] = `
-Object {
-  "data": Object {
-    "someField": 1
-  },
-  "loaded": true,
-  "loading": false,
-  "root": Object {}
-}
-`;
-
-exports[`StorageUnitModalReducer SET_CURRENT action 1`] = `
-Object {
-  "0": Object {
-    "id": 3,
-    "isPartOf": 2,
-    "name": "Forskningens hus",
-    "path": ",1,2,3,",
-    "type": "Building",
-    "updatedBy": 123,
-    "updatedDate": "2016-01-01T00:00:00+00:00"
-  },
-  "currentId": 1
-}
+  Object {
+    "result": Array [
+      Object {
+        "id": 3,
+        "isPartOf": 2,
+        "name": "Forskningens hus",
+        "path": ",1,2,3,",
+        "type": "Building",
+        "updatedBy": 123,
+        "updatedDate": "2016-01-01T00:00:00+00:00"
+      }
+    ],
+    "type": "musit/storageunit-modal/LOAD_CHILDREN_SUCCESS"
+  }
+]
 `;
 
 exports[`StorageUnitModalReducer creates LOAD_ROOT_SUCCESS when fetching data has been done 1`] = `
 Array [
   Object {
-    "type": "musit/storageunit-modal/LOAD_ROOT"
+    "type": "musit/storageunit-modal/LOAD_NODE"
   },
   Object {
     "result": Object {
@@ -155,29 +114,7 @@ Array [
       "updatedBy": 123,
       "updatedDate": "2016-01-01T00:00:00+00:00"
     },
-    "type": "musit/storageunit-modal/LOAD_ROOT_SUCCESS"
-  }
-]
-`;
-
-exports[`StorageUnitModalReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 1`] = `
-Array [
-  Object {
-    "type": "musit/storageunit-modal/LOAD_SEVERAL"
-  },
-  Object {
-    "result": Array [
-      Object {
-        "id": 3,
-        "isPartOf": 2,
-        "name": "Forskningens hus",
-        "path": ",1,2,3,",
-        "type": "Building",
-        "updatedBy": 123,
-        "updatedDate": "2016-01-01T00:00:00+00:00"
-      }
-    ],
-    "type": "musit/storageunit-modal/LOAD_SEVERAL_SUCCESS"
+    "type": "musit/storageunit-modal/LOAD_NODE_SUCCESS"
   }
 ]
 `;
@@ -185,7 +122,7 @@ Array [
 exports[`StorageUnitModalReducer creates LOAD_SEVERAL_SUCCESS when fetching data has been done 1`] = `
 Array [
   Object {
-    "type": "musit/storageunit-modal/LOAD_ROOT"
+    "type": "musit/storageunit-modal/LOAD_NODE"
   },
   Object {
     "result": Array [
@@ -199,7 +136,7 @@ Array [
         "updatedDate": "2016-01-01T00:00:00+00:00"
       }
     ],
-    "type": "musit/storageunit-modal/LOAD_ROOT_SUCCESS"
+    "type": "musit/storageunit-modal/LOAD_NODE_SUCCESS"
   }
 ]
 `;

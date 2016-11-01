@@ -25,7 +25,6 @@ export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
-    pushState: PropTypes.func.isRequired,
     store: PropTypes.object,
     pickListNodeCount: PropTypes.number.isRequired,
     pickListObjectCount: PropTypes.number.isRequired,
@@ -93,7 +92,7 @@ export default class App extends Component {
       width: 'auto',
       close: function() {
         ReactDOM.unmountComponentAtNode(this);
-        $( this ).remove();
+        $(this).remove();
       }
     });
 
