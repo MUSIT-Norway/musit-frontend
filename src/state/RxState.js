@@ -18,7 +18,7 @@ export const connect = (selector = state => state) => (providedState$) => {
       state$ = providedState$;
 
       static contextTypes = {
-        state$: PropTypes.object, // .isRequired
+        state$: PropTypes.object // .isRequired
       };
 
       constructor(props, context) {
@@ -46,11 +46,11 @@ export const connect = (selector = state => state) => (providedState$) => {
 // We can use this in the future maybe, thus making global state aka the way redux does it
 export class RxStateProvider extends Component {
   static propTypes = {
-    state$: PropTypes.object.isRequired,
+    state$: PropTypes.object.isRequired
   };
 
   static childContextTypes = {
-    state$: PropTypes.object.isRequired,
+    state$: PropTypes.object.isRequired
   };
 
   getChildContext() {
