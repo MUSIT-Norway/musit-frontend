@@ -87,7 +87,13 @@ export default class ObservationControlGridShow extends React.Component {
       <Layout
         title="Magasin"
         translate={this.props.translate}
-        breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={(node) => hashHistory.push(node.url)} />}
+        breadcrumb={
+          <Breadcrumb
+            node={this.props.rootNode}
+            onClickCrumb={(node) => hashHistory.push(node.url)}
+            allActive
+          />
+        }
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContent()}

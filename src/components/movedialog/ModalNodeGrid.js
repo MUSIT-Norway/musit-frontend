@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { Table, FormGroup } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import './ModalNodeGrid.css'
 
 export default class ModalNodeGrid extends Component {
   static propTypes = {
@@ -12,7 +13,7 @@ export default class ModalNodeGrid extends Component {
     return (
       <FormGroup>
         <div>
-          <Table responsive hover>
+          <Table responsive hover className="modalNodeGrid">
             <tbody>
               {this.props.tableData.map((c, i) =>
                 <tr key={i} id={`${i}`}>
