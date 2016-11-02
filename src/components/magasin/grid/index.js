@@ -151,6 +151,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   moveObject = (fromObject) => (toId, toName, onSuccess) => {
+    const description = this.getObjectDescription(fromObject)
     this.props.moveObject(fromObject.id, toId, this.props.user.id, {
       onSuccess: () => {
         onSuccess()
@@ -158,13 +159,13 @@ export default class StorageUnitsContainer extends React.Component {
         this.props.loadRoot(this.props.rootNode.id)
         emitSuccess({
           type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.objectMoved', { name: fromObject.name, destination: toName })
+          message: I18n.t('musit.moveModal.messages.objectMoved', { name: description, destination: toName })
         })
       },
       onFailure: () => {
         emitError({
           type: 'errorOnMove',
-          message: I18n.t('musit.moveModal.messages.errorObject', { name: fromObject.name, destination: toName })
+          message: I18n.t('musit.moveModal.messages.errorObject', { name: description, destination: toName })
         })
       }
     })

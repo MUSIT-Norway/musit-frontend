@@ -19,7 +19,7 @@
  */
 import React from 'react'
 import { Grid, Row, Col, FormControl } from 'react-bootstrap'
-import PairedToogleButtons from '../../../components/control/add/ToggleButtons'
+import PairedToogleButtons from './ToggleButtons'
 import DatePicker from '../../../util/datePicker'
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
 import { hashHistory } from 'react-router'

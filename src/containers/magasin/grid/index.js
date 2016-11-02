@@ -8,12 +8,32 @@ import { hashHistory } from 'react-router'
 import { I18n } from 'react-i18nify'
 import { emitError, emitSuccess } from '../../../errors/emitter'
 import StorageUnitsContainer from '../../../components/magasin/grid'
+import { createSelector } from 'reselect'
+import orderBy from 'lodash/orderBy'
+import toLower from 'lodash/toLower'
+
+const getStorageGridUnit = (state) => state.storageGridUnit.data || []
+
+const getSortedStorageGridUnit = createSelector(
+    [ getStorageGridUnit ],
+    (storageGridUnit) => orderBy(storageGridUnit, ['type', (o) => toLower(o.name)])
+)
+
+const getStorageObjectGrid = (state) => state.storageObjectGrid.data || []
+
+const getSortedStorageObjectGrid = createSelector(
+    [ getStorageObjectGrid ],
+    (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
+)
+
+
+
 
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   stats: state.storageUnitStats.stats,
-  children: state.storageGridUnit.data || [],
-  objects: state.storageObjectGrid.data || [],
+  children: getSortedStorageGridUnit(state),
+  objects: getSortedStorageObjectGrid(state),
   rootNode: state.storageGridUnit.root.data,
   routerState: state.routing
 });

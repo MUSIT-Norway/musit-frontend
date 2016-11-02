@@ -1,9 +1,11 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
+
 export default (props) =>
-  <button
+  <Button
     disabled={props.disabled ? 'disabled' : ''}
-    className={`btn btn-primary`}
+    bsStyle="primary"
     onClick={props.onClick}
   >
     {props.label}
-  </button>
+  </Button>

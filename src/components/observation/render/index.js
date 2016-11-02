@@ -1,9 +1,9 @@
-
 import React, { PropTypes } from 'react'
-import ObservationFromToNumberCommentComponent from '../ObservationFromToNumberCommentComponent'
-import ObservationDoubleTextAreaComponent from '../ObservationDoubleTextAreaComponent'
-import ObservationStatusPercentageComment from '../ObservationStatusPercentageComment'
-import ObservationPest from '../ObservationPest'
+import ObservationFromToNumberCommentComponent from './ObservationFromToNumberCommentComponent'
+import ObservationDoubleTextAreaComponent from './ObservationDoubleTextAreaComponent'
+import ObservationStatusPercentageComment from './ObservationStatusPercentageComment'
+import ObservationPest from './ObservationPest'
+import { I18n } from 'react-i18nify'
 
 export const RenderAlcohol = (props) => {
   return (
@@ -11,31 +11,30 @@ export const RenderAlcohol = (props) => {
       {...props.layoutProps}
       {...props.valueProps}
       disabled={props.disabled}
-      statusLabel={props.translate('musit.observation.page.alcohol.statusLabel')}
-      statusTooltip={props.translate('musit.observation.page.alcohol.statusTooltip')}
-      statusPlaceHolder={props.translate('musit.observation.page.alcohol.statusPlaceHolder')}
+      statusLabel={I18n.t('musit.observation.page.alcohol.statusLabel')}
+      statusTooltip={I18n.t('musit.observation.page.alcohol.statusTooltip')}
+      statusPlaceHolder={I18n.t('musit.observation.page.alcohol.statusPlaceHolder')}
       statusItems={[
-        props.translate('musit.observation.page.alcohol.statusItems.dryed'),
-        props.translate('musit.observation.page.alcohol.statusItems.allmostDryed'),
-        props.translate('musit.observation.page.alcohol.statusItems.someDryed'),
-        props.translate('musit.observation.page.alcohol.statusItems.minorDryed'),
-        props.translate('musit.observation.page.alcohol.statusItems.satisfactory')
+        I18n.t('musit.observation.page.alcohol.statusItems.dryed'),
+        I18n.t('musit.observation.page.alcohol.statusItems.allmostDryed'),
+        I18n.t('musit.observation.page.alcohol.statusItems.someDryed'),
+        I18n.t('musit.observation.page.alcohol.statusItems.minorDryed'),
+        I18n.t('musit.observation.page.alcohol.statusItems.satisfactory')
       ]}
       statusOnChange={(value) => props.onChangeField('statusValue', value, props.index)}
-      volumeLabel={props.translate('musit.observation.page.alcohol.volumeLabel')}
-      volumeTooltip={props.translate('musit.observation.page.alcohol.volumeTooltip')}
-      volumePlaceHolder={props.translate('musit.observation.page.alcohol.volumePlaceHolder')}
+      volumeLabel={I18n.t('musit.observation.page.alcohol.volumeLabel')}
+      volumeTooltip={I18n.t('musit.observation.page.alcohol.volumeTooltip')}
+      volumePlaceHolder={I18n.t('musit.observation.page.alcohol.volumePlaceHolder')}
       volumeOnChange={(value) => props.onChangeField('volumeValue', value, props.index)}
-      commentLabel={props.translate('musit.observation.page.alcohol.commentLabel')}
-      commentTooltip={props.translate('musit.observation.page.alcohol.commentTooltip')}
-      commentPlaceHolder={props.translate('musit.observation.page.alcohol.commentPlaceHolder')}
+      commentLabel={I18n.t('musit.observation.page.alcohol.commentLabel')}
+      commentTooltip={I18n.t('musit.observation.page.alcohol.commentTooltip')}
+      commentPlaceHolder={I18n.t('musit.observation.page.alcohol.commentPlaceHolder')}
       commentOnChange={(value) => props.onChangeField('commentValue', value, props.index)}
     />
   )
 }
 
 RenderAlcohol.propTypes = {
-  translate: PropTypes.func.isRequired,
   onChangeField: PropTypes.func,
   index: PropTypes.number,
   valueProps: PropTypes.shape({
@@ -67,48 +66,50 @@ export const RenderPest = (props) => {
       disabled={props.disabled}
       canEdit={props.canEdit}
       observations={props.valueProps.observations}
-      lifeCycleLabel={props.translate('musit.observation.page.pest.lifeCycleLabel')}
-      lifeCyclePlaceHolder={props.translate('musit.texts.makeChoice')}
-      lifeCycleTooltip={props.translate('musit.observation.page.pest.lifeCycleTooltip')}
+      lifeCycleLabel={I18n.t('musit.observation.page.pest.lifeCycleLabel')}
+      lifeCyclePlaceHolder={I18n.t('musit.texts.makeChoice')}
+      lifeCycleTooltip={I18n.t('musit.observation.page.pest.lifeCycleTooltip')}
       lifeCycleOnChange={(lifeCycleIndex, value) =>
         props.onChangePestObservation(lifeCycleIndex, 'lifeCycle', value, props.index)
       }
       lifeCycleOnRemove={(lifeCycleIndex) => props.onRemovePestObservation(lifeCycleIndex, props.index)}
       lifeCycleItems={[
-        props.translate('musit.observation.page.pest.lifeCycleLabelMenu.puppe'),
-        props.translate('musit.observation.pest.pest.lifeCycleLabelMenu.adult'),
-        props.translate('musit.observation.pest.pest.lifeCycleLabelMenu.puppeskin'),
-        props.translate('musit.observation.pest.pest.lifeCycleLabelMenu.larva'),
-        props.translate('musit.observation.pest.pest.lifeCycleLabelMenu.egg')
+        I18n.t('musit.observation.page.pest.lifeCycleLabelMenu.puppe'),
+        I18n.t('musit.observation.pest.pest.lifeCycleLabelMenu.adult'),
+        I18n.t('musit.observation.pest.pest.lifeCycleLabelMenu.puppeskin'),
+        I18n.t('musit.observation.pest.pest.lifeCycleLabelMenu.larva'),
+        I18n.t('musit.observation.pest.pest.lifeCycleLabelMenu.egg')
       ]}
-      countLabel={props.translate('musit.observation.page.pest.countLabel')}
-      countTooltip={props.translate('musit.observation.page.pest.countTooltip')}
-      countPlaceHolder={props.translate('musit.observation.page.pest.countPlaceHolder')}
+      countLabel={I18n.t('musit.observation.page.pest.countLabel')}
+      countTooltip={I18n.t('musit.observation.page.pest.countTooltip')}
+      countPlaceHolder={I18n.t('musit.observation.page.pest.countPlaceHolder')}
       countOnChange={(countIndex, value) => props.onChangePestObservation(countIndex, 'count', value, props.index)}
       commentsLeftValue={props.valueProps.identificationValue}
-      commentsLeftLabel={props.translate('musit.observation.page.pest.identificationLabel')}
-      commentsLeftTooltip={props.translate('musit.observation.page.pest.identificationTooltip')}
-      commentsLeftPlaceHolder={props.translate('musit.observation.page.pest.identificationPlaceHolder')}
+      commentsLeftLabel={I18n.t('musit.observation.page.pest.identificationLabel')}
+      commentsLeftTooltip={I18n.t('musit.observation.page.pest.identificationTooltip')}
+      commentsLeftPlaceHolder={I18n.t('musit.observation.page.pest.identificationPlaceHolder')}
       commentsOnChangeLeft={(value) => props.onChangeField('identificationValue', value, props.index)}
       commentsRightValue={props.valueProps.commentValue}
-      commentsRightLabel={props.translate('musit.observation.page.pest.commentsLabel')}
-      commentsRightTooltip={props.translate('musit.observation.page.pest.commentsTooltip')}
-      commentsRightPlaceHolder={props.translate('musit.observation.page.pest.commentsPlaceHolder')}
+      commentsRightLabel={I18n.t('musit.observation.page.pest.commentsLabel')}
+      commentsRightTooltip={I18n.t('musit.observation.page.pest.commentsTooltip')}
+      commentsRightPlaceHolder={I18n.t('musit.observation.page.pest.commentsPlaceHolder')}
       commentsOnChangeRight={(value) => props.onChangeField('commentValue', value, props.index)}
-      newButtonLabel={props.translate('musit.observation.page.newButtonLabel')}
+      newButtonLabel={I18n.t('musit.observation.page.newButtonLabel')}
       newButtonOnClick={() => props.onClickAddObservation(props.index)}
     />
   )
 }
 
 RenderPest.propTypes = {
-  translate: PropTypes.func.isRequired,
   onChangePestObservation: PropTypes.func,
   onClickAddObservation: PropTypes.func,
   onRemovePestObservation: PropTypes.func,
   index: PropTypes.number,
   valueProps: PropTypes.shape({
-    observations: PropTypes.arrayOf(PropTypes.object),
+    observations: PropTypes.arrayOf(PropTypes.shape({
+      count: PropTypes.string,
+      lifeCycle: PropTypes.string
+    })),
     identificationValue: PropTypes.string,
     commentValue: PropTypes.string
   }).isRequired,
@@ -145,20 +146,19 @@ export const RenderDoubleTextArea = (props) => {
       {...props.layoutProps}
       {...props.valueProps}
       disabled={props.disabled}
-      leftLabel={props.translate(`musit.observation.page.${props.type}.leftLabelText`)}
-      leftTooltip={props.translate(`musit.observation.page.${props.type}.leftLabelText`)}
-      leftPlaceHolder={props.translate(`musit.observation.page.${props.type}.leftLabelPlaceHolder`)}
+      leftLabel={I18n.t(`musit.observation.page.${props.type}.leftLabelText`)}
+      leftTooltip={I18n.t(`musit.observation.page.${props.type}.leftLabelText`)}
+      leftPlaceHolder={I18n.t(`musit.observation.page.${props.type}.leftLabelPlaceHolder`)}
       onChangeLeft={(value) => props.onChangeField('leftValue', value, props.index)}
-      rightLabel={props.translate(`musit.observation.page.${props.type}.rightLabelText`)}
-      rightTooltip={props.translate(`musit.observation.page.${props.type}.rightLabelPlaceToolTip`)}
-      rightPlaceHolder={props.translate(`musit.observation.page.${props.type}.rightLabelPlaceHolder`)}
+      rightLabel={I18n.t(`musit.observation.page.${props.type}.rightLabelText`)}
+      rightTooltip={I18n.t(`musit.observation.page.${props.type}.rightLabelPlaceToolTip`)}
+      rightPlaceHolder={I18n.t(`musit.observation.page.${props.type}.rightLabelPlaceHolder`)}
       onChangeRight={(value) => props.onChangeField('rightValue', value, props.index)}
     />
   )
 }
 
 RenderDoubleTextArea.propTypes = {
-  translate: PropTypes.func.isRequired,
   onChangeField: PropTypes.func,
   index: PropTypes.number,
   valueProps: PropTypes.shape({
@@ -188,24 +188,23 @@ export const RenderFromToNumberComment = (props) => {
       {...props.layoutProps}
       {...props.valueProps}
       disabled={props.disabled}
-      fromLabel={props.translate(`musit.observation.page.${props.type}.fromValueLabelText`)}
-      fromTooltip={props.translate(`musit.observation.page.${props.type}.fromValueTooltip`)}
-      fromPlaceHolder={props.translate(`musit.observation.page.${props.type}.fromValuePlaceHolder`)}
+      fromLabel={I18n.t(`musit.observation.page.${props.type}.fromValueLabelText`)}
+      fromTooltip={I18n.t(`musit.observation.page.${props.type}.fromValueTooltip`)}
+      fromPlaceHolder={I18n.t(`musit.observation.page.${props.type}.fromValuePlaceHolder`)}
       onChangeFrom={(value) => props.onChangeField('fromValue', value, props.index)}
-      toLabel={props.translate(`musit.observation.page.${props.type}.toValueLabelText`)}
-      toTooltip={props.translate(`musit.observation.page.${props.type}.toValueTooltip`)}
-      toPlaceHolder={props.translate(`musit.observation.page.${props.type}.toValuePlaceHolder`)}
+      toLabel={I18n.t(`musit.observation.page.${props.type}.toValueLabelText`)}
+      toTooltip={I18n.t(`musit.observation.page.${props.type}.toValueTooltip`)}
+      toPlaceHolder={I18n.t(`musit.observation.page.${props.type}.toValuePlaceHolder`)}
       onChangeTo={(value) => props.onChangeField('toValue', value, props.index)}
-      commentLabel={props.translate(`musit.observation.page.${props.type}.note`)}
-      commentTooltip={props.translate(`musit.observation.page.${props.type}.noteTooltip`)}
-      commentPlaceholder={props.translate(`musit.observation.page.${props.type}.notePlaceHolder`)}
+      commentLabel={I18n.t(`musit.observation.page.${props.type}.note`)}
+      commentTooltip={I18n.t(`musit.observation.page.${props.type}.noteTooltip`)}
+      commentPlaceholder={I18n.t(`musit.observation.page.${props.type}.notePlaceHolder`)}
       onChangeComment={(value) => props.onChangeField('commentValue', value, props.index)}
     />
   )
 }
 
 RenderFromToNumberComment.propTypes = {
-  translate: PropTypes.func.isRequired,
   onChangeField: PropTypes.func,
   index: PropTypes.number,
   valueProps: PropTypes.shape({

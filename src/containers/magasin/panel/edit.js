@@ -5,13 +5,14 @@ import EditStorageUnitContainer from '../../../components/magasin/panel/edit'
 import { update as updateState } from '../../../reducers/storageunit/panel/state'
 import { emitError, emitSuccess } from '../../../errors/emitter'
 import { I18n } from 'react-i18nify'
+import { loadRoot } from '../../../reducers/storageunit/grid'
 
 const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState,
     loaded: !!state.storagePanelUnit.loaded,
     translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data
+    rootNode: state.storageGridUnit.root.data || {}
   }
 };
 
@@ -29,8 +30,10 @@ const mapDispatchToProps = (dispatch) => {
     loadStorageUnit: (id, callback) => {
       dispatch(load(id, callback))
     },
-    updateState: (data) => dispatch(updateState(data))
-
+    updateState: (data) => dispatch(updateState(data)),
+    loadStorageObj: (id) => {
+      dispatch(loadRoot(id))
+    }
   }
 };
 
