@@ -14,35 +14,18 @@ export default class ActorSuggest extends React.Component {
     clear: React.PropTypes.func
   }
 
-  static defaultProps = {
-    id: 'doneByField',
-    disabled: false
-  }
-
   constructor(props) {
     super(props)
-    this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
     this.state = {
       value: this.props.value
     }
-  }
-
-  onChange(event, { newValue }) {
-    this.setState({ ...this.state, value: newValue })
-  }
-
-  onSuggestionSelected(event, { suggestion }) {
-    if (event.keyCode === 13) {
-      event.preventDefault()
-    }
-    this.props.onChange(suggestion)
   }
 
   doneByProps = {
     id: this.props.id,
     placeholder: this.props.placeHolder,
     type: 'search',
-    onChange: this.onChange.bind(this)
+    onChange: (event, { newValue }) => this.setState({ ...this.state, value: newValue })
   }
 
   render() {
@@ -55,7 +38,13 @@ export default class ActorSuggest extends React.Component {
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
         inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.props.clear }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
-        onSuggestionSelected={this.onSuggestionSelected}
+        onSuggestionSelected={(event, { suggestion }) => {
+          if (event.keyCode === 13) {
+            event.preventDefault()
+          }
+            this.props.onChange(suggestion)
+          }
+        }
       />
     )
   }
