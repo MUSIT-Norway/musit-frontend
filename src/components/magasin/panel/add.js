@@ -13,19 +13,19 @@ export default class AddStorageUnitContainer extends React.Component {
 
   componentWillMount() {
     this.props.clearState()
+    if (!this.props.rootNode.path) {
+      this.props.loadStorageObj(this.props.params.id)
+    }
   }
 
   render() {
     return (
       <StorageUnitContainer
-        translate={this.props.translate}
+        {...this.props}
         onLagreClick={(data) => {
           const parentId = this.props.params.parentId;
           this.props.onLagreClick(parentId, data)
         }}
-        updateState={this.props.updateState}
-        unit={this.props.unit}
-        params={this.props.params}
         isAdd
         loaded={!!this.props.unit}
       />

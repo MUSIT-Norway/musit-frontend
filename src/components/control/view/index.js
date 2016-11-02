@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -20,7 +19,7 @@
 import React from 'react'
 import { hashHistory } from 'react-router'
 import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap'
-import { ControlView } from '../../../components/control/view'
+import ControlView from './ControlView'
 import { MusitField } from '../../../components/formfields'
 import Layout from '../../../layout'
 import Breadcrumb from '../../../layout/Breadcrumb'
