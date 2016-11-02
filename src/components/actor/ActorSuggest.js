@@ -7,11 +7,11 @@ export default class ActorSuggest extends React.Component {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
     placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.object,
+    suggest: React.PropTypes.array,
     onChange: React.PropTypes.func.isRequired,
-    onUpdateRequested: React.PropTypes.func,
+    update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
-    clearSuggest: React.PropTypes.func
+    clear: React.PropTypes.func
   }
 
   static defaultProps = {
@@ -51,7 +51,7 @@ export default class ActorSuggest extends React.Component {
   }
 
   onBlur() {
-    return this.props.clearState
+    return this.props.clear
   }
 
   render() {
@@ -59,7 +59,7 @@ export default class ActorSuggest extends React.Component {
       <Autosuggest
         suggestions={this.getSuggestions()}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={(update) => this.props.suggestActor(update)}
+        onSuggestionsUpdateRequested={this.props.update}
         getSuggestionValue={(suggestion) => suggestion.fn}
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
         inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.onBlur() }}
