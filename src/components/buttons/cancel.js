@@ -1,8 +1,9 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
+
 export default (props) =>
-  <button
-    className={`btn btn-danger`}
+  <Button
     onClick={props.onClick}
   >
     {props.label}
-  </button>
+  </Button>
