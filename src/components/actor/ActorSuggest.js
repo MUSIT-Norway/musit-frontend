@@ -1,25 +1,7 @@
-
 import React from 'react'
-import { connect } from 'react-redux'
 import Autosuggest from 'react-autosuggest'
-import { suggestPerson, clearSuggest } from '../../reducers/suggest'
 
-const mapStateToProps = (state) => ({
-  suggest: state.suggest
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  onUpdateRequested: (id, { value, reason }) => {
-    if (reason && reason === 'type' && value && value.length >= 2) {
-      dispatch(suggestPerson(id, value))
-    } else {
-      dispatch(clearSuggest(id))
-    }
-  },
-  clearSuggest: () => dispatch(clearSuggest())
-})
-
-class ActorSuggest extends React.Component {
+export default class ActorSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
@@ -58,8 +40,7 @@ class ActorSuggest extends React.Component {
   }
 
   getSuggestions() {
-    const suggest = this.props.suggest[this.props.id];
-    return suggest && suggest.data ? suggest.data : []
+    return this.props.suggest;
   }
 
   doneByProps = {
@@ -70,7 +51,7 @@ class ActorSuggest extends React.Component {
   }
 
   onBlur() {
-    return this.props.clearSuggest
+    return this.props.clearState
   }
 
   render() {
@@ -78,7 +59,7 @@ class ActorSuggest extends React.Component {
       <Autosuggest
         suggestions={this.getSuggestions()}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
+        onSuggestionsUpdateRequested={(update) => this.props.suggestActor(update)}
         getSuggestionValue={(suggestion) => suggestion.fn}
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
         inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.onBlur() }}
@@ -88,5 +69,3 @@ class ActorSuggest extends React.Component {
     )
   }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(ActorSuggest)

@@ -94,6 +94,7 @@ source.subscribe((e) => {
       });
       break;
     default:
+      console.log(e.error)
       notificationSystem.addNotification({
         message: e.error.message,
         level: 'error',
