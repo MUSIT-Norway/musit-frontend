@@ -30,7 +30,7 @@ const getNodes = (state) => state.picks.NODE || []
 
 const getSortedNodes = createSelector(
     [ getNodes ],
-    (nodes) => orderBy(nodes, [(o) => toLower(o.value.name), 'value.type'])
+    (nodes) => orderBy(nodes, 'value.type', [(o) => toLower(o.value.name)])
 )
 
 
