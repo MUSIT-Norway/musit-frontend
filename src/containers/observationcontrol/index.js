@@ -22,11 +22,20 @@ import { connect } from 'react-redux'
 import { loadControlsAndObservationsForNode, loadActor } from '../../reducers/grid/observationcontrol'
 import { loadRoot } from '../../reducers/storageunit/grid'
 import ObservationControlGridShow from '../../components/observationcontrol'
+import { createSelector } from 'reselect'
+import orderBy from 'lodash/orderBy'
+
+const getObservationControl = (state) => state.observationControlGrid.data
+
+const getSortedObservationControl = createSelector(
+    [ getObservationControl ],
+    (observationControl) => orderBy(observationControl, ['doneDate', 'id'], ['desc', 'desc'])
+)
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
-    observationControlGridData: state.observationControlGrid.data,
+    observationControlGridData: getSortedObservationControl(state),
     rootNode: state.storageGridUnit.root.data
   }
 }
