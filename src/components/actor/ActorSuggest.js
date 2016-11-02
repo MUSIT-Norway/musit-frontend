@@ -22,7 +22,6 @@ export default class ActorSuggest extends React.Component {
   constructor(props) {
     super(props)
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
-    this.onBlur = this.onBlur.bind(this)
     this.state = {
       value: this.props.value
     }
@@ -39,10 +38,6 @@ export default class ActorSuggest extends React.Component {
     this.props.onChange(suggestion)
   }
 
-  getSuggestions() {
-    return this.props.suggest;
-  }
-
   doneByProps = {
     id: this.props.id,
     placeholder: this.props.placeHolder,
@@ -50,19 +45,15 @@ export default class ActorSuggest extends React.Component {
     onChange: this.onChange.bind(this)
   }
 
-  onBlur() {
-    return this.props.clear
-  }
-
   render() {
     return (
       <Autosuggest
-        suggestions={this.getSuggestions()}
+        suggestions={this.props.suggest}
         disabled={this.props.disabled}
         onSuggestionsUpdateRequested={this.props.update}
         getSuggestionValue={(suggestion) => suggestion.fn}
         renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
-        inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.onBlur() }}
+        inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.props.clear }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
