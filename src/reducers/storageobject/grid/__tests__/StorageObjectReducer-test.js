@@ -1,6 +1,3 @@
-import assert from 'assert'
-
-import storageObjectReducer, { LOAD_SEVERAL_SUCCESS } from '../index'
 import * as actions from '../index'
 import reducer from '../index'
 import request from 'superagent';
@@ -34,16 +31,7 @@ const comingFromBackend = [
   }
 ]
 
-
 describe('StorageUnitReducer', () => {
-  it('Initial state is set', () => {
-    const state = storageObjectReducer({}, {
-      type: LOAD_SEVERAL_SUCCESS,
-      result: comingFromBackend
-    })
-    assert(state.data === comingFromBackend)
-  })
-
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
     const id = 1
     const url = `/api/thingaggregate/museum/1/node/${id}/objects`

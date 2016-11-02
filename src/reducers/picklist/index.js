@@ -51,13 +51,15 @@ const removeItem = (type) => (state, action) => {
   return { ...state, [type]: nodes }
 };
 
+
 const addItem = (type) => (state, action) => {
   if (state[type].findIndex(node => action.item.id === node.value.id) > -1) {
     return state;
   }
+  const nodes = state[type].concat({ marked: false, value: action.item, path: action.path})
   return {
     ...state,
-    [type]: state[type].concat({ marked: false, value: action.item, path: action.path })
+    [type]: nodes
   };
 };
 
