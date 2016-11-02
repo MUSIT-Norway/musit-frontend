@@ -19,28 +19,37 @@
  */
 import { I18n } from 'react-i18nify'
 import { connect } from 'react-redux'
-import { loadControl } from '../../../reducers/control'
-import { getActorNameFromId } from '../../../reducers/observation'
-import ControlViewContainerImpl from '../../../components/control/view'
-import { loadRoot } from '../../../reducers/storageunit/grid'
+import { loadControlsAndObservationsForNode, loadActor } from '../../reducers/grid/observationcontrol'
+import { loadRoot } from '../../reducers/storageunit/grid'
+import ObservationControlGridShow from '../../components/observationcontrol'
+import { createSelector } from 'reselect'
+import orderBy from 'lodash/orderBy'
 
-const mapStateToProps = (state) => ({
-  translate: (key, markdown) => I18n.t(key, markdown),
-  controls: state.control,
-  doneBy: state.observation.data.doneBy,
-  rootNode: state.storageGridUnit.root.data
-})
+const getObservationControl = (state) => state.observationControlGrid.data
+
+const getSortedObservationControl = createSelector(
+    [ getObservationControl ],
+    (observationControl) => orderBy(observationControl, ['doneDate', 'id'], ['desc', 'desc'])
+)
+
+const mapStateToProps = (state) => {
+  return {
+    translate: (key, markdown) => I18n.t(key, markdown),
+    observationControlGridData: getSortedObservationControl(state),
+    rootNode: state.storageGridUnit.root.data
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
-  loadControl: (nodeId, controlId, callback) => {
-    dispatch(loadControl(nodeId, controlId, callback))
+  loadControlAndObservations: (id, callback) => {
+    dispatch(loadControlsAndObservationsForNode(id, callback))
   },
-  loadPersonNameFromId: (doneBy) => {
-    dispatch(getActorNameFromId(doneBy))
+  loadActorDetails: (data) => {
+    dispatch(loadActor(data))
   },
   loadStorageObj: (id) => {
     dispatch(loadRoot(id))
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ControlViewContainerImpl)
+export default connect(mapStateToProps, mapDispatchToProps)(ObservationControlGridShow)

@@ -1,10 +1,6 @@
-
-import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { I18n } from 'react-i18nify'
-import ObservationPage from './page'
-import Layout from '../../layout'
-import Breadcrumb from '../../layout/Breadcrumb'
+import AddObservationPage from '../../components/observation/add'
 import { hashHistory } from 'react-router'
 import { addObservation } from '../../reducers/observation'
 import { loadRoot } from '../../reducers/storageunit/grid'
@@ -32,45 +28,6 @@ const mapDispatchToProps = (dispatch) => {
     loadStorageObj: (id) => {
       dispatch(loadRoot(id))
     }
-  }
-}
-
-class AddObservationPage extends React.Component {
-
-  static propTypes = {
-    translate: PropTypes.func.isRequired,
-    params: PropTypes.object.isRequired,
-    onSaveObservation: PropTypes.func.isRequired,
-    actor: PropTypes.object,
-    rootNode: React.PropTypes.object
-  }
-
-  componentWillMount() {
-    if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id)
-    }
-  }
-
-  render() {
-    return (
-      <Layout
-        title="Magasin"
-        translate={this.props.translate}
-        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
-        content={
-          <div>
-            <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.add')}</h4>
-            <ObservationPage
-              id={this.props.params.id}
-              onSaveObservation={this.props.onSaveObservation}
-              translate={this.props.translate}
-              mode="ADD"
-              doneBy={this.props.actor}
-            />
-          </div>
-        }
-      />
-    )
   }
 }
 

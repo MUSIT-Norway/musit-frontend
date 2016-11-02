@@ -26,134 +26,32 @@ import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import getRoutes from './routes';
 import DevTools from './components/dev-tools';
-
-const client = new ApiClient();
-const dest = document.getElementById('content');
-const store = createStore(client);
-const history = syncHistoryWithStore(hashHistory, store);
 import config from './config'
-
+import LanguageJson from '../language.json'
+import { I18n } from 'react-i18nify'
+import { emitError } from './errors/emitter'
+import './errors/handler'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css'
 import './index.css'
 
-import LanguageJson from '../language.json'
-import { I18n } from 'react-i18nify'
+const client = new ApiClient();
+const dest = document.getElementById('content');
+const store = createStore(client);
+const history = syncHistoryWithStore(hashHistory, store);
+
 I18n.loadTranslations(LanguageJson)
 I18n.setLocale('no')
 
-import NotificationSystem from 'react-notification-system';
-
-const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'))
-
-import { source, successSource, emitError } from './errors/emitter'
-
-const children = (message) =>
-    <div style={{margin: '30px'}}>
-      <p>
-        {message}
-      </p>
-    </div>
-
-successSource.subscribe ((s) => {
-  switch(s.type) {
-    case 'deleteSuccess':
-      notificationSystem.addNotification({
-        level: 'success',
-        title: I18n.t('musit.notificationMessages.deleting'),
-        position: 'tc',
-        children: children(s.message)
-      });
-      break;
-    case 'movedSuccess':
-      notificationSystem.addNotification({
-        level: 'success',
-        title: I18n.t('musit.notificationMessages.moving'),
-        position: 'tc',
-        children: children(s.message)
-      });
-      break;
-    case 'saveSuccess':
-      notificationSystem.addNotification({
-        level: 'success',
-        title: I18n.t('musit.notificationMessages.saving'),
-        position: 'tc',
-        children: children(s.message)
-      });
-      break;
-    default:
-      notificationSystem.addNotification({
-        level: 'success',
-        children: children(s.message)
-      });
-  }
-});
-
-source.subscribe((e) => {
-  switch(e.type) {
-    case 'network':
-      const { response } = e.error
-      const { req } = response || {}
-      const msg = req ? req.url : e.error.message
-      notificationSystem.addNotification({
-        message: msg,
-        level: 'error',
-        title: I18n.t('musit.errorMainMessages.networkError'),
-        position: 'tc',
-        children: children(msg)
-      });
-      break;
-    case 'dateValidationError':
-      notificationSystem.addNotification({
-        level: 'error',
-        title: I18n.t('musit.errorMainMessages.applicationError'),
-        position: 'tc',
-        children: children(e.message)
-      });
-      break;
-    case 'errorOnDelete':
-      notificationSystem.addNotification({
-        level: 'error',
-        title: I18n.t('musit.errorMainMessages.applicationError'),
-        position: 'tc',
-        children: children(e.message)
-      });
-      break;
-    case 'errorOnMove':
-      notificationSystem.addNotification({
-        level: 'error',
-        title: I18n.t('musit.errorMainMessages.applicationError'),
-        position: 'tc',
-        children: children(e.message)
-      });
-      break;
-    case 'errorOnSave':
-      notificationSystem.addNotification({
-        level: 'error',
-        title: I18n.t('musit.errorMainMessages.applicationError'),
-        position: 'tc',
-        children: children(e.message)
-      });
-      break;
-    default:
-      notificationSystem.addNotification({
-        message: e.message,
-        level: 'error',
-        position: 'tc'
-      });
-  }
-});
-
 try {
   const component =
-      <Router
-        onUpdate={() => window.scrollTo(0, 0)}
-        history={history}
-      >
-        {getRoutes(store)}
-      </Router>
-    ;
+    <Router
+      onUpdate={() => window.scrollTo(0, 0)}
+      history={history}
+    >
+      {getRoutes(store)}
+    </Router>;
 
   ReactDOM.render(
     <Provider store={store} key="provider">
@@ -177,8 +75,8 @@ try {
       dest
     );
   }
-} catch(e) {
-  emitError({ type: 'other', e })
+} catch(error) {
+  emitError({ type: 'other', error })
 }
 
 

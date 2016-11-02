@@ -1,9 +1,7 @@
-
-import React, { PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router'
 import { load, update } from '../../../reducers/storageunit/panel';
-import StorageUnitContainerImpl from './page'
+import EditStorageUnitContainer from '../../../components/magasin/panel/edit'
 import { update as updateState } from '../../../reducers/storageunit/panel/state'
 import { emitError, emitSuccess } from '../../../errors/emitter'
 import { I18n } from 'react-i18nify'
@@ -11,7 +9,9 @@ import { I18n } from 'react-i18nify'
 const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState,
-    loaded: !!state.storagePanelUnit.loaded
+    loaded: !!state.storagePanelUnit.loaded,
+    translate: (key, markdown) => I18n.t(key, markdown),
+    rootNode: state.storageGridUnit.root.data
   }
 };
 
@@ -33,36 +33,5 @@ const mapDispatchToProps = (dispatch) => {
 
   }
 };
-
-class EditStorageUnitContainer extends React.Component {
-  static propTypes = {
-    onLagreClick: PropTypes.func.isRequired,
-    loadStorageUnit: PropTypes.func.isRequired,
-    params: PropTypes.object,
-    unit: PropTypes.object,
-    loaded: PropTypes.bool.isRequired,
-    updateState: PropTypes.func.isRequired
-  };
-
-  componentWillMount() {
-    this.props.loadStorageUnit(this.props.params.id, {
-      onSuccess: (result) => {
-        this.props.updateState(result)
-      }
-    })
-  }
-
-  render() {
-    return (
-      <StorageUnitContainerImpl
-        unit={this.props.unit}
-        updateState={this.props.updateState}
-        onLagreClick={this.props.onLagreClick}
-        params={this.props.params}
-        loaded={this.props.loaded && !!this.props.unit}
-      />
-    )
-  }
-}
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditStorageUnitContainer)
