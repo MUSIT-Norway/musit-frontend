@@ -19,7 +19,7 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import { MusitField, MusitTextArea } from '../../components/formfields'
+import { MusitField, MusitTextArea } from '../../../components/formfields'
 import { Row, ControlLabel, Col } from 'react-bootstrap'
 
 export default class ObservationFromToNumberCommentComponent extends Component {
