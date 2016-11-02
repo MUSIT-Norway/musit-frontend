@@ -1,14 +1,7 @@
 import React, { PropTypes, Component } from "react";
-import { Observable, Subject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
-export function createAction() {
-  return new Subject();
-}
-
-export function createActions(actionNames) {
-  return actionNames.reduce((akk, name) => ({ ...akk, [name]: createAction() }), {});
-}
-
+// Creates a state for use with the connect and provider below
 export function createState(reducer$, initialState$ = Observable.of({})) {
   return initialState$
     .merge(reducer$)
@@ -18,6 +11,7 @@ export function createState(reducer$, initialState$ = Observable.of({})) {
     .refCount();
 }
 
+// Used much the same way as redux connect
 export const connect = (selector = state => state) => (providedState$) => {
   return function wrapWithConnect(WrappedComponent) {
     return class Connect extends Component {
@@ -49,6 +43,7 @@ export const connect = (selector = state => state) => (providedState$) => {
   };
 };
 
+// We can use this in the future maybe, thus making global state aka the way redux does it
 export class RxStateProvider extends Component {
   static propTypes = {
     state$: PropTypes.object.isRequired,
