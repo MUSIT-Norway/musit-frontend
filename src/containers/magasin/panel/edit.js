@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
     unit: state.storagePanelState,
     loaded: !!state.storagePanelUnit.loaded,
     translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data
+    rootNode: state.storageGridUnit.root.data || {}
   }
 };
 

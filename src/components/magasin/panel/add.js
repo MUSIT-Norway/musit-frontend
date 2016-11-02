@@ -23,7 +23,7 @@ export default class AddStorageUnitContainer extends React.Component {
       <StorageUnitContainer
         {...this.props}
         onLagreClick={(data) => {
-          const parentId = this.props.params.parentId;
+          const parentId = this.props.params.id;
           this.props.onLagreClick(parentId, data)
         }}
         isAdd

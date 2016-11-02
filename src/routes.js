@@ -48,7 +48,7 @@ export default () => {
       <Route path="/search/objects" component={ObjectSearchContainer} />
       <Route path="/magasin/root" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />
-      <Route path="/magasin/:parentId/add" add component={AddStorageUnitPanel} />
+      <Route path="/magasin/:id/add" add component={AddStorageUnitPanel} />
       <Route path="/magasin/:id/view" component={EditStorageUnitPanel} />
       <Route path="/magasin/:id/controls" showControls showObservations={false} component={ObservationControlGridShow} />
       <Route path="/magasin/:id/control/add" component={ControlAddContainer} />
