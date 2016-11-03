@@ -76,6 +76,9 @@ export default class ObservationPage extends React.Component {
         doneBy: nextProps.doneBy
       })
     }
+    if (nextProps.doneBy !== this.props.doneBy) {
+      this.setState({ ...this.state, doneBy: nextProps.doneBy })
+    }
   }
 
   onChangeField(field, value, index) {
