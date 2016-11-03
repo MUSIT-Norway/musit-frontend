@@ -61,7 +61,6 @@ export default function clientMiddleware(client) {
         }
       ).catch((error) => {
         next({ ...rest, error, type: FAILURE });
-        emitError({ type: 'network', error });
         if (callback) {
           const { onFailure } = callback;
           if (typeof onFailure === 'function') {
