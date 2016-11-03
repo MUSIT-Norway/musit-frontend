@@ -1,7 +1,7 @@
 
-import React, { Component, PropTypes } from 'react'
-import { Button, Row, Col } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
+import React, { Component, PropTypes } from 'react';
+import { Button, Row, Col } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
 
 export default class ObservationControlComponent extends Component {
   static propTypes = {
@@ -12,8 +12,8 @@ export default class ObservationControlComponent extends Component {
   }
 
   render() {
-    const { id, translate, onClickNewControl, onClickNewObservation } = this.props
-    const getTranslate = (term) => translate(`musit.leftMenu.observationControl.${term}`)
+    const { id, translate, onClickNewControl, onClickNewObservation } = this.props;
+    const getTranslate = (term) => translate(`musit.leftMenu.observationControl.${term}`);
     const buttonLogic = (type, eventType) => {
       return (
         <Button
@@ -24,8 +24,8 @@ export default class ObservationControlComponent extends Component {
           <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
           {getTranslate(type)}
         </Button>
-      )
-    }
+      );
+    };
     return (
       <div>
         <Row>
@@ -37,6 +37,6 @@ export default class ObservationControlComponent extends Component {
           </Col>
         </Row>
       </div>
-    )
+    );
   }
 }

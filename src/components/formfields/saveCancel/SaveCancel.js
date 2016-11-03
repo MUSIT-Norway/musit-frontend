@@ -18,8 +18,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component, PropTypes } from 'react'
-import { Button, Row, Col } from 'react-bootstrap'
+import React, { Component, PropTypes } from 'react';
+import { Button, Row, Col } from 'react-bootstrap';
 
 export default class SaveCancel extends Component {
   static propTypes = {
@@ -34,14 +34,14 @@ export default class SaveCancel extends Component {
   }
 
   constructor(props) {
-    super(props)
+    super(props);
     const {
       id,
       saveDisabled,
       onClickSave,
       cancelDisabled,
       onClickCancel
-    } = props
+    } = props;
     this.fields = {
       save: {
         id: `Save_${id || 1}`,
@@ -53,18 +53,18 @@ export default class SaveCancel extends Component {
         onClick: onClickCancel,
         disabled: cancelDisabled
       }
-    }
+    };
   }
 
   render() {
-    const { saveLabel, cancelLabel, translate } = this.props
+    const { saveLabel, cancelLabel, translate } = this.props;
     const showButton = (data) => {
       return (
         <Col xs={6} sm={5} style={{ border: 'none', textAlign: 'center' }}>
           {data}
         </Col>
-      )
-    }
+      );
+    };
 
     return (
       <Row>
@@ -85,6 +85,6 @@ export default class SaveCancel extends Component {
           </Button>
         )}
       </Row>
-    )
+    );
   }
 }

@@ -1,7 +1,7 @@
-import React from 'react'
-import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
-import { I18n } from 'react-i18nify'
-import { formatFloatToString } from './../../util'
+import React from 'react';
+import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
+import { I18n } from 'react-i18nify';
+import { formatFloatToString } from './../../util';
 
 export default class KDReport extends React.Component {
   static propTypes= {
@@ -10,7 +10,7 @@ export default class KDReport extends React.Component {
   };
 
   componentWillMount() {
-    this.props.loadKDReport()
+    this.props.loadKDReport();
   }
 
   render() {
@@ -57,7 +57,7 @@ export default class KDReport extends React.Component {
           </Panel>
         </main>
       </div>
-    )
+    );
   }
 
 }

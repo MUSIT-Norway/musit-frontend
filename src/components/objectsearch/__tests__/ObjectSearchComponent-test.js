@@ -1,8 +1,8 @@
-import { shallow } from 'enzyme'
+import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
-import React from 'react'
-import ObjectSearchComponent from '../ObjectSearchComponent'
-import { getPath } from '../../../reducers/helper'
+import React from 'react';
+import ObjectSearchComponent from '../ObjectSearchComponent';
+import { getPath } from '../../../reducers/helper';
 
 describe('ObjectSearchComponent', () => {
   const path = ',1,2,3,';
@@ -36,7 +36,7 @@ describe('ObjectSearchComponent', () => {
         pathNames: pathNames
       }
     )
-  }
+  };
 
   it('should display object 1', () => {
     const wrapper = shallow(
@@ -57,7 +57,7 @@ describe('ObjectSearchComponent', () => {
           currentPage: 1
         }}
       />
-    )
-    expect(shallowToJson(wrapper)).toMatchSnapshot()
-  })
-})
+    );
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
+});

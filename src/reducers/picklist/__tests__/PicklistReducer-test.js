@@ -1,15 +1,15 @@
-import assert from 'assert'
-import deepFreeze from 'deep-freeze'
-import configureMockStore from 'redux-mock-store'
-import createMiddleware from '../../../middleware/clientMiddleware'
-import ApiClient from '../../../middleware/ApiClient'
-import Config from '../../../config'
+import assert from 'assert';
+import deepFreeze from 'deep-freeze';
+import configureMockStore from 'redux-mock-store';
+import createMiddleware from '../../../middleware/clientMiddleware';
+import ApiClient from '../../../middleware/ApiClient';
+import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
 
-const middlewares = [ createMiddleware(new ApiClient()) ]
-const mockStore = configureMockStore(middlewares)
+const middlewares = [ createMiddleware(new ApiClient()) ];
+const mockStore = configureMockStore(middlewares);
 
 import picklistReducer, {
   addObject, addNode,
@@ -18,26 +18,26 @@ import picklistReducer, {
   clearNodes, clearObjects,
   refreshNode,
   LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE, LOAD_ONE_NODE_FAIL
-} from '../index'
+} from '../index';
 
 
-import reducer from '../../../reducers/picklist/index'
-import * as actions from '../../../reducers/picklist/index'
+import reducer from '../../../reducers/picklist/index';
+import * as actions from '../../../reducers/picklist/index';
 
 const node1 = {
   id: 1,
   name: 'Test 1'
-}
+};
 
 const node2 = {
   id: 2,
   name: 'Test 2'
-}
+};
 
 const node3 = {
   id: 3,
   name: 'Test 3'
-}
+};
 
 const DEFAULT_NODES = [
   {
@@ -60,12 +60,12 @@ const DEFAULT_NODES = [
 const object1 = {
   id: 1,
   mame: 'Some test object'
-}
+};
 
 const object2 = {
   id: 2,
   mame: 'Some test object 2'
-}
+};
 
 const DEFAULT_OBJECTS = [
   {
@@ -78,7 +78,7 @@ const DEFAULT_OBJECTS = [
     path: [],
     value: object2
   }
-]
+];
 
 describe('PicklistReducer', () => {
   let testState;
@@ -87,124 +87,124 @@ describe('PicklistReducer', () => {
     testState = {
       NODE: DEFAULT_NODES,
       OBJECT: DEFAULT_OBJECTS
-    }
-    deepFreeze(testState)
-  })
+    };
+    deepFreeze(testState);
+  });
 
   it('refreshNode works as expected when it gets data', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/1`
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/1`;
     nock('http://localhost')
       .get(url)
       .reply(200, {
         id: 1,
         name: 'The special room',
         type: 'Room'
-      })
+      });
 
-    const store = mockStore()
+    const store = mockStore();
 
     return store.dispatch(refreshNode(1))
       .then(() => {
-        expect(store.getActions()).toMatchSnapshot()
-      })
-  })
+        expect(store.getActions()).toMatchSnapshot();
+      });
+  });
 
   it('load node returns same state', () => {
     const state = picklistReducer(testState, {
       type: LOAD_ONE_NODE
-    })
-    assert(state === testState)
-  })
+    });
+    assert(state === testState);
+  });
 
   it('load node fail returns state with error', () => {
     const state = picklistReducer(testState, {
       type: LOAD_ONE_NODE_FAIL,
       error: Error('Some error')
-    })
-    assert.deepStrictEqual(state, { ...testState, error: Error('Some error')})
-  })
+    });
+    assert.deepStrictEqual(state, { ...testState, error: Error('Some error')});
+  });
 
   it('New state is set untouched', () => {
-    const state = picklistReducer(testState, {})
-    assert(state === testState)
-  })
+    const state = picklistReducer(testState, {});
+    assert(state === testState);
+  });
 
   it('Initial state is set', () => {
-    const state = picklistReducer()
+    const state = picklistReducer();
     const expectedState = {
       NODE: [],
       OBJECT: []
-    }
-    assert.deepStrictEqual(state, expectedState, 'Should have default state')
-  })
+    };
+    assert.deepStrictEqual(state, expectedState, 'Should have default state');
+  });
 
   it('New state is set untouched', () => {
-    const state = picklistReducer(testState, {})
-    assert(state === testState)
-  })
+    const state = picklistReducer(testState, {});
+    assert(state === testState);
+  });
 
   it('Clear objects, resets objects array', () => {
-    const newState = picklistReducer(testState, clearObjects())
+    const newState = picklistReducer(testState, clearObjects());
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: []
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Objects should be cleared')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Objects should be cleared');
+  });
 
   it('Clear nodes, resets nodes array', () => {
-    const newState = picklistReducer(testState, clearNodes())
+    const newState = picklistReducer(testState, clearNodes());
     const expectedState = {
       NODE: [],
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Nodes should be cleareds')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Nodes should be cleareds');
+  });
 
   it('Add node, adds item to node array', () => {
     const item = {
       id: 888,
       name: 'special node'
-    }
-    const newState = picklistReducer(testState, addNode(item))
+    };
+    const newState = picklistReducer(testState, addNode(item));
     const newNode = [{
       marked: false,
       path: [],
       value: item
-    }]
+    }];
     const expectedState = {
       NODE: DEFAULT_NODES.concat(newNode),
       OBJECT: DEFAULT_OBJECTS
-    }
+    };
 
-    assert.deepStrictEqual(newState, expectedState, 'Node should be added')
-  })
+    assert.deepStrictEqual(newState, expectedState, 'Node should be added');
+  });
 
   it('Add node twice, adds item only once to node array', () => {
     const item = {
       id: 888,
       name: 'special node'
-    }
-    const newState1 = picklistReducer(testState, addNode(item))
-    const newState2 = picklistReducer(newState1, addNode(item))
+    };
+    const newState1 = picklistReducer(testState, addNode(item));
+    const newState2 = picklistReducer(newState1, addNode(item));
     const newNode = [{
       marked: false,
       path: [],
       value: item
-    }]
+    }];
     const expectedState = {
       NODE: DEFAULT_NODES.concat(newNode),
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState2, expectedState, 'Node should be added')
-  })
+    };
+    assert.deepStrictEqual(newState2, expectedState, 'Node should be added');
+  });
 
 
   it('Add node with path, adds item and path to node array', () => {
     const item = {
       id: 888,
       name: 'special node'
-    }
+    };
     const path = [
       {
         id: 4444,
@@ -214,24 +214,24 @@ describe('PicklistReducer', () => {
         id: 55555,
         name: 'Some strange unit'
       }
-    ]
-    const newState = picklistReducer(testState, addNode(item, path))
+    ];
+    const newState = picklistReducer(testState, addNode(item, path));
 
     const newNode = [{
       marked: false,
       path: path,
       value: item
-    }]
+    }];
     const expectedState = {
       NODE: DEFAULT_NODES.concat(newNode),
       OBJECT: DEFAULT_OBJECTS
-    }
+    };
 
-    assert.deepStrictEqual(newState, expectedState, 'Node should be added')
-  })
+    assert.deepStrictEqual(newState, expectedState, 'Node should be added');
+  });
 
   it('Remove node, remove item from node array', () => {
-    const newState = picklistReducer(testState, removeNode(node2))
+    const newState = picklistReducer(testState, removeNode(node2));
     const expectedState = {
       NODE: [
         {
@@ -246,25 +246,25 @@ describe('PicklistReducer', () => {
         }
       ],
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Node should be removed')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Node should be removed');
+  });
 
   it('Remove all nodes, remove nodes from node array', () => {
-    const newState = picklistReducer(testState, removeNode([node1, node2, node3]))
+    const newState = picklistReducer(testState, removeNode([node1, node2, node3]));
     const expectedState = {
       NODE: [],
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Node should be removed')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Node should be removed');
+  });
 
   it('Add object, adds object to object array', () => {
     const item = {
       id: 7777,
       mame: 'Some test object'
-    }
-    const newState = picklistReducer(testState, addObject(item))
+    };
+    const newState = picklistReducer(testState, addObject(item));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: DEFAULT_OBJECTS.concat({
@@ -272,17 +272,17 @@ describe('PicklistReducer', () => {
         path: [],
         value: item
       })
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Object should be added')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Object should be added');
+  });
 
   it('Add object twice, adds object only once to object array', () => {
     const item = {
       id: 7777,
       mame: 'Some test object'
-    }
-    const newState1 = picklistReducer(testState, addObject(item))
-    const newState2 = picklistReducer(newState1, addObject(item))
+    };
+    const newState1 = picklistReducer(testState, addObject(item));
+    const newState2 = picklistReducer(newState1, addObject(item));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: DEFAULT_OBJECTS.concat({
@@ -290,15 +290,15 @@ describe('PicklistReducer', () => {
         path: [],
         value: item
       })
-    }
-    assert.deepStrictEqual(newState2, expectedState, 'Object should be added')
-  })
+    };
+    assert.deepStrictEqual(newState2, expectedState, 'Object should be added');
+  });
 
   it('Add object with path, adds object and path to object array', () => {
     const item = {
       id: 7777,
       mame: 'Some test object'
-    }
+    };
     const path = [
       {
         id: 3345,
@@ -308,8 +308,8 @@ describe('PicklistReducer', () => {
         id: 234,
         name: 'Some storage unit'
       }
-    ]
-    const newState = picklistReducer(testState, addObject(item, path))
+    ];
+    const newState = picklistReducer(testState, addObject(item, path));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: DEFAULT_OBJECTS.concat({
@@ -317,12 +317,12 @@ describe('PicklistReducer', () => {
         path: path,
         value: item
       })
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Object should be added')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Object should be added');
+  });
 
   it('Remove object, remove item from object array', () => {
-    const newState = picklistReducer(testState, removeObject(object1))
+    const newState = picklistReducer(testState, removeObject(object1));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: [
@@ -332,21 +332,21 @@ describe('PicklistReducer', () => {
           value: object2
         }
       ]
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Node should be removed')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Node should be removed');
+  });
 
   it('Remove all object, remove all objects from object array', () => {
-    const newState = picklistReducer(testState, removeObject([object1, object2]))
+    const newState = picklistReducer(testState, removeObject([object1, object2]));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: []
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Node should be removed')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Node should be removed');
+  });
 
   it('Toggle node, toggles item in the array', () => {
-    const newState = picklistReducer(testState, toggleNode([node2])) // lets try with brackets here
+    const newState = picklistReducer(testState, toggleNode([node2])); // lets try with brackets here
     const expectedState = {
       NODE: [
         {
@@ -366,12 +366,12 @@ describe('PicklistReducer', () => {
         }
       ],
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item');
+  });
 
   it('Toggle node with on = true, toggles item in the array', () => {
-    const newState = picklistReducer(testState, toggleNode([node2], true)) // lets try with brackets here
+    const newState = picklistReducer(testState, toggleNode([node2], true)); // lets try with brackets here
     const expectedState = {
       NODE: [
         {
@@ -391,12 +391,12 @@ describe('PicklistReducer', () => {
         }
       ],
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item');
+  });
 
   it('Toggle node with on = false, toggles item in the array', () => {
-    const newState = picklistReducer(testState, toggleNode([node2], false)) // lets try with brackets here
+    const newState = picklistReducer(testState, toggleNode([node2], false)); // lets try with brackets here
     const expectedState = {
       NODE: [
         {
@@ -416,12 +416,12 @@ describe('PicklistReducer', () => {
         }
       ],
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item');
+  });
 
   it('Toggle all node, toggles items in the array', () => {
-    const newState = picklistReducer(testState, toggleNode([node1, node2, node3]))
+    const newState = picklistReducer(testState, toggleNode([node1, node2, node3]));
     const expectedState = {
       NODE: [
         {
@@ -441,12 +441,12 @@ describe('PicklistReducer', () => {
         }
       ],
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item');
+  });
 
   it('Toggle object, toggles item in the array', () => {
-    const newState = picklistReducer(testState, toggleObject(object1))
+    const newState = picklistReducer(testState, toggleObject(object1));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: [
@@ -461,12 +461,12 @@ describe('PicklistReducer', () => {
           value: object2
         }
       ]
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item');
+  });
 
   it('Toggle object with on = true, toggles item in the array', () => {
-    const newState = picklistReducer(testState, toggleObject(object1, true))
+    const newState = picklistReducer(testState, toggleObject(object1, true));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: [
@@ -481,12 +481,12 @@ describe('PicklistReducer', () => {
           value: object2
         }
       ]
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item');
+  });
 
   it('Toggle object with on = false, toggles item in the array', () => {
-    const newState = picklistReducer(testState, toggleObject(object1, false))
+    const newState = picklistReducer(testState, toggleObject(object1, false));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: [
@@ -501,12 +501,12 @@ describe('PicklistReducer', () => {
           value: object2
         }
       ]
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item');
+  });
 
   it('Toggle all object, toggles items in the array', () => {
-    const newState = picklistReducer(testState, toggleObject([object1, object2]))
+    const newState = picklistReducer(testState, toggleObject([object1, object2]));
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: [
@@ -521,27 +521,27 @@ describe('PicklistReducer', () => {
           value: object2
         }
       ]
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should mark item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should mark item');
+  });
 
   it('Toggle object without item, should still work but have no effect', () => {
-    const newState = picklistReducer(testState, toggleObject())
+    const newState = picklistReducer(testState, toggleObject());
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should not mark any item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should not mark any item');
+  });
 
   it('Toggle node without item, should still work but have no effect', () => {
-    const newState = picklistReducer(testState, toggleNode())
+    const newState = picklistReducer(testState, toggleNode());
     const expectedState = {
       NODE: DEFAULT_NODES,
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(newState, expectedState, 'Should not mark any item')
-  })
+    };
+    assert.deepStrictEqual(newState, expectedState, 'Should not mark any item');
+  });
 
   it('Refresh node updates path. Do not show root if only root is there.', () => {
     const newState = picklistReducer(testState, {
@@ -550,7 +550,7 @@ describe('PicklistReducer', () => {
         path: ',1,',
         pathNames: [{ nodeId: 1}] },
       id: 1
-    })
+    });
     const expectedState = {
       NODE: [
         {
@@ -570,44 +570,44 @@ describe('PicklistReducer', () => {
         }
       ],
       OBJECT: DEFAULT_OBJECTS
-    }
-    assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1')
-  })
+    };
+    assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1');
+  });
 
-it('Refresh node updates path. Will only show the second node. First(root) and last node(child) will not show.', () => {
-  const newState = picklistReducer(testState, {
-    type: LOAD_ONE_NODE_SUCCESS,
-    result:{
-      path: ',1,2,3,',
-      pathNames: [{ nodeId: 1},{ nodeId: 2},{ nodeId: 3}]
-    },
-    id: 1
-  })
-  const expectedState = {
-    NODE: [
-      {
-        marked: false,
-        path: [{id : 2, url: "/magasin/2"}],
-        value: node1
+  it('Refresh node updates path. Will only show the second node. First(root) and last node(child) will not show.', () => {
+    const newState = picklistReducer(testState, {
+      type: LOAD_ONE_NODE_SUCCESS,
+      result:{
+        path: ',1,2,3,',
+        pathNames: [{ nodeId: 1},{ nodeId: 2},{ nodeId: 3}]
       },
-      {
-        marked: false,
-        path: [],
-        value: node2
-      },
-      {
-        marked: false,
-        path: [],
-        value: node3
-      }
-    ],
-    OBJECT: DEFAULT_OBJECTS
-  }
-  assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1')
-})
+      id: 1
+    });
+    const expectedState = {
+      NODE: [
+        {
+          marked: false,
+          path: [{id : 2, url: "/magasin/2"}],
+          value: node1
+        },
+        {
+          marked: false,
+          path: [],
+          value: node2
+        },
+        {
+          marked: false,
+          path: [],
+          value: node3
+        }
+      ],
+      OBJECT: DEFAULT_OBJECTS
+    };
+    assert.deepStrictEqual(JSON.stringify(expectedState), JSON.stringify(newState), 'Should update path for node 1');
+  });
   it('invokes LOAD_ONE_OBJECT_SUCCESS when object path is loaded.', () => {
-    const id = 1
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/currentlocation`
+    const id = 1;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/currentlocation`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
@@ -630,28 +630,28 @@ it('Refresh node updates path. Will only show the second node. First(root) and l
             }
           ],
           type: 'Building'
-        })
-    const store = mockStore()
+        });
+    const store = mockStore();
 
     return store.dispatch(actions.refreshObject(1))
         .then(() => {
-          expect(store.getActions()).toMatchSnapshot()
-        })
-  })
+          expect(store.getActions()).toMatchSnapshot();
+        });
+  });
 
   it('Refresh object: no action', () => {
     expect(
         reducer(undefined, {})
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Refresh object: initial action', () => {
     expect(
         reducer(undefined, {
           type: actions.LOAD_ONE_OBJECT
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Refresh object: success action', () => {
     expect(
@@ -661,8 +661,8 @@ it('Refresh node updates path. Will only show the second node. First(root) and l
             someField: 1
           }
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Refresh object: fail action', () => {
     expect(
@@ -670,12 +670,12 @@ it('Refresh node updates path. Will only show the second node. First(root) and l
           type: actions.LOAD_ONE_OBJECT_FAIL,
           error: Error('Some error occurred to load object path.')
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('invokes LOAD_ONE_NODE_SUCCESS when node path is loaded.', () => {
-    const id = 3
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`
+    const id = 3;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
@@ -698,28 +698,28 @@ it('Refresh node updates path. Will only show the second node. First(root) and l
             }
           ],
           type: 'Building'
-        })
-    const store = mockStore()
+        });
+    const store = mockStore();
 
     return store.dispatch(actions.refreshNode(3))
         .then(() => {
-          expect(store.getActions()).toMatchSnapshot()
-        })
-  })
+          expect(store.getActions()).toMatchSnapshot();
+        });
+  });
 
   it('Refresh node: no action', () => {
     expect(
         reducer(undefined, {})
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Refresh node: initial action', () => {
     expect(
         reducer(undefined, {
           type: actions.LOAD_ONE_NODE
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Refresh node: success action', () => {
     expect(
@@ -729,8 +729,8 @@ it('Refresh node updates path. Will only show the second node. First(root) and l
             someField: 1
           }
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Refresh node: fail action', () => {
     expect(
@@ -738,8 +738,8 @@ it('Refresh node updates path. Will only show the second node. First(root) and l
           type: actions.LOAD_ONE_NODE_FAIL,
           error: Error('Some error occurred to load node path.')
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
 
-})
+});

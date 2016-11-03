@@ -1,7 +1,7 @@
-import assert from 'assert'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import ReactTestUtils from 'react-addons-test-utils'
+import assert from 'assert';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactTestUtils from 'react-addons-test-utils';
 import MusitTextArea from '../index';
 
 describe('MusitTextArea', () => {
@@ -18,7 +18,7 @@ describe('MusitTextArea', () => {
 
     const actualDiv = ReactDOM.findDOMNode(myDiv);
     const field = actualDiv.querySelectorAll('textarea')[0];
-    assert.equal(field.value, 'flint', 'Felt må være tilstede')
+    assert.equal(field.value, 'flint', 'Felt må være tilstede');
   });
 
   it('should render MusitTextArea blank', () => {
@@ -34,7 +34,7 @@ describe('MusitTextArea', () => {
 
     const actualDiv = ReactDOM.findDOMNode(myDiv);
     const field = actualDiv.querySelectorAll('textarea')[0];
-    assert.equal(field.value, '', 'Felt må være tilstede')
+    assert.equal(field.value, '', 'Felt må være tilstede');
   });
 
   it('number input', () => {
@@ -50,6 +50,6 @@ describe('MusitTextArea', () => {
 
     const actualDiv = ReactDOM.findDOMNode(myDiv);
     const field = actualDiv.querySelectorAll('textarea')[0];
-    assert.equal(field.value, '123454566', 'Felt må være tilstede')
+    assert.equal(field.value, '123454566', 'Felt må være tilstede');
   });
 });

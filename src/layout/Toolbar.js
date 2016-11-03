@@ -1,9 +1,9 @@
 
-import React from 'react'
-import { Button } from 'react-bootstrap'
-import { MusitField } from '../components/formfields'
-import FontAwesome from 'react-fontawesome'
-import './Toolbar.css'
+import React from 'react';
+import { Button } from 'react-bootstrap';
+import { MusitField } from '../components/formfields';
+import FontAwesome from 'react-fontawesome';
+import './Toolbar.css';
 
 export default class Toolbar extends React.Component {
   static propTypes = {
@@ -30,7 +30,7 @@ export default class Toolbar extends React.Component {
       showRight,
       labelRight,
       clickShowRight
-    } = this.props
+    } = this.props;
     if (onSearchChanged) {
       optionalSearch = 
         <div className="searchField">
@@ -43,13 +43,13 @@ export default class Toolbar extends React.Component {
             validate="text"
             onChange={onSearchChanged}
           />
-        </div>
+        </div>;
       
     } else {
       optionalSearch = 
         <div className="searchField">
           <span style={{ width: '180px', display: 'inline-block' }}>{' '}</span>
-        </div>
+        </div>;
       
     }
     return (
@@ -64,6 +64,6 @@ export default class Toolbar extends React.Component {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 }
