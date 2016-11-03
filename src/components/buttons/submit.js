@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 
 export default (props) =>
   <Button
-    disabled={props.disabled ? 'disabled' : ''}
+    disabled={props.disabled}
     bsStyle="primary"
     onClick={props.onClick}
   >

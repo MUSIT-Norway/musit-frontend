@@ -28,7 +28,7 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
  *
  * @returns {string} the token
  */
-const getToken = () => {
+export const getToken = () => {
   let token = '';
   if (localStorage.getItem('jwtToken')) {
     token = jwtDecode(localStorage.getItem('jwtToken')).accessToken;
@@ -53,7 +53,7 @@ class ApiClient {
         if (data) {
           apiRequest.send(data);
         }
-        apiRequest.end((err, response) => err ? reject(err) : resolve(response.body));
+        apiRequest.end((error, response) => error ? reject({ error, response }) : resolve(response.body));
       });
     });
   }
