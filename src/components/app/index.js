@@ -10,10 +10,11 @@ import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import MusitUserAccount from '../../components/user-account-view';
 import './index.css';
 import Logo from './assets/logo.png';
-const $ = global.jQuery;
 import { emitSuccess, emitError } from '../../errors/emitter';
 import * as loglevel from 'loglevel';
 import config from '../../config';
+
+const $ = global.jQuery;
 
 if (config.isDev) {
   loglevel.setLevel('debug');
@@ -55,7 +56,7 @@ export default class App extends Component {
   }
 
   showConfirm(title, onYes) {
-    const prompt = '<div title="Confirmation Required">Are you sure about this?</div>';
+    const prompt = `<div>${ I18n.t('musit.texts.showConfirm.message') }</div>`;
     const $dialog = $(prompt).dialog({
       autoOpen: false,
       modal: true,
@@ -67,15 +68,21 @@ export default class App extends Component {
       }
     });
     $dialog.dialog({
-      buttons : {
-        "Confirm" : function() {
-          onYes();
-          $(this).dialog("close");
+      buttons : [
+        {
+          text: I18n.t('musit.texts.showConfirm.confirm'),
+          click: function() {
+            onYes();
+            $(this).dialog("close");
+          }
         },
-        "Cancel" : function() {
-          $(this).dialog("close");
+        {
+          text: I18n.t('musit.texts.showConfirm.cancel'),
+          click: function() {
+            $(this).dialog("close");
+          }
         }
-      }
+      ]
     });
     $dialog.dialog('open');
   }
