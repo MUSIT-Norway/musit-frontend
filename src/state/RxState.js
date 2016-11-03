@@ -1,29 +1,21 @@
 import React, { PropTypes, Component } from "react";
-import { Observable, Subject } from 'rxjs/Rx';
-import * as logger from 'loglevel';
+import { Observable } from 'rxjs/Rx';
 
 // Creates a state for use with the connect and provider below
 export function createState(reducer$, initialState$ = Observable.of({})) {
-  const end$ = new Subject();
-  const state$ = initialState$
+  return initialState$
     .merge(reducer$)
     .scan((state, [scope, reducer]) =>
       ({ ...state, [scope]: reducer(state[scope]) }))
     .publishReplay(1)
-    .refCount()
-    .takeUntil(end$);
-  return {
-    end$,
-    state$
-  };
+    .refCount();
 }
 
 // Used much the same way as redux connect
 export const connect = (selector = state => state) => (providedState$) => {
   return function wrapWithConnect(WrappedComponent) {
     return class Connect extends Component {
-      state$ = providedState$.state$;
-      end$ = providedState$.end$;
+      state$ = providedState$;
 
       static contextTypes = {
         state$: PropTypes.object // .isRequired
@@ -38,15 +30,10 @@ export const connect = (selector = state => state) => (providedState$) => {
       }
 
       componentWillMount() {
-        this.subscription = this.state$.map(selector).subscribe(
-          state => this.setState(state),
-          e => logger.debug('onError: %s', e),
-          () => logger.debug('onCompleted')
-        );
+        this.subscription = this.state$.map(selector).subscribe(state => this.setState(state));
       }
 
       componentWillUnmount() {
-        this.end$.next('destroy');
         this.subscription.unsubscribe();
       }
 
