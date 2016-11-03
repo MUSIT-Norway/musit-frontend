@@ -21,10 +21,17 @@ export default class ActorSuggest extends React.Component {
     }
   }
 
+  componentWillReceiveProps(next) {
+    if (next.value !== this.props.value) {
+      this.setState({...this.state, value: next.value})
+    }
+  }
+
   doneByProps = {
     id: this.props.id,
     placeholder: this.props.placeHolder,
     type: 'search',
+    onBlur: this.props.clear,
     onChange: (event, { newValue }) => this.setState({ ...this.state, value: newValue })
   }
 
@@ -35,13 +42,16 @@ export default class ActorSuggest extends React.Component {
         disabled={this.props.disabled}
         onSuggestionsUpdateRequested={this.props.update}
         getSuggestionValue={(suggestion) => suggestion.fn}
-        renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
-        inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.props.clear }}
+        renderSuggestion={
+          (suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>
+        }
+        inputProps={{ ...this.doneByProps, value: this.state.value }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
-        onSuggestionSelected={(event, { suggestion }) => {
-          if (event.keyCode === 13) {
-            event.preventDefault()
-          }
+        onSuggestionSelected={
+          (event, { suggestion }) => {
+            if (event.keyCode === 13) {
+              event.preventDefault()
+            }
             this.props.onChange(suggestion)
           }
         }
