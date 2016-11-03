@@ -1,24 +1,24 @@
-import { I18n } from 'react-i18nify'
-import 'react-select/dist/react-select.css'
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
-import { IndexLink, hashHistory } from 'react-router'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
+import { I18n } from 'react-i18nify';
+import 'react-select/dist/react-select.css';
+import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
+import { IndexLink, hashHistory } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
-import MusitUserAccount from '../../components/user-account-view'
-import './index.css'
-import Logo from './assets/logo.png'
-const $ = global.jQuery
-import { emitSuccess, emitError } from '../../errors/emitter'
-import * as loglevel from 'loglevel'
-import config from '../../config'
+import MusitUserAccount from '../../components/user-account-view';
+import './index.css';
+import Logo from './assets/logo.png';
+const $ = global.jQuery;
+import { emitSuccess, emitError } from '../../errors/emitter';
+import * as loglevel from 'loglevel';
+import config from '../../config';
 
 if (config.isDev) {
-  loglevel.setLevel('debug')
+  loglevel.setLevel('debug');
 } else {
-  loglevel.setLevel('error')
+  loglevel.setLevel('error');
 }
 
 export default class App extends Component {
@@ -51,11 +51,11 @@ export default class App extends Component {
       showError: emitError,
       showNotification: emitSuccess,
       logger: loglevel
-    }
+    };
   }
 
   showConfirm(title, onYes) {
-    const prompt = '<div title="Confirmation Required">Are you sure about this?</div>'
+    const prompt = '<div title="Confirmation Required">Are you sure about this?</div>';
     const $dialog = $(prompt).dialog({
       autoOpen: false,
       modal: true,
@@ -65,7 +65,7 @@ export default class App extends Component {
       close: function() {
         $( this ).remove();
       }
-    })
+    });
     $dialog.dialog({
       buttons : {
         "Confirm" : function() {
@@ -77,7 +77,7 @@ export default class App extends Component {
         }
       }
     });
-    $dialog.dialog('open')
+    $dialog.dialog('open');
   }
 
 
@@ -109,34 +109,34 @@ export default class App extends Component {
         return {
           ...appContext,
           closeModal: () => $dialog.dialog('close')
-        }
+        };
       }
 
       render() {
-        return componentToRender
+        return componentToRender;
       }
     }
 
-    ReactDOM.render(<ClosableAndProvided />, $dialog[0])
+    ReactDOM.render(<ClosableAndProvided />, $dialog[0]);
 
     $dialog.dialog('open');
   }
 
   constructor(props, context) {
-    super(props, context)
-    this.showModal = this.showModal.bind(this)
+    super(props, context);
+    this.showModal = this.showModal.bind(this);
   }
 
   componentWillMount() {
-    const loaded = this.props.loadUser()
+    const loaded = this.props.loadUser();
     if (!loaded) {
-      hashHistory.replace('/')
+      hashHistory.replace('/');
     }
   }
 
   handleLogout = () => {
-    this.props.clearUser()
-    hashHistory.replace('/')
+    this.props.clearUser();
+    hashHistory.replace('/');
   }
 
   render() {

@@ -16,14 +16,14 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React, {Component, PropTypes} from 'react'
-import Breadcrumb from '../../layout/Breadcrumb'
-import ModalNodeGrid from './ModalNodeGrid'
-import NodeSuggest from '../nodesearch'
-import Modal from '../modal/MusitModal'
-import SubmitButton from '../buttons/submit'
-import CancelButton from '../buttons/cancel'
-import { I18n } from 'react-i18nify'
+import React, {Component, PropTypes} from 'react';
+import Breadcrumb from '../../layout/Breadcrumb';
+import ModalNodeGrid from './ModalNodeGrid';
+import NodeSuggest from '../nodesearch';
+import Modal from '../modal/MusitModal';
+import SubmitButton from '../buttons/submit';
+import CancelButton from '../buttons/cancel';
+import { I18n } from 'react-i18nify';
 
 export default class MusitModal extends Component {
 
@@ -42,23 +42,23 @@ export default class MusitModal extends Component {
   };
 
   componentDidMount() {
-    this.loadHome()
+    this.loadHome();
   }
 
   loadHome() {
-    this.props.clear()
+    this.props.clear();
     this.props.loadRootChildren();
   }
 
   loadNode(id) {
-    this.props.loadNode(id)
-    this.props.loadChildren(id)
+    this.props.loadNode(id);
+    this.props.loadChildren(id);
   }
 
   render() {
-    const {children, selectedNode} = this.props
+    const {children, selectedNode} = this.props;
 
-    const isSelected = Object.keys({...selectedNode}).length > 0
+    const isSelected = Object.keys({...selectedNode}).length > 0;
 
     const header =
       <div style={{ width: '500px', paddingBottom: '10px' }}>
@@ -89,7 +89,7 @@ export default class MusitModal extends Component {
         <Breadcrumb
           node={selectedNode}
           onClickCrumb={(node) => {
-            return node.id === -1 || !node.id ? this.loadHome() : this.loadNode(node.id)
+            return node.id === -1 || !node.id ? this.loadHome() : this.loadNode(node.id);
           }}
         />
         <div style={{ paddingTop: '10px' }}>

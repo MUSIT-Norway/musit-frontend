@@ -17,24 +17,24 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React from 'react'
-import { IndexRedirect, Route } from 'react-router'
-import NotFound from './components/NotFound'
-import WelcomeView from './containers/welcome-view'
-import StorageUnitsTable from './containers/magasin/grid'
-import PickListView from './containers/picklist'
-import AddStorageUnitPanel from './containers/magasin/panel/add'
-import EditStorageUnitPanel from './containers/magasin/panel/edit'
-import AddObservationPage from './containers/observation/add'
-import EditObservationPage from './containers/observation/edit'
-import ViewObservationPage from './containers/observation/view'
-import Reports from './containers/reports'
-import KDReportContainer from './containers/reports/reportkd'
-import ControlViewContainer from './containers/control/view'
-import ControlAddContainer from './containers/control/add'
-import App from './containers/app'
-import ObservationControlGridShow from './containers/observationcontrol'
-import ObjectSearchContainer from './containers/objectsearch'
+import React from 'react';
+import { IndexRedirect, Route } from 'react-router';
+import NotFound from './components/NotFound';
+import WelcomeView from './containers/welcome-view';
+import StorageUnitsTable from './containers/magasin/grid';
+import PickListView from './containers/picklist';
+import AddStorageUnitPanel from './containers/magasin/panel/add';
+import EditStorageUnitPanel from './containers/magasin/panel/edit';
+import AddObservationPage from './containers/observation/add';
+import EditObservationPage from './containers/observation/edit';
+import ViewObservationPage from './containers/observation/view';
+import Reports from './containers/reports';
+import KDReportContainer from './containers/reports/reportkd';
+import ControlViewContainer from './containers/control/view';
+import ControlAddContainer from './containers/control/add';
+import App from './containers/app';
+import ObservationControlGridShow from './containers/observationcontrol';
+import ObjectSearchContainer from './containers/objectsearch';
 
 export default () => {
   return (

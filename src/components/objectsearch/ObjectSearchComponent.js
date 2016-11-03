@@ -1,9 +1,9 @@
-import React from 'react'
-import { I18n } from 'react-i18nify'
-import { Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
-import Breadcrumb from '../../layout/Breadcrumb'
-import PagingToolbar from '../../util/paging'
+import React from 'react';
+import { I18n } from 'react-i18nify';
+import { Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import Breadcrumb from '../../layout/Breadcrumb';
+import PagingToolbar from '../../util/paging';
 
 export function renderParam(id, props, style) {
   return (
@@ -18,7 +18,7 @@ export function renderParam(id, props, style) {
         onChange={(e) => props.onChangeField(id, e.target.value)}
       />
     </FormGroup>
-  )
+  );
 }
 
 export default (props) =>
@@ -37,8 +37,8 @@ export default (props) =>
             <Button
               type="submit"
               onClick={(e) => {
-                e.preventDefault()
-                props.searchForObjects(props.params)
+                e.preventDefault();
+                props.searchForObjects(props.params);
               }}
             >
               <FontAwesome name="search" style={{ fontSize: '1.3em' }} />
@@ -84,8 +84,8 @@ export default (props) =>
                         <a
                           href=""
                           onClick={(e) => {
-                            e.preventDefault()
-                            props.pickObject(data, data.breadcrumb)
+                            e.preventDefault();
+                            props.pickObject(data, data.breadcrumb);
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >
@@ -93,7 +93,7 @@ export default (props) =>
                         </a>
                       </td>
                     </tr>
-                  )
+                  );
                 })}
                 </tbody>
               </Table>
@@ -109,4 +109,4 @@ export default (props) =>
         </div>
       </Grid>
     </main>
-  </div>
+  </div>;

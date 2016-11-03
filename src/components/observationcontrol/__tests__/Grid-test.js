@@ -1,10 +1,10 @@
-import assert from 'assert'
-import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils'
+import assert from 'assert';
+import React from 'react';
+import ReactTestUtils from 'react-addons-test-utils';
 import ObservationControlGrid from '../Grid';
 
 describe('ObservationControlGrid', () => {
-  let inputComponent
+  let inputComponent;
   const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ObservationControlGrid
@@ -42,19 +42,19 @@ describe('ObservationControlGrid', () => {
   };
 
   it('Check the 1st row Date value', () => {
-    setup()
-    assert(inputComponent[1].innerHTML === '01.01.1983')
-  })
+    setup();
+    assert(inputComponent[1].innerHTML === '01.01.1983');
+  });
   it('Check the 1st row registered date value', () => {
-    setup()
-    assert(inputComponent[4].innerHTML === '04.01.1983')
-  })
+    setup();
+    assert(inputComponent[4].innerHTML === '04.01.1983');
+  });
   it('Check the 2nd row Date value', () => {
-    setup()
-    assert(inputComponent[7].innerHTML === '01.01.1984')
-  })
+    setup();
+    assert(inputComponent[7].innerHTML === '01.01.1984');
+  });
   it('Check the 2nd row registered date value', () => {
-    setup()
-    assert(inputComponent[10].innerHTML === '04.01.1984')
-  })
-})
+    setup();
+    assert(inputComponent[10].innerHTML === '04.01.1984');
+  });
+});

@@ -18,11 +18,11 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component, PropTypes } from 'react'
-import ObservationDoubleTextAreaComponent from './ObservationDoubleTextAreaComponent'
-import { MusitField, MusitDropDownField } from '../../../components/formfields'
-import { ControlLabel, Row, Col, Button } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
+import React, { Component, PropTypes } from 'react';
+import ObservationDoubleTextAreaComponent from './ObservationDoubleTextAreaComponent';
+import { MusitField, MusitDropDownField } from '../../../components/formfields';
+import { ControlLabel, Row, Col, Button } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
 
 export default class ObservationPest extends Component {
   static propTypes = {
@@ -140,8 +140,8 @@ export default class ObservationPest extends Component {
                 {!this.props.canEdit ? '' : <a href="" >
                   <
                     FontAwesome onClick={(e) => {
-                      this.props.lifeCycleOnRemove(index)
-                      e.preventDefault()
+                      this.props.lifeCycleOnRemove(index);
+                      e.preventDefault();
                     }
                   }
                     name="times"
@@ -159,9 +159,9 @@ export default class ObservationPest extends Component {
                 </span>
               </Col>
             </Row>
-          )
+          );
         })}
       </div>
-    )
+    );
   }
 }

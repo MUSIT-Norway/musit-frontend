@@ -1,10 +1,10 @@
-import { shallow } from 'enzyme'
-import MusitField from '../../../../components/formfields/musitfield'
-import MusitDropDownField from '../../../../components/formfields/musitdropdownfield'
-import React from 'react'
+import { shallow } from 'enzyme';
+import MusitField from '../../../../components/formfields/musitfield';
+import MusitDropDownField from '../../../../components/formfields/musitdropdownfield';
+import React from 'react';
 import ObservationPest from '../ObservationPest';
 import ObservationDoubleTextAreaComponent from '../ObservationDoubleTextAreaComponent';
-import { ControlLabel } from 'react-bootstrap'
+import { ControlLabel } from 'react-bootstrap';
 
 describe('ObservationPest', () => {
 
@@ -64,22 +64,22 @@ describe('ObservationPest', () => {
         ]}
       />
     );
-    expect(wrapper.find(ObservationDoubleTextAreaComponent).length).toEqual(1)
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftValue="left value"]').length).toEqual(1)
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightValue="right value"]').length).toEqual(1)
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftPlaceHolder="Left placeholder"]').length).toEqual(1)
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightPlaceHolder="Right placeholder"]').length).toEqual(1)
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftTooltip="Left tooltip"]').length).toEqual(1)
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightTooltip="Right tooltip"]').length).toEqual(1)
-    expect(wrapper.find(MusitDropDownField).length).toEqual(3)
-    expect(wrapper.find('MusitDropDownField[value="Adult"]').length).toEqual(2)
-    expect(wrapper.find('MusitDropDownField[value="Puppe"]').length).toEqual(1)
-    expect(wrapper.find(MusitField).length).toEqual(3)
-    expect(wrapper.find('MusitField[value="1"]').length).toEqual(1)
-    expect(wrapper.find('MusitField[value="10"]').length).toEqual(1)
-    expect(wrapper.find('MusitField[value="20"]').length).toEqual(1)
-    expect(wrapper.contains(<ControlLabel>LifeCycle label</ControlLabel>)).toEqual(true)
-    expect(wrapper.contains(<ControlLabel>Count label</ControlLabel>)).toEqual(true)
-    expect(wrapper.contains(<ControlLabel>LifeCycle label</ControlLabel>)).toEqual(true)
-  })
-})
+    expect(wrapper.find(ObservationDoubleTextAreaComponent).length).toEqual(1);
+    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftValue="left value"]').length).toEqual(1);
+    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightValue="right value"]').length).toEqual(1);
+    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftPlaceHolder="Left placeholder"]').length).toEqual(1);
+    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightPlaceHolder="Right placeholder"]').length).toEqual(1);
+    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftTooltip="Left tooltip"]').length).toEqual(1);
+    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightTooltip="Right tooltip"]').length).toEqual(1);
+    expect(wrapper.find(MusitDropDownField).length).toEqual(3);
+    expect(wrapper.find('MusitDropDownField[value="Adult"]').length).toEqual(2);
+    expect(wrapper.find('MusitDropDownField[value="Puppe"]').length).toEqual(1);
+    expect(wrapper.find(MusitField).length).toEqual(3);
+    expect(wrapper.find('MusitField[value="1"]').length).toEqual(1);
+    expect(wrapper.find('MusitField[value="10"]').length).toEqual(1);
+    expect(wrapper.find('MusitField[value="20"]').length).toEqual(1);
+    expect(wrapper.contains(<ControlLabel>LifeCycle label</ControlLabel>)).toEqual(true);
+    expect(wrapper.contains(<ControlLabel>Count label</ControlLabel>)).toEqual(true);
+    expect(wrapper.contains(<ControlLabel>LifeCycle label</ControlLabel>)).toEqual(true);
+  });
+});

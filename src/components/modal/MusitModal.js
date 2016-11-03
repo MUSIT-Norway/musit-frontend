@@ -17,8 +17,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React from 'react'
-import './MusitModal.css'
+import React from 'react';
+import './MusitModal.css';
 
 const MusitModal = (props) => {
   const extraClassName = props.className ? ' ' + props.className : '';

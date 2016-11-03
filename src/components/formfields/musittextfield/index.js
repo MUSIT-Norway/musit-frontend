@@ -47,7 +47,7 @@ export default class MusitTextField extends Component {
       <Popover id="InputLinkPopover" title="Info">
         {tip}
       </Popover>
-    )
+    );
   }
 
   render() {
@@ -119,6 +119,6 @@ export default class MusitTextField extends Component {
             />}
         </Col>
       </FormGroup>
-    )
+    );
   }
 }

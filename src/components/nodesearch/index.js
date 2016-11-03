@@ -1,97 +1,97 @@
 
-import React from 'react'
-import { connect } from 'react-redux'
-import AutoSuggest from 'react-autosuggest'
-import { suggestNode, clearSuggest } from '../../reducers/suggest'
+import React from 'react';
+import { connect } from 'react-redux';
+import AutoSuggest from 'react-autosuggest';
+import { suggestNode, clearSuggest } from '../../reducers/suggest';
 
 const mapStateToProps = (state) => ({
-    suggest: state.suggest
+  suggest: state.suggest
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onUpdateRequested: (id, { value, reason }) => {
-        if (reason && reason === 'type' && value && value.length > 2) {
-            dispatch(suggestNode(id, value))
-        } else {
-            dispatch(clearSuggest(id))
-        }
-    },
-    clearSuggest: () => dispatch(clearSuggest())
+  onUpdateRequested: (id, { value, reason }) => {
+    if (reason && reason === 'type' && value && value.length > 2) {
+      dispatch(suggestNode(id, value));
+    } else {
+      dispatch(clearSuggest(id));
+    }
+  },
+  clearSuggest: () => dispatch(clearSuggest())
 });
 
 class NodeSuggest extends React.Component {
 
-    static propTypes = {
-        id: React.PropTypes.string.isRequired,
-        value: React.PropTypes.string,
-        placeHolder: React.PropTypes.string,
-        suggest: React.PropTypes.object,
-        onChange: React.PropTypes.func.isRequired,
-        onUpdateRequested: React.PropTypes.func,
-        disabled: React.PropTypes.bool,
-        clearSuggest: React.PropTypes.func
+  static propTypes = {
+    id: React.PropTypes.string.isRequired,
+    value: React.PropTypes.string,
+    placeHolder: React.PropTypes.string,
+    suggest: React.PropTypes.object,
+    onChange: React.PropTypes.func.isRequired,
+    onUpdateRequested: React.PropTypes.func,
+    disabled: React.PropTypes.bool,
+    clearSuggest: React.PropTypes.func
+  };
+
+  static defaultProps = {
+    id: 'nodeField',
+    disabled: false,
+    value: ''
+  };
+
+  constructor(props) {
+    super(props);
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.state = {
+      value: this.props.value
     };
+  }
 
-    static defaultProps = {
-        id: 'nodeField',
-        disabled: false,
-        value: ''
-    };
-
-    constructor(props) {
-        super(props);
-        this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
-        this.onBlur = this.onBlur.bind(this)
-        this.state = {
-            value: this.props.value
-        }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.value !== this.props.value) {
+      this.setState({ ...this.state, value: nextProps.value });
     }
+  }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.value !== this.props.value) {
-            this.setState({ ...this.state, value: nextProps.value })
-        }
+  onChange(event, { newValue }) {
+    this.setState({ ...this.state, value: newValue });
+  }
+
+  onSuggestionSelected(event, { suggestion }) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
     }
+    this.props.onChange(suggestion.id);
+  }
 
-    onChange(event, { newValue }) {
-        this.setState({ ...this.state, value: newValue });
-    }
+  getSuggestions() {
+    const suggest = this.props.suggest[this.props.id];
+    return suggest && suggest.data ? suggest.data : [];
+  }
 
-    onSuggestionSelected(event, { suggestion }) {
-        if (event.keyCode === 13) {
-            event.preventDefault()
-        }
-        this.props.onChange(suggestion.id)
-    }
+  getNodeSuggestionValue(suggestion) {
+    return suggestion.name;
+  }
 
-    getSuggestions() {
-        const suggest = this.props.suggest[this.props.id];
-        return suggest && suggest.data ? suggest.data : []
-    }
+  nodeProps = {
+    id: this.props.id,
+    placeholder: this.props.placeHolder,
+    type: 'search',
+    onChange: this.onChange.bind(this)
+  };
 
-    getNodeSuggestionValue(suggestion) {
-        return suggestion.name
-    }
-
-    nodeProps = {
-        id: this.props.id,
-        placeholder: this.props.placeHolder,
-        type: 'search',
-        onChange: this.onChange.bind(this)
-    };
-
-    renderNodeSuggestion(suggestion) {
-        const suggestionText = suggestion.name;
-        return (
+  renderNodeSuggestion(suggestion) {
+    const suggestionText = suggestion.name;
+    return (
             <span className={'suggestion-content'}>{suggestionText}</span>
-        )
-    }
-    onBlur() {
-        return this.props.clearSuggest
-    }
+        );
+  }
+  onBlur() {
+    return this.props.clearSuggest;
+  }
 
-    render() {
-        return (
+  render() {
+    return (
             <AutoSuggest
                 suggestions={this.getSuggestions()}
                 disabled={this.props.disabled}
@@ -102,8 +102,8 @@ class NodeSuggest extends React.Component {
                 shouldRenderSuggestions={(v) => v !== 'undefined'}
                 onSuggestionSelected={this.onSuggestionSelected}
             />
-        )
-    }
+        );
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NodeSuggest)
+export default connect(mapStateToProps, mapDispatchToProps)(NodeSuggest);

@@ -18,8 +18,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component, PropTypes } from 'react'
-import validate from '../common/validators'
+import React, { Component, PropTypes } from 'react';
+import validate from '../common/validators';
 
 export default class MusitField extends Component {
 
@@ -46,23 +46,23 @@ export default class MusitField extends Component {
   }
 
   classNameWithSpan() {
-    let lvString = ' '
+    let lvString = ' ';
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
-      lvString = 'input-group has-error'
+      lvString = 'input-group has-error';
     } else {
-      lvString = 'input-group'
+      lvString = 'input-group';
     }
-    return lvString
+    return lvString;
   }
 
   classNameOnlyWithInput() {
-    let lvString = ''
+    let lvString = '';
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
-      lvString = 'has-error'
+      lvString = 'has-error';
     } else {
-      lvString = ''
+      lvString = '';
     }
-    return lvString
+    return lvString;
   }
 
   render() {
@@ -93,7 +93,7 @@ export default class MusitField extends Component {
         className={this.classNameOnlyWithInput()}
       >
        {lcPlaceholder}
-      </div>
+      </div>;
       
   }
 }

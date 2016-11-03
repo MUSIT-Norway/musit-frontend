@@ -1,6 +1,6 @@
-import React from 'react'
-import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap'
-import { I18n } from 'react-i18nify'
+import React from 'react';
+import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
+import { I18n } from 'react-i18nify';
 
 const reports = [
   {
@@ -47,5 +47,5 @@ export default () => {
         </Panel>
       </main>
     </div>
-  )
-}
+  );
+};
