@@ -1,6 +1,7 @@
 import { Observable, Subject } from 'rxjs/Rx';
 import * as loglevel from 'loglevel';
 import 'whatwg-fetch';
+import { getToken } from '../../middleware/ApiClient';
 
 // Reducer subjects (for data)
 export const update$ = new Subject();
@@ -13,8 +14,11 @@ input$.map(update => update.value)
   .debounce(() => Observable.timer(700))
   .distinctUntilChanged()
   .switchMap((term) =>
-    fetch(`/api/actor/v1/person?search=[${term}]&museumId=1`)
-      .then((response) => response.json())
+    fetch(`/api/actor/v1/person?search=[${term}]&museumId=1`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    }).then((response) => response.json())
   )
   .subscribe(
     (data) => update$.next(data),

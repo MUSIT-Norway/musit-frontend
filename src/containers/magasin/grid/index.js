@@ -104,8 +104,8 @@ const mapDispatchToProps = (dispatch, props) => {
               message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name: currentNode.name})
             });
           },
-          onFailure: (e) => {
-            if (e.status === 400) {
+          onFailure: (error) => {
+            if (error.response.status === 400) {
               emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')} );
             } else {
               emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')} );
