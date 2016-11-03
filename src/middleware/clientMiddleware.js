@@ -54,7 +54,7 @@ export default function clientMiddleware(client) {
           if (callback) {
             const {onFailure} = callback;
             if (typeof onFailure === 'function') {
-              onFailure(error);
+              return onFailure(error);
             }
           }
           emitError({ type: 'network', error });
@@ -65,7 +65,7 @@ export default function clientMiddleware(client) {
         if (callback) {
           const { onFailure } = callback;
           if (typeof onFailure === 'function') {
-            onFailure(error);
+            return onFailure(error);
           }
         }
         emitError({ type: 'network', error });
