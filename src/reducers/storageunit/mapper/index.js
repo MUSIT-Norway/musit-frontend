@@ -16,8 +16,8 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { toFrontend } from './to_frontend'
-import { toBackend } from './to_backend'
+import { toFrontend } from './to_frontend';
+import { toBackend } from './to_backend';
 
-export const mapToFrontend = toFrontend
-export const mapToBackend = toBackend
+export const mapToFrontend = toFrontend;
+export const mapToBackend = toBackend;

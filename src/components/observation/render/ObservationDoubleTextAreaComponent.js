@@ -17,9 +17,9 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React, { Component, PropTypes } from 'react'
-import { MusitTextArea } from '../../../components/formfields'
-import { Row, ControlLabel, Col } from 'react-bootstrap'
+import React, { Component, PropTypes } from 'react';
+import { MusitTextArea } from '../../../components/formfields';
+import { Row, ControlLabel, Col } from 'react-bootstrap';
 
 export default class ObservationDoubleTextAreaComponent extends Component {
   static propTypes = {
@@ -75,6 +75,6 @@ export default class ObservationDoubleTextAreaComponent extends Component {
           />
         </Col>
       </Row>
-    )
+    );
   }
 }

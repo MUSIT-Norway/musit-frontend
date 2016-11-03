@@ -1,7 +1,7 @@
-import assert from 'assert'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import ReactTestUtils from 'react-addons-test-utils'
+import assert from 'assert';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactTestUtils from 'react-addons-test-utils';
 import MusitTextField from '../index';
 
 describe('MusitTextField', () => {
@@ -20,8 +20,8 @@ describe('MusitTextField', () => {
 
     const actualDiv = ReactDOM.findDOMNode(myDiv);
     const label = actualDiv.querySelectorAll('label')[0];
-    assert.equal(label.textContent, 'Navn', 'Navn må være tilstede')
+    assert.equal(label.textContent, 'Navn', 'Navn må være tilstede');
     const field = actualDiv.querySelectorAll('input')[0];
-    assert.equal(field.value, 'flint', 'Felt må være tilstede')
+    assert.equal(field.value, 'flint', 'Felt må være tilstede');
   });
 });

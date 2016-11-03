@@ -26,23 +26,23 @@ import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import getRoutes from './routes';
 import DevTools from './components/dev-tools';
-import config from './config'
-import LanguageJson from '../language.json'
-import { I18n } from 'react-i18nify'
-import { emitError } from './errors/emitter'
-import './errors/handler'
+import config from './config';
+import LanguageJson from '../language.json';
+import { I18n } from 'react-i18nify';
+import { emitError } from './errors/emitter';
+import './errors/handler';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import 'font-awesome/css/font-awesome.css'
-import './index.css'
+import 'font-awesome/css/font-awesome.css';
+import './index.css';
 
 const client = new ApiClient();
 const dest = document.getElementById('content');
 const store = createStore(client);
 const history = syncHistoryWithStore(hashHistory, store);
 
-I18n.loadTranslations(LanguageJson)
-I18n.setLocale('no')
+I18n.loadTranslations(LanguageJson);
+I18n.setLocale('no');
 
 try {
   const component =
@@ -76,7 +76,7 @@ try {
     );
   }
 } catch(error) {
-  emitError({ type: 'other', error })
+  emitError({ type: 'other', error });
 }
 
 

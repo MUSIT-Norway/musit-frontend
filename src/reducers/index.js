@@ -32,8 +32,8 @@ import observationReducer from './observation';
 import reportReducer from './reports';
 import controlReducer from './control';
 import observationControlGridReducer from './grid/observationcontrol';
-import moveHistoryReducer from './grid/move'
-import ObjectSearchReducer from './objectsearch/reducer'
+import moveHistoryReducer from './grid/move';
+import ObjectSearchReducer from './objectsearch/reducer';
 
 const rootReducer = combineReducers({
   routing: routerReducer,

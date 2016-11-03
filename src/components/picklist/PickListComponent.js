@@ -1,9 +1,9 @@
 
-import React, { Component } from 'react'
-import { Table } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
-import { I18n } from 'react-i18nify'
-import './index.css'
+import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import { I18n } from 'react-i18nify';
+import './index.css';
 
 export default class PickListComponent extends Component {
   static propTypes = {
@@ -24,7 +24,7 @@ export default class PickListComponent extends Component {
       iconRendrer,
       labelRendrer,
       isnode
-    } = this.props
+    } = this.props;
     const count =
       <span
         className="normalActionNoPadding"
@@ -32,7 +32,7 @@ export default class PickListComponent extends Component {
         title={I18n.t(`musit.pickList.tooltip.${isnode ? 'selectedNodeCount' : 'selectedObjectCount'}`)}
       >
         {`(${marked.length})`}
-      </span>
+      </span>;
     return (
       <div>
         <Table responsive striped condensed hover>
@@ -58,7 +58,7 @@ export default class PickListComponent extends Component {
                   style={{ fontSize: '1.5em' }}
                   onClick={() => {
                     if (marked.length > 0) {
-                      this.props.move(marked)
+                      this.props.move(marked);
                     }
                   }}
                   title={I18n.t(`musit.pickList.tooltip.${isnode ? 'moveSelectedNodes' : 'moveSelectedObjects'}`)}
@@ -70,7 +70,7 @@ export default class PickListComponent extends Component {
                   name="remove"
                   onClick={() => {
                     if (marked.length > 0) {
-                      this.props.remove(marked)
+                      this.props.remove(marked);
                     }
                   }}
                   title={I18n.t(`musit.pickList.tooltip.${isnode ? 'removeSelectedNodesFromList' : 'removeSelectedObjectsFromList'}`)}
@@ -81,8 +81,8 @@ export default class PickListComponent extends Component {
           </thead>
           <tbody>
             {picks.map((pick, i) => {
-              const item = pick.value
-              const isItemMarked = pick.marked
+              const item = pick.value;
+              const isItemMarked = pick.marked;
               return (
                 <tr key={i}>
                   <td style={{ width: "3em", textAlign: "left", verticalAlign: "middle" }}>
@@ -100,12 +100,12 @@ export default class PickListComponent extends Component {
                     </span>
                   </td>
                 </tr>
-              )
+              );
             })}
           </tbody>
         </Table>
       </div>
-    )
+    );
   }
 
 }

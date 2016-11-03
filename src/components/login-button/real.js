@@ -30,7 +30,7 @@ export default class FeideButton extends React.Component {
             webWindow.focus();
             const checkLoaded = () => {
               if (webWindow.closed === true) {
-                const user = jwtDecode(localStorage.getItem('jwtToken'))
+                const user = jwtDecode(localStorage.getItem('jwtToken'));
                 this.props.setUser(user);
               } else {
                 setTimeout(checkLoaded, 500);
@@ -42,6 +42,6 @@ export default class FeideButton extends React.Component {
           {this.props.children}
         </span>
       </Button>
-    )
+    );
   }
 }

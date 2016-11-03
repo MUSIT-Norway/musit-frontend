@@ -16,12 +16,12 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import './MoveHistoryModal.css'
-import React, { Component, PropTypes } from 'react'
-import ModalMoveHistoryGrid from './ModalMoveHistoryGrid'
-import Modal from '../modal/MusitModal'
-import CancelButton from '../buttons/cancel'
-import { I18n } from 'react-i18nify'
+import './MoveHistoryModal.css';
+import React, { Component, PropTypes } from 'react';
+import ModalMoveHistoryGrid from './ModalMoveHistoryGrid';
+import Modal from '../modal/MusitModal';
+import CancelButton from '../buttons/cancel';
+import { I18n } from 'react-i18nify';
 
 export default class MoveHistoryModal extends Component {
 
@@ -35,10 +35,10 @@ export default class MoveHistoryModal extends Component {
   };
 
   componentDidMount() {
-    this.props.clearMoveHistoryForObject()
+    this.props.clearMoveHistoryForObject();
     this.props.loadMoveHistoryForObject(this.props.objectId, {
       onSuccess: (result) => this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map(r => r.doneBy) })
-    })
+    });
   }
 
   render() {

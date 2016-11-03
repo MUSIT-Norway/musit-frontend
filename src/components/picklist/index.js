@@ -1,3 +1,3 @@
-import PickListComponent from './PickListComponent'
+import PickListComponent from './PickListComponent';
 
-export { PickListComponent }
+export { PickListComponent };

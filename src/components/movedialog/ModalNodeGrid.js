@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { Table, FormGroup } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
-import './ModalNodeGrid.css'
+import React, { Component, PropTypes } from 'react';
+import { Table, FormGroup } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import './ModalNodeGrid.css';
 
 export default class ModalNodeGrid extends Component {
   static propTypes = {
@@ -21,8 +21,8 @@ export default class ModalNodeGrid extends Component {
                     <a
                       href=""
                       onClick={(e) => {
-                        e.preventDefault()
-                        this.props.onClick(c)
+                        e.preventDefault();
+                        this.props.onClick(c);
                       }}
                     >
                       <FontAwesome name="folder" />
@@ -35,6 +35,6 @@ export default class ModalNodeGrid extends Component {
           </Table>
         </div>
       </FormGroup>
-    )
+    );
   }
 }

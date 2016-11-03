@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
-import ObservationPage from './index'
-import Layout from '../../layout'
-import Breadcrumb from '../../layout/Breadcrumb'
+import React, { PropTypes } from 'react';
+import ObservationPage from './index';
+import Layout from '../../layout';
+import Breadcrumb from '../../layout/Breadcrumb';
 
 export default class AddObservationPage extends React.Component {
 
@@ -15,7 +15,7 @@ export default class AddObservationPage extends React.Component {
 
   componentWillMount() {
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id)
+      this.props.loadStorageObj(this.props.params.id);
     }
   }
 
@@ -38,6 +38,6 @@ export default class AddObservationPage extends React.Component {
           </div>
         }
       />
-    )
+    );
   }
 }
