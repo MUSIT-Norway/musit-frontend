@@ -23,6 +23,9 @@ export const connect = (selector = state => state) => (providedState$) => {
 
       constructor(props, context) {
         super(props, context);
+        // Note: we could possibly change this to:
+        // this.state$ = this.state$ || this.context.state$;
+        // so that a connected component can have its own state.
         this.state$ = this.context.state$ || this.state$;
       }
 
