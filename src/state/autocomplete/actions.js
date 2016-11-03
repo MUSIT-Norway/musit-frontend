@@ -15,14 +15,13 @@ export default function createActions(urlTemplate, debounceTimer = Observable.ti
     .filter((text) => text.length > 2)
     .debounce(() => debounceTimer)
     .distinctUntilChanged()
-    .switchMap((term) => {
-      const url = urlTemplate.replace('%term%', term)
-      return fetch(url, {
+    .switchMap((term) =>
+      fetch(urlTemplate.replace('%term%', term), {
         headers: {
           Authorization: `Bearer ${getToken()}`
         }
-      }).then((response) => response.json());
-    })
+      }).then((response) => response.json())
+    )
     .subscribe(
       (data) => update$.next(data),
       (error) => {
