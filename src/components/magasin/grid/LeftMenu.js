@@ -33,7 +33,7 @@ export default class NodeLeftMenuComponent extends Component {
       showButtons
     } = this.props;
 
-    const buttonLink = (type, icon, eventType, MusitIconType) => {
+    const buttonLink = (type, icon, eventType, MusitIconType, disabled) => {
       let fragment = null;
       if (rootNode) {
         fragment = 
@@ -43,8 +43,9 @@ export default class NodeLeftMenuComponent extends Component {
               id={`${rootNode.id}_${type}`}
               onClick={() => eventType(rootNode.id)}
               style={{ color: 'black' }}
+              disabled={disabled}
             >
-              {MusitIconType ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
+              {MusitIconType && MusitIconType === 1? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
                 <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />}
               <br />
               {I18n.t(`musit.leftMenu.node.${type}`)}
@@ -85,7 +86,7 @@ export default class NodeLeftMenuComponent extends Component {
         </div>
       );
     };
-
+    const disabled = !Number.isNaN(objectsOnNode) && !Number.isNaN(underNodeCount) && objectsOnNode + underNodeCount > 0
     return (
       <div>
         {rootNode ? newButton(rootNode.id) : null}
@@ -94,10 +95,11 @@ export default class NodeLeftMenuComponent extends Component {
         {showCount(totalObjectCount, 'totalObjectCount')}
         {showCount(underNodeCount, 'underNodeCount')}
         {rootNode ? <hr /> : null}
-        {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
+        {showButtons ? buttonLink('properties', 'cog', onClickProperties, 0) : null}
         {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
-        {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode)) : null}
-        {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
+        {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode), 0) : null}
+        {showButtons ?
+          buttonLink('delete','trash-o', onClickDelete, 0, disabled): null}
       </div>
     );
   }
