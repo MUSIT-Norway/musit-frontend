@@ -19,8 +19,8 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import { ObservationDoubleTextAreaComponent } from './index'
-import { MusitField, MusitDropDownField } from '../../components/formfields'
+import ObservationDoubleTextAreaComponent from './ObservationDoubleTextAreaComponent'
+import { MusitField, MusitDropDownField } from '../../../components/formfields'
 import { ControlLabel, Row, Col, Button } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 
@@ -28,7 +28,10 @@ export default class ObservationPest extends Component {
   static propTypes = {
     disabled: PropTypes.bool,
     canEdit: PropTypes.bool,
-    observations: PropTypes.array.isRequired,
+    observations: PropTypes.arrayOf(PropTypes.shape({
+      count: PropTypes.string,
+      lifeCycle: PropTypes.string
+    })).isRequired,
     // Lifecycle
     lifeCycleLabel: PropTypes.string.isRequired,
     lifeCyclePlaceHolder: PropTypes.string.isRequired,

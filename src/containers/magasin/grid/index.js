@@ -16,7 +16,7 @@ const getStorageGridUnit = (state) => state.storageGridUnit.data || []
 
 const getSortedStorageGridUnit = createSelector(
     [ getStorageGridUnit ],
-    (storageGridUnit) => orderBy(storageGridUnit, [(o) => toLower(o.name), 'type'])
+    (storageGridUnit) => orderBy(storageGridUnit, ['type', (o) => toLower(o.name)])
 )
 
 const getStorageObjectGrid = (state) => state.storageObjectGrid.data || []
