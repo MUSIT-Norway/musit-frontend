@@ -21,8 +21,8 @@
 import { connect } from 'react-redux';
 import WelcomeContainer from '../../components/welcome-view';
 import { connectUser, loadActor } from '../../reducers/auth';
-import { I18n } from 'react-i18nify'
-import { hashHistory } from 'react-router'
+import { I18n } from 'react-i18nify';
+import { hashHistory } from 'react-router';
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -31,10 +31,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setUser: (user: any) => {
-    dispatch(connectUser(user))
-    dispatch(loadActor())
-    hashHistory.replace('/magasin/root')
+    dispatch(connectUser(user));
+    dispatch(loadActor());
+    hashHistory.replace('/magasin/root');
   }
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(WelcomeContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(WelcomeContainer);

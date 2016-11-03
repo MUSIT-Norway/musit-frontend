@@ -1,5 +1,5 @@
-import React from 'react'
-import Autosuggest from 'react-autosuggest'
+import React from 'react';
+import Autosuggest from 'react-autosuggest';
 
 export default class ActorSuggest extends React.Component {
 
@@ -15,15 +15,15 @@ export default class ActorSuggest extends React.Component {
   }
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       value: this.props.value
-    }
+    };
   }
 
   componentWillReceiveProps(next) {
     if (next.value !== this.props.value) {
-      this.setState({...this.state, value: next.value})
+      this.setState({...this.state, value: next.value});
     }
   }
 
@@ -50,12 +50,12 @@ export default class ActorSuggest extends React.Component {
         onSuggestionSelected={
           (event, { suggestion }) => {
             if (event.keyCode === 13) {
-              event.preventDefault()
+              event.preventDefault();
             }
-            this.props.onChange(suggestion)
+            this.props.onChange(suggestion);
           }
         }
       />
-    )
+    );
   }
 }

@@ -17,39 +17,39 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { I18n } from 'react-i18nify'
-import { connect } from 'react-redux'
-import { loadControlsAndObservationsForNode, loadActor } from '../../reducers/grid/observationcontrol'
-import { loadRoot } from '../../reducers/storageunit/grid'
-import ObservationControlGridShow from '../../components/observationcontrol'
-import { createSelector } from 'reselect'
-import orderBy from 'lodash/orderBy'
+import { I18n } from 'react-i18nify';
+import { connect } from 'react-redux';
+import { loadControlsAndObservationsForNode, loadActor } from '../../reducers/grid/observationcontrol';
+import { loadRoot } from '../../reducers/storageunit/grid';
+import ObservationControlGridShow from '../../components/observationcontrol';
+import { createSelector } from 'reselect';
+import orderBy from 'lodash/orderBy';
 
-const getObservationControl = (state) => state.observationControlGrid.data
+const getObservationControl = (state) => state.observationControlGrid.data;
 
 const getSortedObservationControl = createSelector(
     [ getObservationControl ],
     (observationControl) => orderBy(observationControl, ['doneDate', 'id'], ['desc', 'desc'])
-)
+);
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
     observationControlGridData: getSortedObservationControl(state),
     rootNode: state.storageGridUnit.root.data
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   loadControlAndObservations: (id, callback) => {
-    dispatch(loadControlsAndObservationsForNode(id, callback))
+    dispatch(loadControlsAndObservationsForNode(id, callback));
   },
   loadActorDetails: (data) => {
-    dispatch(loadActor(data))
+    dispatch(loadActor(data));
   },
   loadStorageObj: (id) => {
-    dispatch(loadRoot(id))
+    dispatch(loadRoot(id));
   }
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ObservationControlGridShow)
+export default connect(mapStateToProps, mapDispatchToProps)(ObservationControlGridShow);

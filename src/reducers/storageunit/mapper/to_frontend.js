@@ -1,6 +1,6 @@
 
-import { formatFloatToString } from '../../../util'
-import { getPath } from '../../helper'
+import { formatFloatToString } from '../../../util';
+import { getPath } from '../../helper';
 
 const mapRequirement = (envReq, field) => {
   if (envReq[field] && (envReq[field].base || envReq[field].tolerance)) {
@@ -16,7 +16,7 @@ const mapRequirement = (envReq, field) => {
     };
   }
   return null;
-}
+};
 
 export const toFrontend = (data) => {
   return {
@@ -36,5 +36,5 @@ export const toFrontend = (data) => {
     } : {},
     environmentAssessment: data.environmentAssessment || {},
     securityAssessment: data.securityAssessment || {}
-  }
-}
+  };
+};

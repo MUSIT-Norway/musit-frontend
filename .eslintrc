@@ -4,7 +4,7 @@
     "mockStore": true
   },
   "rules": {
-    "no-alert": "warn",
+    "no-alert": "error",
     "no-array-constructor": "error",
     "no-bitwise": "error",
     "no-catch-shadow": "error",
@@ -31,14 +31,15 @@
     "no-extra-boolean-cast": "error",
     "no-extra-parens": "error",
     "no-extra-semi": "error",
+    "semi": "error",
     "no-fallthrough": "error",
     "no-func-assign": "error",
     "no-inner-declarations": ["error", "functions"],
     "no-invalid-regexp": "error",
-    "no-irregular-whitespace": "warn",
+    "no-irregular-whitespace": "error",
     "no-labels": "error",
     "no-mixed-spaces-and-tabs": ["error", false],
-    "no-multi-spaces": "warn",
+    "no-multi-spaces": "error",
     "no-unsafe-negation": "error",
     "no-nested-ternary": "error",
     "no-new": "error",
@@ -70,6 +71,9 @@
     "radix": "error",
     "use-isnan": "error",
     "valid-typeof": "error",
-    "prefer-const": "error"
+    "prefer-const": "error",
+    "indent": ["error", 2],
+    "brace-style": [ 2, "1tbs" ],
+    "curly": ["error", "all"]
   }
 }

@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-import StorageUnitContainer from './index'
+import React, { PropTypes } from 'react';
+import StorageUnitContainer from './index';
 
 export default class AddStorageUnitContainer extends React.Component {
   static propTypes = {
@@ -12,9 +12,9 @@ export default class AddStorageUnitContainer extends React.Component {
   };
 
   componentWillMount() {
-    this.props.clearState()
+    this.props.clearState();
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id)
+      this.props.loadStorageObj(this.props.params.id);
     }
   }
 
@@ -24,11 +24,11 @@ export default class AddStorageUnitContainer extends React.Component {
         {...this.props}
         onLagreClick={(data) => {
           const parentId = this.props.params.id;
-          this.props.onLagreClick(parentId, data)
+          this.props.onLagreClick(parentId, data);
         }}
         isAdd
         loaded={!!this.props.unit}
       />
-    )
+    );
   }
 }

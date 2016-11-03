@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react'
-import { Table, FormGroup } from 'react-bootstrap'
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
-import { I18n } from 'react-i18nify'
+import React, { Component, PropTypes } from 'react';
+import { Table, FormGroup } from 'react-bootstrap';
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util';
+import { I18n } from 'react-i18nify';
 
 export default class ModalMoveHistoryGrid extends Component {
   static propTypes = {
@@ -9,7 +9,7 @@ export default class ModalMoveHistoryGrid extends Component {
   }
 
   render() {
-    const toPathStr = (pathArr) => pathArr.map(o => o.name).join('  /  ')
+    const toPathStr = (pathArr) => pathArr.map(o => o.name).join('  /  ');
     return (
       <FormGroup>
         <div>
@@ -51,6 +51,6 @@ export default class ModalMoveHistoryGrid extends Component {
           </Table>
         </div>
       </FormGroup>
-    )
+    );
   }
 }

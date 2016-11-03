@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'events';
 import Rx from 'rxjs/Rx';
 
 // Error emitter (private)

@@ -1,8 +1,8 @@
 
-import React, { Component, PropTypes } from 'react'
-import { ControlLabel, Button } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
-import { I18n } from 'react-i18nify'
+import React, { Component, PropTypes } from 'react';
+import { ControlLabel, Button } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import { I18n } from 'react-i18nify';
 
 export default class NodeLeftMenuComponent extends Component {
   static propTypes = {
@@ -31,10 +31,10 @@ export default class NodeLeftMenuComponent extends Component {
       onClickMoveNode,
       onClickDelete,
       showButtons
-    } = this.props
+    } = this.props;
 
     const buttonLink = (type, icon, eventType, MusitIconType) => {
-      let fragment = null
+      let fragment = null;
       if (rootNode) {
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
@@ -49,14 +49,14 @@ export default class NodeLeftMenuComponent extends Component {
               <br />
               {I18n.t(`musit.leftMenu.node.${type}`)}
             </Button>
-          </div>
+          </div>;
         
       }
-      return fragment
-    }
+      return fragment;
+    };
 
     const showCount = (type, typeText) => {
-      let fragment = null
+      let fragment = null;
       if (rootNode) {
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
@@ -65,11 +65,11 @@ export default class NodeLeftMenuComponent extends Component {
             <ControlLabel id={`${rootNode.id}_${typeText}`}>
               {Number.isNaN(type) ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : type}
             </ControlLabel>
-          </div>
+          </div>;
         
       }
-      return fragment
-    }
+      return fragment;
+    };
 
     const newButton = (identity) => {
       return (
@@ -83,8 +83,8 @@ export default class NodeLeftMenuComponent extends Component {
             {I18n.t('musit.leftMenu.node.newNode')}
           </Button>
         </div>
-      )
-    }
+      );
+    };
 
     return (
       <div>
@@ -99,6 +99,6 @@ export default class NodeLeftMenuComponent extends Component {
         {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode)) : null}
         {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
       </div>
-    )
+    );
   }
 }

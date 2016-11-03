@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs/Rx';
-import * as loglevel from 'loglevel'
+import * as loglevel from 'loglevel';
 
 // Reducer subjects (for data)
 export const update$ = new Subject();
@@ -20,7 +20,7 @@ input$.map(update => update.value)
   .subscribe(
     (data) => update$.next(data),
     (error) => {
-      loglevel.error('Error:' + error)
-      clear$.next()
+      loglevel.error('Error:' + error);
+      clear$.next();
     }
   );

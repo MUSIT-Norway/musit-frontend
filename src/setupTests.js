@@ -1,15 +1,15 @@
 if (typeof localStorage === "undefined" || localStorage === null) {
-    const LocalStorage = require('node-localstorage').LocalStorage;
-    global.localStorage = new LocalStorage('./');
+  const LocalStorage = require('node-localstorage').LocalStorage;
+  global.localStorage = new LocalStorage('./');
 }
 
-import LanguageJson from '../language.json'
-import { I18n } from 'react-i18nify'
-I18n.loadTranslations(LanguageJson)
-I18n.setLocale('no')
+import LanguageJson from '../language.json';
+import { I18n } from 'react-i18nify';
+I18n.loadTranslations(LanguageJson);
+I18n.setLocale('no');
 
-import configureMockStore from 'redux-mock-store'
-import createMiddleware from './middleware/clientMiddleware'
-import ApiClient from './middleware/ApiClient'
-const middlewares = [ createMiddleware(new ApiClient()) ]
-global.mockStore = configureMockStore(middlewares)
+import configureMockStore from 'redux-mock-store';
+import createMiddleware from './middleware/clientMiddleware';
+import ApiClient from './middleware/ApiClient';
+const middlewares = [ createMiddleware(new ApiClient()) ];
+global.mockStore = configureMockStore(middlewares);

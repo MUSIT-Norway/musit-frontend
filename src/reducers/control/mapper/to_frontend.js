@@ -1,10 +1,10 @@
 
 const wrap = (be) => {
   return { ...be };
-}
+};
 
 const toFrontEnd = (be) => {
-  return wrap(be)
-}
+  return wrap(be);
+};
 
-export default toFrontEnd
+export default toFrontEnd;

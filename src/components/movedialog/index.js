@@ -17,9 +17,9 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { loadChildren, clear, loadNode } from '../../reducers/storageunit/modal'
-import { connect } from 'react-redux'
-import MusitModalImpl from './MusitModal'
+import { loadChildren, clear, loadNode } from '../../reducers/storageunit/modal';
+import { connect } from 'react-redux';
+import MusitModalImpl from './MusitModal';
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
@@ -33,8 +33,8 @@ const mapDispatchToProps = (dispatch) => {
     loadNode: (id) => dispatch(loadNode(id)),
     loadRootChildren: () => dispatch(loadChildren(1)),
     loadChildren: (id) => dispatch(loadChildren(id))
-  }
+  };
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl)
+export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl);
