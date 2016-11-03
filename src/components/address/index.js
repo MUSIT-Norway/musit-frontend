@@ -1,23 +1,6 @@
-
 import React from 'react';
-import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
-import { suggestAddress, clearSuggest } from '../../reducers/suggest';
-
-const mapStateToProps = (state) => ({
-  suggest: state.suggest
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onUpdateRequested: (id, { value, reason }) => {
-    if (reason && reason === 'type' && value && value.length >= 2) {
-      dispatch(suggestAddress(id, value));
-    } else {
-      dispatch(clearSuggest(id));
-    }
-  },
-  clearSuggest: () => dispatch(clearSuggest())
-});
+import autoComplete from '../../state/autocomplete/connect';
 
 class AddressSuggest extends React.Component {
 
@@ -25,11 +8,11 @@ class AddressSuggest extends React.Component {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
     placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.object,
+    suggest: React.PropTypes.array,
     onChange: React.PropTypes.func.isRequired,
-    onUpdateRequested: React.PropTypes.func,
+    update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
-    clearSuggest: React.PropTypes.func
+    clear: React.PropTypes.func
   }
 
   static defaultProps = {
@@ -41,7 +24,6 @@ class AddressSuggest extends React.Component {
   constructor(props) {
     super(props);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
-    this.onBlur = this.onBlur.bind(this);
     this.state = {
       value: this.props.value
     };
@@ -66,11 +48,6 @@ class AddressSuggest extends React.Component {
     this.props.onChange(value);
   }
 
-  getSuggestions() {
-    const suggest = this.props.suggest[this.props.id];
-    return suggest && suggest.data ? suggest.data : [];
-  }
-
   getAddressSuggestionValue(suggestion) {
     return `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
   }
@@ -79,7 +56,8 @@ class AddressSuggest extends React.Component {
     id: this.props.id,
     placeholder: this.props.placeHolder,
     type: 'search',
-    onChange: this.onChange.bind(this)
+    onChange: this.onChange.bind(this),
+    onBlur: this.props.clear
   }
 
   renderAddressSuggestion(suggestion) {
@@ -88,19 +66,16 @@ class AddressSuggest extends React.Component {
       <span className={'suggestion-content'}>{suggestionText}</span>
     );
   }
-  onBlur() {
-    return this.props.clearSuggest;
-  }
 
   render() {
     return (
       <Autosuggest
-        suggestions={this.getSuggestions()}
+        suggestions={this.props.suggest}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
+        onSuggestionsUpdateRequested={this.props.update}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
-        inputProps={{ ...this.doneByProps, value: this.state.value, onBlur: this.onBlur() }}
+        inputProps={{ ...this.doneByProps, value: this.state.value }}
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
@@ -108,4 +83,6 @@ class AddressSuggest extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddressSuggest);
+export default autoComplete(
+  '/api/geolocation/v1/address?search=[%term%]'
+)(AddressSuggest);

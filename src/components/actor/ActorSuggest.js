@@ -1,7 +1,8 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
+import autoComplete from '../../state/autocomplete/connect';
 
-export default class ActorSuggest extends React.Component {
+class ActorSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
@@ -59,3 +60,7 @@ export default class ActorSuggest extends React.Component {
     );
   }
 }
+
+export default autoComplete(
+  '/api/actor/v1/person?search=[%term%]&museumId=1'
+)(ActorSuggest);
