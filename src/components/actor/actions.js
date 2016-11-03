@@ -1,5 +1,6 @@
 import { Observable, Subject } from 'rxjs/Rx';
 import * as loglevel from 'loglevel';
+import 'whatwg-fetch';
 
 // Reducer subjects (for data)
 export const update$ = new Subject();
@@ -11,12 +12,10 @@ input$.map(update => update.value)
   .filter((text) => text.length > 2)
   .debounce(() => Observable.timer(700))
   .distinctUntilChanged()
-  .switchMap((term) => {
-    return global.jQuery.ajax({
-      url: `/api/actor/v1/person?search=[${term}]&museumId=1`,
-      dataType: 'json'
-    }).promise();
-  })
+  .switchMap((term) =>
+    fetch(`/api/actor/v1/person?search=[${term}]&museumId=1`)
+      .then((response) => response.json())
+  )
   .subscribe(
     (data) => update$.next(data),
     (error) => {
