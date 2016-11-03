@@ -73,12 +73,14 @@ export default class App extends Component {
           click: function() {
             onYes();
             $(this).dialog("close");
-        }},
+          }
+        },
         {
           text: I18n.t('musit.texts.showConfirm.cancel'),
           click: function() {
             $(this).dialog("close");
-        }}
+          }
+        }
       ]
     });
     $dialog.dialog('open')
