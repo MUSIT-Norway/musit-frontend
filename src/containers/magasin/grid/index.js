@@ -26,9 +26,6 @@ const getSortedStorageObjectGrid = createSelector(
     (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
 )
 
-
-
-
 const mapStateToProps = (state) => ({
   user: state.auth.actor,
   stats: state.storageUnitStats.stats,
