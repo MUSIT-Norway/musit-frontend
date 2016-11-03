@@ -1,22 +1,22 @@
-import { values } from 'lodash'
-import React, { PropTypes } from 'react'
-import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap'
+import { values } from 'lodash';
+import React, { PropTypes } from 'react';
+import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap';
 import {
   RenderPest,
   RenderAlcohol,
   RenderDoubleTextArea,
   RenderFromToNumberComment
-} from './render'
-import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util'
-import FontAwesome from 'react-fontawesome'
-import { hashHistory } from 'react-router'
-import SaveCancel from '../formfields/saveCancel/SaveCancel'
-import DatePicker from '../../util/datePicker'
-import ActorSuggest from '../actor'
-import * as validation from './validation'
-import { isDateBiggerThanToday } from '../../util'
-import { I18n } from 'react-i18nify'
-import { emitError } from '../../errors/emitter'
+} from './render';
+import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util';
+import FontAwesome from 'react-fontawesome';
+import { hashHistory } from 'react-router';
+import SaveCancel from '../formfields/saveCancel/SaveCancel';
+import DatePicker from '../../util/datePicker';
+import ActorSuggest from '../actor';
+import * as validation from './validation';
+import { isDateBiggerThanToday } from '../../util';
+import { I18n } from 'react-i18nify';
+import { emitError } from '../../errors/emitter';
 
 export default class ObservationPage extends React.Component {
 
@@ -41,24 +41,24 @@ export default class ObservationPage extends React.Component {
   }
 
   static createDefaultPestData() {
-    return { observations: [{ lifeCycle: '', count: '' }] }
+    return { observations: [{ lifeCycle: '', count: '' }] };
   }
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       selectedType: null,
       observations: props.observations,
       doneDate: props.doneDate || new Date().toISOString(),
       doneBy: props.doneBy
-    }
-    this.isTypeSelectable = this.isTypeSelectable.bind(this)
-    this.onChangeField = this.onChangeField.bind(this)
-    this.onChangeTypeSelect = this.onChangeTypeSelect.bind(this)
-    this.onChangePestObservation = this.onChangePestObservation.bind(this)
-    this.onRemovePestObservation = this.onRemovePestObservation.bind(this)
-    this.onClickAddObservation = this.onClickAddObservation.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    };
+    this.isTypeSelectable = this.isTypeSelectable.bind(this);
+    this.onChangeField = this.onChangeField.bind(this);
+    this.onChangeTypeSelect = this.onChangeTypeSelect.bind(this);
+    this.onChangePestObservation = this.onChangePestObservation.bind(this);
+    this.onRemovePestObservation = this.onRemovePestObservation.bind(this);
+    this.onClickAddObservation = this.onClickAddObservation.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -68,60 +68,60 @@ export default class ObservationPage extends React.Component {
         doneBy: nextProps.doneBy && nextProps.doneBy.id ? nextProps.doneBy : null,
         doneDate: nextProps.doneDate,
         observations: nextProps.observations
-      })
+      });
     }
     if (this.props.mode === 'ADD' && nextProps.doneBy && this.props.doneBy && nextProps.doneBy.id !== this.props.doneBy.id) {
       this.setState({
         ...this.state,
         doneBy: nextProps.doneBy
-      })
+      });
     }
   }
 
   onChangeField(field, value, index) {
-    const observations = [...this.state.observations]
-    observations[index] = { ...observations[index], data: { ...observations[index].data, [field]: value } }
-    this.setState({ ...this.state, observations })
+    const observations = [...this.state.observations];
+    observations[index] = { ...observations[index], data: { ...observations[index].data, [field]: value } };
+    this.setState({ ...this.state, observations });
   }
 
   onChangePestObservation(pestObservationIndex, field, value, pestIndex) {
-    const observations = [...this.state.observations]
-    const pestObj = observations[pestIndex]
-    const pestObservations = pestObj.data.observations
-    pestObservations[pestObservationIndex][field] = value
-    this.setState({ ...this.state, observations })
+    const observations = [...this.state.observations];
+    const pestObj = observations[pestIndex];
+    const pestObservations = pestObj.data.observations;
+    pestObservations[pestObservationIndex][field] = value;
+    this.setState({ ...this.state, observations });
   }
 
   onRemovePestObservation(pestObservationIndex, pestIndex) {
-    const observations = [...this.state.observations]
-    const pestObj = observations[pestIndex]
-    pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex)
-    this.setState({ ...this.state, observations })
+    const observations = [...this.state.observations];
+    const pestObj = observations[pestIndex];
+    pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex);
+    this.setState({ ...this.state, observations });
   }
 
   onClickAddObservation(pestIndex) {
-    const observations = [...this.state.observations]
-    const pestObj = observations[pestIndex]
-    const pestObservations = pestObj.data.observations
-    pestObservations.push({ lifeCycle: '', count: '' })
-    this.setState({ ...this.state, observations })
+    const observations = [...this.state.observations];
+    const pestObj = observations[pestIndex];
+    const pestObservations = pestObj.data.observations;
+    pestObservations.push({ lifeCycle: '', count: '' });
+    this.setState({ ...this.state, observations });
   }
 
   onChangeTypeSelect(e) {
     this.setState({
       ...this.state,
       selectedType: e.target.options[e.target.selectedIndex].value
-    })
+    });
   }
 
   setDate = (newValue) => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
-        emitError({ type: 'dateValidationError', message: this.props.translate('musit.observation.page.dateValidation') })
+        emitError({ type: 'dateValidationError', message: this.props.translate('musit.observation.page.dateValidation') });
 
-        this.setState({ ...this.state, doneDate: new Date().toISOString() })
+        this.setState({ ...this.state, doneDate: new Date().toISOString() });
       } else {
-        this.setState({ ...this.state, doneDate: newValue })
+        this.setState({ ...this.state, doneDate: newValue });
       }
     }
   }
@@ -196,57 +196,57 @@ export default class ObservationPage extends React.Component {
   }
 
   addObservationType(typeToAdd, data = {}) {
-    const type = typeToAdd || this.state.selectedType
+    const type = typeToAdd || this.state.selectedType;
     if (!type || type === '') {
-      return
+      return;
     }
-    const typeProps = { ...data, ...this.typeDefinitions[type].data }
-    const observations = [{ type, data: typeProps }, ...this.state.observations]
-    this.setState({ ...this.state, observations, selectedType: null })
+    const typeProps = { ...data, ...this.typeDefinitions[type].data };
+    const observations = [{ type, data: typeProps }, ...this.state.observations];
+    this.setState({ ...this.state, observations, selectedType: null });
   }
 
   isTypeSelectable(typeStr) {
-    return !containsObjectWithField(this.state.observations, 'type', typeStr)
+    return !containsObjectWithField(this.state.observations, 'type', typeStr);
   }
 
   removeObservation(index) {
-    const observations = this.state.observations
-    this.setState({ ...this.state, observations: observations.filter((o, i) => i !== index) })
+    const observations = this.state.observations;
+    this.setState({ ...this.state, observations: observations.filter((o, i) => i !== index) });
   }
 
   validateForm(formProps) {
-    let errors = {}
+    let errors = {};
 
     if (typeof formProps.doneBy !== 'object' || (!formProps.doneBy || !formProps.doneBy.id)) {
-      errors.doneBy = 'musit.observation.page.doneByRequired'
+      errors.doneBy = 'musit.observation.page.doneByRequired';
     }
 
     if (!formProps.doneDate) {
-      errors.doneDate = 'musit.observation.page.dateRequired'
+      errors.doneDate = 'musit.observation.page.dateRequired';
     }
 
     formProps.observations.forEach((observation, index) => {
       const typeDefinition = this.typeDefinitions[observation.type];
       if (typeDefinition.validate) {
-        errors = { ...errors, ...typeDefinition.validate.bind(this)(observation.data, index, observation.type) }
+        errors = { ...errors, ...typeDefinition.validate.bind(this)(observation.data, index, observation.type) };
       }
-    })
+    });
 
-    return errors
+    return errors;
   }
 
   handleSubmit(e) {
-    e.preventDefault()
-    const errors = this.validateForm(this.state)
-    this.setState({ ...this.state, errors })
+    e.preventDefault();
+    const errors = this.validateForm(this.state);
+    this.setState({ ...this.state, errors });
     if (Object.keys(errors).length === 0) {
-      this.props.onSaveObservation(this.props.id, this.state)
+      this.props.onSaveObservation(this.props.id, this.state);
     }
   }
 
   renderObservation(observation, index) {
     const typeDefinition = this.typeDefinitions[observation.type];
-    return typeDefinition.render.bind(this)(observation.type, observation.data, index)
+    return typeDefinition.render.bind(this)(observation.type, observation.data, index);
   }
 
   renderAlcohol(id, valueProps, index) {
@@ -257,7 +257,7 @@ export default class ObservationPage extends React.Component {
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />
+    />;
   }
 
   renderPest(id, valueProps, index) {
@@ -272,7 +272,7 @@ export default class ObservationPage extends React.Component {
       onChangePestObservation={this.onChangePestObservation}
       onRemovePestObservation={this.onRemovePestObservation}
       onClickAddObservation={this.onClickAddObservation}
-    />
+    />;
   }
 
   renderDoubleTextArea(id, valueProps, index) {
@@ -284,7 +284,7 @@ export default class ObservationPage extends React.Component {
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />
+    />;
   }
 
   renderFromToNumberComment(id, valueProps, index) {
@@ -296,7 +296,7 @@ export default class ObservationPage extends React.Component {
       mode={this.props.mode}
       translate={this.props.translate}
       onChangeField={this.onChangeField}
-    />
+    />;
   }
 
   render() {
@@ -304,7 +304,7 @@ export default class ObservationPage extends React.Component {
       <form
         onKeyDown={(e) => {
           if (e.keyCode === 13 && e.target.type !== 'textarea') {
-            e.preventDefault()
+            e.preventDefault();
           }
         }}
         onSubmit={this.handleSubmit}
@@ -345,7 +345,7 @@ export default class ObservationPage extends React.Component {
                     value={this.state.doneBy ? this.state.doneBy.fn || '' : ''}
                     placeHolder="Find actor"
                     onChange={doneBy => {
-                      this.setState({ ...this.state, doneBy })
+                      this.setState({ ...this.state, doneBy });
                     }}
                   />
                 }
@@ -387,7 +387,7 @@ export default class ObservationPage extends React.Component {
                           <option key={index} value={type}>
                             {this.props.translate(`musit.observation.page.${this.typeDefinitions[type].label}`)}
                           </option>
-                        )
+                        );
                       })}
                     </FormControl>
                   </FormGroup>
@@ -411,8 +411,8 @@ export default class ObservationPage extends React.Component {
                     {this.props.mode !== 'ADD' ? '' : 
                       <a
                         href="" onClick={(e) => {
-                          this.removeObservation(index)
-                          e.preventDefault()
+                          this.removeObservation(index);
+                          e.preventDefault();
                         }
                         }
                       >
@@ -423,20 +423,20 @@ export default class ObservationPage extends React.Component {
                   {this.renderObservation(observation, index)}
                   <hr />
                 </div>
-              )
+              );
             })}
           </Row>
           <br />
           <Row className="row-centered" style={{ textAlign: 'center' }}>
             {this.state.errors && values(this.state.errors).map((error, index) => {
-              return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>
+              return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>;
             })}
             <br />
             {this.props.mode === 'VIEW' ?
               <Col xs={10}>
                 <Button
                   onClick={() => {
-                    hashHistory.goBack()
+                    hashHistory.goBack();
                   }}
                 >
                   {I18n.t('musit.texts.close')}
@@ -453,6 +453,6 @@ export default class ObservationPage extends React.Component {
           </Row>
         </Grid>
       </form>
-    )
+    );
   }
 }

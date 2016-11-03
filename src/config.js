@@ -1,5 +1,5 @@
-const storagefacilityBaseUrl = '/api/storagefacility/v1'
-const thingaggregateBaseUrl = '/api/thingaggregate'
+const storagefacilityBaseUrl = '/api/storagefacility/v1';
+const thingaggregateBaseUrl = '/api/thingaggregate';
 
 export default {
   isDev: process.env.NODE_ENV === 'development',

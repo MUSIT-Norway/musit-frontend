@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
-import ObservationPage from './index'
-import Layout from '../../layout'
-import Breadcrumb from '../../layout/Breadcrumb'
+import React, { PropTypes } from 'react';
+import ObservationPage from './index';
+import Layout from '../../layout';
+import Breadcrumb from '../../layout/Breadcrumb';
 
 export default class EditObservationPage extends React.Component {
 
@@ -15,7 +15,7 @@ export default class EditObservationPage extends React.Component {
 
   componentWillMount() {
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id)
+      this.props.loadStorageObj(this.props.params.id);
     }
   }
 
@@ -23,30 +23,30 @@ export default class EditObservationPage extends React.Component {
     return Object.keys(this.props.location.state)
       .filter((o) => o.endsWith('OK') && this.props.location.state[o] === false)
       .map((o) => {
-          switch (o) {
-            case 'pestOK':
-              return { type: 'pest', data: ObservationPage.createDefaultPestData() }
-            case 'temperatureOK':
-              return { type: 'temperature', data: {} }
-            case 'moldOK':
-              return { type: 'mold', data: {} }
-            case 'hypoxicAirOK':
-              return { type: 'hypoxicAir', data: {} }
-            case 'gasOK':
-              return { type: 'gas', data: {} }
-            case 'lightConditionOK':
-              return { type: 'lightCondition', data: {} }
-            case 'cleaningOK':
-              return { type: 'cleaning', data: {} }
-            case 'relativeHumidityOK':
-              return { type: 'relativeHumidity', data: {} }
-            case 'alcoholOK':
-              return { type: 'alcohol', data: {} }
-            default:
-              throw Error(`Invalid control ${o}`)
-          }
+        switch (o) {
+        case 'pestOK':
+          return { type: 'pest', data: ObservationPage.createDefaultPestData() };
+        case 'temperatureOK':
+          return { type: 'temperature', data: {} };
+        case 'moldOK':
+          return { type: 'mold', data: {} };
+        case 'hypoxicAirOK':
+          return { type: 'hypoxicAir', data: {} };
+        case 'gasOK':
+          return { type: 'gas', data: {} };
+        case 'lightConditionOK':
+          return { type: 'lightCondition', data: {} };
+        case 'cleaningOK':
+          return { type: 'cleaning', data: {} };
+        case 'relativeHumidityOK':
+          return { type: 'relativeHumidity', data: {} };
+        case 'alcoholOK':
+          return { type: 'alcohol', data: {} };
+        default:
+          throw Error(`Invalid control ${o}`);
         }
-      )
+      }
+      );
   }
 
   render() {
@@ -70,6 +70,6 @@ export default class EditObservationPage extends React.Component {
           </div>
         }
       />
-    )
+    );
   }
 }

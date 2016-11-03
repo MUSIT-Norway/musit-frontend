@@ -16,18 +16,18 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { values } from 'lodash'
-import React, { Component, PropTypes } from 'react'
-import { hashHistory } from 'react-router'
-import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap'
-import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel'
-import Layout from '../../../layout'
-import Breadcrumb from '../../../layout/Breadcrumb'
-import AddressSuggest from '../../../components/address'
+import { values } from 'lodash';
+import React, { Component, PropTypes } from 'react';
+import { hashHistory } from 'react-router';
+import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap';
+import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel';
+import Layout from '../../../layout';
+import Breadcrumb from '../../../layout/Breadcrumb';
+import AddressSuggest from '../../../components/address';
 import Loader from 'react-loader';
-import { parseISODateNonStrict } from '../../../util'
-import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../components/formfields'
-import validateForm from './validator'
+import { parseISODateNonStrict } from '../../../util';
+import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../components/formfields';
+import validateForm from './validator';
 
 export default class StorageUnitContainer extends Component {
   static propTypes = {
@@ -42,48 +42,48 @@ export default class StorageUnitContainer extends Component {
   }
 
   constructor(props) {
-    super(props)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.translateEnvReqField = this.translateEnvReqField.bind(this)
-    this.renderEnvReqNumberField = this.renderEnvReqNumberField.bind(this)
-    this.renderEnvReqStringFieldBlock = this.renderEnvReqStringFieldBlock.bind(this)
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.translateEnvReqField = this.translateEnvReqField.bind(this);
+    this.renderEnvReqNumberField = this.renderEnvReqNumberField.bind(this);
+    this.renderEnvReqStringFieldBlock = this.renderEnvReqStringFieldBlock.bind(this);
   }
 
   handleSubmit(e) {
-    e.preventDefault()
-    const errors = validateForm(this.props)
-    this.props.updateState({ ...this.props.unit, errors })
+    e.preventDefault();
+    const errors = validateForm(this.props);
+    this.props.updateState({ ...this.props.unit, errors });
     if (Object.keys(errors).length === 0) {
-      this.props.onLagreClick(this.props.unit)
+      this.props.onLagreClick(this.props.unit);
     }
   }
 
   updateStorageUnit(data, key, value) {
     const newData = Object.assign({}, data);
-    newData[key] = value
-    this.props.updateState(newData)
+    newData[key] = value;
+    this.props.updateState(newData);
   }
 
   updateEnvRequirements(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.environmentRequirement[key] = value
-    this.props.updateState(newData)
+    newData.environmentRequirement[key] = value;
+    this.props.updateState(newData);
   }
 
   updateEnvAssessments(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.environmentAssessment[key] = value
-    this.props.updateState(newData)
+    newData.environmentAssessment[key] = value;
+    this.props.updateState(newData);
   }
 
   updateSecAssessments(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.securityAssessment[key] = value
-    this.props.updateState(newData)
+    newData.securityAssessment[key] = value;
+    this.props.updateState(newData);
   }
 
   translateEnvReqField(field) {
-    return this.props.translate(`musit.storageUnits.environmentRequirement.${field}`)
+    return this.props.translate(`musit.storageUnits.environmentRequirement.${field}`);
   }
 
   renderEnvReqStringFieldBlock(field) {
@@ -103,7 +103,7 @@ export default class StorageUnitContainer extends Component {
           />
         </div>
       </FormGroup>
-    )
+    );
   }
 
   renderEnvReqTextAreaBlock(field) {
@@ -124,7 +124,7 @@ export default class StorageUnitContainer extends Component {
           />
         </div>
       </FormGroup>
-    )
+    );
   }
 
   renderEnvReqNumberField(field, unit, precision) {
@@ -138,7 +138,7 @@ export default class StorageUnitContainer extends Component {
         onChange={value => this.updateEnvRequirements(this.props.unit, field, value)}
         value={unit.environmentRequirement[field] || ''}
       />
-    )
+    );
   }
 
   renderSecurityAssessmentField(field) {
@@ -151,7 +151,7 @@ export default class StorageUnitContainer extends Component {
           {this.props.translate(`musit.storageUnits.securityAssessment.${field}`)}
         </Checkbox>
       </div>
-    )
+    );
   }
 
   renderEnvironmentAssessmentField(field) {
@@ -164,7 +164,7 @@ export default class StorageUnitContainer extends Component {
           {this.props.translate(`musit.storageUnits.environmentalAssessment.${field}`)}
         </Checkbox>
       </div>
-    )
+    );
   }
 
   renderStorageUnitNumberField(field, unit, precision) {
@@ -178,11 +178,11 @@ export default class StorageUnitContainer extends Component {
         precision={precision}
         value={unit[field]}
       />
-    )
+    );
   }
 
   renderLastChangeData(unit) {
-    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format("DD.MM.YYYY")
+    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format("DD.MM.YYYY");
     // const lastUpdateBy = unit.updatedBy // TODO når dette er i orden, autentisering er i orden
     return (
       <span>
@@ -190,7 +190,7 @@ export default class StorageUnitContainer extends Component {
         <br />
         <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{this.props.isAdd ? '' : lastUpdateDate}
       </span>
-    )
+    );
   }
 
   render() {
@@ -207,7 +207,7 @@ export default class StorageUnitContainer extends Component {
                   <form
                     onKeyDown={(e) => {
                       if (e.keyCode === 13 && e.target.type !== 'textarea') {
-                        e.preventDefault()
+                        e.preventDefault();
                       }
                     }}
                     onSubmit={e => this.handleSubmit(e, this.state)}
@@ -281,7 +281,7 @@ export default class StorageUnitContainer extends Component {
                                       value={this.props.unit.address}
                                       placeHolder="Find address"
                                       onChange={(address) => {
-                                        this.updateStorageUnit(this.props.unit, 'address', address)
+                                        this.updateStorageUnit(this.props.unit, 'address', address);
                                       }}
                                     />
                                   </div>
@@ -422,7 +422,7 @@ export default class StorageUnitContainer extends Component {
                         <Row>
                           <br />
                           {this.props.unit.errors && values(this.props.unit.errors).map((error, index) => {
-                            return <p style={{ color: 'red' }} key={index}>{error}</p>
+                            return <p style={{ color: 'red' }} key={index}>{error}</p>;
                           })}
                           <br />
                           <SaveCancel

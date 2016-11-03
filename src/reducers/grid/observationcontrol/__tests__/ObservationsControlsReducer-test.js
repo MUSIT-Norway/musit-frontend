@@ -1,9 +1,9 @@
-import assert from 'assert'
-import observationControlGridReducer from '../index'
+import assert from 'assert';
+import observationControlGridReducer from '../index';
 
-import * as actions from '../../observationcontrol/index'
-import reducer from '../../observationcontrol/index'
-import Config from '../../../../config'
+import * as actions from '../../observationcontrol/index';
+import reducer from '../../observationcontrol/index';
+import Config from '../../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
@@ -73,78 +73,78 @@ const initialState = {
        OK: true }
     ] }
   ]
-}
+};
 
 describe('ObservationControlGridReducer', () => {
 
-    it('Initial state is set', () => {
-    const state = observationControlGridReducer(initialState, {})
-    assert(state === initialState)
-  })
+  it('Initial state is set', () => {
+    const state = observationControlGridReducer(initialState, {});
+    assert(state === initialState);
+  });
 
-    it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
-        const actorPostData = [1,2]
-        const url = '/api/actor/v1/person/details'
-        nock('http://localhost')
+  it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
+    const actorPostData = [1,2];
+    const url = '/api/actor/v1/person/details';
+    nock('http://localhost')
             .post(url, actorPostData)
             .reply(201, [
-                {
-                    id: 1,
-                    fn: 'Jarle Stabell',
-                    dataportenId: 'jarle'
-                },
-                {
-                    id: 2,
-                    fn: 'Stein A. Olsen',
-                    dataportenId: 'stein'
-                }
-            ])
-        const store = mockStore()
+              {
+                id: 1,
+                fn: 'Jarle Stabell',
+                dataportenId: 'jarle'
+              },
+              {
+                id: 2,
+                fn: 'Stein A. Olsen',
+                dataportenId: 'stein'
+              }
+            ]);
+    const store = mockStore();
 
-        return store.dispatch(actions.loadActor([1, 2]))
+    return store.dispatch(actions.loadActor([1, 2]))
             .then(() => {
-                expect(store.getActions()).toMatchSnapshot()
-            })
-    })
+              expect(store.getActions()).toMatchSnapshot();
+            });
+  });
 
-    it('actor: no action', () => {
-        expect(
+  it('actor: no action', () => {
+    expect(
             reducer(undefined, {})
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('actor: initial action', () => {
-        expect(
+  it('actor: initial action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD_ACTOR
+              type: actions.LOAD_ACTOR
             })
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('actor: success action', () => {
-        expect(
+  it('actor: success action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD_ACTOR_SUCCESS,
-                result: {
-                    someField: 1
-                }
+              type: actions.LOAD_ACTOR_SUCCESS,
+              result: {
+                someField: 1
+              }
             })
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('actor: fail action', () => {
-        expect(
+  it('actor: fail action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD_ACTOR_FAILURE,
-                error: Error('Some error in loadActor.')
+              type: actions.LOAD_ACTOR_FAILURE,
+              error: Error('Some error in loadActor.')
             })
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
 
-    it('creates LOAD_SUCCESS when fetching data has been done', () => {
-        const OutputSuccess = {
-            data: [
+  it('creates LOAD_SUCCESS when fetching data has been done', () => {
+    const OutputSuccess = {
+      data: [
                 { eventType: 'Observation',
                     doneDate: '1990-11-11',
                     doneBy: '2',
@@ -207,52 +207,52 @@ describe('ObservationControlGridReducer', () => {
                         { eventType: 'ControlPest',
                             OK: true }
                     ] }
-            ]
-        }
-        const id = 1
-        const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/events`
-        nock('http://localhost')
+      ]
+    };
+    const id = 1;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/events`;
+    nock('http://localhost')
             .get(url)
-            .reply(200, OutputSuccess)
-        const store = mockStore()
+            .reply(200, OutputSuccess);
+    const store = mockStore();
 
-        return store.dispatch(actions.loadControlsAndObservationsForNode(1))
+    return store.dispatch(actions.loadControlsAndObservationsForNode(1))
             .then(() => {
-                expect(store.getActions()).toMatchSnapshot()
-            })
-    })
+              expect(store.getActions()).toMatchSnapshot();
+            });
+  });
 
-    it('observation control: no action', () => {
-        expect(
+  it('observation control: no action', () => {
+    expect(
             reducer(undefined, {})
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('observation control: initial action', () => {
-        expect(
+  it('observation control: initial action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD
+              type: actions.LOAD
             })
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('observation control: success action', () => {
-        expect(
+  it('observation control: success action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD_SUCCESS,
-                result: {
-                    someField: 1
-                }
+              type: actions.LOAD_SUCCESS,
+              result: {
+                someField: 1
+              }
             })
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('observation control: fail action', () => {
-        expect(
+  it('observation control: fail action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD_FAIL,
-                error: Error('Some error to load observation control data.')
+              type: actions.LOAD_FAIL,
+              error: Error('Some error to load observation control data.')
             })
-        ).toMatchSnapshot()
-    })
-})
+        ).toMatchSnapshot();
+  });
+});

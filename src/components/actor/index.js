@@ -1,23 +1,23 @@
 
-import React from 'react'
-import { connect } from 'react-redux'
-import Autosuggest from 'react-autosuggest'
-import { suggestPerson, clearSuggest } from '../../reducers/suggest'
+import React from 'react';
+import { connect } from 'react-redux';
+import Autosuggest from 'react-autosuggest';
+import { suggestPerson, clearSuggest } from '../../reducers/suggest';
 
 const mapStateToProps = (state) => ({
   suggest: state.suggest
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onUpdateRequested: (id, { value, reason }) => {
     if (reason && reason === 'type' && value && value.length >= 2) {
-      dispatch(suggestPerson(id, value))
+      dispatch(suggestPerson(id, value));
     } else {
-      dispatch(clearSuggest(id))
+      dispatch(clearSuggest(id));
     }
   },
   clearSuggest: () => dispatch(clearSuggest())
-})
+});
 
 class ActorSuggest extends React.Component {
 
@@ -38,28 +38,28 @@ class ActorSuggest extends React.Component {
   }
 
   constructor(props) {
-    super(props)
-    this.onSuggestionSelected = this.onSuggestionSelected.bind(this)
-    this.onBlur = this.onBlur.bind(this)
+    super(props);
+    this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.state = {
       value: this.props.value
-    }
+    };
   }
 
   onChange(event, { newValue }) {
-    this.setState({ ...this.state, value: newValue })
+    this.setState({ ...this.state, value: newValue });
   }
 
   onSuggestionSelected(event, { suggestion }) {
     if (event.keyCode === 13) {
-      event.preventDefault()
+      event.preventDefault();
     }
-    this.props.onChange(suggestion)
+    this.props.onChange(suggestion);
   }
 
   getSuggestions() {
     const suggest = this.props.suggest[this.props.id];
-    return suggest && suggest.data ? suggest.data : []
+    return suggest && suggest.data ? suggest.data : [];
   }
 
   doneByProps = {
@@ -70,7 +70,7 @@ class ActorSuggest extends React.Component {
   }
 
   onBlur() {
-    return this.props.clearSuggest
+    return this.props.clearSuggest;
   }
 
   render() {
@@ -85,8 +85,8 @@ class ActorSuggest extends React.Component {
         shouldRenderSuggestions={(v) => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
-    )
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActorSuggest)
+export default connect(mapStateToProps, mapDispatchToProps)(ActorSuggest);

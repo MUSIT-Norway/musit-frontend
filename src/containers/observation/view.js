@@ -1,8 +1,8 @@
-import { connect } from 'react-redux'
-import { I18n } from 'react-i18nify'
-import ViewObservationPage from '../../components/observation/view'
-import { loadObservation, getActorNameFromId } from '../../reducers/observation'
-import { loadRoot } from '../../reducers/storageunit/grid'
+import { connect } from 'react-redux';
+import { I18n } from 'react-i18nify';
+import ViewObservationPage from '../../components/observation/view';
+import { loadObservation, getActorNameFromId } from '../../reducers/observation';
+import { loadRoot } from '../../reducers/storageunit/grid';
 
 const mapStateToProps = (state) => {
   return {
@@ -13,21 +13,21 @@ const mapStateToProps = (state) => {
     registeredBy: state.observation.data.registeredBy,
     observations: state.observation.data.observations,
     rootNode: state.storageGridUnit.root.data
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     loadObservation: (nodeId, observationId, callback) => {
-      dispatch(loadObservation(nodeId, observationId, callback))
+      dispatch(loadObservation(nodeId, observationId, callback));
     },
     loadPersonNameFromId: (doneBy) => {
-      dispatch(getActorNameFromId(doneBy))
+      dispatch(getActorNameFromId(doneBy));
     },
     loadStorageObj: (id) => {
-      dispatch(loadRoot(id))
+      dispatch(loadRoot(id));
     }
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewObservationPage)
+export default connect(mapStateToProps, mapDispatchToProps)(ViewObservationPage);

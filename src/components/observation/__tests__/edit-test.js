@@ -1,7 +1,7 @@
-import assert from 'assert'
-import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils'
-import ObservationPage from '../index'
+import assert from 'assert';
+import React from 'react';
+import ReactTestUtils from 'react-addons-test-utils';
+import ObservationPage from '../index';
 
 describe('Render edit observation page', () => {
   const renderer = ReactTestUtils.createRenderer();
@@ -17,9 +17,9 @@ describe('Render edit observation page', () => {
         mode="EDIT"
         id="1"
       />
-    )
-    observationPage = renderer.getRenderOutput()
-  })
+    );
+    observationPage = renderer.getRenderOutput();
+  });
 
   it('should set default date and have correct date format', () => {
     const dateProps = observationPage
@@ -33,9 +33,9 @@ describe('Render edit observation page', () => {
             .children[0]
             .props
             .children[1]
-            .props
+            .props;
 
-    assert(dateProps.value === '23.12.2016')
-    assert(dateProps.disabled === true)
-  })
-})
+    assert(dateProps.value === '23.12.2016');
+    assert(dateProps.disabled === true);
+  });
+});

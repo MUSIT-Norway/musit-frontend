@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
-import ObservationFromToNumberCommentComponent from './ObservationFromToNumberCommentComponent'
-import ObservationDoubleTextAreaComponent from './ObservationDoubleTextAreaComponent'
-import ObservationStatusPercentageComment from './ObservationStatusPercentageComment'
-import ObservationPest from './ObservationPest'
-import { I18n } from 'react-i18nify'
+import React, { PropTypes } from 'react';
+import ObservationFromToNumberCommentComponent from './ObservationFromToNumberCommentComponent';
+import ObservationDoubleTextAreaComponent from './ObservationDoubleTextAreaComponent';
+import ObservationStatusPercentageComment from './ObservationStatusPercentageComment';
+import ObservationPest from './ObservationPest';
+import { I18n } from 'react-i18nify';
 
 export const RenderAlcohol = (props) => {
   return (
@@ -31,8 +31,8 @@ export const RenderAlcohol = (props) => {
       commentPlaceHolder={I18n.t('musit.observation.page.alcohol.commentPlaceHolder')}
       commentOnChange={(value) => props.onChangeField('commentValue', value, props.index)}
     />
-  )
-}
+  );
+};
 
 RenderAlcohol.propTypes = {
   onChangeField: PropTypes.func,
@@ -48,7 +48,7 @@ RenderAlcohol.propTypes = {
     commentWidth: PropTypes.number.isRequired
   }),
   disabled: PropTypes.bool
-}
+};
 
 RenderAlcohol.defaultProps = {
   layoutProps: {
@@ -57,7 +57,7 @@ RenderAlcohol.defaultProps = {
     commentWidth: 4
   },
   onChangeField: () => true
-}
+};
 
 export const RenderPest = (props) => {
   return (
@@ -97,8 +97,8 @@ export const RenderPest = (props) => {
       newButtonLabel={I18n.t('musit.observation.page.newButtonLabel')}
       newButtonOnClick={() => props.onClickAddObservation(props.index)}
     />
-  )
-}
+  );
+};
 
 RenderPest.propTypes = {
   onChangePestObservation: PropTypes.func,
@@ -123,7 +123,7 @@ RenderPest.propTypes = {
   }),
   disabled: PropTypes.bool,
   canEdit: PropTypes.bool
-}
+};
 
 RenderPest.defaultProps = {
   layoutProps: {
@@ -138,7 +138,7 @@ RenderPest.defaultProps = {
   onClickAddObservation: () => true,
   onRemovePestObservation: () => true,
   canEdit: true
-}
+};
 
 export const RenderDoubleTextArea = (props) => {
   return (
@@ -155,8 +155,8 @@ export const RenderDoubleTextArea = (props) => {
       rightPlaceHolder={I18n.t(`musit.observation.page.${props.type}.rightLabelPlaceHolder`)}
       onChangeRight={(value) => props.onChangeField('rightValue', value, props.index)}
     />
-  )
-}
+  );
+};
 
 RenderDoubleTextArea.propTypes = {
   onChangeField: PropTypes.func,
@@ -171,7 +171,7 @@ RenderDoubleTextArea.propTypes = {
   }),
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool
-}
+};
 
 RenderDoubleTextArea.defaultProps = {
   layoutProps: {
@@ -179,7 +179,7 @@ RenderDoubleTextArea.defaultProps = {
     rightWidth: 5
   },
   onChangeField: () => true
-}
+};
 
 
 export const RenderFromToNumberComment = (props) => {
@@ -201,8 +201,8 @@ export const RenderFromToNumberComment = (props) => {
       commentPlaceholder={I18n.t(`musit.observation.page.${props.type}.notePlaceHolder`)}
       onChangeComment={(value) => props.onChangeField('commentValue', value, props.index)}
     />
-  )
-}
+  );
+};
 
 RenderFromToNumberComment.propTypes = {
   onChangeField: PropTypes.func,
@@ -219,7 +219,7 @@ RenderFromToNumberComment.propTypes = {
   }),
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool
-}
+};
 
 RenderFromToNumberComment.defaultProps = {
   layoutProps: {
@@ -228,4 +228,4 @@ RenderFromToNumberComment.defaultProps = {
     commentWidth: 4
   },
   onChangeField: () => true
-}
+};

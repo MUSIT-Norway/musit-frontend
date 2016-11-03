@@ -1,7 +1,7 @@
-import React from 'react'
-import FontAwesome from 'react-fontawesome'
-import takeRight from 'lodash/takeRight'
-import map from 'lodash/map'
+import React from 'react';
+import FontAwesome from 'react-fontawesome';
+import takeRight from 'lodash/takeRight';
+import map from 'lodash/map';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 const tooltip = (tipText, child) =>
@@ -26,7 +26,7 @@ class Breadcrumb extends React.Component {
   render() {
     const clickCrumb = (node) => (evt) => {
       evt.preventDefault();
-      this.props.onClickCrumb(node)
+      this.props.onClickCrumb(node);
     };
 
     let path = [];
@@ -63,7 +63,7 @@ class Breadcrumb extends React.Component {
         {itemsCropped.map((item, i, arr) => {
           const notLast = i < arr.length - 1;
           const enableLast = notLast && !this.props.disabled;
-          const enableLink = this.props.allActive || enableLast
+          const enableLink = this.props.allActive || enableLast;
           return (
             <span key={i}>
             {CrumbItem({
@@ -81,4 +81,4 @@ class Breadcrumb extends React.Component {
   }
 }
 
-export default Breadcrumb
+export default Breadcrumb;

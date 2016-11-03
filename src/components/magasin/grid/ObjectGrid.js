@@ -1,8 +1,8 @@
 
-import React, { Component, PropTypes } from 'react'
-import { Table, FormGroup } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
-import { I18n } from 'react-i18nify'
+import React, { Component, PropTypes } from 'react';
+import { Table, FormGroup } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import { I18n } from 'react-i18nify';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -20,7 +20,7 @@ export default class ObjectGrid extends Component {
   }
 
   render() {
-    const { id, tableData } = this.props
+    const { id, tableData } = this.props;
     return (
       <div>
         <FormGroup>
@@ -58,8 +58,8 @@ export default class ObjectGrid extends Component {
                       <a
                         href=""
                         onClick={(e) => {
-                          e.preventDefault()
-                          this.props.showMoveHistory(c)
+                          e.preventDefault();
+                          this.props.showMoveHistory(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
                       >
@@ -70,8 +70,8 @@ export default class ObjectGrid extends Component {
                       <a
                         href=""
                         onClick={(e) => {
-                          e.preventDefault()
-                          this.props.onMove(c)
+                          e.preventDefault();
+                          this.props.onMove(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
                       >
@@ -82,8 +82,8 @@ export default class ObjectGrid extends Component {
                       <a
                         href=""
                         onClick={(e) => {
-                          e.preventDefault()
-                          this.props.onAction('pickObject', c)
+                          e.preventDefault();
+                          this.props.onAction('pickObject', c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
                       >
@@ -97,6 +97,6 @@ export default class ObjectGrid extends Component {
           </div>
         </FormGroup>
       </div>
-    )
+    );
   }
 }
