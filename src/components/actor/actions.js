@@ -1,7 +1,7 @@
 import { Observable, Subject } from 'rxjs/Rx';
 import * as loglevel from 'loglevel';
 import 'whatwg-fetch';
-import { getToken } from '../../middleware/ApiClient'
+import { getToken } from '../../middleware/ApiClient';
 
 // Reducer subjects (for data)
 export const update$ = new Subject();
