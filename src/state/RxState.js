@@ -11,7 +11,7 @@ export function createState(reducer$, initialState$ = Observable.of({})) {
       ({ ...state, [scope]: reducer(state[scope]) }))
     .publishReplay(1)
     .refCount()
-    .takeUntil(end$)
+    .takeUntil(end$);
   return {
     end$,
     state$
