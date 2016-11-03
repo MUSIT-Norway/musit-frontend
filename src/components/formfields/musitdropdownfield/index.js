@@ -57,10 +57,10 @@ export default class MusitDropDownField extends Component {
 
   render() {
     const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
-
-    const lcPlaceholder = 
+    const lcPlaceholder =
       <Select
         placeholder={this.props.placeHolder}
+        style={this.props.disabled ? { backgroundColor: '#eee' } : undefined }
         disabled={this.props.disabled}
         value={this.props.value}
         options={this.getOptions()}
@@ -68,7 +68,7 @@ export default class MusitDropDownField extends Component {
         data-toggle="tooltip"
         title={this.props.tooltip}
         clearable={false}
-      />;
+      />
 
     const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
 
