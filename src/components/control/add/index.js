@@ -24,7 +24,7 @@ import DatePicker from '../../../util/datePicker';
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel';
 import { hashHistory } from 'react-router';
 import { flatten, DATE_FORMAT_DISPLAY, hasProp } from '../../../util';
-import ActorSuggest from '../../../components/actor';
+import ActorSuggest from '../../../components/actor/connected';
 import Layout from '../../../layout';
 import Breadcrumb from '../../../layout/Breadcrumb';
 import { isDateBiggerThanToday } from '../../../util';
@@ -68,7 +68,7 @@ export default class ControlAddContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.actor && this.props.actor && nextProps.actor.id !== this.props.actor.id) {
+    if (nextProps.actor !== this.props.actor) {
       this.setState({ ...this.state, doneBy: nextProps.actor });
     }
   }

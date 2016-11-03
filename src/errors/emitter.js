@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import Rx from 'rx';
+import Rx from 'rxjs/Rx';
 
 // Error emitter (private)
 const emitter = new EventEmitter();

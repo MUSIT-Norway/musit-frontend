@@ -3,6 +3,7 @@ import NotificationSystem from 'react-notification-system';
 import { source, successSource } from './emitter';
 import { I18n } from 'react-i18nify';
 import ReactDOM from 'react-dom';
+import * as logger from 'loglevel';
 
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
 
@@ -94,6 +95,7 @@ source.subscribe((e) => {
     });
     break;
   default:
+    logger.debug(e.error);
     notificationSystem.addNotification({
       message: e.error.message,
       level: 'error',
