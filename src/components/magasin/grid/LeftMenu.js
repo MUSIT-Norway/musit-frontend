@@ -86,7 +86,7 @@ export default class NodeLeftMenuComponent extends Component {
         </div>
       );
     };
-    const disabled = !Number.isNaN(objectsOnNode) && !Number.isNaN(underNodeCount) && objectsOnNode + underNodeCount > 0
+    const disabled = !Number.isNaN(objectsOnNode) && !Number.isNaN(underNodeCount) && objectsOnNode + underNodeCount > 0;
     return (
       <div>
         {rootNode ? newButton(rootNode.id) : null}
