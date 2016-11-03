@@ -87,7 +87,7 @@ describe('Suggest reducer', () => {
                 updatedDate: '2016-10-24T16:12:46+00:00'
             }
         ]
-        const url = `/api/storagefacility/v1/museum/1/storagenodes/search?searchStr=${query}`
+        const url = `/api/storagefacility/v1/museum/1/storagenodes/search?searchStr=${query}&`
         nock('http://localhost')
             .get(url)
             .reply(200, getData)
