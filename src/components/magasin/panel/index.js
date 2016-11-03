@@ -186,9 +186,9 @@ export default class StorageUnitContainer extends Component {
     // const lastUpdateBy = unit.updatedBy // TODO når dette er i orden, autentisering er i orden
     return (
       <span>
-        <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> Darth Wader
+        <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> {this.props.isAdd ? '' : 'Darth Wader'}
         <br />
-        <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{lastUpdateDate}
+        <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{this.props.isAdd ? '' : lastUpdateDate}
       </span>
     )
   }
