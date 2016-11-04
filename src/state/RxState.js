@@ -11,9 +11,7 @@ export const connect = (selector = state => state) => (state$) => {
   return function wrapWithConnect(WrappedComponent) {
     return class Connect extends Component {
       componentWillMount() {
-        this.subscription = state$
-          .map(selector)
-          .subscribe(state => this.setState(state));
+        this.subscription = state$.map(selector).subscribe(state => this.setState(state));
       }
 
       componentWillUnmount() {
