@@ -24,7 +24,7 @@ import DatePicker from '../../../util/datePicker';
 import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel';
 import { hashHistory } from 'react-router';
 import { flatten, DATE_FORMAT_DISPLAY, hasProp } from '../../../util';
-import ActorSuggest from '../../../components/actor/connected';
+import ActorSuggest from '../../../components/actor/ActorSuggest';
 import Layout from '../../../layout';
 import Breadcrumb from '../../../layout/Breadcrumb';
 import { isDateBiggerThanToday } from '../../../util';
