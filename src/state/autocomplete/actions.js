@@ -4,16 +4,15 @@ import { getToken } from '../../middleware/ApiClient';
 import * as loglevel from 'loglevel';
 import 'whatwg-fetch';
 
-export default function createActions(urlTemplate, debounceTimer = Observable.timer(500)) {
+export default function createActions(urlTemplate) {
   // Reducer subjects (for data)
   const update$ = new Subject();
   const clear$ = new Subject();
 
   // Async actions
   const input$ = new Subject();
-  input$.map(update => update.value)
-    .filter((text) => text.length > 2)
-    .debounce(() => debounceTimer)
+  input$
+    .debounce(() => Observable.timer(500))
     .distinctUntilChanged()
     .switchMap((term) =>
       fetch(urlTemplate.replace('%term%', term), {

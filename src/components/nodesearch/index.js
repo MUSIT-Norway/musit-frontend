@@ -55,7 +55,7 @@ class NodeSuggest extends React.Component {
     placeholder: this.props.placeHolder,
     type: 'search',
     onChange: this.onChange.bind(this),
-    onBlur: this.props.clearSuggest
+    onBlur: this.props.clear
   };
 
   renderNodeSuggestion(suggestion) {
