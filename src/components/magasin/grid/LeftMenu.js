@@ -1,8 +1,8 @@
 
-import React, { Component, PropTypes } from 'react'
-import { ControlLabel, Button } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
-import { I18n } from 'react-i18nify'
+import React, { Component, PropTypes } from 'react';
+import { ControlLabel, Button } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import { I18n } from 'react-i18nify';
 
 export default class NodeLeftMenuComponent extends Component {
   static propTypes = {
@@ -31,10 +31,10 @@ export default class NodeLeftMenuComponent extends Component {
       onClickMoveNode,
       onClickDelete,
       showButtons
-    } = this.props
+    } = this.props;
 
-    const buttonLink = (type, icon, eventType, MusitIconType) => {
-      let fragment = null
+    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) => {
+      let fragment = null;
       if (rootNode) {
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
@@ -43,20 +43,21 @@ export default class NodeLeftMenuComponent extends Component {
               id={`${rootNode.id}_${type}`}
               onClick={() => eventType(rootNode.id)}
               style={{ color: 'black' }}
+              disabled={disabled}
             >
-              {MusitIconType ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
+              {useMusitIcon ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
                 <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />}
               <br />
               {I18n.t(`musit.leftMenu.node.${type}`)}
             </Button>
-          </div>
+          </div>;
         
       }
-      return fragment
-    }
+      return fragment;
+    };
 
     const showCount = (type, typeText) => {
-      let fragment = null
+      let fragment = null;
       if (rootNode) {
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
@@ -65,11 +66,11 @@ export default class NodeLeftMenuComponent extends Component {
             <ControlLabel id={`${rootNode.id}_${typeText}`}>
               {Number.isNaN(type) ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : type}
             </ControlLabel>
-          </div>
+          </div>;
         
       }
-      return fragment
-    }
+      return fragment;
+    };
 
     const newButton = (identity) => {
       return (
@@ -83,9 +84,9 @@ export default class NodeLeftMenuComponent extends Component {
             {I18n.t('musit.leftMenu.node.newNode')}
           </Button>
         </div>
-      )
-    }
-
+      );
+    };
+    const disabled = !Number.isNaN(objectsOnNode) && !Number.isNaN(underNodeCount) && objectsOnNode + underNodeCount > 0;
     return (
       <div>
         {rootNode ? newButton(rootNode.id) : null}
@@ -95,10 +96,11 @@ export default class NodeLeftMenuComponent extends Component {
         {showCount(underNodeCount, 'underNodeCount')}
         {rootNode ? <hr /> : null}
         {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
-        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
+        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true) : null}
         {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode)) : null}
-        {showButtons ? buttonLink('delete', 'trash-o', onClickDelete) : null}
+        {showButtons ?
+          buttonLink('delete','trash-o', onClickDelete, disabled): null}
       </div>
-    )
+    );
   }
 }

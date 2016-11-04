@@ -1,11 +1,11 @@
-import assert from 'assert'
-import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils'
+import assert from 'assert';
+import React from 'react';
+import ReactTestUtils from 'react-addons-test-utils';
 import NodeLeftMenuComponent from '../LeftMenu';
 
 describe('NodeLeftMenuComponent', () => {
-  let labels
-  let buttons
+  let labels;
+  let buttons;
   const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <NodeLeftMenuComponent
@@ -28,19 +28,19 @@ describe('NodeLeftMenuComponent', () => {
     buttons = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'button');
   };
   it('Check the New newNode button is created.', () => {
-    setup()
-    assert(buttons[0].getAttribute('id') === '1_newNode')
-  })
+    setup();
+    assert(buttons[0].getAttribute('id') === '1_newNode');
+  });
   it('Check the New properties button is created.', () => {
-    setup()
-    assert(buttons[1].getAttribute('id') === '1_properties')
-  })
+    setup();
+    assert(buttons[1].getAttribute('id') === '1_properties');
+  });
   it('Check the objectsOnNode label is created.', () => {
-    setup()
-    assert(labels[0].getAttribute('id') === '1_objectsOnNode')
-  })
+    setup();
+    assert(labels[0].getAttribute('id') === '1_objectsOnNode');
+  });
   it('Check the totalObjectCount label is created.', () => {
-    setup()
-    assert(labels[1].getAttribute('id') === '1_totalObjectCount')
-  })
-})
+    setup();
+    assert(labels[1].getAttribute('id') === '1_totalObjectCount');
+  });
+});

@@ -1,7 +1,7 @@
-import assert from 'assert'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import ReactTestUtils from 'react-addons-test-utils'
+import assert from 'assert';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactTestUtils from 'react-addons-test-utils';
 import MusitField from '../index';
 
 describe('MusitField', () => {
@@ -18,7 +18,7 @@ describe('MusitField', () => {
 
     const inputField = ReactDOM.findDOMNode(myDiv);
     const field = inputField.querySelectorAll('input')[0];
-    assert.equal(field.value, 'test value', 'Field must be present')
+    assert.equal(field.value, 'test value', 'Field must be present');
   });
 
   it('should render MusitField 2', () => {

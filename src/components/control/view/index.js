@@ -16,15 +16,15 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React from 'react'
-import { hashHistory } from 'react-router'
-import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap'
-import ControlView from './ControlView'
-import { MusitField } from '../../../components/formfields'
-import Layout from '../../../layout'
-import Breadcrumb from '../../../layout/Breadcrumb'
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util'
-import { I18n } from 'react-i18nify'
+import React from 'react';
+import { hashHistory } from 'react-router';
+import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap';
+import ControlView from './ControlView';
+import { MusitField } from '../../../components/formfields';
+import Layout from '../../../layout';
+import Breadcrumb from '../../../layout/Breadcrumb';
+import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util';
+import { I18n } from 'react-i18nify';
 
 export default class ControlViewContainer extends React.Component {
   static propTypes = {
@@ -41,12 +41,12 @@ export default class ControlViewContainer extends React.Component {
     if (this.props.params.controlId) {
       this.props.loadControl(this.props.params.id, this.props.params.controlId, {
         onSuccess: (r) => {
-          this.props.loadPersonNameFromId(r.doneBy)
+          this.props.loadPersonNameFromId(r.doneBy);
         }
-      })
+      });
     }
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id)
+      this.props.loadStorageObj(this.props.params.id);
     }
   }
 
@@ -58,7 +58,7 @@ export default class ControlViewContainer extends React.Component {
     if (!this.props.controls) {
       return null;  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
     }
-    const { translate } = this.props
+    const { translate } = this.props;
     const data = this.props.controls.data;
     return (
       <Layout
@@ -123,7 +123,7 @@ export default class ControlViewContainer extends React.Component {
               </Row>
               <Row className="row-centered" style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}>
                 <Col xs={10}>
-                  <Button onClick={() => { hashHistory.goBack() }}>
+                  <Button onClick={() => hashHistory.goBack()}>
                     {I18n.t('musit.texts.close')}
                   </Button>
                 </Col>
@@ -133,6 +133,6 @@ export default class ControlViewContainer extends React.Component {
         }
       />
 
-    )
+    );
   }
 }

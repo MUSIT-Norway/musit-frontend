@@ -1,6 +1,6 @@
-import assert from 'assert'
-import React from 'react'
-import ReactTestUtils from 'react-addons-test-utils'
+import assert from 'assert';
+import React from 'react';
+import ReactTestUtils from 'react-addons-test-utils';
 import ControlView from '../ControlView';
 
 describe('ControlView', () => {
@@ -34,9 +34,9 @@ describe('ControlView', () => {
   });
 
   it('Check the temperature component is created by checking down button id', () => {
-    assert(temperatureButton.getAttribute('id') === '1_temperature_downButton')
-  })
+    assert(temperatureButton.getAttribute('id') === '1_temperature_downButton');
+  });
   it('Check the relativeHumidity component is created by checking down button id', () => {
-    assert(relativeHumidityButton.getAttribute('id') === '1_relativeHumidity_downButton')
-  })
-})
+    assert(relativeHumidityButton.getAttribute('id') === '1_relativeHumidity_downButton');
+  });
+});

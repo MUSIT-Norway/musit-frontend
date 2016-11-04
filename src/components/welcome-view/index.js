@@ -1,15 +1,15 @@
 
-import './style.css'
-import React from 'react'
-import { Panel, Grid, Row } from 'react-bootstrap'
-import LoginButton from '../../components/login-button'
-import Logo1 from './assets/UiS_nor_color_rgb.png'
-import Logo2 from './assets/UiO_SAMARB_rgb_gjennomsiktig.png'
-import Logo3 from './assets/UiT_samarbeidslogo_bokmal_300ppi.png'
-import Logo4 from './assets/UiBmerke_grayscale.png'
-import Logo5 from './assets/ntnu_u-slagord.png'
-import FeideLogo from './assets/feide-login-icon.png'
-import { I18n } from 'react-i18nify'
+import './style.css';
+import React from 'react';
+import { Panel, Grid, Row } from 'react-bootstrap';
+import LoginButton from '../../components/login-button';
+import Logo1 from './assets/UiS_nor_color_rgb.png';
+import Logo2 from './assets/UiO_SAMARB_rgb_gjennomsiktig.png';
+import Logo3 from './assets/UiT_samarbeidslogo_bokmal_300ppi.png';
+import Logo4 from './assets/UiBmerke_grayscale.png';
+import Logo5 from './assets/ntnu_u-slagord.png';
+import FeideLogo from './assets/feide-login-icon.png';
+import { I18n } from 'react-i18nify';
 
 export default class WelcomeContainer extends React.Component {
   static propTypes = {

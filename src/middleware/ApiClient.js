@@ -28,15 +28,15 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
  *
  * @returns {string} the token
  */
-const getToken = () => {
-  let token = ''
+export const getToken = () => {
+  let token = '';
   if (localStorage.getItem('jwtToken')) {
-    token = jwtDecode(localStorage.getItem('jwtToken')).accessToken
+    token = jwtDecode(localStorage.getItem('jwtToken')).accessToken;
   } else if (localStorage.getItem('fakeToken')) {
-    token = JSON.parse(localStorage.getItem('fakeToken')).accessToken
+    token = JSON.parse(localStorage.getItem('fakeToken')).accessToken;
   }
-  return token
-}
+  return token;
+};
 
 class ApiClient {
   constructor() {
@@ -46,23 +46,23 @@ class ApiClient {
         if (params) {
           apiRequest.query(params);
         }
-        const token = getToken()
+        const token = getToken();
         if (token !== '') {
-          apiRequest.set('Authorization', `Bearer ${token}`)
+          apiRequest.set('Authorization', `Bearer ${token}`);
         }
         if (data) {
           apiRequest.send(data);
         }
-        apiRequest.end((err, response) => err ? reject(err) : resolve(response.body));
+        apiRequest.end((error, response) => error ? reject({ error, response }) : resolve(response.body));
       });
-    })
+    });
   }
 
   fixPath(path) {
     if (path.charAt(0) === '') {
-      return `/${path}`
+      return `/${path}`;
     }
-    return path
+    return path;
   }
 
 }

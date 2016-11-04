@@ -1,8 +1,8 @@
 
-import React, { Component, PropTypes } from 'react'
-import { Table, FormGroup } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
-import { I18n } from 'react-i18nify'
+import React, { Component, PropTypes } from 'react';
+import { Table, FormGroup } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import { I18n } from 'react-i18nify';
 
 export default class NodeGrid extends Component {
   static propTypes = {
@@ -21,7 +21,7 @@ export default class NodeGrid extends Component {
   }
 
   render() {
-    const { id } = this.props
+    const { id } = this.props;
     return (
       <div>
         <FormGroup>
@@ -50,8 +50,8 @@ export default class NodeGrid extends Component {
                       <a
                         href=""
                         onClick={(e) => {
-                          e.preventDefault()
-                          this.props.onClick(c)
+                          e.preventDefault();
+                          this.props.onClick(c);
                         }}
                       >
                         <FontAwesome name="folder" />
@@ -74,8 +74,8 @@ export default class NodeGrid extends Component {
                       <a
                         href=""
                         onClick={(e) => {
-                          e.preventDefault()
-                          this.props.onAction('controlsobservations', c)
+                          e.preventDefault();
+                          this.props.onAction('controlsobservations', c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.observationAndControl')}
                       >
@@ -86,8 +86,8 @@ export default class NodeGrid extends Component {
                       <a
                         href=""
                         onClick={(e) => {
-                          e.preventDefault()
-                          this.props.onMove(c)
+                          e.preventDefault();
+                          this.props.onMove(c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                       >
@@ -98,8 +98,8 @@ export default class NodeGrid extends Component {
                       <a
                         href=""
                         onClick={(e) => {
-                          e.preventDefault()
-                          this.props.onAction('pickNode', c)
+                          e.preventDefault();
+                          this.props.onAction('pickNode', c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                       >
@@ -113,6 +113,6 @@ export default class NodeGrid extends Component {
           </div>
         </FormGroup>
       </div>
-    )
+    );
   }
 }

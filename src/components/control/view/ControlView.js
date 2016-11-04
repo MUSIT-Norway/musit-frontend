@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react'
-import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
-import * as ObservationRender from '../../observation/render'
-import { formatFloatToString } from './../../../util'
-import reduce from 'lodash/reduce'
-import keys from 'lodash/keys'
-import map from 'lodash/map'
+import React, { Component, PropTypes } from 'react';
+import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
+import * as ObservationRender from '../../observation/render';
+import { formatFloatToString } from './../../../util';
+import reduce from 'lodash/reduce';
+import keys from 'lodash/keys';
+import map from 'lodash/map';
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -71,10 +71,10 @@ export default class ControlView extends Component {
       }
     };
 
-    this.downButton = this.downButton.bind(this)
-    this.oneTableRow = this.oneTableRow.bind(this)
-    this.getControls = this.getControls.bind(this)
-    this.showObservation = this.showObservation.bind(this)
+    this.downButton = this.downButton.bind(this);
+    this.oneTableRow = this.oneTableRow.bind(this);
+    this.getControls = this.getControls.bind(this);
+    this.showObservation = this.showObservation.bind(this);
   }
 
   observation(fontName, observationType) {
@@ -83,7 +83,7 @@ export default class ControlView extends Component {
           <span className={`icon icon-${fontName}`} style={{ 'fontSize': 'x-large' }} />
           {` ${observationType}`}
         </Col>
-    )
+    );
   }
 
   controlOk = (
@@ -111,7 +111,7 @@ export default class ControlView extends Component {
             {ok ? null : <FontAwesome name="sort-desc" style={{ 'fontSize': 'x-large' }} />}
           </Button>
         </Col>
-    ) }
+    ); }
 
   oneTableRow(control, eventType, index) {
     return (
@@ -128,29 +128,29 @@ export default class ControlView extends Component {
             </Panel>
           </Row>
         </div>
-    )
+    );
   }
 
   getControls(controls) {
     const withIndexAndKey = map(keys({...controls}), (type, index) => {
-      return { index, item: controls[type], type }
-    })
+      return { index, item: controls[type], type };
+    });
     return reduce(withIndexAndKey, (result, withIndex) => {
       if (ControlView.typeMap[withIndex.type]) {
-        result.push(this.oneTableRow(withIndex.item, withIndex.type, withIndex.index))
+        result.push(this.oneTableRow(withIndex.item, withIndex.type, withIndex.index));
       }
       return result;
-    }, [])
+    }, []);
   }
 
   showObservation(control, controlType) {
     let lv;
-    const { ok } = control
+    const { ok } = control;
     if (!ok) {
       const observation = control.observation;
       switch (controlType) {
-        case 'temperature':
-          lv = 
+      case 'temperature':
+        lv = 
             <ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
@@ -165,11 +165,11 @@ export default class ControlView extends Component {
                 toWidth: 3,
                 commentWidth: 6
               }}
-            />
+            />;
           
-          break
-        case 'alcohol':
-          lv = 
+        break;
+      case 'alcohol':
+        lv = 
             <ObservationRender.RenderAlcohol
               disabled
               translate={this.props.translate}
@@ -183,11 +183,11 @@ export default class ControlView extends Component {
                 volumeWidth: 3,
                 commentWidth: 6
               }}
-            />
+            />;
           
-          break
-        case 'cleaning':
-          lv = 
+        break;
+      case 'cleaning':
+        lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
               translate={this.props.translate}
@@ -200,11 +200,11 @@ export default class ControlView extends Component {
                 leftWidth: 6,
                 rightWidth: 6
               }}
-            />
+            />;
           
-          break
-        case 'gas':
-          lv = 
+        break;
+      case 'gas':
+        lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="gas"
@@ -217,11 +217,11 @@ export default class ControlView extends Component {
                 leftWidth: 6,
                 rightWidth: 6
               }}
-            />
+            />;
           
-          break
-        case 'hypoxicAir':
-          lv = 
+        break;
+      case 'hypoxicAir':
+        lv = 
             <ObservationRender.RenderFromToNumberComment
               disabled
               type="hypoxicAir"
@@ -236,11 +236,11 @@ export default class ControlView extends Component {
                 toWidth: 3,
                 commentWidth: 6
               }}
-            />
+            />;
           
-          break
-        case 'lightingCondition':
-          lv = 
+        break;
+      case 'lightingCondition':
+        lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="lightCondition"
@@ -253,11 +253,11 @@ export default class ControlView extends Component {
                 leftWidth: 6,
                 rightWidth: 6
               }}
-            />
+            />;
           
-          break
-        case 'mold':
-          lv = 
+        break;
+      case 'mold':
+        lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="mold"
@@ -270,11 +270,11 @@ export default class ControlView extends Component {
                 leftWidth: 6,
                 rightWidth: 6
               }}
-            />
+            />;
           
-          break
-        case 'pest':
-          lv = 
+        break;
+      case 'pest':
+        lv = 
             <ObservationRender.RenderPest
               disabled
               translate={this.props.translate}
@@ -284,7 +284,7 @@ export default class ControlView extends Component {
                   return {
                     lifeCycle: lc.stage,
                     count: formatFloatToString(lc.quantity)
-                  }
+                  };
                 }),
                 identificationValue: observation.identification,
                 commentValue: observation.note
@@ -297,11 +297,11 @@ export default class ControlView extends Component {
                 commentsLeftWidth: 6,
                 commentsRightWidth: 6
               }}
-            />
+            />;
           
-          break
-        case 'relativeHumidity':
-          lv = 
+        break;
+      case 'relativeHumidity':
+        lv = 
             <ObservationRender.RenderFromToNumberComment
               disabled
               translate={this.props.translate}
@@ -316,15 +316,15 @@ export default class ControlView extends Component {
                 toWidth: 3,
                 commentWidth: 6
               }}
-            />
+            />;
           
-          break
-        default:
-          lv = ''
-          break
+        break;
+      default:
+        lv = '';
+        break;
       }
     }
-    return lv
+    return lv;
   }
 
   render() {
@@ -332,6 +332,6 @@ export default class ControlView extends Component {
       <FormGroup>
         {this.getControls(this.props.controlsJson)}
       </FormGroup>
-    )
+    );
   }
 }

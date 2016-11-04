@@ -17,7 +17,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { emitError } from '../errors/emitter'
+import { emitError } from '../errors/emitter';
 
 export default function clientMiddleware(client) {
   return ({ dispatch, getState }) => {
@@ -32,7 +32,7 @@ export default function clientMiddleware(client) {
       }
 
       if (!types) {
-        throw Error('This middleware needs a field "types" of string[]. Ex. { types: [LOAD, LOAD_SUCCESS, lOAD_FAIL] }')
+        throw Error('This middleware needs a field "types" of string[]. Ex. { types: [LOAD, LOAD_SUCCESS, lOAD_FAIL] }');
       }
 
       const [REQUEST, SUCCESS, FAILURE] = types;
@@ -41,30 +41,33 @@ export default function clientMiddleware(client) {
       const actionPromise = promise(client);
       actionPromise.then(
         (result) => {
-          next({ ...rest, result, type: SUCCESS })
+          next({ ...rest, result, type: SUCCESS });
           if (callback) {
-            const { onSuccess } = callback
-            if (typeof onSuccess === 'function') onSuccess(result)
+            const { onSuccess } = callback;
+            if (typeof onSuccess === 'function') {
+              onSuccess(result);
+            }
           }
         },
         (error) => {
-          next({ ...rest, error, type: FAILURE })
+          next({ ...rest, error, type: FAILURE });
           if (callback) {
-            const {onFailure} = callback
-            if (typeof onFailure === 'function')
-              return onFailure(error)
+            const {onFailure} = callback;
+            if (typeof onFailure === 'function') {
+              return onFailure(error);
+            }
           }
-          emitError({ type: 'network', error })
+          emitError({ type: 'network', error });
         }
       ).catch((error) => {
         next({ ...rest, error, type: FAILURE });
-        emitError({ type: 'network', error })
         if (callback) {
-          const { onFailure } = callback
-          if (typeof onFailure === 'function')
-            onFailure(error)
+          const { onFailure } = callback;
+          if (typeof onFailure === 'function') {
+            return onFailure(error);
+          }
         }
-        emitError({ type: 'network', error })
+        emitError({ type: 'network', error });
       });
 
       return actionPromise;

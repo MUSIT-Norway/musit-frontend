@@ -1,7 +1,7 @@
-import { shallow } from 'enzyme'
+import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
-import React from 'react'
-import Modal from '../MusitModal'
+import React from 'react';
+import Modal from '../MusitModal';
 
 describe('MusitModal', () => {
   it('should render header, body and footer', () => {
@@ -11,7 +11,7 @@ describe('MusitModal', () => {
         body={<div>Some really cool body</div>}
         footer={<span>A footer</span>}
       />
-    )
-    expect(shallowToJson(wrapper)).toMatchSnapshot()
-  })
-})
+    );
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
+});

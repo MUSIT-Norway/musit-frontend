@@ -265,11 +265,10 @@
             "commentPlaceHolder": "Free text",
             "commentTooltip": "Task that should be performed",
             "statusItems": {
-              "dryed": "Dehydrated",
-              "allmostDryed": "Almost dehydrated",
-              "someDryed": "A bit dehydrated",
-              "minorDryed": "A little dehydated",
-              "satisfactory": "Satisfactory"
+              "satisfactory": "Satisfactory",
+              "someDryed": "Partially dehydrated/evaporated",
+              "allmostDryed": "Almost dehydrated/evaporated",
+              "dryed": "Dehydrated"
             }
           },
           "temperature": {
@@ -853,11 +852,10 @@
             "commentPlaceHolder": "Fritekst",
             "commentTooltip": "Tiltak som bør iverksettes",
             "statusItems": {
-              "dryed": "Uttørket",
-              "allmostDryed": "Nesten uttørket",
-              "someDryed": "Noe uttørket",
-              "minorDryed": "Litt uttørket",
-              "satisfactory": "Tilfredsstillende"
+              "satisfactory": "Tilfredsstillende",
+              "someDryed": "Noe uttørket/avdampett",
+              "allmostDryed": "Nesten uttørket/avdampet",
+              "dryed": "Uttørket"
             }
           },
           "temperature": {

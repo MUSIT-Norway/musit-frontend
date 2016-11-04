@@ -1,3 +1,3 @@
-import ReportOverview from '../../components/reports'
+import ReportOverview from '../../components/reports';
 
-export default ReportOverview
+export default ReportOverview;
