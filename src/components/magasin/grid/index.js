@@ -224,8 +224,8 @@ export default class StorageUnitsContainer extends React.Component {
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={this.showMoveNodeModal}
           onClickDelete={(id) => {
-            const title = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name: rootNode.name})
-            this.context.showConfirm(title, () => onDelete(id, rootNode))
+            const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name: rootNode.name});
+            this.context.showConfirm(message, () => onDelete(id, rootNode));
           }}
         />
       </div>
