@@ -33,7 +33,7 @@ export default class NodeLeftMenuComponent extends Component {
       showButtons
     } = this.props;
 
-    const buttonLink = (type, icon, eventType, MusitIconType, disabled) => {
+    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) => {
       let fragment = null;
       if (rootNode) {
         fragment = 
@@ -45,7 +45,7 @@ export default class NodeLeftMenuComponent extends Component {
               style={{ color: 'black' }}
               disabled={disabled}
             >
-              {MusitIconType && MusitIconType === 1? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
+              {useMusitIcon ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
                 <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />}
               <br />
               {I18n.t(`musit.leftMenu.node.${type}`)}
@@ -95,11 +95,11 @@ export default class NodeLeftMenuComponent extends Component {
         {showCount(totalObjectCount, 'totalObjectCount')}
         {showCount(underNodeCount, 'underNodeCount')}
         {rootNode ? <hr /> : null}
-        {showButtons ? buttonLink('properties', 'cog', onClickProperties, 0) : null}
-        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, 1) : null}
-        {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode), 0) : null}
+        {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
+        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true) : null}
+        {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode)) : null}
         {showButtons ?
-          buttonLink('delete','trash-o', onClickDelete, 0, disabled): null}
+          buttonLink('delete','trash-o', onClickDelete, disabled): null}
       </div>
     );
   }
