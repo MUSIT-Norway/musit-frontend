@@ -1,7 +1,7 @@
 
-import { MenuItem, Dropdown, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import React, { Component } from 'react'
-import FontAwesome from 'react-fontawesome'
+import { MenuItem, Dropdown, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import React, { Component } from 'react';
+import FontAwesome from 'react-fontawesome';
 
 export default class MusitUserAccount extends Component {
   static propTypes = {
@@ -60,6 +60,6 @@ export default class MusitUserAccount extends Component {
             <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>
           </Dropdown.Menu>
         </Dropdown>
-      </OverlayTrigger>)
+      </OverlayTrigger>);
   }
 }

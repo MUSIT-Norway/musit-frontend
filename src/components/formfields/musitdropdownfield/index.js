@@ -1,7 +1,7 @@
 
 import React, { Component, PropTypes } from 'react';
-import Select from 'react-select'
-import validate from '../common/validators'
+import Select from 'react-select';
+import validate from '../common/validators';
 
 export default class MusitDropDownField extends Component {
   static propTypes = {
@@ -32,35 +32,35 @@ export default class MusitDropDownField extends Component {
     return this.props.items.map((el) => ({
       value: el,
       label: this.props.translateKeyPrefix ? this.props.translate(this.props.translateKeyPrefix.concat(el)) : el
-    }))
+    }));
   }
 
   classNameOnlyWithInput() {
-    let lvString = ''
+    let lvString = '';
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
-      lvString = 'has-error'
+      lvString = 'has-error';
     } else {
-      lvString = ''
+      lvString = '';
     }
-    return lvString
+    return lvString;
   }
 
   classNameWithSpan() {
-    let lvString = ' '
+    let lvString = ' ';
     if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
-      lvString = 'input-group has-error'
+      lvString = 'input-group has-error';
     } else {
-      lvString = 'input-group'
+      lvString = 'input-group';
     }
-    return lvString
+    return lvString;
   }
 
   render() {
     const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
-
-    const lcPlaceholder = 
+    const lcPlaceholder =
       <Select
         placeholder={this.props.placeHolder}
+        style={this.props.disabled ? { backgroundColor: '#eee' } : undefined }
         disabled={this.props.disabled}
         value={this.props.value}
         options={this.getOptions()}
@@ -85,7 +85,7 @@ export default class MusitDropDownField extends Component {
         className={this.classNameOnlyWithInput()}
       >
         {lcPlaceholder}
-      </div>
+      </div>;
       
   }
 }

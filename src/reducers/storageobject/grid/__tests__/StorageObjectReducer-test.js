@@ -1,8 +1,5 @@
-import assert from 'assert'
-
-import storageObjectReducer, { LOAD_SEVERAL_SUCCESS } from '../index'
-import * as actions from '../index'
-import reducer from '../index'
+import * as actions from '../index';
+import reducer from '../index';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
@@ -32,45 +29,36 @@ const comingFromBackend = [
     },
     displayName: 'Sommerfugl'
   }
-]
-
+];
 
 describe('StorageUnitReducer', () => {
-  it('Initial state is set', () => {
-    const state = storageObjectReducer({}, {
-      type: LOAD_SEVERAL_SUCCESS,
-      result: comingFromBackend
-    })
-    assert(state.data === comingFromBackend)
-  })
-
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
-    const id = 1
-    const url = `/api/thingaggregate/museum/1/node/${id}/objects`
+    const id = 1;
+    const url = `/api/thingaggregate/museum/1/node/${id}/objects`;
     nock('http://localhost')
         .get(url)
-        .reply(200, comingFromBackend)
-    const store = mockStore()
+        .reply(200, comingFromBackend);
+    const store = mockStore();
 
     return store.dispatch(actions.loadObjects(1))
         .then(() => {
-          expect(store.getActions()).toMatchSnapshot()
-        })
-  })
+          expect(store.getActions()).toMatchSnapshot();
+        });
+  });
 
   it('no action', () => {
     expect(
         reducer(undefined, undefined)
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('initial action', () => {
     expect(
         reducer(undefined, {
           type: actions.LOAD_SEVERAL
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('success action', () => {
     expect(
@@ -80,8 +68,8 @@ describe('StorageUnitReducer', () => {
             someField: 1
           }
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('fail action', () => {
     expect(
@@ -89,7 +77,7 @@ describe('StorageUnitReducer', () => {
           type: actions.LOAD_SEVERAL_FAIL,
           error: Error('Some error here.')
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
-})
+});

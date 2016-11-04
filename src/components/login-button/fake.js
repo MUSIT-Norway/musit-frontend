@@ -18,9 +18,9 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component, PropTypes } from 'react'
-import { DropdownButton, MenuItem } from 'react-bootstrap'
-import fakeUserInfo from '../../../fake_security.json'
+import React, { Component, PropTypes } from 'react';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
+import fakeUserInfo from '../../../fake_security.json';
 
 export default class FakeLoginSelector extends Component {
   static propTypes = {
@@ -34,7 +34,7 @@ export default class FakeLoginSelector extends Component {
   }
 
   onSelect(user) {
-    localStorage.setItem('fakeToken', JSON.stringify(user))
+    localStorage.setItem('fakeToken', JSON.stringify(user));
     this.props.setUser(user);
   }
 
@@ -43,6 +43,6 @@ export default class FakeLoginSelector extends Component {
       <DropdownButton id="fake-user-select" title="Fake User" onSelect={this.onSelect}>
         {fakeUserInfo.map((user, i) => <MenuItem key={i} eventKey={user}>{user.name}</MenuItem>)}
       </DropdownButton>
-    )
+    );
   }
 }

@@ -1,16 +1,16 @@
-import React, { PropTypes } from 'react'
-import { range } from 'lodash'
+import React, { PropTypes } from 'react';
+import { range } from 'lodash';
 
 class PagingToolbar extends React.Component {
   render() {
-    const numPages = this.props.numItems / this.props.perPage
-    const currentPage = this.props.currentPage
+    const numPages = this.props.numItems / this.props.perPage;
+    const currentPage = this.props.currentPage;
     return (
       <div
         style={{
-        float: 'right',
-        marginRight: '30px'
-      }}
+          float: 'right',
+          marginRight: '30px'
+        }}
       >
       <span
         style={{
@@ -21,8 +21,8 @@ class PagingToolbar extends React.Component {
           <a
             href="/page/back"
             onClick={(e) => {
-              e.preventDefault()
-              this.props.onClick(currentPage-1)
+              e.preventDefault();
+              this.props.onClick(currentPage-1);
             }}
           >
             {'<'}
@@ -35,8 +35,8 @@ class PagingToolbar extends React.Component {
             <span
               key={i}
               style={{
-              padding: '5px'
-            }}
+                padding: '5px'
+              }}
             >
             {currentPage === page ?
               page
@@ -44,27 +44,27 @@ class PagingToolbar extends React.Component {
               <a
                 href={`/page/${page}`}
                 onClick={(e) => {
-                  e.preventDefault()
-                  this.props.onClick(page)
+                  e.preventDefault();
+                  this.props.onClick(page);
                 }}
               >
                 {page}
               </a>
             }
           </span>
-          )
+          );
         })}
         <span
           style={{
-          fontWeight: 'bold'
-        }}
+            fontWeight: 'bold'
+          }}
         >
         {numPages > 1 && currentPage < numPages ?
           <a
             href="/page/next"
             onClick={(e) => {
-              e.preventDefault()
-              this.props.onClick(currentPage+1)
+              e.preventDefault();
+              this.props.onClick(currentPage+1);
             }}
           >
             {'>'}
@@ -73,7 +73,7 @@ class PagingToolbar extends React.Component {
         }
       </span>
       </div>
-    )
+    );
   }
 }
 
@@ -83,10 +83,10 @@ PagingToolbar.propTypes = {
   baseUrl: PropTypes.string.isRequired,
   perPage: PropTypes.number,
   onClick: PropTypes.func.isRequired
-}
+};
 
 PagingToolbar.defaultProps = {
   perPage: 50
-}
+};
 
-export default PagingToolbar
+export default PagingToolbar;

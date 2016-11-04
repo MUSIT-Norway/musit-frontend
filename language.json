@@ -35,7 +35,9 @@
       },
       "moveModal": {
         "move": "Move",
+        "moveObject": "Move object %{name}",
         "moveObjects": "Move objects",
+        "moveNode": "Move node %{name}",
         "moveNodes": "Move nodes",
         "currentDestination": "Destination:",
         "noData": "No sub nodes",
@@ -155,7 +157,12 @@
         "saveTooltip": "Save registration",
         "cancel": "Cancel",
         "cancelTooltip": "Cancel registration",
-        "magazine": "Storage facility"
+        "magazine": "Storage facility",
+        "showConfirm": {
+          "message": "Are you sure about this?",
+          "confirm": "Confirm",
+          "cancel": "Cancel"
+        }
       },
       "viewControl": {
         "title": "View control",
@@ -256,11 +263,10 @@
             "commentPlaceHolder": "Free text",
             "commentTooltip": "Task that should be performed",
             "statusItems": {
-              "dryed": "Dehydrated",
-              "allmostDryed": "Almost dehydrated",
-              "someDryed": "A bit dehydrated",
-              "minorDryed": "A little dehydated",
-              "satisfactory": "Satisfactory"
+              "satisfactory": "Satisfactory",
+              "someDryed": "Partially dehydrated/evaporated",
+              "allmostDryed": "Almost dehydrated/evaporated",
+              "dryed": "Dehydrated"
             }
           },
           "temperature": {
@@ -614,7 +620,9 @@
       },
       "moveModal": {
         "move": "Flytt hit",
+        "moveObject": "Flytt objekt %{name}",
         "moveObjects": "Flytt objekter",
+        "moveNode": "Flytt node %{name}",
         "moveNodes": "Flytt noder",
         "currentDestination": "Destinasjon:",
         "noData": "Ingen undernoder",
@@ -734,7 +742,12 @@
         "saveTooltip": "Lagre",
         "cancel": "Avbryt",
         "cancelTooltip": "Avbryt registreringen",
-        "magazine": "Magasin"
+        "magazine": "Magasin",
+        "showConfirm": {
+          "message": "Er du sikker på dette?",
+          "confirm": "Bekrefte",
+          "cancel": "Avbryt"
+        }
       },
       "viewControl": {
         "title": "Vis kontroll",
@@ -835,11 +848,10 @@
             "commentPlaceHolder": "Fritekst",
             "commentTooltip": "Tiltak som bør iverksettes",
             "statusItems": {
-              "dryed": "Uttørket",
-              "allmostDryed": "Nesten uttørket",
-              "someDryed": "Noe uttørket",
-              "minorDryed": "Litt uttørket",
-              "satisfactory": "Tilfredsstillende"
+              "satisfactory": "Tilfredsstillende",
+              "someDryed": "Noe uttørket/avdampett",
+              "allmostDryed": "Nesten uttørket/avdampet",
+              "dryed": "Uttørket"
             }
           },
           "temperature": {

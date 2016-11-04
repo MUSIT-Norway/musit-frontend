@@ -1,5 +1,5 @@
 
-import { parseFloatFromString } from '../../../util'
+import { parseFloatFromString } from '../../../util';
 
 export const toBackend = (data, parentId) => {
   return {
@@ -29,5 +29,5 @@ export const toBackend = (data, parentId) => {
     } : {},
     environmentAssessment: data.environmentAssessment || null,
     securityAssessment: data.securityAssessment || null
-  }
-}
+  };
+};

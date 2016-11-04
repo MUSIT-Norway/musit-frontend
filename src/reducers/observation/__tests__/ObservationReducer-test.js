@@ -1,35 +1,35 @@
-import assert from 'assert'
+import assert from 'assert';
 import observationReducer, {
   loadObservation,
   initialState
-} from '../index'
-import mapToFrontEnd from '../mapper/to_frontend'
-import mapToBackEnd from '../mapper/to_backend'
+} from '../index';
+import mapToFrontEnd from '../mapper/to_frontend';
+import mapToBackEnd from '../mapper/to_backend';
 
-import configureMockStore from 'redux-mock-store'
-import createMiddleware from '../../../middleware/clientMiddleware'
-import ApiClient from '../../../middleware/ApiClient'
-import Config from '../../../config'
+import configureMockStore from 'redux-mock-store';
+import createMiddleware from '../../../middleware/clientMiddleware';
+import ApiClient from '../../../middleware/ApiClient';
+import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
-import reducer from '../../../reducers/observation/index'
-import * as actions from '../../../reducers/observation/index'
+import reducer from '../../../reducers/observation/index';
+import * as actions from '../../../reducers/observation/index';
 
 const nock = nocker(request);
-const middlewares = [ createMiddleware(new ApiClient()) ]
-const mockStore = configureMockStore(middlewares)
+const middlewares = [ createMiddleware(new ApiClient()) ];
+const mockStore = configureMockStore(middlewares);
 
 
 describe('ObservationReducer', () => {
   it('Initial state is set', () => {
-    const state = observationReducer()
-    assert(state === initialState)
-  })
+    const state = observationReducer();
+    assert(state === initialState);
+  });
 
   it('load observation should update state', () => {
-    const state = observationReducer(initialState, loadObservation(1))
-    assert(state.data.observations.length === 0)
-  })
+    const state = observationReducer(initialState, loadObservation(1));
+    assert(state.data.observations.length === 0);
+  });
 
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = {
@@ -59,12 +59,12 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    }
+    };
     const backEnd = mapToBackEnd(frontEnd);
-    expect(backEnd).toMatchSnapshot()
-    const thereAndBackAgain = mapToFrontEnd(backEnd)
-    expect(thereAndBackAgain).toMatchSnapshot()
-  })
+    expect(backEnd).toMatchSnapshot();
+    const thereAndBackAgain = mapToFrontEnd(backEnd);
+    expect(thereAndBackAgain).toMatchSnapshot();
+  });
 
   it('Valid action from calling actor service for finding actor should update state correctly', () => {
     const actionResult = {
@@ -73,11 +73,11 @@ describe('ObservationReducer', () => {
         fn: 'Arne And1'
       },
       type: 'LOAD_ACTOR_SUCCESS'
-    }
+    };
 
-    const state = observationReducer(initialState, actionResult)
-    assert(state.type !== 'LOAD_ACTOR_SUCCESS' || state.data.fn === 'Arne And1')
-  })
+    const state = observationReducer(initialState, actionResult);
+    assert(state.type !== 'LOAD_ACTOR_SUCCESS' || state.data.fn === 'Arne And1');
+  });
 
   it('test alcohol status: Uttørket', () => {
     const frontend = {
@@ -94,12 +94,12 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    }
+    };
     const backEnd = mapToBackEnd(frontend);
-    expect(backEnd).toMatchSnapshot()
-    const thereAndBackAgain = mapToFrontEnd(backEnd)
-    expect(thereAndBackAgain).toMatchSnapshot()
-  })
+    expect(backEnd).toMatchSnapshot();
+    const thereAndBackAgain = mapToFrontEnd(backEnd);
+    expect(thereAndBackAgain).toMatchSnapshot();
+  });
 
   it('test alcohol status: nesten uttørket', () => {
     const frontend = {
@@ -116,12 +116,12 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    }
+    };
     const backEnd = mapToBackEnd(frontend);
-    expect(backEnd).toMatchSnapshot()
-    const thereAndBackAgain = mapToFrontEnd(backEnd)
-    expect(thereAndBackAgain).toMatchSnapshot()
-  })
+    expect(backEnd).toMatchSnapshot();
+    const thereAndBackAgain = mapToFrontEnd(backEnd);
+    expect(thereAndBackAgain).toMatchSnapshot();
+  });
 
   it('test alcohol status: litt uttørket', () => {
     const frontend = {
@@ -138,12 +138,12 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    }
+    };
     const backEnd = mapToBackEnd(frontend);
-    expect(backEnd).toMatchSnapshot()
-    const thereAndBackAgain = mapToFrontEnd(backEnd)
-    expect(thereAndBackAgain).toMatchSnapshot()
-  })
+    expect(backEnd).toMatchSnapshot();
+    const thereAndBackAgain = mapToFrontEnd(backEnd);
+    expect(thereAndBackAgain).toMatchSnapshot();
+  });
 
   it('test alcohol status: noe uttørket', () => {
     const frontend = {
@@ -160,12 +160,12 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    }
+    };
     const backEnd = mapToBackEnd(frontend);
-    expect(backEnd).toMatchSnapshot()
-    const thereAndBackAgain = mapToFrontEnd(backEnd)
-    expect(thereAndBackAgain).toMatchSnapshot()
-  })
+    expect(backEnd).toMatchSnapshot();
+    const thereAndBackAgain = mapToFrontEnd(backEnd);
+    expect(thereAndBackAgain).toMatchSnapshot();
+  });
 
   it('test alcohol status: tilfredsstillende', () => {
     const frontend = {
@@ -182,13 +182,13 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    }
+    };
     const backEnd = mapToBackEnd(frontend);
-    expect(backEnd).toMatchSnapshot()
-    const thereAndBackAgain = mapToFrontEnd(backEnd)
-    expect(thereAndBackAgain).toMatchSnapshot()
+    expect(backEnd).toMatchSnapshot();
+    const thereAndBackAgain = mapToFrontEnd(backEnd);
+    expect(thereAndBackAgain).toMatchSnapshot();
 
-  })
+  });
 
   it('test invalid alcohol status', () => {
     const frontend = {
@@ -205,12 +205,12 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    }
+    };
     const backEnd = mapToBackEnd(frontend);
-    expect(backEnd).toMatchSnapshot()
-    const thereAndBackAgain = mapToFrontEnd(backEnd)
-    expect(thereAndBackAgain).toMatchSnapshot()
-  })
+    expect(backEnd).toMatchSnapshot();
+    const thereAndBackAgain = mapToFrontEnd(backEnd);
+    expect(thereAndBackAgain).toMatchSnapshot();
+  });
 
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const frontend = {
@@ -326,18 +326,18 @@ describe('ObservationReducer', () => {
             toValue: '4,4',
             commentValue: 'Altfor fuktig' }
         }
-      ] }
+      ] };
     const backEnd = mapToBackEnd(frontend);
-    expect(backEnd).toMatchSnapshot()
-    const thereAndBackAgain = mapToFrontEnd(backEnd)
-    expect(thereAndBackAgain).toMatchSnapshot()
-  })
+    expect(backEnd).toMatchSnapshot();
+    const thereAndBackAgain = mapToFrontEnd(backEnd);
+    expect(thereAndBackAgain).toMatchSnapshot();
+  });
 
 
   it('creates LOAD_SUCCESS when observation data is loaded', () => {
-    const nodeId = 2
-    const observationId = 3
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations/${observationId}`
+    const nodeId = 2;
+    const observationId = 3;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations/${observationId}`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
@@ -351,29 +351,29 @@ describe('ObservationReducer', () => {
           gas:{
             gas: 'Gas test'
           }
-        })
+        });
 
-    const store = mockStore()
+    const store = mockStore();
 
     return store.dispatch(actions.loadObservation(2, 3))
         .then(() => {
-          expect(store.getActions()).toMatchSnapshot()
-        })
-  })
+          expect(store.getActions()).toMatchSnapshot();
+        });
+  });
 
   it('Observation no action', () => {
     expect(
         reducer(undefined, {})
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Observation initial action', () => {
     expect(
         reducer(undefined, {
           type: actions.LOAD
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Observation success action', () => {
     expect(
@@ -383,8 +383,8 @@ describe('ObservationReducer', () => {
             someField: 1
           }
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Observation fail action', () => {
     expect(
@@ -392,41 +392,41 @@ describe('ObservationReducer', () => {
           type: actions.LOAD_FAIL,
           error: Error('Some error occurred to load observation data.')
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('creates LOAD_ACTOR_SUCCESS when actor data is imported', () => {
-    const id = 1
-    const url = `/api/actor/v1/person/${id}`
+    const id = 1;
+    const url = `/api/actor/v1/person/${id}`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
           id: 1,
           fn: 'Jarle Stabell',
           dataportenId: 'jarle'
-        })
+        });
 
-    const store = mockStore()
+    const store = mockStore();
 
     return store.dispatch(actions.getActorNameFromId(1))
         .then(() => {
-          expect(store.getActions()).toMatchSnapshot()
-        })
-  })
+          expect(store.getActions()).toMatchSnapshot();
+        });
+  });
 
   it('Actor no action', () => {
     expect(
         reducer(undefined, {})
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Actor initial action', () => {
     expect(
         reducer(undefined, {
           type: actions.LOAD_ACTOR
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Actor success action', () => {
     expect(
@@ -436,8 +436,8 @@ describe('ObservationReducer', () => {
             someField: 1
           }
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Actor fail action', () => {
     expect(
@@ -445,8 +445,8 @@ describe('ObservationReducer', () => {
           type: actions.LOAD_ACTOR_FAIL,
           error: Error('Some error occurred to load actor data.')
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('creates ADD_SUCCESS when observation data is added', () => {
     const observationAddData = {
@@ -469,9 +469,9 @@ describe('ObservationReducer', () => {
           }
         }
       ]
-    }
-    const nodeId = 4
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations`
+    };
+    const nodeId = 4;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations`;
     nock('http://localhost')
         .post(url, observationAddData)
         .reply(201, {
@@ -486,29 +486,29 @@ describe('ObservationReducer', () => {
             note: 'Gas comments',
             gas: 'test Gas'
           }
-        })
+        });
 
-    const observationStore = mockStore()
+    const observationStore = mockStore();
 
     return observationStore.dispatch(actions.addObservation(4, observationAddData))
         .then(() => {
-          expect(observationStore.getActions()).toMatchSnapshot()
-        })
-  })
+          expect(observationStore.getActions()).toMatchSnapshot();
+        });
+  });
 
   it('Add observation no action', () => {
     expect(
         reducer(undefined, {})
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Add observation initial action', () => {
     expect(
         reducer(undefined, {
           type: actions.ADD
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Add observation success action', () => {
     expect(
@@ -518,8 +518,8 @@ describe('ObservationReducer', () => {
             someField: 1
           }
         })
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   it('Add observation fail action', () => {
     expect(
@@ -527,6 +527,6 @@ describe('ObservationReducer', () => {
           type: actions.ADD_FAIL,
           error: Error('Some error occurred in the add observation data method.')
         })
-    ).toMatchSnapshot()
-  })
-})
+    ).toMatchSnapshot();
+  });
+});

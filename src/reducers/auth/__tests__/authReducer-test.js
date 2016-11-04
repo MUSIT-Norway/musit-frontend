@@ -1,106 +1,106 @@
 
-import configureMockStore from 'redux-mock-store'
-import createMiddleware from '../../../middleware/clientMiddleware'
-import ApiClient from '../../../middleware/ApiClient'
+import configureMockStore from 'redux-mock-store';
+import createMiddleware from '../../../middleware/clientMiddleware';
+import ApiClient from '../../../middleware/ApiClient';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 
-import * as actions from '../../../reducers/auth'
-import reducer from '../../../reducers/auth'
+import * as actions from '../../../reducers/auth';
+import reducer from '../../../reducers/auth';
 
 const nock = nocker(request);
-const middlewares = [ createMiddleware(new ApiClient()) ]
-const mockStore = configureMockStore(middlewares)
+const middlewares = [ createMiddleware(new ApiClient()) ];
+const mockStore = configureMockStore(middlewares);
 
 describe('Auth', () => {
-    it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
-        const url = `/api/actor/v1/dataporten/currentUser`
-        nock('http://localhost')
+  it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
+    const url = `/api/actor/v1/dataporten/currentUser`;
+    nock('http://localhost')
             .get(url)
             .reply(200, {
-                id: 1,
-                fn: 'Jarle Stabell',
-                dataportenId: 'jarle'
-            })
-        const store = mockStore()
+              id: 1,
+              fn: 'Jarle Stabell',
+              dataportenId: 'jarle'
+            });
+    const store = mockStore();
 
-        return store.dispatch(actions.loadActor())
+    return store.dispatch(actions.loadActor())
             .then(() => {
-                expect(store.getActions()).toMatchSnapshot()
-            })
-    })
+              expect(store.getActions()).toMatchSnapshot();
+            });
+  });
 
-    it('no action', () => {
-        expect(
+  it('no action', () => {
+    expect(
             reducer(undefined, {})
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('initial action', () => {
-        expect(
+  it('initial action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD_ACTOR
+              type: actions.LOAD_ACTOR
             })
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('success action', () => {
-        expect(
+  it('success action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD_ACTOR_SUCCESS,
-                result: {
-                    someField: 1
-                }
+              type: actions.LOAD_ACTOR_SUCCESS,
+              result: {
+                someField: 1
+              }
             })
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('fail action', () => {
-        expect(
+  it('fail action', () => {
+    expect(
             reducer(undefined, {
-                type: actions.LOAD_ACTOR_FAILURE,
-                error: Error('Some error here.')
+              type: actions.LOAD_ACTOR_FAILURE,
+              error: Error('Some error here.')
             })
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    const initialState = {
-        user: {
-          userId: 'jarle',
-          name: 'Jarle Stabell',
-          emails: ['foo@bar.bas'],
-          groups: ['EtnoLes', 'FotoLes'],
-          accessToken: 'fake-token-zab-xy-jarle'
-        },
-        actor: {
-          id: 1,
-          fn: 'Jarle Stabell',
-          dataportenId: 'jarle'
-        }
+  const initialState = {
+    user: {
+      userId: 'jarle',
+      name: 'Jarle Stabell',
+      emails: ['foo@bar.bas'],
+      groups: ['EtnoLes', 'FotoLes'],
+      accessToken: 'fake-token-zab-xy-jarle'
+    },
+    actor: {
+      id: 1,
+      fn: 'Jarle Stabell',
+      dataportenId: 'jarle'
     }
+  };
 
-    it('CLEAR_ACTOR action', () => {
-        expect(
+  it('CLEAR_ACTOR action', () => {
+    expect(
             reducer(initialState, actions.clearActor())
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('SET_USER action', () => {
-        expect(
+  it('SET_USER action', () => {
+    expect(
             reducer(initialState, actions.connectUser('TEST_USER'))
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
-    it('CLEAR_USER action', () => {
-        expect(
+  it('CLEAR_USER action', () => {
+    expect(
             reducer(initialState, actions.clearUser())
-        ).toMatchSnapshot()
-    })
+        ).toMatchSnapshot();
+  });
 
 
-    it('undefined action', () => {
-        expect(
+  it('undefined action', () => {
+    expect(
             reducer(initialState, undefined)
-        ).toMatchSnapshot()
-    })
-})
+        ).toMatchSnapshot();
+  });
+});

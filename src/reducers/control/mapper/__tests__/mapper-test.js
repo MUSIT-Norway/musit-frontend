@@ -1,6 +1,6 @@
 import {
   mapToBackend
-} from '../to_backend'
+} from '../to_backend';
 
 describe('ControlMapperReducer', () => {
   it('maps to correct backend structure with no observations', () => {
@@ -16,8 +16,8 @@ describe('ControlMapperReducer', () => {
       alcoholOK: true,
       pestOK: false,
       moldOK: true
-    }
-    const nodeId = 54
+    };
+    const nodeId = 54;
     const observations = {
       observations: [
         {
@@ -39,8 +39,8 @@ describe('ControlMapperReducer', () => {
           }
         }
       ]
-    }
-    const transformed = mapToBackend(state, observations, nodeId)
-    expect(transformed).toMatchSnapshot()
-  })
-})
+    };
+    const transformed = mapToBackend(state, observations, nodeId);
+    expect(transformed).toMatchSnapshot();
+  });
+});

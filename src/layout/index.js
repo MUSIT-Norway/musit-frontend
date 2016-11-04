@@ -17,8 +17,8 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React from 'react'
-import { Grid, Row, Col, PageHeader } from 'react-bootstrap'
+import React from 'react';
+import { Grid, Row, Col, PageHeader } from 'react-bootstrap';
 
 export default class Layout extends React.Component {
   static propTypes = {
@@ -50,7 +50,7 @@ export default class Layout extends React.Component {
               <Col md={6} mdOffset={2} style={{ display: 'inline-block', lineHeight: '30px', verticalAlign: 'center' }}>
                 {this.props.breadcrumb}
               </Col>
-              <Col md={3} mdOffset={1} >
+              <Col md={3} mdOffset={0} style={{ marginLeft: '20px'}}>
                 {this.props.toolbar}
               </Col>
             </Row>
@@ -75,6 +75,6 @@ export default class Layout extends React.Component {
           </Grid>
         </main>
       </div>
-    )
+    );
   }
 }

@@ -19,7 +19,7 @@
  */
 
 import React, { Component, PropTypes } from 'react';
-import validate from '../common/validators'
+import validate from '../common/validators';
 
 export default class MusitTextArea extends Component {
 
@@ -37,13 +37,13 @@ export default class MusitTextArea extends Component {
   }
 
   classNameOnlyWithInput() {
-    let lvString = ''
+    let lvString = '';
     if (validate(this.props) === 'error') {
-      lvString = 'has-error'
+      lvString = 'has-error';
     } else {
-      lvString = ''
+      lvString = '';
     }
-    return lvString
+    return lvString;
   }
 
   render() {
@@ -56,13 +56,13 @@ export default class MusitTextArea extends Component {
         disabled={this.props.disabled}
         onChange={(event) => this.props.onChange(event.target.value)}
         title={this.props.tooltip}
-      />
+      />;
     
 
     return (
       <div className={this.classNameOnlyWithInput()}>
         {lcPlaceholder}
       </div>
-    )
+    );
   }
 }

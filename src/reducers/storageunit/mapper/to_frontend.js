@@ -1,6 +1,6 @@
 
-import { formatFloatToString } from '../../../util'
-
+import { formatFloatToString } from '../../../util';
+import { getPath } from '../../helper';
 
 const mapRequirement = (envReq, field) => {
   if (envReq[field] && (envReq[field].base || envReq[field].tolerance)) {
@@ -16,11 +16,12 @@ const mapRequirement = (envReq, field) => {
     };
   }
   return null;
-}
+};
 
 export const toFrontend = (data) => {
   return {
     ...data,
+    breadcrumb: getPath(data.path, data.pathNames),
     area: formatFloatToString(data.area),
     areaTo: formatFloatToString(data.areaTo),
     height: formatFloatToString(data.height),
@@ -35,5 +36,5 @@ export const toFrontend = (data) => {
     } : {},
     environmentAssessment: data.environmentAssessment || {},
     securityAssessment: data.securityAssessment || {}
-  }
-}
+  };
+};

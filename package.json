@@ -28,6 +28,7 @@
     "font-awesome": "4.6.3",
     "jwt-decode": "2.1.0",
     "lodash": "4.16.4",
+    "loglevel": "^1.4.1",
     "moment": "2.15.1",
     "react": "15.3.2",
     "react-addons-test-utils": "15.3.2",
@@ -49,7 +50,8 @@
     "redux-devtools-log-monitor": "1.0.11",
     "redux-form": "6.1.1",
     "redux-logger": "2.7.0",
-    "rx": "^4.1.0",
+    "reselect": "2.5.4",
+    "rxjs": "5.0.0-rc.1",
     "superagent": "2.3.0"
   },
   "scripts": {
