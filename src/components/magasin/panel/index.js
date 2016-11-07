@@ -47,6 +47,7 @@ export default class StorageUnitContainer extends Component {
     this.translateEnvReqField = this.translateEnvReqField.bind(this);
     this.renderEnvReqNumberField = this.renderEnvReqNumberField.bind(this);
     this.renderEnvReqStringFieldBlock = this.renderEnvReqStringFieldBlock.bind(this);
+    this.getAllowedNodeTypes = this.getAllowedNodeTypes.bind(this);
   }
 
   handleSubmit(e) {
@@ -193,7 +194,23 @@ export default class StorageUnitContainer extends Component {
     );
   }
 
+  getAllowedNodeTypes() {
+    // First level 'Organisation'. Second level 'Building'
+    const nodeTypes = ['StorageUnit', 'Room', 'Building', 'Organisation'];
+    const nodeTypesOrganisation = ['Organisation'];
+    const nodeTypesBuilding = ['Building'];
+    const { pathNames } = this.props.rootNode || {};
+    let lv_return;
+    if ( pathNames && (pathNames.length === 2 || pathNames.length === 1)) {
+      lv_return = pathNames.length === 1 ? nodeTypesOrganisation : nodeTypesBuilding;
+    } else {
+      lv_return = nodeTypes;
+    }
+    return lv_return;
+  }
+
   render() {
+
     return (
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
@@ -233,7 +250,7 @@ export default class StorageUnitContainer extends Component {
                                     tooltip={this.props.translate('musit.storageUnits.type.tooltip')}
                                     placeHolder={this.props.translate('musit.storageUnits.type.placeHolder')}
                                     maximumLength={100}
-                                    items={['StorageUnit', 'Room', 'Building', 'Organisation']}
+                                    items={this.getAllowedNodeTypes()}
                                     translate={this.props.translate}
                                     translateKeyPrefix={'musit.storageUnits.type.items.'}
                                     onChange={storageType => this.updateStorageUnit(this.props.unit, 'type', storageType)}
