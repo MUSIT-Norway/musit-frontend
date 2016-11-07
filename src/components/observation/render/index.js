@@ -69,7 +69,7 @@ export const RenderPest = (props) => {
       }
       lifeCycleOnRemove={(lifeCycleIndex) => props.onRemovePestObservation(lifeCycleIndex, props.index)}
       lifeCycleItems={['puppe', 'adult', 'puppeskin', 'larva', 'egg']}
-      lifeCycleItemsTranslateKeyPrefix='musit.observation.pest.pest.lifeCycleLabelMenu.'
+      lifeCycleItemsTranslateKeyPrefix='musit.observation.page.pest.lifeCycleLabelMenu.'
       countLabel={I18n.t('musit.observation.page.pest.countLabel')}
       countTooltip={I18n.t('musit.observation.page.pest.countTooltip')}
       countPlaceHolder={I18n.t('musit.observation.page.pest.countPlaceHolder')}
