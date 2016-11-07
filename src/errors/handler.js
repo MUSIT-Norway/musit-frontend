@@ -1,6 +1,6 @@
 import React from 'react';
 import NotificationSystem from 'react-notification-system';
-import { source, successSource } from './emitter';
+import event$ from './emitter';
 import { I18n } from 'react-i18nify';
 import ReactDOM from 'react-dom';
 import * as logger from 'loglevel';
@@ -14,14 +14,14 @@ const children = (message) =>
     </p>
   </div>;
 
-successSource.subscribe ((s) => {
-  switch(s.type) {
+const handleNotification = (event) => {
+  switch(event.type) {
   case 'deleteSuccess':
     notificationSystem.addNotification({
       level: 'success',
       title: I18n.t('musit.notificationMessages.deleting'),
       position: 'tc',
-      children: children(s.message)
+      children: children(event.message)
     });
     break;
   case 'movedSuccess':
@@ -29,7 +29,7 @@ successSource.subscribe ((s) => {
       level: 'success',
       title: I18n.t('musit.notificationMessages.moving'),
       position: 'tc',
-      children: children(s.message)
+      children: children(event.message)
     });
     break;
   case 'saveSuccess':
@@ -37,25 +37,42 @@ successSource.subscribe ((s) => {
       level: 'success',
       title: I18n.t('musit.notificationMessages.saving'),
       position: 'tc',
-      children: children(s.message)
+      children: children(event.message)
     });
     break;
   default:
     notificationSystem.addNotification({
       level: 'success',
-      children: children(s.message)
+      children: children(event.message)
     });
   }
-});
+};
 
-source.subscribe((e) => {
-  switch(e.type) {
+const getErrorMessage = (status) => {
+  switch(status) {
+  case 404:
+    return 'Ressursen ble ikke funnet.';
+  case 401:
+    return 'Du er ikke logget inn.';
+  case 403:
+    return 'Du har ikke tilgang.';
+  case 400:
+    return 'Ugyldige data ble sendt til serveren.';
+  case 500:
+    return 'Intern systemfeil. Kontakt systemadministrator.';
+  default:
+    return 'Feilkode: ' + status + '.';
+  }
+};
+
+const handleError = (event) => {
+  const error = event.error || event;
+  const type = event.type;
+  switch(type) {
   case 'network':
-    const { response } = e.error;
-    const { req } = response || {};
-    const msg = req ? req.url : e.error.message;
+    const msg = getErrorMessage(error.response.status);
     notificationSystem.addNotification({
-      message: msg,
+      autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.networkError'),
       position: 'tc',
@@ -64,42 +81,60 @@ source.subscribe((e) => {
     break;
   case 'dateValidationError':
     notificationSystem.addNotification({
+      autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
-      children: children(e.message)
+      children: children(error.message)
     });
     break;
   case 'errorOnDelete':
     notificationSystem.addNotification({
+      autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
-      children: children(e.message)
+      children: children(error.message)
     });
     break;
   case 'errorOnMove':
     notificationSystem.addNotification({
+      autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
-      children: children(e.message)
+      children: children(error.message)
     });
     break;
   case 'errorOnSave':
     notificationSystem.addNotification({
+      autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
-      children: children(e.message)
+      children: children(error.message)
     });
     break;
   default:
-    logger.debug(e.error);
+    logger.debug(error);
     notificationSystem.addNotification({
-      message: e.error.message,
+      autoDismiss: 0,
       level: 'error',
-      position: 'tc'
+      title: I18n.t('musit.errorMainMessages.applicationError'),
+      position: 'tc',
+      children: children(error.message)
     });
+  }
+};
+
+event$.subscribe((event) => {
+  switch(event.type) {
+  case 'musitNotification':
+    handleNotification(event.payload);
+    break;
+  case 'musitError':
+    handleError(event.payload);
+    break;
+  default:
   }
 });

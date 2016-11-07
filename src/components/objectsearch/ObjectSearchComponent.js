@@ -4,6 +4,7 @@ import { Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table } from 
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../layout/Breadcrumb';
 import PagingToolbar from '../../util/paging';
+import { hashHistory } from 'react-router';
 
 export function renderParam(id, props, style) {
   return (
@@ -79,7 +80,15 @@ export default (props) =>
                       <td className="museumNo">{data.museumNo}</td>
                       <td className="subNo">{data.subNo}</td>
                       <td className="term">{data.term}</td>
-                      <td className="path">{data.breadcrumb.length > 0 ? <Breadcrumb node={data} allActive /> : ''}</td>
+                      <td className="path">
+                        {data.breadcrumb.length > 0 &&
+                          <Breadcrumb
+                            node={data}
+                            allActive
+                            onClickCrumb={(node) => hashHistory.push(node.url) }
+                          />
+                        }
+                      </td>
                       <td className="move">
                         <a
                           href=""

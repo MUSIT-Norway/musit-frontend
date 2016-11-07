@@ -67,7 +67,7 @@ export default function clientMiddleware(client) {
             return onFailure(error);
           }
         }
-        emitError({ type: 'network', error });
+        emitError({ type: 'exception', error });
       });
 
       return actionPromise;
