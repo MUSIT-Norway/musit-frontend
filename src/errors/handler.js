@@ -51,17 +51,17 @@ const handleNotification = (event) => {
 const getErrorMessage = (status) => {
   switch(status) {
   case 404:
-    return 'Ressursen ble ikke funnet.';
+    return I18n.t('musit.errorMainMessages.notFound');
   case 401:
-    return 'Du er ikke logget inn.';
+    return I18n.t('musit.errorMainMessages.notAuthenticated');
   case 403:
-    return 'Du har ikke tilgang.';
+    return I18n.t('musit.errorMainMessages.notAllowed');
   case 400:
-    return 'Ugyldige data ble sendt til serveren.';
+    return I18n.t('musit.errorMainMessages.badRequest');
   case 500:
-    return 'Intern systemfeil. Kontakt systemadministrator.';
+    return I18n.t('musit.errorMainMessages.applicationError');
   default:
-    return 'Feilkode: ' + status + '.';
+    return I18n.t('musit.errorMainMessages.errorCode', { status });
   }
 };
 
@@ -70,7 +70,8 @@ const handleError = (event) => {
   const type = event.type;
   switch(type) {
   case 'network':
-    const msg = getErrorMessage(error.response.status);
+    const response = error.response;
+    const msg = response.body && response.body.message || getErrorMessage(response.status);
     notificationSystem.addNotification({
       autoDismiss: 0,
       level: 'error',
