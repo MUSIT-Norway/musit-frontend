@@ -65,5 +65,5 @@
     "lint:fix": "./node_modules/react-scripts/node_modules/.bin/eslint . --fix",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
-  "pre-commit": [ "precommit-msg", "lint:fix", "flow" ]
+  "pre-commit": [ "precommit-msg", "lint", "flow" ]
 }
