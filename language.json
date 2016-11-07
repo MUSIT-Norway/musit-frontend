@@ -158,10 +158,12 @@
         "cancel": "Cancel",
         "cancelTooltip": "Cancel registration",
         "magazine": "Storage facility",
+        "deleteNode": "Delete node",
         "showConfirm": {
           "message": "Are you sure about this?",
           "confirm": "Confirm",
-          "cancel": "Cancel"
+          "cancel": "Cancel",
+          "ok": "Ok"
         }
       },
       "viewControl": {
@@ -743,10 +745,12 @@
         "cancel": "Avbryt",
         "cancelTooltip": "Avbryt registreringen",
         "magazine": "Magasin",
+        "deleteNode": "Slett node",
         "showConfirm": {
           "message": "Er du sikker på dette?",
           "confirm": "Bekrefte",
-          "cancel": "Avbryt"
+          "cancel": "Avbryt",
+          "ok": "Ok"
         }
       },
       "viewControl": {

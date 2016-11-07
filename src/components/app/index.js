@@ -55,8 +55,9 @@ export default class App extends Component {
     };
   }
 
-  showConfirm(title, onYes) {
-    const prompt = `<div>${ I18n.t('musit.texts.showConfirm.message') }</div>`;
+  showConfirm(message, onYes) {
+    const title = I18n.t('musit.texts.deleteNode');
+    const prompt = `<div>${ message }</div>`;
     const $dialog = $(prompt).dialog({
       autoOpen: false,
       modal: true,
@@ -70,7 +71,7 @@ export default class App extends Component {
     $dialog.dialog({
       buttons : [
         {
-          text: I18n.t('musit.texts.showConfirm.confirm'),
+          text: I18n.t('musit.texts.showConfirm.ok'),
           click: function() {
             onYes();
             $(this).dialog("close");
