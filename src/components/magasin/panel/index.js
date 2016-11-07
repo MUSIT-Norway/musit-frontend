@@ -199,7 +199,7 @@ export default class StorageUnitContainer extends Component {
     const nodeTypes = ['StorageUnit', 'Room', 'Building', 'Organisation'];
     const nodeTypesOrganisation = ['Organisation'];
     const nodeTypesBuilding = ['Building'];
-    const { pathNames } = this.props.rootNode || {}
+    const { pathNames } = this.props.rootNode || {};
     let lv_return;
     if ( pathNames && (pathNames.length === 2 || pathNames.length === 1)) {
       lv_return = pathNames.length === 1 ? nodeTypesOrganisation : nodeTypesBuilding;
