@@ -71,7 +71,8 @@ const handleError = (event) => {
   switch(type) {
   case 'network':
     const response = error.response;
-    const msg = response.body && response.body.message || getErrorMessage(response.status);
+    const responseBody = response.body && response.body.message;
+    const msg = responseBody || getErrorMessage(response.status);
     notificationSystem.addNotification({
       autoDismiss: 0,
       level: 'error',
