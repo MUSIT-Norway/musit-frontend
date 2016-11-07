@@ -47,6 +47,7 @@ export default class StorageUnitContainer extends Component {
     this.translateEnvReqField = this.translateEnvReqField.bind(this);
     this.renderEnvReqNumberField = this.renderEnvReqNumberField.bind(this);
     this.renderEnvReqStringFieldBlock = this.renderEnvReqStringFieldBlock.bind(this);
+    this.getNodeTypeItems = this.getNodeTypeItems.bind(this);
   }
 
   handleSubmit(e) {
@@ -193,7 +194,26 @@ export default class StorageUnitContainer extends Component {
     );
   }
 
+  getNodeTypeItems() {
+    // First level 'Organisation'. Second level 'Building'
+    const nodeType = ['StorageUnit', 'Room', 'Building', 'Organisation'];
+    const nodeTypeOrganisation = ['Organisation'];
+    const nodeTypeBuilding = ['Building'];
+    let lv_return;
+    if (this.props.rootNode &&
+      this.props.rootNode.pathNames &&
+      this.props.rootNode.pathNames.length &&
+      (this.props.rootNode.pathNames.length === 2 || this.props.rootNode.pathNames.length === 1)
+    ) {
+      lv_return = this.props.rootNode.pathNames.length === 1 ? nodeTypeOrganisation : nodeTypeBuilding;
+    } else {
+      lv_return = nodeType;
+    }
+    return lv_return;
+  }
+
   render() {
+
     return (
       <Layout
         title={this.props.translate('musit.storageUnits.title')}
@@ -233,7 +253,7 @@ export default class StorageUnitContainer extends Component {
                                     tooltip={this.props.translate('musit.storageUnits.type.tooltip')}
                                     placeHolder={this.props.translate('musit.storageUnits.type.placeHolder')}
                                     maximumLength={100}
-                                    items={['StorageUnit', 'Room', 'Building', 'Organisation']}
+                                    items={this.getNodeTypeItems()}
                                     translate={this.props.translate}
                                     translateKeyPrefix={'musit.storageUnits.type.items.'}
                                     onChange={storageType => this.updateStorageUnit(this.props.unit, 'type', storageType)}
