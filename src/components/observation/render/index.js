@@ -14,12 +14,8 @@ export const RenderAlcohol = (props) => {
       statusLabel={I18n.t('musit.observation.page.alcohol.statusLabel')}
       statusTooltip={I18n.t('musit.observation.page.alcohol.statusTooltip')}
       statusPlaceHolder={I18n.t('musit.observation.page.alcohol.statusPlaceHolder')}
-      statusItems={[
-        I18n.t('musit.observation.page.alcohol.statusItems.satisfactory'),
-        I18n.t('musit.observation.page.alcohol.statusItems.someDryed'),
-        I18n.t('musit.observation.page.alcohol.statusItems.allmostDryed'),
-        I18n.t('musit.observation.page.alcohol.statusItems.dryed')
-      ]}
+      statusItems={[ 'satisfactory', 'someDryed', 'allmostDryed', 'dryed']}
+      statusItemsTranslateKeyPrefix='musit.observation.page.alcohol.statusItems.'
       statusOnChange={(value) => props.onChangeField('statusValue', value, props.index)}
       volumeLabel={I18n.t('musit.observation.page.alcohol.volumeLabel')}
       volumeTooltip={I18n.t('musit.observation.page.alcohol.volumeTooltip')}
