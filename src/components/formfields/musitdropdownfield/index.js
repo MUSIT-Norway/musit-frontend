@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
 import validate from '../common/validators';
+import { I18n } from 'react-i18nify';
 
 export default class MusitDropDownField extends Component {
   static propTypes = {
@@ -31,7 +32,7 @@ export default class MusitDropDownField extends Component {
   getOptions() {
     return this.props.items.map((el) => ({
       value: el,
-      label: this.props.translateKeyPrefix ? this.props.translate(this.props.translateKeyPrefix.concat(el)) : el
+      label: this.props.translateKeyPrefix ? I18n.t(this.props.translateKeyPrefix.concat(el)) : el
     }));
   }
 

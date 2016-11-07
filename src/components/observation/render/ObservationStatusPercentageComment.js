@@ -30,6 +30,7 @@ export default class ObervationStatusPercentageComment extends Component {
     statusPlaceHolder: PropTypes.string.isRequired,
     statusValue: PropTypes.string,
     statusItems: PropTypes.array.isRequired,
+    statusItemsTranslateKeyPrefix: PropTypes.string,
     statusTooltip: PropTypes.string,
     statusOnChange: PropTypes.func.isRequired,
     statusValidate: PropTypes.string,
@@ -88,6 +89,7 @@ export default class ObervationStatusPercentageComment extends Component {
           <MusitDropDownField
             value={this.props.statusValue}
             items={this.props.statusItems}
+            translateKeyPrefix={this.props.statusItemsTranslateKeyPrefix}
             tooltip={this.props.statusTooltip}
             placeHolder={!this.props.disabled ? this.props.statusPlaceHolder : ''}
             validate={this.props.statusValidate}
