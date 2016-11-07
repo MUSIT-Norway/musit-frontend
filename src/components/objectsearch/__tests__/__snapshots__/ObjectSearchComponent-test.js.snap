@@ -186,7 +186,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -258,7 +259,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -330,7 +332,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -402,7 +405,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -474,7 +478,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -546,7 +551,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -618,7 +624,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -690,7 +697,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -762,7 +770,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -834,7 +843,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -906,7 +916,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -978,7 +989,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -1050,7 +1062,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -1122,7 +1135,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -1194,7 +1208,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -1266,7 +1281,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -1338,7 +1354,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -1410,7 +1427,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -1482,7 +1500,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">
@@ -1554,7 +1573,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "subNo": "45",
                         "term": "Fuglekasse"
                       }
-                    } />
+                    }
+                    onClickCrumb={[Function onClickCrumb]} />
                 </td>
                 <td
                   className="move">

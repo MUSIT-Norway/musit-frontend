@@ -2,8 +2,13 @@
   "en": {
     "musit": {
       "errorMainMessages": {
-        "applicationError": "Application error",
-        "networkError": "Network error"
+        "applicationError": "Application error.",
+        "networkError": "Network error.",
+        "notFound": "The resource was not found.",
+        "notAllowed": "You don't have the appropriate access rights.",
+        "notAuthenticated": "You are not logged in.",
+        "badRequest": "Invalid data was rejected by the server.",
+        "errorCode": "HTTP error code: %{status}"
       },
       "notificationMessages": {
         "deleting": "Delete",
@@ -589,8 +594,13 @@
   "no": {
     "musit": {
       "errorMainMessages": {
-        "applicationError": "Applikasjonsfeil",
-        "networkError": "Nettverksfeil"
+        "applicationError": "Applikasjonsfeil.",
+        "networkError": "Nettverksfeil",
+        "notFound": "Ressursen ble ikke funnet.",
+        "notAllowed": "Du har ikke tilgang.",
+        "notAuthenticated": "Du er ikke logget inn.",
+        "badRequest": "Ugyldige data ble sendt til serveren.",
+        "errorCode": "HTTP feilkode: %{status}"
       },
       "notificationMessages": {
         "deleting": "Sletting",
