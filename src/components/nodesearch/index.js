@@ -1,23 +1,6 @@
-
 import React from 'react';
-import { connect } from 'react-redux';
 import AutoSuggest from 'react-autosuggest';
-import { suggestNode, clearSuggest } from '../../reducers/suggest';
-
-const mapStateToProps = (state) => ({
-  suggest: state.suggest
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onUpdateRequested: (id, { value, reason }) => {
-    if (reason && reason === 'type' && value && value.length > 2) {
-      dispatch(suggestNode(id, value));
-    } else {
-      dispatch(clearSuggest(id));
-    }
-  },
-  clearSuggest: () => dispatch(clearSuggest())
-});
+import autoComplete from '../../state/autocomplete';
 
 class NodeSuggest extends React.Component {
 
@@ -25,11 +8,11 @@ class NodeSuggest extends React.Component {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
     placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.object,
+    suggest: React.PropTypes.array,
     onChange: React.PropTypes.func.isRequired,
-    onUpdateRequested: React.PropTypes.func,
+    update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
-    clearSuggest: React.PropTypes.func
+    clear: React.PropTypes.func
   };
 
   static defaultProps = {
@@ -41,7 +24,6 @@ class NodeSuggest extends React.Component {
   constructor(props) {
     super(props);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
-    this.onBlur = this.onBlur.bind(this);
     this.state = {
       value: this.props.value
     };
@@ -64,11 +46,6 @@ class NodeSuggest extends React.Component {
     this.props.onChange(suggestion.id);
   }
 
-  getSuggestions() {
-    const suggest = this.props.suggest[this.props.id];
-    return suggest && suggest.data ? suggest.data : [];
-  }
-
   getNodeSuggestionValue(suggestion) {
     return suggestion.name;
   }
@@ -77,33 +54,33 @@ class NodeSuggest extends React.Component {
     id: this.props.id,
     placeholder: this.props.placeHolder,
     type: 'search',
-    onChange: this.onChange.bind(this)
+    onChange: this.onChange.bind(this),
+    onBlur: this.props.clear
   };
 
   renderNodeSuggestion(suggestion) {
     const suggestionText = suggestion.name;
     return (
-            <span className={'suggestion-content'}>{suggestionText}</span>
-        );
-  }
-  onBlur() {
-    return this.props.clearSuggest;
+      <span className={'suggestion-content'}>{suggestionText}</span>
+    );
   }
 
   render() {
     return (
-            <AutoSuggest
-                suggestions={this.getSuggestions()}
-                disabled={this.props.disabled}
-                onSuggestionsUpdateRequested={(update) => this.props.onUpdateRequested(this.props.id, update)}
-                getSuggestionValue={this.getNodeSuggestionValue}
-                renderSuggestion={this.renderNodeSuggestion}
-                inputProps={{ ...this.nodeProps, value: this.state.value, onBlur: this.onBlur() }}
-                shouldRenderSuggestions={(v) => v !== 'undefined'}
-                onSuggestionSelected={this.onSuggestionSelected}
-            />
-        );
+      <AutoSuggest
+        suggestions={this.props.suggest}
+        disabled={this.props.disabled}
+        onSuggestionsUpdateRequested={this.props.update}
+        getSuggestionValue={this.getNodeSuggestionValue}
+        renderSuggestion={this.renderNodeSuggestion}
+        inputProps={{ ...this.nodeProps, value: this.state.value }}
+        shouldRenderSuggestions={(v) => v !== 'undefined'}
+        onSuggestionSelected={this.onSuggestionSelected}
+      />
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NodeSuggest);
+export default autoComplete(
+  '/api/storagefacility/v1/museum/1/storagenodes/search?searchStr=%term%&'
+)(NodeSuggest);

@@ -12,7 +12,7 @@ import FontAwesome from 'react-fontawesome';
 import { hashHistory } from 'react-router';
 import SaveCancel from '../formfields/saveCancel/SaveCancel';
 import DatePicker from '../../util/datePicker';
-import ActorSuggest from '../actor/connected';
+import ActorSuggest from '../actor/ActorSuggest';
 import * as validation from './validation';
 import { isDateBiggerThanToday } from '../../util';
 import { I18n } from 'react-i18nify';

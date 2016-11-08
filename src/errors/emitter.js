@@ -1,15 +1,9 @@
-import { EventEmitter } from 'events';
-import Rx from 'rxjs/Rx';
+import { Subject } from 'rxjs/Rx';
 
-// Error emitter (private)
-const emitter = new EventEmitter();
+const event$ = new Subject();
+export default event$;
 
-// Error emitter (public)
-export const emitError = (error) => emitter.emit('error', error);
-export const emitSuccess = (success) => emitter.emit('success', success);
-
-// Error source
-export const source = Rx.Observable.fromEvent(emitter, 'error');
-
-// Success source
-export const successSource = Rx.Observable.fromEvent(emitter, 'success');
+export const emitSuccess = (event) =>
+  event$.next({ type: 'musitNotification', payload: event });
+export const emitError = (event) =>
+  event$.next({ type: 'musitError', payload: event });
