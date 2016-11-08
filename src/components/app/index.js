@@ -147,6 +147,11 @@ export default class App extends Component {
     hashHistory.replace('/');
   }
 
+  handleLanguage = (l) => {
+    localStorage.setItem('language', JSON.stringify(l));
+    window.location.reload(true);
+  }
+
   render() {
     const { user, pickListNodeCount, pickListObjectCount } = this.props;
     return (
@@ -188,7 +193,7 @@ export default class App extends Component {
             </Nav>
             <Nav pullRight>
               {user &&
-              <MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} />
+              <MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} handleLanguage={(l) => this.handleLanguage(l)}/>
               }
             </Nav>
             <Nav pullRight>

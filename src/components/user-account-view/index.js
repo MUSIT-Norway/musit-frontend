@@ -8,7 +8,8 @@ export default class MusitUserAccount extends Component {
     user: React.PropTypes.object,
     collections: React.PropTypes.array,
     selectedCollection: React.PropTypes.number,
-    handleLogout: React.PropTypes.func
+    handleLogout: React.PropTypes.func,
+    handleLanguage: React.PropTypes.func
   }
   static defaultProps = {
     collections: [
@@ -26,10 +27,12 @@ export default class MusitUserAccount extends Component {
     selectedCollection: 1
   }
 
+
   render() {
+    const getLanguage = JSON.parse(localStorage.getItem('language')) || 'no';
+    const check = (l) => getLanguage === l ? <FontAwesome name="check" /> : <span></span>;
     const tooltip = 
-      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>
-    ;
+      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>;
     const menuText = (t1, t2) =>
       <Row>
         <Col md={1}>{t1}</Col>
@@ -43,19 +46,28 @@ export default class MusitUserAccount extends Component {
             <FontAwesome name="user" size="lg" />
           </Dropdown.Toggle>
           <Dropdown.Menu>
+            <MenuItem />
             <MenuItem eventKey={1}>Min konto</MenuItem>
             <MenuItem divider />
-            <MenuItem eventKey={2}>Samlinger</MenuItem>
+            <MenuItem eventKey={3} header>Samlinger</MenuItem>
             {this.props.collections.map(
               (cc, i) =>
-              this.props.selectedCollection === cc.id ?
-                <MenuItem key={i} eventKey={`coll_${cc.id}`}>
-                  {menuText(<FontAwesome name="check" />, cc.collection)}
-                </MenuItem> :
-                <MenuItem key={i}>
-                  {menuText('', cc.collection)}
-                </MenuItem>)
-              }
+                this.props.selectedCollection === cc.id ?
+                  <MenuItem key={i} eventKey={`coll_${cc.id}`}>
+                    {menuText(<FontAwesome name="check" />, cc.collection)}
+                  </MenuItem> :
+                  <MenuItem key={i}>
+                    {menuText('', cc.collection)}
+                  </MenuItem>)
+            }
+            <MenuItem divider />
+            <MenuItem header>Language</MenuItem>
+            <MenuItem eventKey={5} onSelect={() => this.props.handleLanguage('no')}>
+              {menuText(check('no'),'NO')}
+            </MenuItem>
+            <MenuItem eventKey={6} onSelect={() => this.props.handleLanguage('en')}>
+              {menuText(check('en'),'EN')}
+            </MenuItem>
             <MenuItem divider />
             <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>
           </Dropdown.Menu>
