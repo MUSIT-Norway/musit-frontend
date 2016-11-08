@@ -29,7 +29,7 @@ export default class MusitUserAccount extends Component {
 
 
   render() {
-    const getLanguage = JSON.parse(localStorage.getItem('language')) || 'no';
+    const getLanguage = localStorage.getItem('language') || 'no';
     const check = (l) => getLanguage === l ? <FontAwesome name="check" /> : <span></span>;
     const tooltip = 
       <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>;

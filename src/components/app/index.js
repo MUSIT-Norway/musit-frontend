@@ -148,7 +148,7 @@ export default class App extends Component {
   }
 
   handleLanguage = (l) => {
-    localStorage.setItem('language', JSON.stringify(l));
+    localStorage.setItem('language', l);
     window.location.reload(true);
   }
 
