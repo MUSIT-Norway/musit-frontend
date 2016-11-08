@@ -458,6 +458,8 @@
         "type": {
           "labelText": "Type",
           "required": "Type is required.",
+          "organisationAllowed": "Only organisation type is allowed.",
+          "buildingAllowed": "Only building type is allowed.",
           "placeHolder": "Please choose...",
           "tooltip": "Type of node",
           "items": {
@@ -1050,6 +1052,8 @@
         "type": {
           "labelText": "Type",
           "required": "Type er påkrevd.",
+          "organisationAllowed": "Bare typen organisasjon er tillatt.",
+          "buildingAllowed": "Bare type bygg er tillatt.",
           "placeHolder": "Vennligst velg...",
           "tooltip": "Nodens type",
           "items": {
