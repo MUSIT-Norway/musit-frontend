@@ -36,9 +36,11 @@ export default (formProps) => {
       errors.name = I18n.t('musit.storageUnits.name.required');
     }
     const { pathNames } = formProps.rootNode || {};
+    // On top level(root) only organisation type is allowed
     if ( pathNames && pathNames.length === 1 && formProps.unit.type && formProps.unit.type !== 'Organisation') {
       errors = { ...errors, type : I18n.t('musit.storageUnits.type.organisationAllowed') };
     }
+    // On second level(under the root) only building type is allowed
     if ( pathNames && pathNames.length === 2 && formProps.unit.type && formProps.unit.type !== 'Building') {
       errors = { ...errors, type : I18n.t('musit.storageUnits.type.buildingAllowed') };
     }
