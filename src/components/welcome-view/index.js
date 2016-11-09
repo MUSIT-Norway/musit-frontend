@@ -31,7 +31,10 @@ export default class WelcomeContainer extends React.Component {
                       <LoginButton
                         setUser={this.props.setUser}
                       >
-                        {I18n.t('musit.login')}<img src={FeideLogo} alt="feide-logo-button" title="Feide Login" />
+                        <span>
+                          {I18n.t('musit.login')}
+                          <img src={FeideLogo} alt="feide-logo-button" title="Feide Login" />
+                        </span>
                       </LoginButton>
                     }
 
