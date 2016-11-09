@@ -1052,8 +1052,8 @@
         "type": {
           "labelText": "Type",
           "required": "Type er påkrevd.",
-          "organisationAllowed": "Bare typen organisasjon er tillatt.",
-          "buildingAllowed": "Bare type bygg er tillatt.",
+          "organisationAllowed": "Bare typen organisasjon er tillatt på dette nivå.",
+          "buildingAllowed": "Bare typen bygg er tillatt på dette nivå.",
           "placeHolder": "Vennligst velg...",
           "tooltip": "Nodens type",
           "items": {
