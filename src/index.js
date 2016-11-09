@@ -43,6 +43,7 @@ const history = syncHistoryWithStore(hashHistory, store);
 
 I18n.loadTranslations(LanguageJson);
 const language = localStorage.getItem('language') || 'no';
+localStorage.setItem('language', language);
 I18n.setLocale(language);
 
 try {

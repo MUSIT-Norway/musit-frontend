@@ -29,8 +29,8 @@ export default class MusitUserAccount extends Component {
 
 
   render() {
-    const getLanguage = localStorage.getItem('language') || 'no';
-    const check = (l) => getLanguage === l ? <FontAwesome name="check" /> : <span></span>;
+    const currentLanguage = localStorage.getItem('language');
+    const checked = (language) => currentLanguage === language && <FontAwesome name="check" /> ;
     const tooltip = 
       <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>;
     const menuText = (t1, t2) =>
@@ -63,10 +63,10 @@ export default class MusitUserAccount extends Component {
             <MenuItem divider />
             <MenuItem header>Language</MenuItem>
             <MenuItem eventKey={5} onSelect={() => this.props.handleLanguage('no')}>
-              {menuText(check('no'),'NO')}
+              {menuText(checked('no'),'NO')}
             </MenuItem>
             <MenuItem eventKey={6} onSelect={() => this.props.handleLanguage('en')}>
-              {menuText(check('en'),'EN')}
+              {menuText(checked('en'),'EN')}
             </MenuItem>
             <MenuItem divider />
             <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>
