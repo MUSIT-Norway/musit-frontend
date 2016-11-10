@@ -35,6 +35,15 @@ export default (formProps) => {
     if (!formProps.unit.name || formProps.unit.name.trim().length === 0) {
       errors.name = I18n.t('musit.storageUnits.name.required');
     }
+    const { pathNames } = formProps.rootNode || {};
+    // On top level(root) only organisation type is allowed
+    if ( pathNames && pathNames.length === 1 && formProps.unit.type && formProps.unit.type !== 'Organisation') {
+      errors = { ...errors, type : I18n.t('musit.storageUnits.type.organisationAllowed') };
+    }
+    // On second level(under the root) only building type is allowed
+    if ( pathNames && pathNames.length === 2 && formProps.unit.type && formProps.unit.type !== 'Building') {
+      errors = { ...errors, type : I18n.t('musit.storageUnits.type.buildingAllowed') };
+    }
     errors = { ...errors, ...validateStringField('type', formProps.unit.type, 100) };
     errors = { ...errors, ...validateStringField('name', formProps.unit.name, 100) };
     errors = { ...errors, ...validateStringField('address', formProps.unit.address, 100) };
