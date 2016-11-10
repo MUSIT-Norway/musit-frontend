@@ -29,7 +29,7 @@ import DevTools from './components/dev-tools';
 import config from './config';
 import LanguageJson from '../language.json';
 import { I18n } from 'react-i18nify';
-import { emitError } from './errors/emitter';
+import * as loglevel from 'loglevel';
 import './errors/handler';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -44,39 +44,40 @@ const history = syncHistoryWithStore(hashHistory, store);
 I18n.loadTranslations(LanguageJson);
 I18n.setLocale('no');
 
-try {
-  const component =
-    <Router
-      onUpdate={() => window.scrollTo(0, 0)}
-      history={history}
-    >
-      {getRoutes(store)}
-    </Router>;
+if (config.isDev) {
+  loglevel.setLevel('debug');
+} else {
+  loglevel.setLevel('error');
+}
 
+const component =
+  <Router
+    onUpdate={() => window.scrollTo(0, 0)}
+    history={history}
+  >
+    {getRoutes(store)}
+  </Router>;
+
+ReactDOM.render(
+  <Provider store={store} key="provider">
+    {component}
+  </Provider>,
+  dest
+);
+
+if (config.isDev) {
+  window.React = React;
+}
+
+if (config.useDevTools && !window.devToolsExtension) {
   ReactDOM.render(
     <Provider store={store} key="provider">
-      {component}
+      <div>
+        {component}
+        <DevTools />
+      </div>
     </Provider>,
     dest
   );
-
-  if (config.isDev) {
-    window.React = React;
-  }
-
-  if (config.useDevTools && !window.devToolsExtension) {
-    ReactDOM.render(
-      <Provider store={store} key="provider">
-        <div>
-          {component}
-          <DevTools />
-        </div>
-      </Provider>,
-      dest
-    );
-  }
-} catch(error) {
-  emitError({ type: 'other', error });
 }
-
 

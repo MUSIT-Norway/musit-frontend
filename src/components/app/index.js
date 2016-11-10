@@ -1,7 +1,6 @@
 import { I18n } from 'react-i18nify';
 import 'react-select/dist/react-select.css';
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap';
@@ -10,17 +9,6 @@ import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import MusitUserAccount from '../../components/user-account-view';
 import './index.css';
 import Logo from './assets/logo.png';
-import { emitSuccess, emitError } from '../../errors/emitter';
-import * as loglevel from 'loglevel';
-import config from '../../config';
-
-const $ = global.jQuery;
-
-if (config.isDev) {
-  loglevel.setLevel('debug');
-} else {
-  loglevel.setLevel('error');
-}
 
 export default class App extends Component {
   static propTypes = {
@@ -31,108 +19,6 @@ export default class App extends Component {
     pickListObjectCount: PropTypes.number.isRequired,
     clearUser: PropTypes.func.isRequired,
     loadUser: PropTypes.func.isRequired
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  }
-
-  static childContextTypes = {
-    showModal: PropTypes.func,
-    showConfirm: PropTypes.func,
-    showError: PropTypes.func,
-    showNotification: PropTypes.func,
-    logger: PropTypes.object
-  }
-
-  getChildContext() {
-    return {
-      showModal: this.showModal,
-      showConfirm: this.showConfirm,
-      showError: emitError,
-      showNotification: emitSuccess,
-      logger: loglevel
-    };
-  }
-
-  showConfirm(message, onYes) {
-    const title = I18n.t('musit.texts.deleteNode');
-    const prompt = `<div>${ message }</div>`;
-    const $dialog = $(prompt).dialog({
-      autoOpen: false,
-      modal: true,
-      title: title,
-      autoResize: true,
-      resizable: false,
-      close: function() {
-        $( this ).remove();
-      }
-    });
-    $dialog.dialog({
-      buttons : [
-        {
-          text: I18n.t('musit.texts.showConfirm.ok'),
-          click: function() {
-            onYes();
-            $(this).dialog("close");
-          }
-        },
-        {
-          text: I18n.t('musit.texts.showConfirm.cancel'),
-          click: function() {
-            $(this).dialog("close");
-          }
-        }
-      ]
-    });
-    $dialog.dialog('open');
-  }
-
-
-  showModal(title, componentToRender) {
-    const $dialog = $('<div>').dialog({
-      autoOpen: false,
-      modal: true,
-      title: title,
-      autoResize: true,
-      minHeight: "auto",
-      resizable: false,
-      width: 'auto',
-      close: function() {
-        ReactDOM.unmountComponentAtNode(this);
-        $(this).remove();
-      }
-    });
-
-    const appContext = this.context;
-
-    class ClosableAndProvided extends React.Component {
-      static childContextTypes = {
-        ...App.childContextTypes,
-        store: React.PropTypes.object,
-        closeModal: React.PropTypes.func
-      }
-
-      getChildContext() {
-        return {
-          ...appContext,
-          closeModal: () => $dialog.dialog('close')
-        };
-      }
-
-      render() {
-        return componentToRender;
-      }
-    }
-
-    ReactDOM.render(<ClosableAndProvided />, $dialog[0]);
-
-    $dialog.dialog('open');
-  }
-
-  constructor(props, context) {
-    super(props, context);
-    this.showModal = this.showModal.bind(this);
   }
 
   componentWillMount() {
@@ -166,7 +52,7 @@ export default class App extends Component {
           <Navbar.Collapse>
             <Nav navbar>
               {user &&
-              <LinkContainer to="/magasin/root">
+              <LinkContainer to="/magasin">
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
               }

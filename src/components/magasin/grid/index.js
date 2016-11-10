@@ -100,7 +100,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadNodes() {
     if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id);
+      this.props.loadChildren(this.props.params.id, true);
     } else {
       this.props.loadStorageUnits();
     }
@@ -202,12 +202,11 @@ export default class StorageUnitsContainer extends React.Component {
 
   makeLeftMenu(rootNode, statistics) {
     const { onEdit, onDelete } = this.props;
-    const showButtons = this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root';
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           rootNode={rootNode}
-          showButtons={showButtons}
+          showButtons={true}
           onClickNewNode={(parentId) => {
             if (parentId) {
               hashHistory.push(`/magasin/${parentId}/add`);
@@ -240,11 +239,9 @@ export default class StorageUnitsContainer extends React.Component {
         tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
         onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.breadcrumb)}
         onMove={this.showMoveNodeModal}
-        onClick={(row) =>
-          hashHistory.push(
-            `/magasin/${row.id}`
-          )
-        }
+        onClick={(row) => {
+          hashHistory.push(`/magasin/${row.id}`);
+        }}
         rootNode={this.props.rootNode}
       />;
     }

@@ -102,7 +102,7 @@ export const loadRoot = (id) => {
   } else {
     action = {
       types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/1/children`))
+      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/root`))
     };
   }
   return action;

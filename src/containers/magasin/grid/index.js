@@ -52,8 +52,9 @@ const mapDispatchToProps = (dispatch, props) => {
     loadStorageObjects: (id) => {
       dispatch(loadObjects(id));
     },
-    loadChildren: (id, callback) => {
-      dispatch(loadChildren(id, callback));
+    loadChildren: (id) => {
+      dispatch(loadChildren(id));
+      dispatch(clearRoot());
       dispatch(loadRoot(id));
       dispatch(clearStats());
       dispatch(loadStats(id));

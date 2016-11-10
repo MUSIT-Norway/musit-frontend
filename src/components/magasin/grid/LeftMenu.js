@@ -89,17 +89,16 @@ export default class NodeLeftMenuComponent extends Component {
     const disabled = !Number.isNaN(objectsOnNode) && !Number.isNaN(underNodeCount) && objectsOnNode + underNodeCount > 0;
     return (
       <div>
-        {rootNode ? newButton(rootNode.id) : null}
-        {rootNode ? <hr /> : null}
+        {rootNode && newButton(rootNode.id)}
+        {rootNode && <hr />}
         {showCount(objectsOnNode, 'objectsOnNode')}
         {showCount(totalObjectCount, 'totalObjectCount')}
         {showCount(underNodeCount, 'underNodeCount')}
-        {rootNode ? <hr /> : null}
-        {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
-        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true) : null}
-        {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode)) : null}
-        {showButtons ?
-          buttonLink('delete','trash-o', onClickDelete, disabled): null}
+        {rootNode && <hr />}
+        {showButtons && buttonLink('properties', 'cog', onClickProperties)}
+        {showButtons && buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true)}
+        {showButtons && buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode))}
+        {showButtons && buttonLink('delete','trash-o', onClickDelete, disabled)}
       </div>
     );
   }
