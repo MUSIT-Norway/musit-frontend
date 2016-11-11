@@ -35,7 +35,6 @@ describe('ObservationPest', () => {
         lifeCycleTooltip={"LifeCycle tooltip"}
         lifeCycleWidth={2}
         lifeCycleValidate={"text"}
-        translate={(key) => key}
         commentsLeftLabel="Left label"
         commentsLeftValue="left value"
         commentsLeftTooltip="Left tooltip"

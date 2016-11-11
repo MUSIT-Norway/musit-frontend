@@ -38,6 +38,7 @@ export default class ObservationPest extends Component {
     lifeCycleTooltip: PropTypes.string.isRequired,
     lifeCycleValidate: PropTypes.string,
     lifeCycleItems: PropTypes.array.isRequired,
+    lifeCycleItemsTranslateKeyPrefix: PropTypes.string,
     lifeCycleWidth: PropTypes.number.isRequired,
     lifeCycleOnChange: PropTypes.func.isRequired,
     lifeCycleOnRemove: PropTypes.func.isRequired,
@@ -109,6 +110,7 @@ export default class ObservationPest extends Component {
                   </ControlLabel>
                   <MusitDropDownField
                     items={this.props.lifeCycleItems}
+                    translateKeyPrefix={this.props.lifeCycleItemsTranslateKeyPrefix}
                     placeHolder={!this.props.disabled ? this.props.lifeCyclePlaceHolder : ''}
                     tooltip={this.props.lifeCycleTooltip}
                     validate={this.props.lifeCycleValidate}
