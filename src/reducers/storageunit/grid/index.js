@@ -92,17 +92,19 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
 
 export default storageUnitGridReducer;
 
-export const loadRoot = (id) => {
+export const loadRoot = (id, callback) => {
   let action = {};
   if (id) {
     action = {
       types: [LOAD_ONE, LOAD_ONE_SUCCESS, LOAD_ONE_FAIL],
-      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`))
+      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`)),
+      callback
     };
   } else {
     action = {
       types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/root`))
+      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/root`)),
+      callback
     };
   }
   return action;

@@ -6,7 +6,6 @@ import { I18n } from 'react-i18nify';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
-    id: PropTypes.number,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       museumNo: PropTypes.string.isRequired,
@@ -15,12 +14,10 @@ export default class ObjectGrid extends Component {
     })).isRequired,
     onAction: PropTypes.func.isRequired,
     showMoveHistory: PropTypes.func.isRequired,
-    onMove: PropTypes.func.isRequired,
-    rootNode: React.PropTypes.object
+    onMove: PropTypes.func.isRequired
   }
 
   render() {
-    const { id, tableData } = this.props;
     return (
       <div>
         <FormGroup>
@@ -42,19 +39,19 @@ export default class ObjectGrid extends Component {
                 </tr>
               </thead>
               <tbody>
-                {tableData.map((c, i) =>
-                  <tr key={i} id={`${id}_${c.museumNo}_${c.subNo}`} >
-                    <td id={`${id}_${c.museumNo}_${c.subNo}_museumNumber`}>
+                {this.props.tableData.map((c, i) =>
+                  <tr key={i}>
+                    <td>
                       <FontAwesome name="rebel" />
                       {` ${c.museumNo}`}
                     </td>
-                    <td id={`${id}_${c.museumNo}_${c.subNo}_uNumber`}>
+                    <td>
                       {c.subNo}
                     </td>
-                    <td id={`${id}_${c.museumNo}_${c.subNo}_term`}>
+                    <td>
                       {c.term}
                     </td>
-                    <td id={`${id}_${c.museumNo}_${c.subNo}_moveHistory`}>
+                    <td>
                       <a
                         href=""
                         onClick={(e) => {
@@ -66,7 +63,7 @@ export default class ObjectGrid extends Component {
                         <span className="icon icon-musitmovehistoryicon" />
                       </a>
                     </td>
-                    <td id={`${id}_${c.museumNo}_${c.subNo}_truck`}>
+                    <td>
                       <a
                         href=""
                         onClick={(e) => {
@@ -78,7 +75,7 @@ export default class ObjectGrid extends Component {
                         <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
                       </a>
                     </td>
-                    <td id={`${id}_${c.museumNo}_${c.subNo}_shoppingCart`}>
+                    <td>
                       <a
                         href=""
                         onClick={(e) => {

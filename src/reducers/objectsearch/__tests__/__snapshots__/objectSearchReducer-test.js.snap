@@ -75,6 +75,11 @@ Object {
       Object {
         "breadcrumb": Array [
           Object {
+            "id": 1,
+            "name": "root-node",
+            "url": "/magasin/1"
+          },
+          Object {
             "id": 2,
             "name": "Utviklingsmuseet",
             "url": "/magasin/2"
@@ -170,6 +175,11 @@ Object {
       },
       Object {
         "breadcrumb": Array [
+          Object {
+            "id": 1,
+            "name": "root-node",
+            "url": "/magasin/1"
+          },
           Object {
             "id": 2,
             "name": "Utviklingsmuseet",
