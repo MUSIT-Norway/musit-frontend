@@ -182,7 +182,7 @@ Array [
 ]
 `;
 
-exports[`StorageUnitReducer creates LOAD_ONE_SUCCESS when fetching data has been done 1`] = `
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 1`] = `
 Array [
   Object {
     "type": "musit/storageunit-grid/LOAD_ONE"
@@ -212,7 +212,29 @@ Array [
 ]
 `;
 
-exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 1`] = `
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 2`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-grid/LOAD_SEVERAL"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "id": 3,
+        "isPartOf": 2,
+        "name": "Forskningens hus",
+        "path": ",1,2,3,",
+        "type": "Building",
+        "updatedBy": 123,
+        "updatedDate": "2016-01-01T00:00:00+00:00"
+      }
+    ],
+    "type": "musit/storageunit-grid/LOAD_SEVERAL_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 3`] = `
 Array [
   Object {
     "type": "musit/storageunit-grid/LOAD_SEVERAL"

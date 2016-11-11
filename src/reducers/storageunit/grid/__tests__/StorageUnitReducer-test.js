@@ -142,7 +142,7 @@ describe('StorageUnitReducer', () => {
         .reply(200, loadOneState);
     const store = mockStore();
 
-    return store.dispatch(actions.loadRoot(2))
+    store.dispatch(actions.loadRoot(2))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });
@@ -193,13 +193,13 @@ describe('StorageUnitReducer', () => {
       updatedDate: '2016-01-01T00:00:00+00:00'
     }];
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/1/children`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/root`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
     const store = mockStore();
 
-    return store.dispatch(actions.loadRoot())
+    store.dispatch(actions.loadRoot())
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });
@@ -240,14 +240,14 @@ describe('StorageUnitReducer', () => {
   });
 
   it('creates LOAD_SEVERAL_SUCCESS child when fetching data has been done', () => {
-    const id =1;
+    const id = 1;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
     const store = mockStore();
 
-    return store.dispatch(actions.loadChildren(1))
+    return store.dispatch(actions.loadChildren(id))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });
