@@ -42,7 +42,9 @@ const store = createStore(client);
 const history = syncHistoryWithStore(hashHistory, store);
 
 I18n.loadTranslations(LanguageJson);
-I18n.setLocale('no');
+const language = localStorage.getItem('language') || 'no';
+localStorage.setItem('language', language);
+I18n.setLocale(language);
 
 if (config.isDev) {
   loglevel.setLevel('debug');
