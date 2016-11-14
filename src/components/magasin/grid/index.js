@@ -238,7 +238,7 @@ export default class StorageUnitsContainer extends React.Component {
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           rootNode={rootNode}
-          showButtons={rootNode ? rootNode.type !== 'Root' : true}
+          showButtons={rootNode && rootNode.type !== 'Root'}
           onClickNewNode={(parentId) => {
             if (parentId) {
               hashHistory.push(`/magasin/${parentId}/add`);
