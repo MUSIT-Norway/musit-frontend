@@ -97,7 +97,7 @@ export default class ControlViewContainer extends React.Component {
                   />
                 </Col>
                 <Col sm={4} md={5} >
-                  <ControlLabel>{I18n.t('mussit.texts.registeredBy')}</ControlLabel>
+                  <ControlLabel>{I18n.t('musit.texts.registeredBy')}</ControlLabel>
                   <br />
                   <MusitField
                     onChange={() => true}
