@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch) => {
           emitError(
             {
               type: 'errorOnSave',
-              message: this.props.translate('musit.storageUnits.messages.saveNodeError')
+              message: I18n.t('musit.storageUnits.messages.saveNodeError')
             }
           )
       }));

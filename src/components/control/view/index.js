@@ -28,7 +28,6 @@ import { I18n } from 'react-i18nify';
 
 export default class ControlViewContainer extends React.Component {
   static propTypes = {
-    translate: React.PropTypes.func.isRequired,
     controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
@@ -58,20 +57,18 @@ export default class ControlViewContainer extends React.Component {
     if (!this.props.controls) {
       return null;  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
     }
-    const { translate } = this.props;
     const data = this.props.controls.data;
     return (
       <Layout
         title="Magasin"
-        translate={this.props.translate}
         breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <div>
-            <h4 style={{ textAlign: 'center' }}>{translate('musit.viewControl.title')}</h4>
+            <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.viewControl.title')}</h4>
             <Grid>
               <Row>
                 <Col sm={4} md={5}>
-                  <ControlLabel>{translate('musit.texts.datePerformed')}</ControlLabel>
+                  <ControlLabel>{I18n.t('musit.texts.datePerformed')}</ControlLabel>
                   <br />
                   <MusitField
                     onChange={() => true}
@@ -80,7 +77,7 @@ export default class ControlViewContainer extends React.Component {
                   />
                 </Col>
                 <Col sm={4} md={5}>
-                  <ControlLabel>{translate('musit.texts.performedBy')}</ControlLabel>
+                  <ControlLabel>{I18n.t('musit.texts.performedBy')}</ControlLabel>
                   <br />
                   <MusitField
                     onChange={() => true}
@@ -91,7 +88,7 @@ export default class ControlViewContainer extends React.Component {
               </Row>
               <Row>
                 <Col sm={4} md={5}>
-                  <ControlLabel>{translate('musit.texts.dateRegistered')}</ControlLabel>
+                  <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
                   <br />
                   <MusitField
                     onChange={() => true}
@@ -100,7 +97,7 @@ export default class ControlViewContainer extends React.Component {
                   />
                 </Col>
                 <Col sm={4} md={5} >
-                  <ControlLabel>{translate('musit.texts.registeredBy')}</ControlLabel>
+                  <ControlLabel>{I18n.t('mussit.texts.registeredBy')}</ControlLabel>
                   <br />
                   <MusitField
                     onChange={() => true}
@@ -116,7 +113,6 @@ export default class ControlViewContainer extends React.Component {
                 <Col sm={8} md={10}>
                   <ControlView
                     id="1"
-                    translate={translate}
                     controlsJson={data}
                   />
                 </Col>
