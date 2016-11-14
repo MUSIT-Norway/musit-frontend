@@ -13,6 +13,15 @@ export const flatten = (arr: []) => {
   return obj;
 };
 
+export const filter = (arr: any[], fields: string[], pattern: string) => {
+  const contains = (s: any, p: string) => {
+    return (s || '').toString().toLowerCase().indexOf(p.toLowerCase()) !== -1;
+  };
+  return arr.filter((row) => {
+    return fields.find((field) => contains(row[field], pattern));
+  });
+};
+
 export const blur = () => {
   // Give the document focus
   window.focus();

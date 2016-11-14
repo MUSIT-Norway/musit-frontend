@@ -31,7 +31,7 @@ describe('ObjectSearchComponent', () => {
         subNo: '45',
         term: 'Fuglekasse',
         id: 1,
-        breadcrumb: getPath(path, pathNames),
+        breadcrumb: getPath({ path, pathNames }),
         path: path,
         pathNames: pathNames
       }

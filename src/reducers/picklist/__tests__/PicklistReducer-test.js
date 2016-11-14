@@ -548,7 +548,8 @@ describe('PicklistReducer', () => {
       type: LOAD_ONE_NODE_SUCCESS,
       result:{
         path: ',1,',
-        pathNames: [{ nodeId: 1}] },
+        pathNames: [{ nodeId: 1}]
+      },
       id: 1
     });
     const expectedState = {
@@ -587,7 +588,7 @@ describe('PicklistReducer', () => {
       NODE: [
         {
           marked: false,
-          path: [{id : 2, url: "/magasin/2"}],
+          path: [{ id: 1, url: "/magasin/1" }, {id : 2, url: "/magasin/2"}],
           value: node1
         },
         {
