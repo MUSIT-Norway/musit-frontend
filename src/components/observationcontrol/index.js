@@ -34,9 +34,7 @@ export default class ObservationControlGridShow extends React.Component {
         }
       }
     });
-    if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id);
-    }
+    this.props.loadStorageObj(this.props.params.id);
   }
 
   makeToolbar() {
