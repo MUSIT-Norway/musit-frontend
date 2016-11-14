@@ -5,6 +5,11 @@
     "accessToken": "fake-token-zab-xy-guest"
   },
   {
+    "userId": "normal",
+    "name": "Normalbruker",
+    "accessToken": "fake-token-zab-xy-normal"
+  },
+  {
     "userId": "stein",
     "name": "Stein A. Olsen",
     "accessToken": "fake-token-zab-xy-stein"
