@@ -8,7 +8,6 @@ import { hashHistory } from 'react-router';
 
 export default class ObservationControlGridShow extends React.Component {
   static propTypes = {
-    translate: React.PropTypes.func.isRequired,
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
     params: React.PropTypes.object,
     route: React.PropTypes.object,
@@ -54,7 +53,6 @@ export default class ObservationControlGridShow extends React.Component {
     return <div style={{ paddingTop: 10 }}>
       <ObservationControlComponent
         id={this.props.params.id}
-        translate={this.props.translate}
         selectObservation
         selectControl
         onClickNewObservation={() => hashHistory.push(`/magasin/${this.props.params.id}/observation/add`)}
@@ -66,7 +64,6 @@ export default class ObservationControlGridShow extends React.Component {
   makeContent() {
     return <ObservationControlGrid
       id={this.props.params.id}
-      translate={this.props.translate}
       tableData={this.props.observationControlGridData.filter((e) => {
         if (e.eventType && this.state.showControls && this.state.showObservations) {
           return true;
@@ -84,7 +81,6 @@ export default class ObservationControlGridShow extends React.Component {
     return (
       <Layout
         title="Magasin"
-        translate={this.props.translate}
         breadcrumb={
           <Breadcrumb
             node={this.props.rootNode}
