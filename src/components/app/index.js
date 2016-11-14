@@ -96,7 +96,7 @@ export default class App extends Component {
           {this.props.children}
         </div>
 
-        <div className="well text-center">{' '}</div>
+        <footer className="footer well">{' '}</footer>
       </div>
     );
   }

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { hashHistory } from 'react-router';
 import NodeGrid from './NodeGrid';
@@ -107,7 +106,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadNodes() {
     if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id, true);
+      this.props.loadChildren(this.props.params.id);
     } else {
       this.props.loadStorageUnits();
     }

@@ -19,3 +19,11 @@ nav.fa {
 .appContent {
   margin: 50px 0;
 }
+
+.footer {
+  text-align: center;
+  position: fixed;
+  margin-bottom: 0 !important;
+  bottom: 0;
+  width: 100%;
+}

@@ -58,7 +58,7 @@ export default class NodeLeftMenuComponent extends Component {
 
     const showCount = (type) => {
       let fragment = null;
-      if (rootNode && this.props.stats) {
+      if (rootNode) {
         const count = this.props.stats[type];
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
@@ -87,7 +87,6 @@ export default class NodeLeftMenuComponent extends Component {
         </div>
       );
     };
-    const disabled = this.getDisabledState();
     const showStats = this.props.stats;
     return (
       <div>
@@ -100,12 +99,12 @@ export default class NodeLeftMenuComponent extends Component {
         {showButtons && buttonLink('properties', 'cog', onClickProperties)}
         {showButtons && buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true)}
         {showButtons && buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode))}
-        {showButtons && buttonLink('delete','trash-o', onClickDelete, disabled)}
+        {showButtons && buttonLink('delete','trash-o', onClickDelete, this.isDeleteDisabled())}
       </div>
     );
   }
 
-  getDisabledState() {
+  isDeleteDisabled() {
     if (!this.props.stats) {
       return true;
     }

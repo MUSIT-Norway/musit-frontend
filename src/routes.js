@@ -46,7 +46,7 @@ export default () => {
       <Route path="/reports" component={Reports} />
       <Route path="/reports/kdreport" component={KDReportContainer} />
       <Route path="/search/objects" component={ObjectSearchContainer} />
-      <Route path="/magasin" isRoot component={StorageUnitsTable} />
+      <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />
       <Route path="/magasin/:id/add" add component={AddStorageUnitPanel} />
       <Route path="/magasin/:id/view" component={EditStorageUnitPanel} />

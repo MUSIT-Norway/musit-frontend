@@ -40,10 +40,10 @@ const mapDispatchToProps = (dispatch, props) => {
 
   return {
     loadRoot: (id) => {
+      dispatch(clearStats());
       dispatch(loadRoot(id, {
         onSuccess: (result) => {
           if (result.type !== 'Root') {
-            dispatch(clearStats());
             dispatch(loadStats(id));
           }
         }
@@ -60,10 +60,10 @@ const mapDispatchToProps = (dispatch, props) => {
     loadChildren: (id) => {
       dispatch(loadChildren(id));
       dispatch(clearRoot());
+      dispatch(clearStats());
       dispatch(loadRoot(id, {
         onSuccess: (result) => {
           if (result.type !== 'Root') {
-            dispatch(clearStats());
             dispatch(loadStats(id));
           }
         }
