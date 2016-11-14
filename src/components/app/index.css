@@ -23,7 +23,10 @@ nav.fa {
 .footer {
   text-align: center;
   position: fixed;
-  margin-bottom: 0 !important;
   bottom: 0;
   width: 100%;
+}
+
+.footer.well {
+  margin-bottom: 0;
 }

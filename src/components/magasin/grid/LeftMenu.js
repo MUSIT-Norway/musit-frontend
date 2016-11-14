@@ -9,9 +9,9 @@ export default class NodeLeftMenuComponent extends Component {
     rootNode: PropTypes.object,
     onClickNewNode: PropTypes.func.isRequired,
     stats: PropTypes.shape({
-      numNodes: PropTypes.number.isRequired,
-      numObjects: PropTypes.number.isRequired,
-      totalObjects: PropTypes.number.isRequired
+      numNodes: PropTypes.number,
+      numObjects: PropTypes.number,
+      totalObjects: PropTypes.number
     }),
     onClickProperties: PropTypes.func.isRequired,
     onClickObservations: PropTypes.func,
@@ -19,7 +19,7 @@ export default class NodeLeftMenuComponent extends Component {
     onClickController: PropTypes.func,
     onClickMoveNode: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired,
-    showButtons: PropTypes.bool.isRequired
+    showButtons: PropTypes.bool
   }
 
   render() {
