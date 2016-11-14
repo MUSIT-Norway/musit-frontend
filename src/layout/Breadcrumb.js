@@ -43,8 +43,8 @@ class Breadcrumb extends React.Component {
     return (
       <div>
         {CrumbItem({
-          url: itemsWithIndex.length > 0 && !this.props.disabled ? '/magasin/root' : null,
-          onClick: clickCrumb({url: '/magasin/root'}),
+          url: itemsWithIndex.length > 0 && !this.props.disabled ? '/magasin' : null,
+          onClick: clickCrumb({url: '/magasin'}),
           name: 'Magasin',
           displayName: ' ',
           icon: 'home',

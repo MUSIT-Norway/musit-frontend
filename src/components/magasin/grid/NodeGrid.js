@@ -6,7 +6,6 @@ import { I18n } from 'react-i18nify';
 
 export default class NodeGrid extends Component {
   static propTypes = {
-    id: PropTypes.number,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
@@ -21,7 +20,6 @@ export default class NodeGrid extends Component {
   }
 
   render() {
-    const { id } = this.props;
     return (
       <div>
         <FormGroup>
@@ -45,8 +43,8 @@ export default class NodeGrid extends Component {
               </thead>
               <tbody>
                 {this.props.tableData.map((c, i) =>
-                  <tr key={i} id={`${id}_${c.name}_${c.type}`} >
-                    <td id={`${id}_${c.name}_${c.type}_nodeName`}>
+                  <tr key={i}>
+                    <td>
                       <a
                         href=""
                         onClick={(e) => {
@@ -58,20 +56,20 @@ export default class NodeGrid extends Component {
                         {` ${c.name}`}
                       </a>
                     </td>
-                    <td id={`${id}_${c.name}_${c.type}_nodeType`}>
+                    <td>
                       {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
                     </td>
-                    <td id={`${id}_${c.name}_${c.type}_objectCount`}>
+                    <td>
                       {c.objectCount}
                     </td>
-                    <td id={`${id}_${c.name}_${c.type}_totalObjectCount`}>
+                    <td>
                       {c.totalObjectCount}
                     </td>
-                    <td id={`${id}_${c.name}_${c.type}_nodeCount`}>
+                    <td>
                       {c.nodeCount}
                     </td>
-                    <td id={`${id}_${c.name}_${c.type}_eye`}>
-                      <a
+                    <td>
+                      {c.type !== 'Root' && <a
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -80,10 +78,10 @@ export default class NodeGrid extends Component {
                         title={I18n.t('musit.grid.node.iconTooltip.observationAndControl')}
                       >
                         <span className="icon icon-musitcontrolobsicon" />
-                      </a>
+                      </a>}
                     </td>
-                    <td id={`${id}_${c.name}_${c.type}_truck`}>
-                      <a
+                    <td>
+                      {c.type !== 'Root' && <a
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -92,10 +90,10 @@ export default class NodeGrid extends Component {
                         title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                       >
                         <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
-                      </a>
+                      </a>}
                     </td>
-                    <td id={`${id}_${c.name}_${c.type}_shoppingCart`}>
-                      <a
+                    <td>
+                      {c.type !== 'Root' && <a
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -104,7 +102,7 @@ export default class NodeGrid extends Component {
                         title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                       >
                         <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />
-                      </a>
+                      </a>}
                     </td>
                   </tr>
                 )}

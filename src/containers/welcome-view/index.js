@@ -22,19 +22,21 @@ import { connect } from 'react-redux';
 import WelcomeContainer from '../../components/welcome-view';
 import { connectUser, loadActor } from '../../reducers/auth';
 import { I18n } from 'react-i18nify';
-import { hashHistory } from 'react-router';
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   translate: (key, markdown) => I18n.t(key, markdown)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setUser: (user: any) => {
-    dispatch(connectUser(user));
-    dispatch(loadActor());
-    hashHistory.replace('/magasin/root');
-  }
-});
+const mapDispatchToProps = (dispatch, props) => {
+  const { history } = props;
+  return {
+    setUser: (user: any) => {
+      dispatch(connectUser(user));
+      dispatch(loadActor());
+      history.replace('/magasin');
+    }
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(WelcomeContainer);

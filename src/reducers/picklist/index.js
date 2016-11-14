@@ -84,10 +84,10 @@ const loadItemSuccess = (type) => (state, action) => {
     if (n.value.id === action.id) {
       return {
         ...n,
-        path: getPath(
-          type === TYPES.OBJECT ? action.result.path : getPathString(action.result.path),
-          action.result.pathNames
-        )
+        path: getPath({
+          path: type === TYPES.OBJECT ? action.result.path : getPathString(action.result.path),
+          pathNames: action.result.pathNames
+        })
       };
     }
     return n;
