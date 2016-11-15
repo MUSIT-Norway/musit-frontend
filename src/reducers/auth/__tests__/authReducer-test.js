@@ -14,7 +14,7 @@ const mockStore = configureMockStore(middlewares);
 
 describe('Auth', () => {
   it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
-    const url = `/api/actor/v1/dataporten/currentUser`;
+    const url = '/api/actor/v1/dataporten/currentUser';
     nock('http://localhost')
             .get(url)
             .reply(200, {

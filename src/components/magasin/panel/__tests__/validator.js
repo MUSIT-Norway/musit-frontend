@@ -3,7 +3,7 @@ import validateForm from '../validator';
 describe('Test root level check for Organisation', () => {
   const rootNode = {
     id: 1,
-    name: "root-node",
+    name: 'root-node',
     path: ',1,',
     pathNames:[
       {
@@ -16,16 +16,16 @@ describe('Test root level check for Organisation', () => {
     environmentAssessment: {},
     updatedBy: 123,
     updatedDate: '2016-10-24T16:13:24+00:00',
-    type: "Organisation"
+    type: 'Root'
   };
 
   const unit = {
-    name: "Test name",
-    isPartOf:1,
+    name: 'Test name',
+    isPartOf: 1,
     environmentRequirement: {},
     securityAssessment: {},
     environmentAssessment: {},
-    type: "Room"
+    type: 'Room'
   };
 
   const propTypes = {
@@ -38,7 +38,7 @@ describe('Test root level check for Organisation', () => {
   });
 
   const propTypesPass = JSON.parse(JSON.stringify(propTypes));
-  propTypesPass['unit']['type'] = "Organisation";
+  propTypesPass['unit']['type'] = 'Organisation';
 
   it('Test Organisation check pass:Error list is empty for Organisation', () => {
     expect(validateForm(propTypesPass).type).toBe(undefined);
@@ -49,7 +49,7 @@ describe('Test root level check for Organisation', () => {
 describe('Test one level below the root level: check for building.', () => {
   const rootNode = {
     id: 2,
-    name: "Utviklingsmuseet",
+    name: 'Utviklingsmuseet',
     isPartOf:1,
     path: ',1,2,',
     pathNames:[
@@ -67,16 +67,16 @@ describe('Test one level below the root level: check for building.', () => {
     environmentAssessment: {},
     updatedBy: 123,
     updatedDate: '2016-10-24T16:13:24+00:00',
-    type: '"Organisation"'
+    type: 'Organisation'
   };
 
   const unit = {
-    name: "Test name",
+    name: 'Test name',
     isPartOf:1,
     environmentRequirement: {},
     securityAssessment: {},
     environmentAssessment: {},
-    type: "Room"
+    type: 'Room'
   };
 
   const propTypes = {
@@ -89,7 +89,7 @@ describe('Test one level below the root level: check for building.', () => {
   });
 
   const propTypesPass = JSON.parse(JSON.stringify(propTypes));
-  propTypesPass['unit']['type'] = "Building";
+  propTypesPass['unit']['type'] = 'Building';
 
   it('Test Building check pass:Error list is empty for Building', () => {
     expect(validateForm(propTypesPass).type).toBe(undefined);

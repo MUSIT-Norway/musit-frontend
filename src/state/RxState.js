@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Observable } from 'rxjs/Rx';
 
 export function createState(reducer$, initialState$ = Observable.of({})) {
