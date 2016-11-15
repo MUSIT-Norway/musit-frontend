@@ -38,7 +38,7 @@ export default class PickListComponent extends Component {
         <Table responsive striped condensed hover>
           <thead>
             <tr>
-              <th style={{ width: "2em", textAlign: "left" }}>
+              <th style={{ width: '2em', textAlign: 'left' }}>
                 <input
                   className="normalAction"
                   type="checkbox"
@@ -47,13 +47,13 @@ export default class PickListComponent extends Component {
                   title={I18n.t('musit.pickList.tooltip.checkBoxMarkAll')}
                 />
               </th>
-              <th style={{ verticalAlign: "bottom", textAlign: "left" }}>
+              <th style={{ verticalAlign: 'bottom', textAlign: 'left' }}>
                 { isnode ?
                   <FontAwesome className="normalActionNoPadding" style={{ fontSize: '1.5em' }} name="print" /> : null
                 }
                 {isnode ? count : null}
                 <FontAwesome
-                  className={isnode ? "normalAction" : "normalActionNoPadding"}
+                  className={isnode ? 'normalAction' : 'normalActionNoPadding'}
                   name="truck"
                   style={{ fontSize: '1.5em' }}
                   onClick={() => {
@@ -85,7 +85,7 @@ export default class PickListComponent extends Component {
               const isItemMarked = pick.marked;
               return (
                 <tr key={i}>
-                  <td style={{ width: "3em", textAlign: "left", verticalAlign: "middle" }}>
+                  <td style={{ width: '3em', textAlign: 'left', verticalAlign: 'middle' }}>
                     <span>
                       <input
                         type="checkbox"
