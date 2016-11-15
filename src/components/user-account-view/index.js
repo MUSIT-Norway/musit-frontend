@@ -32,7 +32,7 @@ export default class MusitUserAccount extends Component {
     const currentLanguage = localStorage.getItem('language');
     const checked = (language) => currentLanguage === language && <FontAwesome name="check" /> ;
     const tooltip = 
-      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>;
+      <Tooltip id="tooltip" positionleft={500}>Logget inn som <strong>{this.props.user.userId}</strong></Tooltip>;
     const menuText = (t1, t2) =>
       <Row>
         <Col md={1}>{t1}</Col>
@@ -40,7 +40,7 @@ export default class MusitUserAccount extends Component {
       </Row>
     ;
     return (
-      <OverlayTrigger overlay={tooltip}>
+      <OverlayTrigger overlay={tooltip} placement="left">
         <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
           <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed' }}>
             <FontAwesome name="user" size="lg" />
