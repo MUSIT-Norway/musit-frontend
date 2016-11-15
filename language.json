@@ -587,9 +587,7 @@
         "body": "**Museum of Archaeology, University of Stavanger** \n**University Museum of Bergen, University of Bergen** \n**Museum of Cultural History, University of Oslo** \n**Natural History Museum, University of Oslo** \n**Tromsø University Museum, University of Tromsø** \n**NTNU University Museum, Norwegian University of Science and Technology**\n",
         "noAccess": "Your account does not have access to MUSIT. Contact your local MUSIT administrator."
       },
-      "welcomeUserPage": {
-        "body": "The Norwegian university museums IT organization (MUSIT) is a cooperation agreement between the University of Stavanger, University of Bergen, University of Oslo, University of Tromsø - Norway's Arctic university, and the Norwegian University of Science and Technology. \nThe University museums of Norway hold in trust regional and global scientific collections of natural and cultural history. \nThe cooperative aims to ensure the operation, maintenance and development of the university museums' joint collection databases, and to facilitate sharing dissemination of data for research, education, management and the public.\n"
-      },
+      "Forbidden": "Du har ikke lov.",
       "login": "Login through Dataporten"
     }
   },
@@ -1178,12 +1176,10 @@
       },
       "welcomePage": {
         "title": "MUSIT \nUniversitetsmuseenes samlingsdatabaser\n",
-        "body": "**Arkeologisk museum, Universitetet i Stavanger** \n**Universitetsmuseet i Bergen, Universitetet i Bergen** \n**Kulturhistorisk museum, Universitetet i Oslo** \n**Naturhistorisk museum, Universitetet i Oslo** \n**Tromsø Museum - Universitetetsmuseet, Universitetet i Tromsø** \n**Vitenskapsmuseet - NTNU, Norges Teknisk-Naturvitenskapelige Universitet**\n"
+        "body": "**Arkeologisk museum, Universitetet i Stavanger** \n**Universitetsmuseet i Bergen, Universitetet i Bergen** \n**Kulturhistorisk museum, Universitetet i Oslo** \n**Naturhistorisk museum, Universitetet i Oslo** \n**Tromsø Museum - Universitetetsmuseet, Universitetet i Tromsø** \n**Vitenskapsmuseet - NTNU, Norges Teknisk-Naturvitenskapelige Universitet**\n",
+        "noAccess": "Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil"
       },
-      "noAccess": "Din brukerkonto har ikke adgang til MUSIT. Kontakt din lokale MUSIT-administrator om du mener dette er feil",
-      "welcomeUserPage": {
-        "body": "MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet, Universitetet i Tromsø, og Universitetet i Stavanger. \nSamarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014. \nMUSIT har som formål «å sikre drift, vedlikehold og utvikling av museenes felles samlingsdatabaser, og å legge til rette for deling av data for forskning, utdanning, forvaltning og allmennhet». \nMUSIT forvalter samlinger innenfor en rekke fagfelt innen naturhistorie og kulturhistorie (se http://www.unimus.no/).\n"
-      },
+      "Forbidden": "Du har ikke lov.",
       "login": "Logg inn via Dataporten"
     }
   }

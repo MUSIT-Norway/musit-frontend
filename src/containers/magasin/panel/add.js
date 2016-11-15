@@ -3,7 +3,7 @@ import { hashHistory } from 'react-router';
 import { insert } from '../../../reducers/storageunit/panel';
 import StorageUnitAddContainer from '../../../components/magasin/panel/add';
 import { clear as clearState, update as updateState } from '../../../reducers/storageunit/panel/state';
-import { emitError, emitSuccess } from '../../../errors/emitter';
+import { emitSuccess } from '../../../errors/emitter';
 import { I18n } from 'react-i18nify';
 import { loadRoot } from '../../../reducers/storageunit/grid';
 
@@ -20,14 +20,7 @@ const mapDispatchToProps = (dispatch) => {
             }
           );
         },
-        onFailure: () => {
-          emitError(
-            {
-              type: 'errorOnSave',
-              message: I18n.t('musit.storageUnits.messages.saveNodeError')
-            }
-          );
-        }
+        onFailure: () => false
       }));
     },
     updateState: (data) => dispatch(updateState(data)),
@@ -41,6 +34,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState,
+    error: state.storagePanelUnit.error,
+    loaded: !!state.storagePanelUnit.loaded,
     translate: (key, markdown) => I18n.t(key, markdown),
     rootNode: state.storageGridUnit.root.data || {}
   };
