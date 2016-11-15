@@ -24,9 +24,9 @@ describe('ObservationPest', () => {
         countPrecision={0}
         countValidate={"number"}
         lifeCycleItems={[
-          "Adult",
-          "Puppe",
-          "Whateva"
+          'Adult',
+          'Puppe',
+          'Whateva'
         ]}
         lifeCycleLabel={"LifeCycle label"}
         lifeCycleOnChange={() => true}
@@ -49,15 +49,15 @@ describe('ObservationPest', () => {
         commentsOnChangeRight={() => 'ji'}
         observations={[
           {
-            count: "1",
+            count: '1',
             lifeCycle: 'Adult'
           },
           {
-            count: "20",
+            count: '20',
             lifeCycle: 'Adult'
           },
           {
-            count: "10",
+            count: '10',
             lifeCycle: 'Puppe'
           }
         ]}

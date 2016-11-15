@@ -56,13 +56,13 @@ export default (ComponentToWrap) => {
             text: I18n.t('musit.texts.showConfirm.ok'),
             click: function() {
               onYes();
-              $(this).dialog("close");
+              $(this).dialog('close');
             }
           },
           {
             text: I18n.t('musit.texts.showConfirm.cancel'),
             click: function() {
-              $(this).dialog("close");
+              $(this).dialog('close');
             }
           }
         ]
@@ -77,7 +77,7 @@ export default (ComponentToWrap) => {
         modal: true,
         title: title,
         autoResize: true,
-        minHeight: "auto",
+        minHeight: 'auto',
         resizable: false,
         width: 'auto',
         close: function() {

@@ -28,7 +28,7 @@ describe('ReducerStoragUnitPanel', () => {
         name: 'Forskningens hus'
       }],
     environmentRequirement: {
-      comment: "fdsfd"
+      comment: 'fdsfd'
     },
     updatedBy:666,
     updatedDate: '2016-10-24T15:41:35+00:00',
@@ -83,7 +83,7 @@ describe('ReducerStoragUnitPanel', () => {
   });
   const putData = {
     id: 2,
-    name: "p5",
+    name: 'p5',
     isPartOf:1,
     groupRead: 'foo',
     path: ',1,2,',
@@ -155,7 +155,7 @@ describe('ReducerStoragUnitPanel', () => {
 
   it('insert INSERT_SUCCESS when fetching data has been done', () => {
     const postData = {
-      name: "p5",
+      name: 'p5',
       isPartOf:1,
       groupRead: 'foo',
       environmentRequirement: {},

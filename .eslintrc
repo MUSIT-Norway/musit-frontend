@@ -74,6 +74,7 @@
     "prefer-const": "error",
     "indent": ["error", 2],
     "brace-style": [ 2, "1tbs" ],
-    "curly": ["error", "all"]
+    "curly": ["error", "all"],
+    "quotes": ["error", "single"]
   }
 }
