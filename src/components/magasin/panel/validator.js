@@ -21,7 +21,7 @@ const validateNumberField = (field, value = '', minimumLength = 0, maximumLength
   return errors;
 };
 
-const validateEnvironmentRequirement = (field, min, max, pres, formProps) => {
+const validateEnvReq = (field, min, max, pres, formProps) => {
   const key = field.split('.').reduce((a, b) => formProps[a][b]);
   return validateNumberField(field, key, min, max, pres);
 };
@@ -58,12 +58,12 @@ export default (formProps) => {
     errors = { ...errors, ...validateNumberField('areaTo', unit.areaTo, 0, 10, 3) };
     errors = { ...errors, ...validateNumberField('height', unit.height, 0, 10, 3) };
     errors = { ...errors, ...validateNumberField('heightTo', unit.heightTo, 0, 10, 3) };
-    errors = { ...errors, ...validateEnvironmentRequirement('environmentRequirement.temperature', 0, 10, 3, unit) };
-    errors = { ...errors, ...validateEnvironmentRequirement('environmentRequirement.temperatureTolerance', 0, 10, 0, unit) };
-    errors = { ...errors, ...validateEnvironmentRequirement('environmentRequirement.relativeHumidity', 0, 10, 3, unit) };
-    errors = { ...errors, ...validateEnvironmentRequirement('environmentRequirement.relativeHumidityTolerance', 0, 10, 0, unit) };
-    errors = { ...errors, ...validateEnvironmentRequirement('environmentRequirement.hypoxicAir', 0, 10, 3, unit) };
-    errors = { ...errors, ...validateEnvironmentRequirement('environmentRequirement.hypoxicAirTolerance', 0, 10, 0, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.temperature', 0, 10, 3, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.temperatureTolerance', 0, 10, 0, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.relativeHumidity', 0, 10, 3, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.relativeHumidityTolerance', 0, 10, 0, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.hypoxicAir', 0, 10, 3, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.hypoxicAirTolerance', 0, 10, 0, unit) };
     const envReq = unit.environmentRequirement;
     errors = { ...errors, ...validateStringField('environmentRequirement.cleaning', envReq.cleaning, 100) };
     errors = { ...errors, ...validateStringField('environmentRequirement.lightingCondition', envReq.lightingCondition, 100) };
