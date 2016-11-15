@@ -29,10 +29,10 @@ import Layout from '../../../layout';
 import Breadcrumb from '../../../layout/Breadcrumb';
 import { isDateBiggerThanToday } from '../../../util';
 import { emitError, emitSuccess } from '../../../errors/emitter';
+import { I18n } from 'react-i18nify';
 
 export default class ControlAddContainer extends React.Component {
   static propTypes = {
-    translate: React.PropTypes.func.isRequired,
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
     actor: React.PropTypes.object,
@@ -119,9 +119,9 @@ export default class ControlAddContainer extends React.Component {
       this.props.saveControl(this.props.params.id, controlState, {
         onSuccess: () => {
           hashHistory.goBack();
-          emitSuccess({ type: 'saveSuccess', message: this.props.translate('musit.newControl.saveControlSuccess')});
+          emitSuccess({ type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess')});
         },
-        onFailure: () => emitError({ type: 'errorOnSave', message: this.props.translate('musit.newControl.saveControlError')})
+        onFailure: () => emitError({ type: 'errorOnSave', message: I18n.t('musit.newControl.saveControlError')})
       }, this.props.params.id);
     }
   }
@@ -129,7 +129,7 @@ export default class ControlAddContainer extends React.Component {
   setDate = (newValue) => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
-        emitError({ type: 'dateValidationError', message: this.props.translate('musit.newControl.dateValidation') });
+        emitError({ type: 'dateValidationError', message: I18n.t('musit.newControl.dateValidation') });
         this.setState({ ...this.state, doneDate: new Date().toISOString() });
       } else {
         this.setState({ ...this.state, doneDate: newValue });
@@ -141,13 +141,13 @@ export default class ControlAddContainer extends React.Component {
     const errors = [];
     const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null);
     if (controls.length === 0) {
-      errors.push(this.props.translate('musit.newControl.controlsRequired'));
+      errors.push(I18n.t('musit.newControl.controlsRequired'));
     }
     if (!this.state.doneBy || !this.state.doneBy.id) {
-      errors.push(this.props.translate('musit.newControl.doneByRequired'));
+      errors.push(I18n.t('musit.newControl.doneByRequired'));
     }
     if (!this.state.doneDate) {
-      errors.push(this.props.translate('musit.newControl.dateRequired'));
+      errors.push(I18n.t('musit.newControl.dateRequired'));
     }
     if (errors.length === 0) {
       this.onClickSave();
@@ -214,11 +214,10 @@ export default class ControlAddContainer extends React.Component {
     return (
       <Layout
         title="Magasin"
-        translate={this.props.translate}
         breadcrumb={breadcrumb}
         content={
           <form onSubmit={this.handleSubmit}>
-            <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.newControl.title', false)}</h4>
+            <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.newControl.title', false)}</h4>
             <Grid>
               <Row>
                 <Col xs={3}>

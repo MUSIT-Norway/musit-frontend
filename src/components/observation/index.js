@@ -22,7 +22,6 @@ export default class ObservationPage extends React.Component {
 
   static propTypes = {
     id: PropTypes.string.isRequired,
-    translate: PropTypes.func.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
     doneBy: PropTypes.object,
@@ -120,7 +119,7 @@ export default class ObservationPage extends React.Component {
   setDate = (newValue) => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
-        emitError({ type: 'dateValidationError', message: this.props.translate('musit.observation.page.dateValidation') });
+        emitError({ type: 'dateValidationError', message: I18n.t('musit.observation.page.dateValidation') });
 
         this.setState({ ...this.state, doneDate: new Date().toISOString() });
       } else {
@@ -258,7 +257,6 @@ export default class ObservationPage extends React.Component {
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
-      translate={this.props.translate}
       onChangeField={this.onChangeField}
     />;
   }
@@ -270,7 +268,6 @@ export default class ObservationPage extends React.Component {
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
-      translate={this.props.translate}
       onChangeField={this.onChangeField}
       onChangePestObservation={this.onChangePestObservation}
       onRemovePestObservation={this.onRemovePestObservation}
@@ -285,7 +282,6 @@ export default class ObservationPage extends React.Component {
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
-      translate={this.props.translate}
       onChangeField={this.onChangeField}
     />;
   }
@@ -297,7 +293,6 @@ export default class ObservationPage extends React.Component {
       valueProps={valueProps}
       index={index}
       mode={this.props.mode}
-      translate={this.props.translate}
       onChangeField={this.onChangeField}
     />;
   }
@@ -317,7 +312,7 @@ export default class ObservationPage extends React.Component {
             <h3 />
             <Row>
               <Col xs={12} sm={5}>
-                <ControlLabel>{this.props.translate('musit.observation.page.date')}</ControlLabel>
+                <ControlLabel>{I18n.t('musit.observation.page.date')}</ControlLabel>
                 {this.props.mode !== 'ADD' ? 
                   <FormControl
                     componentClass="input"
@@ -335,7 +330,7 @@ export default class ObservationPage extends React.Component {
                 }
               </Col>
               <Col xs={12} sm={5}>
-                <ControlLabel>{this.props.translate('musit.observation.page.doneBy')}</ControlLabel>
+                <ControlLabel>{I18n.t('musit.observation.page.doneBy')}</ControlLabel>
                 {this.props.mode !== 'ADD' ? 
                   <FormControl
                     componentClass="input"
@@ -357,7 +352,7 @@ export default class ObservationPage extends React.Component {
             {this.props.mode === 'VIEW' ?
               <Row>
                 <Col sm={5}>
-                  <ControlLabel>{this.props.translate('musit.texts.dateRegistered')}</ControlLabel>
+                  <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
                     componentClass="input"
                     value={parseISODate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
@@ -365,7 +360,7 @@ export default class ObservationPage extends React.Component {
                   />
                 </Col>
                 <Col sm={5} >
-                  <ControlLabel>{this.props.translate('musit.texts.registeredBy')}</ControlLabel>
+                  <ControlLabel>{I18n.t('musit.texts.registeredBy')}</ControlLabel>
                   <FormControl
                     componentClass="input"
                     value={this.props.registeredBy || ''}
@@ -388,7 +383,7 @@ export default class ObservationPage extends React.Component {
                       {Object.keys(this.typeDefinitions).filter(this.isTypeSelectable).map((type, index) => {
                         return (
                           <option key={index} value={type}>
-                            {this.props.translate(`musit.observation.page.${this.typeDefinitions[type].label}`)}
+                            {I18n.t(`musit.observation.page.${this.typeDefinitions[type].label}`)}
                           </option>
                         );
                       })}
@@ -399,7 +394,7 @@ export default class ObservationPage extends React.Component {
                   <Button
                     onClick={() => this.addObservationType()}
                   >
-                    <FontAwesome name="plus-circle" />&nbsp;{this.props.translate('musit.observation.page.newButtonLabel')}
+                    <FontAwesome name="plus-circle" />&nbsp;{I18n.t('musit.observation.page.newButtonLabel')}
                   </Button>
                 </Col>
               </Row>
@@ -409,7 +404,7 @@ export default class ObservationPage extends React.Component {
               return (
                 <div key={index}>
                   <h3>
-                    {this.props.translate(`musit.observation.page.${typeDefinition.label}`)}
+                    {I18n.t(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
                     {this.props.mode !== 'ADD' ? '' : 
                       <a
@@ -432,7 +427,7 @@ export default class ObservationPage extends React.Component {
           <br />
           <Row className="row-centered" style={{ textAlign: 'center' }}>
             {this.state.errors && values(this.state.errors).map((error, index) => {
-              return <p style={{ color: 'red' }} key={index}>{this.props.translate(error)}</p>;
+              return <p style={{ color: 'red' }} key={index}>{I18n.t(error)}</p>;
             })}
             <br />
             {this.props.mode === 'VIEW' ?
@@ -446,7 +441,6 @@ export default class ObservationPage extends React.Component {
                 </Button>
               </Col> :
               <SaveCancel
-                translate={this.props.translate}
                 onClickSave={this.handleSubmit}
                 onClickCancel={() => hashHistory.goBack()}
                 saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}

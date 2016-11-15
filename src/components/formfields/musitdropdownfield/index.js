@@ -18,7 +18,6 @@ export default class MusitDropDownField extends Component {
     validator: PropTypes.func,
     precision: PropTypes.number,
     items: PropTypes.array.isRequired,
-    translate: PropTypes.func,
     translateKeyPrefix: PropTypes.string,
     disabled: PropTypes.bool
   }

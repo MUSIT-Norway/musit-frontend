@@ -8,24 +8,24 @@ export default class NodeLeftMenuComponent extends Component {
   static propTypes = {
     rootNode: PropTypes.object,
     onClickNewNode: PropTypes.func.isRequired,
-    objectsOnNode: PropTypes.number,
-    totalObjectCount: PropTypes.number,
-    underNodeCount: PropTypes.number,
+    stats: PropTypes.shape({
+      numNodes: PropTypes.number,
+      numObjects: PropTypes.number,
+      totalObjects: PropTypes.number
+    }),
     onClickProperties: PropTypes.func.isRequired,
     onClickObservations: PropTypes.func,
     onClickControlObservations: PropTypes.func.isRequired,
     onClickController: PropTypes.func,
     onClickMoveNode: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired,
-    showButtons: PropTypes.bool.isRequired
+    showButtons: PropTypes.bool
   }
+
   render() {
     const {
       rootNode,
       onClickNewNode,
-      objectsOnNode,
-      totalObjectCount,
-      underNodeCount,
       onClickProperties,
       onClickControlObservations,
       onClickMoveNode,
@@ -56,15 +56,16 @@ export default class NodeLeftMenuComponent extends Component {
       return fragment;
     };
 
-    const showCount = (type, typeText) => {
+    const showCount = (type) => {
       let fragment = null;
       if (rootNode) {
+        const count = this.props.stats[type];
         fragment = 
           <div style={{ border: 'none', textAlign: 'center' }}>
-            {I18n.t(`musit.leftMenu.node.${typeText}`)}
+            {I18n.t(`musit.leftMenu.node.${type}`)}
             <br />
-            <ControlLabel id={`${rootNode.id}_${typeText}`}>
-              {Number.isNaN(type) ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : type}
+            <ControlLabel id={`${rootNode.id}_${type}`}>
+              {Number.isNaN(count) ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : count}
             </ControlLabel>
           </div>;
         
@@ -86,21 +87,29 @@ export default class NodeLeftMenuComponent extends Component {
         </div>
       );
     };
-    const disabled = !Number.isNaN(objectsOnNode) && !Number.isNaN(underNodeCount) && objectsOnNode + underNodeCount > 0;
+    const showStats = this.props.stats;
     return (
       <div>
-        {rootNode ? newButton(rootNode.id) : null}
-        {rootNode ? <hr /> : null}
-        {showCount(objectsOnNode, 'objectsOnNode')}
-        {showCount(totalObjectCount, 'totalObjectCount')}
-        {showCount(underNodeCount, 'underNodeCount')}
-        {rootNode ? <hr /> : null}
-        {showButtons ? buttonLink('properties', 'cog', onClickProperties) : null}
-        {showButtons ? buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true) : null}
-        {showButtons ? buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode)) : null}
-        {showButtons ?
-          buttonLink('delete','trash-o', onClickDelete, disabled): null}
+        {rootNode && newButton(rootNode.id)}
+        {showStats && <hr />}
+        {showStats && showCount('numNodes')}
+        {showStats && showCount('numObjects')}
+        {showStats && showCount('totalObjects')}
+        {showButtons && <hr />}
+        {showButtons && buttonLink('properties', 'cog', onClickProperties)}
+        {showButtons && buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true)}
+        {showButtons && buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode))}
+        {showButtons && buttonLink('delete','trash-o', onClickDelete, this.isDeleteDisabled())}
       </div>
     );
+  }
+
+  isDeleteDisabled() {
+    if (!this.props.stats) {
+      return true;
+    }
+    const objectsOnNode = this.props.stats.numNodes;
+    const underNodeCount = this.props.stats.numObjects;
+    return objectsOnNode + underNodeCount > 0;
   }
 }

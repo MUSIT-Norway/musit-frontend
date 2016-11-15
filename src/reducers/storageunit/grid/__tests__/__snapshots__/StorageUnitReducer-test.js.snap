@@ -182,7 +182,7 @@ Array [
 ]
 `;
 
-exports[`StorageUnitReducer creates LOAD_ONE_SUCCESS when fetching data has been done 1`] = `
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 1`] = `
 Array [
   Object {
     "type": "musit/storageunit-grid/LOAD_ONE"
@@ -212,7 +212,7 @@ Array [
 ]
 `;
 
-exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 1`] = `
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 2`] = `
 Array [
   Object {
     "type": "musit/storageunit-grid/LOAD_SEVERAL"
@@ -234,7 +234,7 @@ Array [
 ]
 `;
 
-exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS when fetching data has been done 1`] = `
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 3`] = `
 Array [
   Object {
     "type": "musit/storageunit-grid/LOAD_SEVERAL"

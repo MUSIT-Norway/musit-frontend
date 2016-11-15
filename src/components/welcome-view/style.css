@@ -3,6 +3,7 @@
     text-align: center;
     align-items: center;
     display: flex;
+    margin-top: 20px;
 }
 
 .welcomePanel > div {

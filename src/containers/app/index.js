@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import fakeUserInfo from '../../../fake_security.json';
 import App from '../../components/app';
+import Notifyable from './Notifyable';
 
 const mapStateToProps = (state) => {
   return {
@@ -45,4 +46,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Notifyable(App));

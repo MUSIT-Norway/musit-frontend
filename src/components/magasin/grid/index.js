@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { hashHistory } from 'react-router';
 import NodeGrid from './NodeGrid';
@@ -6,12 +5,19 @@ import ObjectGrid from './ObjectGrid';
 import Layout from '../../../layout';
 import NodeLeftMenuComponent from './LeftMenu';
 import Toolbar from '../../../layout/Toolbar';
-import { blur } from '../../../util';
+import { blur, filter } from '../../../util';
 import Breadcrumb from '../../../layout/Breadcrumb';
 import MusitModal from '../../movedialog';
 import { I18n } from 'react-i18nify';
 import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
+
+const getObjectDescription = (object) => {
+  let objStr = object.museumNo ? `${object.museumNo}` : '';
+  objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr;
+  objStr = object.term ? `${objStr} - ${object.term}` : objStr;
+  return objStr;
+};
 
 export default class StorageUnitsContainer extends React.Component {
   static propTypes = {
@@ -36,8 +42,8 @@ export default class StorageUnitsContainer extends React.Component {
     }),
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
-      nodes: React.PropTypes.number,
-      objects: React.PropTypes.number,
+      numNodes: React.PropTypes.number,
+      numObjects: React.PropTypes.number,
       totalObjects: React.PropTypes.number
     })
   };
@@ -45,7 +51,7 @@ export default class StorageUnitsContainer extends React.Component {
   static contextTypes = {
     showModal: React.PropTypes.func.isRequired,
     showConfirm: React.PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -112,17 +118,27 @@ export default class StorageUnitsContainer extends React.Component {
     }
   }
 
-  showMoveNodeModal = (nodeToMove) => {
+  showMoveNodeModal(
+    nodeToMove,
+    showModal = this.context.showModal
+  ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    this.context.showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />);
+    showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />);
   }
 
-  moveNode = (fromNode) => (toId, toName, onSuccess) => {
-    this.props.moveNode(fromNode.id, toId, this.props.user.id, {
+  moveNode = (
+    fromNode,
+    userId = this.props.user.id,
+    nodeId = this.props.rootNode.id,
+    moveNode = this.props.moveNode,
+    loadRoot = this.props.loadRoot,
+    loadNodes = this.loadNodes
+  ) => (toId, toName, onSuccess) => {
+    moveNode(fromNode.id, toId, userId, {
       onSuccess: () => {
         onSuccess();
-        this.loadNodes();
-        this.props.loadRoot(this.props.rootNode.id);
+        loadNodes();
+        loadRoot(nodeId);
         emitSuccess({
           type: 'movedSuccess',
           message: I18n.t('musit.moveModal.messages.nodeMoved', { name: fromNode.name, destination: toName })
@@ -137,26 +153,29 @@ export default class StorageUnitsContainer extends React.Component {
     });
   };
 
-  getObjectDescription(object) {
-    let objStr = object.museumNo ? `${object.museumNo}` : '';
-    objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr;
-    objStr = object.term ? `${objStr} - ${object.term}` : objStr;
-    return objStr;
-  }
-
-  showMoveObjectModal = (object) => {
-    const objStr = this.getObjectDescription(object);
+  showMoveObjectModal(
+    object,
+    showModal = this.context.showModal
+  ) {
+    const objStr = getObjectDescription(object);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    this.context.showModal(title, <MusitModal onMove={this.moveObject(object)} />);
+    showModal(title, <MusitModal onMove={this.moveObject(object)} />);
   }
 
-  moveObject = (fromObject) => (toId, toName, onSuccess) => {
-    const description = this.getObjectDescription(fromObject);
-    this.props.moveObject(fromObject.id, toId, this.props.user.id, {
+  moveObject = (
+    fromObject,
+    userId = this.props.user.id,
+    nodeId = this.props.rootNode.id,
+    moveObject = this.props.moveObject,
+    loadRoot = this.props.loadRoot,
+    loadObjects = this.loadObjects
+  ) => (toId, toName, onSuccess) => {
+    const description = getObjectDescription(fromObject);
+    moveObject(fromObject.id, toId, userId, {
       onSuccess: () => {
         onSuccess();
-        this.loadObjects();
-        this.props.loadRoot(this.props.rootNode.id);
+        loadObjects();
+        loadRoot(this.props.rootNode.id);
         emitSuccess({
           type: 'movedSuccess',
           message: I18n.t('musit.moveModal.messages.objectMoved', { name: description, destination: toName })
@@ -171,21 +190,28 @@ export default class StorageUnitsContainer extends React.Component {
     });
   };
 
-  showObjectMoveHistory = (object) => {
-    const objStr = this.getObjectDescription(object);
+  showObjectMoveHistory(
+    object,
+    showModal = this.context.showModal
+  ) {
+    const objStr = getObjectDescription(object);
     const componentToRender = <MusitModalHistory objectId={object.id} />;
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
-    this.context.showModal(title, componentToRender);
+    showModal(title, componentToRender);
   }
 
-  makeToolbar() {
+  makeToolbar(
+    showNodes = this.state.showNodes,
+    showObjects = this.state.showObjects,
+    searchPattern = this.state.searchPattern
+  ) {
     return <Toolbar
-      showRight={this.state.showObjects}
-      showLeft={this.state.showNodes}
+      showRight={showObjects}
+      showLeft={showNodes}
       labelRight="Objekter"
       labelLeft="Noder"
       placeHolderSearch="Filtrer i liste"
-      searchValue={this.state.searchPattern}
+      searchValue={searchPattern}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
         this.showObjects();
@@ -200,14 +226,19 @@ export default class StorageUnitsContainer extends React.Component {
     />;
   }
 
-  makeLeftMenu(rootNode, statistics) {
-    const { onEdit, onDelete } = this.props;
-    const showButtons = this.props.routerState.locationBeforeTransitions.pathname !== '/magasin/root';
+  makeLeftMenu(
+    rootNode = this.props.rootNode,
+    stats = this.props.stats,
+    onEdit = this.props.onEdit,
+    onDelete = this.props.onDelete,
+    moveNode = this.showMoveNodeModal,
+    confirm = this.context.showConfirm
+  ) {
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           rootNode={rootNode}
-          showButtons={showButtons}
+          showButtons={rootNode && rootNode.type !== 'Root'}
           onClickNewNode={(parentId) => {
             if (parentId) {
               hashHistory.push(`/magasin/${parentId}/add`);
@@ -215,60 +246,65 @@ export default class StorageUnitsContainer extends React.Component {
               hashHistory.push('/magasin/add');
             }
           }}
-          objectsOnNode={statistics ? statistics.numObjects : Number.NaN}
-          totalObjectCount={statistics ? statistics.totalObjects : Number.NaN}
-          underNodeCount={statistics ? statistics.numNodes : Number.NaN}
+          stats={stats}
           onClickProperties={(id) => onEdit({ id })}
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={this.showMoveNodeModal}
+          onClickMoveNode={moveNode}
           onClickDelete={(id) => {
-            const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {name: rootNode.name});
-            this.context.showConfirm(message, () => onDelete(id, rootNode));
+            const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
+              name: rootNode.name
+            });
+            confirm(message, () => onDelete(id, rootNode));
           }}
         />
       </div>
     );
   }
 
-  makeContentGrid(filter, rootNode, children) {
-    const nodeId = rootNode ? rootNode.id : null;
-    if (this.state.showNodes) {
-      return <NodeGrid
-        id={nodeId}
-        tableData={children.filter((row) => row.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1)}
-        onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.breadcrumb)}
-        onMove={this.showMoveNodeModal}
-        onClick={(row) =>
-          hashHistory.push(
-            `/magasin/${row.id}`
-          )
-        }
-        rootNode={this.props.rootNode}
-      />;
+  makeContentGrid(
+    searchPattern = this.state.searchPattern,
+    rootNode = this.props.rootNode,
+    children = this.props.children,
+    objects = this.props.objects,
+    showNodes = this.state.showNodes,
+    onAction = this.props.onAction,
+    moveNode = this.showMoveNodeModal,
+    moveObject = this.showMoveObjectModal,
+    showHistory = this.showObjectMoveHistory
+  ) {
+    if (showNodes) {
+      return (
+        <NodeGrid
+          tableData={filter(children, ['name'], searchPattern)}
+          onAction={(action, unit) => onAction(action, unit, rootNode.breadcrumb)}
+          onMove={moveNode}
+          onClick={(row) => {
+            hashHistory.push(`/magasin/${row.id}`);
+          }}
+        />
+      );
     }
-    return <ObjectGrid
-      id={nodeId}
-      tableData={this.props.objects}
-      showMoveHistory={this.showObjectMoveHistory}
-      onAction={(action, unit) => this.props.onAction(action, unit, this.props.rootNode.breadcrumb)}
-      onMove={this.showMoveObjectModal}
-      rootNode={this.props.rootNode}
-    />;
+    return (
+      <ObjectGrid
+        tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
+        showMoveHistory={showHistory}
+        onAction={(action, unit) => onAction(action, unit, rootNode.breadcrumb)}
+        onMove={moveObject}
+      />
+    );
   }
 
   render() {
-    const { searchPattern } = this.state;
-    const { children, rootNode } = this.props;
     return (
       <div>
         <Layout
           title={'Magasin'}
-          breadcrumb={<Breadcrumb node={rootNode} onClickCrumb={this.onClickCrumb} />}
+          breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={this.onClickCrumb} />}
           toolbar={this.makeToolbar()}
-          leftMenu={this.makeLeftMenu(rootNode, this.props.stats)}
-          content={this.makeContentGrid(searchPattern, rootNode, children)}
+          leftMenu={this.makeLeftMenu()}
+          content={this.makeContentGrid()}
         />
       </div>
     );

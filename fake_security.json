@@ -5,6 +5,11 @@
     "accessToken": "fake-token-zab-xy-guest"
   },
   {
+    "userid": "3655615b-e385-4833-b414-9957ea225e58",
+    "name": "Normalbruker",
+    "accessToken": "fake-token-zab-xy-normal"
+  },
+  {
     "userid": "34e74d46-d45c-49dc-ace7-587b0ff40646",
     "name": "Stein A. Olsen",
     "accessToken": "fake-token-zab-xy-stein"

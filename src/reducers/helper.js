@@ -1,7 +1,17 @@
-export const getPath = (pathStr, pathNames) => {
-  const nodeIds = (pathStr != null ? pathStr : '').slice(1, -1).split(',').slice(1).map(p => parseFloat(p));
+export const getPath = (node) => {
+  const nodeIds = (node.path != null ? node.path : '').split(',').slice(1).map(p => parseFloat(p)).filter(n => n);
+  const pathNames = node.pathNames || [{
+    nodeId: node.id,
+    name: node.name
+  }];
   return nodeIds.map(nodeId => {
-    const pathMatch = pathNames.find(e => e.nodeId === nodeId);
+    let pathMatch = pathNames.find(e => e.nodeId === nodeId);
+    if (!pathMatch) {
+      pathMatch = {
+        nodeId: node.id,
+        name: node.name
+      };
+    }
     return {
       id: pathMatch.nodeId,
       name: pathMatch.name,

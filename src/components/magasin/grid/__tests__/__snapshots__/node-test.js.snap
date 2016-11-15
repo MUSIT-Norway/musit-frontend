@@ -1,0 +1,211 @@
+exports[`NodeLeftMenuComponent renders properly 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={false}
+      id="1_newNode"
+      onClick={[Function onClick]}
+      style={
+        Object {
+          "textAlign": "left"
+        }
+      }>
+      <FontAwesome
+        name="plus-circle"
+        style={
+          Object {
+            "padding": "2px"
+          }
+        } />
+      Ny node
+    </Button>
+  </div>
+  <hr />
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }>
+    Antall undernoder:
+    <br />
+    <ControlLabel
+      bsClass="control-label"
+      id="1_numNodes"
+      srOnly={false}>
+      11
+    </ControlLabel>
+  </div>
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }>
+    Objekter på node:
+    <br />
+    <ControlLabel
+      bsClass="control-label"
+      id="1_numObjects"
+      srOnly={false}>
+      5
+    </ControlLabel>
+  </div>
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }>
+    Totalt ant. objekter:
+    <br />
+    <ControlLabel
+      bsClass="control-label"
+      id="1_totalObjects"
+      srOnly={false}>
+      78
+    </ControlLabel>
+  </div>
+  <hr />
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="link"
+      disabled={false}
+      id="1_properties"
+      onClick={[Function onClick]}
+      style={
+        Object {
+          "color": "black"
+        }
+      }>
+      <FontAwesome
+        name="cog"
+        style={
+          Object {
+            "fontSize": "1.5em",
+            "padding": "2px"
+          }
+        } />
+      <br />
+      Egenskaper
+    </Button>
+  </div>
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="link"
+      disabled={false}
+      id="1_controlsobservations"
+      onClick={[Function onClick]}
+      style={
+        Object {
+          "color": "black"
+        }
+      }>
+      <span
+        className="icon icon-musitcontrolobsicon"
+        style={
+          Object {
+            "padding": "2px"
+          }
+        } />
+      <br />
+      Kontr./Observ.
+    </Button>
+  </div>
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="link"
+      disabled={false}
+      id="1_moveNode"
+      onClick={[Function onClick]}
+      style={
+        Object {
+          "color": "black"
+        }
+      }>
+      <FontAwesome
+        name="truck"
+        style={
+          Object {
+            "fontSize": "1.5em",
+            "padding": "2px"
+          }
+        } />
+      <br />
+      Flytt node
+    </Button>
+  </div>
+  <div
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="link"
+      disabled={true}
+      id="1_delete"
+      onClick={[Function onClick]}
+      style={
+        Object {
+          "color": "black"
+        }
+      }>
+      <FontAwesome
+        name="trash-o"
+        style={
+          Object {
+            "fontSize": "1.5em",
+            "padding": "2px"
+          }
+        } />
+      <br />
+      Slett
+    </Button>
+  </div>
+</div>
+`;

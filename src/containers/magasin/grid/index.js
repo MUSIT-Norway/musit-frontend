@@ -40,9 +40,14 @@ const mapDispatchToProps = (dispatch, props) => {
 
   return {
     loadRoot: (id) => {
-      dispatch(loadRoot(id));
       dispatch(clearStats());
-      dispatch(loadStats(id));
+      dispatch(loadRoot(id, {
+        onSuccess: (result) => {
+          if (result.type !== 'Root') {
+            dispatch(loadStats(id));
+          }
+        }
+      }));
     },
     loadStorageUnits: () => {
       dispatch(clearRoot());
@@ -52,11 +57,17 @@ const mapDispatchToProps = (dispatch, props) => {
     loadStorageObjects: (id) => {
       dispatch(loadObjects(id));
     },
-    loadChildren: (id, callback) => {
-      dispatch(loadChildren(id, callback));
-      dispatch(loadRoot(id));
+    loadChildren: (id) => {
+      dispatch(loadChildren(id));
+      dispatch(clearRoot());
       dispatch(clearStats());
-      dispatch(loadStats(id));
+      dispatch(loadRoot(id, {
+        onSuccess: (result) => {
+          if (result.type !== 'Root') {
+            dispatch(loadStats(id));
+          }
+        }
+      }));
     },
     moveObject: (objectId, destinationId, doneBy, callback) => {
       dispatch(moveObject(objectId, destinationId, doneBy, callback));

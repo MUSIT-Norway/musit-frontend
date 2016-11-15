@@ -20,11 +20,11 @@
 
 import React, { Component, PropTypes } from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
+import { I18n } from 'react-i18nify';
 
 export default class SaveCancel extends Component {
   static propTypes = {
     id: PropTypes.string,
-    translate: PropTypes.func.isRequired,
     saveLabel: PropTypes.string,
     saveDisabled: PropTypes.bool,
     onClickSave: PropTypes.func.isRequired,
@@ -57,7 +57,7 @@ export default class SaveCancel extends Component {
   }
 
   render() {
-    const { saveLabel, cancelLabel, translate } = this.props;
+    const { saveLabel, cancelLabel } = this.props;
     const showButton = (data) => {
       return (
         <Col xs={6} sm={5} style={{ border: 'none', textAlign: 'center' }}>
@@ -73,7 +73,7 @@ export default class SaveCancel extends Component {
             onClick={this.props.onClickSave}
             disabled={this.props.saveDisabled}
           >
-            {saveLabel || translate('musit.texts.save')}
+            {saveLabel || I18n.t('musit.texts.save')}
           </Button>
         )}
         {showButton(
@@ -81,7 +81,7 @@ export default class SaveCancel extends Component {
             onClick={this.props.onClickCancel}
             disabled={this.props.cancelDisabled}
           >
-            {cancelLabel || translate('musit.texts.cancel')}
+            {cancelLabel || I18n.t('musit.texts.cancel')}
           </Button>
         )}
       </Row>
