@@ -421,8 +421,13 @@ export default class StorageUnitContainer extends Component {
                         <Row>
                           <br />
                           {this.props.unit.errors && values(this.props.unit.errors).map((error, index) => {
-                            return <p style={{ color: 'red' }} key={index}>{error}</p>;
+                            return <span style={{ color: 'red' }} key={index}>{error}</span>;
                           })}
+                          {this.props.error &&
+                            <span style={{ color: 'red' }}>
+                              {I18n.t(`musit.${this.props.error.error.message}`)}
+                            </span>
+                          }
                           <br />
                           <SaveCancel
                             onClickSave={this.handleSubmit}
