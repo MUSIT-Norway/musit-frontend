@@ -587,7 +587,7 @@
         "body": "**Museum of Archaeology, University of Stavanger** \n**University Museum of Bergen, University of Bergen** \n**Museum of Cultural History, University of Oslo** \n**Natural History Museum, University of Oslo** \n**Tromsø University Museum, University of Tromsø** \n**NTNU University Museum, Norwegian University of Science and Technology**\n",
         "noAccess": "Your account does not have access to MUSIT. Contact your local MUSIT administrator."
       },
-      "Forbidden": "Du har ikke lov.",
+      "Forbidden": "You are not allowed.",
       "login": "Login through Dataporten"
     }
   },
