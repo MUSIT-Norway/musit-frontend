@@ -96,3 +96,75 @@ describe('Test one level below the root level: check for building.', () => {
   });
 
 });
+
+describe('Test three level below the root level: Organisation should allow anything.', () => {
+  const rootNode = {
+    id: 5,
+    name: 'Utviklingsmuseet',
+    isPartOf:1,
+    path: ',1,2,3,5',
+    pathNames:[
+      {
+        nodeId: 1,
+        name: 'root-node'
+      },
+      {
+        nodeId: 2,
+        name: 'Utviklingsmuseet'
+      },
+      {
+        nodeId: 3,
+        name: 'Utviklingsmuseet'
+      },
+      {
+        nodeId: 5,
+        name: 'Utviklingsmuseet'
+      }
+    ],
+    environmentRequirement: {},
+    securityAssessment: {},
+    environmentAssessment: {},
+    updatedBy: 123,
+    updatedDate: '2016-10-24T16:13:24+00:00',
+    type: 'Organisation'
+  };
+
+  const unit = {
+    name: 'Test name',
+    isPartOf:1,
+    environmentRequirement: {},
+    securityAssessment: {},
+    environmentAssessment: {},
+    type: 'N/A' // specified in tests below
+  };
+
+  const propTypes = {
+    unit: unit,
+    rootNode: rootNode
+  };
+
+  it('Test that StorageUnit is allowed', () => {
+    expect(validateForm({ ...propTypes, type: 'StorageUnit' }).type).toBe(undefined);
+  });
+
+  it('Test that Room is allowed', () => {
+    expect(validateForm({ ...propTypes, type: 'Room' }).type).toBe(undefined);
+  });
+
+  it('Test that Building is allowed', () => {
+    expect(validateForm({ ...propTypes, type: 'Building' }).type).toBe(undefined);
+  });
+
+  it('Test that Organisation is allowed', () => {
+    expect(validateForm({ ...propTypes, type: 'Organisation' }).type).toBe(undefined);
+  });
+
+  const propTypesPass = JSON.parse(JSON.stringify(propTypes));
+  propTypesPass['unit']['type'] = 'Building';
+
+  it('Test Building check pass:Error list is empty for Building', () => {
+    expect(validateForm(propTypesPass).type).toBe(undefined);
+  });
+
+});
+
