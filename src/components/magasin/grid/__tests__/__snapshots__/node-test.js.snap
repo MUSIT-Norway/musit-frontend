@@ -38,7 +38,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
         "textAlign": "center"
       }
     }>
-    Num Nodes
+    Antall undernoder:
     <br />
     <ControlLabel
       bsClass="control-label"
@@ -54,7 +54,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
         "textAlign": "center"
       }
     }>
-    Num Objects
+    Objekter på node:
     <br />
     <ControlLabel
       bsClass="control-label"
@@ -70,7 +70,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
         "textAlign": "center"
       }
     }>
-    Total Objects
+    Totalt ant. objekter:
     <br />
     <ControlLabel
       bsClass="control-label"

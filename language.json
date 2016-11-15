@@ -61,9 +61,9 @@
       "leftMenu": {
         "node": {
           "newNode": "New node",
-          "objectsOnNode": "No. of objects:",
-          "totalObjectCount": "Total no. of objects:",
-          "underNodeCount": "No. of sub nodes:",
+          "numObjects": "No. of objects:",
+          "totalObjects": "Total no. of objects:",
+          "numNodes": "No. of sub nodes:",
           "properties": "Properties",
           "observations": "Observations",
           "controller": "Controls",
@@ -653,9 +653,9 @@
       "leftMenu": {
         "node": {
           "newNode": "Ny node",
-          "objectsOnNode": "Objekter på node:",
-          "totalObjectCount": "Totalt ant. objekter:",
-          "underNodeCount": "Antall undernoder:",
+          "numObjects": "Objekter på node:",
+          "totalObjects": "Totalt ant. objekter:",
+          "numNodes": "Antall undernoder:",
           "properties": "Egenskaper",
           "observations": "Observasjoner",
           "controller": "Kontroller",

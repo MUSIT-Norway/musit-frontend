@@ -36,7 +36,7 @@ export default class ToogleButtons extends Component {
           </Col>
           <Col xs={10}>
             <Button
-              className={value ? "buttonpaddingtrue" : "buttonpaddingfalse"}
+              className={value ? 'buttonpaddingtrue' : 'buttonpaddingfalse'}
               onClick={this.props.updatevalueOK}
             >
               <FontAwesome name="check" />
@@ -44,7 +44,7 @@ export default class ToogleButtons extends Component {
               OK
             </Button>
             <Button
-              className={value != null && !value ? "buttonpaddingtrue" : "buttonpaddingfalse"}
+              className={value != null && !value ? 'buttonpaddingtrue' : 'buttonpaddingfalse'}
               onClick={this.props.updatevalueNotOK}
             >
               <FontAwesome name="times" />

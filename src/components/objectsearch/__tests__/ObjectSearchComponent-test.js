@@ -9,18 +9,18 @@ describe('ObjectSearchComponent', () => {
   const pathNames = [
     {
       nodeId: 1,
-      name: "Root",
-      type: "Organization"
+      name: 'Root',
+      type: 'Organization'
     },
     {
       nodeId: 2,
-      name: "Musit",
-      type: "Building"
+      name: 'Musit',
+      type: 'Building'
     },
     {
       nodeId: 3,
-      name: "Kontoret",
-      type: "Room"
+      name: 'Kontoret',
+      type: 'Room'
     }
   ];
   const testData = {
@@ -51,9 +51,9 @@ describe('ObjectSearchComponent', () => {
         data={testData}
         onChangeField={() => true}
         params={{
-          museumNo: "1234",
-          subNo: "455",
-          term: "Lololol",
+          museumNo: '1234',
+          subNo: '455',
+          term: 'Lololol',
           currentPage: 1
         }}
       />

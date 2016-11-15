@@ -64,101 +64,101 @@ describe('Object search reducer', () => {
             reducer(undefined, {
               type: constants.SEARCH_OBJECTS_SUCCESS,
               result: {
-                "totalMatches": 55,
-                "matches": [
+                'totalMatches': 55,
+                'matches': [
                   {
-                    "id": 51,
-                    "museumNo": "MusN11",
-                    "term": "Solsikke",
-                    "currentLocationId": 5,
-                    "path": ",1,2,3,4,5,",
-                    "pathNames": [
+                    'id': 51,
+                    'museumNo': 'MusN11',
+                    'term': 'Solsikke',
+                    'currentLocationId': 5,
+                    'path': ',1,2,3,4,5,',
+                    'pathNames': [
                       {
-                        "nodeId": 1,
-                        "name": "root-node"
+                        'nodeId': 1,
+                        'name': 'root-node'
                       },
                       {
-                        "nodeId": 2,
-                        "name": "Utviklingsmuseet"
+                        'nodeId': 2,
+                        'name': 'Utviklingsmuseet'
                       },
                       {
-                        "nodeId": 3,
-                        "name": "Forskningens hus"
+                        'nodeId': 3,
+                        'name': 'Forskningens hus'
                       },
                       {
-                        "nodeId": 4,
-                        "name": "Kulturværelset"
+                        'nodeId': 4,
+                        'name': 'Kulturværelset'
                       },
                       {
-                        "nodeId": 5,
-                        "name": "Naturværelset"
+                        'nodeId': 5,
+                        'name': 'Naturværelset'
                       }
                     ]
                   },
                   {
-                    "id": 54,
-                    "museumNo": "MusN13",
-                    "term": "Makrellsopp"
+                    'id': 54,
+                    'museumNo': 'MusN13',
+                    'term': 'Makrellsopp'
                   },
                   {
-                    "id": 19,
-                    "museumNo": "MusN20",
-                    "term": "Ukjent mygg"
+                    'id': 19,
+                    'museumNo': 'MusN20',
+                    'term': 'Ukjent mygg'
                   },
                   {
-                    "id": 17,
-                    "museumNo": "MusN21",
-                    "subNo": "2",
-                    "term": "Snilebille"
+                    'id': 17,
+                    'museumNo': 'MusN21',
+                    'subNo': '2',
+                    'term': 'Snilebille'
                   },
                   {
-                    "id": 18,
-                    "museumNo": "MusN22",
-                    "term": "Fluesopp"
+                    'id': 18,
+                    'museumNo': 'MusN22',
+                    'term': 'Fluesopp'
                   },
                   {
-                    "id": 14,
-                    "museumNo": "MusK23",
-                    "term": "Lite skaft av ben"
+                    'id': 14,
+                    'museumNo': 'MusK23',
+                    'term': 'Lite skaft av ben'
                   },
                   {
-                    "id": 15,
-                    "museumNo": "MusK24",
-                    "subNo": "a",
-                    "term": "Lendeklede"
+                    'id': 15,
+                    'museumNo': 'MusK24',
+                    'subNo': 'a',
+                    'term': 'Lendeklede'
                   },
                   {
-                    "id": 16,
-                    "museumNo": "MusK24",
-                    "subNo": "b",
-                    "term": "Kokekar"
+                    'id': 16,
+                    'museumNo': 'MusK24',
+                    'subNo': 'b',
+                    'term': 'Kokekar'
                   },
                   {
-                    "id": 9,
-                    "museumNo": "MusN28",
-                    "term": "Tusenben",
-                    "currentLocationId": 5,
-                    "path": ",1,2,3,4,5,",
-                    "pathNames": [
+                    'id': 9,
+                    'museumNo': 'MusN28',
+                    'term': 'Tusenben',
+                    'currentLocationId': 5,
+                    'path': ',1,2,3,4,5,',
+                    'pathNames': [
                       {
-                        "nodeId": 1,
-                        "name": "root-node"
+                        'nodeId': 1,
+                        'name': 'root-node'
                       },
                       {
-                        "nodeId": 2,
-                        "name": "Utviklingsmuseet"
+                        'nodeId': 2,
+                        'name': 'Utviklingsmuseet'
                       },
                       {
-                        "nodeId": 3,
-                        "name": "Forskningens hus"
+                        'nodeId': 3,
+                        'name': 'Forskningens hus'
                       },
                       {
-                        "nodeId": 4,
-                        "name": "Kulturværelset"
+                        'nodeId': 4,
+                        'name': 'Kulturværelset'
                       },
                       {
-                        "nodeId": 5,
-                        "name": "Naturværelset"
+                        'nodeId': 5,
+                        'name': 'Naturværelset'
                       }
                     ]
                   }

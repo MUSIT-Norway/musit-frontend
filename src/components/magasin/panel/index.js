@@ -183,7 +183,7 @@ export default class StorageUnitContainer extends Component {
   }
 
   renderLastChangeData(unit) {
-    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format("DD.MM.YYYY");
+    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format('DD.MM.YYYY');
     // const lastUpdateBy = unit.updatedBy // TODO når dette er i orden, autentisering er i orden
     return (
       <span>
