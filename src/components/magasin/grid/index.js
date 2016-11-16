@@ -179,7 +179,7 @@ export default class StorageUnitsContainer extends React.Component {
             message: I18n.t('musit.moveModal.messages.errorNode', { name: fromNode.name, destination: toName })
           });
         }
-      })
+      });
     } else {
       emitError({
         type: 'errorOnMove',
