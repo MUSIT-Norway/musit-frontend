@@ -80,23 +80,23 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onAction: (actionName, unit, path) => {
       switch (actionName) {
-        case 'pickNode':
-          dispatch(addNode(unit, path));
-          break;
-        case 'pickObject':
-          dispatch(addObject(unit, path));
-          break;
-        case 'controlsobservations':
-          history.push(`/magasin/${unit.id}/controlsobservations`);
-          break;
-        case 'observation':
-          history.push(`/magasin/${unit.id}/observations`);
-          break;
-        case 'control':
-          history.push(`/magasin/${unit.id}/controls`);
-          break;
-        default:
-          break;
+      case 'pickNode':
+        dispatch(addNode(unit, path));
+        break;
+      case 'pickObject':
+        dispatch(addObject(unit, path));
+        break;
+      case 'controlsobservations':
+        history.push(`/magasin/${unit.id}/controlsobservations`);
+        break;
+      case 'observation':
+        history.push(`/magasin/${unit.id}/observations`);
+        break;
+      case 'control':
+        history.push(`/magasin/${unit.id}/controls`);
+        break;
+      default:
+        break;
       }
     },
     onEdit: (unit) => {

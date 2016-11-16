@@ -59,7 +59,7 @@ export const hasProp = (obj: any, prop: string): boolean => {
 };
 
 
-export const customSortingStorageNodeType = (type: string): string  => {
+export const customSortingStorageNodeType = (type: string): string => {
   switch (type) {
   case 'Organisation' : return '01';
   case 'Building': return '02';
@@ -67,7 +67,7 @@ export const customSortingStorageNodeType = (type: string): string  => {
   case 'StorageUnit': return '04';
   default: return '99';
   }
-}
+};
 
 export const isDateBiggerThanToday = (newDate: any): boolean => {
   const today = moment();
