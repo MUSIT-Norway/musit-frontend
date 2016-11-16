@@ -51,7 +51,7 @@ export default class PickListContainer extends React.Component {
     if (this.isTypeNode()) {
       title = I18n.t('musit.moveModal.moveNodes');
     } else {
-      I18n.t('musit.moveModal.moveObjects');
+      title = I18n.t('musit.moveModal.moveObjects');
     }
     this.context.showModal(title, <MusitModal onMove={this.moveModal(items)}/>);
   }
@@ -96,6 +96,7 @@ export default class PickListContainer extends React.Component {
 
   moveModal = (items) => (toId, toName, onSuccess) => {
     const isNode = this.isTypeNode();
+    const userId = this.props.user.id ? this.props.user.id : '';
     const moveFunction = isNode ? this.props.moveNode : this.props.moveObject;
     const toMove = items.map(itemToMove => itemToMove.value.id);
     const toMoveLength = toMove.length;
@@ -107,7 +108,7 @@ export default class PickListContainer extends React.Component {
     } else {
       callback = this.objectCallback(toName, toMoveLength, name, items, onSuccess);
     }
-    moveFunction(toMove, toId, this.props.user.id, callback);
+    moveFunction(toMove, toId, userId, callback);
   }
 
   render() {
