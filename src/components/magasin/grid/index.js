@@ -128,7 +128,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   moveNode = (
     fromNode,
-    userId = this.props.user.id ? this.props.user.id : '',
+    userId = this.props.user.id,
     nodeId = this.props.rootNode.id,
     moveNode = this.props.moveNode,
     loadRoot = this.props.loadRoot,
@@ -164,7 +164,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   moveObject = (
     fromObject,
-    userId = this.props.user ? this.props.user.id : '',
+    userId = this.props.user.id,
     nodeId = this.props.rootNode.id,
     moveObject = this.props.moveObject,
     loadRoot = this.props.loadRoot,

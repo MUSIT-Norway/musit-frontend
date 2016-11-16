@@ -96,7 +96,7 @@ export default class PickListContainer extends React.Component {
 
   moveModal = (items) => (toId, toName, onSuccess) => {
     const isNode = this.isTypeNode();
-    const userId = this.props.user.id ? this.props.user.id : '';
+    const userId = this.props.user.id;
     const moveFunction = isNode ? this.props.moveNode : this.props.moveObject;
     const toMove = items.map(itemToMove => itemToMove.value.id);
     const toMoveLength = toMove.length;
