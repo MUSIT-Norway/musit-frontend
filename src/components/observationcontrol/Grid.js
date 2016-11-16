@@ -10,7 +10,6 @@ import map from 'lodash/map';
 export default class ObservationControlGrid extends Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
-    translate: PropTypes.func.isRequired,
     showMode: PropTypes.oneOf(['ALL', 'CONTROLS', 'OBSERVATIONS', '']),
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -80,19 +79,19 @@ export default class ObservationControlGrid extends Component {
               <tr>
                 <th />
                 <th>
-                  {this.props.translate('musit.grid.observation.date')}
+                  {I18n.t('musit.grid.observation.date')}
                 </th>
                 <th>
-                  {this.props.translate('musit.grid.observation.types')}
+                  {I18n.t('musit.grid.observation.types')}
                 </th>
                 <th>
-                  {this.props.translate('musit.grid.observation.doneBy')}
+                  {I18n.t('musit.grid.observation.doneBy')}
                 </th>
                 <th>
-                  {this.props.translate('musit.grid.observation.registeredDate')}
+                  {I18n.t('musit.grid.observation.registeredDate')}
                 </th>
                 <th>
-                  {this.props.translate('musit.grid.observation.registeredBy')}
+                  {I18n.t('musit.grid.observation.registeredBy')}
                 </th>
               </tr>
             </thead>

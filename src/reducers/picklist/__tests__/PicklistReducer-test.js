@@ -588,7 +588,7 @@ describe('PicklistReducer', () => {
       NODE: [
         {
           marked: false,
-          path: [{ id: 1, url: "/magasin/1" }, {id : 2, url: "/magasin/2"}],
+          path: [{ id: 1, url: '/magasin/1' }, {id : 2, url: '/magasin/2'}],
           value: node1
         },
         {

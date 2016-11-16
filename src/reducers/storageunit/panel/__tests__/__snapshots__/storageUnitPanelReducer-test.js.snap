@@ -107,7 +107,7 @@ Array [
 exports[`ReducerStoragUnitPanel insert: fail action 1`] = `
 Object {
   "data": [Error: Some error in insert.],
-  "loaded": false,
+  "loaded": true,
   "loading": false
 }
 `;
@@ -175,7 +175,7 @@ Array [
 exports[`ReducerStoragUnitPanel update: fail action 1`] = `
 Object {
   "data": [Error: Some error in update.],
-  "loaded": false,
+  "loaded": true,
   "loading": false
 }
 `;

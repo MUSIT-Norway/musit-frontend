@@ -2,18 +2,18 @@
 import React, { Component, PropTypes } from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import { I18n } from 'react-i18nify';
 
 export default class ObservationControlComponent extends Component {
   static propTypes = {
     id: PropTypes.number.isRequired,
-    translate: PropTypes.func.isRequired,
     onClickNewObservation: PropTypes.func.isRequired,
     onClickNewControl: PropTypes.func.isRequired
   }
 
   render() {
-    const { id, translate, onClickNewControl, onClickNewObservation } = this.props;
-    const getTranslate = (term) => translate(`musit.leftMenu.observationControl.${term}`);
+    const { id, onClickNewControl, onClickNewObservation } = this.props;
+    const getTranslate = (term) => I18n.t(`musit.leftMenu.observationControl.${term}`);
     const buttonLogic = (type, eventType) => {
       return (
         <Button

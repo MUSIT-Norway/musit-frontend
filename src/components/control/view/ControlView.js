@@ -6,11 +6,11 @@ import { formatFloatToString } from './../../../util';
 import reduce from 'lodash/reduce';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
+import { I18n } from 'react-i18nify';
 
 export default class ControlView extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    translate: PropTypes.func.isRequired,
     controlsJson: PropTypes.object
   }
 
@@ -89,14 +89,14 @@ export default class ControlView extends Component {
   controlOk = (
       <Col xs={5} sm={5} md={5} >
         <FontAwesome name="check" style={{ 'fontSize': 'x-large' }} />
-        {`  ${this.props.translate('musit.texts.ok')}`}
+        {`  ${I18n.t('musit.texts.ok')}`}
       </Col>
   )
 
   controlNotOk = (
       <Col xs={5} sm={5} md={5} >
         <FontAwesome name="close" style={{ 'fontSize': 'x-large' }} />
-        {`  ${this.props.translate('musit.texts.notOk')}`}
+        {`  ${I18n.t('musit.texts.notOk')}`}
       </Col>
   )
 
@@ -118,7 +118,7 @@ export default class ControlView extends Component {
         <div key={index}>
           <Row style={{ top: '0', bottom: '0' }} >
             {this.observation(ControlView.iconMap[eventType],
-                this.props.translate(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
+                I18n.t(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
             {control.ok ? this.controlOk : this.controlNotOk}
             {this.downButton(eventType, control.ok)}
           </Row>
@@ -153,7 +153,6 @@ export default class ControlView extends Component {
         lv = 
             <ObservationRender.RenderFromToNumberComment
               disabled
-              translate={this.props.translate}
               type="temperature"
               valueProps={{
                 fromValue: formatFloatToString(observation.range.from),
@@ -172,7 +171,6 @@ export default class ControlView extends Component {
         lv = 
             <ObservationRender.RenderAlcohol
               disabled
-              translate={this.props.translate}
               valueProps={{
                 statusValue: observation.condition,
                 volumeValue: formatFloatToString(observation.volume),
@@ -190,7 +188,6 @@ export default class ControlView extends Component {
         lv = 
             <ObservationRender.RenderDoubleTextArea
               disabled
-              translate={this.props.translate}
               type="cleaning"
               valueProps={{
                 leftValue: observation.cleaning,
@@ -208,7 +205,6 @@ export default class ControlView extends Component {
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="gas"
-              translate={this.props.translate}
               valueProps={{
                 leftValue: observation.gas,
                 rightValue: observation.note
@@ -225,7 +221,6 @@ export default class ControlView extends Component {
             <ObservationRender.RenderFromToNumberComment
               disabled
               type="hypoxicAir"
-              translate={this.props.translate}
               valueProps={{
                 fromValue: formatFloatToString(observation.range.from),
                 toValue: formatFloatToString(observation.range.to),
@@ -244,7 +239,6 @@ export default class ControlView extends Component {
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="lightCondition"
-              translate={this.props.translate}
               valueProps={{
                 leftValue: observation.lightingCondition,
                 rightValue: observation.note
@@ -261,7 +255,6 @@ export default class ControlView extends Component {
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="mold"
-              translate={this.props.translate}
               valueProps={{
                 leftValue: observation.mold,
                 rightValue: observation.note
@@ -277,7 +270,6 @@ export default class ControlView extends Component {
         lv = 
             <ObservationRender.RenderPest
               disabled
-              translate={this.props.translate}
               canEdit={false}
               valueProps={{
                 observations: observation.lifecycles.map(lc => {
@@ -304,7 +296,6 @@ export default class ControlView extends Component {
         lv = 
             <ObservationRender.RenderFromToNumberComment
               disabled
-              translate={this.props.translate}
               type="relativeHumidity"
               valueProps={{
                 fromValue: formatFloatToString(observation.range.from),

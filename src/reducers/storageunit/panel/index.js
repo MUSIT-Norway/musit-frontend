@@ -30,7 +30,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       loading: false,
-      loaded: false,
+      loaded: true,
       data: action.error
     };
   case UPDATE:

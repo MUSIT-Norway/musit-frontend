@@ -21,73 +21,53 @@ const validateNumberField = (field, value = '', minimumLength = 0, maximumLength
   return errors;
 };
 
-const validateEnvironmentRequirement = (field, min, max, pres, formProps) => {
+const validateEnvReq = (field, min, max, pres, formProps) => {
   const key = field.split('.').reduce((a, b) => formProps[a][b]);
   return validateNumberField(field, key, min, max, pres);
 };
 
+const getPathLength = (formProps) => {
+  const { pathNames } = formProps.rootNode || {};
+  return pathNames && pathNames.length;
+};
+
 export default (formProps) => {
   let errors = {};
-  if (formProps && formProps.unit) {
-    if (!formProps.unit.type || formProps.unit.type.trim().length === 0) {
+  const unit = formProps.unit;
+  if (formProps && unit) {
+    if (!unit.type || unit.type.trim().length === 0) {
       errors.type = I18n.t('musit.storageUnits.type.required');
     }
-    if (!formProps.unit.name || formProps.unit.name.trim().length === 0) {
+    if (!unit.name || unit.name.trim().length === 0) {
       errors.name = I18n.t('musit.storageUnits.name.required');
     }
-    const { pathNames } = formProps.rootNode || {};
-    // On top level(root) only organisation type is allowed
-    if ( pathNames && pathNames.length === 1 && formProps.unit.type && formProps.unit.type !== 'Organisation') {
-      errors = { ...errors, type : I18n.t('musit.storageUnits.type.organisationAllowed') };
+
+    if (!unit.id) {
+      if (formProps.rootNode.type === 'Root' && 'Organisation' !== unit.type) {
+        errors = {...errors, type: I18n.t('musit.storageUnits.type.organisationAllowed')};
+      }
+      if (2 === getPathLength(formProps) && formProps.rootNode.type === 'Organisation' && 'Building' !== unit.type) {
+        errors = {...errors, type: I18n.t('musit.storageUnits.type.buildingAllowed')};
+      }
     }
-    // On second level(under the root) only building type is allowed
-    if ( pathNames && pathNames.length === 2 && formProps.unit.type && formProps.unit.type !== 'Building') {
-      errors = { ...errors, type : I18n.t('musit.storageUnits.type.buildingAllowed') };
-    }
-    errors = { ...errors, ...validateStringField('type', formProps.unit.type, 100) };
-    errors = { ...errors, ...validateStringField('name', formProps.unit.name, 100) };
-    errors = { ...errors, ...validateStringField('address', formProps.unit.address, 100) };
-    errors = { ...errors, ...validateNumberField('area', formProps.unit.area, 0, 10, 3) };
-    errors = { ...errors, ...validateNumberField('areaTo', formProps.unit.areaTo, 0, 10, 3) };
-    errors = { ...errors, ...validateNumberField('height', formProps.unit.height, 0, 10, 3) };
-    errors = { ...errors, ...validateNumberField('heightTo', formProps.unit.heightTo, 0, 10, 3) };
-    errors = {
-      ...errors,
-      ...validateEnvironmentRequirement('environmentRequirement.temperature', 0, 10, 3, formProps.unit)
-    };
-    errors = {
-      ...errors,
-      ...validateEnvironmentRequirement('environmentRequirement.temperatureTolerance', 0, 10, 0, formProps.unit)
-    };
-    errors = {
-      ...errors,
-      ...validateEnvironmentRequirement('environmentRequirement.relativeHumidity', 0, 10, 3, formProps.unit)
-    };
-    errors = {
-      ...errors,
-      ...validateEnvironmentRequirement('environmentRequirement.relativeHumidityTolerance', 0, 10, 0, formProps.unit)
-    };
-    errors = {
-      ...errors,
-      ...validateEnvironmentRequirement('environmentRequirement.hypoxicAir', 0, 10, 3, formProps.unit)
-    };
-    errors = {
-      ...errors,
-      ...validateEnvironmentRequirement('environmentRequirement.hypoxicAirTolerance', 0, 10, 0, formProps.unit)
-    };
-    const environmentRequirement = formProps.unit.environmentRequirement;
-    errors = {
-      ...errors,
-      ...validateStringField('environmentRequirement.cleaning', environmentRequirement.cleaning, 100)
-    };
-    errors = {
-      ...errors,
-      ...validateStringField('environmentRequirement.lightingCondition', environmentRequirement.lightingCondition, 100)
-    };
-    errors = {
-      ...errors,
-      ...validateStringField('environmentRequirement.comments', environmentRequirement.comments, 250)
-    };
+
+    errors = { ...errors, ...validateStringField('type', unit.type, 100) };
+    errors = { ...errors, ...validateStringField('name', unit.name, 100) };
+    errors = { ...errors, ...validateStringField('address', unit.address, 100) };
+    errors = { ...errors, ...validateNumberField('area', unit.area, 0, 10, 3) };
+    errors = { ...errors, ...validateNumberField('areaTo', unit.areaTo, 0, 10, 3) };
+    errors = { ...errors, ...validateNumberField('height', unit.height, 0, 10, 3) };
+    errors = { ...errors, ...validateNumberField('heightTo', unit.heightTo, 0, 10, 3) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.temperature', 0, 10, 3, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.temperatureTolerance', 0, 10, 0, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.relativeHumidity', 0, 10, 3, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.relativeHumidityTolerance', 0, 10, 0, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.hypoxicAir', 0, 10, 3, unit) };
+    errors = { ...errors, ...validateEnvReq('environmentRequirement.hypoxicAirTolerance', 0, 10, 0, unit) };
+    const envReq = unit.environmentRequirement;
+    errors = { ...errors, ...validateStringField('environmentRequirement.cleaning', envReq.cleaning, 100) };
+    errors = { ...errors, ...validateStringField('environmentRequirement.lightingCondition', envReq.lightingCondition, 100) };
+    errors = { ...errors, ...validateStringField('environmentRequirement.comments', envReq.comments, 250) };
   } else {
     errors.type = I18n.t('musit.storageUnits.type.required');
     errors.name = I18n.t('musit.storageUnits.name.required');

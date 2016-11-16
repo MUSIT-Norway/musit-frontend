@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ObservationPage from './index';
 import Layout from '../../layout';
 import Breadcrumb from '../../layout/Breadcrumb';
+import { I18n } from 'react-i18nify';
 
 export default class ViewObservationPage extends React.Component {
 
@@ -11,7 +12,6 @@ export default class ViewObservationPage extends React.Component {
     doneBy: PropTypes.object,
     registeredBy: PropTypes.string,
     registeredDate: PropTypes.string,
-    translate: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     loadPersonNameFromId: PropTypes.func.isRequired,
     loadObservation: PropTypes.func.isRequired,
@@ -38,16 +38,14 @@ export default class ViewObservationPage extends React.Component {
     return (
       <Layout
         title="Magasin"
-        translate={this.props.translate}
         breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <div>
-            <h4 style={{ textAlign: 'center' }}>{this.props.translate('musit.observation.page.titles.view')}</h4>
+            <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.view')}</h4>
             <ObservationPage
               id={this.props.params.id}
               onSaveObservation={() => true} // disable save
               observations={this.props.observations}
-              translate={this.props.translate}
               doneBy={this.props.doneBy}
               doneDate={this.props.doneDate}
               registeredBy={this.props.registeredBy}

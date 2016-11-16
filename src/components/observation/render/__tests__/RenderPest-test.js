@@ -11,19 +11,19 @@ describe('RenderPest', () => {
         lifeCycle: 'adult'
       },
       {
-        count: "20",
-        lifeCycle: "puppe"
+        count: '20',
+        lifeCycle: 'puppe'
       },
       {
-        count: "10",
-        lifeCycle: "larva"
+        count: '10',
+        lifeCycle: 'larva'
       }
     ];
 
     const ValueProps = {
       observations : observations,
-      identificationValue : "Identification value.",
-      commentValue : "Comment value."
+      identificationValue : 'Identification value.',
+      commentValue : 'Comment value.'
     };
 
     const layoutProps = {

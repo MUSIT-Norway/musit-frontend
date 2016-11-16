@@ -40,7 +40,7 @@ export default class MusitUserAccount extends Component {
       </Row>
     ;
     return (
-      <OverlayTrigger overlay={tooltip}>
+      <OverlayTrigger overlay={tooltip} placement="left">
         <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
           <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed' }}>
             <FontAwesome name="user" size="lg" />

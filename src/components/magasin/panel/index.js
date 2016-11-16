@@ -28,6 +28,7 @@ import Loader from 'react-loader';
 import { parseISODateNonStrict } from '../../../util';
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../components/formfields';
 import validateForm from './validator';
+import { I18n } from 'react-i18nify';
 
 export default class StorageUnitContainer extends Component {
   static propTypes = {
@@ -47,7 +48,6 @@ export default class StorageUnitContainer extends Component {
     this.translateEnvReqField = this.translateEnvReqField.bind(this);
     this.renderEnvReqNumberField = this.renderEnvReqNumberField.bind(this);
     this.renderEnvReqStringFieldBlock = this.renderEnvReqStringFieldBlock.bind(this);
-    this.getAllowedNodeTypes = this.getAllowedNodeTypes.bind(this);
   }
 
   handleSubmit(e) {
@@ -84,7 +84,7 @@ export default class StorageUnitContainer extends Component {
   }
 
   translateEnvReqField(field) {
-    return this.props.translate(`musit.storageUnits.environmentRequirement.${field}`);
+    return I18n.t(`musit.storageUnits.environmentRequirement.${field}`);
   }
 
   renderEnvReqStringFieldBlock(field) {
@@ -149,7 +149,7 @@ export default class StorageUnitContainer extends Component {
           checked={!!this.props.unit.securityAssessment[field]}
           onChange={(event) => this.updateSecAssessments(this.props.unit, field, event.target.checked)}
         >
-          {this.props.translate(`musit.storageUnits.securityAssessment.${field}`)}
+          {I18n.t(`musit.storageUnits.securityAssessment.${field}`)}
         </Checkbox>
       </div>
     );
@@ -162,7 +162,7 @@ export default class StorageUnitContainer extends Component {
           checked={!!this.props.unit.environmentAssessment[field]}
           onChange={(event) => this.updateEnvAssessments(this.props.unit, field, event.target.checked)}
         >
-          {this.props.translate(`musit.storageUnits.environmentalAssessment.${field}`)}
+          {I18n.t(`musit.storageUnits.environmentalAssessment.${field}`)}
         </Checkbox>
       </div>
     );
@@ -172,9 +172,9 @@ export default class StorageUnitContainer extends Component {
     return (
       <Field
         id={field}
-        tooltip={this.props.translate(`musit.storageUnits.${field}.tooltip`)}
+        tooltip={I18n.t(`musit.storageUnits.${field}.tooltip`)}
         validate="number"
-        placeHolder={this.props.translate(`musit.storageUnits.${field}.placeHolder`)}
+        placeHolder={I18n.t(`musit.storageUnits.${field}.placeHolder`)}
         onChange={value => this.updateStorageUnit(this.props.unit, field, value)}
         precision={precision}
         value={unit[field]}
@@ -183,38 +183,21 @@ export default class StorageUnitContainer extends Component {
   }
 
   renderLastChangeData(unit) {
-    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format("DD.MM.YYYY");
+    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format('DD.MM.YYYY');
     // const lastUpdateBy = unit.updatedBy // TODO når dette er i orden, autentisering er i orden
     return (
       <span>
-        <b>{this.props.translate('musit.storageUnits.lastUpdateBy')}</b> {this.props.isAdd ? '' : 'Darth Wader'}
+        <b>{I18n.t('musit.storageUnits.lastUpdateBy')}</b> {this.props.isAdd ? '' : 'Darth Wader'}
         <br />
-        <b>{this.props.translate('musit.storageUnits.lastUpdateDate')}</b>{this.props.isAdd ? '' : lastUpdateDate}
+        <b>{I18n.t('musit.storageUnits.lastUpdateDate')}</b>{this.props.isAdd ? '' : lastUpdateDate}
       </span>
     );
   }
 
-  getAllowedNodeTypes() {
-    // First level 'Organisation'. Second level 'Building'
-    const nodeTypes = ['StorageUnit', 'Room', 'Building', 'Organisation'];
-    const nodeTypesOrganisation = ['Organisation'];
-    const nodeTypesBuilding = ['Building'];
-    const { pathNames } = this.props.rootNode || {};
-    let lv_return;
-    if ( pathNames && (pathNames.length === 2 || pathNames.length === 1)) {
-      lv_return = pathNames.length === 1 ? nodeTypesOrganisation : nodeTypesBuilding;
-    } else {
-      lv_return = nodeTypes;
-    }
-    return lv_return;
-  }
-
   render() {
-
     return (
       <Layout
-        title={this.props.translate('musit.storageUnits.title')}
-        translate={this.props.translate}
+        title={I18n.t('musit.storageUnits.title')}
         breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <Loader loaded={this.props.loaded}>
@@ -231,8 +214,8 @@ export default class StorageUnitContainer extends Component {
                   >
                     <div>
                       <h4 style={{ textAlign: 'center' }}>
-                        {this.props.isAdd ? `${this.props.translate('musit.storageUnits.newNode')} - ` : ''}
-                        {this.props.translate('musit.storageUnits.header')}
+                        {this.props.isAdd ? `${I18n.t('musit.storageUnits.newNode')} - ` : ''}
+                        {I18n.t('musit.storageUnits.header')}
                       </h4>
                       <Grid>
                         <Row className="row-centered">
@@ -240,18 +223,17 @@ export default class StorageUnitContainer extends Component {
                             <Form horizontal>
                               <div className="form-group">
                                 <label className="col-sm-3 control-label" htmlFor="storageUnitType">
-                                  {this.props.translate('musit.storageUnits.type.labelText')}
+                                  {I18n.t('musit.storageUnits.type.labelText')}
                                   { <span style={{ color: 'red' }}>*</span> }
                                 </label>
                                 <div class="col-sm-4" is="null">
                                   <MusitDropDownField
                                     id="type"
                                     validate="text"
-                                    tooltip={this.props.translate('musit.storageUnits.type.tooltip')}
-                                    placeHolder={this.props.translate('musit.storageUnits.type.placeHolder')}
+                                    tooltip={I18n.t('musit.storageUnits.type.tooltip')}
+                                    placeHolder={I18n.t('musit.storageUnits.type.placeHolder')}
                                     maximumLength={100}
-                                    items={this.getAllowedNodeTypes()}
-                                    translate={this.props.translate}
+                                    items={['StorageUnit', 'Room', 'Building', 'Organisation']}
                                     translateKeyPrefix={'musit.storageUnits.type.items.'}
                                     onChange={storageType => this.updateStorageUnit(this.props.unit, 'type', storageType)}
                                     value={this.props.unit.type}
@@ -267,15 +249,15 @@ export default class StorageUnitContainer extends Component {
                             <Form horizontal>
                               <FormGroup>
                                 <label className="col-sm-3 control-label" htmlFor="name">
-                                  {this.props.translate('musit.storageUnits.name.labelText')}
+                                  {I18n.t('musit.storageUnits.name.labelText')}
                                   { <span style={{ color: 'red' }}>*</span> }
                                 </label>
                                 <div class="col-sm-8" is="null">
                                   <Field
                                     id="name"
-                                    tooltip={this.props.translate('musit.storageUnits.name.tooltip')}
+                                    tooltip={I18n.t('musit.storageUnits.name.tooltip')}
                                     validate="text"
-                                    placeHolder={this.props.translate('musit.storageUnits.name.placeHolder')}
+                                    placeHolder={I18n.t('musit.storageUnits.name.placeHolder')}
                                     onChange={storageUnitName => this.updateStorageUnit(this.props.unit, 'name', storageUnitName)}
                                     maximumLength={100}
                                     value={this.props.unit.name || ''}
@@ -290,7 +272,7 @@ export default class StorageUnitContainer extends Component {
                               <Form horizontal>
                                 <FormGroup>
                                   <label className="col-sm-3 control-label" htmlFor="address">
-                                    {this.props.translate('musit.storageUnits.address.labelText')}
+                                    {I18n.t('musit.storageUnits.address.labelText')}
                                   </label>
                                   <div class="col-sm-8" is="null">
                                     <AddressSuggest
@@ -312,7 +294,7 @@ export default class StorageUnitContainer extends Component {
                             <Form horizontal>
                               <div className="form-group">
                                 <label className="col-sm-3 control-label" htmlFor="comments2">
-                                  {this.props.translate('musit.storageUnits.area.labelText')}</label>
+                                  {I18n.t('musit.storageUnits.area.labelText')}</label>
                                 <div class="col-sm-4" is="null">
                                   {this.renderStorageUnitNumberField('area', this.props.unit, 3)}
                                 </div>
@@ -326,7 +308,7 @@ export default class StorageUnitContainer extends Component {
                             <Form horizontal>
                               <div className="form-group">
                                 <label className="col-sm-3 control-label" htmlFor="controlId">
-                                  {this.props.translate('musit.storageUnits.height.labelText')}</label>
+                                  {I18n.t('musit.storageUnits.height.labelText')}</label>
                                 <div class="col-sm-4" is="null">
                                   {this.renderStorageUnitNumberField('height', this.props.unit, 3)}
                                 </div>
@@ -340,7 +322,7 @@ export default class StorageUnitContainer extends Component {
                       </Grid>
                       <Row>
                         <Col style={{ textAlign: 'center' }}>
-                          <h4>{this.props.translate('musit.storageUnits.environmentalData')}</h4>
+                          <h4>{I18n.t('musit.storageUnits.environmentalData')}</h4>
                         </Col>
                       </Row>
                       <div>
@@ -416,7 +398,7 @@ export default class StorageUnitContainer extends Component {
                         <Grid>
                           <Row>
                             <Col lg={5} md={5} sm={5} xs={10} offset={1}>
-                              <ControlLabel>{this.props.translate('musit.storageUnits.securityAssessment.securityAssessment')}
+                              <ControlLabel>{I18n.t('musit.storageUnits.securityAssessment.securityAssessment')}
                               </ControlLabel>
                               {this.renderSecurityAssessmentField('perimeter')}
                               {this.renderSecurityAssessmentField('theftProtection')}
@@ -426,7 +408,7 @@ export default class StorageUnitContainer extends Component {
                             </Col>
                             <Col lg={5} md={5} sm={5} xs={10} offset={1}>
                               <ControlLabel>
-                                {this.props.translate('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
+                                {I18n.t('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
                               </ControlLabel>
                               {this.renderEnvironmentAssessmentField('relativeHumidity')}
                               {this.renderEnvironmentAssessmentField('lightingCondition')}
@@ -443,7 +425,6 @@ export default class StorageUnitContainer extends Component {
                           })}
                           <br />
                           <SaveCancel
-                            translate={this.props.translate}
                             onClickSave={this.handleSubmit}
                             onClickCancel={() => hashHistory.goBack()}
                           />
