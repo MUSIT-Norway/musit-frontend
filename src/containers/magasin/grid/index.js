@@ -1,29 +1,32 @@
-import { connect } from 'react-redux';
-import { loadRoot, clearRoot, loadChildren, deleteUnit } from '../../../reducers/storageunit/grid';
-import { loadObjects } from '../../../reducers/storageobject/grid';
-import { addNode, addObject } from '../../../reducers/picklist';
-import { moveObject, moveNode } from '../../../reducers/move';
-import { loadStats, clearStats } from '../../../reducers/storageunit/stats';
-import { hashHistory } from 'react-router';
-import { I18n } from 'react-i18nify';
-import { emitError, emitSuccess } from '../../../errors/emitter';
+import {connect} from 'react-redux';
+import {loadRoot, clearRoot, loadChildren, deleteUnit} from '../../../reducers/storageunit/grid';
+import {loadObjects} from '../../../reducers/storageobject/grid';
+import {addNode, addObject} from '../../../reducers/picklist';
+import {moveObject, moveNode} from '../../../reducers/move';
+import {loadStats, clearStats} from '../../../reducers/storageunit/stats';
+import {hashHistory} from 'react-router';
+import {I18n} from 'react-i18nify';
+import {emitError, emitSuccess} from '../../../errors/emitter';
 import StorageUnitsContainer from '../../../components/magasin/grid';
-import { createSelector } from 'reselect';
+import {createSelector} from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
+import {customSortingStorageNodeType} from '../../../util/';
 
 const getStorageGridUnit = (state) => state.storageGridUnit.data || [];
 
 const getSortedStorageGridUnit = createSelector(
-    [ getStorageGridUnit ],
-    (storageGridUnit) => orderBy(storageGridUnit, ['type', (o) => toLower(o.name)])
-);
+  [getStorageGridUnit],
+  (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type),
+    (o) => toLower(o.name)
+  ])
+  );
 
 const getStorageObjectGrid = (state) => state.storageObjectGrid.data || [];
 
 const getSortedStorageObjectGrid = createSelector(
-    [ getStorageObjectGrid ],
-    (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
+  [getStorageObjectGrid],
+  (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
 );
 
 const mapStateToProps = (state) => ({
@@ -36,7 +39,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => {
-  const { history } = props;
+  const {history} = props;
 
   return {
     loadRoot: (id) => {
@@ -77,23 +80,23 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onAction: (actionName, unit, path) => {
       switch (actionName) {
-      case 'pickNode':
-        dispatch(addNode(unit, path));
-        break;
-      case 'pickObject':
-        dispatch(addObject(unit, path));
-        break;
-      case 'controlsobservations':
-        history.push(`/magasin/${unit.id}/controlsobservations`);
-        break;
-      case 'observation':
-        history.push(`/magasin/${unit.id}/observations`);
-        break;
-      case 'control':
-        history.push(`/magasin/${unit.id}/controls`);
-        break;
-      default:
-        break;
+        case 'pickNode':
+          dispatch(addNode(unit, path));
+          break;
+        case 'pickObject':
+          dispatch(addObject(unit, path));
+          break;
+        case 'controlsobservations':
+          history.push(`/magasin/${unit.id}/controlsobservations`);
+          break;
+        case 'observation':
+          history.push(`/magasin/${unit.id}/observations`);
+          break;
+        case 'control':
+          history.push(`/magasin/${unit.id}/controls`);
+          break;
+        default:
+          break;
       }
     },
     onEdit: (unit) => {
@@ -117,9 +120,12 @@ const mapDispatchToProps = (dispatch, props) => {
           },
           onFailure: (error) => {
             if (error.response.status === 400) {
-              emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')} );
+              emitError({
+                type: 'errorOnDelete',
+                message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')
+              });
             } else {
-              emitError({ type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')} );
+              emitError({type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')});
             }
           }
         }));

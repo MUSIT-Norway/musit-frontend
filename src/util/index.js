@@ -58,6 +58,17 @@ export const hasProp = (obj: any, prop: string): boolean => {
   return {}.hasOwnProperty.call(obj, prop);
 };
 
+
+export const customSortingStorageNodeType = (type: string): string  => {
+  switch (type) {
+  case 'Organisation' : return '01';
+  case 'Building': return '02';
+  case 'Room': return '03';
+  case 'StorageUnit': return '04';
+  default: return '99';
+  }
+}
+
 export const isDateBiggerThanToday = (newDate: any): boolean => {
   const today = moment();
   const isAfterYear = moment(newDate).isAfter(today, 'year');

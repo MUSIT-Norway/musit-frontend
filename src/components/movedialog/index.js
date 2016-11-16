@@ -23,12 +23,13 @@ import MusitModalImpl from './MusitModal';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
+import {customSortingStorageNodeType} from '../../util/';
 
 const getStorageGridUnit = (state) => state.storageUnitModal.data || [];
 
 const getSortedStorageGridUnit = createSelector(
   [ getStorageGridUnit ],
-  (storageGridUnit) => orderBy(storageGridUnit, ['type', (o) => toLower(o.name)])
+  (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type), (o) => toLower(o.name)])
 );
 
 

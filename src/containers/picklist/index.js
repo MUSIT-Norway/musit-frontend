@@ -25,12 +25,13 @@ import { loadRoot } from '../../reducers/storageunit/grid';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
+import {customSortingStorageNodeType} from '../../util/';
 
 const getNodes = (state) => state.picks.NODE || [];
 
 const getSortedNodes = createSelector(
     [ getNodes ],
-    (nodes) => orderBy(nodes, ['value.type', (o) => toLower(o.value.name)])
+    (nodes) => orderBy(nodes, [(o) => customSortingStorageNodeType(o.value.type), (o) => toLower(o.value.name)])
 );
 
 
