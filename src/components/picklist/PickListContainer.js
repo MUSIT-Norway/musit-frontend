@@ -94,7 +94,7 @@ export default class PickListContainer extends React.Component {
     }
   })
 
-  moveModal = (items) => (toId, toName, onSuccess) => {
+  moveModal = (items) => (to, toName, onSuccess) => {
     const isNode = this.isTypeNode();
     const moveFunction = isNode ? this.props.moveNode : this.props.moveObject;
     const toMove = items.map(itemToMove => itemToMove.value.id);
@@ -107,7 +107,7 @@ export default class PickListContainer extends React.Component {
     } else {
       callback = this.objectCallback(toName, toMoveLength, name, items, onSuccess);
     }
-    moveFunction(toMove, toId, this.props.user.id, callback);
+    moveFunction(toMove, to.id, this.props.user.id, callback);
   }
 
   render() {

@@ -126,6 +126,32 @@ export default class StorageUnitsContainer extends React.Component {
     showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />);
   }
 
+
+  getPathLength = (formProps) => {
+    const { pathNames } = formProps || {};
+    return pathNames && pathNames.length;
+  }
+
+  checkNodeType = (from, to) => {
+
+    if (to.type === 'Root' && 'Organisation' !== from.type) {
+      return I18n.t('musit.storageUnits.type.organisationAllowed');
+    }
+
+    if (2 === this.getPathLength(to) && to.type === 'Organisation' && 'Building' !== from.type) {
+      return I18n.t('musit.storageUnits.type.buildingAllowed');
+    }
+
+  }
+  checkNodeBranch = (from, to) => {
+
+    const pathNameFound = to.pathNames.filter(id => id.nodeId === from.id);
+
+    if ( pathNameFound.length > 0) {
+      return 'Not allowed in same branch';
+    }
+  }
+
   moveNode = (
     fromNode,
     userId = this.props.user.id,
@@ -133,24 +159,33 @@ export default class StorageUnitsContainer extends React.Component {
     moveNode = this.props.moveNode,
     loadRoot = this.props.loadRoot,
     loadNodes = this.loadNodes
-  ) => (toId, toName, onSuccess) => {
-    moveNode(fromNode.id, toId, userId, {
-      onSuccess: () => {
-        onSuccess();
-        loadNodes();
-        loadRoot(nodeId);
-        emitSuccess({
-          type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.nodeMoved', { name: fromNode.name, destination: toName })
-        });
-      },
-      onFailure: () => {
-        emitError({
-          type: 'errorOnMove',
-          message: I18n.t('musit.moveModal.messages.errorNode', { name: fromNode.name, destination: toName })
-        });
-      }
-    });
+  ) => (to, toName, onSuccess) => {
+    const errorMessage = this.checkNodeBranch(fromNode, to) || this.checkNodeType(fromNode, to);
+
+    if (!errorMessage) {
+      moveNode(fromNode.id, to.id, userId, {
+        onSuccess: () => {
+          onSuccess();
+          loadNodes();
+          loadRoot(nodeId);
+          emitSuccess({
+            type: 'movedSuccess',
+            message: I18n.t('musit.moveModal.messages.nodeMoved', { name: fromNode.name, destination: toName })
+          });
+        },
+        onFailure: () => {
+          emitError({
+            type: 'errorOnMove',
+            message: I18n.t('musit.moveModal.messages.errorNode', { name: fromNode.name, destination: toName })
+          });
+        }
+      })
+    } else {
+      emitError({
+        type: 'errorOnMove',
+        message: errorMessage
+      });
+    }
   };
 
   showMoveObjectModal(
