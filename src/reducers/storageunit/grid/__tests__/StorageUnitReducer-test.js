@@ -136,7 +136,7 @@ describe('StorageUnitReducer', () => {
 
   it('creates LOAD_ONE_SUCCESS when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadOneState);
@@ -193,7 +193,7 @@ describe('StorageUnitReducer', () => {
       updatedDate: '2016-01-01T00:00:00+00:00'
     }];
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/root`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/root`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
@@ -241,7 +241,7 @@ describe('StorageUnitReducer', () => {
 
   it('creates LOAD_SEVERAL_SUCCESS child when fetching data has been done', () => {
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
@@ -289,7 +289,7 @@ describe('StorageUnitReducer', () => {
 
   it('creates DELETE_SUCCESS when fetching data has been done', () => {
     const id =2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
         .del(url)
         .reply(200, {

@@ -17,7 +17,7 @@ describe('Object search reducer', () => {
       page: 1,
       perPage: 50
     };
-    const baseUrl = Config.magasin.urls.objectsearch.baseUrl(1);
+    const baseUrl = Config.magasin.urls.objectsearch.baseUrl(99);
     const museumNoQuery = `museumNo=${params.museumNo || ''}`;
     const subNoQuery = `subNo=${params.subNo || ''}`;
     const termQuery = `term=${params.term || ''}`;

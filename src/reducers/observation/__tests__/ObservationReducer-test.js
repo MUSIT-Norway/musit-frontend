@@ -337,7 +337,7 @@ describe('ObservationReducer', () => {
   it('creates LOAD_SUCCESS when observation data is loaded', () => {
     const nodeId = 2;
     const observationId = 3;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations/${observationId}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations/${observationId}`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
@@ -471,7 +471,7 @@ describe('ObservationReducer', () => {
       ]
     };
     const nodeId = 4;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations`;
     nock('http://localhost')
         .post(url, observationAddData)
         .reply(201, {

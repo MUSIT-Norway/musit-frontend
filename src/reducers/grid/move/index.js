@@ -1,6 +1,7 @@
 import Config from '../../../config';
 import { apiUrl } from '../../../util';
 import { getPath } from '../../helper';
+import { getActorNames } from '../../../util/actor';
 
 export const LOAD = 'musit/movehistory/LOAD';
 export const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS';
@@ -58,11 +59,11 @@ const moveHistoryReducer = (state = initialState, action) => {
       ...state,
       loading: false,
       loaded: true,
-      data: state.data.map((e) => {
-        const actor = action.result.find((a) => a.id === e.doneBy);
-        return { ...e,
-            doneBy: actor ? actor.fn : e.doneBy
-          };
+      data: state.data.map((data) => {
+        return {
+          ...data,
+          ...getActorNames(action.result, data.doneBy, data.registeredBy)
+        };
       })
     };
   case LOAD_ACTOR_FAIL:
@@ -96,7 +97,7 @@ export const loadActor = (r) => {
 export const loadMoveHistoryForObject = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/locations`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/objects/${id}/locations`)),
     callback
   };
 };

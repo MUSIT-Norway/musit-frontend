@@ -210,7 +210,7 @@ describe('ObservationControlGridReducer', () => {
       ]
     };
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/events`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/events`;
     nock('http://localhost')
             .get(url)
             .reply(200, OutputSuccess);
