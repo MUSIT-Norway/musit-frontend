@@ -39,7 +39,7 @@ export default class StorageUnitsContainer extends React.Component {
     moveNode: React.PropTypes.func.isRequired,
     user: React.PropTypes.shape({
       id: React.PropTypes.number.isRequired
-    }).isRequired,
+    }),
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
       numNodes: React.PropTypes.number,
