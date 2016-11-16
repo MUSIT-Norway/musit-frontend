@@ -20,10 +20,21 @@
 import { loadChildren, clear, loadNode } from '../../reducers/storageunit/modal';
 import { connect } from 'react-redux';
 import MusitModalImpl from './MusitModal';
+import { createSelector } from 'reselect';
+import orderBy from 'lodash/orderBy';
+import toLower from 'lodash/toLower';
+
+const getStorageGridUnit = (state) => state.storageUnitModal.data || [];
+
+const getSortedStorageGridUnit = createSelector(
+  [ getStorageGridUnit ],
+  (storageGridUnit) => orderBy(storageGridUnit, ['type', (o) => toLower(o.name)])
+);
+
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  children: state.storageUnitModal.data || [],
+  children: getSortedStorageGridUnit(state),
   selectedNode: state.storageUnitModal.root.data
 });
 
