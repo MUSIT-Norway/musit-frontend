@@ -11,6 +11,7 @@ import MusitModal from '../../movedialog';
 import { I18n } from 'react-i18nify';
 import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
+import { checkNodeBranchAndType } from '../../../util/nodeValidator'
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -126,32 +127,6 @@ export default class StorageUnitsContainer extends React.Component {
     showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />);
   }
 
-
-  getPathLength = (formProps) => {
-    const { pathNames } = formProps || {};
-    return pathNames && pathNames.length;
-  }
-
-  checkNodeType = (from, to) => {
-
-    if (to.type === 'Root' && 'Organisation' !== from.type) {
-      return I18n.t('musit.storageUnits.type.organisationAllowed');
-    }
-
-    if (2 === this.getPathLength(to) && to.type === 'Organisation' && 'Building' !== from.type) {
-      return I18n.t('musit.storageUnits.type.buildingAllowed');
-    }
-
-  }
-  checkNodeBranch = (from, to) => {
-
-    const pathNameFound = to.pathNames.filter(id => id.nodeId === from.id);
-
-    if ( pathNameFound.length > 0) {
-      return 'Not allowed in same branch';
-    }
-  }
-
   moveNode = (
     fromNode,
     userId = this.props.user.id,
@@ -160,7 +135,7 @@ export default class StorageUnitsContainer extends React.Component {
     loadRoot = this.props.loadRoot,
     loadNodes = this.loadNodes
   ) => (to, toName, onSuccess) => {
-    const errorMessage = this.checkNodeBranch(fromNode, to) || this.checkNodeType(fromNode, to);
+    const errorMessage = checkNodeBranchAndType(fromNode, to);
 
     if (!errorMessage) {
       moveNode(fromNode.id, to.id, userId, {
