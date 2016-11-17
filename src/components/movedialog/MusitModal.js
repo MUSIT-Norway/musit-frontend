@@ -95,7 +95,7 @@ export default class MusitModal extends Component {
         <div style={{ paddingTop: '10px' }}>
           <SubmitButton
             disabled={!isSelected}
-            onClick={() => this.props.onMove(selectedNode.id, selectedNode.name, this.context.closeModal)}
+            onClick={() => this.props.onMove(selectedNode, selectedNode.name, this.context.closeModal)}
             label={I18n.t('musit.moveModal.move')}
           />
           &nbsp;

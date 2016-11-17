@@ -460,6 +460,9 @@
           "required": "Type is required.",
           "organisationAllowed": "Only organisation type is allowed.",
           "buildingAllowed": "Only building type is allowed.",
+          "organisationAllowedToMove": "Only nodes of type Organisation can be moved to a root node.",
+          "buildingAllowedToMove": "Only nodes of type building can be moved to a node type Organisation.",
+          "notAllowedToMove": "A node can not be moved into itself.",
           "placeHolder": "Please choose...",
           "tooltip": "Type of node",
           "items": {
@@ -1054,6 +1057,9 @@
           "required": "Type er påkrevd.",
           "organisationAllowed": "Bare typen organisasjon er tillatt på dette nivå.",
           "buildingAllowed": "Bare typen bygg er tillatt på dette nivå.",
+          "organisationAllowedToMove": "Kun noder av type Organisasjon kan flyttes til en rotnode.",
+          "buildingAllowedToMove": "Kun noder av type Bygg kan flyttes til en node type Organisasjon.",
+          "notAllowedToMove": "En node kan ikke flyttes inn i selv.",
           "placeHolder": "Vennligst velg...",
           "tooltip": "Nodens type",
           "items": {

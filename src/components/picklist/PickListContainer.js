@@ -10,6 +10,7 @@ import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog';
 import './PickListContainer.css';
 import { emitError, emitSuccess } from '../../errors/emitter';
+import { checkNodeBranchAndType } from '../../util/nodeValidator';
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -92,9 +93,8 @@ export default class PickListContainer extends React.Component {
     }
   })
 
-  moveModal = (items) => (toId, toName, onSuccess) => {
+  moveModal = (items) => (to, toName, onSuccess) => {
     const isNode = this.isTypeNode();
-    const userId = this.props.user.id;
     const moveFunction = isNode ? this.props.moveNode : this.props.moveObject;
     const toMove = items.map(itemToMove => itemToMove.value.id);
     const toMoveLength = toMove.length;
@@ -106,7 +106,27 @@ export default class PickListContainer extends React.Component {
     } else {
       callback = this.objectCallback(toName, toMoveLength, name, items, onSuccess);
     }
-    moveFunction(toMove, toId, userId, callback);
+
+
+    let error = false;
+    if (isNode) {
+      const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
+      const errorMessages = itemsWithError.map(fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.value.name})` );
+      if (errorMessages.length > 0) {
+        error = true;
+        for (const errorMessage of errorMessages) {
+          emitError({
+            type: 'errorOnMove',
+            message: errorMessage
+          });
+        }
+      }
+    }
+
+    if (!error) {
+      moveFunction(toMove, to.id, this.props.user.id, callback);
+    }
+
   }
 
   render() {
