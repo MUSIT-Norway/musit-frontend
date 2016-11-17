@@ -11,6 +11,7 @@ import MusitModal from '../../movedialog';
 import { I18n } from 'react-i18nify';
 import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
+import { checkNodeBranchAndType } from '../../../util/nodeValidator';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -131,24 +132,33 @@ export default class StorageUnitsContainer extends React.Component {
     moveNode = this.props.moveNode,
     loadRoot = this.props.loadRoot,
     loadNodes = this.loadNodes
-  ) => (toId, toName, onSuccess) => {
-    moveNode(fromNode.id, toId, userId, {
-      onSuccess: () => {
-        onSuccess();
-        loadNodes();
-        loadRoot(nodeId);
-        emitSuccess({
-          type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.nodeMoved', { name: fromNode.name, destination: toName })
-        });
-      },
-      onFailure: () => {
-        emitError({
-          type: 'errorOnMove',
-          message: I18n.t('musit.moveModal.messages.errorNode', { name: fromNode.name, destination: toName })
-        });
-      }
-    });
+  ) => (to, toName, onSuccess) => {
+    const errorMessage = checkNodeBranchAndType(fromNode, to);
+
+    if (!errorMessage) {
+      moveNode(fromNode.id, to.id, userId, {
+        onSuccess: () => {
+          onSuccess();
+          loadNodes();
+          loadRoot(nodeId);
+          emitSuccess({
+            type: 'movedSuccess',
+            message: I18n.t('musit.moveModal.messages.nodeMoved', { name: fromNode.name, destination: toName })
+          });
+        },
+        onFailure: () => {
+          emitError({
+            type: 'errorOnMove',
+            message: I18n.t('musit.moveModal.messages.errorNode', { name: fromNode.name, destination: toName })
+          });
+        }
+      });
+    } else {
+      emitError({
+        type: 'errorOnMove',
+        message: errorMessage
+      });
+    }
   };
 
   showMoveObjectModal(
