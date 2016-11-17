@@ -30,7 +30,7 @@ export default class ModalNodeGrid extends Component {
                       {` ${c.name}`}
                     </a>
                   </td>
-                  <td>
+                  <td id={`${i}_${c.type}`}>
                     {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
                   </td>
                 </tr>

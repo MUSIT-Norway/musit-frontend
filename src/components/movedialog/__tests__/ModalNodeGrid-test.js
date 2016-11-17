@@ -11,13 +11,16 @@ describe('ModalNodeGrid', () => {
         onClick={(key) => key}
         tableData={[
           {
-            name: 'Eske'
+            name: 'Eske',
+            type: 'StorageUnit'
           },
           {
-            name: 'Box'
+            name: 'Box',
+            type: 'StorageUnit'
           },
           {
-            name: 'Room'
+            name: 'Room',
+            type: 'Room'
           }
         ]}
       />
@@ -31,10 +34,10 @@ describe('ModalNodeGrid', () => {
   });
   it('Check that second row is created by id.', () => {
     setup();
-    assert(inputComponent[1].getAttribute('id') === '1_Box');
+    assert(inputComponent[2].getAttribute('id') === '1_Box');
   });
   it('Check that third row is created by id.', () => {
     setup();
-    assert(inputComponent[2].getAttribute('id') === '2_Room');
+    assert(inputComponent[5].getAttribute('id') === '2_Room');
   });
 });
