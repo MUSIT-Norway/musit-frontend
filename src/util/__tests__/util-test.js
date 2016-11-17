@@ -31,7 +31,7 @@ describe('parseISODateStrict', () => {
 });
 
 describe('customSortingStorageNodeType', () => {
-  it('Order should be Organisation > Building > Room > StorageUnit', () => {
+  it('Order should be Organisation < Building < Room < StorageUnit', () => {
     const unknown = customSortingStorageNodeType('errrr');
     const building = customSortingStorageNodeType('Building');
     const organisation = customSortingStorageNodeType('Organisation');
