@@ -461,7 +461,7 @@
           "organisationAllowed": "Only organisation type is allowed.",
           "buildingAllowed": "Only building type is allowed.",
           "organisationAllowedToMove": "Only nodes of type Organization can be moved to a root node.",
-          "buildingAllowedToMove": "Only nodes by type of construction can be moved to a node type Organization.",
+          "buildingAllowedToMove": "Only nodes of type building can be moved to a node type Organization.",
           "notAllowedToMove": "A node can not be moved into itself.",
           "placeHolder": "Please choose...",
           "tooltip": "Type of node",

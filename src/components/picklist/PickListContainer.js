@@ -10,7 +10,7 @@ import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog';
 import './PickListContainer.css';
 import { emitError, emitSuccess } from '../../errors/emitter';
-import { checkNodeBranchAndType } from '../../util/nodeValidator'
+import { checkNodeBranchAndType } from '../../util/nodeValidator';
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -112,7 +112,7 @@ export default class PickListContainer extends React.Component {
     let error = false;
     if (isNode) {
       const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
-      const errorMessages = itemsWithError.map(fromNode => checkNodeBranchAndType(fromNode, to));
+      const errorMessages = itemsWithError.map(fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.value.name})` );
       if (errorMessages.length > 0) {
         error = true;
         for (const errorMessage of errorMessages) {

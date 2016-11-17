@@ -11,7 +11,7 @@ import MusitModal from '../../movedialog';
 import { I18n } from 'react-i18nify';
 import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
-import { checkNodeBranchAndType } from '../../../util/nodeValidator'
+import { checkNodeBranchAndType } from '../../../util/nodeValidator';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
