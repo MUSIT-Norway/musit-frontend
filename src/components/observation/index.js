@@ -17,6 +17,7 @@ import * as validation from './validation';
 import { isDateBiggerThanToday } from '../../util';
 import { I18n } from 'react-i18nify';
 import { emitError } from '../../errors/emitter';
+import { getActorId } from '../../util/actor';
 
 export default class ObservationPage extends React.Component {
 
@@ -24,7 +25,8 @@ export default class ObservationPage extends React.Component {
     id: PropTypes.string.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
-    doneBy: PropTypes.object,
+    doneBy: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    doneById: PropTypes.string,
     registeredDate: PropTypes.string,
     registeredBy: PropTypes.string,
     onSaveObservation: PropTypes.func.isRequired,
@@ -49,7 +51,8 @@ export default class ObservationPage extends React.Component {
       selectedType: null,
       observations: props.observations,
       doneDate: props.doneDate || new Date().toISOString(),
-      doneBy: props.doneBy
+      doneBy: props.doneBy,
+      doneById: props.doneById
     };
     this.isTypeSelectable = this.isTypeSelectable.bind(this);
     this.onChangeField = this.onChangeField.bind(this);
@@ -64,19 +67,25 @@ export default class ObservationPage extends React.Component {
     if (this.props.mode === 'VIEW') {
       this.setState({
         ...this.state,
-        doneBy: nextProps.doneBy && nextProps.doneBy.id ? nextProps.doneBy : null,
+        doneBy: nextProps.doneBy,
+        doneById: nextProps.doneById,
         doneDate: nextProps.doneDate,
         observations: nextProps.observations
       });
     }
-    if (this.props.mode === 'ADD' && nextProps.doneBy && this.props.doneBy && nextProps.doneBy.id !== this.props.doneBy.id) {
+    if (this.props.mode === 'ADD' && nextProps.doneBy && this.props.doneBy && nextProps.doneBy !== this.props.doneBy) {
       this.setState({
         ...this.state,
-        doneBy: nextProps.doneBy
+        doneBy: nextProps.doneBy,
+        doneById: nextProps.doneById
       });
     }
     if (nextProps.doneBy !== this.props.doneBy) {
-      this.setState({ ...this.state, doneBy: nextProps.doneBy });
+      this.setState({
+        ...this.state,
+        doneBy: nextProps.doneBy,
+        doneById: nextProps.doneById
+      });
     }
   }
 
@@ -334,16 +343,20 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ? 
                   <FormControl
                     componentClass="input"
-                    value={this.state.doneBy ? this.state.doneBy.fn || '' : ''}
+                    value={this.state.doneBy && this.state.doneBy.fn ? this.state.doneBy.fn : this.state.doneBy || ''}
                     disabled
                   />
                  : 
                   <ActorSuggest
                     id="doneByField"
-                    value={this.state.doneBy ? this.state.doneBy.fn || '' : ''}
+                    value={this.state.doneBy && this.state.doneBy.fn ? this.state.doneBy.fn : this.state.doneBy || ''}
                     placeHolder="Find actor"
-                    onChange={doneBy => {
-                      this.setState({ ...this.state, doneBy });
+                    onChange={newValue => {
+                      this.setState({
+                        ...this.state,
+                        doneBy: newValue,
+                        doneById: getActorId(newValue)
+                      });
                     }}
                   />
                 }

@@ -19,8 +19,7 @@
  */
 import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
-import { loadControl } from '../../../reducers/control';
-import { getActorNameFromId } from '../../../reducers/observation';
+import { loadControl, loadActors } from '../../../reducers/control';
 import ControlViewContainerImpl from '../../../components/control/view';
 import { loadRoot } from '../../../reducers/storageunit/grid';
 
@@ -35,8 +34,8 @@ const mapDispatchToProps = (dispatch) => ({
   loadControl: (nodeId, controlId, callback) => {
     dispatch(loadControl(nodeId, controlId, callback));
   },
-  loadPersonNameFromId: (doneBy) => {
-    dispatch(getActorNameFromId(doneBy));
+  loadActorDetails: (control) => {
+    dispatch(loadActors(control));
   },
   loadStorageObj: (id) => {
     dispatch(loadRoot(id));

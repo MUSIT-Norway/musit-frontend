@@ -1,3 +1,5 @@
+import { apiUrl } from '../../util';
+import { getActorId } from '../../util/actor';
 
 export const SET_USER = 'musit/auth/SET_USER';
 export const CLEAR_USER = 'musit/auth/CLEAR_USER';
@@ -5,7 +7,6 @@ export const LOAD_ACTOR = 'musit/auth/LOAD_ACTOR';
 export const LOAD_ACTOR_SUCCESS = 'musit/auth/LOAD_ACTOR_SUCCESS';
 export const LOAD_ACTOR_FAILURE = 'musit/auth/LOAD_ACTOR_FAILURE';
 export const CLEAR_ACTOR = 'musit/auth/CLEAR_ACTOR';
-import { apiUrl } from '../../util';
 
 const initialState = {
   user: null,
@@ -40,7 +41,8 @@ const authReducer = (state = initialState, action = {}) => {
       ...state,
       loading: false,
       loaded: true,
-      actor: action.result
+      actor: action.result,
+      actorId: getActorId(action.result)
     };
   case LOAD_ACTOR_FAILURE:
     return {

@@ -19,7 +19,7 @@
  */
 import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
-import { loadControlsAndObservationsForNode, loadActor } from '../../reducers/grid/observationcontrol';
+import { loadControlsAndObservationsForNode, loadActors } from '../../reducers/grid/observationcontrol';
 import { loadRoot } from '../../reducers/storageunit/grid';
 import ObservationControlGridShow from '../../components/observationcontrol';
 import { createSelector } from 'reselect';
@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loadControlsAndObservationsForNode(id, callback));
   },
   loadActorDetails: (data) => {
-    dispatch(loadActor(data));
+    dispatch(loadActors(data));
   },
   loadStorageObj: (id) => {
     dispatch(loadRoot(id));

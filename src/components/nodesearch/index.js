@@ -1,6 +1,7 @@
 import React from 'react';
 import AutoSuggest from 'react-autosuggest';
 import autoComplete from '../../state/autocomplete';
+import Config from '../../config';
 
 class NodeSuggest extends React.Component {
 
@@ -82,5 +83,5 @@ class NodeSuggest extends React.Component {
 }
 
 export default autoComplete(
-  '/api/storagefacility/v1/museum/1/storagenodes/search?searchStr=%term%&'
+  `${Config.magasin.urls.storagefacility.baseUrl(99)}/search?searchStr=%term%&`
 )(NodeSuggest);

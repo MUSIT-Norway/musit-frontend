@@ -53,7 +53,7 @@ export default storageUnitStatsReducer;
 export const loadStats = (id) => {
   return {
     types: [LOAD_STATS, LOAD_STATS_SUCCESS, LOAD_STATS_FAILURE],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/stats`))
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/stats`))
   };
 };
 

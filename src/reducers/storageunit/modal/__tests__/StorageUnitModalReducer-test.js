@@ -112,7 +112,7 @@ describe('StorageUnitModalReducer', () => {
 
   it('creates LOAD_ROOT_SUCCESS when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadOneState);
@@ -175,7 +175,7 @@ describe('StorageUnitModalReducer', () => {
       updatedDate: '2016-01-01T00:00:00+00:00'
     }];
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/1`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/1`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
@@ -217,7 +217,7 @@ describe('StorageUnitModalReducer', () => {
 
   it('creates LOAD_CHILDREN_SUCCESS child when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
