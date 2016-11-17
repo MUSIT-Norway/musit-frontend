@@ -125,7 +125,7 @@ describe('GridMoveHistory', () => {
       }]
         };
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/locations`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/objects/${id}/locations`;
     nock('http://localhost')
             .get(url)
             .reply(200, OutputSuccess);

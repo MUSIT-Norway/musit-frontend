@@ -30,7 +30,7 @@ export default class ObservationControlGridShow extends React.Component {
     this.props.loadControlAndObservations(this.props.params.id, {
       onSuccess: (result) => {
         if (result && result.length > 0) {
-          this.props.loadActorDetails({data: result.map(r => r.doneBy)});
+          this.props.loadActorDetails(result);
         }
       }
     });

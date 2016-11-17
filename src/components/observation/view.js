@@ -9,11 +9,11 @@ export default class ViewObservationPage extends React.Component {
   static propTypes = {
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
-    doneBy: PropTypes.object,
+    doneBy: PropTypes.string,
     registeredBy: PropTypes.string,
     registeredDate: PropTypes.string,
     params: PropTypes.object.isRequired,
-    loadPersonNameFromId: PropTypes.func.isRequired,
+    loadActorDetails: PropTypes.func.isRequired,
     loadObservation: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object
   }
@@ -21,8 +21,8 @@ export default class ViewObservationPage extends React.Component {
   componentWillMount() {
     if (this.props.params.obsId) {
       this.props.loadObservation(this.props.params.id, this.props.params.obsId, {
-        onSuccess: (r) => {
-          this.props.loadPersonNameFromId(r.doneBy);
+        onSuccess: (observation) => {
+          this.props.loadActorDetails(observation);
         }
       });
     }

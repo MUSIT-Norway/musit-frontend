@@ -28,6 +28,7 @@ import ActorSuggest from '../../../components/actor/ActorSuggest';
 import Layout from '../../../layout';
 import Breadcrumb from '../../../layout/Breadcrumb';
 import { isDateBiggerThanToday } from '../../../util';
+import { getActorId } from '../../../util/actor';
 import { emitError, emitSuccess } from '../../../errors/emitter';
 import { I18n } from 'react-i18nify';
 
@@ -36,6 +37,7 @@ export default class ControlAddContainer extends React.Component {
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
     actor: React.PropTypes.object,
+    actorId: React.PropTypes.string,
     envReqData: React.PropTypes.object,
     rootNode: React.PropTypes.object
   }
@@ -52,7 +54,8 @@ export default class ControlAddContainer extends React.Component {
       light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
       cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
       doneDate: this.props.doneDate ? this.props.doneDate : new Date().toISOString(),
-      doneBy: this.props.actor
+      doneBy: this.props.actor,
+      doneById: this.props.actorId
     };
     this.onControlClick = this.onControlClick.bind(this);
     this.onControlClickOK = this.onControlClickOK.bind(this);
@@ -68,6 +71,9 @@ export default class ControlAddContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.actorId !== this.props.actorId) {
+      this.setState({ ...this.state, doneById: nextProps.actorId });
+    }
     if (nextProps.actor !== this.props.actor) {
       this.setState({ ...this.state, doneBy: nextProps.actor });
     }
@@ -106,7 +112,7 @@ export default class ControlAddContainer extends React.Component {
     // Create a nice representation of the control state
     const controlState = {
       ...flatten(controls),
-      doneBy: this.state.doneBy,
+      doneBy: this.state.doneById,
       doneDate: this.state.doneDate
     };
     if (this.oneStateIsNotOK()) {
@@ -143,7 +149,7 @@ export default class ControlAddContainer extends React.Component {
     if (controls.length === 0) {
       errors.push(I18n.t('musit.newControl.controlsRequired'));
     }
-    if (!this.state.doneBy || !this.state.doneBy.id) {
+    if (!this.state.doneBy) {
       errors.push(I18n.t('musit.newControl.doneByRequired'));
     }
     if (!this.state.doneDate) {
@@ -259,7 +265,11 @@ export default class ControlAddContainer extends React.Component {
                         value={this.state.doneBy ? this.state.doneBy.fn : ''}
                         placeHolder="Find actor"
                         onChange={newValue => {
-                          this.setState({ ...this.state, doneBy: newValue });
+                          this.setState({
+                            ...this.state,
+                            doneBy: newValue,
+                            doneById: getActorId(newValue)
+                          });
                         }}
                       />
                     </Col>

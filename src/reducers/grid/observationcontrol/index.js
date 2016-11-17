@@ -1,5 +1,8 @@
 import Config from '../../../config';
 import { apiUrl } from '../../../util';
+import { getActorNames } from '../../../util/actor';
+import flatten from 'lodash/flatten';
+import uniq from 'lodash/uniq';
 
 export const LOAD = 'musit/observationcontrol/LOAD';
 export const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS';
@@ -9,7 +12,6 @@ export const LOAD_ACTOR_SUCCESS = 'musit/observationcontrol/LOAD_ACTOR_SUCCESS';
 export const LOAD_ACTOR_FAILURE = 'musit/observationcontrol/LOAD_ACTOR_FAILURE';
 
 const initialState = { data: [] };
-import 'whatwg-fetch';
 
 const observationControlGridReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -36,27 +38,24 @@ const observationControlGridReducer = (state = initialState, action) => {
   case LOAD_ACTOR:
     return {
       ...state,
-      loadingActors: true,
-      loadedActors: false
+      loading: true,
+      loaded: false
     };
   case LOAD_ACTOR_SUCCESS:
     return {
       ...state,
-      loadingActors: false,
-      loadedActors: true,
-      data: state.data.map((data) => {
-        const actor = action.result.find((a) => a.id === data.doneBy);
-        return {
-          ...data,
-          doneBy: actor ? actor.fn : data.doneBy
-        };
-      })
+      loading: false,
+      loaded: true,
+      data: state.data.map((data) => ({
+        ...data,
+        ...getActorNames(action.result, data.doneBy, data.registeredBy)
+      }))
     };
   case LOAD_ACTOR_FAILURE:
     return {
       ...state,
-      loadingActors: false,
-      loadedActors: false,
+      loading: false,
+      loaded: false,
       error: action.error
     };
   default:
@@ -64,17 +63,18 @@ const observationControlGridReducer = (state = initialState, action) => {
   }
 };
 
-export const loadActor = (r) => {
+export const loadActors = (rows) => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: (client) => client.post(apiUrl('/api/actor/v1/person/details'), r)
+    promise: (client) =>
+      client.post(apiUrl('/api/actor/v1/person/details'), { data: uniq(flatten(rows.map(r => [r.doneBy, r.registeredBy]))) })
   };
 };
 
 export const loadControlsAndObservationsForNode = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/events`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/events`)),
     callback
   };
 };

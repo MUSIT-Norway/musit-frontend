@@ -3,6 +3,7 @@ import reducer from '../index';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
+import Config from '../../../../config';
 
 const comingFromBackend = [
   {
@@ -34,7 +35,7 @@ const comingFromBackend = [
 describe('StorageUnitReducer', () => {
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
     const id = 1;
-    const url = `/api/thingaggregate/museum/1/node/${id}/objects`;
+    const url = `${Config.magasin.urls.thingaggregate.baseUrl(99)}/node/${id}/objects`;
     nock('http://localhost')
         .get(url)
         .reply(200, comingFromBackend);

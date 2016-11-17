@@ -2,10 +2,10 @@ import Config from '../../config';
 import { apiUrl } from '../../util';
 
 export const MOVE_OBJECT = 'musit/move/object/start';
-export const MOVE_OBJECT_SUCCESS = 'musit/move/object/succes';
+export const MOVE_OBJECT_SUCCESS = 'musit/move/object/success';
 export const MOVE_OBJECT_FAILURE = 'musit/move/object/failure';
 export const MOVE_NODE = 'musit/move/node/start';
-export const MOVE_NODE_SUCCESS = 'musit/move/node/succes';
+export const MOVE_NODE_SUCCESS = 'musit/move/node/success';
 export const MOVE_NODE_FAILURE = 'musit/move/node/failure';
 
 const ACTIONS = {
@@ -32,7 +32,7 @@ export const moveObject = (objectId, destination, doneBy, callback) => {
   };
   return {
     types: [MOVE_OBJECT, MOVE_OBJECT_SUCCESS, MOVE_OBJECT_FAILURE],
-    promise: (client) => client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/moveObject`), { data }),
+    promise: (client) => client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/moveObject`), { data }),
     callback
   };
 };
@@ -45,7 +45,7 @@ export const moveNode = (nodeId, destination, doneBy, callback) => {
   };
   return {
     types: [MOVE_NODE, MOVE_NODE_SUCCESS, MOVE_NODE_FAILURE],
-    promise: (client) => client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/moveNode`), { data }),
+    promise: (client) => client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/moveNode`), { data }),
     callback
   };
 };

@@ -66,7 +66,7 @@ describe('Stats reducer', () => {
 
   it('creates LOAD_STATS_SUCCESS when fetching data has been done', () => {
     const id = 3;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/stats`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/stats`;
     nock('http://localhost')
         .get(url)
         .reply(200, {

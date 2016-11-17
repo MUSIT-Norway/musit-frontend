@@ -9,7 +9,7 @@ Object {
     "observation": undefined,
     "ok": true
   },
-  "doneBy": undefined,
+  "doneBy": "f4e1eba9-8add-4675-9836-db59f7115d7c",
   "doneDate": "2016-10-31T23:00:00.000Z",
   "eventType": "Control",
   "gas": Object {
