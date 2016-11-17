@@ -69,13 +69,13 @@ export default storageUnitContainerReducer;
 export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`)),
     callback
   };
 };
 
 export const update = (data, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${data.id}`);
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${data.id}`);
   const dataToPost = mapToBackend(data);
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
@@ -85,7 +85,7 @@ export const update = (data, callback) => {
 };
 
 export const insert = (parentId, data, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}${!parentId ? '/root' : ''}`);
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}${!parentId ? '/root' : ''}`);
   const dataToPost = mapToBackend(data, parentId);
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],

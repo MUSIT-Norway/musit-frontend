@@ -1,8 +1,10 @@
 import Config from '../../config';
 import { apiUrl } from '../../util';
-
+import { getActorNames } from '../../util/actor';
 import mapToBackEnd from './mapper/to_backend';
 import mapToFrontEnd from './mapper/to_frontend';
+import uniq from 'lodash/uniq';
+
 export const ADD = 'musit/observation/ADD';
 export const ADD_SUCCESS = 'musit/observation/ADD_SUCCESS';
 export const ADD_FAIL = 'musit/observation/ADD_FAIL';
@@ -11,7 +13,7 @@ export const LOAD_SUCCESS = 'musit/observation/LOAD_SUCCESS';
 export const LOAD_FAIL = 'musit/observation/LOAD_FAIL';
 export const LOAD_ACTOR = 'musit/observation/actor/LOAD';
 export const LOAD_ACTOR_SUCCESS = 'musit/observation/actor/LOAD_SUCCESS';
-export const LOAD_ACTOR_FAIL = 'musit/observation/actor/LOAD_FAIL';
+export const LOAD_ACTOR_FAILURE = 'musit/observation/actor/LOAD_FAILURE';
 export const initialState = {
   data: {
     observations: []
@@ -76,14 +78,17 @@ const observationReducer = (state = initialState, action = {}) => {
       ...state,
       loading: false,
       loaded: true,
-      data: { ...state.data, doneBy: action.result }
+      data: {
+        ...state.data,
+        ...getActorNames(action.result, state.data.doneBy, state.data.registeredBy)
+      }
     };
-  case LOAD_ACTOR_FAIL:
+  case LOAD_ACTOR_FAILURE:
     return {
       ...state,
       loading: false,
       loaded: false,
-      data: { ...state.data, doneBy: action.error }
+      error: action.error
     };
   default:
     return state;
@@ -94,7 +99,7 @@ export default observationReducer;
 
 export const addObservation = (nodeId, data, callback) => {
   const action = 'post';
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations`);
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations`);
   const dataToPost = mapToBackEnd(data, nodeId);
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
@@ -103,15 +108,16 @@ export const addObservation = (nodeId, data, callback) => {
   };
 };
 
-export const getActorNameFromId = (id) => {
+export const loadActors = (observation) => {
   return {
-    types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAIL],
-    promise: (client) => client.get(apiUrl(`/api/actor/v1/person/${id}`))
+    types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
+    promise: (client) =>
+      client.post(apiUrl('/api/actor/v1/person/details'), { data: uniq([observation.doneBy, observation.registeredBy]) })
   };
 };
 
 export const loadObservation = (nodeId, observationId, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${nodeId}/observations/${observationId}`);
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations/${observationId}`);
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get(url),

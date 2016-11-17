@@ -1,6 +1,6 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
-import suReducer, { moveObject } from '../index';
+import suReducer, {moveObject} from '../index';
 
 
 import * as actions from '../index';
@@ -38,91 +38,88 @@ describe('MoveReducer', () => {
   });
 
   it('Move object.', () => {
-    const newstate = suReducer(loadingState, { type: 'musit/move/object/start' });
+    const newstate = suReducer(loadingState, {type: 'musit/move/object/start'});
     assert(JSON.stringify(newstate) === JSON.stringify(loadingState));
   });
 
   it('Move object success', () => {
-    const newstate = suReducer(successState, { type: 'musit/move/object/succes' });
-    assert(JSON.stringify(newstate) === JSON.stringify(successState));
+    const newstate = suReducer(successState, {type: 'musit/move/object/success'});
+    assert.deepStrictEqual(newstate, successState);
   });
 
   it('Move object failure', () => {
-    const newstate = suReducer(failureState, { type: 'musit/move/object/failure' });
+    const newstate = suReducer(failureState, {type: 'musit/move/object/failure'});
     assert(JSON.stringify(newstate) === JSON.stringify(failureState));
   });
 
   it('Move node.', () => {
-    const newstate = suReducer(loadingState, { type: 'musit/move/node/start' });
+    const newstate = suReducer(loadingState, {type: 'musit/move/node/start'});
     assert(JSON.stringify(newstate) === JSON.stringify(loadingState));
   });
 
   it('Move node success', () => {
-    const newstate = suReducer(successState, { type: 'musit/move/node/succes' });
+    const newstate = suReducer(successState, {type: 'musit/move/node/success'});
     assert(JSON.stringify(newstate) === JSON.stringify(successState));
   });
 
   it('Move node failure', () => {
-    const newstate = suReducer(failureState, { type: 'musit/move/node/failure' });
+    const newstate = suReducer(failureState, {type: 'musit/move/node/failure'});
     assert(JSON.stringify(newstate) === JSON.stringify(failureState));
   });
 
 
-
   it('creates MOVE_OBJECT_SUCCESS when fetching data has been done', () => {
     const putData = {
-      doneBy: 1,
+      doneBy: 'f4e1eba9-8add-4675-9836-db59f7115d7c',
       destination: 4,
       items: [2, 3]
     };
-    const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(id)}/moveObject`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/moveObject`;
     nock('http://localhost')
-        .put(url, putData)
-        .reply(201, {
-          moved:[2, 3],
-          failed:[]
-        }
-          );
+      .put(url, putData)
+      .reply(201, {
+        moved: [2, 3],
+        failed: []
+      });
     const store = mockStore();
 
-    return store.dispatch(actions.moveObject([2, 3], 4, 1))
-        .then(() => {
-          expect(store.getActions()).toMatchSnapshot();
-        });
+    return store.dispatch(actions.moveObject([2, 3], 4, 'f4e1eba9-8add-4675-9836-db59f7115d7c'))
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('object: no action', () => {
     expect(
-        reducer(undefined, {})
+      reducer(undefined, {})
     ).toMatchSnapshot();
   });
 
   it('object: initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.MOVE_OBJECT
-        })
+      reducer(undefined, {
+        type: actions.MOVE_OBJECT
+      })
     ).toMatchSnapshot();
   });
 
   it('object: success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.MOVE_OBJECT_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.MOVE_OBJECT_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('object: fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.MOVE_OBJECT_FAILURE,
-          error: Error('Some error in moveObject.')
-        })
+      reducer(undefined, {
+        type: actions.MOVE_OBJECT_FAILURE,
+        error: Error('Some error in moveObject.')
+      })
     ).toMatchSnapshot();
   });
 
@@ -132,53 +129,52 @@ describe('MoveReducer', () => {
       destination: 4,
       items: [2, 3]
     };
-    const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(id)}/moveNode`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/moveNode`;
     nock('http://localhost')
-        .put(url, putData)
-        .reply(201, {
-          moved:[2, 3],
-          failed:[]
-        });
+      .put(url, putData)
+      .reply(201, {
+        moved: [2, 3],
+        failed: []
+      });
     const store = mockStore();
 
     return store.dispatch(actions.moveNode([2, 3], 4, 1))
-        .then(() => {
-          expect(store.getActions()).toMatchSnapshot();
-        });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('node: no action', () => {
     expect(
-        reducer(undefined, {})
+      reducer(undefined, {})
     ).toMatchSnapshot();
   });
 
   it('node: initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.MOVE_NODE
-        })
+      reducer(undefined, {
+        type: actions.MOVE_NODE
+      })
     ).toMatchSnapshot();
   });
 
   it('node: success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.MOVE_NODE_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.MOVE_NODE_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('node: fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.MOVE_NODE_FAILURE,
-          error: Error('Some error in moveNode.')
-        })
+      reducer(undefined, {
+        type: actions.MOVE_NODE_FAILURE,
+        error: Error('Some error in moveNode.')
+      })
     ).toMatchSnapshot();
   });
 });
