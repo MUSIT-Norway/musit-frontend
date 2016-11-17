@@ -106,7 +106,7 @@ export default class ControlAddContainer extends React.Component {
     // Create a nice representation of the control state
     const controlState = {
       ...flatten(controls),
-      doneBy: this.state.doneBy.getActorId(),
+      doneBy: this.state.doneBy,
       doneDate: this.state.doneDate
     };
     if (this.oneStateIsNotOK()) {
