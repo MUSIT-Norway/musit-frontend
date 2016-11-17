@@ -37,7 +37,6 @@ export const mapToBackend = (state, observations, nodeId) => {
   const r = {};
   r.eventType = 'Control';
   r.doneBy = getDoneBy(observations, state);
-  r.doneBy = r.doneBy.id;
   r.doneDate = getDoneDate(observations, state);
   r.affectedThing = nodeId * 1;
   r.temperature = new Option(state.temperatureOK).map(ok => getControl(ok, observations, 'temperature', parseRangeObservation));

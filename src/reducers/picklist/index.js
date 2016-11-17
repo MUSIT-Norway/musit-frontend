@@ -144,7 +144,7 @@ export const toggleObject = (item, on) => ({ type: TOGGLE_OBJECT, item, on });
 export const refreshNode = (id) => {
   return {
     types: [LOAD_ONE_NODE, LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`)),
     id
   };
 };
@@ -153,7 +153,7 @@ export const refreshNode = (id) => {
 export const refreshObject = (id) => {
   return {
     types: [LOAD_ONE_OBJECT, LOAD_ONE_OBJECT_SUCCESS, LOAD_ONE_OBJECT_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/currentlocation`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/objects/${id}/currentlocation`)),
     id
   };
 };

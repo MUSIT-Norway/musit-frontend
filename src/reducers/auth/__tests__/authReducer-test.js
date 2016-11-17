@@ -16,12 +16,12 @@ describe('Auth', () => {
   it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
     const url = '/api/actor/v1/dataporten/currentUser';
     nock('http://localhost')
-            .get(url)
-            .reply(200, {
-              id: 1,
-              fn: 'Jarle Stabell',
-              dataportenId: 'jarle'
-            });
+      .get(url)
+      .reply(200, {
+        id: 1,
+        fn: 'Jarle Stabell',
+        dataportenId: 'jarle'
+      });
     const store = mockStore();
 
     return store.dispatch(actions.loadActor())
@@ -32,36 +32,51 @@ describe('Auth', () => {
 
   it('no action', () => {
     expect(
-            reducer(undefined, {})
-        ).toMatchSnapshot();
+      reducer(undefined, {})
+    ).toMatchSnapshot();
   });
 
   it('initial action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.LOAD_ACTOR
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.LOAD_ACTOR
+      })
+    ).toMatchSnapshot();
   });
 
-  it('success action', () => {
+  it('success action with dataportenId', () => {
     expect(
-            reducer(undefined, {
-              type: actions.LOAD_ACTOR_SUCCESS,
-              result: {
-                someField: 1
-              }
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.LOAD_ACTOR_SUCCESS,
+        result: {
+          id: 1,
+          dataportenId: 'e7107fd4-4822-466f-9041-2e67095d8e2d',
+          fn: 'Some fancy user'
+        }
+      })
+    ).toMatchSnapshot();
+  });
+
+  it('success action with applicationId', () => {
+    expect(
+      reducer(undefined, {
+        type: actions.LOAD_ACTOR_SUCCESS,
+        result: {
+          id: 1,
+          applicationId: '932f8aad-5bf2-409d-8916-c91c24b31152',
+          fn: 'Some fancy user'
+        }
+      })
+    ).toMatchSnapshot();
   });
 
   it('fail action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.LOAD_ACTOR_FAILURE,
-              error: Error('Some error here.')
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.LOAD_ACTOR_FAILURE,
+        error: Error('Some error here.')
+      })
+    ).toMatchSnapshot();
   });
 
   const initialState = {
@@ -81,26 +96,26 @@ describe('Auth', () => {
 
   it('CLEAR_ACTOR action', () => {
     expect(
-            reducer(initialState, actions.clearActor())
-        ).toMatchSnapshot();
+      reducer(initialState, actions.clearActor())
+    ).toMatchSnapshot();
   });
 
   it('SET_USER action', () => {
     expect(
-            reducer(initialState, actions.connectUser('TEST_USER'))
-        ).toMatchSnapshot();
+      reducer(initialState, actions.connectUser('TEST_USER'))
+    ).toMatchSnapshot();
   });
 
   it('CLEAR_USER action', () => {
     expect(
-            reducer(initialState, actions.clearUser())
-        ).toMatchSnapshot();
+      reducer(initialState, actions.clearUser())
+    ).toMatchSnapshot();
   });
 
 
   it('undefined action', () => {
     expect(
-            reducer(initialState, undefined)
-        ).toMatchSnapshot();
+      reducer(initialState, undefined)
+    ).toMatchSnapshot();
   });
 });

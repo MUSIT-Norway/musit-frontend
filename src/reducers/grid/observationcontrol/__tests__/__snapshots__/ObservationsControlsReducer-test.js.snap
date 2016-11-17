@@ -2,16 +2,16 @@ exports[`ObservationControlGridReducer actor: fail action 1`] = `
 Object {
   "data": Array [],
   "error": [Error: Some error in loadActor.],
-  "loadedActors": false,
-  "loadingActors": false
+  "loaded": false,
+  "loading": false
 }
 `;
 
 exports[`ObservationControlGridReducer actor: initial action 1`] = `
 Object {
   "data": Array [],
-  "loadedActors": false,
-  "loadingActors": true
+  "loaded": false,
+  "loading": true
 }
 `;
 
@@ -24,8 +24,8 @@ Object {
 exports[`ObservationControlGridReducer actor: success action 1`] = `
 Object {
   "data": Array [],
-  "loadedActors": true,
-  "loadingActors": false
+  "loaded": true,
+  "loading": false
 }
 `;
 
