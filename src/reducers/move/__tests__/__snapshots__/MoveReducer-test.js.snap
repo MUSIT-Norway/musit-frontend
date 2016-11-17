@@ -11,7 +11,7 @@ Array [
         3
       ]
     },
-    "type": "musit/move/node/succes"
+    "type": "musit/move/node/success"
   }
 ]
 `;
@@ -29,7 +29,7 @@ Array [
         3
       ]
     },
-    "type": "musit/move/object/succes"
+    "type": "musit/move/object/success"
   }
 ]
 `;

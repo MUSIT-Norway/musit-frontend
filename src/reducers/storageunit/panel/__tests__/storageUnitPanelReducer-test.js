@@ -36,7 +36,7 @@ describe('ReducerStoragUnitPanel', () => {
   };
   it('creates LOAD_SUCCESS when fetching data has been done', () => {
     const id = 3;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
             .get(url)
             .reply(200, loadState);
@@ -106,7 +106,7 @@ describe('ReducerStoragUnitPanel', () => {
   };
   it('update INSERT_SUCCESS when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
             .put(url, putData)
             .reply(201, putData);
@@ -165,7 +165,7 @@ describe('ReducerStoragUnitPanel', () => {
       area: 1
     };
     const parentId = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}${!parentId ? '/root' : ''}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}${!parentId ? '/root' : ''}`;
     nock('http://localhost')
             .post(url, postData)
             .reply(201, putData);

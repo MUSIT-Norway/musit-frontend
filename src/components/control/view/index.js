@@ -31,7 +31,7 @@ export default class ControlViewContainer extends React.Component {
     controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
-    loadPersonNameFromId: React.PropTypes.func.isRequired,
+    loadActorDetails: React.PropTypes.func.isRequired,
     doneBy: React.PropTypes.object,
     rootNode: React.PropTypes.object
   }
@@ -39,8 +39,8 @@ export default class ControlViewContainer extends React.Component {
   componentWillMount() {
     if (this.props.params.controlId) {
       this.props.loadControl(this.props.params.id, this.props.params.controlId, {
-        onSuccess: (r) => {
-          this.props.loadPersonNameFromId(r.doneBy);
+        onSuccess: (control) => {
+          this.props.loadActorDetails(control);
         }
       });
     }
@@ -81,7 +81,7 @@ export default class ControlViewContainer extends React.Component {
                   <br />
                   <MusitField
                     onChange={() => true}
-                    value={this.props.doneBy ? this.props.doneBy.fn : ''}
+                    value={data ? data.doneBy : ''}
                     disabled
                   />
                 </Col>

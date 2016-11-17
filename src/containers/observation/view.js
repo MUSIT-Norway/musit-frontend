@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { I18n } from 'react-i18nify';
 import ViewObservationPage from '../../components/observation/view';
-import { loadObservation, getActorNameFromId } from '../../reducers/observation';
+import { loadObservation, loadActors } from '../../reducers/observation';
 import { loadRoot } from '../../reducers/storageunit/grid';
 
 const mapStateToProps = (state) => {
@@ -21,8 +21,8 @@ const mapDispatchToProps = (dispatch) => {
     loadObservation: (nodeId, observationId, callback) => {
       dispatch(loadObservation(nodeId, observationId, callback));
     },
-    loadPersonNameFromId: (doneBy) => {
-      dispatch(getActorNameFromId(doneBy));
+    loadActorDetails: (observation) => {
+      dispatch(loadActors(observation));
     },
     loadStorageObj: (id) => {
       dispatch(loadRoot(id));

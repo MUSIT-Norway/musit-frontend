@@ -13,7 +13,7 @@ const mockStore = configureMockStore(middlewares);
 
 describe('KD Report', () => {
   it('creates LOAD_KD_REPORT_SUCESS when fetching reports has been done', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/report`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/report`;
     nock('http://localhost')
             .get(url)
             .reply(200, {

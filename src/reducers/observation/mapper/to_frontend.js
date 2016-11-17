@@ -147,8 +147,7 @@ function parseAlcohol(o) {
 
 const wrap = (be) => {
   const ret = {};
-  ret.doneBy = {};
-  ret.doneBy.id = be.doneBy;
+  ret.doneBy = be.doneBy;
   ret.doneDate = be.doneDate;
   ret.registeredDate = be.registeredDate;
   ret.registeredBy = be.registeredBy;

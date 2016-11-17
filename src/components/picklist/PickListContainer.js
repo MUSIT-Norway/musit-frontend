@@ -22,9 +22,7 @@ export default class PickListContainer extends React.Component {
     moveNode: React.PropTypes.func.isRequired,
     moveObject: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
-    user: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired
-    }),
+    userId: React.PropTypes.string,
     addNode: React.PropTypes.func.isRequired,
     addObject: React.PropTypes.func.isRequired,
     loadRoot: React.PropTypes.func.isRequired,
@@ -52,7 +50,7 @@ export default class PickListContainer extends React.Component {
     if (this.isTypeNode()) {
       title = I18n.t('musit.moveModal.moveNodes');
     } else {
-      I18n.t('musit.moveModal.moveObjects');
+      title = I18n.t('musit.moveModal.moveObjects');
     }
     this.context.showModal(title, <MusitModal onMove={this.moveModal(items)}/>);
   }
@@ -109,6 +107,7 @@ export default class PickListContainer extends React.Component {
       callback = this.objectCallback(toName, toMoveLength, name, items, onSuccess);
     }
 
+
     let error = false;
     if (isNode) {
       const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
@@ -127,6 +126,7 @@ export default class PickListContainer extends React.Component {
     if (!error) {
       moveFunction(toMove, to.id, this.props.user.id, callback);
     }
+
   }
 
   render() {

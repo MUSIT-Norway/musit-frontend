@@ -38,9 +38,7 @@ export default class StorageUnitsContainer extends React.Component {
     moves: React.PropTypes.arrayOf(React.PropTypes.object),
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
-    user: React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired
-    }),
+    userId: React.PropTypes.string,
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
       numNodes: React.PropTypes.number,
@@ -129,7 +127,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   moveNode = (
     fromNode,
-    userId = this.props.user.id,
+    userId = this.props.userId,
     nodeId = this.props.rootNode.id,
     moveNode = this.props.moveNode,
     loadRoot = this.props.loadRoot,
@@ -174,7 +172,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   moveObject = (
     fromObject,
-    userId = this.props.user.id,
+    userId = this.props.userId,
     nodeId = this.props.rootNode.id,
     moveObject = this.props.moveObject,
     loadRoot = this.props.loadRoot,

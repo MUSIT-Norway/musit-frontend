@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import './ModalNodeGrid.css';
+import { I18n } from 'react-i18nify';
 
 export default class ModalNodeGrid extends Component {
   static propTypes = {
@@ -28,6 +29,9 @@ export default class ModalNodeGrid extends Component {
                       <FontAwesome name="folder" />
                       {` ${c.name}`}
                     </a>
+                  </td>
+                  <td id={`${i}_${c.type}`}>
+                    {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
                   </td>
                 </tr>
               )}

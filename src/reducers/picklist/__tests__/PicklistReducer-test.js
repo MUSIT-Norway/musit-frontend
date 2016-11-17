@@ -92,7 +92,7 @@ describe('PicklistReducer', () => {
   });
 
   it('refreshNode works as expected when it gets data', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/1`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/1`;
     nock('http://localhost')
       .get(url)
       .reply(200, {
@@ -608,7 +608,7 @@ describe('PicklistReducer', () => {
   });
   it('invokes LOAD_ONE_OBJECT_SUCCESS when object path is loaded.', () => {
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/objects/${id}/currentlocation`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/objects/${id}/currentlocation`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
@@ -676,7 +676,7 @@ describe('PicklistReducer', () => {
 
   it('invokes LOAD_ONE_NODE_SUCCESS when node path is loaded.', () => {
     const id = 3;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
         .get(url)
         .reply(200, {

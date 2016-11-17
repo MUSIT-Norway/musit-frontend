@@ -1,66 +1,66 @@
 [
   {
-    "userId": "guest",
+    "userid": "1a17c60c-755d-4d88-9449-12bbd5abe5e2",
     "name": "Gjestebruker",
     "accessToken": "fake-token-zab-xy-guest"
   },
   {
-    "userId": "normal",
+    "userid": "3655615b-e385-4833-b414-9957ea225e58",
     "name": "Normalbruker",
     "accessToken": "fake-token-zab-xy-normal"
   },
   {
-    "userId": "stein",
+    "userid": "34e74d46-d45c-49dc-ace7-587b0ff40646",
     "name": "Stein A. Olsen",
     "accessToken": "fake-token-zab-xy-stein"
   },
   {
-    "userId": "musitTestUser",
+    "userid": "8efd41bb-bc58-4bbf-ac95-eea21ba9db81",
     "name": "Fake Musit Test User",
     "accessToken": "fake-token-zab-xy-musitTestUser"
   },
   {
-    "userId": "DawnWilliams",
+    "userid": "dd457c4e-668e-41c5-8820-168f816a531b",
     "name": "Dawn Williams",
     "accessToken": "fake-token-zab-xy-DawnWilliams"
   },
   {
-    "userId": "EspenUleberg",
+    "userid": "ca04b20e-5094-4b02-8b72-05ec629e7cb4",
     "name": "Espen Uleberg",
     "accessToken": "fake-token-zab-xy-EspenUleberg"
   },
   {
-    "userId": "HeiniEmilia",
+    "userid": "54c2e6f8-53f6-46be-b029-6f01b4b97231",
     "name": "Heini Emilia Rämä",
     "accessToken": "fake-token-zab-xy-HeiniEmilia"
   },
   {
-    "userId": "Karsten",
-    "name": "Karsten Hårsaker",
-    "accessToken": "fake-token-zab-xy-Karsten"
+    "userid": "71899f45-08da-48ef-b4c3-0f519d27157f",
+    "name": "Karstein Hårsaker",
+    "accessToken": "fake-token-zab-xy-Karstein"
   },
   {
-    "userId": "MarielleBergh",
+    "userid": "064c9dff-9956-4f4e-b3f7-ed77b6e5bc62",
     "name": "Marielle Bergh",
     "accessToken": "fake-token-zab-xy-MarielleBergh"
   },
   {
-    "userId": "WencheBrun",
+    "userid": "e5bc8090-705d-40be-bcfa-2b351e7f2339",
     "name": "Wenche Brun",
     "accessToken": "fake-token-zab-xy-WencheBrun"
   },
   {
-    "userId": "SusanMatland",
+    "userid": "6eb49c1b-82c7-478b-85e4-9d69d5a50057",
     "name": "Susan Matland",
     "accessToken": "fake-token-zab-xy-SusanMatland"
   },
   {
-    "userId": "KjellGunnarMobekk",
+    "userid": "86626c72-2da2-4fa5-969b-8226a4141dcf",
     "name": "Kjell Gunnar Mobekk",
     "accessToken": "fake-token-zab-xy-KjellGunnarMobekk"
   },
   {
-    "userId": "LineArildSjo",
+    "userid": "4acad74e-eb4d-4632-be84-7ada5fef1074",
     "name": "Line Arild Sjo",
     "accessToken": "fake-token-zab-xy-LineArildSjo"
   }

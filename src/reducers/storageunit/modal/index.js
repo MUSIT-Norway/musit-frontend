@@ -77,7 +77,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
 export default storageUnitModalReducer;
 
 export const loadNode = (id) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}`);
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`);
   return {
     types: [LOAD_NODE, LOAD_NODE_SUCCESS, LOAD_NODE_FAIL],
     promise: (client) => client.get(url)
@@ -85,7 +85,7 @@ export const loadNode = (id) => {
 };
 
 export const loadChildren = (id, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(1)}/${id}/children`);
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`);
   return {
     types: [LOAD_CHILDREN, LOAD_CHILDREN_SUCCESS, LOAD_CHILDREN_FAIL],
     promise: (client) => client.get(url),
