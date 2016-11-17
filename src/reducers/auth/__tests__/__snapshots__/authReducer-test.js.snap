@@ -80,11 +80,28 @@ Object {
 }
 `;
 
-exports[`Auth success action 1`] = `
+exports[`Auth success action with applicationId 1`] = `
 Object {
   "actor": Object {
-    "someField": 1
+    "applicationId": "932f8aad-5bf2-409d-8916-c91c24b31152",
+    "fn": "Some fancy user",
+    "id": 1
   },
+  "actorId": "932f8aad-5bf2-409d-8916-c91c24b31152",
+  "loaded": true,
+  "loading": false,
+  "user": null
+}
+`;
+
+exports[`Auth success action with dataportenId 1`] = `
+Object {
+  "actor": Object {
+    "dataportenId": "e7107fd4-4822-466f-9041-2e67095d8e2d",
+    "fn": "Some fancy user",
+    "id": 1
+  },
+  "actorId": "e7107fd4-4822-466f-9041-2e67095d8e2d",
   "loaded": true,
   "loading": false,
   "user": null

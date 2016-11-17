@@ -16,7 +16,7 @@ import reducer from '../../../reducers/observation/index';
 import * as actions from '../../../reducers/observation/index';
 
 const nock = nocker(request);
-const middlewares = [ createMiddleware(new ApiClient()) ];
+const middlewares = [createMiddleware(new ApiClient())];
 const mockStore = configureMockStore(middlewares);
 
 
@@ -33,7 +33,8 @@ describe('ObservationReducer', () => {
 
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
+      doneById: '8994945c-89a1-4086-b17a-728df8a907a4', 
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -81,7 +82,8 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: Uttørket', () => {
     const frontend = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
+      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -103,7 +105,8 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: nesten uttørket', () => {
     const frontend = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
+      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -125,7 +128,8 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: litt uttørket', () => {
     const frontend = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
+      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -147,7 +151,8 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: noe uttørket', () => {
     const frontend = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
+      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -169,7 +174,8 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: tilfredsstillende', () => {
     const frontend = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
+      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -192,7 +198,8 @@ describe('ObservationReducer', () => {
 
   it('test invalid alcohol status', () => {
     const frontend = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
+      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -214,7 +221,8 @@ describe('ObservationReducer', () => {
 
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const frontend = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
+      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -297,7 +305,8 @@ describe('ObservationReducer', () => {
           data: {
             fromValue: '1,4',
             toValue: '4,4',
-            commentValue: 'Altfor fuktig' }
+            commentValue: 'Altfor fuktig'
+          }
         },
         {
           type: 'pest',
@@ -305,10 +314,14 @@ describe('ObservationReducer', () => {
             identificationValue: 'Mye skadedyr',
             commentValue: 'Ikke gjort noe med',
             observations: [
-                { lifeCycle: 'Larva',
-                count: '4' },
-                { lifeCycle: 'Puppe',
-                count: '32' }
+              {
+                lifeCycle: 'Larva',
+                count: '4'
+              },
+              {
+                lifeCycle: 'Puppe',
+                count: '32'
+              }
             ]
           }
         },
@@ -324,9 +337,11 @@ describe('ObservationReducer', () => {
           data: {
             fromValue: '1,4',
             toValue: '4,4',
-            commentValue: 'Altfor fuktig' }
+            commentValue: 'Altfor fuktig'
+          }
         }
-      ] };
+      ]
+    };
     const backEnd = mapToBackEnd(frontend);
     expect(backEnd).toMatchSnapshot();
     const thereAndBackAgain = mapToFrontEnd(backEnd);
@@ -339,118 +354,134 @@ describe('ObservationReducer', () => {
     const observationId = 3;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations/${observationId}`;
     nock('http://localhost')
-        .get(url)
-        .reply(200, {
-          id: 50,
-          doneBy: 1,
-          doneDate: '2016-09-29T00:00:00+00:00',
-          affectedThing: 2,
-          registeredBy:'Darth Vader',
-          registeredDate: '2016-10-17T14:22:39+00:00',
-          eventType: 'Observation',
-          gas:{
-            gas: 'Gas test'
-          }
-        });
+      .get(url)
+      .reply(200, {
+        id: 50,
+        doneBy: 1,
+        doneDate: '2016-09-29T00:00:00+00:00',
+        affectedThing: 2,
+        registeredBy: 'Darth Vader',
+        registeredDate: '2016-10-17T14:22:39+00:00',
+        eventType: 'Observation',
+        gas: {
+          gas: 'Gas test'
+        }
+      });
 
     const store = mockStore();
 
     return store.dispatch(actions.loadObservation(2, 3))
-        .then(() => {
-          expect(store.getActions()).toMatchSnapshot();
-        });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('Observation no action', () => {
     expect(
-        reducer(undefined, {})
+      reducer(undefined, {})
     ).toMatchSnapshot();
   });
 
   it('Observation initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD
-        })
+      reducer(undefined, {
+        type: actions.LOAD
+      })
     ).toMatchSnapshot();
   });
 
   it('Observation success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.LOAD_SUCCESS,
+        result: {
+          doneBy: '7da64e83-7918-4cbb-8d81-f71e3ecdae67'
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('Observation fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_FAIL,
-          error: Error('Some error occurred to load observation data.')
-        })
+      reducer(undefined, {
+        type: actions.LOAD_FAIL,
+        error: Error('Some error occurred to load observation data.')
+      })
     ).toMatchSnapshot();
   });
 
   it('creates LOAD_ACTOR_SUCCESS when actor data is imported', () => {
-    const id = 1;
-    const url = `/api/actor/v1/person/${id}`;
+    const url = '/api/actor/v1/person/details';
     nock('http://localhost')
-        .get(url)
-        .reply(200, {
-          id: 1,
-          fn: 'Jarle Stabell',
-          dataportenId: 'jarle'
-        });
+      .post(url, ['f98ba9f4-24cb-4a6d-acd7-3083e131321e'])
+      .reply(200, {
+        id: 1,
+        fn: 'Jarle Stabell',
+        dataportenId: 'jarle'
+      });
 
     const store = mockStore();
 
-    return store.dispatch(actions.getActorNameFromId(1))
-        .then(() => {
-          expect(store.getActions()).toMatchSnapshot();
-        });
+    return store.dispatch(actions.loadActors({
+      doneBy: 'f98ba9f4-24cb-4a6d-acd7-3083e131321e',
+      registeredBy: 'f98ba9f4-24cb-4a6d-acd7-3083e131321e'
+    })).then(() => {
+      expect(store.getActions()).toMatchSnapshot();
+    });
   });
 
   it('Actor no action', () => {
     expect(
-        reducer(undefined, {})
+      reducer(undefined, {})
     ).toMatchSnapshot();
   });
 
   it('Actor initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_ACTOR
-        })
+      reducer(undefined, {
+        type: actions.LOAD_ACTOR
+      })
     ).toMatchSnapshot();
   });
 
-  it('Actor success action', () => {
+  it('Actor success action with dataportenId', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_ACTOR_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.LOAD_ACTOR_SUCCESS,
+        result: {
+          id: 1,
+          dataportenId: '82300ac0-5d14-46be-997f-2472b7071a84',
+          fn: 'Jarl'
+        }
+      })
+    ).toMatchSnapshot();
+  });
+
+  it('Actor success action with applicationId', () => {
+    expect(
+      reducer(undefined, {
+        type: actions.LOAD_ACTOR_SUCCESS,
+        result: {
+          id: 1,
+          applicationId: '78453ebd-252b-482b-8d26-ab78dff7034a',
+          fn: 'Jarl'
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('Actor fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_ACTOR_FAIL,
-          error: Error('Some error occurred to load actor data.')
-        })
+      reducer(undefined, {
+        type: actions.LOAD_ACTOR_FAILURE,
+        error: Error('Some error occurred to load actor data.')
+      })
     ).toMatchSnapshot();
   });
 
   it('creates ADD_SUCCESS when observation data is added', () => {
     const observationAddData = {
-      doneBy: { id: '1' },
+      doneBy: {id: '1'},
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -473,60 +504,60 @@ describe('ObservationReducer', () => {
     const nodeId = 4;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations`;
     nock('http://localhost')
-        .post(url, observationAddData)
-        .reply(201, {
-          id: 10,
-          doneBy: 1,
-          doneDate: '2016-10-18T00:00:00+00:00',
-          affectedThing: 4,
-          registeredBy: 'Darth Vader',
-          registeredDate: '2016-10-18T13:42:10+00:00',
-          eventType: 'Observation',
-          gas: {
-            note: 'Gas comments',
-            gas: 'test Gas'
-          }
-        });
+      .post(url, observationAddData)
+      .reply(201, {
+        id: 10,
+        doneBy: 1,
+        doneDate: '2016-10-18T00:00:00+00:00',
+        affectedThing: 4,
+        registeredBy: 'Darth Vader',
+        registeredDate: '2016-10-18T13:42:10+00:00',
+        eventType: 'Observation',
+        gas: {
+          note: 'Gas comments',
+          gas: 'test Gas'
+        }
+      });
 
     const observationStore = mockStore();
 
     return observationStore.dispatch(actions.addObservation(4, observationAddData))
-        .then(() => {
-          expect(observationStore.getActions()).toMatchSnapshot();
-        });
+      .then(() => {
+        expect(observationStore.getActions()).toMatchSnapshot();
+      });
   });
 
   it('Add observation no action', () => {
     expect(
-        reducer(undefined, {})
+      reducer(undefined, {})
     ).toMatchSnapshot();
   });
 
   it('Add observation initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.ADD
-        })
+      reducer(undefined, {
+        type: actions.ADD
+      })
     ).toMatchSnapshot();
   });
 
   it('Add observation success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.ADD_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.ADD_SUCCESS,
+        result: {
+          doneBy: '062f6a86-7f54-4d0b-9cbe-2b83b6af9b83'
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('Add observation fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.ADD_FAIL,
-          error: Error('Some error occurred in the add observation data method.')
-        })
+      reducer(undefined, {
+        type: actions.ADD_FAIL,
+        error: Error('Some error occurred in the add observation data method.')
+      })
     ).toMatchSnapshot();
   });
 });

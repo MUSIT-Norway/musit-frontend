@@ -2,10 +2,10 @@ import Config from '../../config';
 import { apiUrl } from '../../util';
 
 export const MOVE_OBJECT = 'musit/move/object/start';
-export const MOVE_OBJECT_SUCCESS = 'musit/move/object/succes';
+export const MOVE_OBJECT_SUCCESS = 'musit/move/object/success';
 export const MOVE_OBJECT_FAILURE = 'musit/move/object/failure';
 export const MOVE_NODE = 'musit/move/node/start';
-export const MOVE_NODE_SUCCESS = 'musit/move/node/succes';
+export const MOVE_NODE_SUCCESS = 'musit/move/node/success';
 export const MOVE_NODE_FAILURE = 'musit/move/node/failure';
 
 const ACTIONS = {
