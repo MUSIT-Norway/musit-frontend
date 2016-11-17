@@ -1,7 +1,7 @@
 import Config from '../../config';
-import { getActorNames } from '../../util/actor';
 import { mapToBackend } from './mapper/to_backend';
 import uniq from 'lodash/uniq';
+import Actor from '../../models/actor';
 
 const ADD = 'musit/control/ADD';
 const ADD_SUCCESS = 'musit/control/ADD_SUCCESS';
@@ -71,7 +71,7 @@ const controlReducer = (state = initialState, action = {}) => {
       loaded: true,
       data: {
         ...state.data,
-        ...getActorNames(action.result, state.data.doneBy, state.data.registeredBy)
+        ...Actor.getActorNames(action.result, state.data.doneBy, state.data.registeredBy)
       }
     };
   case LOAD_ACTOR_FAILURE:

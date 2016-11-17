@@ -1,7 +1,7 @@
 import Config from '../../../config';
 import { apiUrl } from '../../../util';
 import { getPath } from '../../helper';
-import { getActorNames } from '../../../util/actor';
+import Actor from '../../../models/actor';
 
 export const LOAD = 'musit/movehistory/LOAD';
 export const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS';
@@ -62,7 +62,7 @@ const moveHistoryReducer = (state = initialState, action) => {
       data: state.data.map((data) => {
         return {
           ...data,
-          ...getActorNames(action.result, data.doneBy, data.registeredBy)
+          ...Actor.getActorNames(action.result, data.doneBy, data.registeredBy)
         };
       })
     };

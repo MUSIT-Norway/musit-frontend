@@ -5,7 +5,7 @@ import observationReducer, {
 } from '../index';
 import mapToFrontEnd from '../mapper/to_frontend';
 import mapToBackEnd from '../mapper/to_backend';
-
+import Actor from '../../../models/actor';
 import configureMockStore from 'redux-mock-store';
 import createMiddleware from '../../../middleware/clientMiddleware';
 import ApiClient from '../../../middleware/ApiClient';
@@ -33,8 +33,7 @@ describe('ObservationReducer', () => {
 
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4', 
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -82,8 +81,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: Uttørket', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -105,8 +103,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: nesten uttørket', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -128,8 +125,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: litt uttørket', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -151,8 +147,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: noe uttørket', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -174,8 +169,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: tilfredsstillende', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -198,8 +192,7 @@ describe('ObservationReducer', () => {
 
   it('test invalid alcohol status', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -221,8 +214,7 @@ describe('ObservationReducer', () => {
 
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -481,7 +473,7 @@ describe('ObservationReducer', () => {
 
   it('creates ADD_SUCCESS when observation data is added', () => {
     const observationAddData = {
-      doneBy: {id: '1'},
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {

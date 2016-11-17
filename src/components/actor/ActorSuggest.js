@@ -2,6 +2,7 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import autoComplete from '../../state/autocomplete';
 import Config from '../../config';
+import Actor from '../../models/actor';
 
 class ActorSuggest extends React.Component {
 
@@ -54,7 +55,7 @@ class ActorSuggest extends React.Component {
             if (event.keyCode === 13) {
               event.preventDefault();
             }
-            this.props.onChange(suggestion);
+            this.props.onChange(new Actor(suggestion));
           }
         }
       />

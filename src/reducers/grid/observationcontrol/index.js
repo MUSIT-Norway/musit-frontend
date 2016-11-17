@@ -1,8 +1,8 @@
 import Config from '../../../config';
 import { apiUrl } from '../../../util';
-import { getActorNames } from '../../../util/actor';
 import flatten from 'lodash/flatten';
 import uniq from 'lodash/uniq';
+import Actor from '../../../models/actor';
 
 export const LOAD = 'musit/observationcontrol/LOAD';
 export const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS';
@@ -48,7 +48,7 @@ const observationControlGridReducer = (state = initialState, action) => {
       loaded: true,
       data: state.data.map((data) => ({
         ...data,
-        ...getActorNames(action.result, data.doneBy, data.registeredBy)
+        ...Actor.getActorNames(action.result, data.doneBy, data.registeredBy)
       }))
     };
   case LOAD_ACTOR_FAILURE:

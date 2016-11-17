@@ -1,9 +1,9 @@
 import Config from '../../config';
 import { apiUrl } from '../../util';
-import { getActorNames } from '../../util/actor';
 import mapToBackEnd from './mapper/to_backend';
 import mapToFrontEnd from './mapper/to_frontend';
 import uniq from 'lodash/uniq';
+import Actor from '../../models/actor';
 
 export const ADD = 'musit/observation/ADD';
 export const ADD_SUCCESS = 'musit/observation/ADD_SUCCESS';
@@ -80,7 +80,7 @@ const observationReducer = (state = initialState, action = {}) => {
       loaded: true,
       data: {
         ...state.data,
-        ...getActorNames(action.result, state.data.doneBy, state.data.registeredBy)
+        ...Actor.getActorNames(action.result, state.data.doneBy, state.data.registeredBy)
       }
     };
   case LOAD_ACTOR_FAILURE:
