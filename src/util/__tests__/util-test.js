@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict } from '../';
+import { isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict, customSortingStorageNodeType } from '../';
 import moment from 'moment';
 
 describe('parseISODateNonStrict', () => {
@@ -29,6 +29,19 @@ describe('parseISODateStrict', () => {
     assert(parsed.isValid() === true);
   });
 });
+
+describe('customSortingStorageNodeType', () => {
+  it('Order should be Organisation > Building > Room > StorageUnit', () => {
+    const unknown = customSortingStorageNodeType('errrr');
+    const building = customSortingStorageNodeType('Building');
+    const organisation = customSortingStorageNodeType('Organisation');
+    const storageUnit = customSortingStorageNodeType('StorageUnit');
+    const room = customSortingStorageNodeType('Room');
+    assert(organisation < building && building < room && room < storageUnit && storageUnit < unknown);
+  });
+
+});
+
 
 describe('isDateBiggerThanToday', () => {
   it('Check Today', () => {
