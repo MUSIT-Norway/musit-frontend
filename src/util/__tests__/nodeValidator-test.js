@@ -250,6 +250,11 @@ describe('Test node validation', () => {
     expect(output).toBe(undefined);
   });
 
+  it('checkNodeBranch pass 2', () => {
+    const output = checkNodeBranch(from_node_14, to_node_1);
+    expect(output).toBe(undefined);
+  });
+
   it('checkNodeType fail', () => {
     const output = checkNodeType(from_node_21, to_node_2);
     expect(output.includes('Kun noder av type Bygg kan flyttes til en node type Organisasjon.')).toBe(true);
@@ -263,6 +268,16 @@ describe('Test node validation', () => {
   it('checkNodeType fail for root', () => {
     const output = checkNodeType(from_node_21, to_node_1);
     expect(output.includes('Kun noder av type Organisasjon kan flyttes til en rotnode.')).toBe(true);
+  });
+
+  it('checkNodeType fail for root 2', () => {
+    const output = checkNodeType(from_node_11, to_node_1);
+    expect(output).toBe('Kun noder av type Organisasjon kan flyttes til en rotnode.');
+  });
+
+  it('checkNodeType fail for root 3', () => {
+    const output = checkNodeType(from_node_21, to_node_1);
+    expect(output).toBe('Kun noder av type Organisasjon kan flyttes til en rotnode.');
   });
 
   it('checkNodeType pass for root', () => {

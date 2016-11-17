@@ -20,10 +20,11 @@ export const checkNodeType = (from, to) => {
 };
 
 export const checkNodeBranch = (from, to) => {
-  const pathNameFound = to.pathNames.filter(id => {
+
+  const pathNameFound = to.pathNames ? to.pathNames.filter(id => {
     const matchOnValue = from.value && id.nodeId === from.value.id;
     return id.nodeId === from.id || matchOnValue;
-  });
+  }) : {};
 
   if ( pathNameFound.length > 0) {
     return I18n.t('musit.storageUnits.type.notAllowedToMove');
