@@ -62,7 +62,8 @@ Array [
         }
       ],
       "type": "Building",
-      "updatedBy": 666,
+      "updatedBy": "e4eaf917-e095-456e-a66d-08555b66f4f2",
+      "updatedByName": "Test user",
       "updatedDate": "2016-10-24T15:41:35+00:00"
     },
     "type": "musit/storageunit-container/LOAD_SUCCESS"
@@ -96,7 +97,7 @@ Array [
       ],
       "securityAssessment": Object {},
       "type": "Room",
-      "updatedBy": 123,
+      "updatedBy": "e4eaf917-e095-456e-a66d-08555b66f4f2",
       "updatedDate": "2016-10-24T16:13:24+00:00"
     },
     "type": "musit/storageunit-container/INSERT_SUCCESS"
@@ -164,7 +165,8 @@ Array [
       ],
       "securityAssessment": Object {},
       "type": "Room",
-      "updatedBy": 123,
+      "updatedBy": "e4eaf917-e095-456e-a66d-08555b66f4f2",
+      "updatedByName": "Test user",
       "updatedDate": "2016-10-24T16:13:24+00:00"
     },
     "type": "musit/storageunit-container/INSERT_SUCCESS"
