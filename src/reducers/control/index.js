@@ -9,9 +9,6 @@ const ADD_FAIL = 'musit/control/ADD_FAILURE';
 const LOAD = 'musit/control/LOAD';
 const LOAD_SUCCESS = 'musit/control/LOAD_SUCCESS';
 const LOAD_FAIL = 'musit/control/LOAD_FAIL';
-const LOAD_ACTOR = 'musit/observation/actor/LOAD';
-const LOAD_ACTOR_SUCCESS = 'musit/control/actor/LOAD_SUCCESS';
-const LOAD_ACTOR_FAILURE = 'musit/control/actor/LOAD_FAILURE';
 
 export const initialState = {};
 
@@ -58,29 +55,6 @@ const controlReducer = (state = initialState, action = {}) => {
       loaded: false,
       data: action.error
     };
-  case LOAD_ACTOR:
-    return {
-      ...state,
-      loading: true,
-      loaded: false
-    };
-  case LOAD_ACTOR_SUCCESS:
-    return {
-      ...state,
-      loading: false,
-      loaded: true,
-      data: {
-        ...state.data,
-        ...Actor.getActorNames(action.result, state.data.doneBy, state.data.registeredBy)
-      }
-    };
-  case LOAD_ACTOR_FAILURE:
-    return {
-      ...state,
-      loading: false,
-      loaded: false,
-      error: action.error
-    };
   default:
     return state;
   }
@@ -98,17 +72,19 @@ export const addControl = (nodeId, controlData, observations, callback) => {
   };
 };
 
-export const loadActors = (control) => {
-  return {
-    types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: (client) => client.post('/api/actor/v1/person/details', { data: uniq([control.doneBy, control.registeredBy]) })
-  };
-};
-
 export const loadControl = (nodeId, controlId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/controls/${controlId}`),
+    promise: (client) => new Promise((resolve, reject) => {
+      client.get(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/controls/${controlId}`)
+        .then(control => {
+          client.post(`${Config.magasin.urls.actor.baseUrl}/details`, { data: uniq([control.doneBy, control.registeredBy]) })
+            .then(actors => resolve({
+              ...control,
+              ...Actor.getActorNames(actors, control.doneBy, control.registeredBy)
+            })).catch(error => reject(error));
+        }).catch(error => reject(error));
+    }),
     callback
   };
 };

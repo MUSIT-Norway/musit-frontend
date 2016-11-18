@@ -38,11 +38,7 @@ export default class ControlViewContainer extends React.Component {
 
   componentWillMount() {
     if (this.props.params.controlId) {
-      this.props.loadControl(this.props.params.id, this.props.params.controlId, {
-        onSuccess: (control) => {
-          this.props.loadActorDetails(control);
-        }
-      });
+      this.props.loadControl(this.props.params.id, this.props.params.controlId);
     }
     if (!this.props.rootNode.path) {
       this.props.loadStorageObj(this.props.params.id);

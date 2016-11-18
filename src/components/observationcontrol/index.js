@@ -11,7 +11,6 @@ export default class ObservationControlGridShow extends React.Component {
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
     params: React.PropTypes.object,
     route: React.PropTypes.object,
-    loadActorDetails: React.PropTypes.func.isRequired,
     loadControlAndObservations: React.PropTypes.func.isRequired,
     loadStorageObj: React.PropTypes.func.isRequired,
     path: React.PropTypes.arrayOf(React.PropTypes.object)
@@ -27,13 +26,7 @@ export default class ObservationControlGridShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadControlAndObservations(this.props.params.id, {
-      onSuccess: (result) => {
-        if (result && result.length > 0) {
-          this.props.loadActorDetails(result);
-        }
-      }
-    });
+    this.props.loadControlAndObservations(this.props.params.id);
     this.props.loadStorageObj(this.props.params.id);
   }
 
