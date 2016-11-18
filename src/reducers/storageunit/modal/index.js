@@ -85,7 +85,12 @@ export const loadNode = (id) => {
 };
 
 export const loadChildren = (id, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`);
+  let url;
+  if (id) {
+    url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`);
+  } else {
+    url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/root`);
+  }
   return {
     types: [LOAD_CHILDREN, LOAD_CHILDREN_SUCCESS, LOAD_CHILDREN_FAIL],
     promise: (client) => client.get(url),
