@@ -15,7 +15,7 @@ export default function createActions(urlTemplate) {
     .debounce(() => Observable.timer(500))
     .distinctUntilChanged()
     .switchMap((term) =>
-      fetch(urlTemplate.replace('%term%', term), {
+      fetch(urlTemplate.replace('%term%', encodeURIComponent(term)), {
         headers: {
           Authorization: `Bearer ${getToken()}`
         }
