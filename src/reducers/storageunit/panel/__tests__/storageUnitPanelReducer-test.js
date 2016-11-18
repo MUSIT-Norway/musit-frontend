@@ -1,4 +1,3 @@
-
 import * as actions from '../index';
 import reducer from '../index';
 import Config from '../../../../config';
@@ -30,64 +29,71 @@ describe('ReducerStoragUnitPanel', () => {
     environmentRequirement: {
       comment: 'fdsfd'
     },
-    updatedBy:666,
+    updatedBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
     updatedDate: '2016-10-24T15:41:35+00:00',
     type: 'Building'
   };
+
   it('creates LOAD_SUCCESS when fetching data has been done', () => {
     const id = 3;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
-            .get(url)
-            .reply(200, loadState);
+      .get(url)
+      .reply(200, loadState);
+
+    const actorUrl = `${Config.magasin.urls.actor.baseUrl}/e4eaf917-e095-456e-a66d-08555b66f4f2`;
+    nock('http://localhost')
+      .get(actorUrl)
+      .reply(200, { fn: 'Test user', dataportenId: 'e4eaf917-e095-456e-a66d-08555b66f4f2'});
+
     const store = mockStore();
 
     return store.dispatch(actions.load(3))
-            .then(() => {
-              expect(store.getActions()).toMatchSnapshot();
-            });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('LOAD: no action', () => {
     expect(
-            reducer(undefined, {})
-        ).toMatchSnapshot();
+      reducer(undefined, {})
+    ).toMatchSnapshot();
   });
 
   it('LOAD: initial action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.LOAD
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.LOAD
+      })
+    ).toMatchSnapshot();
   });
 
   it('LOAD: success action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.LOAD_SUCCESS,
-              result: {
-                someField: 1
-              }
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.LOAD_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
+    ).toMatchSnapshot();
   });
 
   it('LOAD: fail action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.LOAD_FAIL,
-              error: Error('LOAD has some error.')
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.LOAD_FAIL,
+        error: Error('LOAD has some error.')
+      })
+    ).toMatchSnapshot();
   });
   const putData = {
     id: 2,
     name: 'p5',
-    isPartOf:1,
+    isPartOf: 1,
     groupRead: 'foo',
     path: ',1,2,',
-    pathNames:[
+    pathNames: [
       {
         nodeId: 1,
         name: 'root-node'
@@ -100,7 +106,7 @@ describe('ReducerStoragUnitPanel', () => {
     environmentRequirement: {},
     securityAssessment: {},
     environmentAssessment: {},
-    updatedBy: 123,
+    updatedBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
     updatedDate: '2016-10-24T16:13:24+00:00',
     type: 'Room'
   };
@@ -108,55 +114,61 @@ describe('ReducerStoragUnitPanel', () => {
     const id = 2;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
-            .put(url, putData)
-            .reply(201, putData);
+      .put(url, putData)
+      .reply(201, putData);
+
+    const actorUrl = `${Config.magasin.urls.actor.baseUrl}/e4eaf917-e095-456e-a66d-08555b66f4f2`;
+    nock('http://localhost')
+      .get(actorUrl)
+      .reply(200, { fn: 'Test user', dataportenId: 'e4eaf917-e095-456e-a66d-08555b66f4f2'});
+
     const store = mockStore();
 
     return store.dispatch(actions.update(putData))
-            .then(() => {
-              expect(store.getActions()).toMatchSnapshot();
-            });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
 
   it('update: no action', () => {
     expect(
-            reducer(undefined, {})
-        ).toMatchSnapshot();
+      reducer(undefined, {})
+    ).toMatchSnapshot();
   });
 
   it('update: initial action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.INSERT
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.INSERT
+      })
+    ).toMatchSnapshot();
   });
 
   it('update: success action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.INSERT_SUCCESS,
-              result: {
-                someField: 1
-              }
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.INSERT_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
+    ).toMatchSnapshot();
   });
 
   it('update: fail action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.INSERT_FAIL,
-              error: Error('Some error in update.')
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.INSERT_FAIL,
+        error: Error('Some error in update.')
+      })
+    ).toMatchSnapshot();
   });
 
   it('insert INSERT_SUCCESS when fetching data has been done', () => {
     const postData = {
       name: 'p5',
-      isPartOf:1,
+      isPartOf: 1,
       groupRead: 'foo',
       environmentRequirement: {},
       securityAssessment: {},
@@ -167,48 +179,48 @@ describe('ReducerStoragUnitPanel', () => {
     const parentId = 1;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}${!parentId ? '/root' : ''}`;
     nock('http://localhost')
-            .post(url, postData)
-            .reply(201, putData);
+      .post(url, postData)
+      .reply(201, putData);
     const store = mockStore();
 
     return store.dispatch(actions.insert(1, postData))
-            .then(() => {
-              expect(store.getActions()).toMatchSnapshot();
-            });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
 
   it('insert: no action', () => {
     expect(
-            reducer(undefined, {})
-        ).toMatchSnapshot();
+      reducer(undefined, {})
+    ).toMatchSnapshot();
   });
 
   it('insert: initial action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.INSERT
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.INSERT
+      })
+    ).toMatchSnapshot();
   });
 
   it('insert: success action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.INSERT_SUCCESS,
-              result: {
-                someField: 1
-              }
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.INSERT_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
+    ).toMatchSnapshot();
   });
 
   it('insert: fail action', () => {
     expect(
-            reducer(undefined, {
-              type: actions.INSERT_FAIL,
-              error: Error('Some error in insert.')
-            })
-        ).toMatchSnapshot();
+      reducer(undefined, {
+        type: actions.INSERT_FAIL,
+        error: Error('Some error in insert.')
+      })
+    ).toMatchSnapshot();
   });
 });

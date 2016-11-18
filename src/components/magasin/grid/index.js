@@ -38,7 +38,7 @@ export default class StorageUnitsContainer extends React.Component {
     moves: React.PropTypes.arrayOf(React.PropTypes.object),
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
-    userId: React.PropTypes.string,
+    user: React.PropTypes.object,
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
       numNodes: React.PropTypes.number,
@@ -126,30 +126,30 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   moveNode = (
-    fromNode,
-    userId = this.props.userId,
+    nodeToMove,
+    userId = this.props.user.getActorId(),
     nodeId = this.props.rootNode.id,
     moveNode = this.props.moveNode,
     loadRoot = this.props.loadRoot,
     loadNodes = this.loadNodes
-  ) => (to, toName, onSuccess) => {
-    const errorMessage = checkNodeBranchAndType(fromNode, to);
+  ) => (toNode, toName, onSuccess) => {
+    const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
 
     if (!errorMessage) {
-      moveNode(fromNode.id, to.id, userId, {
+      moveNode(nodeToMove.id, toNode.id, userId, {
         onSuccess: () => {
           onSuccess();
           loadNodes();
           loadRoot(nodeId);
           emitSuccess({
             type: 'movedSuccess',
-            message: I18n.t('musit.moveModal.messages.nodeMoved', { name: fromNode.name, destination: toName })
+            message: I18n.t('musit.moveModal.messages.nodeMoved', { name: nodeToMove.name, destination: toName })
           });
         },
         onFailure: () => {
           emitError({
             type: 'errorOnMove',
-            message: I18n.t('musit.moveModal.messages.errorNode', { name: fromNode.name, destination: toName })
+            message: I18n.t('musit.moveModal.messages.errorNode', { name: nodeToMove.name, destination: toName })
           });
         }
       });
@@ -162,24 +162,24 @@ export default class StorageUnitsContainer extends React.Component {
   };
 
   showMoveObjectModal(
-    object,
+    objectToMove,
     showModal = this.context.showModal
   ) {
-    const objStr = getObjectDescription(object);
+    const objStr = getObjectDescription(objectToMove);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    showModal(title, <MusitModal onMove={this.moveObject(object)} />);
+    showModal(title, <MusitModal onMove={this.moveObject(objectToMove)} />);
   }
 
   moveObject = (
-    fromObject,
-    userId = this.props.userId,
+    objectToMove,
+    userId = this.props.user.getActorId(),
     nodeId = this.props.rootNode.id,
     moveObject = this.props.moveObject,
     loadRoot = this.props.loadRoot,
     loadObjects = this.loadObjects
-  ) => (toId, toName, onSuccess) => {
-    const description = getObjectDescription(fromObject);
-    moveObject(fromObject.id, toId, userId, {
+  ) => (toNode, toName, onSuccess) => {
+    const description = getObjectDescription(objectToMove);
+    moveObject(objectToMove.id, toNode.id, userId, {
       onSuccess: () => {
         onSuccess();
         loadObjects();
@@ -199,11 +199,11 @@ export default class StorageUnitsContainer extends React.Component {
   };
 
   showObjectMoveHistory(
-    object,
+    objectToShowHistoryFor,
     showModal = this.context.showModal
   ) {
-    const objStr = getObjectDescription(object);
-    const componentToRender = <MusitModalHistory objectId={object.id} />;
+    const objStr = getObjectDescription(objectToShowHistoryFor);
+    const componentToRender = <MusitModalHistory objectId={objectToShowHistoryFor.id} />;
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
     showModal(title, componentToRender);
   }

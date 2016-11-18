@@ -13,18 +13,13 @@ export default class ViewObservationPage extends React.Component {
     registeredBy: PropTypes.string,
     registeredDate: PropTypes.string,
     params: PropTypes.object.isRequired,
-    loadActorDetails: PropTypes.func.isRequired,
     loadObservation: PropTypes.func.isRequired,
     rootNode: React.PropTypes.object
   }
 
   componentWillMount() {
     if (this.props.params.obsId) {
-      this.props.loadObservation(this.props.params.id, this.props.params.obsId, {
-        onSuccess: (observation) => {
-          this.props.loadActorDetails(observation);
-        }
-      });
+      this.props.loadObservation(this.props.params.id, this.props.params.obsId);
     }
     if (!this.props.rootNode.path) {
       this.props.loadStorageObj(this.props.params.id);

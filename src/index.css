@@ -237,3 +237,7 @@ a:visited { color: #337ab7; }
 .icon-musitmoldicon:before {
     content: "\78";
 }
+
+.form-control::-ms-clear {
+    display: none;
+}

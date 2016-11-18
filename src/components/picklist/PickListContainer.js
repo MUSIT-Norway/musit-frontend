@@ -22,7 +22,7 @@ export default class PickListContainer extends React.Component {
     moveNode: React.PropTypes.func.isRequired,
     moveObject: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
-    userId: React.PropTypes.string,
+    user: React.PropTypes.object,
     addNode: React.PropTypes.func.isRequired,
     addObject: React.PropTypes.func.isRequired,
     loadRoot: React.PropTypes.func.isRequired,
@@ -124,7 +124,7 @@ export default class PickListContainer extends React.Component {
     }
 
     if (!error) {
-      moveFunction(toMove, to.id, this.props.user.id, callback);
+      moveFunction(toMove, to.id, this.props.user.getActorId(), callback);
     }
 
   }

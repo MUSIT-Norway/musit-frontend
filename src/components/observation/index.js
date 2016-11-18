@@ -17,7 +17,6 @@ import * as validation from './validation';
 import { isDateBiggerThanToday } from '../../util';
 import { I18n } from 'react-i18nify';
 import { emitError } from '../../errors/emitter';
-import { getActorId } from '../../util/actor';
 
 export default class ObservationPage extends React.Component {
 
@@ -25,8 +24,7 @@ export default class ObservationPage extends React.Component {
     id: PropTypes.string.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
-    doneBy: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    doneById: PropTypes.string,
+    doneBy: PropTypes.string,
     registeredDate: PropTypes.string,
     registeredBy: PropTypes.string,
     onSaveObservation: PropTypes.func.isRequired,
@@ -51,8 +49,7 @@ export default class ObservationPage extends React.Component {
       selectedType: null,
       observations: props.observations,
       doneDate: props.doneDate || new Date().toISOString(),
-      doneBy: props.doneBy,
-      doneById: props.doneById
+      doneBy: props.doneBy
     };
     this.isTypeSelectable = this.isTypeSelectable.bind(this);
     this.onChangeField = this.onChangeField.bind(this);
@@ -68,7 +65,6 @@ export default class ObservationPage extends React.Component {
       this.setState({
         ...this.state,
         doneBy: nextProps.doneBy,
-        doneById: nextProps.doneById,
         doneDate: nextProps.doneDate,
         observations: nextProps.observations
       });
@@ -76,15 +72,13 @@ export default class ObservationPage extends React.Component {
     if (this.props.mode === 'ADD' && nextProps.doneBy && this.props.doneBy && nextProps.doneBy !== this.props.doneBy) {
       this.setState({
         ...this.state,
-        doneBy: nextProps.doneBy,
-        doneById: nextProps.doneById
+        doneBy: nextProps.doneBy
       });
     }
     if (nextProps.doneBy !== this.props.doneBy) {
       this.setState({
         ...this.state,
-        doneBy: nextProps.doneBy,
-        doneById: nextProps.doneById
+        doneBy: nextProps.doneBy
       });
     }
   }
@@ -354,8 +348,7 @@ export default class ObservationPage extends React.Component {
                     onChange={newValue => {
                       this.setState({
                         ...this.state,
-                        doneBy: newValue,
-                        doneById: getActorId(newValue)
+                        doneBy: newValue
                       });
                     }}
                   />

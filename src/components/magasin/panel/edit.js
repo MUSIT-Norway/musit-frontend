@@ -18,15 +18,13 @@ export default class EditStorageUnitContainer extends React.Component {
         this.props.updateState(result);
       }
     });
-    if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id);
-    }
   }
 
   render() {
     return (
       <StorageUnitContainer
         {...this.props}
+        rootNode={this.props.unit}
         loaded={this.props.loaded && !!this.props.unit}
       />
     );

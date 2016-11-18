@@ -30,7 +30,7 @@ const getSortedStorageObjectGrid = createSelector(
 );
 
 const mapStateToProps = (state) => ({
-  userId: state.auth.actorId,
+  user: state.auth.actor,
   stats: state.storageUnitStats.stats,
   children: getSortedStorageGridUnit(state),
   objects: getSortedStorageObjectGrid(state),

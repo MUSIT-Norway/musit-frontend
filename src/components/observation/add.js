@@ -9,7 +9,7 @@ export default class AddObservationPage extends React.Component {
   static propTypes = {
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
-    actorId: PropTypes.string,
+    actor: PropTypes.object,
     rootNode: React.PropTypes.object
   }
 
@@ -32,7 +32,6 @@ export default class AddObservationPage extends React.Component {
               onSaveObservation={this.props.onSaveObservation}
               mode="ADD"
               doneBy={this.props.actor}
-              doneById={this.props.actorId}
             />
           </div>
         }
