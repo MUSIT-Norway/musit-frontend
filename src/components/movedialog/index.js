@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clear: () => dispatch(clear()),
     loadNode: (id) => dispatch(loadNode(id)),
-    loadRootChildren: () => dispatch(loadChildren(1)),
+    loadRootChildren: () => dispatch(loadChildren()),
     loadChildren: (id) => dispatch(loadChildren(id))
   };
 };
