@@ -66,20 +66,35 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
 
 export default storageUnitContainerReducer;
 
+const getUpdatedBy = (client, node, resolve, reject) => {
+  client.get(apiUrl(`${Config.magasin.urls.actor.baseUrl}/${node.updatedBy}`))
+    .then(actor => resolve({
+      ...node,
+      updatedByName: actor.fn
+    })).catch(error => reject(error));
+};
+
 export const load = (id, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`)),
+    promise: (client) => new Promise((resolve, reject) => {
+      client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`))
+        .then(node => getUpdatedBy(client, node, resolve, reject))
+        .catch(error => reject(error));
+    }),
     callback
   };
 };
 
 export const update = (data, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${data.id}`);
   const dataToPost = mapToBackend(data);
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
-    promise: (client) => client.put(url, { data: dataToPost }),
+    promise: (client) => new Promise((resolve, reject) => {
+      client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${data.id}`), { data: dataToPost })
+          .then(node => getUpdatedBy(client, node, resolve, reject))
+          .catch(error => reject(error));
+    }),
     callback
   };
 };

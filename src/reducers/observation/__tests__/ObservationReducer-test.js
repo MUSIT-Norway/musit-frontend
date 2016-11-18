@@ -5,7 +5,7 @@ import observationReducer, {
 } from '../index';
 import mapToFrontEnd from '../mapper/to_frontend';
 import mapToBackEnd from '../mapper/to_backend';
-
+import Actor from '../../../models/actor';
 import configureMockStore from 'redux-mock-store';
 import createMiddleware from '../../../middleware/clientMiddleware';
 import ApiClient from '../../../middleware/ApiClient';
@@ -33,8 +33,7 @@ describe('ObservationReducer', () => {
 
   it('mapToFrontEnd and mapToBackEnd shoud be inverse functions', () => {
     const frontEnd = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4', 
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -82,8 +81,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: Uttørket', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -105,8 +103,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: nesten uttørket', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -128,8 +125,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: litt uttørket', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -151,8 +147,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: noe uttørket', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -174,8 +169,7 @@ describe('ObservationReducer', () => {
 
   it('test alcohol status: tilfredsstillende', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -198,8 +192,7 @@ describe('ObservationReducer', () => {
 
   it('test invalid alcohol status', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -221,8 +214,7 @@ describe('ObservationReducer', () => {
 
   it('mapToFrontEnd and mapToBackEnd are inverse with complete data', () => {
     const frontend = {
-      doneBy: {id: '1'},
-      doneById: '8994945c-89a1-4086-b17a-728df8a907a4',
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {
@@ -357,7 +349,7 @@ describe('ObservationReducer', () => {
       .get(url)
       .reply(200, {
         id: 50,
-        doneBy: 1,
+        doneBy: '8994945c-89a1-4086-b17a-728df8a907a4',
         doneDate: '2016-09-29T00:00:00+00:00',
         affectedThing: 2,
         registeredBy: 'Darth Vader',
@@ -367,6 +359,11 @@ describe('ObservationReducer', () => {
           gas: 'Gas test'
         }
       });
+
+    const actorUrl = `${Config.magasin.urls.actor.baseUrl}/details`;
+    nock('http://localhost')
+      .post(actorUrl, ['8994945c-89a1-4086-b17a-728df8a907a4'])
+      .reply(200, [{ fn: 'Test user', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4'}]);
 
     const store = mockStore();
 
@@ -410,78 +407,9 @@ describe('ObservationReducer', () => {
     ).toMatchSnapshot();
   });
 
-  it('creates LOAD_ACTOR_SUCCESS when actor data is imported', () => {
-    const url = '/api/actor/v1/person/details';
-    nock('http://localhost')
-      .post(url, ['f98ba9f4-24cb-4a6d-acd7-3083e131321e'])
-      .reply(200, {
-        id: 1,
-        fn: 'Jarle Stabell',
-        dataportenId: 'jarle'
-      });
-
-    const store = mockStore();
-
-    return store.dispatch(actions.loadActors({
-      doneBy: 'f98ba9f4-24cb-4a6d-acd7-3083e131321e',
-      registeredBy: 'f98ba9f4-24cb-4a6d-acd7-3083e131321e'
-    })).then(() => {
-      expect(store.getActions()).toMatchSnapshot();
-    });
-  });
-
-  it('Actor no action', () => {
-    expect(
-      reducer(undefined, {})
-    ).toMatchSnapshot();
-  });
-
-  it('Actor initial action', () => {
-    expect(
-      reducer(undefined, {
-        type: actions.LOAD_ACTOR
-      })
-    ).toMatchSnapshot();
-  });
-
-  it('Actor success action with dataportenId', () => {
-    expect(
-      reducer(undefined, {
-        type: actions.LOAD_ACTOR_SUCCESS,
-        result: {
-          id: 1,
-          dataportenId: '82300ac0-5d14-46be-997f-2472b7071a84',
-          fn: 'Jarl'
-        }
-      })
-    ).toMatchSnapshot();
-  });
-
-  it('Actor success action with applicationId', () => {
-    expect(
-      reducer(undefined, {
-        type: actions.LOAD_ACTOR_SUCCESS,
-        result: {
-          id: 1,
-          applicationId: '78453ebd-252b-482b-8d26-ab78dff7034a',
-          fn: 'Jarl'
-        }
-      })
-    ).toMatchSnapshot();
-  });
-
-  it('Actor fail action', () => {
-    expect(
-      reducer(undefined, {
-        type: actions.LOAD_ACTOR_FAILURE,
-        error: Error('Some error occurred to load actor data.')
-      })
-    ).toMatchSnapshot();
-  });
-
   it('creates ADD_SUCCESS when observation data is added', () => {
     const observationAddData = {
-      doneBy: {id: '1'},
+      doneBy: new Actor({ id: '1', dataportenId: '8994945c-89a1-4086-b17a-728df8a907a4' }),
       doneDate: '2016-10-31T23:00:00.000Z',
       observations: [
         {

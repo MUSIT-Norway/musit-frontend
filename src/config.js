@@ -13,8 +13,7 @@ export default {
           `/api/thingaggregate/museum/${museumId}`
       },
       actor: {
-        personBaseUrl: (museumId: number): string =>
-          `/api/actor/v1/person?museumId=${museumId}`
+        baseUrl: '/api/actor/v1/person'
       }
     }
   }

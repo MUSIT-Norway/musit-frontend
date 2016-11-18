@@ -1,186 +1,134 @@
-exports[`ObservationControlGridReducer actor: fail action 1`] = `
-Object {
-  "data": Array [],
-  "error": [Error: Some error in loadActor.],
-  "loaded": false,
-  "loading": false
-}
-`;
-
-exports[`ObservationControlGridReducer actor: initial action 1`] = `
-Object {
-  "data": Array [],
-  "loaded": false,
-  "loading": true
-}
-`;
-
-exports[`ObservationControlGridReducer actor: no action 1`] = `
-Object {
-  "data": Array []
-}
-`;
-
-exports[`ObservationControlGridReducer actor: success action 1`] = `
-Object {
-  "data": Array [],
-  "loaded": true,
-  "loading": false
-}
-`;
-
-exports[`ObservationControlGridReducer creates LOAD_ACTOR_SUCCESS when fetching data has been done 1`] = `
-Array [
-  Object {
-    "type": "musit/observationcontrol/LOAD_ACTOR"
-  },
-  Object {
-    "result": Array [
-      Object {
-        "dataportenId": "jarle",
-        "fn": "Jarle Stabell",
-        "id": 1
-      },
-      Object {
-        "dataportenId": "stein",
-        "fn": "Stein A. Olsen",
-        "id": 2
-      }
-    ],
-    "type": "musit/observationcontrol/LOAD_ACTOR_SUCCESS"
-  }
-]
-`;
-
 exports[`ObservationControlGridReducer creates LOAD_SUCCESS when fetching data has been done 1`] = `
 Array [
   Object {
     "type": "musit/observationcontrol/LOAD"
   },
   Object {
-    "result": Object {
-      "data": Array [
-        Object {
-          "doneBy": "2",
-          "doneDate": "1990-11-11",
-          "eventType": "Observation",
-          "subEvents-parts": Array [
-            Object {
-              "eventType": "ObservationLightingCondition",
-              "lightingCondition": "Veldig lyst idag",
-              "note": "Skru ned lyset"
-            },
-            Object {
-              "condition": "Mye alkohol",
-              "eventType": "ObservationAlcohol",
-              "note": "Tynn ut",
-              "volume": "93.5"
-            },
-            Object {
-              "eventType": "ObservationPest",
-              "identification": "Banafluer i fruktkurven",
-              "lifeCycles": Array [
-                Object {
-                  "number": "3",
-                  "stage": "Puppeskinn"
-                },
-                Object {
-                  "number": "3",
-                  "stage": "Larva"
-                }
-              ],
-              "note": "Eplecidereddik og Zalo"
-            }
-          ]
-        },
-        Object {
-          "doneBy": "1",
-          "doneDate": "1981-12-01",
-          "eventType": "Control",
-          "subEvents-parts": Array [
-            Object {
-              "OK": true,
-              "eventType": "ControlRelativeHumidity"
-            },
-            Object {
-              "OK": true,
-              "eventType": "ControlLightingCondition"
-            },
-            Object {
-              "OK": false,
-              "eventType": "ControlTemperature"
-            },
-            Object {
-              "OK": false,
-              "eventType": "ControlHypoxicAir"
-            },
-            Object {
-              "OK": true,
-              "eventType": "ControlAlcohol"
-            }
-          ]
-        },
-        Object {
-          "doneBy": "2",
-          "doneDate": "1994-02-21",
-          "eventType": "Observation",
-          "subEvents-parts": Array [
-            Object {
-              "eventType": "ObservationMold",
-              "mold": "Muggent",
-              "note": "Eddik"
-            },
-            Object {
-              "cleaning": "Urent",
-              "eventType": "ObservationCleaning",
-              "note": "Her må der vaskes bedre"
-            },
-            Object {
-              "eventType": "ObservationPest",
-              "identification": "Sommerfugler i under takbjelken",
-              "lifeCycles": Array [
-                Object {
-                  "number": "1",
-                  "stage": "Puppe"
-                },
-                Object {
-                  "number": "3",
-                  "stage": "Larva"
-                }
-              ],
-              "note": "Gasses"
-            }
-          ]
-        },
-        Object {
-          "doneBy": "2",
-          "doneDate": "1891-12-01",
-          "eventType": "Control",
-          "subEvents-parts": Array [
-            Object {
-              "OK": true,
-              "eventType": "ControlCleaning"
-            },
-            Object {
-              "OK": true,
-              "eventType": "ControlHypoxicAir"
-            },
-            Object {
-              "OK": false,
-              "eventType": "ControlGass"
-            },
-            Object {
-              "OK": false,
-              "eventType": "ControlHypoxicAir"
-            },
-            Object {
-              "OK": true,
-              "eventType": "ControlPest"
-            }
-          ]
-        }
-      ]
-    },
+    "result": Array [
+      Object {
+        "doneBy": "Test user",
+        "doneDate": "1990-11-11",
+        "eventType": "Observation",
+        "registeredBy": undefined,
+        "subEvents-parts": Array [
+          Object {
+            "eventType": "ObservationLightingCondition",
+            "lightingCondition": "Veldig lyst idag",
+            "note": "Skru ned lyset"
+          },
+          Object {
+            "condition": "Mye alkohol",
+            "eventType": "ObservationAlcohol",
+            "note": "Tynn ut",
+            "volume": "93.5"
+          },
+          Object {
+            "eventType": "ObservationPest",
+            "identification": "Banafluer i fruktkurven",
+            "lifeCycles": Array [
+              Object {
+                "number": "3",
+                "stage": "Puppeskinn"
+              },
+              Object {
+                "number": "3",
+                "stage": "Larva"
+              }
+            ],
+            "note": "Eplecidereddik og Zalo"
+          }
+        ]
+      },
+      Object {
+        "doneBy": "Test user",
+        "doneDate": "1981-12-01",
+        "eventType": "Control",
+        "registeredBy": undefined,
+        "subEvents-parts": Array [
+          Object {
+            "OK": true,
+            "eventType": "ControlRelativeHumidity"
+          },
+          Object {
+            "OK": true,
+            "eventType": "ControlLightingCondition"
+          },
+          Object {
+            "OK": false,
+            "eventType": "ControlTemperature"
+          },
+          Object {
+            "OK": false,
+            "eventType": "ControlHypoxicAir"
+          },
+          Object {
+            "OK": true,
+            "eventType": "ControlAlcohol"
+          }
+        ]
+      },
+      Object {
+        "doneBy": "Test user",
+        "doneDate": "1994-02-21",
+        "eventType": "Observation",
+        "registeredBy": undefined,
+        "subEvents-parts": Array [
+          Object {
+            "eventType": "ObservationMold",
+            "mold": "Muggent",
+            "note": "Eddik"
+          },
+          Object {
+            "cleaning": "Urent",
+            "eventType": "ObservationCleaning",
+            "note": "Her må der vaskes bedre"
+          },
+          Object {
+            "eventType": "ObservationPest",
+            "identification": "Sommerfugler i under takbjelken",
+            "lifeCycles": Array [
+              Object {
+                "number": "1",
+                "stage": "Puppe"
+              },
+              Object {
+                "number": "3",
+                "stage": "Larva"
+              }
+            ],
+            "note": "Gasses"
+          }
+        ]
+      },
+      Object {
+        "doneBy": "Test user",
+        "doneDate": "1891-12-01",
+        "eventType": "Control",
+        "registeredBy": undefined,
+        "subEvents-parts": Array [
+          Object {
+            "OK": true,
+            "eventType": "ControlCleaning"
+          },
+          Object {
+            "OK": true,
+            "eventType": "ControlHypoxicAir"
+          },
+          Object {
+            "OK": false,
+            "eventType": "ControlGass"
+          },
+          Object {
+            "OK": false,
+            "eventType": "ControlHypoxicAir"
+          },
+          Object {
+            "OK": true,
+            "eventType": "ControlPest"
+          }
+        ]
+      }
+    ],
     "type": "musit/observationcontrol/LOAD_SUCCESS"
   }
 ]

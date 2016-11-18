@@ -1,5 +1,5 @@
 import { apiUrl } from '../../util';
-import { getActorId } from '../../util/actor';
+import Actor from '../../models/actor';
 
 export const SET_USER = 'musit/auth/SET_USER';
 export const CLEAR_USER = 'musit/auth/CLEAR_USER';
@@ -41,8 +41,7 @@ const authReducer = (state = initialState, action = {}) => {
       ...state,
       loading: false,
       loaded: true,
-      actor: action.result,
-      actorId: getActorId(action.result)
+      actor: new Actor(action.result)
     };
   case LOAD_ACTOR_FAILURE:
     return {

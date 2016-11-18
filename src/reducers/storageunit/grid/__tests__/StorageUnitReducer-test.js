@@ -138,47 +138,47 @@ describe('StorageUnitReducer', () => {
     const id = 2;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
-        .get(url)
-        .reply(200, loadOneState);
+      .get(url)
+      .reply(200, loadOneState);
     const store = mockStore();
 
     store.dispatch(actions.loadRoot(2))
-        .then(() => {
-          expect(store.getActions()).toMatchSnapshot();
-        });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('LOAD_ONE: no action', () => {
     expect(
-        reducer(undefined, {})
+      reducer(undefined, {})
     ).toMatchSnapshot();
   });
 
   it('LOAD_ONE: initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_ONE
-        })
+      reducer(undefined, {
+        type: actions.LOAD_ONE
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_ONE: success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_ONE_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.LOAD_ONE_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_ONE: fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_ONE_FAIL,
-          error: Error('LOAD_ONE: has error.')
-        })
+      reducer(undefined, {
+        type: actions.LOAD_ONE_FAIL,
+        error: Error('LOAD_ONE: has error.')
+      })
     ).toMatchSnapshot();
   });
 
@@ -195,47 +195,47 @@ describe('StorageUnitReducer', () => {
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/root`;
     nock('http://localhost')
-        .get(url)
-        .reply(200, loadSeveralChildState);
+      .get(url)
+      .reply(200, loadSeveralChildState);
     const store = mockStore();
 
     store.dispatch(actions.loadRoot())
-        .then(() => {
-          expect(store.getActions()).toMatchSnapshot();
-        });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('LOAD_SEVERAL: no action', () => {
     expect(
-        reducer(undefined, undefined)
+      reducer(undefined, undefined)
     ).toMatchSnapshot();
   });
 
   it('LOAD_SEVERAL: initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL
-        })
+      reducer(undefined, {
+        type: actions.LOAD_SEVERAL
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_SEVERAL: success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.LOAD_SEVERAL_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_SEVERAL: fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL_FAIL,
-          error: Error('LOAD_SEVERAL has error.')
-        })
+      reducer(undefined, {
+        type: actions.LOAD_SEVERAL_FAIL,
+        error: Error('LOAD_SEVERAL has error.')
+      })
     ).toMatchSnapshot();
   });
 
@@ -243,97 +243,97 @@ describe('StorageUnitReducer', () => {
     const id = 1;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`;
     nock('http://localhost')
-        .get(url)
-        .reply(200, loadSeveralChildState);
+      .get(url)
+      .reply(200, loadSeveralChildState);
     const store = mockStore();
 
     return store.dispatch(actions.loadChildren(id))
-        .then(() => {
-          expect(store.getActions()).toMatchSnapshot();
-        });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('LOAD_SEVERAL child: no action', () => {
     expect(
-        reducer(undefined, undefined)
+      reducer(undefined, undefined)
     ).toMatchSnapshot();
   });
 
   it('LOAD_SEVERAL child: initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL
-        })
+      reducer(undefined, {
+        type: actions.LOAD_SEVERAL
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_SEVERAL child: success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.LOAD_SEVERAL_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_SEVERAL child: fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_SEVERAL_FAIL,
-          error: Error('LOAD_SEVERAL child has error.')
-        })
+      reducer(undefined, {
+        type: actions.LOAD_SEVERAL_FAIL,
+        error: Error('LOAD_SEVERAL child has error.')
+      })
     ).toMatchSnapshot();
   });
 
   it('creates DELETE_SUCCESS when fetching data has been done', () => {
-    const id =2;
+    const id = 2;
     const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
     nock('http://localhost')
-        .del(url)
-        .reply(200, {
-          message: 'Deleted 1 storage nodes.'
-        });
+      .del(url)
+      .reply(200, {
+        message: 'Deleted 1 storage nodes.'
+      });
     const store = mockStore();
 
     return store.dispatch(actions.deleteUnit(2))
-        .then(() => {
-          expect(store.getActions()).toMatchSnapshot();
-        });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('DELETE: no action', () => {
     expect(
-        reducer(undefined, undefined)
+      reducer(undefined, undefined)
     ).toMatchSnapshot();
   });
 
   it('DELETE: initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.DELETE
-        })
+      reducer(undefined, {
+        type: actions.DELETE
+      })
     ).toMatchSnapshot();
   });
 
   it('DELETE: success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.DELETE_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer(undefined, {
+        type: actions.DELETE_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('DELETE: fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.DELETE_FAIL,
-          error: Error('DELETE has error.')
-        })
+      reducer(undefined, {
+        type: actions.DELETE_FAIL,
+        error: Error('DELETE has error.')
+      })
     ).toMatchSnapshot();
   });
 });

@@ -25,7 +25,6 @@ import { loadRoot } from '../../../reducers/storageunit/grid';
 
 const mapStateToProps = (state) => ({
   actor: state.auth.actor,
-  actorId: state.auth.actorId,
   translate: (key, markdown) => I18n.t(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
   rootNode: state.storageGridUnit.root.data

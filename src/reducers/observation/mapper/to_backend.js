@@ -112,7 +112,7 @@ function getData(observations, field) {
 export default (state: any, nodeId: string | number) => {
   const r = {};
   r.eventType = 'Observation';
-  r.doneBy = state.doneById;
+  r.doneBy = state.doneBy.getActorId();
   r.doneDate = state.doneDate;
   r.affectedThing = nodeId * 1;
   r.temperature = new Option(getData(state.observations, 'temperature')).map(parseRangeObservation);

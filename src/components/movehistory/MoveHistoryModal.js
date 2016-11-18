@@ -36,9 +36,7 @@ export default class MoveHistoryModal extends Component {
 
   componentDidMount() {
     this.props.clearMoveHistoryForObject();
-    this.props.loadMoveHistoryForObject(this.props.objectId, {
-      onSuccess: (result) => this.props.loadActorDetails({ data: result.filter((r) => r.doneBy).map(r => r.doneBy) })
-    });
+    this.props.loadMoveHistoryForObject(this.props.objectId);
   }
 
   render() {
