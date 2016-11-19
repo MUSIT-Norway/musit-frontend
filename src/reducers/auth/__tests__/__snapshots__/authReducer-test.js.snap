@@ -42,7 +42,9 @@ Object {
     "accessToken": "token",
     "actor": null,
     "groups": Array [],
-    "museumId": 99
+    "museumId": MuseumId {
+      "museumId": 99
+    }
   }
 }
 `;

@@ -76,7 +76,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.loadNodes();
+    this.loadNodes(this.props.user.museumId);
   }
 
   componentWillReceiveProps(newProps) {
@@ -127,7 +127,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   moveNode = (
     nodeToMove,
-    userId = this.props.user.getActorId(),
+    userId = this.props.user.actor.getActorId(),
     nodeId = this.props.rootNode.id,
     moveNode = this.props.moveNode,
     loadRoot = this.props.loadRoot,
@@ -172,7 +172,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   moveObject = (
     objectToMove,
-    userId = this.props.user.getActorId(),
+    userId = this.props.user.actor.getActorId(),
     nodeId = this.props.rootNode.id,
     moveObject = this.props.moveObject,
     loadRoot = this.props.loadRoot,
