@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {loadRoot, clearRoot, loadChildren, deleteUnit} from '../../../reducers/storageunit/grid';
+import {loadRoot as loadRootNodes, clearRoot, loadChildren as loadChildNodes, deleteUnit} from '../../../reducers/storageunit/grid';
 import {loadObjects} from '../../../reducers/storageobject/grid';
 import {addNode, addObject} from '../../../reducers/picklist';
 import {moveObject, moveNode} from '../../../reducers/move';
@@ -42,9 +42,9 @@ const mapDispatchToProps = (dispatch, props) => {
   const {history} = props;
 
   return {
-    loadRoot: (id) => {
+    loadRoot: (id, museumId) => {
       dispatch(clearStats());
-      dispatch(loadRoot(id, {
+      dispatch(loadRootNodes(id, museumId, {
         onSuccess: (result) => {
           if (result.type !== 'Root') {
             dispatch(loadStats(id));
@@ -52,19 +52,19 @@ const mapDispatchToProps = (dispatch, props) => {
         }
       }));
     },
-    loadStorageUnits: () => {
+    loadStorageUnits: (museumId) => {
       dispatch(clearRoot());
-      dispatch(loadRoot());
+      dispatch(loadRootNodes(null, museumId));
       dispatch(clearStats());
     },
     loadStorageObjects: (id) => {
       dispatch(loadObjects(id));
     },
-    loadChildren: (id) => {
-      dispatch(loadChildren(id));
+    loadChildren: (id, museumId) => {
+      dispatch(loadChildNodes(id, museumId));
       dispatch(clearRoot());
       dispatch(clearStats());
-      dispatch(loadRoot(id, {
+      dispatch(loadRootNodes(id, museumId, {
         onSuccess: (result) => {
           if (result.type !== 'Root') {
             dispatch(loadStats(id));
@@ -110,7 +110,7 @@ const mapDispatchToProps = (dispatch, props) => {
             if (currentNode.isPartOf) {
               hashHistory.replace(`/magasin/${currentNode.isPartOf}`);
             } else {
-              dispatch(loadRoot());
+              dispatch(loadRootNodes());
               dispatch(clearStats());
             }
             emitSuccess({

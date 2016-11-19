@@ -76,16 +76,16 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.loadNodes(this.props.user.museumId);
+    this.loadNodes();
   }
 
   componentWillReceiveProps(newProps) {
     // Issued on every propchange, including local route changes
     if (newProps.params.id !== this.props.params.id) {
       if (newProps.params.id) {
-        this.props.loadChildren(newProps.params.id);
+        this.props.loadChildren(newProps.params.id, this.props.user.museumId);
       } else {
-        this.props.loadStorageUnits();
+        this.props.loadStorageUnits(this.props.user.museumId);
       }
     }
   }
@@ -105,9 +105,9 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadNodes() {
     if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id);
+      this.props.loadChildren(this.props.params.id, this.props.user.museumId);
     } else {
-      this.props.loadStorageUnits();
+      this.props.loadStorageUnits(this.props.user.museumId);
     }
   }
 

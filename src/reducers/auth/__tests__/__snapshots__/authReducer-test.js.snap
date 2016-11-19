@@ -43,7 +43,7 @@ Object {
     "actor": null,
     "groups": Array [],
     "museumId": MuseumId {
-      "museumId": 99
+      "id": 99
     }
   }
 }

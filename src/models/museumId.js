@@ -1,18 +1,18 @@
 /* @flow */
 
 class MuseumId {
-  museumId: number;
+  id: number;
 
   constructor(museumId: number) {
-    this.museumId = museumId;
+    this.id = museumId;
   }
 
   getQuery() {
-    return `museumId=${this.museumId}`;
+    return `museumId=${this.id}`;
   }
 
   getPath() {
-    return `museum/${this.museumId}`;
+    return `museum/${this.id}`;
   }
 }
 
