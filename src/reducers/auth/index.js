@@ -1,5 +1,6 @@
-import { apiUrl } from '../../util';
+import {apiUrl} from '../../util';
 import Actor from '../../models/actor';
+import UserSession from '../../models/userSession';
 
 export const SET_USER = 'musit/auth/SET_USER';
 export const CLEAR_USER = 'musit/auth/CLEAR_USER';
@@ -9,8 +10,7 @@ export const LOAD_ACTOR_FAILURE = 'musit/auth/LOAD_ACTOR_FAILURE';
 export const CLEAR_ACTOR = 'musit/auth/CLEAR_ACTOR';
 
 const initialState = {
-  user: null,
-  actor: null
+  user: {}
 };
 
 const authReducer = (state = initialState, action = {}) => {
@@ -18,17 +18,17 @@ const authReducer = (state = initialState, action = {}) => {
   case SET_USER:
     return {
       ...state,
-      user: action.user
+      user: new UserSession(
+          action.accessToken,
+          [],
+          null,
+          99
+        )
     };
   case CLEAR_USER:
     return {
       ...state,
-      user: null
-    };
-  case CLEAR_ACTOR:
-    return {
-      ...state,
-      actor: null
+      user: {}
     };
   case LOAD_ACTOR:
     return {
@@ -41,7 +41,12 @@ const authReducer = (state = initialState, action = {}) => {
       ...state,
       loading: false,
       loaded: true,
-      actor: new Actor(action.result)
+      user: new UserSession(
+          state.user.accessToken,
+          state.user.groups,
+          new Actor(action.result),
+          state.user.museumId
+        )
     };
   case LOAD_ACTOR_FAILURE:
     return {
@@ -70,10 +75,10 @@ export const clearActor = () => {
   };
 };
 
-export const connectUser = (user) => {
+export const setUser = (user) => {
   return {
     type: SET_USER,
-    user: user
+    accessToken: user.accessToken
   };
 };
 

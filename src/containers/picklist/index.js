@@ -43,7 +43,7 @@ const getSortedObjects = createSelector(
 );
 
 const mapStateToProps = (state) => ({
-  user: state.auth.actor,
+  user: state.auth.user.actor,
   picks: {
     NODE: getSortedNodes(state) ,
     OBJECT: getSortedObjects(state)

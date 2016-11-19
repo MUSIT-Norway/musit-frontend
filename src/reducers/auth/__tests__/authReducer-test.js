@@ -1,4 +1,3 @@
-
 import configureMockStore from 'redux-mock-store';
 import createMiddleware from '../../../middleware/clientMiddleware';
 import ApiClient from '../../../middleware/ApiClient';
@@ -9,7 +8,7 @@ import * as actions from '../../../reducers/auth';
 import reducer from '../../../reducers/auth';
 
 const nock = nocker(request);
-const middlewares = [ createMiddleware(new ApiClient()) ];
+const middlewares = [createMiddleware(new ApiClient())];
 const mockStore = configureMockStore(middlewares);
 
 describe('Auth', () => {
@@ -25,9 +24,9 @@ describe('Auth', () => {
     const store = mockStore();
 
     return store.dispatch(actions.loadActor())
-            .then(() => {
-              expect(store.getActions()).toMatchSnapshot();
-            });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('no action', () => {
@@ -102,7 +101,7 @@ describe('Auth', () => {
 
   it('SET_USER action', () => {
     expect(
-      reducer(initialState, actions.connectUser('TEST_USER'))
+      reducer(initialState, actions.setUser({ accessToken: 'token' }))
     ).toMatchSnapshot();
   });
 

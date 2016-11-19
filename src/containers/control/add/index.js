@@ -24,7 +24,7 @@ import ControlAddContainerImpl from '../../../components/control/add';
 import { loadRoot } from '../../../reducers/storageunit/grid';
 
 const mapStateToProps = (state) => ({
-  actor: state.auth.actor,
+  actor: state.auth.user.actor,
   translate: (key, markdown) => I18n.t(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
   rootNode: state.storageGridUnit.root.data
