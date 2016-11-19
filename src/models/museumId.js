@@ -10,6 +10,10 @@ class MuseumId {
   getQuery() {
     return `museumId=${this.museumId}`;
   }
+
+  getPath() {
+    return `museum/${this.museumId}`;
+  }
 }
 
 export default MuseumId;

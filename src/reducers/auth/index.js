@@ -1,6 +1,7 @@
 import {apiUrl} from '../../util';
 import Actor from '../../models/actor';
 import UserSession from '../../models/userSession';
+import MuseumId from '../../models/museumId';
 
 export const SET_USER = 'musit/auth/SET_USER';
 export const CLEAR_USER = 'musit/auth/CLEAR_USER';
@@ -19,11 +20,11 @@ const authReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       user: new UserSession(
-          action.accessToken,
-          [],
-          null,
-          99
-        )
+        action.accessToken,
+        [],
+        null,
+        new MuseumId(99)
+      )
     };
   case CLEAR_USER:
     return {
@@ -42,11 +43,11 @@ const authReducer = (state = initialState, action = {}) => {
       loading: false,
       loaded: true,
       user: new UserSession(
-          state.user.accessToken,
-          state.user.groups,
-          new Actor(action.result),
-          state.user.museumId
-        )
+        state.user.accessToken,
+        state.user.groups,
+        new Actor(action.result),
+        state.user.museumId
+      )
     };
   case LOAD_ACTOR_FAILURE:
     return {
