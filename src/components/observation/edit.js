@@ -63,7 +63,7 @@ export default class EditObservationPage extends React.Component {
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
               doneBy={this.props.location.state.doneBy}
-              onSaveObservation={this.props.onSaveObservation(this.props.location.state)}
+              onSaveObservation={this.props.onSaveObservation(this.props.location.state, this.props.user.museumId)}
               mode="EDIT"
             />
           </div>
