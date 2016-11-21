@@ -3,6 +3,8 @@ import Actor from '../../models/actor';
 import UserSession from '../../models/userSession';
 import MuseumId from '../../models/museumId';
 
+const ID = 'auth';
+
 export const SET_USER = 'musit/auth/SET_USER';
 export const CLEAR_USER = 'musit/auth/CLEAR_USER';
 export const LOAD_ACTOR = 'musit/auth/LOAD_ACTOR';
@@ -52,7 +54,7 @@ const authReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default authReducer;
+export default { ID, reducer: authReducer };
 
 export const loadActor = () => {
   return {
@@ -78,4 +80,8 @@ export const clearUser = () => {
   return {
     type: CLEAR_USER
   };
+};
+
+export const getMuseumId = () => {
+  return global.reduxStore.getState()[ID].user.museumId.id;
 };

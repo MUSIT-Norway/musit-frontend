@@ -3,7 +3,6 @@ import Autosuggest from 'react-autosuggest';
 import autoComplete from '../../state/autocomplete';
 import Config from '../../config';
 import Actor from '../../models/actor';
-import MuseumId from '../../models/museumId';
 
 class ActorSuggest extends React.Component {
 
@@ -64,6 +63,4 @@ class ActorSuggest extends React.Component {
   }
 }
 
-export default autoComplete(
-  `${Config.magasin.urls.actor.baseUrl}?${new MuseumId(99).getQuery()}&search=[%term%]`
-)(ActorSuggest);
+export default autoComplete(Config.magasin.urls.actor.searchUrl)(ActorSuggest);

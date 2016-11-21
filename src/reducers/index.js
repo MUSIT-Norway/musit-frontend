@@ -19,7 +19,7 @@
 
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import authReducer from './auth';
+import auth from './auth';
 import picklistReducer from './picklist';
 import storagePanelReducer from './storageunit/panel';
 import storagePanelStateReducer from './storageunit/panel/state';
@@ -36,7 +36,7 @@ import ObjectSearchReducer from './objectsearch/reducer';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
-  auth: authReducer,
+  [auth.ID]: auth.reducer,
   picks: picklistReducer,
   storagePanelUnit: storagePanelReducer,
   storageGridUnit: storageNodeGridReducer,
