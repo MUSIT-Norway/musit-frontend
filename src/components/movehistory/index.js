@@ -1,23 +1,21 @@
 import MoveHistoryModal from './MoveHistoryModal';
-import { loadMoveHistoryForObject, clearMoveHistoryForObject, loadActor } from '../../reducers/grid/move';
+import { loadMoveHistoryForObject, clearMoveHistoryForObject } from '../../reducers/grid/move';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
-    moves: state.movehistory.data || []
+    moves: state.movehistory.data || [],
+    user: state.auth.user
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadMoveHistoryForObject: (objectId, cb) => {
-      dispatch(loadMoveHistoryForObject(objectId, cb));
+    loadMoveHistoryForObject: (objectId, museumId, cb) => {
+      dispatch(loadMoveHistoryForObject(objectId, museumId, cb));
     },
-    clearMoveHistoryForObject: (objectId) => {
-      dispatch(clearMoveHistoryForObject(objectId));
-    },
-    loadActorDetails: (data) => {
-      dispatch(loadActor(data));
+    clearMoveHistoryForObject: (objectId, museumId) => {
+      dispatch(clearMoveHistoryForObject(objectId, museumId));
     }
   };
 };

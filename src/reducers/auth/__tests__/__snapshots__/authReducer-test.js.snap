@@ -1,6 +1,10 @@
 exports[`Auth CLEAR_ACTOR action 1`] = `
 Object {
-  "actor": null,
+  "actor": Object {
+    "dataportenId": "jarle",
+    "fn": "Jarle Stabell",
+    "id": 1
+  },
   "user": Object {
     "accessToken": "fake-token-zab-xy-jarle",
     "emails": Array [
@@ -23,7 +27,7 @@ Object {
     "fn": "Jarle Stabell",
     "id": 1
   },
-  "user": null
+  "user": Object {}
 }
 `;
 
@@ -34,7 +38,14 @@ Object {
     "fn": "Jarle Stabell",
     "id": 1
   },
-  "user": "TEST_USER"
+  "user": UserSession {
+    "accessToken": "token",
+    "actor": null,
+    "groups": null,
+    "museumId": MuseumId {
+      "id": 99
+    }
+  }
 }
 `;
 
@@ -56,55 +67,60 @@ Array [
 
 exports[`Auth fail action 1`] = `
 Object {
-  "actor": null,
   "error": [Error: Some error here.],
   "loaded": false,
   "loading": false,
-  "user": null
+  "user": Object {}
 }
 `;
 
 exports[`Auth initial action 1`] = `
 Object {
-  "actor": null,
   "loaded": false,
   "loading": true,
-  "user": null
+  "user": Object {}
 }
 `;
 
 exports[`Auth no action 1`] = `
 Object {
-  "actor": null,
-  "user": null
+  "user": Object {}
 }
 `;
 
 exports[`Auth success action with applicationId 1`] = `
 Object {
-  "actor": Actor {
-    "applicationId": "932f8aad-5bf2-409d-8916-c91c24b31152",
-    "dataportenId": undefined,
-    "fn": "Some fancy user",
-    "id": 1
-  },
   "loaded": true,
   "loading": false,
-  "user": null
+  "user": UserSession {
+    "accessToken": undefined,
+    "actor": Actor {
+      "applicationId": "932f8aad-5bf2-409d-8916-c91c24b31152",
+      "dataportenId": undefined,
+      "fn": "Some fancy user",
+      "id": 1
+    },
+    "groups": undefined,
+    "museumId": undefined
+  }
 }
 `;
 
 exports[`Auth success action with dataportenId 1`] = `
 Object {
-  "actor": Actor {
-    "applicationId": undefined,
-    "dataportenId": "e7107fd4-4822-466f-9041-2e67095d8e2d",
-    "fn": "Some fancy user",
-    "id": 1
-  },
   "loaded": true,
   "loading": false,
-  "user": null
+  "user": UserSession {
+    "accessToken": undefined,
+    "actor": Actor {
+      "applicationId": undefined,
+      "dataportenId": "e7107fd4-4822-466f-9041-2e67095d8e2d",
+      "fn": "Some fancy user",
+      "id": 1
+    },
+    "groups": undefined,
+    "museumId": undefined
+  }
 }
 `;
 

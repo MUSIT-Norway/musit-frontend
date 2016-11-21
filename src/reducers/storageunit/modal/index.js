@@ -76,20 +76,20 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
 
 export default storageUnitModalReducer;
 
-export const loadNode = (id) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`);
+export const loadNode = (id, museumId) => {
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`);
   return {
     types: [LOAD_NODE, LOAD_NODE_SUCCESS, LOAD_NODE_FAIL],
     promise: (client) => client.get(url)
   };
 };
 
-export const loadChildren = (id, callback) => {
+export const loadChildren = (id, museumId, callback) => {
   let url;
   if (id) {
-    url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`);
+    url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}/children`);
   } else {
-    url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/root`);
+    url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/root`);
   }
   return {
     types: [LOAD_CHILDREN, LOAD_CHILDREN_SUCCESS, LOAD_CHILDREN_FAIL],

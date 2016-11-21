@@ -83,9 +83,9 @@ export default class StorageUnitsContainer extends React.Component {
     // Issued on every propchange, including local route changes
     if (newProps.params.id !== this.props.params.id) {
       if (newProps.params.id) {
-        this.props.loadChildren(newProps.params.id);
+        this.props.loadChildren(newProps.params.id, this.props.user.museumId);
       } else {
-        this.props.loadStorageUnits();
+        this.props.loadStorageUnits(this.props.user.museumId);
       }
     }
   }
@@ -105,15 +105,15 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadNodes() {
     if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id);
+      this.props.loadChildren(this.props.params.id, this.props.user.museumId);
     } else {
-      this.props.loadStorageUnits();
+      this.props.loadStorageUnits(this.props.user.museumId);
     }
   }
 
   loadObjects() {
     if (this.props.params.id) {
-      this.props.loadStorageObjects(this.props.params.id);
+      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId);
     }
   }
 
@@ -127,7 +127,8 @@ export default class StorageUnitsContainer extends React.Component {
 
   moveNode = (
     nodeToMove,
-    userId = this.props.user.getActorId(),
+    userId = this.props.user.actor.getActorId(),
+    museumId = this.props.user.museumId,
     nodeId = this.props.rootNode.id,
     moveNode = this.props.moveNode,
     loadRoot = this.props.loadRoot,
@@ -136,11 +137,11 @@ export default class StorageUnitsContainer extends React.Component {
     const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
 
     if (!errorMessage) {
-      moveNode(nodeToMove.id, toNode.id, userId, {
+      moveNode(nodeToMove.id, toNode.id, userId, museumId, {
         onSuccess: () => {
           onSuccess();
           loadNodes();
-          loadRoot(nodeId);
+          loadRoot(nodeId, museumId);
           emitSuccess({
             type: 'movedSuccess',
             message: I18n.t('musit.moveModal.messages.nodeMoved', { name: nodeToMove.name, destination: toName })
@@ -172,18 +173,19 @@ export default class StorageUnitsContainer extends React.Component {
 
   moveObject = (
     objectToMove,
-    userId = this.props.user.getActorId(),
+    userId = this.props.user.actor.getActorId(),
+    museumId = this.props.user.museumId,
     nodeId = this.props.rootNode.id,
     moveObject = this.props.moveObject,
     loadRoot = this.props.loadRoot,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
     const description = getObjectDescription(objectToMove);
-    moveObject(objectToMove.id, toNode.id, userId, {
+    moveObject(objectToMove.id, toNode.id, userId, museumId, {
       onSuccess: () => {
         onSuccess();
         loadObjects();
-        loadRoot(this.props.rootNode.id);
+        loadRoot(nodeId, museumId);
         emitSuccess({
           type: 'movedSuccess',
           message: I18n.t('musit.moveModal.messages.objectMoved', { name: description, destination: toName })
@@ -235,6 +237,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   makeLeftMenu(
+    museumId = this.props.user.museumId,
     rootNode = this.props.rootNode,
     stats = this.props.stats,
     onEdit = this.props.onEdit,
@@ -264,7 +267,7 @@ export default class StorageUnitsContainer extends React.Component {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
               name: rootNode.name
             });
-            confirm(message, () => onDelete(id, rootNode));
+            confirm(message, () => onDelete(id, museumId, rootNode));
           }}
         />
       </div>

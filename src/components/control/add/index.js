@@ -63,7 +63,7 @@ export default class ControlAddContainer extends React.Component {
 
   componentWillMount() {
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id);
+      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
     }
   }
 
@@ -116,13 +116,13 @@ export default class ControlAddContainer extends React.Component {
         state: controlState
       });
     } else {
-      this.props.saveControl(this.props.params.id, controlState, {
+      this.props.saveControl(this.props.params.id, this.props.user.museumId, controlState, {
         onSuccess: () => {
           hashHistory.goBack();
           emitSuccess({ type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess')});
         },
         onFailure: () => emitError({ type: 'errorOnSave', message: I18n.t('musit.newControl.saveControlError')})
-      }, this.props.params.id);
+      });
     }
   }
 

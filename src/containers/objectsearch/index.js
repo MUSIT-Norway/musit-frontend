@@ -6,6 +6,7 @@ import { addObject } from '../../reducers/picklist';
 const mapStateToProps = (state) => {
   return {
     data: state.objectSearch.data,
+    user: state.auth.user,
     params: state.objectSearch.params,
     currentPage: state.objectSearch.currentPage,
     loaded: state.objectSearch.loaded
@@ -14,7 +15,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchForObjects: (params, page = 1) => dispatch(actions.searchForObjects(params, page)),
+    searchForObjects: (params, page, museumId) => dispatch(actions.searchForObjects(params, page, museumId)),
     onChangeField: (field, value) => dispatch(actions.onChangeField(field, value)),
     pickObject: (object, path) => dispatch(addObject(object, path))
   };

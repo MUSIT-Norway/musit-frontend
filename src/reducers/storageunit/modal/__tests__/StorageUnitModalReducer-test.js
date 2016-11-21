@@ -1,6 +1,6 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
-
+import MuseumId from '../../../../models/museumId';
 import * as actions from '../index';
 import reducer from '../index';
 import Config from '../../../../config';
@@ -112,13 +112,13 @@ describe('StorageUnitModalReducer', () => {
 
   it('creates LOAD_ROOT_SUCCESS when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadOneState);
     const store = mockStore();
 
-    return store.dispatch(actions.loadNode(2))
+    return store.dispatch(actions.loadNode(2, new MuseumId(99)))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });
@@ -175,13 +175,13 @@ describe('StorageUnitModalReducer', () => {
       updatedDate: '2016-01-01T00:00:00+00:00'
     }];
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/1`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/1`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
     const store = mockStore();
 
-    return store.dispatch(actions.loadNode(1))
+    return store.dispatch(actions.loadNode(1, new MuseumId(99)))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });
@@ -217,13 +217,13 @@ describe('StorageUnitModalReducer', () => {
 
   it('creates LOAD_CHILDREN_SUCCESS child when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}/children`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
     const store = mockStore();
 
-    return store.dispatch(actions.loadChildren(id))
+    return store.dispatch(actions.loadChildren(id, new MuseumId(99)))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });

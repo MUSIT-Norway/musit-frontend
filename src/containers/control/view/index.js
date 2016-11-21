@@ -19,7 +19,7 @@
  */
 import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
-import { loadControl, loadActors } from '../../../reducers/control';
+import { loadControl } from '../../../reducers/control';
 import ControlViewContainerImpl from '../../../components/control/view';
 import { loadRoot } from '../../../reducers/storageunit/grid';
 
@@ -27,18 +27,16 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => I18n.t(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  rootNode: state.storageGridUnit.root.data
+  rootNode: state.storageGridUnit.root.data,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loadControl: (nodeId, controlId, callback) => {
-    dispatch(loadControl(nodeId, controlId, callback));
+  loadControl: (nodeId, controlId, museumId, callback) => {
+    dispatch(loadControl(nodeId, controlId, museumId, callback));
   },
-  loadActorDetails: (control) => {
-    dispatch(loadActors(control));
-  },
-  loadStorageObj: (id) => {
-    dispatch(loadRoot(id));
+  loadStorageObj: (id, museumId) => {
+    dispatch(loadRoot(id, museumId));
   }
 });
 

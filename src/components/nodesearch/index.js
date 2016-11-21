@@ -82,6 +82,4 @@ class NodeSuggest extends React.Component {
   }
 }
 
-export default autoComplete(
-  `${Config.magasin.urls.storagefacility.baseUrl(99)}/search?searchStr=%term%&`
-)(NodeSuggest);
+export default autoComplete(Config.magasin.urls.storagefacility.searchUrl)(NodeSuggest);

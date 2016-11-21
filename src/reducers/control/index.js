@@ -62,9 +62,9 @@ const controlReducer = (state = initialState, action = {}) => {
 
 export default controlReducer;
 
-export const addControl = (nodeId, controlData, observations, callback) => {
+export const addControl = (nodeId, controlData, observations, museumId, callback) => {
   const data = mapToBackend(controlData, observations, nodeId);
-  const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/controls`;
+  const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
     promise: (client) => client.post(url, { data }),
@@ -72,11 +72,11 @@ export const addControl = (nodeId, controlData, observations, callback) => {
   };
 };
 
-export const loadControl = (nodeId, controlId, callback) => {
+export const loadControl = (nodeId, controlId, museumId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => new Promise((resolve, reject) => {
-      client.get(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/controls/${controlId}`)
+      client.get(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls/${controlId}`)
         .then(control => {
           client.post(`${Config.magasin.urls.actor.baseUrl}/details`, { data: uniq([control.doneBy, control.registeredBy]) })
             .then(actors => resolve({

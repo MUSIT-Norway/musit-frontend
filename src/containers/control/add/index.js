@@ -24,18 +24,19 @@ import ControlAddContainerImpl from '../../../components/control/add';
 import { loadRoot } from '../../../reducers/storageunit/grid';
 
 const mapStateToProps = (state) => ({
-  actor: state.auth.actor,
+  actor: state.auth.user.actor,
   translate: (key, markdown) => I18n.t(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
-  rootNode: state.storageGridUnit.root.data
+  rootNode: state.storageGridUnit.root.data,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveControl: (id, data, saveControlCallback) => {
-    dispatch(addControl(id, data, {}, saveControlCallback));
+  saveControl: (id, museumId, data, saveControlCallback) => {
+    dispatch(addControl(id, data, {}, museumId, saveControlCallback));
   },
-  loadStorageObj: (id) => {
-    dispatch(loadRoot(id));
+  loadStorageObj: (id, museumId) => {
+    dispatch(loadRoot(id, museumId));
   }
 });
 

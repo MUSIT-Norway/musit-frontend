@@ -5,15 +5,26 @@ export default {
   magasin: {
     urls: {
       storagefacility: {
-        baseUrl: (museumId: number): string =>
-          `/api/storagefacility/v1/museum/${museumId}/storagenodes`
+        searchUrl:
+          '/api/storagefacility/v1/museum/%museumId%/storagenodes/search?searchStr=%term%&',
+        baseUrl: (mid): string =>
+          `/api/storagefacility/v1/${mid.getPath()}/storagenodes`
       },
       thingaggregate: {
-        baseUrl: (museumId: number): string =>
-          `/api/thingaggregate/museum/${museumId}`
+        baseUrl: (mid): string =>
+          `/api/thingaggregate/${mid.getPath()}`
       },
       actor: {
-        baseUrl: '/api/actor/v1/person'
+        searchUrl:
+          '/api/actor/v1/person?museumId=%museumId%&search=[%term%]',
+        baseUrl:
+          '/api/actor/v1/person',
+        currentUser:
+          '/api/actor/v1/dataporten/currentUser'
+      },
+      geolocation: {
+        searchUrl:
+          '/api/geolocation/v1/address?search=[%term%]'
       }
     }
   }

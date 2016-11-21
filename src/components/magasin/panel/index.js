@@ -55,7 +55,7 @@ export default class StorageUnitContainer extends Component {
     const errors = validateForm(this.props);
     this.props.updateState({ ...this.props.unit, errors });
     if (Object.keys(errors).length === 0) {
-      this.props.onLagreClick(this.props.unit);
+      this.props.onLagreClick(this.props.unit, this.props.user.museumId);
     }
   }
 

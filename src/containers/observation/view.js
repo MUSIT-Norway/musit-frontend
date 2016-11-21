@@ -7,6 +7,7 @@ import { loadRoot } from '../../reducers/storageunit/grid';
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
+    user: state.auth.user,
     doneBy: state.observation.data.doneBy,
     doneDate: state.observation.data.doneDate,
     registeredDate: state.observation.data.registeredDate,
@@ -18,11 +19,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadObservation: (nodeId, observationId, callback) => {
-      dispatch(loadObservation(nodeId, observationId, callback));
+    loadObservation: (nodeId, observationId, museumId, callback) => {
+      dispatch(loadObservation(nodeId, observationId, museumId, callback));
     },
-    loadStorageObj: (id) => {
-      dispatch(loadRoot(id));
+    loadStorageObj: (id, museumId) => {
+      dispatch(loadRoot(id, museumId));
     }
   };
 };

@@ -24,7 +24,7 @@ export default class ObservationPage extends React.Component {
     id: PropTypes.string.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
-    doneBy: PropTypes.string,
+    doneBy: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     registeredDate: PropTypes.string,
     registeredBy: PropTypes.string,
     onSaveObservation: PropTypes.func.isRequired,
@@ -245,7 +245,7 @@ export default class ObservationPage extends React.Component {
     const errors = this.validateForm(this.state);
     this.setState({ ...this.state, errors });
     if (Object.keys(errors).length === 0) {
-      this.props.onSaveObservation(this.props.id, this.state);
+      this.props.onSaveObservation(this.props.id, this.props.user.museumId, this.state);
     }
   }
 

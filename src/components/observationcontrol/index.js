@@ -26,8 +26,8 @@ export default class ObservationControlGridShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadControlAndObservations(this.props.params.id);
-    this.props.loadStorageObj(this.props.params.id);
+    this.props.loadControlAndObservations(this.props.params.id, this.props.user.museumId);
+    this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
   }
 
   makeToolbar() {

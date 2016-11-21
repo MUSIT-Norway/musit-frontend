@@ -1,8 +1,7 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
 import suReducer, {moveObject} from '../index';
-
-
+import MuseumId from '../../../models/museumId';
 import * as actions from '../index';
 import reducer from '../index';
 import Config from '../../../config';
@@ -74,7 +73,7 @@ describe('MoveReducer', () => {
       destination: 4,
       items: [2, 3]
     };
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/moveObject`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/moveObject`;
     nock('http://localhost')
       .put(url, putData)
       .reply(201, {
@@ -83,7 +82,7 @@ describe('MoveReducer', () => {
       });
     const store = mockStore();
 
-    return store.dispatch(actions.moveObject([2, 3], 4, 'f4e1eba9-8add-4675-9836-db59f7115d7c'))
+    return store.dispatch(actions.moveObject([2, 3], 4, 'f4e1eba9-8add-4675-9836-db59f7115d7c', new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -129,7 +128,7 @@ describe('MoveReducer', () => {
       destination: 4,
       items: [2, 3]
     };
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/moveNode`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/moveNode`;
     nock('http://localhost')
       .put(url, putData)
       .reply(201, {
@@ -138,7 +137,7 @@ describe('MoveReducer', () => {
       });
     const store = mockStore();
 
-    return store.dispatch(actions.moveNode([2, 3], 4, 1))
+    return store.dispatch(actions.moveNode([2, 3], 4, 1, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });

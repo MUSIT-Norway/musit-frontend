@@ -19,10 +19,10 @@ export default class ViewObservationPage extends React.Component {
 
   componentWillMount() {
     if (this.props.params.obsId) {
-      this.props.loadObservation(this.props.params.id, this.props.params.obsId);
+      this.props.loadObservation(this.props.params.id, this.props.params.obsId, this.props.user.museumId);
     }
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id);
+      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
     }
   }
 
@@ -39,6 +39,7 @@ export default class ViewObservationPage extends React.Component {
             <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.view')}</h4>
             <ObservationPage
               id={this.props.params.id}
+              user={this.props.user}
               onSaveObservation={() => true} // disable save
               observations={this.props.observations}
               doneBy={this.props.doneBy}

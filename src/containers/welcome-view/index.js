@@ -20,11 +20,11 @@
 
 import { connect } from 'react-redux';
 import WelcomeContainer from '../../components/welcome-view';
-import { connectUser, loadActor } from '../../reducers/auth';
+import { setUser, loadActor } from '../../reducers/auth';
 import { I18n } from 'react-i18nify';
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user,
+  user: state.auth.user.actor,
   translate: (key, markdown) => I18n.t(key, markdown)
 });
 
@@ -32,7 +32,7 @@ const mapDispatchToProps = (dispatch, props) => {
   const { history } = props;
   return {
     setUser: (user: any) => {
-      dispatch(connectUser(user));
+      dispatch(setUser(user));
       dispatch(loadActor());
       history.replace('/magasin');
     }
