@@ -165,3 +165,93 @@ Object {
   }
 }
 `;
+
+exports[`StorageUnitReducer creates DELETE_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "id": 2,
+    "type": "musit/storageunit-grid/DELETE"
+  },
+  Object {
+    "id": 2,
+    "result": Object {
+      "message": "Deleted 1 storage nodes."
+    },
+    "type": "musit/storageunit-grid/DELETE_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-grid/LOAD_ONE"
+  },
+  Object {
+    "result": Object {
+      "id": 2,
+      "isPartOf": 1,
+      "name": "Utviklingsmuseet",
+      "path": ",1,2,",
+      "pathNames": Array [
+        Object {
+          "name": "root-node",
+          "nodeId": 1
+        },
+        Object {
+          "name": "Utviklingsmuseet",
+          "nodeId": 2
+        }
+      ],
+      "type": "Organisation",
+      "updatedBy": 123,
+      "updatedDate": "2016-01-01T00:00:00+00:00"
+    },
+    "type": "musit/storageunit-grid/LOAD_ONE_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 2`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-grid/LOAD_SEVERAL"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "id": 3,
+        "isPartOf": 2,
+        "name": "Forskningens hus",
+        "path": ",1,2,3,",
+        "type": "Building",
+        "updatedBy": 123,
+        "updatedDate": "2016-01-01T00:00:00+00:00"
+      }
+    ],
+    "type": "musit/storageunit-grid/LOAD_SEVERAL_SUCCESS"
+  }
+]
+`;
+
+exports[`StorageUnitReducer creates LOAD_SEVERAL_SUCCESS child when fetching data has been done 3`] = `
+Array [
+  Object {
+    "type": "musit/storageunit-grid/LOAD_SEVERAL"
+  },
+  Object {
+    "result": Array [
+      Object {
+        "id": 3,
+        "isPartOf": 2,
+        "name": "Forskningens hus",
+        "path": ",1,2,3,",
+        "type": "Building",
+        "updatedBy": 123,
+        "updatedDate": "2016-01-01T00:00:00+00:00"
+      }
+    ],
+    "type": "musit/storageunit-grid/LOAD_SEVERAL_SUCCESS"
+  }
+]
+`;

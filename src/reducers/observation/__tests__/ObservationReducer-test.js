@@ -14,6 +14,7 @@ import request from 'superagent';
 import nocker from 'superagent-nock';
 import reducer from '../../../reducers/observation/index';
 import * as actions from '../../../reducers/observation/index';
+import MuseumId from '../../../models/museumId';
 
 const nock = nocker(request);
 const middlewares = [createMiddleware(new ApiClient())];
@@ -27,7 +28,7 @@ describe('ObservationReducer', () => {
   });
 
   it('load observation should update state', () => {
-    const state = observationReducer(initialState, loadObservation(1));
+    const state = observationReducer(initialState, loadObservation(1, 2, new MuseumId(99)));
     assert(state.data.observations.length === 0);
   });
 
@@ -344,7 +345,7 @@ describe('ObservationReducer', () => {
   it('creates LOAD_SUCCESS when observation data is loaded', () => {
     const nodeId = 2;
     const observationId = 3;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations/${observationId}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${nodeId}/observations/${observationId}`;
     nock('http://localhost')
       .get(url)
       .reply(200, {
@@ -367,7 +368,7 @@ describe('ObservationReducer', () => {
 
     const store = mockStore();
 
-    return store.dispatch(actions.loadObservation(2, 3))
+    return store.dispatch(actions.loadObservation(2, 3, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -430,7 +431,7 @@ describe('ObservationReducer', () => {
       ]
     };
     const nodeId = 4;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${nodeId}/observations`;
     nock('http://localhost')
       .post(url, observationAddData)
       .reply(201, {
@@ -449,7 +450,7 @@ describe('ObservationReducer', () => {
 
     const observationStore = mockStore();
 
-    return observationStore.dispatch(actions.addObservation(4, observationAddData))
+    return observationStore.dispatch(actions.addObservation(4, new MuseumId(99), observationAddData))
       .then(() => {
         expect(observationStore.getActions()).toMatchSnapshot();
       });

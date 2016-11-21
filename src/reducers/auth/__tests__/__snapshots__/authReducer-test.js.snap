@@ -41,7 +41,7 @@ Object {
   "user": UserSession {
     "accessToken": "token",
     "actor": null,
-    "groups": Array [],
+    "groups": null,
     "museumId": MuseumId {
       "id": 99
     }

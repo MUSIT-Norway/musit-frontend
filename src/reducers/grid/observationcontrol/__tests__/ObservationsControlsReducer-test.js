@@ -1,6 +1,6 @@
 import assert from 'assert';
 import observationControlGridReducer from '../index';
-
+import MuseumId from '../../../../models/museumId';
 import * as actions from '../../observationcontrol/index';
 import reducer from '../../observationcontrol/index';
 import Config from '../../../../config';
@@ -245,7 +245,7 @@ describe('ObservationControlGridReducer', () => {
     ];
 
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/events`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}/events`;
     nock('http://localhost')
       .get(url)
       .reply(200, OutputSuccess);
@@ -257,7 +257,7 @@ describe('ObservationControlGridReducer', () => {
 
     const store = mockStore();
 
-    return store.dispatch(actions.loadControlsAndObservationsForNode(1))
+    return store.dispatch(actions.loadControlsAndObservationsForNode(1, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });

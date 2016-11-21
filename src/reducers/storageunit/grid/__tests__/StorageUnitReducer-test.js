@@ -1,6 +1,6 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
-
+import MuseumId from '../../../../models/museumId';
 import * as actions from '../index';
 import reducer from '../index';
 import Config from '../../../../config';
@@ -136,13 +136,13 @@ describe('StorageUnitReducer', () => {
 
   it('creates LOAD_ONE_SUCCESS when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}`;
     nock('http://localhost')
       .get(url)
       .reply(200, loadOneState);
     const store = mockStore();
 
-    store.dispatch(actions.loadRoot(2))
+    store.dispatch(actions.loadRoot(2, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -193,13 +193,13 @@ describe('StorageUnitReducer', () => {
       updatedDate: '2016-01-01T00:00:00+00:00'
     }];
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/root`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/root`;
     nock('http://localhost')
       .get(url)
       .reply(200, loadSeveralChildState);
     const store = mockStore();
 
-    store.dispatch(actions.loadRoot())
+    store.dispatch(actions.loadRoot(null, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -241,13 +241,13 @@ describe('StorageUnitReducer', () => {
 
   it('creates LOAD_SEVERAL_SUCCESS child when fetching data has been done', () => {
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/children`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}/children`;
     nock('http://localhost')
       .get(url)
       .reply(200, loadSeveralChildState);
     const store = mockStore();
 
-    return store.dispatch(actions.loadChildren(id))
+    return store.dispatch(actions.loadChildren(id, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -289,7 +289,7 @@ describe('StorageUnitReducer', () => {
 
   it('creates DELETE_SUCCESS when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}`;
     nock('http://localhost')
       .del(url)
       .reply(200, {
@@ -297,7 +297,7 @@ describe('StorageUnitReducer', () => {
       });
     const store = mockStore();
 
-    return store.dispatch(actions.deleteUnit(2))
+    return store.dispatch(actions.deleteUnit(2, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });

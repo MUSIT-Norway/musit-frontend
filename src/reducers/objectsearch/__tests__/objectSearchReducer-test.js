@@ -4,6 +4,8 @@ import reducer from '../reducer';
 import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
+import MuseumId from '../../../models/museumId';
+
 const nock = nocker(request);
 
 describe('Object search reducer', () => {
@@ -17,7 +19,7 @@ describe('Object search reducer', () => {
       page: 1,
       perPage: 50
     };
-    const baseUrl = `${Config.magasin.urls.thingaggregate.baseUrl(99)}/objects/search`;
+    const baseUrl = `${Config.magasin.urls.thingaggregate.baseUrl(new MuseumId(99))}/objects/search`;
     const museumNoQuery = `museumNo=${params.museumNo || ''}`;
     const subNoQuery = `subNo=${params.subNo || ''}`;
     const termQuery = `term=${params.term || ''}`;
@@ -38,7 +40,7 @@ describe('Object search reducer', () => {
       });
     const store = mockStore();
 
-    return store.dispatch(actions.searchForObjects(params, page))
+    return store.dispatch(actions.searchForObjects(params, page, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
