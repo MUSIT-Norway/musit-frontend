@@ -37,11 +37,11 @@ const observationControlGridReducer = (state = initialState, action) => {
   }
 };
 
-export const loadControlsAndObservationsForNode = (id, callback) => {
+export const loadControlsAndObservationsForNode = (id, museumId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => new Promise((resolve, reject) => {
-      client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/events`))
+      client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}/events`))
         .then(rows => {
           client.post(apiUrl(`${Config.magasin.urls.actor.baseUrl}/details`), {
             data: uniq(flatten(rows.map(r => [r.doneBy, r.registeredBy])))

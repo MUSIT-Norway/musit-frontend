@@ -42,9 +42,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     clear: () => dispatch(clear()),
-    loadNode: (id) => dispatch(loadNode(id)),
-    loadRootChildren: () => dispatch(loadChildren()),
-    loadChildren: (id) => dispatch(loadChildren(id))
+    loadNode: (id, museumId) => dispatch(loadNode(id, museumId)),
+    loadRootChildren: (museumId) => dispatch(loadChildren(null, museumId)),
+    loadChildren: (id, museumId) => dispatch(loadChildren(id, museumId))
   };
 };
 

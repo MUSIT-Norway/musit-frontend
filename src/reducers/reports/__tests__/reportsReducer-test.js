@@ -7,13 +7,14 @@ import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
+import MuseumId from '../../../models/museumId';
 
 const middlewares = [ createMiddleware(new ApiClient()) ];
 const mockStore = configureMockStore(middlewares);
 
 describe('KD Report', () => {
   it('creates LOAD_KD_REPORT_SUCESS when fetching reports has been done', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/report`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/report`;
     nock('http://localhost')
             .get(url)
             .reply(200, {
@@ -27,7 +28,7 @@ describe('KD Report', () => {
 
     const store = mockStore();
 
-    return store.dispatch(actions.loadKDReport())
+    return store.dispatch(actions.loadKDReport(new MuseumId(99)))
             .then(() => {
               expect(store.getActions()).toMatchSnapshot();
             });

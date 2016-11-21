@@ -1,7 +1,7 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
 import statsReducer, { loadStats, clearStats } from '../index';
-
+import MuseumId from '../../../../models/museumId';
 import * as actions from '../index';
 import reducer from '../index';
 import Config from '../../../../config';
@@ -66,7 +66,7 @@ describe('Stats reducer', () => {
 
   it('creates LOAD_STATS_SUCCESS when fetching data has been done', () => {
     const id = 3;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}/stats`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}/stats`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
@@ -76,7 +76,7 @@ describe('Stats reducer', () => {
         });
     const store = mockStore();
 
-    return store.dispatch(actions.loadStats(3))
+    return store.dispatch(actions.loadStats(3, new MuseumId(99)))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });

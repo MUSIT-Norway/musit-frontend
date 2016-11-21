@@ -8,16 +8,17 @@ import { emitError, emitSuccess } from '../../errors/emitter';
 
 const mapStateToProps = (state) => {
   return {
-    actor: state.auth.actor,
+    actor: state.auth.user.actor,
     translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data
+    rootNode: state.storageGridUnit.root.data,
+    user: state.auth.user
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSaveObservation: (id, data) => {
-      dispatch(addObservation(id, data, {
+    onSaveObservation: (id, museumId, data) => {
+      dispatch(addObservation(id, museumId, data, {
         onSuccess: () => {
           hashHistory.goBack();
           emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
@@ -25,8 +26,8 @@ const mapDispatchToProps = (dispatch) => {
         onFailure: () => emitError( { type: 'errorOnSave', message: I18n.t('musit.observation.page.messages.saveError') })
       }));
     },
-    loadStorageObj: (id) => {
-      dispatch(loadRoot(id));
+    loadStorageObj: (id, museumId) => {
+      dispatch(loadRoot(id, museumId));
     }
   };
 };

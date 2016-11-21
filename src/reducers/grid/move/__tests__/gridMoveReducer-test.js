@@ -3,6 +3,8 @@ import reducer from '../../../../reducers/grid/move/index';
 import Config from '../../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
+import MuseumId from '../../../../models/museumId';
+
 const nock = nocker(request);
 
 describe('GridMoveHistory', () => {
@@ -62,7 +64,7 @@ describe('GridMoveHistory', () => {
       }
     ];
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/objects/${id}/locations`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/objects/${id}/locations`;
     nock('http://localhost')
       .get(url)
       .reply(200, OutputSuccess);
@@ -74,7 +76,7 @@ describe('GridMoveHistory', () => {
 
     const store = mockStore();
 
-    return store.dispatch(actions.loadMoveHistoryForObject(1))
+    return store.dispatch(actions.loadMoveHistoryForObject(1, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });

@@ -1,6 +1,7 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import autoComplete from '../../state/autocomplete';
+import Config from '../../config';
 
 class AddressSuggest extends React.Component {
 
@@ -83,6 +84,4 @@ class AddressSuggest extends React.Component {
   }
 }
 
-export default autoComplete(
-  '/api/geolocation/v1/address?search=[%term%]'
-)(AddressSuggest);
+export default autoComplete(Config.magasin.urls.geolocation.searchUrl)(AddressSuggest);

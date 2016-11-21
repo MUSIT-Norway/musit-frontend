@@ -47,12 +47,12 @@ export default class MusitModal extends Component {
 
   loadHome() {
     this.props.clear();
-    this.props.loadRootChildren();
+    this.props.loadRootChildren(this.props.user.museumId);
   }
 
   loadNode(id) {
-    this.props.loadNode(id);
-    this.props.loadChildren(id);
+    this.props.loadNode(id, this.props.user.museumId);
+    this.props.loadChildren(id, this.props.user.museumId);
   }
 
   render() {

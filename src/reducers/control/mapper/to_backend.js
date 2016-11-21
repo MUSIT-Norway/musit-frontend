@@ -9,13 +9,15 @@ import {
     parseMold
 } from '../../observation/mapper/to_backend';
 import { Option } from './../../../util';
+import Actor from './../../../models/actor';
 
 function getDoneDate(observations, state) {
   return observations && observations.doneDate ? observations.doneDate : state.doneDate;
 }
 
 function getDoneBy(observations, state) {
-  return observations && observations.doneBy ? observations.doneBy : state.doneBy;
+  const doneBy = observations && observations.doneBy ? observations.doneBy : state.doneBy;
+  return new Actor(doneBy);
 }
 
 function getObservation(observations, field): Option {

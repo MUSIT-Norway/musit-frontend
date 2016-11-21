@@ -39,6 +39,12 @@ import './index.css';
 const client = new ApiClient();
 const dest = document.getElementById('content');
 const store = createStore(client);
+
+// ---- Global Store -----
+// This is crucial for the parts of the app that are not in redux!
+global.reduxStore = store;
+// ---- Global Store -----
+
 const history = syncHistoryWithStore(hashHistory, store);
 
 I18n.loadTranslations(LanguageJson);

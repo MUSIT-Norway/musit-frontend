@@ -24,7 +24,7 @@ export default (state = {}, action) => {
   return state;
 };
 
-export const moveObject = (objectId, destination, doneBy, callback) => {
+export const moveObject = (objectId, destination, doneBy, museumId, callback) => {
   const data = {
     doneBy,
     destination,
@@ -32,12 +32,12 @@ export const moveObject = (objectId, destination, doneBy, callback) => {
   };
   return {
     types: [MOVE_OBJECT, MOVE_OBJECT_SUCCESS, MOVE_OBJECT_FAILURE],
-    promise: (client) => client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/moveObject`), { data }),
+    promise: (client) => client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveObject`), { data }),
     callback
   };
 };
 
-export const moveNode = (nodeId, destination, doneBy, callback) => {
+export const moveNode = (nodeId, destination, doneBy, museumId, callback) => {
   const data = {
     doneBy,
     destination,
@@ -45,7 +45,7 @@ export const moveNode = (nodeId, destination, doneBy, callback) => {
   };
   return {
     types: [MOVE_NODE, MOVE_NODE_SUCCESS, MOVE_NODE_FAILURE],
-    promise: (client) => client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/moveNode`), { data }),
+    promise: (client) => client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveNode`), { data }),
     callback
   };
 };

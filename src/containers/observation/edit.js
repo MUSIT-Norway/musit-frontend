@@ -10,18 +10,19 @@ import { emitError, emitSuccess } from '../../errors/emitter';
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data
+    rootNode: state.storageGridUnit.root.data,
+    user: state.auth.user
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  loadObservation: (id) => {
-    dispatch(loadObservation(id));
+  loadObservation: (id, museumId) => {
+    dispatch(loadObservation(id, museumId));
   },
   // Higher order function (or partial function if you like to call it that)
-  onSaveObservation: (controlState) => {
+  onSaveObservation: (controlState, museumId) => {
     return (id, observationState) => {
-      dispatch(addControl(id, controlState, observationState, {
+      dispatch(addControl(id, controlState, observationState, museumId, {
         onSuccess: () => {
           hashHistory.goBack();
           emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
@@ -30,8 +31,8 @@ const mapDispatchToProps = (dispatch) => ({
       }));
     };
   },
-  loadStorageObj: (id) => {
-    dispatch(loadRoot(id));
+  loadStorageObj: (id, museumId) => {
+    dispatch(loadRoot(id, museumId));
   }
 });
 

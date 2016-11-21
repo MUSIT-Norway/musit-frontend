@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {loadRoot, clearRoot, loadChildren, deleteUnit} from '../../../reducers/storageunit/grid';
+import {loadRoot as loadRootNodes, clearRoot, loadChildren as loadChildNodes, deleteUnit} from '../../../reducers/storageunit/grid';
 import {loadObjects} from '../../../reducers/storageobject/grid';
 import {addNode, addObject} from '../../../reducers/picklist';
 import {moveObject, moveNode} from '../../../reducers/move';
@@ -30,7 +30,7 @@ const getSortedStorageObjectGrid = createSelector(
 );
 
 const mapStateToProps = (state) => ({
-  user: state.auth.actor,
+  user: state.auth.user,
   stats: state.storageUnitStats.stats,
   children: getSortedStorageGridUnit(state),
   objects: getSortedStorageObjectGrid(state),
@@ -42,41 +42,41 @@ const mapDispatchToProps = (dispatch, props) => {
   const {history} = props;
 
   return {
-    loadRoot: (id) => {
+    loadRoot: (id, museumId) => {
       dispatch(clearStats());
-      dispatch(loadRoot(id, {
+      dispatch(loadRootNodes(id, museumId, {
         onSuccess: (result) => {
           if (result.type !== 'Root') {
-            dispatch(loadStats(id));
+            dispatch(loadStats(id, museumId));
           }
         }
       }));
     },
-    loadStorageUnits: () => {
+    loadStorageUnits: (museumId) => {
       dispatch(clearRoot());
-      dispatch(loadRoot());
+      dispatch(loadRootNodes(null, museumId));
       dispatch(clearStats());
     },
-    loadStorageObjects: (id) => {
-      dispatch(loadObjects(id));
+    loadStorageObjects: (id, museumId) => {
+      dispatch(loadObjects(id, museumId));
     },
-    loadChildren: (id) => {
-      dispatch(loadChildren(id));
+    loadChildren: (id, museumId) => {
+      dispatch(loadChildNodes(id, museumId));
       dispatch(clearRoot());
       dispatch(clearStats());
-      dispatch(loadRoot(id, {
+      dispatch(loadRootNodes(id, museumId, {
         onSuccess: (result) => {
           if (result.type !== 'Root') {
-            dispatch(loadStats(id));
+            dispatch(loadStats(id, museumId));
           }
         }
       }));
     },
-    moveObject: (objectId, destinationId, doneBy, callback) => {
-      dispatch(moveObject(objectId, destinationId, doneBy, callback));
+    moveObject: (objectId, destinationId, doneBy, museumId, callback) => {
+      dispatch(moveObject(objectId, destinationId, doneBy, museumId, callback));
     },
-    moveNode: (nodeId, destinationId, doneBy, callback) => {
-      dispatch(moveNode(nodeId, destinationId, doneBy, callback));
+    moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
+      dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
     },
     onAction: (actionName, unit, path) => {
       switch (actionName) {
@@ -102,15 +102,15 @@ const mapDispatchToProps = (dispatch, props) => {
     onEdit: (unit) => {
       hashHistory.push(`/magasin/${unit.id}/view`);
     },
-    onDelete: (id, currentNode) => {
+    onDelete: (id, museumId, currentNode) => {
       if (id === currentNode.id) {
-        dispatch(deleteUnit(id, {
+        dispatch(deleteUnit(id, museumId, {
           onSuccess: () => {
             dispatch(clearRoot());
             if (currentNode.isPartOf) {
               hashHistory.replace(`/magasin/${currentNode.isPartOf}`);
             } else {
-              dispatch(loadRoot());
+              dispatch(loadRootNodes(null, museumId));
               dispatch(clearStats());
             }
             emitSuccess({

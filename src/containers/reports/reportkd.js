@@ -4,12 +4,13 @@ import KDReport from '../../components/reports/reportkd';
 
 const mapStateToProps = (state) => {
   return {
-    data: state.reports && state.reports.data ? state.reports.data.kdreport.data : null
+    data: state.reports && state.reports.data ? state.reports.data.kdreport.data : null,
+    user: state.auth.user
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  loadKDReport: () => dispatch(loadKDReport())
+  loadKDReport: (museumId) => dispatch(loadKDReport(museumId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(KDReport);

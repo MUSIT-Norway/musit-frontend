@@ -6,6 +6,8 @@ import ApiClient from '../../../middleware/ApiClient';
 import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
+import MuseumId from '../../../models/museumId';
+
 const nock = nocker(request);
 
 const middlewares = [ createMiddleware(new ApiClient()) ];
@@ -92,7 +94,7 @@ describe('PicklistReducer', () => {
   });
 
   it('refreshNode works as expected when it gets data', () => {
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/1`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/1`;
     nock('http://localhost')
       .get(url)
       .reply(200, {
@@ -103,7 +105,7 @@ describe('PicklistReducer', () => {
 
     const store = mockStore();
 
-    return store.dispatch(refreshNode(1))
+    return store.dispatch(refreshNode(1, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -608,7 +610,7 @@ describe('PicklistReducer', () => {
   });
   it('invokes LOAD_ONE_OBJECT_SUCCESS when object path is loaded.', () => {
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/objects/${id}/currentlocation`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/objects/${id}/currentlocation`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
@@ -634,7 +636,7 @@ describe('PicklistReducer', () => {
         });
     const store = mockStore();
 
-    return store.dispatch(actions.refreshObject(1))
+    return store.dispatch(actions.refreshObject(1, new MuseumId(99)))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });
@@ -676,7 +678,7 @@ describe('PicklistReducer', () => {
 
   it('invokes LOAD_ONE_NODE_SUCCESS when node path is loaded.', () => {
     const id = 3;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}`;
     nock('http://localhost')
         .get(url)
         .reply(200, {
@@ -702,7 +704,7 @@ describe('PicklistReducer', () => {
         });
     const store = mockStore();
 
-    return store.dispatch(actions.refreshNode(3))
+    return store.dispatch(actions.refreshNode(3, new MuseumId(99)))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });

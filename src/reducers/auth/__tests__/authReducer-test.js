@@ -1,20 +1,21 @@
-
 import configureMockStore from 'redux-mock-store';
 import createMiddleware from '../../../middleware/clientMiddleware';
 import ApiClient from '../../../middleware/ApiClient';
 import request from 'superagent';
 import nocker from 'superagent-nock';
+import Config from '../../../config';
 
 import * as actions from '../../../reducers/auth';
-import reducer from '../../../reducers/auth';
+import auth from '../../../reducers/auth';
 
+const reducer = auth.reducer;
 const nock = nocker(request);
-const middlewares = [ createMiddleware(new ApiClient()) ];
+const middlewares = [createMiddleware(new ApiClient())];
 const mockStore = configureMockStore(middlewares);
 
 describe('Auth', () => {
   it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
-    const url = '/api/actor/v1/dataporten/currentUser';
+    const url = Config.magasin.urls.actor.currentUser;
     nock('http://localhost')
       .get(url)
       .reply(200, {
@@ -25,9 +26,9 @@ describe('Auth', () => {
     const store = mockStore();
 
     return store.dispatch(actions.loadActor())
-            .then(() => {
-              expect(store.getActions()).toMatchSnapshot();
-            });
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
   });
 
   it('no action', () => {
@@ -102,7 +103,7 @@ describe('Auth', () => {
 
   it('SET_USER action', () => {
     expect(
-      reducer(initialState, actions.connectUser('TEST_USER'))
+      reducer(initialState, actions.setUser({ accessToken: 'token' }))
     ).toMatchSnapshot();
   });
 

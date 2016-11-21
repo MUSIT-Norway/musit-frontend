@@ -15,7 +15,7 @@ export default class AddObservationPage extends React.Component {
 
   componentWillMount() {
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id);
+      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
     }
   }
 
@@ -29,6 +29,7 @@ export default class AddObservationPage extends React.Component {
             <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.add')}</h4>
             <ObservationPage
               id={this.props.params.id}
+              user={this.props.user}
               onSaveObservation={this.props.onSaveObservation}
               mode="ADD"
               doneBy={this.props.actor}

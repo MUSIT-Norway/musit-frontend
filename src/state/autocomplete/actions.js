@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Rx';
 import { getToken } from '../../middleware/ApiClient';
 import * as loglevel from 'loglevel';
 import 'whatwg-fetch';
+import { getMuseumId } from '../../reducers/auth';
 
 export default function createActions(urlTemplate) {
   // Reducer subjects (for data)
@@ -14,13 +15,16 @@ export default function createActions(urlTemplate) {
   input$
     .debounce(() => Observable.timer(500))
     .distinctUntilChanged()
-    .switchMap((term) =>
-      fetch(urlTemplate.replace('%term%', encodeURIComponent(term)), {
+    .switchMap((term) => {
+      const url = urlTemplate
+        .replace('%term%', encodeURIComponent(term))
+        .replace('%museumId%', encodeURIComponent(getMuseumId()));
+      return fetch(url, {
         headers: {
           Authorization: `Bearer ${getToken()}`
         }
-      }).then((response) => response.json())
-    )
+      }).then((response) => response.json());
+    })
     .subscribe(
       (data) => update$.next(data),
       (error) => {

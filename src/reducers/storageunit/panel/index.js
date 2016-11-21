@@ -66,19 +66,19 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
 
 export default storageUnitContainerReducer;
 
-const getUpdatedBy = (client, node, resolve, reject) => {
+const getUpdatedBy = (client, node, resolve) => {
   client.get(apiUrl(`${Config.magasin.urls.actor.baseUrl}/${node.updatedBy}`))
     .then(actor => resolve({
       ...node,
       updatedByName: actor.fn
-    })).catch(error => reject(error));
+    })).catch(() => resolve(node));
 };
 
-export const load = (id, callback) => {
+export const load = (id, museumId, callback) => {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => new Promise((resolve, reject) => {
-      client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`))
+      client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`))
         .then(node => getUpdatedBy(client, node, resolve, reject))
         .catch(error => reject(error));
     }),
@@ -86,12 +86,12 @@ export const load = (id, callback) => {
   };
 };
 
-export const update = (data, callback) => {
+export const update = (data, museumId, callback) => {
   const dataToPost = mapToBackend(data);
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],
     promise: (client) => new Promise((resolve, reject) => {
-      client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${data.id}`), { data: dataToPost })
+      client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${data.id}`), { data: dataToPost })
           .then(node => getUpdatedBy(client, node, resolve, reject))
           .catch(error => reject(error));
     }),
@@ -99,8 +99,8 @@ export const update = (data, callback) => {
   };
 };
 
-export const insert = (parentId, data, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}${!parentId ? '/root' : ''}`);
+export const insert = (parentId, museumId, data, callback) => {
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}${!parentId ? '/root' : ''}`);
   const dataToPost = mapToBackend(data, parentId);
   return {
     types: [INSERT, INSERT_SUCCESS, INSERT_FAIL],

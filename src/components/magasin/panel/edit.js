@@ -13,7 +13,7 @@ export default class EditStorageUnitContainer extends React.Component {
   };
 
   componentWillMount() {
-    this.props.loadStorageUnit(this.props.params.id, {
+    this.props.loadStorageUnit(this.props.params.id, this.props.user.museumId, {
       onSuccess: (result) => {
         this.props.updateState(result);
       }

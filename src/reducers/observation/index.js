@@ -71,9 +71,9 @@ const observationReducer = (state = initialState, action = {}) => {
 
 export default observationReducer;
 
-export const addObservation = (nodeId, data, callback) => {
+export const addObservation = (nodeId, museumId, data, callback) => {
   const action = 'post';
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations`);
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`);
   const dataToPost = mapToBackEnd(data, nodeId);
   return {
     types: [ADD, ADD_SUCCESS, ADD_FAIL],
@@ -82,8 +82,8 @@ export const addObservation = (nodeId, data, callback) => {
   };
 };
 
-export const loadObservation = (nodeId, observationId, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${nodeId}/observations/${observationId}`);
+export const loadObservation = (nodeId, observationId, museumId, callback) => {
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations/${observationId}`);
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => new Promise((resolve, reject) => {

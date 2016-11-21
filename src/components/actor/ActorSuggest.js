@@ -63,6 +63,4 @@ class ActorSuggest extends React.Component {
   }
 }
 
-export default autoComplete(
-  `${Config.magasin.urls.actor.baseUrl}?museumId=${99}&search=[%term%]`
-)(ActorSuggest);
+export default autoComplete(Config.magasin.urls.actor.searchUrl)(ActorSuggest);

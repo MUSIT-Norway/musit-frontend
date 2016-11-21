@@ -3,6 +3,8 @@ import reducer from '../index';
 import Config from '../../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
+import MuseumId from '../../../../models/museumId';
+
 const nock = nocker(request);
 
 
@@ -36,7 +38,7 @@ describe('ReducerStoragUnitPanel', () => {
 
   it('creates LOAD_SUCCESS when fetching data has been done', () => {
     const id = 3;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}`;
     nock('http://localhost')
       .get(url)
       .reply(200, loadState);
@@ -48,7 +50,7 @@ describe('ReducerStoragUnitPanel', () => {
 
     const store = mockStore();
 
-    return store.dispatch(actions.load(3))
+    return store.dispatch(actions.load(3, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -112,7 +114,7 @@ describe('ReducerStoragUnitPanel', () => {
   };
   it('update INSERT_SUCCESS when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}`;
     nock('http://localhost')
       .put(url, putData)
       .reply(201, putData);
@@ -124,7 +126,7 @@ describe('ReducerStoragUnitPanel', () => {
 
     const store = mockStore();
 
-    return store.dispatch(actions.update(putData))
+    return store.dispatch(actions.update(putData, new MuseumId(99)))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
@@ -177,13 +179,13 @@ describe('ReducerStoragUnitPanel', () => {
       area: 1
     };
     const parentId = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(99)}${!parentId ? '/root' : ''}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}${!parentId ? '/root' : ''}`;
     nock('http://localhost')
       .post(url, postData)
       .reply(201, putData);
     const store = mockStore();
 
-    return store.dispatch(actions.insert(1, postData))
+    return store.dispatch(actions.insert(1, new MuseumId(99), postData))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
