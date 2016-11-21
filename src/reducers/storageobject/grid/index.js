@@ -32,10 +32,10 @@ const storageObjectGridReducer = (state = {}, action = {}) => {
 
 export default storageObjectGridReducer;
 
-export const loadObjects = (id, callback) => {
+export const loadObjects = (id, museumId, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(99)}/node/${id}/objects`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/node/${id}/objects`)),
     callback
   };
 };

@@ -10,6 +10,7 @@ import { loadRoot } from '../../../reducers/storageunit/grid';
 const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState,
+    user: state.auth.user,
     loaded: !!state.storagePanelUnit.loaded,
     translate: (key, markdown) => I18n.t(key, markdown),
     rootNode: state.storageGridUnit.root.data || {}
@@ -18,8 +19,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLagreClick: (data) => {
-      dispatch(update(data, {
+    onLagreClick: (data, museumId) => {
+      dispatch(update(data, museumId, {
         onSuccess: () => {
           hashHistory.goBack();
           emitSuccess(
@@ -38,12 +39,12 @@ const mapDispatchToProps = (dispatch) => {
           )
       }));
     },
-    loadStorageUnit: (id, callback) => {
-      dispatch(load(id, callback));
+    loadStorageUnit: (id, museumId, callback) => {
+      dispatch(load(id, museumId, callback));
     },
     updateState: (data) => dispatch(updateState(data)),
-    loadStorageObj: (id) => {
-      dispatch(loadRoot(id));
+    loadStorageObj: (id, museumId) => {
+      dispatch(loadRoot(id, museumId));
     }
   };
 };

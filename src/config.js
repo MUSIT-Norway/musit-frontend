@@ -5,12 +5,12 @@ export default {
   magasin: {
     urls: {
       storagefacility: {
-        baseUrl: (museumId: number): string =>
-          `/api/storagefacility/v1/museum/${museumId}/storagenodes`
+        baseUrl: (museumId): string =>
+          `/api/storagefacility/v1/${museumId.getPath()}/storagenodes`
       },
       thingaggregate: {
-        baseUrl: (museumId: number): string =>
-          `/api/thingaggregate/museum/${museumId}`
+        baseUrl: (museumId): string =>
+          `/api/thingaggregate/${museumId.getPath()}`
       },
       actor: {
         baseUrl: '/api/actor/v1/person'

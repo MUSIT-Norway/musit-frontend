@@ -97,13 +97,13 @@ export const loadRoot = (id, museumId, callback) => {
   if (id) {
     action = {
       types: [LOAD_ONE, LOAD_ONE_SUCCESS, LOAD_ONE_FAIL],
-      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId.id)}/${id}`)),
+      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`)),
       callback
     };
   } else {
     action = {
       types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId.id)}/root`)),
+      promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/root`)),
       callback
     };
   }
@@ -113,7 +113,7 @@ export const loadRoot = (id, museumId, callback) => {
 export const loadChildren = (id, museumId, callback) => {
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId.id)}/${id}/children`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}/children`)),
     callback
   };
 };
@@ -121,7 +121,7 @@ export const loadChildren = (id, museumId, callback) => {
 export const deleteUnit = (id, museumId, callback) => {
   return {
     types: [DELETE, DELETE_SUCCESS, DELETE_FAIL],
-    promise: (client) => client.del(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId.id)}/${id}`)),
+    promise: (client) => client.del(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`)),
     id,
     callback
   };

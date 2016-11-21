@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(loadRootNodes(id, museumId, {
         onSuccess: (result) => {
           if (result.type !== 'Root') {
-            dispatch(loadStats(id));
+            dispatch(loadStats(id, museumId));
           }
         }
       }));
@@ -57,8 +57,8 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(loadRootNodes(null, museumId));
       dispatch(clearStats());
     },
-    loadStorageObjects: (id) => {
-      dispatch(loadObjects(id));
+    loadStorageObjects: (id, museumId) => {
+      dispatch(loadObjects(id, museumId));
     },
     loadChildren: (id, museumId) => {
       dispatch(loadChildNodes(id, museumId));
@@ -67,16 +67,16 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(loadRootNodes(id, museumId, {
         onSuccess: (result) => {
           if (result.type !== 'Root') {
-            dispatch(loadStats(id));
+            dispatch(loadStats(id, museumId));
           }
         }
       }));
     },
-    moveObject: (objectId, destinationId, doneBy, callback) => {
-      dispatch(moveObject(objectId, destinationId, doneBy, callback));
+    moveObject: (objectId, destinationId, doneBy, museumId, callback) => {
+      dispatch(moveObject(objectId, destinationId, doneBy, museumId, callback));
     },
-    moveNode: (nodeId, destinationId, doneBy, callback) => {
-      dispatch(moveNode(nodeId, destinationId, doneBy, callback));
+    moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
+      dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
     },
     onAction: (actionName, unit, path) => {
       switch (actionName) {

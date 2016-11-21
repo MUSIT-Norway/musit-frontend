@@ -36,16 +36,17 @@ const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
     observationControlGridData: getSortedObservationControl(state),
-    rootNode: state.storageGridUnit.root.data
+    rootNode: state.storageGridUnit.root.data,
+    user: state.auth.user
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  loadControlAndObservations: (id, callback) => {
-    dispatch(loadControlsAndObservationsForNode(id, callback));
+  loadControlAndObservations: (id, museumId, callback) => {
+    dispatch(loadControlsAndObservationsForNode(id, museumId, callback));
   },
-  loadStorageObj: (id) => {
-    dispatch(loadRoot(id));
+  loadStorageObj: (id, museumId) => {
+    dispatch(loadRoot(id, museumId));
   }
 });
 

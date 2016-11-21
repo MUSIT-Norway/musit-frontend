@@ -9,8 +9,8 @@ import { loadRoot } from '../../../reducers/storageunit/grid';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLagreClick: (parentId, data) => {
-      dispatch(insert(parentId, data, {
+    onLagreClick: (parentId, museumId, data) => {
+      dispatch(insert(parentId, museumId, data, {
         onSuccess: () => {
           hashHistory.goBack();
           emitSuccess(
@@ -32,8 +32,8 @@ const mapDispatchToProps = (dispatch) => {
     },
     updateState: (data) => dispatch(updateState(data)),
     clearState: () => dispatch(clearState()),
-    loadStorageObj: (id) => {
-      dispatch(loadRoot(id));
+    loadStorageObj: (id, museumId) => {
+      dispatch(loadRoot(id, museumId));
     }
   };
 };
@@ -41,6 +41,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState,
+    user: state.auth.user,
     translate: (key, markdown) => I18n.t(key, markdown),
     rootNode: state.storageGridUnit.root.data || {}
   };

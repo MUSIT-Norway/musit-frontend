@@ -21,7 +21,6 @@ import PickListContainer from '../../components/picklist/PickListContainer';
 import { connect } from 'react-redux';
 import { refreshObject, refreshNode, addNode, addObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist';
 import { moveObject, moveNode } from '../../reducers/move';
-import { loadRoot } from '../../reducers/storageunit/grid';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
@@ -56,11 +55,11 @@ const mapDispatchToProps = (dispatch) => ({
   toggleObject: (item, on) => dispatch(toggleObject(item, on)),
   removeNode: (item) => dispatch(removeNode(item)),
   removeObject: (item) => dispatch(removeObject(item)),
-  moveObject: (objectId, destinationId, doneBy, callback) => {
-    dispatch(moveObject(objectId, destinationId, doneBy, callback));
+  moveObject: (objectId, destinationId, doneBy, museumId, callback) => {
+    dispatch(moveObject(objectId, destinationId, doneBy, museumId, callback));
   },
-  moveNode: (nodeId, destinationId, doneBy, callback) => {
-    dispatch(moveNode(nodeId, destinationId, doneBy, callback));
+  moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
+    dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
   },
   addNode: (unit, path) => {
     dispatch(addNode(unit, path));
@@ -68,11 +67,8 @@ const mapDispatchToProps = (dispatch) => ({
   addObject: (unit, path) => {
     dispatch(addObject(unit, path));
   },
-  loadRoot: (id) => {
-    dispatch(loadRoot(id));
-  },
-  refreshNodes: (ids) => ids.forEach(id => dispatch(refreshNode(id))),
-  refreshObjects: (ids) => ids.forEach(id => dispatch(refreshObject(id)))
+  refreshNodes: (ids, museumId) => ids.forEach(id => dispatch(refreshNode(id, museumId))),
+  refreshObjects: (ids, museumId) => ids.forEach(id => dispatch(refreshObject(id, museumId)))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PickListContainer);

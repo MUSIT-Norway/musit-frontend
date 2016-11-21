@@ -43,8 +43,8 @@ export default (state = initialState, action) => {
   }
 };
 
-export const loadKDReport = () => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/report`);
+export const loadKDReport = (museumId) => {
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/report`);
   return {
     types: [LOAD_KD_REPORT, LOAD_KD_REPORT_SUCESS, LOAD_KD_REPORT_FAIL],
     promise: (client) => client.get(url)

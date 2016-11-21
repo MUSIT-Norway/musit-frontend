@@ -10,7 +10,7 @@ export default class KDReport extends React.Component {
   };
 
   componentWillMount() {
-    this.props.loadKDReport();
+    this.props.loadKDReport(this.props.user.museumId);
   }
 
   render() {

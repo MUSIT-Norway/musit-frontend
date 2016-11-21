@@ -2,8 +2,8 @@ import * as types from './constants';
 import { apiUrl } from'../../util';
 import Config from '../../config';
 
-export const searchForObjects = (params, page) => {
-  const baseUrl = apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(99)}/objects/search`);
+export const searchForObjects = (params, page, museumId) => {
+  const baseUrl = apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/objects/search`);
   const museumNoQuery = `museumNo=${params.museumNo || ''}`;
   const subNoQuery = `subNo=${params.subNo || ''}`;
   const termQuery = `term=${params.term || ''}`;

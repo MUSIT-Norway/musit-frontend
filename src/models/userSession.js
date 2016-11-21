@@ -9,7 +9,7 @@ class UserSession {
   actor: ?Actor;
   museumId: ?MuseumId;
 
-  constructor(accessToken: string, groups: ?Group[], actor: ?Actor, museumId: ?MuseumId) {
+  constructor(accessToken: string, museumId: ?MuseumId, groups: ?Group[], actor: ?Actor) {
     this.accessToken = accessToken;
     this.groups = groups;
     this.actor = actor;

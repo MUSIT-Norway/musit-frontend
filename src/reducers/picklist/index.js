@@ -141,19 +141,19 @@ export const removeObject = (item) => ({ type: REMOVE_OBJECT, item });
 export const toggleObject = (item, on) => ({ type: TOGGLE_OBJECT, item, on });
 
 // Action for load node
-export const refreshNode = (id) => {
+export const refreshNode = (id, museumId) => {
   return {
     types: [LOAD_ONE_NODE, LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/${id}`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`)),
     id
   };
 };
 
 // Action for load object
-export const refreshObject = (id) => {
+export const refreshObject = (id, museumId) => {
   return {
     types: [LOAD_ONE_OBJECT, LOAD_ONE_OBJECT_SUCCESS, LOAD_ONE_OBJECT_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(99)}/objects/${id}/currentlocation`)),
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`)),
     id
   };
 };

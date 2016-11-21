@@ -19,12 +19,7 @@ const authReducer = (state = initialState, action = {}) => {
   case SET_USER:
     return {
       ...state,
-      user: new UserSession(
-        action.accessToken,
-        [],
-        null,
-        new MuseumId(99)
-      )
+      user: new UserSession(action.accessToken, new MuseumId(99), null, null)
     };
   case CLEAR_USER:
     return {
@@ -38,16 +33,12 @@ const authReducer = (state = initialState, action = {}) => {
       loaded: false
     };
   case LOAD_ACTOR_SUCCESS:
+    const user = state.user;
     return {
       ...state,
       loading: false,
       loaded: true,
-      user: new UserSession(
-        state.user.accessToken,
-        state.user.groups,
-        new Actor(action.result),
-        state.user.museumId
-      )
+      user: new UserSession(user.accessToken, user.museumId, user.groups, new Actor(action.result))
     };
   case LOAD_ACTOR_FAILURE:
     return {
