@@ -102,15 +102,15 @@ const mapDispatchToProps = (dispatch, props) => {
     onEdit: (unit) => {
       hashHistory.push(`/magasin/${unit.id}/view`);
     },
-    onDelete: (id, currentNode) => {
+    onDelete: (id, museumId, currentNode) => {
       if (id === currentNode.id) {
-        dispatch(deleteUnit(id, {
+        dispatch(deleteUnit(id, museumId, {
           onSuccess: () => {
             dispatch(clearRoot());
             if (currentNode.isPartOf) {
               hashHistory.replace(`/magasin/${currentNode.isPartOf}`);
             } else {
-              dispatch(loadRootNodes());
+              dispatch(loadRootNodes(null, museumId));
               dispatch(clearStats());
             }
             emitSuccess({

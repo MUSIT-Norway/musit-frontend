@@ -55,7 +55,7 @@ export default class PickListContainer extends React.Component {
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshNodes(items.map(p => p.value).map(item => item.id));
+      this.props.refreshNodes(items.map(p => p.value).map(item => item.id), this.props.user.museumId);
       onSuccess();
       if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })});
@@ -74,7 +74,7 @@ export default class PickListContainer extends React.Component {
 
   objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshObjects(items.map(p => p.value).map(item => item.id));
+      this.props.refreshObjects(items.map(p => p.value).map(item => item.id), this.props.user.museumId);
       onSuccess();
       if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })});
@@ -122,9 +122,8 @@ export default class PickListContainer extends React.Component {
     }
 
     if (!error) {
-      moveFunction(toMove, to.id, this.props.user.getActorId(), callback);
+      moveFunction(toMove, to.id, this.props.user.actor.getActorId(), this.props.user.museumId, callback);
     }
-
   }
 
   render() {

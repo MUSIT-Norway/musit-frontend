@@ -237,6 +237,7 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   makeLeftMenu(
+    museumId = this.props.user.museumId,
     rootNode = this.props.rootNode,
     stats = this.props.stats,
     onEdit = this.props.onEdit,
@@ -266,7 +267,7 @@ export default class StorageUnitsContainer extends React.Component {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
               name: rootNode.name
             });
-            confirm(message, () => onDelete(id, rootNode));
+            confirm(message, () => onDelete(id, museumId, rootNode));
           }}
         />
       </div>
