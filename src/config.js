@@ -18,7 +18,13 @@ export default {
         searchUrl:
           '/api/actor/v1/person?museumId=%museumId%&search=[%term%]',
         baseUrl:
-          '/api/actor/v1/person'
+          '/api/actor/v1/person',
+        currentUser:
+          '/api/actor/v1/dataporten/currentUser'
+      },
+      geolocation: {
+        searchUrl:
+          '/api/geolocation/v1/address?search=[%term%]'
       }
     }
   }

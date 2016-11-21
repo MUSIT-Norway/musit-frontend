@@ -3,6 +3,7 @@ import createMiddleware from '../../../middleware/clientMiddleware';
 import ApiClient from '../../../middleware/ApiClient';
 import request from 'superagent';
 import nocker from 'superagent-nock';
+import Config from '../../../config';
 
 import * as actions from '../../../reducers/auth';
 import auth from '../../../reducers/auth';
@@ -14,7 +15,7 @@ const mockStore = configureMockStore(middlewares);
 
 describe('Auth', () => {
   it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
-    const url = '/api/actor/v1/dataporten/currentUser';
+    const url = Config.magasin.urls.actor.currentUser;
     nock('http://localhost')
       .get(url)
       .reply(200, {

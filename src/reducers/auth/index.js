@@ -1,5 +1,6 @@
 import {apiUrl} from '../../util';
 import Actor from '../../models/actor';
+import Config from '../../config';
 import UserSession from '../../models/userSession';
 import MuseumId from '../../models/museumId';
 
@@ -59,7 +60,7 @@ export default { ID, reducer: authReducer };
 export const loadActor = () => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: (client) => client.get(apiUrl('/api/actor/v1/dataporten/currentUser'))
+    promise: (client) => client.get(apiUrl(Config.magasin.urls.actor.currentUser))
   };
 };
 
