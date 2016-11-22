@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSaveObservation: (id, museumId, data) => {
+    onSaveObservation: (id, data, museumId) => {
       dispatch(addObservation(id, museumId, data, {
         onSuccess: () => {
           hashHistory.goBack();
