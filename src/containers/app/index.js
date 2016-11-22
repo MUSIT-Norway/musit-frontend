@@ -35,8 +35,8 @@ const mapDispatchToProps = (dispatch) => {
       }
       const fakeToken = localStorage.getItem('fakeToken');
       if (fakeToken) {
-        const userId = JSON.parse(fakeToken).userId;
-        const user = fakeUserInfo.find(u => u.userId === userId);
+        const userid = JSON.parse(fakeToken).userid;
+        const user = fakeUserInfo.find(u => u.userid === userid);
         dispatch(setUser(user));
         dispatch(loadActor());
         return true;

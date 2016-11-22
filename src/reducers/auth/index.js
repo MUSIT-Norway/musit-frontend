@@ -83,6 +83,14 @@ export const clearUser = () => {
   };
 };
 
+const getStateField = (field) => {
+  return global.reduxStore.getState()[ID].user[field];
+};
+
 export const getMuseumId = () => {
-  return global.reduxStore.getState()[ID].user.museumId.id;
+  return getStateField('museumId');
+};
+
+export const getAccessToken = () => {
+  return getStateField('accessToken');
 };

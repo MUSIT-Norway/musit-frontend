@@ -5,8 +5,8 @@ export default {
   magasin: {
     urls: {
       storagefacility: {
-        searchUrl:
-          '/api/storagefacility/v1/museum/%museumId%/storagenodes/search?searchStr=%term%&',
+        searchUrl: (term, mid) =>
+          `/api/storagefacility/v1/${mid.getPath()}/storagenodes/search?searchStr=${term}&`,
         baseUrl: (mid): string =>
           `/api/storagefacility/v1/${mid.getPath()}/storagenodes`
       },
@@ -15,16 +15,16 @@ export default {
           `/api/thingaggregate/${mid.getPath()}`
       },
       actor: {
-        searchUrl:
-          '/api/actor/v1/person?museumId=%museumId%&search=[%term%]',
+        searchUrl: (term, mid) =>
+          `/api/actor/v1/person?${mid.getQuery()}&search=[${term}]`,
         baseUrl:
           '/api/actor/v1/person',
         currentUser:
           '/api/actor/v1/dataporten/currentUser'
       },
       geolocation: {
-        searchUrl:
-          '/api/geolocation/v1/address?search=[%term%]'
+        searchUrl: (term) =>
+          `/api/geolocation/v1/address?search=[${term}]`
       }
     }
   }
