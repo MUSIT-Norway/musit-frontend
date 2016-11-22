@@ -1,3 +1,5 @@
+import MuseumId from './models/museumId';
+
 if (typeof localStorage === 'undefined' || localStorage === null) {
   const LocalStorage = require('node-localstorage').LocalStorage;
   global.localStorage = new LocalStorage('./');
@@ -13,3 +15,12 @@ import createMiddleware from './middleware/clientMiddleware';
 import ApiClient from './middleware/ApiClient';
 const middlewares = [ createMiddleware(new ApiClient()) ];
 global.mockStore = configureMockStore(middlewares);
+global.reduxStore = {
+  getState: () => ({
+    auth: {
+      user: {
+        museumId: new MuseumId(99)
+      }
+    }
+  })
+};
