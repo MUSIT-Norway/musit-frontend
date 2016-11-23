@@ -1,6 +1,6 @@
 export default {
   isDev: process.env.NODE_ENV === 'development',
-  isFake: process.env.REACT_APP_USE_DATAPORTEN !== 'true',
+  isFake: false,
   useDevTools: process.env.DEV_TOOLS || false,
   magasin: {
     urls: {
