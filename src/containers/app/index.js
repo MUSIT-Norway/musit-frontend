@@ -1,7 +1,7 @@
 import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
-import { clearUser, setUser, clearActor, loadActor } from '../../reducers/auth';
+import { setUser, loadActor } from '../../reducers/auth';
 import jwtDecode from 'jwt-decode';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import fakeUserInfo from '../../../fake_security.json';
@@ -22,8 +22,7 @@ const mapDispatchToProps = (dispatch) => {
     clearUser: () => {
       localStorage.removeItem('jwtToken');
       localStorage.removeItem('fakeToken');
-      dispatch(clearUser());
-      dispatch(clearActor());
+      window.location.replace('https://auth.dataporten.no/logout');
     },
     loadUser: () => {
       const jwtToken = localStorage.getItem('jwtToken');
