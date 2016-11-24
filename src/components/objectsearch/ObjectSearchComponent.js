@@ -75,6 +75,7 @@ export default (props) =>
                 </thead>
                 <tbody>
                 {props.data.matches.map((data, i) => {
+                  const isMainObject = data.isMainObject();
                   return (
                     <tr key={i}>
                       <td className="museumNo">{data.museumNo}</td>
@@ -90,6 +91,7 @@ export default (props) =>
                         }
                       </td>
                       <td className="move">
+                        {isMainObject &&
                         <a
                           href=""
                           onClick={(e) => {
@@ -98,8 +100,9 @@ export default (props) =>
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >
-                          <FontAwesome name="shopping-cart" style={{ fontSize: '1.3em' }} />
+                          <FontAwesome name="shopping-cart" style={{ fontSize: '1.3em' }}/>
                         </a>
+                        }
                       </td>
                     </tr>
                   );
