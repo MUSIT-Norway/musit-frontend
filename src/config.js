@@ -6,7 +6,7 @@ export default {
     urls: {
       storagefacility: {
         searchUrl: (term, mid) =>
-          `/api/storagefacility/v1/${mid.getPath()}/storagenodes/search?searchStr=${term}&`,
+          `/api/storagefacility/v1/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
         baseUrl: (mid): string =>
           `/api/storagefacility/v1/${mid.getPath()}/storagenodes`
       },
@@ -16,7 +16,7 @@ export default {
       },
       actor: {
         searchUrl: (term, mid) =>
-          `/api/actor/v1/person?${mid.getQuery()}&search=[${term}]`,
+          `/api/actor/v1/person?${mid.getQuery()}&search=[${encodeURIComponent(term)}]`,
         baseUrl:
           '/api/actor/v1/person',
         currentUser:
@@ -24,7 +24,7 @@ export default {
       },
       geolocation: {
         searchUrl: (term) =>
-          `/api/geolocation/v1/address?search=[${term}]`
+          `/api/geolocation/v1/address?search=[${encodeURIComponent(term)}]`
       }
     }
   }
