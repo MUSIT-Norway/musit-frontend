@@ -3,6 +3,7 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import ObjectSearchComponent from '../ObjectSearchComponent';
 import { getPath } from '../../../reducers/helper';
+import MusitObject from '../../../models/object';
 
 describe('ObjectSearchComponent', () => {
   const path = ',1,2,3,';
@@ -25,7 +26,7 @@ describe('ObjectSearchComponent', () => {
   ];
   const testData = {
     totalMatches: 20,
-    matches: Array(20).fill(
+    matches: Array(20).fill(new MusitObject(
       {
         museumNo: '12345',
         subNo: '45',
@@ -35,7 +36,7 @@ describe('ObjectSearchComponent', () => {
         path: path,
         pathNames: pathNames
       }
-    )
+    ))
   };
 
   it('should display object 1', () => {
