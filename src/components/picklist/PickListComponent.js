@@ -84,14 +84,22 @@ export default class PickListComponent extends Component {
               const item = pick.value;
               const isItemMarked = pick.marked;
               return (
-                <tr key={i}>
+                <tr key={i} className={item.mainObjectId && !item.isMainObject() ? 'childObject' : item.isMainObject() && 'mainObject' }>
                   <td style={{ width: '3em', textAlign: 'left', verticalAlign: 'middle' }}>
                     <span>
-                      <input
-                        type="checkbox"
-                        checked={isItemMarked ? 'checked' : ''}
-                        onClick={() => this.props.toggle(item)}
-                      />
+                      {item.isMainObject() ?
+                        <input
+                          type="checkbox"
+                          checked={isItemMarked ? 'checked' : ''}
+                          onClick={() => this.props.toggle(item)}
+                        />
+                        :
+                        <input
+                          type="checkbox"
+                          checked={isItemMarked ? 'checked' : ''}
+                          disabled
+                        />
+                      }
                     </span>
                   </td>
                   <td>

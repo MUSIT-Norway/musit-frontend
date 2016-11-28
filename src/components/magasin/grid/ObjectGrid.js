@@ -41,7 +41,7 @@ export default class ObjectGrid extends Component {
               <tbody>
                 {this.props.tableData.map((c, i) => {
                   const isMainObject = c.isMainObject();
-                  return <tr key={i}>
+                  return <tr key={i} className={isMainObject ? 'mainObject' : c.mainObjectId && 'childObject'}>
                     <td>
                       <FontAwesome name="rebel"/>
                       {` ${c.museumNo}`}
