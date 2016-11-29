@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import ChooseTemplateComponent from '../../components/print/ChooseTemplate';
-import { loadTemplates } from '../../reducers/print/index';
+import { loadTemplates, selectTemplate } from '../../reducers/print/index';
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadTemplates: () => dispatch(loadTemplates())
+    loadTemplates: () => dispatch(loadTemplates()),
+    selectTemplate: (template) => dispatch(selectTemplate(template))
   };
 };
 

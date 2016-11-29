@@ -78,7 +78,9 @@ export default class StorageUnitsContainer extends React.Component {
 
   componentWillMount() {
     this.loadNodes();
-    this.context.showModal('Choose template', <ChooseTemplate />);
+    this.context.showModal('Choose template', <ChooseTemplate nextStep={() => {
+
+    }} />);
   }
 
   componentWillReceiveProps(newProps) {

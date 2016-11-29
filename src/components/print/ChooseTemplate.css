@@ -1,4 +1,4 @@
 .templateChooser {
     width: 500px;
-    height: 300px;
+    min-height: 380px;
 }

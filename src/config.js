@@ -28,7 +28,9 @@ export default {
       },
       barcode: {
         templatesUrl:
-          '/api/barcode/templates'
+          '/api/barcode/templates',
+        templatePreviewUrl: (id, format, name, uuid) =>
+          `/api/barcode/templates/${id}/preview?codeFormat=${format}&name=${name}&uuid=${uuid}`
       }
     }
   }

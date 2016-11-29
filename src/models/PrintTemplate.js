@@ -5,6 +5,7 @@ class Template {
   labelHeight: number;
   colsPerPage: number;
   rowsPerPage: number;
+  content: string;
 
   constructor(props) {
     this.id = props.id;
@@ -13,7 +14,10 @@ class Template {
     this.labelHeight = props.labelHeight;
     this.colsPerPage = props.colsPerPage;
     this.rowsPerPage = props.rowsPerPage;
+    this.content = props.content;
   }
 }
 
 export default Template;
+
+export const QR_CODE = 1;
