@@ -25,6 +25,10 @@ export default {
       geolocation: {
         searchUrl: (term) =>
           `/api/geolocation/v1/address?search=[${encodeURIComponent(term)}]`
+      },
+      barcode: {
+        templatesUrl:
+          '/api/barcode/templates'
       }
     }
   }

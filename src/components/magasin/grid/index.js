@@ -12,6 +12,7 @@ import { I18n } from 'react-i18nify';
 import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
 import { checkNodeBranchAndType } from '../../../util/nodeValidator';
+import ChooseTemplate from '../../../containers/print/ChooseTemplate';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -77,6 +78,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   componentWillMount() {
     this.loadNodes();
+    this.context.showModal('Choose template', <ChooseTemplate />);
   }
 
   componentWillReceiveProps(newProps) {
