@@ -136,6 +136,7 @@ export default class ControlAddContainer extends React.Component {
       }
     }
   }
+
   handleSubmit(event) {
     event.preventDefault();
     const errors = [];
