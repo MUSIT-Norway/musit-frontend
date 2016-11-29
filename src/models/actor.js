@@ -23,7 +23,6 @@ class Actor {
    * @param props the actor as received from endpoint currentUser.
    */
   constructor(props) {
-    this.id = props.id;
     this.dataportenId = props.dataportenId;
     this.applicationId = props.applicationId;
     this.fn = props.fn;
