@@ -103,8 +103,8 @@
     "test": "node scripts/test.js --env=jsdom",
     "codacy": "cat coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
     "flow": "./node_modules/.bin/flow check --show-all-errors",
-    "lint": "./node_modules/react-scripts/node_modules/.bin/eslint .",
-    "lint:fix": "./node_modules/react-scripts/node_modules/.bin/eslint . --fix",
+    "lint": "./node_modules/.bin/eslint .",
+    "lint:fix": "./node_modules/.bin/eslint . --fix",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
   "pre-commit": [
