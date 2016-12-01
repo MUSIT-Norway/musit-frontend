@@ -24,6 +24,7 @@ class Actor {
    */
   constructor(props) {
     this.dataportenId = props.dataportenId;
+    this.dataportenUser = props.dataportenUser;
     this.applicationId = props.applicationId;
     this.fn = props.fn;
   }
