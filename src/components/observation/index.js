@@ -222,7 +222,7 @@ export default class ObservationPage extends React.Component {
   validateForm(formProps) {
     let errors = {};
 
-    if (typeof formProps.doneBy !== 'object' || (!formProps.doneBy || !formProps.doneBy.id)) {
+    if (typeof formProps.doneBy !== 'object' || (!formProps.doneBy || !formProps.doneBy.getActorId())) {
       errors.doneBy = 'musit.observation.page.doneByRequired';
     }
 
@@ -316,13 +316,13 @@ export default class ObservationPage extends React.Component {
             <Row>
               <Col xs={12} sm={5}>
                 <ControlLabel>{I18n.t('musit.observation.page.date')}</ControlLabel>
-                {this.props.mode !== 'ADD' ? 
+                {this.props.mode !== 'ADD' ?
                   <FormControl
                     componentClass="input"
                     value={parseISODate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
-                 : 
+                 :
                   <DatePicker
                     dateFormat={DATE_FORMAT_DISPLAY}
                     onClear={(newValue) => this.setState({ ...this.state, doneDate: newValue })}
@@ -334,13 +334,13 @@ export default class ObservationPage extends React.Component {
               </Col>
               <Col xs={12} sm={5}>
                 <ControlLabel>{I18n.t('musit.observation.page.doneBy')}</ControlLabel>
-                {this.props.mode !== 'ADD' ? 
+                {this.props.mode !== 'ADD' ?
                   <FormControl
                     componentClass="input"
                     value={this.state.doneBy && this.state.doneBy.fn ? this.state.doneBy.fn : this.state.doneBy || ''}
                     disabled
                   />
-                 : 
+                 :
                   <ActorSuggest
                     id="doneByField"
                     value={this.state.doneBy && this.state.doneBy.fn ? this.state.doneBy.fn : this.state.doneBy || ''}
@@ -376,7 +376,7 @@ export default class ObservationPage extends React.Component {
               </Row>
             : ''}
             <h3 />
-            {this.props.mode !== 'ADD' ? '' : 
+            {this.props.mode !== 'ADD' ? '' :
               <Row>
                 <Col xs={2}>
                   <FormGroup controlId="formControlsSelect">
@@ -412,7 +412,7 @@ export default class ObservationPage extends React.Component {
                   <h3>
                     {I18n.t(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
-                    {this.props.mode !== 'ADD' ? '' : 
+                    {this.props.mode !== 'ADD' ? '' :
                       <a
                         href="" onClick={(e) => {
                           this.removeObservation(index);
