@@ -27,8 +27,8 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 // Tools like Cloud9 rely on this.
 const DEFAULT_PORT = process.env.PORT || 3000;
-let compiler;
-let handleCompile;
+var compiler;
+var handleCompile;
 
 // You can safely remove this after ejecting.
 // We only use this block for testing of Create React App itself:
