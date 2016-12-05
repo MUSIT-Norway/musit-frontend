@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {loadRoot as loadRootNodes, clearRoot, loadChildren as loadChildNodes, deleteUnit} from '../../../reducers/storageunit/grid';
 import {loadObjects} from '../../../reducers/storageobject/grid';
-import {addNode, addObject} from '../../../reducers/picklist';
+import {addNode, addObject, loadMainObject} from '../../../reducers/picklist';
 import {moveObject, moveNode} from '../../../reducers/move';
 import {loadStats, clearStats} from '../../../reducers/storageunit/stats';
 import {hashHistory} from 'react-router';
@@ -78,13 +78,21 @@ const mapDispatchToProps = (dispatch, props) => {
     moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
       dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
     },
-    onAction: (actionName, unit, path) => {
+    onAction: (actionName, unit, path, museumId) => {
       switch (actionName) {
       case 'pickNode':
         dispatch(addNode(unit, path));
         break;
       case 'pickObject':
-        dispatch(addObject(unit, path));
+        if (unit.mainObjectId) {
+          dispatch(loadMainObject(unit, path, museumId, {
+            onSuccess: (children) => {
+              children.forEach(child => dispatch(addObject(child, path)));
+            }
+          }));
+        } else {
+          dispatch(addObject(unit, path));
+        }
         break;
       case 'controlsobservations':
         history.push(`/magasin/${unit.id}/controlsobservations`);
