@@ -66,9 +66,14 @@ describe('StorageUnitReducer', () => {
     expect(
         reducer(undefined, {
           type: actions.LOAD_SEVERAL_SUCCESS,
-          result: {
-            someField: 1
-          }
+          result: [
+            {
+              id: 1,
+              term: 'Fugl',
+              museumNo: 'CH500',
+              subNo: '5'
+            }
+          ]
         })
     ).toMatchSnapshot();
   });

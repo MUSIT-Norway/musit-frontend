@@ -53,9 +53,19 @@ exports[`StorageUnitReducer no action 1`] = `Object {}`;
 
 exports[`StorageUnitReducer success action 1`] = `
 Object {
-  "data": Object {
-    "someField": 1
-  },
+  "data": Array [
+    MusitObject {
+      "breadcrumb": undefined,
+      "currentLocationId": undefined,
+      "id": 1,
+      "mainObjectId": undefined,
+      "museumNo": "CH500",
+      "path": undefined,
+      "pathNames": undefined,
+      "subNo": "5",
+      "term": "Fugl"
+    }
+  ],
   "loaded": true,
   "loading": false
 }

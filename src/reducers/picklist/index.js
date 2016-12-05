@@ -1,6 +1,7 @@
 import { apiUrl } from '../../util';
 import { getPath } from '../helper';
 import Config from '../../config';
+import MusitObject from '../../models/object';
 
 export const TYPES = {
   NODE: 'NODE',
@@ -23,11 +24,18 @@ export const CLEAR_OBJECTS = 'musit/picklist/CLEAR_OBJECTS';
 export const ADD_OBJECT = 'musit/picklist/ADD_OBJECT';
 export const REMOVE_OBJECT = 'musit/picklist/REMOVE_OBJECT';
 export const TOGGLE_OBJECT = 'musit/picklist/TOGGLE_OBJECT';
+export const TOGGLE_MAIN_OBJECT = 'musit/picklist/TOGGLE_MAIN_OBJECT';
 
 // Load object
 export const LOAD_ONE_OBJECT = 'musit/picklist/LOAD_ONE_OBJECT';
 export const LOAD_ONE_OBJECT_SUCCESS = 'musit/picklist/LOAD_ONE_OBJECT_SUCCESS';
 export const LOAD_ONE_OBJECT_FAIL = 'musit/picklist/LOAD_ONE_OBJECT_FAIL';
+
+// Load main object
+// NOT USED FOR REDUCER
+export const LOAD_MAIN_OBJECT = 'musit/picklist/LOAD_MAIN_OBJECT';
+export const LOAD_MAIN_OBJECT_SUCCESS = 'musit/picklist/LOAD_MAIN_OBJECT_SUCCESS';
+export const LOAD_MAIN_OBJECT_FAIL = 'musit/picklist/LOAD_MAIN_OBJECT_FAIL';
 
 // Empty state
 const initialState = {
@@ -41,6 +49,16 @@ const toggleItem = (type) => (state, action) => {
   const nodes = state[type].map(node => ({
     ...node,
     marked: items.indexOf(node.value) > -1 ? toggle(node) : node.marked
+  }));
+  return { ...state, [type]: nodes };
+};
+
+const toggleObjects = (type) => (state, action) => {
+  const mainObjectId = action.item.mainObjectId;
+  const toggle = (node) => typeof action.on !== 'undefined' ? action.on : !node.marked;
+  const nodes = state[type].map(node => ({
+    ...node,
+    marked: mainObjectId === node.value.mainObjectId ? toggle(node) : node.marked
   }));
   return { ...state, [type]: nodes };
 };
@@ -113,6 +131,7 @@ const OBJECT_ACTION_HANDLERS = {
   [ADD_OBJECT]: addItem(TYPES.OBJECT),
   [REMOVE_OBJECT]: removeItem(TYPES.OBJECT),
   [TOGGLE_OBJECT]: toggleItem(TYPES.OBJECT),
+  [TOGGLE_MAIN_OBJECT]: toggleObjects(TYPES.OBJECT),
   [LOAD_ONE_OBJECT]: loadItem,
   [LOAD_ONE_OBJECT_SUCCESS]: loadItemSuccess(TYPES.OBJECT),
   [LOAD_ONE_OBJECT_FAIL]: loadItemFail
@@ -136,9 +155,11 @@ export const toggleNode = (item, on) => ({ type: TOGGLE_NODE, item, on });
 
 // OBJECTS Actions
 export const clearObjects = () => ({ type: CLEAR_OBJECTS });
-export const addObject = (item, path = []) => ({ type: ADD_OBJECT, item, path });
+export const addObject = (item, path = []) => ({ type: ADD_OBJECT, item: new MusitObject(item), path });
 export const removeObject = (item) => ({ type: REMOVE_OBJECT, item });
 export const toggleObject = (item, on) => ({ type: TOGGLE_OBJECT, item, on });
+export const toggleMainObject = (item, on) => ({ type: TOGGLE_MAIN_OBJECT, item, on });
+
 
 // Action for load node
 export const refreshNode = (id, museumId) => {
@@ -155,5 +176,13 @@ export const refreshObject = (id, museumId) => {
     types: [LOAD_ONE_OBJECT, LOAD_ONE_OBJECT_SUCCESS, LOAD_ONE_OBJECT_FAIL],
     promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`)),
     id
+  };
+};
+
+export const loadMainObject = (unit, path, museumId, callback) => {
+  return {
+    types: [LOAD_MAIN_OBJECT, LOAD_MAIN_OBJECT_SUCCESS, LOAD_MAIN_OBJECT_FAIL],
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/object/${unit.id}/children`)),
+    callback
   };
 };

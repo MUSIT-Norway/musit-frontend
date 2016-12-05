@@ -39,10 +39,11 @@ export default class ObjectGrid extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.tableData.map((c, i) =>
-                  <tr key={i}>
+                {this.props.tableData.map((c, i) => {
+                  const isMainObject = c.isMainObject();
+                  return <tr key={i} className={isMainObject ? 'mainObject' : c.mainObjectId && 'childObject'}>
                     <td>
-                      <FontAwesome name="rebel" />
+                      <FontAwesome name="rebel"/>
                       {` ${c.museumNo}`}
                     </td>
                     <td>
@@ -52,6 +53,7 @@ export default class ObjectGrid extends Component {
                       {c.term}
                     </td>
                     <td>
+                      {isMainObject &&
                       <a
                         href=""
                         onClick={(e) => {
@@ -60,10 +62,12 @@ export default class ObjectGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
                       >
-                        <span className="icon icon-musitmovehistoryicon" />
+                        <span className="icon icon-musitmovehistoryicon"/>
                       </a>
+                      }
                     </td>
                     <td>
+                      {isMainObject &&
                       <a
                         href=""
                         onClick={(e) => {
@@ -72,10 +76,12 @@ export default class ObjectGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
                       >
-                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck"/>
                       </a>
+                      }
                     </td>
                     <td>
+                      {isMainObject &&
                       <a
                         href=""
                         onClick={(e) => {
@@ -84,11 +90,12 @@ export default class ObjectGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
                       >
-                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
                       </a>
+                      }
                     </td>
-                  </tr>
-                )}
+                  </tr>;
+                })}
               </tbody>
             </Table>
           </div>

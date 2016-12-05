@@ -1,6 +1,6 @@
 import { omit } from 'lodash';
 import { getPath } from '../helper';
-
+import MusitObject from '../../models/object';
 import * as types from './constants';
 
 const initialState = {
@@ -54,10 +54,10 @@ export default (state = initialState, action) => {
       data: {
         totalMatches: action.result.totalMatches,
         matches: action.result.matches.map(data => {
-          return {
+          return new MusitObject({
             ...data,
             breadcrumb: getPath(data)
-          };
+          });
         })
       }
     };
