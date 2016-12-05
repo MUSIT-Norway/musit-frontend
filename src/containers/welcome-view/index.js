@@ -28,13 +28,11 @@ const mapStateToProps = (state) => ({
   translate: (key, markdown) => I18n.t(key, markdown)
 });
 
-const mapDispatchToProps = (dispatch, props) => {
-  const { history } = props;
+const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (user: any) => {
       dispatch(setUser(user));
       dispatch(loadActor());
-      history.replace('/magasin');
     }
   };
 };

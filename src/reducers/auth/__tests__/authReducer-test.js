@@ -15,20 +15,70 @@ const mockStore = configureMockStore(middlewares);
 
 describe('Auth', () => {
   it('creates LOAD_ACTOR_SUCCESS when fetching data has been done', () => {
-    const url = Config.magasin.urls.actor.currentUser;
     nock('http://localhost')
-      .get(url)
+      .get(Config.magasin.urls.actor.currentUser)
       .reply(200, {
         id: 1,
         fn: 'Jarle Stabell',
-        dataportenId: 'jarle'
+        dataportenId: 'jarle',
+        dataportenUser: 'jarle@uio.no'
       });
+    nock('http://localhost')
+      .get(Config.magasin.urls.auth.groupsUrl('jarle@uio.no'))
+      .reply(200, [
+        {
+          museumId: 99,
+          shortName: 'Test'
+        }
+      ]);
     const store = mockStore();
 
     return store.dispatch(actions.loadActor())
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });
+  });
+
+  it('creates LOAD_ACTOR_SUCCESS when fetching data has been done (super user)', () => {
+    nock('http://localhost')
+          .get(Config.magasin.urls.actor.currentUser)
+          .reply(200, {
+            id: 1,
+            fn: 'Jarle Stabell',
+            dataportenId: 'jarle',
+            dataportenUser: 'jarle@uio.no'
+          });
+    nock('http://localhost')
+          .get(Config.magasin.urls.auth.groupsUrl('jarle@uio.no'))
+          .reply(200, [
+            {
+              museumId: 10000,
+              shortName: 'God Access'
+            }
+          ]);
+    nock('http://localhost')
+          .get(Config.magasin.urls.auth.museumsUrl)
+          .reply(200, [
+            {
+              id: 10000,
+              name: 'God Access'
+            },
+            {
+              id: 99,
+              name: 'Test museum'
+            },
+            {
+              id: 3,
+              name: 'KHM'
+            }
+          ]);
+
+    const store = mockStore();
+
+    return store.dispatch(actions.loadActor())
+          .then(() => {
+            expect(store.getActions()).toMatchSnapshot();
+          });
   });
 
   it('no action', () => {
@@ -52,7 +102,10 @@ describe('Auth', () => {
         result: {
           id: 1,
           dataportenId: 'e7107fd4-4822-466f-9041-2e67095d8e2d',
-          fn: 'Some fancy user'
+          fn: 'Some fancy user',
+          groups: [{
+            museumId: 99
+          }]
         }
       })
     ).toMatchSnapshot();
@@ -65,7 +118,10 @@ describe('Auth', () => {
         result: {
           id: 1,
           applicationId: '932f8aad-5bf2-409d-8916-c91c24b31152',
-          fn: 'Some fancy user'
+          fn: 'Some fancy user',
+          groups: [{
+            museumId: 99
+          }]
         }
       })
     ).toMatchSnapshot();

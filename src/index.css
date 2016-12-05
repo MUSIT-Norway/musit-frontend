@@ -7,6 +7,10 @@
     padding-left: 50px;
 }
 
+.childObject {
+    color: darkgray;
+}
+
 a:link { color: #337ab7; }
 a:visited { color: #337ab7; }
 
@@ -240,4 +244,8 @@ a:visited { color: #337ab7; }
 
 .form-control::-ms-clear {
     display: none;
+}
+
+.table tr {
+    height: 40px;
 }
