@@ -43,7 +43,7 @@ export default class ObjectGrid extends Component {
                   const isMainObject = c.isMainObject();
                   return <tr key={i} className={isMainObject ? 'mainObject' : c.mainObjectId && 'childObject'}>
                     <td>
-                      <FontAwesome name="rebel"/>
+                      <span className="icon icon-musitobject"/>
                       {` ${c.museumNo}`}
                     </td>
                     <td>
