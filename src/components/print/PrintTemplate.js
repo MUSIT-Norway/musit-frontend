@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react';
+import Template from '../../models/PrintTemplate';
 import IFrame from '../../util/IFrame';
 import './ChooseTemplate.css';
 
 class ChooseTemplate extends Component {
   static propTypes = {
-    renderTemplate: PropTypes.func.isRequired,
+    templates: PropTypes.arrayOf(PropTypes.instanceOf(Template)),
+    loadTemplates: PropTypes.func.isRequired,
+    selectTemplate: PropTypes.func.isRequired,
     nextStep: PropTypes.func.isRequired
   };
 

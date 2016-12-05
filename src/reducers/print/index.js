@@ -8,6 +8,10 @@ export const LOAD_TEMPLATES = 'musit/print/LOAD_TEMPLATES';
 export const LOAD_TEMPLATES_FAIL = 'musit/print/LOAD_TEMPLATES_FAIL';
 export const LOAD_TEMPLATES_SUCCESS = 'musit/print/LOAD_TEMPLATES_SUCCESS';
 
+export const LOAD_PREVIEW = 'musit/print/LOAD_PREVIEW';
+export const LOAD_PREVIEW_FAIL = 'musit/print/LOAD_PREVIEW_FAIL';
+export const LOAD_PREVIEW_SUCCESS = 'musit/print/LOAD_PREVIEW_SUCCESS';
+
 export default (state = {}, action) => {
   switch(action.type) {
   case SELECT_TEMPLATE:
@@ -53,5 +57,24 @@ export const loadTemplates = () => {
             ).then(result => resolve(result))
           )
       )
+  };
+};
+
+export const renderTemplate = (templateId, codeFormat, uuid, name) => {
+  return {
+    types: [LOAD_PREVIEW, LOAD_PREVIEW_SUCCESS, LOAD_PREVIEW_FAIL],
+    promise: (client) => client.post(Config.magasin.urls.barcode.templateRenderUrl(templateId, codeFormat), {
+      body: [
+        {
+          uuid,
+          data: [
+            {
+              field: 'name',
+              value: name
+            }
+          ]
+        }
+      ]
+    })
   };
 };
