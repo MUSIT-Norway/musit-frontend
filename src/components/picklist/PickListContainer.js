@@ -2,7 +2,7 @@
 import React from 'react';
 import { PickListComponent } from '../../components/picklist';
 import { PageHeader, Grid } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+//import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../layout/Breadcrumb';
 import { hashHistory } from 'react-router';
 import { TYPES } from '../../reducers/picklist';
@@ -141,10 +141,9 @@ export default class PickListContainer extends React.Component {
               picks={picks}
               marked={markedValues}
               isnode={this.isTypeNode()}
-              iconRendrer={(pick) => <FontAwesome
-                name={pick.value.name ? 'folder' : 'rebel'}
-                style={{ fontSize: '1.5em' }}
-              />}
+              iconRendrer={(pick) => (<span className={pick.value.name ? 'icon icon-musitpicklistnode' :
+                'icon icon-musitpicklistobject'} style={{fontSize: '1.5em' }}/>)
+              }
               labelRendrer={(pick) => {
                 return (
                   <div>
