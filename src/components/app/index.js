@@ -21,13 +21,6 @@ export default class App extends Component {
     loadUser: PropTypes.func.isRequired
   }
 
-  componentWillMount() {
-    const loaded = this.props.loadUser();
-    if (!loaded) {
-      hashHistory.replace('/');
-    }
-  }
-
   handleLogout = () => {
     this.props.clearUser();
     hashHistory.replace('/');
@@ -79,7 +72,14 @@ export default class App extends Component {
             </Nav>
             <Nav pullRight>
               {user &&
-              <MusitUserAccount user={this.props.user} handleLogout={this.handleLogout} handleLanguage={(l) => this.handleLanguage(l)}/>
+              <MusitUserAccount
+                user={this.props.user.actor}
+                groups={this.props.user.groups}
+                selectedMuseumId={this.props.user.museumId.id}
+                handleLogout={this.handleLogout}
+                handleLanguage={(l) => this.handleLanguage(l)}
+                handleMuseumId={this.props.setMuseumId}
+              />
               }
             </Nav>
             <Nav pullRight>

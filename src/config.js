@@ -25,6 +25,12 @@ export default {
       geolocation: {
         searchUrl: (term) =>
           `/api/geolocation/v1/address?search=[${encodeURIComponent(term)}]`
+      },
+      auth: {
+        groupsUrl: (feideEmail) =>
+          `/api/auth/rest/groups/${feideEmail}`,
+        museumsUrl:
+          '/api/auth/rest/museums'
       }
     }
   }

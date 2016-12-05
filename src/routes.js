@@ -32,20 +32,14 @@ import Reports from './containers/reports';
 import KDReportContainer from './containers/reports/reportkd';
 import ControlViewContainer from './containers/control/view';
 import ControlAddContainer from './containers/control/add';
-import App from './containers/app';
 import ObservationControlGridShow from './containers/observationcontrol';
 import ObjectSearchContainer from './containers/objectsearch';
+import Authenticated from './components/Authenticated';
 
 export default () => {
   return (
-    <Route component={App}>
-      <IndexRedirect to="/" />
-
-      <Route path="/" component={WelcomeView} />
-      <Route path="/picklist/:type" component={PickListView} />
-      <Route path="/reports" component={Reports} />
-      <Route path="/reports/kdreport" component={KDReportContainer} />
-      <Route path="/search/objects" component={ObjectSearchContainer} />
+    <Route component={Authenticated}>
+      <IndexRedirect to="/magasin" />
       <Route path="/magasin" component={StorageUnitsTable} />
       <Route path="/magasin/add" add component={AddStorageUnitPanel} />
       <Route path="/magasin/:id/add" add component={AddStorageUnitPanel} />
@@ -59,6 +53,11 @@ export default () => {
       <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
       <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} />
       <Route path="/magasin/:id" component={StorageUnitsTable} />
+      <Route path="/picklist/:type" component={PickListView} />
+      <Route path="/reports" component={Reports} />
+      <Route path="/reports/kdreport" component={KDReportContainer} />
+      <Route path="/search/objects" component={ObjectSearchContainer} />
+      <Route path="/" component={WelcomeView} />
 
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />
