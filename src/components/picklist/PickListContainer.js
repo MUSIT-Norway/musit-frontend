@@ -23,8 +23,6 @@ export default class PickListContainer extends React.Component {
     moveObject: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
     user: React.PropTypes.object,
-    addNode: React.PropTypes.func.isRequired,
-    addObject: React.PropTypes.func.isRequired,
     refreshNodes: React.PropTypes.func.isRequired,
     refreshObjects: React.PropTypes.func.isRequired
   }

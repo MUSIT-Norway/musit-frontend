@@ -19,7 +19,7 @@
  */
 import PickListContainer from '../../components/picklist/PickListContainer';
 import { connect } from 'react-redux';
-import { refreshObject, refreshNode, addNode, addObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist';
+import { refreshObject, refreshNode, toggleMainObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist';
 import { moveObject, moveNode } from '../../reducers/move';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
@@ -52,7 +52,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   toggleNode: (item, on) => dispatch(toggleNode(item, on)),
-  toggleObject: (item, on) => dispatch(toggleObject(item, on)),
+  toggleObject: (item, on) => {
+    if (item.isMainObject && item.isMainObject()) {
+      dispatch(toggleMainObject(item, on));
+    } else {
+      dispatch(toggleObject(item, on));
+    }
+  },
   removeNode: (item) => dispatch(removeNode(item)),
   removeObject: (item) => dispatch(removeObject(item)),
   moveObject: (objectId, destinationId, doneBy, museumId, callback) => {
@@ -60,12 +66,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
     dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
-  },
-  addNode: (unit, path) => {
-    dispatch(addNode(unit, path));
-  },
-  addObject: (unit, path) => {
-    dispatch(addObject(unit, path));
   },
   refreshNodes: (ids, museumId) => ids.forEach(id => dispatch(refreshNode(id, museumId))),
   refreshObjects: (ids, museumId) => ids.forEach(id => dispatch(refreshObject(id, museumId)))
