@@ -21,7 +21,7 @@ import picklistReducer, {
   refreshNode,
   LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE, LOAD_ONE_NODE_FAIL
 } from '../index';
-
+import MusitObject from '../../../models/object';
 
 import reducer from '../../../reducers/picklist/index';
 import * as actions from '../../../reducers/picklist/index';
@@ -272,7 +272,7 @@ describe('PicklistReducer', () => {
       OBJECT: DEFAULT_OBJECTS.concat({
         marked: false,
         path: [],
-        value: item
+        value: new MusitObject(item)
       })
     };
     assert.deepStrictEqual(newState, expectedState, 'Object should be added');
@@ -290,7 +290,7 @@ describe('PicklistReducer', () => {
       OBJECT: DEFAULT_OBJECTS.concat({
         marked: false,
         path: [],
-        value: item
+        value: new MusitObject(item)
       })
     };
     assert.deepStrictEqual(newState2, expectedState, 'Object should be added');
@@ -317,7 +317,7 @@ describe('PicklistReducer', () => {
       OBJECT: DEFAULT_OBJECTS.concat({
         marked: false,
         path: path,
-        value: item
+        value: new MusitObject(item)
       })
     };
     assert.deepStrictEqual(newState, expectedState, 'Object should be added');

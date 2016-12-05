@@ -31,6 +31,12 @@ export default {
           '/api/barcode/templates',
         templatePreviewUrl: (id, format, name, uuid) =>
           `/api/barcode/templates/${id}/preview?codeFormat=${format}&name=${name}&uuid=${uuid}`
+      },
+      auth: {
+        groupsUrl: (feideEmail) =>
+          `/api/auth/rest/groups/${feideEmail}`,
+        museumsUrl:
+          '/api/auth/rest/museums'
       }
     }
   }
