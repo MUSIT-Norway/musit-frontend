@@ -88,7 +88,7 @@ export const loadActor = (callback) => {
              if (groups.length > 0 && !groups.find(museum => ALL_MUSEUMS === museum.museumId)) {
                resolve({ ...user, groups });
              } else {
-               client.get(Config.magasin.urls.auth.museumsUrl)
+               client.get(apiUrl(Config.magasin.urls.auth.museumsUrl))
                  .then(museums => {
                    resolve({
                      ...user,

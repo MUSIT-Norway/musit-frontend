@@ -42,11 +42,38 @@ Object {
     "accessToken": "token",
     "actor": null,
     "groups": null,
-    "museumId": MuseumId {
-      "id": 99
-    }
+    "museumId": null
   }
 }
+`;
+
+exports[`Auth creates LOAD_ACTOR_SUCCESS when fetching data has been done (super user) 1`] = `
+Array [
+  Object {
+    "type": "musit/auth/LOAD_ACTOR"
+  },
+  Object {
+    "result": Object {
+      "dataportenId": "jarle",
+      "dataportenUser": "jarle@uio.no",
+      "fn": "Jarle Stabell",
+      "groups": Array [
+        Object {
+          "id": 99,
+          "museumId": 99,
+          "name": "Test museum"
+        },
+        Object {
+          "id": 3,
+          "museumId": 3,
+          "name": "KHM"
+        }
+      ],
+      "id": 1
+    },
+    "type": "musit/auth/LOAD_ACTOR_SUCCESS"
+  }
+]
 `;
 
 exports[`Auth creates LOAD_ACTOR_SUCCESS when fetching data has been done 1`] = `
@@ -57,7 +84,14 @@ Array [
   Object {
     "result": Object {
       "dataportenId": "jarle",
+      "dataportenUser": "jarle@uio.no",
       "fn": "Jarle Stabell",
+      "groups": Array [
+        Object {
+          "museumId": 99,
+          "shortName": "Test"
+        }
+      ],
       "id": 1
     },
     "type": "musit/auth/LOAD_ACTOR_SUCCESS"
@@ -97,10 +131,17 @@ Object {
     "actor": Actor {
       "applicationId": "932f8aad-5bf2-409d-8916-c91c24b31152",
       "dataportenId": undefined,
+      "dataportenUser": undefined,
       "fn": "Some fancy user"
     },
-    "groups": undefined,
-    "museumId": undefined
+    "groups": Array [
+      Object {
+        "museumId": 99
+      }
+    ],
+    "museumId": MuseumId {
+      "id": 99
+    }
   }
 }
 `;
@@ -114,10 +155,17 @@ Object {
     "actor": Actor {
       "applicationId": undefined,
       "dataportenId": "e7107fd4-4822-466f-9041-2e67095d8e2d",
+      "dataportenUser": undefined,
       "fn": "Some fancy user"
     },
-    "groups": undefined,
-    "museumId": undefined
+    "groups": Array [
+      Object {
+        "museumId": 99
+      }
+    ],
+    "museumId": MuseumId {
+      "id": 99
+    }
   }
 }
 `;
