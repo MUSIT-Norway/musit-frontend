@@ -57,7 +57,7 @@ export default (props) =>
           </h4>
           {props.data.matches.length > 0 &&
             <div>
-              <PagingToolbar
+              <PagingToolbar inline
                 numItems={props.data.totalMatches}
                 baseUrl={props.location.pathname}
                 currentPage={props.params.currentPage}
@@ -109,7 +109,7 @@ export default (props) =>
                 })}
                 </tbody>
               </Table>
-              <PagingToolbar
+              <PagingToolbar inline
                 numItems={props.data.totalMatches}
                 baseUrl={props.location.pathname}
                 currentPage={props.params.currentPage}
