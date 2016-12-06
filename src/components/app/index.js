@@ -55,16 +55,6 @@ export default class App extends Component {
               </LinkContainer>
               }
               {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
-                <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
-              </LinkContainer>
-              }
-              {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
-                <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
-              </LinkContainer>
-              }
-              {user &&
               <LinkContainer to="/reports">
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
@@ -86,6 +76,18 @@ export default class App extends Component {
               {user &&
               <LinkContainer to={'/search/objects'}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
+              </LinkContainer>
+              }
+            </Nav>
+            <Nav pullRight>
+              {user &&
+              <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
+                <NavItem><Badge><span className="icon icon-musitpicklistnode" />{` ${pickListNodeCount} `}</Badge></NavItem>
+              </LinkContainer>
+              }
+              {user &&
+              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
+                <NavItem><Badge><span className="icon icon-musitpicklistobject" />{` ${pickListObjectCount} `}</Badge></NavItem>
               </LinkContainer>
               }
             </Nav>
