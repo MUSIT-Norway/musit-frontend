@@ -1,8 +1,4 @@
-/* @flow */
-
 class MuseumId {
-  id: number;
-
   constructor(museumId: number) {
     this.id = museumId;
   }

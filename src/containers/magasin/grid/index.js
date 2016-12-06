@@ -57,8 +57,8 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(loadRootNodes(null, museumId));
       dispatch(clearStats());
     },
-    loadStorageObjects: (id, museumId) => {
-      dispatch(loadObjects(id, museumId));
+    loadStorageObjects: (id, museumId, collectionId) => {
+      dispatch(loadObjects(id, museumId, collectionId));
     },
     loadChildren: (id, museumId) => {
       dispatch(loadChildNodes(id, museumId));

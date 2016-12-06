@@ -76,9 +76,11 @@ export default class App extends Component {
                 user={this.props.user.actor}
                 groups={this.props.user.groups}
                 selectedMuseumId={this.props.user.museumId.id}
+                selectedCollectionId={this.props.user.collectionId.uuid}
                 handleLogout={this.handleLogout}
                 handleLanguage={(l) => this.handleLanguage(l)}
                 handleMuseumId={this.props.setMuseumId}
+                handleCollectionId={this.props.setCollectionId}
               />
               }
             </Nav>

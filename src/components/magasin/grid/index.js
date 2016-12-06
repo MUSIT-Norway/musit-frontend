@@ -113,7 +113,8 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadObjects() {
     if (this.props.params.id) {
-      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId);
+      console.log(this.props.user);
+      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId);
     }
   }
 
