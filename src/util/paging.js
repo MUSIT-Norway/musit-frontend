@@ -5,6 +5,10 @@ class PagingToolbar extends React.Component {
   render() {
     const numPages = this.props.numItems / this.props.perPage;
     const currentPage = this.props.currentPage;
+    const maxPages = 10;
+    const min = currentPage;
+    const max = maxPages;
+
     return (
       <div
         style={{
@@ -17,12 +21,12 @@ class PagingToolbar extends React.Component {
           fontWeight: 'bold'
         }}
       >
-        {numPages > 1 && currentPage > 1 ?
+        {numPages > 1 && min > 1 ?
           <a
             href="/page/back"
             onClick={(e) => {
               e.preventDefault();
-              this.props.onClick(currentPage-1);
+              this.props.onClick(currentPage - 1);
             }}
           >
             {'<'}
@@ -30,7 +34,20 @@ class PagingToolbar extends React.Component {
           : '<'
         }
       </span>
-        {range(1, numPages + 1).map((page, i) => {
+        {min > 1
+            ?
+            <a
+              href={`/page/${min}`}
+              onClick={(e) => {
+                e.preventDefault();
+                this.props.onClick(min - maxPages > 1 ? min : 1);
+              }
+              }
+            >
+            {' .. '}
+            </a> : null
+            }
+        {range(min, max).map((page, i) => {
           return (
             <span
               key={i}
@@ -59,12 +76,25 @@ class PagingToolbar extends React.Component {
             fontWeight: 'bold'
           }}
         >
+    {numPages - min > maxPages
+      ?
+      <a
+        href={`/page/${min}`}
+        onClick={(e) => {
+          e.preventDefault();
+          this.props.onClick(min);
+        }
+        }
+      >
+        {' .. '}
+      </a> : null
+    }
         {numPages > 1 && currentPage < numPages ?
           <a
             href="/page/next"
             onClick={(e) => {
               e.preventDefault();
-              this.props.onClick(currentPage+1);
+              this.props.onClick(currentPage + 1);
             }}
           >
             {'>'}

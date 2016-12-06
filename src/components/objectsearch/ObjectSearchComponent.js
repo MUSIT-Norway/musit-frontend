@@ -56,14 +56,20 @@ export default (props) =>
           }
           </h4>
           {props.data.matches.length > 0 &&
-            <div>
-              <PagingToolbar inline
-                numItems={props.data.totalMatches}
-                baseUrl={props.location.pathname}
-                currentPage={props.params.currentPage}
-                perPage={props.params.perPage}
-                onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId)}
-              />
+            <div style={{overflow:'hidden'}}>
+              <Table>
+                <tr>
+                  <td>
+                    <PagingToolbar
+                      numItems={46777}
+                      baseUrl={props.location.pathname}
+                      currentPage={props.params.currentPage}
+                      perPage={props.params.perPage}
+                      onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId)}
+                    />
+                  </td>
+                </tr>
+              </Table>
               <Table>
                 <thead>
                   <tr>
@@ -109,13 +115,19 @@ export default (props) =>
                 })}
                 </tbody>
               </Table>
-              <PagingToolbar inline
-                numItems={props.data.totalMatches}
-                baseUrl={props.location.pathname}
-                currentPage={props.params.currentPage}
-                perPage={props.params.perPage}
-                onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId)}
-              />
+              <Table style={{width:'100%'}}>
+                <tr>
+                  <td style={{'word-wrap':'break-word'}}>
+                    <PagingToolbar
+                      numItems={46777}
+                      baseUrl={props.location.pathname}
+                      currentPage={props.params.currentPage}
+                      perPage={props.params.perPage}
+                      onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId)}
+                    />
+                  </td>
+                </tr>
+              </Table>
             </div>
           }
         </div>
