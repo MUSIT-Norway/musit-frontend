@@ -94,7 +94,7 @@ function printFileSizes(stats, previousSizeMap) {
     assets.map(a => stripAnsi(a.sizeLabel).length)
   );
   assets.forEach(asset => {
-    let sizeLabel = asset.sizeLabel;
+    var sizeLabel = asset.sizeLabel;
     const sizeLength = stripAnsi(sizeLabel).length;
     if (sizeLength < longestSizeLabelLength) {
       const rightPadding = ' '.repeat(longestSizeLabelLength - sizeLength);
