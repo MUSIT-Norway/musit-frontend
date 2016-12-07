@@ -25,6 +25,7 @@ export default class ObjectGrid extends Component {
             <Table responsive hover condensed>
               <thead>
                 <tr>
+                  <th style={{width:'20px'}} />
                   <th>
                     {I18n.t('musit.grid.object.museumsNumber')}
                   </th>
@@ -42,8 +43,10 @@ export default class ObjectGrid extends Component {
                 {this.props.tableData.map((c, i) => {
                   const isMainObject = c.isMainObject();
                   return <tr key={i} className={isMainObject ? 'mainObject' : c.mainObjectId && 'childObject'}>
+                    <td style={{width:'20px'}}>
+                      <span className="icon icon-musitobject"/>
+                    </td>
                     <td>
-                      <FontAwesome name="rebel"/>
                       {` ${c.museumNo}`}
                     </td>
                     <td>
