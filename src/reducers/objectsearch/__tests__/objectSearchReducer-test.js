@@ -5,6 +5,7 @@ import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 import MuseumId from '../../../models/museumId';
+import CollectionId from '../../../models/collectionId';
 
 const nock = nocker(request);
 
@@ -25,7 +26,8 @@ describe('Object search reducer', () => {
     const termQuery = `term=${params.term || ''}`;
     const pageQuery = `page=${page}`;
     const limitQuery = `limit=${params.perPage}`;
-    const url = `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}`;
+    const collectionIds = 'collectionIds=ddddfg';
+    const url = `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionIds}`;
     nock('http://localhost')
       .get(url)
       .reply(200, {
@@ -40,7 +42,7 @@ describe('Object search reducer', () => {
       });
     const store = mockStore();
 
-    return store.dispatch(actions.searchForObjects(params, page, new MuseumId(99)))
+    return store.dispatch(actions.searchForObjects(params, page, new MuseumId(99), new CollectionId('ddddfg')))
       .then(() => {
         expect(store.getActions()).toMatchSnapshot();
       });

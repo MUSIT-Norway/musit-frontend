@@ -172,7 +172,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -252,7 +251,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -332,7 +330,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -412,7 +409,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -492,7 +488,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -572,7 +567,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -652,7 +646,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -732,7 +725,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -812,7 +804,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -892,7 +883,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -972,7 +962,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1052,7 +1041,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1132,7 +1120,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1212,7 +1199,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1292,7 +1278,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1372,7 +1357,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1452,7 +1436,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1532,7 +1515,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1612,7 +1594,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",
@@ -1692,7 +1673,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         "id": 1,
                         "mainObjectId": undefined,
                         "museumNo": "12345",
-                        "path": ",1,2,3,",
                         "pathNames": Array [
                           Object {
                             "name": "Root",

@@ -38,11 +38,8 @@ Object {
     "fn": "Jarle Stabell",
     "id": 1
   },
-  "user": UserSession {
-    "accessToken": "token",
-    "actor": null,
-    "groups": null,
-    "museumId": null
+  "user": Object {
+    "accessToken": "token"
   }
 }
 `;
@@ -126,16 +123,23 @@ exports[`Auth success action with applicationId 1`] = `
 Object {
   "loaded": true,
   "loading": false,
-  "user": UserSession {
-    "accessToken": undefined,
+  "user": Object {
     "actor": Actor {
       "applicationId": "932f8aad-5bf2-409d-8916-c91c24b31152",
       "dataportenId": undefined,
       "dataportenUser": undefined,
       "fn": "Some fancy user"
     },
+    "collectionId": CollectionId {
+      "uuid": "ddfggg"
+    },
     "groups": Array [
       Object {
+        "collections": Array [
+          Object {
+            "uuid": "ddfggg"
+          }
+        ],
         "museumId": 99
       }
     ],
@@ -150,16 +154,23 @@ exports[`Auth success action with dataportenId 1`] = `
 Object {
   "loaded": true,
   "loading": false,
-  "user": UserSession {
-    "accessToken": undefined,
+  "user": Object {
     "actor": Actor {
       "applicationId": undefined,
       "dataportenId": "e7107fd4-4822-466f-9041-2e67095d8e2d",
       "dataportenUser": undefined,
       "fn": "Some fancy user"
     },
+    "collectionId": CollectionId {
+      "uuid": "ddfggg"
+    },
     "groups": Array [
       Object {
+        "collections": Array [
+          Object {
+            "uuid": "ddfggg"
+          }
+        ],
         "museumId": 99
       }
     ],

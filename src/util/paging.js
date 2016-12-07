@@ -3,16 +3,16 @@ import {range} from 'lodash';
 
 class PagingToolbar extends React.Component {
   render() {
-    const numPages = this.props.numItems / this.props.perPage;
+    const numPages = Math.ceil(this.props.numItems / this.props.perPage);
     const currentPage = this.props.currentPage;
-    const maxPages = 10;
-    const min = currentPage;
-    const max = (min + maxPages > numPages) ? numPages : min + maxPages - 1;
+    const maxPages = 2;
+    const min = currentPage - maxPages +1> 1 ? currentPage : 1;
+    const max = (min + maxPages-1 >= numPages) ? numPages : min + maxPages - 1;
 
     return (
       <div
         style={{
-          float: 'left'
+          float: 'right'
         }}
       >
       <span
@@ -46,7 +46,7 @@ class PagingToolbar extends React.Component {
             {' .. '}
           </a> : null
         }
-        {range(min, max).map((page, i) => {
+        {range(min, max+1).map((page, i) => {
           return (
             <span
               key={i}
@@ -75,13 +75,13 @@ class PagingToolbar extends React.Component {
             fontWeight: 'bold'
           }}
         >
-    {numPages - min > maxPages
+    {numPages > max
       ?
       <a
-        href={`/page/${min}`}
+        href={`/page/${max+1}`}
         onClick={(e) => {
           e.preventDefault();
-          this.props.onClick(min);
+          this.props.onClick(max+1);
         }
         }
       >

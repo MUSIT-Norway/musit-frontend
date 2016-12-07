@@ -12,6 +12,7 @@ import { I18n } from 'react-i18nify';
 import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
 import { checkNodeBranchAndType } from '../../../util/nodeValidator';
+import MusitNode from '../../../models/node';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -113,7 +114,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadObjects() {
     if (this.props.params.id) {
-      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId);
+      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId);
     }
   }
 
@@ -249,7 +250,7 @@ export default class StorageUnitsContainer extends React.Component {
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           rootNode={rootNode}
-          showButtons={rootNode && rootNode.type !== 'Root'}
+          showButtons={rootNode && !MusitNode.isRootNode(rootNode.type)}
           onClickNewNode={(parentId) => {
             if (parentId) {
               hashHistory.push(`/magasin/${parentId}/add`);

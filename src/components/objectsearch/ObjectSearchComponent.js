@@ -39,7 +39,7 @@ export default (props) =>
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                props.searchForObjects(props.params, 1, props.user.museumId);
+                props.searchForObjects(props.params, 1, props.user.museumId, props.user.collectionId);
               }}
             >
               <FontAwesome name="search" style={{fontSize: '1.3em'}}/>
@@ -56,68 +56,67 @@ export default (props) =>
             }
           </h4>
           {props.data.matches.length > 0 &&
-          <div>
-            <PagingToolbar
-              numItems={props.data.totalMatches}
-              baseUrl={props.location.pathname}
-              currentPage={props.params.currentPage}
-              perPage={props.params.perPage}
-              onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId)}
-            />
-
-            <Table>
-              <thead>
-              <tr>
-                <th>{I18n.t('musit.objectsearch.museumNo.label')}</th>
-                <th>{I18n.t('musit.objectsearch.subNo.label')}</th>
-                <th>{I18n.t('musit.objectsearch.term.label')}</th>
-                <th>{I18n.t('musit.objectsearch.location.label')}</th>
-              </tr>
-              </thead>
-              <tbody>
-              {props.data.matches.map((data, i) => {
-                const isMainObject = data.isMainObject();
-                return (
-                  <tr key={i}>
-                    <td className="museumNo">{data.museumNo}</td>
-                    <td className="subNo">{data.subNo}</td>
-                    <td className="term">{data.term}</td>
-                    <td className="path">
-                      {data.breadcrumb.length > 0 &&
-                      <Breadcrumb
-                        node={data}
-                        allActive
-                        onClickCrumb={(node) => hashHistory.push(node.url) }
-                      />
-                      }
-                    </td>
-                    <td className="move">
-                      {isMainObject &&
-                      <a
-                        href=""
-                        onClick={(e) => {
-                          e.preventDefault();
-                          props.pickObject(data, data.breadcrumb);
-                        }}
-                        title={I18n.t('musit.objectsearch.addToPickList')}
-                      >
-                        <FontAwesome name="shopping-cart" style={{fontSize: '1.3em'}}/>
-                      </a>
-                      }
-                    </td>
+            <div>
+              <PagingToolbar
+                numItems={props.data.totalMatches}
+                baseUrl={props.location.pathname}
+                currentPage={props.params.currentPage}
+                perPage={props.params.perPage}
+                onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
+              />
+              <Table>
+                <thead>
+                  <tr>
+                    <th>{I18n.t('musit.objectsearch.museumNo.label')}</th>
+                    <th>{I18n.t('musit.objectsearch.subNo.label')}</th>
+                    <th>{I18n.t('musit.objectsearch.term.label')}</th>
+                    <th>{I18n.t('musit.objectsearch.location.label')}</th>
                   </tr>
-                );
-              })}
-              </tbody>
-            </Table>
-            <PagingToolbar
-              numItems={props.data.totalMatches}
-              baseUrl={props.location.pathname}
-              currentPage={props.params.currentPage}
-              perPage={props.params.perPage}
-              onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId)}
-            />
-          </div>
+                </thead>
+                <tbody>
+                {props.data.matches.map((data, i) => {
+                  const isMainObject = data.isMainObject();
+                  return (
+                    <tr key={i}>
+                      <td className="museumNo">{data.museumNo}</td>
+                      <td className="subNo">{data.subNo}</td>
+                      <td className="term">{data.term}</td>
+                      <td className="path">
+                        {data.breadcrumb.length > 0 &&
+                          <Breadcrumb
+                            node={data}
+                            allActive
+                            onClickCrumb={(node) => hashHistory.push(node.url) }
+                          />
+                        }
+                      </td>
+                      <td className="move">
+                        {isMainObject &&
+                        <a
+                          href=""
+                          onClick={(e) => {
+                            e.preventDefault();
+                            props.pickObject(data, data.breadcrumb);
+                          }}
+                          title={I18n.t('musit.objectsearch.addToPickList')}
+                        >
+                          <FontAwesome name="shopping-cart" style={{ fontSize: '1.3em' }}/>
+                        </a>
+                        }
+                      </td>
+                    </tr>
+                  );
+                })}
+                </tbody>
+              </Table>
+              <PagingToolbar
+                numItems={props.data.totalMatches}
+                baseUrl={props.location.pathname}
+                currentPage={props.params.currentPage}
+                perPage={props.params.perPage}
+                onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
+              />
+            </div>
           }
         </div>
       </Grid>
