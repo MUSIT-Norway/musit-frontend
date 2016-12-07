@@ -51,7 +51,7 @@ export default class EditObservationPage extends React.Component {
   }
 
   getDoneByFromLocationState() {
-      return new Actor(this.props.location.state.doneBy);
+    return new Actor(this.props.location.state.doneBy);
   }
 
   render() {
