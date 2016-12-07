@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchForObjects: (params, page, museumId) => dispatch(actions.searchForObjects(params, page, museumId)),
+    searchForObjects: (params, page, museumId, collectionId) => dispatch(actions.searchForObjects(params, page, museumId, collectionId)),
     onChangeField: (field, value) => dispatch(actions.onChangeField(field, value)),
     pickObject: (object, path) => dispatch(addObject(object, path))
   };

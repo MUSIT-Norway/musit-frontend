@@ -2,20 +2,29 @@
 import { MenuItem, Dropdown, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
+import flatten from 'lodash/flatten';
+import uniqBy from 'lodash/uniqBy';
 
 export default class MusitUserAccount extends Component {
   static propTypes = {
     user: React.PropTypes.object,
     selectedMuseumId: React.PropTypes.number,
+    selectedCollectionId: React.PropTypes.string,
     groups: React.PropTypes.arrayOf(React.PropTypes.shape({
+      id: React.PropTypes.string,
       name: React.PropTypes.string,
       shortName: React.PropTypes.string,
+      permission: React.PropTypes.number,
       museumId: React.PropTypes.number,
-      id: React.PropTypes.number
+      collections: React.PropTypes.arrayOf(React.PropTypes.shape({
+        uuid: React.PropTypes.string
+      })),
+      description: React.PropTypes.string
     })),
     handleLogout: React.PropTypes.func,
     handleLanguage: React.PropTypes.func,
-    handleMuseumId: React.PropTypes.func
+    handleMuseumId: React.PropTypes.func,
+    handleCollectionId: React.PropTypes.func
   }
 
   render() {
@@ -31,7 +40,10 @@ export default class MusitUserAccount extends Component {
     );
     const groups = this.props.groups;
     const museumId = this.props.selectedMuseumId;
+    const collectionId = this.props.selectedCollectionId;
     const museumDropDown = groups.length > 1 && groups[0].shortName;
+    const collectionDropdown = groups.length > 0 && groups[0].collections.length > 0;
+    const collections = collectionDropdown && uniqBy(flatten(groups.map(g => g.collections)), c => c.uuid);
     return (
       <OverlayTrigger overlay={tooltip} placement="left">
         <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
@@ -41,7 +53,7 @@ export default class MusitUserAccount extends Component {
           <Dropdown.Menu>
             <MenuItem />
             {museumDropDown &&
-              <MenuItem eventKey={3} header>Samlinger</MenuItem>
+              <MenuItem eventKey={3} header>Museum</MenuItem>
             }
             {museumDropDown &&
               groups.map((cc, i) =>
@@ -51,6 +63,19 @@ export default class MusitUserAccount extends Component {
               )
             }
             {museumDropDown &&
+              <MenuItem divider/>
+            }
+            {collectionDropdown &&
+              <MenuItem eventKey={3} header>Samlinger</MenuItem>
+            }
+            {collectionDropdown &&
+              collections.map((cc, i) =>
+                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(cc.uuid)}>
+                  {menuText(collectionId === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
+                </MenuItem>
+              )
+            }
+            {collectionDropdown &&
               <MenuItem divider/>
             }
             <MenuItem header>Language</MenuItem>

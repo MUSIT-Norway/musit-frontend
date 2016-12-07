@@ -39,7 +39,7 @@ export default (props) =>
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                props.searchForObjects(props.params, 1, props.user.museumId);
+                props.searchForObjects(props.params, 1, props.user.museumId, props.user.collectionId);
               }}
             >
               <FontAwesome name="search" style={{ fontSize: '1.3em' }} />
@@ -62,7 +62,7 @@ export default (props) =>
                 baseUrl={props.location.pathname}
                 currentPage={props.params.currentPage}
                 perPage={props.params.perPage}
-                onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId)}
+                onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
               />
               <Table>
                 <thead>
@@ -114,7 +114,7 @@ export default (props) =>
                 baseUrl={props.location.pathname}
                 currentPage={props.params.currentPage}
                 perPage={props.params.perPage}
-                onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId)}
+                onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
               />
             </div>
           }

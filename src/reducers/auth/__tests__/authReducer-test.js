@@ -104,7 +104,12 @@ describe('Auth', () => {
           dataportenId: 'e7107fd4-4822-466f-9041-2e67095d8e2d',
           fn: 'Some fancy user',
           groups: [{
-            museumId: 99
+            museumId: 99,
+            collections:[
+              {
+                uuid: 'ddfggg'
+              }
+            ]
           }]
         }
       })
@@ -120,7 +125,12 @@ describe('Auth', () => {
           applicationId: '932f8aad-5bf2-409d-8916-c91c24b31152',
           fn: 'Some fancy user',
           groups: [{
-            museumId: 99
+            museumId: 99,
+            collections:[
+              {
+                uuid: 'ddfggg'
+              }
+            ]
           }]
         }
       })
