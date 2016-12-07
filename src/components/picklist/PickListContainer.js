@@ -141,10 +141,9 @@ export default class PickListContainer extends React.Component {
               picks={picks}
               marked={markedValues}
               isnode={this.isTypeNode()}
-              iconRendrer={(pick) => <FontAwesome
-                name={pick.value.name ? 'folder' : 'rebel'}
-                style={{ fontSize: '1.5em' }}
-              />}
+              iconRendrer={(pick) => (pick.value.name ? <FontAwesome name="folder"/> :
+                <span className='icon icon-musitobject'/>)
+              }
               labelRendrer={(pick) => {
                 return (
                   <div>
