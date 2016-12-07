@@ -61,7 +61,7 @@ export default (props) =>
                 <tr>
                   <td>
                     <PagingToolbar
-                      numItems={46777}
+                      numItems={props.data.totalMatches}
                       baseUrl={props.location.pathname}
                       currentPage={props.params.currentPage}
                       perPage={props.params.perPage}
@@ -119,7 +119,7 @@ export default (props) =>
                 <tr>
                   <td style={{'word-wrap':'break-word'}}>
                     <PagingToolbar
-                      numItems={46777}
+                      numItems={props.data.totalMatches}
                       baseUrl={props.location.pathname}
                       currentPage={props.params.currentPage}
                       perPage={props.params.perPage}

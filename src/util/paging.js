@@ -7,7 +7,7 @@ class PagingToolbar extends React.Component {
     const currentPage = this.props.currentPage;
     const maxPages = 10;
     const min = currentPage;
-    const max = maxPages;
+    const max = min+ maxPages -1 > numPages ? numPages : min + maxPages -1;
 
     return (
       <div
