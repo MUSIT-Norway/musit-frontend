@@ -84,10 +84,11 @@ export default class PickListComponent extends Component {
               const item = pick.value;
               const isItemMarked = pick.marked;
               return (
-                <tr key={i} className={item.mainObjectId && !item.isMainObject() ? 'childObject' : item.isMainObject() && 'mainObject' }>
+                <tr key={i} className={item.isMainObject && !item.isMainObject() ? 'childObject' :
+                  item.isMainObject && item.isMainObject() && 'mainObject' }>
                   <td style={{ width: '3em', textAlign: 'left', verticalAlign: 'middle' }}>
                     <span>
-                      {item.isMainObject() ?
+                      {item.isMainObject && item.isMainObject() ?
                         <input
                           type="checkbox"
                           checked={isItemMarked ? 'checked' : ''}
