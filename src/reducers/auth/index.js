@@ -89,30 +89,39 @@ const ALL_MUSEUMS = 10000;
 export const loadActor = (callback) => {
   return {
     types: [LOAD_ACTOR, LOAD_ACTOR_SUCCESS, LOAD_ACTOR_FAILURE],
-    promise: (client) => new Promise((resolve) => {
+    promise: (client) => new Promise((resolve, reject) => {
       client.get(apiUrl(Config.magasin.urls.actor.currentUser))
        .then(user =>
-         client.get(apiUrl(Config.magasin.urls.auth.groupsUrl(user.dataportenUser)))
-           .then(maybeGroups => {
-             const groups = [].concat(maybeGroups).filter(m => m);
-             if (groups.length > 0 && !groups.find(museum => ALL_MUSEUMS === museum.museumId)) {
-               resolve({ ...user, groups });
-             } else {
-               client.get(apiUrl(Config.magasin.urls.auth.museumsUrl))
-                 .then(museums => {
-                   resolve({
-                     ...user,
-                     groups: museums
-                       .filter(museum => ALL_MUSEUMS !== museum.id)
-                       .map(museum => ({
-                         ...museum,
-                         museumId: museum.id
-                       }))
-                   });
-                 });
-             }
-           })
-       );
+         Promise.all([
+           client.get(apiUrl(Config.magasin.urls.auth.groupsUrl(user.dataportenUser))),
+           client.get(apiUrl(Config.magasin.urls.auth.museumsUrl))
+         ]).then(values => {
+           const maybeGroups = values[0];
+           const museums = values[1];
+           const groups = maybeGroups.filter(m => m);
+           const maybeGodGroup = groups.find(museum => ALL_MUSEUMS === museum.museumId);
+           if (groups.length > 0 && !maybeGodGroup) {
+             resolve({
+               ...user,
+               groups: groups.map(group => ({
+                 ...group,
+                 museumName: museums.find(m => m.id === group.museumId).shortName
+               }))
+             });
+           } else {
+             resolve({
+               ...user,
+               groups: museums.filter(museum => ALL_MUSEUMS !== museum.id)
+                 .map(museum => ({
+                   ...museum,
+                   museumId: museum.id,
+                   museumName: museum.shortName,
+                   collections: maybeGodGroup.collections
+                 }))
+             });
+           }
+         }).catch(error => reject(error))
+       ).catch(error => reject(error));
     }),
     callback
   };

@@ -56,14 +56,36 @@ Array [
       "fn": "Jarle Stabell",
       "groups": Array [
         Object {
+          "collections": Array [
+            Object {
+              "name": "Ark 1",
+              "uuid": "1345"
+            },
+            Object {
+              "name": "Ark 2",
+              "uuid": "2345"
+            }
+          ],
           "id": 99,
           "museumId": 99,
-          "name": "Test museum"
+          "museumName": "Test museum",
+          "shortName": "Test museum"
         },
         Object {
+          "collections": Array [
+            Object {
+              "name": "Ark 1",
+              "uuid": "1345"
+            },
+            Object {
+              "name": "Ark 2",
+              "uuid": "2345"
+            }
+          ],
           "id": 3,
           "museumId": 3,
-          "name": "KHM"
+          "museumName": "KHM",
+          "shortName": "KHM"
         }
       ],
       "id": 1
@@ -85,7 +107,18 @@ Array [
       "fn": "Jarle Stabell",
       "groups": Array [
         Object {
+          "collections": Array [
+            Object {
+              "name": "Ark 1",
+              "uuid": "134567"
+            },
+            Object {
+              "name": "Ark 2",
+              "uuid": "234567"
+            }
+          ],
           "museumId": 99,
+          "museumName": "Test museum",
           "shortName": "Test"
         }
       ],

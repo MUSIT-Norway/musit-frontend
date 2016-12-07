@@ -41,7 +41,7 @@ export default class MusitUserAccount extends Component {
     const groups = this.props.groups;
     const museumId = this.props.selectedMuseumId;
     const collectionId = this.props.selectedCollectionId;
-    const museumDropDown = groups.length > 1 && groups[0].shortName;
+    const museumDropDown = groups.length > 1 && groups[0].museumName;
     const collectionDropdown = groups.length > 0 && groups[0].collections.length > 0;
     const collections = collectionDropdown && uniqBy(flatten(groups.map(g => g.collections)), c => c.uuid);
     return (
@@ -57,8 +57,8 @@ export default class MusitUserAccount extends Component {
             }
             {museumDropDown &&
               groups.map((cc, i) =>
-                <MenuItem key={i} eventKey={cc.id} onClick={() => this.props.handleMuseumId(cc.id)}>
-                  {menuText(museumId === cc.id ? <FontAwesome name="check" /> : '', cc.shortName)}
+                <MenuItem key={i} eventKey={cc.museumId} onClick={() => this.props.handleMuseumId(cc.museumId)}>
+                  {menuText(museumId === cc.museumId ? <FontAwesome name="check" /> : '', cc.museumName)}
                 </MenuItem>
               )
             }
