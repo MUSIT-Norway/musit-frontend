@@ -12,6 +12,7 @@ import {createSelector} from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 import {customSortingStorageNodeType} from '../../../util/';
+import MusitNode from '../../../models/node';
 
 const getStorageGridUnit = (state) => state.storageGridUnit.data || [];
 
@@ -46,7 +47,7 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(clearStats());
       dispatch(loadRootNodes(id, museumId, {
         onSuccess: (result) => {
-          if (result.type !== 'Root') {
+          if (!MusitNode.isRootNode(result.type)) {
             dispatch(loadStats(id, museumId));
           }
         }
@@ -66,7 +67,7 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(clearStats());
       dispatch(loadRootNodes(id, museumId, {
         onSuccess: (result) => {
-          if (result.type !== 'Root') {
+          if (!MusitNode.isRootNode(result.type)) {
             dispatch(loadStats(id, museumId));
           }
         }

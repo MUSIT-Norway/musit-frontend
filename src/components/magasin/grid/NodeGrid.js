@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
+import MusitNode from '../../../models/node';
 
 export default class NodeGrid extends Component {
   static propTypes = {
@@ -42,8 +43,9 @@ export default class NodeGrid extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.tableData.map((c, i) =>
-                  <tr key={i}>
+                {this.props.tableData.map((c, i) => {
+                  const isRoot = MusitNode.isRootNode(c.type);
+                  return <tr key={i}>
                     <td>
                       <a
                         href=""
@@ -52,7 +54,7 @@ export default class NodeGrid extends Component {
                           this.props.onClick(c);
                         }}
                       >
-                        <FontAwesome name="folder" />
+                        <FontAwesome name="folder"/>
                         {` ${c.name}`}
                       </a>
                     </td>
@@ -69,7 +71,7 @@ export default class NodeGrid extends Component {
                       {c.nodeCount}
                     </td>
                     <td>
-                      {c.type !== 'Root' && <a
+                      {!isRoot && <a
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -77,11 +79,11 @@ export default class NodeGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.observationAndControl')}
                       >
-                        <span className="icon icon-musitcontrolobsicon" />
+                        <span className="icon icon-musitcontrolobsicon"/>
                       </a>}
                     </td>
                     <td>
-                      {c.type !== 'Root' && <a
+                      {!isRoot && <a
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -89,11 +91,11 @@ export default class NodeGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
                       >
-                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck"/>
                       </a>}
                     </td>
                     <td>
-                      {c.type !== 'Root' && <a
+                      {!isRoot && <a
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -101,11 +103,11 @@ export default class NodeGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                       >
-                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart" />
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
                       </a>}
                     </td>
-                  </tr>
-                )}
+                  </tr>;
+                })}
               </tbody>
             </Table>
           </div>
