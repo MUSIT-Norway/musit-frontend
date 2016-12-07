@@ -5,6 +5,7 @@ import nocker from 'superagent-nock';
 const nock = nocker(request);
 import Config from '../../../../config';
 import MuseumId from '../../../../models/museumId';
+import CollectionId from '../../../../models/collectionId';
 
 const comingFromBackend = [
   {
@@ -36,13 +37,13 @@ const comingFromBackend = [
 describe('StorageUnitReducer', () => {
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
     const id = 1;
-    const url = `${Config.magasin.urls.thingaggregate.baseUrl(new MuseumId(99))}/node/${id}/objects`;
+    const url = `${Config.magasin.urls.thingaggregate.baseUrl(new MuseumId(99))}/node/${id}/objects?collectionIds=ddfggggg`;
     nock('http://localhost')
         .get(url)
         .reply(200, comingFromBackend);
     const store = mockStore();
 
-    return store.dispatch(actions.loadObjects(1, new MuseumId(99)))
+    return store.dispatch(actions.loadObjects(id, new MuseumId(99), new CollectionId('ddfggggg')))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });
