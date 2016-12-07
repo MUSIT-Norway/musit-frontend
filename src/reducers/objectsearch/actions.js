@@ -2,14 +2,14 @@ import * as types from './constants';
 import { apiUrl } from'../../util';
 import Config from '../../config';
 
-export const searchForObjects = (params, page, museumId) => {
+export const searchForObjects = (params, page, museumId, collectionId) => {
   const baseUrl = apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/objects/search`);
   const museumNoQuery = `museumNo=${params.museumNo || ''}`;
   const subNoQuery = `subNo=${params.subNo || ''}`;
   const termQuery = `term=${params.term || ''}`;
   const pageQuery = `page=${page}`;
   const limitQuery = `limit=${params.perPage}`;
-  const url = `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}`;
+  const url = `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
   return {
     types: [types.SEARCH_OBJECTS, types.SEARCH_OBJECTS_SUCCESS, types.SEARCH_OBJECTS_FAIL],
     promise: (client) => client.get(url),

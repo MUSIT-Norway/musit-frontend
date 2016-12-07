@@ -4,7 +4,7 @@ import { routerActions } from 'react-router-redux';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import App from '../../components/app';
 import Notifyable from './Notifyable';
-import { setMuseumId } from '../../reducers/auth';
+import { setMuseumId, setCollectionId } from '../../reducers/auth';
 
 const mapStateToProps = (state) => {
   return {
@@ -19,6 +19,10 @@ const mapDispatchToProps = (dispatch, store) => {
   return {
     setMuseumId: (mid) => {
       dispatch(setMuseumId(mid));
+      store.history.push('/magasin');
+    },
+    setCollectionId: (cid) => {
+      dispatch(setCollectionId(cid));
       store.history.push('/magasin');
     }
   };

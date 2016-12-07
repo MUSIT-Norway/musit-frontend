@@ -1,13 +1,14 @@
 import {apiUrl} from '../../util';
+import Config from '../../config';
 import Actor from '../../models/actor';
 import MuseumId from '../../models/museumId';
-import Config from '../../config';
-import UserSession from '../../models/userSession';
+import CollectionId from '../../models/collectionId';
 
 const ID = 'auth';
 
 export const SET_USER = 'musit/auth/SET_USER';
 export const SET_MUSEUMID = 'musit/auth/SET_MUSEUMID';
+export const SET_COLLECTIONID = 'musit/auth/SET_COLLECTIONID';
 export const CLEAR_USER = 'musit/auth/CLEAR_USER';
 export const LOAD_ACTOR = 'musit/auth/LOAD_ACTOR';
 export const LOAD_ACTOR_SUCCESS = 'musit/auth/LOAD_ACTOR_SUCCESS';
@@ -24,17 +25,25 @@ const authReducer = (state = initialState, action = {}) => {
   case SET_USER:
     return {
       ...state,
-      user: new UserSession(action.accessToken, null, null, null)
+      user: {
+        accessToken: action.accessToken
+      }
     };
   case SET_MUSEUMID:
     return {
       ...state,
-      user: new UserSession(
-        user.accessToken,
-        new MuseumId(action.museumId),
-        user.groups,
-        user.actor
-      )
+      user: {
+        ...user,
+        museumId: new MuseumId(action.museumId)
+      }
+    };
+  case SET_COLLECTIONID:
+    return {
+      ...state,
+      user: {
+        ...user,
+        collectionId: new CollectionId(action.collectionId)
+      }
     };
   case CLEAR_USER:
     return {
@@ -53,12 +62,13 @@ const authReducer = (state = initialState, action = {}) => {
       ...state,
       loading: false,
       loaded: true,
-      user: new UserSession(
-        user.accessToken,
-        new MuseumId(allGroups[0].museumId),
-        allGroups,
-        new Actor(action.result)
-      )
+      user: {
+        ...user,
+        actor: new Actor(action.result),
+        museumId: new MuseumId(allGroups[0].museumId),
+        collectionId: new CollectionId(allGroups[0].collections[0].uuid),
+        groups: allGroups
+      }
     };
   case LOAD_ACTOR_FAILURE:
     return {
@@ -125,6 +135,13 @@ export const setMuseumId = (museumId) => {
   return {
     type: SET_MUSEUMID,
     museumId
+  };
+};
+
+export const setCollectionId = (collectionId) => {
+  return {
+    type: SET_COLLECTIONID,
+    collectionId
   };
 };
 
