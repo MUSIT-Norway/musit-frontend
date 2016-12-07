@@ -3,6 +3,7 @@ import ObservationPage from './index';
 import Layout from '../../layout';
 import Breadcrumb from '../../layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
+import Actor from '../../models/actor';
 
 export default class EditObservationPage extends React.Component {
 
@@ -49,6 +50,10 @@ export default class EditObservationPage extends React.Component {
       );
   }
 
+  getDoneByFromLocationState() {
+      return new Actor(this.props.location.state.doneBy);
+  }
+
   render() {
     return (
       <Layout
@@ -62,7 +67,7 @@ export default class EditObservationPage extends React.Component {
               user={this.props.user}
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
-              doneBy={this.props.location.state.doneBy}
+              doneBy={this.getDoneByFromLocationState()}
               onSaveObservation={this.props.onSaveObservation(this.props.location.state, this.props.user.museumId)}
               mode="EDIT"
             />
