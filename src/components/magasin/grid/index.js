@@ -13,6 +13,7 @@ import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
 import { checkNodeBranchAndType } from '../../../util/nodeValidator';
 import ChooseTemplate from '../../../containers/print/ChooseTemplate';
+import PrintTemplate from '../../../containers/print/PrintTemplate';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -79,7 +80,7 @@ export default class StorageUnitsContainer extends React.Component {
   componentWillMount() {
     this.loadNodes();
     this.context.showModal('Choose template', <ChooseTemplate nextStep={() => {
-      this.context.showModal('Print template', <ChooseTemplate nextStep={() => {
+      this.context.showModal('Print template', <PrintTemplate nextStep={() => {
 
       }} />);
     }} />);
