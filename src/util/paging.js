@@ -1,15 +1,18 @@
-import React, { PropTypes } from 'react';
-import { range } from 'lodash';
+import React, {PropTypes} from 'react';
+import {range} from 'lodash';
 
 class PagingToolbar extends React.Component {
   render() {
-    const numPages = this.props.numItems / this.props.perPage;
+    const numPages = Math.ceil(this.props.numItems / this.props.perPage);
     const currentPage = this.props.currentPage;
+    const maxPages = 2;
+    const min = currentPage - maxPages +1> 1 ? currentPage : 1;
+    const max = (min + maxPages-1 >= numPages) ? numPages : min + maxPages - 1;
+
     return (
       <div
         style={{
-          float: 'right',
-          marginRight: '30px'
+          float: 'right'
         }}
       >
       <span
@@ -17,12 +20,12 @@ class PagingToolbar extends React.Component {
           fontWeight: 'bold'
         }}
       >
-        {numPages > 1 && currentPage > 1 ?
+        {numPages > 1 && min > 1 ?
           <a
             href="/page/back"
             onClick={(e) => {
               e.preventDefault();
-              this.props.onClick(currentPage-1);
+              this.props.onClick(currentPage - 1);
             }}
           >
             {'<'}
@@ -30,7 +33,20 @@ class PagingToolbar extends React.Component {
           : '<'
         }
       </span>
-        {range(1, numPages + 1).map((page, i) => {
+        {min > 1
+          ?
+          <a
+            href={`/page/${min}`}
+            onClick={(e) => {
+              e.preventDefault();
+              this.props.onClick(min - maxPages > 1 ? min : 1);
+            }
+            }
+          >
+            {' .. '}
+          </a> : null
+        }
+        {range(min, max+1).map((page, i) => {
           return (
             <span
               key={i}
@@ -59,18 +75,31 @@ class PagingToolbar extends React.Component {
             fontWeight: 'bold'
           }}
         >
-        {numPages > 1 && currentPage < numPages ?
-          <a
-            href="/page/next"
-            onClick={(e) => {
-              e.preventDefault();
-              this.props.onClick(currentPage+1);
-            }}
-          >
-            {'>'}
-          </a>
-          : '>'
+    {numPages > max
+      ?
+      <a
+        href={`/page/${max+1}`}
+        onClick={(e) => {
+          e.preventDefault();
+          this.props.onClick(max+1);
         }
+        }
+      >
+        {' .. '}
+      </a> : null
+    }
+          {numPages > 1 && currentPage < numPages ?
+            <a
+              href="/page/next"
+              onClick={(e) => {
+                e.preventDefault();
+                this.props.onClick(currentPage + 1);
+              }}
+            >
+              {'>'}
+            </a>
+            : '>'
+          }
       </span>
       </div>
     );
