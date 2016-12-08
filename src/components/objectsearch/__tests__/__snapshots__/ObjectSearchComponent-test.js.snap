@@ -137,7 +137,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -216,7 +217,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -295,7 +297,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -374,7 +377,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -453,7 +457,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -532,7 +537,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -611,7 +617,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -690,7 +697,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -769,7 +777,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -848,7 +857,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -927,7 +937,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1006,7 +1017,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1085,7 +1097,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1164,7 +1177,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1243,7 +1257,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1322,7 +1337,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1401,7 +1417,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1480,7 +1497,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1559,7 +1577,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345
@@ -1638,7 +1657,8 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     </a>
                   </td>
                 </tr>
-                <tr>
+                <tr
+                  className="mainObject">
                   <td
                     className="museumNo">
                     12345

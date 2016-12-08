@@ -79,9 +79,10 @@ export default (props) =>
               </thead>
               <tbody>
                 {props.data.matches.map((data, i) => {
-                  const isMainObject = data.isMainObject();
+                  const isMainObject = !data.mainObjectId || data.isMainObject();
+                  const isChildObject = data.mainObjectId && !data.isMainObject();
                   return (
-                    <tr key={i}>
+                    <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}>
                       <td className="museumNo">{data.museumNo}</td>
                       <td className="subNo">{data.subNo}</td>
                       <td className="term">{data.term}</td>
@@ -100,7 +101,7 @@ export default (props) =>
                           href=""
                           onClick={(e) => {
                             e.preventDefault();
-                            props.pickObject(data, data.breadcrumb);
+                            props.pickObject(data, data.breadcrumb, props.user.museumId, props.user.collectionId);
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >
