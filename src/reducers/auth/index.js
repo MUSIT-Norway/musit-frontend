@@ -96,19 +96,10 @@ export const loadActor = (callback) => {
            client.get(apiUrl(Config.magasin.urls.auth.groupsUrl(user.dataportenUser))),
            client.get(apiUrl(Config.magasin.urls.auth.museumsUrl))
          ]).then(values => {
-           const maybeGroups = values[0];
+           const groups = values[0];
            const museums = values[1];
-           const groups = maybeGroups.filter(m => m);
-           const maybeGodGroup = groups.find(museum => ALL_MUSEUMS === museum.museumId);
-           if (groups.length > 0 && !maybeGodGroup) {
-             resolve({
-               ...user,
-               groups: groups.map(group => ({
-                 ...group,
-                 museumName: museums.find(m => m.id === group.museumId).shortName
-               }))
-             });
-           } else {
+           const isGod = !!groups.find(museum => ALL_MUSEUMS === museum.museumId);
+           if (isGod) {
              resolve({
                ...user,
                groups: museums.filter(museum => ALL_MUSEUMS !== museum.id)
@@ -116,8 +107,21 @@ export const loadActor = (callback) => {
                    ...museum,
                    museumId: museum.id,
                    museumName: museum.shortName,
-                   collections: maybeGodGroup.collections
+                   collections: [
+                     {
+                       uuid: '00000000-0000-0000-0000-000000000000',
+                       name: 'All'
+                     }
+                   ]
                  }))
+             });
+           } else {
+             resolve({
+               ...user,
+               groups: groups.map(group => ({
+                 ...group,
+                 museumName: museums.find(m => m.id === group.museumId).shortName
+               }))
              });
            }
          }).catch(error => reject(error))
