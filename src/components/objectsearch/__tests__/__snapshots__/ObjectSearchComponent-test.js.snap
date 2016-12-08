@@ -101,1646 +101,1652 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
         <h4>
           Søket ga 20 treff:
         </h4>
-        <div>
-          <PagingToolbar
-            baseUrl="/#/search/objects"
-            currentPage={1}
-            numItems={20}
-            onClick={[Function onClick]}
-            perPage={50} />
-          <Table
-            bordered={false}
-            bsClass="table"
-            condensed={false}
-            hover={false}
-            responsive={false}
-            striped={false}>
-            <thead>
-              <tr>
-                <th>
-                  Museumnr.
-                </th>
-                <th>
-                  Unr.
-                </th>
-                <th>
-                  Term/Artsnavn
-                </th>
-                <th>
-                  Plassering
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
-                      }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+        <Loader
+          component="div"
+          loaded={true}
+          loadedClassName="loadedContent"
+          parentClassName="loader">
+          <div>
+            <PagingToolbar
+              baseUrl="/#/search/objects"
+              currentPage={1}
+              numItems={20}
+              onClick={[Function onClick]}
+              perPage={50} />
+            <Table
+              bordered={false}
+              bsClass="table"
+              condensed={false}
+              hover={false}
+              responsive={false}
+              striped={false}>
+              <thead>
+                <tr>
+                  <th>
+                    Museumnr.
+                  </th>
+                  <th>
+                    Unr.
+                  </th>
+                  <th>
+                    Term/Artsnavn
+                  </th>
+                  <th>
+                    Plassering
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-              <tr
-                className="mainObject">
-                <td
-                  className="museumNo">
-                  12345
-                </td>
-                <td
-                  className="subNo">
-                  45
-                </td>
-                <td
-                  className="term">
-                  Fuglekasse
-                </td>
-                <td
-                  className="path">
-                  <Breadcrumb
-                    allActive={true}
-                    node={
-                      MusitObject {
-                        "breadcrumb": Array [
-                          Object {
-                            "id": 1,
-                            "name": "Root",
-                            "url": "/magasin/1"
-                          },
-                          Object {
-                            "id": 2,
-                            "name": "Musit",
-                            "url": "/magasin/2"
-                          },
-                          Object {
-                            "id": 3,
-                            "name": "Kontoret",
-                            "url": "/magasin/3"
-                          }
-                        ],
-                        "currentLocationId": undefined,
-                        "id": 1,
-                        "mainObjectId": undefined,
-                        "museumNo": "12345",
-                        "pathNames": Array [
-                          Object {
-                            "name": "Root",
-                            "nodeId": 1,
-                            "type": "Organization"
-                          },
-                          Object {
-                            "name": "Musit",
-                            "nodeId": 2,
-                            "type": "Building"
-                          },
-                          Object {
-                            "name": "Kontoret",
-                            "nodeId": 3,
-                            "type": "Room"
-                          }
-                        ],
-                        "subNo": "45",
-                        "term": "Fuglekasse"
                       }
-                    }
-                    onClickCrumb={[Function onClickCrumb]} />
-                </td>
-                <td
-                  className="move">
-                  <a
-                    href=""
-                    onClick={[Function onClick]}
-                    title="Add To Pick List">
-                    <FontAwesome
-                      name="shopping-cart"
-                      style={
-                        Object {
-                          "fontSize": "1.3em"
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+                <tr
+                  className="mainObject">
+                  <td
+                    className="museumNo">
+                    12345
+                  </td>
+                  <td
+                    className="subNo">
+                    45
+                  </td>
+                  <td
+                    className="term">
+                    Fuglekasse
+                  </td>
+                  <td
+                    className="path">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        MusitObject {
+                          "breadcrumb": Array [
+                            Object {
+                              "id": 1,
+                              "name": "Root",
+                              "url": "/magasin/1"
+                            },
+                            Object {
+                              "id": 2,
+                              "name": "Musit",
+                              "url": "/magasin/2"
+                            },
+                            Object {
+                              "id": 3,
+                              "name": "Kontoret",
+                              "url": "/magasin/3"
+                            }
+                          ],
+                          "currentLocationId": undefined,
+                          "id": 1,
+                          "mainObjectId": undefined,
+                          "museumNo": "12345",
+                          "pathNames": Array [
+                            Object {
+                              "name": "Root",
+                              "nodeId": 1,
+                              "type": "Organization"
+                            },
+                            Object {
+                              "name": "Musit",
+                              "nodeId": 2,
+                              "type": "Building"
+                            },
+                            Object {
+                              "name": "Kontoret",
+                              "nodeId": 3,
+                              "type": "Room"
+                            }
+                          ],
+                          "subNo": "45",
+                          "term": "Fuglekasse"
                         }
-                      } />
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-          <PagingToolbar
-            baseUrl="/#/search/objects"
-            currentPage={1}
-            numItems={20}
-            onClick={[Function onClick]}
-            perPage={50} />
-        </div>
+                      }
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </td>
+                  <td
+                    className="move">
+                    <a
+                      href=""
+                      onClick={[Function onClick]}
+                      title="Add To Pick List">
+                      <FontAwesome
+                        name="shopping-cart"
+                        style={
+                          Object {
+                            "fontSize": "1.3em"
+                          }
+                        } />
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
+            <PagingToolbar
+              baseUrl="/#/search/objects"
+              currentPage={1}
+              numItems={20}
+              onClick={[Function onClick]}
+              perPage={50} />
+          </div>
+        </Loader>
       </div>
     </Grid>
   </main>
