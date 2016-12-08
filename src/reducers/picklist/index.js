@@ -179,10 +179,11 @@ export const refreshObject = (id, museumId) => {
   };
 };
 
-export const loadMainObject = (unit, path, museumId, callback) => {
+export const loadMainObject = (unit, path, museumId, collectionId, callback) => {
   return {
     types: [LOAD_MAIN_OBJECT, LOAD_MAIN_OBJECT_SUCCESS, LOAD_MAIN_OBJECT_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/object/${unit.id}/children`)),
+    promise: (client) =>
+      client.get(apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/objects/${unit.id}/children?${collectionId.getQuery()}`)),
     callback
   };
 };

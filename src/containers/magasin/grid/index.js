@@ -79,14 +79,14 @@ const mapDispatchToProps = (dispatch, props) => {
     moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
       dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
     },
-    onAction: (actionName, unit, path, museumId) => {
+    onAction: (actionName, unit, path, museumId, collectionId) => {
       switch (actionName) {
       case 'pickNode':
         dispatch(addNode(unit, path));
         break;
       case 'pickObject':
         if (unit.mainObjectId) {
-          dispatch(loadMainObject(unit, path, museumId, {
+          dispatch(loadMainObject(unit, path, museumId, collectionId, {
             onSuccess: (children) => {
               children.forEach(child => dispatch(addObject(child, path)));
             }

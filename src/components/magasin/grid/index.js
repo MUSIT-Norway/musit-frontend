@@ -290,7 +290,15 @@ export default class StorageUnitsContainer extends React.Component {
       return (
         <NodeGrid
           tableData={filter(children, ['name'], searchPattern)}
-          onAction={(action, unit) => onAction(action, unit, rootNode.breadcrumb, this.props.user.museumId)}
+          onAction={(action, unit) =>
+            onAction(
+              action,
+              unit,
+              rootNode.breadcrumb,
+              this.props.user.museumId,
+              this.props.user.collectionId
+            )
+          }
           onMove={moveNode}
           onClick={(row) => {
             hashHistory.push(`/magasin/${row.id}`);
@@ -302,7 +310,15 @@ export default class StorageUnitsContainer extends React.Component {
       <ObjectGrid
         tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
         showMoveHistory={showHistory}
-        onAction={(action, unit) => onAction(action, unit, rootNode.breadcrumb, this.props.user.museumId)}
+        onAction={(action, unit) =>
+          onAction(
+            action,
+            unit,
+            rootNode.breadcrumb,
+            this.props.user.museumId,
+            this.props.user.collectionId
+          )
+        }
         onMove={moveObject}
       />
     );
