@@ -31,7 +31,7 @@ export default class ModalMoveHistoryGrid extends Component {
               </tr>
             </thead>
             <tbody style={{ 'fontSize': '12px', padding: '10px' }}>
-              {this.props.tableData.map((c, i) =>
+              {[].concat(this.props.tableData).map((c, i) =>
                 <tr key={i} id={`${i}`}>
                   <td id={`${i}_${c.doneDate}`}>
                     {` ${parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}`}
