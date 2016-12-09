@@ -39,6 +39,7 @@ export default class MusitUserAccount extends Component {
         <Col md={1}>{t2}</Col>
       </Row>
     );
+    const nodeId = this.props.rootNode && this.props.rootNode.id;
     const groups = this.props.groups;
     const museumId = this.props.selectedMuseumId;
     const collectionId = this.props.selectedCollectionId;
@@ -71,7 +72,7 @@ export default class MusitUserAccount extends Component {
             }
             {collectionDropdown &&
               collections.map((cc, i) =>
-                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(this.props.rootNode.id, cc.uuid)}>
+                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(nodeId, cc.uuid)}>
                   {menuText(collectionId === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
                 </MenuItem>
               )
