@@ -5,6 +5,9 @@ import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import App from '../../components/app';
 import Notifyable from './Notifyable';
 import { setMuseumId, setCollectionId } from '../../reducers/auth';
+import {loadRoot as loadRootNodes, clearRoot} from '../../reducers/storageunit/grid';
+import {clearStats} from '../../reducers/storageunit/stats';
+import MuseumId from '../../models/museumId';
 
 const mapStateToProps = (state) => {
   return {
@@ -18,9 +21,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, store) => {
   return {
-    setMuseumId: (mid) => {
+    setMuseumId: (nid, mid) => {
       dispatch(setMuseumId(mid));
       store.history.push('/magasin');
+      dispatch(clearRoot());
+      dispatch(clearStats());
+      dispatch(loadRootNodes(null, new MuseumId(mid)));
     },
     setCollectionId: (nid, cid) => {
       dispatch(setCollectionId(cid));
