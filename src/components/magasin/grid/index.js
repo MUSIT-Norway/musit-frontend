@@ -55,15 +55,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      searchPattern: '',
-      showMoveHistory: false,
-      objectData: null,
-      showModal: false,
-      showModalFromId: '',
-      showModalType: ''
-    };
-
+    this.state = { searchPattern: '' };
     this.loadNodes = this.loadNodes.bind(this);
     this.loadObjects = this.loadObjects.bind(this);
     this.moveNode = this.moveNode.bind(this);
@@ -86,7 +78,6 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    // Issued on every propchange, including local route changes
     if (newProps.params.id !== this.props.params.id) {
       if (newProps.params.id) {
         this.props.loadChildren(newProps.params.id, this.props.user.museumId);
