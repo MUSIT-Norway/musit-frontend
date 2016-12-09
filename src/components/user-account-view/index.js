@@ -24,7 +24,8 @@ export default class MusitUserAccount extends Component {
     handleLogout: React.PropTypes.func,
     handleLanguage: React.PropTypes.func,
     handleMuseumId: React.PropTypes.func,
-    handleCollectionId: React.PropTypes.func
+    handleCollectionId: React.PropTypes.func,
+    rootNode: React.PropTypes.number
   }
 
   render() {
@@ -70,7 +71,7 @@ export default class MusitUserAccount extends Component {
             }
             {collectionDropdown &&
               collections.map((cc, i) =>
-                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(cc.uuid)}>
+                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(this.props.rootNode.id, cc.uuid)}>
                   {menuText(collectionId === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
                 </MenuItem>
               )

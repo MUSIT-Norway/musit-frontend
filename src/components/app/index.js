@@ -71,6 +71,7 @@ export default class App extends Component {
                 handleLanguage={(l) => this.handleLanguage(l)}
                 handleMuseumId={this.props.setMuseumId}
                 handleCollectionId={this.props.setCollectionId}
+                rootNode={this.props.rootNode}
               />
               }
             </Nav>

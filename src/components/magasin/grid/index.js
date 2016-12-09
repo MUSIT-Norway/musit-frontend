@@ -55,17 +55,7 @@ export default class StorageUnitsContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      searchPattern: '',
-      showObjects: false,
-      showNodes: true,
-      showMoveHistory: false,
-      objectData: null,
-      showModal: false,
-      showModalFromId: '',
-      showModalType: ''
-    };
-
+    this.state = { searchPattern: '' };
     this.loadNodes = this.loadNodes.bind(this);
     this.loadObjects = this.loadObjects.bind(this);
     this.moveNode = this.moveNode.bind(this);
@@ -77,11 +67,17 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.loadNodes();
+    if (this.props.route.showObjects) {
+      this.loadObjects();
+      if (this.props.params.id && !this.props.rootNode.id) {
+        this.props.loadRoot(this.props.params.id, this.props.user.museumId);
+      }
+    } else {
+      this.loadNodes();
+    }
   }
 
   componentWillReceiveProps(newProps) {
-    // Issued on every propchange, including local route changes
     if (newProps.params.id !== this.props.params.id) {
       if (newProps.params.id) {
         this.props.loadChildren(newProps.params.id, this.props.user.museumId);
@@ -97,11 +93,19 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   showNodes() {
-    this.setState({ ...this.state, showNodes: true, showObjects: false });
+    if (this.props.rootNode) {
+      hashHistory.push(`/magasin/${this.props.rootNode.id}`);
+    } else {
+      hashHistory.push('/magasin');
+    }
   }
 
   showObjects() {
-    this.setState({ ...this.state, showNodes: false, showObjects: true });
+    if (this.props.rootNode) {
+      hashHistory.push(`/magasin/${this.props.rootNode.id}/objects`);
+    } else {
+      hashHistory.push('/magasin');
+    }
   }
 
   loadNodes() {
@@ -212,13 +216,12 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   makeToolbar(
-    showNodes = this.state.showNodes,
-    showObjects = this.state.showObjects,
+    showObjects = this.props.route.showObjects,
     searchPattern = this.state.searchPattern
   ) {
     return <Toolbar
       showRight={showObjects}
-      showLeft={showNodes}
+      showLeft={!showObjects}
       labelRight="Objekter"
       labelLeft="Noder"
       placeHolderSearch="Filtrer i liste"
@@ -280,37 +283,18 @@ export default class StorageUnitsContainer extends React.Component {
     rootNode = this.props.rootNode,
     children = this.props.children,
     objects = this.props.objects,
-    showNodes = this.state.showNodes,
+    showObjects = this.props.route.showObjects,
     onAction = this.props.onAction,
     moveNode = this.showMoveNodeModal,
     moveObject = this.showMoveObjectModal,
     showHistory = this.showObjectMoveHistory
   ) {
-    if (showNodes) {
+    if (showObjects) {
       return (
-        <NodeGrid
-          tableData={filter(children, ['name'], searchPattern)}
+        <ObjectGrid
+          tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
+          showMoveHistory={showHistory}
           onAction={(action, unit) =>
-            onAction(
-              action,
-              unit,
-              rootNode.breadcrumb,
-              this.props.user.museumId,
-              this.props.user.collectionId
-            )
-          }
-          onMove={moveNode}
-          onClick={(row) => {
-            hashHistory.push(`/magasin/${row.id}`);
-          }}
-        />
-      );
-    }
-    return (
-      <ObjectGrid
-        tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
-        showMoveHistory={showHistory}
-        onAction={(action, unit) =>
           onAction(
             action,
             unit,
@@ -319,7 +303,26 @@ export default class StorageUnitsContainer extends React.Component {
             this.props.user.collectionId
           )
         }
-        onMove={moveObject}
+          onMove={moveObject}
+        />
+      );
+    }
+    return (
+      <NodeGrid
+        tableData={filter(children, ['name'], searchPattern)}
+        onAction={(action, unit) =>
+            onAction(
+              action,
+              unit,
+              rootNode.breadcrumb,
+              this.props.user.museumId,
+              this.props.user.collectionId
+            )
+          }
+        onMove={moveNode}
+        onClick={(row) => {
+          hashHistory.push(`/magasin/${row.id}`);
+        }}
       />
     );
   }

@@ -5,6 +5,7 @@ class MusitObject {
     this.term = props.term;
     this.subNo = props.subNo;
     this.mainObjectId = props.mainObjectId;
+    this.path = props.path;
     this.pathNames = props.pathNames;
     this.breadcrumb = props.breadcrumb;
     this.currentLocationId = props.currentLocationId;

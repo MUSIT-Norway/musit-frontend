@@ -104,6 +104,7 @@ Object {
         "id": 51,
         "mainObjectId": undefined,
         "museumNo": "MusN11",
+        "path": ",1,2,3,4,5,",
         "pathNames": Array [
           Object {
             "name": "root-node",
@@ -135,6 +136,7 @@ Object {
         "id": 54,
         "mainObjectId": undefined,
         "museumNo": "MusN13",
+        "path": undefined,
         "pathNames": undefined,
         "subNo": undefined,
         "term": "Makrellsopp"
@@ -145,6 +147,7 @@ Object {
         "id": 19,
         "mainObjectId": undefined,
         "museumNo": "MusN20",
+        "path": undefined,
         "pathNames": undefined,
         "subNo": undefined,
         "term": "Ukjent mygg"
@@ -155,6 +158,7 @@ Object {
         "id": 17,
         "mainObjectId": undefined,
         "museumNo": "MusN21",
+        "path": undefined,
         "pathNames": undefined,
         "subNo": "2",
         "term": "Snilebille"
@@ -165,6 +169,7 @@ Object {
         "id": 18,
         "mainObjectId": undefined,
         "museumNo": "MusN22",
+        "path": undefined,
         "pathNames": undefined,
         "subNo": undefined,
         "term": "Fluesopp"
@@ -175,6 +180,7 @@ Object {
         "id": 14,
         "mainObjectId": undefined,
         "museumNo": "MusK23",
+        "path": undefined,
         "pathNames": undefined,
         "subNo": undefined,
         "term": "Lite skaft av ben"
@@ -185,6 +191,7 @@ Object {
         "id": 15,
         "mainObjectId": undefined,
         "museumNo": "MusK24",
+        "path": undefined,
         "pathNames": undefined,
         "subNo": "a",
         "term": "Lendeklede"
@@ -195,6 +202,7 @@ Object {
         "id": 16,
         "mainObjectId": undefined,
         "museumNo": "MusK24",
+        "path": undefined,
         "pathNames": undefined,
         "subNo": "b",
         "term": "Kokekar"
@@ -231,6 +239,7 @@ Object {
         "id": 9,
         "mainObjectId": undefined,
         "museumNo": "MusN28",
+        "path": ",1,2,3,4,5,",
         "pathNames": Array [
           Object {
             "name": "root-node",

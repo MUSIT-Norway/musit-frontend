@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     pushState: routerActions.push,
+    rootNode: state.storageGridUnit.root.data,
     pickListNodeCount: state.picks[PICK_TYPES.NODE] ? state.picks[PICK_TYPES.NODE].length : 0,
     pickListObjectCount: state.picks[PICK_TYPES.OBJECT] ? state.picks[PICK_TYPES.OBJECT].length : 0
   };
@@ -21,9 +22,13 @@ const mapDispatchToProps = (dispatch, store) => {
       dispatch(setMuseumId(mid));
       store.history.push('/magasin');
     },
-    setCollectionId: (cid) => {
+    setCollectionId: (nid, cid) => {
       dispatch(setCollectionId(cid));
-      store.history.push('/magasin');
+      if (nid) {
+        store.history.push(`/magasin/${nid}`);
+      } else {
+        store.history.push('/magasin');
+      }
     }
   };
 };
