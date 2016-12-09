@@ -78,11 +78,14 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.params.id !== this.props.params.id) {
-      if (newProps.params.id) {
-        this.props.loadChildren(newProps.params.id, this.props.user.museumId);
+    const museumHasChanged = newProps.user.museumId !== this.props.user.museumId;
+    const museumId = museumHasChanged ? newProps.user.museumId : this.props.user.museumId;
+    const nodeId = museumHasChanged ? null : newProps.params.id;
+    if (newProps.params.id !== this.props.params.id || museumHasChanged) {
+      if (nodeId) {
+        this.props.loadChildren(nodeId, museumId);
       } else {
-        this.props.loadStorageUnits(this.props.user.museumId);
+        this.props.loadStorageUnits(museumId);
       }
     }
   }
@@ -220,7 +223,7 @@ export default class StorageUnitsContainer extends React.Component {
     searchPattern = this.state.searchPattern
   ) {
     return <Toolbar
-      showRight={showObjects}
+      showRight={!!showObjects}
       showLeft={!showObjects}
       labelRight="Objekter"
       labelLeft="Noder"
