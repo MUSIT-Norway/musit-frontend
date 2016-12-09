@@ -52,6 +52,7 @@ export default () => {
       <Route path="/magasin/:id/observation/add" component={AddObservationPage} />
       <Route path="/magasin/:id/observation/edit" component={EditObservationPage} />
       <Route path="/magasin/:id/observation/:obsId" component={ViewObservationPage} />
+      <Route path="/magasin/:id/objects" showObjects component={StorageUnitsTable} />
       <Route path="/magasin/:id" component={StorageUnitsTable} />
       <Route path="/picklist/:type" component={PickListView} />
       <Route path="/reports" component={Reports} />

@@ -3,7 +3,7 @@ import 'react-select/dist/react-select.css';
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem, Badge } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import MusitUserAccount from '../../components/user-account-view';
@@ -55,16 +55,6 @@ export default class App extends Component {
               </LinkContainer>
               }
               {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
-                <NavItem><Badge><FontAwesome name="rebel" />{` ${pickListObjectCount} `}</Badge></NavItem>
-              </LinkContainer>
-              }
-              {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
-                <NavItem><Badge><FontAwesome name="folder" />{` ${pickListNodeCount} `}</Badge></NavItem>
-              </LinkContainer>
-              }
-              {user &&
               <LinkContainer to="/reports">
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
@@ -76,9 +66,12 @@ export default class App extends Component {
                 user={this.props.user.actor}
                 groups={this.props.user.groups}
                 selectedMuseumId={this.props.user.museumId.id}
+                selectedCollectionId={this.props.user.collectionId.uuid}
                 handleLogout={this.handleLogout}
                 handleLanguage={(l) => this.handleLanguage(l)}
                 handleMuseumId={this.props.setMuseumId}
+                handleCollectionId={this.props.setCollectionId}
+                rootNode={this.props.rootNode}
               />
               }
             </Nav>
@@ -86,6 +79,18 @@ export default class App extends Component {
               {user &&
               <LinkContainer to={'/search/objects'}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
+              </LinkContainer>
+              }
+            </Nav>
+            <Nav pullRight>
+              {user &&
+              <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
+                <NavItem><span className="icon icon-musitpicklistnode" />{` ${pickListNodeCount} `}</NavItem>
+              </LinkContainer>
+              }
+              {user &&
+              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
+                <NavItem><span className="icon icon-musitpicklistobject" />{` ${pickListObjectCount} `}</NavItem>
               </LinkContainer>
               }
             </Nav>

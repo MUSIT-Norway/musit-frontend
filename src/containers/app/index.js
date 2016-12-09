@@ -4,12 +4,13 @@ import { routerActions } from 'react-router-redux';
 import { TYPES as PICK_TYPES } from '../../reducers/picklist';
 import App from '../../components/app';
 import Notifyable from './Notifyable';
-import { setMuseumId } from '../../reducers/auth';
+import { setMuseumId, setCollectionId } from '../../reducers/auth';
 
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
     pushState: routerActions.push,
+    rootNode: state.storageGridUnit.root.data,
     pickListNodeCount: state.picks[PICK_TYPES.NODE] ? state.picks[PICK_TYPES.NODE].length : 0,
     pickListObjectCount: state.picks[PICK_TYPES.OBJECT] ? state.picks[PICK_TYPES.OBJECT].length : 0
   };
@@ -20,6 +21,14 @@ const mapDispatchToProps = (dispatch, store) => {
     setMuseumId: (mid) => {
       dispatch(setMuseumId(mid));
       store.history.push('/magasin');
+    },
+    setCollectionId: (nid, cid) => {
+      dispatch(setCollectionId(cid));
+      if (nid) {
+        store.history.push(`/magasin/${nid}`);
+      } else {
+        store.history.push('/magasin');
+      }
     }
   };
 };

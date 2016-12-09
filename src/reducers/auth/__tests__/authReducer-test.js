@@ -28,7 +28,33 @@ describe('Auth', () => {
       .reply(200, [
         {
           museumId: 99,
-          shortName: 'Test'
+          shortName: 'Test',
+          collections: [
+            {
+              uuid: '134567',
+              name: 'Ark 1'
+            },
+            {
+              uuid: '234567',
+              name: 'Ark 2'
+            }
+          ]
+        }
+      ]);
+    nock('http://localhost')
+      .get(Config.magasin.urls.auth.museumsUrl)
+      .reply(200, [
+        {
+          id: 10000,
+          shortName: 'All'
+        },
+        {
+          id: 99,
+          shortName: 'Test museum'
+        },
+        {
+          id: 3,
+          shortName: 'KHM'
         }
       ]);
     const store = mockStore();
@@ -53,7 +79,17 @@ describe('Auth', () => {
           .reply(200, [
             {
               museumId: 10000,
-              shortName: 'God Access'
+              name: 'God Access',
+              collections: [
+                {
+                  uuid: '1345',
+                  name: 'Ark 1'
+                },
+                {
+                  uuid: '2345',
+                  name: 'Ark 2'
+                }
+              ]
             }
           ]);
     nock('http://localhost')
@@ -61,15 +97,15 @@ describe('Auth', () => {
           .reply(200, [
             {
               id: 10000,
-              name: 'God Access'
+              shortName: 'All'
             },
             {
               id: 99,
-              name: 'Test museum'
+              shortName: 'Test museum'
             },
             {
               id: 3,
-              name: 'KHM'
+              shortName: 'KHM'
             }
           ]);
 
@@ -104,7 +140,12 @@ describe('Auth', () => {
           dataportenId: 'e7107fd4-4822-466f-9041-2e67095d8e2d',
           fn: 'Some fancy user',
           groups: [{
-            museumId: 99
+            museumId: 99,
+            collections:[
+              {
+                uuid: 'ddfggg'
+              }
+            ]
           }]
         }
       })
@@ -120,7 +161,12 @@ describe('Auth', () => {
           applicationId: '932f8aad-5bf2-409d-8916-c91c24b31152',
           fn: 'Some fancy user',
           groups: [{
-            museumId: 99
+            museumId: 99,
+            collections:[
+              {
+                uuid: 'ddfggg'
+              }
+            ]
           }]
         }
       })

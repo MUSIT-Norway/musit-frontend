@@ -83,11 +83,13 @@ export default class PickListComponent extends Component {
             {picks.map((pick, i) => {
               const item = pick.value;
               const isItemMarked = pick.marked;
+              const isMainObject = item.isMainObject && item.isMainObject();
+              const isChildObject = item.isMainObject && !item.isMainObject();
               return (
-                <tr key={i} className={item.mainObjectId && !item.isMainObject() ? 'childObject' : item.isMainObject() && 'mainObject' }>
+                <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject' }>
                   <td style={{ width: '3em', textAlign: 'left', verticalAlign: 'middle' }}>
                     <span>
-                      {item.isMainObject() ?
+                      {!item.mainObjectId || isMainObject ?
                         <input
                           type="checkbox"
                           checked={isItemMarked ? 'checked' : ''}

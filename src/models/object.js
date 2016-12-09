@@ -1,14 +1,4 @@
 class MusitObject {
-  id: number;
-  museumNo: string;
-  term: ?string;
-  subNo: ?string;
-  mainObjectId: ?number;
-  path: string;
-  pathNames: number[];
-  breadcrumb: [];
-  currentLocationId: number;
-
   constructor(props) {
     this.id = props.id;
     this.museumNo = props.museumNo;

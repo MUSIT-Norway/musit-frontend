@@ -31,18 +31,18 @@ export default class ModalMoveHistoryGrid extends Component {
               </tr>
             </thead>
             <tbody style={{ 'fontSize': '12px', padding: '10px' }}>
-              {this.props.tableData.map((c, i) =>
-                <tr key={i} id={`${i}`}>
-                  <td id={`${i}_${c.doneDate}`}>
+              {[].concat(this.props.tableData).map((c, i) =>
+                <tr key={i}>
+                  <td>
                     {` ${parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}`}
                   </td>
-                  <td id={`${i}_${c.doneBy}`}>
+                  <td>
                     {` ${c.doneBy}`}
                   </td>
-                  <td id={`${i}_${c.from.path}`}>
+                  <td>
                     {` ${toPathStr(c.from.breadcrumb)}`}
                   </td>
-                  <td id={`${i}_${c.to.path}`}>
+                  <td>
                     {` ${toPathStr(c.to.breadcrumb)}`}
                   </td>
                 </tr>

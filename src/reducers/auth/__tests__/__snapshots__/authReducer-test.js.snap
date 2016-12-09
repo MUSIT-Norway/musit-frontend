@@ -38,11 +38,8 @@ Object {
     "fn": "Jarle Stabell",
     "id": 1
   },
-  "user": UserSession {
-    "accessToken": "token",
-    "actor": null,
-    "groups": null,
-    "museumId": null
+  "user": Object {
+    "accessToken": "token"
   }
 }
 `;
@@ -59,14 +56,28 @@ Array [
       "fn": "Jarle Stabell",
       "groups": Array [
         Object {
+          "collections": Array [
+            Object {
+              "name": "All",
+              "uuid": "00000000-0000-0000-0000-000000000000"
+            }
+          ],
           "id": 99,
           "museumId": 99,
-          "name": "Test museum"
+          "museumName": "Test museum",
+          "shortName": "Test museum"
         },
         Object {
+          "collections": Array [
+            Object {
+              "name": "All",
+              "uuid": "00000000-0000-0000-0000-000000000000"
+            }
+          ],
           "id": 3,
           "museumId": 3,
-          "name": "KHM"
+          "museumName": "KHM",
+          "shortName": "KHM"
         }
       ],
       "id": 1
@@ -88,7 +99,18 @@ Array [
       "fn": "Jarle Stabell",
       "groups": Array [
         Object {
+          "collections": Array [
+            Object {
+              "name": "Ark 1",
+              "uuid": "134567"
+            },
+            Object {
+              "name": "Ark 2",
+              "uuid": "234567"
+            }
+          ],
           "museumId": 99,
+          "museumName": "Test museum",
           "shortName": "Test"
         }
       ],
@@ -126,16 +148,23 @@ exports[`Auth success action with applicationId 1`] = `
 Object {
   "loaded": true,
   "loading": false,
-  "user": UserSession {
-    "accessToken": undefined,
+  "user": Object {
     "actor": Actor {
       "applicationId": "932f8aad-5bf2-409d-8916-c91c24b31152",
       "dataportenId": undefined,
       "dataportenUser": undefined,
       "fn": "Some fancy user"
     },
+    "collectionId": CollectionId {
+      "uuid": "ddfggg"
+    },
     "groups": Array [
       Object {
+        "collections": Array [
+          Object {
+            "uuid": "ddfggg"
+          }
+        ],
         "museumId": 99
       }
     ],
@@ -150,16 +179,23 @@ exports[`Auth success action with dataportenId 1`] = `
 Object {
   "loaded": true,
   "loading": false,
-  "user": UserSession {
-    "accessToken": undefined,
+  "user": Object {
     "actor": Actor {
       "applicationId": undefined,
       "dataportenId": "e7107fd4-4822-466f-9041-2e67095d8e2d",
       "dataportenUser": undefined,
       "fn": "Some fancy user"
     },
+    "collectionId": CollectionId {
+      "uuid": "ddfggg"
+    },
     "groups": Array [
       Object {
+        "collections": Array [
+          Object {
+            "uuid": "ddfggg"
+          }
+        ],
         "museumId": 99
       }
     ],
