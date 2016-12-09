@@ -60,6 +60,7 @@ Object {
       "id": 1,
       "mainObjectId": undefined,
       "museumNo": "CH500",
+      "path": undefined,
       "pathNames": undefined,
       "subNo": "5",
       "term": "Fugl"
