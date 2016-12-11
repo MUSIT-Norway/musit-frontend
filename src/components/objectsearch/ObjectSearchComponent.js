@@ -57,7 +57,7 @@ export default (props) =>
             )
             }
           </h4>
-          <Loader loaded={props.loaded}>
+          <Loader loaded={!props.loading}>
           {props.data.matches.length > 0 &&
           <div>
             <PagingToolbar
