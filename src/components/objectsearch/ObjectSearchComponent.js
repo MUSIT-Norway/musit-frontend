@@ -57,9 +57,8 @@ export default (props) =>
             )
             }
           </h4>
-          {props.data.matches.length > 0 &&
-
           <Loader loaded={props.loaded}>
+          {props.data.matches.length > 0 &&
           <div>
             <PagingToolbar
               numItems={props.data.totalMatches}
@@ -122,8 +121,8 @@ export default (props) =>
               onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
             />
           </div>
-          </Loader>
           }
+          </Loader>
         </div>
       </Grid>
     </main>

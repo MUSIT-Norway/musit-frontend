@@ -11,7 +11,8 @@ const initialState = {
   params: {
     currentPage: 1,
     perPage: 50
-  }
+  },
+  loaded: true
 };
 
 export default (state = initialState, action) => {
