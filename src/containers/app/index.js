@@ -1,7 +1,8 @@
 import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
-import { TYPES as PICK_TYPES } from '../../reducers/picklist';
+import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../../reducers/picklist';
+import { clearSearch } from '../../reducers/objectsearch/actions';
 import App from '../../components/app';
 import Notifyable from './Notifyable';
 import {clearStats} from '../../reducers/storageunit/stats';
@@ -26,6 +27,9 @@ const mapDispatchToProps = (dispatch, store) => {
       dispatch(setCollectionId(cid));
       dispatch(clearRoot());
       dispatch(clearStats());
+      dispatch(clearSearch());
+      dispatch(clearNodes());
+      dispatch(clearObjects());
       dispatch(loadRoot(null, new MuseumId(mid), {
         onSuccess: () => store.history.push('/magasin')
       }));
