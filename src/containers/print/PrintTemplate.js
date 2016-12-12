@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import PrintTemplateComponent from '../../components/print/ChooseTemplate';
+import PrintTemplateComponent from '../../components/print/PrintTemplate';
 import { renderTemplate } from '../../reducers/print/index';
 
 const mapDispatchToProps = (dispatch) => {
@@ -10,7 +10,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
   return {
-    selected: state.print.selected
+    selected: state.print.selected,
+    rendered: state.print.rendered
   };
 };
 

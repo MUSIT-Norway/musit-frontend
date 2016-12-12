@@ -32,7 +32,7 @@ export default {
         templatePreviewUrl: (id, format, name, uuid) =>
           `/api/barcode/templates/${id}/preview?codeFormat=${format}&name=${name}&uuid=${uuid}`,
         templateRenderUrl: (id, format) =>
-          `/api/barcode/templates/${id}/preview?codeFormat=${format}`
+          `/api/barcode/templates/${id}/render?codeFormat=${format}`
       },
       auth: {
         groupsUrl: (feideEmail) =>

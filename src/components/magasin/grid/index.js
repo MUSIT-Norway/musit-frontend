@@ -12,8 +12,6 @@ import { I18n } from 'react-i18nify';
 import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
 import { checkNodeBranchAndType } from '../../../util/nodeValidator';
-import ChooseTemplate from '../../../containers/print/ChooseTemplate';
-import PrintTemplate from '../../../containers/print/PrintTemplate';
 import MusitNode from '../../../models/node';
 
 const getObjectDescription = (object) => {
@@ -77,11 +75,6 @@ export default class StorageUnitsContainer extends React.Component {
     } else {
       this.loadNodes();
     }
-    this.context.showModal('Choose template', <ChooseTemplate nextStep={() => {
-      this.context.showModal('Print template', <PrintTemplate nextStep={() => {
-
-      }} />);
-    }} />);
   }
 
   componentWillReceiveProps(newProps) {

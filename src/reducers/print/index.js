@@ -24,6 +24,11 @@ export default (state = {}, action) => {
       ...state,
       templates: action.result.map(props => new Template(props))
     };
+  case LOAD_PREVIEW_SUCCESS:
+    return {
+      ...state,
+      rendered: action.result
+    };
   default:
     return state;
   }
@@ -60,21 +65,19 @@ export const loadTemplates = () => {
   };
 };
 
-export const renderTemplate = (templateId, codeFormat, uuid, name) => {
+export const renderTemplate = (templateId, codeFormat, nodes) => {
   return {
     types: [LOAD_PREVIEW, LOAD_PREVIEW_SUCCESS, LOAD_PREVIEW_FAIL],
     promise: (client) => client.post(Config.magasin.urls.barcode.templateRenderUrl(templateId, codeFormat), {
-      body: [
-        {
-          uuid,
-          data: [
-            {
-              field: 'name',
-              value: name
-            }
-          ]
-        }
-      ]
+      data: nodes.map(node => ({
+        uuid: node.uuid,
+        data: [
+          {
+            field: 'name',
+            value: node.name
+          }
+        ]
+      }))
     })
   };
 };

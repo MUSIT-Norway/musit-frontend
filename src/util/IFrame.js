@@ -5,7 +5,7 @@ class IFrame extends React.Component {
 
   static propTypes = {
     frameProps: React.PropTypes.object,
-    content: React.PropTypes.string.isRequired,
+    content: React.PropTypes.string,
     onLoad: React.PropTypes.func
   };
 
