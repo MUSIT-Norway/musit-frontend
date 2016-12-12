@@ -9,7 +9,8 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     params: state.objectSearch.params,
     currentPage: state.objectSearch.currentPage,
-    loaded: state.objectSearch.loaded
+    loaded: state.objectSearch.loaded,
+    loading: state.objectSearch.loading
   };
 };
 

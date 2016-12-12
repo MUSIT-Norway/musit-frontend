@@ -25,7 +25,11 @@ export default class MusitUserAccount extends Component {
     handleLanguage: React.PropTypes.func,
     handleMuseumId: React.PropTypes.func,
     handleCollectionId: React.PropTypes.func,
-    rootNode: React.PropTypes.number
+    rootNode: React.PropTypes.object
+  }
+
+  getCollections(mid, groups) {
+    return uniqBy(flatten(groups.filter(g => g.museumId === mid).map(g => g.collections)), c => c.uuid);
   }
 
   render() {
@@ -45,7 +49,7 @@ export default class MusitUserAccount extends Component {
     const collectionId = this.props.selectedCollectionId;
     const museumDropDown = groups.length > 1 && groups[0].museumName;
     const collectionDropdown = groups.length > 0 && groups[0].collections.length > 0;
-    const collections = collectionDropdown && uniqBy(flatten(groups.map(g => g.collections)), c => c.uuid);
+    const collections = collectionDropdown && this.getCollections(museumId, groups);
     return (
       <OverlayTrigger overlay={tooltip} placement="left">
         <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
@@ -59,7 +63,11 @@ export default class MusitUserAccount extends Component {
             }
             {museumDropDown &&
               groups.map((cc, i) =>
-                <MenuItem key={i} eventKey={cc.museumId} onClick={() => this.props.handleMuseumId(cc.museumId)}>
+                <MenuItem
+                  key={i}
+                  eventKey={cc.museumId}
+                  onClick={() => this.props.handleMuseumId(cc.museumId, this.getCollections(cc.museumId, groups)[0].uuid)}
+                >
                   {menuText(museumId === cc.museumId ? <FontAwesome name="check" /> : '', cc.museumName)}
                 </MenuItem>
               )
