@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import IFrame from '../../util/IFrame';
-import './ChooseTemplate.css';
 import Template from '../../models/PrintTemplate';
+import './style.css';
 
 class ChooseTemplate extends Component {
   static propTypes = {

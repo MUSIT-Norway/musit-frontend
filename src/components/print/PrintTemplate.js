@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Template from '../../models/PrintTemplate';
-import './ChooseTemplate.css';
+import './style.css';
 
 class PrintTemplate extends Component {
   static propTypes = {
@@ -19,7 +19,7 @@ class PrintTemplate extends Component {
 
   render() {
     return (
-      <div className="templateChooser">
+      <div className="templatePrint">
         hei
       </div>
     );

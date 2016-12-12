@@ -2,3 +2,10 @@
     width: 500px;
     min-height: 380px;
 }
+
+
+.templatePrint {
+    width: 210mm;
+    height: 297mm;
+}
+
