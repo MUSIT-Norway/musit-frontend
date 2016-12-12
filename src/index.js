@@ -35,6 +35,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
+import './state/codeReceiver';
 
 const client = new ApiClient();
 const dest = document.getElementById('content');
