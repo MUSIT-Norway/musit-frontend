@@ -37,7 +37,7 @@ class ApiClient {
         if (data) {
           apiRequest.send(data);
         }
-        apiRequest.end((error, response) => error ? reject({ error, response }) : resolve(response.body));
+        apiRequest.end((error, response) => error ? reject({ error, response }) : resolve(response.body || response.text));
       });
     });
   }
