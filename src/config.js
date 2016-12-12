@@ -26,6 +26,14 @@ export default {
         searchUrl: (term) =>
           `/api/geolocation/v1/address?search=[${encodeURIComponent(term)}]`
       },
+      barcode: {
+        templatesUrl:
+          '/api/barcode/templates',
+        templatePreviewUrl: (id, format, name, uuid) =>
+          `/api/barcode/templates/${id}/preview?codeFormat=${format}&name=${name}&uuid=${uuid}`,
+        templateRenderUrl: (id, format) =>
+          `/api/barcode/templates/${id}/render?codeFormat=${format}`
+      },
       auth: {
         groupsUrl: (feideEmail) =>
           `/api/auth/rest/groups/${feideEmail}`,

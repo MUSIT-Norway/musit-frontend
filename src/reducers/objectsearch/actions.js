@@ -24,3 +24,5 @@ export const onChangeField = (field, value) => {
     value
   };
 };
+
+export const clearSearch = () => ({ type: types.CLEAR_SEARCH });

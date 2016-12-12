@@ -9,6 +9,7 @@ export default class PickListComponent extends Component {
   static propTypes = {
     picks: React.PropTypes.array.isRequired,
     move: React.PropTypes.func.isRequired,
+    print: React.PropTypes.func.isRequired,
     toggle: React.PropTypes.func.isRequired,
     remove: React.PropTypes.func.isRequired,
     marked: React.PropTypes.array.isRequired,
@@ -49,7 +50,17 @@ export default class PickListComponent extends Component {
               </th>
               <th style={{ verticalAlign: 'bottom', textAlign: 'left' }}>
                 { isnode ?
-                  <FontAwesome className="normalActionNoPadding" style={{ fontSize: '1.5em' }} name="print" /> : null
+                  <FontAwesome
+                    className="normalActionNoPadding"
+                    style={{ fontSize: '1.5em' }}
+                    name="print"
+                    onClick={() => {
+                      if (marked.length > 0) {
+                        this.props.print(marked);
+                      }
+                    }}
+                    title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
+                  /> : null
                 }
                 {isnode ? count : null}
                 <FontAwesome
