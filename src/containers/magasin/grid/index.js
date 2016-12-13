@@ -134,7 +134,7 @@ const mapDispatchToProps = (dispatch, props) => {
                 message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')
               });
             } else {
-              emitError({type: 'errorOnDelete', message: I18n.t('musit.leftMenu.node.deleteMessages.errorCommon')});
+              emitError(error);
             }
           }
         }));

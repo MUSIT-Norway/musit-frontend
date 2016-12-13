@@ -155,9 +155,10 @@ export default class StorageUnitsContainer extends React.Component {
             message: I18n.t('musit.moveModal.messages.nodeMoved', { name: nodeToMove.name, destination: toName })
           });
         },
-        onFailure: () => {
+        onFailure: (e) => {
           emitError({
             type: 'errorOnMove',
+            error: e,
             message: I18n.t('musit.moveModal.messages.errorNode', { name: nodeToMove.name, destination: toName })
           });
         }
