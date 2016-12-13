@@ -11,6 +11,8 @@ import MusitModal from '../movedialog';
 import './PickListContainer.css';
 import { emitError, emitSuccess } from '../../errors/emitter';
 import { checkNodeBranchAndType } from '../../util/nodeValidator';
+import ChooseTemplate from '../../containers/print/ChooseTemplate';
+import PrintTemplate from '../../containers/print/PrintTemplate';
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -34,6 +36,7 @@ export default class PickListContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.moveModal = this.moveModal.bind(this);
+    this.print = this.print.bind(this);
   }
 
   isTypeNode() {
@@ -124,6 +127,12 @@ export default class PickListContainer extends React.Component {
     }
   }
 
+  print(nodesToPrint) {
+    this.context.showModal('Choose template', <ChooseTemplate nextStep={() => {
+      this.context.showModal('Print template', <PrintTemplate marked={nodesToPrint} />);
+    }} />);
+  }
+
   render() {
     const { toggleNode, toggleObject, removeNode, removeObject } = this.props;
     const type = this.props.params.type.toUpperCase();
@@ -163,6 +172,7 @@ export default class PickListContainer extends React.Component {
               toggle={(item, on) => this.isTypeNode() ? toggleNode(item, on) : toggleObject(item, on)}
               remove={item => this.isTypeNode() ? removeNode(item) : removeObject(item)}
               move={() => this.showModal(marked)}
+              print={this.print}
             />
             <div style={{ textAlign: 'left' }}>
               {marked.length}/{picks.length} &nbsp;

@@ -33,10 +33,12 @@ import controlReducer from './control';
 import observationControlGridReducer from './grid/observationcontrol';
 import moveHistoryReducer from './grid/move';
 import ObjectSearchReducer from './objectsearch/reducer';
+import printReducer from './print/index';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
   [auth.ID]: auth.reducer,
+  print: printReducer,
   picks: picklistReducer,
   storagePanelUnit: storagePanelReducer,
   storageGridUnit: storageNodeGridReducer,

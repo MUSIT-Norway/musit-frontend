@@ -38,6 +38,8 @@ export default (state = initialState, action) => {
         currentPage: action.page
       }
     };
+  case types.CLEAR_SEARCH:
+    return initialState;
   case types.SEARCH_OBJECTS_FAIL:
     return {
       ...state,

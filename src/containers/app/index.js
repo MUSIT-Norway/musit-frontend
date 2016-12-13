@@ -1,12 +1,13 @@
 import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
-import { TYPES as PICK_TYPES } from '../../reducers/picklist';
+import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../../reducers/picklist';
+import { clearSearch } from '../../reducers/objectsearch/actions';
 import App from '../../components/app';
 import Notifyable from './Notifyable';
-import { setMuseumId, setCollectionId } from '../../reducers/auth';
-import {loadRoot as loadRootNodes, clearRoot} from '../../reducers/storageunit/grid';
 import {clearStats} from '../../reducers/storageunit/stats';
+import {setMuseumId, setCollectionId } from '../../reducers/auth';
+import {clearRoot, loadRoot} from '../../reducers/storageunit/grid';
 import MuseumId from '../../models/museumId';
 
 const mapStateToProps = (state) => {
@@ -21,12 +22,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, store) => {
   return {
-    setMuseumId: (nid, mid) => {
+    setMuseumId: (mid, cid) => {
       dispatch(setMuseumId(mid));
-      store.history.push('/magasin');
+      dispatch(setCollectionId(cid));
       dispatch(clearRoot());
       dispatch(clearStats());
-      dispatch(loadRootNodes(null, new MuseumId(mid)));
+      dispatch(clearSearch());
+      dispatch(clearNodes());
+      dispatch(clearObjects());
+      dispatch(loadRoot(null, new MuseumId(mid), {
+        onSuccess: () => store.history.push('/magasin')
+      }));
     },
     setCollectionId: (nid, cid) => {
       dispatch(setCollectionId(cid));
