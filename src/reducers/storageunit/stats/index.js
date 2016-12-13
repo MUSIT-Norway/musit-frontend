@@ -53,7 +53,7 @@ export default storageUnitStatsReducer;
 export const loadStats = (id, museumId) => {
   return {
     types: [LOAD_STATS, LOAD_STATS_SUCCESS, LOAD_STATS_FAILURE],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/${id}/stats`))
+    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/storagenodes/${id}/stats`))
   };
 };
 
