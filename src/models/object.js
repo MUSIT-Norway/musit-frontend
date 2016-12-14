@@ -12,7 +12,7 @@ class MusitObject {
   }
 
   isMainObject() {
-    return !this.mainObjectId || this.id === this.mainObjectId;
+    return this.id === this.mainObjectId;
   }
 }
 
