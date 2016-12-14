@@ -1,10 +1,7 @@
 export const getState = (id, field) => global.reduxStore.getState()[id][field];
 
-const DISPATCH_START = 'musit/dispatch/start';
-const DISPATCH_SUCCESS = 'musit/dispatch/success';
-const DISPATCH_FAILURE = 'musit/dispatch/failure';
+export const DISPATCH_START = 'musit/dispatch/start';
+export const DISPATCH_SUCCESS = 'musit/dispatch/success';
+export const DISPATCH_FAILURE = 'musit/dispatch/failure';
 
-export const dispatchAction = (action) => global.reduxStore.dispatch({
-  types: [ DISPATCH_START, DISPATCH_SUCCESS, DISPATCH_FAILURE ],
-  ...action
-});
+export const dispatchAction = (action) => global.reduxStore.dispatch(action);
