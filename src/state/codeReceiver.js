@@ -1,10 +1,10 @@
 import {Observable} from 'rxjs/Rx';
-
-import Config from '../config';
-
-import { dispatchAction, DISPATCH_START, DISPATCH_SUCCESS, DISPATCH_FAILURE } from '../reducers/public';
+import { dispatchAction, getState } from '../reducers/public';
+import { addNode } from '../reducers/picklist';
+import { getPath } from '../reducers/helper';
 import { getMuseumId } from '../reducers/auth';
 import { hashHistory } from 'react-router';
+import Config from '../config';
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -20,11 +20,15 @@ Observable.merge(clearReducer, keyPressReducer).scan((state, changeFn) => change
     .subscribe(uuid => {
       if (UUID_REGEX.test(uuid)) {
         dispatchAction({
-          types: [ DISPATCH_START, DISPATCH_SUCCESS, DISPATCH_FAILURE ],
           promise: (client) => client.get(Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId())),
           callback: {
             onSuccess: (res) => {
-              hashHistory.push(`/magasin/${res.id}`);
+              const isNodePickList = getState('routing', 'locationBeforeTransitions').pathname === '/picklist/node';
+              if (isNodePickList) {
+                dispatchAction(addNode(res, getPath(res)));
+              } else {
+                hashHistory.push(`/magasin/${res.id}`);
+              }
             }
           }
         });
