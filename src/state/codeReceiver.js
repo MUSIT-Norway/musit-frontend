@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 
-import { dispatchAction, getState, DISPATCH_START, DISPATCH_SUCCESS, DISPATCH_FAILURE } from '../reducers/public';
+import { dispatchAction, getState } from '../reducers/public';
 import { addNode } from '../reducers/picklist';
 import { getPath } from '../reducers/helper';
 import { getMuseumId } from '../reducers/auth';
@@ -12,6 +12,10 @@ const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-
 const ROUTE_STATE = 'routing';
 const ROUTE_LOCATION = 'locationBeforeTransitions';
 const ROUTE_PICKLIST_NODE = '/picklist/node';
+
+const DISPATCH_START = 'musit/dispatch/start';
+const DISPATCH_SUCCESS = 'musit/dispatch/success';
+const DISPATCH_FAILURE = 'musit/dispatch/failure';
 
 const clearScheduler$ = Observable.fromEvent(window, 'keypress').debounce(() => Observable.timer(500));
 const clearReducer = clearScheduler$.map(() => () => '');
