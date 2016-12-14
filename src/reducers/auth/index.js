@@ -3,6 +3,7 @@ import Config from '../../config';
 import Actor from '../../models/actor';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
+import { getState } from '../../reducers/public';
 
 const ID = 'auth';
 
@@ -164,14 +165,10 @@ export const clearUser = () => {
   };
 };
 
-const getStateField = (field) => {
-  return global.reduxStore.getState()[ID].user[field];
-};
-
 export const getMuseumId = () => {
-  return getStateField('museumId');
+  return getState(ID, 'user').museumId;
 };
 
 export const getAccessToken = () => {
-  return getStateField('accessToken');
+  return getState(ID, 'user').accessToken;
 };
