@@ -53,7 +53,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   toggleNode: (item, on) => dispatch(toggleNode(item, on)),
   toggleObject: (item, on) => {
-    if (item.isMainObject && item.isMainObject()) {
+    if (item.mainObjectId && item.isMainObject()) {
       dispatch(toggleMainObject(item, on));
     } else {
       dispatch(toggleObject(item, on));
