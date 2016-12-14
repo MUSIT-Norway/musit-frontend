@@ -94,8 +94,8 @@ export default class PickListComponent extends Component {
             {picks.map((pick, i) => {
               const item = pick.value;
               const isItemMarked = pick.marked;
-              const isMainObject = item.isMainObject && item.isMainObject();
-              const isChildObject = item.isMainObject && !item.isMainObject();
+              const isMainObject = item.isMainObject && (!item.mainObjectId || item.isMainObject());
+              const isChildObject = item.isMainObject && (item.mainObjectId && !item.isMainObject());
               return (
                 <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject' }>
                   <td style={{ width: '3em', textAlign: 'left', verticalAlign: 'middle' }}>
