@@ -9,13 +9,14 @@ import { hashHistory } from 'react-router';
 import Config from '../config';
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 const ROUTE_STATE = 'routing';
 const ROUTE_LOCATION = 'locationBeforeTransitions';
 const ROUTE_PICKLIST_NODE = '/picklist/node';
 
-const DISPATCH_START = 'musit/dispatch/start';
-const DISPATCH_SUCCESS = 'musit/dispatch/success';
-const DISPATCH_FAILURE = 'musit/dispatch/failure';
+const SCAN_START = 'musit/scan/start';
+const SCAN_SUCCESS = 'musit/scan/success';
+const SCAN_FAILURE = 'musit/scan/failure';
 
 const clearScheduler$ = Observable.fromEvent(window, 'keypress').debounce(() => Observable.timer(500));
 const clearReducer = clearScheduler$.map(() => () => '');
@@ -30,7 +31,7 @@ Observable.merge(clearReducer, keyPressReducer)
     .subscribe(uuid => {
       if (UUID_REGEX.test(uuid)) {
         dispatchAction({
-          types: [ DISPATCH_START, DISPATCH_SUCCESS, DISPATCH_FAILURE ],
+          types: [ SCAN_START, SCAN_SUCCESS, SCAN_FAILURE ],
           promise: (client) => client.get(Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId())),
           callback: {
             onSuccess: (res) => {
