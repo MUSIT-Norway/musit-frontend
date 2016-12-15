@@ -121,7 +121,7 @@ export default class ControlAddContainer extends React.Component {
           hashHistory.goBack();
           emitSuccess({ type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess')});
         },
-        onFailure: () => emitError({ type: 'errorOnSave', message: I18n.t('musit.newControl.saveControlError')})
+        onFailure: (e) => emitError({...e, type: 'network'})
       });
     }
   }

@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
           hashHistory.goBack();
           emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
         },
-        onFailure: () => emitError( { type: 'errorOnSave', message: I18n.t('musit.observation.page.messages.saveError') })
+        onFailure: (e) => emitError({ ...e, type: 'network' })
       }));
     },
     loadStorageObj: (id, museumId) => {

@@ -20,13 +20,8 @@ const mapDispatchToProps = (dispatch) => {
             }
           );
         },
-        onFailure: () => {
-          emitError(
-            {
-              type: 'errorOnSave',
-              message: I18n.t('musit.storageUnits.messages.saveNodeError')
-            }
-          );
+        onFailure: (e) => {
+          emitError({...e, type: 'network'});
         }
       }));
     },
