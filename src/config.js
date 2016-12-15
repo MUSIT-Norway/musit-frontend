@@ -8,7 +8,9 @@ export default {
         searchUrl: (term, mid) =>
           `/api/storagefacility/v1/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
         scanUrl: (uuid, mid) =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes/scan?storageNodeId=${uuid}&`,
+          `/api/storagefacility/v1/${mid.getPath()}/storagenodes/scan?storageNodeId=${uuid}&`,
+        scanOldUrl: (oldBarcode, mid) =>
+          `/api/storagefacility/v1/${mid.getPath()}/storagenodes/scan?oldBarcode=${oldBarcode}`,
         baseUrl: (mid): string =>
           `/api/storagefacility/v1/${mid.getPath()}/storagenodes`
       },
