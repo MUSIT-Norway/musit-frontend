@@ -67,7 +67,7 @@ export const loadMoveHistoryForObject = (id, museumId, callback) => {
       client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`))
         .then(rows => {
           client.post(apiUrl(`${Config.magasin.urls.actor.baseUrl}/details`), {
-            data: uniq(rows.map(r => r.doneBy))
+            data: uniq(rows.map(r => r.registeredBy))
           }).then(actors => {
             resolve(
               rows.map((data) => ({
