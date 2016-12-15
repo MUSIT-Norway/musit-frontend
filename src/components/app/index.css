@@ -21,10 +21,15 @@ nav.fa {
 }
 
 .footer {
-  text-align: center;
+  text-align: right;
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+.version {
+  font-size: smaller;
+  color: lightgray;
 }
 
 .footer.well {

@@ -16,6 +16,10 @@ export const LOAD_ACTOR_SUCCESS = 'musit/auth/LOAD_ACTOR_SUCCESS';
 export const LOAD_ACTOR_FAILURE = 'musit/auth/LOAD_ACTOR_FAILURE';
 export const CLEAR_ACTOR = 'musit/auth/CLEAR_ACTOR';
 
+export const LOAD_BUILD_INFO_START = 'musit/auth/LOAD_BUILD_INFO_START';
+export const LOAD_BUILD_INFO_SUCCESS = 'musit/auth/LOAD_BUILD_INFO_SUCCESS';
+export const LOAD_BUILD_INFO_FAILURE = 'musit/auth/LOAD_BUILD_INFO_FAILURE';
+
 const initialState = {
   user: {}
 };
@@ -78,6 +82,11 @@ const authReducer = (state = initialState, action = {}) => {
       loaded: false,
       error: action.error
     };
+  case LOAD_BUILD_INFO_SUCCESS:
+    return {
+      ...state,
+      buildinfo: JSON.parse(action.result)
+    };
   default:
     return state;
   }
@@ -129,6 +138,13 @@ export const loadActor = (callback) => {
        ).catch(error => reject(error));
     }),
     callback
+  };
+};
+
+export const loadBuildinfo = () => {
+  return {
+    types: [LOAD_BUILD_INFO_START, LOAD_BUILD_INFO_SUCCESS, LOAD_BUILD_INFO_FAILURE],
+    promise: (client) => client.get(Config.magasin.urls.auth.buildInfo)
   };
 };
 

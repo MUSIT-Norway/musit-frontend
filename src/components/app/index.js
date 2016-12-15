@@ -18,7 +18,13 @@ export default class App extends Component {
     pickListNodeCount: PropTypes.number.isRequired,
     pickListObjectCount: PropTypes.number.isRequired,
     clearUser: PropTypes.func.isRequired,
-    loadUser: PropTypes.func.isRequired
+    loadUser: PropTypes.func.isRequired,
+    loadBuildinfo: PropTypes.func.isRequired,
+    buildinfo: PropTypes.any
+  }
+
+  componentWillMount() {
+    this.props.loadBuildinfo();
   }
 
   handleLogout = () => {
@@ -101,7 +107,9 @@ export default class App extends Component {
           {this.props.children}
         </div>
 
-        <footer className="footer well">{' '}</footer>
+        <footer className="footer well version">
+          {this.props.buildinfo && ('Build number: ' + this.props.buildinfo.buildInfoBuildNumber)}
+        </footer>
       </div>
     );
   }

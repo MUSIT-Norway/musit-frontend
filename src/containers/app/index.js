@@ -2,6 +2,7 @@ import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
 import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../../reducers/picklist';
+import { loadBuildinfo } from '../../reducers/auth';
 import { clearSearch } from '../../reducers/objectsearch/actions';
 import App from '../../components/app';
 import Notifyable from './Notifyable';
@@ -13,6 +14,7 @@ import MuseumId from '../../models/museumId';
 const mapStateToProps = (state) => {
   return {
     user: state.auth.user,
+    buildinfo: state.auth.buildinfo,
     pushState: routerActions.push,
     rootNode: state.storageGridUnit.root.data,
     pickListNodeCount: state.picks[PICK_TYPES.NODE] ? state.picks[PICK_TYPES.NODE].length : 0,
@@ -41,7 +43,8 @@ const mapDispatchToProps = (dispatch, store) => {
       } else {
         store.history.push('/magasin');
       }
-    }
+    },
+    loadBuildinfo: () => dispatch(loadBuildinfo())
   };
 };
 

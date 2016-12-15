@@ -42,7 +42,9 @@ export default {
         groupsUrl: (feideEmail) =>
           `/api/auth/rest/groups/${feideEmail}`,
         museumsUrl:
-          '/api/auth/rest/museums'
+          '/api/auth/rest/museums',
+        buildInfo:
+          '/api/auth/service/auth/buildinfo'
       }
     }
   }
