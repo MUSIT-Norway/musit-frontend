@@ -66,16 +66,21 @@ export const loadMoveHistoryForObject = (id, museumId, callback) => {
     promise: (client) => new Promise((resolve, reject) => {
       client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`))
         .then(rows => {
-          client.post(apiUrl(`${Config.magasin.urls.actor.baseUrl}/details`), {
-            data: uniq(rows.map(r => r.registeredBy))
-          }).then(actors => {
-            resolve(
-              rows.map((data) => ({
-                ...data,
-                ...Actor.getActorNames(actors, data.doneBy, data.registeredBy)
-              }))
-            );
-          }).catch(error => reject(error));
+          const actorIds = uniq(rows.map(r => r.doneBy));
+          if (actorIds.length === 0) {
+            resolve(rows);
+          } else {
+            client.post(apiUrl(`${Config.magasin.urls.actor.baseUrl}/details`), {
+              data: actorIds
+            }).then(actors => {
+              resolve(
+                rows.map((data) => ({
+                  ...data,
+                  ...Actor.getActorNames(actors, data.doneBy, data.registeredBy)
+                }))
+              );
+            }).catch(error => reject(error));
+          }
         }).catch(error => reject(error));
     }),
     callback

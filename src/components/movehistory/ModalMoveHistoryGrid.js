@@ -37,7 +37,7 @@ export default class ModalMoveHistoryGrid extends Component {
                     {` ${parseISODate(c.doneDate).format(DATE_FORMAT_DISPLAY)}`}
                   </td>
                   <td>
-                    {` ${c.registeredBy}`}
+                    {` ${c.doneBy}`}
                   </td>
                   <td>
                     {` ${toPathStr(c.from.breadcrumb)}`}
