@@ -66,7 +66,7 @@ export const loadMoveHistoryForObject = (id, museumId, callback) => {
     promise: (client) => new Promise((resolve, reject) => {
       client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`))
         .then(rows => {
-          const actorIds = uniq(rows.map(r => r.doneBy));
+          const actorIds = uniq(rows.map(r => r.doneBy)).filter(r => r);
           if (actorIds.length === 0) {
             resolve(rows);
           } else {
