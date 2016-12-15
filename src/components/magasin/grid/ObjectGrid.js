@@ -41,8 +41,9 @@ export default class ObjectGrid extends Component {
               </thead>
               <tbody>
                 {this.props.tableData.map((c, i) => {
-                  const isMainObject = c.isMainObject();
-                  return <tr key={i} className={isMainObject ? 'mainObject' : c.mainObjectId && 'childObject'}>
+                  const isMainObject = !c.mainObjectId || c.isMainObject();
+                  const isChildObject = c.mainObjectId && !isMainObject;
+                  return <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}>
                     <td style={{width:'20px'}}>
                       <span className="icon icon-musitobject"/>
                     </td>
