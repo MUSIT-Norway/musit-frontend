@@ -64,15 +64,15 @@ export default class PickListContainer extends React.Component {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })});
       }
     },
-    onFailure: () => {
+    onFailure: (e) => {
       if (toMoveLength === 1) {
-        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })});
+        emitError({type: 'errorOnMove', error: e, message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })});
       } else {
-        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })});
+        emitError({type: 'errorOnMove', error: e,
+          message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })});
       }
     }
   })
-
   objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
       this.props.refreshObjects(items.map(p => p.value).map(item => item.id), this.props.user.museumId);
@@ -83,11 +83,12 @@ export default class PickListContainer extends React.Component {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLength, destination: toName })});
       }
     },
-    onFailure: () => {
+    onFailure: (e) => {
       if (toMoveLength === 1) {
-        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName })});
+        emitError({type: 'errorOnMove', error: e, message: I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName })});
       } else {
-        emitError({type: 'errorOnMove', message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName })});
+        emitError({type: 'errorOnMove', error: e,
+          message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName })});
       }
     }
   })
