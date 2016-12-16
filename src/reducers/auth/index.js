@@ -185,6 +185,10 @@ export const getMuseumId = () => {
   return getState(ID, 'user').museumId;
 };
 
+export const getCollectionId = () => {
+  return getState(ID, 'user').collectionId;
+};
+
 export const getAccessToken = () => {
   return getState(ID, 'user').accessToken;
 };

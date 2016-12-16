@@ -16,7 +16,9 @@ export default {
       },
       thingaggregate: {
         baseUrl: (mid): string =>
-          `/api/thingaggregate/${mid.getPath()}`
+          `/api/thingaggregate/${mid.getPath()}`,
+        scanOldUrl: (oldBarcode, mid, cid) =>
+          `/api/thingaggregate/${mid.getPath()}/scan?oldBarcode=${oldBarcode}&collectionIds=${cid}`
       },
       actor: {
         searchUrl: (term, mid) =>
