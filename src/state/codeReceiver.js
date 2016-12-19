@@ -8,7 +8,7 @@ import { dispatchAction, getState } from '../reducers/public';
 import { addNode, addObject } from '../reducers/picklist';
 import { getPath } from '../reducers/helper';
 import { getMuseumId, getCollectionId } from '../reducers/auth';
-import { isActive, loadNode } from '../reducers/storageunit/modal';
+import { isActive, loadNode, loadChildren } from '../reducers/storageunit/modal';
 
 import { ROUTE_PICKLIST, ROUTE_STORAGEFACILITY } from '../routes';
 
@@ -51,6 +51,7 @@ const dispatchNode = (url, isNodePickList, isStoragefacility, isMoveActive) => {
         if (res.id) {
           if (isMoveActive) {
             dispatchAction(loadNode(res.id, getMuseumId()));
+            dispatchAction(loadChildren(res.id, getMuseumId()));
           } else if (isNodePickList) {
             dispatchAction(addNode(res, getPath(res)));
           } else if (isStoragefacility) {
