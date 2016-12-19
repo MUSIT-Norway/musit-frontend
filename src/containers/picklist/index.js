@@ -24,7 +24,8 @@ import { moveObject, moveNode } from '../../reducers/move';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
-import {customSortingStorageNodeType} from '../../util/';
+import { customSortingStorageNodeType } from '../../util/';
+import { clear } from '../../reducers/storageunit/modal';
 
 const getNodes = (state) => state.picks.NODE || [];
 
@@ -68,7 +69,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
   },
   refreshNodes: (ids, museumId) => ids.forEach(id => dispatch(refreshNode(id, museumId))),
-  refreshObjects: (ids, museumId) => ids.forEach(id => dispatch(refreshObject(id, museumId)))
+  refreshObjects: (ids, museumId) => ids.forEach(id => dispatch(refreshObject(id, museumId))),
+  clearMoveDialog: () => dispatch(clear())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PickListContainer);

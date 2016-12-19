@@ -26,7 +26,8 @@ export default class PickListContainer extends React.Component {
     params: React.PropTypes.object.isRequired,
     user: React.PropTypes.object,
     refreshNodes: React.PropTypes.func.isRequired,
-    refreshObjects: React.PropTypes.func.isRequired
+    refreshObjects: React.PropTypes.func.isRequired,
+    clearMoveDialog: React.PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -51,7 +52,7 @@ export default class PickListContainer extends React.Component {
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
     }
-    this.context.showModal(title, <MusitModal onMove={this.moveModal(items)}/>);
+    this.context.showModal(title, <MusitModal onMove={this.moveModal(items)}/>, this.props.clearMoveDialog);
   }
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
