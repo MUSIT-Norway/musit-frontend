@@ -8,7 +8,7 @@ import { dispatchAction, getState } from '../reducers/public';
 import { addNode, addObject } from '../reducers/picklist';
 import { getPath } from '../reducers/helper';
 import { getMuseumId, getCollectionId } from '../reducers/auth';
-import { isActive, loadNode, loadChildren } from '../reducers/storageunit/modal';
+import { isMoveDialogActive, loadNode, loadChildren } from '../reducers/storageunit/modal';
 
 import { ROUTE_PICKLIST, ROUTE_STORAGEFACILITY } from '../routes';
 
@@ -80,7 +80,7 @@ state$.filter(text => OLD_REGEX.test(text))
     const isNodePickList = isNodePicklist(path);
     const isObjectPickList = isObjectPicklist(path);
     const isStoragefacility = pathname.startsWith(ROUTE_STORAGEFACILITY);
-    const isMoveActive = isActive();
+    const isMoveActive = isMoveDialogActive();
     if (isNodePickList || isStoragefacility || isMoveActive) {
       const url = Config.magasin.urls.storagefacility.scanOldUrl(oldBarcode, getMuseumId());
       dispatchNode(url, isNodePickList, isStoragefacility, isMoveActive);
@@ -96,7 +96,7 @@ state$.filter(text => UUID_REGEX.test(text))
     const path = getRoutePath(pathname);
     const isNodePickList = isNodePicklist(path);
     const isStoragefacility = pathname.startsWith(ROUTE_STORAGEFACILITY);
-    const isMoveActive = isActive();
+    const isMoveActive = isMoveDialogActive();
     if (isNodePickList || isStoragefacility || isMoveActive) {
       const url = Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId());
       dispatchNode(url, isNodePickList, isStoragefacility, isMoveActive);

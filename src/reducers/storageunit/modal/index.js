@@ -107,7 +107,7 @@ export const clear = () => {
   };
 };
 
-export const isActive = () => {
+export const isMoveDialogActive = () => {
   const data = getState(ID, 'data');
   return data && data.length > 0 || Object.keys(getState(ID, 'root')).length > 0;
 };
