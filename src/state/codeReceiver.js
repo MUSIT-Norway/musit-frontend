@@ -10,7 +10,7 @@ import { getPath } from '../reducers/helper';
 import { getMuseumId, getCollectionId } from '../reducers/auth';
 import { isMoveDialogActive, loadNode, loadChildren } from '../reducers/storageunit/modal';
 
-import { ROUTE_PICKLIST, ROUTE_STORAGEFACILITY } from '../routes';
+import { ROUTE_PICKLIST, ROUTE_SF } from '../routes.path';
 
 import Config from '../config';
 
@@ -41,7 +41,7 @@ const getRoutePathname = () => getState(ROUTE_STATE, ROUTE_LOCATION).pathname;
 const getRoutePath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
 const isNodePicklist = (path) => path && path.length > 0 && path[1] === 'node';
 const isObjectPicklist = (path) => path && path.length > 0 && path[1] === 'object';
-const isStorageFacility = (pathname) => pathname.startsWith(ROUTE_STORAGEFACILITY);
+const isStorageFacility = (pathname) => pathname.startsWith(ROUTE_SF);
 
 const dispatchNode = (url, isNodePickList, isStoragefacility, isMoveActive) => {
   dispatchAction({
