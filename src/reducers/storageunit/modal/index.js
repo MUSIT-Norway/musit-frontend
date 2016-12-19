@@ -109,5 +109,7 @@ export const clear = () => {
 
 export const isMoveDialogActive = () => {
   const data = getState(ID, 'data');
-  return data && data.length > 0 || Object.keys(getState(ID, 'root')).length > 0;
+  const hasData = data && data.length > 0;
+  const hasRoot = Object.keys(getState(ID, 'root')).length > 0;
+  return hasData || hasRoot;
 };
