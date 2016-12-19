@@ -38,24 +38,29 @@ const state$ = Observable.merge(clearReducer$, charReducer$)
     .map(text =>text.replace(/\+/g, '-'));
 
 const getRoutePathname = () => getState(ROUTE_STATE, ROUTE_LOCATION).pathname;
-const getRoutePath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
-const isNodePicklist = (path) => path && path.length > 0 && path[1] === 'node';
-const isObjectPicklist = (path) => path && path.length > 0 && path[1] === 'object';
+const getPickListPath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
+const isNodePickList = (path) => path && path.length > 0 && path[1] === 'node';
+const isObjectPickList = (path) => path && path.length > 0 && path[1] === 'object';
 const isStorageFacility = (pathname) => pathname.startsWith(ROUTE_SF);
 
-const dispatchNode = (url, isNodePickList, isStoragefacility, isMoveActive) => {
+const dispatchNode = (
+  serviceUrl,
+  nodePickList,
+  storageFacility,
+  moveActive
+) => {
   dispatchAction({
     types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
-    promise: (client) => client.get(url),
+    promise: (client) => client.get(serviceUrl),
     callback: {
       onSuccess: (res) => {
         if (res.id) {
-          if (isMoveActive) {
+          if (moveActive) {
             dispatchAction(loadNode(res.id, getMuseumId()));
             dispatchAction(loadChildren(res.id, getMuseumId()));
-          } else if (isNodePickList) {
+          } else if (nodePickList) {
             dispatchAction(addNode(res, getPath(res)));
-          } else if (isStoragefacility) {
+          } else if (storageFacility) {
             hashHistory.push(`/magasin/${res.id}`);
           }
         }
@@ -64,10 +69,12 @@ const dispatchNode = (url, isNodePickList, isStoragefacility, isMoveActive) => {
   });
 };
 
-const dispatchObject = (url) => {
+const dispatchObject = (
+  serviceUrl
+) => {
   dispatchAction({
     types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
-    promise: (client) => client.get(url),
+    promise: (client) => client.get(serviceUrl),
     callback: {
       onSuccess: (res) => res.map(obj => dispatchAction(addObject(obj, getPath(obj))))
     }
@@ -77,15 +84,15 @@ const dispatchObject = (url) => {
 state$.filter(text => OLD_REGEX.test(text))
   .subscribe(oldBarcode => {
     const pathname = getRoutePathname();
-    const path = getRoutePath(pathname);
-    const isNodePickList = isNodePicklist(path);
-    const isObjectPickList = isObjectPicklist(path);
-    const isStoragefacility = isStorageFacility();
-    const isMoveActive = isMoveDialogActive();
-    if (isNodePickList || isStoragefacility || isMoveActive) {
+    const pickListPath = getPickListPath(pathname);
+    const nodePickList = isNodePickList(pickListPath);
+    const objectPickList = isObjectPickList(pickListPath);
+    const storageFacility = isStorageFacility();
+    const moveActive = isMoveDialogActive();
+    if (nodePickList || storageFacility || moveActive) {
       const url = Config.magasin.urls.storagefacility.scanOldUrl(oldBarcode, getMuseumId());
-      dispatchNode(url, isNodePickList, isStoragefacility, isMoveActive);
-    } else if (isObjectPickList) {
+      dispatchNode(url, nodePickList, storageFacility, moveActive);
+    } else if (objectPickList) {
       const url = Config.magasin.urls.thingaggregate.scanOldUrl(oldBarcode, getMuseumId(), getCollectionId());
       dispatchObject(url);
     }
@@ -94,12 +101,12 @@ state$.filter(text => OLD_REGEX.test(text))
 state$.filter(text => UUID_REGEX.test(text))
   .subscribe(uuid => {
     const pathname = getRoutePathname();
-    const path = getRoutePath(pathname);
-    const isNodePickList = isNodePicklist(path);
-    const isStoragefacility = isStorageFacility();
-    const isMoveActive = isMoveDialogActive();
-    if (isNodePickList || isStoragefacility || isMoveActive) {
+    const pickListPath = getPickListPath(pathname);
+    const nodePickList = isNodePickList(pickListPath);
+    const storageFacility = isStorageFacility();
+    const moveActive = isMoveDialogActive();
+    if (nodePickList || storageFacility || moveActive) {
       const url = Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId());
-      dispatchNode(url, isNodePickList, isStoragefacility, isMoveActive);
+      dispatchNode(url, nodePickList, storageFacility, moveActive);
     }
   });
