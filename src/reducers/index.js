@@ -24,7 +24,7 @@ import picklistReducer from './picklist';
 import storagePanelReducer from './storageunit/panel';
 import storagePanelStateReducer from './storageunit/panel/state';
 import storageNodeGridReducer from './storageunit/grid';
-import storageUnitModalReducer from './storageunit/modal';
+import storageUnitModal from './storageunit/modal';
 import storageUnitStatsReducer from './storageunit/stats';
 import storageObjectGridReducer from './storageobject/grid';
 import observationReducer from './observation';
@@ -42,7 +42,7 @@ const rootReducer = combineReducers({
   picks: picklistReducer,
   storagePanelUnit: storagePanelReducer,
   storageGridUnit: storageNodeGridReducer,
-  storageUnitModal: storageUnitModalReducer,
+  [storageUnitModal.ID]: storageUnitModal.reducer,
   storageUnitStats: storageUnitStatsReducer,
   storagePanelState: storagePanelStateReducer,
   storageObjectGrid: storageObjectGridReducer,

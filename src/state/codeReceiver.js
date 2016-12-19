@@ -8,6 +8,8 @@ import { dispatchAction, getState } from '../reducers/public';
 import { addNode, addObject } from '../reducers/picklist';
 import { getPath } from '../reducers/helper';
 import { getMuseumId, getCollectionId } from '../reducers/auth';
+import { isActive, loadNode } from '../reducers/storageunit/modal';
+
 import { ROUTE_PICKLIST, ROUTE_STORAGEFACILITY } from '../routes';
 
 import Config from '../config';
@@ -40,14 +42,16 @@ const getRoutePath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
 const isNodePicklist = (path) => path && path.length > 0 && path[1] === 'node';
 const isObjectPicklist = (path) => path && path.length > 0 && path[1] === 'object';
 
-const dispatchNode = (url, isNodePickList, isStoragefacility) => {
+const dispatchNode = (url, isNodePickList, isStoragefacility, isMoveActive) => {
   dispatchAction({
     types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
     promise: (client) => client.get(url),
     callback: {
       onSuccess: (res) => {
         if (res.id) {
-          if (isNodePickList) {
+          if (isMoveActive) {
+            dispatchAction(loadNode(res.id, getMuseumId()));
+          } else if (isNodePickList) {
             dispatchAction(addNode(res, getPath(res)));
           } else if (isStoragefacility) {
             hashHistory.push(`/magasin/${res.id}`);
@@ -75,9 +79,10 @@ state$.filter(text => OLD_REGEX.test(text))
     const isNodePickList = isNodePicklist(path);
     const isObjectPickList = isObjectPicklist(path);
     const isStoragefacility = pathname.startsWith(ROUTE_STORAGEFACILITY);
-    if (isNodePickList || isStoragefacility) {
+    const isMoveActive = isActive();
+    if (isNodePickList || isStoragefacility || isMoveActive) {
       const url = Config.magasin.urls.storagefacility.scanOldUrl(oldBarcode, getMuseumId());
-      dispatchNode(url, isNodePickList, isStoragefacility);
+      dispatchNode(url, isNodePickList, isStoragefacility, isMoveActive);
     } else if (isObjectPickList) {
       const url = Config.magasin.urls.thingaggregate.scanOldUrl(oldBarcode, getMuseumId(), getCollectionId());
       dispatchObject(url);
@@ -90,8 +95,9 @@ state$.filter(text => UUID_REGEX.test(text))
     const path = getRoutePath(pathname);
     const isNodePickList = isNodePicklist(path);
     const isStoragefacility = pathname.startsWith(ROUTE_STORAGEFACILITY);
-    if (isNodePickList || isStoragefacility) {
+    const isMoveActive = isActive();
+    if (isNodePickList || isStoragefacility || isMoveActive) {
       const url = Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId());
-      dispatchNode(url, isNodePickList, isStoragefacility);
+      dispatchNode(url, isNodePickList, isStoragefacility, isMoveActive);
     }
   });

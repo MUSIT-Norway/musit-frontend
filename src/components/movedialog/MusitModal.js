@@ -41,6 +41,11 @@ export default class MusitModal extends Component {
     closeModal: PropTypes.func.isRequired
   };
 
+  constructor(props, context) {
+    super(props, context);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
   componentDidMount() {
     this.loadHome();
   }
@@ -53,6 +58,11 @@ export default class MusitModal extends Component {
   loadNode(id) {
     this.props.loadNode(id, this.props.user.museumId);
     this.props.loadChildren(id, this.props.user.museumId);
+  }
+
+  closeModal() {
+    this.props.clear();
+    this.context.closeModal();
   }
 
   render() {
@@ -95,12 +105,12 @@ export default class MusitModal extends Component {
         <div style={{ paddingTop: '10px' }}>
           <SubmitButton
             disabled={!isSelected}
-            onClick={() => this.props.onMove(selectedNode, selectedNode.name, this.context.closeModal)}
+            onClick={() => this.props.onMove(selectedNode, selectedNode.name, this.closeModal)}
             label={I18n.t('musit.moveModal.move')}
           />
           &nbsp;
           <CancelButton
-            onClick={this.context.closeModal}
+            onClick={this.closeModal}
             label={I18n.t('musit.texts.close')}
           />
         </div>

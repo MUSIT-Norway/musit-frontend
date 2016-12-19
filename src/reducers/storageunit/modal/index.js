@@ -1,6 +1,9 @@
 import Config from '../../../config';
 import { apiUrl } from '../../../util';
 import { getPath } from '../../helper';
+import { getState } from '../../../reducers/public';
+
+const ID = 'storageUnitModal';
 
 export const LOAD_CHILDREN = 'musit/storageunit-modal/LOAD_CHILDREN';
 export const LOAD_CHILDREN_SUCCESS = 'musit/storageunit-modal/LOAD_CHILDREN_SUCCESS';
@@ -74,7 +77,7 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default storageUnitModalReducer;
+export default { ID, reducer: storageUnitModalReducer };
 
 export const loadNode = (id, museumId) => {
   const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`);
@@ -102,4 +105,9 @@ export const clear = () => {
   return {
     type: CLEAR
   };
+};
+
+export const isActive = () => {
+  const data = getState(ID, 'data');
+  return data && data.length > 0 || Object.keys(getState(ID, 'root')).length > 0;
 };
