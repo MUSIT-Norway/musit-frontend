@@ -46,10 +46,12 @@ const dispatchNode = (url, isNodePickList, isStoragefacility) => {
     promise: (client) => client.get(url),
     callback: {
       onSuccess: (res) => {
-        if (isNodePickList) {
-          dispatchAction(addNode(res, getPath(res)));
-        } else if (isStoragefacility) {
-          hashHistory.push(`/magasin/${res.id}`);
+        if (res.id) {
+          if (isNodePickList) {
+            dispatchAction(addNode(res, getPath(res)));
+          } else if (isStoragefacility) {
+            hashHistory.push(`/magasin/${res.id}`);
+          }
         }
       }
     }
