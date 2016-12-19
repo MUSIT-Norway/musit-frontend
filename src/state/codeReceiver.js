@@ -41,6 +41,7 @@ const getRoutePathname = () => getState(ROUTE_STATE, ROUTE_LOCATION).pathname;
 const getRoutePath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
 const isNodePicklist = (path) => path && path.length > 0 && path[1] === 'node';
 const isObjectPicklist = (path) => path && path.length > 0 && path[1] === 'object';
+const isStorageFacility = (pathname) => pathname.startsWith(ROUTE_STORAGEFACILITY);
 
 const dispatchNode = (url, isNodePickList, isStoragefacility, isMoveActive) => {
   dispatchAction({
@@ -79,7 +80,7 @@ state$.filter(text => OLD_REGEX.test(text))
     const path = getRoutePath(pathname);
     const isNodePickList = isNodePicklist(path);
     const isObjectPickList = isObjectPicklist(path);
-    const isStoragefacility = pathname.startsWith(ROUTE_STORAGEFACILITY);
+    const isStoragefacility = isStorageFacility();
     const isMoveActive = isMoveDialogActive();
     if (isNodePickList || isStoragefacility || isMoveActive) {
       const url = Config.magasin.urls.storagefacility.scanOldUrl(oldBarcode, getMuseumId());
@@ -95,7 +96,7 @@ state$.filter(text => UUID_REGEX.test(text))
     const pathname = getRoutePathname();
     const path = getRoutePath(pathname);
     const isNodePickList = isNodePicklist(path);
-    const isStoragefacility = pathname.startsWith(ROUTE_STORAGEFACILITY);
+    const isStoragefacility = isStorageFacility();
     const isMoveActive = isMoveDialogActive();
     if (isNodePickList || isStoragefacility || isMoveActive) {
       const url = Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId());
