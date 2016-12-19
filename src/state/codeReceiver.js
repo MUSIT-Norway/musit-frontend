@@ -1,10 +1,14 @@
+const pathToRegexp = require('path-to-regexp');
+
 import { Observable } from 'rxjs/Rx';
 
-import { dispatchAction, getState } from '../reducers/public';
-import { addNode } from '../reducers/picklist';
-import { getPath } from '../reducers/helper';
-import { getMuseumId } from '../reducers/auth';
 import { hashHistory } from 'react-router';
+
+import { dispatchAction, getState } from '../reducers/public';
+import { addNode, addObject } from '../reducers/picklist';
+import { getPath } from '../reducers/helper';
+import { getMuseumId, getCollectionId } from '../reducers/auth';
+import { ROUTE_PICKLIST, ROUTE_STORAGEFACILITY } from '../routes';
 
 import Config from '../config';
 
@@ -13,47 +17,81 @@ const OLD_REGEX = /^[0-9]{9,10}$/i;
 
 const ROUTE_STATE = 'routing';
 const ROUTE_LOCATION = 'locationBeforeTransitions';
-const ROUTE_PICKLIST_NODE = '/picklist/node';
+const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 
 const SCAN_START = 'musit/scan/start';
 const SCAN_SUCCESS = 'musit/scan/success';
 const SCAN_FAILURE = 'musit/scan/failure';
 
-const clearScheduler$ = Observable.fromEvent(window, 'keypress').debounce(() => Observable.timer(500));
-const clearReducer = clearScheduler$.map(() => () => '');
+const keyPress$ = Observable.fromEvent(window, 'keypress');
 
-const keyPress$ = Observable.fromEvent(window, 'keypress').map(e => String.fromCharCode(e.which));
-const keyPressReducer = keyPress$.map(text => (state) => `${state}${text.replace('\\+', '-')}`);
+const clear$ = keyPress$.debounce(() => Observable.timer(500));
+const clearReducer$ = clear$.map(() => () => '');
 
-const state$ = Observable.merge(clearReducer, keyPressReducer)
+const char$ = keyPress$.map(e => String.fromCharCode(e.which));
+const charReducer$ = char$.map(text => (state) => `${state}${text.replace('\\+', '-')}`);
+
+const state$ = Observable.merge(clearReducer$, charReducer$)
     .scan((state, reducer) => reducer(state), '')
-    .map(text => text.replace(/\+/g, '-'));
+    .map(text =>text.replace(/\+/g, '-'));
 
-const callback = {
-  onSuccess: (res) => {
-    const isNodePickList = getState(ROUTE_STATE, ROUTE_LOCATION).pathname === ROUTE_PICKLIST_NODE;
-    if (isNodePickList) {
-      dispatchAction(addNode(res, getPath(res)));
-    } else {
-      hashHistory.push(`/magasin/${res.id}`);
+const getRoutePathname = () => getState(ROUTE_STATE, ROUTE_LOCATION).pathname;
+const getRoutePath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
+const isNodePicklist = (path) => path && path.length > 0 && path[1] === 'node';
+const isObjectPicklist = (path) => path && path.length > 0 && path[1] === 'object';
+
+const dispatchNode = (url, isNodePickList, isStoragefacility) => {
+  dispatchAction({
+    types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
+    promise: (client) => client.get(url),
+    callback: {
+      onSuccess: (res) => {
+        if (res.id) {
+          if (isNodePickList) {
+            dispatchAction(addNode(res, getPath(res)));
+          } else if (isStoragefacility) {
+            hashHistory.push(`/magasin/${res.id}`);
+          }
+        }
+      }
     }
-  }
+  });
+};
+
+const dispatchObject = (url) => {
+  dispatchAction({
+    types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
+    promise: (client) => client.get(url),
+    callback: {
+      onSuccess: (res) => res.map(obj => dispatchAction(addObject(obj, getPath(obj))))
+    }
+  });
 };
 
 state$.filter(text => OLD_REGEX.test(text))
-    .subscribe(oldBarcode => {
-      dispatchAction({
-        types: [ SCAN_START, SCAN_SUCCESS, SCAN_FAILURE ],
-        promise: (client) => client.get(Config.magasin.urls.storagefacility.scanOldUrl(oldBarcode, getMuseumId())),
-        callback
-      });
-    });
+  .subscribe(oldBarcode => {
+    const pathname = getRoutePathname();
+    const path = getRoutePath(pathname);
+    const isNodePickList = isNodePicklist(path);
+    const isObjectPickList = isObjectPicklist(path);
+    const isStoragefacility = pathname.startsWith(ROUTE_STORAGEFACILITY);
+    if (isNodePickList || isStoragefacility) {
+      const url = Config.magasin.urls.storagefacility.scanOldUrl(oldBarcode, getMuseumId());
+      dispatchNode(url, isNodePickList, isStoragefacility);
+    } else if (isObjectPickList) {
+      const url = Config.magasin.urls.thingaggregate.scanOldUrl(oldBarcode, getMuseumId(), getCollectionId());
+      dispatchObject(url);
+    }
+  });
 
 state$.filter(text => UUID_REGEX.test(text))
-    .subscribe(uuid => {
-      dispatchAction({
-        types: [ SCAN_START, SCAN_SUCCESS, SCAN_FAILURE ],
-        promise: (client) => client.get(Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId())),
-        callback
-      });
-    });
+  .subscribe(uuid => {
+    const pathname = getRoutePathname();
+    const path = getRoutePath(pathname);
+    const isNodePickList = isNodePicklist(path);
+    const isStoragefacility = pathname.startsWith(ROUTE_STORAGEFACILITY);
+    if (isNodePickList || isStoragefacility) {
+      const url = Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId());
+      dispatchNode(url, isNodePickList, isStoragefacility);
+    }
+  });
