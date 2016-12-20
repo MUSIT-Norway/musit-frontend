@@ -111,7 +111,8 @@ export const loadRoot = (id, museumId, currentPage, callback) => {
 };
 
 export const loadChildren = (id, museumId, currentPage, callback) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}/children?page=${currentPage || 1}`);
+  const baseUrl = Config.magasin.urls.storagefacility.baseUrl(museumId);
+  const url = apiUrl(`${baseUrl}/${id}/children?page=${currentPage || 1}&limit=${Config.magasin.limit}`);
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
     promise: (client) => client.get(url),

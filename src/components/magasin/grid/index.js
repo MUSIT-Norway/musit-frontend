@@ -14,6 +14,7 @@ import MusitModalHistory from '../../movehistory';
 import { checkNodeBranchAndType } from '../../../util/nodeValidator';
 import MusitNode from '../../../models/node';
 import PagingToolbar from '../../../util/paging';
+import Config from '../../../config';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -301,27 +302,38 @@ export default class StorageUnitsContainer extends React.Component {
   ) {
     if (showObjects) {
       return (
-        <ObjectGrid
-          tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
-          showMoveHistory={showHistory}
-          onAction={(action, unit) =>
-          onAction(
-            action,
-            unit,
-            rootNode.breadcrumb,
-            this.props.user.museumId,
-            this.props.user.collectionId
-          )
-        }
-          onMove={moveObject}
-        />
+        <div>
+          <ObjectGrid
+            tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
+            showMoveHistory={showHistory}
+            onAction={(action, unit) =>
+              onAction(
+                action,
+                unit,
+                rootNode.breadcrumb,
+                this.props.user.museumId,
+                this.props.user.collectionId
+              )
+            }
+            onMove={moveObject}
+          />
+          {this.props.totalObjects > 0 &&
+            <PagingToolbar
+              numItems={this.props.totalObjects}
+              currentPage={this.getCurrentPage() || 1}
+              perPage={Config.magasin.limit}
+              onClick={() => {
+                console.log('Clicking');
+              }}
+            />
+          }
+        </div>
       );
     }
-    const tableData = filter(children, ['name'], searchPattern);
     return (
       <div>
         <NodeGrid
-          tableData={tableData}
+          tableData={filter(children, ['name'], searchPattern)}
           onAction={(action, unit) =>
             onAction(
               action,
@@ -336,29 +348,29 @@ export default class StorageUnitsContainer extends React.Component {
             hashHistory.push(`/magasin/${row.id}`);
           }}
         />
-        <PagingToolbar
-          numItems={tableData.length}
-          currentPage={this.getCurrentPage() || 1}
-          perPage={25}
-          onClick={() => {
-            console.log('Clicking');
-          }}
-        />
+        {this.props.totalNodes > 0 &&
+          <PagingToolbar
+            numItems={this.props.totalNodes}
+            currentPage={this.getCurrentPage() || 1}
+            perPage={Config.magasin.limit}
+            onClick={() => {
+              console.log('Clicking');
+            }}
+          />
+        }
       </div>
     );
   }
 
   render() {
     return (
-      <div>
-        <Layout
-          title={'Magasin'}
-          breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={this.onClickCrumb} />}
-          toolbar={this.makeToolbar()}
-          leftMenu={this.makeLeftMenu()}
-          content={this.makeContentGrid()}
-        />
-      </div>
+      <Layout
+        title={'Magasin'}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={this.onClickCrumb} />}
+        toolbar={this.makeToolbar()}
+        leftMenu={this.makeLeftMenu()}
+        content={this.makeContentGrid()}
+      />
     );
   }
 }

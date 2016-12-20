@@ -14,24 +14,22 @@ import toLower from 'lodash/toLower';
 import {customSortingStorageNodeType} from '../../../util/';
 import MusitNode from '../../../models/node';
 
-const getStorageGridUnit = (state) => {
-  if (!state.storageGridUnit.data) {
+const getGridData = (field) => (state) => {
+  if (!state[field].data) {
     return [];
   }
-  return state.storageGridUnit.data.length ? state.storageGridUnit.data : state.storageGridUnit.data.matches || [];
+  return state[field].data.length ? state[field].data : state[field].data.matches || [];
 };
 
 const getSortedStorageGridUnit = createSelector(
-  [getStorageGridUnit],
+  [getGridData('storageGridUnit')],
   (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type),
     (o) => toLower(o.name)
   ])
   );
 
-const getStorageObjectGrid = (state) => state.storageObjectGrid.data || [];
-
 const getSortedStorageObjectGrid = createSelector(
-  [getStorageObjectGrid],
+  [getGridData('storageObjectGrid')],
   (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
 );
 
@@ -39,8 +37,9 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   stats: state.storageUnitStats.stats,
   children: getSortedStorageGridUnit(state),
-  totalMatches: state.storageGridUnit.data && state.storageGridUnit.data.totalMatches,
+  totalNodes: state.storageGridUnit.data && state.storageGridUnit.data.totalMatches,
   objects: getSortedStorageObjectGrid(state),
+  totalObjects: state.storageObjectGrid.data && state.storageObjectGrid.data.totalMatches,
   rootNode: state.storageGridUnit.root.data,
   routerState: state.routing
 });
