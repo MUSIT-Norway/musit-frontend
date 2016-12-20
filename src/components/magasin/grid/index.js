@@ -68,10 +68,6 @@ export default class StorageUnitsContainer extends React.Component {
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
   }
 
-  getCurrentPage() {
-    return this.props.location.state && this.props.location.state.currentPage;
-  }
-
   componentWillMount() {
     if (this.props.route.showObjects) {
       this.loadObjects();
@@ -320,10 +316,16 @@ export default class StorageUnitsContainer extends React.Component {
           {this.props.totalObjects > 0 &&
             <PagingToolbar
               numItems={this.props.totalObjects}
-              currentPage={this.getCurrentPage() || 1}
+              currentPage={this.props.location.state && this.props.location.state.currentPage}
               perPage={Config.magasin.limit}
-              onClick={() => {
-                console.log('Clicking');
+              onClick={(currentPage) => {
+                hashHistory.replace({
+                  pathname: `/magasin/${this.props.rootNode.id}/objects`,
+                  state: {
+                    currentPage
+                  }
+                });
+                this.loadObjects();
               }}
             />
           }
@@ -351,10 +353,16 @@ export default class StorageUnitsContainer extends React.Component {
         {this.props.totalNodes > 0 &&
           <PagingToolbar
             numItems={this.props.totalNodes}
-            currentPage={this.getCurrentPage() || 1}
+            currentPage={this.props.location.state && this.props.location.state.currentPage}
             perPage={Config.magasin.limit}
-            onClick={() => {
-              console.log('Clicking');
+            onClick={(currentPage) => {
+              hashHistory.replace({
+                pathname: `/magasin/${this.props.rootNode.id}`,
+                state: {
+                  currentPage
+                }
+              });
+              this.loadNodes();
             }}
           />
         }
