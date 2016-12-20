@@ -98,7 +98,7 @@ state$.filter(text => OLD_REGEX.test(text))
       const url = Config.magasin.urls.thingaggregate.scanOldUrl(oldBarcode, getMuseumId(), getCollectionId());
       dispatchObject(url);
     } else {
-      emitError({ message: 'Scanning av gamle barcodes kan kun gjøres i magasin eller plukkliste' });
+      emitError({ message: 'Scanning av gamle barcodes kan kun gjøres i magasin eller node/objekt plukkliste' });
     }
   });
 
@@ -113,6 +113,6 @@ state$.filter(text => UUID_REGEX.test(text))
       const url = Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId());
       dispatchNode(url, nodePickList, storageFacility, moveActive);
     } else {
-      emitError({ message: 'Scanning av uuid kan kun gjøres i magasin eller plukkliste' });
+      emitError({ message: 'Scanning av uuid kan kun gjøres i magasin eller node plukkliste' });
     }
   });
