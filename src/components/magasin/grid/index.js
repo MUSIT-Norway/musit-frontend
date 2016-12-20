@@ -69,6 +69,10 @@ export default class StorageUnitsContainer extends React.Component {
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
   }
 
+  getCurrentPage() {
+    return this.props.location.state && this.props.location.state.currentPage;
+  }
+
   componentWillMount() {
     if (this.props.route.showObjects) {
       this.loadObjects();
@@ -85,8 +89,10 @@ export default class StorageUnitsContainer extends React.Component {
     const museumId = museumHasChanged ? newProps.user.museumId : this.props.user.museumId;
     const nodeId = museumHasChanged ? null : newProps.params.id;
     if (newProps.params.id !== this.props.params.id || museumHasChanged) {
-      if (nodeId) {
-        this.props.loadChildren(nodeId, museumId, this.getCurrentPage());
+      if (newProps.route.showObjects) {
+        this.loadObjects();
+      } else if (nodeId) {
+        this.props.loadChildren(nodeId, museumId);
       } else {
         this.props.loadStorageUnits(museumId, this.getCurrentPage());
       }
@@ -317,7 +323,7 @@ export default class StorageUnitsContainer extends React.Component {
           {this.props.totalObjects > 0 &&
             <PagingToolbar
               numItems={this.props.totalObjects}
-              currentPage={this.props.location.state && this.props.location.state.currentPage}
+              currentPage={this.getCurrentPage()}
               perPage={Config.magasin.limit}
               onClick={(currentPage) => {
                 hashHistory.replace({
@@ -354,7 +360,7 @@ export default class StorageUnitsContainer extends React.Component {
         {this.props.totalNodes > 0 &&
           <PagingToolbar
             numItems={this.props.totalNodes}
-            currentPage={this.props.location.state && this.props.location.state.currentPage}
+            currentPage={this.getCurrentPage()}
             perPage={Config.magasin.limit}
             onClick={(currentPage) => {
               hashHistory.replace({
