@@ -91,7 +91,9 @@ export default class StorageUnitsContainer extends React.Component {
     const museumId = museumHasChanged ? newProps.user.museumId : this.props.user.museumId;
     const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
-    if (newProps.params.id !== this.props.params.id || museumHasChanged || locationState !== this.props.location.state) {
+    const idHasChanged = newProps.params.id !== this.props.params.id;
+    const stateHasChanged = locationState !== this.props.location.state;
+    if (idHasChanged || museumHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
       if (newProps.route.showObjects) {
         this.loadObjects(currentPage);
