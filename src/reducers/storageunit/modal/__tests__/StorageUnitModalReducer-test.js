@@ -2,15 +2,11 @@ import assert from 'assert';
 import deepFreeze from 'deep-freeze';
 import MuseumId from '../../../../models/museumId';
 import * as actions from '../index';
-import reducer from '../index';
+import reducer, { clear } from '../index';
 import Config from '../../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
-
-import suReducer, {
-  clear
-} from '../index';
 
 const testRootState = {
   data: [
@@ -82,12 +78,12 @@ deepFreeze(testSubNoRootState);
 
 describe('StorageUnitModalReducer', () => {
   it('Initial state is set', () => {
-    const state = suReducer(testRootState, {});
+    const state = reducer.reducer(testRootState, {});
     assert(state === testRootState);
   });
 
   it('Clear StorageUnitModalReducer root', () => {
-    const state = suReducer(testSubRootState, clear());
+    const state = reducer.reducer(testSubRootState, clear());
     assert(JSON.stringify(state) === JSON.stringify(testSubNoRootState));
   });
 
@@ -126,41 +122,41 @@ describe('StorageUnitModalReducer', () => {
 
   it('Reducer: no action', () => {
     expect(
-      reducer(undefined, {})
+      reducer.reducer(undefined, {})
     ).toMatchSnapshot();
   });
 
   it('Reducer: nothing at all', () => {
     expect(
-      reducer(undefined, undefined)
+      reducer.reducer(undefined, undefined)
     ).toMatchSnapshot();
   });
 
   it('LOAD_NODE: initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_NODE
-        })
+      reducer.reducer(undefined, {
+        type: actions.LOAD_NODE
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_NODE: success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_NODE_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer.reducer(undefined, {
+        type: actions.LOAD_NODE_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_NODE: fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_NODE_FAIL,
-          error: Error('LOAD_ROOT: has error.')
-        })
+      reducer.reducer(undefined, {
+        type: actions.LOAD_NODE_FAIL,
+        error: Error('LOAD_ROOT: has error.')
+      })
     ).toMatchSnapshot();
   });
 
@@ -189,29 +185,29 @@ describe('StorageUnitModalReducer', () => {
 
   it('LOAD_CHILDREN: initial action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_CHILDREN
-        })
+      reducer.reducer(undefined, {
+        type: actions.LOAD_CHILDREN
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_CHILDREN: success action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_CHILDREN_SUCCESS,
-          result: {
-            someField: 1
-          }
-        })
+      reducer.reducer(undefined, {
+        type: actions.LOAD_CHILDREN_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
     ).toMatchSnapshot();
   });
 
   it('LOAD_CHILDREN: fail action', () => {
     expect(
-        reducer(undefined, {
-          type: actions.LOAD_CHILDREN_FAIL,
-          error: Error('LOAD_CHILDREN has error.')
-        })
+      reducer.reducer(undefined, {
+        type: actions.LOAD_CHILDREN_FAIL,
+        error: Error('LOAD_CHILDREN has error.')
+      })
     ).toMatchSnapshot();
   });
 

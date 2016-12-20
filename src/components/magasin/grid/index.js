@@ -41,6 +41,7 @@ export default class StorageUnitsContainer extends React.Component {
     moves: React.PropTypes.arrayOf(React.PropTypes.object),
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
+    clearMoveDialog: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
@@ -132,7 +133,7 @@ export default class StorageUnitsContainer extends React.Component {
     showModal = this.context.showModal
   ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />);
+    showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />, this.props.clearMoveDialog);
   }
 
   moveNode = (
@@ -179,7 +180,7 @@ export default class StorageUnitsContainer extends React.Component {
   ) {
     const objStr = getObjectDescription(objectToMove);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    showModal(title, <MusitModal onMove={this.moveObject(objectToMove)} />);
+    showModal(title, <MusitModal onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
   }
 
   moveObject = (

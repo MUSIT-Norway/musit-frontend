@@ -35,48 +35,30 @@ import ControlAddContainer from './containers/control/add';
 import ObservationControlGridShow from './containers/observationcontrol';
 import ObjectSearchContainer from './containers/objectsearch';
 import Authenticated from './components/Authenticated';
-
-export const ROUTE_PICKLIST = '/picklist/:type';
-export const ROUTE_REPORTS = '/reports';
-export const ROUTE_REPORTS_KDREPORT = `${ROUTE_REPORTS}/kdreport`;
-export const ROUTE_SEARCH_OBJECTS = '/search/objects';
-export const ROUTE_STORAGEFACILITY = '/magasin';
-export const ROUTE_STORAGEFACILITY_ADD = `${ROUTE_STORAGEFACILITY}/add`;
-export const ROUTE_STORAGEFACILITY_NODE = `${ROUTE_STORAGEFACILITY}/:id`;
-export const ROUTE_STORAGEFACILITY_NODE_ADD = `${ROUTE_STORAGEFACILITY_NODE}/add`;
-export const ROUTE_STORAGEFACILITY_NODE_VIEW= `${ROUTE_STORAGEFACILITY_NODE}/view`;
-export const ROUTE_STORAGEFACILITY_NODE_CONTROLS = `${ROUTE_STORAGEFACILITY_NODE}/controls`;
-export const ROUTE_STORAGEFACILITY_NODE_CONTROLS_ADD = `${ROUTE_STORAGEFACILITY_NODE}/control/add`;
-export const ROUTE_STORAGEFACILITY_NODE_CONTROLS_VIEW = `${ROUTE_STORAGEFACILITY_NODE}/control/:controlId`;
-export const ROUTE_STORAGEFACILITY_NODE_OBSERVATIONS = `${ROUTE_STORAGEFACILITY_NODE}/observations`;
-export const ROUTE_STORAGEFACILITY_NODE_OBSERVATIONS_ADD= `${ROUTE_STORAGEFACILITY_NODE}/observations/add`;
-export const ROUTE_STORAGEFACILITY_NODE_OBSERVATIONS_EDIT= `${ROUTE_STORAGEFACILITY_NODE}/observations/edit`;
-export const ROUTE_STORAGEFACILITY_NODE_OBSERVATIONS_VIEW= `${ROUTE_STORAGEFACILITY_NODE}/observations/:obsId`;
-export const ROUTE_STORAGEFACILITY_NODE_CONTROLS_AND_OBSERVATIONS = `${ROUTE_STORAGEFACILITY_NODE}/controlsobservations`;
-export const ROUTE_STORAGEFACILITY_OBJECTS = `${ROUTE_STORAGEFACILITY_NODE}/objects`;
+import * as path from './routes.path';
 
 export default () => {
   return (
     <Route component={Authenticated}>
-      <IndexRedirect to={ROUTE_STORAGEFACILITY} />
-      <Route path={ROUTE_STORAGEFACILITY} component={StorageUnitsTable} />
-      <Route path={ROUTE_STORAGEFACILITY_ADD} add component={AddStorageUnitPanel} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_ADD} add component={AddStorageUnitPanel} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_VIEW} component={EditStorageUnitPanel} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_CONTROLS} showControls showObservations={false} component={ObservationControlGridShow} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={ObservationControlGridShow} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_CONTROLS_ADD} component={ControlAddContainer} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_OBSERVATIONS} showObservations showControls={false} component={ObservationControlGridShow} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
-      <Route path={ROUTE_STORAGEFACILITY_OBJECTS} showObjects component={StorageUnitsTable} />
-      <Route path={ROUTE_STORAGEFACILITY_NODE} component={StorageUnitsTable} />
-      <Route path={ROUTE_PICKLIST} component={PickListView} />
-      <Route path={ROUTE_REPORTS} component={Reports} />
-      <Route path={ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
-      <Route path={ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
+      <IndexRedirect to={path.ROUTE_SF} />
+      <Route path={path.ROUTE_SF} component={StorageUnitsTable} />
+      <Route path={path.ROUTE_SF_ADD} add component={AddStorageUnitPanel} />
+      <Route path={path.ROUTE_SF_NODE_ADD} add component={AddStorageUnitPanel} />
+      <Route path={path.ROUTE_SF_NODE_VIEW} component={EditStorageUnitPanel} />
+      <Route path={path.ROUTE_SF_NODE_CONTROLS} showControls showObservations={false} component={ObservationControlGridShow} />
+      <Route path={path.ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={ObservationControlGridShow} />
+      <Route path={path.ROUTE_SF_NODE_CONTROLS_ADD} component={ControlAddContainer} />
+      <Route path={path.ROUTE_SF_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
+      <Route path={path.ROUTE_SF_NODE_OBSERVATIONS} showObservations showControls={false} component={ObservationControlGridShow} />
+      <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
+      <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
+      <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
+      <Route path={path.ROUTE_SF_OBJECTS} showObjects component={StorageUnitsTable} />
+      <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
+      <Route path={path.ROUTE_PICKLIST} component={PickListView} />
+      <Route path={path.ROUTE_REPORTS} component={Reports} />
+      <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
       <Route path="/" component={WelcomeView} />
 
       -- Catch all route
