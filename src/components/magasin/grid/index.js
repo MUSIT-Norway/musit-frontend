@@ -69,8 +69,10 @@ export default class StorageUnitsContainer extends React.Component {
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
   }
 
-  getCurrentPage() {
-    return this.props.location.state && this.props.location.state.currentPage;
+  getCurrentPage(
+    state = this.props.location.state
+  ) {
+    return state && state.currentPage;
   }
 
   componentWillMount() {
@@ -88,13 +90,16 @@ export default class StorageUnitsContainer extends React.Component {
     const museumHasChanged = newProps.user.museumId !== this.props.user.museumId;
     const museumId = museumHasChanged ? newProps.user.museumId : this.props.user.museumId;
     const nodeId = museumHasChanged ? null : newProps.params.id;
-    if (newProps.params.id !== this.props.params.id || museumHasChanged) {
+    const locationState = newProps.location.state;
+    if (newProps.params.id !== this.props.params.id || museumHasChanged || locationState !== this.props.location.state) {
+      const currentPage = this.getCurrentPage(locationState);
+      console.log(`Current page: ${currentPage}`);
       if (newProps.route.showObjects) {
-        this.loadObjects();
+        this.loadObjects(currentPage);
       } else if (nodeId) {
-        this.props.loadChildren(nodeId, museumId);
+        this.props.loadChildren(nodeId, museumId, currentPage);
       } else {
-        this.props.loadStorageUnits(museumId, this.getCurrentPage());
+        this.props.loadStorageUnits(museumId, currentPage);
       }
     }
   }
@@ -128,9 +133,11 @@ export default class StorageUnitsContainer extends React.Component {
     }
   }
 
-  loadObjects() {
+  loadObjects(
+    currentPage = this.getCurrentPage()
+  ) {
     if (this.props.params.id) {
-      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId, this.getCurrentPage());
+      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId, currentPage);
     }
   }
 
@@ -323,7 +330,7 @@ export default class StorageUnitsContainer extends React.Component {
           {this.props.totalObjects > 0 &&
             <PagingToolbar
               numItems={this.props.totalObjects}
-              currentPage={this.getCurrentPage()}
+              currentPage={this.getCurrentPage() || 1}
               perPage={Config.magasin.limit}
               onClick={(currentPage) => {
                 hashHistory.replace({
@@ -360,7 +367,7 @@ export default class StorageUnitsContainer extends React.Component {
         {this.props.totalNodes > 0 &&
           <PagingToolbar
             numItems={this.props.totalNodes}
-            currentPage={this.getCurrentPage()}
+            currentPage={this.getCurrentPage() || 1}
             perPage={Config.magasin.limit}
             onClick={(currentPage) => {
               hashHistory.replace({
