@@ -14,6 +14,8 @@ import { ROUTE_PICKLIST, ROUTE_SF } from '../routes.path';
 
 import Config from '../config';
 
+import { emitError } from '../errors/emitter';
+
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const OLD_REGEX = /^[0-9]{9,10}$/i;
 
@@ -87,7 +89,7 @@ state$.filter(text => OLD_REGEX.test(text))
     const pickListPath = getPickListPath(pathname);
     const nodePickList = isNodePickList(pickListPath);
     const objectPickList = isObjectPickList(pickListPath);
-    const storageFacility = isStorageFacility();
+    const storageFacility = isStorageFacility(pathname);
     const moveActive = isMoveDialogActive();
     if (nodePickList || storageFacility || moveActive) {
       const url = Config.magasin.urls.storagefacility.scanOldUrl(oldBarcode, getMuseumId());
@@ -95,6 +97,8 @@ state$.filter(text => OLD_REGEX.test(text))
     } else if (objectPickList) {
       const url = Config.magasin.urls.thingaggregate.scanOldUrl(oldBarcode, getMuseumId(), getCollectionId());
       dispatchObject(url);
+    } else {
+      emitError({ message: 'Scanning av gamle barcodes kan kun gjøres i magasin eller plukkliste' });
     }
   });
 
@@ -103,10 +107,12 @@ state$.filter(text => UUID_REGEX.test(text))
     const pathname = getRoutePathname();
     const pickListPath = getPickListPath(pathname);
     const nodePickList = isNodePickList(pickListPath);
-    const storageFacility = isStorageFacility();
+    const storageFacility = isStorageFacility(pathname);
     const moveActive = isMoveDialogActive();
     if (nodePickList || storageFacility || moveActive) {
       const url = Config.magasin.urls.storagefacility.scanUrl(uuid, getMuseumId());
       dispatchNode(url, nodePickList, storageFacility, moveActive);
+    } else {
+      emitError({ message: 'Scanning av uuid kan kun gjøres i magasin eller plukkliste' });
     }
   });
