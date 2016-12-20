@@ -13,6 +13,7 @@ import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 import {customSortingStorageNodeType} from '../../../util/';
 import MusitNode from '../../../models/node';
+import { clear } from '../../../reducers/storageunit/modal';
 
 const getStorageGridUnit = (state) => state.storageGridUnit.data || [];
 
@@ -139,7 +140,8 @@ const mapDispatchToProps = (dispatch, props) => {
           }
         }));
       }
-    }
+    },
+    clearMoveDialog: () => dispatch(clear())
   };
 };
 

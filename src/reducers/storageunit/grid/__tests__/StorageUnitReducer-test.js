@@ -2,16 +2,11 @@ import assert from 'assert';
 import deepFreeze from 'deep-freeze';
 import MuseumId from '../../../../models/museumId';
 import * as actions from '../index';
-import reducer from '../index';
+import reducer, { clearRoot } from '../index';
 import Config from '../../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
-
-
-import suReducer, {
-  clearRoot
-} from '../index';
 
 const testRootState = {
   data: [
@@ -106,12 +101,12 @@ deepFreeze(testSubNoRootState);
 
 describe('StorageUnitReducer', () => {
   it('Initial state is set', () => {
-    const state = suReducer(testRootState, {});
+    const state = reducer(testRootState, {});
     assert(state === testRootState);
   });
 
   it('Clear root', () => {
-    const state = suReducer(testSubRootState, clearRoot());
+    const state = reducer(testSubRootState, clearRoot());
     assert(JSON.stringify(state) === JSON.stringify(testSubNoRootState));
   });
 
