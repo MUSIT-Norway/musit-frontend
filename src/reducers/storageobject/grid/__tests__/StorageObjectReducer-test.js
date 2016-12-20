@@ -7,37 +7,40 @@ import Config from '../../../../config';
 import MuseumId from '../../../../models/museumId';
 import CollectionId from '../../../../models/collectionId';
 
-const comingFromBackend = [
-  {
-    id: 1,
-    identifier: {
-      museumNo: 'C666',
-      subNo: '34'
+const comingFromBackend = {
+  totalMatches: 3,
+  matches: [
+    {
+      id: 1,
+      identifier: {
+        museumNo: 'C666',
+        subNo: '34'
+      },
+      displayName: 'Øks'
     },
-    displayName: 'Øks'
-  },
-  {
-    id: 2,
-    identifier: {
-      museumNo: 'C666',
-      subNo: '31'
+    {
+      id: 2,
+      identifier: {
+        museumNo: 'C666',
+        subNo: '31'
+      },
+      displayName: 'Sverd'
     },
-    displayName: 'Sverd'
-  },
-  {
-    id: 3,
-    identifier: {
-      museumNo: 'C666',
-      subNo: '38'
-    },
-    displayName: 'Sommerfugl'
-  }
-];
+    {
+      id: 3,
+      identifier: {
+        museumNo: 'C666',
+        subNo: '38'
+      },
+      displayName: 'Sommerfugl'
+    }
+  ]
+};
 
 describe('StorageUnitReducer', () => {
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
     const id = 1;
-    const url = `${Config.magasin.urls.thingaggregate.baseUrl(new MuseumId(99))}/node/${id}/objects?collectionIds=ddfggggg`;
+    const url = `${Config.magasin.urls.thingaggregate.baseUrl(new MuseumId(99))}/node/${id}/objects?collectionIds=ddfggggg&page=1&limit=25`;
     nock('http://localhost')
         .get(url)
         .reply(200, comingFromBackend);
@@ -67,14 +70,17 @@ describe('StorageUnitReducer', () => {
     expect(
         reducer(undefined, {
           type: actions.LOAD_SEVERAL_SUCCESS,
-          result: [
-            {
-              id: 1,
-              term: 'Fugl',
-              museumNo: 'CH500',
-              subNo: '5'
-            }
-          ]
+          result: {
+            totalMatches: 1,
+            matches: [
+              {
+                id: 1,
+                term: 'Fugl',
+                museumNo: 'CH500',
+                subNo: '5'
+              }
+            ]
+          }
         })
     ).toMatchSnapshot();
   });

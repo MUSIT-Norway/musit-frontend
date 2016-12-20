@@ -4,32 +4,35 @@ Array [
     "type": "musit/storageobject-grid/LOAD_SEVERAL"
   },
   Object {
-    "result": Array [
-      Object {
-        "displayName": "Øks",
-        "id": 1,
-        "identifier": Object {
-          "museumNo": "C666",
-          "subNo": "34"
+    "result": Object {
+      "matches": Array [
+        Object {
+          "displayName": "Øks",
+          "id": 1,
+          "identifier": Object {
+            "museumNo": "C666",
+            "subNo": "34"
+          }
+        },
+        Object {
+          "displayName": "Sverd",
+          "id": 2,
+          "identifier": Object {
+            "museumNo": "C666",
+            "subNo": "31"
+          }
+        },
+        Object {
+          "displayName": "Sommerfugl",
+          "id": 3,
+          "identifier": Object {
+            "museumNo": "C666",
+            "subNo": "38"
+          }
         }
-      },
-      Object {
-        "displayName": "Sverd",
-        "id": 2,
-        "identifier": Object {
-          "museumNo": "C666",
-          "subNo": "31"
-        }
-      },
-      Object {
-        "displayName": "Sommerfugl",
-        "id": 3,
-        "identifier": Object {
-          "museumNo": "C666",
-          "subNo": "38"
-        }
-      }
-    ],
+      ],
+      "totalMatches": 3
+    },
     "type": "musit/storageobject-grid/LOAD_SEVERAL_SUCCESS"
   }
 ]
@@ -53,19 +56,22 @@ exports[`StorageUnitReducer no action 1`] = `Object {}`;
 
 exports[`StorageUnitReducer success action 1`] = `
 Object {
-  "data": Array [
-    MusitObject {
-      "breadcrumb": undefined,
-      "currentLocationId": undefined,
-      "id": 1,
-      "mainObjectId": undefined,
-      "museumNo": "CH500",
-      "path": undefined,
-      "pathNames": undefined,
-      "subNo": "5",
-      "term": "Fugl"
-    }
-  ],
+  "data": Object {
+    "matches": Array [
+      MusitObject {
+        "breadcrumb": undefined,
+        "currentLocationId": undefined,
+        "id": 1,
+        "mainObjectId": undefined,
+        "museumNo": "CH500",
+        "path": undefined,
+        "pathNames": undefined,
+        "subNo": "5",
+        "term": "Fugl"
+      }
+    ],
+    "totalMatches": 1
+  },
   "loaded": true,
   "loading": false
 }

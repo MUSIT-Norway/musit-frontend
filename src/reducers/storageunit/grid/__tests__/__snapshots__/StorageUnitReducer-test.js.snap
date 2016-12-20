@@ -218,17 +218,20 @@ Array [
     "type": "musit/storageunit-grid/LOAD_SEVERAL"
   },
   Object {
-    "result": Array [
-      Object {
-        "id": 3,
-        "isPartOf": 2,
-        "name": "Forskningens hus",
-        "path": ",1,2,3,",
-        "type": "Building",
-        "updatedBy": 123,
-        "updatedDate": "2016-01-01T00:00:00+00:00"
-      }
-    ],
+    "result": Object {
+      "matches": Array [
+        Object {
+          "id": 3,
+          "isPartOf": 2,
+          "name": "Forskningens hus",
+          "path": ",1,2,3,",
+          "type": "Building",
+          "updatedBy": 123,
+          "updatedDate": "2016-01-01T00:00:00+00:00"
+        }
+      ],
+      "totalMatches": 1
+    },
     "type": "musit/storageunit-grid/LOAD_SEVERAL_SUCCESS"
   }
 ]
@@ -240,17 +243,20 @@ Array [
     "type": "musit/storageunit-grid/LOAD_SEVERAL"
   },
   Object {
-    "result": Array [
-      Object {
-        "id": 3,
-        "isPartOf": 2,
-        "name": "Forskningens hus",
-        "path": ",1,2,3,",
-        "type": "Building",
-        "updatedBy": 123,
-        "updatedDate": "2016-01-01T00:00:00+00:00"
-      }
-    ],
+    "result": Object {
+      "matches": Array [
+        Object {
+          "id": 3,
+          "isPartOf": 2,
+          "name": "Forskningens hus",
+          "path": ",1,2,3,",
+          "type": "Building",
+          "updatedBy": 123,
+          "updatedDate": "2016-01-01T00:00:00+00:00"
+        }
+      ],
+      "totalMatches": 1
+    },
     "type": "musit/storageunit-grid/LOAD_SEVERAL_SUCCESS"
   }
 ]
