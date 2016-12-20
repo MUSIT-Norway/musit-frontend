@@ -98,3 +98,7 @@ const testing = process.env.NODE_ENV === 'test';
 export const apiUrl = (url: string): string => {
   return `${testing ? 'http://localhost' : ''}${url}`;
 };
+
+export const isNumber = (n: number) => {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+};
