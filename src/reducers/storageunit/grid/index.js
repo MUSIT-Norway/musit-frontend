@@ -92,7 +92,7 @@ const storageUnitGridReducer = (state = initialState, action = {}) => {
 
 export default storageUnitGridReducer;
 
-export const loadRoot = (id, museumId, callback) => {
+export const loadRoot = (id, museumId, currentPage, callback) => {
   let action = {};
   if (id) {
     action = {
@@ -110,10 +110,11 @@ export const loadRoot = (id, museumId, callback) => {
   return action;
 };
 
-export const loadChildren = (id, museumId, callback) => {
+export const loadChildren = (id, museumId, currentPage, callback) => {
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}/children?page=${currentPage || 1}`);
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}/children`)),
+    promise: (client) => client.get(url),
     callback
   };
 };

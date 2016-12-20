@@ -115,7 +115,6 @@ export default (props) =>
             </Table>
             <PagingToolbar
               numItems={props.data.totalMatches}
-              baseUrl={props.location.pathname}
               currentPage={props.params.currentPage}
               perPage={props.params.perPage}
               onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}

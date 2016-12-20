@@ -14,7 +14,12 @@ import toLower from 'lodash/toLower';
 import {customSortingStorageNodeType} from '../../../util/';
 import MusitNode from '../../../models/node';
 
-const getStorageGridUnit = (state) => state.storageGridUnit.data || [];
+const getStorageGridUnit = (state) => {
+  if (!state.storageGridUnit.data) {
+    return [];
+  }
+  return state.storageGridUnit.data.length ? state.storageGridUnit.data : state.storageGridUnit.data.matches || [];
+};
 
 const getSortedStorageGridUnit = createSelector(
   [getStorageGridUnit],
@@ -34,6 +39,7 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   stats: state.storageUnitStats.stats,
   children: getSortedStorageGridUnit(state),
+  totalMatches: state.storageGridUnit.data && state.storageGridUnit.data.totalMatches,
   objects: getSortedStorageObjectGrid(state),
   rootNode: state.storageGridUnit.root.data,
   routerState: state.routing
@@ -43,9 +49,9 @@ const mapDispatchToProps = (dispatch, props) => {
   const {history} = props;
 
   return {
-    loadRoot: (id, museumId) => {
+    loadRoot: (id, museumId, currentPage) => {
       dispatch(clearStats());
-      dispatch(loadRootNodes(id, museumId, {
+      dispatch(loadRootNodes(id, museumId, currentPage, {
         onSuccess: (result) => {
           if (!MusitNode.isRootNode(result.type)) {
             dispatch(loadStats(id, museumId));
@@ -53,19 +59,19 @@ const mapDispatchToProps = (dispatch, props) => {
         }
       }));
     },
-    loadStorageUnits: (museumId) => {
+    loadStorageUnits: (museumId, currentPage) => {
       dispatch(clearRoot());
-      dispatch(loadRootNodes(null, museumId));
+      dispatch(loadRootNodes(null, museumId, currentPage));
       dispatch(clearStats());
     },
-    loadStorageObjects: (id, museumId, collectionId) => {
-      dispatch(loadObjects(id, museumId, collectionId));
+    loadStorageObjects: (id, museumId, collectionId, currentPage) => {
+      dispatch(loadObjects(id, museumId, collectionId, currentPage));
     },
-    loadChildren: (id, museumId) => {
-      dispatch(loadChildNodes(id, museumId));
+    loadChildren: (id, museumId, currentPage) => {
+      dispatch(loadChildNodes(id, museumId, currentPage));
       dispatch(clearRoot());
       dispatch(clearStats());
-      dispatch(loadRootNodes(id, museumId, {
+      dispatch(loadRootNodes(id, museumId, null, {
         onSuccess: (result) => {
           if (!MusitNode.isRootNode(result.type)) {
             dispatch(loadStats(id, museumId));

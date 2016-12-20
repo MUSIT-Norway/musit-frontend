@@ -13,6 +13,7 @@ import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
 import { checkNodeBranchAndType } from '../../../util/nodeValidator';
 import MusitNode from '../../../models/node';
+import PagingToolbar from '../../../util/paging';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -66,11 +67,15 @@ export default class StorageUnitsContainer extends React.Component {
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
   }
 
+  getCurrentPage() {
+    return this.props.location.state && this.props.location.state.currentPage;
+  }
+
   componentWillMount() {
     if (this.props.route.showObjects) {
       this.loadObjects();
       if (this.props.params.id && !this.props.rootNode.id) {
-        this.props.loadRoot(this.props.params.id, this.props.user.museumId);
+        this.props.loadRoot(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
       }
     } else {
       this.loadNodes();
@@ -83,9 +88,9 @@ export default class StorageUnitsContainer extends React.Component {
     const nodeId = museumHasChanged ? null : newProps.params.id;
     if (newProps.params.id !== this.props.params.id || museumHasChanged) {
       if (nodeId) {
-        this.props.loadChildren(nodeId, museumId);
+        this.props.loadChildren(nodeId, museumId, this.getCurrentPage());
       } else {
-        this.props.loadStorageUnits(museumId);
+        this.props.loadStorageUnits(museumId, this.getCurrentPage());
       }
     }
   }
@@ -113,15 +118,15 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadNodes() {
     if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id, this.props.user.museumId);
+      this.props.loadChildren(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
     } else {
-      this.props.loadStorageUnits(this.props.user.museumId);
+      this.props.loadStorageUnits(this.props.user.museumId, this.getCurrentPage());
     }
   }
 
   loadObjects() {
     if (this.props.params.id) {
-      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId);
+      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId, this.getCurrentPage());
     }
   }
 
@@ -312,10 +317,12 @@ export default class StorageUnitsContainer extends React.Component {
         />
       );
     }
+    const tableData = filter(children, ['name'], searchPattern);
     return (
-      <NodeGrid
-        tableData={filter(children, ['name'], searchPattern)}
-        onAction={(action, unit) =>
+      <div>
+        <NodeGrid
+          tableData={tableData}
+          onAction={(action, unit) =>
             onAction(
               action,
               unit,
@@ -324,11 +331,20 @@ export default class StorageUnitsContainer extends React.Component {
               this.props.user.collectionId
             )
           }
-        onMove={moveNode}
-        onClick={(row) => {
-          hashHistory.push(`/magasin/${row.id}`);
-        }}
-      />
+          onMove={moveNode}
+          onClick={(row) => {
+            hashHistory.push(`/magasin/${row.id}`);
+          }}
+        />
+        <PagingToolbar
+          numItems={tableData.length}
+          currentPage={this.getCurrentPage() || 1}
+          perPage={25}
+          onClick={() => {
+            console.log('Clicking');
+          }}
+        />
+      </div>
     );
   }
 
