@@ -340,7 +340,6 @@ export default class StorageUnitsContainer extends React.Component {
                     currentPage
                   }
                 });
-                this.loadObjects();
               }}
             />
           }
@@ -377,7 +376,6 @@ export default class StorageUnitsContainer extends React.Component {
                   currentPage
                 }
               });
-              this.loadNodes();
             }}
           />
         }
