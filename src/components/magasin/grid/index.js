@@ -93,7 +93,6 @@ export default class StorageUnitsContainer extends React.Component {
     const locationState = newProps.location.state;
     if (newProps.params.id !== this.props.params.id || museumHasChanged || locationState !== this.props.location.state) {
       const currentPage = this.getCurrentPage(locationState);
-      console.log(`Current page: ${currentPage}`);
       if (newProps.route.showObjects) {
         this.loadObjects(currentPage);
       } else if (nodeId) {
