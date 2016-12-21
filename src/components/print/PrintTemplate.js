@@ -47,6 +47,7 @@ class ChooseTemplate extends Component {
     return (
       <div className="templatePrint">
         <select
+          className="printTool"
           onChange={this.selectTemplate}
         >
           <option>Select template</option>
@@ -54,15 +55,21 @@ class ChooseTemplate extends Component {
             <option key={i} value={template.id}>{template.name}</option>
           )}
         </select>
+        {' '}
         {this.props.rendered &&
-          <button onClick={() => this.previewFrame.domNode.contentWindow.print()}>Print</button>
+          <input
+            className="printTool"
+            onClick={() => this.previewFrame.domNode.contentWindow.print()}
+            type="button"
+            value="Print template"
+          />
         }
         {this.props.rendered &&
           <IFrame
             ref={(child) => this.previewFrame = child}
             frameProps={{
               width: '100%',
-              height: 450,
+              height: '95%',
               frameBorder: 0,
               scrolling: 'yes'
             }}
