@@ -14,10 +14,6 @@ class IFrame extends React.Component {
     }
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   updateIFrameContents() {
     const contentWindow = this.domNode.contentWindow;
     contentWindow.document.open();
