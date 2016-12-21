@@ -5,8 +5,7 @@ class IFrame extends React.Component {
 
   static propTypes = {
     frameProps: React.PropTypes.object,
-    content: React.PropTypes.string,
-    onLoad: React.PropTypes.func
+    content: React.PropTypes.string
   };
 
   static defaultProps = {
@@ -15,22 +14,11 @@ class IFrame extends React.Component {
     }
   };
 
-  constructor(props) {
-    super(props);
-    this.onLoad = this.onLoad.bind(this);
-  }
-
   updateIFrameContents() {
     const contentWindow = this.domNode.contentWindow;
     contentWindow.document.open();
     contentWindow.document.write(this.props.content);
     contentWindow.document.close();
-  }
-
-  onLoad() {
-    if (typeof this.props.onLoad === 'function') {
-      this.props.onLoad(this.domNode);
-    }
   }
 
   render() {

@@ -1,14 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import IFrame from '../../util/IFrame';
 import Template from '../../models/PrintTemplate';
-import './style.css';
+import './PrintTemplate.css';
 
-class PrintTemplate extends Component {
+class ChooseTemplate extends Component {
   static propTypes = {
-    renderTemplate: PropTypes.func.isRequired,
-    selected: PropTypes.instanceOf(Template),
+    templates: PropTypes.arrayOf(PropTypes.instanceOf(Template)),
+    loadTemplates: PropTypes.func.isRequired,
+    selectTemplate: PropTypes.func.isRequired,
+    selectType: PropTypes.func.isRequired,
+    clearDialog: PropTypes.func.isRequired,
+    clearRendered: PropTypes.func.isRequired,
     marked: PropTypes.array,
-    nextStep: PropTypes.func.isRequired
+    rendered: PropTypes.string
   };
 
   static defaultProps = {
@@ -19,33 +23,88 @@ class PrintTemplate extends Component {
     closeModal: PropTypes.func.isRequired
   };
 
+  constructor(props, context) {
+    super(props, context);
+    this.selectTemplate = this.selectTemplate.bind(this);
+    this.selectType = this.selectType.bind(this);
+  }
+
   componentWillMount() {
-    this.props.renderTemplate(this.props.selected.id, 1, this.props.marked.map(ntp => ({
-      uuid: ntp.nodeId,
-      name: ntp.name
-    })));
+    this.props.clearDialog();
+    this.props.loadTemplates();
+  }
+
+  selectType(e) {
+    const typeId = e.target.value * 1;
+    if (typeId) {
+      this.props.selectType(typeId);
+      this.selectTemplate(null, this.props.selectedTemplate * 1, typeId);
+    }
+  }
+
+  selectTemplate(
+    e,
+    templateId = e.target.value * 1,
+    selectedType = this.props.selectedType
+  ) {
+    this.props.clearRendered();
+    if (templateId) {
+      this.props.selectTemplate(templateId);
+      this.props.renderTemplate(templateId, selectedType, this.props.marked.map(ntp => ({
+        uuid: ntp.nodeId,
+        name: ntp.name
+      })));
+    }
   }
 
   render() {
     return (
       <div className="templatePrint">
-        <IFrame
-          frameProps={{
-            width: '100%',
-            height: '100%',
-            frameBorder: 0,
-            scrolling: 'no'
-          }}
-          content={this.props.rendered}
-          onLoad={(domNode) => {
-            if (this.props.rendered) {
-              domNode.contentWindow.print();
-            }
-          }}
-        />
+        <select
+          className="printTool"
+          onChange={this.selectTemplate}
+        >
+          <option>Select template</option>
+          {[].concat(this.props.templates).filter(t => t).map((template, i) =>
+            <option key={i} value={template.id}>{template.name}</option>
+          )}
+        </select>
+        {' '}
+        {this.props.rendered &&
+          <select
+            className="printTool"
+            onChange={this.selectType}
+            value={this.props.selectedType}
+          >
+            <option>Select type</option>
+            <option value={1}>QR Code</option>
+            <option value={2}>Data Matrix</option>
+          </select>
+        }
+        {' '}
+        {this.props.rendered &&
+          <input
+            className="printTool"
+            onClick={() => this.previewFrame.domNode.contentWindow.print()}
+            type="button"
+            value="Print template"
+          />
+        }
+        {this.props.rendered &&
+          <IFrame
+            ref={(child) => this.previewFrame = child}
+            frameProps={{
+              width: '100%',
+              height: '95%',
+              frameBorder: 0,
+              scrolling: 'yes'
+            }}
+            content={this.props.rendered}
+          />
+        }
       </div>
     );
   }
 }
 
-export default PrintTemplate;
+export default ChooseTemplate;

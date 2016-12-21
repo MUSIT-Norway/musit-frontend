@@ -1,0 +1,10 @@
+.templatePrint {
+    width: 1185px;
+    height: 700px;
+}
+
+.printTool {
+    height:30px;
+    line-height:25px;
+    background:#f4f4f4;
+}

@@ -11,7 +11,6 @@ import MusitModal from '../movedialog';
 import './PickListContainer.css';
 import { emitError, emitSuccess } from '../../errors/emitter';
 import { checkNodeBranchAndType } from '../../util/nodeValidator';
-import ChooseTemplate from '../../containers/print/ChooseTemplate';
 import PrintTemplate from '../../containers/print/PrintTemplate';
 
 export default class PickListContainer extends React.Component {
@@ -130,9 +129,7 @@ export default class PickListContainer extends React.Component {
   }
 
   print(nodesToPrint) {
-    this.context.showModal('Choose template', <ChooseTemplate nextStep={() => {
-      this.context.showModal('Print template', <PrintTemplate marked={nodesToPrint} />);
-    }} />);
+    this.context.showModal('Choose template', <PrintTemplate marked={nodesToPrint} />);
   }
 
   render() {
