@@ -2,6 +2,9 @@ import Config from '../../config';
 import Template from '../../models/PrintTemplate';
 import { QR_CODE } from '../../models/PrintTemplate';
 
+export const CLEAR = 'musit/print/CLEAR';
+export const CLEAR_RENDERED = 'musit/print/CLEAR_RENDERED';
+
 export const SELECT_TEMPLATE = 'musit/print/SELECT_TEMPLATE';
 
 export const LOAD_TEMPLATES = 'musit/print/LOAD_TEMPLATES';
@@ -14,6 +17,18 @@ export const LOAD_PREVIEW_SUCCESS = 'musit/print/LOAD_PREVIEW_SUCCESS';
 
 export default (state = {}, action) => {
   switch(action.type) {
+  case CLEAR:
+    return {
+      ...state,
+      selected: null,
+      rendered: null,
+      templates: null
+    };
+  case CLEAR_RENDERED:
+    return {
+      ...state,
+      rendered: null
+    };
   case SELECT_TEMPLATE:
     return {
       ...state,
@@ -38,6 +53,18 @@ export const selectTemplate = (template) => {
   return {
     type: SELECT_TEMPLATE,
     template
+  };
+};
+
+export const clear = () => {
+  return {
+    type: CLEAR
+  };
+};
+
+export const clearRendered = () => {
+  return {
+    type: CLEAR_RENDERED
   };
 };
 
