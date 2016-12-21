@@ -17,7 +17,10 @@ const storageObjectGridReducer = (state = {}, action = {}) => {
       ...state,
       loading: false,
       loaded: true,
-      data: action.result.map(o => new MusitObject(o))
+      data: {
+        ...action.result,
+        matches: action.result.matches.map(o => new MusitObject(o))
+      }
     };
   case LOAD_SEVERAL_FAIL:
     return {
@@ -34,10 +37,15 @@ const storageObjectGridReducer = (state = {}, action = {}) => {
 export default storageObjectGridReducer;
 
 
-export const loadObjects = (id, museumId, collectionId, callback) => {
+export const loadObjects = (id, museumId, collectionId, currentPage, callback) => {
+  const url = Config.magasin.urls.thingaggregate.baseUrl;
   return {
     types: [LOAD_SEVERAL, LOAD_SEVERAL_SUCCESS, LOAD_SEVERAL_FAIL],
-    promise: (client) => client.get(apiUrl(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/node/${id}/objects?${collectionId.getQuery()}`)),
+    promise: (client) => client.get(
+      apiUrl(
+        `${url(museumId)}/node/${id}/objects?${collectionId.getQuery()}&page=${currentPage || 1}&limit=${Config.magasin.limit}`
+      )
+    ),
     callback
   };
 };

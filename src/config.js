@@ -3,6 +3,7 @@ export default {
   isFake: false,
   useDevTools: process.env.DEV_TOOLS || false,
   magasin: {
+    limit: 25,
     urls: {
       storagefacility: {
         searchUrl: (term, mid) =>

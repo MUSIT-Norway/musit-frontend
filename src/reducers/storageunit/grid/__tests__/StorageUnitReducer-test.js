@@ -177,16 +177,20 @@ describe('StorageUnitReducer', () => {
     ).toMatchSnapshot();
   });
 
-  const loadSeveralChildState = [
-    {
-      id: 3,
-      name: 'Forskningens hus',
-      isPartOf: 2,
-      path: ',1,2,3,',
-      type: 'Building',
-      updatedBy: 123,
-      updatedDate: '2016-01-01T00:00:00+00:00'
-    }];
+  const loadSeveralChildState = {
+    totalMatches: 1,
+    matches: [
+      {
+        id: 3,
+        name: 'Forskningens hus',
+        isPartOf: 2,
+        path: ',1,2,3,',
+        type: 'Building',
+        updatedBy: 123,
+        updatedDate: '2016-01-01T00:00:00+00:00'
+      }
+    ]
+  };
   it('creates LOAD_SEVERAL_SUCCESS when fetching data has been done', () => {
     const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/root`;
     nock('http://localhost')
@@ -236,7 +240,7 @@ describe('StorageUnitReducer', () => {
 
   it('creates LOAD_SEVERAL_SUCCESS child when fetching data has been done', () => {
     const id = 1;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}/children`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}/children?page=1&limit=25`;
     nock('http://localhost')
       .get(url)
       .reply(200, loadSeveralChildState);

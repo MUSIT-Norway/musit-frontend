@@ -1760,7 +1760,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               </tbody>
             </Table>
             <PagingToolbar
-              baseUrl="/#/search/objects"
               currentPage={1}
               numItems={20}
               onClick={[Function onClick]}

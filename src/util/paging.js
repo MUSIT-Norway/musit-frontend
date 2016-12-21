@@ -109,7 +109,6 @@ class PagingToolbar extends React.Component {
 PagingToolbar.propTypes = {
   currentPage: PropTypes.number.isRequired,
   numItems: PropTypes.number.isRequired,
-  baseUrl: PropTypes.string.isRequired,
   perPage: PropTypes.number,
   onClick: PropTypes.func.isRequired
 };

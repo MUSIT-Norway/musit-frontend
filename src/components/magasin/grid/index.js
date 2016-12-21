@@ -13,6 +13,8 @@ import { emitError, emitSuccess } from '../../../errors/emitter';
 import MusitModalHistory from '../../movehistory';
 import { checkNodeBranchAndType } from '../../../util/nodeValidator';
 import MusitNode from '../../../models/node';
+import PagingToolbar from '../../../util/paging';
+import Config from '../../../config';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -67,11 +69,17 @@ export default class StorageUnitsContainer extends React.Component {
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
   }
 
+  getCurrentPage(
+    state = this.props.location.state
+  ) {
+    return state && state.currentPage;
+  }
+
   componentWillMount() {
     if (this.props.route.showObjects) {
       this.loadObjects();
       if (this.props.params.id && !this.props.rootNode.id) {
-        this.props.loadRoot(this.props.params.id, this.props.user.museumId);
+        this.props.loadRoot(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
       }
     } else {
       this.loadNodes();
@@ -82,13 +90,17 @@ export default class StorageUnitsContainer extends React.Component {
     const museumHasChanged = newProps.user.museumId !== this.props.user.museumId;
     const museumId = museumHasChanged ? newProps.user.museumId : this.props.user.museumId;
     const nodeId = museumHasChanged ? null : newProps.params.id;
-    if (newProps.params.id !== this.props.params.id || museumHasChanged) {
+    const locationState = newProps.location.state;
+    const idHasChanged = newProps.params.id !== this.props.params.id;
+    const stateHasChanged = locationState !== this.props.location.state;
+    if (idHasChanged || museumHasChanged || stateHasChanged) {
+      const currentPage = this.getCurrentPage(locationState);
       if (newProps.route.showObjects) {
-        this.loadObjects();
+        this.loadObjects(currentPage);
       } else if (nodeId) {
-        this.props.loadChildren(nodeId, museumId);
+        this.props.loadChildren(nodeId, museumId, currentPage);
       } else {
-        this.props.loadStorageUnits(museumId);
+        this.props.loadStorageUnits(museumId, currentPage);
       }
     }
   }
@@ -116,15 +128,17 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadNodes() {
     if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id, this.props.user.museumId);
+      this.props.loadChildren(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
     } else {
-      this.props.loadStorageUnits(this.props.user.museumId);
+      this.props.loadStorageUnits(this.props.user.museumId, this.getCurrentPage());
     }
   }
 
-  loadObjects() {
+  loadObjects(
+    currentPage = this.getCurrentPage()
+  ) {
     if (this.props.params.id) {
-      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId);
+      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId, currentPage);
     }
   }
 
@@ -299,26 +313,44 @@ export default class StorageUnitsContainer extends React.Component {
   ) {
     if (showObjects) {
       return (
-        <ObjectGrid
-          tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
-          showMoveHistory={showHistory}
-          onAction={(action, unit) =>
-          onAction(
-            action,
-            unit,
-            rootNode.breadcrumb,
-            this.props.user.museumId,
-            this.props.user.collectionId
-          )
-        }
-          onMove={moveObject}
-        />
+        <div>
+          <ObjectGrid
+            tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
+            showMoveHistory={showHistory}
+            onAction={(action, unit) =>
+              onAction(
+                action,
+                unit,
+                rootNode.breadcrumb,
+                this.props.user.museumId,
+                this.props.user.collectionId
+              )
+            }
+            onMove={moveObject}
+          />
+          {this.props.totalObjects > 0 &&
+            <PagingToolbar
+              numItems={this.props.totalObjects}
+              currentPage={this.getCurrentPage() || 1}
+              perPage={Config.magasin.limit}
+              onClick={(currentPage) => {
+                hashHistory.replace({
+                  pathname: `/magasin/${this.props.rootNode.id}/objects`,
+                  state: {
+                    currentPage
+                  }
+                });
+              }}
+            />
+          }
+        </div>
       );
     }
     return (
-      <NodeGrid
-        tableData={filter(children, ['name'], searchPattern)}
-        onAction={(action, unit) =>
+      <div>
+        <NodeGrid
+          tableData={filter(children, ['name'], searchPattern)}
+          onAction={(action, unit) =>
             onAction(
               action,
               unit,
@@ -327,25 +359,39 @@ export default class StorageUnitsContainer extends React.Component {
               this.props.user.collectionId
             )
           }
-        onMove={moveNode}
-        onClick={(row) => {
-          hashHistory.push(`/magasin/${row.id}`);
-        }}
-      />
+          onMove={moveNode}
+          onClick={(row) => {
+            hashHistory.push(`/magasin/${row.id}`);
+          }}
+        />
+        {this.props.totalNodes > 0 &&
+          <PagingToolbar
+            numItems={this.props.totalNodes}
+            currentPage={this.getCurrentPage() || 1}
+            perPage={Config.magasin.limit}
+            onClick={(currentPage) => {
+              hashHistory.replace({
+                pathname: `/magasin/${this.props.rootNode.id}`,
+                state: {
+                  currentPage
+                }
+              });
+            }}
+          />
+        }
+      </div>
     );
   }
 
   render() {
     return (
-      <div>
-        <Layout
-          title={'Magasin'}
-          breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={this.onClickCrumb} />}
-          toolbar={this.makeToolbar()}
-          leftMenu={this.makeLeftMenu()}
-          content={this.makeContentGrid()}
-        />
-      </div>
+      <Layout
+        title={'Magasin'}
+        breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={this.onClickCrumb} />}
+        toolbar={this.makeToolbar()}
+        leftMenu={this.makeLeftMenu()}
+        content={this.makeContentGrid()}
+      />
     );
   }
 }

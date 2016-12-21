@@ -15,19 +15,22 @@ import {customSortingStorageNodeType} from '../../../util/';
 import MusitNode from '../../../models/node';
 import { clear } from '../../../reducers/storageunit/modal';
 
-const getStorageGridUnit = (state) => state.storageGridUnit.data || [];
+const getGridData = (field) => (state) => {
+  if (!state[field].data) {
+    return [];
+  }
+  return state[field].data.length ? state[field].data : state[field].data.matches || [];
+};
 
 const getSortedStorageGridUnit = createSelector(
-  [getStorageGridUnit],
+  [getGridData('storageGridUnit')],
   (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type),
     (o) => toLower(o.name)
   ])
   );
 
-const getStorageObjectGrid = (state) => state.storageObjectGrid.data || [];
-
 const getSortedStorageObjectGrid = createSelector(
-  [getStorageObjectGrid],
+  [getGridData('storageObjectGrid')],
   (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
 );
 
@@ -35,7 +38,9 @@ const mapStateToProps = (state) => ({
   user: state.auth.user,
   stats: state.storageUnitStats.stats,
   children: getSortedStorageGridUnit(state),
+  totalNodes: state.storageGridUnit.data && state.storageGridUnit.data.totalMatches,
   objects: getSortedStorageObjectGrid(state),
+  totalObjects: state.storageObjectGrid.data && state.storageObjectGrid.data.totalMatches,
   rootNode: state.storageGridUnit.root.data,
   routerState: state.routing
 });
@@ -44,9 +49,9 @@ const mapDispatchToProps = (dispatch, props) => {
   const {history} = props;
 
   return {
-    loadRoot: (id, museumId) => {
+    loadRoot: (id, museumId, currentPage) => {
       dispatch(clearStats());
-      dispatch(loadRootNodes(id, museumId, {
+      dispatch(loadRootNodes(id, museumId, currentPage, {
         onSuccess: (result) => {
           if (!MusitNode.isRootNode(result.type)) {
             dispatch(loadStats(id, museumId));
@@ -54,19 +59,19 @@ const mapDispatchToProps = (dispatch, props) => {
         }
       }));
     },
-    loadStorageUnits: (museumId) => {
+    loadStorageUnits: (museumId, currentPage) => {
       dispatch(clearRoot());
-      dispatch(loadRootNodes(null, museumId));
+      dispatch(loadRootNodes(null, museumId, currentPage));
       dispatch(clearStats());
     },
-    loadStorageObjects: (id, museumId, collectionId) => {
-      dispatch(loadObjects(id, museumId, collectionId));
+    loadStorageObjects: (id, museumId, collectionId, currentPage) => {
+      dispatch(loadObjects(id, museumId, collectionId, currentPage));
     },
-    loadChildren: (id, museumId) => {
-      dispatch(loadChildNodes(id, museumId));
+    loadChildren: (id, museumId, currentPage) => {
+      dispatch(loadChildNodes(id, museumId, currentPage));
       dispatch(clearRoot());
       dispatch(clearStats());
-      dispatch(loadRootNodes(id, museumId, {
+      dispatch(loadRootNodes(id, museumId, null, {
         onSuccess: (result) => {
           if (!MusitNode.isRootNode(result.type)) {
             dispatch(loadStats(id, museumId));
