@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import PrintTemplateComponent from '../../components/print/PrintTemplate';
-import { loadTemplates, selectTemplate, clear, clearRendered, renderTemplate } from '../../reducers/print/index';
+import { loadTemplates, selectTemplate, selectType, clear, clearRendered, renderTemplate } from '../../reducers/print/index';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -8,6 +8,7 @@ const mapDispatchToProps = (dispatch) => {
     clearRendered: () => dispatch(clearRendered()),
     loadTemplates: () => dispatch(loadTemplates()),
     selectTemplate: (template) => dispatch(selectTemplate(template)),
+    selectType: (type) => dispatch(selectType(type)),
     renderTemplate: (tid, cf, uuid, name) => dispatch(renderTemplate(tid, cf, uuid, name))
   };
 };
@@ -15,7 +16,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     templates: state.print.templates,
-    selected: state.print.selected,
+    selectedType: state.print.selectedType,
+    selectedTemplate: state.print.selected,
     rendered: state.print.rendered
   };
 };

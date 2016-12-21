@@ -6,6 +6,7 @@ export const CLEAR = 'musit/print/CLEAR';
 export const CLEAR_RENDERED = 'musit/print/CLEAR_RENDERED';
 
 export const SELECT_TEMPLATE = 'musit/print/SELECT_TEMPLATE';
+export const SELECT_TYPE = 'musit/print/SELECT_TYPE';
 
 export const LOAD_TEMPLATES = 'musit/print/LOAD_TEMPLATES';
 export const LOAD_TEMPLATES_FAIL = 'musit/print/LOAD_TEMPLATES_FAIL';
@@ -15,15 +16,14 @@ export const LOAD_PREVIEW = 'musit/print/LOAD_PREVIEW';
 export const LOAD_PREVIEW_FAIL = 'musit/print/LOAD_PREVIEW_FAIL';
 export const LOAD_PREVIEW_SUCCESS = 'musit/print/LOAD_PREVIEW_SUCCESS';
 
-export default (state = {}, action) => {
+const defaultState = {
+  selectedType: 1
+};
+
+export default (state = defaultState, action) => {
   switch(action.type) {
   case CLEAR:
-    return {
-      ...state,
-      selected: null,
-      rendered: null,
-      templates: null
-    };
+    return defaultState;
   case CLEAR_RENDERED:
     return {
       ...state,
@@ -33,6 +33,11 @@ export default (state = {}, action) => {
     return {
       ...state,
       selected: action.template
+    };
+  case SELECT_TYPE:
+    return {
+      ...state,
+      selectedType: action.codeType
     };
   case LOAD_TEMPLATES_SUCCESS:
     return {
@@ -53,6 +58,13 @@ export const selectTemplate = (template) => {
   return {
     type: SELECT_TEMPLATE,
     template
+  };
+};
+
+export const selectType = (codeType) => {
+  return {
+    type: SELECT_TYPE,
+    codeType
   };
 };
 
