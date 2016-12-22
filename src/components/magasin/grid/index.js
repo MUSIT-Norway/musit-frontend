@@ -201,13 +201,14 @@ export default class StorageUnitsContainer extends React.Component {
     objectToMove,
     userId = this.props.user.actor.getActorId(),
     museumId = this.props.user.museumId,
+    collectionId = this.props.user.collectionId,
     nodeId = this.props.rootNode.id,
     moveObject = this.props.moveObject,
     loadRoot = this.props.loadRoot,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
     const description = getObjectDescription(objectToMove);
-    moveObject(objectToMove.id, toNode.id, userId, museumId, {
+    moveObject(objectToMove, toNode.id, userId, museumId, collectionId, {
       onSuccess: () => {
         onSuccess();
         loadObjects();

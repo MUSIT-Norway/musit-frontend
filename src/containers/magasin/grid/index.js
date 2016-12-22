@@ -79,8 +79,24 @@ const mapDispatchToProps = (dispatch, props) => {
         }
       }));
     },
-    moveObject: (objectId, destinationId, doneBy, museumId, callback) => {
-      dispatch(moveObject(objectId, destinationId, doneBy, museumId, callback));
+    moveObject: (
+      objectToMove,
+      destinationId,
+      doneBy,
+      museumId,
+      collectionId,
+      callback
+    ) => {
+      if (objectToMove.isMainObject()) {
+        dispatch(loadMainObject(objectToMove, museumId, collectionId, {
+          onSuccess: (children) => {
+            const objectIds = children.map(c => c.id);
+            dispatch(moveObject(objectIds, destinationId, doneBy, museumId, callback));
+          }
+        }));
+      } else {
+        dispatch(moveObject(objectToMove.id, destinationId, doneBy, museumId, callback));
+      }
     },
     moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
       dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
@@ -91,8 +107,8 @@ const mapDispatchToProps = (dispatch, props) => {
         dispatch(addNode(unit, path));
         break;
       case 'pickObject':
-        if (unit.mainObjectId) {
-          dispatch(loadMainObject(unit, path, museumId, collectionId, {
+        if (unit.isMainObject()) {
+          dispatch(loadMainObject(unit, museumId, collectionId, {
             onSuccess: (children) => {
               children.forEach(child => dispatch(addObject(child, path)));
             }
@@ -100,9 +116,6 @@ const mapDispatchToProps = (dispatch, props) => {
         } else {
           dispatch(addObject(unit, path));
         }
-        break;
-      case 'controlsobservations':
-        history.push(`/magasin/${unit.id}/controlsobservations`);
         break;
       case 'observation':
         history.push(`/magasin/${unit.id}/observations`);

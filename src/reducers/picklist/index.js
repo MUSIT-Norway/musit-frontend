@@ -179,7 +179,7 @@ export const refreshObject = (id, museumId) => {
   };
 };
 
-export const loadMainObject = (unit, path, museumId, collectionId, callback) => {
+export const loadMainObject = (unit, museumId, collectionId, callback) => {
   return {
     types: [LOAD_MAIN_OBJECT, LOAD_MAIN_OBJECT_SUCCESS, LOAD_MAIN_OBJECT_FAIL],
     promise: (client) =>
