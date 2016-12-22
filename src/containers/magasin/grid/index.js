@@ -45,7 +45,7 @@ const mapStateToProps = (state) => ({
   routerState: state.routing
 });
 
-const mapDispatchToProps = (dispatch, props) => {
+export const mapDispatchToProps = (dispatch, props) => {
   const {history} = props;
 
   return {
@@ -79,12 +79,20 @@ const mapDispatchToProps = (dispatch, props) => {
         }
       }));
     },
-    moveObject: (objectToMove, destinationId, doneBy, museumId, collectionId, callback) => {
-      if (objectToMove.mainObjectId) {
+    moveObject: (
+      objectToMove,
+      destinationId,
+      doneBy,
+      museumId,
+      collectionId,
+      callback
+    ) => {
+      if (objectToMove.isMainObject()) {
         dispatch(loadMainObject(objectToMove, museumId, collectionId, {
-          onSuccess: (children) => children.forEach(child => {
-            dispatch(moveObject(child.id, destinationId, doneBy, museumId, callback));
-          })
+          onSuccess: (children) => {
+            const objectIds = children.map(c => c.id);
+            dispatch(moveObject(objectIds, destinationId, doneBy, museumId, callback));
+          }
         }));
       } else {
         dispatch(moveObject(objectToMove.id, destinationId, doneBy, museumId, callback));
@@ -99,7 +107,7 @@ const mapDispatchToProps = (dispatch, props) => {
         dispatch(addNode(unit, path));
         break;
       case 'pickObject':
-        if (unit.mainObjectId) {
+        if (unit.isMainObject()) {
           dispatch(loadMainObject(unit, museumId, collectionId, {
             onSuccess: (children) => {
               children.forEach(child => dispatch(addObject(child, path)));
