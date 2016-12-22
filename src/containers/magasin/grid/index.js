@@ -45,7 +45,7 @@ const mapStateToProps = (state) => ({
   routerState: state.routing
 });
 
-export const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = (dispatch, props) => {
   const {history} = props;
 
   return {
