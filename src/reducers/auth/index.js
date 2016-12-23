@@ -95,6 +95,7 @@ const authReducer = (state = initialState, action = {}) => {
 export default { ID, reducer: authReducer };
 
 const ALL_MUSEUMS = 10000;
+const GOD_ACCESS = 10000;
 
 export const loadActor = (callback) => {
   return {
@@ -108,7 +109,7 @@ export const loadActor = (callback) => {
          ]).then(values => {
            const groups = values[0];
            const museums = values[1];
-           const isGod = !!groups.find(museum => ALL_MUSEUMS === museum.museumId);
+           const isGod = !!groups.find(group => GOD_ACCESS === group.permission);
            if (isGod) {
              resolve({
                ...user,
@@ -117,6 +118,7 @@ export const loadActor = (callback) => {
                    ...museum,
                    museumId: museum.id,
                    museumName: museum.shortName,
+                   permission: GOD_ACCESS,
                    collections: [
                      {
                        uuid: '00000000-0000-0000-0000-000000000000',
