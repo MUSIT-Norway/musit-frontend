@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import { load, update } from '../reducers/storageunit/panel';
-import EditStorageUnitContainer from '../components/magasin/panel/edit';
-import { update as updateState } from '../reducers/storageunit/panel/state';
-import { emitError, emitSuccess } from '../errors/emitter';
-import { loadRoot } from '../reducers/storageunit/grid';
+import { load, update } from '../actions';
+import EditNode from '../components/EditNode';
+import { updateState } from '../actions';
+import { emitError, emitSuccess } from '../../errors/emitter';
+import { loadRoot } from '../../magasin/actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -45,4 +45,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditStorageUnitContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EditNode);

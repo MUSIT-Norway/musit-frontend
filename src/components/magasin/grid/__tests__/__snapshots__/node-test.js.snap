@@ -1,4 +1,4 @@
-exports[`NodeLeftMenuComponent renders properly 1`] = `
+exports[`SideBar renders properly 1`] = `
 <div>
   <div
     style={

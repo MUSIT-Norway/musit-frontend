@@ -1,20 +1,20 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
-import NodeGrid from './component.nodeGrid';
-import ObjectGrid from './component.objectGrid';
-import Layout from '../layout';
-import NodeLeftMenuComponent from './component.leftMenu';
-import Toolbar from '../layout/Toolbar';
-import { blur, filter } from '../util';
-import Breadcrumb from '../layout/Breadcrumb';
-import MusitModal from '../components/movedialog';
+import NodeGrid from './NodeGrid';
+import ObjectGrid from './ObjectGrid';
+import Layout from '../../layout';
+import SideBar from './SideBar';
+import Toolbar from '../../layout/Toolbar';
+import { blur, filter } from '../../util';
+import Breadcrumb from '../../layout/Breadcrumb';
+import MusitModal from '../../components/movedialog';
 import { I18n } from 'react-i18nify';
-import { emitError, emitSuccess } from '../errors/emitter';
-import MusitModalHistory from '../components/movehistory';
-import { checkNodeBranchAndType } from '../util/nodeValidator';
-import MusitNode from '../models/node';
-import PagingToolbar from '../util/paging';
-import Config from '../config';
+import { emitError, emitSuccess } from '../../errors/emitter';
+import MusitModalHistory from '../../components/movehistory';
+import { checkNodeBranchAndType } from '../../util/nodeValidator';
+import MusitNode from '../../models/node';
+import PagingToolbar from '../../util/paging';
+import Config from '../../config';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -23,7 +23,7 @@ const getObjectDescription = (object) => {
   return objStr;
 };
 
-export default class StorageUnitsContainer extends React.Component {
+export default class StorageGrid extends React.Component {
   static propTypes = {
     children: React.PropTypes.arrayOf(React.PropTypes.object),
     objects: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -274,7 +274,7 @@ export default class StorageUnitsContainer extends React.Component {
   ) {
     return (
       <div style={{ paddingTop: 10 }}>
-        <NodeLeftMenuComponent
+        <SideBar
           rootNode={rootNode}
           showButtons={rootNode && !MusitNode.isRootNode(rootNode.type)}
           onClickNewNode={(parentId) => {

@@ -3,7 +3,7 @@ import { ControlLabel, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 
-export default class NodeLeftMenuComponent extends Component {
+export default class SideBar extends Component {
   static propTypes = {
     rootNode: PropTypes.object,
     onClickNewNode: PropTypes.func.isRequired,

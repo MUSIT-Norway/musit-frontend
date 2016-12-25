@@ -20,17 +20,17 @@ import { values } from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { hashHistory } from 'react-router';
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap';
-import SaveCancel from '../components/formfields/saveCancel/SaveCancel';
-import Layout from '../layout';
-import Breadcrumb from '../layout/Breadcrumb';
-import AddressSuggest from '../components/address';
+import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
+import Layout from '../../layout';
+import Breadcrumb from '../../layout/Breadcrumb';
+import AddressSuggest from '../../components/address';
 import Loader from 'react-loader';
-import { parseISODateNonStrict } from '../util';
-import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../components/formfields';
-import validateForm from './validator';
+import { parseISODateNonStrict } from '../../util';
+import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../components/formfields';
+import validateForm from '../validator';
 import { I18n } from 'react-i18nify';
 
-export default class StorageUnitContainer extends Component {
+export default class Shared extends Component {
   static propTypes = {
     unit: PropTypes.object.isRequired,
     params: PropTypes.object,

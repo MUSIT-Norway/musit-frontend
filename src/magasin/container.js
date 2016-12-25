@@ -7,7 +7,7 @@ import {loadStats, clearStats} from '../reducers/storageunit/stats';
 import {hashHistory} from 'react-router';
 import {I18n} from 'react-i18nify';
 import {emitError, emitSuccess} from '../errors/emitter';
-import StorageUnitsContainer from '../components/magasin/grid';
+import StorageUnitsContainer from './components/StorageGrid';
 import {createSelector} from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';

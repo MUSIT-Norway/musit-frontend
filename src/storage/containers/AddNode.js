@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import { insert } from '../reducers/storageunit/panel';
-import StorageUnitAddContainer from '../components/magasin/panel/add';
-import { clear as clearState, update as updateState } from '../reducers/storageunit/panel/state';
-import { emitError, emitSuccess } from '../errors/emitter';
-import { loadRoot } from '../reducers/storageunit/grid';
+import { insert } from '../actions';
+import AddNode from '../components/AddNode';
+import { clearState, updateState } from '../actions';
+import { emitError, emitSuccess } from '../../errors/emitter';
+import { loadRoot } from '../../magasin/actions';
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -42,4 +42,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(StorageUnitAddContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(AddNode);

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
-import MusitNode from '../models/node';
+import MusitNode from '../../models/node';
 
 export default class NodeGrid extends Component {
   static propTypes = {

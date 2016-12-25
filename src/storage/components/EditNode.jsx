@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import StorageUnitContainer from './component';
+import StorageUnitContainer from './Shared';
 
-export default class EditStorageUnitContainer extends React.Component {
+export default class EditNode extends React.Component {
   static propTypes = {
     onLagreClick: PropTypes.func.isRequired,
     loadStorageUnit: PropTypes.func.isRequired,

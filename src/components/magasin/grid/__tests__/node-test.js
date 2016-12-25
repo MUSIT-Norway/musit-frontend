@@ -3,7 +3,7 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import NodeLeftMenuComponent from '../LeftMenu';
 
-describe('NodeLeftMenuComponent', () => {
+describe('SideBar', () => {
 
   it('renders properly', () => {
     const wrapper = shallow(
