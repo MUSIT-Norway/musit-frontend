@@ -1,0 +1,10 @@
+export const LOAD_SEVERAL = 'musit/storageunit-grid/LOAD_SEVERAL';
+export const LOAD_SEVERAL_SUCCESS = 'musit/storageunit-grid/LOAD_SEVERAL_SUCCESS';
+export const LOAD_SEVERAL_FAIL = 'musit/storageunit-grid/LOAD_SEVERAL_FAIL';
+export const LOAD_ONE = 'musit/storageunit-grid/LOAD_ONE';
+export const LOAD_ONE_SUCCESS = 'musit/storageunit-grid/LOAD_ONE_SUCCESS';
+export const LOAD_ONE_FAIL = 'musit/storageunit-grid/LOAD_ONE_FAIL';
+export const CLEAR_ROOT = 'musit/storageunit-grid/CLEAR_ROOT';
+export const DELETE = 'musit/storageunit-grid/DELETE';
+export const DELETE_SUCCESS = 'musit/storageunit-grid/DELETE_SUCCESS';
+export const DELETE_FAIL = 'musit/storageunit-grid/DELETE_FAIL';

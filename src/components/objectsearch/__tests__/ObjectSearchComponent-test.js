@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import ObjectSearchComponent from '../ObjectSearchComponent';
-import { getPath } from '../../../reducers/helper';
+import { getPath } from '../../../util';
 import MusitObject from '../../../models/object';
 
 describe('ObjectSearchComponent', () => {

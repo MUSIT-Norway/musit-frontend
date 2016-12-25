@@ -1,6 +1,4 @@
-
-import { formatFloatToString } from '../../../util';
-import { getPath } from '../../helper';
+import { formatFloatToString, getPath } from '../../../util';
 
 const mapRequirement = (envReq, field) => {
   if (envReq[field] && (envReq[field].base || envReq[field].tolerance)) {

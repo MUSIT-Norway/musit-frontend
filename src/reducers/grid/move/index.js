@@ -1,7 +1,6 @@
 import Config from '../../../config';
-import { apiUrl } from '../../../util';
+import { apiUrl, getPath } from '../../../util';
 import uniq from 'lodash/uniq';
-import { getPath } from '../../helper';
 import Actor from '../../../models/actor';
 
 export const LOAD = 'musit/movehistory/LOAD';

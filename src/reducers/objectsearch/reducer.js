@@ -1,5 +1,5 @@
 import { omit } from 'lodash';
-import { getPath } from '../helper';
+import { getPath } from '../../util';
 import MusitObject from '../../models/object';
 import * as types from './constants';
 

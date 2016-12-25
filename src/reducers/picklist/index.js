@@ -1,5 +1,4 @@
-import { apiUrl } from '../../util';
-import { getPath } from '../helper';
+import { apiUrl, getPath } from '../../util';
 import Config from '../../config';
 import MusitObject from '../../models/object';
 
