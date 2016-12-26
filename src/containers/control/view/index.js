@@ -17,7 +17,6 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
 import { loadControl } from '../../../reducers/control';
 import ControlViewContainerImpl from '../../../components/control/view';
@@ -25,7 +24,6 @@ import { actions, rootNodeSelector } from '../../../magasin';
 const { loadRoot } = actions;
 
 const mapStateToProps = (state) => ({
-  translate: (key, markdown) => I18n.t(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
   rootNode: rootNodeSelector(state.magasinReducers),

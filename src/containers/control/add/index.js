@@ -19,18 +19,19 @@
  */
 import { connect } from 'react-redux';
 import { addControl } from '../../../reducers/control';
-import { I18n } from 'react-i18nify';
 import ControlAddContainerImpl from '../../../components/control/add';
 import { actions, rootNodeSelector } from '../../../magasin';
 const { loadRoot } = actions;
 
-const mapStateToProps = (state) => ({
-  actor: state.auth.user.actor,
-  translate: (key, markdown) => I18n.t(key, markdown),
-  envReqData: rootNodeSelector(state.magasinReducers) ? rootNodeSelector(state.magasinReducers).environmentRequirement : null,
-  rootNode: rootNodeSelector(state.magasinReducers),
-  user: state.auth.user
-});
+const mapStateToProps = (state) => {
+  const rootNode = rootNodeSelector(state.magasinReducers);
+  return {
+    actor: state.auth.user.actor,
+    envReqData: rootNode ? rootNode.environmentRequirement : null,
+    rootNode: rootNode,
+    user: state.auth.user
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   saveControl: (id, museumId, data, saveControlCallback) => {

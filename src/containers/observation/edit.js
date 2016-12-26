@@ -10,7 +10,6 @@ import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => I18n.t(key, markdown),
     rootNode: rootNodeSelector(state.magasinReducers),
     user: state.auth.user
   };

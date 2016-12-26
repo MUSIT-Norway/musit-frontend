@@ -37,7 +37,6 @@ const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState,
     user: state.auth.user,
-    translate: (key, markdown) => I18n.t(key, markdown),
     rootNode: state.storageGridUnit.root.data || {}
   };
 };

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { I18n } from 'react-i18nify';
 import ViewObservationPage from '../../components/observation/view';
 import { loadObservation } from '../../reducers/observation';
 import { actions, rootNodeSelector } from '../../magasin';
@@ -7,7 +6,6 @@ const { loadRoot } = actions;
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => I18n.t(key, markdown),
     user: state.auth.user,
     doneBy: state.observation.data.doneBy,
     doneDate: state.observation.data.doneDate,
