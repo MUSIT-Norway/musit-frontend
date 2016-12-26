@@ -1,4 +1,4 @@
-import { toFrontend } from '../magasin/mapper';
+import { toFrontend } from '../../magasin/modules/mapper';
 import * as types from './types';
 
 const initialState = {

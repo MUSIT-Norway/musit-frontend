@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import { insert } from '../actions';
+import { insert } from '../modules/actions';
 import AddNode from '../components/AddNode';
-import { clearState, updateState } from '../actions';
+import { clearState, updateState } from '../modules/actions';
 import { emitError, emitSuccess } from '../../errors/emitter';
-import { loadRoot } from '../../magasin/actions';
+import { loadRoot } from '../../magasin/modules/actions';
 
 const mapDispatchToProps = (dispatch) => {
   return {

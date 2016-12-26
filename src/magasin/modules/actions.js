@@ -1,5 +1,5 @@
-import { apiUrl } from '../util';
-import Config from '../config';
+import { apiUrl } from '../../util';
+import Config from '../../config';
 import * as types from './types';
 
 export const loadRoot = (id, museumId, currentPage, callback) => {

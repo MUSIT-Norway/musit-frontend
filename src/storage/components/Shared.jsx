@@ -27,7 +27,7 @@ import AddressSuggest from '../../components/address';
 import Loader from 'react-loader';
 import { parseISODateNonStrict } from '../../util';
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../components/formfields';
-import validateForm from '../validator';
+import validateForm from '../modules/validator';
 import { I18n } from 'react-i18nify';
 
 export default class Shared extends Component {

@@ -1,6 +1,6 @@
-import Config from '../config';
-import { apiUrl } from '../util';
-import { toFrontend, toBackend } from '../magasin/mapper';
+import Config from '../../config';
+import { apiUrl } from '../../util';
+import { toFrontend, toBackend } from '../../magasin/modules/mapper';
 import * as types from './types';
 
 const getUpdatedBy = (client, node, resolve) => {

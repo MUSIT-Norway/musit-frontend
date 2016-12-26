@@ -1,19 +1,19 @@
 import {connect} from 'react-redux';
-import {loadRoot as loadRootNodes, clearRoot, loadChildren as loadChildNodes, deleteUnit} from '../reducers/storageunit/grid';
-import {loadObjects} from '../reducers/storageobject/grid';
-import {addNode, addObject, loadMainObject} from '../reducers/picklist';
-import {moveObject, moveNode} from '../reducers/move';
-import {loadStats, clearStats} from '../reducers/storageunit/stats';
+import {loadRoot as loadRootNodes, clearRoot, loadChildren as loadChildNodes, deleteUnit} from '../../reducers/storageunit/grid';
+import {loadObjects} from '../../reducers/storageobject/grid';
+import {addNode, addObject, loadMainObject} from '../../reducers/picklist';
+import {moveObject, moveNode} from '../../reducers/move';
+import {loadStats, clearStats} from '../../reducers/storageunit/stats';
 import {hashHistory} from 'react-router';
 import {I18n} from 'react-i18nify';
-import {emitError, emitSuccess} from '../errors/emitter';
-import StorageUnitsContainer from './components/StorageGrid';
+import {emitError, emitSuccess} from '../../errors/emitter';
+import StorageUnitsContainer from '../components/StorageGrid';
 import {createSelector} from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
-import {customSortingStorageNodeType} from '../util';
-import MusitNode from '../models/node';
-import { clear } from '../reducers/storageunit/modal';
+import {customSortingStorageNodeType} from '../../util';
+import MusitNode from '../../models/node';
+import { clear } from '../../reducers/storageunit/modal';
 
 const getGridData = (field) => (state) => {
   if (!state[field].data) {

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import { load, update } from '../actions';
+import { load, update } from '../modules/actions';
 import EditNode from '../components/EditNode';
-import { updateState } from '../actions';
+import { updateState } from '../modules/actions';
 import { emitError, emitSuccess } from '../../errors/emitter';
-import { loadRoot } from '../../magasin/actions';
+import { loadRoot } from '../../magasin/modules/actions';
 
 const mapStateToProps = (state) => {
   return {
