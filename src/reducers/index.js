@@ -21,12 +21,9 @@ import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import auth from './auth';
 import picklistReducer from './picklist';
-import storagePanelReducer from './storageunit/panel';
-import storagePanelStateReducer from './storageunit/panel/state';
-import storageNodeGridReducer from './storageunit/grid';
+import { storageReducer } from '../storage';
+import { magasinReducers } from '../magasin';
 import storageUnitModal from './storageunit/modal';
-import storageUnitStatsReducer from './storageunit/stats';
-import storageObjectGridReducer from './storageobject/grid';
 import observationReducer from './observation';
 import reportReducer from './reports';
 import controlReducer from './control';
@@ -36,16 +33,13 @@ import ObjectSearchReducer from './objectsearch/reducer';
 import printReducer from './print/index';
 
 const rootReducer = combineReducers({
+  magasinReducers,
   routing: routerReducer,
   [auth.ID]: auth.reducer,
   print: printReducer,
   picks: picklistReducer,
-  storagePanelUnit: storagePanelReducer,
-  storageGridUnit: storageNodeGridReducer,
+  storagePanelUnit: storageReducer,
   [storageUnitModal.ID]: storageUnitModal.reducer,
-  storageUnitStats: storageUnitStatsReducer,
-  storagePanelState: storagePanelStateReducer,
-  storageObjectGrid: storageObjectGridReducer,
   observation: observationReducer,
   reports: reportReducer,
   control: controlReducer,

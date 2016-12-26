@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import StorageUnitContainer from './Shared';
+import StorageUnitContainer from './StorageComponent';
 
 export default class EditNode extends React.Component {
   static propTypes = {

@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
     user: state.auth.user,
     buildinfo: state.auth.buildinfo,
     pushState: routerActions.push,
-    rootNode: state.storageGridUnit.root.data,
+    rootNode: state.magasinReducers.storageGridUnit.root.data,
     pickListNodeCount: state.picks[PICK_TYPES.NODE] ? state.picks[PICK_TYPES.NODE].length : 0,
     pickListObjectCount: state.picks[PICK_TYPES.OBJECT] ? state.picks[PICK_TYPES.OBJECT].length : 0
   };

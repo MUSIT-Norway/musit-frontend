@@ -1,4 +1,4 @@
-import validateForm from '../validator';
+import validateForm from '../storageValidator';
 
 describe('Test root level check for Organisation', () => {
   const rootNode = {

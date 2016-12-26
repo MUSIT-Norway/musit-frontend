@@ -1,26 +1,25 @@
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import { load, update } from '../modules/actions';
-import EditNode from '../components/EditNode';
-import { updateState } from '../modules/actions';
-import { emitError, emitSuccess } from '../../errors/emitter';
-import { loadRoot } from '../../magasin/modules/actions';
+import { insert } from './storageActions';
+import AddNode from './StorageAddComponent';
+import { clearState, updateState } from './storageActions';
+import { emitError, emitSuccess } from '../errors/emitter';
+import { actions, rootNodeSelector } from '../magasin';
+const { loadRoot } = actions;
 
 const mapStateToProps = (state) => {
   return {
-    unit: state.storagePanelUnit.state,
     user: state.auth.user,
-    loaded: !!state.storagePanelUnit.loaded,
-    translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data || {}
+    unit: state.storagePanelUnit.state,
+    rootNode: rootNodeSelector(state.magasinReducers)
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLagreClick: (data, museumId) => {
-      dispatch(update(data, museumId, {
+    onLagreClick: (parentId, museumId, data) => {
+      dispatch(insert(parentId, museumId, data, {
         onSuccess: () => {
           hashHistory.goBack();
           emitSuccess(
@@ -35,14 +34,12 @@ const mapDispatchToProps = (dispatch) => {
         }
       }));
     },
-    loadStorageUnit: (id, museumId, callback) => {
-      dispatch(load(id, museumId, callback));
-    },
     updateState: (data) => dispatch(updateState(data)),
+    clearState: () => dispatch(clearState()),
     loadStorageObj: (id, museumId) => {
       dispatch(loadRoot(id, museumId));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditNode);
+export default connect(mapStateToProps, mapDispatchToProps)(AddNode);

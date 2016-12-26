@@ -71,7 +71,7 @@ export default (ComponentToWrap) => {
     }
 
 
-    showModal(title, componentToRender, closeFn) {
+    showModal(title, componentToRender) {
       const $dialog = $('<div>').dialog({
         autoOpen: false,
         modal: true,
@@ -83,8 +83,8 @@ export default (ComponentToWrap) => {
         close: function() {
           ReactDOM.unmountComponentAtNode(this);
           $(this).remove();
-          if (typeof closeFn === 'function') {
-            closeFn();
+          if (typeof componentToRender.closeModal === 'function') {
+            componentToRender.closeModal();
           }
         }
       });

@@ -1,7 +1,8 @@
-import Config from '../../config';
-import { apiUrl } from '../../util';
-import { toFrontend, toBackend } from '../../magasin/modules/mapper';
-import * as types from './types';
+import Config from '../config';
+import { apiUrl } from '../util';
+import { mapper } from '../magasin';
+const { toFrontend, toBackend } = mapper;
+import * as types from './storageTypes';
 
 const getUpdatedBy = (client, node, resolve) => {
   client.get(apiUrl(`${Config.magasin.urls.actor.baseUrl}/${node.updatedBy}`))
@@ -26,7 +27,7 @@ export const load = (id, museumId, callback) => {
 export const update = (data, museumId, callback) => {
   const dataToPost = toBackend(data);
   return {
-    types: [types.INSERT, types.INSERT_SUCCESS, types.INSERT_FAIL],
+    types: [types.UPDATE, types.UPDATE_SUCCESS, types.UPDATE_FAIL],
     promise: (client) => new Promise((resolve, reject) => {
       client.put(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${data.id}`), { data: dataToPost })
         .then(node => getUpdatedBy(client, node, resolve, reject))

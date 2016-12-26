@@ -1,10 +1,10 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
-import MuseumId from '../../../models/museumId';
-import * as actions from '../actions';
-import reducer from '../reducer';
-import * as types from '../types';
-import Config from '../../../config';
+import MuseumId from '../../models/museumId';
+import * as actions from '../magasinActions';
+import { nodeReducer as reducer, statsReducer } from '../magasinReducers';
+import * as types from '../magasinTypes';
+import Config from '../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
@@ -100,7 +100,7 @@ const testSubNoRootState = {
 deepFreeze(testSubNoRootState);
 
 
-describe('StorageUnitReducer', () => {
+describe('Node reducer', () => {
   it('Initial state is set', () => {
     const state = reducer(testRootState, {});
     assert(state === testRootState);
@@ -336,4 +336,99 @@ describe('StorageUnitReducer', () => {
       })
     ).toMatchSnapshot();
   });
+});
+
+
+const initialState = {
+  stats: {
+    nodes: 1100,
+    objects: 2100,
+    totalObjects: 3100
+  }
+};
+const nullState = {
+  stats: null
+};
+
+deepFreeze(initialState);
+deepFreeze(nullState);
+
+describe('Stats reducer', () => {
+  it('Test the initial state.', () => {
+    const newstate = statsReducer(initialState, actions.loadStats(1));
+    assert(initialState !== JSON.stringify(newstate));
+  });
+
+  it('Test loading stats.', () => {
+    const newstate = statsReducer(initialState, { type: 'musit/strageunit-stats/LOAD_STATS' });
+    expect(newstate).toMatchSnapshot();
+  });
+
+  it('Test success state', () => {
+    const newstate = statsReducer(initialState, { type: 'musit/strageunit-stats/LOAD_STATS_SUCCESS' });
+    expect(newstate).toMatchSnapshot();
+  });
+
+  it('Test failure state', () => {
+    const newstate = statsReducer(initialState, { type: 'musit/strageunit-stats/LOAD_STATS_FAILURE' });
+    expect(newstate).toMatchSnapshot();
+  });
+
+  it('Test clearStats method', () => {
+    const newstate = statsReducer(initialState, actions.clearStats());
+    expect(newstate).toMatchSnapshot();
+  });
+
+  it('creates LOAD_STATS_SUCCESS when fetching data has been done', () => {
+    const id = 3;
+    const url = `${Config.magasin.urls.thingaggregate.baseUrl(new MuseumId(99))}/storagenodes/${id}/stats`;
+    nock('http://localhost')
+      .get(url)
+      .reply(200, {
+        numNodes: 6,
+        numObjects: 0,
+        totalObjects: 12
+      });
+    const store = mockStore();
+
+    return store.dispatch(actions.loadStats(3, new MuseumId(99)))
+      .then(() => {
+        expect(store.getActions()).toMatchSnapshot();
+      });
+  });
+
+  it('LOAD_STATS: no action', () => {
+    expect(
+      reducer(undefined, undefined)
+    ).toMatchSnapshot();
+  });
+
+  it('LOAD_STATS: initial action', () => {
+    expect(
+      reducer(undefined, {
+        type: types.LOAD_STATS
+      })
+    ).toMatchSnapshot();
+  });
+
+  it('LOAD_STATS: success action', () => {
+    expect(
+      reducer(undefined, {
+        type: types.LOAD_STATS_SUCCESS,
+        result: {
+          someField: 1
+        }
+      })
+    ).toMatchSnapshot();
+  });
+
+  it('LOAD_STATS: fail action', () => {
+    expect(
+      reducer(undefined, {
+        type: types.LOAD_STATS_FAILURE,
+        error: Error('LOAD_STATS has some error.')
+      })
+    ).toMatchSnapshot();
+  });
+
 });

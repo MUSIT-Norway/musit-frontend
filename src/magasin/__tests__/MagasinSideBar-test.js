@@ -1,13 +1,13 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import NodeLeftMenuComponent from '../SideBar';
+import MagasinSideBar from '../MagasinSideBar';
 
 describe('SideBar', () => {
 
   it('renders properly', () => {
     const wrapper = shallow(
-      <NodeLeftMenuComponent
+      <MagasinSideBar
         rootNode={{ id: 1}}
         translate={(key) => key}
         onClickNewNode={(key) => key}

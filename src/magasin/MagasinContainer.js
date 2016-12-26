@@ -1,80 +1,51 @@
-import {connect} from 'react-redux';
-import {loadRoot as loadRootNodes, clearRoot, loadChildren as loadChildNodes, deleteUnit} from '../../reducers/storageunit/grid';
-import {loadObjects} from '../../reducers/storageobject/grid';
-import {addNode, addObject, loadMainObject} from '../../reducers/picklist';
-import {moveObject, moveNode} from '../../reducers/move';
-import {loadStats, clearStats} from '../../reducers/storageunit/stats';
-import {hashHistory} from 'react-router';
-import {I18n} from 'react-i18nify';
-import {emitError, emitSuccess} from '../../errors/emitter';
-import StorageUnitsContainer from '../components/StorageGrid';
-import {createSelector} from 'reselect';
-import orderBy from 'lodash/orderBy';
-import toLower from 'lodash/toLower';
-import {customSortingStorageNodeType} from '../../util';
-import MusitNode from '../../models/node';
-import { clear } from '../../reducers/storageunit/modal';
+import { connect } from 'react-redux';
+import { I18n } from 'react-i18nify';
+import { hashHistory } from 'react-router';
+import * as actions from './magasinActions';
+import { selector } from './magasinReducers';
+import { emitError, emitSuccess } from '../errors/emitter';
+import { MusitNode } from '../models';
+import { moveObject, moveNode } from '../reducers/move';
+import { addNode, addObject, loadMainObject } from '../reducers/picklist';
+import StorageUnitsContainer from './MagasinComponent';
 
-const getGridData = (field) => (state) => {
-  if (!state[field].data) {
-    return [];
-  }
-  return state[field].data.length ? state[field].data : state[field].data.matches || [];
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.user,
+    ...selector(state.magasinReducers)
+  };
 };
-
-const getSortedStorageGridUnit = createSelector(
-  [getGridData('storageGridUnit')],
-  (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type),
-    (o) => toLower(o.name)
-  ])
-  );
-
-const getSortedStorageObjectGrid = createSelector(
-  [getGridData('storageObjectGrid')],
-  (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
-);
-
-const mapStateToProps = (state) => ({
-  user: state.auth.user,
-  stats: state.storageUnitStats.stats,
-  children: getSortedStorageGridUnit(state),
-  totalNodes: state.storageGridUnit.data && state.storageGridUnit.data.totalMatches,
-  objects: getSortedStorageObjectGrid(state),
-  totalObjects: state.storageObjectGrid.data && state.storageObjectGrid.data.totalMatches,
-  rootNode: state.storageGridUnit.root.data,
-  routerState: state.routing
-});
 
 const mapDispatchToProps = (dispatch, props) => {
   const {history} = props;
 
   return {
     loadRoot: (id, museumId, currentPage) => {
-      dispatch(clearStats());
-      dispatch(loadRootNodes(id, museumId, currentPage, {
+      dispatch(actions.clearStats());
+      dispatch(actions.loadRoot(id, museumId, currentPage, {
         onSuccess: (result) => {
           if (!MusitNode.isRootNode(result.type)) {
-            dispatch(loadStats(id, museumId));
+            dispatch(actions.loadStats(id, museumId));
           }
         }
       }));
     },
     loadStorageUnits: (museumId, currentPage) => {
-      dispatch(clearRoot());
-      dispatch(loadRootNodes(null, museumId, currentPage));
-      dispatch(clearStats());
+      dispatch(actions.clearRoot());
+      dispatch(actions.loadRoot(null, museumId, currentPage));
+      dispatch(actions.clearStats());
     },
     loadStorageObjects: (id, museumId, collectionId, currentPage) => {
-      dispatch(loadObjects(id, museumId, collectionId, currentPage));
+      dispatch(actions.loadObjects(id, museumId, collectionId, currentPage));
     },
     loadChildren: (id, museumId, currentPage) => {
-      dispatch(loadChildNodes(id, museumId, currentPage));
-      dispatch(clearRoot());
-      dispatch(clearStats());
-      dispatch(loadRootNodes(id, museumId, null, {
+      dispatch(actions.loadChildren(id, museumId, currentPage));
+      dispatch(actions.clearRoot());
+      dispatch(actions.clearStats());
+      dispatch(actions.loadRoot(id, museumId, null, {
         onSuccess: (result) => {
           if (!MusitNode.isRootNode(result.type)) {
-            dispatch(loadStats(id, museumId));
+            dispatch(actions.loadStats(id, museumId));
           }
         }
       }));
@@ -132,14 +103,14 @@ const mapDispatchToProps = (dispatch, props) => {
     },
     onDelete: (id, museumId, currentNode) => {
       if (id === currentNode.id) {
-        dispatch(deleteUnit(id, museumId, {
+        dispatch(actions.deleteUnit(id, museumId, {
           onSuccess: () => {
-            dispatch(clearRoot());
+            dispatch(actions.clearRoot());
             if (currentNode.isPartOf) {
               hashHistory.replace(`/magasin/${currentNode.isPartOf}`);
             } else {
-              dispatch(loadRootNodes(null, museumId));
-              dispatch(clearStats());
+              dispatch(actions.loadRoot(null, museumId));
+              dispatch(actions.clearStats());
             }
             emitSuccess({
               type: 'deleteSuccess',
@@ -158,8 +129,7 @@ const mapDispatchToProps = (dispatch, props) => {
           }
         }));
       }
-    },
-    clearMoveDialog: () => dispatch(clear())
+    }
   };
 };
 

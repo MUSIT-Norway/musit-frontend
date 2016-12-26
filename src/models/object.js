@@ -14,6 +14,14 @@ class MusitObject {
   isMainObject() {
     return this.id === this.mainObjectId;
   }
+
+  static getObjectDescription(object) {
+    let objStr = object.museumNo ? `${object.museumNo}` : '';
+    objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr;
+    objStr = object.term ? `${objStr} - ${object.term}` : objStr;
+    return objStr;
+  }
+
 }
 
 export default MusitObject;

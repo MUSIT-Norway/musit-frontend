@@ -1,10 +1,10 @@
-import * as actions from '../actions';
-import * as types from '../types';
-import reducer from '../reducer';
-import Config from '../../../config';
+import * as actions from '../storageActions';
+import * as types from '../storageTypes';
+import reducer from '../storageReducers';
+import Config from '../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
-import MuseumId from '../../../models/museumId';
+import MuseumId from '../../models/museumId';
 
 const nock = nocker(request);
 

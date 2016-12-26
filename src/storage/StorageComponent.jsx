@@ -20,15 +20,19 @@ import { values } from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { hashHistory } from 'react-router';
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap';
-import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
-import Layout from '../../layout';
-import Breadcrumb from '../../layout/Breadcrumb';
-import AddressSuggest from '../../components/address';
 import Loader from 'react-loader';
-import { parseISODateNonStrict } from '../../util';
-import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../components/formfields';
-import validateForm from '../modules/validator';
 import { I18n } from 'react-i18nify';
+
+import Layout from '../layout';
+import Breadcrumb from '../layout/Breadcrumb';
+
+import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../components/formfields';
+import SaveCancel from '../components/formfields/saveCancel/SaveCancel';
+import AddressSuggest from '../components/address';
+
+import validateForm from './storageValidator';
+
+import { parseISODateNonStrict } from '../util';
 
 export default class Shared extends Component {
   static propTypes = {
@@ -198,7 +202,7 @@ export default class Shared extends Component {
     return (
       <Layout
         title={I18n.t('musit.storageUnits.title')}
-        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
+        breadcrumb={<Breadcrumb node={this.props.rootNodeSelector} disabled />}
         content={
           <Loader loaded={this.props.loaded}>
             <Grid>

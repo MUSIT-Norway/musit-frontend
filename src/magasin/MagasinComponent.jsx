@@ -1,31 +1,35 @@
+// React
 import React from 'react';
 import { hashHistory } from 'react-router';
-import NodeGrid from './NodeGrid';
-import ObjectGrid from './ObjectGrid';
-import Layout from '../../layout';
-import SideBar from './SideBar';
-import Toolbar from '../../layout/Toolbar';
-import { blur, filter } from '../../util';
-import Breadcrumb from '../../layout/Breadcrumb';
-import MusitModal from '../../components/movedialog';
 import { I18n } from 'react-i18nify';
-import { emitError, emitSuccess } from '../../errors/emitter';
-import MusitModalHistory from '../../components/movehistory';
-import { checkNodeBranchAndType } from '../../util/nodeValidator';
-import MusitNode from '../../models/node';
-import PagingToolbar from '../../util/paging';
-import Config from '../../config';
 
-const getObjectDescription = (object) => {
-  let objStr = object.museumNo ? `${object.museumNo}` : '';
-  objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr;
-  objStr = object.term ? `${objStr} - ${object.term}` : objStr;
-  return objStr;
-};
+// Components in this module
+import NodeGrid from './MagasinNodeGrid';
+import ObjectGrid from './MagasinObjectGrid';
+import SideBar from './MagasinSideBar';
+
+// Layout
+import Layout from '../layout';
+import Toolbar from '../layout/Toolbar';
+import Breadcrumb from '../layout/Breadcrumb';
+
+// Utilities
+import { blur, filter } from '../util';
+import { checkNodeBranchAndType } from '../util/nodeValidator';
+import { emitError, emitSuccess } from '../errors/emitter';
+import { MusitNode, MusitObject } from '../models';
+import PagingToolbar from '../util/paging';
+
+// Containers from other modules
+import MusitModal from '../components/movedialog';
+import MusitModalHistory from '../components/movehistory';
+
+// Config
+import Config from '../config';
 
 export default class StorageGrid extends React.Component {
   static propTypes = {
-    children: React.PropTypes.arrayOf(React.PropTypes.object),
+    nodes: React.PropTypes.arrayOf(React.PropTypes.object),
     objects: React.PropTypes.arrayOf(React.PropTypes.object),
     rootNode: React.PropTypes.object,
     loadStorageUnits: React.PropTypes.func.isRequired,
@@ -36,12 +40,10 @@ export default class StorageGrid extends React.Component {
     props: React.PropTypes.object,
     params: React.PropTypes.object,
     history: React.PropTypes.object,
-    routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
     moves: React.PropTypes.arrayOf(React.PropTypes.object),
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
@@ -147,7 +149,7 @@ export default class StorageGrid extends React.Component {
     showModal = this.context.showModal
   ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />, this.props.clearMoveDialog);
+    showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />);
   }
 
   moveNode = (
@@ -192,9 +194,9 @@ export default class StorageGrid extends React.Component {
     objectToMove,
     showModal = this.context.showModal
   ) {
-    const objStr = getObjectDescription(objectToMove);
+    const objStr = MusitObject.getObjectDescription(objectToMove);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    showModal(title, <MusitModal onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
+    showModal(title, <MusitModal onMove={this.moveObject(objectToMove)} />);
   }
 
   moveObject = (
@@ -207,7 +209,7 @@ export default class StorageGrid extends React.Component {
     loadRoot = this.props.loadRoot,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
-    const description = getObjectDescription(objectToMove);
+    const description = MusitObject.getObjectDescription(objectToMove);
     moveObject(objectToMove, toNode.id, userId, museumId, collectionId, {
       onSuccess: () => {
         onSuccess();
@@ -232,7 +234,7 @@ export default class StorageGrid extends React.Component {
     objectToShowHistoryFor,
     showModal = this.context.showModal
   ) {
-    const objStr = getObjectDescription(objectToShowHistoryFor);
+    const objStr = MusitObject.getObjectDescription(objectToShowHistoryFor);
     const componentToRender = <MusitModalHistory objectId={objectToShowHistoryFor.id} />;
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
     showModal(title, componentToRender);
@@ -304,7 +306,7 @@ export default class StorageGrid extends React.Component {
   makeContentGrid(
     searchPattern = this.state.searchPattern,
     rootNode = this.props.rootNode,
-    children = this.props.children,
+    nodes = this.props.nodes,
     objects = this.props.objects,
     showObjects = this.props.route.showObjects,
     onAction = this.props.onAction,
@@ -350,7 +352,7 @@ export default class StorageGrid extends React.Component {
     return (
       <div>
         <NodeGrid
-          tableData={filter(children, ['name'], searchPattern)}
+          tableData={filter(nodes, ['name'], searchPattern)}
           onAction={(action, unit) =>
             onAction(
               action,

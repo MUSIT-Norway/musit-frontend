@@ -1,5 +1,4 @@
-import { toFrontend } from '../../magasin/modules/mapper';
-import * as types from './types';
+import * as types from './storageTypes';
 
 const initialState = {
   state: {
@@ -9,7 +8,7 @@ const initialState = {
   }
 };
 
-const storageUnitContainerReducer = (state = initialState, action = {}) => {
+const storageReducer = (state = initialState, action = {}) => {
   switch (action.type) {
   case types.INSERT:
     return {
@@ -20,8 +19,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       loading: false,
-      loaded: true,
-      data: toFrontend(action.result)
+      loaded: true
     };
   case types.INSERT_FAIL:
     return {
@@ -34,8 +32,20 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       loading: false,
+      loaded: true
+    };
+  case types.UPDATE_SUCCESS:
+    return {
+      ...state,
+      loading: false,
+      loaded: true
+    };
+  case types.UPDATE_FAIL:
+    return {
+      ...state,
+      loading: false,
       loaded: true,
-      data: action.data
+      data: action.error
     };
   case types.LOAD:
     return {
@@ -46,8 +56,7 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
     return {
       ...state,
       loading: false,
-      loaded: true,
-      data: toFrontend(action.result)
+      loaded: true
     };
   case types.LOAD_FAIL:
     return {
@@ -75,4 +84,4 @@ const storageUnitContainerReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default storageUnitContainerReducer;
+export default storageReducer;
