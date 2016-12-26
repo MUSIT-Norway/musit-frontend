@@ -34,17 +34,6 @@ Object {
 
 exports[`ReducerStoragUnitPanel LOAD: success action 1`] = `
 Object {
-  "data": Object {
-    "area": undefined,
-    "areaTo": undefined,
-    "breadcrumb": Array [],
-    "environmentAssessment": Object {},
-    "environmentRequirement": Object {},
-    "height": undefined,
-    "heightTo": undefined,
-    "securityAssessment": Object {},
-    "someField": 1
-  },
   "loaded": true,
   "loading": false,
   "state": Object {
@@ -164,17 +153,6 @@ Object {
 
 exports[`ReducerStoragUnitPanel insert: success action 1`] = `
 Object {
-  "data": Object {
-    "area": undefined,
-    "areaTo": undefined,
-    "breadcrumb": Array [],
-    "environmentAssessment": Object {},
-    "environmentRequirement": Object {},
-    "height": undefined,
-    "heightTo": undefined,
-    "securityAssessment": Object {},
-    "someField": 1
-  },
   "loaded": true,
   "loading": false,
   "state": Object {
@@ -256,17 +234,6 @@ Object {
 
 exports[`ReducerStoragUnitPanel update: success action 1`] = `
 Object {
-  "data": Object {
-    "area": undefined,
-    "areaTo": undefined,
-    "breadcrumb": Array [],
-    "environmentAssessment": Object {},
-    "environmentRequirement": Object {},
-    "height": undefined,
-    "heightTo": undefined,
-    "securityAssessment": Object {},
-    "someField": 1
-  },
   "loaded": true,
   "loading": false,
   "state": Object {

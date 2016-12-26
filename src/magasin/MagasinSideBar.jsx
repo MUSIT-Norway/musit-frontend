@@ -86,7 +86,7 @@ export default class SideBar extends Component {
         </div>
       );
     };
-    const showStats = this.props.stats;
+    const showStats = this.props.stats && showButtons;
     return (
       <div>
         {rootNode && newButton(rootNode.id)}
