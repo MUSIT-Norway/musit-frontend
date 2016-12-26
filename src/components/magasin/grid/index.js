@@ -9,7 +9,7 @@ import { blur, filter } from '../../../util';
 import Breadcrumb from '../../../layout/Breadcrumb';
 import MusitModal from '../../movedialog';
 import { I18n } from 'react-i18nify';
-import { emitError, emitSuccess } from '../../../errors/emitter';
+import { emitError, emitSuccess } from '../../../util/errors/emitter';
 import MusitModalHistory from '../../movehistory';
 import { checkNodeBranchAndType } from '../../../util/nodeValidator';
 import MusitNode from '../../../models/node';
@@ -286,8 +286,6 @@ export default class StorageUnitsContainer extends React.Component {
           stats={stats}
           onClickProperties={(id) => onEdit({ id })}
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
-          onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
-          onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={moveNode}
           onClickDelete={(id) => {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {

@@ -3,14 +3,14 @@ import { I18n } from 'react-i18nify';
 import AddObservationPage from '../../components/observation/add';
 import { hashHistory } from 'react-router';
 import { addObservation } from '../../reducers/observation';
-import { loadRoot } from '../../reducers/storageunit/grid';
-import { emitError, emitSuccess } from '../../errors/emitter';
+import { actions, rootNodeSelector } from '../../magasin';
+const { loadRoot } = actions;
+import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 const mapStateToProps = (state) => {
   return {
     actor: state.auth.user.actor,
-    translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data,
+    rootNode: rootNodeSelector(state.magasinReducers),
     user: state.auth.user
   };
 };

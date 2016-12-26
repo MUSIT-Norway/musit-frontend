@@ -9,7 +9,7 @@ import { TYPES } from '../../reducers/picklist';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog';
 import './PickListContainer.css';
-import { emitError, emitSuccess } from '../../errors/emitter';
+import { emitError, emitSuccess } from '../../util/errors/emitter';
 import { checkNodeBranchAndType } from '../../util/nodeValidator';
 import PrintTemplate from '../../containers/print/PrintTemplate';
 

@@ -3,7 +3,7 @@ import { hashHistory } from 'react-router';
 import { insert } from '../../../reducers/storageunit/panel';
 import StorageUnitAddContainer from '../../../components/magasin/panel/add';
 import { clear as clearState, update as updateState } from '../../../reducers/storageunit/panel/state';
-import { emitError, emitSuccess } from '../../../errors/emitter';
+import { emitError, emitSuccess } from '../../../util/errors/emitter';
 import { I18n } from 'react-i18nify';
 import { loadRoot } from '../../../reducers/storageunit/grid';
 

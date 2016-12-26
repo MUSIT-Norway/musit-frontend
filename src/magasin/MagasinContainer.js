@@ -3,7 +3,7 @@ import { I18n } from 'react-i18nify';
 import { hashHistory } from 'react-router';
 import * as actions from './magasinActions';
 import { selector } from './magasinReducers';
-import { emitError, emitSuccess } from '../errors/emitter';
+import { emitError, emitSuccess } from '../util/errors/emitter';
 import { MusitNode } from '../models';
 import { moveObject, moveNode } from '../reducers/move';
 import { addNode, addObject, loadMainObject } from '../reducers/picklist';

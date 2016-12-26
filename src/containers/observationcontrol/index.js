@@ -17,10 +17,10 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
 import { loadControlsAndObservationsForNode } from '../../reducers/grid/observationcontrol';
-import { loadRoot } from '../../reducers/storageunit/grid';
+import { actions, rootNodeSelector } from '../../magasin';
+const { loadRoot } = actions;
 import ObservationControlGridShow from '../../components/observationcontrol';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
@@ -34,9 +34,8 @@ const getSortedObservationControl = createSelector(
 
 const mapStateToProps = (state) => {
   return {
-    translate: (key, markdown) => I18n.t(key, markdown),
     observationControlGridData: getSortedObservationControl(state),
-    rootNode: state.storageGridUnit.root.data,
+    rootNode: rootNodeSelector(state.magasinReducers),
     user: state.auth.user
   };
 };

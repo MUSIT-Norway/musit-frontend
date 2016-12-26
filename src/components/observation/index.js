@@ -16,7 +16,7 @@ import ActorSuggest from '../actor/ActorSuggest';
 import * as validation from './validation';
 import { isDateBiggerThanToday } from '../../util';
 import { I18n } from 'react-i18nify';
-import { emitError } from '../../errors/emitter';
+import { emitError } from '../../util/errors/emitter';
 
 export default class ObservationPage extends React.Component {
 

@@ -21,13 +21,14 @@ import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
 import { loadControl } from '../../../reducers/control';
 import ControlViewContainerImpl from '../../../components/control/view';
-import { loadRoot } from '../../../reducers/storageunit/grid';
+import { actions, rootNodeSelector } from '../../../magasin';
+const { loadRoot } = actions;
 
 const mapStateToProps = (state) => ({
   translate: (key, markdown) => I18n.t(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  rootNode: state.storageGridUnit.root.data,
+  rootNode: rootNodeSelector(state.magasinReducers),
   user: state.auth.user
 });
 

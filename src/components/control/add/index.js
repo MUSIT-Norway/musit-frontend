@@ -28,7 +28,7 @@ import ActorSuggest from '../../../components/actor/ActorSuggest';
 import Layout from '../../../layout';
 import Breadcrumb from '../../../layout/Breadcrumb';
 import { isDateBiggerThanToday } from '../../../util';
-import { emitError, emitSuccess } from '../../../errors/emitter';
+import { emitError, emitSuccess } from '../../../util/errors/emitter';
 import { I18n } from 'react-i18nify';
 
 export default class ControlAddContainer extends React.Component {

@@ -6,7 +6,7 @@ import {moveObject, moveNode} from '../../../reducers/move';
 import {loadStats, clearStats} from '../../../reducers/storageunit/stats';
 import {hashHistory} from 'react-router';
 import {I18n} from 'react-i18nify';
-import {emitError, emitSuccess} from '../../../errors/emitter';
+import {emitError, emitSuccess} from '../../../util/errors/emitter';
 import StorageUnitsContainer from '../../../components/magasin/grid';
 import {createSelector} from 'reselect';
 import orderBy from 'lodash/orderBy';
@@ -44,9 +44,7 @@ const mapStateToProps = (state) => ({
   routerState: state.routing
 });
 
-const mapDispatchToProps = (dispatch, props) => {
-  const {history} = props;
-
+const mapDispatchToProps = (dispatch) => {
   return {
     loadRoot: (id, museumId, currentPage) => {
       dispatch(clearStats());
@@ -115,12 +113,6 @@ const mapDispatchToProps = (dispatch, props) => {
         } else {
           dispatch(addObject(unit, path));
         }
-        break;
-      case 'observation':
-        history.push(`/magasin/${unit.id}/observations`);
-        break;
-      case 'control':
-        history.push(`/magasin/${unit.id}/controls`);
         break;
       default:
         break;

@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import { I18n } from 'react-i18nify';
 import ViewObservationPage from '../../components/observation/view';
 import { loadObservation } from '../../reducers/observation';
-import { loadRoot } from '../../reducers/storageunit/grid';
+import { actions, rootNodeSelector } from '../../magasin';
+const { loadRoot } = actions;
 
 const mapStateToProps = (state) => {
   return {
@@ -13,7 +14,7 @@ const mapStateToProps = (state) => {
     registeredDate: state.observation.data.registeredDate,
     registeredBy: state.observation.data.registeredBy,
     observations: state.observation.data.observations,
-    rootNode: state.storageGridUnit.root.data
+    rootNode: rootNodeSelector(state.magasinReducers)
   };
 };
 

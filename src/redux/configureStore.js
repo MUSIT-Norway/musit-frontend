@@ -19,7 +19,7 @@
 
 import { applyMiddleware, createStore as _createStore, compose } from 'redux';
 import rootReducer from '../reducers';
-import createMiddleware from '../middleware/clientMiddleware';
+import createMiddleware from './clientMiddleware';
 import createLogger from 'redux-logger';
 import { persistState } from 'redux-devtools';
 import DevTools from '../components/dev-tools';

@@ -18,7 +18,7 @@
  */
 
 import React from 'react';
-import { IndexRedirect, Route } from 'react-router';
+import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import NotFound from './components/NotFound';
 import WelcomeView from './containers/welcome-view';
 import PickListView from './containers/picklist';
@@ -40,23 +40,25 @@ export default () => {
   return (
     <Route component={Authenticated}>
       <IndexRedirect to={path.ROUTE_SF} />
-      <Route path={path.ROUTE_SF} component={MagasinGrid} />
-      <Route path={path.ROUTE_SF_ADD} add component={StorageAddContainer} />
-      <Route path={path.ROUTE_SF_NODE_ADD} add component={StorageAddContainer} />
-      <Route path={path.ROUTE_SF_NODE_VIEW} component={StorageEditContainer} />
-      <Route path={path.ROUTE_SF_NODE_CONTROLS} showControls showObservations={false} component={ObservationControlGridShow} />
-      <Route path={path.ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={ObservationControlGridShow} />
-      <Route path={path.ROUTE_SF_NODE_CONTROLS_ADD} component={ControlAddContainer} />
-      <Route path={path.ROUTE_SF_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
-      <Route path={path.ROUTE_SF_NODE_OBSERVATIONS} showObservations showControls={false} component={ObservationControlGridShow} />
-      <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
-      <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
-      <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
-      <Route path={path.ROUTE_SF_OBJECTS} showObjects component={MagasinGrid} />
-      <Route path={path.ROUTE_SF_NODE} component={MagasinGrid} />
+      <Route path={path.ROUTE_SF}>
+        <IndexRoute component={MagasinGrid} />
+        <Route path={path.ROUTE_SF_ADD} add component={StorageAddContainer} />
+        <Route path={path.ROUTE_SF_NODE_ADD} add component={StorageAddContainer} />
+        <Route path={path.ROUTE_SF_NODE_VIEW} component={StorageEditContainer} />
+        <Route path={path.ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={ObservationControlGridShow} />
+        <Route path={path.ROUTE_SF_NODE_CONTROLS_ADD} component={ControlAddContainer} />
+        <Route path={path.ROUTE_SF_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
+        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
+        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
+        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
+        <Route path={path.ROUTE_SF_OBJECTS} showObjects component={MagasinGrid} />
+        <Route path={path.ROUTE_SF_NODE} component={MagasinGrid} />
+      </Route>
       <Route path={path.ROUTE_PICKLIST} component={PickListView} />
-      <Route path={path.ROUTE_REPORTS} component={Reports} />
-      <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      <Route path={path.ROUTE_REPORTS}>
+        <IndexRoute component={Reports} />
+        <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      </Route>
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
       <Route path="/" component={WelcomeView} />
 

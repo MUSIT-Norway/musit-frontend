@@ -4,13 +4,14 @@ import EditObservationPage from '../../components/observation/edit';
 import { loadObservation } from '../../reducers/observation';
 import { addControl } from '../../reducers/control';
 import { hashHistory } from 'react-router';
-import { loadRoot } from '../../reducers/storageunit/grid';
-import { emitError, emitSuccess } from '../../errors/emitter';
+import { actions, rootNodeSelector } from '../../magasin';
+const { loadRoot } = actions;
+import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data,
+    rootNode: rootNodeSelector(state.magasinReducers),
     user: state.auth.user
   };
 };

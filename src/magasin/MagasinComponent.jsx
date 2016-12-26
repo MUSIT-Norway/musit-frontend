@@ -16,7 +16,7 @@ import Breadcrumb from '../layout/Breadcrumb';
 // Utilities
 import { blur, filter } from '../util';
 import { checkNodeBranchAndType } from '../util/nodeValidator';
-import { emitError, emitSuccess } from '../errors/emitter';
+import { emitError, emitSuccess } from '../util/errors/emitter';
 import { MusitNode, MusitObject } from '../models';
 import PagingToolbar from '../util/paging';
 

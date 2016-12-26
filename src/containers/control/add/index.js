@@ -21,13 +21,14 @@ import { connect } from 'react-redux';
 import { addControl } from '../../../reducers/control';
 import { I18n } from 'react-i18nify';
 import ControlAddContainerImpl from '../../../components/control/add';
-import { loadRoot } from '../../../reducers/storageunit/grid';
+import { actions, rootNodeSelector } from '../../../magasin';
+const { loadRoot } = actions;
 
 const mapStateToProps = (state) => ({
   actor: state.auth.user.actor,
   translate: (key, markdown) => I18n.t(key, markdown),
-  envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
-  rootNode: state.storageGridUnit.root.data,
+  envReqData: rootNodeSelector(state.magasinReducers) ? rootNodeSelector(state.magasinReducers).environmentRequirement : null,
+  rootNode: rootNodeSelector(state.magasinReducers),
   user: state.auth.user
 });
 

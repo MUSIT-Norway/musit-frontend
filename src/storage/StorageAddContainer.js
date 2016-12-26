@@ -4,7 +4,7 @@ import { I18n } from 'react-i18nify';
 import { insert } from './storageActions';
 import AddNode from './StorageAddComponent';
 import { clearState, updateState } from './storageActions';
-import { emitError, emitSuccess } from '../errors/emitter';
+import { emitError, emitSuccess } from '../util/errors/emitter';
 import { actions, rootNodeSelector } from '../magasin';
 const { loadRoot } = actions;
 

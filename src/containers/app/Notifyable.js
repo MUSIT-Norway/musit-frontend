@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { emitSuccess, emitError } from '../../errors/emitter';
+import { emitSuccess, emitError } from '../../util/errors/emitter';
 import * as loglevel from 'loglevel';
 import { I18n } from 'react-i18nify';
 
