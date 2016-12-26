@@ -83,9 +83,6 @@ export default (ComponentToWrap) => {
         close: function() {
           ReactDOM.unmountComponentAtNode(this);
           $(this).remove();
-          if (typeof componentToRender.closeModal === 'function') {
-            componentToRender.closeModal();
-          }
         }
       });
 
