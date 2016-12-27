@@ -29,13 +29,12 @@ import ControlViewContainer from './control/ControlViewContainer';
 import ControlAddContainer from './control/ControlAddContainer';
 import ReportsOverviewContainer from './reports/ReportsOverviewContainer';
 import ReportsKDContainer from './reports/ReportsKDContainer';
+import ObjectSearchContainer from './search/SearchObjectContainer';
+import AddObservationPage from './observation/ObservationAddContainer';
+import EditObservationPage from './observation/ObservationEditContainer';
+import ViewObservationPage from './observation/ObservationViewContainer';
+import ObservationControlGridShow from './events/EventsContainer';
 
-import AddObservationPage from './core/containers/observation/add';
-import EditObservationPage from './core/containers/observation/edit';
-import ViewObservationPage from './core/containers/observation/view';
-
-import ObservationControlGridShow from './core/containers/observationcontrol';
-import ObjectSearchContainer from './core/containers/objectsearch';
 import Authenticated from './core/components/Authenticated';
 import * as path from './routes.path';
 

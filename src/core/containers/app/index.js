@@ -4,7 +4,7 @@ import { routerActions } from 'react-router-redux';
 
 import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../../../picklist/picklistReducers';
 import { setMuseumId, setCollectionId, loadBuildinfo } from '../../../reducers/auth';
-import { clearSearch } from '../../../reducers/objectsearch/actions';
+import { clearSearch } from '../../../search/searchActions';
 
 import App from '../../components/app';
 

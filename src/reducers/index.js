@@ -20,17 +20,19 @@
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import auth from './auth';
+
 import picklistReducers from '../picklist/picklistReducers';
 import storageReducers from '../storage/storageReducers';
 import magasinReducers from '../magasin/magasinReducers';
-import reportReducer from '../reports/reportsReducer';
-import storageUnitModal from './storageunit/modal';
-import observationReducer from './observation';
-import controlReducer from '../control/controlReducer';
-import observationControlGridReducer from './grid/observationcontrol';
-import moveHistoryReducer from './grid/move';
-import ObjectSearchReducer from './objectsearch/reducer';
+import reportReducer from '../reports/reportsReducers';
+import ObjectSearchReducer from '../search/searchReducers';
+import observationReducers from '../observation/observationReducers';
+import observationControlGridReducer from '../events/eventsReducers';
 import printReducer from '../print/printReducer';
+import controlReducer from '../control/controlReducer';
+
+import storageUnitModal from './storageunit/modal';
+import moveHistoryReducer from './grid/move';
 
 const rootReducer = combineReducers({
   magasinReducers,
@@ -40,7 +42,7 @@ const rootReducer = combineReducers({
   picks: picklistReducers,
   storagePanelUnit: storageReducers,
   [storageUnitModal.ID]: storageUnitModal.reducer,
-  observation: observationReducer,
+  observation: observationReducers,
   reports: reportReducer,
   control: controlReducer,
   observationControlGrid: observationControlGridReducer,
