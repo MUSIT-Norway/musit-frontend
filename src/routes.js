@@ -16,24 +16,27 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 import React from 'react';
 import { IndexRedirect, IndexRoute, Route } from 'react-router';
-import NotFound from './components/NotFound';
-import WelcomeView from './containers/welcome-view';
-import PickListView from './containers/picklist';
-import { MagasinGrid } from './magasin';
-import { StorageAddContainer, StorageEditContainer } from './storage';
-import AddObservationPage from './containers/observation/add';
-import EditObservationPage from './containers/observation/edit';
-import ViewObservationPage from './containers/observation/view';
-import Reports from './containers/reports';
-import KDReportContainer from './containers/reports/reportkd';
-import ControlViewContainer from './containers/control/view';
-import ControlAddContainer from './containers/control/add';
-import ObservationControlGridShow from './containers/observationcontrol';
-import ObjectSearchContainer from './containers/objectsearch';
-import Authenticated from './components/Authenticated';
+import NotFound from './core/components/NotFound';
+import WelcomeView from './core/containers/welcome-view';
+
+import PickListView from './picklist/PicklistContainer';
+import MagasinContainer from './magasin/MagasinContainer';
+import StorageAddContainer from './storage/StorageAddContainer';
+import StorageEditContainer from './storage/StorageEditContainer';
+import ControlViewContainer from './control/ControlViewContainer';
+import ControlAddContainer from './control/ControlAddContainer';
+import ReportsOverviewContainer from './reports/ReportsOverviewContainer';
+import ReportsKDContainer from './reports/ReportsKDContainer';
+
+import AddObservationPage from './core/containers/observation/add';
+import EditObservationPage from './core/containers/observation/edit';
+import ViewObservationPage from './core/containers/observation/view';
+
+import ObservationControlGridShow from './core/containers/observationcontrol';
+import ObjectSearchContainer from './core/containers/objectsearch';
+import Authenticated from './core/components/Authenticated';
 import * as path from './routes.path';
 
 export default () => {
@@ -41,7 +44,7 @@ export default () => {
     <Route component={Authenticated}>
       <IndexRedirect to={path.ROUTE_SF} />
       <Route path={path.ROUTE_SF}>
-        <IndexRoute component={MagasinGrid} />
+        <IndexRoute component={MagasinContainer} />
         <Route path={path.ROUTE_SF_ADD} add component={StorageAddContainer} />
         <Route path={path.ROUTE_SF_NODE_ADD} add component={StorageAddContainer} />
         <Route path={path.ROUTE_SF_NODE_VIEW} component={StorageEditContainer} />
@@ -51,13 +54,13 @@ export default () => {
         <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
         <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
         <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
-        <Route path={path.ROUTE_SF_OBJECTS} showObjects component={MagasinGrid} />
-        <Route path={path.ROUTE_SF_NODE} component={MagasinGrid} />
+        <Route path={path.ROUTE_SF_OBJECTS} showObjects component={MagasinContainer} />
+        <Route path={path.ROUTE_SF_NODE} component={MagasinContainer} />
       </Route>
       <Route path={path.ROUTE_PICKLIST} component={PickListView} />
       <Route path={path.ROUTE_REPORTS}>
-        <IndexRoute component={Reports} />
-        <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+        <IndexRoute component={ReportsOverviewContainer} />
+        <Route path={path.ROUTE_REPORTS_KDREPORT} component={ReportsKDContainer} />
       </Route>
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
       <Route path="/" component={WelcomeView} />

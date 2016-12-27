@@ -22,7 +22,7 @@ import rootReducer from '../reducers';
 import createMiddleware from './clientMiddleware';
 import createLogger from 'redux-logger';
 import { persistState } from 'redux-devtools';
-import DevTools from '../components/dev-tools';
+import DevTools from './devTools';
 import reducers from '../reducers';
 import config from '../config';
 

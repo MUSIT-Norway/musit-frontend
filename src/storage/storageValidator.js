@@ -1,5 +1,5 @@
 import { I18n } from 'react-i18nify';
-import { validateString, validateNumber } from '../components/formfields/common/validators';
+import { validateString, validateNumber } from '../core/components/formfields/common/validators';
 import MusitNode from '../models/node';
 
 const errorAddMessage = (errors, field) => {

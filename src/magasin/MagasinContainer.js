@@ -6,7 +6,7 @@ import { selector } from './magasinReducers';
 import { emitError, emitSuccess } from '../util/errors/emitter';
 import { MusitNode } from '../models';
 import { moveObject, moveNode } from '../reducers/move';
-import { addNode, addObject, loadMainObject } from '../reducers/picklist';
+import { addNode, addObject, loadMainObject } from '../picklist/picklistReducers';
 import StorageUnitsContainer from './MagasinComponent';
 
 const mapStateToProps = (state) => {

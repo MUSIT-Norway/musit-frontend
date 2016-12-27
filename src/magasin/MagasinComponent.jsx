@@ -1,30 +1,25 @@
-// React
 import React from 'react';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 
-// Components in this module
 import NodeGrid from './MagasinNodeGrid';
 import ObjectGrid from './MagasinObjectGrid';
 import SideBar from './MagasinSideBar';
 
-// Layout
 import Layout from '../layout';
 import Toolbar from '../layout/Toolbar';
 import Breadcrumb from '../layout/Breadcrumb';
 
-// Utilities
 import { blur, filter } from '../util';
 import { checkNodeBranchAndType } from '../util/nodeValidator';
 import { emitError, emitSuccess } from '../util/errors/emitter';
-import { MusitNode, MusitObject } from '../models';
 import PagingToolbar from '../util/paging';
 
-// Containers from other modules
-import MusitModal from '../components/movedialog';
-import MusitModalHistory from '../components/movehistory';
+import { MusitNode, MusitObject } from '../models';
 
-// Config
+import MusitModal from '../core/components/movedialog';
+import MusitModalHistory from '../core/components/movehistory';
+
 import Config from '../config';
 
 export default class StorageGrid extends React.Component {

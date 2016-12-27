@@ -26,9 +26,10 @@ import { I18n } from 'react-i18nify';
 import Layout from '../layout';
 import Breadcrumb from '../layout/Breadcrumb';
 
-import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../components/formfields';
-import SaveCancel from '../components/formfields/saveCancel/SaveCancel';
-import AddressSuggest from '../components/address';
+import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../core/components/formfields';
+import SaveCancel from '../core/components/formfields/saveCancel/SaveCancel';
+
+import AddressSuggest from '../core/components/address';
 
 import validateForm from './storageValidator';
 

@@ -25,7 +25,7 @@ import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import getRoutes from './routes';
-import DevTools from './components/dev-tools';
+import DevTools from './redux/devTools';
 import config from './config';
 import LanguageJson from '../language.json';
 import { I18n } from 'react-i18nify';
