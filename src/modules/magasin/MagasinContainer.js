@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router';
 import * as actions from './magasinActions';
 import { selector } from './magasinReducers';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
-import { MusitNode } from '../../models';
+import MusitNode from '../../models/node';
 import { moveObject, moveNode, clear } from '../moveDialog/moveDialogActions';
 import { addNode, addObject } from '../picklist/picklistActions';
 import StorageUnitsContainer from './MagasinComponent';

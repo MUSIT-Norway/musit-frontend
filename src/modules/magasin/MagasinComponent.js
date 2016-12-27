@@ -15,7 +15,8 @@ import { checkNodeBranchAndType } from '../../util/nodeValidator';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 import PagingToolbar from '../../util/paging';
 
-import { MusitNode, MusitObject } from '../../models';
+import MusitObject from '../../models/object';
+import MusitNode from '../../models/node';
 
 import MusitModal from '../moveDialog/MoveDialogContainer';
 import MusitModalHistory from '../moveHistory/MoveHistoryContainer';
