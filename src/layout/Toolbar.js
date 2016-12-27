@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { MusitField } from '../core/components/formfields';
+import { MusitField } from '../components/formfields';
 import FontAwesome from 'react-fontawesome';
 import './Toolbar.css';
 

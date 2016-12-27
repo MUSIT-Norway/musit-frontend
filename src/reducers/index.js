@@ -21,18 +21,17 @@ import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import auth from './auth';
 
-import picklistReducers from '../picklist/picklistReducers';
-import storageReducers from '../storage/storageReducers';
-import magasinReducers from '../magasin/magasinReducers';
-import reportReducer from '../reports/reportsReducers';
-import ObjectSearchReducer from '../search/searchReducers';
-import observationReducers from '../observation/observationReducers';
-import observationControlGridReducer from '../events/eventsReducers';
-import printReducer from '../print/printReducer';
-import controlReducer from '../control/controlReducer';
-
-import storageUnitModal from './storageunit/modal';
-import moveHistoryReducer from './grid/move';
+import picklistReducers from '../modules/picklist/picklistReducers';
+import storageReducers from '../modules/storage/storageReducers';
+import magasinReducers from '../modules/magasin/magasinReducers';
+import reportReducer from '../modules/reports/reportsReducers';
+import ObjectSearchReducer from '../modules/search/searchReducers';
+import observationReducers from '../modules/observation/observationReducers';
+import observationControlGridReducer from '../modules/events/eventsReducers';
+import printReducer from '../modules/print/printReducer';
+import controlReducer from '../modules/control/controlReducer';
+import moveHistoryReducer from '../modules/moveHistory/moveHistoryReducers';
+import moveDialogReducer from '../modules/moveDialog/moveDialogReducers';
 
 const rootReducer = combineReducers({
   magasinReducers,
@@ -41,7 +40,7 @@ const rootReducer = combineReducers({
   print: printReducer,
   picks: picklistReducers,
   storagePanelUnit: storageReducers,
-  [storageUnitModal.ID]: storageUnitModal.reducer,
+  [moveDialogReducer.ID]: moveDialogReducer.reducer,
   observation: observationReducers,
   reports: reportReducer,
   control: controlReducer,

@@ -1,0 +1,35 @@
+exports[`MoveReducer creates MOVE_NODE_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/move/node/start"
+  },
+  Object {
+    "result": Object {
+      "failed": Array [],
+      "moved": Array [
+        2,
+        3
+      ]
+    },
+    "type": "musit/move/node/success"
+  }
+]
+`;
+
+exports[`MoveReducer creates MOVE_OBJECT_SUCCESS when fetching data has been done 1`] = `
+Array [
+  Object {
+    "type": "musit/move/object/start"
+  },
+  Object {
+    "result": Object {
+      "failed": Array [],
+      "moved": Array [
+        2,
+        3
+      ]
+    },
+    "type": "musit/move/object/success"
+  }
+]
+`;

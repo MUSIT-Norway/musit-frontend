@@ -18,25 +18,30 @@
  */
 import React from 'react';
 import { IndexRedirect, IndexRoute, Route } from 'react-router';
-import NotFound from './core/components/NotFound';
-import WelcomeView from './core/containers/welcome-view';
 
-import PickListView from './picklist/PicklistContainer';
-import MagasinContainer from './magasin/MagasinContainer';
-import StorageAddContainer from './storage/StorageAddContainer';
-import StorageEditContainer from './storage/StorageEditContainer';
-import ControlViewContainer from './control/ControlViewContainer';
-import ControlAddContainer from './control/ControlAddContainer';
-import ReportsOverviewContainer from './reports/ReportsOverviewContainer';
-import ReportsKDContainer from './reports/ReportsKDContainer';
-import ObjectSearchContainer from './search/SearchObjectContainer';
-import AddObservationPage from './observation/ObservationAddContainer';
-import EditObservationPage from './observation/ObservationEditContainer';
-import ViewObservationPage from './observation/ObservationViewContainer';
-import ObservationControlGridShow from './events/EventsContainer';
+import LoginContainer from './modules/app/LoginContainer';
+import PickListView from './modules/picklist/PicklistContainer';
+import MagasinContainer from './modules/magasin/MagasinContainer';
+import StorageAddContainer from './modules/storage/StorageAddContainer';
+import StorageEditContainer from './modules/storage/StorageEditContainer';
+import ControlViewContainer from './modules/control/ControlViewContainer';
+import ControlAddContainer from './modules/control/ControlAddContainer';
+import ReportsOverviewContainer from './modules/reports/ReportsOverviewContainer';
+import ReportsKDContainer from './modules/reports/ReportsKDContainer';
+import ObjectSearchContainer from './modules/search/SearchObjectContainer';
+import AddObservationPage from './modules/observation/ObservationAddContainer';
+import EditObservationPage from './modules/observation/ObservationEditContainer';
+import ViewObservationPage from './modules/observation/ObservationViewContainer';
+import ObservationControlGridShow from './modules/events/EventsContainer';
+import Authenticated from './modules/app/Authenticated';
 
-import Authenticated from './core/components/Authenticated';
 import * as path from './routes.path';
+
+const NotFound = () =>
+  <div className="container">
+    <h1>Not found! 404!</h1>
+    <p>The route you are looking for does not exist!</p>
+  </div>;
 
 export default () => {
   return (
@@ -62,7 +67,7 @@ export default () => {
         <Route path={path.ROUTE_REPORTS_KDREPORT} component={ReportsKDContainer} />
       </Route>
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
-      <Route path="/" component={WelcomeView} />
+      <Route path="/" component={LoginContainer} />
 
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />
