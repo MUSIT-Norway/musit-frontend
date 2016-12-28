@@ -15,12 +15,10 @@ I18n.setLocale('no');
 
 const middlewares = [ createMiddleware(new ApiClient()) ];
 global.mockStore = configureMockStore(middlewares);
-global.reduxStore = {
-  getState: () => ({
-    app: {
-      user: {
-        museumId: new MuseumId(99)
-      }
+global.reduxStore = mockStore({
+  app: {
+    user: {
+      museumId: new MuseumId(99)
     }
-  })
-};
+  }
+});
