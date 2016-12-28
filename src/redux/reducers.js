@@ -33,7 +33,6 @@ import moveHistory from '../modules/moveHistory/moveHistoryReducers';
 import moveDialog from '../modules/moveDialog/moveDialogReducers';
 
 const rootReducer = combineReducers({
-  routing,
   app,
   magasin,
   moveDialog,
@@ -45,10 +44,8 @@ const rootReducer = combineReducers({
   reports,
   search,
   events,
-  print
+  print,
+  routing
 });
 
 export default rootReducer;
-
-export const getState = () => global.reduxStore.getState();
-export const dispatch = (action) => global.reduxStore.dispatch(action);

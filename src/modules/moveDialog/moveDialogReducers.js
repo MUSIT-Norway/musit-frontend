@@ -1,5 +1,4 @@
-import { getPath } from '../../util';
-import { getState } from '../../redux/reducers';
+import { getPath, getState } from '../../util';
 import * as types from './moveDialogTypes';
 
 const initialState = {

@@ -124,3 +124,14 @@ export const getPath = (node: any) => {
     };
   });
 };
+
+export const getState = () => global.reduxStore.getState();
+
+interface Client {}
+
+interface Action {
+  types: string[],
+  promise: (client: Client) => Promise<*>
+}
+
+export const dispatch = (action: Action) => global.reduxStore.dispatch(action);

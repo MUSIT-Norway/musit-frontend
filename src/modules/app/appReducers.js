@@ -1,9 +1,8 @@
-import {apiUrl} from '../../util';
+import { apiUrl, getState } from '../../util';
 import Config from '../../config';
 import Actor from '../../models/actor';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
-import { getState } from '../../redux/reducers';
 
 export const SET_USER = 'musit/auth/SET_USER';
 export const SET_MUSEUMID = 'musit/auth/SET_MUSEUMID';
