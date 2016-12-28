@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
-    moves: [].concat(state.movehistory.data),
-    user: state.auth.user
+    moves: [].concat(state.moveHistory.data),
+    user: state.app.user
   };
 };
 

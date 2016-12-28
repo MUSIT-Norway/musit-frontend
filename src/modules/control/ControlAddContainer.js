@@ -24,12 +24,10 @@ import { loadRoot } from '../magasin/magasinActions';
 import { rootNodeSelector } from '../magasin/magasinSelectors';
 
 const mapStateToProps = (state) => {
-  const rootNode = rootNodeSelector(state.magasinReducers);
+  const rootNode = rootNodeSelector(state.magasin);
   return {
-    actor: state.auth.user.actor,
-    envReqData: rootNode ? rootNode.environmentRequirement : null,
-    rootNode: rootNode,
-    user: state.auth.user
+    user: state.app.user,
+    rootNode: rootNode
   };
 };
 

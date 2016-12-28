@@ -1,9 +1,9 @@
 import pathToRegexp from 'path-to-regexp';
 import { Observable } from 'rxjs/Rx';
 import { hashHistory } from 'react-router';
-import { dispatchAction, getState } from '../reducers/public';
+import { dispatch, getState } from '../redux/reducers';
 import { addNode, addObject } from '../modules/picklist/picklistActions';
-import { getMuseumId, getCollectionId } from '../reducers/auth';
+import { getMuseumId, getCollectionId } from '../modules/app/appReducers';
 import { loadNode, loadChildren } from '../modules/moveDialog/moveDialogActions';
 import { isMoveDialogActive } from '../modules/moveDialog/moveDialogReducers';
 import { ROUTE_PICKLIST, ROUTE_SF } from '../routes.path';
@@ -14,8 +14,6 @@ import Config from '../config';
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const OLD_REGEX = /^[0-9]{9,10}$/i;
 
-const ROUTE_STATE = 'routing';
-const ROUTE_LOCATION = 'locationBeforeTransitions';
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 
 const SCAN_START = 'musit/scan/start';
@@ -34,7 +32,10 @@ const state$ = Observable.merge(clearReducer$, charReducer$)
     .scan((state, reducer) => reducer(state), '')
     .map(text =>text.replace(/\+/g, '-'));
 
-const getRoutePathname = () => getState(ROUTE_STATE, ROUTE_LOCATION).pathname;
+const getRoutePathname = () => {
+  const state = getState();
+  return state.routing.locationBeforeTransitions.pathname;
+};
 const getPickListPath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
 const isNodePickList = (path) => path && path.length > 0 && path[1] === 'node';
 const isObjectPickList = (path) => path && path.length > 0 && path[1] === 'object';
@@ -53,7 +54,7 @@ const dispatchNodeSearch = (
   museumId = getMuseumId(),
   collectionId = getCollectionId()
 ) => {
-  dispatchAction({
+  dispatch({
     types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
     promise: (client) => new Promise((resolve, reject) => {
       client.get(scanNodeUrlFn(uuidOrBarCode, museumId))
@@ -78,10 +79,10 @@ const dispatchNodeSearch = (
       onSuccess: (res) => {
         if (res.nodeId) {
           if (moveActive) {
-            dispatchAction(loadNode(res.id, museumId));
-            dispatchAction(loadChildren(res.id, museumId));
+            dispatch(loadNode(res.id, museumId));
+            dispatch(loadChildren(res.id, museumId));
           } else if (nodePickList) {
-            dispatchAction(addNode(res, getPath(res)));
+            dispatch(addNode(res, getPath(res)));
           } else if (storageFacility) {
             hashHistory.push(`/magasin/${res.id}`);
           }
@@ -116,11 +117,11 @@ const dispatchObject = (
   museumId = getMuseumId(),
   collectionId = getCollectionId()
 ) => {
-  dispatchAction({
+  dispatch({
     types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
     promise: (client) => client.get(urlFn(oldBarcode, museumId, collectionId)),
     callback: {
-      onSuccess: (res) => res.map(obj => dispatchAction(addObject(obj, getPath(obj))))
+      onSuccess: (res) => res.map(obj => dispatch(addObject(obj, getPath(obj))))
     }
   });
 };

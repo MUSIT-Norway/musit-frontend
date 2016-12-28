@@ -3,7 +3,7 @@ import Loader from 'react-loader';
 import App from './AppContainer';
 import Login from './LoginContainer';
 import {connect} from 'react-redux';
-import { setUser, loadActor } from '../../reducers/auth';
+import { setUser, loadActor } from './appReducers';
 import fakeUserInfo from '../../../fake_security.json';
 import jwtDecode from 'jwt-decode';
 
@@ -44,7 +44,7 @@ class Authenticated extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.user
+    user: state.app.user
   };
 };
 

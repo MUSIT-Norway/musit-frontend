@@ -30,7 +30,7 @@ import { customSortingStorageNodeType } from '../../util';
 
 import PickListContainer from './PicklistComponent';
 
-const getNodes = (state) => state.picks.NODE || [];
+const getNodes = (state) => state.picklist.NODE || [];
 
 const getSortedNodes = createSelector(
     [ getNodes ],
@@ -38,7 +38,7 @@ const getSortedNodes = createSelector(
 );
 
 
-const getObjects = (state) => state.picks.OBJECT || [];
+const getObjects = (state) => state.picklist.OBJECT || [];
 
 const getSortedObjects = createSelector(
     [ getObjects ],
@@ -46,7 +46,7 @@ const getSortedObjects = createSelector(
 );
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user,
+  user: state.app.user,
   picks: {
     NODE: getSortedNodes(state) ,
     OBJECT: getSortedObjects(state)

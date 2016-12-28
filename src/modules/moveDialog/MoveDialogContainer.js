@@ -33,17 +33,17 @@ const getGridData = (state) => {
 };
 
 const getSortedStorageGridUnit = createSelector(
-  [ state => getGridData(state.storageUnitModal) ],
+  [ state => getGridData(state.moveDialog) ],
   (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type), (o) => toLower(o.name)])
 );
 
-export const totalNodesSelector = (state) => state.storageUnitModal.data && state.storageUnitModal.data.totalMatches;
+export const totalNodesSelector = (state) => state.moveDialog.data && state.moveDialog.data.totalMatches;
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user,
+  user: state.app.user,
   children: getSortedStorageGridUnit(state),
   totalNodes: totalNodesSelector(state),
-  selectedNode: state.storageUnitModal.root.data
+  selectedNode: state.moveDialog.root.data
 });
 
 const mapDispatchToProps = (dispatch) => {

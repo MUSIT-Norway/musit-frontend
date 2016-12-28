@@ -14,8 +14,8 @@ import EditObservationPage from './ObservationEditComponent';
 
 const mapStateToProps = (state) => {
   return {
-    rootNode: rootNodeSelector(state.magasinReducers),
-    user: state.auth.user
+    user: state.app.user,
+    rootNode: rootNodeSelector(state.magasin)
   };
 };
 

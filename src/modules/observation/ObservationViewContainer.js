@@ -9,13 +9,13 @@ import ViewObservationPage from './ObservationViewComponent';
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.user,
+    user: state.app.user,
     doneBy: state.observation.data.doneBy,
     doneDate: state.observation.data.doneDate,
     registeredDate: state.observation.data.registeredDate,
     registeredBy: state.observation.data.registeredBy,
     observations: state.observation.data.observations,
-    rootNode: rootNodeSelector(state.magasinReducers)
+    rootNode: rootNodeSelector(state.magasin)
   };
 };
 

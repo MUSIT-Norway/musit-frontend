@@ -10,9 +10,9 @@ import { rootNodeSelector } from '../magasin/magasinSelectors';
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.user,
-    unit: state.storagePanelUnit.state,
-    rootNode: rootNodeSelector(state.magasinReducers)
+    user: state.app.user,
+    unit: state.storage.state,
+    rootNode: rootNodeSelector(state.magasin)
   };
 };
 

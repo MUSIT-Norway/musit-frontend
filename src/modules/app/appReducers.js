@@ -3,9 +3,7 @@ import Config from '../../config';
 import Actor from '../../models/actor';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
-import { getState } from '../../reducers/public';
-
-const ID = 'auth';
+import { getState } from '../../redux/reducers';
 
 export const SET_USER = 'musit/auth/SET_USER';
 export const SET_MUSEUMID = 'musit/auth/SET_MUSEUMID';
@@ -92,7 +90,7 @@ const authReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default { ID, reducer: authReducer };
+export default authReducer;
 
 const ALL_MUSEUMS = 10000;
 
@@ -182,13 +180,16 @@ export const clearUser = () => {
 };
 
 export const getMuseumId = () => {
-  return getState(ID, 'user').museumId;
+  const state = getState();
+  return state.app.user.museumId;
 };
 
 export const getCollectionId = () => {
-  return getState(ID, 'user').collectionId;
+  const state = getState();
+  return state.app.user.collectionId;
 };
 
 export const getAccessToken = () => {
-  return getState(ID, 'user').accessToken;
+  const state = getState();
+  return state.app.user.accessToken;
 };

@@ -11,8 +11,8 @@ import StorageUnitsContainer from './MagasinComponent';
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth.user,
-    ...selector(state.magasinReducers)
+    user: state.app.user,
+    ...selector(state.magasin)
   };
 };
 

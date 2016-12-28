@@ -5,7 +5,7 @@ import KDReport from './ReportsKDComponent';
 const mapStateToProps = (state) => {
   return {
     data: state.reports && state.reports.data ? state.reports.data.kdreport.data : null,
-    user: state.auth.user
+    user: state.app.user
   };
 };
 

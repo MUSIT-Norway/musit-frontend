@@ -29,7 +29,7 @@ import ObservationControlGridShow from './EventsComponent';
 import { loadRoot } from '../magasin/magasinActions';
 import { rootNodeSelector } from '../magasin/magasinSelectors';
 
-const getObservationControl = (state) => state.observationControlGrid.data;
+const getObservationControl = (state) => state.events.data;
 
 const getSortedObservationControl = createSelector(
     [ getObservationControl ],
@@ -38,9 +38,9 @@ const getSortedObservationControl = createSelector(
 
 const mapStateToProps = (state) => {
   return {
-    observationControlGridData: getSortedObservationControl(state),
-    rootNode: rootNodeSelector(state.magasinReducers),
-    user: state.auth.user
+    user: state.app.user,
+    rootNode: rootNodeSelector(state.magasin),
+    observationControlGridData: getSortedObservationControl(state)
   };
 };
 

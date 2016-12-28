@@ -1,8 +1,6 @@
 import { getPath } from '../../util';
-import { getState } from '../../reducers/public';
+import { getState } from '../../redux/reducers';
 import * as types from './moveDialogTypes';
-
-const ID = 'storageUnitModal';
 
 const initialState = {
   root: {
@@ -72,11 +70,12 @@ const storageUnitModalReducer = (state = initialState, action = {}) => {
   }
 };
 
-export default { ID, reducer: storageUnitModalReducer };
+export default storageUnitModalReducer;
 
 export const isMoveDialogActive = () => {
-  const data = getState(ID, 'data');
+  const state = getState();
+  const data = state.moveDialog.data;
   const hasData = data && data.length > 0;
-  const hasRoot = Object.keys(getState(ID, 'root')).length > 0;
+  const hasRoot = Object.keys(state.moveDialog.root).length > 0;
   return hasData || hasRoot;
 };

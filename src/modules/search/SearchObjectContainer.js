@@ -8,12 +8,12 @@ import Component from './SearchObjectComponent';
 
 const mapStateToProps = (state) => {
   return {
-    data: state.objectSearch.data,
-    user: state.auth.user,
-    params: state.objectSearch.params,
-    currentPage: state.objectSearch.currentPage,
-    loaded: state.objectSearch.loaded,
-    loading: state.objectSearch.loading
+    user: state.app.user,
+    data: state.search.data,
+    params: state.search.params,
+    currentPage: state.search.currentPage,
+    loaded: state.search.loaded,
+    loading: state.search.loading
   };
 };
 

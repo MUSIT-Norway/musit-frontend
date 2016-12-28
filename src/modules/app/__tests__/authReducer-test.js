@@ -5,8 +5,8 @@ import request from 'superagent';
 import nocker from 'superagent-nock';
 import Config from '../../../config';
 
-import * as actions from '../../../reducers/auth';
-import auth from '../../../reducers/auth';
+import * as actions from '../appReducers';
+import auth from '../appReducers';
 
 const reducer = auth.reducer;
 const nock = nocker(request);

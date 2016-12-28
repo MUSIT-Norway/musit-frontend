@@ -18,7 +18,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import request from 'superagent';
-import { getAccessToken } from '../reducers/auth';
+import { getAccessToken } from '../modules/app/appReducers';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 

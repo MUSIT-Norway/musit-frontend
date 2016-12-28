@@ -37,30 +37,36 @@ export default class ControlAddContainer extends React.Component {
   static propTypes = {
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
-    actor: React.PropTypes.object,
-    envReqData: React.PropTypes.object,
+    user: React.PropTypes.object,
     rootNode: React.PropTypes.object
   }
 
   constructor(props) {
     super(props);
+    const reqData = this.props.rootNode && this.props.rootNode.environmentRequirement;
     this.state = {
-      temperature: this.props.envReqData ? this.props.envReqData.temperature : ' ',
-      temperatureTolerance: this.props.envReqData ? this.props.envReqData.temperatureTolerance : ' ',
-      relativeHumidity: this.props.envReqData ? this.props.envReqData.relativeHumidity : ' ',
-      relativeHumidityInterval: this.props.envReqData ? this.props.envReqData.relativeHumidityTolerance : ' ',
-      inertAir: this.props.envReqData ? this.props.envReqData.hypoxicAir : ' ',
-      inertAirInterval: this.props.envReqData ? this.props.envReqData.hypoxicAirTolerance : ' ',
-      light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
-      cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
+      ...this.getEnvironmentRequirementData(reqData),
       doneDate: this.props.doneDate ? this.props.doneDate : new Date().toISOString(),
-      doneBy: this.props.actor
+      doneBy: this.props.user.actor
     };
     this.onControlClick = this.onControlClick.bind(this);
     this.onControlClickOK = this.onControlClickOK.bind(this);
     this.onControlClickNOK = this.onControlClickNOK.bind(this);
     this.onClickSave = this.onClickSave.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  getEnvironmentRequirementData(envReqData) {
+    return {
+      temperature: envReqData ? envReqData.temperature : ' ',
+      temperatureTolerance: envReqData ? envReqData.temperatureTolerance : ' ',
+      relativeHumidity: envReqData ? envReqData.relativeHumidity : ' ',
+      relativeHumidityInterval: envReqData ? envReqData.relativeHumidityTolerance : ' ',
+      inertAir: envReqData ? envReqData.hypoxicAir : ' ',
+      inertAirInterval: envReqData ? envReqData.hypoxicAirTolerance : ' ',
+      light: envReqData ? envReqData.lightingCondition : ' ',
+      cleaning: envReqData ? envReqData.cleaning : ' '
+    };
   }
 
   componentWillMount() {
@@ -71,7 +77,16 @@ export default class ControlAddContainer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.actor !== this.props.actor) {
-      this.setState({ ...this.state, doneBy: nextProps.actor });
+      this.setState({
+        ...this.state,
+        doneBy: nextProps.actor
+      });
+    }
+    if (nextProps.rootNode !== this.props.rootNode) {
+      this.setState({
+        ...this.state,
+        ...this.getEnvironmentRequirementData(nextProps.rootNode.environmentRequirement)
+      });
     }
   }
 

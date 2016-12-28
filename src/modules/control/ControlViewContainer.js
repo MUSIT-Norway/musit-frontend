@@ -26,8 +26,8 @@ import { rootNodeSelector } from '../magasin/magasinSelectors';
 const mapStateToProps = (state) => ({
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  rootNode: rootNodeSelector(state.magasinReducers),
-  user: state.auth.user
+  rootNode: rootNodeSelector(state.magasin),
+  user: state.app.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
