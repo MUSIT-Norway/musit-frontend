@@ -5,7 +5,7 @@ import { hashHistory } from 'react-router';
 import { addObservation } from './observationReducers';
 
 import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinReducers';
+import { rootNodeSelector } from '../magasin/magasinSelectors';
 
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 

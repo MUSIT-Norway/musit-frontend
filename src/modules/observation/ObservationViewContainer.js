@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { loadObservation } from './observationReducers';
 
 import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinReducers';
+import { rootNodeSelector } from '../magasin/magasinSelectors';
 
 import ViewObservationPage from './ObservationViewComponent';
 

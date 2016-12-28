@@ -27,7 +27,7 @@ import orderBy from 'lodash/orderBy';
 import ObservationControlGridShow from './EventsComponent';
 
 import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinReducers';
+import { rootNodeSelector } from '../magasin/magasinSelectors';
 
 const getObservationControl = (state) => state.observationControlGrid.data;
 

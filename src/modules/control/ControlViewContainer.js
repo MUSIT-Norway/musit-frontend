@@ -18,10 +18,10 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import { connect } from 'react-redux';
-import { loadControl } from './controlReducer';
+import { loadControl } from './controlActions';
 import ControlViewContainerImpl from './ControlViewComponent';
 import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinReducers';
+import { rootNodeSelector } from '../magasin/magasinSelectors';
 
 const mapStateToProps = (state) => ({
   controls: state.control,

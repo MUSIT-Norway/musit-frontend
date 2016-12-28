@@ -6,7 +6,7 @@ import EditNode from './StorageEditComponent';
 import { updateState } from './storageActions';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinReducers';
+import { rootNodeSelector } from '../magasin/magasinSelectors';
 
 const mapStateToProps = (state) => {
   return {

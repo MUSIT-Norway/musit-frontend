@@ -11,7 +11,7 @@ import App from './AppComponent';
 
 import Notifyable from './Notifyable';
 
-import { rootNodeSelector } from '../magasin/magasinReducers';
+import { rootNodeSelector } from '../magasin/magasinSelectors';
 import { clearRoot, loadRoot, clearStats } from '../magasin/magasinActions';
 
 import MuseumId from '../../models/museumId';

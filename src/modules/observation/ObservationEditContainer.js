@@ -3,10 +3,10 @@ import { I18n } from 'react-i18nify';
 import { hashHistory } from 'react-router';
 
 import { loadObservation } from './observationReducers';
-import { addControl } from '../control/controlReducer';
+import { addControl } from '../control/controlActions';
 
 import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinReducers';
+import { rootNodeSelector } from '../magasin/magasinSelectors';
 
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 
