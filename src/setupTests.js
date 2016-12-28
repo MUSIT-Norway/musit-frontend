@@ -17,7 +17,7 @@ const middlewares = [ createMiddleware(new ApiClient()) ];
 global.mockStore = configureMockStore(middlewares);
 global.reduxStore = {
   getState: () => ({
-    auth: {
+    app: {
       user: {
         museumId: new MuseumId(99)
       }

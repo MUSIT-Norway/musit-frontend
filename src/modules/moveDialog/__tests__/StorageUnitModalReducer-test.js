@@ -79,12 +79,12 @@ deepFreeze(testSubNoRootState);
 
 describe('StorageUnitModalReducer', () => {
   it('Initial state is set', () => {
-    const state = reducer.reducer(testRootState, {});
+    const state = reducer(testRootState, {});
     assert(state === testRootState);
   });
 
   it('Clear StorageUnitModalReducer root', () => {
-    const state = reducer.reducer(testSubRootState, actions.clear());
+    const state = reducer(testSubRootState, actions.clear());
     assert(JSON.stringify(state) === JSON.stringify(testSubNoRootState));
   });
 
@@ -123,19 +123,19 @@ describe('StorageUnitModalReducer', () => {
 
   it('Reducer: no action', () => {
     expect(
-      reducer.reducer(undefined, {})
+      reducer(undefined, {})
     ).toMatchSnapshot();
   });
 
   it('Reducer: nothing at all', () => {
     expect(
-      reducer.reducer(undefined, undefined)
+      reducer(undefined, undefined)
     ).toMatchSnapshot();
   });
 
   it('LOAD_NODE: initial action', () => {
     expect(
-      reducer.reducer(undefined, {
+      reducer(undefined, {
         type: types.LOAD_NODE
       })
     ).toMatchSnapshot();
@@ -143,7 +143,7 @@ describe('StorageUnitModalReducer', () => {
 
   it('LOAD_NODE: success action', () => {
     expect(
-      reducer.reducer(undefined, {
+      reducer(undefined, {
         type: types.LOAD_NODE_SUCCESS,
         result: {
           someField: 1
@@ -154,7 +154,7 @@ describe('StorageUnitModalReducer', () => {
 
   it('LOAD_NODE: fail action', () => {
     expect(
-      reducer.reducer(undefined, {
+      reducer(undefined, {
         type: types.LOAD_NODE_FAIL,
         error: Error('LOAD_ROOT: has error.')
       })
@@ -186,7 +186,7 @@ describe('StorageUnitModalReducer', () => {
 
   it('LOAD_CHILDREN: initial action', () => {
     expect(
-      reducer.reducer(undefined, {
+      reducer(undefined, {
         type: types.LOAD_CHILDREN
       })
     ).toMatchSnapshot();
@@ -194,7 +194,7 @@ describe('StorageUnitModalReducer', () => {
 
   it('LOAD_CHILDREN: success action', () => {
     expect(
-      reducer.reducer(undefined, {
+      reducer(undefined, {
         type: types.LOAD_CHILDREN_SUCCESS,
         result: {
           someField: 1
@@ -205,7 +205,7 @@ describe('StorageUnitModalReducer', () => {
 
   it('LOAD_CHILDREN: fail action', () => {
     expect(
-      reducer.reducer(undefined, {
+      reducer(undefined, {
         type: types.LOAD_CHILDREN_FAIL,
         error: Error('LOAD_CHILDREN has error.')
       })

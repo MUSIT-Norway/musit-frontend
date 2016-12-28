@@ -6,9 +6,8 @@ import nocker from 'superagent-nock';
 import Config from '../../../config';
 
 import * as actions from '../appReducers';
-import auth from '../appReducers';
+import reducer from '../appReducers';
 
-const reducer = auth.reducer;
 const nock = nocker(request);
 const middlewares = [createMiddleware(new ApiClient())];
 const mockStore = configureMockStore(middlewares);
