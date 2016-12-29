@@ -1,0 +1,3 @@
+exports[`MusitObject model should generate empty string on missing props 1`] = `""`;
+
+exports[`MusitObject model should generate proper object description 1`] = `"AK23 - 1 - Rare saker"`;
