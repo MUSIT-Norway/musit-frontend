@@ -5,9 +5,10 @@ import * as actions from './magasinActions';
 import selector from './magasinSelectors';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 import MusitNode from '../../models/node';
-import { moveObject, moveNode, clear } from '../moveDialog/moveDialogActions';
 import { addNode, addObject } from '../picklist/picklistActions';
 import StorageUnitsContainer from './MagasinComponent';
+import MoveDialog from '../moveDialog/index';
+const { moveObject, moveNode, clear } = MoveDialog.actions;
 
 const mapStateToProps = (state) => {
   return {

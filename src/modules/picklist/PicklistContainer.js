@@ -21,7 +21,6 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { refreshObject, refreshNode, toggleMainObject, toggleNode, toggleObject, removeNode, removeObject } from './picklistActions';
-import { moveObject, moveNode, clear } from '../moveDialog/moveDialogActions';
 
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
@@ -29,6 +28,9 @@ import toLower from 'lodash/toLower';
 import { customSortingStorageNodeType } from '../../util';
 
 import PickListContainer from './PicklistComponent';
+
+import MoveDialog from '../moveDialog/index';
+const { moveObject, moveNode, clear } = MoveDialog.actions;
 
 const getNodes = (state) => state.picklist.NODE || [];
 

@@ -18,7 +18,7 @@ import PagingToolbar from '../../util/paging';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 
-import MusitModal from '../moveDialog/MoveDialogContainer';
+import MoveDialog from '../moveDialog/index';
 import MusitModalHistory from '../moveHistory/MoveHistoryContainer';
 
 import Config from '../../config';
@@ -145,7 +145,7 @@ export default class StorageGrid extends React.Component {
     showModal = this.context.showModal
   ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />, this.props.clearMoveDialog);
+    showModal(title, MoveDialog.getDialog(this.moveNode(nodeToMove)), this.props.clearMoveDialog);
   }
 
   moveNode = (
@@ -192,7 +192,7 @@ export default class StorageGrid extends React.Component {
   ) {
     const objStr = MusitObject.getObjectDescription(objectToMove);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    showModal(title, <MusitModal onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
+    showModal(title, MoveDialog.getDialog(this.moveObject(objectToMove)), this.props.clearMoveDialog);
   }
 
   moveObject = (

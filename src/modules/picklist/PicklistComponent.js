@@ -10,14 +10,14 @@ import PickListComponent from './PicklistGrid';
 
 import { NODE as PICK_NODE } from './picklistTypes';
 
-import MusitModal from '../moveDialog/MoveDialogContainer';
-
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 import { checkNodeBranchAndType } from '../../util/nodeValidator';
 
 import PrintTemplate from '../print/PrintContainer';
 
 import './PicklistComponent.css';
+
+import MoveDialog from '../moveDialog/index';
 
 export default class PickListContainer extends React.Component {
   static propTypes = {
@@ -56,7 +56,7 @@ export default class PickListContainer extends React.Component {
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
     }
-    this.context.showModal(title, <MusitModal onMove={this.moveModal(items)}/>, this.props.clearMoveDialog);
+    this.context.showModal(title, MoveDialog.getDialog(this.moveModal(items)), this.props.clearMoveDialog);
   }
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({

@@ -2,13 +2,16 @@ import pathToRegexp from 'path-to-regexp';
 import { Observable } from 'rxjs/Rx';
 import { hashHistory } from 'react-router';
 import { addNode, addObject } from '../modules/picklist/picklistActions';
-import { loadNode, loadChildren } from '../modules/moveDialog/moveDialogActions';
-import { isMoveDialogActive } from '../modules/moveDialog/moveDialogReducers';
+
 import { ROUTE_PICKLIST, ROUTE_SF } from '../routes.path';
 import { emitError } from '../util/errors/emitter';
 import { isNumber, getPath, dispatch, getState } from '../util';
 import Config from '../config';
 import App from '../modules/app/index';
+import MoveDialog from '../modules/moveDialog/index';
+const { loadNode, loadChildren } = MoveDialog.actions;
+const { isMoveDialogActive } = MoveDialog.selectors;
+
 const { getMuseumId, getCollectionId } = App.actions;
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
