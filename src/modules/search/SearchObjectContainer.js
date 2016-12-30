@@ -2,9 +2,12 @@ import { connect } from 'react-redux';
 
 import * as actions from './searchActions';
 import { addObject } from '../picklist/picklistActions';
-import { loadMainObject } from '../magasin/magasinActions';
 
 import Component from './SearchObjectComponent';
+
+import Magasin from '../magasin/index';
+
+const { loadMainObject } = Magasin.actions;
 
 const mapStateToProps = (state) => {
   return {

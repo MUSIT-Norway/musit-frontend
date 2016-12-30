@@ -21,20 +21,17 @@ import { IndexRedirect, IndexRoute, Route } from 'react-router';
 
 import LoginContainer from './modules/app/LoginContainer';
 import PickListView from './modules/picklist/PicklistContainer';
-import MagasinContainer from './modules/magasin/MagasinContainer';
-import StorageAddContainer from './modules/storage/StorageAddContainer';
-import StorageEditContainer from './modules/storage/StorageEditContainer';
-import ControlViewContainer from './modules/control/ControlViewContainer';
-import ControlAddContainer from './modules/control/ControlAddContainer';
+import Magasin from './modules/magasin/index';
+import Storage from './modules/storage/index';
+import Events from './modules/events/index';
+import Control from './modules/control/index';
+import Observation from './modules/observation/index';
+
 import ReportsOverviewContainer from './modules/reports/ReportsOverviewContainer';
 import ReportsKDContainer from './modules/reports/ReportsKDContainer';
 import ObjectSearchContainer from './modules/search/SearchObjectContainer';
-import AddObservationPage from './modules/observation/ObservationAddContainer';
-import EditObservationPage from './modules/observation/ObservationEditContainer';
-import ViewObservationPage from './modules/observation/ObservationViewContainer';
-import ObservationControlGridShow from './modules/events/EventsContainer';
-import Authenticated from './modules/app/Authenticated';
 
+import Authenticated from './modules/app/Authenticated';
 import * as path from './routes.path';
 
 const NotFound = () =>
@@ -48,18 +45,11 @@ export default () => {
     <Route component={Authenticated}>
       <IndexRedirect to={path.ROUTE_SF} />
       <Route path={path.ROUTE_SF}>
-        <IndexRoute component={MagasinContainer} />
-        <Route path={path.ROUTE_SF_ADD} add component={StorageAddContainer} />
-        <Route path={path.ROUTE_SF_NODE_ADD} add component={StorageAddContainer} />
-        <Route path={path.ROUTE_SF_NODE_VIEW} component={StorageEditContainer} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={ObservationControlGridShow} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_ADD} component={ControlAddContainer} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
-        <Route path={path.ROUTE_SF_OBJECTS} showObjects component={MagasinContainer} />
-        <Route path={path.ROUTE_SF_NODE} component={MagasinContainer} />
+        {Control.routes}
+        {Observation.routes}
+        {Events.routes}
+        {Storage.routes}
+        {Magasin.routes}
       </Route>
       <Route path={path.ROUTE_PICKLIST} component={PickListView} />
       <Route path={path.ROUTE_REPORTS}>

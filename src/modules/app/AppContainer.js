@@ -10,10 +10,12 @@ import App from './AppComponent';
 
 import Notifyable from './Notifyable';
 
-import { rootNodeSelector } from '../magasin/magasinSelectors';
-import { clearRoot, loadRoot, clearStats } from '../magasin/magasinActions';
-
 import MuseumId from '../../models/museumId';
+
+import Magasin from '../magasin/index';
+
+const { clearRoot, loadRoot, clearStats } = Magasin.actions;
+const { rootNodeSelector } = Magasin.selectors;
 
 const mapStateToProps = (state) => {
   return {

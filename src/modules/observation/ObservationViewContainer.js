@@ -2,10 +2,12 @@ import { connect } from 'react-redux';
 
 import { loadObservation } from './observationReducers';
 
-import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinSelectors';
-
 import ViewObservationPage from './ObservationViewComponent';
+
+import Magasin from '../magasin/index';
+
+const { loadRoot } = Magasin.actions;
+const { rootNodeSelector } = Magasin.selectors;
 
 const mapStateToProps = (state) => {
   return {

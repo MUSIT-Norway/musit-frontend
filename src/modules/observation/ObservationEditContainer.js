@@ -5,12 +5,14 @@ import { hashHistory } from 'react-router';
 import { loadObservation } from './observationReducers';
 import { addControl } from '../control/controlActions';
 
-import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinSelectors';
-
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 import EditObservationPage from './ObservationEditComponent';
+
+import Magasin from '../magasin/index';
+
+const { loadRoot } = Magasin.actions;
+const { rootNodeSelector } = Magasin.selectors;
 
 const mapStateToProps = (state) => {
   return {

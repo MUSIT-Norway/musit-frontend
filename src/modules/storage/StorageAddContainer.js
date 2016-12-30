@@ -5,8 +5,10 @@ import { insert } from './storageActions';
 import AddNode from './StorageAddComponent';
 import { clearState, updateState } from './storageActions';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
-import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinSelectors';
+import Magasin from '../magasin/index';
+
+const { loadRoot } = Magasin.actions;
+const { rootNodeSelector } = Magasin.selectors;
 
 const mapStateToProps = (state) => {
   return {

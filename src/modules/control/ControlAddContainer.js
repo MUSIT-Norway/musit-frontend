@@ -20,8 +20,10 @@
 import { connect } from 'react-redux';
 import { addControl } from './controlActions';
 import ControlAddContainerImpl from './ControlAddComponent';
-import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinSelectors';
+import Magasin from '../magasin/index';
+
+const { loadRoot } = Magasin.actions;
+const { rootNodeSelector } = Magasin.selectors;
 
 const mapStateToProps = (state) => {
   const rootNode = rootNodeSelector(state.magasin);

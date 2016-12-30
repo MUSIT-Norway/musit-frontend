@@ -20,30 +20,30 @@ import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
 import app from '../modules/app/appReducers';
-import picklist from '../modules/picklist/picklistReducers';
-import storage from '../modules/storage/storageReducers';
-import magasin from '../modules/magasin/magasinReducers';
-import reports from '../modules/reports/reportsReducers';
-import search from '../modules/search/searchReducers';
-import observation from '../modules/observation/observationReducers';
-import events from '../modules/events/eventsReducers';
-import print from '../modules/print/printReducer';
-import control from '../modules/control/controlReducer';
+import Observation from '../modules/observation/index';
+import Magasin from '../modules/magasin/index';
+import Storage from '../modules/storage/index';
+import Control from '../modules/control/index';
+import Events from '../modules/events/index';
 import moveHistory from '../modules/moveHistory/moveHistoryReducers';
 import moveDialog from '../modules/moveDialog/moveDialogReducers';
+import picklist from '../modules/picklist/picklistReducers';
+import reports from '../modules/reports/reportsReducers';
+import search from '../modules/search/searchReducers';
+import print from '../modules/print/printReducer';
 
 const rootReducer = combineReducers({
   app,
-  magasin,
-  moveDialog,
+  observation: Observation.reducer,
+  magasin: Magasin.reducer,
+  storage: Storage.reducer,
+  control: Control.reducer,
+  events: Events.reducer,
   moveHistory,
-  observation,
+  moveDialog,
   picklist,
-  storage,
-  control,
   reports,
   search,
-  events,
   print,
   routing
 });

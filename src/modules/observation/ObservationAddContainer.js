@@ -4,12 +4,14 @@ import { hashHistory } from 'react-router';
 
 import { addObservation } from './observationReducers';
 
-import { loadRoot } from '../magasin/magasinActions';
-import { rootNodeSelector } from '../magasin/magasinSelectors';
-
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 import AddObservationPage from './ObservationAddComponent';
+
+import Magasin from '../magasin/index';
+
+const { loadRoot } = Magasin.actions;
+const { rootNodeSelector } = Magasin.selectors;
 
 const mapStateToProps = (state) => {
   return {

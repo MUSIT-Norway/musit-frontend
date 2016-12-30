@@ -284,7 +284,7 @@ export default class StorageGrid extends React.Component {
           }}
           stats={stats}
           onClickProperties={(id) => onEdit({ id })}
-          onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
+          onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/events`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={moveNode}
