@@ -19,20 +19,20 @@
 import React from 'react';
 import { IndexRedirect, IndexRoute, Route } from 'react-router';
 
+import * as path from './routes.path';
+
+import Authenticated from './modules/app/Authenticated';
 import LoginContainer from './modules/app/LoginContainer';
 import PickListView from './modules/picklist/PicklistContainer';
+import ReportsOverviewContainer from './modules/reports/ReportsOverviewContainer';
+import ReportsKDContainer from './modules/reports/ReportsKDContainer';
+import ObjectSearchContainer from './modules/search/SearchObjectContainer';
+
 import Magasin from './modules/magasin/index';
 import Storage from './modules/storage/index';
 import Events from './modules/events/index';
 import Control from './modules/control/index';
 import Observation from './modules/observation/index';
-
-import ReportsOverviewContainer from './modules/reports/ReportsOverviewContainer';
-import ReportsKDContainer from './modules/reports/ReportsKDContainer';
-import ObjectSearchContainer from './modules/search/SearchObjectContainer';
-
-import Authenticated from './modules/app/Authenticated';
-import * as path from './routes.path';
 
 const NotFound = () =>
   <div className="container">
@@ -58,7 +58,6 @@ export default () => {
       </Route>
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
       <Route path="/" component={LoginContainer} />
-
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />
     </Route>

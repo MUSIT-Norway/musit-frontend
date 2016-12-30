@@ -4,6 +4,18 @@ import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 
+/**
+ * A private helper method for retrieving:
+ *
+ * 1. The data as array
+ * or
+ * 2. The matches array on the data object
+ *
+ * TODO NB! this method is copy pasted inside the events module
+ *
+ * @param state
+ * @returns {Array}
+ */
 const getGridData = (state) => {
   if (!state.data) {
     return [];
@@ -11,7 +23,7 @@ const getGridData = (state) => {
   return state.data.length ? state.data : state.data.matches || [];
 };
 
-const nodesSelector = createSelector(
+export const nodesSelector = createSelector(
   [state => getGridData(state.nodeReducer)],
   (storageGridUnit) => orderBy(storageGridUnit, [
     (o) => customSortingStorageNodeType(o.type),
@@ -19,9 +31,9 @@ const nodesSelector = createSelector(
   ])
 );
 
-const totalNodesSelector = (state) => state.nodeReducer.data && state.nodeReducer.data.totalMatches;
+export const totalNodesSelector = (state) => state.nodeReducer.data && state.nodeReducer.data.totalMatches;
 
-const objectsSelector = createSelector(
+export const objectsSelector = createSelector(
   [state => getGridData(state.objectReducer)],
   (storageObjectGrid) => orderBy(storageObjectGrid, [
     (o) => toLower(o.museumNo),
@@ -30,9 +42,9 @@ const objectsSelector = createSelector(
   ])
 );
 
-const totalObjectsSelector = (state) => state.objectReducer.data && state.objectReducer.data.totalMatches;
+export const totalObjectsSelector = (state) => state.objectReducer.data && state.objectReducer.data.totalMatches;
 
-const statsSelector = (state) => state.statsReducer;
+export const statsSelector = (state) => state.statsReducer;
 
 export const rootNodeSelector = (state) => state.nodeReducer.root.data;
 

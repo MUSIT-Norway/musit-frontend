@@ -3,16 +3,17 @@ import { I18n } from 'react-i18nify';
 import { hashHistory } from 'react-router';
 
 import { loadObservation } from './observationReducers';
-import { addControl } from '../control/controlActions';
 
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 import EditObservationPage from './ObservationEditComponent';
 
 import Magasin from '../magasin/index';
+import Control from '../control/index';
 
 const { loadRoot } = Magasin.actions;
 const { rootNodeSelector } = Magasin.selectors;
+const { addControl } = Control.actions;
 
 const mapStateToProps = (state) => {
   return {

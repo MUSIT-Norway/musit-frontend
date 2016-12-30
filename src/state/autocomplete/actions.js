@@ -1,8 +1,9 @@
 import { Subject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
-import { getAccessToken, getMuseumId } from '../../modules/app/appReducers';
 import * as loglevel from 'loglevel';
 import 'whatwg-fetch';
+import App from '../../modules/app/index';
+const { getAccessToken, getMuseumId } = App.actions;
 
 export default function createActions(urlFun) {
   // Reducer subjects (for data)

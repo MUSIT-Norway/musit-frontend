@@ -19,7 +19,7 @@
 import { routerReducer as routing } from 'react-router-redux';
 import { combineReducers } from 'redux';
 
-import app from '../modules/app/appReducers';
+import App from '../modules/app/index';
 import Observation from '../modules/observation/index';
 import Magasin from '../modules/magasin/index';
 import Storage from '../modules/storage/index';
@@ -33,7 +33,7 @@ import search from '../modules/search/searchReducers';
 import print from '../modules/print/printReducer';
 
 const rootReducer = combineReducers({
-  app,
+  app: App.reducer,
   observation: Observation.reducer,
   magasin: Magasin.reducer,
   storage: Storage.reducer,
