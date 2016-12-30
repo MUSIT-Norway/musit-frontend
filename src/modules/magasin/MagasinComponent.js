@@ -19,7 +19,7 @@ import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 
 import MoveDialog from '../moveDialog/index';
-import MusitModalHistory from '../moveHistory/MoveHistoryContainer';
+import MoveHistory from '../moveHistory/index';
 
 import Config from '../../config';
 
@@ -231,7 +231,7 @@ export default class StorageGrid extends React.Component {
     showModal = this.context.showModal
   ) {
     const objStr = MusitObject.getObjectDescription(objectToShowHistoryFor);
-    const componentToRender = <MusitModalHistory objectId={objectToShowHistoryFor.id} />;
+    const componentToRender = MoveHistory.getDialog(objectToShowHistoryFor.id);
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
     showModal(title, componentToRender);
   }

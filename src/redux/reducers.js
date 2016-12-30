@@ -26,7 +26,7 @@ import Storage from '../modules/storage/index';
 import Control from '../modules/control/index';
 import Events from '../modules/events/index';
 import MoveDialog from '../modules/moveDialog/index';
-import moveHistory from '../modules/moveHistory/moveHistoryReducers';
+import MoveHistory from '../modules/moveHistory/index';
 import picklist from '../modules/picklist/picklistReducers';
 import reports from '../modules/reports/reportsReducers';
 import search from '../modules/search/searchReducers';
@@ -40,7 +40,7 @@ const rootReducer = combineReducers({
   control: Control.reducer,
   events: Events.reducer,
   moveDialog: MoveDialog.reducer,
-  moveHistory,
+  moveHistory: MoveHistory.reducer,
   picklist,
   reports,
   search,
