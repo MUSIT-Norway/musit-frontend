@@ -6,13 +6,12 @@ import reduce from 'lodash/reduce';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 import { I18n } from 'react-i18nify';
-import Observation from '../observation/index';
-const {
+import {
   RenderFromToNumberComment,
   RenderAlcohol,
   RenderDoubleTextArea,
   RenderPest
-} = Observation.render;
+} from '../observation/render/index';
 
 export default class ControlView extends Component {
   static propTypes = {
