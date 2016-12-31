@@ -9,6 +9,7 @@ import { NODE as PICK_NODE, OBJECT as PICK_OBJECT } from '../picklist/picklistTy
 import MusitUserAccount from './UserAccountView';
 import './AppComponent.css';
 import Logo from './assets/logo.png';
+import MuseumId from '../../models/museumId';
 
 export default class App extends Component {
   static propTypes = {
@@ -23,18 +24,48 @@ export default class App extends Component {
     buildinfo: PropTypes.any
   }
 
+  constructor(props, context) {
+    super(props, context);
+    this.handleLanguage = this.handleLanguage.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleMuseumId = this.handleMuseumId.bind(this);
+    this.handleCollectionId = this.handleCollectionId.bind(this);
+  }
+
   componentWillMount() {
     this.props.loadBuildinfo();
   }
 
-  handleLogout = () => {
+  handleLogout() {
     this.props.clearUser();
     hashHistory.replace('/');
   }
 
-  handleLanguage = (l) => {
+  handleLanguage(l) {
     localStorage.setItem('language', l);
     window.location.reload(true);
+  }
+
+  handleMuseumId(mid, cid) {
+    this.props.setMuseumId(mid);
+    this.props.setCollectionId(cid);
+    this.props.clearRoot();
+    this.props.clearStats();
+    this.props.clearSearch();
+    this.props.clearNodes();
+    this.props.clearObjects();
+    this.props.loadRoot(null, new MuseumId(mid), {
+      onSuccess: () => hashHistory.push('/magasin')
+    });
+  }
+
+  handleCollectionId(nid, cid) {
+    this.props.setCollectionId(cid);
+    if (nid) {
+      hashHistory.push(`/magasin/${nid}`);
+    } else {
+      hashHistory.push('/magasin');
+    }
   }
 
   render() {
@@ -74,9 +105,9 @@ export default class App extends Component {
                 selectedMuseumId={this.props.user.museumId.id}
                 selectedCollectionId={this.props.user.collectionId.uuid}
                 handleLogout={this.handleLogout}
-                handleLanguage={(l) => this.handleLanguage(l)}
-                handleMuseumId={this.props.setMuseumId}
-                handleCollectionId={this.props.setCollectionId}
+                handleLanguage={this.handleLanguage}
+                handleMuseumId={this.handleMuseumId}
+                handleCollectionId={this.handleCollectionId}
                 rootNode={this.props.rootNode}
               />
               }

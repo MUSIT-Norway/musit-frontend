@@ -47,14 +47,7 @@ const mapDispatchToProps = (dispatch, { history }) => ({
       }
     }));
   },
-  moveObject: (
-    objectToMove,
-    destinationId,
-    doneBy,
-    museumId,
-    collectionId,
-    callback
-  ) => {
+  moveObject: (objectToMove, destinationId, doneBy, museumId, collectionId, callback) => {
     if (objectToMove.isMainObject()) {
       dispatch(actions.loadMainObject(objectToMove, museumId, collectionId, {
         onSuccess: (children) => {
