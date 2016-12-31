@@ -10,7 +10,7 @@ import {
   RenderAlcohol,
   RenderDoubleTextArea,
   RenderFromToNumberComment
-} from './render/helper';
+} from './render/index';
 
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import ActorSuggest from '../../components/ActorSuggest';

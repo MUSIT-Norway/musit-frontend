@@ -1,6 +1,6 @@
 import { render } from 'enzyme';
 import React from 'react';
-import { RenderPest } from '../helper';
+import { RenderPest } from '../index';
 
 describe('RenderPest', () => {
   let wrapper;

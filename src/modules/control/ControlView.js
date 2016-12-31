@@ -1,12 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import * as ObservationRender from '../../modules/observation/render/helper';
 import { formatFloatToString } from '../../util';
 import reduce from 'lodash/reduce';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
 import { I18n } from 'react-i18nify';
+import Observation from '../observation/index';
+const {
+  RenderFromToNumberComment,
+  RenderAlcohol,
+  RenderDoubleTextArea,
+  RenderPest
+} = Observation.render;
 
 export default class ControlView extends Component {
   static propTypes = {
@@ -151,7 +157,7 @@ export default class ControlView extends Component {
       switch (controlType) {
       case 'temperature':
         lv = 
-            <ObservationRender.RenderFromToNumberComment
+            <RenderFromToNumberComment
               disabled
               type="temperature"
               valueProps={{
@@ -169,7 +175,7 @@ export default class ControlView extends Component {
         break;
       case 'alcohol':
         lv = 
-            <ObservationRender.RenderAlcohol
+            <RenderAlcohol
               disabled
               valueProps={{
                 statusValue: observation.condition,
@@ -186,7 +192,7 @@ export default class ControlView extends Component {
         break;
       case 'cleaning':
         lv = 
-            <ObservationRender.RenderDoubleTextArea
+            <RenderDoubleTextArea
               disabled
               type="cleaning"
               valueProps={{
@@ -202,7 +208,7 @@ export default class ControlView extends Component {
         break;
       case 'gas':
         lv = 
-            <ObservationRender.RenderDoubleTextArea
+            <RenderDoubleTextArea
               disabled
               type="gas"
               valueProps={{
@@ -218,7 +224,7 @@ export default class ControlView extends Component {
         break;
       case 'hypoxicAir':
         lv = 
-            <ObservationRender.RenderFromToNumberComment
+            <RenderFromToNumberComment
               disabled
               type="hypoxicAir"
               valueProps={{
@@ -236,7 +242,7 @@ export default class ControlView extends Component {
         break;
       case 'lightingCondition':
         lv = 
-            <ObservationRender.RenderDoubleTextArea
+            <RenderDoubleTextArea
               disabled
               type="lightCondition"
               valueProps={{
@@ -252,7 +258,7 @@ export default class ControlView extends Component {
         break;
       case 'mold':
         lv = 
-            <ObservationRender.RenderDoubleTextArea
+            <RenderDoubleTextArea
               disabled
               type="mold"
               valueProps={{
@@ -268,7 +274,7 @@ export default class ControlView extends Component {
         break;
       case 'pest':
         lv = 
-            <ObservationRender.RenderPest
+            <RenderPest
               disabled
               canEdit={false}
               valueProps={{
@@ -294,7 +300,7 @@ export default class ControlView extends Component {
         break;
       case 'relativeHumidity':
         lv = 
-            <ObservationRender.RenderFromToNumberComment
+            <RenderFromToNumberComment
               disabled
               type="relativeHumidity"
               valueProps={{

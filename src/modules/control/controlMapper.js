@@ -1,15 +1,15 @@
 import find from 'lodash/find';
-import {
-    parseAlcohol,
-    parseCleaning,
-    parseRangeObservation,
-    parsePest,
-    parseLightCondition,
-    parseGas,
-    parseMold
-} from '../../modules/observation/mapper/to_backend';
 import { Option } from '../../util';
 import Actor from '../../models/actor';
+import {
+  parseAlcohol,
+  parseCleaning,
+  parseRangeObservation,
+  parsePest,
+  parseLightCondition,
+  parseGas,
+  parseMold
+} from '../observation/mapper/to_backend';
 
 function getDoneDate(observations, state) {
   return observations && observations.doneDate ? observations.doneDate : state.doneDate;
