@@ -46,13 +46,13 @@ const mapStateToProps = (state) => ({
   selectedNode: state.moveDialog.root.data
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clear: () => dispatch(clear()),
-    loadNode: (id, museumId) => dispatch(loadNode(id, museumId)),
-    loadRootChildren: (museumId) => dispatch(loadChildren(null, museumId)),
-    loadChildren: (id, museumId) => dispatch(loadChildren(id, museumId))
-  };
+const loadRootChildren = (museumId) => loadChildren(null, museumId);
+
+const mapDispatchToProps = {
+  clear,
+  loadNode,
+  loadRootChildren,
+  loadChildren
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl);

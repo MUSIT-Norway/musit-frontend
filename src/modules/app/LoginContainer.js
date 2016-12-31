@@ -26,13 +26,9 @@ const mapStateToProps = (state) => ({
   user: state.app.user.actor
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setUser: (user: any) => {
-      dispatch(setUser(user));
-      dispatch(loadActor());
-    }
-  };
+const mapDispatchToProps = {
+  setUser,
+  loadActor
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WelcomeContainer);

@@ -30,8 +30,8 @@ export default class PickListContainer extends React.Component {
     moveObject: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
     user: React.PropTypes.object,
-    refreshNodes: React.PropTypes.func.isRequired,
-    refreshObjects: React.PropTypes.func.isRequired
+    refreshNode: React.PropTypes.func.isRequired,
+    refreshObject: React.PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -61,7 +61,7 @@ export default class PickListContainer extends React.Component {
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshNodes(items.map(p => p.value).map(item => item.id), this.props.user.museumId);
+      items.forEach(item => this.props.refreshNode(item.value.id, this.props.user.museumId));
       onSuccess();
       if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })});
@@ -80,7 +80,7 @@ export default class PickListContainer extends React.Component {
   })
   objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshObjects(items.map(p => p.value).map(item => item.id), this.props.user.museumId);
+      items.forEach(item => this.props.refreshObject(item.value.id, this.props.user.museumId));
       onSuccess();
       if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })});

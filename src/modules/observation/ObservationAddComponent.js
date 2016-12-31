@@ -3,6 +3,8 @@ import ObservationPage from './ObservationComponent';
 import Layout from '../../layout';
 import Breadcrumb from '../../layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
+import { hashHistory } from 'react-router';
+import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 export default class AddObservationPage extends React.Component {
 
@@ -30,7 +32,15 @@ export default class AddObservationPage extends React.Component {
             <ObservationPage
               id={this.props.params.id}
               user={this.props.user}
-              onSaveObservation={this.props.onSaveObservation}
+              onSaveObservation={(id, museumId, data) => {
+                this.props.onSaveObservation(id, museumId, data, {
+                  onSuccess: () => {
+                    hashHistory.goBack();
+                    emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
+                  },
+                  onFailure: (e) => emitError({ ...e, type: 'network' })
+                });
+              }}
               mode="ADD"
               doneBy={this.props.user.actor}
             />

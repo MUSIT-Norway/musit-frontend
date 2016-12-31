@@ -4,6 +4,8 @@ import Layout from '../../layout';
 import Breadcrumb from '../../layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
 import Actor from '../../models/actor';
+import { hashHistory } from 'react-router';
+import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 export default class EditObservationPage extends React.Component {
 
@@ -68,7 +70,17 @@ export default class EditObservationPage extends React.Component {
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
               doneBy={this.getDoneByFromLocationState()}
-              onSaveObservation={this.props.onSaveObservation(this.props.location.state, this.props.user.museumId)}
+              onSaveObservation={(id, museumId, observationState) => {
+                this.props.onSaveObservation(id, this.props.location.state, observationState, museumId, {
+                  onSuccess: () => {
+                    hashHistory.goBack();
+                    emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
+                  },
+                  onFailure: (e) => {
+                    emitError({ ...e, type: 'network' });
+                  }
+                });
+              }}
               mode="EDIT"
             />
           </div>

@@ -249,7 +249,7 @@ export default class ObservationPage extends React.Component {
     const errors = this.validateForm(this.state);
     this.setState({ ...this.state, errors });
     if (Object.keys(errors).length === 0) {
-      this.props.onSaveObservation(this.props.id, this.state, this.props.user.museumId);
+      this.props.onSaveObservation(this.props.id, this.props.user.museumId, this.state);
     }
   }
 

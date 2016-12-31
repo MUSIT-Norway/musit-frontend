@@ -1,5 +1,8 @@
 import React, { PropTypes } from 'react';
 import StorageUnitContainer from './StorageComponent';
+import { hashHistory } from 'react-router';
+import { I18n } from 'react-i18nify';
+import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 export default class AddNode extends React.Component {
   static propTypes = {
@@ -21,10 +24,22 @@ export default class AddNode extends React.Component {
     return (
       <StorageUnitContainer
         {...this.props}
-        onLagreClick={(data) => {
+        onLagreClick={(data, museumId) => {
           const parentId = this.props.params.id;
-          const museumId = this.props.user.museumId;
-          this.props.onLagreClick(parentId, museumId, data);
+          this.props.onLagreClick(parentId, museumId, data, {
+            onSuccess: () => {
+              hashHistory.goBack();
+              emitSuccess(
+                {
+                  type: 'saveSuccess',
+                  message:  I18n.t('musit.storageUnits.messages.saveNodeSuccess')
+                }
+              );
+            },
+            onFailure: (e) => {
+              emitError({...e, type: 'network'});
+            }
+          });
         }}
         isAdd
         loaded={!!this.props.unit}

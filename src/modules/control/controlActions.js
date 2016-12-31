@@ -4,14 +4,21 @@ import uniq from 'lodash/uniq';
 import Actor from '../../models/actor';
 import * as types from './controlTypes';
 
-export const addControl = (nodeId, controlData, observations, museumId, callback) => {
-  const data = mapToBackend(controlData, observations, nodeId);
+const postControl = (data, nodeId, museumId, callback) => {
   const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
   return {
     types: [types.ADD, types.ADD_SUCCESS, types.ADD_FAIL],
     promise: (client) => client.post(url, { data }),
     callback
   };
+};
+
+export const addControl = (nodeId, museumId, controlData, callback) => {
+  return postControl(mapToBackend(controlData, {}, nodeId), nodeId, museumId, callback);
+};
+
+export const addControlWithObservations = (nodeId, controlData, observationsData, museumId, callback) => {
+  return postControl(mapToBackend(controlData, observationsData, nodeId), nodeId, museumId, callback);
 };
 
 export const loadControl = (nodeId, controlId, museumId, callback) => {

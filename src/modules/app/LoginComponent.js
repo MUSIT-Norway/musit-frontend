@@ -13,7 +13,8 @@ import { I18n } from 'react-i18nify';
 export default class WelcomeContainer extends React.Component {
   static propTypes = {
     user: React.PropTypes.object,
-    setUser: React.PropTypes.func.isRequired
+    setUser: React.PropTypes.func.isRequired,
+    loadActor: React.PropTypes.func.isRequired
   };
 
   render() {
@@ -26,7 +27,10 @@ export default class WelcomeContainer extends React.Component {
                 <div>
                   {!this.props.user &&
                     <LoginButton
-                      setUser={this.props.setUser}
+                      setUser={(u) => {
+                        this.props.setUser(u);
+                        this.props.loadActor();
+                      }}
                     >
                       <span>
                         {I18n.t('musit.login')}

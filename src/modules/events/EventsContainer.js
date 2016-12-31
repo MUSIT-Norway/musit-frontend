@@ -38,21 +38,15 @@ const getSortedObservationControl = createSelector(
     (observationControl) => orderBy(observationControl, ['doneDate', 'id'], ['desc', 'desc'])
 );
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.app.user,
-    rootNode: rootNodeSelector(state.magasin),
-    observationControlGridData: getSortedObservationControl(state)
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  loadControlAndObservations: (id, museumId, callback) => {
-    dispatch(loadControlsAndObservationsForNode(id, museumId, callback));
-  },
-  loadStorageObj: (id, museumId) => {
-    dispatch(loadRoot(id, museumId));
-  }
+const mapStateToProps = (state) => ({
+  user: state.app.user,
+  rootNode: rootNodeSelector(state.magasin),
+  observationControlGridData: getSortedObservationControl(state)
 });
+
+const mapDispatchToProps = {
+  loadControlAndObservations: loadControlsAndObservationsForNode,
+  loadStorageObj: loadRoot
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ObservationControlGridShow);

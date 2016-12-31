@@ -55,26 +55,23 @@ const mapStateToProps = (state) => ({
   }
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  clearMoveDialog: () => dispatch(clear()),
-  toggleNode: (item, on) => dispatch(toggleNode(item, on)),
-  toggleObject: (item, on) => {
-    if (item.mainObjectId && item.isMainObject()) {
-      dispatch(toggleMainObject(item, on));
-    } else {
-      dispatch(toggleObject(item, on));
-    }
-  },
-  removeNode: (item) => dispatch(removeNode(item)),
-  removeObject: (item) => dispatch(removeObject(item)),
-  moveObject: (objectId, destinationId, doneBy, museumId, callback) => {
-    dispatch(moveObject(objectId, destinationId, doneBy, museumId, callback));
-  },
-  moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
-    dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
-  },
-  refreshNodes: (ids, museumId) => ids.forEach(id => dispatch(refreshNode(id, museumId))),
-  refreshObjects: (ids, museumId) => ids.forEach(id => dispatch(refreshObject(id, museumId)))
-});
+const toggleObjectHelper = (item, on) => {
+  if (item.mainObjectId && item.isMainObject()) {
+    return toggleMainObject(item, on);
+  }
+  return toggleObject(item, on);
+};
+
+const mapDispatchToProps = {
+  clearMoveDialog: clear,
+  toggleNode,
+  toggleObject: toggleObjectHelper,
+  removeNode,
+  removeObject,
+  moveObject,
+  moveNode,
+  refreshNode,
+  refreshObject
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(PickListContainer);

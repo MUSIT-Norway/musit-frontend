@@ -32,13 +32,9 @@ const mapStateToProps = (state) => ({
   user: state.app.user
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loadControl: (nodeId, controlId, museumId, callback) => {
-    dispatch(loadControl(nodeId, controlId, museumId, callback));
-  },
-  loadStorageObj: (id, museumId) => {
-    dispatch(loadRoot(id, museumId));
-  }
-});
+const mapDispatchToProps = {
+  loadControl,
+  loadStorageObj: loadRoot
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlViewContainerImpl);

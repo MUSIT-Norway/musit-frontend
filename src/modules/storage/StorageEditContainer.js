@@ -1,50 +1,24 @@
 import { connect } from 'react-redux';
-import { hashHistory } from 'react-router';
-import { I18n } from 'react-i18nify';
 import { load, update } from './storageActions';
 import EditNode from './StorageEditComponent';
 import { updateState } from './storageActions';
-import { emitError, emitSuccess } from '../../util/errors/emitter';
 import Magasin from '../magasin/index';
 
 const { loadRoot } = Magasin.actions;
 const { rootNodeSelector } = Magasin.selectors;
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.app.user,
-    unit: state.storage.state,
-    loaded: !!state.storage.loaded,
-    rootNode: rootNodeSelector(state.magasin)
-  };
-};
+const mapStateToProps = (state) => ({
+  user: state.app.user,
+  unit: state.storage.state,
+  loaded: !!state.storage.loaded,
+  rootNode: rootNodeSelector(state.magasin)
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onLagreClick: (data, museumId) => {
-      dispatch(update(data, museumId, {
-        onSuccess: () => {
-          hashHistory.goBack();
-          emitSuccess(
-            {
-              type: 'saveSuccess',
-              message:  I18n.t('musit.storageUnits.messages.saveNodeSuccess')
-            }
-          );
-        },
-        onFailure: (e) => {
-          emitError({...e, type: 'network'});
-        }
-      }));
-    },
-    loadStorageUnit: (id, museumId, callback) => {
-      dispatch(load(id, museumId, callback));
-    },
-    updateState: (data) => dispatch(updateState(data)),
-    loadStorageObj: (id, museumId) => {
-      dispatch(loadRoot(id, museumId));
-    }
-  };
+const mapDispatchToProps = {
+  onLagreClick: update,
+  loadStorageUnit: load,
+  updateState,
+  loadStorageObj: loadRoot
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditNode);

@@ -25,21 +25,14 @@ import Magasin from '../magasin/index';
 const { loadRoot } = Magasin.actions;
 const { rootNodeSelector } = Magasin.selectors;
 
-const mapStateToProps = (state) => {
-  const rootNode = rootNodeSelector(state.magasin);
-  return {
-    user: state.app.user,
-    rootNode: rootNode
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  saveControl: (id, museumId, data, saveControlCallback) => {
-    dispatch(addControl(id, data, {}, museumId, saveControlCallback));
-  },
-  loadStorageObj: (id, museumId) => {
-    dispatch(loadRoot(id, museumId));
-  }
+const mapStateToProps = (state) => ({
+  user: state.app.user,
+  rootNode: rootNodeSelector(state.magasin)
 });
+
+const mapDispatchToProps = {
+  saveControl: addControl,
+  loadStorageObj: loadRoot
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlAddContainerImpl);
