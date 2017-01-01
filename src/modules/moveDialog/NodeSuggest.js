@@ -1,6 +1,6 @@
 import React from 'react';
 import AutoSuggest from 'react-autosuggest';
-import autoComplete from '../../state/autocomplete';
+import autoComplete from '../../rxjs/autocomplete';
 import Config from '../../config';
 
 class NodeSuggest extends React.Component {

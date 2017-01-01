@@ -1,6 +1,6 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import autoComplete from '../state/autocomplete';
+import autoComplete from '../rxjs/autocomplete';
 import Config from '../config';
 import Actor from '../models/actor';
 
