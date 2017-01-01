@@ -2,7 +2,7 @@ import { apiUrl } from '../../util';
 import Config from '../../config';
 import * as types from './magasinTypes';
 
-export const loadRoot = (id, museumId, callback) => {
+export const loadRoot = (id, museumId, currentPage, callback) => {
   let action = {};
   if (id) {
     action = {
