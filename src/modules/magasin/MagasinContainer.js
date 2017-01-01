@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   ...selector(state.magasin)
 });
 
-const mapDispatchToProps = (dispatch, { history }) => ({
+const mapDispatchToProps = (dispatch) => ({
   clearMoveDialog: () => dispatch(clear()),
   loadRoot: (id, museumId, currentPage) => {
     dispatch(actions.clearStats());
@@ -78,18 +78,9 @@ const mapDispatchToProps = (dispatch, { history }) => ({
         dispatch(addObject(unit, path));
       }
       break;
-    case 'observation':
-      history.push(`/magasin/${unit.id}/observations`);
-      break;
-    case 'control':
-      history.push(`/magasin/${unit.id}/controls`);
-      break;
     default:
       break;
     }
-  },
-  onEdit: (unit) => {
-    hashHistory.push(`/magasin/${unit.id}/view`);
   },
   onDelete: (id, museumId, currentNode) => {
     if (id === currentNode.id) {
