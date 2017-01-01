@@ -12,9 +12,9 @@ export default class ObjectGrid extends Component {
       subNo: PropTypes.string,
       term: PropTypes.string.isRequired
     })).isRequired,
-    onAction: PropTypes.func.isRequired,
     showMoveHistory: PropTypes.func.isRequired,
-    onMove: PropTypes.func.isRequired
+    onMoveObject: PropTypes.func.isRequired,
+    pickObject: PropTypes.func.isRequired
   }
 
   render() {
@@ -76,7 +76,7 @@ export default class ObjectGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
-                          this.props.onMove(c);
+                          this.props.onMoveObject(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
                       >
@@ -90,7 +90,7 @@ export default class ObjectGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
-                          this.props.onAction('pickObject', c);
+                          this.props.pickObject(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
                       >

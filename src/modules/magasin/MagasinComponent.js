@@ -28,18 +28,13 @@ export default class StorageGrid extends React.Component {
     nodes: React.PropTypes.arrayOf(React.PropTypes.object),
     objects: React.PropTypes.arrayOf(React.PropTypes.object),
     rootNode: React.PropTypes.object,
-    loadStorageUnits: React.PropTypes.func.isRequired,
-    loadStorageObjects: React.PropTypes.func.isRequired,
-    onDelete: React.PropTypes.func.isRequired,
-    onEdit: React.PropTypes.func.isRequired,
-    onAction: React.PropTypes.func.isRequired,
     props: React.PropTypes.object,
     params: React.PropTypes.object,
     history: React.PropTypes.object,
-    loadChildren: React.PropTypes.func,
     moves: React.PropTypes.arrayOf(React.PropTypes.object),
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
+    addNode: React.PropTypes.func.isRequired,
     user: React.PropTypes.object,
     loadRoot: React.PropTypes.func.isRequired,
     stats: React.PropTypes.shape({
@@ -73,15 +68,49 @@ export default class StorageGrid extends React.Component {
     return state && state.currentPage;
   }
 
+  loadRoot(id, museumId) {
+    this.props.clearStats();
+    this.props.loadRoot(id, museumId, {
+      onSuccess: (result) => {
+        if (!MusitNode.isRootNode(result.type)) {
+          this.props.loadStats(id, museumId);
+        }
+      }
+    });
+  }
+
   componentWillMount() {
     if (this.props.route.showObjects) {
       this.loadObjects();
       if (this.props.params.id && !this.props.rootNode.id) {
-        this.props.loadRoot(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
+        this.loadRoot(this.props.params.id, this.props.user.museumId);
       }
     } else {
       this.loadNodes();
     }
+  }
+
+  loadChildren(id, museumId, currentPage) {
+    this.props.loadChildren(id, museumId, currentPage);
+    this.props.clearRoot();
+    this.props.clearStats();
+    this.props.loadRoot(id, museumId, {
+      onSuccess: (result) => {
+        if (!MusitNode.isRootNode(result.type)) {
+          this.props.loadStats(id, museumId);
+        }
+      }
+    });
+  }
+
+  loadStorageObjects(id, museumId, collectionId, currentPage) {
+    this.props.loadObjects(id, museumId, collectionId, currentPage);
+  }
+
+  loadStorageUnits(museumId, currentPage) {
+    this.props.clearRoot();
+    this.props.loadRoot(null, museumId, currentPage);
+    this.props.clearStats();
   }
 
   componentWillReceiveProps(newProps) {
@@ -96,9 +125,9 @@ export default class StorageGrid extends React.Component {
       if (newProps.route.showObjects) {
         this.loadObjects(currentPage);
       } else if (nodeId) {
-        this.props.loadChildren(nodeId, museumId, currentPage);
+        this.loadChildren(nodeId, museumId, currentPage);
       } else {
-        this.props.loadStorageUnits(museumId, currentPage);
+        this.loadStorageUnits(museumId, currentPage);
       }
     }
   }
@@ -126,17 +155,15 @@ export default class StorageGrid extends React.Component {
 
   loadNodes() {
     if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
+      this.loadChildren(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
     } else {
-      this.props.loadStorageUnits(this.props.user.museumId, this.getCurrentPage());
+      this.loadStorageUnits(this.props.user.museumId, this.getCurrentPage());
     }
   }
 
-  loadObjects(
-    currentPage = this.getCurrentPage()
-  ) {
+  loadObjects(currentPage = this.getCurrentPage()) {
     if (this.props.params.id) {
-      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId, currentPage);
+      this.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId, currentPage);
     }
   }
 
@@ -154,7 +181,7 @@ export default class StorageGrid extends React.Component {
     museumId = this.props.user.museumId,
     nodeId = this.props.rootNode.id,
     moveNode = this.props.moveNode,
-    loadRoot = this.props.loadRoot,
+    loadRoot = this.loadRoot,
     loadNodes = this.loadNodes
   ) => (toNode, toName, onSuccess) => {
     const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
@@ -202,11 +229,11 @@ export default class StorageGrid extends React.Component {
     collectionId = this.props.user.collectionId,
     nodeId = this.props.rootNode.id,
     moveObject = this.props.moveObject,
-    loadRoot = this.props.loadRoot,
+    loadRoot = this.loadRoot,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
     const description = MusitObject.getObjectDescription(objectToMove);
-    moveObject(objectToMove, toNode.id, userId, museumId, collectionId, {
+    const callback = {
       onSuccess: () => {
         onSuccess();
         loadObjects();
@@ -223,7 +250,17 @@ export default class StorageGrid extends React.Component {
           message: I18n.t('musit.moveModal.messages.errorNode', { name: description.name, destination: toName })
         });
       }
-    });
+    };
+    if (objectToMove.isMainObject()) {
+      this.props.loadMainObject(objectToMove, museumId, collectionId, {
+        onSuccess: (children) => {
+          const objectIds = children.map(c => c.id);
+          this.props.moveObject(objectIds, toNode.id, userId, museumId, callback);
+        }
+      });
+    } else {
+      this.props.moveObject(objectToMove.id, toNode.id, userId, museumId, callback);
+    }
   };
 
   showObjectMoveHistory(
@@ -265,8 +302,6 @@ export default class StorageGrid extends React.Component {
     museumId = this.props.user.museumId,
     rootNode = this.props.rootNode,
     stats = this.props.stats,
-    onEdit = this.props.onEdit,
-    onDelete = this.props.onDelete,
     moveNode = this.showMoveNodeModal,
     confirm = this.context.showConfirm
   ) {
@@ -283,16 +318,39 @@ export default class StorageGrid extends React.Component {
             }
           }}
           stats={stats}
-          onClickProperties={(id) => onEdit({ id })}
+          onClickProperties={(id) => hashHistory.push(`/magasin/${id}/view`)}
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/events`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={moveNode}
-          onClickDelete={(id) => {
-            const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
-              name: rootNode.name
+          onClickDelete={() => {
+            confirm(I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', { name: rootNode.name }), () => {
+              this.props.deleteUnit(rootNode.id, museumId, {
+                onSuccess: () => {
+                  this.props.clearRoot();
+                  if (rootNode.isPartOf) {
+                    hashHistory.replace(`/magasin/${rootNode.isPartOf}`);
+                  } else {
+                    this.loadRoot(null, museumId);
+                    this.props.clearStats();
+                  }
+                  emitSuccess({
+                    type: 'deleteSuccess',
+                    message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name: rootNode.name})
+                  });
+                },
+                onFailure: (error) => {
+                  if (error.response.status === 400) {
+                    emitError({
+                      type: 'errorOnDelete',
+                      message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')
+                    });
+                  } else {
+                    emitError(error);
+                  }
+                }
+              });
             });
-            confirm(message, () => onDelete(id, museumId, rootNode));
           }}
         />
       </div>
@@ -300,12 +358,13 @@ export default class StorageGrid extends React.Component {
   }
 
   makeContentGrid(
+    museumId = this.props.user.museumId,
+    collectionId = this.props.user.collectionId,
     searchPattern = this.state.searchPattern,
     rootNode = this.props.rootNode,
     nodes = this.props.nodes,
     objects = this.props.objects,
     showObjects = this.props.route.showObjects,
-    onAction = this.props.onAction,
     moveNode = this.showMoveNodeModal,
     moveObject = this.showMoveObjectModal,
     showHistory = this.showObjectMoveHistory
@@ -316,16 +375,18 @@ export default class StorageGrid extends React.Component {
           <ObjectGrid
             tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
             showMoveHistory={showHistory}
-            onAction={(action, unit) =>
-              onAction(
-                action,
-                unit,
-                rootNode.breadcrumb,
-                this.props.user.museumId,
-                this.props.user.collectionId
-              )
-            }
-            onMove={moveObject}
+            onMoveObject={moveObject}
+            pickObject={(unit) => {
+              if (unit.isMainObject()) {
+                this.props.loadMainObject(unit, museumId, collectionId, {
+                  onSuccess: (children) => {
+                    children.forEach(child => this.props.addObject(child, rootNode.breadcrumb));
+                  }
+                });
+              } else {
+                this.props.addObject(unit, rootNode.breadcrumb);
+              }
+            }}
           />
           {this.props.totalObjects > 0 &&
             <PagingToolbar
@@ -349,19 +410,10 @@ export default class StorageGrid extends React.Component {
       <div>
         <NodeGrid
           tableData={filter(nodes, ['name'], searchPattern)}
-          onAction={(action, unit) =>
-            onAction(
-              action,
-              unit,
-              rootNode.breadcrumb,
-              this.props.user.museumId,
-              this.props.user.collectionId
-            )
-          }
-          onMove={moveNode}
-          onClick={(row) => {
-            hashHistory.push(`/magasin/${row.id}`);
-          }}
+          onShowEvents={unit => hashHistory.push(`/magasin/${unit.id}/events`)}
+          onPickNode={unit => this.props.addNode(unit, rootNode.breadcrumb)}
+          onMoveNode={moveNode}
+          onClick={(row) => hashHistory.push(`/magasin/${row.id}`)}
         />
         {this.props.totalNodes > 0 &&
           <PagingToolbar
