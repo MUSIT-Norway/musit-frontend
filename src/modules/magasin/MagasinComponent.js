@@ -60,6 +60,7 @@ export default class StorageGrid extends React.Component {
     this.onClickCrumb = this.onClickCrumb.bind(this);
     this.showMoveNodeModal = this.showMoveNodeModal.bind(this);
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
+    this.loadRoot = this.loadRoot.bind(this);
   }
 
   getCurrentPage(
