@@ -58,26 +58,17 @@ Array [
         Object {
           "collections": Array [
             Object {
-              "name": "All",
-              "uuid": "00000000-0000-0000-0000-000000000000"
-            }
-          ],
-          "id": 99,
-          "museumId": 99,
-          "museumName": "Test museum",
-          "shortName": "Test museum"
-        },
-        Object {
-          "collections": Array [
+              "name": "Ark 1",
+              "uuid": "1345"
+            },
             Object {
-              "name": "All",
-              "uuid": "00000000-0000-0000-0000-000000000000"
+              "name": "Ark 2",
+              "uuid": "2345"
             }
           ],
-          "id": 3,
-          "museumId": 3,
-          "museumName": "KHM",
-          "shortName": "KHM"
+          "museumId": 10000,
+          "museumName": "All",
+          "name": "God Access"
         }
       ],
       "id": 1
