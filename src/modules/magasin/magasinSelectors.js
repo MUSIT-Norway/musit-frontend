@@ -4,18 +4,6 @@ import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 
-/**
- * A private helper method for retrieving:
- *
- * 1. The data as array
- * or
- * 2. The matches array on the data object
- *
- * TODO NB! this method is copy pasted inside the events module
- *
- * @param state
- * @returns {Array}
- */
 const getGridData = (state) => {
   if (!state.data) {
     return [];
@@ -31,8 +19,6 @@ export const nodesSelector = createSelector(
   ])
 );
 
-export const totalNodesSelector = (state) => state.nodeReducer.data && state.nodeReducer.data.totalMatches;
-
 export const objectsSelector = createSelector(
   [state => getGridData(state.objectReducer)],
   (storageObjectGrid) => orderBy(storageObjectGrid, [
@@ -42,17 +28,15 @@ export const objectsSelector = createSelector(
   ])
 );
 
-export const totalObjectsSelector = (state) => state.objectReducer.data && state.objectReducer.data.totalMatches;
-
-export const statsSelector = (state) => state.statsReducer;
-
 export const rootNodeSelector = (state) => state.nodeReducer.root.data;
 
 export default createStructuredSelector({
-  stats: statsSelector,
+  stats: (state) => state.statsReducer,
   nodes: nodesSelector,
-  totalNodes: totalNodesSelector,
+  totalNodes: (state) => state.nodeReducer.data && state.nodeReducer.data.totalMatches,
+  loadingNodes: (state) => state.nodeReducer.loading,
   objects: objectsSelector,
-  totalObjects: totalObjectsSelector,
+  totalObjects: (state) => state.objectReducer.data && state.objectReducer.data.totalMatches,
+  loadingObjects: (state) => state.objectReducer.loading,
   rootNode: rootNodeSelector
 });

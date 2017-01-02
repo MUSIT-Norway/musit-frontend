@@ -23,6 +23,8 @@ import MoveHistory from '../moveHistory/index';
 
 import Config from '../../config';
 
+import Loader from 'react-loader';
+
 export default class StorageGrid extends React.Component {
   static propTypes = {
     nodes: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -311,7 +313,7 @@ export default class StorageGrid extends React.Component {
   ) {
     if (showObjects) {
       return (
-        <div>
+        <Loader loaded={!this.props.loadingObjects}>
           <ObjectGrid
             tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
             showMoveHistory={showHistory}
@@ -341,11 +343,11 @@ export default class StorageGrid extends React.Component {
               }}
             />
           }
-        </div>
+        </Loader>
       );
     }
     return (
-      <div>
+      <Loader loaded={!this.props.loadingNodes}>
         <NodeGrid
           tableData={filter(nodes, ['name'], searchPattern)}
           onAction={(action, unit) =>
@@ -377,7 +379,7 @@ export default class StorageGrid extends React.Component {
             }}
           />
         }
-      </div>
+      </Loader>
     );
   }
 
