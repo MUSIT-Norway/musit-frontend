@@ -24,6 +24,8 @@ import Modal from '../modal/MusitModal';
 import SubmitButton from '../buttons/submit';
 import CancelButton from '../buttons/cancel';
 import { I18n } from 'react-i18nify';
+import Config from '../../config';
+import PagingToolbar from '../../util/paging';
 
 export default class MusitModal extends Component {
 
@@ -34,12 +36,20 @@ export default class MusitModal extends Component {
     loadRootChildren: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
     children: PropTypes.arrayOf(PropTypes.object),
+    totalNodes: PropTypes.number,
     selectedNode: PropTypes.object
-  }
+  };
 
   static contextTypes = {
     closeModal: PropTypes.func.isRequired
   };
+
+  constructor(props, context) {
+    super(props, context);
+    this.state = {
+      currentPage: 1
+    };
+  }
 
   componentDidMount() {
     this.loadHome();
@@ -76,11 +86,28 @@ export default class MusitModal extends Component {
       </div>;
 
     if (children.length > 0) {
-      body =
-        <ModalNodeGrid
-          tableData={children}
-          onClick={(n) => this.loadNode(n.id)}
-        />;
+      body = (
+        <div>
+          <ModalNodeGrid
+            tableData={children}
+            onClick={(n) => this.loadNode(n.id)}
+          />
+          {this.props.totalNodes &&
+          <PagingToolbar
+            numItems={this.props.totalNodes}
+            currentPage={this.state.currentPage}
+            perPage={Config.magasin.limit}
+            onClick={(currentPage) => {
+              this.setState({
+                ...this.state,
+                currentPage
+              });
+              this.loadNode(selectedNode && selectedNode.id);
+            }}
+          />
+          }
+        </div>
+      );
     }
 
     const footer =
