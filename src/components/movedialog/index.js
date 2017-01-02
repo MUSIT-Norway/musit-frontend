@@ -46,14 +46,7 @@ const mapStateToProps = (state) => ({
   selectedNode: state.storageUnitModal.root.data
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clear: () => dispatch(clear()),
-    loadNode: (id, museumId) => dispatch(loadNode(id, museumId)),
-    loadRootChildren: (museumId) => dispatch(loadChildren(null, museumId)),
-    loadChildren: (id, museumId) => dispatch(loadChildren(id, museumId))
-  };
-};
+const mapDispatchToProps = { clear, loadNode, loadChildren };
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl);

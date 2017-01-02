@@ -24,8 +24,9 @@ import Modal from '../modal/MusitModal';
 import SubmitButton from '../buttons/submit';
 import CancelButton from '../buttons/cancel';
 import { I18n } from 'react-i18nify';
-import Config from '../../config';
 import PagingToolbar from '../../util/paging';
+
+const PER_PAGE = 10;
 
 export default class MusitModal extends Component {
 
@@ -33,7 +34,6 @@ export default class MusitModal extends Component {
     onMove: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
     loadChildren: PropTypes.func.isRequired,
-    loadRootChildren: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
     children: PropTypes.arrayOf(PropTypes.object),
     totalNodes: PropTypes.number,
@@ -57,12 +57,12 @@ export default class MusitModal extends Component {
 
   loadHome() {
     this.props.clear();
-    this.props.loadRootChildren(this.props.user.museumId);
+    this.props.loadChildren(null, this.props.user.museumId);
   }
 
-  loadNode(id) {
+  loadNode(id, currentPage = 1) {
     this.props.loadNode(id, this.props.user.museumId);
-    this.props.loadChildren(id, this.props.user.museumId);
+    this.props.loadChildren(id, this.props.user.museumId, currentPage, PER_PAGE);
   }
 
   render() {
@@ -96,13 +96,13 @@ export default class MusitModal extends Component {
           <PagingToolbar
             numItems={this.props.totalNodes}
             currentPage={this.state.currentPage}
-            perPage={Config.magasin.limit}
+            perPage={PER_PAGE}
             onClick={(currentPage) => {
               this.setState({
                 ...this.state,
                 currentPage
               });
-              this.loadNode(selectedNode && selectedNode.id);
+              this.loadNode(selectedNode && selectedNode.id, currentPage);
             }}
           />
           }
@@ -135,7 +135,7 @@ export default class MusitModal extends Component {
 
     return (
       <Modal
-        style={{ minWidth: 700}}
+        style={{ minWidth: 700 }}
         header={header}
         body={body}
         footer={footer}

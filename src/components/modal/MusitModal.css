@@ -16,7 +16,6 @@
 .musit-modal-body {
     flex: 1 0 auto;
     min-height: 250px;
-    max-height: 300px;
     overflow-y: auto;
 }
 
