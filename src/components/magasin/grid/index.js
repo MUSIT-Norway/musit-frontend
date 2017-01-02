@@ -32,7 +32,6 @@ export default class StorageUnitsContainer extends React.Component {
     loadStorageUnits: React.PropTypes.func.isRequired,
     loadStorageObjects: React.PropTypes.func.isRequired,
     onDelete: React.PropTypes.func.isRequired,
-    onEdit: React.PropTypes.func.isRequired,
     onAction: React.PropTypes.func.isRequired,
     props: React.PropTypes.object,
     params: React.PropTypes.object,
@@ -268,7 +267,6 @@ export default class StorageUnitsContainer extends React.Component {
     museumId = this.props.user.museumId,
     rootNode = this.props.rootNode,
     stats = this.props.stats,
-    onEdit = this.props.onEdit,
     onDelete = this.props.onDelete,
     moveNode = this.showMoveNodeModal,
     confirm = this.context.showConfirm
@@ -286,7 +284,7 @@ export default class StorageUnitsContainer extends React.Component {
             }
           }}
           stats={stats}
-          onClickProperties={(id) => onEdit({ id })}
+          onClickProperties={(id) => hashHistory.push(`/magasin/${id}/view`)}
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}

@@ -57,20 +57,16 @@ export default class NodeLeftMenuComponent extends Component {
     };
 
     const showCount = (type) => {
-      let fragment = null;
-      if (rootNode) {
-        const count = this.props.stats[type];
-        fragment = 
-          <div style={{ border: 'none', textAlign: 'center' }}>
-            {I18n.t(`musit.leftMenu.node.${type}`)}
-            <br />
-            <ControlLabel id={`${rootNode.id}_${type}`}>
-              {Number.isNaN(count) ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : count}
-            </ControlLabel>
-          </div>;
-        
-      }
-      return fragment;
+      const count = this.props.stats && this.props.stats[type];
+      return (
+        <div style={{ border: 'none', textAlign: 'center' }}>
+          {I18n.t(`musit.leftMenu.node.${type}`)}
+          <br />
+          <ControlLabel>
+            {count === null ? <FontAwesome style={{ fontSize: '1.5em' }} name="spinner" /> : count}
+          </ControlLabel>
+        </div>
+      );
     };
 
     const newButton = (identity) => {
@@ -87,14 +83,13 @@ export default class NodeLeftMenuComponent extends Component {
         </div>
       );
     };
-    const showStats = this.props.stats;
     return (
       <div>
         {rootNode && newButton(rootNode.id)}
-        {showStats && <hr />}
-        {showStats && showCount('numNodes')}
-        {showStats && showCount('numObjects')}
-        {showStats && showCount('totalObjects')}
+        {showButtons && <hr />}
+        {showButtons && showCount('numNodes')}
+        {showButtons && showCount('numObjects')}
+        {showButtons && showCount('totalObjects')}
         {showButtons && <hr />}
         {showButtons && buttonLink('properties', 'cog', onClickProperties)}
         {showButtons && buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true)}
