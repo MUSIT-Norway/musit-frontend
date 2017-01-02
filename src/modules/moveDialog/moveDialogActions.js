@@ -36,10 +36,10 @@ export const loadNode = (id, museumId) => {
   };
 };
 
-export const loadChildren = (id, museumId, currentPage, callback) => {
+export const loadChildren = (id, museumId, currentPage, perPage, callback) => {
   let url;
   if (id) {
-    url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}/children?page=${currentPage || 1}&limit=${Config.magasin.limit}`);
+    url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}/children?limit=${perPage}&page=${currentPage}`);
   } else {
     url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/root`);
   }

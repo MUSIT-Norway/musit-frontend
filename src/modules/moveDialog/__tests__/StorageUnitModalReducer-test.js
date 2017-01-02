@@ -214,13 +214,13 @@ describe('StorageUnitModalReducer', () => {
 
   it('creates LOAD_CHILDREN_SUCCESS child when fetching data has been done', () => {
     const id = 2;
-    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}/children?page=1&limit=${Config.magasin.limit}`;
+    const url = `${Config.magasin.urls.storagefacility.baseUrl(new MuseumId(99))}/${id}/children?limit=10&page=1`;
     nock('http://localhost')
         .get(url)
         .reply(200, loadSeveralChildState);
     const store = mockStore();
 
-    return store.dispatch(actions.loadChildren(id, new MuseumId(99)))
+    return store.dispatch(actions.loadChildren(id, new MuseumId(99), 1, 10))
         .then(() => {
           expect(store.getActions()).toMatchSnapshot();
         });
