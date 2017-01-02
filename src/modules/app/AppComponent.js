@@ -100,8 +100,7 @@ export default class App extends Component {
             <Nav pullRight>
               {user &&
               <MusitUserAccount
-                user={this.props.user.actor}
-                groups={this.props.user.groups}
+                user={this.props.user}
                 selectedMuseumId={this.props.user.museumId.id}
                 selectedCollectionId={this.props.user.collectionId.uuid}
                 handleLogout={this.handleLogout}
@@ -139,7 +138,7 @@ export default class App extends Component {
         </div>
 
         <footer className="footer well version">
-          {this.props.buildinfo && ('Build number: ' + this.props.buildinfo.buildInfoBuildNumber)}
+          {this.props.buildinfo && ('Build number: ' + this.props.buildinfo.buildInfoB)}
         </footer>
       </div>
     );

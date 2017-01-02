@@ -36,8 +36,9 @@ export default class MusitModal extends Component {
     loadRootChildren: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
     children: PropTypes.arrayOf(PropTypes.object),
+    totalNodes: PropTypes.number,
     selectedNode: PropTypes.object
-  }
+  };
 
   static contextTypes = {
     closeModal: PropTypes.func.isRequired
@@ -48,15 +49,10 @@ export default class MusitModal extends Component {
     this.state = {
       currentPage: 1
     };
-    this.clearDialog = this.clearDialog.bind(this);
   }
 
   componentDidMount() {
     this.loadHome();
-  }
-
-  clearDialog() {
-    this.props.clear();
   }
 
   loadHome() {

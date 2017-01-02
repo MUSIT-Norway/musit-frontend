@@ -3,23 +3,13 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import flatten from 'lodash/flatten';
 import uniqBy from 'lodash/uniqBy';
+import find from 'lodash/find';
 
 export default class MusitUserAccount extends Component {
   static propTypes = {
     user: React.PropTypes.object,
     selectedMuseumId: React.PropTypes.number,
     selectedCollectionId: React.PropTypes.string,
-    groups: React.PropTypes.arrayOf(React.PropTypes.shape({
-      id: React.PropTypes.string,
-      name: React.PropTypes.string,
-      shortName: React.PropTypes.string,
-      permission: React.PropTypes.number,
-      museumId: React.PropTypes.number,
-      collections: React.PropTypes.arrayOf(React.PropTypes.shape({
-        uuid: React.PropTypes.string
-      })),
-      description: React.PropTypes.string
-    })),
     handleLogout: React.PropTypes.func,
     handleLanguage: React.PropTypes.func,
     handleMuseumId: React.PropTypes.func,
@@ -31,10 +21,23 @@ export default class MusitUserAccount extends Component {
     return uniqBy(flatten(groups.filter(g => g.museumId === mid).map(g => g.collections)), c => c.uuid);
   }
 
+  adminLink() {
+    const { user } = this.props;
+
+    return (
+      <MenuItem onSelect={() => document.getElementById('userGroupAdmin').submit()}>
+        <form id={'userGroupAdmin'} method={'POST'} encType={'application/x-www-form-urlencoded'} action={'/service_auth/web'}>
+          <input hidden="hidden" name="_at" readOnly="readOnly" value={user.accessToken} />
+        </form>
+        <i className="fa fa-cogs"/> Admin
+      </MenuItem>
+    );
+  }
+
   render() {
     const currentLanguage = localStorage.getItem('language');
     const checked = (language) => currentLanguage === language && <FontAwesome name="check" /> ;
-    const tooltip = 
+    const tooltip =
       <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.fn}</strong></Tooltip>;
     const menuText = (t1, t2) => (
       <Row>
@@ -43,12 +46,16 @@ export default class MusitUserAccount extends Component {
       </Row>
     );
     const nodeId = this.props.rootNode && this.props.rootNode.id;
-    const groups = this.props.groups;
+    const groups = this.props.user.groups;
     const museumId = this.props.selectedMuseumId;
     const collectionId = this.props.selectedCollectionId;
     const museumDropDown = groups.length > 1 && groups[0].museumName;
     const collectionDropdown = groups.length > 0 && groups[0].collections.length > 0;
     const collections = collectionDropdown && this.getCollections(museumId, groups);
+    const hasAdmin = !!find(groups, (g) => {
+      return g.permission >= 40;
+    });
+
     return (
       <OverlayTrigger overlay={tooltip} placement="left">
         <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
@@ -94,6 +101,8 @@ export default class MusitUserAccount extends Component {
             <MenuItem eventKey={6} onSelect={() => this.props.handleLanguage('en')}>
               {menuText(checked('en'),'EN')}
             </MenuItem>
+            {hasAdmin && <MenuItem divider/>}
+            {hasAdmin && this.adminLink()}
             <MenuItem divider />
             <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>
           </Dropdown.Menu>
