@@ -2,6 +2,7 @@ export default {
   isDev: process.env.NODE_ENV === 'development',
   isFake: false,
   useDevTools: process.env.DEV_TOOLS || false,
+  print: { labelConfig: { 4: 2 } },
   magasin: {
     limit: 25,
     urls: {

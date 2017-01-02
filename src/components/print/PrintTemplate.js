@@ -2,13 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import IFrame from '../../util/IFrame';
 import Template from '../../models/PrintTemplate';
 import './PrintTemplate.css';
+import Config from '../../config';
 
 class ChooseTemplate extends Component {
   static propTypes = {
     templates: PropTypes.arrayOf(PropTypes.instanceOf(Template)),
     loadTemplates: PropTypes.func.isRequired,
     selectTemplate: PropTypes.func.isRequired,
-    selectType: PropTypes.func.isRequired,
     clearDialog: PropTypes.func.isRequired,
     clearRendered: PropTypes.func.isRequired,
     marked: PropTypes.array,
@@ -26,7 +26,6 @@ class ChooseTemplate extends Component {
   constructor(props, context) {
     super(props, context);
     this.selectTemplate = this.selectTemplate.bind(this);
-    this.selectType = this.selectType.bind(this);
   }
 
   componentWillMount() {
@@ -34,23 +33,11 @@ class ChooseTemplate extends Component {
     this.props.loadTemplates();
   }
 
-  selectType(e) {
-    const typeId = e.target.value * 1;
-    if (typeId) {
-      this.props.selectType(typeId);
-      this.selectTemplate(null, this.props.selectedTemplate * 1, typeId);
-    }
-  }
-
-  selectTemplate(
-    e,
-    templateId = e.target.value * 1,
-    selectedType = this.props.selectedType
-  ) {
+  selectTemplate(e, templateId = e.target.value * 1) {
     this.props.clearRendered();
     if (templateId) {
       this.props.selectTemplate(templateId);
-      this.props.renderTemplate(templateId, selectedType, this.props.marked.map(ntp => ({
+      this.props.renderTemplate(templateId, Config.print.labelConfig[templateId] || 1, this.props.marked.map(ntp => ({
         uuid: ntp.nodeId,
         name: ntp.name
       })));
@@ -69,18 +56,6 @@ class ChooseTemplate extends Component {
             <option key={i} value={template.id}>{template.name}</option>
           )}
         </select>
-        {' '}
-        {this.props.rendered &&
-          <select
-            className="printTool"
-            onChange={this.selectType}
-            value={this.props.selectedType}
-          >
-            <option>Select type</option>
-            <option value={1}>QR Code</option>
-            <option value={2}>Data Matrix</option>
-          </select>
-        }
         {' '}
         {this.props.rendered &&
           <input
