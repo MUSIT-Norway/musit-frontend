@@ -126,9 +126,6 @@ const mapDispatchToProps = (dispatch, props) => {
         break;
       }
     },
-    onEdit: (unit) => {
-      hashHistory.push(`/magasin/${unit.id}/view`);
-    },
     onDelete: (id, museumId, currentNode) => {
       if (id === currentNode.id) {
         dispatch(deleteUnit(id, museumId, {
