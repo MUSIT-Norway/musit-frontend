@@ -48,15 +48,10 @@ export default class MusitModal extends Component {
     this.state = {
       currentPage: 1
     };
-    this.clearDialog = this.clearDialog.bind(this);
   }
 
   componentDidMount() {
     this.loadHome();
-  }
-
-  clearDialog() {
-    this.props.clear();
   }
 
   loadHome() {
