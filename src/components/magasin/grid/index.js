@@ -15,6 +15,7 @@ import { checkNodeBranchAndType } from '../../../util/nodeValidator';
 import MusitNode from '../../../models/node';
 import PagingToolbar from '../../../util/paging';
 import Config from '../../../config';
+import Loader from 'react-loader';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -314,7 +315,7 @@ export default class StorageUnitsContainer extends React.Component {
   ) {
     if (showObjects) {
       return (
-        <div>
+        <Loader loaded={!this.props.loadingObjects}>
           <ObjectGrid
             tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
             showMoveHistory={showHistory}
@@ -344,11 +345,11 @@ export default class StorageUnitsContainer extends React.Component {
               }}
             />
           }
-        </div>
+        </Loader>
       );
     }
     return (
-      <div>
+      <Loader loaded={!this.props.loadingNodes}>
         <NodeGrid
           tableData={filter(children, ['name'], searchPattern)}
           onAction={(action, unit) =>
@@ -380,7 +381,7 @@ export default class StorageUnitsContainer extends React.Component {
             }}
           />
         }
-      </div>
+      </Loader>
     );
   }
 
