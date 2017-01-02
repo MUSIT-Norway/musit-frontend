@@ -39,8 +39,10 @@ const mapStateToProps = (state) => ({
   stats: state.storageUnitStats.stats,
   children: getSortedStorageGridUnit(state),
   totalNodes: state.storageGridUnit.data && state.storageGridUnit.data.totalMatches,
+  loadingNodes: state.storageGridUnit.loading,
   objects: getSortedStorageObjectGrid(state),
   totalObjects: state.storageObjectGrid.data && state.storageObjectGrid.data.totalMatches,
+  loadingObjects: state.storageObjectGrid.loading,
   rootNode: state.storageGridUnit.root.data,
   routerState: state.routing
 });
