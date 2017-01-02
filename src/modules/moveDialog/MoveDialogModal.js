@@ -36,8 +36,9 @@ export default class MusitModal extends Component {
     loadRootChildren: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
     children: PropTypes.arrayOf(PropTypes.object),
+    totalNodes: PropTypes.number,
     selectedNode: PropTypes.object
-  }
+  };
 
   static contextTypes = {
     closeModal: PropTypes.func.isRequired
