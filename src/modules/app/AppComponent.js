@@ -138,7 +138,7 @@ export default class App extends Component {
         </div>
 
         <footer className="footer well version">
-          {this.props.buildinfo && ('Build number: ' + this.props.buildinfo.buildInfoB)}
+          {this.props.buildinfo && ('Build number: ' + this.props.buildinfo.buildInfoBuildNumber)}
         </footer>
       </div>
     );
