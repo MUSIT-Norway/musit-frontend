@@ -92,7 +92,7 @@ export default class MusitModal extends Component {
             tableData={children}
             onClick={(n) => this.loadNode(n.id)}
           />
-          {this.props.totalNodes &&
+          {this.props.totalNodes && this.props.totalNodes > PER_PAGE &&
           <PagingToolbar
             numItems={this.props.totalNodes}
             currentPage={this.state.currentPage}
