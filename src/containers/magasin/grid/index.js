@@ -119,11 +119,8 @@ const mapDispatchToProps = (dispatch, props) => {
           dispatch(addObject(unit, path));
         }
         break;
-      case 'observation':
-        history.push(`/magasin/${unit.id}/observations`);
-        break;
-      case 'control':
-        history.push(`/magasin/${unit.id}/controls`);
+      case 'controlsobservations':
+        history.push(`/magasin/${unit.id}/controlsobservations`);
         break;
       default:
         break;
