@@ -63,7 +63,7 @@ export default class MusitUserAccount extends Component {
           <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed' }}>
             <FontAwesome name="user" size="lg" />
           </Dropdown.Toggle>
-          <Dropdown.Menu>
+          <Dropdown.Menu style={{ width: 200 }}>
             <MenuItem />
             {museumDropDown &&
               <MenuItem eventKey={3} header>Museum</MenuItem>
