@@ -25,17 +25,24 @@ import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 import {customSortingStorageNodeType} from '../../util/';
 
-const getStorageGridUnit = (state) => state.storageUnitModal.data || [];
+const getGridData = (state) => {
+  if (!state.data) {
+    return [];
+  }
+  return state.data.length ? state.data : state.data.matches || [];
+};
 
 const getSortedStorageGridUnit = createSelector(
-  [ getStorageGridUnit ],
+  [ state => getGridData(state.storageUnitModal) ],
   (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type), (o) => toLower(o.name)])
 );
 
+const totalNodesSelector = (state) => state.storageUnitModal.data && state.storageUnitModal.data.totalMatches;
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   children: getSortedStorageGridUnit(state),
+  totalNodes: totalNodesSelector(state),
   selectedNode: state.storageUnitModal.root.data
 });
 
