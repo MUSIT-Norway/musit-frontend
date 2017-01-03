@@ -104,7 +104,9 @@
             "StorageUnit": "Storage unit",
             "Room": "Room",
             "Building": "Building",
-            "Organisation": "Organisation"
+            "Organisation": "Organisation",
+            "Root" : "Root",
+            "RootLoan": "Root"
           },
           "objectCount": "No. of obj.",
           "totalObjectCount": "Tot. no. of obj.",
@@ -702,7 +704,9 @@
             "StorageUnit": "Lagringsenhet",
             "Room": "Rom",
             "Building": "Bygg",
-            "Organisation": "Organisasjon"
+            "Organisation": "Organisasjon",
+            "Root": "Rotnode",
+            "RootLoan": "Rotnode"
           },
           "objectCount": "Ant. obj.",
           "totalObjectCount": "Tot. ant. obj.",
