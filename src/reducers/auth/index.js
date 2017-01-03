@@ -4,6 +4,7 @@ import Actor from '../../models/actor';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
 import { getState } from '../../reducers/public';
+import { I18n } from 'react-i18nify';
 
 const ID = 'auth';
 
@@ -108,6 +109,9 @@ export const loadActor = (callback) => {
            client.get(apiUrl(Config.magasin.urls.auth.museumsUrl))
          ]).then(values => {
            const groups = values[0];
+           if (!groups) {
+             return reject(new Error(I18n.t('musit.errorMainMessages.noGroups')));
+           }
            const museums = values[1];
            const isGod = !!groups.find(group => GOD_ACCESS === group.permission);
            if (isGod) {

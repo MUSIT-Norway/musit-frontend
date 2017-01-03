@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 import WelcomeContainer from '../../components/welcome-view';
 import { setUser, loadActor } from '../../reducers/auth';
 import { I18n } from 'react-i18nify';
+import { emitError } from '../../errors/emitter';
 
 const mapStateToProps = (state) => ({
   user: state.auth.user.actor,
@@ -32,7 +33,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (user: any) => {
       dispatch(setUser(user));
-      dispatch(loadActor());
+      dispatch(loadActor({
+        onFailure: (e) => emitError(e)
+      }));
     }
   };
 };
