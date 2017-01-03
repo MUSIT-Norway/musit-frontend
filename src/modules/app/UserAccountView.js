@@ -38,7 +38,7 @@ export default class MusitUserAccount extends Component {
     const currentLanguage = localStorage.getItem('language');
     const checked = (language) => currentLanguage === language && <FontAwesome name="check" /> ;
     const tooltip =
-      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.fn}</strong></Tooltip>;
+      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.actor.fn}</strong></Tooltip>;
     const menuText = (t1, t2) => (
       <Row>
         <Col md={1}>{t1}</Col>
