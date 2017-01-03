@@ -7,7 +7,7 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from './render';
-import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util';
+import { containsObjectWithField, parseUTCDate, DATE_FORMAT_DISPLAY } from '../../util';
 import FontAwesome from 'react-fontawesome';
 import { hashHistory } from 'react-router';
 import SaveCancel from '../formfields/saveCancel/SaveCancel';
@@ -319,7 +319,7 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ?
                   <FormControl
                     componentClass="input"
-                    value={parseISODate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
+                    value={parseUTCDate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                  :
@@ -361,7 +361,7 @@ export default class ObservationPage extends React.Component {
                   <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
                     componentClass="input"
-                    value={parseISODate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
+                    value={parseUTCDate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                 </Col>
