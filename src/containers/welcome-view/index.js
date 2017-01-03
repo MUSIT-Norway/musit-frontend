@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch) => {
     setUser: (user: any) => {
       dispatch(setUser(user));
       dispatch(loadActor({
-        onFailure: (e) => emitError({...e, type: 'network'})
+        onFailure: (e) => emitError(e)
       }));
     }
   };

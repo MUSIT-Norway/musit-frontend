@@ -23,7 +23,9 @@ class Authenticated extends React.Component {
   componentWillMount() {
     this.props.loadUser({
       onFailure: (e) => {
-        emitError({...e, type: 'network'});
+        if (e) {
+          emitError(e);
+        }
         this.setState({ needToLogin: true });
       }
     });
