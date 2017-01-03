@@ -18,6 +18,7 @@ export default class NodeGrid extends Component {
       nodeCount: PropTypes.number
     })),
     onAction: PropTypes.func.isRequired,
+    onEvents: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired
   }
@@ -77,7 +78,7 @@ export default class NodeGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
-                          this.props.onAction('controlsobservations', c);
+                          this.props.onEvents(c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.observationAndControl')}
                       >

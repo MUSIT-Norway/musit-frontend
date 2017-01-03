@@ -360,9 +360,8 @@ export default class StorageGrid extends React.Component {
             )
           }
           onMove={moveNode}
-          onClick={(row) => {
-            hashHistory.push(`/magasin/${row.id}`);
-          }}
+          onEvents={(row) => hashHistory.push(`/magasin/${row.id}/events`)}
+          onClick={(row) => hashHistory.push(`/magasin/${row.id}`)}
         />
         {this.props.totalNodes > 0 &&
           <PagingToolbar
