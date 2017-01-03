@@ -17,7 +17,7 @@ import ActorSuggest from '../../components/ActorSuggest';
 
 import * as validation from './observationValidation';
 
-import { containsObjectWithField, parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util';
+import { containsObjectWithField, parseUTCDate, DATE_FORMAT_DISPLAY } from '../../util';
 import { emitError } from '../../util/errors/emitter';
 import DatePicker from '../../util/datePicker';
 import { isDateBiggerThanToday } from '../../util';
@@ -323,7 +323,7 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ?
                   <FormControl
                     componentClass="input"
-                    value={parseISODate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
+                    value={parseUTCDate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                  :
@@ -365,7 +365,7 @@ export default class ObservationPage extends React.Component {
                   <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
                     componentClass="input"
-                    value={parseISODate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
+                    value={parseUTCDate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                 </Col>

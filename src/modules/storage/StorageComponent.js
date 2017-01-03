@@ -21,6 +21,7 @@ import React, { Component, PropTypes } from 'react';
 import { hashHistory } from 'react-router';
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap';
 import Loader from 'react-loader';
+
 import { I18n } from 'react-i18nify';
 
 import Layout from '../../layout';
@@ -32,7 +33,7 @@ import AddressSuggest from '../../components/AddressSuggest';
 
 import validateForm from './storageValidator';
 
-import { parseISODateNonStrict } from '../../util';
+import { parseUTCDate } from '../../util';
 
 export default class Shared extends Component {
   static propTypes = {
@@ -186,7 +187,7 @@ export default class Shared extends Component {
   }
 
   renderLastChangeData(unit) {
-    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format('DD.MM.YYYY');
+    const lastUpdateDate = parseUTCDate(unit.updatedDate).format('DD.MM.YYYY');
     const lastUpdateBy = unit.updatedByName;
     return (
       <span>

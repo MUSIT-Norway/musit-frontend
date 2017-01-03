@@ -14,25 +14,25 @@ describe('ObservationControlGrid', () => {
           {
             id: 1,
             eventType: 'control',
-            doneDate: '1983.01.01',
+            doneDate: '2017-01-01T09:42:52+00:00',
             'subEvents-parts': [
               { eventType: 'ControlAlcohole', ok: true },
               { eventType: 'ControlPest', ok: true }
             ],
             doneBy: 'Blablabla...',
-            registeredDate: '1983.01.04',
+            registeredDate: '2017-01-04T09:42:57+00:00',
             registeredBy: 'Blabla...'
           },
           {
             id: 2,
             eventType: 'observation',
-            doneDate: '1984.01.01',
+            doneDate: '2017-01-03T09:42:52+00:00',
             'subEvents-parts': [
               { eventType: 'ObservationTemperature' },
               { eventType: 'ObservationLightingConditions' }
             ],
             doneBy: 'Blablabla...',
-            registeredDate: '1984.01.04',
+            registeredDate: '2017-01-08T09:42:57+00:00',
             registeredBy: 'Blabla...'
           }
         ]}
@@ -43,18 +43,18 @@ describe('ObservationControlGrid', () => {
 
   it('Check the 1st row Date value', () => {
     setup();
-    assert(inputComponent[1].innerHTML === '01.01.1983');
+    assert(inputComponent[1].innerHTML === '01.01.2017');
   });
   it('Check the 1st row registered date value', () => {
     setup();
-    assert(inputComponent[4].innerHTML === '04.01.1983');
+    assert(inputComponent[4].innerHTML === '04.01.2017');
   });
   it('Check the 2nd row Date value', () => {
     setup();
-    assert(inputComponent[7].innerHTML === '01.01.1984');
+    assert(inputComponent[7].innerHTML === '03.01.2017');
   });
   it('Check the 2nd row registered date value', () => {
     setup();
-    assert(inputComponent[10].innerHTML === '04.01.1984');
+    assert(inputComponent[10].innerHTML === '08.01.2017');
   });
 });
