@@ -102,14 +102,15 @@ const handleError = (event) => {
   case 'errorOnMove':
     const customMessage = event.message;
     const r = error.response;
-    const rB = r.body && r.body.message;
-    const m = rB || getErrorMessage(r.status);
+    const rMsg = r && r.body && r.body.message;
+    const rStatus = r && r.status && getErrorMessage(r.status);
+    const serverMessage = rMsg || rStatus || '';
     notificationSystem.addNotification({
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
-      children: children(`${customMessage}. ${m}`)
+      children: children(`${customMessage}. ${serverMessage}`)
     });
     break;
   case 'errorOnSave':
