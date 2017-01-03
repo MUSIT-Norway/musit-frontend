@@ -25,7 +25,7 @@ import Layout from '../../../layout';
 import Breadcrumb from '../../../layout/Breadcrumb';
 import AddressSuggest from '../../../components/address';
 import Loader from 'react-loader';
-import { parseISODateNonStrict } from '../../../util';
+import { parseUTCDate } from '../../../util';
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../../components/formfields';
 import validateForm from './validator';
 import { I18n } from 'react-i18nify';
@@ -183,7 +183,7 @@ export default class StorageUnitContainer extends Component {
   }
 
   renderLastChangeData(unit) {
-    const lastUpdateDate = parseISODateNonStrict(unit.updatedDate).format('DD.MM.YYYY');
+    const lastUpdateDate = parseUTCDate(unit.updatedDate).format('DD.MM.YYYY');
     const lastUpdateBy = unit.updatedByName;
     return (
       <span>

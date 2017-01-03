@@ -35,15 +35,9 @@ export const blur = () => {
 export const containsObjectWithField = (arr: any[], field: string, value: string): boolean => arr.filter((e) => e[field] === value).length > 0;
 
 export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY';
-export const DATE_FORMAT_ISO_SHORT = 'YYYY-MM-DD';
-export const DATE_FORMAT_ISO_FULL = 'YYYY-MM-DDTHH:mm:ss.SSSZZ';
 
-export const parseISODateNonStrict = (dateStr: string) => {
-  return moment(dateStr, [DATE_FORMAT_ISO_FULL]);
-};
-
-export const parseISODateStrict = (dateStr: string) => {
-  return moment(dateStr, [DATE_FORMAT_ISO_SHORT], true);
+export const parseUTCDate = (dateStr: string) => {
+  return moment.utc(dateStr);
 };
 
 export const parseFloatFromString = (value: string): number => {

@@ -23,7 +23,7 @@ import ControlView from './ControlView';
 import { MusitField } from '../../../components/formfields';
 import Layout from '../../../layout';
 import Breadcrumb from '../../../layout/Breadcrumb';
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../../util';
+import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../../util';
 import { I18n } from 'react-i18nify';
 
 export default class ControlViewContainer extends React.Component {
@@ -46,7 +46,7 @@ export default class ControlViewContainer extends React.Component {
   }
 
   getDate(data, field) {
-    return data && data[field] ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
+    return data && data[field] ? parseUTCDate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
   }
 
   render() {
