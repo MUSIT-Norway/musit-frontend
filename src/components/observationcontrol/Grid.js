@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
 import { hashHistory } from 'react-router';
-import { parseISODateNonStrict as parseISODate, DATE_FORMAT_DISPLAY } from '../../util';
+import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../util';
 import { I18n } from 'react-i18nify';
 import reduce from 'lodash/reduce';
 import keys from 'lodash/keys';
@@ -124,7 +124,7 @@ export default class ObservationControlGrid extends Component {
                           <div className="icon icon-musitobservationicon" title={I18n.t('musit.grid.observation.iconTooltip.observation')}/> : ''}
                     </td>
                     <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_date`}>
-                      {parseISODate(controlOrObservation.doneDate).format(DATE_FORMAT_DISPLAY)}
+                      {parseUTCDate(controlOrObservation.doneDate).format(DATE_FORMAT_DISPLAY)}
                     </td>
                     <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_types`}>
                       {icons}
@@ -133,7 +133,7 @@ export default class ObservationControlGrid extends Component {
                       {controlOrObservation.doneBy}
                     </td>
                     <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_registeredDate`}>
-                      {parseISODate(controlOrObservation.registeredDate).format(DATE_FORMAT_DISPLAY)}
+                      {parseUTCDate(controlOrObservation.registeredDate).format(DATE_FORMAT_DISPLAY)}
                     </td>
                     <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_registeredBy`}>
                       {controlOrObservation.registeredBy}

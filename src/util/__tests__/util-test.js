@@ -1,31 +1,17 @@
 import assert from 'assert';
-import { isDateBiggerThanToday, parseISODateNonStrict, parseISODateStrict, customSortingStorageNodeType } from '../';
+import { isDateBiggerThanToday, parseUTCDate, customSortingStorageNodeType } from '../';
 import moment from 'moment';
 
-describe('parseISODateNonStrict', () => {
+describe('parseUTCDate', () => {
   it('should accept full iso timestamp', () => {
     const date = '2016-09-07T22:56:00.000Z';
-    const parsed = parseISODateNonStrict(date);
+    const parsed = parseUTCDate(date);
     expect(parsed).toMatchSnapshot();
   });
 
   it('should accept standard simple ISO date format', () => {
     const date = '2016-12-23';
-    const parsed = parseISODateNonStrict(date);
-    assert(parsed.isValid() === true);
-  });
-});
-
-describe('parseISODateStrict', () => {
-  it('should reject full iso timestamp', () => {
-    const date = '2016-09-07T22:56:00+00:00';
-    const parsed = parseISODateStrict(date);
-    assert(parsed.isValid() === false);
-  });
-
-  it('should accept standard simple ISO date format', () => {
-    const date = '2016-09-07';
-    const parsed = parseISODateStrict(date);
+    const parsed = parseUTCDate(date);
     assert(parsed.isValid() === true);
   });
 });
