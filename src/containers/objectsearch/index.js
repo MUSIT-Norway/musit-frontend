@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => {
     onChangeField: (field, value) => dispatch(actions.onChangeField(field, value)),
     pickObject: (object, path, museumId, collectionId) => {
       if (object.mainObjectId) {
-        dispatch(loadMainObject(object, path, museumId, collectionId, {
+        dispatch(loadMainObject(object, museumId, collectionId, {
           onSuccess: (children) => {
             children.forEach(child => dispatch(addObject(child, path)));
           }
