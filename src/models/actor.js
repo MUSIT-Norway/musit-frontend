@@ -14,8 +14,8 @@ class Actor {
    */
   static getActorNames(actorsJson, doneById, registeredById) {
     const actors = [].concat(actorsJson).map(actor => new Actor(actor));
-    const doneBy = find(actors, (a) => a.getActorId() === doneById);
-    const registeredBy = find(actors, (a) => a.getActorId() === registeredById);
+    const doneBy = find(actors, (a) => a.hasActorId(doneById));
+    const registeredBy = find(actors, (a) => a.hasActorId(registeredById));
     return { doneBy: doneBy && doneBy.fn, registeredBy: registeredBy && registeredBy.fn };
   }
 
@@ -36,6 +36,13 @@ class Actor {
    */
   getActorId() {
     return this.dataportenId || this.applicationId;
+  }
+
+  hasActorId(actorId) {
+    const isDataportenId = this.dataportenId && this.dataportenId === actorId;
+    const isApplicationId = this.applicationId === actorId;
+
+    return isDataportenId || isApplicationId;
   }
 }
 

@@ -9,7 +9,8 @@ Array [
         "doneBy": "Test user",
         "doneDate": "1990-11-11",
         "eventType": "Observation",
-        "registeredBy": undefined,
+        "registeredBy": "Test user",
+        "registeredDate": "1990-11-11",
         "subEvents-parts": Array [
           Object {
             "eventType": "ObservationLightingCondition",
@@ -43,7 +44,8 @@ Array [
         "doneBy": "Test user",
         "doneDate": "1981-12-01",
         "eventType": "Control",
-        "registeredBy": undefined,
+        "registeredBy": "Test user",
+        "registeredDate": "1981-12-01",
         "subEvents-parts": Array [
           Object {
             "OK": true,
@@ -71,7 +73,8 @@ Array [
         "doneBy": "Test user",
         "doneDate": "1994-02-21",
         "eventType": "Observation",
-        "registeredBy": undefined,
+        "registeredBy": "Test user",
+        "registeredDate": "1994-02-21",
         "subEvents-parts": Array [
           Object {
             "eventType": "ObservationMold",
@@ -104,7 +107,8 @@ Array [
         "doneBy": "Test user",
         "doneDate": "1891-12-01",
         "eventType": "Control",
-        "registeredBy": undefined,
+        "registeredBy": "Test user",
+        "registeredDate": "1891-12-01",
         "subEvents-parts": Array [
           Object {
             "OK": true,
