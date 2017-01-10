@@ -12,6 +12,8 @@ const initialState = {
   data: [
     {
       eventType: 'Observation',
+      registeredBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
+      registeredDate: '1990-11-11',
       doneDate: '1990-11-11',
       doneBy: '2',
       'subEvents-parts': [
@@ -36,6 +38,8 @@ const initialState = {
     },
     {
       eventType: 'Control',
+      registeredBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
+      registeredDate: '1981-12-01',
       doneDate: '1981-12-01',
       doneBy: '1',
       'subEvents-parts': [
@@ -63,6 +67,8 @@ const initialState = {
     },
     {
       eventType: 'Observation',
+      registeredBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
+      registeredDate: '1994-02-21',
       doneDate: '1994-02-21',
       doneBy: '2',
       'subEvents-parts': [
@@ -86,6 +92,8 @@ const initialState = {
     },
     {
       eventType: 'Control',
+      registeredBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
+      registeredDate: '1891-12-01',
       doneDate: '1891-12-01',
       doneBy: '2',
       'subEvents-parts': [
@@ -125,6 +133,8 @@ describe('ObservationControlGridReducer', () => {
     const OutputSuccess = [
       {
         eventType: 'Observation',
+        registeredBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
+        registeredDate: '1990-11-11',
         doneDate: '1990-11-11',
         doneBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
         'subEvents-parts': [
@@ -158,6 +168,8 @@ describe('ObservationControlGridReducer', () => {
       },
       {
         eventType: 'Control',
+        registeredBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
+        registeredDate: '1981-12-01',
         doneDate: '1981-12-01',
         doneBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
         'subEvents-parts': [
@@ -185,6 +197,8 @@ describe('ObservationControlGridReducer', () => {
       },
       {
         eventType: 'Observation',
+        registeredBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
+        registeredDate: '1994-02-21',
         doneDate: '1994-02-21',
         doneBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
         'subEvents-parts': [
@@ -217,6 +231,8 @@ describe('ObservationControlGridReducer', () => {
       },
       {
         eventType: 'Control',
+        registeredBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
+        registeredDate: '1891-12-01',
         doneDate: '1891-12-01',
         doneBy: 'e4eaf917-e095-456e-a66d-08555b66f4f2',
         'subEvents-parts': [
