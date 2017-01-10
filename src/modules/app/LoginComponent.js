@@ -9,6 +9,7 @@ import Logo4 from './assets/UiBmerke_grayscale.png';
 import Logo5 from './assets/ntnu_u-slagord.png';
 import FeideLogo from './assets/feide-login-icon.png';
 import { I18n } from 'react-i18nify';
+import { emitError } from '../../util/errors/emitter';
 
 export default class WelcomeContainer extends React.Component {
   static propTypes = {
@@ -29,7 +30,9 @@ export default class WelcomeContainer extends React.Component {
                     <LoginButton
                       setUser={(u) => {
                         this.props.setUser(u);
-                        this.props.loadActor();
+                        this.props.loadActor({
+                          onFailure: (e) => emitError(e)
+                        });
                       }}
                     >
                       <span>

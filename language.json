@@ -8,7 +8,8 @@
         "notAllowed": "You don't have the appropriate access rights.",
         "notAuthenticated": "You are not logged in.",
         "badRequest": "Invalid data was rejected by the server.",
-        "errorCode": "HTTP error code: %{status}"
+        "errorCode": "HTTP error code: %{status}",
+        "noGroups": "You do not have access to MUSITbasen. Please contact your Database Coordinator."
       },
       "notificationMessages": {
         "deleting": "Delete",
@@ -608,7 +609,8 @@
         "notAllowed": "Du har ikke tilgang.",
         "notAuthenticated": "Du er ikke logget inn.",
         "badRequest": "Ugyldige data ble sendt til serveren.",
-        "errorCode": "HTTP feilkode: %{status}"
+        "errorCode": "HTTP feilkode: %{status}",
+        "noGroups": "Du har ikke tilgang til MUSITbasen. Vennligst kontakt din Databasekoordinator."
       },
       "notificationMessages": {
         "deleting": "Sletting",

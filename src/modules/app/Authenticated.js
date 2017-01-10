@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import { setUser, loadActor } from './appReducers';
 import fakeUserInfo from '../../../fake_security.json';
 import jwtDecode from 'jwt-decode';
+import { emitError } from '../../util/errors/emitter';
 
 class Authenticated extends React.Component {
 
@@ -21,7 +22,10 @@ class Authenticated extends React.Component {
 
   componentWillMount() {
     this.props.loadUser({
-      onFailure: () => {
+      onFailure: (e) => {
+        if (e) {
+          emitError(e);
+        }
         this.setState({ needToLogin: true });
       }
     });

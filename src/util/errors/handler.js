@@ -3,7 +3,6 @@ import NotificationSystem from 'react-notification-system';
 import event$ from './emitter';
 import { I18n } from 'react-i18nify';
 import ReactDOM from 'react-dom';
-import * as logger from 'loglevel';
 
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
 
@@ -48,7 +47,11 @@ const handleNotification = (event) => {
   }
 };
 
-const getErrorMessage = (status) => {
+const getErrorStatus = (error) => {
+  const status = error && error.response && error.response.status;
+  if (!status) {
+    return;
+  }
   switch(status) {
   case 404:
     return I18n.t('musit.errorMainMessages.notFound');
@@ -65,20 +68,25 @@ const getErrorMessage = (status) => {
   }
 };
 
+const getErrorMessage = (error) => {
+  return error.response && error.response.body && error.response.body.message;
+};
+
 const handleError = (event) => {
   const error = event.error || event;
   const type = event.type;
+  let eMsg, eStatus, customMessage;
+
   switch(type) {
   case 'network':
-    const response = error.response;
-    const responseBody = response.body && response.body.message;
-    const msg = responseBody || getErrorMessage(response.status);
+    eMsg = getErrorMessage(error);
+    eStatus = getErrorStatus(error);
     notificationSystem.addNotification({
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.networkError'),
       position: 'tc',
-      children: children(msg)
+      children: children(eMsg || eStatus)
     });
     break;
   case 'dateValidationError':
@@ -100,17 +108,15 @@ const handleError = (event) => {
     });
     break;
   case 'errorOnMove':
-    const customMessage = event.message;
-    const r = error.response;
-    const rMsg = r && r.body && r.body.message;
-    const rStatus = r && r.status && getErrorMessage(r.status);
-    const serverMessage = rMsg || rStatus || '';
+    customMessage = event.message;
+    eMsg = getErrorMessage(error);
+    eStatus = getErrorStatus(error);
     notificationSystem.addNotification({
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
-      children: children(`${customMessage}. ${serverMessage}`)
+      children: children(`${customMessage}. ${eMsg || eStatus || ''}`)
     });
     break;
   case 'errorOnSave':
@@ -123,13 +129,14 @@ const handleError = (event) => {
     });
     break;
   default:
-    logger.debug(error);
+    customMessage = event.message;
+    eMsg = getErrorMessage(error);
     notificationSystem.addNotification({
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
-      children: children(error.message)
+      children: children(customMessage || eMsg || '')
     });
   }
 };
