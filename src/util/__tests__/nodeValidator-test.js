@@ -1,4 +1,4 @@
-import { checkNodeBranchAndType, checkNodeBranch, checkNodeType, getPathLength } from '../nodeValidator';
+import { checkNodeBranchAndType, checkNodeBranch, checkNodeType, getPathNamesLength } from '../nodeValidator';
 
 describe('Test node validation', () => {
   const from_node_11 = {
@@ -285,9 +285,14 @@ describe('Test node validation', () => {
     expect(output).toBe(undefined);
   });
 
-  it('getPathLength ', () => {
-    const output = getPathLength(to_node_2);
+  it('getPathnamesLength - correct input', () => {
+    const output = getPathNamesLength(to_node_2);
     expect(output).toBe(2);
+  });
+
+  it('getPathnamesLength - no input', () => {
+    const output = getPathNamesLength();
+    expect(output).toBe(0);
   });
 
 });

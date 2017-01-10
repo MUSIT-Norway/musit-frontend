@@ -16,53 +16,48 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 import React from 'react';
 import { IndexRedirect, IndexRoute, Route } from 'react-router';
-import NotFound from './components/NotFound';
-import WelcomeView from './containers/welcome-view';
-import StorageUnitsTable from './containers/magasin/grid';
-import PickListView from './containers/picklist';
-import AddStorageUnitPanel from './containers/magasin/panel/add';
-import EditStorageUnitPanel from './containers/magasin/panel/edit';
-import AddObservationPage from './containers/observation/add';
-import EditObservationPage from './containers/observation/edit';
-import ViewObservationPage from './containers/observation/view';
-import Reports from './containers/reports';
-import KDReportContainer from './containers/reports/reportkd';
-import ControlViewContainer from './containers/control/view';
-import ControlAddContainer from './containers/control/add';
-import ObservationControlGridShow from './containers/observationcontrol';
-import ObjectSearchContainer from './containers/objectsearch';
-import Authenticated from './components/Authenticated';
+
 import * as path from './routes.path';
+
+import Authenticated from './modules/app/Authenticated';
+import LoginContainer from './modules/app/LoginContainer';
+import PickListView from './modules/picklist/PicklistContainer';
+import ReportsOverviewContainer from './modules/reports/ReportsOverviewContainer';
+import ReportsKDContainer from './modules/reports/ReportsKDContainer';
+import ObjectSearchContainer from './modules/search/SearchObjectContainer';
+
+import Magasin from './modules/magasin/index';
+import Storage from './modules/storage/index';
+import Events from './modules/events/index';
+import Control from './modules/control/index';
+import Observation from './modules/observation/index';
+
+const NotFound = () =>
+  <div className="container">
+    <h1>Not found! 404!</h1>
+    <p>The route you are looking for does not exist!</p>
+  </div>;
 
 export default () => {
   return (
     <Route component={Authenticated}>
       <IndexRedirect to={path.ROUTE_SF} />
       <Route path={path.ROUTE_SF}>
-        <IndexRoute component={StorageUnitsTable} />
-        <Route path={path.ROUTE_SF_ADD} add component={AddStorageUnitPanel} />
-        <Route path={path.ROUTE_SF_NODE_ADD} add component={AddStorageUnitPanel} />
-        <Route path={path.ROUTE_SF_NODE_VIEW} component={EditStorageUnitPanel} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS} showControls showObservations={false} component={ObservationControlGridShow} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={ObservationControlGridShow} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_ADD} component={ControlAddContainer} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS} showObservations showControls={false} component={ObservationControlGridShow} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
-        <Route path={path.ROUTE_SF_OBJECTS} showObjects component={StorageUnitsTable} />
-        <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
+        {Control.routes}
+        {Observation.routes}
+        {Events.routes}
+        {Storage.routes}
+        {Magasin.routes}
       </Route>
       <Route path={path.ROUTE_PICKLIST} component={PickListView} />
-      <Route path={path.ROUTE_REPORTS} component={Reports} />
-      <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      <Route path={path.ROUTE_REPORTS}>
+        <IndexRoute component={ReportsOverviewContainer} />
+        <Route path={path.ROUTE_REPORTS_KDREPORT} component={ReportsKDContainer} />
+      </Route>
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
-      <Route path="/" component={WelcomeView} />
-
+      <Route path="/" component={LoginContainer} />
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />
     </Route>

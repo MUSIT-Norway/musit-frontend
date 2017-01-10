@@ -1,9 +1,13 @@
 {
   "extends": "react-app",
+  "plugins": [
+    "import"
+  ],
   "globals": {
     "mockStore": true
   },
   "rules": {
+    "import/no-unresolved": [2, {"commonjs": true, "amd": true}],
     "no-alert": "error",
     "no-array-constructor": "error",
     "no-bitwise": "error",

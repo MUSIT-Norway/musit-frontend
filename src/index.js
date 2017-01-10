@@ -19,23 +19,23 @@
 import 'es6-shim';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createStore from './store/configureStore.js';
-import ApiClient from './middleware/ApiClient';
+import createStore from './redux/configureStore.js';
+import ApiClient from './redux/ApiClient';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import getRoutes from './routes';
-import DevTools from './components/dev-tools';
+import DevTools from './redux/devTools';
 import config from './config';
 import LanguageJson from '../language.json';
 import { I18n } from 'react-i18nify';
 import * as loglevel from 'loglevel';
-import './errors/handler';
+import './util/errors/handler';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
-import './state/codeReceiver';
+import './rxjs/codeReceiver';
 
 const client = new ApiClient();
 const dest = document.getElementById('content');
