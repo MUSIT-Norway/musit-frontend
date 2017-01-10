@@ -8,39 +8,16 @@ import {hashHistory} from 'react-router';
 import {I18n} from 'react-i18nify';
 import {emitError, emitSuccess} from '../../../errors/emitter';
 import StorageUnitsContainer from '../../../components/magasin/grid';
-import {createSelector} from 'reselect';
-import orderBy from 'lodash/orderBy';
-import toLower from 'lodash/toLower';
-import {customSortingStorageNodeType} from '../../../util/';
 import MusitNode from '../../../models/node';
 import { clear } from '../../../reducers/storageunit/modal';
-
-const getGridData = (field) => (state) => {
-  if (!state[field].data) {
-    return [];
-  }
-  return state[field].data.length ? state[field].data : state[field].data.matches || [];
-};
-
-const getSortedStorageGridUnit = createSelector(
-  [getGridData('storageGridUnit')],
-  (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type),
-    (o) => toLower(o.name)
-  ])
-  );
-
-const getSortedStorageObjectGrid = createSelector(
-  [getGridData('storageObjectGrid')],
-  (storageObjectGrid) => orderBy(storageObjectGrid, [(o) => toLower(o.museumNo), (o) => toLower(o.subNo), (o) => toLower(o.term)])
-);
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   stats: state.storageUnitStats.stats,
-  children: getSortedStorageGridUnit(state),
+  children: state.storageGridUnit,
   totalNodes: state.storageGridUnit.data && state.storageGridUnit.data.totalMatches,
   loadingNodes: state.storageGridUnit.loading,
-  objects: getSortedStorageObjectGrid(state),
+  objects: state.storageObjectGrid,
   totalObjects: state.storageObjectGrid.data && state.storageObjectGrid.data.totalMatches,
   loadingObjects: state.storageObjectGrid.loading,
   rootNode: state.storageGridUnit.root.data,
