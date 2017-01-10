@@ -1,4 +1,4 @@
-.welcomePanel {
+.aboutPanel {
     justify-content: center;
     text-align: center;
     align-items: center;
@@ -6,10 +6,10 @@
     margin-top: 20px;
 }
 
-.welcomePanel > div {
+.aboutPanel > div {
     width: 700px;
     border: 1px solid;
-    padding: 50px 20px;
+    padding: 10px 20px;
 }
 
 .title {
