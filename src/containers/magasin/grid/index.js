@@ -11,13 +11,20 @@ import StorageUnitsContainer from '../../../components/magasin/grid';
 import MusitNode from '../../../models/node';
 import { clear } from '../../../reducers/storageunit/modal';
 
+const getGridData = (state) => {
+  if (!state.data) {
+    return [];
+  }
+  return state.data.length ? state.data : state.data.matches || [];
+};
+
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   stats: state.storageUnitStats.stats,
-  children: state.storageGridUnit,
+  children: getGridData(state.storageGridUnit),
   totalNodes: state.storageGridUnit.data && state.storageGridUnit.data.totalMatches,
   loadingNodes: state.storageGridUnit.loading,
-  objects: state.storageObjectGrid,
+  objects: getGridData(state.storageObjectGrid),
   totalObjects: state.storageObjectGrid.data && state.storageObjectGrid.data.totalMatches,
   loadingObjects: state.storageObjectGrid.loading,
   rootNode: state.storageGridUnit.root.data,
