@@ -29,6 +29,18 @@ class WelcomeContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = { showModal: false };
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
+  }
+
+  showModal(e) {
+    e.preventDefault();
+    this.setState({ showModal: true });
+  }
+
+  hideModal(e) {
+    e.preventDefault();
+    this.setState({ showModal: false });
   }
 
   render() {
@@ -41,13 +53,13 @@ class WelcomeContainer extends React.Component {
                 <div>
                   {!this.props.user &&
                   <LoginButton setUser={this.props.setUser}>
-                    <span>
+                    <span className="buttonText">
                       {I18n.t('musit.login')}
                     </span>
                   </LoginButton>
                   }
                   <div className="title">
-                    {getTranslated(this.props, () => this.setState({ showModal: true }))}
+                    {getTranslated(this.props, this.showModal)}
                   </div>
                   <Logos style={{ marginTop: 100 }}/>
                 </div>
@@ -55,7 +67,7 @@ class WelcomeContainer extends React.Component {
             </Row>
           </Grid>
         </main>
-        <Modal show={this.state.showModal} onHide={() => this.setState({ showModal: false })}>
+        <Modal show={this.state.showModal} onHide={this.hideModal}>
           <Modal.Header closeButton>
             <Modal.Title>Modal heading</Modal.Title>
           </Modal.Header>
@@ -63,7 +75,7 @@ class WelcomeContainer extends React.Component {
             Heisann
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={() => this.setState({ showModal: false })}>Close</Button>
+            <Button onClick={this.hideModal}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>

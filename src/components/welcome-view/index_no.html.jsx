@@ -6,7 +6,11 @@ const EnglishWelcomePage = (props) => (
     <br />
     <p>MUSITBasen</p>
     <br />
-    <p><a onClick={props.showModal}>Personopplysninger ved bruk av MUSITBasen</a></p>
+    <p>
+      <a href="/moreinfo" onClick={props.showModal} className="moreInfo">
+        Personopplysninger ved bruk av MUSITBasen
+      </a>
+    </p>
   </div>
 );
 
