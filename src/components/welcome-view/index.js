@@ -1,11 +1,12 @@
 import './style.css';
 import React from 'react';
-import { Grid, Row, Modal, Button } from 'react-bootstrap';
+import { Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './index_no.html.jsx';
 import EnglishTranslation from './index_en.html.jsx';
 import Logos from '../logos/Logos';
 import LoginButton from '../../components/login-button';
+import MoreInfo from './moreInfo';
 
 const getTranslated = (props, showModal) => {
   const locale = I18n._locale;
@@ -67,17 +68,7 @@ class WelcomeContainer extends React.Component {
             </Row>
           </Grid>
         </main>
-        <Modal show={this.state.showModal} onHide={this.hideModal}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            Heisann
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.hideModal}>Close</Button>
-          </Modal.Footer>
-        </Modal>
+        <MoreInfo isVisible={this.state.showModal} hideModal={this.hideModal} />
       </div>
     );
   }
