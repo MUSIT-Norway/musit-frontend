@@ -20,7 +20,7 @@
 import React from 'react';
 import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import NotFound from './components/NotFound';
-import WelcomeView from './containers/welcome-view';
+import AboutView from './components/about-view';
 import StorageUnitsTable from './containers/magasin/grid';
 import PickListView from './containers/picklist';
 import AddStorageUnitPanel from './containers/magasin/panel/add';
@@ -39,7 +39,7 @@ import * as path from './routes.path';
 
 export default () => {
   return (
-    <Route component={Authenticated}>
+    <Route path="/" component={Authenticated}>
       <IndexRedirect to={path.ROUTE_SF} />
       <Route path={path.ROUTE_SF}>
         <IndexRoute component={StorageUnitsTable} />
@@ -61,8 +61,7 @@ export default () => {
       <Route path={path.ROUTE_REPORTS} component={Reports} />
       <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
-      <Route path="/" component={WelcomeView} />
-
+      <Route path="/about" component={AboutView} />
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />
     </Route>

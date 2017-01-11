@@ -17,14 +17,6 @@
     font-size: 24px;
 }
 
-.logos {
-    margin-top: 150px;
-}
-
-.logos > img {
-    margin: 10px;
-}
-
 img[alt="feide-logo-button"] {
     max-height: 2em;
 }

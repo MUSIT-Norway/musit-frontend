@@ -44,7 +44,7 @@ export default class App extends Component {
         <Navbar fixedTop style={{ zIndex:1 }}>
           <Navbar.Header>
             <Navbar.Brand>
-              <IndexLink to={'/'} activeStyle={{ color: '#33e0ff' }}>
+              <IndexLink to={'/about'} activeStyle={{ color: '#33e0ff' }}>
                 <div className="brand">
                   <img height="40" alt="logo" src={Logo} />
                 </div>

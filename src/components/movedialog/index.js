@@ -20,10 +20,6 @@
 import { loadChildren, clear, loadNode } from '../../reducers/storageunit/modal';
 import { connect } from 'react-redux';
 import MusitModalImpl from './MusitModal';
-import { createSelector } from 'reselect';
-import orderBy from 'lodash/orderBy';
-import toLower from 'lodash/toLower';
-import {customSortingStorageNodeType} from '../../util/';
 
 const getGridData = (state) => {
   if (!state.data) {
@@ -32,17 +28,12 @@ const getGridData = (state) => {
   return state.data.length ? state.data : state.data.matches || [];
 };
 
-const getSortedStorageGridUnit = createSelector(
-  [ state => getGridData(state.storageUnitModal) ],
-  (storageGridUnit) => orderBy(storageGridUnit, [(o) => customSortingStorageNodeType(o.type), (o) => toLower(o.name)])
-);
-
-const totalNodesSelector = (state) => state.storageUnitModal.data && state.storageUnitModal.data.totalMatches;
+const totalNodesSelector = (state) => state.data && state.data.totalMatches;
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  children: getSortedStorageGridUnit(state),
-  totalNodes: totalNodesSelector(state),
+  children: getGridData(state.storageUnitModal),
+  totalNodes: totalNodesSelector(state.storageUnitModal),
   selectedNode: state.storageUnitModal.root.data
 });
 

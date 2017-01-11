@@ -1,0 +1,13 @@
+.aboutPanel {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    margin-top: 20px;
+}
+
+.aboutPanel > div {
+    width: 700px;
+    border: 1px solid;
+    padding: 10px 20px;
+}
