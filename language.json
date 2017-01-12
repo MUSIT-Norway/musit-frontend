@@ -5,7 +5,7 @@
         "applicationError": "Application error.",
         "networkError": "Network error.",
         "notFound": "The resource was not found.",
-        "notAllowed": "You don't have the appropriate access rights.",
+        "notAllowed": "You do not have the appropriate access rights.",
         "notAuthenticated": "You are not logged in.",
         "badRequest": "Invalid data was rejected by the server.",
         "errorCode": "HTTP error code: %{status}",
@@ -17,7 +17,7 @@
         "moving": "Move"
       },
       "moveHistory": {
-        "title": "Moving history for",
+        "title": "Location history for",
         "from": "From",
         "to": "To",
         "doneBy": "Performed by",
