@@ -6,10 +6,9 @@ export default () => (
     <h2>MUSIT - Universitetsmuseenes IT-organisasjon</h2>
     <br />
     <br />
-    <p>MUSIT er universitetetsmuseenes felles IT-organisasjon, forankret i en samarbeidsavtale mellom Universitetet i Oslo, Universitetet i Bergen, Norges Teknisk-Naturvitenskapelige Universitet, Universitetet i Tromsø, og Universitetet i Stavanger.</p>
-    <p>Samarbeidsavtalen ble evaluert i 2013, og en ny avtale med vedtekter ble undertegnet i 2014.</p>
-    <p>MUSIT har som formål «å sikre drift, vedlikehold og utvikling av museenes felles samlingsdatabaser, og å legge til rette for deling av data for forskning, utdanning, forvaltning og allmennhet». </p>
-    <p>MUSIT forvalter samlinger innenfor en rekke fagfelt innen naturhistorie og kulturhistorie (se <a href="http://www.unimus.no/">{"http://www.unimus.no/"}</a>).</p>
+    <p>Universitetsmuseenes IT-organisasjon (MUSIT) er et nasjonalt samarbeidstiltak mellom Universitetet i Bergen, Universitetet i Oslo, Universitetet i Stavanger, Norges teknisk-naturvitenskapelige universitet og UiT Norges arktiske universitet.</p>
+    <p>Samarbeidstiltaket gjelder Arkeologisk museum, Kulturhistorisk museum, Naturhistorisk museum, NTNU Vitenskapsmuseet, Tromsø museum – Universitetsmuseet, og Universitetsmuseet i Bergen.</p>
+    <p>Universitetsmuseene forvalter de største samlingene i Norge innenfor en rekke fagfelt som arkeologi, botanikk, etnografi, geologi, numismatikk og zoologi. MUSIT er den sentrale forvalter av universitetsmuseenes samlingsdata, og skal tilby løsninger som gjør datasett lett tilgjengelig for bruk i forskning, forvaltning og formidling.</p>
     <br />
     <br />
   </div>
