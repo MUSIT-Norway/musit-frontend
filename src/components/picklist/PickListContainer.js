@@ -161,7 +161,7 @@ export default class PickListContainer extends React.Component {
                     <div className="labelText">
                       <Breadcrumb
                         node={pick.path}
-                        onClickCrumb={node => hashHistory.push(`/magasin/${node.id === -1 ? 'root' : node.id}`)}
+                        onClickCrumb={node => hashHistory.push(`/magasin/${!node.id || node.id === -1 ? '' : node.id}`)}
                         allActive
                       />
                     </div>
