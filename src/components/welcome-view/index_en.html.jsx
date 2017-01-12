@@ -1,17 +1,15 @@
 import React from 'react';
 
-const NorwegianWelcomePage = (props) => (
+export default (props) => (
   <div>
-    <p>MUSIT - Universitetsmuseenes IT-organisasjon</p>
+    <p>MUSIT - The University museums IT-organisation</p>
     <br />
     <p>MUSITbasen</p>
     <br />
     <p>
       <a href="/moreinfo" onClick={props.showModal} className="moreInfo">
-        Personopplysninger ved bruk av MUSITbasen
+        Use of personal information in MUSITbasen
       </a>
     </p>
   </div>
 );
-
-export default NorwegianWelcomePage;
