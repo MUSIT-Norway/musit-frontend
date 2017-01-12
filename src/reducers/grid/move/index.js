@@ -1,8 +1,10 @@
 import Config from '../../../config';
 import { apiUrl } from '../../../util';
 import uniq from 'lodash/uniq';
+import flatten from 'lodash/flatten';
 import { getPath } from '../../helper';
 import Actor from '../../../models/actor';
+import { I18n } from 'react-i18nify';
 
 export const LOAD = 'musit/movehistory/LOAD';
 export const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS';
@@ -79,7 +81,7 @@ export const loadMoveHistoryForObject = (id, museumId, callback) => {
                   const doneBy = actors.find(a => a.hasActorId(data.doneBy));
                   return {
                     ...data,
-                    doneBy: doneBy && doneBy.fn
+                    doneBy: doneBy ? doneBy.fn : I18n.t('musit.unknown')
                   };
                 })
               );

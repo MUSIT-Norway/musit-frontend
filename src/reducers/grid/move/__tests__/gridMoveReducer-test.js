@@ -12,7 +12,7 @@ describe('GridMoveHistory', () => {
     const OutputSuccess = [
       {
         doneDate: '2016-10-06T00:00:00+00:00',
-        registeredBy: 'Darth Vader',
+        registeredBy: '00000000-0000-0000-0000-000000000000',
         registeredDate: '2016-10-06T05:55:52+00:00',
         from: {
           path: ',1,2,3,6,7,',
@@ -64,7 +64,7 @@ describe('GridMoveHistory', () => {
       {
         doneBy: 'ee8d5b67-d173-46b2-9918-e06a9729825f',
         doneDate: '2016-10-06T00:00:00+00:00',
-        registeredBy: 'Darth Vader',
+        registeredBy: '00000000-0000-0000-0000-000000000000',
         registeredDate: '2016-10-06T05:55:52+00:00',
         from: {
           path: ',1,2,3,6,7,',

@@ -119,7 +119,7 @@ Array [
   Object {
     "result": Array [
       Object {
-        "doneBy": undefined,
+        "doneBy": "Ukjent",
         "doneDate": "2016-10-06T00:00:00+00:00",
         "from": Object {
           "path": ",1,2,3,6,7,",
@@ -146,7 +146,7 @@ Array [
             }
           ]
         },
-        "registeredBy": "Darth Vader",
+        "registeredBy": "00000000-0000-0000-0000-000000000000",
         "registeredDate": "2016-10-06T05:55:52+00:00",
         "to": Object {
           "path": ",1,2,3,6,",
@@ -198,7 +198,7 @@ Array [
             }
           ]
         },
-        "registeredBy": "Darth Vader",
+        "registeredBy": "00000000-0000-0000-0000-000000000000",
         "registeredDate": "2016-10-06T05:55:52+00:00",
         "to": Object {
           "path": ",1,2,3,6,",

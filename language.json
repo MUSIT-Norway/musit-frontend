@@ -1,6 +1,7 @@
 {
   "en": {
     "musit": {
+      "unknown": "Unknown",
       "errorMainMessages": {
         "applicationError": "Application error.",
         "networkError": "Network error.",
@@ -602,6 +603,7 @@
   },
   "no": {
     "musit": {
+      "unknown": "Ukjent",
       "errorMainMessages": {
         "applicationError": "Applikasjonsfeil.",
         "networkError": "Nettverksfeil",
