@@ -1,7 +1,6 @@
 import Config from '../../../config';
 import { apiUrl } from '../../../util';
 import uniq from 'lodash/uniq';
-import flatten from 'lodash/flatten';
 import { getPath } from '../../helper';
 import Actor from '../../../models/actor';
 import { I18n } from 'react-i18nify';
