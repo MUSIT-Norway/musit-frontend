@@ -3,6 +3,7 @@ import { apiUrl } from '../../../util';
 import uniq from 'lodash/uniq';
 import { getPath } from '../../helper';
 import Actor from '../../../models/actor';
+import { I18n } from 'react-i18nify';
 
 export const LOAD = 'musit/movehistory/LOAD';
 export const LOAD_SUCCESS = 'musit/movehistory/LOAD_SUCCESS';
@@ -72,12 +73,16 @@ export const loadMoveHistoryForObject = (id, museumId, callback) => {
           } else {
             client.post(apiUrl(`${Config.magasin.urls.actor.baseUrl}/details`), {
               data: actorIds
-            }).then(actors => {
+            }).then(actorsJson => {
+              const actors = actorsJson.map(a => new Actor(a));
               resolve(
-                rows.map((data) => ({
-                  ...data,
-                  ...Actor.getActorNames(actors, data.doneBy, data.registeredBy)
-                }))
+                rows.map((data) => {
+                  const doneBy = actors.find(a => a.hasActorId(data.doneBy));
+                  return {
+                    ...data,
+                    doneBy: doneBy ? doneBy.fn : I18n.t('musit.unknown')
+                  };
+                })
               );
             }).catch(error => reject(error));
           }
