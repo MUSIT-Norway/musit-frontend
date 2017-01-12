@@ -72,12 +72,16 @@ export const loadMoveHistoryForObject = (id, museumId, callback) => {
           } else {
             client.post(apiUrl(`${Config.magasin.urls.actor.baseUrl}/details`), {
               data: actorIds
-            }).then(actors => {
+            }).then(actorsJson => {
+              const actors = actorsJson.map(a => new Actor(a));
               resolve(
-                rows.map((data) => ({
-                  ...data,
-                  ...Actor.getActorNames(actors, data.doneBy, data.registeredBy)
-                }))
+                rows.map((data) => {
+                  const doneBy = actors.find(a => a.hasActorId(data.doneBy));
+                  return {
+                    ...data,
+                    doneBy: doneBy && doneBy.fn
+                  };
+                })
               );
             }).catch(error => reject(error));
           }

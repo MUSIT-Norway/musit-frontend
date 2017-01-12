@@ -17,7 +17,7 @@ export default (props) => (
     </Modal.Body>
     <Modal.Footer>
       <Button onClick={props.hideModal}>
-        Lukk
+        Close
       </Button>
     </Modal.Footer>
   </Modal>

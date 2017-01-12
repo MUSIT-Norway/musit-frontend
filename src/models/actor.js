@@ -39,6 +39,10 @@ class Actor {
   }
 
   hasActorId(actorId) {
+    if (!actorId) {
+      return false;
+    }
+
     const isDataportenId = this.dataportenId && this.dataportenId === actorId;
     const isApplicationId = this.applicationId === actorId;
 

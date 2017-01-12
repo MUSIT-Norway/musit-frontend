@@ -119,6 +119,58 @@ Array [
   Object {
     "result": Array [
       Object {
+        "doneBy": undefined,
+        "doneDate": "2016-10-06T00:00:00+00:00",
+        "from": Object {
+          "path": ",1,2,3,6,7,",
+          "pathNames": Array [
+            Object {
+              "name": "root-node",
+              "nodeId": 1
+            },
+            Object {
+              "name": "Utviklingsmuseet",
+              "nodeId": 2
+            },
+            Object {
+              "name": "Forskningens hus",
+              "nodeId": 3
+            },
+            Object {
+              "name": "Forskningsværelset",
+              "nodeId": 6
+            },
+            Object {
+              "name": "Foo",
+              "nodeId": 7
+            }
+          ]
+        },
+        "registeredBy": "Darth Vader",
+        "registeredDate": "2016-10-06T05:55:52+00:00",
+        "to": Object {
+          "path": ",1,2,3,6,",
+          "pathNames": Array [
+            Object {
+              "name": "root-node",
+              "nodeId": 1
+            },
+            Object {
+              "name": "Utviklingsmuseet",
+              "nodeId": 2
+            },
+            Object {
+              "name": "Forskningens hus",
+              "nodeId": 3
+            },
+            Object {
+              "name": "Forskningsværelset",
+              "nodeId": 6
+            }
+          ]
+        }
+      },
+      Object {
         "doneBy": "Test user",
         "doneDate": "2016-10-06T00:00:00+00:00",
         "from": Object {
@@ -146,7 +198,7 @@ Array [
             }
           ]
         },
-        "registeredBy": undefined,
+        "registeredBy": "Darth Vader",
         "registeredDate": "2016-10-06T05:55:52+00:00",
         "to": Object {
           "path": ",1,2,3,6,",

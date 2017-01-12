@@ -11,6 +11,57 @@ describe('GridMoveHistory', () => {
   it('creates LOAD_SUCCESS when fetching data has been done', () => {
     const OutputSuccess = [
       {
+        doneDate: '2016-10-06T00:00:00+00:00',
+        registeredBy: 'Darth Vader',
+        registeredDate: '2016-10-06T05:55:52+00:00',
+        from: {
+          path: ',1,2,3,6,7,',
+          pathNames: [
+            {
+              name: 'root-node',
+              nodeId: 1
+            },
+            {
+              name: 'Utviklingsmuseet',
+              nodeId: 2
+            },
+            {
+              name: 'Forskningens hus',
+              nodeId: 3
+            },
+            {
+              name: 'Forskningsværelset',
+              nodeId: 6
+            },
+            {
+              name: 'Foo',
+              nodeId: 7
+            }
+          ]
+        },
+        to: {
+          path: ',1,2,3,6,',
+          pathNames: [
+            {
+              name: 'root-node',
+              nodeId: 1
+            },
+            {
+              name: 'Utviklingsmuseet',
+              nodeId: 2
+            },
+            {
+              name: 'Forskningens hus',
+              nodeId: 3
+            },
+            {
+              name: 'Forskningsværelset',
+              nodeId: 6
+            }
+          ]
+        }
+      },
+      {
         doneBy: 'ee8d5b67-d173-46b2-9918-e06a9729825f',
         doneDate: '2016-10-06T00:00:00+00:00',
         registeredBy: 'Darth Vader',
