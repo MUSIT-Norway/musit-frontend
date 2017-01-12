@@ -4,7 +4,7 @@ import { Modal, Button } from 'react-bootstrap';
 export default (props) => (
   <Modal show={props.isVisible} onHide={props.hideModal}>
     <Modal.Header closeButton>
-      <Modal.Title>MUSITbasen og bruk av personopplysninger</Modal.Title>
+      <Modal.Title>Use of personal information in MUSITbasen</Modal.Title>
     </Modal.Header>
     <Modal.Body>
       <p>MUSITbasen uses Dataporten to authenticate users at login.</p>
