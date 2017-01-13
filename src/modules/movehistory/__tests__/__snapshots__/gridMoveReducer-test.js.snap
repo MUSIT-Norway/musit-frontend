@@ -85,7 +85,6 @@ Array [
   Object {
     "result": Array [
       Object {
-        "doneBy": "Ukjent",
         "doneDate": "2016-10-06T00:00:00+00:00",
         "from": Object {
           "breadcrumb": Array [
@@ -186,7 +185,7 @@ Array [
         }
       },
       Object {
-        "doneBy": "Test user",
+        "doneBy": "ee8d5b67-d173-46b2-9918-e06a9729825f",
         "doneDate": "2016-10-06T00:00:00+00:00",
         "from": Object {
           "breadcrumb": Array [
