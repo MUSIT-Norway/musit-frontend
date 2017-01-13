@@ -25,19 +25,7 @@ const moveHistoryReducer = (state = initialState, action) => {
       ...state,
       loading: false,
       loaded: true,
-      data: action.result.map(data => {
-        return {
-          ...data,
-          from: {
-            ...data.from,
-            breadcrumb: getPath(data.from)
-          },
-          to: {
-            ...data.to,
-            breadcrumb: getPath(data.to)
-          }
-        };
-      })
+      data: action.result
     };
   case LOAD_FAIL:
     return {
@@ -66,7 +54,23 @@ export const loadMoveHistoryForObject = (id, museumId, callback) => {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => new Promise((resolve, reject) => {
       client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`))
-        .then(rows => {
+        .then(rowsJson => {
+          if (!Array.isArray(rowsJson)) {
+            return resolve([]);
+          }
+          const rows = rowsJson.map(data => {
+            return {
+              ...data,
+              from: {
+                ...data.from,
+                breadcrumb: getPath(data.from)
+              },
+              to: {
+                ...data.to,
+                breadcrumb: getPath(data.to)
+              }
+            };
+          });
           const actorIds = uniq(rows.map(r => r.doneBy)).filter(r => r);
           if (actorIds.length === 0) {
             resolve(rows);
@@ -74,6 +78,9 @@ export const loadMoveHistoryForObject = (id, museumId, callback) => {
             client.post(apiUrl(`${Config.magasin.urls.actor.baseUrl}/details`), {
               data: actorIds
             }).then(actorsJson => {
+              if (!Array.isArray(actorsJson)) {
+                return resolve(rows);
+              }
               const actors = actorsJson.map(a => new Actor(a));
               resolve(
                 rows.map((data) => {
