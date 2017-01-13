@@ -11,9 +11,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
       componentClass="div"
       fluid={false}>
       <div>
-        <h2>
+        <h1>
           Objektsøk
-        </h2>
+        </h1>
         <Form
           bsClass="form"
           componentClass="form"
