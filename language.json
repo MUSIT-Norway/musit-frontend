@@ -149,23 +149,23 @@
       "objectsearch": {
         "title": "Object search",
         "museumNo": {
-          "label": "Museumnr.",
+          "label": "Museum No.",
           "placeHolder": " "
         },
         "subNo": {
-          "label": "Unr.",
+          "label": "U. No.",
           "placeHolder": " "
         },
         "term": {
-          "label": "Term/Artsnavn",
+          "label": "Artefact/Species",
           "placeHolder": " "
         },
         "location": {
-          "label": "Plassering"
+          "label": "Location"
         },
         "results": {
-          "title": "Søket ga %{count} treff:",
-          "noHit": "Søket ga ingen treff."
+          "title": "Your search gave %{count} hits:",
+          "noHit": "Your search did not give any hits."
         }
       },
       "texts": {
