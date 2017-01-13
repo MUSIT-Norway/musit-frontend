@@ -33,23 +33,6 @@ Object {
   "data": Array [
     Object {
       "from": Object {
-        "breadcrumb": Array [
-          Object {
-            "id": 1,
-            "name": "Museum 1",
-            "url": "/magasin/1"
-          },
-          Object {
-            "id": 2,
-            "name": "Building 1",
-            "url": "/magasin/2"
-          },
-          Object {
-            "id": 4,
-            "name": "Room 4",
-            "url": "/magasin/4"
-          }
-        ],
         "id": 4,
         "name": "Test 2",
         "path": ",1,2,4,",
@@ -69,23 +52,6 @@ Object {
         ]
       },
       "to": Object {
-        "breadcrumb": Array [
-          Object {
-            "id": 1,
-            "name": "Museum 1",
-            "url": "/magasin/1"
-          },
-          Object {
-            "id": 2,
-            "name": "Building 1",
-            "url": "/magasin/2"
-          },
-          Object {
-            "id": 3,
-            "name": "Room 1",
-            "url": "/magasin/3"
-          }
-        ],
         "id": 3,
         "name": "Test 1",
         "path": ",1,2,3,",
@@ -122,6 +88,33 @@ Array [
         "doneBy": "Ukjent",
         "doneDate": "2016-10-06T00:00:00+00:00",
         "from": Object {
+          "breadcrumb": Array [
+            Object {
+              "id": 1,
+              "name": "root-node",
+              "url": "/magasin/1"
+            },
+            Object {
+              "id": 2,
+              "name": "Utviklingsmuseet",
+              "url": "/magasin/2"
+            },
+            Object {
+              "id": 3,
+              "name": "Forskningens hus",
+              "url": "/magasin/3"
+            },
+            Object {
+              "id": 6,
+              "name": "Forskningsværelset",
+              "url": "/magasin/6"
+            },
+            Object {
+              "id": 7,
+              "name": "Foo",
+              "url": "/magasin/7"
+            }
+          ],
           "path": ",1,2,3,6,7,",
           "pathNames": Array [
             Object {
@@ -149,6 +142,28 @@ Array [
         "registeredBy": "00000000-0000-0000-0000-000000000000",
         "registeredDate": "2016-10-06T05:55:52+00:00",
         "to": Object {
+          "breadcrumb": Array [
+            Object {
+              "id": 1,
+              "name": "root-node",
+              "url": "/magasin/1"
+            },
+            Object {
+              "id": 2,
+              "name": "Utviklingsmuseet",
+              "url": "/magasin/2"
+            },
+            Object {
+              "id": 3,
+              "name": "Forskningens hus",
+              "url": "/magasin/3"
+            },
+            Object {
+              "id": 6,
+              "name": "Forskningsværelset",
+              "url": "/magasin/6"
+            }
+          ],
           "path": ",1,2,3,6,",
           "pathNames": Array [
             Object {
@@ -174,6 +189,33 @@ Array [
         "doneBy": "Test user",
         "doneDate": "2016-10-06T00:00:00+00:00",
         "from": Object {
+          "breadcrumb": Array [
+            Object {
+              "id": 1,
+              "name": "root-node",
+              "url": "/magasin/1"
+            },
+            Object {
+              "id": 2,
+              "name": "Utviklingsmuseet",
+              "url": "/magasin/2"
+            },
+            Object {
+              "id": 3,
+              "name": "Forskningens hus",
+              "url": "/magasin/3"
+            },
+            Object {
+              "id": 6,
+              "name": "Forskningsværelset",
+              "url": "/magasin/6"
+            },
+            Object {
+              "id": 7,
+              "name": "Foo",
+              "url": "/magasin/7"
+            }
+          ],
           "path": ",1,2,3,6,7,",
           "pathNames": Array [
             Object {
@@ -201,6 +243,28 @@ Array [
         "registeredBy": "00000000-0000-0000-0000-000000000000",
         "registeredDate": "2016-10-06T05:55:52+00:00",
         "to": Object {
+          "breadcrumb": Array [
+            Object {
+              "id": 1,
+              "name": "root-node",
+              "url": "/magasin/1"
+            },
+            Object {
+              "id": 2,
+              "name": "Utviklingsmuseet",
+              "url": "/magasin/2"
+            },
+            Object {
+              "id": 3,
+              "name": "Forskningens hus",
+              "url": "/magasin/3"
+            },
+            Object {
+              "id": 6,
+              "name": "Forskningsværelset",
+              "url": "/magasin/6"
+            }
+          ],
           "path": ",1,2,3,6,",
           "pathNames": Array [
             Object {
