@@ -123,7 +123,7 @@ describe('GridMoveHistory', () => {
     const actorUrl = `${Config.magasin.urls.actor.baseUrl}/details`;
     nock('http://localhost')
       .post(actorUrl, ['ee8d5b67-d173-46b2-9918-e06a9729825f'])
-      .reply(200, [{fn: 'Test user', dataportenId: 'ee8d5b67-d173-46b2-9918-e06a9729825f'}]);
+      .reply(204, null);
 
     const store = mockStore();
 

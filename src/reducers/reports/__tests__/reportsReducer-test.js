@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store';
-import createMiddleware from '../../../middleware/clientMiddleware';
-import ApiClient from '../../../middleware/ApiClient';
+import createMiddleware from '../../../redux/clientMiddleware';
+import ApiClient from '../../../redux/ApiClient';
 import * as actions from '../index';
 import reducer from '../index';
 import Config from '../../../config';

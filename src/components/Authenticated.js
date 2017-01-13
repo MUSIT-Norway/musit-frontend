@@ -1,12 +1,12 @@
 import React from 'react';
 import Loader from 'react-loader';
-import App from '../containers/app';
-import Login from '../containers/welcome-view';
+import App from './AppContainer';
+import Login from '../modules/login/LoginContainer';
 import {connect} from 'react-redux';
 import { setUser, loadActor } from '../reducers/auth';
 import fakeUserInfo from '../../fake_security.json';
 import jwtDecode from 'jwt-decode';
-import { emitError } from '../errors/emitter';
+import { emitError } from '../util/errors/emitter';
 
 class Authenticated extends React.Component {
 

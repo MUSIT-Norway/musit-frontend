@@ -7,7 +7,7 @@ import { getPath } from '../reducers/helper';
 import { getMuseumId, getCollectionId } from '../reducers/auth';
 import { isMoveDialogActive, loadNode, loadChildren } from '../reducers/storageunit/modal';
 import { ROUTE_PICKLIST, ROUTE_SF } from '../routes.path';
-import { emitError } from '../errors/emitter';
+import { emitError } from '../util/errors/emitter';
 import { isNumber } from '../util';
 import Config from '../config';
 
