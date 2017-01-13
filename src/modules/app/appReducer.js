@@ -1,8 +1,8 @@
-import { apiUrl, getState } from '../shared/util';
-import Config from '../config';
-import Actor from '../shared/models/actor';
-import MuseumId from '../shared/models/museumId';
-import CollectionId from '../shared/models/collectionId';
+import { apiUrl, getState } from '../../shared/util';
+import Config from '../../config';
+import Actor from '../../shared/models/actor';
+import MuseumId from '../../shared/models/museumId';
+import CollectionId from '../../shared/models/collectionId';
 import { I18n } from 'react-i18nify';
 
 const ID = 'auth';

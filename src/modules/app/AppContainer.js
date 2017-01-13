@@ -1,15 +1,15 @@
 import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
-import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../modules/picklist/picklistReducer';
+import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../picklist/picklistReducer';
 import { loadBuildinfo } from './appReducer';
-import { clearSearch } from '../modules/objectsearch/actions';
+import { clearSearch } from '../objectsearch/actions';
 import App from './AppComponent';
 import Notifyable from './Notifyable';
-import {clearStats} from '../modules/storagefacility/reducers/stats';
+import {clearStats} from '../storagefacility/reducers/stats';
 import {setMuseumId, setCollectionId } from './appReducer';
-import {clearRoot, loadRoot} from '../modules/storagefacility/reducers/grid/nodes';
-import MuseumId from '../shared/models/museumId';
+import {clearRoot, loadRoot} from '../storagefacility/reducers/grid/nodes';
+import MuseumId from '../../shared/models/museumId';
 
 const mapStateToProps = (state) => {
   return {

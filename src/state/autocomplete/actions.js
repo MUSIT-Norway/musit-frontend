@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
-import { getAccessToken, getMuseumId } from '../../components/appReducer';
+import { getAccessToken, getMuseumId } from '../../modules/app/appReducer';
 import * as loglevel from 'loglevel';
 import 'whatwg-fetch';
 

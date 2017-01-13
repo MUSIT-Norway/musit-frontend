@@ -34,7 +34,7 @@ import ControlViewContainer from './modules/control/ControlViewContainer';
 import ControlAddContainer from './modules/control/ControlAddContainer';
 import EventsContainer from './modules/events/EventsContainer';
 import ObjectSearchContainer from './modules/objectsearch/ObjectSearchContainer';
-import Authenticated from './components/Authenticated';
+import Authenticated from './modules/app/Authenticated';
 import * as path from './routes.path';
 
 export default () => {

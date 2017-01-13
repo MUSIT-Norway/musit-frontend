@@ -20,7 +20,7 @@
 
 import { connect } from 'react-redux';
 import LoginComponent from './LoginComponent';
-import { setUser, loadActor } from '../../components/appReducer';
+import { setUser, loadActor } from '../app/appReducer';
 import { I18n } from 'react-i18nify';
 import { emitError } from '../../shared/errors/emitter';
 
