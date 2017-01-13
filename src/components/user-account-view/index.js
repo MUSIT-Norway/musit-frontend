@@ -5,6 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import flatten from 'lodash/flatten';
 import uniqBy from 'lodash/uniqBy';
 import find from 'lodash/find';
+import { I18n } from 'react-i18nify';
 
 export default class MusitUserAccount extends Component {
   static propTypes = {
@@ -39,7 +40,11 @@ export default class MusitUserAccount extends Component {
     const currentLanguage = localStorage.getItem('language');
     const checked = (language) => currentLanguage === language && <FontAwesome name="check" /> ;
     const tooltip =
-      <Tooltip id="tooltip">Logget inn som <strong>{this.props.user.actor.fn}</strong></Tooltip>;
+      <Tooltip id="tooltip">
+        <strong>
+          {I18n.t('musit.userProfile.loggedIn', { name: this.props.user.actor.fn })}
+        </strong>
+      </Tooltip>;
     const menuText = (t1, t2) => (
       <Row>
         <Col md={1}>{t1}</Col>
@@ -66,7 +71,7 @@ export default class MusitUserAccount extends Component {
           <Dropdown.Menu style={{ width: 200 }}>
             <MenuItem />
             {museumDropDown &&
-              <MenuItem eventKey={3} header>Museum</MenuItem>
+              <MenuItem eventKey={3} header>{I18n.t('musit.userProfile.museum')}</MenuItem>
             }
             {museumDropDown &&
               groups.map((cc, i) =>
@@ -83,7 +88,7 @@ export default class MusitUserAccount extends Component {
               <MenuItem divider/>
             }
             {collectionDropdown &&
-              <MenuItem eventKey={3} header>Samlinger</MenuItem>
+              <MenuItem eventKey={3} header>{I18n.t('musit.userProfile.collection')}</MenuItem>
             }
             {collectionDropdown &&
               collections.map((cc, i) =>
@@ -95,7 +100,7 @@ export default class MusitUserAccount extends Component {
             {collectionDropdown &&
               <MenuItem divider/>
             }
-            <MenuItem header>Language</MenuItem>
+            <MenuItem header>{I18n.t('musit.language')}</MenuItem>
             <MenuItem eventKey={5} onSelect={() => this.props.handleLanguage('no')}>
               {menuText(checked('no'),'NO')}
             </MenuItem>
@@ -105,7 +110,7 @@ export default class MusitUserAccount extends Component {
             {hasAdmin && <MenuItem divider/>}
             {hasAdmin && this.adminLink()}
             <MenuItem divider />
-            <MenuItem eventKey={4} onSelect={this.props.handleLogout}>Logg ut</MenuItem>
+            <MenuItem eventKey={4} onSelect={this.props.handleLogout}>{I18n.t('musit.userProfile.logout')}</MenuItem>
           </Dropdown.Menu>
         </Dropdown>
       </OverlayTrigger>);

@@ -2,6 +2,13 @@
   "en": {
     "musit": {
       "unknown": "Unknown",
+      "language": "Language",
+      "userProfile": {
+        "loggedIn": "Logged in as %{name}",
+        "logout": "Logout",
+        "collection": "Collection",
+        "museums": "Museum"
+      },
       "errorMainMessages": {
         "applicationError": "Application error.",
         "networkError": "Network error.",
@@ -613,6 +620,13 @@
   "no": {
     "musit": {
       "unknown": "Ukjent",
+      "language": "Språk",
+      "userProfile": {
+        "loggedIn": "Logget inn som %{name}",
+        "logout": "Logg ut",
+        "collection": "Samling",
+        "museums": "Museum"
+      },
       "errorMainMessages": {
         "applicationError": "Applikasjonsfeil.",
         "networkError": "Nettverksfeil",
