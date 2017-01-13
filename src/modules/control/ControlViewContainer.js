@@ -19,7 +19,7 @@
  */
 import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
-import { loadControl } from '../../reducers/control';
+import { loadControl } from './controlReducer';
 import ControlViewComponent from './ControlViewComponent';
 import { loadRoot } from '../storagefacility/reducers/grid/nodes';
 

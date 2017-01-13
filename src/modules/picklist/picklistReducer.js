@@ -1,7 +1,6 @@
-import { apiUrl } from '../../util';
-import { getPath } from '../../reducers/helper';
+import { apiUrl, getPath } from '../../shared/util';
 import Config from '../../config';
-import MusitObject from '../../models/object';
+import MusitObject from '../../shared/models/object';
 
 export const TYPES = {
   NODE: 'NODE',

@@ -1,5 +1,5 @@
 import Config from '../../config';
-import { apiUrl } from '../../util';
+import { apiUrl } from '../../shared/util';
 
 export const LOAD_KD_REPORT = 'musit/reports/LOAD_KD_REPORT';
 export const LOAD_KD_REPORT_FAIL = 'musit/reports/LOAD_KD_REPORT_FAIL';

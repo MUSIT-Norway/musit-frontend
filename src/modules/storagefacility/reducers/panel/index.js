@@ -1,5 +1,5 @@
 import Config from '../../../../config';
-import { apiUrl } from '../../../../util';
+import { apiUrl } from '../../../../shared/util';
 
 import { mapToFrontend, mapToBackend } from '../mapper';
 export const INSERT = 'musit/storageunit-container/INSERT';

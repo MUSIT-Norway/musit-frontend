@@ -1,9 +1,9 @@
 import assert from 'assert';
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import ObservationPage from '../index';
+import ObservationPage from '../ObservationPage';
 import moment from 'moment';
-import { DATE_FORMAT_DISPLAY } from './../../../util';
+import { DATE_FORMAT_DISPLAY } from './../../../shared/util';
 
 describe('Render add observation page', () => {
   const renderer = ReactTestUtils.createRenderer();

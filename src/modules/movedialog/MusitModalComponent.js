@@ -17,14 +17,14 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React, {Component, PropTypes} from 'react';
-import Breadcrumb from '../../layout/Breadcrumb';
+import Breadcrumb from '../../components/layout/Breadcrumb';
 import ModalNodeGrid from './ModalNodeGrid';
 import NodeSuggest from '../../components/suggest/NodeSuggest';
 import Modal from '../../components/modal/MusitModal';
 import SubmitButton from '../../components/buttons/submit';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
-import PagingToolbar from '../../util/paging';
+import PagingToolbar from '../../shared/paging';
 
 const PER_PAGE = 10;
 

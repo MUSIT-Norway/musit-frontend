@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
-import { formatFloatToString } from './../../util';
+import { formatFloatToString } from './../../shared/util';
 
 export default class KDReport extends React.Component {
   static propTypes= {

@@ -2,8 +2,8 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import ObjectSearchComponent from '../ObjectSearchComponent';
-import { getPath } from '../../../reducers/helper';
-import MusitObject from '../../../models/object';
+import { getPath } from '../../../shared/util';
+import MusitObject from '../../../shared/models/object';
 
 describe('ObjectSearchComponent', () => {
   const path = ',1,2,3,';

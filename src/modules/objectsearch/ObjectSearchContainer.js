@@ -1,4 +1,4 @@
-import * as actions from '../../reducers/objectsearch/actions';
+import * as actions from './actions';
 import Component from './ObjectSearchComponent';
 import { connect } from 'react-redux';
 import { addObject, loadMainObject } from '../picklist/picklistReducer';

@@ -18,7 +18,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import { connect } from 'react-redux';
-import { addControl } from '../../reducers/control';
+import { addControl } from './controlReducer';
 import { I18n } from 'react-i18nify';
 import ControlAddComponent from './ControlAddComponent';
 import { loadRoot } from '../storagefacility/reducers/grid/nodes';

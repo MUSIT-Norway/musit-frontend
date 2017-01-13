@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { I18n } from 'react-i18nify';
 import EditObservationPage from './EditObservationPage';
-import { loadObservation } from '../../reducers/observation';
-import { addControl } from '../../reducers/control';
+import { loadObservation } from './observationReducer';
+import { addControl } from '../control/controlReducer';
 import { hashHistory } from 'react-router';
 import { loadRoot } from '../storagefacility/reducers/grid/nodes';
-import { emitError, emitSuccess } from '../../util/errors/emitter';
+import { emitError, emitSuccess } from '../../shared/errors/emitter';
 
 const mapStateToProps = (state) => {
   return {

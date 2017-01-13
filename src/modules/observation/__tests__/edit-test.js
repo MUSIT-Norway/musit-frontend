@@ -1,7 +1,7 @@
 import assert from 'assert';
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import ObservationPage from '../index';
+import ObservationPage from '../ObservationPage';
 
 describe('Render edit observation page', () => {
   const renderer = ReactTestUtils.createRenderer();

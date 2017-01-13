@@ -7,16 +7,15 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from './render';
-import { containsObjectWithField, parseUTCDate, DATE_FORMAT_DISPLAY } from '../../util';
+import { containsObjectWithField, parseUTCDate, DATE_FORMAT_DISPLAY, isDateBiggerThanToday } from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
 import { hashHistory } from 'react-router';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
-import DatePicker from '../../util/datePicker';
+import DatePicker from '../../shared/datePicker';
 import ActorSuggest from '../../components/suggest/ActorSuggest';
 import * as validation from './observationValidation';
-import { isDateBiggerThanToday } from '../../util';
 import { I18n } from 'react-i18nify';
-import { emitError } from '../../util/errors/emitter';
+import { emitError } from '../../shared/errors/emitter';
 
 export default class ObservationPage extends React.Component {
 

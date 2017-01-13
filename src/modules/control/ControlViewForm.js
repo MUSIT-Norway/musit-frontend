@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import * as ObservationRender from '../observation/render';
-import { formatFloatToString } from './../../util';
+import { formatFloatToString } from './../../shared/util';
 import reduce from 'lodash/reduce';
 import keys from 'lodash/keys';
 import map from 'lodash/map';

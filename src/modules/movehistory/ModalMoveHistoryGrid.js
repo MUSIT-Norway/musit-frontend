@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
-import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../util';
+import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 
 export default class ModalMoveHistoryGrid extends Component {

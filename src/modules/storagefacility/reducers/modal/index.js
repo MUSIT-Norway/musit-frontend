@@ -1,6 +1,5 @@
 import Config from '../../../../config';
-import { apiUrl, getPath } from '../../../../util';
-import { getState } from '../../../../reducers/public';
+import { apiUrl, getPath, getState } from '../../../../shared/util';
 
 const ID = 'storageUnitModal';
 

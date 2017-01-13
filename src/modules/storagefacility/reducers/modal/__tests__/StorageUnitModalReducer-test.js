@@ -1,9 +1,9 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
-import MuseumId from '../../../../models/museumId';
+import MuseumId from '../../../../../shared/models/museumId';
 import * as actions from '../index';
 import reducer, { clear } from '../index';
-import Config from '../../../../config';
+import Config from '../../../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);

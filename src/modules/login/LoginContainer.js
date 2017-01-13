@@ -22,7 +22,7 @@ import { connect } from 'react-redux';
 import LoginComponent from './LoginComponent';
 import { setUser, loadActor } from '../../reducers/auth';
 import { I18n } from 'react-i18nify';
-import { emitError } from '../../util/errors/emitter';
+import { emitError } from '../../shared/errors/emitter';
 
 const mapStateToProps = (state) => ({
   user: state.auth.user.actor,

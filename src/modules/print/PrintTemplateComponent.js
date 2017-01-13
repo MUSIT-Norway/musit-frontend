@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import IFrame from '../../util/IFrame';
-import Template from '../../models/PrintTemplate';
+import IFrame from '../../shared/IFrame';
+import Template from '../../shared/models/PrintTemplate';
 import './PrintTemplateComponent.css';
 import Config from '../../config';
 

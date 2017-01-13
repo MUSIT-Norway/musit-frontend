@@ -2,8 +2,8 @@ import React from 'react';
 import {I18n} from 'react-i18nify';
 import {Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table} from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import Breadcrumb from '../../layout/Breadcrumb';
-import PagingToolbar from '../../util/paging';
+import Breadcrumb from '../../components/layout/Breadcrumb';
+import PagingToolbar from '../../shared/paging';
 import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
 

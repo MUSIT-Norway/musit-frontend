@@ -27,12 +27,12 @@ import storageNodeGridReducer from '../modules/storagefacility/reducers/grid/nod
 import storageUnitModal from '../modules/storagefacility/reducers/modal';
 import storageUnitStatsReducer from '../modules/storagefacility/reducers/stats';
 import storageObjectGridReducer from '../modules/storagefacility/reducers/grid/objects';
-import observationReducer from './observation';
+import observationReducer from '../modules/observation/observationReducer';
 import reportReducer from '../modules/reports/reportsReducer';
-import controlReducer from './control';
-import observationControlGridReducer from './grid/observationcontrol';
-import moveHistoryReducer from './grid/move';
-import ObjectSearchReducer from './objectsearch/reducer';
+import controlReducer from '../modules/control/controlReducer';
+import observationControlGridReducer from '../modules/events/eventsReducer';
+import moveHistoryReducer from '../modules/movehistory/moveHistoryReducer';
+import ObjectSearchReducer from '../modules/objectsearch/reducer';
 import printReducer from '../modules/print/printReducer';
 
 const rootReducer = combineReducers({

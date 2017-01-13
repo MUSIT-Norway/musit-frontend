@@ -20,15 +20,14 @@
 import React from 'react';
 import { Grid, Row, Col, FormControl } from 'react-bootstrap';
 import PairedToogleButtons from './ToggleButtons';
-import DatePicker from '../../util/datePicker';
+import DatePicker from '../../shared/datePicker';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import { hashHistory } from 'react-router';
-import { flatten, DATE_FORMAT_DISPLAY, hasProp } from '../../util';
+import { flatten, DATE_FORMAT_DISPLAY, hasProp, isDateBiggerThanToday } from '../../shared/util';
 import ActorSuggest from '../../components/suggest/ActorSuggest';
-import Layout from '../../layout';
-import Breadcrumb from '../../layout/Breadcrumb';
-import { isDateBiggerThanToday } from '../../util';
-import { emitError, emitSuccess } from '../../util/errors/emitter';
+import Layout from '../../components/layout';
+import Breadcrumb from '../../components/layout/Breadcrumb';
+import { emitError, emitSuccess } from '../../shared/errors/emitter';
 import { I18n } from 'react-i18nify';
 
 export default class ControlAddContainer extends React.Component {

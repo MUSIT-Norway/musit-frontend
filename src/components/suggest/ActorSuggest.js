@@ -2,7 +2,7 @@ import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import autoComplete from '../../state/autocomplete';
 import Config from '../../config';
-import Actor from '../../models/actor';
+import Actor from '../../shared/models/actor';
 
 class ActorSuggest extends React.Component {
 

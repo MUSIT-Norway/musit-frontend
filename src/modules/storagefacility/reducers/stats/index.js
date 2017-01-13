@@ -1,5 +1,5 @@
 import Config from '../../../../config';
-import { apiUrl } from '../../../../util';
+import { apiUrl } from '../../../../shared/util';
 
 export const LOAD_STATS = 'musit/strageunit-stats/LOAD_STATS';
 export const LOAD_STATS_SUCCESS = 'musit/strageunit-stats/LOAD_STATS_SUCCESS';

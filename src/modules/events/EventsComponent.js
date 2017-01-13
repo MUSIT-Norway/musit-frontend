@@ -1,9 +1,9 @@
 import React from 'react';
 import ObservationControlGrid from './EventsGrid';
 import ObservationControlComponent from './EventsLeftMenu';
-import Layout from '../../layout';
-import Breadcrumb from '../../layout/Breadcrumb';
-import Toolbar from '../../layout/Toolbar';
+import Layout from '../../components/layout';
+import Breadcrumb from '../../components/layout/Breadcrumb';
+import Toolbar from '../../components/layout/Toolbar';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 

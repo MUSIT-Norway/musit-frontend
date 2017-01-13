@@ -21,9 +21,9 @@ import { hashHistory } from 'react-router';
 import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap';
 import ControlView from './ControlViewForm';
 import { MusitField } from '../../components/formfields';
-import Layout from '../../layout';
-import Breadcrumb from '../../layout/Breadcrumb';
-import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../util';
+import Layout from '../../components/layout';
+import Breadcrumb from '../../components/layout/Breadcrumb';
+import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 
 export default class ControlViewContainer extends React.Component {

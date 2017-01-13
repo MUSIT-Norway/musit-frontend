@@ -24,7 +24,7 @@ import { moveObject, moveNode } from '../../reducers/move';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
-import { customSortingStorageNodeType } from '../../util/';
+import { customSortingStorageNodeType } from '../../shared/util';
 import { clear } from '../storagefacility/reducers/modal';
 
 const getNodes = (state) => state.picks.NODE || [];

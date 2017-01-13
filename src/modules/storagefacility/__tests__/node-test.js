@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import NodeLeftMenuComponent from '../LeftMenu';
+import NodeLeftMenuComponent from '../NodeGridLeftMenu';
 
 describe('NodeLeftMenuComponent', () => {
 

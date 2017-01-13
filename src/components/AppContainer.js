@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
 import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../modules/picklist/picklistReducer';
 import { loadBuildinfo } from '../reducers/auth';
-import { clearSearch } from '../reducers/objectsearch/actions';
+import { clearSearch } from '../modules/objectsearch/actions';
 import App from './AppComponent';
 import Notifyable from './Notifyable';
 import {clearStats} from '../modules/storagefacility/reducers/stats';
 import {setMuseumId, setCollectionId } from '../reducers/auth';
 import {clearRoot, loadRoot} from '../modules/storagefacility/reducers/grid/nodes';
-import MuseumId from '../models/museumId';
+import MuseumId from '../shared/models/museumId';
 
 const mapStateToProps = (state) => {
   return {

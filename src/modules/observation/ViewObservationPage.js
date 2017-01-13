@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import ObservationPage from './ObservationPage';
-import Layout from '../../layout';
-import Breadcrumb from '../../layout/Breadcrumb';
+import Layout from '../../components/layout';
+import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
 
 export default class ViewObservationPage extends React.Component {

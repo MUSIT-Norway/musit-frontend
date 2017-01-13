@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import { setUser, loadActor } from '../reducers/auth';
 import fakeUserInfo from '../../fake_security.json';
 import jwtDecode from 'jwt-decode';
-import { emitError } from '../util/errors/emitter';
+import { emitError } from '../shared/errors/emitter';
 
 class Authenticated extends React.Component {
 

@@ -1,7 +1,7 @@
 import assert from 'assert';
 import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
-import ControlView from '../ControlViewComponent';
+import ControlView from '../ControlViewForm';
 
 describe('ControlView', () => {
   let temperatureButton;

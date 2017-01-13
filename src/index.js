@@ -29,7 +29,7 @@ import config from './config';
 import LanguageJson from '../language.json';
 import { I18n } from 'react-i18nify';
 import * as loglevel from 'loglevel';
-import './util/errors/handler';
+import './shared/errors/handler';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';

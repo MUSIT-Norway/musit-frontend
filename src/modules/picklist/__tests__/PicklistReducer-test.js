@@ -6,7 +6,7 @@ import ApiClient from '../../../redux/ApiClient';
 import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
-import MuseumId from '../../../models/museumId';
+import MuseumId from '../../../shared/models/museumId';
 
 const nock = nocker(request);
 
@@ -21,7 +21,7 @@ import picklistReducer, {
   refreshNode,
   LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE, LOAD_ONE_NODE_FAIL
 } from '../picklistReducer';
-import MusitObject from '../../../models/object';
+import MusitObject from '../../../shared/models/object';
 
 import reducer from '../picklistReducer';
 import * as actions from '../picklistReducer';
