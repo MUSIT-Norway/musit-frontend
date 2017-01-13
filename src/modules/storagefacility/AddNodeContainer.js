@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
-import { insert } from '../../reducers/storageunit/panel';
+import { insert } from './reducers/panel';
 import StorageUnitAddContainer from './AddNodeComponent';
 import { clear as clearState, update as updateState } from './reducers/panel/state';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 import { I18n } from 'react-i18nify';
-import { loadRoot } from '../../reducers/storageunit/grid';
+import { loadRoot } from './reducers/grid';
 
 const mapDispatchToProps = (dispatch) => {
   return {

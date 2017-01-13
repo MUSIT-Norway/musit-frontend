@@ -25,7 +25,7 @@ import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 import { customSortingStorageNodeType } from '../../util/';
-import { clear } from '../../reducers/storageunit/modal';
+import { clear } from '../storagefacility/reducers/modal';
 
 const getNodes = (state) => state.picks.NODE || [];
 

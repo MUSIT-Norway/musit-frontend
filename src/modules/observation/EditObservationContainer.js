@@ -4,7 +4,7 @@ import EditObservationPage from './EditObservationPage';
 import { loadObservation } from '../../reducers/observation';
 import { addControl } from '../../reducers/control';
 import { hashHistory } from 'react-router';
-import { loadRoot } from '../../reducers/storageunit/grid';
+import { loadRoot } from '../storagefacility/reducers/grid';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 const mapStateToProps = (state) => {

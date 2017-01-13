@@ -6,9 +6,9 @@ import { loadBuildinfo } from '../reducers/auth';
 import { clearSearch } from '../reducers/objectsearch/actions';
 import App from './AppComponent';
 import Notifyable from './Notifyable';
-import {clearStats} from '../reducers/storageunit/stats';
+import {clearStats} from '../modules/storagefacility/reducers/stats';
 import {setMuseumId, setCollectionId } from '../reducers/auth';
-import {clearRoot, loadRoot} from '../reducers/storageunit/grid';
+import {clearRoot, loadRoot} from '../modules/storagefacility/reducers/grid';
 import MuseumId from '../models/museumId';
 
 const mapStateToProps = (state) => {

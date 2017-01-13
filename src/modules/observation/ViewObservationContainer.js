@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { I18n } from 'react-i18nify';
 import ViewObservationPage from './ViewObservationPage';
 import { loadObservation } from '../../reducers/observation';
-import { loadRoot } from '../../reducers/storageunit/grid';
+import { loadRoot } from '../storagefacility/reducers/grid';
 
 const mapStateToProps = (state) => {
   return {

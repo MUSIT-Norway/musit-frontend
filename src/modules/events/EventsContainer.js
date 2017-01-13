@@ -20,7 +20,7 @@
 import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
 import { loadControlsAndObservationsForNode } from '../../reducers/grid/observationcontrol';
-import { loadRoot } from '../../reducers/storageunit/grid';
+import { loadRoot } from '../storagefacility/reducers/grid';
 import ObservationControlGridShow from './EventsComponent';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';

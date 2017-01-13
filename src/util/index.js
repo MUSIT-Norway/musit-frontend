@@ -97,12 +97,12 @@ export const isNumber = (n: number) => {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-export const getPath = (node) => {
+export const getPath = (node: any) => {
   const nodeIds = (node.path != null ? node.path : '').split(',').slice(1).map(p => parseFloat(p)).filter(n => n);
   const pathNames = node.pathNames || [{
-      nodeId: node.id,
-      name: node.name
-    }];
+    nodeId: node.id,
+    name: node.name
+  }];
   return nodeIds.map(nodeId => {
     let pathMatch = pathNames.find(e => e.nodeId === nodeId);
     if (!pathMatch) {
