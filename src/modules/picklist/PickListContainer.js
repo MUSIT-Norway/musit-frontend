@@ -20,7 +20,7 @@
 import PickListComponent from './PickListComponent';
 import { connect } from 'react-redux';
 import { refreshObject, refreshNode, toggleMainObject, toggleNode, toggleObject, removeNode, removeObject } from './picklistReducer';
-import { moveObject, moveNode } from '../../reducers/move';
+import { moveObject, moveNode } from '../movedialog/moveActions';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';

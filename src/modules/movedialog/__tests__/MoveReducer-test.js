@@ -1,6 +1,6 @@
 import deepFreeze from 'deep-freeze';
 import MuseumId from '../../../shared/models/museumId';
-import * as actions from '../index';
+import * as actions from '../moveActions';
 import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';

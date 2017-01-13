@@ -1,12 +1,12 @@
 import configureMockStore from 'redux-mock-store';
-import createMiddleware from '../../../redux/clientMiddleware';
-import ApiClient from '../../../redux/ApiClient';
+import createMiddleware from '../../redux/clientMiddleware';
+import ApiClient from '../../redux/ApiClient';
 import request from 'superagent';
 import nocker from 'superagent-nock';
-import Config from '../../../config';
+import Config from '../../config';
 
-import * as actions from '../../../reducers/auth';
-import auth from '../../../reducers/auth';
+import * as actions from '../appReducer';
+import auth from '../appReducer';
 
 const reducer = auth.reducer;
 const nock = nocker(request);

@@ -19,7 +19,7 @@
 
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import auth from './auth';
+import auth from '../components/appReducer';
 import picklistReducer from '../modules/picklist/picklistReducer';
 import storagePanelStateReducer from '../modules/storagefacility/reducers/panel/state';
 import storagePanelReducer from '../modules/storagefacility/reducers/panel';

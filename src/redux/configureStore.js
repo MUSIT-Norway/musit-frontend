@@ -18,11 +18,10 @@
  */
 
 import { applyMiddleware, createStore as _createStore, compose } from 'redux';
-import rootReducer from '../reducers';
+import rootReducer from './reducers';
 import createMiddleware from './clientMiddleware';
 import createLogger from 'redux-logger';
 import { persistState } from 'redux-devtools';
-import reducers from '../reducers';
 import config from '../config';
 
 const createStore = (client, data) => {
@@ -43,8 +42,8 @@ const createStore = (client, data) => {
   const store = finalCreateStore(rootReducer, data);
 
   if (config.isDev && module.hot) {
-    module.hot.accept('../reducers', () => {
-      store.replaceReducer(reducers);
+    module.hot.accept('../redux/reducers', () => {
+      store.replaceReducer(rootReducer);
     });
   }
 
