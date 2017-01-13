@@ -29,7 +29,7 @@ export default (props) =>
     <main>
       <Grid>
         <div>
-          <h2>{I18n.t('musit.objectsearch.title')}</h2>
+          <h1>{I18n.t('musit.objectsearch.title')}</h1>
           <Form inline>
             {renderParam('museumNo', props)}
             {' '}

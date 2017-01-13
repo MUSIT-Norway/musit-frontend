@@ -32,7 +32,7 @@ export default class ViewObservationPage extends React.Component {
     }
     return (
       <Layout
-        title="Magasin"
+        title={I18n.t('musit.storageUnits.title')}
         breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <div>

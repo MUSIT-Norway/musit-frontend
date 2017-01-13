@@ -87,6 +87,15 @@
         }
       },
       "grid": {
+        "button": {
+          "nodes": "Nodes",
+          "objects": "Objects",
+          "observations": "Observations",
+          "controls": "Controls"
+        },
+        "search": {
+          "placeHolder": "Filter the list"
+        },
         "observation": {
           "date": "Date",
           "types": "Types",
@@ -689,6 +698,15 @@
         }
       },
       "grid": {
+        "button": {
+          "nodes": "Noder",
+          "objects": "Objekter",
+          "observations": "Observasjoner",
+          "controls": "Kontroller"
+        },
+        "search": {
+          "tooltip": "Filtrer i listen"
+        },
         "observation": {
           "date": "Dato",
           "types": "Typer",

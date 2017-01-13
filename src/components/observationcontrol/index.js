@@ -5,6 +5,7 @@ import Layout from '../../layout';
 import Breadcrumb from '../../layout/Breadcrumb';
 import Toolbar from '../../layout/Toolbar';
 import { hashHistory } from 'react-router';
+import { I18n } from 'react-i18nify';
 
 export default class ObservationControlGridShow extends React.Component {
   static propTypes = {
@@ -34,9 +35,9 @@ export default class ObservationControlGridShow extends React.Component {
     return <Toolbar
       showRight={this.state.showControls}
       showLeft={this.state.showObservations}
-      labelRight="Kontroller"
-      labelLeft="Observasjoner"
-      placeHolderSearch="Filtrer i liste"
+      labelRight={I18n.t('musit.grid.button.controls')}
+      labelLeft={I18n.t('musit.grid.button.observations')}
+      placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
       clickShowRight={() => this.setState({ ...this.state, showControls: !this.state.showControls })}
       clickShowLeft={() => this.setState({ ...this.state, showObservations: !this.state.showObservations })}
     />;
@@ -73,7 +74,7 @@ export default class ObservationControlGridShow extends React.Component {
   render() {
     return (
       <Layout
-        title="Magasin"
+        title={I18n.t('musit.storageUnits.title')}
         breadcrumb={
           <Breadcrumb
             node={this.props.rootNode}
