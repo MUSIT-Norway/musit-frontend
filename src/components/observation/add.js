@@ -22,7 +22,7 @@ export default class AddObservationPage extends React.Component {
   render() {
     return (
       <Layout
-        title="Magasin"
+        title={I18n.t('musit.storageUnits.title')}
         breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
         content={
           <div>

@@ -214,7 +214,7 @@ export default class ControlAddContainer extends React.Component {
 
     return (
       <Layout
-        title="Magasin"
+        title={I18n.t('musit.storageUnits.title')}
         breadcrumb={breadcrumb}
         content={
           <form onSubmit={this.handleSubmit}>

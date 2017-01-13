@@ -245,9 +245,9 @@ export default class StorageUnitsContainer extends React.Component {
     return <Toolbar
       showRight={!!showObjects}
       showLeft={!showObjects}
-      labelRight="Objekter"
-      labelLeft="Noder"
-      placeHolderSearch="Filtrer i liste"
+      labelRight={I18n.t('mmusit.grid.button.objects')}
+      labelLeft={I18n.t('musit.grid.button.nodes')}
+      placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
       searchValue={searchPattern}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
@@ -386,7 +386,7 @@ export default class StorageUnitsContainer extends React.Component {
   render() {
     return (
       <Layout
-        title={'Magasin'}
+        title={I18n.t('musit.storageUnits.title')}
         breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={this.onClickCrumb} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
