@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {loadRoot as loadRootNodes, clearRoot, loadChildren as loadChildNodes, deleteUnit} from './reducers/grid/nodes';
 import {loadObjects} from './reducers/grid/objects';
-import {addNode, addObject, loadMainObject} from '../../reducers/picklist';
+import {addNode, addObject, loadMainObject} from '../picklist/picklistReducer';
 import {moveObject, moveNode} from '../../reducers/move';
 import {loadStats, clearStats} from './reducers/stats';
 import {hashHistory} from 'react-router';

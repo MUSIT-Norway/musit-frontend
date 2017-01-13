@@ -5,7 +5,7 @@ import { PageHeader, Grid } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../layout/Breadcrumb';
 import { hashHistory } from 'react-router';
-import { TYPES } from '../../reducers/picklist';
+import { TYPES } from '../picklist/picklistReducer';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MusitModalContainer';
 import './PickListComponent.css';

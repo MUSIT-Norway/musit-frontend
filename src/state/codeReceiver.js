@@ -2,7 +2,7 @@ import pathToRegexp from 'path-to-regexp';
 import { Observable } from 'rxjs/Rx';
 import { hashHistory } from 'react-router';
 import { dispatchAction, getState } from '../reducers/public';
-import { addNode, addObject } from '../reducers/picklist';
+import { addNode, addObject } from '../modules/picklist/picklistReducer';
 import { getPath } from '../reducers/helper';
 import { getMuseumId, getCollectionId } from '../reducers/auth';
 import { isMoveDialogActive, loadNode, loadChildren } from '../modules/storagefacility/reducers/modal';

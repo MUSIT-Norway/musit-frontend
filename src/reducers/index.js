@@ -20,7 +20,7 @@
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
 import auth from './auth';
-import picklistReducer from './picklist';
+import picklistReducer from '../modules/picklist/picklistReducer';
 import storagePanelStateReducer from '../modules/storagefacility/reducers/panel/state';
 import storagePanelReducer from '../modules/storagefacility/reducers/panel';
 import storageNodeGridReducer from '../modules/storagefacility/reducers/grid/nodes';
@@ -28,12 +28,12 @@ import storageUnitModal from '../modules/storagefacility/reducers/modal';
 import storageUnitStatsReducer from '../modules/storagefacility/reducers/stats';
 import storageObjectGridReducer from '../modules/storagefacility/reducers/grid/objects';
 import observationReducer from './observation';
-import reportReducer from './reports';
+import reportReducer from '../modules/reports/reportsReducer';
 import controlReducer from './control';
 import observationControlGridReducer from './grid/observationcontrol';
 import moveHistoryReducer from './grid/move';
 import ObjectSearchReducer from './objectsearch/reducer';
-import printReducer from './print/index';
+import printReducer from '../modules/print/printReducer';
 
 const rootReducer = combineReducers({
   routing: routerReducer,

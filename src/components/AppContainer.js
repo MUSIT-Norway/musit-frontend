@@ -1,7 +1,7 @@
 import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
 import { routerActions } from 'react-router-redux';
-import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../reducers/picklist';
+import { TYPES as PICK_TYPES, clearNodes, clearObjects } from '../modules/picklist/picklistReducer';
 import { loadBuildinfo } from '../reducers/auth';
 import { clearSearch } from '../reducers/objectsearch/actions';
 import App from './AppComponent';

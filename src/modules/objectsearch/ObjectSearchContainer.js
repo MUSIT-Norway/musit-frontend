@@ -1,7 +1,7 @@
 import * as actions from '../../reducers/objectsearch/actions';
 import Component from './ObjectSearchComponent';
 import { connect } from 'react-redux';
-import { addObject, loadMainObject } from '../../reducers/picklist';
+import { addObject, loadMainObject } from '../picklist/picklistReducer';
 
 const mapStateToProps = (state) => {
   return {

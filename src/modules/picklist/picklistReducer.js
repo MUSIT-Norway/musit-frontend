@@ -1,5 +1,5 @@
 import { apiUrl } from '../../util';
-import { getPath } from '../helper';
+import { getPath } from '../../reducers/helper';
 import Config from '../../config';
 import MusitObject from '../../models/object';
 

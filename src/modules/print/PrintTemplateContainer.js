@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import PrintTemplateComponent from './PrintTemplateComponent';
-import { loadTemplates, selectTemplate, selectType, clear, clearRendered, renderTemplate } from '../../reducers/print/index';
+import { loadTemplates, selectTemplate, selectType, clear, clearRendered, renderTemplate } from './printReducer';
 
 const mapDispatchToProps = (dispatch) => {
   return {

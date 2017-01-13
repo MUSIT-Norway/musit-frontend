@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { loadKDReport } from '../../reducers/reports';
+import { loadKDReport } from './reportsReducer';
 import KDReport from './KDReportComponent';
 
 const mapStateToProps = (state) => {

@@ -19,7 +19,7 @@
  */
 import PickListComponent from './PickListComponent';
 import { connect } from 'react-redux';
-import { refreshObject, refreshNode, toggleMainObject, toggleNode, toggleObject, removeNode, removeObject } from '../../reducers/picklist';
+import { refreshObject, refreshNode, toggleMainObject, toggleNode, toggleObject, removeNode, removeObject } from './picklistReducer';
 import { moveObject, moveNode } from '../../reducers/move';
 import { createSelector } from 'reselect';
 import orderBy from 'lodash/orderBy';

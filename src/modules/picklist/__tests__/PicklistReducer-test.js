@@ -20,11 +20,11 @@ import picklistReducer, {
   clearNodes, clearObjects,
   refreshNode,
   LOAD_ONE_NODE_SUCCESS, LOAD_ONE_NODE, LOAD_ONE_NODE_FAIL
-} from '../index';
+} from '../picklistReducer';
 import MusitObject from '../../../models/object';
 
-import reducer from '../../../reducers/picklist/index';
-import * as actions from '../../../reducers/picklist/index';
+import reducer from '../picklistReducer';
+import * as actions from '../picklistReducer';
 
 const node1 = {
   id: 1,
