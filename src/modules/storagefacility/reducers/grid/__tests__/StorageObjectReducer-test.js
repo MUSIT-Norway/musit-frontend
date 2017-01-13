@@ -1,11 +1,11 @@
-import * as actions from '../index';
-import reducer from '../index';
+import * as actions from '../objects';
+import reducer from '../objects';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
-import Config from '../../../../config';
-import MuseumId from '../../../../models/museumId';
-import CollectionId from '../../../../models/collectionId';
+import Config from '../../../../../config';
+import MuseumId from '../../../../../models/museumId';
+import CollectionId from '../../../../../models/collectionId';
 
 const comingFromBackend = {
   totalMatches: 3,

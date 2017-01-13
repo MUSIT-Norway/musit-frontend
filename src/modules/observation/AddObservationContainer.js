@@ -3,7 +3,7 @@ import { I18n } from 'react-i18nify';
 import AddObservationPage from './AddObservationPage';
 import { hashHistory } from 'react-router';
 import { addObservation } from '../../reducers/observation';
-import { loadRoot } from '../storagefacility/reducers/grid';
+import { loadRoot } from '../storagefacility/reducers/grid/nodes';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 
 const mapStateToProps = (state) => {

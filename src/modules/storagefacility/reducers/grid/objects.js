@@ -1,9 +1,9 @@
-import { apiUrl } from '../../../util';
+import { apiUrl } from '../../../../util';
 export const LOAD_SEVERAL = 'musit/storageobject-grid/LOAD_SEVERAL';
 export const LOAD_SEVERAL_SUCCESS = 'musit/storageobject-grid/LOAD_SEVERAL_SUCCESS';
 export const LOAD_SEVERAL_FAIL = 'musit/storageobject-grid/LOAD_SEVERAL_FAIL';
-import Config from '../../../config';
-import MusitObject from '../../../models/object';
+import Config from '../../../../config';
+import MusitObject from '../../../../models/object';
 
 const storageObjectGridReducer = (state = {}, action = {}) => {
   switch (action.type) {

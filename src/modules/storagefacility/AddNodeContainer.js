@@ -5,7 +5,7 @@ import StorageUnitAddContainer from './AddNodeComponent';
 import { clear as clearState, update as updateState } from './reducers/panel/state';
 import { emitError, emitSuccess } from '../../util/errors/emitter';
 import { I18n } from 'react-i18nify';
-import { loadRoot } from './reducers/grid';
+import { loadRoot } from './reducers/grid/nodes';
 
 const mapDispatchToProps = (dispatch) => {
   return {

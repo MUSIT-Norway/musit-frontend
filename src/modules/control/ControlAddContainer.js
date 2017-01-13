@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 import { addControl } from '../../reducers/control';
 import { I18n } from 'react-i18nify';
 import ControlAddComponent from './ControlAddComponent';
-import { loadRoot } from '../storagefacility/reducers/grid';
+import { loadRoot } from '../storagefacility/reducers/grid/nodes';
 
 const mapStateToProps = (state) => ({
   actor: state.auth.user.actor,

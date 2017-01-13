@@ -8,7 +8,7 @@ import App from './AppComponent';
 import Notifyable from './Notifyable';
 import {clearStats} from '../modules/storagefacility/reducers/stats';
 import {setMuseumId, setCollectionId } from '../reducers/auth';
-import {clearRoot, loadRoot} from '../modules/storagefacility/reducers/grid';
+import {clearRoot, loadRoot} from '../modules/storagefacility/reducers/grid/nodes';
 import MuseumId from '../models/museumId';
 
 const mapStateToProps = (state) => {
