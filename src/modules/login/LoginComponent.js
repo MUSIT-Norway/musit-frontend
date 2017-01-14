@@ -8,20 +8,7 @@ import Logos from '../../components/logos/Logos';
 import LoginButton from './loginButton';
 import TermsAndConditions from './TermsAndConditions';
 
-const getTranslated = (props, showModal) => {
-  const locale = I18n._locale;
-  let Component;
-  switch (locale) {
-  case 'no':
-    Component = NorwegianTranslation;
-    break;
-  default:
-    Component = EnglishTranslation;
-  }
-  return <Component {...props} showModal={showModal} />;
-};
-
-class WelcomeContainer extends React.Component {
+export default class WelcomeContainer extends React.Component {
   static propTypes = {
     user: React.PropTypes.object,
     setUser: React.PropTypes.func.isRequired
@@ -45,6 +32,7 @@ class WelcomeContainer extends React.Component {
   }
 
   render() {
+    const Translated = I18n._locale === 'no' ? NorwegianTranslation : EnglishTranslation;
     return (
       <div>
         <main>
@@ -60,7 +48,7 @@ class WelcomeContainer extends React.Component {
                   </LoginButton>
                   }
                   <div className="title">
-                    {getTranslated(this.props, this.showModal)}
+                    <Translated {...this.props} showModal={this.showModal} />
                   </div>
                   <Logos style={{ marginTop: 100 }}/>
                 </div>
@@ -73,5 +61,3 @@ class WelcomeContainer extends React.Component {
     );
   }
 }
-
-export default WelcomeContainer;

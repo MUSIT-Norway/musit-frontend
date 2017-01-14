@@ -6,29 +6,22 @@ import NorwegianTranslation from './AboutPage_no.html.jsx';
 import EnglishTranslation from './AboutPage_en.html.jsx';
 import Logos from '../../components/logos/Logos';
 
-const getTranslated = (props) => {
-  const locale = I18n._locale;
-  switch (locale) {
-  case 'no':
-    return <NorwegianTranslation {...props} />;
-  default:
-    return <EnglishTranslation {...props} />;
-  }
-};
-
-export default (props) => (
-  <div>
-    <main>
-      <Grid>
-        <Row className="row-centered">
-          <div className="aboutPanel">
-            <div>
-              {getTranslated(props)}
-              <Logos />
+export default (props) => {
+  const Translated = I18n._locale === 'no' ? NorwegianTranslation : EnglishTranslation;
+  return (
+    <div>
+      <main>
+        <Grid>
+          <Row className="row-centered">
+            <div className="aboutPanel">
+              <div>
+                <Translated {...props} />
+                <Logos />
+              </div>
             </div>
-          </div>
-        </Row>
-      </Grid>
-    </main>
-  </div>
-);
+          </Row>
+        </Grid>
+      </main>
+    </div>
+  );
+};
