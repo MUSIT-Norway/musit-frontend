@@ -1,10 +1,11 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import autoComplete from '../../state/autocomplete';
 import Config from '../../config';
 import Actor from '../../shared/models/actor';
+import suggest$Fn, { update$, clear$} from './suggestStore';
+import inject from '../../state/createContainer';
 
-class ActorSuggest extends React.Component {
+export class ActorSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
@@ -14,11 +15,13 @@ class ActorSuggest extends React.Component {
     onChange: React.PropTypes.func.isRequired,
     update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
-    clear: React.PropTypes.func
+    clear: React.PropTypes.func,
+    museumId: React.PropTypes.number
   }
 
   constructor(props) {
     super(props);
+    this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
       value: this.props.value
     };
@@ -38,29 +41,40 @@ class ActorSuggest extends React.Component {
     onChange: (event, { newValue }) => this.setState({ ...this.state, value: newValue })
   }
 
+  requestSuggestionUpdate(update) {
+    if (update.value.length > 2) {
+      const museumId = this.props.museumId;
+      this.props.update({update, museumId});
+    }
+  }
+
   render() {
     return (
       <Autosuggest
-        suggestions={this.props.suggest}
-        disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={this.props.update}
-        getSuggestionValue={(suggestion) => suggestion.fn}
-        renderSuggestion={
-          (suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>
-        }
-        inputProps={{ ...this.doneByProps, value: this.state.value }}
-        shouldRenderSuggestions={(v) => v !== 'undefined'}
-        onSuggestionSelected={
-          (event, { suggestion }) => {
-            if (event.keyCode === 13) {
-              event.preventDefault();
-            }
-            this.props.onChange(new Actor(suggestion));
+          suggestions={this.props.suggest.data || []}
+          disabled={this.props.disabled}
+          onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
+          getSuggestionValue={(suggestion) => suggestion.fn}
+          renderSuggestion={
+            (suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>
           }
-        }
+          inputProps={{ ...this.doneByProps, value: this.state.value }}
+          shouldRenderSuggestions={(v) => v !== 'undefined'}
+          onSuggestionSelected={
+            (event, { suggestion }) => {
+              if (event.keyCode === 13) {
+                event.preventDefault();
+              }
+              this.props.onChange(new Actor(suggestion));
+            }
+          }
       />
     );
   }
 }
 
-export default autoComplete(Config.magasin.urls.actor.searchUrl)(ActorSuggest);
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } },
+  state: { suggest$: suggest$Fn(Config.magasin.urls.actor.searchUrl) },
+  actions: { update$, clear$ }
+})(ActorSuggest);

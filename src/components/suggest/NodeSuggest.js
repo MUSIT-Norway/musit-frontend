@@ -1,9 +1,10 @@
 import React from 'react';
 import AutoSuggest from 'react-autosuggest';
-import autoComplete from '../../state/autocomplete';
 import Config from '../../config';
+import suggest$Fn, { update$, clear$} from './suggestStore';
+import inject from '../../state/createContainer';
 
-class NodeSuggest extends React.Component {
+export class NodeSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
@@ -69,7 +70,7 @@ class NodeSuggest extends React.Component {
   render() {
     return (
       <AutoSuggest
-        suggestions={this.props.suggest}
+        suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
         onSuggestionsUpdateRequested={this.props.update}
         getSuggestionValue={this.getNodeSuggestionValue}
@@ -82,4 +83,8 @@ class NodeSuggest extends React.Component {
   }
 }
 
-export default autoComplete(Config.magasin.urls.storagefacility.searchUrl)(NodeSuggest);
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } },
+  state: { suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl) },
+  actions: { update$, clear$ }
+})(NodeSuggest);

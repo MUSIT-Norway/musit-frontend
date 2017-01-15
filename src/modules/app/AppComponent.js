@@ -9,8 +9,10 @@ import { TYPES as PICK_TYPES } from '../picklist/picklistReducer';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
+import { provide } from '../../shared/di';
+import appSession from './appSession';
 
-export default class App extends Component {
+export class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
@@ -113,3 +115,7 @@ export default class App extends Component {
     );
   }
 }
+
+export default provide({
+  appSession: { type: PropTypes.object, value: () => appSession }
+})(App);

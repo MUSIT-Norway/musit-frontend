@@ -1,15 +1,16 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import autoComplete from '../../state/autocomplete';
+import inject from '../../state/createContainer';
+import suggest$Fn, { update$, clear$} from './suggestStore';
 import Config from '../../config';
 
-class AddressSuggest extends React.Component {
+export class AddressSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
     placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.array,
+    suggest: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
     update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
@@ -25,6 +26,7 @@ class AddressSuggest extends React.Component {
   constructor(props) {
     super(props);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
       value: this.props.value
     };
@@ -64,16 +66,22 @@ class AddressSuggest extends React.Component {
   renderAddressSuggestion(suggestion) {
     const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
     return (
-      <span className={'suggestion-content'}>{suggestionText}</span>
-    );
+            <span className={'suggestion-content'}>{suggestionText}</span>
+        );
+  }
+
+  requestSuggestionUpdate(update) {
+    if (update.value.length > 2) {
+      this.props.update({update, token: this.props.appSession.getAccessToken()});
+    }
   }
 
   render() {
     return (
       <Autosuggest
-        suggestions={this.props.suggest}
+        suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={this.props.update}
+        onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
         inputProps={{ ...this.doneByProps, value: this.state.value }}
@@ -83,5 +91,8 @@ class AddressSuggest extends React.Component {
     );
   }
 }
-
-export default autoComplete(Config.magasin.urls.geolocation.searchUrl)(AddressSuggest);
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } },
+  state: { suggest$: suggest$Fn(Config.magasin.urls.geolocation.searchUrl) },
+  actions: { update$, clear$ }
+})(AddressSuggest);
