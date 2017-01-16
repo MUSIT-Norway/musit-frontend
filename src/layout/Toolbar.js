@@ -35,7 +35,7 @@ export default class Toolbar extends React.Component {
       optionalSearch = 
         <div className="searchField">
           <MusitField
-            style={{ width: '200px' }}
+            style={{ width: '200px', zIndex: 'inherit' }}
             id={'search'}
             addOnPrefix={'\u2315'}
             placeHolder={placeHolderSearch}
