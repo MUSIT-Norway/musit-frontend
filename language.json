@@ -711,7 +711,7 @@
           "controls": "Kontroller"
         },
         "search": {
-          "tooltip": "Filtrer i listen"
+          "placeHolder": "Filtrer i listen"
         },
         "observation": {
           "date": "Dato",
