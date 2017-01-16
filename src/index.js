@@ -37,6 +37,13 @@ import 'font-awesome/css/font-awesome.css';
 import './index.css';
 import './state/codeReceiver';
 
+const parseQuery = require('query-string').parse;
+const query = parseQuery(location.search);
+if (query['_at']) {
+  localStorage.setItem('accessToken', JSON.stringify({ accessToken: query['_at'] }));
+  window.location.href='/#/magasin';
+}
+
 const client = new ApiClient();
 const dest = document.getElementById('content');
 const store = createStore(client);

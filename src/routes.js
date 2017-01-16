@@ -37,43 +37,33 @@ import ObjectSearchContainer from './containers/objectsearch';
 import Authenticated from './components/Authenticated';
 import * as path from './routes.path';
 
-const TokenSetter = (nextState, replace, callback) => {
-  const location = nextState.location;
-  localStorage.setItem('accessToken', JSON.stringify({ accessToken: location.query['_at'] }));
-  replace('/magasin');
-  callback();
-};
-
 export default () => {
   return (
-    <Route path="/">
+    <Route path="/" component={Authenticated}>
       <IndexRedirect to={path.ROUTE_SF} />
-      <Route path="/authenticate" onEnter={TokenSetter} />
-      <Route component={Authenticated}>
-        <Route path={path.ROUTE_SF}>
-          <IndexRoute component={StorageUnitsTable} />
-          <Route path={path.ROUTE_SF_ADD} add component={AddStorageUnitPanel} />
-          <Route path={path.ROUTE_SF_NODE_ADD} add component={AddStorageUnitPanel} />
-          <Route path={path.ROUTE_SF_NODE_VIEW} component={EditStorageUnitPanel} />
-          <Route path={path.ROUTE_SF_NODE_CONTROLS} showControls showObservations={false} component={ObservationControlGridShow} />
-          <Route path={path.ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={ObservationControlGridShow} />
-          <Route path={path.ROUTE_SF_NODE_CONTROLS_ADD} component={ControlAddContainer} />
-          <Route path={path.ROUTE_SF_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
-          <Route path={path.ROUTE_SF_NODE_OBSERVATIONS} showObservations showControls={false} component={ObservationControlGridShow} />
-          <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
-          <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
-          <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
-          <Route path={path.ROUTE_SF_OBJECTS} showObjects component={StorageUnitsTable} />
-          <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
-        </Route>
-        <Route path={path.ROUTE_PICKLIST} component={PickListView} />
-        <Route path={path.ROUTE_REPORTS} component={Reports} />
-        <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
-        <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
-        <Route path="/about" component={AboutView} />
-        -- Catch all route
-        <Route path="/*" component={NotFound} status={404} />
+      <Route path={path.ROUTE_SF}>
+        <IndexRoute component={StorageUnitsTable} />
+        <Route path={path.ROUTE_SF_ADD} add component={AddStorageUnitPanel} />
+        <Route path={path.ROUTE_SF_NODE_ADD} add component={AddStorageUnitPanel} />
+        <Route path={path.ROUTE_SF_NODE_VIEW} component={EditStorageUnitPanel} />
+        <Route path={path.ROUTE_SF_NODE_CONTROLS} showControls showObservations={false} component={ObservationControlGridShow} />
+        <Route path={path.ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={ObservationControlGridShow} />
+        <Route path={path.ROUTE_SF_NODE_CONTROLS_ADD} component={ControlAddContainer} />
+        <Route path={path.ROUTE_SF_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
+        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS} showObservations showControls={false} component={ObservationControlGridShow} />
+        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
+        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
+        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
+        <Route path={path.ROUTE_SF_OBJECTS} showObjects component={StorageUnitsTable} />
+        <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
       </Route>
+      <Route path={path.ROUTE_PICKLIST} component={PickListView} />
+      <Route path={path.ROUTE_REPORTS} component={Reports} />
+      <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
+      <Route path="/about" component={AboutView} />
+      -- Catch all route
+      <Route path="/*" component={NotFound} status={404} />
     </Route>
   );
 };
