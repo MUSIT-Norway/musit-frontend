@@ -70,6 +70,10 @@ const mapDispatchToProps = (dispatch) => {
         const userid = JSON.parse(fakeToken).userid;
         user = fakeUserInfo.find(u => u.userid === userid);
       }
+      const accessToken = localStorage.getItem('accessToken');
+      if (accessToken) {
+        user = JSON.parse(accessToken); 
+      }
       if (user) {
         dispatch(setUser(user));
         dispatch(loadActor(callback));
