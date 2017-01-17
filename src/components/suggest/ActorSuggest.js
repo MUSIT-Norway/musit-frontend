@@ -51,23 +51,19 @@ export class ActorSuggest extends React.Component {
   render() {
     return (
       <Autosuggest
-          suggestions={this.props.suggest.data || []}
-          disabled={this.props.disabled}
-          onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
-          getSuggestionValue={(suggestion) => suggestion.fn}
-          renderSuggestion={
-            (suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>
+        suggestions={this.props.suggest.data || []}
+        disabled={this.props.disabled}
+        onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
+        getSuggestionValue={(suggestion) => suggestion.fn}
+        renderSuggestion={(suggestion) => <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
+        inputProps={{ ...this.doneByProps, value: this.state.value }}
+        shouldRenderSuggestions={(v) => v !== 'undefined'}
+        onSuggestionSelected={(event, { suggestion }) => {
+          if (event.keyCode === 13) {
+            event.preventDefault();
           }
-          inputProps={{ ...this.doneByProps, value: this.state.value }}
-          shouldRenderSuggestions={(v) => v !== 'undefined'}
-          onSuggestionSelected={
-            (event, { suggestion }) => {
-              if (event.keyCode === 13) {
-                event.preventDefault();
-              }
-              this.props.onChange(new Actor(suggestion));
-            }
-          }
+          this.props.onChange(new Actor(suggestion));
+        }}
       />
     );
   }

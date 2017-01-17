@@ -1,12 +1,12 @@
 import pathToRegexp from 'path-to-regexp';
-import {Observable} from 'rxjs/Rx';
-import {hashHistory} from 'react-router';
-import {addNode, addObject} from '../modules/picklist/picklistReducer';
-import {getMuseumId, getCollectionId} from '../modules/app/appReducer';
-import {isMoveDialogActive, loadNode, loadChildren} from '../modules/storagefacility/reducers/modal';
-import {ROUTE_PICKLIST, ROUTE_SF} from '../routes.path';
-import {emitError} from '../shared/errors/emitter';
-import {isNumber, getPath, dispatchAction, getState} from '../shared/util';
+import { Observable } from 'rxjs/Rx';
+import { hashHistory } from 'react-router';
+import { addNode, addObject } from '../modules/picklist/picklistReducer';
+import { getMuseumId, getCollectionId } from '../modules/app/appReducer';
+import { isMoveDialogActive, loadNode, loadChildren } from '../modules/storagefacility/reducers/modal';
+import { ROUTE_PICKLIST, ROUTE_SF } from '../routes.path';
+import { emitError } from '../shared/errors/emitter';
+import { isNumber, getPath, dispatchAction, getState } from '../shared/util';
 import Config from '../config';
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
