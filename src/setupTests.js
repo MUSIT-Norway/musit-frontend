@@ -1,4 +1,4 @@
-import MuseumId from './models/museumId';
+import MuseumId from './shared/models/museumId';
 
 if (typeof localStorage === 'undefined' || localStorage === null) {
   const LocalStorage = require('node-localstorage').LocalStorage;
@@ -11,8 +11,8 @@ I18n.loadTranslations(LanguageJson);
 I18n.setLocale('no');
 
 import configureMockStore from 'redux-mock-store';
-import createMiddleware from './middleware/clientMiddleware';
-import ApiClient from './middleware/ApiClient';
+import createMiddleware from './redux/clientMiddleware';
+import ApiClient from './redux/ApiClient';
 const middlewares = [ createMiddleware(new ApiClient()) ];
 global.mockStore = configureMockStore(middlewares);
 global.reduxStore = {
