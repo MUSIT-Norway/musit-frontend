@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     clearUser: () => {
       localStorage.removeItem('jwtToken');
-      localStorage.removeItem('fakeToken');
+      localStorage.removeItem('accessToken');
       window.location.replace('https://auth.dataporten.no/logout');
     },
     loadUser: (callback) => {

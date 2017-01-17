@@ -9,6 +9,7 @@ import { TYPES as PICK_TYPES } from '../picklist/picklistReducer';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
+import {emitError} from '../../shared/errors/emitter';
 
 export default class App extends Component {
   static propTypes = {
@@ -23,13 +24,27 @@ export default class App extends Component {
     buildinfo: PropTypes.any
   }
 
+  constructor(props, context) {
+    super(props, context);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
   componentWillMount() {
     this.props.loadBuildinfo();
   }
 
-  handleLogout = () => {
-    this.props.clearUser();
-    hashHistory.replace('/');
+  handleLogout() {
+    fetch('/api/auth/rest/logout', {
+      method: 'GET',
+      headers: new Headers({
+        Authorization: 'Bearer ' + this.props.user.accessToken
+      })
+    }).then(response => {
+      if (response.ok) {
+        this.props.clearUser();
+        hashHistory.replace('/');
+      }
+    }).catch(error => emitError({ type: 'network', error}));
   }
 
   handleLanguage = (l) => {
