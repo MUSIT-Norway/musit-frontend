@@ -12,16 +12,16 @@ export default class RxContainer extends React.Component {
 
   componentDidMount() {
     this.subscription = this.props.observable.subscribe(props => {
-      this.setState({ props });
+      this.setState({props});
     });
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.observable !== this.props.observable) {
       this.subscription.unsubscribe();
-      this.setState({ props: nextProps.initialState });
+      this.setState({props: nextProps.initialState});
       this.subscription = nextProps.observable.subscribe(props => {
-        this.setState({ props });
+        this.setState({props});
       });
     }
   }
@@ -36,11 +36,11 @@ export default class RxContainer extends React.Component {
     }
     const Component = this.props.component;
     return (
-            <Component
-                {...this.props.props}
-                {...this.props.callbacks}
-                {...this.state.props}
-            />
-        );
+      <Component
+        {...this.props.props}
+        {...this.props.callbacks}
+        {...this.state.props}
+      />
+    );
   }
 }

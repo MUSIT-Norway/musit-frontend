@@ -9,22 +9,24 @@ import { TYPES as PICK_TYPES } from '../picklist/picklistReducer';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
-import { provide, inject } from '../../shared/di';
+import provide from '../../state/provide';
+import inject from '../../state/inject';
 import appSession from './appSession';
 import LoginComponent from '../login/LoginComponent';
 
 export class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    user: PropTypes.object,
-    store: PropTypes.object,
-    pickListNodeCount: PropTypes.number.isRequired,
-    pickListObjectCount: PropTypes.number.isRequired,
-    clearUser: PropTypes.func.isRequired,
-    loadUser: PropTypes.func.isRequired,
-    loadBuildinfo: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired,
     appState: PropTypes.object.isRequired
+  }
+
+  constructor(props, context) {
+    super(props, context);
+    this.handleLanguage = this.handleLanguage.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleMuseumId = this.handleMuseumId.bind(this);
+    this.handleCollectionId = this.handleCollectionId.bind(this);
   }
 
   componentWillMount() {
@@ -32,8 +34,9 @@ export class App extends Component {
   }
 
   handleLogout() {
-    this.props.appSession.clearUser();
-    hashHistory.replace('/');
+    localStorage.removeItem('jwtToken');
+    localStorage.removeItem('fakeToken');
+    window.location.replace('https://auth.dataporten.no/logout');
   }
 
   handleLanguage(l) {

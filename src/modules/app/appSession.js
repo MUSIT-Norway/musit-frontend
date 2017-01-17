@@ -9,7 +9,7 @@ import { I18n } from 'react-i18nify';
 
 class AppSession {
   store$: Observable;
-  state: Object = deepFreeze({accessToken: getAccessToken(), actor: {}, groups: [], museumId: 99});
+  state: Object = deepFreeze({accessToken: getAccessToken(), buildInfo: {}, actor: {}, groups: [], museumId: 99});
   error: Object;
   actions: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$', 'clearUser$');
 

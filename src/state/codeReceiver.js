@@ -1,12 +1,12 @@
 import pathToRegexp from 'path-to-regexp';
-import { Observable } from 'rxjs/Rx';
-import { hashHistory } from 'react-router';
-import { addNode, addObject } from '../modules/picklist/picklistReducer';
-import { getMuseumId, getCollectionId } from '../modules/app/appReducer';
-import { isMoveDialogActive, loadNode, loadChildren } from '../modules/storagefacility/reducers/modal';
-import { ROUTE_PICKLIST, ROUTE_SF } from '../routes.path';
-import { emitError } from '../shared/errors/emitter';
-import { isNumber, getPath, dispatchAction, getState } from '../shared/util';
+import {Observable} from 'rxjs/Rx';
+import {hashHistory} from 'react-router';
+import {addNode, addObject} from '../modules/picklist/picklistReducer';
+import {getMuseumId, getCollectionId} from '../modules/app/appReducer';
+import {isMoveDialogActive, loadNode, loadChildren} from '../modules/storagefacility/reducers/modal';
+import {ROUTE_PICKLIST, ROUTE_SF} from '../routes.path';
+import {emitError} from '../shared/errors/emitter';
+import {isNumber, getPath, dispatchAction, getState} from '../shared/util';
 import Config from '../config';
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -29,8 +29,8 @@ const char$ = keyPress$.map(e => String.fromCharCode(e.which));
 const charReducer$ = char$.map(text => (state) => `${state}${text.replace('\\+', '-')}`);
 
 const state$ = Observable.merge(clearReducer$, charReducer$)
-    .scan((state, reducer) => reducer(state), '')
-    .map(text =>text.replace(/\+/g, '-'));
+  .scan((state, reducer) => reducer(state), '')
+  .map(text => text.replace(/\+/g, '-'));
 
 const getRoutePathname = () => getState(ROUTE_STATE, ROUTE_LOCATION).pathname;
 const getPickListPath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
@@ -41,16 +41,14 @@ const scanOldBarcodeObjectUrlFn = Config.magasin.urls.thingaggregate.scanOldUrl;
 const scanOldBarcodeNodeUrlFn = Config.magasin.urls.storagefacility.scanOldUrl;
 const scanUUIDNodeUrlFn = Config.magasin.urls.storagefacility.scanUrl;
 
-const dispatchNodeSearch = (
-  scanNodeUrlFn,
-  scanObjectUrlFn,
-  uuidOrBarCode,
-  nodePickList,
-  storageFacility,
-  moveActive,
-  museumId = getMuseumId(),
-  collectionId = getCollectionId()
-) => {
+const dispatchNodeSearch = (scanNodeUrlFn,
+                            scanObjectUrlFn,
+                            uuidOrBarCode,
+                            nodePickList,
+                            storageFacility,
+                            moveActive,
+                            museumId = getMuseumId(),
+                            collectionId = getCollectionId()) => {
   dispatchAction({
     types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
     promise: (client) => new Promise((resolve, reject) => {
@@ -108,12 +106,10 @@ const dispatchNodeSearch = (
   });
 };
 
-const dispatchObject = (
-  urlFn,
-  oldBarcode,
-  museumId = getMuseumId(),
-  collectionId = getCollectionId()
-) => {
+const dispatchObject = (urlFn,
+                        oldBarcode,
+                        museumId = getMuseumId(),
+                        collectionId = getCollectionId()) => {
   dispatchAction({
     types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
     promise: (client) => client.get(urlFn(oldBarcode, museumId, collectionId)),
@@ -146,7 +142,7 @@ state$.filter(text => OLD_REGEX.test(text))
         oldBarcode
       );
     } else {
-      emitError({ message: 'Scanning av gamle barcodes kan kun gjøres i magasin eller node/objekt plukkliste' });
+      emitError({message: 'Scanning av gamle barcodes kan kun gjøres i magasin eller node/objekt plukkliste'});
     }
   });
 
@@ -167,6 +163,6 @@ state$.filter(text => UUID_REGEX.test(text))
         moveActive
       );
     } else {
-      emitError({ message: 'Scanning av uuid kan kun gjøres i magasin eller node plukkliste' });
+      emitError({message: 'Scanning av uuid kan kun gjøres i magasin eller node plukkliste'});
     }
   });

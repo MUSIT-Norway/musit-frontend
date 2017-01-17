@@ -2,15 +2,15 @@ import {Observable} from 'rxjs';
 import 'rxjs/add/observable/dom/ajax';
 
 const ajax = (url, method, body, headers) =>
-    Observable.ajax({
-      url,
-      responseType: 'json',
-      method,
-      body,
-      headers: {
-        ...headers
-      }
-    });
+  Observable.ajax({
+    url,
+    responseType: 'json',
+    method,
+    body,
+    headers: {
+      ...headers
+    }
+  });
 
 
 export const get = (url, token) => ajax(url, 'GET', null, {
