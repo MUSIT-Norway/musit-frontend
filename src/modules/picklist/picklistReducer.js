@@ -87,7 +87,7 @@ const clearItems = (type) => (state) => ({
 
 export const getPathString = (pathStr) => {
   const pathStrArr = pathStr.substr(1, pathStr.length - 2).split(',');
-  // EX: ,1,2,3,19, will be transformed to 1,2,3,
+  // EX: ,1,2,3,19, will be transformed to ,1,2,3,
   return `,${pathStrArr.slice(0, -1).join(',').toString()},`;
 };
 
@@ -103,7 +103,12 @@ const loadItemSuccess = (type) => (state, action) => {
         ...n,
         path: getPath({
           path: type === TYPES.OBJECT ? action.result.path : getPathString(action.result.path),
-          pathNames: action.result.pathNames
+          pathNames: action.result.pathNames || [
+            {
+              name: action.result.name,
+              nodeId: action.result.id // intended
+            }
+          ]
         })
       };
     }
