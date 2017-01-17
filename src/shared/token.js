@@ -1,4 +1,3 @@
-import fakeUserInfo from '../../fake_security.json';
 import jwtDecode from 'jwt-decode';
 
 export const getAccessToken = () => {
@@ -7,15 +6,9 @@ export const getAccessToken = () => {
   if (jwtToken) {
     user = jwtDecode(jwtToken);
   }
-  const fakeToken = localStorage.getItem('fakeToken');
-  if (fakeToken) {
-    const userid = JSON.parse(fakeToken).userid;
-    user = fakeUserInfo.find(u => u.userid === userid);
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+    user = JSON.parse(accessToken);
   }
   return user.accessToken;
-};
-
-export const clearAccessToken = () => {
-  localStorage.removeItem('jwtToken');
-  localStorage.removeItem('fakeToken');
 };

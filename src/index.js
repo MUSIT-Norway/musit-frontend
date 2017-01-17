@@ -48,6 +48,7 @@ if (accessToken) {
 }
 if (user) {
   localStorage.setItem('accessToken', user);
+  window.location.href='/#/magasin';
 }
 
 const client = new ApiClient();

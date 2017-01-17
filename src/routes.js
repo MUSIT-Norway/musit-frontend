@@ -22,7 +22,7 @@ import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import NotFound from './components/NotFound';
 import AboutView from './modules/about/AboutPage';
 import PickListView from './modules/picklist/PickListContainer';
-import StorageUnitsTable from './modules/storagefacility/NodeGridContainer';
+import StorageUnitsTable from './modules/storagefacility/NodeGridComponent';
 import AddStorageUnitPanel from './modules/storagefacility/AddNodeContainer';
 import EditStorageUnitPanel from './modules/storagefacility/EditNodeContainer';
 import AddObservationPage from './modules/observation/AddObservationContainer';

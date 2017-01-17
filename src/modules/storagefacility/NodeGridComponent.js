@@ -16,6 +16,9 @@ import MusitNode from '../../shared/models/node';
 import PagingToolbar from '../../shared/paging';
 import Config from '../../config';
 import Loader from 'react-loader';
+import inject from '../../state/inject';
+import Rx from 'rxjs';
+import nodeStore, { loadStorageUnits$, loadStorageObjects$, loadChildren$, loadRoot$ } from './nodeGridStore';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -24,7 +27,7 @@ const getObjectDescription = (object) => {
   return objStr;
 };
 
-export default class StorageUnitsContainer extends React.Component {
+export class StorageUnitsContainer extends React.Component {
   static propTypes = {
     children: React.PropTypes.arrayOf(React.PropTypes.object),
     objects: React.PropTypes.arrayOf(React.PropTypes.object),
@@ -34,7 +37,7 @@ export default class StorageUnitsContainer extends React.Component {
     onDelete: React.PropTypes.func.isRequired,
     onAction: React.PropTypes.func.isRequired,
     props: React.PropTypes.object,
-    params: React.PropTypes.object,
+    params: React.PropTypes.object.isRequired,
     history: React.PropTypes.object,
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
@@ -87,8 +90,8 @@ export default class StorageUnitsContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const museumHasChanged = newProps.user.museumId !== this.props.user.museumId;
-    const museumId = museumHasChanged ? newProps.user.museumId : this.props.user.museumId;
+    const museumHasChanged = newProps.appSession.state.museumId !== this.props.appSession.state.museumId;
+    const museumId = museumHasChanged ? newProps.appSession.state.museumId : this.props.appSession.state.museumId;
     const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
@@ -98,9 +101,9 @@ export default class StorageUnitsContainer extends React.Component {
       if (newProps.route.showObjects) {
         this.loadObjects(currentPage);
       } else if (nodeId) {
-        this.props.loadChildren(nodeId, museumId, currentPage);
+        this.props.loadChildren({nodeId, museumId, currentPage, token: this.props.appSession.getAccessToken()});
       } else {
-        this.props.loadStorageUnits(museumId, currentPage);
+        this.props.loadStorageUnits({museumId, currentPage, token: this.props.appSession.getAccessToken()});
       }
     }
   }
@@ -128,7 +131,12 @@ export default class StorageUnitsContainer extends React.Component {
 
   loadNodes() {
     if (this.props.params.id) {
-      this.props.loadChildren(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
+      this.props.loadChildren({
+        nodeId: this.props.params.id,
+        museumId: this.props.appSession.getMuseumId(),
+        page: this.getCurrentPage(),
+        token: this.props.appSession.getAccessToken()
+      });
     } else {
       this.props.loadStorageUnits(this.props.user.museumId, this.getCurrentPage());
     }
@@ -315,7 +323,7 @@ export default class StorageUnitsContainer extends React.Component {
       return (
         <Loader loaded={!this.props.loadingObjects}>
           <ObjectGrid
-            tableData={filter(objects, ['museumNo', 'subNo', 'term'], searchPattern)}
+            tableData={objects ? filter(objects, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             onAction={(action, unit) =>
               onAction(
@@ -349,7 +357,7 @@ export default class StorageUnitsContainer extends React.Component {
     return (
       <Loader loaded={!this.props.loadingNodes}>
         <NodeGrid
-          tableData={filter(children, ['name'], searchPattern)}
+          tableData={children ? filter(children, ['name'], searchPattern) : []}
           onAction={(action, unit) =>
             onAction(
               action,
@@ -395,3 +403,10 @@ export default class StorageUnitsContainer extends React.Component {
     );
   }
 }
+
+const user$ = Rx.Observable.of({});
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } },
+  state: { nodes$: nodeStore, user$ },
+  actions: { loadRoot$, loadStorageObjects$, loadStorageUnits$, loadChildren$ }
+})(StorageUnitsContainer);

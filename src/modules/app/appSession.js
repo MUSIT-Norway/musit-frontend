@@ -5,6 +5,8 @@ import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors/emitter';
 import { I18n } from 'react-i18nify';
+import MuseumId from '../../shared/models/museumId';
+import CollectionId from '../../shared/models/collectionId';
 
 class AppSession {
   store$: Observable;
@@ -80,7 +82,9 @@ class AppSession {
               museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
             }));
           }
-          return {...state, actor: currentUserRes.response, groups, buildInfo: buildInfoRes.response};
+          const museumId = new MuseumId(groups[0].museumId);
+          const collectionId = new CollectionId(groups[0].collections[0].uuid);
+          return {...state, actor: currentUserRes.response, groups, museumId, collectionId, buildInfo: buildInfoRes.response};
         })
     );
   }
