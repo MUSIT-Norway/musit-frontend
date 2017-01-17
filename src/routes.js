@@ -34,12 +34,12 @@ import ControlViewContainer from './modules/control/ControlViewContainer';
 import ControlAddContainer from './modules/control/ControlAddContainer';
 import EventsContainer from './modules/events/EventsContainer';
 import ObjectSearchContainer from './modules/objectsearch/ObjectSearchContainer';
-import Authenticated from './modules/app/Authenticated';
+import App from './modules/app/AppContainer';
 import * as path from './routes.path';
 
 export default () => {
   return (
-    <Route path="/" component={Authenticated}>
+    <Route path="/" component={App}>
       <IndexRedirect to={path.ROUTE_SF} />
       <Route path={path.ROUTE_SF}>
         <IndexRoute component={StorageUnitsTable} />

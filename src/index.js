@@ -35,6 +35,20 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
 import './state/codeReceiver';
+import jwtDecode from 'jwt-decode';
+
+let user;
+const parseQuery = require('query-string').parse;
+const accessToken = parseQuery(location.search)['_at'];
+if (accessToken) {
+  user = JSON.stringify({ accessToken });
+} else if (localStorage.getItem('jwtToken')) {
+  const jwt = jwtDecode(localStorage.getItem('jwtToken'));
+  user = JSON.stringify({ accessToken: jwt.accessToken });
+}
+if (user) {
+  localStorage.setItem('accessToken', user);
+}
 
 const client = new ApiClient();
 const dest = document.getElementById('content');
@@ -76,4 +90,3 @@ ReactDOM.render(
 if (config.isDev) {
   window.React = React;
 }
-

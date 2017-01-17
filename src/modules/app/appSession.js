@@ -1,17 +1,22 @@
 import {Observable} from 'rxjs';
 import {createStore, createActions} from '../../state/RxStore';
 import {get as ajaxGet} from '../../state/ajax';
-import deepFreeze from 'deep-freeze';
 import Config from '../../config';
-import {getAccessToken, clearAccessToken} from '../../shared/token';
+import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors/emitter';
 import { I18n } from 'react-i18nify';
 
 class AppSession {
   store$: Observable;
-  state: Object = deepFreeze({accessToken: getAccessToken(), buildInfo: {}, actor: {}, groups: [], museumId: 99});
+  state: Object = {
+    accessToken: getAccessToken(),
+    buildInfo: {},
+    actor: {},
+    groups: [],
+    museumId: 99
+  };
   error: Object;
-  actions: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$', 'clearUser$');
+  actions: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$');
 
   constructor() {
     this.getAccessToken = this.getAccessToken.bind(this);
@@ -24,12 +29,11 @@ class AppSession {
     this.__loadAppSession = this.__loadAppSession.bind(this);
     const reducer$ = Observable.merge(
       this.actions.setAccessToken$.map(accessToken => state => ({...state, accessToken})),
-      this.actions.clearUser$.do(clearAccessToken).map(() => (state) => ({...state, accessToken: null})),
       this.actions.loadAppSession$.filter(() => this.state.accessToken).switchMap(this.__loadAppSession),
       this.actions.setMuseumId$.map(museumId => state => ({...state, museumId})),
       this.actions.setCollectionId$.map(collectionId => state => ({...state, collectionId}))
     );
-    this.store$ = createStore(reducer$, Observable.of(this.state)).do(state => deepFreeze(state));
+    this.store$ = createStore(reducer$, Observable.of(this.state));
     this.store$.subscribe(
       (state) => this.state = state,
       (error) => this.error = error
@@ -111,10 +115,6 @@ class AppSession {
 
   getBuildNumber() {
     return this.state.buildInfo && this.state.buildInfo.buildInfoBuildNumber;
-  }
-
-  clearUser() {
-    this.actions.clearUser$.next();
   }
 }
 
