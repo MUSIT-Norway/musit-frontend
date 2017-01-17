@@ -1,15 +1,17 @@
-import { Observable } from 'rxjs';
-import { createStore, createActions } from '../../state/RxStore';
-import { get as ajaxGet } from '../../state/ajax';
+import {Observable} from 'rxjs';
+import {createStore, createActions} from '../../state/RxStore';
+import {get as ajaxGet} from '../../state/ajax';
 import deepFreeze from 'deep-freeze';
 import Config from '../../config';
-import { getAccessToken, clearAccessToken } from '../../shared/token';
+import {getAccessToken, clearAccessToken} from '../../shared/token';
+import { emitError } from '../../shared/errors/emitter';
+import { I18n } from 'react-i18nify';
 
 class AppSession {
-  __state__: Object = deepFreeze({ accessToken: getAccessToken(), actor: {}, groups: [], museumId: 99 });
-  __error__: Object;
-  __store$__: Observable;
-  __actions__: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadBuildInfo$', 'clearUser$');
+  store$: Observable;
+  state: Object = deepFreeze({accessToken: getAccessToken(), actor: {}, groups: [], museumId: 99});
+  error: Object;
+  actions: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$', 'clearUser$');
 
   constructor() {
     this.getAccessToken = this.getAccessToken.bind(this);
@@ -19,90 +21,100 @@ class AppSession {
     this.setMuseumId = this.setMuseumId.bind(this);
     this.getBuildNumber = this.getBuildNumber.bind(this);
     this.loadAppSession = this.loadAppSession.bind(this);
-    this.__loadSession__ = this.__loadSession__.bind(this);
+    this.__loadAppSession = this.__loadAppSession.bind(this);
     const reducer$ = Observable.merge(
-            this.__actions__.setAccessToken$.map(accessToken => state => ({...state, accessToken })),
-            this.__actions__.clearUser$.do(clearAccessToken).map(() => (state) => ({...state, accessToken: null})),
-            this.__actions__.loadBuildInfo$.filter(() => this.__state__.accessToken).switchMap(this.__loadSession__),
-            this.__actions__.setMuseumId$.map(museumId => state => ({...state, museumId })),
-            this.__actions__.setCollectionId$.map(collectionId => state => ({...state, collectionId }))
-        );
-    this.__store$__ = createStore(reducer$, Observable.of(this.__state__)).do(state => deepFreeze(state));
-    this.__store$__.subscribe(
-            (state) => this.__state__ = state,
-            (error) => this.__error__ = error
-        );
+      this.actions.setAccessToken$.map(accessToken => state => ({...state, accessToken})),
+      this.actions.clearUser$.do(clearAccessToken).map(() => (state) => ({...state, accessToken: null})),
+      this.actions.loadAppSession$.filter(() => this.state.accessToken).switchMap(this.__loadAppSession),
+      this.actions.setMuseumId$.map(museumId => state => ({...state, museumId})),
+      this.actions.setCollectionId$.map(collectionId => state => ({...state, collectionId}))
+    );
+    this.store$ = createStore(reducer$, Observable.of(this.state)).do(state => deepFreeze(state));
+    this.store$.subscribe(
+      (state) => this.state = state,
+      (error) => this.error = error
+    );
   }
 
-  __loadSession__() {
+  /**
+   * Returns an observable for loading the session.
+   *
+   * @returns {Observable<R|I>|Observable<R>|*}
+   * @private
+   */
+  __loadAppSession() {
     return Observable.forkJoin(
-            ajaxGet(Config.magasin.urls.auth.buildInfo, this.__state__.accessToken),
-            ajaxGet(Config.magasin.urls.actor.currentUser, this.__state__.accessToken),
-            ajaxGet(Config.magasin.urls.auth.museumsUrl, this.__state__.accessToken)
-        ).switchMap(([buildInfoRes, currentUserRes, museumsRes]) =>
-            ajaxGet(Config.magasin.urls.auth.groupsUrl(currentUserRes.response.dataportenUser), this.__state__.accessToken)
-                .map(({ response }) => (state) => {
-                  const isGod = !!response.find(group => 10000 === group.permission);
-                  let groups;
-                  if (isGod) {
-                    groups = museumsRes.response.filter(museum => 10000 !== museum.id)
-                            .map(museum => ({
-                              ...museum,
-                              museumId: museum.id,
-                              museumName: museum.shortName,
-                              permission: 10000,
-                              collections: [
-                                {
-                                  uuid: '00000000-0000-0000-0000-000000000000',
-                                  name: 'All'
-                                }
-                              ]
-                            }));
-                  } else {
-                    groups = response.map(group => ({
-                      ...group,
-                      museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
-                    }));
+      ajaxGet(Config.magasin.urls.auth.buildInfo, this.state.accessToken),
+      ajaxGet(Config.magasin.urls.actor.currentUser, this.state.accessToken),
+      ajaxGet(Config.magasin.urls.auth.museumsUrl, this.state.accessToken)
+    ).switchMap(([buildInfoRes, currentUserRes, museumsRes]) =>
+      ajaxGet(Config.magasin.urls.auth.groupsUrl(currentUserRes.response.dataportenUser), this.state.accessToken)
+        .map(({response}) => (state) => {
+          if (!response) {
+            emitError({ message: I18n.t('musit.errorMainMessages.noGroups') });
+            return state;
+          }
+          const isGod = !!response.find(group => 10000 === group.permission);
+          let groups;
+          if (isGod) {
+            groups = museumsRes.response.filter(museum => 10000 !== museum.id)
+              .map(museum => ({
+                ...museum,
+                museumId: museum.id,
+                museumName: museum.shortName,
+                permission: 10000,
+                collections: [
+                  {
+                    uuid: '00000000-0000-0000-0000-000000000000',
+                    name: 'All'
                   }
-                  return { ...state, actor: currentUserRes.response, groups, buildInfo: buildInfoRes.response };
-                })
-        );
+                ]
+              }));
+          } else {
+            groups = response.map(group => ({
+              ...group,
+              museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
+            }));
+          }
+          return {...state, actor: currentUserRes.response, groups, buildInfo: buildInfoRes.response};
+        })
+    );
   }
 
   getAccessToken() {
-    return this.__state__.accessToken;
+    return this.state.accessToken;
   }
 
   setAccessToken(token) {
-    this.__actions__.setAccessToken$.next(token);
+    this.actions.setAccessToken$.next(token);
   }
 
   getMuseumId() {
-    return this.__state__.museumId;
+    return this.state.museumId;
   }
 
   setMuseumId(mid) {
-    this.__actions__.setMuseumId$.next(mid);
+    this.actions.setMuseumId$.next(mid);
   }
 
   getCollectionId() {
-    return this.__state__.collectionId;
+    return this.state.collectionId;
   }
 
   setCollectionId(cid) {
-    this.__actions__.setCollectionId$.next(cid);
+    this.actions.setCollectionId$.next(cid);
   }
 
   loadAppSession() {
-    this.__actions__.loadBuildInfo$.next();
+    this.actions.loadAppSession$.next();
   }
 
   getBuildNumber() {
-    return this.__state__.buildInfo && this.__state__.buildInfo.buildInfoBuildNumber;
+    return this.state.buildInfo && this.state.buildInfo.buildInfoBuildNumber;
   }
 
   clearUser() {
-    this.__actions__.clearUser$.next();
+    this.actions.clearUser$.next();
   }
 }
 

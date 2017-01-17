@@ -9,8 +9,9 @@ import { TYPES as PICK_TYPES } from '../picklist/picklistReducer';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
-import { provide } from '../../shared/di';
+import { provide, inject } from '../../shared/di';
 import appSession from './appSession';
+import LoginComponent from '../login/LoginComponent';
 
 export class App extends Component {
   static propTypes = {
@@ -22,25 +23,50 @@ export class App extends Component {
     clearUser: PropTypes.func.isRequired,
     loadUser: PropTypes.func.isRequired,
     loadBuildinfo: PropTypes.func.isRequired,
-    buildinfo: PropTypes.any
+    appSession: PropTypes.object.isRequired,
+    appState: PropTypes.object.isRequired
   }
 
   componentWillMount() {
-    this.props.loadBuildinfo();
+    this.props.appSession.loadAppSession();
   }
 
-  handleLogout = () => {
-    this.props.clearUser();
+  handleLogout() {
+    this.props.appSession.clearUser();
     hashHistory.replace('/');
   }
 
-  handleLanguage = (l) => {
+  handleLanguage(l) {
     localStorage.setItem('language', l);
     window.location.reload(true);
   }
 
+  handleMuseumId(mid, cid) {
+    this.props.appSession.setMuseumId(mid);
+    this.props.appSession.setCollectionId(cid);
+    hashHistory.push('/magasin');
+  }
+
+  handleCollectionId(nid, cid) {
+    this.props.appSession.setCollectionId(cid);
+    if (nid) {
+      hashHistory.push(`/magasin/${nid}`);
+    } else {
+      hashHistory.push('/magasin');
+    }
+  }
+
   render() {
-    const { user, pickListNodeCount, pickListObjectCount } = this.props;
+    if (!this.props.appSession.getAccessToken()) {
+      return (
+        <LoginComponent
+          setUser={(u) => {
+            this.props.appSession.setAccessToken(u.accessToken);
+            this.props.appSession.loadAppSession();
+          }}
+        />
+      );
+    }
     return (
       <div>
         <Navbar fixedTop style={{ zIndex:1 }}>
@@ -57,47 +83,47 @@ export class App extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
-              {user &&
+              {this.props.appState &&
               <LinkContainer to="/magasin">
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
               }
-              {user &&
+              {this.props.appState &&
               <LinkContainer to="/reports">
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
               }
             </Nav>
             <Nav pullRight>
-              {user &&
+              {this.props.appState &&
               <MusitUserAccount
-                user={this.props.user}
-                selectedMuseumId={this.props.user.museumId.id}
-                selectedCollectionId={this.props.user.collectionId.uuid}
+                user={this.props.appState}
+                selectedMuseumId={this.props.appState.museumId}
+                selectedCollectionId={this.props.appState.collectionId}
                 handleLogout={this.handleLogout}
-                handleLanguage={(l) => this.handleLanguage(l)}
-                handleMuseumId={this.props.setMuseumId}
-                handleCollectionId={this.props.setCollectionId}
+                handleLanguage={this.handleLanguage}
+                handleMuseumId={this.handleMuseumId}
+                handleCollectionId={this.handleCollectionId}
                 rootNode={this.props.rootNode}
               />
               }
             </Nav>
             <Nav pullRight>
-              {user &&
+              {this.props.appState &&
               <LinkContainer to={'/search/objects'}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
               </LinkContainer>
               }
             </Nav>
             <Nav pullRight>
-              {user &&
+              {this.props.appState &&
               <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
-                <NavItem><span className="icon icon-musitpicklistnode" />{` ${pickListNodeCount} `}</NavItem>
+                <NavItem><span className="icon icon-musitpicklistnode" />0</NavItem>
               </LinkContainer>
               }
-              {user &&
+              {this.props.appState &&
               <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
-                <NavItem><span className="icon icon-musitpicklistobject" />{` ${pickListObjectCount} `}</NavItem>
+                <NavItem><span className="icon icon-musitpicklistobject" />0</NavItem>
               </LinkContainer>
               }
             </Nav>
@@ -109,13 +135,18 @@ export class App extends Component {
         </div>
 
         <footer className="footer well version">
-          {this.props.buildinfo && ('Build number: ' + this.props.buildinfo.buildInfoBuildNumber)}
+          {'Build number: ' + this.props.appState.buildInfo.buildInfoBuildNumber}
         </footer>
       </div>
     );
   }
 }
 
-export default provide({
+const services = {
   appSession: { type: PropTypes.object, value: () => appSession }
-})(App);
+};
+const state = {
+  provided: { appSession: { type: React.PropTypes.object.isRequired } },
+  state: { appState$: appSession.store$ }
+};
+export default provide(services)(inject(state)(App));
