@@ -59,17 +59,14 @@ function initReactJS() {
     loglevel.setLevel('error');
   }
 
-  const component =
-    <Router
-      onUpdate={() => window.scrollTo(0, 0)}
-      history={history}
-    >
-      {getRoutes(store)}
-    </Router>;
-
   ReactDOM.render(
     <Provider store={store} key="provider">
-      {component}
+      <Router
+        onUpdate={() => window.scrollTo(0, 0)}
+        history={history}
+      >
+        {getRoutes(store)}
+      </Router>
     </Provider>,
     dest
   );

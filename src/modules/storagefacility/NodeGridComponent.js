@@ -34,19 +34,19 @@ export class StorageUnitsContainer extends React.Component {
     rootNode: React.PropTypes.object,
     loadStorageUnits: React.PropTypes.func.isRequired,
     loadStorageObjects: React.PropTypes.func.isRequired,
-    onDelete: React.PropTypes.func.isRequired,
-    onAction: React.PropTypes.func.isRequired,
+    onDelete: React.PropTypes.func,
+    onAction: React.PropTypes.func,
     props: React.PropTypes.object,
-    params: React.PropTypes.object.isRequired,
+    params: React.PropTypes.object,
     history: React.PropTypes.object,
     routerState: React.PropTypes.object,
     loadChildren: React.PropTypes.func,
     moves: React.PropTypes.arrayOf(React.PropTypes.object),
-    moveObject: React.PropTypes.func.isRequired,
-    moveNode: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired,
+    moveObject: React.PropTypes.func,
+    moveNode: React.PropTypes.func,
+    clearMoveDialog: React.PropTypes.func,
     user: React.PropTypes.object,
-    loadRoot: React.PropTypes.func.isRequired,
+    loadRoot: React.PropTypes.func,
     stats: React.PropTypes.shape({
       numNodes: React.PropTypes.number,
       numObjects: React.PropTypes.number,
@@ -55,8 +55,8 @@ export class StorageUnitsContainer extends React.Component {
   };
 
   static contextTypes = {
-    showModal: React.PropTypes.func.isRequired,
-    showConfirm: React.PropTypes.func.isRequired
+    showModal: React.PropTypes.func,
+    showConfirm: React.PropTypes.func
   };
 
   constructor(props) {

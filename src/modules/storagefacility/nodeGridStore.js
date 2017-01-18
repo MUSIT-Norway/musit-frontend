@@ -12,7 +12,7 @@ export const {
   clear$
 } = createActions('loadRoot$', 'loadStorageObjects$', 'loadStorageUnits$', 'loadChildren$', 'clear$');
 
-export default createStore(Observable.empty().merge(
+const reducer = Observable.empty().merge(
   clear$.map(() => () => ({ data: []})),
   loadRoot$.switchMap((cmd) =>
     ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(cmd.museumId)}/${cmd.nodeId}`, cmd.token)
@@ -29,4 +29,6 @@ export default createStore(Observable.empty().merge(
     }
     return request.map(({response}) => response);
   }).map((data) => (state) => ({...state, data: data}))
-));
+);
+
+export default createStore(reducer);

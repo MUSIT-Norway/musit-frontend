@@ -8,14 +8,14 @@ import { I18n } from 'react-i18nify';
 import MuseumId from '../../shared/models/museumId';
 import CollectionId from '../../shared/models/collectionId';
 
-class AppSession {
+export default class AppSession {
   store$: Observable;
   state: Object = {
     accessToken: getAccessToken(),
     buildInfo: {},
     actor: {},
     groups: [],
-    museumId: 99
+    museumId: new MuseumId(99)
   };
   error: Object;
   actions: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$');
@@ -38,7 +38,10 @@ class AppSession {
     this.store$ = createStore(reducer$, Observable.of(this.state));
     this.store$.subscribe(
       (state) => this.state = state,
-      (error) => this.error = error
+      (error) => {
+        this.error = error;
+        emitError(error);
+      }
     );
   }
 
@@ -93,6 +96,21 @@ class AppSession {
     return this.state.accessToken;
   }
 
+  getGroups() {
+    return this.state.groups;
+  }
+
+  getActor() {
+    return this.state.actor;
+  }
+
+  getPickList() {
+    return {
+      nodes: [],
+      objects: []
+    };
+  }
+
   setAccessToken(token) {
     this.actions.setAccessToken$.next(token);
   }
@@ -121,7 +139,3 @@ class AppSession {
     return this.state.buildInfo && this.state.buildInfo.buildInfoBuildNumber;
   }
 }
-
-const appSession = new AppSession();
-
-export default appSession;
