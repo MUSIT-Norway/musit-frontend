@@ -13,6 +13,7 @@ import inject from '../../state/inject';
 import AppSession from './appSession';
 import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors/emitter';
+import notifiable from './Notifyable';
 
 export class App extends Component {
   static propTypes = {
@@ -155,9 +156,11 @@ export class App extends Component {
 }
 
 const appSession = new AppSession();
-const servicesAsProps = { appSession: { type: React.PropTypes.object, value: () => appSession } };
+const servicesAsProps = {
+  appSession: { type: React.PropTypes.object, value: () => appSession }
+};
 const stateAsProps = {
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
   state: { appSession$state: appSession.store$ }
 };
-export default provide(servicesAsProps)(inject(stateAsProps)(App));
+export default notifiable(provide(servicesAsProps)(inject(stateAsProps)(App)));

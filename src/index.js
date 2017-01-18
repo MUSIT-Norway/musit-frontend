@@ -23,7 +23,6 @@ import createStore from './redux/configureStore.js';
 import ApiClient from './redux/ApiClient';
 import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
 import getRoutes from './routes';
 import config from './config';
 import LanguageJson from '../language.json';
@@ -46,8 +45,6 @@ function initReactJS() {
   global.reduxStore = store;
   // ---- Global Store -----
 
-  const history = syncHistoryWithStore(hashHistory, store);
-
   I18n.loadTranslations(LanguageJson);
   const language = localStorage.getItem('language') || 'no';
   localStorage.setItem('language', language);
@@ -63,7 +60,7 @@ function initReactJS() {
     <Provider store={store} key="provider">
       <Router
         onUpdate={() => window.scrollTo(0, 0)}
-        history={history}
+        history={hashHistory}
       >
         {getRoutes(store)}
       </Router>

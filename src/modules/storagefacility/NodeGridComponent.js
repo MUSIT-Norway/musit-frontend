@@ -18,7 +18,16 @@ import Config from '../../config';
 import Loader from 'react-loader';
 import inject from '../../state/inject';
 import Rx from 'rxjs';
-import nodeStore, { loadStorageUnits$, loadStorageObjects$, loadChildren$, loadRoot$ } from './nodeGridStore';
+import nodes$, {
+  loadStorageUnits$,
+  loadStorageObjects$,
+  loadChildren$,
+  loadRoot$,
+  setLoading$,
+  clearNodes$,
+  loadStats$,
+  loadNode$
+} from './nodeGridStore';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -29,7 +38,7 @@ const getObjectDescription = (object) => {
 
 export class StorageUnitsContainer extends React.Component {
   static propTypes = {
-    children: React.PropTypes.arrayOf(React.PropTypes.object),
+    nodes: React.PropTypes.object,
     objects: React.PropTypes.arrayOf(React.PropTypes.object),
     rootNode: React.PropTypes.object,
     loadStorageUnits: React.PropTypes.func.isRequired,
@@ -96,14 +105,19 @@ export class StorageUnitsContainer extends React.Component {
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
     const stateHasChanged = locationState !== this.props.location.state;
+    const token = this.props.appSession.getAccessToken();
     if (idHasChanged || museumHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
       if (newProps.route.showObjects) {
         this.loadObjects(currentPage);
-      } else if (nodeId) {
-        this.props.loadChildren({nodeId, museumId, currentPage, token: this.props.appSession.getAccessToken()});
       } else {
-        this.props.loadStorageUnits({museumId, currentPage, token: this.props.appSession.getAccessToken()});
+        this.props.clearNodes();
+        this.props.setLoading();
+        if (nodeId) {
+          this.props.loadNode({nodeId, museumId, token});
+          this.props.loadStats({nodeId, museumId, token});
+        }
+        this.props.loadChildren({nodeId, museumId, currentPage, token});
       }
     }
   }
@@ -130,16 +144,21 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   loadNodes() {
-    if (this.props.params.id) {
-      this.props.loadChildren({
-        nodeId: this.props.params.id,
-        museumId: this.props.appSession.getMuseumId(),
-        page: this.getCurrentPage(),
-        token: this.props.appSession.getAccessToken()
-      });
-    } else {
-      this.props.loadStorageUnits(this.props.user.museumId, this.getCurrentPage());
+    const nodeId = this.props.params.id;
+    const museumId = this.props.appSession.getMuseumId();
+    const token = this.props.appSession.getAccessToken();
+    this.props.clearNodes();
+    this.props.setLoading();
+    if (nodeId) {
+      this.props.loadNode({nodeId, museumId, token});
+      this.props.loadStats({nodeId, museumId, token});
     }
+    this.props.loadChildren({
+      nodeId,
+      museumId,
+      page: this.getCurrentPage(),
+      token
+    });
   }
 
   loadObjects(
@@ -273,8 +292,8 @@ export class StorageUnitsContainer extends React.Component {
 
   makeLeftMenu(
     museumId = this.props.user.museumId,
-    rootNode = this.props.rootNode,
-    stats = this.props.stats,
+    rootNode = this.props.nodes.node,
+    stats = this.props.nodes.stats,
     onDelete = this.props.onDelete,
     moveNode = this.showMoveNodeModal,
     confirm = this.context.showConfirm
@@ -310,8 +329,8 @@ export class StorageUnitsContainer extends React.Component {
 
   makeContentGrid(
     searchPattern = this.state.searchPattern,
-    rootNode = this.props.rootNode,
-    children = this.props.children,
+    rootNode = this.props.nodes.node,
+    nodes = this.props.nodes,
     objects = this.props.objects,
     showObjects = this.props.route.showObjects,
     onAction = this.props.onAction,
@@ -330,8 +349,8 @@ export class StorageUnitsContainer extends React.Component {
                 action,
                 unit,
                 rootNode.breadcrumb,
-                this.props.user.museumId,
-                this.props.user.collectionId
+                this.props.appSession.getMuseumId(),
+                this.props.appSession.getCollectionId()
               )
             }
             onMove={moveObject}
@@ -343,7 +362,7 @@ export class StorageUnitsContainer extends React.Component {
               perPage={Config.magasin.limit}
               onClick={(currentPage) => {
                 hashHistory.replace({
-                  pathname: `/magasin/${this.props.rootNode.id}/objects`,
+                  pathname: `/magasin/${this.props.nodes.node.id}/objects`,
                   state: {
                     currentPage
                   }
@@ -354,17 +373,18 @@ export class StorageUnitsContainer extends React.Component {
         </Loader>
       );
     }
+    const nodeData = nodes && ((Array.isArray(nodes.data) && nodes.data) || (nodes.data && nodes.data.matches));
     return (
-      <Loader loaded={!this.props.loadingNodes}>
+      <Loader loaded={!this.props.nodes.loading}>
         <NodeGrid
-          tableData={children ? filter(children, ['name'], searchPattern) : []}
+          tableData={nodeData ? filter(nodeData, ['name'], searchPattern) : []}
           onAction={(action, unit) =>
             onAction(
               action,
               unit,
               rootNode.breadcrumb,
-              this.props.user.museumId,
-              this.props.user.collectionId
+              this.props.appSession.getMuseumId(),
+              this.props.appSession.getCollectionId()
             )
           }
           onMove={moveNode}
@@ -379,7 +399,7 @@ export class StorageUnitsContainer extends React.Component {
             perPage={Config.magasin.limit}
             onClick={(currentPage) => {
               hashHistory.replace({
-                pathname: `/magasin/${this.props.rootNode.id}`,
+                pathname: `/magasin/${this.props.nodes.node.id}`,
                 state: {
                   currentPage
                 }
@@ -395,7 +415,7 @@ export class StorageUnitsContainer extends React.Component {
     return (
       <Layout
         title={I18n.t('musit.storageUnits.title')}
-        breadcrumb={<Breadcrumb node={this.props.rootNode} onClickCrumb={this.onClickCrumb} />}
+        breadcrumb={<Breadcrumb node={this.props.nodes.node} onClickCrumb={this.onClickCrumb} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContentGrid()}
@@ -407,6 +427,6 @@ export class StorageUnitsContainer extends React.Component {
 const user$ = Rx.Observable.of({});
 export default inject({
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
-  state: { nodes$: nodeStore, user$ },
-  actions: { loadRoot$, loadStorageObjects$, loadStorageUnits$, loadChildren$ }
+  state: { nodes$, user$ },
+  actions: { loadRoot$, loadStorageObjects$, loadStorageUnits$, loadChildren$, setLoading$, clearNodes$, loadStats$, loadNode$ }
 })(StorageUnitsContainer);

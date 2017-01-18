@@ -17,9 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
-import auth from '../modules/app/appReducer';
 import picklistReducer from '../modules/picklist/picklistReducer';
 import storagePanelStateReducer from '../modules/storagefacility/reducers/panel/state';
 import storagePanelReducer from '../modules/storagefacility/reducers/panel';
@@ -36,8 +34,6 @@ import ObjectSearchReducer from '../modules/objectsearch/reducer';
 import printReducer from '../modules/print/printReducer';
 
 const rootReducer = combineReducers({
-  routing: routerReducer,
-  [auth.ID]: auth.reducer,
   print: printReducer,
   picks: picklistReducer,
   storagePanelUnit: storagePanelReducer,

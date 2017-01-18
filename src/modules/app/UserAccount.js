@@ -23,7 +23,7 @@ export default class MusitUserAccount extends Component {
   }
 
   getCollections(mid, groups) {
-    return uniqBy(flatten(groups.filter(g => g.museumId === mid).map(g => g.collections)), c => c.uuid);
+    return uniqBy(flatten(groups.filter(g => g.museumId === mid.id).map(g => g.collections)), c => c.uuid);
   }
 
   adminLink() {
@@ -94,8 +94,8 @@ export default class MusitUserAccount extends Component {
             }
             {collectionDropdown &&
               collections.map((cc, i) =>
-                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(cc.uuid)}>
-                  {menuText(collectionId === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
+                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(new CollectionId(cc.uuid))}>
+                  {menuText(collectionId.uuid === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
                 </MenuItem>
               )
             }

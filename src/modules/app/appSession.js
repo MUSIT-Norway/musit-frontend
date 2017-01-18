@@ -17,7 +17,6 @@ export default class AppSession {
     groups: [],
     museumId: new MuseumId(99)
   };
-  error: Object;
   actions: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$');
 
   constructor() {
@@ -36,13 +35,7 @@ export default class AppSession {
       this.actions.setCollectionId$.map(collectionId => state => ({...state, collectionId}))
     );
     this.store$ = createStore(reducer$, Observable.of(this.state));
-    this.store$.subscribe(
-      (state) => this.state = state,
-      (error) => {
-        this.error = error;
-        emitError(error);
-      }
-    );
+    this.store$.subscribe((state) => this.state = state);
   }
 
   /**
@@ -90,6 +83,10 @@ export default class AppSession {
           return {...state, actor: currentUserRes.response, groups, museumId, collectionId, buildInfo: buildInfoRes.response};
         })
     );
+  }
+
+  getState() {
+    return this.state;
   }
 
   getAccessToken() {

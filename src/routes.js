@@ -58,8 +58,10 @@ export default () => {
         <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
       </Route>
       <Route path={path.ROUTE_PICKLIST} component={PickListView} />
-      <Route path={path.ROUTE_REPORTS} component={Reports} />
-      <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      <Route path={path.ROUTE_REPORTS}>
+        <IndexRoute component={Reports} />
+        <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      </Route>
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
       <Route path="/about" component={AboutView} />
       -- Catch all route
