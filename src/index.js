@@ -36,44 +36,54 @@ import 'font-awesome/css/font-awesome.css';
 import './index.css';
 import './state/codeReceiver';
 
-const client = new ApiClient();
-const dest = document.getElementById('content');
-const store = createStore(client);
+function initReactJS() {
+  const client = new ApiClient();
+  const dest = document.getElementById('content');
+  const store = createStore(client);
 
-// ---- Global Store -----
-// This is crucial for the parts of the app that are not in redux!
-global.reduxStore = store;
-// ---- Global Store -----
+  // ---- Global Store -----
+  // This is crucial for the parts of the app that are not in redux!
+  global.reduxStore = store;
+  // ---- Global Store -----
 
-const history = syncHistoryWithStore(hashHistory, store);
+  const history = syncHistoryWithStore(hashHistory, store);
 
-I18n.loadTranslations(LanguageJson);
-const language = localStorage.getItem('language') || 'no';
-localStorage.setItem('language', language);
-I18n.setLocale(language);
+  I18n.loadTranslations(LanguageJson);
+  const language = localStorage.getItem('language') || 'no';
+  localStorage.setItem('language', language);
+  I18n.setLocale(language);
 
-if (config.isDev) {
-  loglevel.setLevel('debug');
+  if (config.isDev) {
+    loglevel.setLevel('debug');
+  } else {
+    loglevel.setLevel('error');
+  }
+
+  const component =
+    <Router
+      onUpdate={() => window.scrollTo(0, 0)}
+      history={history}
+    >
+      {getRoutes(store)}
+    </Router>;
+
+  ReactDOM.render(
+    <Provider store={store} key="provider">
+      {component}
+    </Provider>,
+    dest
+  );
+
+  if (config.isDev) {
+    window.React = React;
+  }
+}
+
+const parseQuery = require('query-string').parse;
+const accessToken = parseQuery(location.search)['_at'];
+if (accessToken) {
+  localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
+  window.location.href='/#/magasin';
 } else {
-  loglevel.setLevel('error');
+  initReactJS();
 }
-
-const component =
-  <Router
-    onUpdate={() => window.scrollTo(0, 0)}
-    history={history}
-  >
-    {getRoutes(store)}
-  </Router>;
-
-ReactDOM.render(
-  <Provider store={store} key="provider">
-    {component}
-  </Provider>,
-  dest
-);
-
-if (config.isDev) {
-  window.React = React;
-}
-
