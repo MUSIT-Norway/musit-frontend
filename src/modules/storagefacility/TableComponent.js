@@ -1,28 +1,35 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
-import NodeGrid from './NodeGridTable';
-import ObjectGrid from './ObjectGridTable';
-import Layout from '../../components/layout';
-import NodeLeftMenuComponent from './NodeGridLeftMenu';
-import Toolbar from '../../components/layout/Toolbar';
-import { blur, filter } from '../../shared/util';
-import Breadcrumb from '../../components/layout/Breadcrumb';
-import MusitModal from '../movedialog/MusitModalContainer';
 import { I18n } from 'react-i18nify';
-import { emitError, emitSuccess } from '../../shared/errors/emitter';
-import MusitModalHistory from '../movehistory/MoveHistoryContainer';
-import { checkNodeBranchAndType } from '../../shared/nodeValidator';
+import Loader from 'react-loader';
+import { Observable, Subject } from 'rxjs';
+
+import NodeGrid from './NodeTable';
+import ObjectGrid from './ObjectTable';
+import NodeLeftMenuComponent from './TableLeftMenu';
+
+import Layout from '../../components/layout';
+import Toolbar from '../../components/layout/Toolbar';
+import Breadcrumb from '../../components/layout/Breadcrumb';
+
+import { blur, filter } from '../../shared/util';
 import MusitNode from '../../shared/models/node';
 import PagingToolbar from '../../shared/paging';
+import { emitError, emitSuccess } from '../../shared/errors/emitter';
+import { checkNodeBranchAndType } from '../../shared/nodeValidator';
+
+import MusitModal from '../movedialog/MusitModalContainer';
+import MusitModalHistory from '../movehistory/MoveHistoryContainer';
+
 import Config from '../../config';
-import Loader from 'react-loader';
 import inject from '../../state/inject';
+
 import nodes$, {
   loadChildren$,
   loadStats$,
   loadNode$,
   init$
-} from './nodeGridStore';
+} from './tableStore';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -33,27 +40,18 @@ const getObjectDescription = (object) => {
 
 export class StorageUnitsContainer extends React.Component {
   static propTypes = {
-    nodes: React.PropTypes.object,
-    objects: React.PropTypes.arrayOf(React.PropTypes.object),
-    rootNode: React.PropTypes.object,
-    onDelete: React.PropTypes.func,
-    onAction: React.PropTypes.func,
-    props: React.PropTypes.object,
-    params: React.PropTypes.object,
-    history: React.PropTypes.object,
-    routerState: React.PropTypes.object,
-    loadChildren: React.PropTypes.func,
-    moves: React.PropTypes.arrayOf(React.PropTypes.object),
-    moveObject: React.PropTypes.func,
-    moveNode: React.PropTypes.func,
-    clearMoveDialog: React.PropTypes.func,
-    user: React.PropTypes.object,
-    loadRoot: React.PropTypes.func,
-    stats: React.PropTypes.shape({
-      numNodes: React.PropTypes.number,
-      numObjects: React.PropTypes.number,
-      totalObjects: React.PropTypes.number
-    })
+    nodes: React.PropTypes.object.isRequired,
+    objects: React.PropTypes.object.isRequired,
+    loadChildren: React.PropTypes.func.isRequired,
+    loadObjects: React.PropTypes.func.isRequired,
+    loadStats: React.PropTypes.func.isRequired,
+    loadNode: React.PropTypes.func.isRequired,
+    onDelete: React.PropTypes.func.isRequired,
+    onAction: React.PropTypes.func.isRequired,
+    params: React.PropTypes.object.isRequired,
+    moveObject: React.PropTypes.func.isRequired,
+    moveNode: React.PropTypes.func.isRequired,
+    clearMoveDialog: React.PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -84,7 +82,11 @@ export class StorageUnitsContainer extends React.Component {
     if (this.props.route.showObjects) {
       this.loadObjects();
       if (this.props.params.id && !this.props.rootNode.id) {
-        this.props.loadRoot(this.props.params.id, this.props.appSession.getMuseumId(), this.getCurrentPage());
+        this.props.loadNode({
+          nodeId: this.props.params.id,
+          museumId: this.props.appSession.getMuseumId(),
+          page: this.getCurrentPage()
+        });
       }
     } else {
       this.loadNodes();
@@ -94,6 +96,7 @@ export class StorageUnitsContainer extends React.Component {
   componentWillReceiveProps(newProps) {
     const museumHasChanged = newProps.appSession.getMuseumId() !== this.props.appSession.getMuseumId();
     const museumId = museumHasChanged ? newProps.appSession.getMuseumId() : this.props.appSession.getMuseumId();
+    const collectionId = museumHasChanged ? newProps.appSession.getCollectionId() : this.props.appSession.getCollectionId();
     const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
@@ -102,14 +105,9 @@ export class StorageUnitsContainer extends React.Component {
     if (idHasChanged || museumHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
       if (newProps.route.showObjects) {
-        this.loadObjects(currentPage);
+        this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
       } else {
-        this.props.init();
-        if (nodeId) {
-          this.props.loadNode({nodeId, museumId, token});
-          this.props.loadStats({nodeId, museumId, token});
-        }
-        this.props.loadChildren({nodeId, museumId, currentPage, token});
+        this.loadNodes(nodeId, museumId, token, currentPage);
       }
     }
   }
@@ -120,25 +118,27 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   showNodes() {
-    if (this.props.rootNode) {
-      hashHistory.push(`/magasin/${this.props.rootNode.id}`);
+    if (this.props.nodes.node) {
+      hashHistory.push(`/magasin/${this.props.nodes.node.id}`);
     } else {
       hashHistory.push('/magasin');
     }
   }
 
   showObjects() {
-    if (this.props.rootNode) {
-      hashHistory.push(`/magasin/${this.props.rootNode.id}/objects`);
+    if (this.props.nodes.node) {
+      hashHistory.push(`/magasin/${this.props.nodes.node.id}/objects`);
     } else {
       hashHistory.push('/magasin');
     }
   }
 
-  loadNodes() {
-    const nodeId = this.props.params.id;
-    const museumId = this.props.appSession.getMuseumId();
-    const token = this.props.appSession.getAccessToken();
+  loadNodes(
+    nodeId = this.props.params.id,
+    museumId = this.props.appSession.getMuseumId(),
+    token = this.props.appSession.getAccessToken(),
+    currentPage = this.getCurrentPage()
+  ) {
     this.props.init();
     if (nodeId) {
       this.props.loadNode({nodeId, museumId, token});
@@ -147,21 +147,25 @@ export class StorageUnitsContainer extends React.Component {
     this.props.loadChildren({
       nodeId,
       museumId,
-      page: this.getCurrentPage(),
+      page: currentPage,
       token
     });
   }
 
   loadObjects(
+    nodeId = this.props.params.id,
+    museumId = this.props.appSession.getMuseumId(),
+    collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken(),
     currentPage = this.getCurrentPage()
   ) {
-    if (this.props.params.id) {
-      this.props.loadStorageObjects(
-        this.props.params.id,
-        this.props.appSession.getMuseumId(),
-        this.props.appSession.getCollectionId(),
-        currentPage
-      );
+    if (nodeId) {
+      this.props.loadObjects({
+        nodeId,
+        museumId,
+        collectionId,
+        page: currentPage
+      });
     }
   }
 
@@ -179,7 +183,6 @@ export class StorageUnitsContainer extends React.Component {
     museumId = this.props.appSession.getMuseumId(),
     nodeId = this.props.nodes.node.id,
     moveNode = this.props.moveNode,
-    loadRoot = this.props.loadRoot,
     loadNodes = this.loadNodes
   ) => (toNode, toName, onSuccess) => {
     const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
@@ -189,7 +192,6 @@ export class StorageUnitsContainer extends React.Component {
         onSuccess: () => {
           onSuccess();
           loadNodes();
-          loadRoot(nodeId, museumId);
           emitSuccess({
             type: 'movedSuccess',
             message: I18n.t('musit.moveModal.messages.nodeMoved', { name: nodeToMove.name, destination: toName })
@@ -222,12 +224,11 @@ export class StorageUnitsContainer extends React.Component {
 
   moveObject = (
     objectToMove,
-    userId = this.props.user.actor.getActorId(),
+    userId = this.props.appSession.getActor().getActorId(),
     museumId = this.props.appSession.getMuseumId(),
     collectionId = this.props.appSession.getCollectionId(),
     nodeId = this.props.nodes.node.id,
     moveObject = this.props.moveObject,
-    loadRoot = this.props.loadRoot,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
     const description = getObjectDescription(objectToMove);
@@ -235,7 +236,6 @@ export class StorageUnitsContainer extends React.Component {
       onSuccess: () => {
         onSuccess();
         loadObjects();
-        loadRoot(nodeId, museumId);
         emitSuccess({
           type: 'movedSuccess',
           message: I18n.t('musit.moveModal.messages.objectMoved', { name: description, destination: toName })
@@ -325,6 +325,8 @@ export class StorageUnitsContainer extends React.Component {
 
   makeContentGrid(
     searchPattern = this.state.searchPattern,
+    museumId = this.props.appSession.getMuseumId(),
+    collectionId = this.props.appSession.getCollectionId(),
     rootNode = this.props.nodes.node,
     nodes = this.props.nodes,
     objects = this.props.objects,
@@ -334,33 +336,37 @@ export class StorageUnitsContainer extends React.Component {
     moveObject = this.showMoveObjectModal,
     showHistory = this.showObjectMoveHistory
   ) {
+    const currentPage = this.getCurrentPage() || 1;
+    const objectData = objects && objects.data && objects.data.matches;
+    const totalObjects = objects && objects.data && objects.data.totalMatches;
+    const loadingObjects = objects.loading;
     if (showObjects) {
       return (
-        <Loader loaded={!this.props.loadingObjects}>
+        <Loader loaded={!loadingObjects}>
           <ObjectGrid
-            tableData={objects ? filter(objects, ['museumNo', 'subNo', 'term'], searchPattern) : []}
+            tableData={objectData ? filter(objectData, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             onAction={(action, unit) =>
               onAction(
                 action,
                 unit,
                 rootNode.breadcrumb,
-                this.props.appSession.getMuseumId(),
-                this.props.appSession.getCollectionId()
+                museumId,
+                collectionId
               )
             }
             onMove={moveObject}
           />
-          {this.props.totalObjects > 0 &&
+          {totalObjects > 0 &&
             <PagingToolbar
-              numItems={this.props.totalObjects}
-              currentPage={this.getCurrentPage() || 1}
+              numItems={totalObjects}
+              currentPage={currentPage}
               perPage={Config.magasin.limit}
-              onClick={(currentPage) => {
+              onClick={(cp) => {
                 hashHistory.replace({
                   pathname: `/magasin/${this.props.nodes.node.id}/objects`,
                   state: {
-                    currentPage
+                    currentPage: cp
                   }
                 });
               }}
@@ -370,8 +376,10 @@ export class StorageUnitsContainer extends React.Component {
       );
     }
     const nodeData = nodes && ((Array.isArray(nodes.data) && nodes.data) || (nodes.data && nodes.data.matches));
+    const totalNodes = nodes && ((Array.isArray(nodes.data) && nodes.data.length) || (nodes.data && nodes.data.totalMatches));
+    const loadingNodes = nodes.loading;
     return (
-      <Loader loaded={!this.props.nodes.loading}>
+      <Loader loaded={!loadingNodes}>
         <NodeGrid
           tableData={nodeData ? filter(nodeData, ['name'], searchPattern) : []}
           onAction={(action, unit) =>
@@ -379,8 +387,8 @@ export class StorageUnitsContainer extends React.Component {
               action,
               unit,
               rootNode.breadcrumb,
-              this.props.appSession.getMuseumId(),
-              this.props.appSession.getCollectionId()
+              museumId,
+              collectionId
             )
           }
           onMove={moveNode}
@@ -388,16 +396,16 @@ export class StorageUnitsContainer extends React.Component {
             hashHistory.push(`/magasin/${row.id}`);
           }}
         />
-        {this.props.totalNodes > 0 &&
+        {totalNodes > 0 &&
           <PagingToolbar
-            numItems={this.props.totalNodes}
-            currentPage={this.getCurrentPage() || 1}
+            numItems={totalNodes}
+            currentPage={currentPage}
             perPage={Config.magasin.limit}
-            onClick={(currentPage) => {
+            onClick={(cp) => {
               hashHistory.replace({
-                pathname: `/magasin/${this.props.nodes.node.id}`,
+                pathname: `/magasin/${nodes.node.id}`,
                 state: {
-                  currentPage
+                  currentPage: cp
                 }
               });
             }}
@@ -420,8 +428,27 @@ export class StorageUnitsContainer extends React.Component {
   }
 }
 
+const objects$ = Observable.of({});
+const loadObjects$ = new Subject();
+const moveNode$ = new Subject();
+const moveObject$ = new Subject();
+const clearMoveDialog$ = new Subject();
+const onDelete$ = new Subject();
+const onAction$ = new Subject();
+
 export default inject({
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
-  state: { nodes$ },
-  actions: { loadChildren$, loadStats$, loadNode$, init$ }
+  state: { nodes$, objects$ },
+  actions: {
+    init$,
+    loadChildren$,
+    loadStats$,
+    loadNode$,
+    loadObjects$,
+    moveNode$,
+    moveObject$,
+    clearMoveDialog$,
+    onDelete$,
+    onAction$
+  }
 })(StorageUnitsContainer);

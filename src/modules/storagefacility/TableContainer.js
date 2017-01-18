@@ -7,7 +7,7 @@ import {loadStats, clearStats} from './reducers/stats';
 import {hashHistory} from 'react-router';
 import {I18n} from 'react-i18nify';
 import {emitError, emitSuccess} from '../../shared/errors/emitter';
-import StorageUnitsContainer from './NodeGridComponent';
+import StorageUnitsContainer from './TableComponent';
 import MusitNode from '../../shared/models/node';
 import { clear } from './reducers/modal';
 
