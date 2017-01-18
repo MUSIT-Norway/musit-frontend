@@ -26,7 +26,7 @@ import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
 import PagingToolbar from '../../shared/paging';
 
-const PER_PAGE = 2;
+const PER_PAGE = 10;
 
 export default class MusitModal extends Component {
 
