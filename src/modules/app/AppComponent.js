@@ -30,11 +30,6 @@ export class App extends Component {
     this.handleCollectionId = this.handleCollectionId.bind(this);
   }
 
-  constructor(props, context) {
-    super(props, context);
-    this.handleLogout = this.handleLogout.bind(this);
-  }
-
   componentWillMount() {
     this.props.appSession.loadAppSession();
   }
