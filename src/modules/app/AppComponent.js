@@ -97,19 +97,14 @@ export class App extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
-              {this.props.appSession &&
               <LinkContainer to="/magasin">
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
-              }
-              {this.props.appSession &&
               <LinkContainer to="/reports">
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
-              }
             </Nav>
             <Nav pullRight>
-              {this.props.appSession &&
               <MusitUserAccount
                 actor={this.props.appSession.getActor()}
                 groups={this.props.appSession.getGroups()}
@@ -122,26 +117,19 @@ export class App extends Component {
                 handleCollectionId={(uuid) => this.handleCollectionId(this.props.rootNode && this.props.rootNode.id, uuid)}
                 rootNode={this.props.rootNode}
               />
-              }
             </Nav>
             <Nav pullRight>
-              {this.props.appSession &&
               <LinkContainer to={'/search/objects'}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
               </LinkContainer>
-              }
             </Nav>
             <Nav pullRight>
-              {this.props.appSession &&
               <LinkContainer to="/picklist/nodes">
                 <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.appSession.getPickList().nodes.length}</NavItem>
               </LinkContainer>
-              }
-              {this.props.appSession &&
               <LinkContainer to="/picklist/objects">
                 <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.appSession.getPickList().objects.length}</NavItem>
               </LinkContainer>
-              }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
