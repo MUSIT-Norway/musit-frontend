@@ -8,14 +8,11 @@ import MusitNode from '../../shared/models/node';
 export default class NodeGrid extends Component {
   static propTypes = {
     tableData: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      objectCount: PropTypes.number,
-      totalObjectCount: PropTypes.number,
-      nodeCount: PropTypes.number
+      type: PropTypes.string.isRequired
     })),
-    onAction: PropTypes.func.isRequired,
+    goToEvents: PropTypes.func.isRequired,
+    pickNode: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired
   }
@@ -34,9 +31,6 @@ export default class NodeGrid extends Component {
                   <th>
                     {I18n.t('musit.grid.node.nodeType')}
                   </th>
-                  <th />
-                  <th />
-                  <th />
                   <th />
                   <th />
                   <th />
@@ -62,20 +56,11 @@ export default class NodeGrid extends Component {
                       {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
                     </td>
                     <td>
-                      {c.objectCount}
-                    </td>
-                    <td>
-                      {c.totalObjectCount}
-                    </td>
-                    <td>
-                      {c.nodeCount}
-                    </td>
-                    <td>
                       {!isRoot && <a
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
-                          this.props.onAction('controlsobservations', c);
+                          this.props.goToEvents(c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.observationAndControl')}
                       >
@@ -99,7 +84,7 @@ export default class NodeGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
-                          this.props.onAction('pickNode', c);
+                          this.props.pickNode(c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                       >
