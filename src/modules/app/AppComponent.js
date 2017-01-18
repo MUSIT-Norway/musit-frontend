@@ -13,6 +13,7 @@ import provide from '../../state/provide';
 import inject from '../../state/inject';
 import appSession from './appSession';
 import LoginComponent from '../login/LoginComponent';
+import {emitError} from '../../shared/errors/emitter';
 
 export class App extends Component {
   static propTypes = {
@@ -29,14 +30,28 @@ export class App extends Component {
     this.handleCollectionId = this.handleCollectionId.bind(this);
   }
 
+  constructor(props, context) {
+    super(props, context);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
   componentWillMount() {
     this.props.appSession.loadAppSession();
   }
 
   handleLogout() {
-    localStorage.removeItem('jwtToken');
-    localStorage.removeItem('fakeToken');
-    window.location.replace('https://auth.dataporten.no/logout');
+    fetch('/api/auth/rest/logout', {
+      method: 'GET',
+      headers: new Headers({
+        Authorization: 'Bearer ' + this.props.user.accessToken
+      })
+    }).then(response => {
+      if (response.ok) {
+        localStorage.removeItem('jwtToken');
+        localStorage.removeItem('accessToken');
+        window.location.replace('https://auth.dataporten.no/logout');
+      }
+    }).catch(error => emitError({ type: 'network', error}));
   }
 
   handleLanguage(l) {
