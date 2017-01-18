@@ -6,15 +6,11 @@ import MuseumId from '../../shared/models/museumId';
 import { getPath } from '../../shared/util';
 
 export const {
-  loadStorageObjects$,
-  loadStorageUnits$,
-  loadRoot$,
   loadChildren$,
   loadStats$,
   loadNode$,
-  setLoading$,
-  clearNodes$
-} = createActions('loadRoot$', 'loadStorageObjects$', 'loadStorageUnits$', 'loadChildren$', 'loadStats$', 'clearNodes$', 'setLoading$', 'loadNode$');
+  init$
+} = createActions('loadChildren$', 'loadStats$', 'loadNode$', 'init$');
 
 const loadChildren = (cmd) => {
   let request;
@@ -37,8 +33,7 @@ const loadNode = (cmd) =>
     .map(({response}) => ({...response, breadcrumb: getPath(response)}));
 
 const reducer = Observable.empty().merge(
-  clearNodes$.map(() => () => ({data: null, stats: null, node: null})),
-  setLoading$.map(() => (state) => ({...state, loading: true})),
+  init$.map(() => () => ({loading: true, node: null, data: null, stats: null})),
   loadStats$.switchMap(loadStats).map((stats) => (state) => ({...state, stats})),
   loadNode$.switchMap(loadNode).map((node) => (state) => ({...state, node})),
   loadChildren$.switchMap(loadChildren).map((data) => (state) => ({...state, data, loading: false}))

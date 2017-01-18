@@ -131,12 +131,12 @@ export class App extends Component {
             <Nav pullRight>
               {this.props.appSession &&
               <LinkContainer to="/picklist/nodes">
-                <NavItem><span className="icon icon-musitpicklistnode" />{this.props.appSession.getPickList().nodes.length}</NavItem>
+                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.appSession.getPickList().nodes.length}</NavItem>
               </LinkContainer>
               }
               {this.props.appSession &&
               <LinkContainer to="/picklist/objects">
-                <NavItem><span className="icon icon-musitpicklistobject" />{this.props.appSession.getPickList().objects.length}</NavItem>
+                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.appSession.getPickList().objects.length}</NavItem>
               </LinkContainer>
               }
             </Nav>

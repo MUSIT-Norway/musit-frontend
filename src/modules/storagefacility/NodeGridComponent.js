@@ -17,16 +17,11 @@ import PagingToolbar from '../../shared/paging';
 import Config from '../../config';
 import Loader from 'react-loader';
 import inject from '../../state/inject';
-import Rx from 'rxjs';
 import nodes$, {
-  loadStorageUnits$,
-  loadStorageObjects$,
   loadChildren$,
-  loadRoot$,
-  setLoading$,
-  clearNodes$,
   loadStats$,
-  loadNode$
+  loadNode$,
+  init$
 } from './nodeGridStore';
 
 const getObjectDescription = (object) => {
@@ -41,8 +36,6 @@ export class StorageUnitsContainer extends React.Component {
     nodes: React.PropTypes.object,
     objects: React.PropTypes.arrayOf(React.PropTypes.object),
     rootNode: React.PropTypes.object,
-    loadStorageUnits: React.PropTypes.func.isRequired,
-    loadStorageObjects: React.PropTypes.func.isRequired,
     onDelete: React.PropTypes.func,
     onAction: React.PropTypes.func,
     props: React.PropTypes.object,
@@ -91,7 +84,7 @@ export class StorageUnitsContainer extends React.Component {
     if (this.props.route.showObjects) {
       this.loadObjects();
       if (this.props.params.id && !this.props.rootNode.id) {
-        this.props.loadRoot(this.props.params.id, this.props.user.museumId, this.getCurrentPage());
+        this.props.loadRoot(this.props.params.id, this.props.appSession.getMuseumId(), this.getCurrentPage());
       }
     } else {
       this.loadNodes();
@@ -99,8 +92,8 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const museumHasChanged = newProps.appSession.state.museumId !== this.props.appSession.state.museumId;
-    const museumId = museumHasChanged ? newProps.appSession.state.museumId : this.props.appSession.state.museumId;
+    const museumHasChanged = newProps.appSession.getMuseumId() !== this.props.appSession.getMuseumId();
+    const museumId = museumHasChanged ? newProps.appSession.getMuseumId() : this.props.appSession.getMuseumId();
     const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
@@ -111,8 +104,7 @@ export class StorageUnitsContainer extends React.Component {
       if (newProps.route.showObjects) {
         this.loadObjects(currentPage);
       } else {
-        this.props.clearNodes();
-        this.props.setLoading();
+        this.props.init();
         if (nodeId) {
           this.props.loadNode({nodeId, museumId, token});
           this.props.loadStats({nodeId, museumId, token});
@@ -147,8 +139,7 @@ export class StorageUnitsContainer extends React.Component {
     const nodeId = this.props.params.id;
     const museumId = this.props.appSession.getMuseumId();
     const token = this.props.appSession.getAccessToken();
-    this.props.clearNodes();
-    this.props.setLoading();
+    this.props.init();
     if (nodeId) {
       this.props.loadNode({nodeId, museumId, token});
       this.props.loadStats({nodeId, museumId, token});
@@ -165,7 +156,12 @@ export class StorageUnitsContainer extends React.Component {
     currentPage = this.getCurrentPage()
   ) {
     if (this.props.params.id) {
-      this.props.loadStorageObjects(this.props.params.id, this.props.user.museumId, this.props.user.collectionId, currentPage);
+      this.props.loadStorageObjects(
+        this.props.params.id,
+        this.props.appSession.getMuseumId(),
+        this.props.appSession.getCollectionId(),
+        currentPage
+      );
     }
   }
 
@@ -179,9 +175,9 @@ export class StorageUnitsContainer extends React.Component {
 
   moveNode = (
     nodeToMove,
-    userId = this.props.user.actor.getActorId(),
-    museumId = this.props.user.museumId,
-    nodeId = this.props.rootNode.id,
+    userId = this.props.appSession.getActor().getActorId(),
+    museumId = this.props.appSession.getMuseumId(),
+    nodeId = this.props.nodes.node.id,
     moveNode = this.props.moveNode,
     loadRoot = this.props.loadRoot,
     loadNodes = this.loadNodes
@@ -227,9 +223,9 @@ export class StorageUnitsContainer extends React.Component {
   moveObject = (
     objectToMove,
     userId = this.props.user.actor.getActorId(),
-    museumId = this.props.user.museumId,
-    collectionId = this.props.user.collectionId,
-    nodeId = this.props.rootNode.id,
+    museumId = this.props.appSession.getMuseumId(),
+    collectionId = this.props.appSession.getCollectionId(),
+    nodeId = this.props.nodes.node.id,
     moveObject = this.props.moveObject,
     loadRoot = this.props.loadRoot,
     loadObjects = this.loadObjects
@@ -291,7 +287,7 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   makeLeftMenu(
-    museumId = this.props.user.museumId,
+    museumId = this.props.appSession.getCollectionId(),
     rootNode = this.props.nodes.node,
     stats = this.props.nodes.stats,
     onDelete = this.props.onDelete,
@@ -424,9 +420,8 @@ export class StorageUnitsContainer extends React.Component {
   }
 }
 
-const user$ = Rx.Observable.of({});
 export default inject({
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
-  state: { nodes$, user$ },
-  actions: { loadRoot$, loadStorageObjects$, loadStorageUnits$, loadChildren$, setLoading$, clearNodes$, loadStats$, loadNode$ }
+  state: { nodes$ },
+  actions: { loadChildren$, loadStats$, loadNode$, init$ }
 })(StorageUnitsContainer);
