@@ -78,6 +78,9 @@ export class App extends Component {
         />
       );
     }
+    if (!this.props.appSession.getBuildNumber()) {
+      return null;
+    }
     return (
       <div>
         <Navbar fixedTop style={{ zIndex:1 }}>
