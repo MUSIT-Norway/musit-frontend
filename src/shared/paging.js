@@ -20,7 +20,7 @@ class PagingToolbar extends React.Component {
           fontWeight: 'bold'
         }}
       >
-        {numPages > 1 && min > 1 ?
+        {currentPage > 1 ?
           <a
             href="/page/back"
             onClick={(e) => {
