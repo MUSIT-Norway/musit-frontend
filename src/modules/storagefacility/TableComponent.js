@@ -51,6 +51,8 @@ export class StorageUnitsContainer extends React.Component {
     params: React.PropTypes.object.isRequired,
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
+    pickObject: React.PropTypes.func.isRequired,
+    pickNode: React.PropTypes.func.isRequired,
     clearMoveDialog: React.PropTypes.func.isRequired
   };
 
@@ -97,7 +99,7 @@ export class StorageUnitsContainer extends React.Component {
     const museumHasChanged = newProps.appSession.getMuseumId() !== this.props.appSession.getMuseumId();
     const museumId = museumHasChanged ? newProps.appSession.getMuseumId() : this.props.appSession.getMuseumId();
     const collectionId = museumHasChanged ? newProps.appSession.getCollectionId() : this.props.appSession.getCollectionId();
-    const nodeId = museumHasChanged ? null : newProps.params.id;
+    const nodeId = museumHasChanged ? null : (newProps.params.id || null);
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
     const stateHasChanged = locationState !== this.props.location.state;
@@ -113,21 +115,24 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   onClickCrumb(node) {
-    this.showNodes();
     hashHistory.push(node.url);
   }
 
-  showNodes() {
-    if (this.props.nodes.node) {
-      hashHistory.push(`/magasin/${this.props.nodes.node.id}`);
+  showNodes(
+    node = this.props.nodes.node
+  ) {
+    if (node && node.id) {
+      hashHistory.push(`/magasin/${node.id}`);
     } else {
       hashHistory.push('/magasin');
     }
   }
 
-  showObjects() {
-    if (this.props.nodes.node) {
-      hashHistory.push(`/magasin/${this.props.nodes.node.id}/objects`);
+  showObjects(
+    node = this.props.nodes.node
+  ) {
+    if (node) {
+      hashHistory.push(`/magasin/${node.id}/objects`);
     } else {
       hashHistory.push('/magasin');
     }
@@ -346,14 +351,13 @@ export class StorageUnitsContainer extends React.Component {
           <ObjectGrid
             tableData={objectData ? filter(objectData, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
-            onAction={(action, unit) =>
-              onAction(
-                action,
-                unit,
-                rootNode.breadcrumb,
+            pickObject={(object) =>
+              this.props.pickObject({
+                object,
+                path: rootNode.breadcrumb,
                 museumId,
                 collectionId
-              )
+              })
             }
             onMove={moveObject}
           />
@@ -382,19 +386,16 @@ export class StorageUnitsContainer extends React.Component {
       <Loader loaded={!loadingNodes}>
         <NodeGrid
           tableData={nodeData ? filter(nodeData, ['name'], searchPattern) : []}
-          onAction={(action, unit) =>
-            onAction(
-              action,
-              unit,
-              rootNode.breadcrumb,
-              museumId,
-              collectionId
-            )
-          }
+          goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
-          onClick={(row) => {
-            hashHistory.push(`/magasin/${row.id}`);
-          }}
+          pickNode={(node) =>
+            this.props.pickNode({
+              node,
+              path: rootNode.breadcrumb,
+              museumId
+            })
+          }
+          onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
         {totalNodes > 0 &&
           <PagingToolbar
@@ -432,6 +433,8 @@ const objects$ = Observable.of({});
 const loadObjects$ = new Subject();
 const moveNode$ = new Subject();
 const moveObject$ = new Subject();
+const pickNode$ = new Subject();
+const pickObject$ = new Subject();
 const clearMoveDialog$ = new Subject();
 const onDelete$ = new Subject();
 const onAction$ = new Subject();
@@ -449,6 +452,8 @@ export default inject({
     moveObject$,
     clearMoveDialog$,
     onDelete$,
-    onAction$
+    onAction$,
+    pickNode$,
+    pickObject$
   }
 })(StorageUnitsContainer);
