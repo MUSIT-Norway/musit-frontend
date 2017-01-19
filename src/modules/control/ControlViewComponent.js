@@ -25,8 +25,9 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
+import inject from '../../state/inject';
 
-export default class ControlViewContainer extends React.Component {
+export class ControlViewContainer extends React.Component {
   static propTypes = {
     controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
@@ -38,10 +39,10 @@ export default class ControlViewContainer extends React.Component {
 
   componentWillMount() {
     if (this.props.params.controlId) {
-      this.props.loadControl(this.props.params.id, this.props.params.controlId, this.props.user.museumId);
+      this.props.loadControl(this.props.params.id, this.props.params.controlId, this.props.appSession.getMuseumId());
     }
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
+      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
     }
   }
 
@@ -128,3 +129,7 @@ export default class ControlViewContainer extends React.Component {
     );
   }
 }
+
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } }
+})(ControlViewContainer);

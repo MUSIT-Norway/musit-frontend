@@ -11,7 +11,7 @@ export class ActorSuggest extends React.Component {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
     placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.array,
+    suggest: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
     update: React.PropTypes.func,
     disabled: React.PropTypes.bool,

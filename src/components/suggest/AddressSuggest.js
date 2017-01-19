@@ -66,8 +66,8 @@ export class AddressSuggest extends React.Component {
   renderAddressSuggestion(suggestion) {
     const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
     return (
-            <span className={'suggestion-content'}>{suggestionText}</span>
-        );
+      <span className={'suggestion-content'}>{suggestionText}</span>
+    );
   }
 
   requestSuggestionUpdate(update) {

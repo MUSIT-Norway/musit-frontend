@@ -17,6 +17,10 @@ export const get = (url, token) => ajax(url, 'GET', null, {
   'Authorization': 'Bearer ' + token
 });
 
+export const del = (url, token) => ajax(url, 'DELETE', null, {
+  'Authorization': 'Bearer ' + token
+});
+
 export const post = (url, body, token) => ajax(url, 'POST', body, {
   'Content-Type': 'application/json',
   'Authorization': 'Bearer ' + token

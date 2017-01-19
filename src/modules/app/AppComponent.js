@@ -5,6 +5,7 @@ import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
@@ -19,7 +20,8 @@ import Loader from 'react-loader';
 export class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    appSession: PropTypes.object.isRequired
+    appSession: PropTypes.object.isRequired,
+    picks: PropTypes.object
   }
 
   constructor(props, context) {
@@ -126,10 +128,10 @@ export class App extends Component {
             </Nav>
             <Nav pullRight>
               <LinkContainer to="/picklist/node">
-                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{0}</NavItem>
+                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.picks.NODE.length}</NavItem>
               </LinkContainer>
               <LinkContainer to="/picklist/object">
-                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{0}</NavItem>
+                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.picks.OBJECT.length}</NavItem>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>
@@ -155,4 +157,7 @@ const stateAsProps = {
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
   state: { appSession$state: appSession.store$ }
 };
-export default notifiable(provide(servicesAsProps)(inject(stateAsProps)(App)));
+const mapStateToProps = (state) => ({
+  picks: state.picks
+});
+export default connect(mapStateToProps)(notifiable(provide(servicesAsProps)(inject(stateAsProps)(App))));

@@ -3,8 +3,9 @@ import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
+import inject from '../../state/inject';
 
-export default class ViewObservationPage extends React.Component {
+export class ViewObservationPage extends React.Component {
 
   static propTypes = {
     observations: PropTypes.arrayOf(PropTypes.object),
@@ -19,10 +20,10 @@ export default class ViewObservationPage extends React.Component {
 
   componentWillMount() {
     if (this.props.params.obsId) {
-      this.props.loadObservation(this.props.params.id, this.props.params.obsId, this.props.user.museumId);
+      this.props.loadObservation(this.props.params.id, this.props.params.obsId, this.props.appSession.getMuseumId());
     }
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
+      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
     }
   }
 
@@ -55,3 +56,7 @@ export default class ViewObservationPage extends React.Component {
     );
   }
 }
+
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } }
+})(ViewObservationPage);

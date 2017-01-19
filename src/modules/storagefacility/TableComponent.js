@@ -2,7 +2,6 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import Loader from 'react-loader';
-import { Subject } from 'rxjs';
 
 import NodeGrid from './NodeTable';
 import ObjectGrid from './ObjectTable';
@@ -24,11 +23,17 @@ import MusitModalHistory from '../movehistory/MoveHistoryContainer';
 import Config from '../../config';
 import inject from '../../state/inject';
 
+import {connect} from 'react-redux';
+import {addNode, addObject, loadMainObject} from '../picklist/picklistReducer';
+import {moveObject as moveObjectAction, moveNode as moveNodeAction} from '../movedialog/moveActions';
+import { clear } from './reducers/modal';
+
 import store$, {
   loadChildren$,
   loadStats$,
   loadNode$,
   loadObjects$,
+  deleteNode$,
   init$
 } from './tableStore';
 
@@ -46,8 +51,7 @@ export class StorageUnitsContainer extends React.Component {
     loadObjects: React.PropTypes.func.isRequired,
     loadStats: React.PropTypes.func.isRequired,
     loadNode: React.PropTypes.func.isRequired,
-    onDelete: React.PropTypes.func.isRequired,
-    onAction: React.PropTypes.func.isRequired,
+    deleteNode: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
@@ -266,7 +270,7 @@ export class StorageUnitsContainer extends React.Component {
     showModal = this.context.showModal
   ) {
     const objStr = getObjectDescription(objectToShowHistoryFor);
-    const componentToRender = <MusitModalHistory objectId={objectToShowHistoryFor.id} />;
+    const componentToRender = <MusitModalHistory appSession={this.props.appSession} objectId={objectToShowHistoryFor.id} />;
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
     showModal(title, componentToRender);
   }
@@ -297,10 +301,11 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   makeLeftMenu(
-    museumId = this.props.appSession.getCollectionId(),
+    museumId = this.props.appSession.getMuseumId(),
+    token = this.props.appSession.getAccessToken(),
     rootNode = this.props.store.rootNode,
     stats = this.props.store.stats,
-    onDelete = this.props.onDelete,
+    deleteNode = this.props.deleteNode,
     moveNode = this.showMoveNodeModal,
     confirm = this.context.showConfirm
   ) {
@@ -317,16 +322,33 @@ export class StorageUnitsContainer extends React.Component {
             }
           }}
           stats={stats}
-          onClickProperties={(id) => hashHistory.push(`/magasin/${id}/view`)}
+          onClickProperties={(id) => {
+            hashHistory.push({
+              pathname: `/magasin/${id}/view`,
+              state: rootNode
+            });
+          }}
           onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
           onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
           onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
           onClickMoveNode={moveNode}
-          onClickDelete={(id) => {
+          onClickDelete={(nodeId) => {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
               name: rootNode.name
             });
-            confirm(message, () => onDelete(id, museumId, rootNode));
+            confirm(message, () => {
+              deleteNode({nodeId, museumId, token,
+                onComplete: () => {
+                  if (rootNode.isPartOf) {
+                    hashHistory.replace(`/magasin/${rootNode.isPartOf}`);
+                  }
+                  emitSuccess({
+                    type: 'deleteSuccess',
+                    message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name: rootNode.name})
+                  });
+                }
+              });
+            });
           }}
         />
       </div>
@@ -356,12 +378,12 @@ export class StorageUnitsContainer extends React.Component {
             tableData={objectData ? filter(objectData, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             pickObject={(object) =>
-              this.props.pickObject({
+              this.props.pickObject(
                 object,
-                path: rootNode.breadcrumb,
+                rootNode.breadcrumb,
                 museumId,
                 collectionId
-              })
+              )
             }
             onMove={moveObject}
           />
@@ -393,11 +415,11 @@ export class StorageUnitsContainer extends React.Component {
           goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
           pickNode={(node) =>
-            this.props.pickNode({
+            this.props.pickNode(
               node,
-              path: rootNode.breadcrumb,
+              rootNode.breadcrumb,
               museumId
-            })
+            )
           }
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
@@ -433,15 +455,47 @@ export class StorageUnitsContainer extends React.Component {
   }
 }
 
-const moveNode$ = new Subject();
-const moveObject$ = new Subject();
-const pickNode$ = new Subject();
-const pickObject$ = new Subject();
-const clearMoveDialog$ = new Subject();
-const onDelete$ = new Subject();
-const onAction$ = new Subject();
+const mapDispatchToProps = (dispatch) => {
+  return {
+    moveObject: (
+      objectToMove,
+      destinationId,
+      doneBy,
+      museumId,
+      collectionId,
+      callback
+    ) => {
+      if (objectToMove.isMainObject()) {
+        dispatch(loadMainObject(objectToMove, museumId, collectionId, {
+          onSuccess: (children) => {
+            const objectIds = children.map(c => c.id);
+            dispatch(moveObjectAction(objectIds, destinationId, doneBy, museumId, callback));
+          }
+        }));
+      } else {
+        dispatch(moveObjectAction(objectToMove.id, destinationId, doneBy, museumId, callback));
+      }
+    },
+    moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
+      dispatch(moveNodeAction(nodeId, destinationId, doneBy, museumId, callback));
+    },
+    pickNode: (unit, path) => dispatch(addNode(unit, path)),
+    pickObject: (unit, path, museumId, collectionId) => {
+      if (unit.isMainObject()) {
+        dispatch(loadMainObject(unit, museumId, collectionId, {
+          onSuccess: (children) => {
+            children.forEach(child => dispatch(addObject(child, path)));
+          }
+        }));
+      } else {
+        dispatch(addObject(unit, path));
+      }
+    },
+    clearMoveDialog: () => dispatch(clear())
+  };
+};
 
-export default inject({
+export default connect(null, mapDispatchToProps)(inject({
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
   state: { store$ },
   actions: {
@@ -450,12 +504,6 @@ export default inject({
     loadStats$,
     loadNode$,
     loadObjects$,
-    moveNode$,
-    moveObject$,
-    clearMoveDialog$,
-    onDelete$,
-    onAction$,
-    pickNode$,
-    pickObject$
+    deleteNode$
   }
-})(StorageUnitsContainer);
+})(StorageUnitsContainer));

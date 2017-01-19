@@ -10,6 +10,7 @@ export default (urlFn) => createStore(Observable.empty().merge(
         .switchMap(({ update: { value }, token, museumId }) =>
             ajaxGet(urlFn(value, museumId), token)
                 .map(({ response }) => response)
+                .catch(() => [])
         )
         .map((suggestions) => (state) => ({...state, data: suggestions}))
 ));

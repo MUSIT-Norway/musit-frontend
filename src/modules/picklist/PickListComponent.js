@@ -52,7 +52,7 @@ export class PickListContainer extends React.Component {
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
     }
-    this.context.showModal(title, <MusitModal onMove={this.moveModal(items)}/>, this.props.clearMoveDialog);
+    this.context.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveModal(items)}/>, this.props.clearMoveDialog);
   }
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
