@@ -65,7 +65,7 @@ export const ObjectSearchComponent = (props) =>
               baseUrl={props.location.pathname}
               currentPage={props.params.currentPage}
               perPage={props.params.perPage}
-              onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
+              onClick={(page) => props.searchForObjects(props.params, page, props.appSession.getMuseumId(), props.appSession.getCollectionId())}
             />
             <Table>
               <thead>
@@ -100,7 +100,7 @@ export const ObjectSearchComponent = (props) =>
                           href=""
                           onClick={(e) => {
                             e.preventDefault();
-                            props.pickObject(data, data.breadcrumb, props.user.museumId, props.user.collectionId);
+                            props.pickObject(data, data.breadcrumb, props.appSession.getMuseumId(), props.appSession.getCollectionId());
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >
@@ -117,7 +117,7 @@ export const ObjectSearchComponent = (props) =>
               numItems={props.data.totalMatches}
               currentPage={props.params.currentPage}
               perPage={props.params.perPage}
-              onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
+              onClick={(page) => props.searchForObjects(props.params, page, props.appSession.getMuseumId(), props.appSession.getCollectionId())}
             />
           </div>
           }

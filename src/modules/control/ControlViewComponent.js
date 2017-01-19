@@ -32,8 +32,7 @@ export class ControlViewContainer extends React.Component {
     controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
-    loadActorDetails: React.PropTypes.func.isRequired,
-    doneBy: React.PropTypes.object,
+    doneBy: React.PropTypes.any,
     rootNode: React.PropTypes.object
   }
 
