@@ -25,7 +25,8 @@ const mapDispatchToProps = (dispatch) => ({
       dispatch(addControl(id, controlState, observationState, museumId, {
         onSuccess: () => {
           hashHistory.goBack();
-          emitSuccess( { type: 'saveSuccess', message: controlState ? I18n.t('musit.newControl.saveControlSuccess') :
+          emitSuccess( { type: 'saveSuccess', message: controlState ?
+              I18n.t('musit.newControl.saveControlSuccess') :
               I18n.t('musit.observation.page.messages.saveSuccess') });
         },
         onFailure: (e) => emitError({ ...e, type: 'network' })
