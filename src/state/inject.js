@@ -4,6 +4,8 @@ import {Observable} from 'rxjs';
 
 import RxContainer from './RxContainer';
 
+import entries from 'object.entries';
+
 function combineLatestObj(obj) {
   const sources = [];
   const keys = [];
@@ -29,7 +31,7 @@ export default (settings) => (Component) => {
     props = settings.props || {},
     provided = settings.provided || {};
 
-  const callbacks = Object.entries(observers).reduce((acc, [key, observer]) => {
+  const callbacks = entries(observers).reduce((acc, [key, observer]) => {
     acc[key.replace(/\$$/, '')] = (value) => observer.next(value);
     return acc;
   }, {});
@@ -38,7 +40,7 @@ export default (settings) => (Component) => {
     ? Observable.of([{}])
     : combineLatestObj(observables).share();
 
-  const types = Object.entries(provided).reduce((acc, [k, v]) => {
+  const types = entries(provided).reduce((acc, [k, v]) => {
     acc[k] = v.type;
     return acc;
   }, {});

@@ -1,7 +1,8 @@
 import React from 'react';
+import entries from 'object.entries';
 
 const mapObject = (object, mapFn) => {
-  return Object.entries(object).reduce((acc, [k, v]) => {
+  return entries(object).reduce((acc, [k, v]) => {
     acc[k] = mapFn(v);
     return acc;
   }, {});

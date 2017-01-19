@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import ObjectSearchComponent from '../ObjectSearchComponent';
+import { ObjectSearchComponent } from '../ObjectSearchComponent';
 import { getPath } from '../../../shared/util';
 import MusitObject from '../../../shared/models/object';
 
