@@ -62,6 +62,10 @@ export default class MusitModal extends Component {
   }
 
   loadNode(id, currentPage = 1) {
+    this.setState({
+      ...this.state,
+      currentPage
+    });
     this.props.loadNode(id, this.props.appSession.getMuseumId());
     this.props.loadChildren(id, this.props.appSession.getMuseumId(), currentPage, PER_PAGE);
   }
@@ -99,13 +103,7 @@ export default class MusitModal extends Component {
             numItems={this.props.totalNodes}
             currentPage={this.state.currentPage}
             perPage={PER_PAGE}
-            onClick={(currentPage) => {
-              this.setState({
-                ...this.state,
-                currentPage
-              });
-              this.loadNode(selectedNode && selectedNode.id, currentPage);
-            }}
+            onClick={(currentPage) => this.loadNode(selectedNode && selectedNode.id, currentPage)}
           />
           }
         </div>
