@@ -12,8 +12,9 @@ import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors/emitter';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
+import inject from '../../state/inject';
 
-export default class PickListContainer extends React.Component {
+export class PickListContainer extends React.Component {
   static propTypes = {
     picks: React.PropTypes.object.isRequired,
     toggleNode: React.PropTypes.func.isRequired,
@@ -23,7 +24,7 @@ export default class PickListContainer extends React.Component {
     moveNode: React.PropTypes.func.isRequired,
     moveObject: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
-    user: React.PropTypes.object,
+    appSession: React.PropTypes.object.isRequired,
     refreshNodes: React.PropTypes.func.isRequired,
     refreshObjects: React.PropTypes.func.isRequired,
     clearMoveDialog: React.PropTypes.func.isRequired
@@ -56,7 +57,7 @@ export default class PickListContainer extends React.Component {
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshNodes(items.map(p => p.value).map(item => item.id), this.props.user.museumId);
+      this.props.refreshNodes(items.map(p => p.value).map(item => item.id), this.props.appSession.getMuseumId());
       onSuccess();
       if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })});
@@ -75,7 +76,7 @@ export default class PickListContainer extends React.Component {
   })
   objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshObjects(items.map(p => p.value).map(item => item.id), this.props.user.museumId);
+      this.props.refreshObjects(items.map(p => p.value).map(item => item.id), this.props.appSession.getMuseumId());
       onSuccess();
       if (toMoveLength === 1) {
         emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })});
@@ -124,7 +125,7 @@ export default class PickListContainer extends React.Component {
     }
 
     if (!error) {
-      moveFunction(toMove, to.id, this.props.user.actor.getActorId(), this.props.user.museumId, callback);
+      moveFunction(toMove, to.id, this.props.appSession.getActor().getActorId(), this.props.appSession.getMuseumId(), callback);
     }
   }
 
@@ -135,7 +136,7 @@ export default class PickListContainer extends React.Component {
   render() {
     const { toggleNode, toggleObject, removeNode, removeObject } = this.props;
     const type = this.props.params.type.toUpperCase();
-    const picks = this.props.picks[type];
+    const picks = (this.props.picks && this.props.picks[type]) || [];
     const marked = picks.filter(p => p.marked);
     const markedValues = marked.map(p => p.value);
     return (
@@ -184,3 +185,7 @@ export default class PickListContainer extends React.Component {
     );
   }
 }
+
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } }
+})(PickListContainer);

@@ -2,15 +2,16 @@ import React from 'react';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import { formatFloatToString } from './../../shared/util';
+import inject from '../../state/inject';
 
-export default class KDReport extends React.Component {
+export class KDReport extends React.Component {
   static propTypes= {
     data: React.PropTypes.object,
     loadKDReport: React.PropTypes.func
   };
 
   componentWillMount() {
-    this.props.loadKDReport(this.props.user.museumId);
+    this.props.loadKDReport(this.props.appSession.getMuseumId());
   }
 
   render() {
@@ -61,3 +62,7 @@ export default class KDReport extends React.Component {
   }
 
 }
+
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } }
+})(KDReport);

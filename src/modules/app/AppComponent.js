@@ -125,10 +125,10 @@ export class App extends Component {
               </LinkContainer>
             </Nav>
             <Nav pullRight>
-              <LinkContainer to="/picklist/nodes">
+              <LinkContainer to="/picklist/node">
                 <NavItem><span className="icon icon-musitpicklistnode" />{' '}{0}</NavItem>
               </LinkContainer>
-              <LinkContainer to="/picklist/objects">
+              <LinkContainer to="/picklist/object">
                 <NavItem><span className="icon icon-musitpicklistobject" />{' '}{0}</NavItem>
               </LinkContainer>
             </Nav>

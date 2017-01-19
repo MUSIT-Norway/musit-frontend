@@ -6,7 +6,7 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import PagingToolbar from '../../shared/paging';
 import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
-
+import inject from '../../state/inject';
 
 export function renderParam(id, props, style) {
   return (
@@ -24,7 +24,7 @@ export function renderParam(id, props, style) {
   );
 }
 
-export default (props) =>
+export const ObjectSearchComponent = (props) =>
   <div style={{paddingTop: 20}}>
     <main>
       <Grid>
@@ -41,7 +41,7 @@ export default (props) =>
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                props.searchForObjects(props.params, 1, props.user.museumId, props.user.collectionId);
+                props.searchForObjects(props.params, 1, props.appSession.getMuseumId(), props.appSession.getCollectionId());
               }}
             >
               <FontAwesome name="search" style={{fontSize: '1.3em'}}/>
@@ -126,3 +126,7 @@ export default (props) =>
       </Grid>
     </main>
   </div>;
+
+export default inject({
+  provided: { appSession: { type: React.PropTypes.object.isRequired } }
+})(ObjectSearchComponent);
