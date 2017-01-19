@@ -37,7 +37,8 @@ export default class MusitModal extends Component {
     clear: PropTypes.func.isRequired,
     children: PropTypes.arrayOf(PropTypes.object),
     totalNodes: PropTypes.number,
-    selectedNode: PropTypes.object
+    selectedNode: PropTypes.object,
+    appSession: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -57,12 +58,12 @@ export default class MusitModal extends Component {
 
   loadHome() {
     this.props.clear();
-    this.props.loadChildren(null, this.props.user.museumId);
+    this.props.loadChildren(null, this.props.appSession.getMuseumId());
   }
 
   loadNode(id, currentPage = 1) {
-    this.props.loadNode(id, this.props.user.museumId);
-    this.props.loadChildren(id, this.props.user.museumId, currentPage, PER_PAGE);
+    this.props.loadNode(id, this.props.appSession.getMuseumId());
+    this.props.loadChildren(id, this.props.appSession.getMuseumId(), currentPage, PER_PAGE);
   }
 
   render() {
@@ -73,6 +74,7 @@ export default class MusitModal extends Component {
     const header =
       <div style={{ width: '500px', paddingBottom: '10px' }}>
         <NodeSuggest
+          appSession={this.props.appSession}
           label="Search"
           id="nodeSearch"
           onChange={ (v) => v ? this.loadNode(v) : null }

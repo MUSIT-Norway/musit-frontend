@@ -14,6 +14,7 @@ import AppSession from './appSession';
 import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors/emitter';
 import notifiable from './Notifyable';
+import Loader from 'react-loader';
 
 export class App extends Component {
   static propTypes = {
@@ -79,7 +80,7 @@ export class App extends Component {
       );
     }
     if (!this.props.appSession.getBuildNumber()) {
-      return null;
+      return <Loader loaded={false} />;
     }
     return (
       <div>
@@ -125,10 +126,10 @@ export class App extends Component {
             </Nav>
             <Nav pullRight>
               <LinkContainer to="/picklist/nodes">
-                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.appSession.getPickList().nodes.length}</NavItem>
+                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{0}</NavItem>
               </LinkContainer>
               <LinkContainer to="/picklist/objects">
-                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.appSession.getPickList().objects.length}</NavItem>
+                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{0}</NavItem>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>

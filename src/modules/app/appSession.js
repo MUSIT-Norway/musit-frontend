@@ -11,13 +11,7 @@ import Actor from '../../shared/models/actor';
 
 export default class AppSession {
   store$: Observable;
-  state: Object = {
-    accessToken: getAccessToken(),
-    buildInfo: {},
-    actor: {},
-    groups: [],
-    museumId: new MuseumId(99)
-  };
+  state: Object = { accessToken: getAccessToken() };
   actions: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$');
 
   constructor() {
@@ -30,10 +24,20 @@ export default class AppSession {
     this.loadAppSession = this.loadAppSession.bind(this);
     this.__loadAppSession = this.__loadAppSession.bind(this);
     const reducer$ = Observable.merge(
-      this.actions.setAccessToken$.map(accessToken => state => ({...state, accessToken})),
-      this.actions.loadAppSession$.filter(() => this.state.accessToken).switchMap(this.__loadAppSession),
-      this.actions.setMuseumId$.map(museumId => state => ({...state, museumId})),
-      this.actions.setCollectionId$.map(collectionId => state => ({...state, collectionId}))
+      this.actions.setAccessToken$
+        .map(accessToken => state => ({...state, accessToken})),
+      this.actions.loadAppSession$
+        .filter(() => this.state.accessToken)
+        .switchMap(this.__loadAppSession)
+        .map(session => state => ({...state, ...session}))
+        .catch(error => {
+          emitError(error);
+          return Observable.of(state => ({...state, accessToken: null}));
+        }),
+      this.actions.setMuseumId$
+        .map(museumId => state => ({...state, museumId})),
+      this.actions.setCollectionId$
+        .map(collectionId => state => ({...state, collectionId}))
     );
     this.store$ = createStore(reducer$, Observable.of(this.state));
     this.store$.subscribe((state) => this.state = state);
@@ -52,10 +56,10 @@ export default class AppSession {
       ajaxGet(Config.magasin.urls.auth.museumsUrl, this.state.accessToken)
     ).switchMap(([buildInfoRes, currentUserRes, museumsRes]) =>
       ajaxGet(Config.magasin.urls.auth.groupsUrl(currentUserRes.response.dataportenUser), this.state.accessToken)
-        .map(({response}) => (state) => {
+        .map(({response}) => {
           if (!response) {
             emitError({ message: I18n.t('musit.errorMainMessages.noGroups') });
-            return state;
+            return null;
           }
           const isGod = !!response.find(group => 10000 === group.permission);
           let groups;
@@ -81,13 +85,15 @@ export default class AppSession {
           }
           const museumId = new MuseumId(groups[0].museumId);
           const collectionId = new CollectionId(groups[0].collections[0].uuid);
-          return {...state, actor: new Actor(currentUserRes.response), groups, museumId, collectionId, buildInfo: buildInfoRes.response};
+          return {
+            actor: new Actor(currentUserRes.response),
+            groups,
+            museumId,
+            collectionId,
+            buildInfo: buildInfoRes.response
+          };
         })
     );
-  }
-
-  getState() {
-    return this.state;
   }
 
   getAccessToken() {
@@ -100,13 +106,6 @@ export default class AppSession {
 
   getActor() {
     return this.state.actor;
-  }
-
-  getPickList() {
-    return {
-      nodes: [],
-      objects: []
-    };
   }
 
   setAccessToken(token) {

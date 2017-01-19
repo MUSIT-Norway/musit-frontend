@@ -10,7 +10,7 @@ export class NodeSuggest extends React.Component {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
     placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.array,
+    suggest: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
     update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
@@ -26,6 +26,7 @@ export class NodeSuggest extends React.Component {
   constructor(props) {
     super(props);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
       value: this.props.value
     };
@@ -67,12 +68,18 @@ export class NodeSuggest extends React.Component {
     );
   }
 
+  requestSuggestionUpdate(update) {
+    if (update.value.length > 2) {
+      this.props.update({update, museumId: this.props.appSession.getMuseumId(), token: this.props.appSession.getAccessToken()});
+    }
+  }
+
   render() {
     return (
       <AutoSuggest
         suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={this.props.update}
+        onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getNodeSuggestionValue}
         renderSuggestion={this.renderNodeSuggestion}
         inputProps={{ ...this.nodeProps, value: this.state.value }}
@@ -84,7 +91,6 @@ export class NodeSuggest extends React.Component {
 }
 
 export default inject({
-  provided: { appSession: { type: React.PropTypes.object.isRequired } },
   state: { suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl) },
   actions: { update$, clear$ }
 })(NodeSuggest);

@@ -20,7 +20,6 @@
 import { loadChildren, clear, loadNode } from '../storagefacility/reducers/modal';
 import { connect } from 'react-redux';
 import MusitModalImpl from './MusitModalComponent';
-import MuseumId from '../../shared/models/museumId';
 
 const getGridData = (state) => {
   if (!state.data) {
@@ -32,13 +31,11 @@ const getGridData = (state) => {
 const totalNodesSelector = (state) => state.data && state.data.totalMatches;
 
 const mapStateToProps = (state) => ({
-  user: (state.auth && state.auth.user) || { museumId: new MuseumId(99) },
   children: getGridData(state.storageUnitModal),
   totalNodes: totalNodesSelector(state.storageUnitModal),
   selectedNode: state.storageUnitModal.root.data
 });
 
 const mapDispatchToProps = { clear, loadNode, loadChildren };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl);

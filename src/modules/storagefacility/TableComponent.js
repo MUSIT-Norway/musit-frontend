@@ -147,8 +147,11 @@ export class StorageUnitsContainer extends React.Component {
   ) {
     this.props.init();
     if (nodeId) {
-      this.props.loadNode({nodeId, museumId, token});
-      this.props.loadStats({nodeId, museumId, token});
+      this.props.loadNode({nodeId, museumId, token, onComplete: node => {
+        if(node && !MusitNode.isRootNode(node.type)) {
+          this.props.loadStats({nodeId, museumId, token});
+        }
+      }});
     }
     this.props.loadChildren({
       nodeId,
@@ -181,7 +184,7 @@ export class StorageUnitsContainer extends React.Component {
     showModal = this.context.showModal
   ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    showModal(title, <MusitModal onMove={this.moveNode(nodeToMove)} />, this.props.clearMoveDialog);
+    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />, this.props.clearMoveDialog);
   }
 
   moveNode = (
