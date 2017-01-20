@@ -9,9 +9,7 @@ import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
-import provide from '../../state/provide';
 import inject from '../../state/inject';
-import AppSession from './appSession';
 import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors/emitter';
 import notifiable from './Notifyable';
@@ -153,12 +151,6 @@ export class App extends Component {
   }
 }
 
-const appSession = new AppSession();
-
-const servicesAsContext = {
-  appSession: { type: PropTypes.object, value: () => appSession }
-};
-
 const stateAsProps = {
   state: {
     appSession: {
@@ -177,12 +169,4 @@ const mapDispatchToProps = (dispatch) => ({
   setCollectionId: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  notifiable(
-    provide(servicesAsContext)(
-      inject(stateAsProps)(
-        App
-      )
-    )
-  )
-);
+export default connect(mapStateToProps, mapDispatchToProps)(notifiable(inject(stateAsProps)(App)));

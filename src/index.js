@@ -17,7 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import 'es6-shim';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import createStore from './redux/configureStore.js';
 import ApiClient from './redux/ApiClient';
@@ -33,6 +33,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
+import AppSession from './modules/app/appSession';
+import provide from './state/provide';
 
 function initReactJS() {
   const client = new ApiClient();
@@ -55,14 +57,25 @@ function initReactJS() {
     loglevel.setLevel('error');
   }
 
+  const appRouter = () => (
+    <Router
+      onUpdate={() => window.scrollTo(0, 0)}
+      history={hashHistory}
+    >
+      {getRoutes(store)}
+    </Router>
+  );
+
+  const SessionProvided = provide({
+    appSession: {
+      type: PropTypes.object,
+      value: () => new AppSession()
+    }
+  })(appRouter);
+
   ReactDOM.render(
     <Provider store={store} key="provider">
-      <Router
-        onUpdate={() => window.scrollTo(0, 0)}
-        history={hashHistory}
-      >
-        {getRoutes(store)}
-      </Router>
+      <SessionProvided />
     </Provider>,
     dest
   );
