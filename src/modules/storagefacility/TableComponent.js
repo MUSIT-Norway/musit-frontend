@@ -455,6 +455,18 @@ export class StorageUnitsContainer extends React.Component {
   }
 }
 
+const pickObject = (dispatch) => (unit, path, museumId, collectionId) => {
+  if (unit.isMainObject()) {
+    dispatch(loadMainObject(unit, museumId, collectionId, {
+      onSuccess: (children) => {
+        children.forEach(child => dispatch(addObject(child, path)));
+      }
+    }));
+  } else {
+    dispatch(addObject(unit, path));
+  }
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     moveObject: (
@@ -480,16 +492,13 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(moveNodeAction(nodeId, destinationId, doneBy, museumId, callback));
     },
     pickNode: (unit, path) => dispatch(addNode(unit, path)),
+    pickObjects: (unit, path, museumId, collectionId) => {
+      unit.forEach(object => {
+        pickObject(dispatch)(object, path, museumId, collectionId);
+      });
+    },
     pickObject: (unit, path, museumId, collectionId) => {
-      if (unit.isMainObject()) {
-        dispatch(loadMainObject(unit, museumId, collectionId, {
-          onSuccess: (children) => {
-            children.forEach(child => dispatch(addObject(child, path)));
-          }
-        }));
-      } else {
-        dispatch(addObject(unit, path));
-      }
+      pickObject(dispatch)(unit, path, museumId, collectionId);
     },
     clearMoveDialog: () => dispatch(clear())
   };
