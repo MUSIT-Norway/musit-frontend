@@ -233,7 +233,7 @@ export class StorageUnitsContainer extends React.Component {
   ) {
     const objStr = getObjectDescription(objectToMove);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    showModal(title, <MusitModal onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
+    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
   }
 
   moveObject = (
