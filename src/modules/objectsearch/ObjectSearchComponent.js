@@ -79,7 +79,7 @@ export const ObjectSearchComponent = (props) =>
                     href=""
                     onClick={(e) => {
                       e.preventDefault();
-                      props.pickObjects(props.data.matches, props.user.museumId, props.user.collectionId);
+                      props.pickObjects(props.data.matches, props.appSession.getMuseumId(), props.appSession.getCollectionId());
                     }}
                     title={I18n.t('musit.objectsearch.addAllToPickList')}
                   >

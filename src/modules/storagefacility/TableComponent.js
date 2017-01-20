@@ -385,6 +385,14 @@ export class StorageUnitsContainer extends React.Component {
                 collectionId
               )
             }
+            pickObjects={(objectArr) =>
+              this.props.pickObjects(
+                objectArr,
+                rootNode.breadcrumb,
+                museumId,
+                collectionId
+              )
+            }
             onMove={moveObject}
           />
           {totalObjects > 0 &&
