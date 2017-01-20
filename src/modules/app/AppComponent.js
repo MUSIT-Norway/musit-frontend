@@ -154,12 +154,18 @@ export class App extends Component {
 }
 
 const appSession = new AppSession();
-const servicesAsProps = {
-  appSession: { type: React.PropTypes.object, value: () => appSession }
+const servicesAsContext = {
+  appSession: { type: PropTypes.object, value: () => appSession }
 };
 const stateAsProps = {
-  provided: { appSession: { type: React.PropTypes.object.isRequired } },
-  state: { appSession$state: appSession.store$ }
+  state: {
+    appSession: {
+      type: PropTypes.object.isRequired,
+      observable: (object) => ({
+        _$: object.store$.map(state => state).distinctUntilChanged()
+      })
+    }
+  }
 };
 const mapStateToProps = (state) => ({
   picks: state.picks
@@ -168,4 +174,12 @@ const mapDispatchToProps = (dispatch) => ({
   setMuseumId: (museumId) => dispatch({ type: SET_MUSEUM, museumId }),
   setCollectionId: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
 });
-export default connect(mapStateToProps, mapDispatchToProps)(notifiable(provide(servicesAsProps)(inject(stateAsProps)(App))));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  notifiable(
+    provide(servicesAsContext)(
+      inject(stateAsProps)(
+        App
+      )
+    )
+  )
+);

@@ -36,17 +36,45 @@ export default (settings) => (Component) => {
     return acc;
   }, {});
 
-  const propsObservable = Object.keys(observables).length === 0
-    ? Observable.of([{}])
-    : combineLatestObj(observables).share();
-
-  const types = entries(provided).reduce((acc, [k, v]) => {
-    acc[k] = v.type;
+  const contextTypes = entries({ ...provided, ...observables}).reduce((acc, [k, v]) => {
+    if (v.type) {
+      acc[k] = v.type;
+    }
     return acc;
   }, {});
 
   class Injected extends React.Component {
-    static contextTypes = types;
+    static contextTypes = contextTypes;
+
+    constructor(p, c) {
+      super(p, c);
+
+      const observablesFromValue = entries(observables).reduce((acc, [k, v]) => {
+        if (v.subscribe) {
+          acc[k] = v;
+        }
+        return acc;
+      }, {});
+
+      const observablesFromContext = entries(observables).reduce((acc, [k, v]) => {
+        if (v.type && v.observable && this.context[k]) {
+          return {
+            ...acc,
+            ...v.observable(this.context[k])
+          };
+        }
+        return acc;
+      }, {});
+
+      const allObservables = {
+        ...observablesFromValue,
+        ...observablesFromContext
+      };
+
+      this.propsObservable = Object.keys(allObservables).length === 0
+        ? Observable.of([{}])
+        : combineLatestObj(allObservables).share();
+    }
 
     render() {
       return (
@@ -54,7 +82,7 @@ export default (settings) => (Component) => {
           props={{...this.context, ...this.props, ...props}}
           callbacks={callbacks}
           component={Component}
-          observable={propsObservable}
+          observable={this.propsObservable}
         />
       );
     }
