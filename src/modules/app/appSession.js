@@ -4,10 +4,12 @@ import {get as ajaxGet} from '../../state/ajax';
 import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors/emitter';
+import { dispatchAction } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import MuseumId from '../../shared/models/museumId';
 import CollectionId from '../../shared/models/collectionId';
 import Actor from '../../shared/models/actor';
+import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
 
 export default class AppSession {
   store$: Observable;
@@ -84,7 +86,9 @@ export default class AppSession {
             }));
           }
           const museumId = new MuseumId(groups[0].museumId);
+          dispatchAction({ type: SET_MUSEUM, museumId });
           const collectionId = new CollectionId(groups[0].collections[0].uuid);
+          dispatchAction({ type: SET_COLLECTION, collectionId });
           return {
             actor: new Actor(currentUserRes.response),
             groups,

@@ -8,13 +8,14 @@ import { emitError } from '../shared/errors/emitter';
 import { isNumber, getPath, dispatchAction, getState } from '../shared/util';
 import Config from '../config';
 
-const { getMuseumId, getCollectionId } = {};
+const { getMuseumId, getCollectionId } = {
+  getMuseumId: () => getState('session', 'museumId'),
+  getCollectionId: () => getState('session', 'collectionId')
+};
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const OLD_REGEX = /^[0-9]{9,10}$/i;
 
-const ROUTE_STATE = 'routing';
-const ROUTE_LOCATION = 'locationBeforeTransitions';
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 
 const SCAN_START = 'musit/scan/start';
@@ -33,7 +34,17 @@ const state$ = Observable.merge(clearReducer$, charReducer$)
   .scan((state, reducer) => reducer(state), '')
   .map(text => text.replace(/\+/g, '-'));
 
-const getRoutePathname = () => getState(ROUTE_STATE, ROUTE_LOCATION).pathname;
+const getRoutePathname = () => {
+  const hash = window.location.hash;
+  if (hash.indexOf('#') === -1) {
+    return hash;
+  }
+  if (hash.indexOf('?') === -1) {
+    return hash.substr(1);
+  }
+  return hash.substr(1, hash.indexOf('?') - 1);
+};
+
 const getPickListPath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
 const isNodePickList = (path) => path && path.length > 0 && path[1] === 'node';
 const isObjectPickList = (path) => path && path.length > 0 && path[1] === 'object';
@@ -128,7 +139,7 @@ state$.filter(text => OLD_REGEX.test(text))
     const objectPickList = isObjectPickList(pickListPath);
     const storageFacility = isStorageFacility(pathname);
     const moveActive = isMoveDialogActive();
-    if (nodePickList || storageFacility || moveActive) {
+    if (nodePickList || moveActive || storageFacility) {
       dispatchNodeSearch(
         scanOldBarcodeNodeUrlFn,
         scanOldBarcodeObjectUrlFn,
@@ -154,7 +165,7 @@ state$.filter(text => UUID_REGEX.test(text))
     const nodePickList = isNodePickList(pickListPath);
     const storageFacility = isStorageFacility(pathname);
     const moveActive = isMoveDialogActive();
-    if (nodePickList || storageFacility || moveActive) {
+    if (nodePickList || moveActive || storageFacility) {
       dispatchNodeSearch(
         scanUUIDNodeUrlFn,
         scanOldBarcodeObjectUrlFn,

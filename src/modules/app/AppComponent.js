@@ -16,6 +16,7 @@ import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors/emitter';
 import notifiable from './Notifyable';
 import Loader from 'react-loader';
+import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
 
 export class App extends Component {
   static propTypes = {
@@ -57,12 +58,15 @@ export class App extends Component {
 
   handleMuseumId(mid, cid) {
     this.props.appSession.setMuseumId(mid);
+    this.props.setMuseumId(mid);
     this.props.appSession.setCollectionId(cid);
+    this.props.setCollectionId(cid);
     hashHistory.push('/magasin');
   }
 
   handleCollectionId(nid, cid) {
     this.props.appSession.setCollectionId(cid);
+    this.props.setCollectionId(cid);
     if (nid) {
       hashHistory.push(`/magasin/${nid}`);
     } else {
@@ -160,4 +164,8 @@ const stateAsProps = {
 const mapStateToProps = (state) => ({
   picks: state.picks
 });
-export default connect(mapStateToProps)(notifiable(provide(servicesAsProps)(inject(stateAsProps)(App))));
+const mapDispatchToProps = (dispatch) => ({
+  setMuseumId: (museumId) => dispatch({ type: SET_MUSEUM, museumId }),
+  setCollectionId: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
+});
+export default connect(mapStateToProps, mapDispatchToProps)(notifiable(provide(servicesAsProps)(inject(stateAsProps)(App))));

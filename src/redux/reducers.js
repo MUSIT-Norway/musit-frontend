@@ -31,10 +31,12 @@ import moveHistoryReducer from '../modules/movehistory/moveHistoryReducer';
 import ObjectSearchReducer from '../modules/objectsearch/reducer';
 import printReducer from '../modules/print/printReducer';
 import storageNodeGridReducer from '../modules/storagefacility/reducers/grid/nodes';
+import sessionReducer from './sessionReducer';
 
 const rootReducer = combineReducers({
   print: printReducer,
   picks: picklistReducer,
+  session: sessionReducer,
   storagePanelUnit: storagePanelReducer,
   [storageUnitModal.ID]: storageUnitModal.reducer,
   storageGridUnit: storageNodeGridReducer,
