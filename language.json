@@ -756,14 +756,14 @@
             "moveObjectHistory": "Flyttehistorikk",
             "moveObject": "Flytt objektet",
             "addToPickList": "Legg til plukklisten",
-            "addAllToPickList": "Legg til alle"
+            "addAllToPickList": "Legg til alle i plukklisten"
           }
         }
       },
       "objectsearch": {
         "title": "Objektsøk",
         "addToPickList": "Legg til plukklisten",
-        "addAllToPickList": "Legg til alle",
+        "addAllToPickList": "Legg til alle i plukklisten",
         "museumNo": {
           "label": "Museumnr.",
           "placeHolder": " "
