@@ -58,9 +58,11 @@ export default (settings) => (Component) => {
 
       const observablesFromContext = entries(observables).reduce((acc, [k, v]) => {
         if (v.type && v.observable && this.context[k]) {
+          let observable = v.observable(this.context[k]);
+          observable = observable.subscribe ? { [`${k}$state`]: observable} : observable;
           return {
             ...acc,
-            ...v.observable(this.context[k])
+            ...observable
           };
         }
         return acc;

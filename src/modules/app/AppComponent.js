@@ -154,26 +154,29 @@ export class App extends Component {
 }
 
 const appSession = new AppSession();
+
 const servicesAsContext = {
   appSession: { type: PropTypes.object, value: () => appSession }
 };
+
 const stateAsProps = {
   state: {
     appSession: {
       type: PropTypes.object.isRequired,
-      observable: (object) => ({
-        _$: object.store$.map(state => state).distinctUntilChanged()
-      })
+      observable: (object) => object.store$
     }
   }
 };
+
 const mapStateToProps = (state) => ({
   picks: state.picks
 });
+
 const mapDispatchToProps = (dispatch) => ({
   setMuseumId: (museumId) => dispatch({ type: SET_MUSEUM, museumId }),
   setCollectionId: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(
   notifiable(
     provide(servicesAsContext)(
