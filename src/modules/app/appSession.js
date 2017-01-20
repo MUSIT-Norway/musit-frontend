@@ -10,6 +10,7 @@ import MuseumId from '../../shared/models/museumId';
 import CollectionId from '../../shared/models/collectionId';
 import Actor from '../../shared/models/actor';
 import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
+import CodeReceiver from './codeReceiver';
 
 export default class AppSession {
   store$: Observable;
@@ -17,6 +18,7 @@ export default class AppSession {
   actions: Object = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$');
 
   constructor() {
+    this.codeRecieiver = new CodeReceiver(this);
     this.getAccessToken = this.getAccessToken.bind(this);
     this.getCollectionId = this.getCollectionId.bind(this);
     this.setCollectionId = this.setCollectionId.bind(this);
