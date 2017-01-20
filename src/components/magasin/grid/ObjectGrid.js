@@ -37,6 +37,18 @@ export default class ObjectGrid extends Component {
                   </th>
                   <th />
                   <th />
+                  <th>
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.props.onAction('pickObjects', this.props.tableData.filter(o => !o.mainObjectId || o.isMainObject()));
+                      }}
+                      title={I18n.t('musit.grid.object.iconTooltip.addAllToPickList')}
+                    >
+                      <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
+                    </a>
+                  </th>
                 </tr>
               </thead>
               <tbody>

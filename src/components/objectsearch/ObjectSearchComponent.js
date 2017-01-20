@@ -74,6 +74,18 @@ export default (props) =>
                 <th>{I18n.t('musit.objectsearch.subNo.label')}</th>
                 <th>{I18n.t('musit.objectsearch.term.label')}</th>
                 <th>{I18n.t('musit.objectsearch.location.label')}</th>
+                <th>
+                  <a
+                    href=""
+                    onClick={(e) => {
+                      e.preventDefault();
+                      props.pickObjects(props.data.matches, props.user.museumId, props.user.collectionId);
+                    }}
+                    title={I18n.t('musit.objectsearch.addAllToPickList')}
+                  >
+                    <FontAwesome name="shopping-cart" style={{fontSize: '1.3em'}}/>
+                  </a>
+                </th>
               </tr>
               </thead>
               <tbody>

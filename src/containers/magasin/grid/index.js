@@ -31,6 +31,18 @@ const mapStateToProps = (state) => ({
   routerState: state.routing
 });
 
+const pickObject = (dispatch) => (unit, path, museumId, collectionId) => {
+  if (unit.isMainObject()) {
+    dispatch(loadMainObject(unit, museumId, collectionId, {
+      onSuccess: (children) => {
+        children.forEach(child => dispatch(addObject(child, path)));
+      }
+    }));
+  } else {
+    dispatch(addObject(unit, path));
+  }
+};
+
 const mapDispatchToProps = (dispatch, props) => {
   const {history} = props;
 
@@ -92,16 +104,13 @@ const mapDispatchToProps = (dispatch, props) => {
       case 'pickNode':
         dispatch(addNode(unit, path));
         break;
+      case 'pickObjects':
+        unit.forEach(object => {
+          pickObject(dispatch)(object, path, museumId, collectionId);
+        });
+        break;
       case 'pickObject':
-        if (unit.isMainObject()) {
-          dispatch(loadMainObject(unit, museumId, collectionId, {
-            onSuccess: (children) => {
-              children.forEach(child => dispatch(addObject(child, path)));
-            }
-          }));
-        } else {
-          dispatch(addObject(unit, path));
-        }
+        pickObject(dispatch)(unit, path, museumId, collectionId);
         break;
       case 'controlsobservations':
         history.push(`/magasin/${unit.id}/controlsobservations`);

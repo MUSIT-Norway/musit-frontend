@@ -142,12 +142,15 @@
           "iconTooltip": {
             "moveObjectHistory": "Move history",
             "moveObject": "Move object",
-            "addToPickList": "Add to picklist"
+            "addToPickList": "Add to picklist",
+            "addAllToPickList": "Add all to picklist"
           }
         }
       },
       "objectsearch": {
         "title": "Object search",
+        "addToPickList": "Add to picklist",
+        "addAllToPickList": "Add all",
         "museumNo": {
           "label": "Museum No.",
           "placeHolder": " "
@@ -752,12 +755,15 @@
           "iconTooltip": {
             "moveObjectHistory": "Flyttehistorikk",
             "moveObject": "Flytt objektet",
-            "addToPickList": "Legg til plukklisten"
+            "addToPickList": "Legg til plukklisten",
+            "addAllToPickList": "Legg til alle"
           }
         }
       },
       "objectsearch": {
         "title": "Objektsøk",
+        "addToPickList": "Legg til plukklisten",
+        "addAllToPickList": "Legg til alle",
         "museumNo": {
           "label": "Museumnr.",
           "placeHolder": " "
