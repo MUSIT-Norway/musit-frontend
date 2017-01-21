@@ -93,6 +93,6 @@ export class AddressSuggest extends React.Component {
 }
 export default inject({
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
-  state: { suggest$: suggest$Fn(Config.magasin.urls.geolocation.searchUrl) },
-  actions: { update$, clear$ }
+  observables: { suggest$: suggest$Fn(Config.magasin.urls.geolocation.searchUrl) },
+  observers: { update$, clear$ }
 })(AddressSuggest);

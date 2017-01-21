@@ -91,6 +91,6 @@ export class NodeSuggest extends React.Component {
 }
 
 export default inject({
-  state: { suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl) },
-  actions: { update$, clear$ }
+  observables: { suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl) },
+  observer: { update$, clear$ }
 })(NodeSuggest);

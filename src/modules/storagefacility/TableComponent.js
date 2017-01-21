@@ -514,8 +514,8 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(null, mapDispatchToProps)(inject({
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
-  state: { store$ },
-  actions: {
+  observables: { store$ },
+  observers: {
     init$,
     loadChildren$,
     loadStats$,

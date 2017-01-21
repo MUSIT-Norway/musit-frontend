@@ -26,8 +26,8 @@ function combineLatestObj(obj) {
 }
 
 export default (settings) => (Component) => {
-  const observables = settings.state || {},
-    observers = settings.actions || {},
+  const observables = settings.observables || {},
+    observers = settings.observers || {},
     props = settings.props || {},
     provided = settings.provided || {};
 
