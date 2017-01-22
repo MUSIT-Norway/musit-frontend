@@ -20,26 +20,28 @@ const onFailure = (cmd) => (error) => {
 
 const toResponse = ({ response }) => response;
 
-export const init$ = new Subject();
+export const clearRootNode$ = new Subject();
+export const setLoading$ = new Subject();
 
-export const loadChildren$ = new Subject().switchMap((cmd) => {
+export const loadNodes$ = new Subject().map(cmd => {
   const baseUrl = Config.magasin.urls.storagefacility.baseUrl(cmd.museumId);
-  let request;
+  let url;
   if (cmd.nodeId) {
-    request = ajaxGet(`${baseUrl}/${cmd.nodeId}/children?page=${cmd.page?cmd.page:1}&limit=${Config.magasin.limit}`, cmd.token);
+    url = `${baseUrl}/${cmd.nodeId}/children?page=${cmd.page?cmd.page:1}&limit=${Config.magasin.limit}`;
   } else {
-    request = ajaxGet(`${baseUrl}/root`, cmd.token);
+    url = `${baseUrl}/root`;
   }
-  return request
-    .map(toResponse)
-    .do(onComplete(cmd))
-    .catch(onFailure(cmd));
+  return { ...cmd, url };
 });
 
-export const loadObjects$ = new Subject().switchMap((cmd) => {
+export const loadObjects$ = new Subject().map(cmd => {
   const baseUrl = Config.magasin.urls.thingaggregate.baseUrl(cmd.museumId);
   const url = `${baseUrl}/node/${cmd.nodeId}/objects?${cmd.collectionId.getQuery()}&page=${cmd.page || 1}&limit=${Config.magasin.limit}`;
-  return ajaxGet(url, cmd.token)
+  return { ...cmd, url };
+});
+
+const loadChildren$ = Observable.merge(loadNodes$, loadObjects$).switchMap((cmd) => {
+  return ajaxGet(cmd.url, cmd.token)
     .map(toResponse)
     .do(onComplete(cmd))
     .catch(onFailure(cmd));
@@ -53,7 +55,7 @@ export const loadStats$ = new Subject().switchMap((cmd) => {
     .catch(onFailure(cmd));
 });
 
-export const loadNode$ = new Subject().switchMap((cmd) => {
+export const loadRootNode$ = new Subject().switchMap((cmd) => {
   const baseUrl = Config.magasin.urls.storagefacility.baseUrl(cmd.museumId);
   return ajaxGet(`${baseUrl}/${cmd.nodeId}`, cmd.token)
     .map(toResponse)
@@ -70,34 +72,31 @@ export const deleteNode$ = new Subject().flatMap((cmd) => {
 });
 
 const reducer$ = Observable.empty().merge(
-  init$.map(() => () => ({
-    rootNode: null,
-    nodes: { loading: true, data: null },
-    objects: { loading: true, data: null },
-    stats: null
-  })),
+  clearRootNode$.map(() => () => {
+    return { rootNode: null, stats: null };
+  }),
   deleteNode$.map(() => (state) => state),
   loadStats$.map((stats) => (state) => ({
     ...state,
     stats
   })),
-  loadNode$.map((rootNode) => (state) => ({
+  loadRootNode$.map((rootNode) => (state) => ({
     ...state,
     rootNode: {
       ...rootNode,
       breadcrumb: getPath(rootNode)
     }
   })),
+  setLoading$.map(() => state => ({
+    ...state,
+    children: { data: null, loading: true }
+  })),
   loadChildren$.map((data) => (state) => ({
     ...state,
-    nodes: { data, loading: false }
-  })),
-  loadObjects$.map((data) => (state) => ({
-    ...state,
-    objects: {
+    children: {
       data: {
         ...data,
-        matches: data.matches.map(o => new MusitObject(o))
+        matches: Array.isArray(data) ? data : data.matches.map(o => o.term ? new MusitObject(o) : o)
       },
       loading: false
     }

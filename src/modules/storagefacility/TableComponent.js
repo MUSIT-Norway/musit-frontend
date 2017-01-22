@@ -29,12 +29,13 @@ import {moveObject as moveObjectAction, moveNode as moveNodeAction} from '../mov
 import { clear } from './reducers/modal';
 
 import store$, {
-  loadChildren$,
+  loadNodes$,
   loadStats$,
-  loadNode$,
+  loadRootNode$,
   loadObjects$,
   deleteNode$,
-  init$
+  setLoading$,
+  clearRootNode$
 } from './tableStore';
 
 const getObjectDescription = (object) => {
@@ -47,17 +48,19 @@ const getObjectDescription = (object) => {
 export class StorageUnitsContainer extends React.Component {
   static propTypes = {
     store: React.PropTypes.object.isRequired,
-    loadChildren: React.PropTypes.func.isRequired,
+    loadNodes: React.PropTypes.func.isRequired,
     loadObjects: React.PropTypes.func.isRequired,
     loadStats: React.PropTypes.func.isRequired,
-    loadNode: React.PropTypes.func.isRequired,
+    loadRootNode: React.PropTypes.func.isRequired,
     deleteNode: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
     moveObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
     pickObject: React.PropTypes.func.isRequired,
     pickNode: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired
+    clearMoveDialog: React.PropTypes.func.isRequired,
+    setLoading: React.PropTypes.func.isRequired,
+    clearRootNode: React.PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -85,10 +88,12 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   componentWillMount() {
+    this.props.clearRootNode();
+    this.props.setLoading();
     if (this.props.route.showObjects) {
       this.loadObjects();
       if (this.props.params.id && !this.props.store.rootNode) {
-        this.props.loadNode({
+        this.props.loadRootNode({
           nodeId: this.props.params.id,
           museumId: this.props.appSession.getMuseumId(),
           page: this.getCurrentPage(),
@@ -111,6 +116,8 @@ export class StorageUnitsContainer extends React.Component {
     const token = this.props.appSession.getAccessToken();
     if (idHasChanged || museumHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
+      this.props.clearRootNode();
+      this.props.setLoading();
       if (newProps.route.showObjects) {
         this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
       } else {
@@ -149,15 +156,15 @@ export class StorageUnitsContainer extends React.Component {
     token = this.props.appSession.getAccessToken(),
     currentPage = this.getCurrentPage()
   ) {
-    this.props.init();
+    this.props.setLoading();
     if (nodeId) {
-      this.props.loadNode({nodeId, museumId, token, onComplete: node => {
+      this.props.loadRootNode({nodeId, museumId, token, onComplete: node => {
         if(node && !MusitNode.isRootNode(node.type)) {
           this.props.loadStats({nodeId, museumId, token});
         }
       }});
     }
-    this.props.loadChildren({
+    this.props.loadNodes({
       nodeId,
       museumId,
       page: currentPage,
@@ -173,6 +180,7 @@ export class StorageUnitsContainer extends React.Component {
     token = this.props.appSession.getAccessToken()
   ) {
     if (nodeId) {
+      this.props.setLoading();
       this.props.loadObjects({
         nodeId,
         museumId,
@@ -360,22 +368,22 @@ export class StorageUnitsContainer extends React.Component {
     museumId = this.props.appSession.getMuseumId(),
     collectionId = this.props.appSession.getCollectionId(),
     rootNode = this.props.store.rootNode,
-    nodes = this.props.store.nodes,
-    objects = this.props.store.objects,
+    children = this.props.store.children,
     showObjects = this.props.route.showObjects,
     moveNode = this.showMoveNodeModal,
     moveObject = this.showMoveObjectModal,
     showHistory = this.showObjectMoveHistory
   ) {
     const currentPage = this.getCurrentPage() || 1;
-    const objectData = objects && objects.data && objects.data.matches;
-    const totalObjects = objects && objects.data && objects.data.totalMatches;
-    const loadingObjects = objects && objects.loading;
+    const matches = children && children.data && children.data.matches;
+    const totalMatches = children && children.data && children.data.totalMatches;
+    const isLoading = children && children.loading;
     if (showObjects) {
       return (
-        <Loader loaded={!loadingObjects}>
+        <Loader loaded={!isLoading}>
           <ObjectGrid
-            tableData={objectData ? filter(objectData, ['museumNo', 'subNo', 'term'], searchPattern) : []}
+            tableData={matches && matches[0] && !!matches[0].museumNo ?
+              filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             pickObject={(object) =>
               this.props.pickObject(
@@ -395,9 +403,9 @@ export class StorageUnitsContainer extends React.Component {
             }
             onMove={moveObject}
           />
-          {totalObjects > 0 &&
+          {totalMatches > 0 &&
             <PagingToolbar
-              numItems={totalObjects}
+              numItems={totalMatches}
               currentPage={currentPage}
               perPage={Config.magasin.limit}
               onClick={(cp) => {
@@ -413,13 +421,11 @@ export class StorageUnitsContainer extends React.Component {
         </Loader>
       );
     }
-    const nodeData = nodes && ((Array.isArray(nodes.data) && nodes.data) || (nodes.data && nodes.data.matches));
-    const totalNodes = nodes && ((Array.isArray(nodes.data) && nodes.data.length) || (nodes.data && nodes.data.totalMatches));
-    const loadingNodes = nodes && nodes.loading;
     return (
-      <Loader loaded={!loadingNodes}>
+      <Loader loaded={!isLoading}>
         <NodeGrid
-          tableData={nodeData ? filter(nodeData, ['name'], searchPattern) : []}
+          tableData={matches && matches[0] && !!matches[0].name ?
+            filter(matches, ['name'], searchPattern) : []}
           goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
           pickNode={(node) =>
@@ -431,9 +437,9 @@ export class StorageUnitsContainer extends React.Component {
           }
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
-        {totalNodes > 0 &&
+        {totalMatches > 0 &&
           <PagingToolbar
-            numItems={totalNodes}
+            numItems={totalMatches}
             currentPage={currentPage}
             perPage={Config.magasin.limit}
             onClick={(cp) => {
@@ -516,11 +522,12 @@ export default connect(null, mapDispatchToProps)(inject({
   provided: { appSession: { type: React.PropTypes.object.isRequired } },
   observables: { store$ },
   observers: {
-    init$,
-    loadChildren$,
+    clearRootNode$,
     loadStats$,
-    loadNode$,
+    loadRootNode$,
+    loadNodes$,
     loadObjects$,
-    deleteNode$
+    deleteNode$,
+    setLoading$
   }
 })(StorageUnitsContainer));
