@@ -91,8 +91,14 @@ export class AddressSuggest extends React.Component {
     );
   }
 }
-export default inject(
-  { appSession: { type: React.PropTypes.object.isRequired } },
-  { suggest$: suggest$Fn(Config.magasin.urls.geolocation.searchUrl) },
-  { update$, clear$ }
-)(AddressSuggest);
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  },
+  suggest$: suggest$Fn(Config.magasin.urls.geolocation.searchUrl)
+};
+
+const commands = { update$, clear$ };
+
+export default inject(data, commands)(AddressSuggest);

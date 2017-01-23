@@ -139,8 +139,10 @@ export const ObjectSearchComponent = (props) =>
     </main>
   </div>;
 
-export default inject({
+const data = {
   appSession: {
     type: React.PropTypes.object.isRequired
   }
-})(ObjectSearchComponent);
+};
+
+export default inject(data)(ObjectSearchComponent);

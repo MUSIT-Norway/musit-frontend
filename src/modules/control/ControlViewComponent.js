@@ -129,8 +129,10 @@ export class ControlViewContainer extends React.Component {
   }
 }
 
-export default inject({
+const data = {
   appSession: {
     type: React.PropTypes.object.isRequired
   }
-})(ControlViewContainer);
+};
+
+export default inject(data)(ControlViewContainer);

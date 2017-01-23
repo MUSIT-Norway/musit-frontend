@@ -63,8 +63,10 @@ export class KDReport extends React.Component {
 
 }
 
-export default inject({
+const data = {
   appSession: {
     type: React.PropTypes.object.isRequired
   }
-})(KDReport);
+};
+
+export default inject(data)(KDReport);

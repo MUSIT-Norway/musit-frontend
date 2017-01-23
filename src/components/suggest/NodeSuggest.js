@@ -90,7 +90,13 @@ export class NodeSuggest extends React.Component {
   }
 }
 
-export default inject(
-  { suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl) },
-  { update$, clear$ }
-)(NodeSuggest);
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  },
+  suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl)
+};
+
+const commands = { update$, clear$ };
+
+export default inject(data, commands)(NodeSuggest);

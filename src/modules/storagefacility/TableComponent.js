@@ -518,12 +518,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const provided = {
+const data = {
   appSession: { type: React.PropTypes.object.isRequired },
   store$
 };
 
-const actions = {
+const commands = {
   clearRootNode$,
   loadStats$,
   loadRootNode$,
@@ -533,7 +533,4 @@ const actions = {
   setLoading$
 };
 
-export default connect(null, mapDispatchToProps)(inject(
-  provided,
-  actions
-)(StorageUnitsContainer));
+export default connect(null, mapDispatchToProps)(inject(data, commands)(StorageUnitsContainer));

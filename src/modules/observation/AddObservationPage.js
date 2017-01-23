@@ -43,8 +43,10 @@ export class AddObservationPage extends React.Component {
   }
 }
 
-export default inject({
+const data = {
   appSession: {
     type: React.PropTypes.object.isRequired
   }
-})(AddObservationPage);
+};
+
+export default inject(data)(AddObservationPage);

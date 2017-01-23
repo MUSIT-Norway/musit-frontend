@@ -151,7 +151,7 @@ export class App extends Component {
   }
 }
 
-const provided = {
+const data = {
   appSession: {
     type: PropTypes.object.isRequired,
     observable: (object) => object.store$
@@ -167,4 +167,4 @@ const mapDispatchToProps = (dispatch) => ({
   setCollectionId: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(notifiable(inject(provided)(App)));
+export default connect(mapStateToProps, mapDispatchToProps)(notifiable(inject(data)(App)));

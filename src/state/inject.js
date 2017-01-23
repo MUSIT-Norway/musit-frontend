@@ -25,13 +25,13 @@ function combineLatestObj(obj) {
   });
 }
 
-export default (provided = {}, observers = {}, props = {}) => (Component) => {
-  const callbacks = entries(observers).reduce((acc, [key, observer]) => {
+export default (data = {}, commands = {}, props = {}) => (Component) => {
+  const callbacks = entries(commands).reduce((acc, [key, observer]) => {
     acc[key.replace(/\$$/, '')] = (value) => observer.next(value);
     return acc;
   }, {});
 
-  const contextTypes = entries({ ...provided}).reduce((acc, [k, v]) => {
+  const contextTypes = entries({ ...data}).reduce((acc, [k, v]) => {
     if (v.type) {
       acc[k] = v.type;
     }
@@ -44,14 +44,14 @@ export default (provided = {}, observers = {}, props = {}) => (Component) => {
     constructor(p, c) {
       super(p, c);
 
-      const observablesFromValue = entries(provided).reduce((acc, [k, v]) => {
+      const observablesFromValue = entries(data).reduce((acc, [k, v]) => {
         if (v.subscribe) {
           acc[k] = v;
         }
         return acc;
       }, {});
 
-      const observablesFromContext = entries(provided).reduce((acc, [k, v]) => {
+      const observablesFromContext = entries(data).reduce((acc, [k, v]) => {
         if (v.type && v.observable && this.context[k]) {
           let observable = v.observable(this.context[k]);
           observable = observable.subscribe ? { [`${k}$state`]: observable} : observable;

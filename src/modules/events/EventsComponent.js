@@ -89,8 +89,10 @@ export class ObservationControlGridShow extends React.Component {
   }
 }
 
-export default inject({
+const data = {
   appSession: {
     type: React.PropTypes.object.isRequired
   }
-})(ObservationControlGridShow);
+};
+
+export default inject(data)(ObservationControlGridShow);

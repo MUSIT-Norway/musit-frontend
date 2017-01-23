@@ -32,8 +32,10 @@ export class EditStorageUnitContainer extends React.Component {
   }
 }
 
-export default inject({
+const data = {
   appSession: {
     type: React.PropTypes.object.isRequired
   }
-})(EditStorageUnitContainer);
+};
+
+export default inject(data)(EditStorageUnitContainer);

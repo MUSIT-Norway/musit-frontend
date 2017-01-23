@@ -186,8 +186,10 @@ export class PickListContainer extends React.Component {
   }
 }
 
-export default inject({
+const data = {
   appSession: {
     type: React.PropTypes.object.isRequired
   }
-})(PickListContainer);
+};
+
+export default inject(data)(PickListContainer);

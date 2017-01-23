@@ -69,8 +69,13 @@ export class ActorSuggest extends React.Component {
   }
 }
 
-export default inject(
-  { appSession: { type: React.PropTypes.object.isRequired } },
-  { suggest$: suggest$Fn(Config.magasin.urls.actor.searchUrl) },
-  { update$, clear$ }
-)(ActorSuggest);
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  },
+  suggest$: suggest$Fn(Config.magasin.urls.actor.searchUrl)
+};
+
+const commands = { update$, clear$ };
+
+export default inject(data, commands)(ActorSuggest);

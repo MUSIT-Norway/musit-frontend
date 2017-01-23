@@ -310,8 +310,10 @@ export class ControlAddContainer extends React.Component {
   }
 }
 
-export default inject({
+const data = {
   appSession: {
     type: React.PropTypes.object.isRequired
   }
-})(ControlAddContainer);
+};
+
+export default inject(data)(ControlAddContainer);
