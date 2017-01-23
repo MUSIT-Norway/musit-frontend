@@ -90,7 +90,7 @@ export class NodeSuggest extends React.Component {
   }
 }
 
-export default inject({
-  observables: { suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl) },
-  observer: { update$, clear$ }
-})(NodeSuggest);
+export default inject(
+  { suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl) },
+  { update$, clear$ }
+)(NodeSuggest);

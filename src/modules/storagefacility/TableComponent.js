@@ -518,16 +518,22 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(inject({
-  provided: { appSession: { type: React.PropTypes.object.isRequired } },
-  observables: { store$ },
-  observers: {
-    clearRootNode$,
-    loadStats$,
-    loadRootNode$,
-    loadNodes$,
-    loadObjects$,
-    deleteNode$,
-    setLoading$
-  }
-})(StorageUnitsContainer));
+const provided = {
+  appSession: { type: React.PropTypes.object.isRequired },
+  store$
+};
+
+const actions = {
+  clearRootNode$,
+  loadStats$,
+  loadRootNode$,
+  loadNodes$,
+  loadObjects$,
+  deleteNode$,
+  setLoading$
+};
+
+export default connect(null, mapDispatchToProps)(inject(
+  provided,
+  actions
+)(StorageUnitsContainer));

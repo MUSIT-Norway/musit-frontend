@@ -57,5 +57,7 @@ export class ViewObservationPage extends React.Component {
 }
 
 export default inject({
-  provided: { appSession: { type: React.PropTypes.object.isRequired } }
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
 })(ViewObservationPage);

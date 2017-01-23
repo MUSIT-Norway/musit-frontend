@@ -130,5 +130,7 @@ export class ControlViewContainer extends React.Component {
 }
 
 export default inject({
-  provided: { appSession: { type: React.PropTypes.object.isRequired } }
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
 })(ControlViewContainer);
