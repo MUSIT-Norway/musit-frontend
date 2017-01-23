@@ -6,7 +6,7 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import PagingToolbar from '../../shared/paging';
 import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
-
+import inject from '../../state/inject';
 
 export function renderParam(id, props, style) {
   return (
@@ -24,7 +24,7 @@ export function renderParam(id, props, style) {
   );
 }
 
-export default (props) =>
+export const ObjectSearchComponent = (props) =>
   <div style={{paddingTop: 20}}>
     <main>
       <Grid>
@@ -41,7 +41,7 @@ export default (props) =>
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                props.searchForObjects(props.params, 1, props.user.museumId, props.user.collectionId);
+                props.searchForObjects(props.params, 1, props.appSession.getMuseumId(), props.appSession.getCollectionId());
               }}
             >
               <FontAwesome name="search" style={{fontSize: '1.3em'}}/>
@@ -65,7 +65,7 @@ export default (props) =>
               baseUrl={props.location.pathname}
               currentPage={props.params.currentPage}
               perPage={props.params.perPage}
-              onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
+              onClick={(page) => props.searchForObjects(props.params, page, props.appSession.getMuseumId(), props.appSession.getCollectionId())}
             />
             <Table>
               <thead>
@@ -79,7 +79,7 @@ export default (props) =>
                     href=""
                     onClick={(e) => {
                       e.preventDefault();
-                      props.pickObjects(props.data.matches, props.user.museumId, props.user.collectionId);
+                      props.pickObjects(props.data.matches, props.appSession.getMuseumId(), props.appSession.getCollectionId());
                     }}
                     title={I18n.t('musit.objectsearch.addAllToPickList')}
                   >
@@ -112,7 +112,7 @@ export default (props) =>
                           href=""
                           onClick={(e) => {
                             e.preventDefault();
-                            props.pickObject(data, data.breadcrumb, props.user.museumId, props.user.collectionId);
+                            props.pickObject(data, data.breadcrumb, props.appSession.getMuseumId(), props.appSession.getCollectionId());
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >
@@ -129,7 +129,7 @@ export default (props) =>
               numItems={props.data.totalMatches}
               currentPage={props.params.currentPage}
               perPage={props.params.perPage}
-              onClick={(page) => props.searchForObjects(props.params, page, props.user.museumId, props.user.collectionId)}
+              onClick={(page) => props.searchForObjects(props.params, page, props.appSession.getMuseumId(), props.appSession.getCollectionId())}
             />
           </div>
           }
@@ -138,3 +138,11 @@ export default (props) =>
       </Grid>
     </main>
   </div>;
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
+};
+
+export default inject(data)(ObjectSearchComponent);

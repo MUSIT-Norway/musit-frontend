@@ -1,11 +1,17 @@
 import { connect } from 'react-redux';
 import { hashHistory } from 'react-router';
-import { insert } from './reducers/panel';
+import { insert, load } from './reducers/panel';
 import StorageUnitAddContainer from './AddNodeComponent';
 import { clear as clearState, update as updateState } from './reducers/panel/state';
 import { emitError, emitSuccess } from '../../shared/errors/emitter';
 import { I18n } from 'react-i18nify';
-import { loadRoot } from './reducers/grid/nodes';
+
+const mapStateToProps = (state) => {
+  return {
+    unit: state.storagePanelState,
+    rootNode: state.storagePanelUnit.data || {}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -28,17 +34,8 @@ const mapDispatchToProps = (dispatch) => {
     updateState: (data) => dispatch(updateState(data)),
     clearState: () => dispatch(clearState()),
     loadStorageObj: (id, museumId) => {
-      dispatch(loadRoot(id, museumId));
+      dispatch(load(id, museumId));
     }
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    unit: state.storagePanelState,
-    user: state.auth.user,
-    translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data || {}
   };
 };
 

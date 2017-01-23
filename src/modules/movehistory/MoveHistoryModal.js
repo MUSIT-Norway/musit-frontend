@@ -27,7 +27,8 @@ export default class MoveHistoryModal extends Component {
 
   static propTypes = {
     moves: PropTypes.arrayOf(PropTypes.object),
-    objectId: PropTypes.number.isRequired
+    objectId: PropTypes.number.isRequired,
+    appSession: PropTypes.object.isRequired
   };
 
   static contextTypes = {
@@ -36,7 +37,7 @@ export default class MoveHistoryModal extends Component {
 
   componentDidMount() {
     this.props.clearMoveHistoryForObject();
-    this.props.loadMoveHistoryForObject(this.props.objectId, this.props.user.museumId);
+    this.props.loadMoveHistoryForObject(this.props.objectId, this.props.appSession.getMuseumId());
   }
 
   render() {

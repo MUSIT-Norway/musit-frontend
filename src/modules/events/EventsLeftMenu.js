@@ -6,7 +6,7 @@ import { I18n } from 'react-i18nify';
 
 export default class ObservationControlComponent extends Component {
   static propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     onClickNewObservation: PropTypes.func.isRequired,
     onClickNewControl: PropTypes.func.isRequired
   }

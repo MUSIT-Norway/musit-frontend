@@ -36,8 +36,7 @@ const mapStateToProps = (state) => {
   return {
     translate: (key, markdown) => I18n.t(key, markdown),
     observationControlGridData: getSortedObservationControl(state),
-    rootNode: state.storageGridUnit.root.data,
-    user: state.auth.user
+    rootNode: state.storageGridUnit.root.data
   };
 };
 

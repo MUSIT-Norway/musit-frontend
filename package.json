@@ -73,6 +73,7 @@
     "lodash": "4.16.4",
     "loglevel": "^1.4.1",
     "moment": "2.15.1",
+    "object.entries": "^1.0.4",
     "query-string": "^4.3.1",
     "react": "15.3.2",
     "react-addons-test-utils": "15.3.2",
@@ -95,7 +96,7 @@
     "redux-form": "6.1.1",
     "redux-logger": "2.7.0",
     "reselect": "2.5.4",
-    "rxjs": "5.0.0-rc.1",
+    "rxjs": "5.0.3",
     "superagent": "2.3.0"
   },
   "scripts": {

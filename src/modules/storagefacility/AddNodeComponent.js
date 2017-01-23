@@ -1,21 +1,20 @@
 import React, { PropTypes } from 'react';
 import StorageUnitContainer from './NodeDetails';
+import inject from '../../state/inject';
 
-export default class AddStorageUnitContainer extends React.Component {
+export class AddStorageUnitContainer extends React.Component {
   static propTypes = {
     onLagreClick: PropTypes.func.isRequired,
     params: PropTypes.object,
     updateState: PropTypes.func.isRequired,
     clearState: PropTypes.func.isRequired,
     unit: PropTypes.object,
-    translate: PropTypes.func.isRequired
+    appSession: PropTypes.object.isRequired
   };
 
   componentWillMount() {
     this.props.clearState();
-    if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
-    }
+    this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
   }
 
   render() {
@@ -24,7 +23,7 @@ export default class AddStorageUnitContainer extends React.Component {
         {...this.props}
         onLagreClick={(data) => {
           const parentId = this.props.params.id;
-          const museumId = this.props.user.museumId;
+          const museumId = this.props.appSession.getMuseumId();
           this.props.onLagreClick(parentId, museumId, data);
         }}
         isAdd
@@ -33,3 +32,11 @@ export default class AddStorageUnitContainer extends React.Component {
     );
   }
 }
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
+};
+
+export default inject(data)(AddStorageUnitContainer);

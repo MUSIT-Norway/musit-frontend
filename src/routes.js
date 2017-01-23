@@ -22,7 +22,7 @@ import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import NotFound from './components/NotFound';
 import AboutView from './modules/about/AboutPage';
 import PickListView from './modules/picklist/PickListContainer';
-import StorageUnitsTable from './modules/storagefacility/NodeGridContainer';
+import StorageUnitsTable from './modules/storagefacility/TableComponent';
 import AddStorageUnitPanel from './modules/storagefacility/AddNodeContainer';
 import EditStorageUnitPanel from './modules/storagefacility/EditNodeContainer';
 import AddObservationPage from './modules/observation/AddObservationContainer';
@@ -34,12 +34,12 @@ import ControlViewContainer from './modules/control/ControlViewContainer';
 import ControlAddContainer from './modules/control/ControlAddContainer';
 import EventsContainer from './modules/events/EventsContainer';
 import ObjectSearchContainer from './modules/objectsearch/ObjectSearchContainer';
-import Authenticated from './modules/app/Authenticated';
+import App from './modules/app/AppComponent';
 import * as path from './routes.path';
 
 export default () => {
   return (
-    <Route path="/" component={Authenticated}>
+    <Route path="/" component={App}>
       <IndexRedirect to={path.ROUTE_SF} />
       <Route path={path.ROUTE_SF}>
         <IndexRoute component={StorageUnitsTable} />
@@ -58,8 +58,10 @@ export default () => {
         <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
       </Route>
       <Route path={path.ROUTE_PICKLIST} component={PickListView} />
-      <Route path={path.ROUTE_REPORTS} component={Reports} />
-      <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      <Route path={path.ROUTE_REPORTS}>
+        <IndexRoute component={Reports} />
+        <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+      </Route>
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
       <Route path="/about" component={AboutView} />
       -- Catch all route
