@@ -57,3 +57,15 @@ const data = {
 };
 export default inject(data)(SomeComp);
 ```
+
+we can also name the bound comp state:
+
+```
+const data = {
+  appSession: {
+    type: PropTypes.object.isRequired,
+    observable: (object) => { name: 'appSession$State', observable: object.store$
+  }
+};
+export default inject(data)(SomeComp);
+```
