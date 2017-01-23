@@ -71,36 +71,37 @@ export const deleteNode$ = new Subject().flatMap((cmd) => {
     .catch(onFailure(cmd));
 });
 
-const reducer$ = Observable.empty().merge(
-  clearRootNode$.map(() => () => {
-    return { rootNode: null, stats: null };
-  }),
-  deleteNode$.map(() => (state) => state),
-  loadStats$.map((stats) => (state) => ({
-    ...state,
-    stats
-  })),
-  loadRootNode$.map((rootNode) => (state) => ({
-    ...state,
-    rootNode: {
-      ...rootNode,
-      breadcrumb: getPath(rootNode)
-    }
-  })),
-  setLoading$.map(() => state => ({
-    ...state,
-    children: { data: null, loading: true }
-  })),
-  loadChildren$.map((data) => (state) => ({
-    ...state,
-    children: {
-      data: {
-        ...data,
-        matches: Array.isArray(data) ? data : data.matches.map(o => o.term ? new MusitObject(o) : o)
-      },
-      loading: false
-    }
-  }))
-);
+export const reducer$ = (actions) =>
+  Observable.empty().merge(
+    actions.clearRootNode$.map(() => () => {
+      return { rootNode: null, stats: null };
+    }),
+    actions.deleteNode$.map(() => (state) => state),
+    actions.loadStats$.map((stats) => (state) => ({
+      ...state,
+      stats
+    })),
+    actions.loadRootNode$.map((rootNode) => (state) => ({
+      ...state,
+      rootNode: {
+        ...rootNode,
+        breadcrumb: getPath(rootNode)
+      }
+    })),
+    actions.setLoading$.map(() => state => ({
+      ...state,
+      children: { data: null, loading: true }
+    })),
+    actions.loadChildren$.map((data) => (state) => ({
+      ...state,
+      children: {
+        data: {
+          ...data,
+          matches: Array.isArray(data) ? data : data.matches.map(o => o.term ? new MusitObject(o) : o)
+        },
+        loading: false
+      }
+    }))
+  );
 
-export default createStore(reducer$);
+export default createStore(reducer$({clearRootNode$, loadChildren$, loadRootNode$, loadStats$, deleteNode$, setLoading$}));

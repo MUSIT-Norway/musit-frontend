@@ -96,7 +96,7 @@
     "redux-form": "6.1.1",
     "redux-logger": "2.7.0",
     "reselect": "2.5.4",
-    "rxjs": "5.0.0-rc.1",
+    "rxjs": "5.0.3",
     "superagent": "2.3.0"
   },
   "scripts": {
