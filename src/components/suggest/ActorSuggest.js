@@ -16,7 +16,7 @@ export class ActorSuggest extends React.Component {
     update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
     clear: React.PropTypes.func,
-    museumId: React.PropTypes.number
+    appSession: React.PropTypes.object.isRequired
   }
 
   constructor(props) {
@@ -43,8 +43,9 @@ export class ActorSuggest extends React.Component {
 
   requestSuggestionUpdate(update) {
     if (update.value.length > 2) {
-      const museumId = this.props.museumId;
-      this.props.update({update, museumId});
+      const museumId = this.props.appSession.getMuseumId();
+      const token = this.props.appSession.getAccessToken();
+      this.props.update({update, museumId, token});
     }
   }
 
