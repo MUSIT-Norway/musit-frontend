@@ -64,8 +64,10 @@ we can also name the bound comp state:
 const data = {
   appSession: {
     type: PropTypes.object.isRequired,
-    observable: (object) => { name: 'appSession$State', observable: object.store$
+    observable: (object) => ({ appState: object.store$ })
   }
 };
 export default inject(data)(SomeComp);
 ```
+
+In the latter example both the appSession variable from context AND the appState variable derived from the observable function will be mapped to the component props.
