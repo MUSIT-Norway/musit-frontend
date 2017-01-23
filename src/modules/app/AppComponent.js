@@ -9,7 +9,7 @@ import { TYPES as PICK_TYPES } from '../picklist/picklistReducer';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
-import {emitError} from '../../shared/errors/emitter';
+import { emitError } from '../../shared/errors/emitter';
 
 export default class App extends Component {
   static propTypes = {
