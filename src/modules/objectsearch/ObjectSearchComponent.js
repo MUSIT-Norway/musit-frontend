@@ -35,7 +35,7 @@ export default (props) =>
             {' '}
             {renderParam('subNo', props)}
             {' '}
-            {renderParam('term', props, {width: '470px'})}
+            {renderParam('term', props, {width: '440px'})}
             {' '}
             <Button
               type="submit"
