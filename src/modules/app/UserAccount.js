@@ -27,12 +27,12 @@ export default class MusitUserAccount extends Component {
   }
 
   adminLink() {
-    const { user } = this.props;
+    const { token } = this.props;
 
     return (
       <MenuItem onSelect={() => document.getElementById('userGroupAdmin').submit()}>
         <form id={'userGroupAdmin'} method={'POST'} encType={'application/x-www-form-urlencoded'} action={'/service_auth/web'}>
-          <input hidden="hidden" name="_at" readOnly="readOnly" value={user.accessToken} />
+          <input hidden="hidden" name="_at" readOnly="readOnly" value={token} />
         </form>
         <i className="fa fa-cogs"/> Admin
       </MenuItem>
@@ -76,15 +76,16 @@ export default class MusitUserAccount extends Component {
               <MenuItem eventKey={3} header>{I18n.t('musit.userProfile.museum')}</MenuItem>
             }
             {museumDropDown &&
-              groups.map((cc, i) =>
-                <MenuItem
+              groups.map((cc, i) => {
+                const cid = this.getCollections(new MuseumId(cc.museumId), groups)[0].uuid;
+                return <MenuItem
                   key={i}
                   eventKey={cc.museumId}
-                  onClick={() => this.props.handleMuseumId(cc.museumId, this.getCollections(cc.museumId, groups)[0].uuid)}
+                  onClick={() => this.props.handleMuseumId(new MuseumId(cc.museumId), new CollectionId(cid))}
                 >
-                  {menuText(museumId === cc.museumId ? <FontAwesome name="check" /> : '', cc.museumName)}
-                </MenuItem>
-              )
+                  {menuText(museumId.id === cc.museumId ? <FontAwesome name="check"/> : '', cc.museumName)}
+                </MenuItem>;
+              })
             }
             {museumDropDown &&
               <MenuItem divider/>
