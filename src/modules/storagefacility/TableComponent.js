@@ -28,7 +28,7 @@ import {addNode, addObject, loadMainObject} from '../picklist/picklistReducer';
 import {moveObject as moveObjectAction, moveNode as moveNodeAction} from '../movedialog/moveActions';
 import { clear } from './reducers/modal';
 
-import store$, {
+import {
   loadNodes$,
   loadStats$,
   loadRootNode$,
@@ -36,7 +36,9 @@ import store$, {
   deleteNode$,
   setLoading$,
   clearRootNode$
-} from './tableStore';
+} from './tableActions';
+
+import store$ from './tableStore';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
