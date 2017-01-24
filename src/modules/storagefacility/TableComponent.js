@@ -354,6 +354,24 @@ export class StorageUnitsContainer extends React.Component {
                     type: 'deleteSuccess',
                     message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name: rootNode.name})
                   });
+                },
+                onFailure: (e) => {
+                  if (e.status===403) {
+                    emitError({
+                      type: 'deleteError',
+                      message: I18n.t('musit.errorMainMessages.notAllowed')
+                    });
+                  } else if (e.status===400) {
+                    emitError({
+                      type: 'deleteError',
+                      message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')
+                    });
+                  } else {
+                    emitError({
+                      type: 'deleteError',
+                      message: e.message
+                    });
+                  }
                 }
               });
             });

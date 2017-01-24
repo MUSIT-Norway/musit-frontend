@@ -116,7 +116,7 @@ const handleError = (event) => {
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
-      children: children(`${customMessage}. ${eMsg || eStatus || ''}`)
+      children: children(`${customMessage} ${eMsg || eStatus || ''}`)
     });
     break;
   case 'errorOnSave':
