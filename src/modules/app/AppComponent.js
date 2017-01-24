@@ -5,55 +5,87 @@ import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import { TYPES as PICK_TYPES } from '../picklist/picklistReducer';
+import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
+import inject from '../../state/inject';
+import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors/emitter';
+import notifiable from './Notifyable';
+import Loader from 'react-loader';
+import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
 
-export default class App extends Component {
+export class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    user: PropTypes.object,
-    store: PropTypes.object,
-    pickListNodeCount: PropTypes.number.isRequired,
-    pickListObjectCount: PropTypes.number.isRequired,
-    clearUser: PropTypes.func.isRequired,
-    loadUser: PropTypes.func.isRequired,
-    loadBuildinfo: PropTypes.func.isRequired,
-    buildinfo: PropTypes.any
+    appSession: PropTypes.object.isRequired,
+    picks: PropTypes.object
   }
 
   constructor(props, context) {
     super(props, context);
+    this.handleLanguage = this.handleLanguage.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleMuseumId = this.handleMuseumId.bind(this);
   }
 
   componentWillMount() {
-    this.props.loadBuildinfo();
+    this.props.appSession.loadAppSession();
   }
 
   handleLogout() {
     fetch('/api/auth/rest/logout', {
       method: 'GET',
       headers: new Headers({
-        Authorization: 'Bearer ' + this.props.user.accessToken
+        Authorization: 'Bearer ' + this.props.appSession.getAccessToken()
       })
     }).then(response => {
       if (response.ok) {
-        this.props.clearUser();
-        hashHistory.replace('/');
+        localStorage.removeItem('jwtToken');
+        localStorage.removeItem('accessToken');
+        window.location.replace('https://auth.dataporten.no/logout');
       }
     }).catch(error => emitError({ type: 'network', error}));
   }
 
-  handleLanguage = (l) => {
+  handleLanguage(l) {
     localStorage.setItem('language', l);
     window.location.reload(true);
   }
 
+  handleMuseumId(mid, cid) {
+    this.props.appSession.setMuseumId(mid);
+    this.props.setMuseumId(mid);
+    this.props.appSession.setCollectionId(cid);
+    this.props.setCollectionId(cid);
+    hashHistory.push('/magasin');
+  }
+
+  handleCollectionId(nid, cid) {
+    this.props.appSession.setCollectionId(cid);
+    this.props.setCollectionId(cid);
+    if (nid) {
+      hashHistory.push(`/magasin/${nid}`);
+    } else {
+      hashHistory.push('/magasin');
+    }
+  }
+
   render() {
-    const { user, pickListNodeCount, pickListObjectCount } = this.props;
+    if (!this.props.appSession.getAccessToken()) {
+      return (
+        <LoginComponent
+          setUser={(u) => {
+            this.props.appSession.setAccessToken(u.accessToken);
+            this.props.appSession.loadAppSession();
+          }}
+        />
+      );
+    }
+    if (!this.props.appSession.getBuildNumber()) {
+      return <Loader loaded={false} />;
+    }
     return (
       <div>
         <Navbar fixedTop style={{ zIndex:1 }}>
@@ -70,49 +102,39 @@ export default class App extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
-              {user &&
               <LinkContainer to="/magasin">
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
-              }
-              {user &&
               <LinkContainer to="/reports">
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
-              }
             </Nav>
             <Nav pullRight>
-              {user &&
               <MusitUserAccount
-                user={this.props.user}
-                selectedMuseumId={this.props.user.museumId.id}
-                selectedCollectionId={this.props.user.collectionId.uuid}
+                actor={this.props.appSession.getActor()}
+                groups={this.props.appSession.getGroups()}
+                token={this.props.appSession.getAccessToken()}
+                selectedMuseumId={this.props.appSession.getMuseumId()}
+                selectedCollectionId={this.props.appSession.getCollectionId()}
                 handleLogout={this.handleLogout}
-                handleLanguage={(l) => this.handleLanguage(l)}
-                handleMuseumId={this.props.setMuseumId}
-                handleCollectionId={this.props.setCollectionId}
+                handleLanguage={this.handleLanguage}
+                handleMuseumId={this.handleMuseumId}
+                handleCollectionId={(uuid) => this.handleCollectionId(this.props.rootNode && this.props.rootNode.id, uuid)}
                 rootNode={this.props.rootNode}
               />
-              }
             </Nav>
             <Nav pullRight>
-              {user &&
               <LinkContainer to={'/search/objects'}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
               </LinkContainer>
-              }
             </Nav>
             <Nav pullRight>
-              {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.NODE.toLowerCase()}`}>
-                <NavItem><span className="icon icon-musitpicklistnode" />{` ${pickListNodeCount} `}</NavItem>
+              <LinkContainer to="/picklist/node">
+                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.picks.NODE.length}</NavItem>
               </LinkContainer>
-              }
-              {user &&
-              <LinkContainer to={`/picklist/${PICK_TYPES.OBJECT.toLowerCase()}`}>
-                <NavItem><span className="icon icon-musitpicklistobject" />{` ${pickListObjectCount} `}</NavItem>
+              <LinkContainer to="/picklist/object">
+                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.picks.OBJECT.length}</NavItem>
               </LinkContainer>
-              }
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -122,9 +144,27 @@ export default class App extends Component {
         </div>
 
         <footer className="footer well version">
-          {this.props.buildinfo && ('Build number: ' + this.props.buildinfo.buildInfoBuildNumber)}
+          {'Build number: ' + this.props.appSession.getBuildNumber()}
         </footer>
       </div>
     );
   }
 }
+
+const data = {
+  appSession: {
+    type: PropTypes.object.isRequired,
+    observable: (object) => object.store$
+  }
+};
+
+const mapStateToProps = (state) => ({
+  picks: state.picks
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setMuseumId: (museumId) => dispatch({ type: SET_MUSEUM, museumId }),
+  setCollectionId: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(notifiable(inject(data)(App)));

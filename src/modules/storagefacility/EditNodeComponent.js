@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import StorageUnitContainer from './NodeDetails';
+import inject from '../../state/inject';
 
-export default class EditStorageUnitContainer extends React.Component {
+export class EditStorageUnitContainer extends React.Component {
   static propTypes = {
     onLagreClick: PropTypes.func.isRequired,
     loadStorageUnit: PropTypes.func.isRequired,
@@ -9,11 +10,11 @@ export default class EditStorageUnitContainer extends React.Component {
     unit: PropTypes.object,
     loaded: PropTypes.bool.isRequired,
     updateState: PropTypes.func.isRequired,
-    translate: PropTypes.func.isRequired
+    appSession: PropTypes.object.isRequired
   };
 
   componentWillMount() {
-    this.props.loadStorageUnit(this.props.params.id, this.props.user.museumId, {
+    this.props.loadStorageUnit(this.props.location.state || this.props.params.id, this.props.appSession.getMuseumId(), {
       onSuccess: (result) => {
         this.props.updateState(result);
       }
@@ -25,8 +26,16 @@ export default class EditStorageUnitContainer extends React.Component {
       <StorageUnitContainer
         {...this.props}
         rootNode={this.props.unit}
-        loaded={this.props.loaded && !!this.props.unit}
+        loaded={!!this.props.unit}
       />
     );
   }
 }
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
+};
+
+export default inject(data)(EditStorageUnitContainer);

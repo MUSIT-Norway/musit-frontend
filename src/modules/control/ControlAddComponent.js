@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -29,12 +28,13 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { emitError, emitSuccess } from '../../shared/errors/emitter';
 import { I18n } from 'react-i18nify';
+import inject from '../../state/inject';
 
-export default class ControlAddContainer extends React.Component {
+export class ControlAddContainer extends React.Component {
   static propTypes = {
     saveControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
-    actor: React.PropTypes.object,
+    appSession: React.PropTypes.object,
     envReqData: React.PropTypes.object,
     rootNode: React.PropTypes.object
   }
@@ -51,7 +51,7 @@ export default class ControlAddContainer extends React.Component {
       light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
       cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
       doneDate: this.props.doneDate ? this.props.doneDate : new Date().toISOString(),
-      doneBy: this.props.actor
+      doneBy: this.props.appSession.getActor()
     };
     this.onControlClick = this.onControlClick.bind(this);
     this.onControlClickOK = this.onControlClickOK.bind(this);
@@ -62,13 +62,7 @@ export default class ControlAddContainer extends React.Component {
 
   componentWillMount() {
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.actor !== this.props.actor) {
-      this.setState({ ...this.state, doneBy: nextProps.actor });
+      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
     }
   }
 
@@ -115,7 +109,7 @@ export default class ControlAddContainer extends React.Component {
         state: controlState
       });
     } else {
-      this.props.saveControl(this.props.params.id, this.props.user.museumId, controlState, {
+      this.props.saveControl(this.props.params.id, this.props.appSession.getMuseumId(), controlState, {
         onSuccess: () => {
           hashHistory.goBack();
           emitSuccess({ type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess')});
@@ -158,7 +152,7 @@ export default class ControlAddContainer extends React.Component {
 
   render() {
     const breadcrumb = <Breadcrumb node={this.props.rootNode} disabled />;
-    const { translate } = this.props;
+    const translate = (k) => I18n.t(k);
 
     const fields = [
       {
@@ -315,3 +309,11 @@ export default class ControlAddContainer extends React.Component {
     );
   }
 }
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
+};
+
+export default inject(data)(ControlAddContainer);

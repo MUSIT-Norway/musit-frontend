@@ -31,13 +31,11 @@ const getGridData = (state) => {
 const totalNodesSelector = (state) => state.data && state.data.totalMatches;
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user,
   children: getGridData(state.storageUnitModal),
   totalNodes: totalNodesSelector(state.storageUnitModal),
   selectedNode: state.storageUnitModal.root.data
 });
 
 const mapDispatchToProps = { clear, loadNode, loadChildren };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusitModalImpl);

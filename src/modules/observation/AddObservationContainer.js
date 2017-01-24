@@ -8,10 +8,7 @@ import { emitError, emitSuccess } from '../../shared/errors/emitter';
 
 const mapStateToProps = (state) => {
   return {
-    actor: state.auth.user.actor,
-    translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data,
-    user: state.auth.user
+    rootNode: state.storageGridUnit.root.data
   };
 };
 

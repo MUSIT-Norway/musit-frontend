@@ -4,7 +4,7 @@ import Template from '../../shared/models/PrintTemplate';
 import './PrintTemplateComponent.css';
 import Config from '../../config';
 
-class ChooseTemplate extends Component {
+export default class ChooseTemplate extends Component {
   static propTypes = {
     templates: PropTypes.arrayOf(PropTypes.instanceOf(Template)),
     loadTemplates: PropTypes.func.isRequired,
@@ -81,5 +81,3 @@ class ChooseTemplate extends Component {
     );
   }
 }
-
-export default ChooseTemplate;

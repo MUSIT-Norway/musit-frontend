@@ -25,23 +25,23 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
+import inject from '../../state/inject';
 
-export default class ControlViewContainer extends React.Component {
+export class ControlViewContainer extends React.Component {
   static propTypes = {
     controls: React.PropTypes.object,
     loadControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
-    loadActorDetails: React.PropTypes.func.isRequired,
-    doneBy: React.PropTypes.object,
+    doneBy: React.PropTypes.any,
     rootNode: React.PropTypes.object
   }
 
   componentWillMount() {
     if (this.props.params.controlId) {
-      this.props.loadControl(this.props.params.id, this.props.params.controlId, this.props.user.museumId);
+      this.props.loadControl(this.props.params.id, this.props.params.controlId, this.props.appSession.getMuseumId());
     }
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
+      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
     }
   }
 
@@ -128,3 +128,11 @@ export default class ControlViewContainer extends React.Component {
     );
   }
 }
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
+};
+
+export default inject(data)(ControlViewContainer);
