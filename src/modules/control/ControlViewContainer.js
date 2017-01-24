@@ -17,18 +17,15 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import { I18n } from 'react-i18nify';
 import { connect } from 'react-redux';
 import { loadControl } from './controlReducer';
 import ControlViewComponent from './ControlViewComponent';
 import { loadRoot } from '../storagefacility/reducers/grid/nodes';
 
 const mapStateToProps = (state) => ({
-  translate: (key, markdown) => I18n.t(key, markdown),
   controls: state.control,
   doneBy: state.observation.data.doneBy,
-  rootNode: state.storageGridUnit.root.data,
-  user: state.auth.user
+  rootNode: state.storageGridUnit.root.data
 });
 
 const mapDispatchToProps = (dispatch) => ({

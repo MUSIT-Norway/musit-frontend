@@ -3,19 +3,21 @@ import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
+import inject from '../../state/inject';
 
-export default class AddObservationPage extends React.Component {
+export class AddObservationPage extends React.Component {
 
   static propTypes = {
     params: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
     actor: PropTypes.object,
-    rootNode: React.PropTypes.object
+    rootNode: React.PropTypes.object,
+    appSession: PropTypes.object.isRequired
   }
 
   componentWillMount() {
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
+      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
     }
   }
 
@@ -29,10 +31,10 @@ export default class AddObservationPage extends React.Component {
             <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.add')}</h4>
             <ObservationPage
               id={this.props.params.id}
-              user={this.props.user}
+              museumId={this.props.appSession.getMuseumId()}
               onSaveObservation={this.props.onSaveObservation}
               mode="ADD"
-              doneBy={this.props.actor}
+              doneBy={this.props.appSession.getActor()}
             />
           </div>
         }
@@ -40,3 +42,11 @@ export default class AddObservationPage extends React.Component {
     );
   }
 }
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
+};
+
+export default inject(data)(AddObservationPage);

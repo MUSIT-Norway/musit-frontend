@@ -4,19 +4,21 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
 import Actor from '../../shared/models/actor';
+import inject from '../../state/inject';
 
-export default class EditObservationPage extends React.Component {
+export class EditObservationPage extends React.Component {
 
   static propTypes = {
     location: PropTypes.object.isRequired,
     onSaveObservation: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
-    rootNode: React.PropTypes.object
+    rootNode: React.PropTypes.object,
+    appSession: PropTypes.object.isRequired
   }
 
   componentWillMount() {
     if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
+      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
     }
   }
 
@@ -64,11 +66,11 @@ export default class EditObservationPage extends React.Component {
             <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.edit')}</h4>
             <ObservationPage
               id={this.props.params.id}
-              user={this.props.user}
+              museumId={this.props.appSession.getMuseumId()}
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
               doneBy={this.getDoneByFromLocationState()}
-              onSaveObservation={this.props.onSaveObservation(this.props.location.state, this.props.user.museumId)}
+              onSaveObservation={this.props.onSaveObservation(this.props.location.state, this.props.appSession.getMuseumId())}
               mode="EDIT"
             />
           </div>
@@ -77,3 +79,11 @@ export default class EditObservationPage extends React.Component {
     );
   }
 }
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
+};
+
+export default inject(data)(EditObservationPage);

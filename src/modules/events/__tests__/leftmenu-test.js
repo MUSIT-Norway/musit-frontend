@@ -8,7 +8,7 @@ describe('LeftMenu', () => {
   const setup = () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <LeftMenu
-        id={1}
+        id={"1"}
         translate={(key) => key}
         selectObservation={(key) => key}
         selectControl={(key) => key}

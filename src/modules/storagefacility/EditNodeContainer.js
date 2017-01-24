@@ -10,10 +10,7 @@ import { loadRoot } from './reducers/grid/nodes';
 const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState,
-    user: state.auth.user,
-    loaded: !!state.storagePanelUnit.loaded,
-    translate: (key, markdown) => I18n.t(key, markdown),
-    rootNode: state.storageGridUnit.root.data || {}
+    loaded: !!state.storagePanelUnit.loaded
   };
 };
 

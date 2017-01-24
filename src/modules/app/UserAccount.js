@@ -6,21 +6,24 @@ import flatten from 'lodash/flatten';
 import uniqBy from 'lodash/uniqBy';
 import find from 'lodash/find';
 import { I18n } from 'react-i18nify';
+import MuseumId from '../../shared/models/museumId';
+import CollectionId from '../../shared/models/collectionId';
 
 export default class MusitUserAccount extends Component {
   static propTypes = {
-    user: React.PropTypes.object,
-    selectedMuseumId: React.PropTypes.number,
-    selectedCollectionId: React.PropTypes.string,
-    handleLogout: React.PropTypes.func,
-    handleLanguage: React.PropTypes.func,
-    handleMuseumId: React.PropTypes.func,
-    handleCollectionId: React.PropTypes.func,
-    rootNode: React.PropTypes.object
+    token: React.PropTypes.string.isRequired,
+    actor: React.PropTypes.object.isRequired,
+    groups: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+    selectedMuseumId: React.PropTypes.instanceOf(MuseumId),
+    selectedCollectionId: React.PropTypes.instanceOf(CollectionId),
+    handleLogout: React.PropTypes.func.isRequired,
+    handleLanguage: React.PropTypes.func.isRequired,
+    handleMuseumId: React.PropTypes.func.isRequired,
+    handleCollectionId: React.PropTypes.func.isRequired
   }
 
   getCollections(mid, groups) {
-    return uniqBy(flatten(groups.filter(g => g.museumId === mid).map(g => g.collections)), c => c.uuid);
+    return uniqBy(flatten(groups.filter(g => g.museumId === mid.id).map(g => g.collections)), c => c.uuid);
   }
 
   adminLink() {
@@ -42,7 +45,7 @@ export default class MusitUserAccount extends Component {
     const tooltip =
       <Tooltip id="tooltip">
         <strong>
-          {I18n.t('musit.userProfile.loggedIn', { name: this.props.user.actor.fn })}
+          {I18n.t('musit.userProfile.loggedIn', { name: this.props.actor.fn })}
         </strong>
       </Tooltip>;
     const menuText = (t1, t2) => (
@@ -51,8 +54,7 @@ export default class MusitUserAccount extends Component {
         <Col md={1}>{t2}</Col>
       </Row>
     );
-    const nodeId = this.props.rootNode && this.props.rootNode.id;
-    const groups = this.props.user.groups;
+    const groups = this.props.groups;
     const museumId = this.props.selectedMuseumId;
     const collectionId = this.props.selectedCollectionId;
     const museumDropDown = groups.length > 1 && groups[0].museumName;
@@ -92,8 +94,8 @@ export default class MusitUserAccount extends Component {
             }
             {collectionDropdown &&
               collections.map((cc, i) =>
-                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(nodeId, cc.uuid)}>
-                  {menuText(collectionId === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
+                <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(new CollectionId(cc.uuid))}>
+                  {menuText(collectionId.uuid === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
                 </MenuItem>
               )
             }

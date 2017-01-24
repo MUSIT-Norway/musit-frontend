@@ -1,15 +1,16 @@
 import React from 'react';
 import AutoSuggest from 'react-autosuggest';
-import autoComplete from '../../state/autocomplete';
 import Config from '../../config';
+import suggest$Fn, { update$, clear$} from './suggestStore';
+import inject from '../../state/inject';
 
-class NodeSuggest extends React.Component {
+export class NodeSuggest extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
     placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.array,
+    suggest: React.PropTypes.object,
     onChange: React.PropTypes.func.isRequired,
     update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
@@ -25,6 +26,7 @@ class NodeSuggest extends React.Component {
   constructor(props) {
     super(props);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.requestSuggestionUpdate = this.requestSuggestionUpdate.bind(this);
     this.state = {
       value: this.props.value
     };
@@ -66,12 +68,20 @@ class NodeSuggest extends React.Component {
     );
   }
 
+  requestSuggestionUpdate(update) {
+    if (update.value.length > 2) {
+      const museumId = this.props.appSession.getMuseumId();
+      const token = this.props.appSession.getAccessToken();
+      this.props.update({update, museumId, token});
+    }
+  }
+
   render() {
     return (
       <AutoSuggest
-        suggestions={this.props.suggest}
+        suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
-        onSuggestionsUpdateRequested={this.props.update}
+        onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getNodeSuggestionValue}
         renderSuggestion={this.renderNodeSuggestion}
         inputProps={{ ...this.nodeProps, value: this.state.value }}
@@ -82,4 +92,13 @@ class NodeSuggest extends React.Component {
   }
 }
 
-export default autoComplete(Config.magasin.urls.storagefacility.searchUrl)(NodeSuggest);
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  },
+  suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl)
+};
+
+const commands = { update$, clear$ };
+
+export default inject(data, commands)(NodeSuggest);

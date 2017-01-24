@@ -19,16 +19,12 @@
  */
 import { connect } from 'react-redux';
 import { addControl } from './controlReducer';
-import { I18n } from 'react-i18nify';
 import ControlAddComponent from './ControlAddComponent';
 import { loadRoot } from '../storagefacility/reducers/grid/nodes';
 
 const mapStateToProps = (state) => ({
-  actor: state.auth.user.actor,
-  translate: (key, markdown) => I18n.t(key, markdown),
   envReqData: state.storageGridUnit.root.data ? state.storageGridUnit.root.data.environmentRequirement : null,
-  rootNode: state.storageGridUnit.root.data,
-  user: state.auth.user
+  rootNode: state.storageGridUnit.root.data
 });
 
 const mapDispatchToProps = (dispatch) => ({

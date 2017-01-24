@@ -35,7 +35,6 @@ export default class StorageUnitContainer extends Component {
     unit: PropTypes.object.isRequired,
     params: PropTypes.object,
     onLagreClick: PropTypes.func.isRequired,
-    translate: PropTypes.func.isRequired,
     isAdd: React.PropTypes.bool,
     path: React.PropTypes.arrayOf(React.PropTypes.object),
     loaded: React.PropTypes.bool.isRequired,
@@ -55,7 +54,7 @@ export default class StorageUnitContainer extends Component {
     const errors = validateForm(this.props);
     this.props.updateState({ ...this.props.unit, errors });
     if (Object.keys(errors).length === 0) {
-      this.props.onLagreClick(this.props.unit, this.props.user.museumId);
+      this.props.onLagreClick(this.props.unit, this.props.appSession.getMuseumId());
     }
   }
 

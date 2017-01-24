@@ -6,7 +6,6 @@ import { addObject, loadMainObject } from '../picklist/picklistReducer';
 const mapStateToProps = (state) => {
   return {
     data: state.objectSearch.data,
-    user: state.auth.user,
     params: state.objectSearch.params,
     currentPage: state.objectSearch.currentPage,
     loaded: state.objectSearch.loaded,
@@ -38,4 +37,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Component);
-

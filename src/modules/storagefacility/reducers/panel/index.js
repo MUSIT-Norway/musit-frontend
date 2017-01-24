@@ -74,13 +74,22 @@ const getUpdatedBy = (client, node, resolve) => {
     })).catch(() => resolve(node));
 };
 
-export const load = (id, museumId, callback) => {
+export const load = (nodeOrId, museumId, callback) => {
+  if (!nodeOrId.id) {
+    return {
+      types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+      promise: (client) => new Promise((resolve, reject) => {
+        client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeOrId}`))
+          .then(node => getUpdatedBy(client, node, resolve, reject))
+          .catch(error => reject(error));
+      }),
+      callback
+    };
+  }
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => new Promise((resolve, reject) => {
-      client.get(apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`))
-        .then(node => getUpdatedBy(client, node, resolve, reject))
-        .catch(error => reject(error));
+      getUpdatedBy(client, nodeOrId, resolve, reject);
     }),
     callback
   };

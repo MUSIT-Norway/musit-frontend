@@ -6,20 +6,19 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import Toolbar from '../../components/layout/Toolbar';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
+import inject from '../../state/inject';
 
-export default class ObservationControlGridShow extends React.Component {
+export class ObservationControlGridShow extends React.Component {
   static propTypes = {
     observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
     params: React.PropTypes.object,
     route: React.PropTypes.object,
     loadControlAndObservations: React.PropTypes.func.isRequired,
-    loadStorageObj: React.PropTypes.func.isRequired,
-    path: React.PropTypes.arrayOf(React.PropTypes.object)
+    loadStorageObj: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.props.params.id = this.props.params.id * 1;
     this.state = {
       showObservations: this.props.route.showObservations,
       showControls: this.props.route.showControls
@@ -27,8 +26,8 @@ export default class ObservationControlGridShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadControlAndObservations(this.props.params.id, this.props.user.museumId);
-    this.props.loadStorageObj(this.props.params.id, this.props.user.museumId);
+    this.props.loadControlAndObservations(this.props.params.id, this.props.appSession.getMuseumId());
+    this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
   }
 
   makeToolbar() {
@@ -89,3 +88,11 @@ export default class ObservationControlGridShow extends React.Component {
     );
   }
 }
+
+const data = {
+  appSession: {
+    type: React.PropTypes.object.isRequired
+  }
+};
+
+export default inject(data)(ObservationControlGridShow);
