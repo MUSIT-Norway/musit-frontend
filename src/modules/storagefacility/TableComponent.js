@@ -28,6 +28,8 @@ import {addNode, addObject, loadMainObject} from '../picklist/picklistReducer';
 import {moveObject as moveObjectAction, moveNode as moveNodeAction} from '../movedialog/moveActions';
 import { clear } from './reducers/modal';
 
+import { Observable } from 'rxjs';
+
 import {
   loadNodes$,
   loadStats$,
@@ -89,18 +91,26 @@ export class StorageUnitsContainer extends React.Component {
     return state && state.currentPage;
   }
 
+  loadRootNode(nodeId, museumId, token) {
+    this.props.loadRootNode({
+      nodeId, museumId, page: this.getCurrentPage(), token, onComplete: node => {
+        if (node && !MusitNode.isRootNode(node.type)) {
+          this.props.loadStats({nodeId, museumId, token});
+        }
+      }
+    });
+  }
+
   componentWillMount() {
     this.props.clearRootNode();
     this.props.setLoading();
     if (this.props.route.showObjects) {
       this.loadObjects();
-      if (this.props.params.id && !this.props.store.rootNode) {
-        this.props.loadRootNode({
-          nodeId: this.props.params.id,
-          museumId: this.props.appSession.getMuseumId(),
-          page: this.getCurrentPage(),
-          token: this.props.appSession.getAccessToken()
-        });
+      const nodeId = this.props.params.id;
+      if (nodeId) {
+        const museumId = this.props.appSession.getMuseumId();
+        const token = this.props.appSession.getAccessToken();
+        this.loadRootNode(nodeId, museumId, token);
       }
     } else {
       this.loadNodes();
@@ -160,11 +170,7 @@ export class StorageUnitsContainer extends React.Component {
   ) {
     this.props.setLoading();
     if (nodeId) {
-      this.props.loadRootNode({nodeId, museumId, token, onComplete: node => {
-        if(node && !MusitNode.isRootNode(node.type)) {
-          this.props.loadStats({nodeId, museumId, token});
-        }
-      }});
+      this.loadRootNode(nodeId, museumId, token);
     }
     this.props.loadNodes({
       nodeId,
@@ -178,8 +184,8 @@ export class StorageUnitsContainer extends React.Component {
     nodeId = this.props.params.id,
     museumId = this.props.appSession.getMuseumId(),
     collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken(),
     currentPage = this.getCurrentPage(),
-    token = this.props.appSession.getAccessToken()
   ) {
     if (nodeId) {
       this.props.setLoading();
@@ -521,7 +527,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const data = {
-  appSession: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   store$
 };
 

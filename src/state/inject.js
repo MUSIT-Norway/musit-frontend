@@ -52,12 +52,18 @@ export default (data = {}, commands = {}, props = {}) => (Component) => {
       }, {});
 
       const observablesFromContext = entries(data).reduce((acc, [k, v]) => {
-        if (v.type && v.observable && this.context[k]) {
-          let observable = v.observable(this.context[k]);
-          observable = observable.subscribe ? { [`${k}$state`]: observable} : observable;
+        const contextVal = this.context[k];
+        if (v.type && contextVal) {
+          if (v.mapToProps) {
+            return {
+              ...acc,
+              [k]: contextVal,
+              ...v.mapToProps(contextVal)
+            };
+          }
           return {
             ...acc,
-            ...observable
+            [k]: contextVal
           };
         }
         return acc;
@@ -76,7 +82,7 @@ export default (data = {}, commands = {}, props = {}) => (Component) => {
     render() {
       return (
         <RxContainer
-          props={{...this.context, ...this.props, ...props}}
+          props={{...this.props, ...props}}
           callbacks={callbacks}
           component={Component}
           observable={this.propsObservable}

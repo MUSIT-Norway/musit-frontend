@@ -9,7 +9,7 @@ import { isNumber, getPath, dispatchAction } from '../../shared/util';
 import Config from '../../config';
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const OLD_REGEX = /^[0-9]{9,10}$/i;
+const OLD_REGEX = /^[0-9]{9,50}$/i;
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 const SCAN_START = 'musit/scan/start';
 const SCAN_SUCCESS = 'musit/scan/success';

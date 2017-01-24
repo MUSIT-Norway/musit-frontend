@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import { formatFloatToString } from './../../shared/util';
+import { Observable } from 'rxjs';
 import inject from '../../state/inject';
 
 export class KDReport extends React.Component {
@@ -64,9 +65,7 @@ export class KDReport extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  }
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired }
 };
 
 export default inject(data)(KDReport);

@@ -33,7 +33,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
-import AppSession from './modules/app/appSession';
+import appSession$ from './modules/app/appSession';
 import provide from './state/provide';
 
 function initReactJS() {
@@ -67,9 +67,9 @@ function initReactJS() {
   );
 
   const SessionProvided = provide({
-    appSession: {
+    appSession$: {
       type: PropTypes.object,
-      value: () => new AppSession()
+      value: appSession$
     }
   })(appRouter);
 

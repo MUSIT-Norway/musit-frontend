@@ -6,6 +6,7 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import PagingToolbar from '../../shared/paging';
 import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
+import { Observable } from 'rxjs';
 import inject from '../../state/inject';
 
 export function renderParam(id, props, style) {
@@ -140,9 +141,7 @@ export const ObjectSearchComponent = (props) =>
   </div>;
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  }
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired }
 };
 
 export default inject(data)(ObjectSearchComponent);
