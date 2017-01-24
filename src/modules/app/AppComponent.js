@@ -11,7 +11,7 @@ import './AppComponent.css';
 import Logo from './musitLogo.png';
 import inject from '../../state/inject';
 import LoginComponent from '../login/LoginComponent';
-import {emitError} from '../../shared/errors/emitter';
+import {emitError} from '../../shared/errors';
 import notifiable from './Notifyable';
 import Loader from 'react-loader';
 import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';

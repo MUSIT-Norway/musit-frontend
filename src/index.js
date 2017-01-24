@@ -28,13 +28,17 @@ import config from './config';
 import LanguageJson from '../language.json';
 import { I18n } from 'react-i18nify';
 import * as loglevel from 'loglevel';
-import './shared/errors/handler';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
 import appSession$ from './modules/app/appSession';
 import provide from './state/provide';
+import NotificationSystem from 'react-notification-system';
+import notification$ from './shared/errors';
+
+const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
+notification$.subscribe(notificationSystem.addNotification);
 
 function initReactJS() {
   const client = new ApiClient();

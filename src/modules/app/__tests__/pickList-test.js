@@ -23,7 +23,7 @@ describe('pickList', () => {
       g: { objects: [], nodes: []},
       h: { objects: [], nodes: [{ marked: false, value: { id: 1 }, path: []}]},
       i: { objects: [], nodes: [{ marked: false, value: { id: 1 }, path: []}, { marked: false, value: { id: 2 }, path: []}]},
-      j: { objects: [], nodes: [{ marked: false, value: { id: 1 }, path: []}, { marked: false, value: { id: 2 }, path: []}]},
+      j: { objects: [], nodes: [{ marked: false, value: { id: 1 }, path: []}, { marked: false, value: { id: 2 }, path: []}]}
     };
 
     // mock up$ and down$ events
@@ -39,5 +39,5 @@ describe('pickList', () => {
 
     // run tests
     testScheduler.flush();
-  })
+  });
 });

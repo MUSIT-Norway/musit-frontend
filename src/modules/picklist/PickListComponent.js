@@ -9,7 +9,7 @@ import { TYPES } from '../picklist/picklistReducer';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MusitModalContainer';
 import './PickListComponent.css';
-import { emitError, emitSuccess } from '../../shared/errors/emitter';
+import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
 import inject from '../../state/inject';

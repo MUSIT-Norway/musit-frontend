@@ -4,7 +4,7 @@ import { hashHistory } from 'react-router';
 import { addNode, addObject } from '../picklist/picklistReducer';
 import { isMoveDialogActive, loadNode, loadChildren } from '../storagefacility/reducers/modal';
 import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
-import { emitError } from '../../shared/errors/emitter';
+import { emitError } from '../../shared/errors';
 import { isNumber, getPath, dispatchAction } from '../../shared/util';
 import Config from '../../config';
 

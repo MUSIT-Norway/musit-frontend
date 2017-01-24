@@ -1,10 +1,6 @@
 import React from 'react';
-import NotificationSystem from 'react-notification-system';
-import event$ from './emitter';
+import { Subject } from 'rxjs/Rx';
 import { I18n } from 'react-i18nify';
-import ReactDOM from 'react-dom';
-
-const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
 
 const children = (message) =>
   <div style={{margin: '30px'}}>
@@ -16,36 +12,42 @@ const children = (message) =>
 const handleNotification = (event) => {
   switch(event.type) {
   case 'deleteSuccess':
-    notificationSystem.addNotification({
+    return {
       level: 'success',
       title: I18n.t('musit.notificationMessages.deleting'),
       position: 'tc',
       children: children(event.message)
-    });
-    break;
+    };
   case 'movedSuccess':
-    notificationSystem.addNotification({
+    return {
       level: 'success',
       title: I18n.t('musit.notificationMessages.moving'),
       position: 'tc',
       children: children(event.message)
-    });
-    break;
+    };
   case 'saveSuccess':
-    notificationSystem.addNotification({
+    return {
       level: 'success',
       title: I18n.t('musit.notificationMessages.saving'),
       position: 'tc',
       children: children(event.message)
-    });
-    break;
+    };
   default:
-    notificationSystem.addNotification({
+    return {
       level: 'success',
       children: children(event.message)
-    });
+    };
   }
 };
+
+// const handleWarning = (event) => {
+//   return {
+//     level: 'warning',
+//     title: I18n.t('musit.notificationMessages.deleting'),
+//     position: 'tc',
+//     children: children(event.message)
+//   };
+// };
 
 const getErrorStatus = (error) => {
   const status = error && error.response && error.response.status;
@@ -81,74 +83,75 @@ const handleError = (event) => {
   case 'network':
     eMsg = getErrorMessage(error);
     eStatus = getErrorStatus(error);
-    notificationSystem.addNotification({
+    return {
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.networkError'),
       position: 'tc',
       children: children(eMsg || eStatus)
-    });
-    break;
+    };
   case 'dateValidationError':
-    notificationSystem.addNotification({
+    return {
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
       children: children(error.message)
-    });
-    break;
+    };
   case 'errorOnDelete':
-    notificationSystem.addNotification({
+    return {
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
       children: children(error.message)
-    });
-    break;
+    };
   case 'errorOnMove':
     customMessage = event.message;
     eMsg = getErrorMessage(error);
     eStatus = getErrorStatus(error);
-    notificationSystem.addNotification({
+    return {
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
       children: children(`${customMessage} ${eMsg || eStatus || ''}`)
-    });
-    break;
+    };
   case 'errorOnSave':
-    notificationSystem.addNotification({
+    return {
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
       children: children(error.message)
-    });
-    break;
+    };
   default:
     customMessage = event.message;
     eMsg = getErrorMessage(error);
-    notificationSystem.addNotification({
+    return {
       autoDismiss: 0,
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
       position: 'tc',
       children: children(customMessage || eMsg || '')
-    });
+    };
   }
 };
 
-event$.subscribe((event) => {
+export const event$ = new Subject();
+export const emitSuccess = (event) => event$.next({ type: 'notification', payload: event });
+export const emitError = (event) => event$.next({ type: 'error', payload: event });
+//export const emitWarning = (event) => event$.next({ type: 'warning', payload: event });
+
+export default event$.asObservable().map(event => {
   switch(event.type) {
-  case 'musitNotification':
-    handleNotification(event.payload);
-    break;
-  case 'musitError':
-    handleError(event.payload);
-    break;
+  case 'notification':
+    return handleNotification(event.payload);
+//case 'warning':
+//  return handleWarning(event.payload);
+  case 'error':
+    return handleError(event.payload);
   default:
+    throw new Error('Unrecognized event type: ' + event.type);
   }
 });

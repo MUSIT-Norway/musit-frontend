@@ -14,7 +14,7 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import { blur, filter } from '../../shared/util';
 import MusitNode from '../../shared/models/node';
 import PagingToolbar from '../../shared/paging';
-import { emitError, emitSuccess } from '../../shared/errors/emitter';
+import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 
 import MusitModal from '../movedialog/MusitModalContainer';
@@ -381,7 +381,7 @@ export class StorageUnitsContainer extends React.Component {
                     });
                   }
                 }
-              })
+              });
             });
           }}
         />

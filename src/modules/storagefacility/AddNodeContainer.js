@@ -3,7 +3,7 @@ import { hashHistory } from 'react-router';
 import { insert, load } from './reducers/panel';
 import StorageUnitAddContainer from './AddNodeComponent';
 import { clear as clearState, update as updateState } from './reducers/panel/state';
-import { emitError, emitSuccess } from '../../shared/errors/emitter';
+import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 
 const mapStateToProps = (state) => {

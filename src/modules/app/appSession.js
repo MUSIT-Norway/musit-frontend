@@ -3,7 +3,7 @@ import {createStore, createActions} from '../../state/RxStore';
 import {get as ajaxGet} from '../../state/ajax';
 import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
-import { emitError } from '../../shared/errors/emitter';
+import { emitError } from '../../shared/errors';
 import { dispatchAction } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import MuseumId from '../../shared/models/museumId';
