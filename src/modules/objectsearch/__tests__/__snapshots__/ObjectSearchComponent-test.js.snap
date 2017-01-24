@@ -73,7 +73,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               placeholder=" "
               style={
                 Object {
-                  "width": "470px"
+                  "width": "440px"
                 }
               }
               type="text"
