@@ -32,7 +32,9 @@ const getRoutePathname = () => {
   return hash.substr(1, hash.indexOf('?') - 1);
 };
 
-export default function (appSession) {
+export default function (appSession$) {
+  let appSession;
+  appSession$.subscribe(state => appSession = state);
   const keyPress$ = Observable.fromEvent(window, 'keypress');
 
   const clear$ = keyPress$.debounce(() => Observable.timer(500));

@@ -40,7 +40,7 @@ import {
   clearRootNode$
 } from './tableActions';
 
-import store$ from './tableStore';
+import tableStore$ from './tableStore';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -328,32 +328,32 @@ export class StorageUnitsContainer extends React.Component {
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          rootNode={rootNode}
+          showNewNode={!!rootNode}
           showButtons={rootNode && !MusitNode.isRootNode(rootNode.type)}
-          onClickNewNode={(parentId) => {
-            if (parentId) {
-              hashHistory.push(`/magasin/${parentId}/add`);
+          onClickNewNode={() => {
+            if (rootNode.id) {
+              hashHistory.push(`/magasin/${rootNode.id}/add`);
             } else {
               hashHistory.push('/magasin/add');
             }
           }}
           stats={stats}
-          onClickProperties={(id) => {
+          onClickProperties={() => {
             hashHistory.push({
-              pathname: `/magasin/${id}/view`,
+              pathname: `/magasin/${rootNode.id}/view`,
               state: rootNode
             });
           }}
-          onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
-          onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
-          onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={moveNode}
-          onClickDelete={(nodeId) => {
+          onClickControlObservations={() => hashHistory.push(`/magasin/${rootNode.id}/controlsobservations`)}
+          onClickObservations={() => hashHistory.push(`/magasin/${rootNode.id}/observations`)}
+          onClickController={() => hashHistory.push(`/magasin/${rootNode.id}/controls`)}
+          onClickMoveNode={() => moveNode(rootNode)}
+          onClickDelete={() => {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
               name: rootNode.name
             });
             confirm(message, () => {
-              deleteNode({nodeId, museumId, token,
+              deleteNode({nodeId: rootNode.id, museumId, token,
                 onComplete: () => {
                   if (rootNode.isPartOf) {
                     hashHistory.replace(`/magasin/${rootNode.isPartOf}`);
@@ -381,7 +381,7 @@ export class StorageUnitsContainer extends React.Component {
                     });
                   }
                 }
-              });
+              })
             });
           }}
         />
@@ -546,7 +546,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  store$
+  store$: tableStore$
 };
 
 const commands = {

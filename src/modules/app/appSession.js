@@ -112,8 +112,8 @@ export const reducer$ = ({ setMuseumId$, setCollectionId$, setAccessToken$, load
     .map(collectionId => state => ({...state, collectionId}))
 );
 
-const store$ = createStore(reducer$(actions), Observable.of(initialState)).map(state => new AppSession(state));
+const session$ = createStore(reducer$(actions), Observable.of(initialState)).map(state => new AppSession(state));
 
-export default store$;
+export default session$;
 
-CodeReceiver(store$);
+CodeReceiver(session$);

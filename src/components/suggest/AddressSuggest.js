@@ -94,9 +94,7 @@ export class AddressSuggest extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  },
+  appSession$: { type: React.PropTypes.object.isRequired },
   suggest$: suggest$Fn(Config.magasin.urls.geolocation.searchUrl)
 };
 

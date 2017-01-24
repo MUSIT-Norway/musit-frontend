@@ -93,9 +93,7 @@ export class NodeSuggest extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  },
+  appSession$: { type: React.PropTypes.object.isRequired },
   suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl)
 };
 

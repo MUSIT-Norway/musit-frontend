@@ -34,9 +34,7 @@ export class AddStorageUnitContainer extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  }
+  appSession$: { type: React.PropTypes.object.isRequired }
 };
 
 export default inject(data)(AddStorageUnitContainer);

@@ -26,16 +26,14 @@ export class EditStorageUnitContainer extends React.Component {
       <StorageUnitContainer
         {...this.props}
         rootNode={this.props.unit}
-        loaded={!!this.props.unit}
+        loaded={!!this.props.unit && !this.props.loading && this.props.loaded}
       />
     );
   }
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  }
+  appSession$: { type: React.PropTypes.object.isRequired }
 };
 
 export default inject(data)(EditStorageUnitContainer);
