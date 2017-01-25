@@ -138,7 +138,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til alle">
+                      title="Legg til alle i plukklisten">
                       <FontAwesome
                         name="shopping-cart"
                         style={
