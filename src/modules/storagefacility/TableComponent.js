@@ -24,7 +24,7 @@ import Config from '../../config';
 import inject from '../../rxjs/inject';
 
 import {connect} from 'react-redux';
-import {addNode, addObject, loadMainObject} from '../picklist/picklistReducer';
+import { addObject, loadMainObject} from '../picklist/picklistReducer';
 import {moveObject as moveObjectAction, moveNode as moveNodeAction} from '../movedialog/moveActions';
 import { clear } from './reducers/modal';
 
@@ -41,6 +41,8 @@ import {
 } from './tableActions';
 
 import tableStore$ from './tableStore';
+
+import { addNode$, addObject$ } from '../app/pickList';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -412,12 +414,12 @@ export class StorageUnitsContainer extends React.Component {
               filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             pickObject={(object) =>
-              this.props.pickObject(
+              this.props.pickObject({
                 object,
-                rootNode.breadcrumb,
+                path: rootNode.breadcrumb,
                 museumId,
                 collectionId
-              )
+              })
             }
             pickObjects={(objectArr) =>
               this.props.pickObjects(
@@ -455,11 +457,10 @@ export class StorageUnitsContainer extends React.Component {
           goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
           pickNode={(node) =>
-            this.props.pickNode(
-              node,
-              rootNode.breadcrumb,
-              museumId
-            )
+            this.props.pickNode({
+              value: node,
+              path: rootNode.breadcrumb
+            })
           }
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
@@ -531,14 +532,10 @@ const mapDispatchToProps = (dispatch) => {
     moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
       dispatch(moveNodeAction(nodeId, destinationId, doneBy, museumId, callback));
     },
-    pickNode: (unit, path) => dispatch(addNode(unit, path)),
     pickObjects: (unit, path, museumId, collectionId) => {
       unit.forEach(object => {
         pickObject(dispatch)(object, path, museumId, collectionId);
       });
-    },
-    pickObject: (unit, path, museumId, collectionId) => {
-      pickObject(dispatch)(unit, path, museumId, collectionId);
     },
     clearMoveDialog: () => dispatch(clear())
   };
@@ -556,7 +553,9 @@ const commands = {
   loadNodes$,
   loadObjects$,
   deleteNode$,
-  setLoading$
+  setLoading$,
+  pickObject$: addObject$,
+  pickNode$: addNode$
 };
 
 export default connect(null, mapDispatchToProps)(inject(data, commands)(StorageUnitsContainer));

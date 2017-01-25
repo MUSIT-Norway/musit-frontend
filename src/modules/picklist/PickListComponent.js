@@ -5,7 +5,6 @@ import { PageHeader, Grid } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
-import { TYPES } from '../picklist/picklistReducer';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MusitModalContainer';
 import './PickListComponent.css';
@@ -13,21 +12,32 @@ import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
 import inject from '../../rxjs/inject';
+import {
+  toggleNode$,
+  toggleMainObject$,
+  toggleObject$,
+  removeNode$,
+  removeObject$,
+  refreshNode$,
+  refreshObject$
+} from '../app/pickList';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
-    picks: React.PropTypes.object.isRequired,
+    pickList: React.PropTypes.object.isRequired,
     toggleNode: React.PropTypes.func.isRequired,
     toggleObject: React.PropTypes.func.isRequired,
+    toggleMainObject: React.PropTypes.func.isRequired,
     removeNode: React.PropTypes.func.isRequired,
     removeObject: React.PropTypes.func.isRequired,
     moveNode: React.PropTypes.func.isRequired,
     moveObject: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object.isRequired,
     appSession: React.PropTypes.object.isRequired,
-    refreshNodes: React.PropTypes.func.isRequired,
-    refreshObjects: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired
+    refreshNode: React.PropTypes.func.isRequired,
+    refreshObject: React.PropTypes.func.isRequired,
+    clearMoveDialog: React.PropTypes.func.isRequired,
+    emitError: React.PropTypes.func.isRequired,
+    emitSuccess: React.PropTypes.func.isRequired
   }
 
   static contextTypes = {
@@ -41,8 +51,7 @@ export class PickListContainer extends React.Component {
   }
 
   isTypeNode() {
-    const type = this.props.params.type.toUpperCase();
-    return type === TYPES.NODE;
+    return 'nodes' === this.props.route.type;
   }
 
   showModal = (items) => {
@@ -57,39 +66,71 @@ export class PickListContainer extends React.Component {
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshNodes(items.map(p => p.value).map(item => item.id), this.props.appSession.getMuseumId());
+      items.map(p => p.value).map(item =>
+        this.props.refreshNode({
+          id: item.id,
+          museumId: this.props.appSession.getMuseumId(),
+          token: this.props.appSession.getAccessToken()
+        })
+      );
       onSuccess();
       if (toMoveLength === 1) {
-        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })});
+        this.props.emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })
+        });
       } else {
-        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })});
+        this.props.emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })
+        });
       }
     },
     onFailure: (e) => {
       if (toMoveLength === 1) {
-        emitError({type: 'errorOnMove', error: e, message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })});
+        this.props.emitError({type: 'errorOnMove', error: e, message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })});
       } else {
-        emitError({type: 'errorOnMove', error: e,
+        this.props.emitError({type: 'errorOnMove', error: e,
           message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })});
       }
     }
   })
+
   objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onSuccess: () => {
-      this.props.refreshObjects(items.map(p => p.value).map(item => item.id), this.props.appSession.getMuseumId());
+      items.map(p => p.value).map(item =>
+        this.props.refreshObject({
+          id: item.id,
+          museumId: this.props.appSession.getMuseumId(),
+          token: this.props.appSession.getAccessToken()
+        })
+      );
       onSuccess();
       if (toMoveLength === 1) {
-        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })});
+        this.props.emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })
+        });
       } else {
-        emitSuccess({type: 'movedSuccess', message: I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLength, destination: toName })});
+        this.props.emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLength, destination: toName })
+        });
       }
     },
-    onFailure: (e) => {
+    onFailure: (error) => {
       if (toMoveLength === 1) {
-        emitError({type: 'errorOnMove', error: e, message: I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName })});
+        this.props.emitError({
+          type: 'errorOnMove',
+          error,
+          message: I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName })
+        });
       } else {
-        emitError({type: 'errorOnMove', error: e,
-          message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName })});
+        this.props.emitError({
+          type: 'errorOnMove',
+          error,
+          message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName })
+        });
       }
     }
   })
@@ -108,7 +149,6 @@ export class PickListContainer extends React.Component {
       callback = this.objectCallback(toName, toMoveLength, name, items, onSuccess);
     }
 
-
     let error = false;
     if (isNode) {
       const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
@@ -116,7 +156,7 @@ export class PickListContainer extends React.Component {
       if (errorMessages.length > 0) {
         error = true;
         for (const errorMessage of errorMessages) {
-          emitError({
+          this.props.emitError({
             type: 'errorOnMove',
             message: errorMessage
           });
@@ -133,21 +173,28 @@ export class PickListContainer extends React.Component {
     this.context.showModal('Choose template', <PrintTemplate marked={nodesToPrint} />);
   }
 
+  toggleObject({item, on}) {
+    if (item.mainObjectId && item.isMainObject()) {
+      this.props.toggleMainObject({item, on});
+    } else {
+      this.props.toggleObject({item, on});
+    }
+  }
+
   render() {
-    const { toggleNode, toggleObject, removeNode, removeObject } = this.props;
-    const type = this.props.params.type.toUpperCase();
-    const picks = (this.props.picks && this.props.picks[type]) || [];
-    const marked = picks.filter(p => p.marked);
+    const type = this.props.route.type;
+    const pickList = (this.props.pickList && this.props.pickList[type]) || [];
+    const marked = pickList.filter(p => p.marked);
     const markedValues = marked.map(p => p.value);
     return (
       <div>
         <main>
           <Grid>
             <PageHeader>
-              {I18n.t(`musit.pickList.title.${this.props.params.type}`)}
+              {I18n.t(`musit.pickList.title.${this.props.route.type}`)}
             </PageHeader>
             <PickListTable
-              picks={picks}
+              picks={pickList}
               marked={markedValues}
               isnode={this.isTypeNode()}
               iconRendrer={(pick) => (pick.value.name ? <FontAwesome name="folder"/> :
@@ -169,13 +216,13 @@ export class PickListContainer extends React.Component {
                   </div>
                 );
               }}
-              toggle={(item, on) => this.isTypeNode() ? toggleNode(item, on) : toggleObject(item, on)}
-              remove={item => this.isTypeNode() ? removeNode(item) : removeObject(item)}
+              toggle={(item, on) => this.isTypeNode() ? this.props.toggleNode({item, on}) : this.toggleObject({item, on})}
+              remove={item => this.isTypeNode() ?  this.props.removeNode(item) :  this.props.removeObject(item)}
               move={() => this.showModal(marked)}
               print={this.print}
             />
             <div style={{ textAlign: 'left' }}>
-              {marked.length}/{picks.length} &nbsp;
+              {marked.length}/{pickList.length} &nbsp;
               {this.isTypeNode() ? I18n.t('musit.pickList.footer.nodeSelected')
                 : I18n.t('musit.pickList.footer.objectSelected') }
             </div>
@@ -187,7 +234,23 @@ export class PickListContainer extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: React.PropTypes.object.isRequired },
+  pickList$: { type: React.PropTypes.object.isRequired }
 };
 
-export default inject(data)(PickListContainer);
+const commands = {
+  refreshNode$,
+  refreshObject$,
+  toggleObject$,
+  toggleNode$,
+  toggleMainObject$,
+  removeObject$,
+  removeNode$
+};
+
+const props = {
+  emitError: (error) => emitError(error),
+  emitSuccess: (success) => emitSuccess(success)
+};
+
+export default inject(data, commands, props)(PickListContainer);

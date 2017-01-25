@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { get as ajaxGet, del as ajaxDelete, onComplete, onFailure, toResponse } from '../../rxjs/ajax';
+import { simpleDel, simpleGet } from '../../rxjs/ajax';
 import Config from '../../config';
 
 export const clearRootNode$ = new Subject();
@@ -22,33 +22,21 @@ export const loadObjects$ = new Subject().map(cmd => {
   return { ...cmd, url };
 });
 
-export const loadChildren$ = Observable.merge(loadNodes$, loadObjects$).switchMap((cmd) => {
-  return ajaxGet(cmd.url, cmd.token)
-    .map(toResponse)
-    .do(onComplete(cmd))
-    .catch(onFailure(cmd));
-});
+export const loadChildren$ = Observable.merge(loadNodes$, loadObjects$).switchMap((cmd) =>
+  simpleGet(cmd.url, cmd.token, cmd)
+);
 
 export const loadStats$ = new Subject().switchMap((cmd) => {
   const baseUrl = Config.magasin.urls.thingaggregate.baseUrl(cmd.museumId);
-  return ajaxGet(`${baseUrl}/storagenodes/${cmd.nodeId}/stats`, cmd.token)
-    .map(toResponse)
-    .do(onComplete(cmd))
-    .catch(onFailure(cmd));
+  return simpleGet(`${baseUrl}/storagenodes/${cmd.nodeId}/stats`, cmd.token, cmd);
 });
 
 export const loadRootNode$ = new Subject().switchMap((cmd) => {
   const baseUrl = Config.magasin.urls.storagefacility.baseUrl(cmd.museumId);
-  return ajaxGet(`${baseUrl}/${cmd.nodeId}`, cmd.token)
-    .map(toResponse)
-    .do(onComplete(cmd))
-    .catch(onFailure(cmd));
+  return simpleGet(`${baseUrl}/${cmd.nodeId}`, cmd.token, cmd);
 });
 
 export const deleteNode$ = new Subject().flatMap((cmd) => {
   const baseUrl = Config.magasin.urls.storagefacility.baseUrl(cmd.museumId);
-  return ajaxDelete(`${baseUrl}/${cmd.nodeId}`, cmd.token)
-    .map(toResponse)
-    .do(onComplete(cmd))
-    .catch(onFailure(cmd));
+  return simpleDel(`${baseUrl}/${cmd.nodeId}`, cmd.token, cmd);
 });
