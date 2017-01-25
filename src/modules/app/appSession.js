@@ -43,9 +43,12 @@ export class AppSession {
   }
 }
 
-const initialState = { accessToken: getAccessToken() };
+const initialState = {accessToken: getAccessToken()};
 
-const loadAppSession = (accessToken = initialState.accessToken) => {
+const loadAppSession = (accessToken = getAccessToken()) => {
+  if (!accessToken) {
+    return Observable.empty();
+  }
   return Observable.forkJoin(
     ajaxGet(Config.magasin.urls.auth.buildInfo, accessToken),
     ajaxGet(Config.magasin.urls.actor.currentUser, accessToken),
@@ -84,6 +87,7 @@ const loadAppSession = (accessToken = initialState.accessToken) => {
         const collectionId = new CollectionId(groups[0].collections[0].uuid);
         dispatchAction({ type: SET_COLLECTION, collectionId });
         return {
+          accessToken,
           actor: new Actor(currentUserRes.response),
           groups,
           museumId,
