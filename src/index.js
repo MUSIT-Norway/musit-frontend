@@ -33,12 +33,27 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
 import appSession$ from './modules/app/appSession';
-import provide from './state/provide';
+import provide from './rxjs/provide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
 
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
-notification$.subscribe(notificationSystem.addNotification);
+
+notification$.subscribe((event) => {
+  notificationSystem.addNotification({
+    autoDismiss: event.level === 'error' && 0,
+    level: event.level,
+    title: event.title,
+    position: 'tc',
+    children: (
+      <div style={{margin: '30px'}}>
+        <p>
+          {event.message}
+        </p>
+      </div>
+    )
+  });
+});
 
 function initReactJS() {
   const client = new ApiClient();

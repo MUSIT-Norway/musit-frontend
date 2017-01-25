@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs';
-import {createStore, createActions} from '../../state/RxStore';
-import {get as ajaxGet} from '../../state/ajax';
+import {createStore, createActions} from '../../rxjs/RxStore';
+import {get as ajaxGet} from '../../rxjs/ajax';
 import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors';

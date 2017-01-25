@@ -12,7 +12,7 @@ import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class PickListContainer extends React.Component {
   static propTypes = {

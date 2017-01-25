@@ -21,7 +21,7 @@ import MusitModal from '../movedialog/MusitModalContainer';
 import MusitModalHistory from '../movehistory/MoveHistoryContainer';
 
 import Config from '../../config';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 import {connect} from 'react-redux';
 import {addNode, addObject, loadMainObject} from '../picklist/picklistReducer';

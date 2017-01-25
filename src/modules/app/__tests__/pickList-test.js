@@ -1,11 +1,11 @@
 import {TestScheduler} from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$ } from '../pickList';
-import { createStore } from '../../../state/RxStore';
+import { createStore } from '../../../rxjs/RxStore';
 
 describe('pickList', () => {
 
-  it('testing reducer', () => {
+  it('testing and clear', () => {
     const testScheduler = new TestScheduler(assert.deepEqual.bind(assert));
 
     // mock streams

@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
-import { createStore } from '../../state/RxStore';
-import { get as ajaxGet, del as ajaxDelete } from '../../state/ajax';
+import { createStore } from '../../rxjs/RxStore';
+import { get as ajaxGet, del as ajaxDelete } from '../../rxjs/ajax';
 import Config from '../../config';
 import MusitObject from '../../shared/models/object';
 import { getPath } from '../../shared/util';
@@ -25,7 +25,34 @@ const addItem = (item, items = []) => {
   return items.concat({ marked: false, value: item.value, path: item.path});
 };
 
+const toggleItem = (type) => (state, action) => {
+  const items = [].concat(action.item);
+  const toggle = (node) => typeof action.on !== 'undefined' ? action.on : !node.marked;
+  const nodes = state[type].map(node => ({
+    ...node,
+    marked: items.indexOf(node.value) > -1 ? toggle(node) : node.marked
+  }));
+  return { ...state, [type]: nodes };
+};
+
+const toggleObjects = (type) => (state, action) => {
+  const mainObjectId = action.item.mainObjectId;
+  const toggle = (node) => typeof action.on !== 'undefined' ? action.on : !node.marked;
+  const nodes = state[type].map(node => ({
+    ...node,
+    marked: mainObjectId === node.value.mainObjectId ? toggle(node) : node.marked
+  }));
+  return { ...state, [type]: nodes };
+};
+
+const removeItem = (type) => (state, action) => {
+  const items = [].concat(action.item);
+  const nodes = state[type].filter(node => items.findIndex(i => i.id === node.value.id) === -1);
+  return { ...state, [type]: nodes };
+};
+
 export const reducer$ = (actions) => Observable.empty().merge(
+  actions.removeObject$.map((item) => (state) => ({...state, objects: removeItem(item, state.objects)})),
   actions.addObject$.map((item) => (state) => ({...state, objects: addItem(item, state.objects)})),
   actions.clearObjects$.map(() => (state) => ({...state, objects: []})),
   actions.addNode$.map((item) => (state) => ({...state, nodes: addItem(item, state.nodes)})),

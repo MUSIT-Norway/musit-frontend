@@ -1,5 +1,5 @@
 import { Observable, Subject } from 'rxjs';
-import { get as ajaxGet, del as ajaxDelete } from '../../state/ajax';
+import { get as ajaxGet, del as ajaxDelete } from '../../rxjs/ajax';
 import Config from '../../config';
 
 const onComplete = (cmd) => (response) => {

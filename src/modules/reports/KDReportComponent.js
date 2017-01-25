@@ -3,7 +3,7 @@ import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import { formatFloatToString } from './../../shared/util';
 import { Observable } from 'rxjs';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class KDReport extends React.Component {
   static propTypes= {

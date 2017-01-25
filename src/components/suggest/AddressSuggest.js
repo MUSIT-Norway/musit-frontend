@@ -1,6 +1,6 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 import suggest$Fn, { update$, clear$} from './suggestStore';
 import Config from '../../config';
 

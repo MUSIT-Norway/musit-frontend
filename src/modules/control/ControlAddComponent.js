@@ -28,7 +28,7 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class ControlAddContainer extends React.Component {
   static propTypes = {

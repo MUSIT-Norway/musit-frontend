@@ -7,7 +7,7 @@ import PagingToolbar from '../../shared/paging';
 import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
 import { Observable } from 'rxjs';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export function renderParam(id, props, style) {
   return (

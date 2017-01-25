@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { createStore } from '../../state/RxStore';
+import { createStore } from '../../rxjs/RxStore';
 import MusitObject from '../../shared/models/object';
 import { getPath } from '../../shared/util';
 import * as actions from './tableActions';

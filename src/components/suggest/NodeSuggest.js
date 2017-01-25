@@ -2,7 +2,7 @@ import React from 'react';
 import AutoSuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$} from './suggestStore';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class NodeSuggest extends React.Component {
 

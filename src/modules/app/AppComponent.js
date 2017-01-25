@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors';
 import notifiable from './Notifyable';
