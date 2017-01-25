@@ -245,7 +245,7 @@ export default class StorageUnitsContainer extends React.Component {
     return <Toolbar
       showRight={!!showObjects}
       showLeft={!showObjects}
-      labelRight={I18n.t('mmusit.grid.button.objects')}
+      labelRight={I18n.t('musit.grid.button.objects')}
       labelLeft={I18n.t('musit.grid.button.nodes')}
       placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
       searchValue={searchPattern}
