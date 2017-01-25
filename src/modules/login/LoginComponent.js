@@ -10,8 +10,7 @@ import TermsAndConditions from './TermsAndConditions';
 
 export default class WelcomeContainer extends React.Component {
   static propTypes = {
-    user: React.PropTypes.object,
-    setUser: React.PropTypes.func.isRequired
+    user: React.PropTypes.object
   };
 
   constructor(props) {
@@ -41,7 +40,7 @@ export default class WelcomeContainer extends React.Component {
               <div className="welcomePanel">
                 <div>
                   {!this.props.user &&
-                  <LoginButton setUser={this.props.setUser}>
+                  <LoginButton>
                     <span className="buttonText">
                       {I18n.t('musit.login')}
                     </span>

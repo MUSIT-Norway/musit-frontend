@@ -15,7 +15,7 @@ import DatePicker from '../../shared/datePicker';
 import ActorSuggest from '../../components/suggest/ActorSuggest';
 import * as validation from './observationValidation';
 import { I18n } from 'react-i18nify';
-import { emitError } from '../../shared/errors/emitter';
+import { emitError } from '../../shared/errors';
 
 export default class ObservationPage extends React.Component {
 

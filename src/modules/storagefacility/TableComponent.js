@@ -14,21 +14,23 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import { blur, filter } from '../../shared/util';
 import MusitNode from '../../shared/models/node';
 import PagingToolbar from '../../shared/paging';
-import { emitError, emitSuccess } from '../../shared/errors/emitter';
+import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 
 import MusitModal from '../movedialog/MusitModalContainer';
 import MusitModalHistory from '../movehistory/MoveHistoryContainer';
 
 import Config from '../../config';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 import {connect} from 'react-redux';
 import {addNode, addObject, loadMainObject} from '../picklist/picklistReducer';
 import {moveObject as moveObjectAction, moveNode as moveNodeAction} from '../movedialog/moveActions';
 import { clear } from './reducers/modal';
 
-import store$, {
+import { Observable } from 'rxjs';
+
+import {
   loadNodes$,
   loadStats$,
   loadRootNode$,
@@ -36,7 +38,9 @@ import store$, {
   deleteNode$,
   setLoading$,
   clearRootNode$
-} from './tableStore';
+} from './tableActions';
+
+import tableStore$ from './tableStore';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -87,18 +91,26 @@ export class StorageUnitsContainer extends React.Component {
     return state && state.currentPage;
   }
 
+  loadRootNode(nodeId, museumId, token) {
+    this.props.loadRootNode({
+      nodeId, museumId, page: this.getCurrentPage(), token, onComplete: node => {
+        if (node && !MusitNode.isRootNode(node.type)) {
+          this.props.loadStats({nodeId, museumId, token});
+        }
+      }
+    });
+  }
+
   componentWillMount() {
     this.props.clearRootNode();
     this.props.setLoading();
     if (this.props.route.showObjects) {
       this.loadObjects();
-      if (this.props.params.id && !this.props.store.rootNode) {
-        this.props.loadRootNode({
-          nodeId: this.props.params.id,
-          museumId: this.props.appSession.getMuseumId(),
-          page: this.getCurrentPage(),
-          token: this.props.appSession.getAccessToken()
-        });
+      const nodeId = this.props.params.id;
+      if (nodeId) {
+        const museumId = this.props.appSession.getMuseumId();
+        const token = this.props.appSession.getAccessToken();
+        this.loadRootNode(nodeId, museumId, token);
       }
     } else {
       this.loadNodes();
@@ -158,11 +170,7 @@ export class StorageUnitsContainer extends React.Component {
   ) {
     this.props.setLoading();
     if (nodeId) {
-      this.props.loadRootNode({nodeId, museumId, token, onComplete: node => {
-        if(node && !MusitNode.isRootNode(node.type)) {
-          this.props.loadStats({nodeId, museumId, token});
-        }
-      }});
+      this.loadRootNode(nodeId, museumId, token);
     }
     this.props.loadNodes({
       nodeId,
@@ -176,8 +184,8 @@ export class StorageUnitsContainer extends React.Component {
     nodeId = this.props.params.id,
     museumId = this.props.appSession.getMuseumId(),
     collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken(),
     currentPage = this.getCurrentPage(),
-    token = this.props.appSession.getAccessToken()
   ) {
     if (nodeId) {
       this.props.setLoading();
@@ -320,32 +328,32 @@ export class StorageUnitsContainer extends React.Component {
     return (
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
-          rootNode={rootNode}
+          showNewNode={!!rootNode}
           showButtons={rootNode && !MusitNode.isRootNode(rootNode.type)}
-          onClickNewNode={(parentId) => {
-            if (parentId) {
-              hashHistory.push(`/magasin/${parentId}/add`);
+          onClickNewNode={() => {
+            if (rootNode.id) {
+              hashHistory.push(`/magasin/${rootNode.id}/add`);
             } else {
               hashHistory.push('/magasin/add');
             }
           }}
           stats={stats}
-          onClickProperties={(id) => {
+          onClickProperties={() => {
             hashHistory.push({
-              pathname: `/magasin/${id}/view`,
+              pathname: `/magasin/${rootNode.id}/view`,
               state: rootNode
             });
           }}
-          onClickControlObservations={(id) => hashHistory.push(`/magasin/${id}/controlsobservations`)}
-          onClickObservations={(id) => hashHistory.push(`/magasin/${id}/observations`)}
-          onClickController={(id) => hashHistory.push(`/magasin/${id}/controls`)}
-          onClickMoveNode={moveNode}
-          onClickDelete={(nodeId) => {
+          onClickControlObservations={() => hashHistory.push(`/magasin/${rootNode.id}/controlsobservations`)}
+          onClickObservations={() => hashHistory.push(`/magasin/${rootNode.id}/observations`)}
+          onClickController={() => hashHistory.push(`/magasin/${rootNode.id}/controls`)}
+          onClickMoveNode={() => moveNode(rootNode)}
+          onClickDelete={() => {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
               name: rootNode.name
             });
             confirm(message, () => {
-              deleteNode({nodeId, museumId, token,
+              deleteNode({nodeId: rootNode.id, museumId, token,
                 onComplete: () => {
                   if (rootNode.isPartOf) {
                     hashHistory.replace(`/magasin/${rootNode.isPartOf}`);
@@ -537,8 +545,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const data = {
-  appSession: { type: React.PropTypes.object.isRequired },
-  store$
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
+  store$: tableStore$
 };
 
 const commands = {

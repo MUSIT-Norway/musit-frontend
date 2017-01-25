@@ -8,7 +8,7 @@ describe('NodeLeftMenuComponent', () => {
   it('renders properly', () => {
     const wrapper = shallow(
       <NodeLeftMenuComponent
-        rootNode={{ id: 1}}
+        showNewNode={true}
         translate={(key) => key}
         onClickNewNode={(key) => key}
         stats={{

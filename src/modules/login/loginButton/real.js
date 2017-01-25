@@ -4,8 +4,7 @@ import { Button } from 'react-bootstrap';
 
 export default class FeideButton extends React.Component {
   static propTypes = {
-    children: React.PropTypes.element,
-    setUser: React.PropTypes.func.isRequired
+    children: React.PropTypes.element
   }
 
   render() {
