@@ -11,6 +11,7 @@ import CollectionId from '../../shared/models/collectionId';
 import Actor from '../../shared/models/actor';
 import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
 import CodeReceiver from './codeReceiver';
+import  { hash } from 'react-router';
 
 export default class AppSession {
   store$: Observable;
@@ -35,6 +36,11 @@ export default class AppSession {
         .switchMap(this.__loadAppSession)
         .map(session => state => ({...state, ...session}))
         .catch(error => {
+          if (error.status === 401) {
+            localStorage.removeItem('accessToken');
+            hash.replace('/');
+            location.reload();
+          }
           emitError(error);
           return Observable.of(state => ({...state, accessToken: null}));
         }),

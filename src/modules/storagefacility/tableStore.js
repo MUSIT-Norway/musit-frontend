@@ -4,6 +4,7 @@ import { get as ajaxGet, del as ajaxDelete } from '../../state/ajax';
 import Config from '../../config';
 import MusitObject from '../../shared/models/object';
 import { getPath } from '../../shared/util';
+import { hashHistory } from 'react-router';
 
 const onComplete = (cmd) => (response) => {
   if (cmd.onComplete) {
@@ -15,6 +16,12 @@ const onFailure = (cmd) => (error) => {
   if (cmd.onFailure) {
     cmd.onFailure(error);
   }
+  if (error.status === 401) {
+    localStorage.removeItem('accessToken');
+    hashHistory.replace('/');
+    location.reload();
+  }
+
   return Observable.of((state) => state);
 };
 

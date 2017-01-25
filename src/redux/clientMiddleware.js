@@ -18,6 +18,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import { emitError } from '../shared/errors/emitter';
+import { hashHistory } from 'react-router';
 
 export default function clientMiddleware(client) {
   return ({ dispatch, getState }) => {
@@ -66,6 +67,13 @@ export default function clientMiddleware(client) {
           if (typeof onFailure === 'function') {
             return onFailure(error);
           }
+        }
+        if (error.status===401) {
+          localStorage.removeItem('accessToken');
+          hashHistory.replace('/');
+          location.reload();
+          emitError(error);
+
         }
         emitError({ type: 'exception', error });
       });
