@@ -30,3 +30,18 @@ export const put = (url, body, token) => ajax(url, 'PUT', body, {
   'Content-Type': 'application/json',
   'Authorization': 'Bearer ' + token
 });
+
+export const onComplete = (cmd) => (response) => {
+  if (cmd.onComplete) {
+    cmd.onComplete(response);
+  }
+};
+
+export const onFailure = (cmd) => (error) => {
+  if (cmd.onFailure) {
+    cmd.onFailure(error);
+  }
+  return Observable.of((state) => ({...state, error}));
+};
+
+export const toResponse = ({ response }) => response;

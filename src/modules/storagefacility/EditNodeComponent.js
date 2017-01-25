@@ -26,7 +26,7 @@ export class EditStorageUnitContainer extends React.Component {
       <StorageUnitContainer
         {...this.props}
         rootNode={this.props.unit}
-        loaded={!!this.props.unit && !this.props.loading && this.props.loaded}
+        loaded={!!this.props.unit}
       />
     );
   }

@@ -424,6 +424,7 @@ export default class StorageUnitContainer extends Component {
                           })}
                           <br />
                           <SaveCancel
+                            saveDisabled={this.props.loading}
                             onClickSave={this.handleSubmit}
                             onClickCancel={() => hashHistory.goBack()}
                           />

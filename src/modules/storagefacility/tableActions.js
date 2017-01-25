@@ -1,21 +1,6 @@
 import { Observable, Subject } from 'rxjs';
-import { get as ajaxGet, del as ajaxDelete } from '../../rxjs/ajax';
+import { get as ajaxGet, del as ajaxDelete, onComplete, onFailure, toResponse } from '../../rxjs/ajax';
 import Config from '../../config';
-
-const onComplete = (cmd) => (response) => {
-  if (cmd.onComplete) {
-    cmd.onComplete(response);
-  }
-};
-
-const onFailure = (cmd) => (error) => {
-  if (cmd.onFailure) {
-    cmd.onFailure(error);
-  }
-  return Observable.of((state) => state);
-};
-
-const toResponse = ({ response }) => response;
 
 export const clearRootNode$ = new Subject();
 export const setLoading$ = new Subject();
