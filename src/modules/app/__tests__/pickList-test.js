@@ -1,4 +1,4 @@
-// eslint-disable
+/* eslint-disable */
 import { TestScheduler, Subject } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$ } from '../pickList';
@@ -47,7 +47,8 @@ describe('pickList', () => {
     const toggleMainObject$ = new Subject();
     const refreshMainObject$ = new Subject();
     const removeObject$ = testScheduler.createHotObservable(removeObject, {1: {id: 1, museumNo: 'H1'}});
-    const refreshObject$ = testScheduler.createHotObservable(refreshObject, {1: {id: 1, museumNo: 'H1', path: ',1,2,', pathNames: [{nodeId: 1, name: 'Test'}, {nodeId: 2, name: 'Tull'}]}});
+    const refreshObject$ = testScheduler.createHotObservable(refreshObject,
+      {1: {id: 1, museumNo: 'H1', path: ',1,2,', pathNames: [{nodeId: 1, name: 'Test'}, {nodeId: 2, name: 'Tull'}]}});
     const clearObjects$ = testScheduler.createHotObservable(clearObjects);
     const addObject$ = testScheduler.createHotObservable(addObject, {1: {value: {id: 1}, path: []}});
 

@@ -59,11 +59,11 @@ const refreshItem = (oneOrMany, items = []) => {
   const itemsToRefresh = [].concat(oneOrMany);
   return items.map((n) => {
     const itemToRefresh = itemsToRefresh.find(item => {
-      return n.value.id === item.id;
+      return n.value.id === item.id || n.value.id === item.objectId;
     });
     if (itemToRefresh) {
       const node = {
-        path: itemToRefresh.museumNo ? itemToRefresh.path : getPathString(itemToRefresh.path),
+        path: itemToRefresh.objectId ? itemToRefresh.path : getPathString(itemToRefresh.path),
         pathNames: itemToRefresh.pathNames || [
           {
             name: itemToRefresh.name,

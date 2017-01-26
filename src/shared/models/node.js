@@ -15,43 +15,43 @@ class MusitNode {
     return this.type === 'Root' || this.type === 'RootLoan';
   }
 
-  static getNode(id: number, museumId: MuseumId, token: string, callback) {
-    return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback).map(node => new MusitNode(node));
-  }
-
-  static getNodes(id: number, page: number, museumId: MuseumId, token: string, callback) {
-    const baseUrl = Config.magasin.urls.storagefacility.baseUrl(museumId);
-    let url;
-    if (id) {
-      url = `${baseUrl}/${id}/children?page=${page || 1}&limit=${Config.magasin.limit}`;
-    } else {
-      url = `${baseUrl}/root`;
-    }
-    return simpleGet(url, token, callback)
-      .map(data => ({
-        totalMatches: data.totalMatches || data.length,
-        matches: (data.matches || data).map(o => new MusitNode(o))
-      }));
-  }
-
-  static getStats(id: number, museumId: MuseumId, token: string, callback) {
-    const baseUrl = Config.magasin.urls.thingaggregate.baseUrl(museumId);
-    return simpleGet(`${baseUrl}/storagenodes/${id}/stats`, token, callback);
-  }
-
-  static deleteNode(id: number, museumId: MuseumId, token: string, callback) {
-    const baseUrl = Config.magasin.urls.storagefacility.baseUrl(museumId);
-    return simpleDel(`${baseUrl}/${id}`, token, callback);
-  }
-
-  static moveNode(id, destination, doneBy, museumId, token, callback) {
-    const data = { doneBy, destination, items: [].concat(id) };
-    return simplePut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveNode`, data, token, callback);
-  }
-
   moveNode(destination, doneBy, museumId, token, callback) {
     return MusitNode.moveNode(this.id, destination, doneBy, museumId, token, callback).toPromise();
   }
 }
+
+MusitNode.getNode = (id: number, museumId: MuseumId, token: string, callback) => {
+  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback).map(node => new MusitNode(node));
+};
+
+MusitNode.getNodes = (id: number, page: number, museumId: MuseumId, token: string, callback) => {
+  const baseUrl = Config.magasin.urls.storagefacility.baseUrl(museumId);
+  let url;
+  if (id) {
+    url = `${baseUrl}/${id}/children?page=${page || 1}&limit=${Config.magasin.limit}`;
+  } else {
+    url = `${baseUrl}/root`;
+  }
+  return simpleGet(url, token, callback)
+    .map(data => ({
+      totalMatches: data.totalMatches || data.length,
+      matches: (data.matches || data).map(o => new MusitNode(o))
+    }));
+};
+
+MusitNode.getStats = (id: number, museumId: MuseumId, token: string, callback) => {
+  const baseUrl = Config.magasin.urls.thingaggregate.baseUrl(museumId);
+  return simpleGet(`${baseUrl}/storagenodes/${id}/stats`, token, callback);
+};
+
+MusitNode.deleteNode = (id: number, museumId: MuseumId, token: string, callback) => {
+  const baseUrl = Config.magasin.urls.storagefacility.baseUrl(museumId);
+  return simpleDel(`${baseUrl}/${id}`, token, callback);
+};
+
+MusitNode.moveNode = (id: number, destination, doneBy, museumId: MuseumId, token: string, callback) => {
+  const data = { doneBy, destination, items: [].concat(id) };
+  return simplePut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveNode`, data, token, callback);
+};
 
 export default MusitNode;

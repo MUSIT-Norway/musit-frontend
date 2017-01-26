@@ -255,8 +255,8 @@ const commands = {
 };
 
 const props = {
-  emitError: (error) => emitError(error),
-  emitSuccess: (success) => emitSuccess(success)
+  emitError,
+  emitSuccess
 };
 
 export default inject(data, commands, props)(PickListContainer);

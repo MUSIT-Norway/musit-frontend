@@ -34,7 +34,6 @@ import tableStore$, {
   loadStats$,
   loadRootNode$,
   loadObjects$,
-  deleteNode$,
   setLoading$,
   clearRootNode$
 } from './tableStore';
@@ -62,7 +61,9 @@ export class StorageUnitsContainer extends React.Component {
     pickNode: React.PropTypes.func.isRequired,
     clearMoveDialog: React.PropTypes.func.isRequired,
     setLoading: React.PropTypes.func.isRequired,
-    clearRootNode: React.PropTypes.func.isRequired
+    clearRootNode: React.PropTypes.func.isRequired,
+    emitError: React.PropTypes.func.isRequired,
+    emitSuccess: React.PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -223,13 +224,13 @@ export class StorageUnitsContainer extends React.Component {
         onComplete: () => {
           onSuccess();
           loadNodes();
-          emitSuccess({
+          this.props.emitSuccess({
             type: 'movedSuccess',
             message: I18n.t('musit.moveModal.messages.nodeMoved', {name: nodeToMove.name, destination: toName})
           });
         },
         onFailure: (e) => {
-          emitError({
+          this.props.emitError({
             type: 'errorOnMove',
             error: e,
             message: I18n.t('musit.moveModal.messages.errorNode', {name: nodeToMove.name, destination: toName})
@@ -237,7 +238,7 @@ export class StorageUnitsContainer extends React.Component {
         }
       });
     } else {
-      emitError({
+      this.props.emitError({
         type: 'errorOnMove',
         message: errorMessage
       });
@@ -268,13 +269,13 @@ export class StorageUnitsContainer extends React.Component {
       onComplete: () => {
         onSuccess();
         loadObjects();
-        emitSuccess({
+        this.props.emitSuccess({
           type: 'movedSuccess',
           message: I18n.t('musit.moveModal.messages.objectMoved', {name: description, destination: toName})
         });
       },
       onFailure: (e) => {
-        emitError({
+        this.props.emitError({
           type: 'errorOnMove',
           error: e,
           message: I18n.t('musit.moveModal.messages.errorObject', {name: description.name, destination: toName})
@@ -355,29 +356,29 @@ export class StorageUnitsContainer extends React.Component {
               name: rootNode.name
             });
             confirm(message, () => {
-              deleteNode({nodeId: rootNode.id, museumId, token,
+              deleteNode(rootNode.id, museumId, token, {
                 onComplete: () => {
                   if (rootNode.isPartOf) {
                     hashHistory.replace(`/magasin/${rootNode.isPartOf}`);
                   }
-                  emitSuccess({
+                  this.props.emitSuccess({
                     type: 'deleteSuccess',
                     message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name: rootNode.name})
                   });
                 },
                 onFailure: (e) => {
                   if (e.status===403) {
-                    emitError({
+                    this.props.emitError({
                       type: 'deleteError',
                       message: I18n.t('musit.errorMainMessages.notAllowed')
                     });
                   } else if (e.status===400) {
-                    emitError({
+                    this.props.emitError({
                       type: 'deleteError',
                       message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')
                     });
                   } else {
-                    emitError({
+                    this.props.emitError({
                       type: 'deleteError',
                       message: e.message
                     });
@@ -421,13 +422,13 @@ export class StorageUnitsContainer extends React.Component {
               })
             }
             pickMainObject={(object) =>
-              this.props.pickMainObject({
-                id: object.id,
-                path: rootNode.breadcrumb,
+              this.props.pickMainObject(
+                object.id,
+                rootNode,
                 museumId,
                 collectionId,
                 token
-              })
+              )
             }
             onMove={moveObject}
           />
@@ -513,19 +514,16 @@ const commands = {
   loadRootNode$,
   loadNodes$,
   loadObjects$,
-  deleteNode$,
   setLoading$,
   pickObject$,
   pickNode$
 };
 
 const props = {
-  pickMainObject: (cmd) =>
-    MusitObject.getMainObject(cmd.id, cmd.museumId, cmd.collectionId, cmd.token, cmd.callback)
-      .toPromise()
-      .then(objects =>
-        objects.forEach(obj => pickObject$.next({value: obj, path: cmd.path}))
-      )
+  pickMainObject: MusitObject.pickMainObject,
+  deleteNode: (id, mid, token, cb) => MusitNode.deleteNode(id, mid, token, cb).toPromise(),
+  emitError,
+  emitSuccess
 };
 
 export default connect(null, mapDispatchToProps)(inject(data, commands, props)(StorageUnitsContainer));

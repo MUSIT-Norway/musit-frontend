@@ -23,14 +23,9 @@ export const loadRootNode$ = new Subject().switchMap((cmd) =>
   MusitNode.getNode(cmd.nodeId, cmd.museumId, cmd.token, cmd)
 );
 
-export const deleteNode$ = new Subject().flatMap((cmd) =>
-  MusitNode.deleteNode(cmd.nodeId, cmd.museumId, cmd.token, cmd)
-);
-
 export const reducer$ = (actions) =>
   Observable.empty().merge(
     actions.clearRootNode$.map(() => () => ({ rootNode: null, stats: null })),
-    actions.deleteNode$.map(() => (state) => state),
     actions.loadStats$.map((stats) => (state) => ({ ...state, stats})),
     actions.loadRootNode$.map((rootNode) => (state) => ({...state, rootNode})),
     actions.setLoading$.map(() => state => ({...state, children: { data: null, loading: true }})),
@@ -38,4 +33,4 @@ export const reducer$ = (actions) =>
     actions.loadObjects$.map((data) => (state) => ({...state, children: { data, loading: false }}))
   );
 
-export default createStore(reducer$({clearRootNode$, setLoading$, deleteNode$, loadStats$, loadRootNode$, loadObjects$, loadNodes$}));
+export default createStore(reducer$({clearRootNode$, setLoading$, loadStats$, loadRootNode$, loadObjects$, loadNodes$}));
