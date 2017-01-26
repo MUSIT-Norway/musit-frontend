@@ -188,9 +188,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -269,9 +267,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -350,9 +346,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -431,9 +425,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -512,9 +504,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -593,9 +583,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -674,9 +662,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -755,9 +741,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -836,9 +820,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -917,9 +899,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -998,9 +978,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1079,9 +1057,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1160,9 +1136,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1241,9 +1215,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1322,9 +1294,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1403,9 +1373,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1484,9 +1452,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1565,9 +1531,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1646,9 +1610,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [
@@ -1727,9 +1689,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                               "url": "/magasin/3"
                             }
                           ],
-                          "currentLocationId": undefined,
                           "id": 1,
-                          "mainObjectId": undefined,
                           "museumNo": "12345",
                           "path": ",1,2,3,",
                           "pathNames": Array [

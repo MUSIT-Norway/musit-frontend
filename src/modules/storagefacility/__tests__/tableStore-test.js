@@ -1,4 +1,4 @@
-import {TestScheduler} from 'rxjs/Rx';
+import { TestScheduler, Subject } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$ } from '../tableStore';
 import { createStore } from '../../../rxjs/RxStore';
@@ -24,15 +24,16 @@ describe('tableStore', () => {
     // mock up$ and down$ events
     const clearRootNode$ = testScheduler.createHotObservable(nullMarbles);
     const setLoading$ = testScheduler.createHotObservable(setLoadingM);
-    const loadChildren$ = testScheduler.createHotObservable(loadingChildrenM, {
+    const loadNodes$ = testScheduler.createHotObservable(loadingChildrenM, {
       1: { matches: [], totalMatches: 0},
       2: { matches: [{ name: 'en node', nodeId: 'uuid', id: 1}], totalMatches: 1 }
     });
+    const loadObjects$ = new Subject();
     const loadStats$ = testScheduler.createHotObservable(nullMarbles);
     const deleteNode$ = testScheduler.createHotObservable(nullMarbles);
     const loadRootNode$ = testScheduler.createHotObservable(nullMarbles);
 
-    const state$ = reducer$({clearRootNode$, setLoading$, loadChildren$, loadStats$, deleteNode$, loadRootNode$});
+    const state$ = reducer$({clearRootNode$, setLoading$, loadNodes$, loadObjects$, loadStats$, deleteNode$, loadRootNode$});
 
     // assertion
     testScheduler.expectObservable(createStore(state$)).toBe(expected, expectedStateMap);
