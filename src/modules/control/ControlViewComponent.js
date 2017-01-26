@@ -25,7 +25,7 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class ControlViewContainer extends React.Component {
   static propTypes = {
@@ -130,9 +130,7 @@ export class ControlViewContainer extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  }
+  appSession$: { type: React.PropTypes.object.isRequired }
 };
 
 export default inject(data)(ControlViewContainer);

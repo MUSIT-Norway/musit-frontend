@@ -3,14 +3,15 @@ import { hashHistory } from 'react-router';
 import { load, update } from './reducers/panel';
 import EditStorageUnitContainer from './EditNodeComponent';
 import { update as updateState } from './reducers/panel/state';
-import { emitError, emitSuccess } from '../../shared/errors/emitter';
+import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import { loadRoot } from './reducers/grid/nodes';
 
 const mapStateToProps = (state) => {
   return {
     unit: state.storagePanelState,
-    loaded: !!state.storagePanelUnit.loaded
+    loaded: !!state.storagePanelUnit.loaded,
+    loading: !!state.storagePanelUnit.loading
   };
 };
 

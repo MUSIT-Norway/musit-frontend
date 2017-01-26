@@ -1,51 +1,35 @@
-import React from 'react';
-import NotificationSystem from 'react-notification-system';
-import event$ from './emitter';
+import { Subject, Observable } from 'rxjs/Rx';
 import { I18n } from 'react-i18nify';
-import ReactDOM from 'react-dom';
 
-const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
-
-const children = (message) =>
-  <div style={{margin: '30px'}}>
-    <p>
-      {message}
-    </p>
-  </div>;
-
-const handleNotification = (event) => {
+const handleSuccess = new Subject().map((event) => {
   switch(event.type) {
   case 'deleteSuccess':
-    notificationSystem.addNotification({
+    return {
       level: 'success',
       title: I18n.t('musit.notificationMessages.deleting'),
-      position: 'tc',
-      children: children(event.message)
-    });
-    break;
+      message: event.message
+    };
   case 'movedSuccess':
-    notificationSystem.addNotification({
+    return {
       level: 'success',
       title: I18n.t('musit.notificationMessages.moving'),
-      position: 'tc',
-      children: children(event.message)
-    });
-    break;
+      message: event.message
+    };
   case 'saveSuccess':
-    notificationSystem.addNotification({
+    return {
       level: 'success',
       title: I18n.t('musit.notificationMessages.saving'),
-      position: 'tc',
-      children: children(event.message)
-    });
-    break;
+      message: event.message
+    };
   default:
-    notificationSystem.addNotification({
+    return {
       level: 'success',
-      children: children(event.message)
-    });
+      message: event.message
+    };
   }
-};
+});
+
+export const emitSuccess = (event) => handleSuccess.next(event);
 
 const getErrorStatus = (error) => {
   const status = error && error.response && error.response.status;
@@ -72,7 +56,7 @@ const getErrorMessage = (error) => {
   return error.response && error.response.body && error.response.body.message;
 };
 
-const handleError = (event) => {
+const handleError = new Subject().map((event) => {
   const error = event.error || event;
   const type = event.type;
   let eMsg, eStatus, customMessage;
@@ -81,74 +65,49 @@ const handleError = (event) => {
   case 'network':
     eMsg = getErrorMessage(error);
     eStatus = getErrorStatus(error);
-    notificationSystem.addNotification({
-      autoDismiss: 0,
+    return {
       level: 'error',
       title: I18n.t('musit.errorMainMessages.networkError'),
-      position: 'tc',
-      children: children(eMsg || eStatus)
-    });
-    break;
+      message: eMsg || eStatus
+    };
   case 'dateValidationError':
-    notificationSystem.addNotification({
-      autoDismiss: 0,
+    return {
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
-      position: 'tc',
-      children: children(error.message)
-    });
-    break;
+      message: error.message
+    };
   case 'errorOnDelete':
-    notificationSystem.addNotification({
-      autoDismiss: 0,
+    return {
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
-      position: 'tc',
-      children: children(error.message)
-    });
-    break;
+      message: error.message
+    };
   case 'errorOnMove':
     customMessage = event.message;
     eMsg = getErrorMessage(error);
     eStatus = getErrorStatus(error);
-    notificationSystem.addNotification({
-      autoDismiss: 0,
+    return {
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
-      position: 'tc',
-      children: children(`${customMessage} ${eMsg || eStatus || ''}`)
-    });
-    break;
+      message: `${customMessage} ${eMsg || eStatus || ''}`
+    };
   case 'errorOnSave':
-    notificationSystem.addNotification({
-      autoDismiss: 0,
+    return {
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
-      position: 'tc',
-      children: children(error.message)
-    });
-    break;
+      message: error.message
+    };
   default:
     customMessage = event.message;
     eMsg = getErrorMessage(error);
-    notificationSystem.addNotification({
-      autoDismiss: 0,
+    return {
       level: 'error',
       title: I18n.t('musit.errorMainMessages.applicationError'),
-      position: 'tc',
-      children: children(customMessage || eMsg || '')
-    });
-  }
-};
-
-event$.subscribe((event) => {
-  switch(event.type) {
-  case 'musitNotification':
-    handleNotification(event.payload);
-    break;
-  case 'musitError':
-    handleError(event.payload);
-    break;
-  default:
+      message: customMessage || eMsg || ''
+    };
   }
 });
+
+export const emitError = (event) => handleError.next(event);
+
+export default Observable.merge(handleSuccess, handleError);
