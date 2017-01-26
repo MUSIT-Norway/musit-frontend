@@ -4,12 +4,12 @@ import { hashHistory } from 'react-router';
 import { addNode, addObject } from '../picklist/picklistReducer';
 import { isMoveDialogActive, loadNode, loadChildren } from '../storagefacility/reducers/modal';
 import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
-import { emitError } from '../../shared/errors/emitter';
+import { emitError } from '../../shared/errors';
 import { isNumber, getPath, dispatchAction } from '../../shared/util';
 import Config from '../../config';
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-const OLD_REGEX = /^[0-9]{9,10}$/i;
+const OLD_REGEX = /^[0-9]{9,11}$/i;
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 const SCAN_START = 'musit/scan/start';
 const SCAN_SUCCESS = 'musit/scan/success';
@@ -32,7 +32,9 @@ const getRoutePathname = () => {
   return hash.substr(1, hash.indexOf('?') - 1);
 };
 
-export default function (appSession) {
+export default function (appSession$) {
+  let appSession;
+  appSession$.subscribe(state => appSession = state);
   const keyPress$ = Observable.fromEvent(window, 'keypress');
 
   const clear$ = keyPress$.debounce(() => Observable.timer(500));

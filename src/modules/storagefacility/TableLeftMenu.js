@@ -6,7 +6,7 @@ import { I18n } from 'react-i18nify';
 
 export default class NodeLeftMenuComponent extends Component {
   static propTypes = {
-    rootNode: PropTypes.object,
+    showNewNode: PropTypes.bool,
     onClickNewNode: PropTypes.func.isRequired,
     stats: PropTypes.shape({
       numNodes: PropTypes.number,
@@ -24,7 +24,7 @@ export default class NodeLeftMenuComponent extends Component {
 
   render() {
     const {
-      rootNode,
+      showNewNode,
       onClickNewNode,
       onClickProperties,
       onClickControlObservations,
@@ -33,28 +33,20 @@ export default class NodeLeftMenuComponent extends Component {
       showButtons
     } = this.props;
 
-    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) => {
-      let fragment = null;
-      if (rootNode) {
-        fragment = 
-          <div style={{ border: 'none', textAlign: 'center' }}>
-            <Button
-              bsStyle="link"
-              id={`${rootNode.id}_${type}`}
-              onClick={() => eventType(rootNode.id)}
-              style={{ color: 'black' }}
-              disabled={disabled}
-            >
-              {useMusitIcon ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
-                <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />}
-              <br />
-              {I18n.t(`musit.leftMenu.node.${type}`)}
-            </Button>
-          </div>;
-        
-      }
-      return fragment;
-    };
+    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) =>
+      <div style={{ border: 'none', textAlign: 'center' }}>
+        <Button
+          bsStyle="link"
+          onClick={() => eventType()}
+          style={{ color: 'black' }}
+          disabled={disabled}
+        >
+          {useMusitIcon ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
+            <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />}
+          <br />
+          {I18n.t(`musit.leftMenu.node.${type}`)}
+        </Button>
+      </div>;
 
     const showCount = (type) => {
       const count = this.props.stats && this.props.stats[type];
@@ -69,23 +61,20 @@ export default class NodeLeftMenuComponent extends Component {
       );
     };
 
-    const newButton = (identity) => {
-      return (
-        <div style={{ border: 'none', textAlign: 'center' }}>
-          <Button
-            id={`${identity}_newNode`}
-            onClick={() => onClickNewNode(identity)}
-            style={{ textAlign: 'left' }}
-          >
-            <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
-            {I18n.t('musit.leftMenu.node.newNode')}
-          </Button>
-        </div>
-      );
-    };
+    const newButton = () =>
+      <div style={{ border: 'none', textAlign: 'center' }}>
+        <Button
+          onClick={() => onClickNewNode()}
+          style={{ textAlign: 'left' }}
+        >
+          <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
+          {I18n.t('musit.leftMenu.node.newNode')}
+        </Button>
+      </div>;
+
     return (
       <div>
-        {rootNode && newButton(rootNode.id)}
+        {showNewNode && newButton()}
         {showButtons && <hr />}
         {showButtons && showCount('numNodes')}
         {showButtons && showCount('numObjects')}
@@ -93,7 +82,7 @@ export default class NodeLeftMenuComponent extends Component {
         {showButtons && <hr />}
         {showButtons && buttonLink('properties', 'cog', onClickProperties)}
         {showButtons && buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true)}
-        {showButtons && buttonLink('moveNode', 'truck', () => onClickMoveNode(rootNode))}
+        {showButtons && buttonLink('moveNode', 'truck', onClickMoveNode)}
         {showButtons && buttonLink('delete','trash-o', onClickDelete, this.isDeleteDisabled())}
       </div>
     );

@@ -9,17 +9,25 @@ import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 import LoginComponent from '../login/LoginComponent';
-import {emitError} from '../../shared/errors/emitter';
+import {emitError} from '../../shared/errors';
 import notifiable from './Notifyable';
 import Loader from 'react-loader';
 import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
+import { actions } from '../app/appSession';
+const { loadAppSession$, setMuseumId$, setCollectionId$ } = actions;
+import { AppSession } from './appSession';
 
 export class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    appSession: PropTypes.object.isRequired,
+    appSession: PropTypes.instanceOf(AppSession).isRequired,
+    setMuseumId: PropTypes.func.isRequired,
+    setCollectionId: PropTypes.func.isRequired,
+    loadAppSession: PropTypes.func.isRequired,
+    setMuseumIdInRedux: PropTypes.func.isRequired,
+    setCollectionIdInRedux: PropTypes.func.isRequired,
     picks: PropTypes.object
   }
 
@@ -31,7 +39,7 @@ export class App extends Component {
   }
 
   componentWillMount() {
-    this.props.appSession.loadAppSession();
+    this.props.loadAppSession();
   }
 
   handleLogout() {
@@ -55,16 +63,16 @@ export class App extends Component {
   }
 
   handleMuseumId(mid, cid) {
-    this.props.appSession.setMuseumId(mid);
     this.props.setMuseumId(mid);
-    this.props.appSession.setCollectionId(cid);
+    this.props.setMuseumIdInRedux(mid);
     this.props.setCollectionId(cid);
+    this.props.setCollectionIdInRedux(cid);
     hashHistory.push('/magasin');
   }
 
   handleCollectionId(nid, cid) {
-    this.props.appSession.setCollectionId(cid);
     this.props.setCollectionId(cid);
+    this.props.setCollectionIdInRedux(cid);
     if (nid) {
       hashHistory.push(`/magasin/${nid}`);
     } else {
@@ -75,12 +83,7 @@ export class App extends Component {
   render() {
     if (!this.props.appSession.getAccessToken()) {
       return (
-        <LoginComponent
-          setUser={(u) => {
-            this.props.appSession.setAccessToken(u.accessToken);
-            this.props.appSession.loadAppSession();
-          }}
-        />
+        <LoginComponent />
       );
     }
     if (!this.props.appSession.getBuildNumber()) {
@@ -152,10 +155,13 @@ export class App extends Component {
 }
 
 const data = {
-  appSession: {
-    type: PropTypes.object.isRequired,
-    observable: (object) => object.store$
-  }
+  appSession$: { type: PropTypes.object.isRequired }
+};
+
+const commands = {
+  loadAppSession$,
+  setMuseumId$,
+  setCollectionId$
 };
 
 const mapStateToProps = (state) => ({
@@ -163,8 +169,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setMuseumId: (museumId) => dispatch({ type: SET_MUSEUM, museumId }),
-  setCollectionId: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
+  setMuseumIdInRedux: (museumId) => dispatch({ type: SET_MUSEUM, museumId }),
+  setCollectionIdInRedux: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(notifiable(inject(data)(App)));
+export default connect(mapStateToProps, mapDispatchToProps)(notifiable(inject(data, commands)(App)));

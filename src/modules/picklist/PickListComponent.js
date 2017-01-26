@@ -9,10 +9,10 @@ import { TYPES } from '../picklist/picklistReducer';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MusitModalContainer';
 import './PickListComponent.css';
-import { emitError, emitSuccess } from '../../shared/errors/emitter';
+import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -187,9 +187,7 @@ export class PickListContainer extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  }
+  appSession$: { type: React.PropTypes.object.isRequired }
 };
 
 export default inject(data)(PickListContainer);

@@ -2,7 +2,7 @@ import React from 'react';
 import AutoSuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$} from './suggestStore';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class NodeSuggest extends React.Component {
 
@@ -93,9 +93,7 @@ export class NodeSuggest extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  },
+  appSession$: { type: React.PropTypes.object.isRequired },
   suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl)
 };
 

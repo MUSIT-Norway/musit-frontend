@@ -3,7 +3,7 @@ import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class ViewObservationPage extends React.Component {
 
@@ -57,9 +57,7 @@ export class ViewObservationPage extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  }
+  appSession$: { type: React.PropTypes.object.isRequired }
 };
 
 export default inject(data)(ViewObservationPage);

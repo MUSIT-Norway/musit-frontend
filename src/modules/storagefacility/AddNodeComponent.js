@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import StorageUnitContainer from './NodeDetails';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 
 export class AddStorageUnitContainer extends React.Component {
   static propTypes = {
@@ -34,9 +34,7 @@ export class AddStorageUnitContainer extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  }
+  appSession$: { type: React.PropTypes.object.isRequired }
 };
 
 export default inject(data)(AddStorageUnitContainer);

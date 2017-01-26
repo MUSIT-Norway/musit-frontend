@@ -10,7 +10,7 @@ const mapObject = (object, mapFn) => {
 
 export default (providing) => (Component) => {
   const types = mapObject(providing, (v) => v.type);
-  const objects = mapObject(providing, (v) => v.value.call(this));
+  const objects = mapObject(providing, (v) => v.value);
   class Provided extends React.Component {
     static childContextTypes = types;
 

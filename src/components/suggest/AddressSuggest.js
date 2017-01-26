@@ -1,6 +1,6 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import inject from '../../state/inject';
+import inject from '../../rxjs/inject';
 import suggest$Fn, { update$, clear$} from './suggestStore';
 import Config from '../../config';
 
@@ -94,9 +94,7 @@ export class AddressSuggest extends React.Component {
 }
 
 const data = {
-  appSession: {
-    type: React.PropTypes.object.isRequired
-  },
+  appSession$: { type: React.PropTypes.object.isRequired },
   suggest$: suggest$Fn(Config.magasin.urls.geolocation.searchUrl)
 };
 

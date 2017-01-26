@@ -5,7 +5,7 @@ import { loadObservation } from './observationReducer';
 import { addControl } from '../control/controlReducer';
 import { hashHistory } from 'react-router';
 import { loadRoot } from '../storagefacility/reducers/grid/nodes';
-import { emitError, emitSuccess } from '../../shared/errors/emitter';
+import { emitError, emitSuccess } from '../../shared/errors';
 
 const mapStateToProps = (state) => {
   return {

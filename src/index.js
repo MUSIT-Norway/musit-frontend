@@ -28,13 +28,32 @@ import config from './config';
 import LanguageJson from '../language.json';
 import { I18n } from 'react-i18nify';
 import * as loglevel from 'loglevel';
-import './shared/errors/handler';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
-import AppSession from './modules/app/appSession';
-import provide from './state/provide';
+import appSession$ from './modules/app/appSession';
+import provide from './rxjs/provide';
+import NotificationSystem from 'react-notification-system';
+import notification$ from './shared/errors';
+
+const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
+
+notification$.subscribe((event) => {
+  notificationSystem.addNotification({
+    autoDismiss: event.level === 'error' && 0,
+    level: event.level,
+    title: event.title,
+    position: 'tc',
+    children: (
+      <div style={{margin: '30px'}}>
+        <p>
+          {event.message}
+        </p>
+      </div>
+    )
+  });
+});
 
 function initReactJS() {
   const client = new ApiClient();
@@ -67,9 +86,9 @@ function initReactJS() {
   );
 
   const SessionProvided = provide({
-    appSession: {
+    appSession$: {
       type: PropTypes.object,
-      value: () => new AppSession()
+      value: appSession$
     }
   })(appRouter);
 
