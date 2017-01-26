@@ -19,6 +19,8 @@
  */
 
 import { emitError } from '../shared/errors';
+import { hashHistory } from 'react-router';
+import { actions } from '../modules/app/appSession';
 
 export default function clientMiddleware(client) {
   return ({ dispatch, getState }) => {
@@ -54,6 +56,12 @@ export default function clientMiddleware(client) {
           next({ ...rest, error, type: FAILURE });
           if (callback) {
             const {onFailure} = callback;
+            if (error.status === 401) {
+              localStorage.removeItem('accessToken');
+              actions.setAccessToken$.next(null);
+              hashHistory.push('/');
+              emitError({ ...error, type: 'network'});
+            } else
             if (typeof onFailure === 'function') {
               return onFailure(error);
             }
