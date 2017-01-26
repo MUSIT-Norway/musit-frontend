@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -19,16 +18,9 @@
  */
 import PickListComponent from './PickListComponent';
 import { connect } from 'react-redux';
-import { moveObject, moveNode } from '../movedialog/moveActions';
 import { clear } from '../storagefacility/reducers/modal';
 
 const mapDispatchToProps = (dispatch) => ({
-  moveObject: (objectId, destinationId, doneBy, museumId, callback) => {
-    dispatch(moveObject(objectId, destinationId, doneBy, museumId, callback));
-  },
-  moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
-    dispatch(moveNode(nodeId, destinationId, doneBy, museumId, callback));
-  },
   clearMoveDialog: () => dispatch(clear())
 });
 

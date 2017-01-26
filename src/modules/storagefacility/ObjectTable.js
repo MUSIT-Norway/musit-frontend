@@ -13,8 +13,17 @@ export default class ObjectGrid extends Component {
       term: PropTypes.string.isRequired
     })).isRequired,
     pickObject: PropTypes.func.isRequired,
+    pickMainObject: PropTypes.func.isRequired,
     showMoveHistory: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired
+  }
+
+  pickObject(o) {
+    if (!o.mainObjectId) {
+      this.props.pickObject(o);
+    } else if (o.isMainObject()) {
+      this.props.pickMainObject(o);
+    }
   }
 
   render() {
@@ -42,7 +51,7 @@ export default class ObjectGrid extends Component {
                       href=""
                       onClick={(e) => {
                         e.preventDefault();
-                        this.props.pickObjects(this.props.tableData.filter(o => !o.mainObjectId || o.isMainObject()));
+                        this.props.tableData.forEach(o => this.pickObject(o));
                       }}
                       title={I18n.t('musit.grid.object.iconTooltip.addAllToPickList')}
                     >
@@ -102,7 +111,7 @@ export default class ObjectGrid extends Component {
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
-                          this.props.pickObject(c);
+                          this.pickObject(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
                       >

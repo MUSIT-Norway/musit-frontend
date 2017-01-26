@@ -1,4 +1,5 @@
-
+import MusitNode from '../../shared/models/node';
+import MusitObject from '../../shared/models/object';
 import React from 'react';
 import PickListTable from './PickListTable';
 import { PageHeader, Grid } from 'react-bootstrap';
@@ -30,8 +31,6 @@ export class PickListContainer extends React.Component {
     toggleMainObject: React.PropTypes.func.isRequired,
     removeNode: React.PropTypes.func.isRequired,
     removeObject: React.PropTypes.func.isRequired,
-    moveNode: React.PropTypes.func.isRequired,
-    moveObject: React.PropTypes.func.isRequired,
     appSession: React.PropTypes.object.isRequired,
     refreshNode: React.PropTypes.func.isRequired,
     refreshObject: React.PropTypes.func.isRequired,
@@ -65,7 +64,7 @@ export class PickListContainer extends React.Component {
   }
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
-    onSuccess: () => {
+    onComplete: () => {
       items.map(p => p.value).map(item =>
         this.props.refreshNode({
           id: item.id,
@@ -97,7 +96,7 @@ export class PickListContainer extends React.Component {
   })
 
   objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
-    onSuccess: () => {
+    onComplete: () => {
       items.map(p => p.value).map(item =>
         this.props.refreshObject({
           id: item.id,
@@ -137,7 +136,7 @@ export class PickListContainer extends React.Component {
 
   moveModal = (items) => (to, toName, onSuccess) => {
     const isNode = this.isTypeNode();
-    const moveFunction = isNode ? this.props.moveNode : this.props.moveObject;
+    const moveFn = isNode ? MusitNode.moveNode : MusitObject.moveObject;
     const toMove = items.map(itemToMove => itemToMove.value.id);
     const toMoveLength = toMove.length;
     const first = items[0].value;
@@ -165,7 +164,14 @@ export class PickListContainer extends React.Component {
     }
 
     if (!error) {
-      moveFunction(toMove, to.id, this.props.appSession.getActor().getActorId(), this.props.appSession.getMuseumId(), callback);
+      moveFn(
+        toMove,
+        to.id,
+        this.props.appSession.getActor().getActorId(),
+        this.props.appSession.getMuseumId(),
+        this.props.appSession.getAccessToken(),
+        callback
+      ).toPromise();
     }
   }
 

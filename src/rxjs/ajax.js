@@ -1,15 +1,15 @@
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/dom/ajax';
 
-export const onComplete = (cmd) => (response) => {
-  if (cmd.onComplete) {
-    cmd.onComplete(response);
+export const onComplete = (callback) => (response) => {
+  if (callback && callback.onComplete) {
+    callback.onComplete(response);
   }
 };
 
-export const onFailure = (cmd) => (error) => {
-  if (cmd.onFailure) {
-    cmd.onFailure(error);
+export const onFailure = (callback) => (error) => {
+  if (callback && callback.onFailure) {
+    callback.onFailure(error);
   }
   return Observable.of((state) => ({...state, error}));
 };
@@ -43,8 +43,8 @@ export const simpleDel = (url, token, callback) => simpleAjax(del(url, token), c
 
 export const post = (url, body, token) => ajax(url, 'POST', body, token, { 'Content-Type': 'application/json' });
 
-export const simplePost = (url, token, callback) => simpleAjax(post(url, token), callback);
+export const simplePost = (url, data, token, callback) => simpleAjax(post(url, data, token), callback);
 
-export const put = (url, body, token) => ajax(url, 'PUT', body, token, { 'Content-Type': 'application/json' });
+export const put = (url, data, token) => ajax(url, 'PUT', data, token, { 'Content-Type': 'application/json' });
 
-export const simplePut = (url, token, callback) => simpleAjax(put(url, token), callback);
+export const simplePut = (url, data, token, callback) => simpleAjax(put(url, data, token), callback);

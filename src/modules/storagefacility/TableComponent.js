@@ -12,6 +12,7 @@ import Toolbar from '../../components/layout/Toolbar';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 
 import { blur, filter } from '../../shared/util';
+import MusitObject from '../../shared/models/object';
 import MusitNode from '../../shared/models/node';
 import PagingToolbar from '../../shared/paging';
 import { emitError, emitSuccess } from '../../shared/errors';
@@ -24,13 +25,11 @@ import Config from '../../config';
 import inject from '../../rxjs/inject';
 
 import {connect} from 'react-redux';
-import { addObject, loadMainObject} from '../picklist/picklistReducer';
-import {moveObject as moveObjectAction, moveNode as moveNodeAction} from '../movedialog/moveActions';
 import { clear } from './reducers/modal';
 
 import { Observable } from 'rxjs';
 
-import {
+import tableStore$, {
   loadNodes$,
   loadStats$,
   loadRootNode$,
@@ -38,11 +37,9 @@ import {
   deleteNode$,
   setLoading$,
   clearRootNode$
-} from './tableActions';
+} from './tableStore';
 
-import tableStore$ from './tableStore';
-
-import { addNode$, addObject$ } from '../app/pickList';
+import { addNode$ as pickNode$, addObject$ as pickObject$ } from '../app/pickList';
 
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
@@ -60,9 +57,8 @@ export class StorageUnitsContainer extends React.Component {
     loadRootNode: React.PropTypes.func.isRequired,
     deleteNode: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
-    moveObject: React.PropTypes.func.isRequired,
-    moveNode: React.PropTypes.func.isRequired,
     pickObject: React.PropTypes.func.isRequired,
+    pickMainObject: React.PropTypes.func.isRequired,
     pickNode: React.PropTypes.func.isRequired,
     clearMoveDialog: React.PropTypes.func.isRequired,
     setLoading: React.PropTypes.func.isRequired,
@@ -95,8 +91,11 @@ export class StorageUnitsContainer extends React.Component {
 
   loadRootNode(nodeId, museumId, token) {
     this.props.loadRootNode({
-      nodeId, museumId, page: this.getCurrentPage(), token, onComplete: node => {
-        if (node && !MusitNode.isRootNode(node.type)) {
+      nodeId,
+      museumId,
+      token,
+      onComplete: node => {
+        if (node && !new MusitNode(node).isRootNode()) {
           this.props.loadStats({nodeId, museumId, token});
         }
       }
@@ -213,27 +212,27 @@ export class StorageUnitsContainer extends React.Component {
     nodeToMove,
     userId = this.props.appSession.getActor().getActorId(),
     museumId = this.props.appSession.getMuseumId(),
+    token = this.props.appSession.getAccessToken(),
     nodeId = this.props.store.rootNode.id,
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes
   ) => (toNode, toName, onSuccess) => {
     const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
-
     if (!errorMessage) {
-      moveNode(nodeToMove.id, toNode.id, userId, museumId, {
-        onSuccess: () => {
+      nodeToMove.moveNode(toNode.id, userId, museumId, token, {
+        onComplete: () => {
           onSuccess();
           loadNodes();
           emitSuccess({
             type: 'movedSuccess',
-            message: I18n.t('musit.moveModal.messages.nodeMoved', { name: nodeToMove.name, destination: toName })
+            message: I18n.t('musit.moveModal.messages.nodeMoved', {name: nodeToMove.name, destination: toName})
           });
         },
         onFailure: (e) => {
           emitError({
             type: 'errorOnMove',
             error: e,
-            message: I18n.t('musit.moveModal.messages.errorNode', { name: nodeToMove.name, destination: toName })
+            message: I18n.t('musit.moveModal.messages.errorNode', {name: nodeToMove.name, destination: toName})
           });
         }
       });
@@ -259,25 +258,26 @@ export class StorageUnitsContainer extends React.Component {
     userId = this.props.appSession.getActor().getActorId(),
     museumId = this.props.appSession.getMuseumId(),
     collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken(),
     nodeId = this.props.store.rootNode.id,
     moveObject = this.props.moveObject,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
     const description = getObjectDescription(objectToMove);
-    moveObject(objectToMove, toNode.id, userId, museumId, collectionId, {
-      onSuccess: () => {
+    objectToMove.moveObject(toNode.id, userId, museumId, collectionId, token, {
+      onComplete: () => {
         onSuccess();
         loadObjects();
         emitSuccess({
           type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.objectMoved', { name: description, destination: toName })
+          message: I18n.t('musit.moveModal.messages.objectMoved', {name: description, destination: toName})
         });
       },
       onFailure: (e) => {
         emitError({
           type: 'errorOnMove',
           error: e,
-          message: I18n.t('musit.moveModal.messages.errorNode', { name: description.name, destination: toName })
+          message: I18n.t('musit.moveModal.messages.errorObject', {name: description.name, destination: toName})
         });
       }
     });
@@ -331,7 +331,7 @@ export class StorageUnitsContainer extends React.Component {
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           showNewNode={!!rootNode}
-          showButtons={rootNode && !MusitNode.isRootNode(rootNode.type)}
+          showButtons={rootNode && !rootNode.isRootNode()}
           onClickNewNode={() => {
             if (rootNode.id) {
               hashHistory.push(`/magasin/${rootNode.id}/add`);
@@ -395,6 +395,7 @@ export class StorageUnitsContainer extends React.Component {
     searchPattern = this.state.searchPattern,
     museumId = this.props.appSession.getMuseumId(),
     collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken(),
     rootNode = this.props.store.rootNode,
     children = this.props.store.children,
     showObjects = this.props.route.showObjects,
@@ -415,19 +416,18 @@ export class StorageUnitsContainer extends React.Component {
             showMoveHistory={showHistory}
             pickObject={(object) =>
               this.props.pickObject({
-                object,
-                path: rootNode.breadcrumb,
-                museumId,
-                collectionId
+                value: object,
+                path: rootNode.breadcrumb
               })
             }
-            pickObjects={(objectArr) =>
-              this.props.pickObjects(
-                objectArr,
-                rootNode.breadcrumb,
+            pickMainObject={(object) =>
+              this.props.pickMainObject({
+                id: object.id,
+                path: rootNode.breadcrumb,
                 museumId,
-                collectionId
-              )
+                collectionId,
+                token
+              })
             }
             onMove={moveObject}
           />
@@ -496,47 +496,8 @@ export class StorageUnitsContainer extends React.Component {
   }
 }
 
-const pickObject = (dispatch) => (unit, path, museumId, collectionId) => {
-  if (unit.isMainObject()) {
-    dispatch(loadMainObject(unit, museumId, collectionId, {
-      onSuccess: (children) => {
-        children.forEach(child => dispatch(addObject(child, path)));
-      }
-    }));
-  } else {
-    dispatch(addObject(unit, path));
-  }
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    moveObject: (
-      objectToMove,
-      destinationId,
-      doneBy,
-      museumId,
-      collectionId,
-      callback
-    ) => {
-      if (objectToMove.isMainObject()) {
-        dispatch(loadMainObject(objectToMove, museumId, collectionId, {
-          onSuccess: (children) => {
-            const objectIds = children.map(c => c.id);
-            dispatch(moveObjectAction(objectIds, destinationId, doneBy, museumId, callback));
-          }
-        }));
-      } else {
-        dispatch(moveObjectAction(objectToMove.id, destinationId, doneBy, museumId, callback));
-      }
-    },
-    moveNode: (nodeId, destinationId, doneBy, museumId, callback) => {
-      dispatch(moveNodeAction(nodeId, destinationId, doneBy, museumId, callback));
-    },
-    pickObjects: (unit, path, museumId, collectionId) => {
-      unit.forEach(object => {
-        pickObject(dispatch)(object, path, museumId, collectionId);
-      });
-    },
     clearMoveDialog: () => dispatch(clear())
   };
 };
@@ -554,8 +515,17 @@ const commands = {
   loadObjects$,
   deleteNode$,
   setLoading$,
-  pickObject$: addObject$,
-  pickNode$: addNode$
+  pickObject$,
+  pickNode$
 };
 
-export default connect(null, mapDispatchToProps)(inject(data, commands)(StorageUnitsContainer));
+const props = {
+  pickMainObject: (cmd) =>
+    MusitObject.getMainObject(cmd.id, cmd.museumId, cmd.collectionId, cmd.token, cmd.callback)
+      .toPromise()
+      .then(objects =>
+        objects.forEach(obj => pickObject$.next({value: obj, path: cmd.path}))
+      )
+};
+
+export default connect(null, mapDispatchToProps)(inject(data, commands, props)(StorageUnitsContainer));

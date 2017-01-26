@@ -10,7 +10,7 @@ export const checkNodeType = (from, to) => {
 
   const matchFromType = from.value ? from.value.type : from.type;
 
-  if (MusitNode.isRootNode(to.type) && 'Organisation' !== matchFromType) {
+  if (new MusitNode(to).isRootNode() && 'Organisation' !== matchFromType) {
     return I18n.t('musit.storageUnits.type.organisationAllowedToMove');
   }
 
