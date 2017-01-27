@@ -1,9 +1,9 @@
-import { simpleGet, simplePut } from '../../rxjs/ajax';
-import Config from '../../config';
-import MuseumId from '../../shared/models/museumId';
-import CollectionId from '../../shared/models/collectionId';
+import { simpleGet, simplePut } from '../rxjs/ajax';
+import Config from '../config';
+import MuseumId from './museumId';
+import CollectionId from './collectionId';
 import entries from 'object.entries';
-import { addObject$ as pickObject$ } from '../../modules/app/pickList';
+import { addObject$ as pickObject$ } from '../modules/app/pickList';
 
 class MusitObject {
   constructor(props) {

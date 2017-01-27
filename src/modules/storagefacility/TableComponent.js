@@ -12,13 +12,13 @@ import Toolbar from '../../components/layout/Toolbar';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 
 import { blur, filter } from '../../shared/util';
-import MusitObject from '../../shared/models/object';
-import MusitNode from '../../shared/models/node';
+import MusitObject from '../../models/object';
+import MusitNode from '../../models/node';
 import PagingToolbar from '../../shared/paging';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 
-import MusitModal from '../movedialog/MusitModalContainer';
+import MusitModal from '../movedialog/MusitModalComponent';
 import MusitModalHistory from '../movehistory/MoveHistoryContainer';
 
 import Config from '../../config';

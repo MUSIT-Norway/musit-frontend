@@ -1,5 +1,5 @@
 import { I18n } from 'react-i18nify';
-import MusitNode from './models/node';
+import MusitNode from '../models/node';
 
 export const getPathLength = (formProps) => {
   const { pathNames } = formProps || {};

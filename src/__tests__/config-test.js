@@ -1,5 +1,5 @@
 import Config from '../config';
-import MuseumId from '../shared/models/museumId';
+import MuseumId from '../models/museumId';
 
 describe('Config urls', () => {
   it('storagefacility searchUrl', () => {

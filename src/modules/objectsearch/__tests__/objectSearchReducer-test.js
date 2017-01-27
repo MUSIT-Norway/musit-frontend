@@ -4,8 +4,8 @@ import reducer from '../reducer';
 import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
-import MuseumId from '../../../shared/models/museumId';
-import CollectionId from '../../../shared/models/collectionId';
+import MuseumId from '../../../models/museumId';
+import CollectionId from '../../../models/collectionId';
 
 const nock = nocker(request);
 

@@ -1,9 +1,9 @@
-import { simpleGet, simpleDel, simplePut } from '../../rxjs/ajax';
-import Config from '../../config';
-import MuseumId from '../../shared/models/museumId';
+import { simpleGet, simpleDel, simplePut } from '../rxjs/ajax';
+import Config from '../config';
+import MuseumId from './museumId';
 import entries from 'object.entries';
-import { getPath } from '../../shared/util';
-import { addNode$ as pickNode$ } from '../../modules/app/pickList';
+import { getPath } from '../shared/util';
+import { addNode$ as pickNode$ } from '../modules/app/pickList';
 
 class MusitNode {
 
@@ -26,11 +26,13 @@ MusitNode.getNode = (id: number, museumId: MuseumId, token: string, callback) =>
   return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback).map(node => new MusitNode(node));
 };
 
-MusitNode.getNodes = (id: number, page: number, museumId: MuseumId, token: string, callback) => {
+MusitNode.getNodes = (id: number, page, museumId: MuseumId, token: string, callback) => {
   const baseUrl = Config.magasin.urls.storagefacility.baseUrl(museumId);
   let url;
   if (id) {
-    url = `${baseUrl}/${id}/children?page=${page || 1}&limit=${Config.magasin.limit}`;
+    const pageNum = page && page.page ? page.page : (page || 1);
+    const limit = page && page.limit ? page.limit : Config.magasin.limit;
+    url = `${baseUrl}/${id}/children?page=${pageNum}&limit=${limit}`;
   } else {
     url = `${baseUrl}/root`;
   }

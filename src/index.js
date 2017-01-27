@@ -37,7 +37,6 @@ import pickList$ from './modules/app/pickList';
 import provide from './rxjs/provide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
-
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
 
 notification$.subscribe((event) => {

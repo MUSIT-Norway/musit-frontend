@@ -1,5 +1,5 @@
-import MusitNode from '../../shared/models/node';
-import MusitObject from '../../shared/models/object';
+import MusitNode from '../../models/node';
+import MusitObject from '../../models/object';
 import React from 'react';
 import PickListTable from './PickListTable';
 import { PageHeader, Grid } from 'react-bootstrap';
@@ -7,7 +7,7 @@ import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import MusitModal from '../movedialog/MusitModalContainer';
+import MusitModal from '../movedialog/MusitModalComponent';
 import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';

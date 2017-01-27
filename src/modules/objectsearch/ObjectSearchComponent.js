@@ -8,7 +8,7 @@ import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
 import { Observable } from 'rxjs';
 import inject from '../../rxjs/inject';
-import MusitObject from '../../shared/models/object';
+import MusitObject from '../../models/object';
 
 export function renderParam(id, props, style) {
   return (

@@ -1,7 +1,7 @@
 import Config from '../../config';
 import { apiUrl, getPath } from '../../shared/util';
 import uniq from 'lodash/uniq';
-import Actor from '../../shared/models/actor';
+import Actor from '../../models/actor';
 import { I18n } from 'react-i18nify';
 
 export const LOAD = 'musit/movehistory/LOAD';

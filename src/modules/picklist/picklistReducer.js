@@ -1,6 +1,6 @@
 import { apiUrl, getPath } from '../../shared/util';
 import Config from '../../config';
-import MusitObject from '../../shared/models/object';
+import MusitObject from '../../models/object';
 
 export const TYPES = {
   NODE: 'NODE',

@@ -1,6 +1,6 @@
 import { I18n } from 'react-i18nify';
 import { validateString, validateNumber } from '../../components/formfields/common/validators';
-import MusitNode from '../../shared/models/node';
+import MusitNode from '../../models/node';
 
 const errorAddMessage = (errors, field) => {
   errors[`${field}`] = I18n.t(`musit.storageUnits.${field}.incorrect`);

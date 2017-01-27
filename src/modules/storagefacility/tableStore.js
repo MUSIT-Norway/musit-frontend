@@ -1,7 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 import { createStore } from '../../rxjs/RxStore';
-import MusitObject from '../../shared/models/object';
-import MusitNode from '../../shared/models/node';
+import MusitObject from '../../models/object';
+import MusitNode from '../../models/node';
 
 export const clearRootNode$ = new Subject();
 

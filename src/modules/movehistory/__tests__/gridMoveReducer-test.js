@@ -3,7 +3,7 @@ import reducer from '../moveHistoryReducer';
 import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
-import MuseumId from '../../../shared/models/museumId';
+import MuseumId from '../../../models/museumId';
 
 const nock = nocker(request);
 

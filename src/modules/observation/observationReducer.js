@@ -3,7 +3,7 @@ import { apiUrl } from '../../shared/util';
 import mapToBackEnd from './mapper/to_backend';
 import mapToFrontEnd from './mapper/to_frontend';
 import uniq from 'lodash/uniq';
-import Actor from '../../shared/models/actor';
+import Actor from '../../models/actor';
 
 export const ADD = 'musit/observation/ADD';
 export const ADD_SUCCESS = 'musit/observation/ADD_SUCCESS';

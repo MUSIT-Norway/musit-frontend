@@ -2,7 +2,7 @@ import Config from '../../config';
 import { apiUrl } from '../../shared/util';
 import flatten from 'lodash/flatten';
 import uniq from 'lodash/uniq';
-import Actor from '../../shared/models/actor';
+import Actor from '../../models/actor';
 
 export const LOAD = 'musit/observationcontrol/LOAD';
 export const LOAD_SUCCESS = 'musit/observationcontrol/LOAD_SUCCESS';

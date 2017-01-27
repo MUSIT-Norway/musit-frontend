@@ -6,9 +6,9 @@ import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors';
 import { dispatchAction } from '../../shared/util';
 import { I18n } from 'react-i18nify';
-import MuseumId from '../../shared/models/museumId';
-import CollectionId from '../../shared/models/collectionId';
-import Actor from '../../shared/models/actor';
+import MuseumId from '../../models/museumId';
+import CollectionId from '../../models/collectionId';
+import Actor from '../../models/actor';
 import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
 import CodeReceiver from './codeReceiver';
 
