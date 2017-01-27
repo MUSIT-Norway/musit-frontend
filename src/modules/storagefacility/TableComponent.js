@@ -19,7 +19,7 @@ import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 
 import MusitModal from '../movedialog/MusitModalComponent';
-import MusitModalHistory from '../movehistory/MoveHistoryContainer';
+import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 
 import Config from '../../config';
 import inject from '../../rxjs/inject';

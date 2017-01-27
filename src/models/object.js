@@ -4,6 +4,7 @@ import MuseumId from './museumId';
 import CollectionId from './collectionId';
 import entries from 'object.entries';
 import { addObject$ as pickObject$ } from '../modules/app/pickList';
+import { getPath } from '../shared/util';
 
 class MusitObject {
   constructor(props) {
@@ -53,6 +54,28 @@ MusitObject.getObjects = (id: number, page: number, museumId: MuseumId, collecti
 MusitObject.moveObject = (objectId, destination, doneBy, museumId, token, callback) => {
   const data = { doneBy, destination, items: [].concat(objectId) };
   return simplePut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveObject`, data, token, callback);
+};
+
+MusitObject.getLocationHistory = (id, museumId, token, callback) => {
+  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`, token, callback)
+    .map(rowsJson => {
+      if (!Array.isArray(rowsJson)) {
+        return [];
+      }
+      return rowsJson.map(data => {
+        return {
+          ...data,
+          from: {
+            ...data.from,
+            breadcrumb: getPath(data.from)
+          },
+          to: {
+            ...data.to,
+            breadcrumb: getPath(data.to)
+          }
+        };
+      });
+    });
 };
 
 MusitObject.pickObject = (object, breadcrumb, museumId, collectionId, token, callback) => {
