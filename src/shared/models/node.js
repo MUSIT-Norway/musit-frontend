@@ -3,6 +3,7 @@ import Config from '../../config';
 import MuseumId from '../../shared/models/museumId';
 import entries from 'object.entries';
 import { getPath } from '../../shared/util';
+import { addNode$ as pickNode$ } from '../../modules/app/pickList';
 
 class MusitNode {
 
@@ -16,7 +17,8 @@ class MusitNode {
   }
 
   moveNode(destination, doneBy, museumId, token, callback) {
-    return MusitNode.moveNode(this.id, destination, doneBy, museumId, token, callback).toPromise();
+    return MusitNode.moveNode(this.id, destination, doneBy, museumId, token, callback)
+      .toPromise();
   }
 }
 
@@ -46,12 +48,17 @@ MusitNode.getStats = (id: number, museumId: MuseumId, token: string, callback) =
 
 MusitNode.deleteNode = (id: number, museumId: MuseumId, token: string, callback) => {
   const baseUrl = Config.magasin.urls.storagefacility.baseUrl(museumId);
-  return simpleDel(`${baseUrl}/${id}`, token, callback);
+  return simpleDel(`${baseUrl}/${id}`, token, callback)
+    .toPromise();
 };
 
 MusitNode.moveNode = (id: number, destination, doneBy, museumId: MuseumId, token: string, callback) => {
   const data = { doneBy, destination, items: [].concat(id) };
   return simplePut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveNode`, data, token, callback);
+};
+
+MusitNode.pickNode = (node, breadcrumb) => {
+  pickNode$.next({ value: node, path: breadcrumb });
 };
 
 export default MusitNode;

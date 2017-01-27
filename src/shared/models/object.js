@@ -32,8 +32,7 @@ class MusitObject {
 }
 
 MusitObject.getObjectLocation = (id: number, museumId: MuseumId, token: string, callback) => {
-  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`, token, callback)
-    .map(location => ({...location, objectId: id}));
+  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`, token, callback);
 };
 
 MusitObject.getMainObject = (id: number, museumId: MuseumId, collectionId: CollectionId, token: string, callback) => {
@@ -56,12 +55,16 @@ MusitObject.moveObject = (objectId, destination, doneBy, museumId, token, callba
   return simplePut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveObject`, data, token, callback);
 };
 
-MusitObject.pickMainObject = (objectId, node, museumId, collectionId, token, callback) => {
-  MusitObject.getMainObject(objectId, museumId, collectionId, token, callback)
-    .toPromise()
-    .then(objects =>
-      objects.forEach(obj => pickObject$.next({value: obj, path: node.breadcrumb}))
-    );
+MusitObject.pickObject = (object, breadcrumb, museumId, collectionId, token, callback) => {
+  if (object.isMainObject()) {
+    MusitObject.getMainObject(object.id, museumId, collectionId, token, callback)
+      .toPromise()
+      .then(objects =>
+        objects.forEach(obj => pickObject$.next({value: obj, path: breadcrumb}))
+      );
+  } else {
+    pickObject$.next({value: object, path: breadcrumb});
+  }
 };
 
 export default MusitObject;

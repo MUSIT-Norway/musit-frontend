@@ -7,7 +7,11 @@ import { createStore } from '../../../rxjs/RxStore';
 describe('pickList', () => {
 
   it('testing and clear', () => {
-    const testScheduler = new TestScheduler(assert.deepEqual.bind(assert));
+    const testScheduler = new TestScheduler((actual, expected) => {
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
+      return assert.deepEqual(actual, expected);
+    });
 
     // mock streams
     const toggleNode        = '---------------11--';
@@ -48,7 +52,7 @@ describe('pickList', () => {
     const refreshMainObject$ = new Subject();
     const removeObject$ = testScheduler.createHotObservable(removeObject, {1: {id: 1, museumNo: 'H1'}});
     const refreshObject$ = testScheduler.createHotObservable(refreshObject,
-      {1: {id: 1, museumNo: 'H1', path: ',1,2,', pathNames: [{nodeId: 1, name: 'Test'}, {nodeId: 2, name: 'Tull'}]}});
+      {1: {id: 1456, objectId: 1, path: ',1,2,', pathNames: [{nodeId: 1, name: 'Test'}, {nodeId: 2, name: 'Tull'}]}});
     const clearObjects$ = testScheduler.createHotObservable(clearObjects);
     const addObject$ = testScheduler.createHotObservable(addObject, {1: {value: {id: 1}, path: []}});
 

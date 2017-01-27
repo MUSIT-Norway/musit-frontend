@@ -38,8 +38,6 @@ import tableStore$, {
   clearRootNode$
 } from './tableStore';
 
-import { addNode$ as pickNode$, addObject$ as pickObject$ } from '../app/pickList';
-
 const getObjectDescription = (object) => {
   let objStr = object.museumNo ? `${object.museumNo}` : '';
   objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr;
@@ -57,7 +55,6 @@ export class StorageUnitsContainer extends React.Component {
     deleteNode: React.PropTypes.func.isRequired,
     params: React.PropTypes.object.isRequired,
     pickObject: React.PropTypes.func.isRequired,
-    pickMainObject: React.PropTypes.func.isRequired,
     pickNode: React.PropTypes.func.isRequired,
     clearMoveDialog: React.PropTypes.func.isRequired,
     setLoading: React.PropTypes.func.isRequired,
@@ -416,15 +413,9 @@ export class StorageUnitsContainer extends React.Component {
               filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             pickObject={(object) =>
-              this.props.pickObject({
-                value: object,
-                path: rootNode.breadcrumb
-              })
-            }
-            pickMainObject={(object) =>
-              this.props.pickMainObject(
-                object.id,
-                rootNode,
+              this.props.pickObject(
+                object,
+                rootNode.breadcrumb,
                 museumId,
                 collectionId,
                 token
@@ -457,12 +448,7 @@ export class StorageUnitsContainer extends React.Component {
             filter(matches, ['name'], searchPattern) : []}
           goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
-          pickNode={(node) =>
-            this.props.pickNode({
-              value: node,
-              path: rootNode.breadcrumb
-            })
-          }
+          pickNode={(node) => this.props.pickNode(node, rootNode.breadcrumb)}
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
         {totalMatches > 0 &&
@@ -514,14 +500,13 @@ const commands = {
   loadRootNode$,
   loadNodes$,
   loadObjects$,
-  setLoading$,
-  pickObject$,
-  pickNode$
+  setLoading$
 };
 
 const props = {
-  pickMainObject: MusitObject.pickMainObject,
-  deleteNode: (id, mid, token, cb) => MusitNode.deleteNode(id, mid, token, cb).toPromise(),
+  pickNode: MusitNode.pickNode,
+  pickObject: MusitObject.pickObject,
+  deleteNode: MusitNode.deleteNode,
   emitError,
   emitSuccess
 };

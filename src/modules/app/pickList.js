@@ -9,13 +9,17 @@ export const removeObject$ = new Subject();
 export const toggleObject$ = new Subject();
 export const toggleMainObject$ = new Subject();
 export const clearObjects$ = new Subject();
-export const refreshObject$ = new Subject().flatMap((cmd) => MusitObject.getObjectLocation(cmd.id, cmd.museumId, cmd.token, cmd));
-export const refreshMainObject$ = new Subject().flatMap((cmd) => MusitObject.getMainObject(cmd.id, cmd.museumId, cmd.collectionId, cmd.token, cmd));
+export const refreshObject$ = new Subject().flatMap((cmd) =>
+  MusitObject.getObjectLocation(cmd.id, cmd.museumId, cmd.token, cmd)
+    .map(location => ({...location, objectId: cmd.id}))
+);
 export const addNode$ = new Subject();
 export const removeNode$ = new Subject();
 export const toggleNode$ = new Subject();
 export const clearNodes$ = new Subject();
-export const refreshNode$ = new Subject().flatMap((cmd) => MusitNode.getNode(cmd.id, cmd.museumId, cmd.token, cmd));
+export const refreshNode$ = new Subject().flatMap((cmd) =>
+  MusitNode.getNode(cmd.id, cmd.museumId, cmd.token, cmd)
+);
 
 const addItem = (item, items = []) => {
   if (items.findIndex(node => item.value.id === node.value.id) > -1) {
@@ -59,7 +63,9 @@ const refreshItem = (oneOrMany, items = []) => {
   const itemsToRefresh = [].concat(oneOrMany);
   return items.map((n) => {
     const itemToRefresh = itemsToRefresh.find(item => {
-      return n.value.id === item.id || n.value.id === item.objectId;
+      const isMatchingId = n.value.id === item.id;
+      const isMatchingObjectId = n.value.id === item.objectId;
+      return isMatchingId || isMatchingObjectId;
     });
     if (itemToRefresh) {
       const node = {
@@ -83,7 +89,6 @@ export const reducer$ = (actions) => Observable.empty().merge(
   actions.removeObject$.map((item) => (state) => ({...state, objects: removeItem(item, state.objects)})),
   actions.addObject$.map((item) => (state) => ({...state, objects: addItem(item, state.objects)})),
   actions.refreshObject$.map((item) => (state) => ({...state, objects: refreshItem(item, state.objects)})),
-  actions.refreshMainObject$.map((item) => (state) => ({...state, objects: refreshItem(item, state.objects)})),
   actions.clearObjects$.map(() => (state) => ({...state, objects: []})),
   actions.toggleNode$.map((item) => (state) => ({...state, nodes: toggleItem(item, state.nodes)})),
   actions.removeNode$.map((item) => (state) => ({...state, nodes: removeItem(item, state.nodes)})),
@@ -103,6 +108,5 @@ export default createStore(reducer$({
   toggleObject$,
   toggleMainObject$,
   refreshObject$,
-  refreshMainObject$,
   clearObjects$
 }), Observable.of({ nodes: [], objects: []}));
