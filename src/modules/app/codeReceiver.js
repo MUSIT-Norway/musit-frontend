@@ -55,6 +55,7 @@ export default function (appSession$) {
                               moveActive,
                               museumId = appSession.getMuseumId(),
                               collectionId = appSession.getCollectionId()) => {
+    console.log(uuidOrBarCode, museumId);
     dispatchAction({
       types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
       promise: (client) => new Promise((resolve, reject) => {
@@ -63,8 +64,10 @@ export default function (appSession$) {
             if (maybeNode.nodeId) {
               resolve(maybeNode);
             } else if (isNumber(uuidOrBarCode)) {
+              console.log('Is number');
               client.get(scanObjectUrlFn(uuidOrBarCode, museumId, collectionId))
                 .then(maybeObj => {
+                  console.log(maybeObj);
                   if (maybeObj.length && maybeObj.length > 0) {
                     resolve(maybeObj[0]);
                   } else {
