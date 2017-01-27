@@ -33,10 +33,10 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
 import appSession$ from './modules/app/appSession';
+import pickList$ from './modules/app/pickList';
 import provide from './rxjs/provide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
-
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
 
 notification$.subscribe((event) => {
@@ -89,6 +89,10 @@ function initReactJS() {
     appSession$: {
       type: PropTypes.object,
       value: appSession$
+    },
+    pickList$: {
+      type: PropTypes.object,
+      value: pickList$
     }
   })(appRouter);
 

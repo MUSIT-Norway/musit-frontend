@@ -1,7 +1,9 @@
 {
   "extends": "react-app",
   "globals": {
-    "mockStore": true
+    "mockStore": true,
+    "localStorage": true,
+    "$": true
   },
   "rules": {
     "no-alert": "error",

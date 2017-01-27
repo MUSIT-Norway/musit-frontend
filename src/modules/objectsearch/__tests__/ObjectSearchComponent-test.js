@@ -3,7 +3,7 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import { ObjectSearchComponent } from '../ObjectSearchComponent';
 import { getPath } from '../../../shared/util';
-import MusitObject from '../../../shared/models/object';
+import MusitObject from '../../../models/object';
 
 describe('ObjectSearchComponent', () => {
   const path = ',1,2,3,';

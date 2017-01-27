@@ -7,7 +7,7 @@ import Config from '../../../config';
 import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
-import MuseumId from '../../../shared/models/museumId';
+import MuseumId from '../../../models/museumId';
 
 const middlewares = [ createMiddleware(new ApiClient()) ];
 const mockStore = configureMockStore(middlewares);

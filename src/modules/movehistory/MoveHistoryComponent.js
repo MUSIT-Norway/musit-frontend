@@ -16,19 +16,26 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import './MoveHistoryModal.css';
+import './MoveHistoryComponent.css';
 import React, { Component, PropTypes } from 'react';
 import ModalMoveHistoryGrid from './ModalMoveHistoryGrid';
 import Modal from '../../components/modal/MusitModal';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
+import inject from '../../rxjs/inject';
+import moveHistoryStore$, {
+  clear$,
+  loadMoveHistory$
+} from './moveHistoryStore';
 
-export default class MoveHistoryModal extends Component {
+export class MoveHistoryModal extends Component {
 
   static propTypes = {
-    moves: PropTypes.arrayOf(PropTypes.object),
+    store: PropTypes.object.isRequired,
     objectId: PropTypes.number.isRequired,
-    appSession: PropTypes.object.isRequired
+    appSession: PropTypes.object.isRequired,
+    loadMoveHistory: PropTypes.func.isRequired,
+    clear: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -36,12 +43,16 @@ export default class MoveHistoryModal extends Component {
   };
 
   componentDidMount() {
-    this.props.clearMoveHistoryForObject();
-    this.props.loadMoveHistoryForObject(this.props.objectId, this.props.appSession.getMuseumId());
+    this.props.clear();
+    this.props.loadMoveHistory({
+      objectId: this.props.objectId,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken()
+    });
   }
 
   render() {
-    const { moves } = this.props;
+    const moves = this.props.store.data;
     return (
       <Modal
         className="my-modal"
@@ -60,3 +71,14 @@ export default class MoveHistoryModal extends Component {
     );
   }
 }
+
+const data = {
+  store$: moveHistoryStore$
+};
+
+const commands = {
+  clear$,
+  loadMoveHistory$
+};
+
+export default inject(data, commands)(MoveHistoryModal);

@@ -1,6 +1,6 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
-import MuseumId from '../../../../../shared/models/museumId';
+import MuseumId from '../../../../../models/museumId';
 import * as actions from '../nodes';
 import reducer, { clearRoot } from '../nodes';
 import Config from '../../../../../config';

@@ -1,7 +1,7 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import Config from '../../config';
-import Actor from '../../shared/models/actor';
+import Actor from '../../models/actor';
 import suggest$Fn, { update$, clear$} from './suggestStore';
 import inject from '../../rxjs/inject';
 

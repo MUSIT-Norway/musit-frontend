@@ -106,7 +106,14 @@ export default (ComponentToWrap) => {
         }
 
         render() {
-          return componentToRender;
+          return <div
+            style={{
+              minHeight: 500,
+              minWidth: 700
+            }}
+          >
+            {componentToRender}
+          </div>;
         }
       }
 

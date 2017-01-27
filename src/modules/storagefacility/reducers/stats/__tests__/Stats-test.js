@@ -1,7 +1,7 @@
 import assert from 'assert';
 import deepFreeze from 'deep-freeze';
 import statsReducer, { loadStats, clearStats } from '../index';
-import MuseumId from '../../../../../shared/models/museumId';
+import MuseumId from '../../../../../models/museumId';
 import * as actions from '../index';
 import reducer from '../index';
 import Config from '../../../../../config';

@@ -28,7 +28,7 @@ export class App extends Component {
     loadAppSession: PropTypes.func.isRequired,
     setMuseumIdInRedux: PropTypes.func.isRequired,
     setCollectionIdInRedux: PropTypes.func.isRequired,
-    picks: PropTypes.object
+    pickList: PropTypes.object.isRequired
   }
 
   constructor(props, context) {
@@ -144,11 +144,11 @@ export class App extends Component {
               </LinkContainer>
             </Nav>
             <Nav pullRight>
-              <LinkContainer to="/picklist/node">
-                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.picks.NODE.length}</NavItem>
+              <LinkContainer to="/picklist/nodes">
+                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.pickList.nodes.length}</NavItem>
               </LinkContainer>
-              <LinkContainer to="/picklist/object">
-                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.picks.OBJECT.length}</NavItem>
+              <LinkContainer to="/picklist/objects">
+                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.pickList.objects.length}</NavItem>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>
@@ -167,7 +167,8 @@ export class App extends Component {
 }
 
 const data = {
-  appSession$: { type: PropTypes.object.isRequired }
+  appSession$: { type: PropTypes.object.isRequired },
+  pickList$: { type: PropTypes.object.isRequired }
 };
 
 const commands = {
@@ -176,13 +177,9 @@ const commands = {
   setCollectionId$
 };
 
-const mapStateToProps = (state) => ({
-  picks: state.picks
-});
-
 const mapDispatchToProps = (dispatch) => ({
   setMuseumIdInRedux: (museumId) => dispatch({ type: SET_MUSEUM, museumId }),
   setCollectionIdInRedux: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(notifiable(inject(data, commands)(App)));
+export default connect(null, mapDispatchToProps)(notifiable(inject(data, commands)(App)));

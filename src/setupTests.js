@@ -1,4 +1,4 @@
-import MuseumId from './shared/models/museumId';
+import MuseumId from './models/museumId';
 
 if (typeof localStorage === 'undefined' || localStorage === null) {
   const LocalStorage = require('node-localstorage').LocalStorage;

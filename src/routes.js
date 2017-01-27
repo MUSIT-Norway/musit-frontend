@@ -57,7 +57,10 @@ export default () => {
         <Route path={path.ROUTE_SF_OBJECTS} showObjects component={StorageUnitsTable} />
         <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
       </Route>
-      <Route path={path.ROUTE_PICKLIST} component={PickListView} />
+      <Route path={path.ROUTE_PICKLIST_ROOT}>
+        <Route path="nodes" type="nodes" component={PickListView} />
+        <Route path="objects" type="objects" component={PickListView} />
+      </Route>
       <Route path={path.ROUTE_REPORTS}>
         <IndexRoute component={Reports} />
         <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />

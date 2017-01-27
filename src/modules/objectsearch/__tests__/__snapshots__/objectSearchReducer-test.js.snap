@@ -102,7 +102,6 @@ Object {
         ],
         "currentLocationId": 5,
         "id": 51,
-        "mainObjectId": undefined,
         "museumNo": "MusN11",
         "path": ",1,2,3,4,5,",
         "pathNames": Array [
@@ -127,83 +126,50 @@ Object {
             "nodeId": 5
           }
         ],
-        "subNo": undefined,
         "term": "Solsikke"
       },
       MusitObject {
         "breadcrumb": Array [],
-        "currentLocationId": undefined,
         "id": 54,
-        "mainObjectId": undefined,
         "museumNo": "MusN13",
-        "path": undefined,
-        "pathNames": undefined,
-        "subNo": undefined,
         "term": "Makrellsopp"
       },
       MusitObject {
         "breadcrumb": Array [],
-        "currentLocationId": undefined,
         "id": 19,
-        "mainObjectId": undefined,
         "museumNo": "MusN20",
-        "path": undefined,
-        "pathNames": undefined,
-        "subNo": undefined,
         "term": "Ukjent mygg"
       },
       MusitObject {
         "breadcrumb": Array [],
-        "currentLocationId": undefined,
         "id": 17,
-        "mainObjectId": undefined,
         "museumNo": "MusN21",
-        "path": undefined,
-        "pathNames": undefined,
         "subNo": "2",
         "term": "Snilebille"
       },
       MusitObject {
         "breadcrumb": Array [],
-        "currentLocationId": undefined,
         "id": 18,
-        "mainObjectId": undefined,
         "museumNo": "MusN22",
-        "path": undefined,
-        "pathNames": undefined,
-        "subNo": undefined,
         "term": "Fluesopp"
       },
       MusitObject {
         "breadcrumb": Array [],
-        "currentLocationId": undefined,
         "id": 14,
-        "mainObjectId": undefined,
         "museumNo": "MusK23",
-        "path": undefined,
-        "pathNames": undefined,
-        "subNo": undefined,
         "term": "Lite skaft av ben"
       },
       MusitObject {
         "breadcrumb": Array [],
-        "currentLocationId": undefined,
         "id": 15,
-        "mainObjectId": undefined,
         "museumNo": "MusK24",
-        "path": undefined,
-        "pathNames": undefined,
         "subNo": "a",
         "term": "Lendeklede"
       },
       MusitObject {
         "breadcrumb": Array [],
-        "currentLocationId": undefined,
         "id": 16,
-        "mainObjectId": undefined,
         "museumNo": "MusK24",
-        "path": undefined,
-        "pathNames": undefined,
         "subNo": "b",
         "term": "Kokekar"
       },
@@ -237,7 +203,6 @@ Object {
         ],
         "currentLocationId": 5,
         "id": 9,
-        "mainObjectId": undefined,
         "museumNo": "MusN28",
         "path": ",1,2,3,4,5,",
         "pathNames": Array [
@@ -262,7 +227,6 @@ Object {
             "nodeId": 5
           }
         ],
-        "subNo": undefined,
         "term": "Tusenben"
       }
     ],
