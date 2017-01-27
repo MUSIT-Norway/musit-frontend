@@ -3,6 +3,9 @@ import { createStore } from '../../rxjs/RxStore';
 import { getPath } from '../../shared/util';
 import MusitObject from '../../shared/models/object';
 import MusitNode from '../../shared/models/node';
+import orderBy from 'lodash/orderBy';
+import toLower from 'lodash/toLower';
+import { customSortingStorageNodeType } from '../../shared/util';
 
 export const addObject$ = new Subject();
 export const removeObject$ = new Subject();
@@ -109,4 +112,8 @@ export default createStore(reducer$({
   toggleMainObject$,
   refreshObject$,
   clearObjects$
-}), Observable.of({ nodes: [], objects: []}));
+}), Observable.of({ nodes: [], objects: []}))
+  .map(state => ({
+    nodes: orderBy(state.nodes, [(o) => customSortingStorageNodeType(o.value.type), (o) => toLower(o.value.name)]),
+    objects: orderBy(state.objects, [(o) => toLower(o.value.museumNo), (o) => toLower(o.value.subNo), (o) => toLower(o.value.term)])
+  }));
