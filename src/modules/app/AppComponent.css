@@ -34,7 +34,7 @@ nav.fa {
 
 .backgroundUTV {
   height: 50px;
-  background-color: #ff6666  !important;
+  background-color: #ff6666;
   font-size: smaller;
   color: black;
   margin-bottom: 1;
@@ -43,7 +43,7 @@ nav.fa {
 
 .backgroundTEST {
   height: 50px;
-  background-color: orange  !important;
+  background-color: orange;
   font-size: smaller;
   color: black;
   margin-bottom: 1;
