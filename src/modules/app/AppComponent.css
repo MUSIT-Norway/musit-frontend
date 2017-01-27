@@ -21,7 +21,7 @@ nav.fa {
 }
 
 .footer {
-  text-align: center;
+  text-align: right;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -32,6 +32,23 @@ nav.fa {
   color: lightgray;
 }
 
+.backgroundUTV {
+  height: 50px;
+  background-color: #ff6666  !important;
+  font-size: smaller;
+  color: black;
+  margin-bottom: 1;
+  padding-right: 10px;
+}
+
+.backgroundTEST {
+  height: 50px;
+  background-color: orange  !important;
+  font-size: smaller;
+  color: black;
+  margin-bottom: 1;
+  padding-right: 10px;
+}
 .footer.well {
   margin-bottom: 0;
 }
