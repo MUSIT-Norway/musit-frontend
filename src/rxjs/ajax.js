@@ -1,5 +1,8 @@
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/dom/ajax';
+import { hashHistory } from 'react-router';
+import { emitError } from '../shared/errors';
+import { actions } from '../modules/app/appSession';
 
 export const onComplete = (callback) => (response) => {
   if (callback && callback.onComplete) {
@@ -8,7 +11,12 @@ export const onComplete = (callback) => (response) => {
 };
 
 export const onFailure = (callback) => (error) => {
-  if (callback && callback.onFailure) {
+  if (error.status === 401) {
+    localStorage.removeItem('accessToken');
+    actions.setAccessToken$.next(null);
+    hashHistory.push('/');
+    emitError({ ...error, type: 'network'});
+  } else if (callback && callback.onFailure) {
     callback.onFailure(error);
   }
   return Observable.of((state) => ({...state, error}));

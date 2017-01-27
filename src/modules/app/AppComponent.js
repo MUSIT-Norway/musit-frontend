@@ -147,6 +147,10 @@ export class App extends Component {
         </div>
 
         <footer className="footer well version">
+          {window.location.href.toLowerCase().includes('test:')? <span style={{ color: 'red', fontSize: 'xx-large' }}>DEV</span> : '' }
+          {window.location.href.toLowerCase().includes('utv.uio.no:')? <span style={{ color: 'red', fontSize: 'xx-large' }}>UTV</span> : '' }
+          {window.location.href.toLowerCase().includes('test.uio.no:')? <span style={{ color: 'orange', fontSize: 'xx-large' }}>TEST</span> : '' }
+          {' '}
           {'Build number: ' + this.props.appSession.getBuildNumber()}
         </footer>
       </div>

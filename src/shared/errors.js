@@ -32,7 +32,7 @@ const handleSuccess = new Subject().map((event) => {
 export const emitSuccess = (event) => handleSuccess.next(event);
 
 const getErrorStatus = (error) => {
-  const status = error && error.response && error.response.status;
+  const status = error  &&  (error.status || (error.response && error.response.status));
   if (!status) {
     return;
   }
