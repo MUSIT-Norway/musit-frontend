@@ -460,8 +460,8 @@
           "selectedObjectCount": "Selected object(s) count"
         },
         "title": {
-          "node": "Picklist (nodes)",
-          "object": "Picklist (objects)"
+          "nodes": "Picklist (nodes)",
+          "objects": "Picklist (objects)"
         },
         "footer": {
           "nodeSelected": "Node(s) selected.",
@@ -1073,8 +1073,8 @@
           "selectedObjectCount": "Valgt objekte(r)"
         },
         "title": {
-          "node": "Plukkliste (noder)",
-          "object": "Plukkliste (objekter)"
+          "nodes": "Plukkliste (noder)",
+          "objects": "Plukkliste (objekter)"
         },
         "footer": {
           "nodeSelected": "node(r) valgt.",
