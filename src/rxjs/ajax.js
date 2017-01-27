@@ -1,5 +1,8 @@
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/dom/ajax';
+import { hashHistory } from 'react-router';
+import { emitError } from '../shared/errors';
+import { actions } from '../modules/app/appSession';
 
 const ajax = (url, method, body, headers) =>
   Observable.ajax({
@@ -38,9 +41,16 @@ export const onComplete = (cmd) => (response) => {
 };
 
 export const onFailure = (cmd) => (error) => {
+  if (error.status === 401) {
+    localStorage.removeItem('accessToken');
+    actions.setAccessToken$.next(null);
+    hashHistory.push('/');
+    emitError({ ...error, type: 'network'});
+  } else
   if (cmd.onFailure) {
     cmd.onFailure(error);
   }
+
   return Observable.of((state) => ({...state, error}));
 };
 
