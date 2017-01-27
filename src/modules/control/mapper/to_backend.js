@@ -9,7 +9,7 @@ import {
     parseMold
 } from '../../observation/mapper/to_backend';
 import { Option } from './../../../shared/util';
-import Actor from '../../../shared/models/actor';
+import Actor from '../../../models/actor';
 
 function getDoneDate(observations, state) {
   return observations && observations.doneDate ? observations.doneDate : state.doneDate;

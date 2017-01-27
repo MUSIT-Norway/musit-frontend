@@ -4,54 +4,55 @@ import { hashHistory } from 'react-router';
 import { emitError } from '../shared/errors';
 import { actions } from '../modules/app/appSession';
 
-const ajax = (url, method, body, headers) =>
+export const onComplete = (callback) => (response) => {
+  if (callback && callback.onComplete) {
+    callback.onComplete(response);
+  }
+};
+
+export const onFailure = (callback) => (error) => {
+  if (error.status === 401) {
+    localStorage.removeItem('accessToken');
+    actions.setAccessToken$.next(null);
+    hashHistory.push('/');
+    emitError({ ...error, type: 'network'});
+  } else if (callback && callback.onFailure) {
+    callback.onFailure(error);
+  }
+  return Observable.of((state) => ({...state, error}));
+};
+
+export const toResponse = ({ response }) => response;
+
+const ajax = (url, method, body, token, headers) =>
   Observable.ajax({
     url,
     responseType: 'json',
     method,
     body,
     headers: {
+      'Authorization': 'Bearer ' + token,
       ...headers
     }
   });
 
+const simpleAjax = (ajax$, callback) =>
+  ajax$.map(toResponse)
+    .do(onComplete(callback))
+    .catch(onFailure(callback));
 
-export const get = (url, token) => ajax(url, 'GET', null, {
-  'Authorization': 'Bearer ' + token
-});
+export const get = (url, token) => ajax(url, 'GET', null, token);
 
-export const del = (url, token) => ajax(url, 'DELETE', null, {
-  'Authorization': 'Bearer ' + token
-});
+export const simpleGet = (url, token, callback) => simpleAjax(get(url, token), callback);
 
-export const post = (url, body, token) => ajax(url, 'POST', body, {
-  'Content-Type': 'application/json',
-  'Authorization': 'Bearer ' + token
-});
+export const del = (url, token) => ajax(url, 'DELETE', null, token);
 
-export const put = (url, body, token) => ajax(url, 'PUT', body, {
-  'Content-Type': 'application/json',
-  'Authorization': 'Bearer ' + token
-});
+export const simpleDel = (url, token, callback) => simpleAjax(del(url, token), callback);
 
-export const onComplete = (cmd) => (response) => {
-  if (cmd.onComplete) {
-    cmd.onComplete(response);
-  }
-};
+export const post = (url, body, token) => ajax(url, 'POST', body, token, { 'Content-Type': 'application/json' });
 
-export const onFailure = (cmd) => (error) => {
-  if (error.status === 401) {
-    localStorage.removeItem('accessToken');
-    actions.setAccessToken$.next(null);
-    hashHistory.push('/');
-    emitError({ ...error, type: 'network'});
-  } else
-  if (cmd.onFailure) {
-    cmd.onFailure(error);
-  }
+export const simplePost = (url, data, token, callback) => simpleAjax(post(url, data, token), callback);
 
-  return Observable.of((state) => ({...state, error}));
-};
+export const put = (url, data, token) => ajax(url, 'PUT', data, token, { 'Content-Type': 'application/json' });
 
-export const toResponse = ({ response }) => response;
+export const simplePut = (url, data, token, callback) => simpleAjax(put(url, data, token), callback);

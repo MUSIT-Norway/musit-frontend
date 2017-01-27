@@ -6,8 +6,8 @@ import flatten from 'lodash/flatten';
 import uniqBy from 'lodash/uniqBy';
 import find from 'lodash/find';
 import { I18n } from 'react-i18nify';
-import MuseumId from '../../shared/models/museumId';
-import CollectionId from '../../shared/models/collectionId';
+import MuseumId from '../../models/museumId';
+import CollectionId from '../../models/collectionId';
 
 export default class MusitUserAccount extends Component {
   static propTypes = {

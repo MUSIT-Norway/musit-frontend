@@ -3,7 +3,7 @@ import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
-import Actor from '../../shared/models/actor';
+import Actor from '../../models/actor';
 import inject from '../../rxjs/inject';
 
 export class EditObservationPage extends React.Component {

@@ -1,6 +1,6 @@
 import { I18n } from 'react-i18nify';
 import { validateString, validateNumber } from '../../components/formfields/common/validators';
-import MusitNode from '../../shared/models/node';
+import MusitNode from '../../models/node';
 
 const errorAddMessage = (errors, field) => {
   errors[`${field}`] = I18n.t(`musit.storageUnits.${field}.incorrect`);
@@ -44,7 +44,7 @@ export default (formProps) => {
     }
 
     if (!unit.id) {
-      if (MusitNode.isRootNode(formProps.rootNode.type) && 'Organisation' !== unit.type) {
+      if (new MusitNode(formProps.rootNode).isRootNode() && 'Organisation' !== unit.type) {
         errors = {...errors, type: I18n.t('musit.storageUnits.type.organisationAllowed')};
       }
       if (2 === getPathLength(formProps) && formProps.rootNode.type === 'Organisation' && 'Building' !== unit.type) {

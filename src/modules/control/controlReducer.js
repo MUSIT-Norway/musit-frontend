@@ -1,7 +1,7 @@
 import Config from '../../config';
 import { mapToBackend } from './mapper/to_backend';
 import uniq from 'lodash/uniq';
-import Actor from '../../shared/models/actor';
+import Actor from '../../models/actor';
 
 const ADD = 'musit/control/ADD';
 const ADD_SUCCESS = 'musit/control/ADD_SUCCESS';

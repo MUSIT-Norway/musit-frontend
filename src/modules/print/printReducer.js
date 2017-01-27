@@ -1,6 +1,6 @@
 import Config from '../../config';
-import Template from '../../shared/models/PrintTemplate';
-import { QR_CODE } from '../../shared/models/PrintTemplate';
+import Template from '../../models/PrintTemplate';
+import { QR_CODE } from '../../models/PrintTemplate';
 
 export const CLEAR = 'musit/print/CLEAR';
 export const CLEAR_RENDERED = 'musit/print/CLEAR_RENDERED';

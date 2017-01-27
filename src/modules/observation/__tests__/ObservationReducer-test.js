@@ -5,7 +5,7 @@ import observationReducer, {
 } from '../observationReducer';
 import mapToFrontEnd from '../mapper/to_frontend';
 import mapToBackEnd from '../mapper/to_backend';
-import Actor from '../../../shared/models/actor';
+import Actor from '../../../models/actor';
 import configureMockStore from 'redux-mock-store';
 import createMiddleware from '../../../redux/clientMiddleware';
 import ApiClient from '../../../redux/ApiClient';
@@ -14,7 +14,7 @@ import request from 'superagent';
 import nocker from 'superagent-nock';
 import reducer from '../observationReducer';
 import * as actions from '../observationReducer';
-import MuseumId from '../../../shared/models/museumId';
+import MuseumId from '../../../models/museumId';
 
 const nock = nocker(request);
 const middlewares = [createMiddleware(new ApiClient())];

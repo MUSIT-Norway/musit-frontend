@@ -4,8 +4,8 @@ import request from 'superagent';
 import nocker from 'superagent-nock';
 const nock = nocker(request);
 import Config from '../../../../../config';
-import MuseumId from '../../../../../shared/models/museumId';
-import CollectionId from '../../../../../shared/models/collectionId';
+import MuseumId from '../../../../../models/museumId';
+import CollectionId from '../../../../../models/collectionId';
 
 const comingFromBackend = {
   totalMatches: 3,

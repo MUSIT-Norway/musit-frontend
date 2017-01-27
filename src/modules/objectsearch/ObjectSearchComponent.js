@@ -8,6 +8,7 @@ import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
 import { Observable } from 'rxjs';
 import inject from '../../rxjs/inject';
+import MusitObject from '../../models/object';
 
 export function renderParam(id, props, style) {
   return (
@@ -80,7 +81,15 @@ export const ObjectSearchComponent = (props) =>
                     href=""
                     onClick={(e) => {
                       e.preventDefault();
-                      props.pickObjects(props.data.matches, props.appSession.getMuseumId(), props.appSession.getCollectionId());
+                      props.data.matches.forEach(obj =>
+                        props.pickObject(
+                          obj,
+                          obj.breadcrumb,
+                          props.appSession.getMuseumId(),
+                          props.appSession.getCollectionId(),
+                          props.appSession.getAccessToken()
+                        )
+                      );
                     }}
                     title={I18n.t('musit.objectsearch.addAllToPickList')}
                   >
@@ -113,7 +122,13 @@ export const ObjectSearchComponent = (props) =>
                           href=""
                           onClick={(e) => {
                             e.preventDefault();
-                            props.pickObject(data, data.breadcrumb, props.appSession.getMuseumId(), props.appSession.getCollectionId());
+                            props.pickObject(
+                              data,
+                              data.breadcrumb,
+                              props.appSession.getMuseumId(),
+                              props.appSession.getCollectionId(),
+                              props.appSession.getAccessToken()
+                            );
                           }}
                           title={I18n.t('musit.objectsearch.addToPickList')}
                         >
@@ -144,4 +159,8 @@ const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired }
 };
 
-export default inject(data)(ObjectSearchComponent);
+const props = {
+  pickObject: MusitObject.pickObject
+};
+
+export default inject(data, {}, props)(ObjectSearchComponent);

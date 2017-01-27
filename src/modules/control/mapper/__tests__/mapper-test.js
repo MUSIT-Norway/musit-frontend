@@ -1,7 +1,7 @@
 import {
   mapToBackend
 } from '../to_backend';
-import Actor from '../../../../shared/models/actor';
+import Actor from '../../../../models/actor';
 
 describe('ControlMapperReducer', () => {
   it('maps to correct backend structure with no observations', () => {

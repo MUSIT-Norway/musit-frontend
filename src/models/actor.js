@@ -1,9 +1,12 @@
 import find from 'lodash/find';
+import Config from '../config';
+import { simplePost } from '../rxjs/ajax';
+import entries from 'object.entries';
 
 /**
  * Encapsulates the responsibilities for the Actor model
  */
-class Actor {
+class MusitActor {
   /**
    * Returns an object with the names of doneBy and registeredBy, or undefined for one or both if not found.
    *
@@ -13,7 +16,7 @@ class Actor {
    * @returns {{doneBy: string|undefined, registeredBy: string|undefined}}
    */
   static getActorNames(actorsJson, doneById, registeredById) {
-    const actors = [].concat(actorsJson).map(actor => new Actor(actor));
+    const actors = [].concat(actorsJson).map(actor => new MusitActor(actor));
     const doneBy = find(actors, (a) => a.hasActorId(doneById));
     const registeredBy = find(actors, (a) => a.hasActorId(registeredById));
     return { doneBy: doneBy && doneBy.fn, registeredBy: registeredBy && registeredBy.fn };
@@ -23,10 +26,7 @@ class Actor {
    * @param props the actor as received from endpoint currentUser.
    */
   constructor(props) {
-    this.dataportenId = props.dataportenId;
-    this.dataportenUser = props.dataportenUser;
-    this.applicationId = props.applicationId;
-    this.fn = props.fn;
+    entries(props).forEach(([k, v]) => this[k] = v);
   }
 
   /**
@@ -50,4 +50,9 @@ class Actor {
   }
 }
 
-export default Actor;
+MusitActor.getActorDetails = (actorIds, token, callback) => {
+  return simplePost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
+    .map(actors => actors.map(a => new MusitActor(a)));
+};
+
+export default MusitActor;

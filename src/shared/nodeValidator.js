@@ -1,5 +1,5 @@
 import { I18n } from 'react-i18nify';
-import MusitNode from './models/node';
+import MusitNode from '../models/node';
 
 export const getPathLength = (formProps) => {
   const { pathNames } = formProps || {};
@@ -10,7 +10,7 @@ export const checkNodeType = (from, to) => {
 
   const matchFromType = from.value ? from.value.type : from.type;
 
-  if (MusitNode.isRootNode(to.type) && 'Organisation' !== matchFromType) {
+  if (new MusitNode(to).isRootNode() && 'Organisation' !== matchFromType) {
     return I18n.t('musit.storageUnits.type.organisationAllowedToMove');
   }
 

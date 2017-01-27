@@ -42,7 +42,7 @@ export default class ObjectGrid extends Component {
                       href=""
                       onClick={(e) => {
                         e.preventDefault();
-                        this.props.pickObjects(this.props.tableData.filter(o => !o.mainObjectId || o.isMainObject()));
+                        this.props.tableData.forEach(o => this.props.pickObject(o));
                       }}
                       title={I18n.t('musit.grid.object.iconTooltip.addAllToPickList')}
                     >

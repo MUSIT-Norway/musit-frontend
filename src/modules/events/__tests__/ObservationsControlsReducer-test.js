@@ -1,6 +1,6 @@
 import assert from 'assert';
 import observationControlGridReducer from '../eventsReducer';
-import MuseumId from '../../../shared/models/museumId';
+import MuseumId from '../../../models/museumId';
 import * as actions from '../eventsReducer';
 import reducer from '../eventsReducer';
 import Config from '../../../config';

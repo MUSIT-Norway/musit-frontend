@@ -1,6 +1,6 @@
 import { omit } from 'lodash';
 import { getPath } from '../../shared/util';
-import MusitObject from '../../shared/models/object';
+import MusitObject from '../../models/object';
 import * as types from './constants';
 
 const initialState = {

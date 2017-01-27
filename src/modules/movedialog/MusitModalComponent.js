@@ -25,19 +25,24 @@ import SubmitButton from '../../components/buttons/submit';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
 import PagingToolbar from '../../shared/paging';
+import inject from '../../rxjs/inject';
+import moveDialogStore$, {
+  clear$,
+  loadChildren$,
+  loadNode$
+} from './moveDialogStore';
+import Loader from 'react-loader';
 
 const PER_PAGE = 10;
 
-export default class MusitModal extends Component {
+export class MusitModal extends Component {
 
   static propTypes = {
     onMove: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
     loadChildren: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
-    children: PropTypes.arrayOf(PropTypes.object),
-    totalNodes: PropTypes.number,
-    selectedNode: PropTypes.object,
+    store: PropTypes.object,
     appSession: PropTypes.object.isRequired
   };
 
@@ -58,7 +63,11 @@ export default class MusitModal extends Component {
 
   loadHome() {
     this.props.clear();
-    this.props.loadChildren(null, this.props.appSession.getMuseumId());
+    this.props.loadChildren({
+      id: null,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken()
+    });
   }
 
   loadNode(id, currentPage = 1) {
@@ -66,12 +75,25 @@ export default class MusitModal extends Component {
       ...this.state,
       currentPage
     });
-    this.props.loadNode(id, this.props.appSession.getMuseumId());
-    this.props.loadChildren(id, this.props.appSession.getMuseumId(), currentPage, PER_PAGE);
+    this.props.clear();
+    this.props.loadNode({
+      nodeId: id,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken()
+    });
+    this.props.loadChildren({
+      nodeId: id,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken(),
+      page: {
+        page: currentPage,
+        limit: PER_PAGE
+      }
+    });
   }
 
   render() {
-    const {children, selectedNode} = this.props;
+    const { data, selectedNode } = this.props.store;
 
     const isSelected = Object.keys({...selectedNode}).length > 0;
 
@@ -86,21 +108,24 @@ export default class MusitModal extends Component {
         />
       </div>;
 
-    let body =
+    let body = data.loading ?
+      <div style={{ textAlign: 'center', color: 'grey' }}>
+        <Loader loaded={false} />
+      </div> :
       <div style={{ textAlign: 'center', color: 'grey' }}>
         {I18n.t('musit.moveModal.noData')}
       </div>;
 
-    if (children.length > 0) {
+    if (data.totalMatches > 0) {
       body = (
         <div>
           <ModalNodeGrid
-            tableData={children}
+            tableData={data.matches}
             onClick={(n) => this.loadNode(n.id)}
           />
-          {this.props.totalNodes && this.props.totalNodes > PER_PAGE &&
+          {data.totalMatches > PER_PAGE &&
           <PagingToolbar
-            numItems={this.props.totalNodes}
+            numItems={data.totalMatches}
             currentPage={this.state.currentPage}
             perPage={PER_PAGE}
             onClick={(currentPage) => this.loadNode(selectedNode && selectedNode.id, currentPage)}
@@ -143,3 +168,15 @@ export default class MusitModal extends Component {
     );
   }
 }
+
+const data = {
+  store$: moveDialogStore$
+};
+
+const commands = {
+  clear$,
+  loadChildren$,
+  loadNode$
+};
+
+export default inject(data, commands)(MusitModal, true);
