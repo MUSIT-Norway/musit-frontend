@@ -18,7 +18,6 @@
  */
 
 import { combineReducers } from 'redux';
-import picklistReducer from '../modules/picklist/picklistReducer';
 import storagePanelStateReducer from '../modules/storagefacility/reducers/panel/state';
 import storagePanelReducer from '../modules/storagefacility/reducers/panel';
 import storageUnitModal from '../modules/storagefacility/reducers/modal';
@@ -34,7 +33,6 @@ import sessionReducer from './sessionReducer';
 
 const rootReducer = combineReducers({
   print: printReducer,
-  picks: picklistReducer,
   session: sessionReducer,
   storagePanelUnit: storagePanelReducer,
   [storageUnitModal.ID]: storageUnitModal.reducer,

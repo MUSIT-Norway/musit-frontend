@@ -1,4 +1,4 @@
-import { simpleGet, simplePut } from '../rxjs/ajax';
+import { simpleGet, simplePut } from '../rxjs/RxAjax';
 import Config from '../config';
 import MuseumId from './museumId';
 import CollectionId from './collectionId';
@@ -9,6 +9,13 @@ import { getPath } from '../shared/util';
 class MusitObject {
   constructor(props) {
     entries(props).forEach(([k, v]) => this[k] = v);
+  }
+
+  getObjectDescription() {
+    let objStr = this.museumNo ? `${this.museumNo}` : '';
+    objStr = this.subNo ? `${objStr} - ${this.subNo}` : objStr;
+    objStr = this.term ? `${objStr} - ${this.term}` : objStr;
+    return objStr;
   }
 
   isMainObject() {

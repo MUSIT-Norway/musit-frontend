@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import { createStore, createActions } from '../../rxjs/RxStore';
-import { get as ajaxGet } from '../../rxjs/ajax';
+import { get as ajaxGet } from '../../rxjs/RxAjax';
 export const { update$, clear$ } = createActions('update$', 'clear$');
 
-export default (urlFn) => createStore(Observable.empty().merge(
+export default (name, urlFn) => createStore(name, Observable.empty().merge(
     clear$.map(() => () => ({ data: []})),
     update$.debounce(() => Observable.timer(500))
         .distinctUntilChanged()

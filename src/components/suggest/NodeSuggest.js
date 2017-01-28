@@ -2,7 +2,7 @@ import React from 'react';
 import AutoSuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$} from './suggestStore';
-import inject from '../../rxjs/inject';
+import inject from '../../rxjs/RxInject';
 
 export class NodeSuggest extends React.Component {
 
@@ -93,7 +93,7 @@ export class NodeSuggest extends React.Component {
 }
 
 const data = {
-  suggest$: suggest$Fn(Config.magasin.urls.storagefacility.searchUrl)
+  suggest$: suggest$Fn('nodeSuggest', Config.magasin.urls.storagefacility.searchUrl)
 };
 
 const commands = { update$, clear$ };

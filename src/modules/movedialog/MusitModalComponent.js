@@ -25,7 +25,7 @@ import SubmitButton from '../../components/buttons/submit';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
 import PagingToolbar from '../../shared/paging';
-import inject from '../../rxjs/inject';
+import inject from '../../rxjs/RxInject';
 import moveDialogStore$, {
   clear$,
   loadChildren$,

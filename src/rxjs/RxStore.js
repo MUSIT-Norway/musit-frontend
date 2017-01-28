@@ -10,7 +10,7 @@ export function createActions(...actionNames) {
   return actionNames.reduce((akk, name) => ({...akk, [name]: createAction()}), {});
 }
 
-export function createStore(reducer$, initialState$ = Rx.Observable.of({})) {
+export function createStore(name, reducer$, initialState$ = Rx.Observable.of({})) {
   return initialState$
     .merge(reducer$)
     .scan((state, reducer) => {
@@ -24,7 +24,7 @@ export function createStore(reducer$, initialState$ = Rx.Observable.of({})) {
       if (Config.isDev) {
         deepFreeze(state);
         // eslint-disable-next-line no-console
-        console.debug(state);
+        console.debug(name, state);
       }
     })
     .publishReplay(1)

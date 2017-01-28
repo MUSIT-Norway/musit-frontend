@@ -99,7 +99,7 @@ export const reducer$ = (actions) => Observable.empty().merge(
   actions.clearNodes$.map(() => (state) => ({...state, nodes: []}))
 );
 
-export default createStore(reducer$({
+export default createStore('pickList', reducer$({
   addNode$,
   removeNode$,
   toggleNode$,

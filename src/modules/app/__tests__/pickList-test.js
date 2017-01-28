@@ -72,7 +72,7 @@ describe('pickList', () => {
     });
 
     // assertion
-    testScheduler.expectObservable(createStore(state$)).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

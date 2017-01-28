@@ -33,4 +33,4 @@ export const reducer$ = (actions) =>
     actions.loadObjects$.map((data) => (state) => ({...state, children: { data, loading: false }}))
   );
 
-export default createStore(reducer$({clearRootNode$, setLoading$, loadStats$, loadRootNode$, loadObjects$, loadNodes$}));
+export default createStore('storageFacility', reducer$({clearRootNode$, setLoading$, loadStats$, loadRootNode$, loadObjects$, loadNodes$}));
