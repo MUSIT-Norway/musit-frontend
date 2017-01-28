@@ -7,7 +7,7 @@ import PagingToolbar from '../../shared/paging';
 import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
 import { Observable } from 'rxjs';
-import inject from '../../rxjs/inject';
+import inject from '../../rxjs/RxInject';
 import MusitObject from '../../models/object';
 
 export function renderParam(id, props, style) {

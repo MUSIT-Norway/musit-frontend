@@ -12,7 +12,7 @@ import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
-import inject from '../../rxjs/inject';
+import inject from '../../rxjs/RxInject';
 import {
   toggleNode$,
   toggleMainObject$,

@@ -5,7 +5,7 @@ import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './LoginComponent_no.html.jsx';
 import EnglishTranslation from './LoginComponent_en.html.jsx';
 import Logos from '../../components/logos/Logos';
-import LoginButton from './loginButton';
+import LoginButton from './LoginButton';
 import TermsAndConditions from './TermsAndConditions';
 
 export default class WelcomeContainer extends React.Component {

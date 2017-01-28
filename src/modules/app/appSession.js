@@ -1,6 +1,6 @@
 import {Observable} from 'rxjs';
 import {createStore, createActions} from '../../rxjs/RxStore';
-import {get as ajaxGet} from '../../rxjs/ajax';
+import {get as ajaxGet} from '../../rxjs/RxAjax';
 import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors';
@@ -116,7 +116,7 @@ export const reducer$ = ({ setMuseumId$, setCollectionId$, setAccessToken$, load
     .map(collectionId => state => ({...state, collectionId}))
 );
 
-const session$ = createStore(reducer$(actions), Observable.of(initialState)).map(state => new AppSession(state));
+const session$ = createStore('appSession', reducer$(actions), Observable.of(initialState)).map(state => new AppSession(state));
 
 export default session$;
 
