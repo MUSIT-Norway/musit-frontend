@@ -5,9 +5,10 @@ import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './AboutPage_no.html.jsx';
 import EnglishTranslation from './AboutPage_en.html.jsx';
 import Logos from '../../components/logos/Logos';
+import inject from '../../rxjs/RxInject';
 
-export default (props) => {
-  const Translated = I18n._locale === 'no' ? NorwegianTranslation : EnglishTranslation;
+export const AboutPage = (props) => {
+  const Translated = props.getLocale() === 'no' ? NorwegianTranslation : EnglishTranslation;
   return (
     <div>
       <main>
@@ -25,3 +26,5 @@ export default (props) => {
     </div>
   );
 };
+
+export default inject({}, {}, { getLocale: () => I18n._locale })(AboutPage);

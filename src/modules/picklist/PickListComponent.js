@@ -34,7 +34,6 @@ export class PickListContainer extends React.Component {
     appSession: React.PropTypes.object.isRequired,
     refreshNode: React.PropTypes.func.isRequired,
     refreshObject: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
     emitSuccess: React.PropTypes.func.isRequired
   }
@@ -60,7 +59,7 @@ export class PickListContainer extends React.Component {
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
     }
-    this.context.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveModal(items)}/>, this.props.clearMoveDialog);
+    this.context.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveModal(items)}/>);
   }
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({

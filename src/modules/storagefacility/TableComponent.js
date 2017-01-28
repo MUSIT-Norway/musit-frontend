@@ -24,9 +24,6 @@ import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 import Config from '../../config';
 import inject from '../../rxjs/RxInject';
 
-import {connect} from 'react-redux';
-import { clear } from './reducers/modal';
-
 import { Observable } from 'rxjs';
 
 import tableStore$, {
@@ -49,7 +46,6 @@ export class StorageUnitsContainer extends React.Component {
     params: React.PropTypes.object.isRequired,
     pickObject: React.PropTypes.func.isRequired,
     pickNode: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired,
     setLoading: React.PropTypes.func.isRequired,
     clearRootNode: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
@@ -196,7 +192,7 @@ export class StorageUnitsContainer extends React.Component {
     showModal = this.context.showModal
   ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />, this.props.clearMoveDialog);
+    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />);
   }
 
   moveNode = (
@@ -477,12 +473,6 @@ export class StorageUnitsContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clearMoveDialog: () => dispatch(clear())
-  };
-};
-
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   store$: tableStore$
@@ -505,4 +495,4 @@ const props = {
   emitSuccess
 };
 
-export default connect(null, mapDispatchToProps)(inject(data, commands, props)(StorageUnitsContainer));
+export default inject(data, commands, props)(StorageUnitsContainer);

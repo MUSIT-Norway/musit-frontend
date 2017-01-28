@@ -1,0 +1,125 @@
+exports[`TermsAndConditions should have english text 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop={true}
+  bsClass="modal"
+  dialogComponentClass={[Function ModalDialog]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "modals": Array []
+    }
+  }
+  onHide={[Function noop]}
+  renderBackdrop={[Function renderBackdrop]}
+  show={false}>
+  <ModalHeader
+    aria-label="Close"
+    bsClass="modal-header"
+    closeButton={true}>
+    <ModalTitle
+      bsClass="modal-title">
+      Use of personal information in MUSITbasen
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body">
+    <p>
+      MUSITbasen uses Dataporten to authenticate users at login.
+    </p>
+    <br />
+    <p>
+      In MUSITbasen the following personal information is stored:
+    </p>
+    <ul>
+      <li>
+        User name, full name and email address at your university.
+      </li>
+      <li>
+        Information about which access a user has, and the changes made in the system by the user.
+      </li>
+    </ul>
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer">
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={false}
+      onClick={undefined}>
+      Close
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
+
+exports[`TermsAndConditions should have norwegian text 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop={true}
+  bsClass="modal"
+  dialogComponentClass={[Function ModalDialog]}
+  enforceFocus={true}
+  keyboard={true}
+  manager={
+    ModalManager {
+      "containers": Array [],
+      "data": Array [],
+      "handleContainerOverflow": true,
+      "hideSiblingNodes": true,
+      "modals": Array []
+    }
+  }
+  onHide={[Function noop]}
+  renderBackdrop={[Function renderBackdrop]}
+  show={false}>
+  <ModalHeader
+    aria-label="Close"
+    bsClass="modal-header"
+    closeButton={true}>
+    <ModalTitle
+      bsClass="modal-title">
+      Bruk av personopplysninger i MUSITbasen
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody
+    bsClass="modal-body">
+    <p>
+      MUSITbasen benytter Dataporten til autentisering av brukere ved pålogging.
+    </p>
+    <br />
+    <p>
+      I MUSITbasen lagres følgende personopplysninger:
+    </p>
+    <ul>
+      <li>
+        Brukernavn, fullt navn og epostadresse ved ditt universitet.
+      </li>
+      <li>
+        Informasjon om hvilke tilganger en bruker har og hvilke endringer som er gjort i systemet av brukeren.
+      </li>
+    </ul>
+  </ModalBody>
+  <ModalFooter
+    bsClass="modal-footer">
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={false}
+      onClick={undefined}>
+      Lukk
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
