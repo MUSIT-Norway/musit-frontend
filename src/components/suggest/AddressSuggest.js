@@ -1,8 +1,8 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import inject from '../../rxjs/RxInject';
 import suggest$Fn, { update$, clear$} from './suggestStore';
 import Config from '../../config';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class AddressSuggest extends React.Component {
 

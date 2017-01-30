@@ -22,9 +22,10 @@ import MusitModal from '../movedialog/MusitModalComponent';
 import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 
 import Config from '../../config';
-import inject from '../../rxjs/RxInject';
 
 import { Observable } from 'rxjs';
+
+import inject from 'react-rxjs/dist/RxInject';
 
 import tableStore$, {
   loadNodes$,

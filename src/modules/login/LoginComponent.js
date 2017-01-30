@@ -7,7 +7,7 @@ import EnglishTranslation from './LoginComponent_en.html.jsx';
 import Logos from '../../components/logos/Logos';
 import LoginButton from './LoginButton';
 import TermsAndConditions from './TermsAndConditions';
-import inject from '../../rxjs/RxInject';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class LoginComponent extends React.Component {
   static propTypes = {

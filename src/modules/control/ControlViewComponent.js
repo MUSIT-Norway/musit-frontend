@@ -25,7 +25,7 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
-import inject from '../../rxjs/RxInject';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class ControlViewContainer extends React.Component {
   static propTypes = {

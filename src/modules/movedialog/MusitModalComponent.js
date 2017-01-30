@@ -25,13 +25,13 @@ import SubmitButton from '../../components/buttons/submit';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
 import PagingToolbar from '../../shared/paging';
-import inject from '../../rxjs/RxInject';
 import moveDialogStore$, {
   clear$,
   loadChildren$,
   loadNode$
 } from './moveDialogStore';
 import Loader from 'react-loader';
+import inject from 'react-rxjs/dist/RxInject';
 
 const PER_PAGE = 10;
 

@@ -10,7 +10,7 @@ describe('MoveHistory', () => {
         onClick={(key) => key}
         tableData={[
           {
-            doneDate: '2017-01-29T21:11:28+01:00',
+            doneDate: '2017-01-20T21:11:28+01:00',
             doneBy: 'Jarl',
             from: {
               breadcrumb: [
@@ -32,7 +32,7 @@ describe('MoveHistory', () => {
             }
           },
           {
-            doneDate: '2017-01-29T21:11:28+01:00',
+            doneDate: '2017-01-20T21:11:28+01:00',
             doneBy: 'Jarl',
             from: {
               breadcrumb: [
@@ -54,6 +54,7 @@ describe('MoveHistory', () => {
             }
           },
           {
+            doneDate: '2017-01-20T21:11:28+01:00',
             doneBy: 'Jarl',
             from: {
               breadcrumb: [
