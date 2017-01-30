@@ -3,7 +3,7 @@ import Autosuggest from 'react-autosuggest';
 import Config from '../../config';
 import Actor from '../../models/actor';
 import suggest$Fn, { update$, clear$} from './suggestStore';
-import inject from '../../rxjs/inject';
+import inject from '../../rxjs/RxInject';
 
 export class ActorSuggest extends React.Component {
 
@@ -72,7 +72,7 @@ export class ActorSuggest extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  suggest$: suggest$Fn(Config.magasin.urls.actor.searchUrl)
+  suggest$: suggest$Fn('actorSuggest', Config.magasin.urls.actor.searchUrl)
 };
 
 const commands = { update$, clear$ };

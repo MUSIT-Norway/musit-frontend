@@ -1,7 +1,7 @@
 import pathToRegexp from 'path-to-regexp';
 import { Observable } from 'rxjs/Rx';
 import { hashHistory } from 'react-router';
-import { addNode, addObject } from '../picklist/picklistReducer';
+import { addNode$, addObject$ } from '../app/pickList';
 import { isMoveDialogActive, loadNode, loadChildren } from '../storagefacility/reducers/modal';
 import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
 import { emitError } from '../../shared/errors';
@@ -86,7 +86,7 @@ export default function (appSession$) {
               dispatchAction(loadNode(res.id, museumId));
               dispatchAction(loadChildren(res.id, museumId));
             } else if (nodePickList) {
-              dispatchAction(addNode(res, getPath(res)));
+              dispatchAction(addNode$.next({ value: res, path: getPath(res)}));
             } else if (storageFacility) {
               hashHistory.push(`/magasin/${res.id}`);
             }
@@ -123,7 +123,7 @@ export default function (appSession$) {
       types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
       promise: (client) => client.get(urlFn(oldBarcode, museumId, collectionId)),
       callback: {
-        onSuccess: (res) => res.map(obj => dispatchAction(addObject(obj, getPath(obj))))
+        onSuccess: (res) => res.map(obj => dispatchAction(addObject$.next(({ value: obj, path: getPath(obj)}))))
       }
     });
   };

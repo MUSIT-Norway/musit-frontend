@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
-import inject from '../../rxjs/inject';
+import inject from '../../rxjs/RxInject';
 import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors';
 import notifiable from './Notifyable';
@@ -79,7 +79,19 @@ export class App extends Component {
       hashHistory.push('/magasin');
     }
   }
-
+  getFooterClass(){
+    let returnClassName;
+    if (window.location.href.toLowerCase().includes('test:')) {
+      returnClassName = 'footer backgroundUTV';
+    } else if (window.location.href.toLowerCase().includes('utv.uio.no:')) {
+      returnClassName = 'footer backgroundUTV';
+    } else if (window.location.href.toLowerCase().includes('test.uio.no:')){
+      returnClassName = 'footer backgroundTEST';
+    } else {
+      returnClassName = 'footer version well';
+    }
+    return returnClassName;
+  }
   render() {
     if (!this.props.appSession.getAccessToken()) {
       return (
@@ -146,11 +158,7 @@ export class App extends Component {
           {this.props.children}
         </div>
 
-        <footer className="footer well version">
-          {window.location.href.toLowerCase().includes('test:')? <span style={{ color: 'red', fontSize: 'xx-large' }}>DEV</span> : '' }
-          {window.location.href.toLowerCase().includes('utv.uio.no:')? <span style={{ color: 'red', fontSize: 'xx-large' }}>UTV</span> : '' }
-          {window.location.href.toLowerCase().includes('test.uio.no:')? <span style={{ color: 'orange', fontSize: 'xx-large' }}>TEST</span> : '' }
-          {' '}
+        <footer className={this.getFooterClass()}>
           {'Build number: ' + this.props.appSession.getBuildNumber()}
         </footer>
       </div>

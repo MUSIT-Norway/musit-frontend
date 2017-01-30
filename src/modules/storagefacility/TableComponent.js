@@ -22,10 +22,7 @@ import MusitModal from '../movedialog/MusitModalComponent';
 import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 
 import Config from '../../config';
-import inject from '../../rxjs/inject';
-
-import {connect} from 'react-redux';
-import { clear } from './reducers/modal';
+import inject from '../../rxjs/RxInject';
 
 import { Observable } from 'rxjs';
 
@@ -38,13 +35,6 @@ import tableStore$, {
   clearRootNode$
 } from './tableStore';
 
-const getObjectDescription = (object) => {
-  let objStr = object.museumNo ? `${object.museumNo}` : '';
-  objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr;
-  objStr = object.term ? `${objStr} - ${object.term}` : objStr;
-  return objStr;
-};
-
 export class StorageUnitsContainer extends React.Component {
   static propTypes = {
     store: React.PropTypes.object.isRequired,
@@ -56,7 +46,6 @@ export class StorageUnitsContainer extends React.Component {
     params: React.PropTypes.object.isRequired,
     pickObject: React.PropTypes.func.isRequired,
     pickNode: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired,
     setLoading: React.PropTypes.func.isRequired,
     clearRootNode: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
@@ -203,7 +192,7 @@ export class StorageUnitsContainer extends React.Component {
     showModal = this.context.showModal
   ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />, this.props.clearMoveDialog);
+    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />);
   }
 
   moveNode = (
@@ -246,7 +235,7 @@ export class StorageUnitsContainer extends React.Component {
     objectToMove,
     showModal = this.context.showModal
   ) {
-    const objStr = getObjectDescription(objectToMove);
+    const objStr = objectToMove.getObjectDescription();
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
     showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
   }
@@ -261,7 +250,7 @@ export class StorageUnitsContainer extends React.Component {
     moveObject = this.props.moveObject,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
-    const description = getObjectDescription(objectToMove);
+    const description = objectToMove.getObjectDescription();
     objectToMove.moveObject(toNode.id, userId, museumId, collectionId, token, {
       onComplete: () => {
         onSuccess();
@@ -285,7 +274,7 @@ export class StorageUnitsContainer extends React.Component {
     objectToShowHistoryFor,
     showModal = this.context.showModal
   ) {
-    const objStr = getObjectDescription(objectToShowHistoryFor);
+    const objStr = objectToShowHistoryFor.getObjectDescription();
     const componentToRender = <MusitModalHistory appSession={this.props.appSession} objectId={objectToShowHistoryFor.id} />;
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
     showModal(title, componentToRender);
@@ -405,6 +394,7 @@ export class StorageUnitsContainer extends React.Component {
     const matches = children && children.data && children.data.matches;
     const totalMatches = children && children.data && children.data.totalMatches;
     const isLoading = children && children.loading;
+    const showPaging = totalMatches > 0 && totalMatches > Config.magasin.limit;
     if (showObjects) {
       return (
         <Loader loaded={!isLoading}>
@@ -423,7 +413,7 @@ export class StorageUnitsContainer extends React.Component {
             }
             onMove={moveObject}
           />
-          {totalMatches > 0 &&
+          {showPaging &&
             <PagingToolbar
               numItems={totalMatches}
               currentPage={currentPage}
@@ -451,7 +441,7 @@ export class StorageUnitsContainer extends React.Component {
           pickNode={(node) => this.props.pickNode(node, rootNode.breadcrumb)}
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
-        {totalMatches > 0 &&
+        {showPaging &&
           <PagingToolbar
             numItems={totalMatches}
             currentPage={currentPage}
@@ -483,12 +473,6 @@ export class StorageUnitsContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clearMoveDialog: () => dispatch(clear())
-  };
-};
-
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   store$: tableStore$
@@ -511,4 +495,4 @@ const props = {
   emitSuccess
 };
 
-export default connect(null, mapDispatchToProps)(inject(data, commands, props)(StorageUnitsContainer));
+export default inject(data, commands, props)(StorageUnitsContainer);
