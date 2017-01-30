@@ -3,7 +3,7 @@ import Autosuggest from 'react-autosuggest';
 import Config from '../../config';
 import Actor from '../../models/actor';
 import suggest$Fn, { update$, clear$} from './suggestStore';
-import inject from '../../rxjs/RxInject';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class ActorSuggest extends React.Component {
 

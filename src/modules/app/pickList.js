@@ -1,10 +1,10 @@
 import { Observable, Subject } from 'rxjs';
-import { createStore } from '../../rxjs/RxStore';
 import { getPath, customSortingStorageNodeType } from '../../shared/util';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
+import { createStore } from 'react-rxjs/dist/RxStore';
 
 export const addObject$ = new Subject();
 export const removeObject$ = new Subject();

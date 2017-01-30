@@ -2,7 +2,7 @@
 import { TestScheduler, Subject } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$ } from '../pickList';
-import { createStore } from '../../../rxjs/RxStore';
+import { createStore } from 'react-rxjs/dist/RxStore';
 
 describe('pickList', () => {
 

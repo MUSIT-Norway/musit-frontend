@@ -6,7 +6,7 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import Toolbar from '../../components/layout/Toolbar';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import inject from '../../rxjs/RxInject';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class ObservationControlGridShow extends React.Component {
   static propTypes = {

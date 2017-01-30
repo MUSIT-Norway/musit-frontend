@@ -34,7 +34,7 @@ import 'font-awesome/css/font-awesome.css';
 import './index.css';
 import appSession$ from './modules/app/appSession';
 import pickList$ from './modules/app/pickList';
-import provide from './rxjs/RxProvide';
+import provide from 'react-rxjs/dist/RxProvide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));

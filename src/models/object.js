@@ -1,4 +1,4 @@
-import { simpleGet, simplePut } from '../rxjs/RxAjax';
+import { simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import MuseumId from './museumId';
 import CollectionId from './collectionId';
