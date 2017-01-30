@@ -92,9 +92,11 @@ export class StorageUnitsContainer extends React.Component {
   componentWillMount() {
     this.props.clearRootNode();
     this.props.setLoading();
+    console.log('Hei hei');
     if (this.props.route.showObjects) {
       this.loadObjects();
       const nodeId = this.props.params.id;
+      console.log(`Node ID: ${nodeId}`);
       if (nodeId) {
         const museumId = this.props.appSession.getMuseumId();
         const token = this.props.appSession.getAccessToken();
@@ -114,6 +116,8 @@ export class StorageUnitsContainer extends React.Component {
     const idHasChanged = newProps.params.id !== this.props.params.id;
     const stateHasChanged = locationState !== this.props.location.state;
     const token = this.props.appSession.getAccessToken();
+
+    console.log('Hei hei recieve props');
     if (idHasChanged || museumHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
       this.props.clearRootNode();
