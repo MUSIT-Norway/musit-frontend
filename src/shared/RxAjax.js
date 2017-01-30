@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs';
 import 'rxjs/add/observable/dom/ajax';
 import { hashHistory } from 'react-router';
-import { emitError } from '../shared/errors';
+import { emitError } from './errors';
 import { actions } from '../modules/app/appSession';
 
 export const onComplete = (callback) => (response) => {

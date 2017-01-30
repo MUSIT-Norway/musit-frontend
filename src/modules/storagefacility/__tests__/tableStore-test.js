@@ -1,7 +1,7 @@
 import { TestScheduler, Subject } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$ } from '../tableStore';
-import { createStore } from '../../../rxjs/RxStore';
+import { createStore } from 'react-rxjs/dist/RxStore';
 
 describe('tableStore', () => {
 

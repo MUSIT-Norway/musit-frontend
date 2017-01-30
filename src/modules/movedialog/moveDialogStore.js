@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
-import { createStore } from '../../rxjs/RxStore';
 import MusitNode from '../../models/node';
+import { createStore } from 'react-rxjs/dist/RxStore';
 
 export const clear$ = new Subject();
 

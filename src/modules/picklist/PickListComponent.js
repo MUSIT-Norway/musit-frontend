@@ -12,7 +12,6 @@ import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
-import inject from '../../rxjs/RxInject';
 import {
   toggleNode$,
   toggleMainObject$,
@@ -22,6 +21,7 @@ import {
   refreshNode$,
   refreshObject$
 } from '../app/pickList';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class PickListContainer extends React.Component {
   static propTypes = {

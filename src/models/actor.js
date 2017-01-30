@@ -1,6 +1,6 @@
 import find from 'lodash/find';
 import Config from '../config';
-import { simplePost } from '../rxjs/RxAjax';
+import { simplePost } from '../shared/RxAjax';
 import entries from 'object.entries';
 
 /**
