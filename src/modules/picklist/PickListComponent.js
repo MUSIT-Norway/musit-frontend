@@ -7,7 +7,7 @@ import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import MusitModal from '../movedialog/MusitModalComponent';
+import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
