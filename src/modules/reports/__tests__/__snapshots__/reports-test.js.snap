@@ -1,0 +1,152 @@
+exports[`KDReportComponent should display correctly 1`] = `
+<div>
+  <main>
+    <Panel
+      bsClass="panel"
+      bsStyle="default"
+      defaultExpanded={false}>
+      <Grid
+        bsClass="container"
+        componentClass="div"
+        fluid={false}>
+        <Row
+          bsClass="row"
+          className="row-centered"
+          componentClass="div">
+          <PageHeader
+            bsClass="page-header">
+            Rapport - Sikring av samlinger
+          </PageHeader>
+          <Table
+            bordered={false}
+            bsClass="table"
+            condensed={false}
+            hover={false}
+            responsive={false}
+            striped={false}
+            style={
+              Object {
+                "width": 700
+              }
+            }>
+            <tbody>
+              <tr>
+                <td>
+                  Totalt areal:
+                </td>
+                <td>
+                  1,23
+                   m²
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Skallsikring:
+                </td>
+                <td>
+                  23,34
+                   m²
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Tyverisikring:
+                </td>
+                <td>
+                  234,2
+                   m²
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Brannsikring:
+                </td>
+                <td>
+                  34,3
+                   m²
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Vannskaderisiko:
+                </td>
+                <td>
+                  234,3
+                   m²
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Rutiner og beredskap:
+                </td>
+                <td>
+                  2334,3
+                   m²
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
+      </Grid>
+    </Panel>
+  </main>
+</div>
+`;
+
+exports[`Reports overview should display correctly 1`] = `
+<div>
+  <main>
+    <Panel
+      bsClass="panel"
+      bsStyle="default"
+      defaultExpanded={false}>
+      <Grid
+        bsClass="container"
+        componentClass="div"
+        fluid={false}>
+        <Row
+          bsClass="row"
+          className="row-centered"
+          componentClass="div">
+          <PageHeader
+            bsClass="page-header">
+            Rapporter
+          </PageHeader>
+          <Table
+            bordered={false}
+            bsClass="table"
+            condensed={false}
+            hover={false}
+            responsive={false}
+            striped={false}>
+            <thead>
+              <tr>
+                <th>
+                  Tittel
+                </th>
+                <th>
+                  Beskrivelse
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                id={undefined}>
+                <td>
+                  <a
+                    href="/#/reports/kdreport">
+                    Sikring av samlinger
+                  </a>
+                </td>
+                <td>
+                  Sikringsindikatorer som rapporteres til KD.
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
+      </Grid>
+    </Panel>
+  </main>
+</div>
+`;

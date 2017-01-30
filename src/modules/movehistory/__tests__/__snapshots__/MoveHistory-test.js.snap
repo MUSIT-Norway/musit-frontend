@@ -1,0 +1,81 @@
+exports[`MoveHistory should match snapshot 1`] = `
+<FormGroup
+  bsClass="form-group">
+  <div>
+    <Table
+      bordered={false}
+      bsClass="table"
+      condensed={true}
+      hover={true}
+      responsive={true}
+      striped={false}>
+      <thead>
+        <tr>
+          <th>
+            Utført dato
+          </th>
+          <th>
+            Utført av
+          </th>
+          <th>
+            Fra
+          </th>
+          <th>
+            Til
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        style={
+          Object {
+            "fontSize": "12px",
+            "padding": "10px"
+          }
+        }>
+        <tr>
+          <td>
+             29.01.2017
+          </td>
+          <td>
+             Jarl
+          </td>
+          <td>
+             Tull
+          </td>
+          <td>
+             Rull
+          </td>
+        </tr>
+        <tr>
+          <td>
+             29.01.2017
+          </td>
+          <td>
+             Jarl
+          </td>
+          <td>
+             Tull
+          </td>
+          <td>
+             Rull
+          </td>
+        </tr>
+        <tr>
+          <td>
+             29.01.2017
+          </td>
+          <td>
+             Jarl
+          </td>
+          <td>
+             Tull
+          </td>
+          <td>
+             Rull
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+  </div>
+</FormGroup>
+`;

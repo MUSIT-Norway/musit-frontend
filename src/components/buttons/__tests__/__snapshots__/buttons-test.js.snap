@@ -1,0 +1,35 @@
+exports[`Cancel should match snapshot 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="default"
+  disabled={false}
+  onClick={undefined}>
+  Cancel button
+</Button>
+`;
+
+exports[`Submit should match snapshot when disabled 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="primary"
+  disabled={true}
+  onClick={undefined}>
+  Submit button
+</Button>
+`;
+
+exports[`Submit should match snapshot when enabled 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="primary"
+  disabled={false}
+  onClick={undefined}>
+  Submit button
+</Button>
+`;
