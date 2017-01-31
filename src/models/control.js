@@ -1,5 +1,4 @@
 import entries from 'object.entries';
-import { simpleGet } from '../shared/RxAjax';
 import Config from '../config';
 
 class Control {
@@ -8,7 +7,7 @@ class Control {
   }
 }
 
-Control.loadControls = ({ nodeId, museumId, token, callback }) => {
+Control.loadControls = (simpleGet) => ({ nodeId, museumId, token, callback }) => {
   return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`, token, callback)
     .map(arr => {
       if (!arr) {
