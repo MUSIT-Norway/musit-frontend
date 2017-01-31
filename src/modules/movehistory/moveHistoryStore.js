@@ -1,9 +1,9 @@
 import { Observable, Subject } from 'rxjs';
-import { createStore } from '../../rxjs/RxStore';
 import MusitObject from '../../models/object';
 import MusitActor from '../../models/actor';
 import uniq from 'lodash/uniq';
 import { I18n } from 'react-i18nify';
+import { createStore } from 'react-rxjs/dist/RxStore';
 
 export const clear$ = new Subject();
 
@@ -35,4 +35,4 @@ export const reducer$ = (actions) =>
     actions.loadMoveHistory$.map((data) => (state) => ({...state, data, error: null}))
   );
 
-export default createStore(reducer$({clear$, loadMoveHistory$}), Observable.of(initialState));
+export default createStore('moveHistory', reducer$({clear$, loadMoveHistory$}), Observable.of(initialState));

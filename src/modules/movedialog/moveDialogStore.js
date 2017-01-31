@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs';
-import { createStore } from '../../rxjs/RxStore';
 import MusitNode from '../../models/node';
+import { createStore } from 'react-rxjs/dist/RxStore';
 
 export const clear$ = new Subject();
 
@@ -28,4 +28,4 @@ export const reducer$ = (actions) =>
     actions.loadChildren$.map((data) => (state) => ({...state, data: { ...data, loading: false }})),
   );
 
-export default createStore(reducer$({clear$, loadNode$, loadChildren$}), Observable.of(initialState));
+export default createStore('moveDialog', reducer$({clear$, loadNode$, loadChildren$}), Observable.of(initialState));

@@ -1,0 +1,41 @@
+exports[`AboutPage should have english text 1`] = `
+<div>
+  <p>
+    MUSIT - The University museums IT-organisation
+  </p>
+  <br />
+  <p>
+    MUSITbasen
+  </p>
+  <br />
+  <p>
+    <a
+      className="moreInfo"
+      href="/moreinfo"
+      onClick={undefined}>
+      Use of personal information in MUSITbasen
+    </a>
+  </p>
+</div>
+`;
+
+exports[`AboutPage should have norwegian text 1`] = `
+<div>
+  <p>
+    MUSIT - Universitetsmuseenes IT-organisasjon
+  </p>
+  <br />
+  <p>
+    MUSITbasen
+  </p>
+  <br />
+  <p>
+    <a
+      className="moreInfo"
+      href="/moreinfo"
+      onClick={undefined}>
+      Bruk av personopplysninger i MUSITbasen
+    </a>
+  </p>
+</div>
+`;

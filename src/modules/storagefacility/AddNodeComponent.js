@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import StorageUnitContainer from './NodeDetails';
-import inject from '../../rxjs/inject';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class AddStorageUnitContainer extends React.Component {
   static propTypes = {

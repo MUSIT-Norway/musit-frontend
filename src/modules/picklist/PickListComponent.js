@@ -7,12 +7,11 @@ import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import MusitModal from '../movedialog/MusitModalComponent';
+import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
-import inject from '../../rxjs/inject';
 import {
   toggleNode$,
   toggleMainObject$,
@@ -22,6 +21,7 @@ import {
   refreshNode$,
   refreshObject$
 } from '../app/pickList';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -34,7 +34,6 @@ export class PickListContainer extends React.Component {
     appSession: React.PropTypes.object.isRequired,
     refreshNode: React.PropTypes.func.isRequired,
     refreshObject: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
     emitSuccess: React.PropTypes.func.isRequired
   }
@@ -60,7 +59,7 @@ export class PickListContainer extends React.Component {
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
     }
-    this.context.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveModal(items)}/>, this.props.clearMoveDialog);
+    this.context.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveModal(items)}/>);
   }
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({

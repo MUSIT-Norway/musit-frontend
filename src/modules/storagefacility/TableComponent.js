@@ -18,16 +18,14 @@ import PagingToolbar from '../../shared/paging';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 
-import MusitModal from '../movedialog/MusitModalComponent';
+import MusitModal from '../movedialog/MoveDialogComponent';
 import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 
 import Config from '../../config';
-import inject from '../../rxjs/inject';
-
-import {connect} from 'react-redux';
-import { clear } from './reducers/modal';
 
 import { Observable } from 'rxjs';
+
+import inject from 'react-rxjs/dist/RxInject';
 
 import tableStore$, {
   loadNodes$,
@@ -37,13 +35,6 @@ import tableStore$, {
   setLoading$,
   clearRootNode$
 } from './tableStore';
-
-const getObjectDescription = (object) => {
-  let objStr = object.museumNo ? `${object.museumNo}` : '';
-  objStr = object.subNo ? `${objStr} - ${object.subNo}` : objStr;
-  objStr = object.term ? `${objStr} - ${object.term}` : objStr;
-  return objStr;
-};
 
 export class StorageUnitsContainer extends React.Component {
   static propTypes = {
@@ -56,7 +47,6 @@ export class StorageUnitsContainer extends React.Component {
     params: React.PropTypes.object.isRequired,
     pickObject: React.PropTypes.func.isRequired,
     pickNode: React.PropTypes.func.isRequired,
-    clearMoveDialog: React.PropTypes.func.isRequired,
     setLoading: React.PropTypes.func.isRequired,
     clearRootNode: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
@@ -88,6 +78,10 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   loadRootNode(nodeId, museumId, token) {
+    this.props.clearRootNode();
+    if (!nodeId) {
+      return;
+    }
     this.props.loadRootNode({
       nodeId,
       museumId,
@@ -100,35 +94,34 @@ export class StorageUnitsContainer extends React.Component {
     });
   }
 
-  componentWillMount() {
-    this.props.clearRootNode();
-    this.props.setLoading();
+  componentWillMount(
+    nodeId = this.props.params.id,
+    museumId = this.props.appSession.getMuseumId(),
+    collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken()
+  ) {
+    this.loadRootNode(nodeId, museumId, token);
     if (this.props.route.showObjects) {
-      this.loadObjects();
-      const nodeId = this.props.params.id;
-      if (nodeId) {
-        const museumId = this.props.appSession.getMuseumId();
-        const token = this.props.appSession.getAccessToken();
-        this.loadRootNode(nodeId, museumId, token);
-      }
+      this.loadObjects(nodeId, museumId, collectionId, token);
     } else {
-      this.loadNodes();
+      this.loadNodes(nodeId, museumId, token);
     }
   }
 
   componentWillReceiveProps(newProps) {
     const museumHasChanged = newProps.appSession.getMuseumId() !== this.props.appSession.getMuseumId();
-    const museumId = museumHasChanged ? newProps.appSession.getMuseumId() : this.props.appSession.getMuseumId();
-    const collectionId = museumHasChanged ? newProps.appSession.getCollectionId() : this.props.appSession.getCollectionId();
-    const nodeId = museumHasChanged ? null : (newProps.params.id || null);
+    const collectionHasChanged = newProps.appSession.getCollectionId() !== this.props.appSession.getCollectionId();
+    const museumId = newProps.appSession.getMuseumId();
+    const collectionId = newProps.appSession.getCollectionId();
+    const token = this.props.appSession.getAccessToken();
+    const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
     const stateHasChanged = locationState !== this.props.location.state;
-    const token = this.props.appSession.getAccessToken();
-    if (idHasChanged || museumHasChanged || stateHasChanged) {
+
+    if (idHasChanged || museumHasChanged || collectionHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
-      this.props.clearRootNode();
-      this.props.setLoading();
+      this.loadRootNode(nodeId, museumId, token);
       if (newProps.route.showObjects) {
         this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
       } else {
@@ -161,38 +154,24 @@ export class StorageUnitsContainer extends React.Component {
     }
   }
 
-  loadNodes(
-    nodeId = this.props.params.id,
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken(),
-    currentPage = this.getCurrentPage()
-  ) {
+  loadNodes(nodeId, museumId, token, page) {
     this.props.setLoading();
-    if (nodeId) {
-      this.loadRootNode(nodeId, museumId, token);
-    }
     this.props.loadNodes({
       nodeId,
       museumId,
-      page: currentPage,
+      page,
       token
     });
   }
 
-  loadObjects(
-    nodeId = this.props.params.id,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
-    currentPage = this.getCurrentPage(),
-  ) {
+  loadObjects(nodeId, museumId, collectionId, token, page) {
     if (nodeId) {
       this.props.setLoading();
       this.props.loadObjects({
         nodeId,
         museumId,
         collectionId,
-        page: currentPage,
+        page,
         token
       });
     }
@@ -203,7 +182,7 @@ export class StorageUnitsContainer extends React.Component {
     showModal = this.context.showModal
   ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />, this.props.clearMoveDialog);
+    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />);
   }
 
   moveNode = (
@@ -246,7 +225,7 @@ export class StorageUnitsContainer extends React.Component {
     objectToMove,
     showModal = this.context.showModal
   ) {
-    const objStr = getObjectDescription(objectToMove);
+    const objStr = objectToMove.getObjectDescription();
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
     showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
   }
@@ -261,7 +240,7 @@ export class StorageUnitsContainer extends React.Component {
     moveObject = this.props.moveObject,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
-    const description = getObjectDescription(objectToMove);
+    const description = objectToMove.getObjectDescription();
     objectToMove.moveObject(toNode.id, userId, museumId, collectionId, token, {
       onComplete: () => {
         onSuccess();
@@ -285,32 +264,36 @@ export class StorageUnitsContainer extends React.Component {
     objectToShowHistoryFor,
     showModal = this.context.showModal
   ) {
-    const objStr = getObjectDescription(objectToShowHistoryFor);
+    const objStr = objectToShowHistoryFor.getObjectDescription();
     const componentToRender = <MusitModalHistory appSession={this.props.appSession} objectId={objectToShowHistoryFor.id} />;
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
     showModal(title, componentToRender);
   }
 
   makeToolbar(
+    nodeId = this.props.params.id,
+    museumId = this.props.appSession.getMuseumId(),
+    collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken(),
     showObjects = this.props.route.showObjects,
     searchPattern = this.state.searchPattern
   ) {
     return <Toolbar
       showRight={!!showObjects}
       showLeft={!showObjects}
-      labelRight={I18n.t('mmusit.grid.button.objects')}
+      labelRight={I18n.t('musit.grid.button.objects')}
       labelLeft={I18n.t('musit.grid.button.nodes')}
       placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
       searchValue={searchPattern}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
         this.showObjects();
-        this.loadObjects();
+        this.loadObjects(nodeId, museumId, collectionId, token);
         blur();
       }}
       clickShowLeft={() => {
         this.showNodes();
-        this.loadNodes();
+        this.loadNodes(nodeId, museumId, token);
         blur();
       }}
     />;
@@ -405,6 +388,7 @@ export class StorageUnitsContainer extends React.Component {
     const matches = children && children.data && children.data.matches;
     const totalMatches = children && children.data && children.data.totalMatches;
     const isLoading = children && children.loading;
+    const showPaging = totalMatches > 0 && totalMatches > Config.magasin.limit;
     if (showObjects) {
       return (
         <Loader loaded={!isLoading}>
@@ -423,7 +407,7 @@ export class StorageUnitsContainer extends React.Component {
             }
             onMove={moveObject}
           />
-          {totalMatches > 0 &&
+          {showPaging &&
             <PagingToolbar
               numItems={totalMatches}
               currentPage={currentPage}
@@ -451,7 +435,7 @@ export class StorageUnitsContainer extends React.Component {
           pickNode={(node) => this.props.pickNode(node, rootNode.breadcrumb)}
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
-        {totalMatches > 0 &&
+        {showPaging &&
           <PagingToolbar
             numItems={totalMatches}
             currentPage={currentPage}
@@ -483,12 +467,6 @@ export class StorageUnitsContainer extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    clearMoveDialog: () => dispatch(clear())
-  };
-};
-
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   store$: tableStore$
@@ -511,4 +489,4 @@ const props = {
   emitSuccess
 };
 
-export default connect(null, mapDispatchToProps)(inject(data, commands, props)(StorageUnitsContainer));
+export default inject(data, commands, props)(StorageUnitsContainer);

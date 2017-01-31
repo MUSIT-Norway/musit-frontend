@@ -1,0 +1,46 @@
+exports[`Logos should match snapshot 1`] = `
+<div
+  className="logos"
+  style={undefined}>
+  <img
+    alt="logo"
+    src="test-file-stub"
+    style={
+      Object {
+        "height": "60px"
+      }
+    } />
+  <img
+    alt="logo"
+    src="test-file-stub"
+    style={
+      Object {
+        "height": "60px"
+      }
+    } />
+  <img
+    alt="logo"
+    src="test-file-stub"
+    style={
+      Object {
+        "height": "60px"
+      }
+    } />
+  <img
+    alt="logo"
+    src="test-file-stub"
+    style={
+      Object {
+        "height": "60px"
+      }
+    } />
+  <img
+    alt="logo"
+    src="test-file-stub"
+    style={
+      Object {
+        "height": "60px"
+      }
+    } />
+</div>
+`;

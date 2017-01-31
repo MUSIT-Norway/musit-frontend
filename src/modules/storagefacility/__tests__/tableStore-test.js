@@ -1,7 +1,7 @@
 import { TestScheduler, Subject } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$ } from '../tableStore';
-import { createStore } from '../../../rxjs/RxStore';
+import { createStore } from 'react-rxjs/dist/RxStore';
 
 describe('tableStore', () => {
 
@@ -36,7 +36,7 @@ describe('tableStore', () => {
     const state$ = reducer$({clearRootNode$, setLoading$, loadNodes$, loadObjects$, loadStats$, deleteNode$, loadRootNode$});
 
     // assertion
-    testScheduler.expectObservable(createStore(state$)).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

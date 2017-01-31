@@ -18,20 +18,20 @@
  */
 import React, {Component, PropTypes} from 'react';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import ModalNodeGrid from './ModalNodeGrid';
+import ModalNodeGrid from './MoveDialogGrid';
 import NodeSuggest from '../../components/suggest/NodeSuggest';
 import Modal from '../../components/modal/MusitModal';
 import SubmitButton from '../../components/buttons/submit';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
 import PagingToolbar from '../../shared/paging';
-import inject from '../../rxjs/inject';
 import moveDialogStore$, {
   clear$,
   loadChildren$,
   loadNode$
 } from './moveDialogStore';
 import Loader from 'react-loader';
+import inject from 'react-rxjs/dist/RxInject';
 
 const PER_PAGE = 10;
 
@@ -160,6 +160,7 @@ export class MusitModal extends Component {
 
     return (
       <Modal
+        className="moveDialog"
         style={{ minWidth: 700 }}
         header={header}
         body={body}

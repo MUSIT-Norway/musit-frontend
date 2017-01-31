@@ -5,10 +5,11 @@ import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './LoginComponent_no.html.jsx';
 import EnglishTranslation from './LoginComponent_en.html.jsx';
 import Logos from '../../components/logos/Logos';
-import LoginButton from './loginButton';
+import LoginButton from './LoginButton';
 import TermsAndConditions from './TermsAndConditions';
+import inject from 'react-rxjs/dist/RxInject';
 
-export default class WelcomeContainer extends React.Component {
+export class LoginComponent extends React.Component {
   static propTypes = {
     user: React.PropTypes.object
   };
@@ -31,7 +32,7 @@ export default class WelcomeContainer extends React.Component {
   }
 
   render() {
-    const Translated = I18n._locale === 'no' ? NorwegianTranslation : EnglishTranslation;
+    const Translated = this.props.getLocale() === 'no' ? NorwegianTranslation : EnglishTranslation;
     return (
       <div>
         <main>
@@ -60,3 +61,5 @@ export default class WelcomeContainer extends React.Component {
     );
   }
 }
+
+export default inject({}, {}, { getLocale: () => I18n._locale })(LoginComponent);
