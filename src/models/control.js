@@ -10,7 +10,12 @@ class Control {
 
 Control.loadControls = ({ nodeId, museumId, token, callback }) => {
   return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`, token, callback)
-    .map(json => new Control(json));
+    .map(arr => {
+      if (!arr) {
+        return [];
+      }
+      return arr.map(json => new Control(json));
+    });
 };
 
 export default Control;

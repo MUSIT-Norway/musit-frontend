@@ -10,7 +10,12 @@ class Observation {
 
 Observation.loadObservations = ({ nodeId, museumId, token, callback }) => {
   return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`, token, callback)
-    .map(json => new Observation(json));
+    .map(arr => {
+      if (!arr) {
+        return [];
+      }
+      return arr.map(json => new Observation(json));
+    });
 };
 
 export default Observation;

@@ -15,11 +15,12 @@ import store$, {
 
 export class ObservationControlGridShow extends React.Component {
   static propTypes = {
-    observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
+    store: React.PropTypes.object,
     params: React.PropTypes.object,
     route: React.PropTypes.object,
-    loadControlAndObservations: React.PropTypes.func.isRequired,
-    loadStorageObj: React.PropTypes.func.isRequired
+    loadEvents: React.PropTypes.func.isRequired,
+    loadRootNode: React.PropTypes.func.isRequired,
+    clearEvents: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -31,16 +32,14 @@ export class ObservationControlGridShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadControlAndObservations({
+    this.props.clearEvents();
+    const props = {
       nodeId: this.props.params.id,
       museumId: this.props.appSession.getMuseumId(),
       token: this.props.appSession.getAccessToken()
-    });
-    this.props.loadStorageObj({
-      nodeId: this.props.params.id,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
-    });
+    };
+    this.props.loadEvents(props);
+    this.props.loadRootNode(props);
   }
 
   makeToolbar() {
@@ -70,7 +69,7 @@ export class ObservationControlGridShow extends React.Component {
   makeContent() {
     return <ObservationControlGrid
       id={this.props.params.id}
-      tableData={this.props.observationControlGridData.filter((e) => {
+      tableData={this.props.store.data.filter((e) => {
         if (e.eventType && this.state.showControls && this.state.showObservations) {
           return true;
         } else if (e.eventType && this.state.showControls) {
@@ -89,7 +88,7 @@ export class ObservationControlGridShow extends React.Component {
         title={I18n.t('musit.storageUnits.title')}
         breadcrumb={
           <Breadcrumb
-            node={this.props.rootNode}
+            node={this.props.store.rootNode}
             onClickCrumb={(node) => hashHistory.push(node.url)}
             allActive
           />
@@ -109,8 +108,8 @@ const data = {
 
 const commands = {
   clearEvents$,
-  loadStorageObj: loadRootNode$,
-  loadControlAndObservations: loadEvents$
+  loadRootNode$,
+  loadEvents$
 };
 
 export default inject(data, commands)(ObservationControlGridShow);

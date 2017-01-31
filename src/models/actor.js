@@ -52,7 +52,12 @@ class MusitActor {
 
 MusitActor.getActorDetails = (actorIds, token, callback) => {
   return simplePost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
-    .map(actors => actors.map(a => new MusitActor(a)));
+    .map(actors => {
+      if (!actors) {
+        return [];
+      }
+      return actors.map(a => new MusitActor(a));
+    });
 };
 
 export default MusitActor;

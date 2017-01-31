@@ -4,9 +4,10 @@ import Control from '../../models/control';
 import Observation from '../../models/observation';
 import MusitActor from '../../models/actor';
 import MusitNode from '../../models/node';
-import sortBy from 'lodash/sortBy';
+import orderBy from 'lodash/orderBy';
 import uniq from 'lodash/uniq';
 import flatten from 'lodash/flatten';
+import concat from 'lodash/concat';
 
 export const clearEvents$ = createAction('clearEvents$');
 export const loadEvents$ = createAction('loadEvents$');
@@ -20,13 +21,18 @@ const reducer$ = (actions) => Observable.merge(
   actions.loadEvents$.switchMap((props) => {
     return Observable.forkJoin(Control.loadControls(props), Observation.loadObservations(props))
       .flatMap(([controls, observations]) => {
-        const events = sortBy(controls.concat(observations), [{ 'doneDate': 'desc' }, { 'id': 'desc' }]);
-        const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy])));
+        const events = orderBy(concat(controls, observations), ['doneDate', 'id'], ['desc', 'desc']);
+        const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(p => p);
         return MusitActor.getActorDetails(actorIds, props.token)
-          .map((actors) => events.map((data) => ({
-            ...data,
-            ...MusitActor.getActorNames(actors, data.doneBy, data.registeredBy)
-          })));
+          .map((actors) => {
+            if (!actors) {
+              return events;
+            }
+            return events.map((data) => ({
+              ...data,
+              ...MusitActor.getActorNames(actors, data.doneBy, data.registeredBy)
+            }));
+          });
       });
   }).map((data) => (state) => ({...state, data})),
 );
