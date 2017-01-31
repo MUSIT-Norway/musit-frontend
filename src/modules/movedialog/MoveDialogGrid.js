@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import './ModalNodeGrid.css';
+import './MoveDialogGrid.css';
 import { I18n } from 'react-i18nify';
 
 export default class ModalNodeGrid extends Component {

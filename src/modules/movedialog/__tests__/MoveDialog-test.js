@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import ModalNodeGrid from '../ModalNodeGrid';
+import ModalNodeGrid from '../MoveDialogGrid';
 
 describe('ModalNodeGrid', () => {
   it('should match snapshot', () => {

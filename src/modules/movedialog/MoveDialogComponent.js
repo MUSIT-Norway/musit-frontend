@@ -18,7 +18,7 @@
  */
 import React, {Component, PropTypes} from 'react';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import ModalNodeGrid from './ModalNodeGrid';
+import ModalNodeGrid from './MoveDialogGrid';
 import NodeSuggest from '../../components/suggest/NodeSuggest';
 import Modal from '../../components/modal/MusitModal';
 import SubmitButton from '../../components/buttons/submit';
@@ -160,6 +160,7 @@ export class MusitModal extends Component {
 
     return (
       <Modal
+        className="moveDialog"
         style={{ minWidth: 700 }}
         header={header}
         body={body}

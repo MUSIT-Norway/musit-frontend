@@ -36,6 +36,7 @@ export class App extends Component {
     this.handleLanguage = this.handleLanguage.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleMuseumId = this.handleMuseumId.bind(this);
+    this.handleCollectionId = this.handleCollectionId.bind(this);
   }
 
   componentWillMount() {
@@ -70,15 +71,17 @@ export class App extends Component {
     hashHistory.push('/magasin');
   }
 
-  handleCollectionId(nid, cid) {
+  handleCollectionId(cid) {
     this.props.setCollectionId(cid);
     this.props.setCollectionIdInRedux(cid);
-    if (nid) {
-      hashHistory.push(`/magasin/${nid}`);
+    const nodeId = this.props.params.id;
+    if (nodeId) {
+      hashHistory.push('/magasin/' + nodeId);
     } else {
       hashHistory.push('/magasin');
     }
   }
+
   getFooterClass(){
     let returnClassName;
     if (window.location.href.toLowerCase().includes('test:')) {
@@ -134,7 +137,7 @@ export class App extends Component {
                 handleLogout={this.handleLogout}
                 handleLanguage={this.handleLanguage}
                 handleMuseumId={this.handleMuseumId}
-                handleCollectionId={(uuid) => this.handleCollectionId(this.props.rootNode && this.props.rootNode.id, uuid)}
+                handleCollectionId={this.handleCollectionId}
                 rootNode={this.props.rootNode}
               />
             </Nav>
