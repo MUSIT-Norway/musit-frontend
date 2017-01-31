@@ -7,6 +7,11 @@ import Toolbar from '../../components/layout/Toolbar';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
+import store$, {
+  clearEvents$,
+  loadRootNode$,
+  loadEvents$
+} from './eventsStore';
 
 export class ObservationControlGridShow extends React.Component {
   static propTypes = {
@@ -26,8 +31,16 @@ export class ObservationControlGridShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadControlAndObservations(this.props.params.id, this.props.appSession.getMuseumId());
-    this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
+    this.props.loadControlAndObservations({
+      nodeId: this.props.params.id,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken()
+    });
+    this.props.loadStorageObj({
+      nodeId: this.props.params.id,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken()
+    });
   }
 
   makeToolbar() {
@@ -90,7 +103,14 @@ export class ObservationControlGridShow extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: React.PropTypes.object.isRequired },
+  store$
 };
 
-export default inject(data)(ObservationControlGridShow);
+const commands = {
+  clearEvents$,
+  loadStorageObj: loadRootNode$,
+  loadControlAndObservations: loadEvents$
+};
+
+export default inject(data, commands)(ObservationControlGridShow);
