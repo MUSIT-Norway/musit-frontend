@@ -57,8 +57,7 @@ const loadAppSession = (accessToken = getAccessToken()) => {
     ajaxGet(Config.magasin.urls.auth.groupsUrl(currentUserRes.response.dataportenUser), accessToken)
       .map(({response}) => {
         if (!response) {
-          emitError({ message: I18n.t('musit.errorMainMessages.noGroups') });
-          return null;
+          throw new Error(I18n.t('musit.errorMainMessages.noGroups'));
         }
         const isGod = !!response.find(group => 10000 === group.permission);
         let groups;
