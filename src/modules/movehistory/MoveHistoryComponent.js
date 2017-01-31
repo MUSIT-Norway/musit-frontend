@@ -22,11 +22,11 @@ import ModalMoveHistoryGrid from './ModalMoveHistoryGrid';
 import Modal from '../../components/modal/MusitModal';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
-import inject from '../../rxjs/RxInject';
 import moveHistoryStore$, {
   clear$,
   loadMoveHistory$
 } from './moveHistoryStore';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class MoveHistoryModal extends Component {
 

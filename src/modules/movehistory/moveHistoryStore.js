@@ -1,9 +1,9 @@
 import { Observable, Subject } from 'rxjs';
-import { createStore } from '../../rxjs/RxStore';
 import MusitObject from '../../models/object';
 import MusitActor from '../../models/actor';
 import uniq from 'lodash/uniq';
 import { I18n } from 'react-i18nify';
+import { createStore } from 'react-rxjs/dist/RxStore';
 
 export const clear$ = new Subject();
 

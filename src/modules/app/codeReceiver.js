@@ -2,7 +2,7 @@ import pathToRegexp from 'path-to-regexp';
 import { Observable } from 'rxjs/Rx';
 import { hashHistory } from 'react-router';
 import { addNode$, addObject$ } from '../app/pickList';
-import { isMoveDialogActive, loadNode, loadChildren } from '../storagefacility/reducers/modal';
+import { loadNode$, loadChildren$ } from '../movedialog/moveDialogStore';
 import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
 import { emitError } from '../../shared/errors';
 import { isNumber, getPath, dispatchAction } from '../../shared/util';
@@ -32,6 +32,10 @@ const getRoutePathname = () => {
   return hash.substr(1, hash.indexOf('?') - 1);
 };
 
+const isMoveDialogActive = () => {
+  return document.getElementsByClassName('moveDialog').length > 0;
+};
+
 export default function (appSession$) {
   let appSession;
   appSession$.subscribe(state => appSession = state);
@@ -47,14 +51,17 @@ export default function (appSession$) {
     .scan((state, reducer) => reducer(state), '')
     .map(text => text.replace(/\+/g, '-'));
 
-  const dispatchNodeSearch = (scanNodeUrlFn,
-                              scanObjectUrlFn,
-                              uuidOrBarCode,
-                              nodePickList,
-                              storageFacility,
-                              moveActive,
-                              museumId = appSession.getMuseumId(),
-                              collectionId = appSession.getCollectionId()) => {
+  const dispatchNodeSearch = (
+    scanNodeUrlFn,
+    scanObjectUrlFn,
+    uuidOrBarCode,
+    nodePickList,
+    storageFacility,
+    moveActive,
+    museumId = appSession.getMuseumId(),
+    collectionId = appSession.getCollectionId(),
+    token = appSession.getAccessToken()
+  ) => {
     dispatchAction({
       types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
       promise: (client) => new Promise((resolve, reject) => {
@@ -65,8 +72,6 @@ export default function (appSession$) {
             } else if (isNumber(uuidOrBarCode)) {
               client.get(scanObjectUrlFn(uuidOrBarCode, museumId, collectionId))
                 .then(maybeObj => {
-                  console.log('Object:');
-                  console.log(maybeObj);
                   if (maybeObj.length && maybeObj.length > 0) {
                     resolve(maybeObj[0]);
                   } else {
@@ -82,15 +87,14 @@ export default function (appSession$) {
         onSuccess: (res) => {
           if (res.nodeId) {
             if (moveActive) {
-              dispatchAction(loadNode(res.id, museumId));
-              dispatchAction(loadChildren(res.id, museumId));
+              dispatchAction(loadNode$.next({ nodeId: res.id, museumId, token }));
+              dispatchAction(loadChildren$.next({ nodeId: res.id, museumId, token }));
             } else if (nodePickList) {
               dispatchAction(addNode$.next({ value: res, path: getPath(res)}));
             } else if (storageFacility) {
               hashHistory.push(`/magasin/${res.id}`);
             }
           } else if (res.currentLocationId) {
-            console.log(res.currentLocationId);
             hashHistory.push(`/magasin/${res.currentLocationId}/objects`);
           }
         },
@@ -114,12 +118,12 @@ export default function (appSession$) {
       }
     });
   };
-
-  const dispatchObject = (urlFn,
-                          oldBarcode,
-                          museumId = appSession.getMuseumId(),
-                          collectionId = appSession.getCollectionId()) => {
-    console.log('122');
+  const dispatchObject = (
+    urlFn,
+    oldBarcode,
+    museumId = appSession.getMuseumId(),
+    collectionId = appSession.getCollectionId()
+  ) => {
     dispatchAction({
       types: [SCAN_START, SCAN_SUCCESS, SCAN_FAILURE],
       promise: (client) => client.get(urlFn(oldBarcode, museumId, collectionId)),

@@ -1,25 +1,25 @@
-import { Observable, Subject } from 'rxjs';
-import { createStore } from '../../rxjs/RxStore';
+import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
+import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
-export const clearRootNode$ = new Subject();
+export const clearRootNode$ = createAction('clearRootNode$');
 
-export const setLoading$ = new Subject();
+export const setLoading$ = createAction('setLoading$');
 
-export const loadNodes$ = new Subject().switchMap(cmd =>
+export const loadNodes$ = createAction('loadNodes$').switchMap(cmd =>
   MusitNode.getNodes(cmd.nodeId, cmd.page, cmd.museumId, cmd.token, cmd)
 );
 
-export const loadObjects$ = new Subject().switchMap(cmd =>
+export const loadObjects$ = createAction('loadObjects$').switchMap(cmd =>
   MusitObject.getObjects(cmd.nodeId, cmd.page, cmd.museumId, cmd.collectionId, cmd.token, cmd)
 );
 
-export const loadStats$ = new Subject().switchMap((cmd) =>
+export const loadStats$ = createAction('loadStats$').switchMap((cmd) =>
   MusitNode.getStats(cmd.nodeId, cmd.museumId, cmd.token, cmd)
 );
 
-export const loadRootNode$ = new Subject().switchMap((cmd) =>
+export const loadRootNode$ = createAction('loadRootNode$').switchMap((cmd) =>
   MusitNode.getNode(cmd.nodeId, cmd.museumId, cmd.token, cmd)
 );
 

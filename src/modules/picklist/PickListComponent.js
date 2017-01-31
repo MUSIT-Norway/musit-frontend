@@ -7,12 +7,11 @@ import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
-import MusitModal from '../movedialog/MusitModalComponent';
+import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
-import inject from '../../rxjs/RxInject';
 import {
   toggleNode$,
   toggleMainObject$,
@@ -22,6 +21,7 @@ import {
   refreshNode$,
   refreshObject$
 } from '../app/pickList';
+import inject from 'react-rxjs/dist/RxInject';
 
 export class PickListContainer extends React.Component {
   static propTypes = {

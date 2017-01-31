@@ -18,13 +18,14 @@ import PagingToolbar from '../../shared/paging';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 
-import MusitModal from '../movedialog/MusitModalComponent';
+import MusitModal from '../movedialog/MoveDialogComponent';
 import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 
 import Config from '../../config';
-import inject from '../../rxjs/RxInject';
 
 import { Observable } from 'rxjs';
+
+import inject from 'react-rxjs/dist/RxInject';
 
 import tableStore$, {
   loadNodes$,
@@ -77,6 +78,10 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   loadRootNode(nodeId, museumId, token) {
+    this.props.clearRootNode();
+    if (!nodeId) {
+      return;
+    }
     this.props.loadRootNode({
       nodeId,
       museumId,
@@ -89,39 +94,34 @@ export class StorageUnitsContainer extends React.Component {
     });
   }
 
-  componentWillMount() {
-    this.props.clearRootNode();
-    this.props.setLoading();
-    console.log('Hei hei');
+  componentWillMount(
+    nodeId = this.props.params.id,
+    museumId = this.props.appSession.getMuseumId(),
+    collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken()
+  ) {
+    this.loadRootNode(nodeId, museumId, token);
     if (this.props.route.showObjects) {
-      this.loadObjects();
-      const nodeId = this.props.params.id;
-      console.log(`Node ID: ${nodeId}`);
-      if (nodeId) {
-        const museumId = this.props.appSession.getMuseumId();
-        const token = this.props.appSession.getAccessToken();
-        this.loadRootNode(nodeId, museumId, token);
-      }
+      this.loadObjects(nodeId, museumId, collectionId, token);
     } else {
-      this.loadNodes();
+      this.loadNodes(nodeId, museumId, token);
     }
   }
 
   componentWillReceiveProps(newProps) {
     const museumHasChanged = newProps.appSession.getMuseumId() !== this.props.appSession.getMuseumId();
-    const museumId = museumHasChanged ? newProps.appSession.getMuseumId() : this.props.appSession.getMuseumId();
-    const collectionId = museumHasChanged ? newProps.appSession.getCollectionId() : this.props.appSession.getCollectionId();
-    const nodeId = museumHasChanged ? null : (newProps.params.id || null);
+    const collectionHasChanged = newProps.appSession.getCollectionId() !== this.props.appSession.getCollectionId();
+    const museumId = newProps.appSession.getMuseumId();
+    const collectionId = newProps.appSession.getCollectionId();
+    const token = this.props.appSession.getAccessToken();
+    const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
     const stateHasChanged = locationState !== this.props.location.state;
-    const token = this.props.appSession.getAccessToken();
 
-    console.log('Hei hei recieve props');
-    if (idHasChanged || museumHasChanged || stateHasChanged) {
+    if (idHasChanged || museumHasChanged || collectionHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
-      this.props.clearRootNode();
-      this.props.setLoading();
+      this.loadRootNode(nodeId, museumId, token);
       if (newProps.route.showObjects) {
         this.loadObjects(nodeId, museumId, collectionId, token, currentPage);
       } else {
@@ -154,38 +154,24 @@ export class StorageUnitsContainer extends React.Component {
     }
   }
 
-  loadNodes(
-    nodeId = this.props.params.id,
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken(),
-    currentPage = this.getCurrentPage()
-  ) {
+  loadNodes(nodeId, museumId, token, page) {
     this.props.setLoading();
-    if (nodeId) {
-      this.loadRootNode(nodeId, museumId, token);
-    }
     this.props.loadNodes({
       nodeId,
       museumId,
-      page: currentPage,
+      page,
       token
     });
   }
 
-  loadObjects(
-    nodeId = this.props.params.id,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
-    currentPage = this.getCurrentPage(),
-  ) {
+  loadObjects(nodeId, museumId, collectionId, token, page) {
     if (nodeId) {
       this.props.setLoading();
       this.props.loadObjects({
         nodeId,
         museumId,
         collectionId,
-        page: currentPage,
+        page,
         token
       });
     }
@@ -285,25 +271,29 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   makeToolbar(
+    nodeId = this.props.params.id,
+    museumId = this.props.appSession.getMuseumId(),
+    collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken(),
     showObjects = this.props.route.showObjects,
     searchPattern = this.state.searchPattern
   ) {
     return <Toolbar
       showRight={!!showObjects}
       showLeft={!showObjects}
-      labelRight={I18n.t('mmusit.grid.button.objects')}
+      labelRight={I18n.t('musit.grid.button.objects')}
       labelLeft={I18n.t('musit.grid.button.nodes')}
       placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
       searchValue={searchPattern}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
         this.showObjects();
-        this.loadObjects();
+        this.loadObjects(nodeId, museumId, collectionId, token);
         blur();
       }}
       clickShowLeft={() => {
         this.showNodes();
-        this.loadNodes();
+        this.loadNodes(nodeId, museumId, token);
         blur();
       }}
     />;
