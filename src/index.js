@@ -40,15 +40,17 @@ import notification$ from './shared/errors';
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
 
 notification$.subscribe((event) => {
+  event = {...event, message: null, body: event.message};
+  if (event.level === 'error') {
+    event = {...event, autoDismiss: 0};
+  }
   notificationSystem.addNotification({
-    autoDismiss: event.level === 'error' && 0,
-    level: event.level,
-    title: event.title,
+    ...event,
     position: 'tc',
     children: (
       <div style={{margin: '30px'}}>
         <p>
-          {event.message}
+          {event.body}
         </p>
       </div>
     )
