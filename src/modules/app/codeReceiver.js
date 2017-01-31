@@ -118,7 +118,6 @@ export default function (appSession$) {
       }
     });
   };
-
   const dispatchObject = (
     urlFn,
     oldBarcode,
