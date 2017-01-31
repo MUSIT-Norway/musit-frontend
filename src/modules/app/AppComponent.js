@@ -86,9 +86,9 @@ export class App extends Component {
     let returnClassName;
     if (window.location.href.toLowerCase().includes('test:')) {
       returnClassName = 'footer backgroundUTV';
-    } else if (window.location.href.toLowerCase().includes('utv.uio.no:')) {
+    } else if (window.location.href.toLowerCase().includes('utv.uio.no')) {
       returnClassName = 'footer backgroundUTV';
-    } else if (window.location.href.toLowerCase().includes('test.uio.no:')){
+    } else if (window.location.href.toLowerCase().includes('test.uio.no')){
       returnClassName = 'footer backgroundTEST';
     } else {
       returnClassName = 'footer version well';
