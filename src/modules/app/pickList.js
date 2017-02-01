@@ -5,6 +5,7 @@ import MusitNode from '../../models/node';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
 import { createStore } from 'react-rxjs/dist/RxStore';
+import { simpleGet } from '../../shared/RxAjax';
 
 export const addObject$ = new Subject();
 export const removeObject$ = new Subject();
@@ -20,7 +21,7 @@ export const removeNode$ = new Subject();
 export const toggleNode$ = new Subject();
 export const clearNodes$ = new Subject();
 export const refreshNode$ = new Subject().flatMap((cmd) =>
-  MusitNode.getNode(cmd.id, cmd.museumId, cmd.token, cmd)
+  MusitNode.getNode(simpleGet)(cmd.id, cmd.museumId, cmd.token, cmd)
 );
 
 const addItem = (item, items = []) => {

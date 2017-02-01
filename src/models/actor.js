@@ -1,6 +1,5 @@
 import find from 'lodash/find';
 import Config from '../config';
-import { simplePost } from '../shared/RxAjax';
 import entries from 'object.entries';
 
 /**
@@ -50,9 +49,14 @@ class MusitActor {
   }
 }
 
-MusitActor.getActorDetails = (actorIds, token, callback) => {
-  return simplePost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
-    .map(actors => actors.map(a => new MusitActor(a)));
+MusitActor.getActorDetails = (ajaxPost) => (actorIds, token, callback) => {
+  return ajaxPost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
+    .map(actors => {
+      if (!actors) {
+        return undefined;
+      }
+      return actors.map(a => new MusitActor(a));
+    });
 };
 
 export default MusitActor;

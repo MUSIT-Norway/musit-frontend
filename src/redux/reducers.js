@@ -20,12 +20,10 @@
 import { combineReducers } from 'redux';
 import storagePanelStateReducer from '../modules/storagefacility/reducers/panel/state';
 import storagePanelReducer from '../modules/storagefacility/reducers/panel';
-import storageUnitModal from '../modules/storagefacility/reducers/modal';
 import storageUnitStatsReducer from '../modules/storagefacility/reducers/stats';
 import observationReducer from '../modules/observation/observationReducer';
 import reportReducer from '../modules/reports/reportsReducer';
 import controlReducer from '../modules/control/controlReducer';
-import observationControlGridReducer from '../modules/events/eventsReducer';
 import ObjectSearchReducer from '../modules/objectsearch/reducer';
 import printReducer from '../modules/print/printReducer';
 import storageNodeGridReducer from '../modules/storagefacility/reducers/grid/nodes';
@@ -35,14 +33,12 @@ const rootReducer = combineReducers({
   print: printReducer,
   session: sessionReducer,
   storagePanelUnit: storagePanelReducer,
-  [storageUnitModal.ID]: storageUnitModal.reducer,
   storageGridUnit: storageNodeGridReducer,
   storageUnitStats: storageUnitStatsReducer,
   storagePanelState: storagePanelStateReducer,
   observation: observationReducer,
   reports: reportReducer,
   control: controlReducer,
-  observationControlGrid: observationControlGridReducer,
   objectSearch: ObjectSearchReducer
 });
 

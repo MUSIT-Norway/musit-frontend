@@ -4,6 +4,7 @@ import MusitActor from '../../models/actor';
 import uniq from 'lodash/uniq';
 import { I18n } from 'react-i18nify';
 import { createStore } from 'react-rxjs/dist/RxStore';
+import { simplePost } from '../../shared/RxAjax';
 
 export const clear$ = new Subject();
 
@@ -11,7 +12,7 @@ export const loadMoveHistory$ = new Subject().switchMap(cmd =>
   MusitObject.getLocationHistory(cmd.objectId, cmd.museumId, cmd.token, cmd)
     .flatMap(rows => {
       const actorIds = uniq(rows.map(r => r.doneBy)).filter(r => r);
-      return MusitActor.getActorDetails(actorIds, cmd.token)
+      return MusitActor.getActorDetails(simplePost)(actorIds, cmd.token)
         .map(actors => {
           if (!Array.isArray(actors)) {
             return rows;
