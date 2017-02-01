@@ -49,8 +49,8 @@ class MusitActor {
   }
 }
 
-MusitActor.getActorDetails = (simplePost) => (actorIds, token, callback) => {
-  return simplePost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
+MusitActor.getActorDetails = (ajaxPost) => (actorIds, token, callback) => {
+  return ajaxPost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
     .map(actors => {
       if (!actors) {
         return undefined;

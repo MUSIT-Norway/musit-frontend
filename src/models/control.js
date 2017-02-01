@@ -7,8 +7,8 @@ class Control {
   }
 }
 
-Control.loadControls = (simpleGet) => ({ nodeId, museumId, token, callback }) => {
-  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`, token, callback)
+Control.loadControls = (ajaxGet) => ({ nodeId, museumId, token, callback }) => {
+  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`, token, callback)
     .map(arr => {
       if (!arr) {
         return [];

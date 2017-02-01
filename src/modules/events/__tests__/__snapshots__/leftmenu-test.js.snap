@@ -1,0 +1,66 @@
+exports[`LeftMenu Check the new observation button is created. 1`] = `
+<div>
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={12}
+      xs={6}>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        disabled={false}
+        id="1_newObservation"
+        onClick={[Function onClick]}
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "100%"
+          }
+        }>
+        <FontAwesome
+          name="plus-circle"
+          style={
+            Object {
+              "padding": "2px"
+            }
+          } />
+        Ny observasjon
+      </Button>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={12}
+      xs={6}>
+      <Button
+        active={false}
+        block={false}
+        bsClass="btn"
+        bsStyle="default"
+        disabled={false}
+        id="1_newControl"
+        onClick={[Function onClick]}
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "100%"
+          }
+        }>
+        <FontAwesome
+          name="plus-circle"
+          style={
+            Object {
+              "padding": "2px"
+            }
+          } />
+        Ny kontroll
+      </Button>
+    </Col>
+  </Row>
+</div>
+`;

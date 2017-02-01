@@ -7,8 +7,8 @@ class Observation {
   }
 }
 
-Observation.loadObservations = (simpleGet) => ({ nodeId, museumId, token, callback }) => {
-  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`, token, callback)
+Observation.loadObservations = (ajaxGet) => ({ nodeId, museumId, token, callback }) => {
+  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`, token, callback)
     .map(arr => {
       if (!arr) {
         return [];

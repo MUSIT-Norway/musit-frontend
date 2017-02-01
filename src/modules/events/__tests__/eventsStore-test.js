@@ -127,7 +127,7 @@ describe('eventsStore', () => {
           return Observable.of({
             nodeId: 1,
             name: 'Test'
-          })
+          });
         }
       }));
     const loadEvents$ = testScheduler.createHotObservable(loadEventsM, {1: {nodeId: 1, museumId: new MuseumId(1), token: '1234'}})

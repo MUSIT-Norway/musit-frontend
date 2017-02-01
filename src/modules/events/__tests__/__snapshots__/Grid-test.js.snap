@@ -1,0 +1,596 @@
+exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
+<FormGroup
+  bsClass="form-group">
+  <div>
+    <Table
+      bordered={false}
+      bsClass="table"
+      condensed={true}
+      hover={true}
+      responsive={true}
+      striped={false}>
+      <thead>
+        <tr>
+          <th />
+          <th>
+            Dato
+          </th>
+          <th>
+            Typer
+          </th>
+          <th>
+            Utført av
+          </th>
+          <th>
+            Reg. dato
+          </th>
+          <th>
+            Reg. av
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitlightingcondicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Lysforhold" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musittemperatureicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Temperatur" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musithypoxicairicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Inertluft" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitrelhumidityicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Relativ luftfuktighet" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitcleaningicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Renhold" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitmoldicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Mugg" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitalcoholicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Sprit" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitgasicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Gass" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitwaterdamageicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Vannskaderisiko" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitfireprotectionicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Brannsikring" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musittheftprotectionicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Tyverisikring" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitperimetersecurityicon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Skallsikring" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+        <tr
+          id="1_2017-01-01T09:42:52+00:00"
+          onClick={[Function onClick]}
+          style={
+            Object {
+              "cursor": "pointer"
+            }
+          }>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_type">
+            <div
+              className="icon icon-musitcontrolicon"
+              title="Kontroll" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_date">
+            01.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_types">
+            <span
+              className="icon icon-musitpesticon"
+              style={
+                Object {
+                  "color": "darkgray",
+                  "padding": "2px"
+                }
+              }
+              title="Skadedyr" />
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_doneBy">
+            Blablabla...
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredDate">
+            04.01.2017
+          </td>
+          <td
+            id="1_2017-01-01T09:42:52+00:00_registeredBy">
+            Blabla...
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+  </div>
+</FormGroup>
+`;

@@ -13,7 +13,7 @@ import store$, {
   loadEvents$
 } from './eventsStore';
 
-export class ObservationControlGridShow extends React.Component {
+export class EventsComponent extends React.Component {
   static propTypes = {
     store: React.PropTypes.object,
     params: React.PropTypes.object,
@@ -67,18 +67,26 @@ export class ObservationControlGridShow extends React.Component {
   }
 
   makeContent() {
+    const filtered = this.props.store.data.filter((e) => {
+      if (e.eventType && this.state.showControls && this.state.showObservations) {
+        return true;
+      } else if (e.eventType && this.state.showControls) {
+        return e.eventType.toLowerCase() === 'control';
+      } else if (e.eventType && this.state.showObservations) {
+        return e.eventType.toLowerCase() === 'observation';
+      }
+      return false;
+    });
+    if (filtered.length === 0) {
+      return (
+        <div style={{ textAlign: 'center', color: 'grey' }}>
+          {I18n.t('musit.events.noData')}
+        </div>
+      );
+    }
     return <ObservationControlGrid
       id={this.props.params.id}
-      tableData={this.props.store.data.filter((e) => {
-        if (e.eventType && this.state.showControls && this.state.showObservations) {
-          return true;
-        } else if (e.eventType && this.state.showControls) {
-          return e.eventType.toLowerCase() === 'control';
-        } else if (e.eventType && this.state.showObservations) {
-          return e.eventType.toLowerCase() === 'observation';
-        }
-        return false;
-      })}
+      tableData={filtered}
     />;
   }
 
@@ -112,4 +120,4 @@ const commands = {
   loadEvents$
 };
 
-export default inject(data, commands)(ObservationControlGridShow);
+export default inject(data, commands)(EventsComponent);
