@@ -31,33 +31,33 @@ export default class ObservationControlGrid extends Component {
 
   getIcon(ok, type, index) {
     switch (type) {
-      case 'lightingCondition':
-        return this.icon(ok, 'musitlightingcondicon', 'lightCondition', index);
-      case 'temperature':
-        return this.icon(ok, 'musittemperatureicon', 'temperature', index);
-      case 'hypoxicAir':
-        return this.icon(ok, 'musithypoxicairicon', 'hypoxicAir', index);
-      case 'relativeHumidity':
-        return this.icon(ok, 'musitrelhumidityicon', 'relativeHumidity', index);
-      case 'cleaning':
-        return this.icon(ok, 'musitcleaningicon', 'cleaning', index);
-      case 'mold':
-        return this.icon(ok, 'musitmoldicon', 'mold', index);
-      case 'pest':
-        return this.icon(ok, 'musitpesticon', 'pest', index);
-      case 'alcohol':
-        return this.icon(ok, 'musitalcoholicon', 'alcohol', index);
-      case 'gas':
-        return this.icon(ok, 'musitgasicon', 'gas', index);
-      case 'waterDamageAssessment':
-        return this.icon(ok, 'musitwaterdamageicon', 'vannskaderisiko', index);
-      case 'fireProtection':
-        return this.icon(ok, 'musitfireprotectionicon', 'brannsikring', index);
-      case 'theftProtection':
-        return this.icon(ok, 'musittheftprotectionicon', 'tyverisikring', index);
-      case 'perimeterSecurity':
-        return this.icon(ok, 'musitperimetersecurityicon', 'skallsikring', index);
-      default:
+    case 'lightingCondition':
+      return this.icon(ok, 'musitlightingcondicon', 'lightCondition', index);
+    case 'temperature':
+      return this.icon(ok, 'musittemperatureicon', 'temperature', index);
+    case 'hypoxicAir':
+      return this.icon(ok, 'musithypoxicairicon', 'hypoxicAir', index);
+    case 'relativeHumidity':
+      return this.icon(ok, 'musitrelhumidityicon', 'relativeHumidity', index);
+    case 'cleaning':
+      return this.icon(ok, 'musitcleaningicon', 'cleaning', index);
+    case 'mold':
+      return this.icon(ok, 'musitmoldicon', 'mold', index);
+    case 'pest':
+      return this.icon(ok, 'musitpesticon', 'pest', index);
+    case 'alcohol':
+      return this.icon(ok, 'musitalcoholicon', 'alcohol', index);
+    case 'gas':
+      return this.icon(ok, 'musitgasicon', 'gas', index);
+    case 'waterDamageAssessment':
+      return this.icon(ok, 'musitwaterdamageicon', 'vannskaderisiko', index);
+    case 'fireProtection':
+      return this.icon(ok, 'musitfireprotectionicon', 'brannsikring', index);
+    case 'theftProtection':
+      return this.icon(ok, 'musittheftprotectionicon', 'tyverisikring', index);
+    case 'perimeterSecurity':
+      return this.icon(ok, 'musitperimetersecurityicon', 'skallsikring', index);
+    default:
     }
   }
 
@@ -110,12 +110,12 @@ export default class ObservationControlGrid extends Component {
                   key={i}
                   id={`${controlOrObservation.id}_${controlOrObservation.doneDate}`}
                   onClick={() => {
-                      if (controlOrObservation.eventType.toLowerCase() === 'control') {
-                        hashHistory.push(`magasin/${this.props.id}/control/${controlOrObservation.id}`);
-                      } else {
-                        hashHistory.push(`magasin/${this.props.id}/observation/${controlOrObservation.id}`);
-                      }
-                    }}
+                    if (controlOrObservation.eventType.toLowerCase() === 'control') {
+                      hashHistory.push(`magasin/${this.props.id}/control/${controlOrObservation.id}`);
+                    } else {
+                      hashHistory.push(`magasin/${this.props.id}/observation/${controlOrObservation.id}`);
+                    }
+                  }}
                 >
                   <td id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_type`}>
                     {controlOrObservation.eventType.toLowerCase() === 'control' ?

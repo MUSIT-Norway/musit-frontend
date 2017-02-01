@@ -18,7 +18,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             lightingCondition: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -29,7 +29,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             temperature: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -40,7 +40,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             hypoxicAir: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -51,7 +51,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             relativeHumidity: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -62,7 +62,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             cleaning: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -73,7 +73,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             mold: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -84,7 +84,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             alcohol: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -95,7 +95,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             gas: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -106,7 +106,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             waterDamageAssessment: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -117,7 +117,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             fireProtection: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -128,7 +128,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             theftProtection: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -139,7 +139,7 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             perimeterSecurity: {
-              ok: true,
+              ok: true
             }
           },
           {
@@ -150,9 +150,9 @@ describe('ObservationControlGrid', () => {
             registeredBy: 'Blabla...',
             eventType: 'control',
             pest: {
-              ok: true,
+              ok: true
             }
-          },
+          }
         ]}
       />
     );
