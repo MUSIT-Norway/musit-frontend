@@ -118,6 +118,7 @@ export class StorageUnitsContainer extends React.Component {
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
     const stateHasChanged = locationState !== this.props.location.state;
+
     if (idHasChanged || museumHasChanged || collectionHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
       this.loadRootNode(nodeId, museumId, token);
@@ -280,7 +281,7 @@ export class StorageUnitsContainer extends React.Component {
     return <Toolbar
       showRight={!!showObjects}
       showLeft={!showObjects}
-      labelRight={I18n.t('mmusit.grid.button.objects')}
+      labelRight={I18n.t('musit.grid.button.objects')}
       labelLeft={I18n.t('musit.grid.button.nodes')}
       placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
       searchValue={searchPattern}
