@@ -1,15 +1,13 @@
 import { Observable, Subject } from 'rxjs';
-import { I18n } from 'react-i18nify';
-import { createStore } from 'react-rxjs/dist/RxStore';
 import { Reports } from '../../models/report';
+import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
 
 const initialState= { data: [] }
 
 export const clear$ = new Subject();
 
-export const loadKDReport$  = new Subject().switchMap(cmd =>
-  Reports(cmd.id).getKDReport(cmd.token).flatMap(rows => rows));
+export const loadKDReport$  = createAction('loadKDReport$').switchMap( cmd => Reports(cmd.museumId).getKDReport(cmd.token));
 
 
 export const reducer$ = (actions) =>
