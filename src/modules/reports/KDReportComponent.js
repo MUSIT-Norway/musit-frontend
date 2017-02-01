@@ -16,12 +16,12 @@ export class KDReport extends React.Component {
     console.log(this.props.appSession);
     const museumId = this.props.appSession.getMuseumId();
     const token = this.props.appSession.getAccessToken();
-    this.props.loadKDReport(museumId, token);
+    this.props.loadKDReport({museumId, token});
   }
 
   render() {
-    const { data } = this.props;
-    console.log(data);
+    const data = this.props.store.kdreport;
+    console.log('Data: ', data);
     return (
       <div>
         <main>
