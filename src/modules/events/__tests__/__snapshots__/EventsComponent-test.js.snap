@@ -1,0 +1,46 @@
+exports[`EventsComponent Check it renders. 1`] = `
+<Layout
+  breadcrumb={
+    <function Breadcrumb() {_classCallCheck(this, Breadcrumb);return _possibleConstructorReturn(this, (Breadcrumb.__proto__ || Object.getPrototypeOf(Breadcrumb)).apply(this, arguments));}
+      allActive={true}
+      node={undefined}
+      onClickCrumb={[Function onClickCrumb]} />
+  }
+  content={
+    <div
+      style={
+        Object {
+          "color": "grey",
+          "textAlign": "center"
+        }
+      }>
+      Ingen kontroller eller observasjoner
+    </div>
+  }
+  leftMenu={
+    <div
+      style={
+        Object {
+          "paddingTop": 10
+        }
+      }>
+      <function ObservationControlComponent() {_classCallCheck(this, ObservationControlComponent);return _possibleConstructorReturn(this, (ObservationControlComponent.__proto__ || Object.getPrototypeOf(ObservationControlComponent)).apply(this, arguments));}
+        id="1"
+        onClickNewControl={[Function onClickNewControl]}
+        onClickNewObservation={[Function onClickNewObservation]}
+        selectControl={true}
+        selectObservation={true} />
+    </div>
+  }
+  title="Magasin"
+  toolbar={
+    <function Toolbar() {_classCallCheck(this, Toolbar);return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));}
+      clickShowLeft={[Function clickShowLeft]}
+      clickShowRight={[Function clickShowRight]}
+      labelLeft="Observasjoner"
+      labelRight="Kontroller"
+      placeHolderSearch="Filtrer i listen"
+      showLeft={true}
+      showRight={true} />
+  } />
+`;

@@ -32,7 +32,7 @@ import Reports from './modules/reports/ReportsOverview';
 import KDReportContainer from './modules/reports/KDReportContainer';
 import ControlViewContainer from './modules/control/ControlViewContainer';
 import ControlAddContainer from './modules/control/ControlAddContainer';
-import EventsContainer from './modules/events/EventsContainer';
+import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchContainer from './modules/objectsearch/ObjectSearchContainer';
 import App from './modules/app/AppComponent';
 import * as path from './routes.path';

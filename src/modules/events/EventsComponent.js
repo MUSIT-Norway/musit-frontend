@@ -7,14 +7,20 @@ import Toolbar from '../../components/layout/Toolbar';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
+import store$, {
+  clearEvents$,
+  loadRootNode$,
+  loadEvents$
+} from './eventsStore';
 
-export class ObservationControlGridShow extends React.Component {
+export class EventsComponent extends React.Component {
   static propTypes = {
-    observationControlGridData: React.PropTypes.arrayOf(React.PropTypes.object),
+    store: React.PropTypes.object,
     params: React.PropTypes.object,
     route: React.PropTypes.object,
-    loadControlAndObservations: React.PropTypes.func.isRequired,
-    loadStorageObj: React.PropTypes.func.isRequired
+    loadEvents: React.PropTypes.func.isRequired,
+    loadRootNode: React.PropTypes.func.isRequired,
+    clearEvents: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -26,8 +32,14 @@ export class ObservationControlGridShow extends React.Component {
   }
 
   componentWillMount() {
-    this.props.loadControlAndObservations(this.props.params.id, this.props.appSession.getMuseumId());
-    this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
+    this.props.clearEvents();
+    const props = {
+      nodeId: this.props.params.id,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken()
+    };
+    this.props.loadEvents(props);
+    this.props.loadRootNode(props);
   }
 
   makeToolbar() {
@@ -55,18 +67,26 @@ export class ObservationControlGridShow extends React.Component {
   }
 
   makeContent() {
+    const filtered = this.props.store.data.filter((e) => {
+      if (e.eventType && this.state.showControls && this.state.showObservations) {
+        return true;
+      } else if (e.eventType && this.state.showControls) {
+        return e.eventType.toLowerCase() === 'control';
+      } else if (e.eventType && this.state.showObservations) {
+        return e.eventType.toLowerCase() === 'observation';
+      }
+      return false;
+    });
+    if (filtered.length === 0) {
+      return (
+        <div style={{ textAlign: 'center', color: 'grey' }}>
+          {I18n.t('musit.events.noData')}
+        </div>
+      );
+    }
     return <ObservationControlGrid
       id={this.props.params.id}
-      tableData={this.props.observationControlGridData.filter((e) => {
-        if (e.eventType && this.state.showControls && this.state.showObservations) {
-          return true;
-        } else if (e.eventType && this.state.showControls) {
-          return e.eventType.toLowerCase() === 'control';
-        } else if (e.eventType && this.state.showObservations) {
-          return e.eventType.toLowerCase() === 'observation';
-        }
-        return false;
-      })}
+      tableData={filtered}
     />;
   }
 
@@ -76,7 +96,7 @@ export class ObservationControlGridShow extends React.Component {
         title={I18n.t('musit.storageUnits.title')}
         breadcrumb={
           <Breadcrumb
-            node={this.props.rootNode}
+            node={this.props.store.rootNode}
             onClickCrumb={(node) => hashHistory.push(node.url)}
             allActive
           />
@@ -90,7 +110,14 @@ export class ObservationControlGridShow extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: React.PropTypes.object.isRequired },
+  store$
 };
 
-export default inject(data)(ObservationControlGridShow);
+const commands = {
+  clearEvents$,
+  loadRootNode$,
+  loadEvents$
+};
+
+export default inject(data, commands)(EventsComponent);

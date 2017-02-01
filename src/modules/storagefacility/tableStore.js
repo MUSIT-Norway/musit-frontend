@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { simpleGet } from '../../shared/RxAjax';
 
 export const clearRootNode$ = createAction('clearRootNode$');
 
@@ -20,7 +21,7 @@ export const loadStats$ = createAction('loadStats$').switchMap((cmd) =>
 );
 
 export const loadRootNode$ = createAction('loadRootNode$').switchMap((cmd) =>
-  MusitNode.getNode(cmd.nodeId, cmd.museumId, cmd.token, cmd)
+  MusitNode.getNode(simpleGet)(cmd.nodeId, cmd.museumId, cmd.token, cmd)
 );
 
 export const reducer$ = (actions) =>

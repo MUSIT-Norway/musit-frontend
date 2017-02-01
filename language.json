@@ -47,6 +47,9 @@
           "routinesAndContingencyPlan": "Routines and contingency plan:"
         }
       },
+      "events": {
+        "noData": "No controls or observations"
+      },
       "moveModal": {
         "move": "Move",
         "moveObject": "Move object %{name}",
@@ -659,6 +662,9 @@
           "waterDamage": "Vannskaderisiko:",
           "routinesAndContingencyPlan": "Rutiner og beredskap:"
         }
+      },
+      "events": {
+        "noData": "Ingen kontroller eller observasjoner"
       },
       "moveModal": {
         "move": "Flytt hit",
