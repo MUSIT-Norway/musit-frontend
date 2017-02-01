@@ -3,7 +3,7 @@ import 'react-select/dist/react-select.css';
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
@@ -18,6 +18,7 @@ import { actions } from '../app/appSession';
 const { loadAppSession$, setMuseumId$, setCollectionId$ } = actions;
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
+import scanner$, { toggleEnabled$ } from './scanner';
 
 export class App extends Component {
   static propTypes = {
@@ -128,6 +129,22 @@ export class App extends Component {
               </LinkContainer>
             </Nav>
             <Nav pullRight>
+              <LinkContainer to="/picklist/nodes">
+                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.pickList.nodes.length}</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/picklist/objects">
+                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.pickList.objects.length}</NavItem>
+              </LinkContainer>
+              <LinkContainer to={'/search/objects'}>
+                <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
+              </LinkContainer>
+              <Button
+                style={{ height: '50px' }}
+                active={this.props.scanner.enabled}
+                onClick={() => this.props.toggleEnabled()}
+              >
+                <img src={require('./scanIcon.png')} height={30} alt="scan" />
+              </Button>
               <MusitUserAccount
                 actor={this.props.appSession.getActor()}
                 groups={this.props.appSession.getGroups()}
@@ -140,19 +157,6 @@ export class App extends Component {
                 handleCollectionId={this.handleCollectionId}
                 rootNode={this.props.rootNode}
               />
-            </Nav>
-            <Nav pullRight>
-              <LinkContainer to={'/search/objects'}>
-                <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
-              </LinkContainer>
-            </Nav>
-            <Nav pullRight>
-              <LinkContainer to="/picklist/nodes">
-                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.pickList.nodes.length}</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/picklist/objects">
-                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.pickList.objects.length}</NavItem>
-              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -171,13 +175,15 @@ export class App extends Component {
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  pickList$: { type: PropTypes.object.isRequired }
+  pickList$: { type: PropTypes.object.isRequired },
+  scanner$
 };
 
 const commands = {
   loadAppSession$,
   setMuseumId$,
-  setCollectionId$
+  setCollectionId$,
+  toggleEnabled$
 };
 
 const mapDispatchToProps = (dispatch) => ({

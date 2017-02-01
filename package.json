@@ -79,7 +79,7 @@
     "react": "15.3.2",
     "react-addons-test-utils": "15.3.2",
     "react-autosuggest": "3.7.4",
-    "react-bootstrap": "0.30.5",
+    "react-bootstrap": "0.30.7",
     "react-bootstrap-date-picker": "3.7.0",
     "react-dom": "15.3.2",
     "react-fontawesome": "1.2.0",
