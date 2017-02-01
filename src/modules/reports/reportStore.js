@@ -1,13 +1,14 @@
 import { Observable, Subject } from 'rxjs';
 import { Reports } from '../../models/report';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { simpleGet } from '../../shared/RxAjax';
 
 
 const initialState= { data: [] }
 
 export const clear$ = new Subject();
 
-export const loadKDReport$  = createAction('loadKDReport$').switchMap( cmd => Reports(cmd.museumId).getKDReport(cmd.token));
+export const loadKDReport$  = createAction('loadKDReport$').switchMap( cmd => Reports(cmd.museumId).getKDReport(simpleGet, cmd.token));
 
 
 export const reducer$ = (actions) =>

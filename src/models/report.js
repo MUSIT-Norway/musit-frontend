@@ -1,4 +1,3 @@
-import { simpleGet } from '../shared/RxAjax';
 import Config from '../config';
 import { apiUrl } from '../../shared/util';
 
@@ -8,9 +7,9 @@ class Reports {
   }
 }
 
-Reports.getKDReport = (token: string)  => {
+Reports.getKDReport = (ajaxGet, token: string)  => {
   const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(this.id)}/report`);
-  return simpleGet(url, token);
+  return ajaxGet(url, token);
 }
 
 export default Reports;
