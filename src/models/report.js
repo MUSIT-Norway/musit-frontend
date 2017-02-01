@@ -1,15 +1,16 @@
 import Config from '../config';
-import { apiUrl } from '../../shared/util';
+import { apiUrl } from '../shared/util';
 
 class Reports {
-  constructor(museumId: number) {
-    this.id = museumId;
-  }
+
 }
 
-Reports.getKDReport = (ajaxGet, token: string)  => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(this.id)}/report`);
-  return ajaxGet(url, token);
-}
+Reports.getKDReport = (ajaxGet, token: string, id: number)  => {
+  console.log(token);
+  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(id)}/report`);
+  const ret = ajaxGet(url,token);
+  console.log(ret);
+  return ret;
+};
 
 export default Reports;

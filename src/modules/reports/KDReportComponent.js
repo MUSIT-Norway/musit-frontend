@@ -3,6 +3,7 @@ import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import { formatFloatToString } from './../../shared/util';
 import { Observable } from 'rxjs';
+import reportStore$, { loadKDReport$, clear$ } from './reportStore';
 import inject from 'react-rxjs/dist/RxInject';
 
 export class KDReport extends React.Component {
@@ -12,11 +13,15 @@ export class KDReport extends React.Component {
   };
 
   componentWillMount() {
-    this.props.loadKDReport(this.props.appSession.getMuseumId());
+    console.log(this.props.appSession);
+    const museumId = this.props.appSession.getMuseumId();
+    const token = this.props.appSession.getAccessToken();
+    this.props.loadKDReport(museumId, token);
   }
 
   render() {
     const { data } = this.props;
+    console.log(data);
     return (
       <div>
         <main>
@@ -65,7 +70,13 @@ export class KDReport extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired }
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
+  store$: reportStore$
 };
 
-export default inject(data)(KDReport);
+const commands = {
+  loadKDReport$,
+  clear$
+};
+
+export default inject(data,commands)(KDReport);
