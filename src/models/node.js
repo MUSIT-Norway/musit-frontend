@@ -23,7 +23,8 @@ class MusitNode {
 }
 
 MusitNode.getNode = (ajaxGet) => (id: number, museumId: MuseumId, token: string, callback) => {
-  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback).map(node => new MusitNode(node));
+  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback)
+    .map(node => node && new MusitNode(node));
 };
 
 MusitNode.getNodes = (id: number, page, museumId: MuseumId, token: string, callback) => {
