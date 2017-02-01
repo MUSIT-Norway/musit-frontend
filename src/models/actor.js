@@ -53,7 +53,7 @@ MusitActor.getActorDetails = (simplePost) => (actorIds, token, callback) => {
   return simplePost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
     .map(actors => {
       if (!actors) {
-        return [];
+        return undefined;
       }
       return actors.map(a => new MusitActor(a));
     });

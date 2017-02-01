@@ -1,6 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 import MusitNode from '../../models/node';
 import { createStore } from 'react-rxjs/dist/RxStore';
+import { simpleGet } from '../../shared/RxAjax';
 
 export const clear$ = new Subject();
 
@@ -9,7 +10,7 @@ export const loadChildren$ = new Subject().switchMap(cmd =>
 );
 
 export const loadNode$ = new Subject().switchMap((cmd) =>
-  MusitNode.getNode(cmd.nodeId, cmd.museumId, cmd.token, cmd)
+  MusitNode.getNode(simpleGet)(cmd.nodeId, cmd.museumId, cmd.token, cmd)
 );
 
 const initialState = {
