@@ -37,10 +37,18 @@ MusitNode.getNodes = (id: number, page, museumId: MuseumId, token: string, callb
     url = `${baseUrl}/root`;
   }
   return simpleGet(url, token, callback)
-    .map(data => ({
-      totalMatches: data.totalMatches || data.length,
-      matches: (data.matches || data).map(o => new MusitNode(o))
-    }));
+    .map(data => {
+      if (!data) {
+        return { totalMatches: 0, matches: [], error: 'no response body' };
+      }
+      if (!Array.isArray(data.matches || data)) {
+        return { totalMatches: 0, matches: [], error: 'response body is not an array' };
+      }
+      return {
+        totalMatches: data.totalMatches || data.length,
+        matches: (data.matches || data).map(o => new MusitNode(o))
+      };
+    });
 };
 
 MusitNode.getStats = (id: number, museumId: MuseumId, token: string, callback) => {

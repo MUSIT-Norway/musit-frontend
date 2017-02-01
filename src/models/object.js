@@ -52,10 +52,15 @@ MusitObject.getObjects = (id: number, page: number, museumId: MuseumId, collecti
   const baseUrl = Config.magasin.urls.thingaggregate.baseUrl(museumId);
   const url = `${baseUrl}/node/${id}/objects?${collectionId.getQuery()}&page=${page || 1}&limit=${Config.magasin.limit}`;
   return simpleGet(url, token, callback)
-    .map(data => ({
-      ...data,
-      matches: data.matches.map(obj => new MusitObject(obj))
-    }));
+    .map(data => {
+      if (!data) {
+        return {...data, matches: [], error: 'no response body'};
+      }
+      return {
+        ...data,
+        matches: data.matches ? data.matches.map(obj => new MusitObject(obj)) : []
+      };
+    });
 };
 
 MusitObject.moveObject = (objectId, destination, doneBy, museumId, token, callback) => {
