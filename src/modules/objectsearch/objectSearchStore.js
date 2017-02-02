@@ -1,13 +1,12 @@
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import * as ajax from '../../shared/RxAjax';
-import { omit } from 'lodash';
 import MusitObject from '../../models/object';
 import { getPath } from '../../shared/util';
 
 
 export const searchForObjects = ({ simpleGet }) => (cmd) => {
-  return MusitObject.searchForObjects(simpleGet)(cmd.params, cmd.page, cmd.collectionId, cmd.museumId, cmd);
+  return MusitObject.searchForObjects(simpleGet)(cmd.params, cmd.page, cmd.museumId, cmd.collectionId, cmd);
 };
 
 const initialState = {
@@ -22,13 +21,13 @@ const initialState = {
 };
 
 export const clearSearch$ =  createAction('clearSearch$');
-export const searchObject$ = createAction('searchObject$').switchMap(searchForObjects(ajax));
+export const searchForObjects$ = createAction('searchForObjects$').switchMap(searchForObjects(ajax));
 export const changeField$ = createAction('changeField$');
 
 export const reducer$ = (actions) => Observable.merge(
   actions.clearSearch$.map(() => () => initialState),
-  actions.searchObject$.map((result) => (state) => ({
-    ...omit(state, 'error'),
+  actions.searchForObjects$.map((result) => (state) => ({
+    ...state,
     loading: false,
     loaded: true,
     data: {
@@ -39,7 +38,8 @@ export const reducer$ = (actions) => Observable.merge(
           breadcrumb: getPath(data)
         });
       })
-    }
+    },
+    error: null
   })),
   actions.changeField$.map((props) => (state) => ({
     ...state,
@@ -52,7 +52,7 @@ export const reducer$ = (actions) => Observable.merge(
 
 export default createStore('objectSearchStore$', reducer$({
   clearSearch$,
-  searchObject$,
+  searchForObjects$,
   changeField$
 }), Observable.of(initialState));
 

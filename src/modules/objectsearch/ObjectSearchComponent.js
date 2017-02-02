@@ -9,7 +9,7 @@ import Loader from 'react-loader';
 import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import inject from 'react-rxjs/dist/RxInject';
-import objectSearchStore$, {clearSearch$, searchObject$, changeField$} from './objectSearchStore';
+import objectSearchStore$, {clearSearch$, searchForObjects$, changeField$} from './objectSearchStore';
 
 export function renderParam(id, props, style) {
   return (
@@ -68,7 +68,13 @@ export const ObjectSearchComponent = (props) =>
               baseUrl={props.location.pathname}
               currentPage={props.params.currentPage}
               perPage={props.params.perPage}
-              onClick={(page) => props.searchForObjects(props.params, page, props.appSession.getMuseumId(), props.appSession.getCollectionId())}
+              onClick={(page) => props.searchForObjects(
+                props.params,
+                page,
+                props.appSession.getMuseumId(),
+                props.appSession.getCollectionId(),
+                this.props.appSession.getAccessToken())
+              }
             />
             <Table>
               <thead>
@@ -164,7 +170,7 @@ const data = {
 
 const commands = {
   clearSearch$,
-  searchObject$,
+  searchForObjects$,
   changeField$
 };
 

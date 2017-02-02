@@ -106,7 +106,7 @@ MusitObject.pickObject = (object, breadcrumb, museumId, collectionId, token, cal
   }
 };
 
-MusitObject.searchForObjects = (params, page, collectionId, museumId, token, callback) => {
+MusitObject.searchForObjects = (params, page, museumId, collectionId, token, callback) => {
   const url = Config.magasin.urls.thingaggregate.searchObjectUrl(params, page, collectionId, museumId);
   return simpleGet(url, token, callback)
     .map(({ response }) => response)
