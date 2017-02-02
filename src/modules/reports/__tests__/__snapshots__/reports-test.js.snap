@@ -35,7 +35,6 @@ exports[`KDReportComponent should display correctly 1`] = `
                   Totalt areal:
                 </td>
                 <td>
-                  1,23
                    m²
                 </td>
               </tr>
@@ -44,7 +43,6 @@ exports[`KDReportComponent should display correctly 1`] = `
                   Skallsikring:
                 </td>
                 <td>
-                  23,34
                    m²
                 </td>
               </tr>
@@ -53,7 +51,6 @@ exports[`KDReportComponent should display correctly 1`] = `
                   Tyverisikring:
                 </td>
                 <td>
-                  234,2
                    m²
                 </td>
               </tr>
@@ -62,7 +59,6 @@ exports[`KDReportComponent should display correctly 1`] = `
                   Brannsikring:
                 </td>
                 <td>
-                  34,3
                    m²
                 </td>
               </tr>
@@ -71,7 +67,6 @@ exports[`KDReportComponent should display correctly 1`] = `
                   Vannskaderisiko:
                 </td>
                 <td>
-                  234,3
                    m²
                 </td>
               </tr>
@@ -80,7 +75,6 @@ exports[`KDReportComponent should display correctly 1`] = `
                   Rutiner og beredskap:
                 </td>
                 <td>
-                  2334,3
                    m²
                 </td>
               </tr>

@@ -22,7 +22,7 @@ describe('KDReportComponent', () => {
         waterDamageAssessment: 234.3,
         routinesAndContingencyPlan: 2334.3
       }}
-      appSession={{ getMuseumId: () => 1 }}
+      appSession={{ getAccessToken : () => 'xxxx-xxxx-xxxx-xxxx', getMuseumId: () => 1 }}
       loadKDReport={() => true}
     />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
