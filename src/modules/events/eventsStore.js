@@ -11,18 +11,19 @@ import concat from 'lodash/concat';
 import * as ajax from '../../shared/RxAjax';
 
 export const loadEvents = ({ simpleGet, simplePost }) => (props) => {
-  return Observable.forkJoin(Control.loadControls(simpleGet)(props), Observation.loadObservations(simpleGet)(props))
-    .flatMap(([controls, observations]) => {
-      const events = orderBy(concat(controls, observations), ['doneDate', 'id'], ['desc', 'desc']);
-      const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(p => p);
-      return MusitActor.getActorDetails(simplePost)(actorIds, props.token)
-        .map((actors) =>
-          events.map((data) => ({
-            ...data,
-            ...MusitActor.getActorNames(actors || [], data.doneBy, data.registeredBy)
-          }))
-        );
-    });
+  const controls$ = Control.loadControls(simpleGet)(props);
+  const observations$ = Observation.loadObservations(simpleGet)(props);
+  return Observable.forkJoin(controls$, observations$).flatMap(([controls, observations]) => {
+    const events = orderBy(concat(controls, observations), ['doneDate', 'id'], ['desc', 'desc']);
+    const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(p => p);
+    return MusitActor.getActorDetails(simplePost)(actorIds, props.token)
+      .map((actors) =>
+        events.map((data) => ({
+          ...data,
+          ...MusitActor.getActorNames(actors || [], data.doneBy, data.registeredBy)
+        }))
+      );
+  });
 };
 
 export const loadRootNode = ({ simpleGet }) => (cmd) => {
