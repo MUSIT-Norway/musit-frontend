@@ -19,7 +19,7 @@ export class KDReport extends React.Component {
   }
 
   render() {
-    const data = this.props.store && this.props.store.data && this.props.store.data.kdreport;
+    const data = this.props.store.data && this.props.store.data.kdreport;
 
     return (
       <div>
