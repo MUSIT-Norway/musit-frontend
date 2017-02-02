@@ -4,6 +4,7 @@ import MuseumId from './museumId';
 import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import { addNode$ as pickNode$ } from '../modules/app/pickList';
+import { mapToBackend } from '../modules/storagefacility/reducers/mapper';
 
 class MusitNode {
 
@@ -25,6 +26,20 @@ class MusitNode {
 MusitNode.getNode = (ajaxGet) => (id: number, museumId: MuseumId, token: string, callback) => {
   return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback)
     .map(({ response }) => response && new MusitNode(response));
+};
+
+MusitNode.addNode = (ajaxPost) => (parentId: number,  museumId: MuseumId, token:string,data, callback) => {
+  const baseUrl= Config.magasin.urls.storagefacility.baseUrl(museumId);
+  const url = `${baseUrl}/${museumId.id}/${!parentId ? '/root' : ''}`;
+  const dataToPost = { data: mapToBackend(data) };
+  return ajaxPost(url,dataToPost,token,callback).map(({ response }) => response && MusitNode(response));
+};
+
+MusitNode.editNode = (ajaxPut) => (id: number,  museumId: MuseumId, token:string,data, callback) => {
+  const baseUrl= Config.magasin.urls.storagefacility.baseUrl(museumId);
+  const url = `${baseUrl}/${museumId.id}}/${id}`;
+  const dataToPost = { data: mapToBackend(data) };
+  return ajaxPut(url,dataToPost,token,callback).map(({ response }) => response && MusitNode(response));
 };
 
 MusitNode.getNodes = (id: number, page, museumId: MuseumId, token: string, callback) => {
