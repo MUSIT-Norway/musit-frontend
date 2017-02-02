@@ -1,12 +1,16 @@
 import Config from '../config';
+import entries from 'object.entries';
 import { apiUrl } from '../shared/util';
 
-class Reports {
+class Report {
+  constructor(props) {
+    entries(props).forEach(([k, v]) => this[k] = v);
+  }
 }
 
-Reports.getKDReport = (ajaxGet, token: string, id: number)  => {
+Report.getKDReport = (ajaxGet, token: string, id: number)  => {
   const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(id)}/report`);
-  return ajaxGet(url,token);
+  return ajaxGet(url,token).map(response => response && new Report(response));
 };
 
-export default Reports;
+export default Report;

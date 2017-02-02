@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { simpleGet } from '../../shared/RxAjax';
-import Reports from '../../models/report';
+import Report from '../../models/report';
 
 
 const initialState = {
@@ -11,7 +11,7 @@ const initialState = {
 
 export const clear$ = createAction('clear$');
 
-export const loadKDReport$  = createAction('loadKDReport$').switchMap( cmd => Reports.getKDReport(simpleGet, cmd.token, cmd.museumId));
+export const loadKDReport$  = createAction('loadKDReport$').switchMap( cmd => Report.getKDReport(simpleGet, cmd.token, cmd.museumId));
 
 
 export const reducer$ = (actions) =>
