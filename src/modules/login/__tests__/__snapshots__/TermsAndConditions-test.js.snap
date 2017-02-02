@@ -24,14 +24,12 @@ exports[`TermsAndConditions should have english text 1`] = `
     bsClass="modal-header"
     closeButton={true}>
     <ModalTitle
-      bsClass="modal-title"
-      componentClass="h4">
+      bsClass="modal-title">
       Use of personal information in MUSITbasen
     </ModalTitle>
   </ModalHeader>
   <ModalBody
-    bsClass="modal-body"
-    componentClass="div">
+    bsClass="modal-body">
     <p>
       MUSITbasen uses Dataporten to authenticate users at login.
     </p>
@@ -49,8 +47,7 @@ exports[`TermsAndConditions should have english text 1`] = `
     </ul>
   </ModalBody>
   <ModalFooter
-    bsClass="modal-footer"
-    componentClass="div">
+    bsClass="modal-footer">
     <Button
       active={false}
       block={false}
@@ -90,14 +87,12 @@ exports[`TermsAndConditions should have norwegian text 1`] = `
     bsClass="modal-header"
     closeButton={true}>
     <ModalTitle
-      bsClass="modal-title"
-      componentClass="h4">
+      bsClass="modal-title">
       Bruk av personopplysninger i MUSITbasen
     </ModalTitle>
   </ModalHeader>
   <ModalBody
-    bsClass="modal-body"
-    componentClass="div">
+    bsClass="modal-body">
     <p>
       MUSITbasen benytter Dataporten til autentisering av brukere ved pålogging.
     </p>
@@ -115,8 +110,7 @@ exports[`TermsAndConditions should have norwegian text 1`] = `
     </ul>
   </ModalBody>
   <ModalFooter
-    bsClass="modal-footer"
-    componentClass="div">
+    bsClass="modal-footer">
     <Button
       active={false}
       block={false}
