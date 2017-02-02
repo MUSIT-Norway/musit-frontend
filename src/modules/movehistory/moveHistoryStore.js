@@ -33,7 +33,7 @@ const initialState = { data: [] };
 export const reducer$ = (actions) =>
   Observable.empty().merge(
     actions.clear$.map(() => () => initialState),
-    actions.loadMoveHistory$.map((data) => (state) => ({...state, data, error: null}))
+    actions.loadMoveHistory$.map((data) => (state) => ({...state, data}))
   );
 
 export default createStore('moveHistory', reducer$({clear$, loadMoveHistory$}), Observable.of(initialState));
