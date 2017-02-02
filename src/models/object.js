@@ -106,4 +106,19 @@ MusitObject.pickObject = (object, breadcrumb, museumId, collectionId, token, cal
   }
 };
 
+MusitObject.searchForObjects = (params, page, collectionId, museumId, token, callback) => {
+  const url = Config.magasin.urls.thingaggregate.searchObjectUrl(params, page, collectionId, museumId);
+  return simpleGet(url, token, callback)
+    .map(({ response }) => response)
+    .map(data => {
+      if (!data) {
+        return {...data, matches: [], totalMatches: 0, error: 'no response body'};
+      }
+      return {
+        ...data,
+        matches: data.matches ? data.matches.map(obj => new MusitObject(obj)) : []
+      };
+    });
+};
+
 export default MusitObject;

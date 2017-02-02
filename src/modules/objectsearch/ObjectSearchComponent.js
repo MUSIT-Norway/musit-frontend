@@ -9,6 +9,7 @@ import Loader from 'react-loader';
 import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import inject from 'react-rxjs/dist/RxInject';
+import objectSearchStore$, {clearSearch$, searchObject$, changeField$} from './objectSearchStore';
 
 export function renderParam(id, props, style) {
   return (
@@ -16,7 +17,7 @@ export function renderParam(id, props, style) {
       <ControlLabel>{I18n.t(`musit.objectsearch.${id}.label`)}</ControlLabel>
       {' '}
       <FormControl
-        style={{...style}}
+        style={{...style}}s
         type="text"
         placeholder={I18n.t(`musit.objectsearch.${id}.placeHolder`)}
         value={props.params[id] || ''}
@@ -156,11 +157,21 @@ export const ObjectSearchComponent = (props) =>
   </div>;
 
 const data = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired }
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
+  store$: objectSearchStore$
+};
+
+
+const commands = {
+  clearSearch$,
+  searchObject$,
+  changeField$
 };
 
 const props = {
   pickObject: MusitObject.pickObject
 };
 
-export default inject(data, {}, props)(ObjectSearchComponent);
+export default inject(data, commands, props)(ObjectSearchComponent);
+
+

@@ -33,7 +33,7 @@ import KDReportContainer from './modules/reports/KDReportContainer';
 import ControlViewContainer from './modules/control/ControlViewContainer';
 import ControlAddContainer from './modules/control/ControlAddContainer';
 import EventsContainer from './modules/events/EventsComponent';
-import ObjectSearchContainer from './modules/objectsearch/ObjectSearchContainer';
+import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import App from './modules/app/AppComponent';
 import * as path from './routes.path';
 
@@ -65,7 +65,7 @@ export default () => {
         <IndexRoute component={Reports} />
         <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
       </Route>
-      <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
+      <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchComponent} />
       <Route path="/about" component={AboutView} />
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />
