@@ -3,7 +3,7 @@ import 'react-select/dist/react-select.css';
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Button, Modal } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
@@ -105,6 +105,22 @@ export class App extends Component {
     if (!this.props.appSession.getBuildNumber()) {
       return <Loader loaded={false} />;
     }
+
+
+    const modalStyle = {
+      position: 'fixed',
+      zIndex: 1040,
+      top: 0, bottom: 0, left: 0, right: 0
+    };
+
+    const backdropStyle = {
+      ...modalStyle,
+      zIndex: 'auto',
+      backgroundColor: '#000',
+      opacity: 0.5
+    };
+
+
     return (
       <div>
         <Navbar fixedTop style={{ zIndex:1 }}>
@@ -145,6 +161,13 @@ export class App extends Component {
               >
                 <img src={require('./scanIcon.png')} height={30} alt="scan" />
               </Button>
+              <Button
+                style={{ height: '50px' }}
+                active={this.props.scanner.enabled}
+                onClick={() => this.props.toggleEnabled()}
+              >
+                <img src={require('./scanIcon.png')} height={30} alt="scan" />
+              </Button>
               <MusitUserAccount
                 actor={this.props.appSession.getActor()}
                 groups={this.props.appSession.getGroups()}
@@ -163,6 +186,17 @@ export class App extends Component {
 
         <div className="appContent">
           {this.props.children}
+          <Modal.Dialog className="modal-container"  style={modalStyle} backdropStyle={backdropStyle}>
+            <Modal.Header>
+              <Modal.Title>Scan old bar code</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <input className="oldBarCodeInput" style={{ width: '100%'}} />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button bsStyle="primary">Scan now</Button>
+            </Modal.Footer>
+          </Modal.Dialog>
         </div>
 
         <footer className={this.getFooterClass()}>
