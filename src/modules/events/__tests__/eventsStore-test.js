@@ -115,7 +115,7 @@ describe('eventsStore', () => {
       },
       b: {
         data: [],
-        loading: true,
+        loading: true
       },
       c: {
         data: [
