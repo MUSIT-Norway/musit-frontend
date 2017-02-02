@@ -24,9 +24,7 @@ class MusitNode {
 
 MusitNode.getNode = (ajaxGet) => (id: number, museumId: MuseumId, token: string, callback) => {
   return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback)
-    .map(({ response }) => {
-      return response && new MusitNode(response);
-    });
+    .map(({ response }) => response && new MusitNode(response));
 };
 
 MusitNode.getNodes = (id: number, page, museumId: MuseumId, token: string, callback) => {
@@ -44,12 +42,13 @@ MusitNode.getNodes = (id: number, page, museumId: MuseumId, token: string, callb
       if (!response) {
         return { totalMatches: 0, matches: [], error: 'no response body' };
       }
-      if (!Array.isArray(response.matches || response)) {
+      const matches = response.matches || response;
+      if (!Array.isArray(matches)) {
         return { totalMatches: 0, matches: [], error: 'response body is not an array' };
       }
       return {
         totalMatches: response.totalMatches || response.length,
-        matches: (response.matches || response).map(o => new MusitNode(o))
+        matches: matches.map(o => new MusitNode(o))
       };
     });
 };
