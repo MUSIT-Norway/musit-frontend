@@ -16,10 +16,16 @@ export const onFailure = (callback) => (error) => {
     actions.setAccessToken$.next(null);
     hashHistory.push('/');
     emitError({ ...error, type: 'network'});
+  } else if (error.status === 404) {
+    hashHistory.push('/');
+    emitError({ ...error, type: 'network'});
   } else if (callback && callback.onFailure) {
     callback.onFailure(error);
   }
-  return Observable.of((state) => ({...state, error}));
+  if (process.env.NODE_ENV === 'development') {
+    console.log(error);
+  }
+  return Observable.of(null);
 };
 
 export const toResponse = ({ response }) => response;
