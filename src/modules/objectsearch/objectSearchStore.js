@@ -28,18 +28,16 @@ export const reducer$ = (actions) => Observable.merge(
   actions.clearSearch$.map(() => () => initialState),
   actions.searchForObjects$.map((result) => (state) => ({
     ...state,
-    loading: false,
-    loaded: true,
     data: {
       totalMatches: result.totalMatches,
-      matches: result.matches ? result.matches.map(data => {
+      matches: result.matches.map(data => {
         return new MusitObject({
           ...data,
           breadcrumb: getPath(data)
         });
-      }) : []
+      })
     },
-    error: null
+    error : null
   })),
   actions.onChangeField$.map((props) => (state) => ({
     ...state,

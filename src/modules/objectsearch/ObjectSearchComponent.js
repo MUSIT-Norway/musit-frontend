@@ -53,7 +53,7 @@ export const ObjectSearchComponent = (props) =>
           <br />
           <h4>
             {props.loaded &&
-            (props.data.totalMatches > 0 ?
+            (props.store.data.totalMatches > 0 ?
                 I18n.t('musit.objectsearch.results.title', {count: props.data.totalMatches})
                 :
                 I18n.t('musit.objectsearch.results.noHit')
@@ -61,19 +61,19 @@ export const ObjectSearchComponent = (props) =>
             }
           </h4>
           <Loader loaded={!props.loading}>
-          {props.data.matches.length > 0 &&
+          {props.store.data && props.store.data.matches.length > 0 &&
           <div>
             <PagingToolbar
-              numItems={props.data.totalMatches}
-              baseUrl={props.location.pathname}
-              currentPage={props.params.currentPage}
-              perPage={props.params.perPage}
+              numItems={props.store.data.totalMatches}
+              baseUrl={props.store.location.pathname}
+              currentPage={props.store.params.currentPage}
+              perPage={props.store.params.perPage}
               onClick={(page) => props.searchForObjects(
-                props.params,
+                props.store.params,
                 page,
                 props.appSession.getMuseumId(),
                 props.appSession.getCollectionId(),
-                this.props.appSession.getAccessToken())
+                props.appSession.getAccessToken())
               }
             />
             <Table>
@@ -88,7 +88,7 @@ export const ObjectSearchComponent = (props) =>
                     href=""
                     onClick={(e) => {
                       e.preventDefault();
-                      props.data.matches.forEach(obj =>
+                      props.store.data.matches.forEach(obj =>
                         props.pickObject(
                           obj,
                           obj.breadcrumb,
@@ -106,7 +106,7 @@ export const ObjectSearchComponent = (props) =>
               </tr>
               </thead>
               <tbody>
-                {props.data.matches.map((data, i) => {
+                {props.store.data.matches.map((data, i) => {
                   const isMainObject = !data.mainObjectId || data.isMainObject();
                   const isChildObject = data.mainObjectId && !data.isMainObject();
                   return (
@@ -149,10 +149,10 @@ export const ObjectSearchComponent = (props) =>
               </tbody>
             </Table>
             <PagingToolbar
-              numItems={props.data.totalMatches}
-              currentPage={props.params.currentPage}
-              perPage={props.params.perPage}
-              onClick={(page) => props.searchForObjects(props.params, page, props.appSession.getMuseumId(), props.appSession.getCollectionId())}
+              numItems={props.store.data.totalMatches}
+              currentPage={props.store.params.currentPage}
+              perPage={props.store.params.perPage}
+              onClick={(page) => props.searchForObjects(props.store.params, page, props.appSession.getMuseumId(), props.appSession.getCollectionId())}
             />
           </div>
           }
