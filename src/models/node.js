@@ -24,7 +24,9 @@ class MusitNode {
 
 MusitNode.getNode = (ajaxGet) => (id: number, museumId: MuseumId, token: string, callback) => {
   return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback)
-    .map(node => node && new MusitNode(node));
+    .map(({ response }) => {
+      return response && new MusitNode(response);
+    });
 };
 
 MusitNode.getNodes = (id: number, page, museumId: MuseumId, token: string, callback) => {
@@ -38,23 +40,24 @@ MusitNode.getNodes = (id: number, page, museumId: MuseumId, token: string, callb
     url = `${baseUrl}/root`;
   }
   return simpleGet(url, token, callback)
-    .map(data => {
-      if (!data) {
+    .map(({ response }) => {
+      if (!response) {
         return { totalMatches: 0, matches: [], error: 'no response body' };
       }
-      if (!Array.isArray(data.matches || data)) {
+      if (!Array.isArray(response.matches || response)) {
         return { totalMatches: 0, matches: [], error: 'response body is not an array' };
       }
       return {
-        totalMatches: data.totalMatches || data.length,
-        matches: (data.matches || data).map(o => new MusitNode(o))
+        totalMatches: response.totalMatches || response.length,
+        matches: (response.matches || response).map(o => new MusitNode(o))
       };
     });
 };
 
 MusitNode.getStats = (id: number, museumId: MuseumId, token: string, callback) => {
   const baseUrl = Config.magasin.urls.thingaggregate.baseUrl(museumId);
-  return simpleGet(`${baseUrl}/storagenodes/${id}/stats`, token, callback);
+  return simpleGet(`${baseUrl}/storagenodes/${id}/stats`, token, callback)
+    .map(({ response }) => response);
 };
 
 MusitNode.deleteNode = (id: number, museumId: MuseumId, token: string, callback) => {
