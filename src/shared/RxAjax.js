@@ -10,19 +10,40 @@ export const onComplete = (callback) => (response) => {
   }
 };
 
-export const onFailure = (callback) => (error) => {
-  if (error.status === 401) {
-    localStorage.removeItem('accessToken');
-    actions.setAccessToken$.next(null);
-    hashHistory.push('/');
-    emitError({ ...error, type: 'network'});
-  } else if (callback && callback.onFailure) {
-    callback.onFailure(error);
-  }
-  return Observable.of((state) => ({...state, error}));
+const shouldLog = function () {
+  return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 };
 
-export const toResponse = ({ response }) => response;
+export const onFailure = (callback) => (error) => {
+  switch(error.status) {
+  case 401:
+    if (shouldLog()) {
+      console.error('Unauthorized', error); // eslint-disable-line no-console
+    }
+    if (localStorage.getItem('accessToken')) {
+      localStorage.removeItem('accessToken');
+      actions.setAccessToken$.next(null);
+      hashHistory.push('/');
+      emitError({ ...error, type: 'network'});
+    }
+    return Observable.empty();
+  case 404:
+    emitError({ ...error, type: 'network'});
+    break;
+  default:
+    break;
+  }
+
+  if (callback && callback.onFailure) {
+    callback.onFailure(error);
+  }
+
+  if (shouldLog()) {
+    console.error(error); // eslint-disable-line no-console
+  }
+
+  return Observable.of({ error });
+};
 
 const ajax = (url, method, body, token, headers) =>
   Observable.ajax({
@@ -36,10 +57,7 @@ const ajax = (url, method, body, token, headers) =>
     }
   });
 
-const simpleAjax = (ajax$, callback) =>
-  ajax$.map(toResponse)
-    .do(onComplete(callback))
-    .catch(onFailure(callback));
+const simpleAjax = (ajax$, callback) => ajax$.do(onComplete(callback)).catch(onFailure(callback));
 
 export const get = (url, token) => ajax(url, 'GET', null, token);
 

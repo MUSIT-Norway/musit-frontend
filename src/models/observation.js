@@ -9,6 +9,7 @@ class Observation {
 
 Observation.loadObservations = (ajaxGet) => ({ nodeId, museumId, token, callback }) => {
   return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`, token, callback)
+    .map(({ response }) => response)
     .map(arr => {
       if (!arr) {
         return [];
