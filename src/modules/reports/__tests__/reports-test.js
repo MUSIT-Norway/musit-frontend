@@ -14,15 +14,16 @@ describe('Reports overview', () => {
 describe('KDReportComponent', () => {
   it('should display correctly', () => {
     const wrapper = shallow(<KDReport
-      data={{
-        totalArea: 1.23,
-        perimeterSecurity: 23.34,
-        theftProtection: 234.2,
-        fireProtection: 34.3,
-        waterDamageAssessment: 234.3,
-        routinesAndContingencyPlan: 2334.3
-      }}
-      appSession={{ getMuseumId: () => 1 }}
+      store={{
+        data: {
+          kdreport: {
+            totalArea: 1.23,
+            perimeterSecurity: 23.34,
+            theftProtection: 234.2,
+            fireProtection: 34.3,
+            waterDamageAssessment: 234.3,
+            routinesAndContingencyPlan: 2334.3}}}}
+      appSession={{ getMuseumId: () => 1, getAccessToken: () => 'xxxx-xxxx-xxxx-xxxx' }}
       loadKDReport={() => true}
     />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();

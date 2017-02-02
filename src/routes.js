@@ -23,13 +23,13 @@ import NotFound from './components/NotFound';
 import AboutView from './modules/about/AboutPage';
 import PickListView from './modules/picklist/PickListComponent';
 import StorageUnitsTable from './modules/storagefacility/TableComponent';
+import KDReportComponent from './modules/reports/KDReportComponent';
 import AddStorageUnitPanel from './modules/storagefacility/AddNodeContainer';
 import EditStorageUnitPanel from './modules/storagefacility/EditNodeContainer';
 import AddObservationPage from './modules/observation/AddObservationContainer';
 import EditObservationPage from './modules/observation/EditObservationContainer';
 import ViewObservationPage from './modules/observation/ViewObservationContainer';
 import Reports from './modules/reports/ReportsOverview';
-import KDReportContainer from './modules/reports/KDReportContainer';
 import ControlViewContainer from './modules/control/ControlViewContainer';
 import ControlAddContainer from './modules/control/ControlAddContainer';
 import EventsContainer from './modules/events/EventsComponent';
@@ -63,7 +63,7 @@ export default () => {
       </Route>
       <Route path={path.ROUTE_REPORTS}>
         <IndexRoute component={Reports} />
-        <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportContainer} />
+        <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportComponent} />
       </Route>
       <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchComponent} />
       <Route path="/about" component={AboutView} />
