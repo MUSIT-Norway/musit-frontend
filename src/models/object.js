@@ -40,11 +40,13 @@ class MusitObject {
 }
 
 MusitObject.getObjectLocation = (id: number, museumId: MuseumId, token: string, callback) => {
-  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`, token, callback);
+  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`, token, callback)
+    .map(({ response }) => response);
 };
 
 MusitObject.getMainObject = (id: number, museumId: MuseumId, collectionId: CollectionId, token: string, callback) => {
   return simpleGet(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/objects/${id}/children?${collectionId.getQuery()}`, token, callback)
+    .map(({ response }) => response)
     .map(objects => objects.map(obj => new MusitObject(obj)));
 };
 
@@ -52,6 +54,7 @@ MusitObject.getObjects = (id: number, page: number, museumId: MuseumId, collecti
   const baseUrl = Config.magasin.urls.thingaggregate.baseUrl(museumId);
   const url = `${baseUrl}/node/${id}/objects?${collectionId.getQuery()}&page=${page || 1}&limit=${Config.magasin.limit}`;
   return simpleGet(url, token, callback)
+    .map(({ response }) => response)
     .map(data => {
       if (!data) {
         return {...data, matches: [], error: 'no response body'};
@@ -70,6 +73,7 @@ MusitObject.moveObject = (objectId, destination, doneBy, museumId, token, callba
 
 MusitObject.getLocationHistory = (id, museumId, token, callback) => {
   return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`, token, callback)
+    .map(({ response }) => response)
     .map(rowsJson => {
       if (!Array.isArray(rowsJson)) {
         return [];

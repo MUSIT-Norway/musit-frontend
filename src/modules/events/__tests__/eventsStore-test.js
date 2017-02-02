@@ -42,41 +42,47 @@ describe('eventsStore', () => {
       .switchMap(loadEvents({
         simpleGet: (url) => {
           if (url.indexOf('controls') > -1) {
-            return Observable.of([
-              {
-                id: 1455,
-                doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c',
-                registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
-              }
-            ]);
+            return Observable.of({
+              response: [
+                {
+                  id: 1455,
+                  doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c',
+                  registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
+                }
+              ]
+            });
           } else if(url.indexOf('observations') > -1) {
-            return Observable.of([
-              {
-                id: 23444,
-                doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b',
-                registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
-              }
-            ]);
+            return Observable.of({
+              response: [
+                {
+                  id: 23444,
+                  doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b',
+                  registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
+                }
+              ]
+            });
           }
         },
-        simplePost: () => Observable.of([
-          {
-            fn: 'Test 1',
-            dataportenId: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c'
-          },
-          {
-            fn: 'Test 2',
-            dataportenId: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b'
-          },
-          {
-            fn: 'Test 3',
-            dataportenId: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
-          },
-          {
-            fn: 'Test 4',
-            dataportenId: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
-          }
-        ])
+        simplePost: () => Observable.of({
+          response: [
+            {
+              fn: 'Test 1',
+              dataportenId: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c'
+            },
+            {
+              fn: 'Test 2',
+              dataportenId: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b'
+            },
+            {
+              fn: 'Test 3',
+              dataportenId: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
+            },
+            {
+              fn: 'Test 4',
+              dataportenId: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
+            }
+          ]
+        })
       }));
 
     const state$ = reducer$({ clearEvents$, loadRootNode$, loadEvents$ });
@@ -125,8 +131,10 @@ describe('eventsStore', () => {
       .switchMap(loadRootNode({
         simpleGet: () => {
           return Observable.of({
-            nodeId: 1,
-            name: 'Test'
+            response: {
+              nodeId: 1,
+              name: 'Test'
+            }
           });
         }
       }));
@@ -134,24 +142,28 @@ describe('eventsStore', () => {
       .switchMap(loadEvents({
         simpleGet: (url) => {
           if (url.indexOf('controls') > -1) {
-            return Observable.of([
-              {
-                id: 1455,
-                doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c',
-                registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
-              }
-            ]);
+            return Observable.of({
+              response: [
+                {
+                  id: 1455,
+                  doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c',
+                  registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
+                }
+              ]
+            });
           } else if(url.indexOf('observations') > -1) {
-            return Observable.of([
-              {
-                id: 23444,
-                doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b',
-                registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
-              }
-            ]);
+            return Observable.of({
+              response: [
+                {
+                  id: 23444,
+                  doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b',
+                  registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
+                }
+              ]
+            });
           }
         },
-        simplePost: () => Observable.of(null)
+        simplePost: () => Observable.of({ response: [] })
       }));
 
     const state$ = reducer$({ clearEvents$, loadRootNode$, loadEvents$ });
