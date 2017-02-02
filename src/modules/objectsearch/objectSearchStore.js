@@ -22,7 +22,7 @@ const initialState = {
 
 export const clearSearch$ =  createAction('clearSearch$');
 export const searchForObjects$ = createAction('searchForObjects$').switchMap(searchForObjects(ajax));
-export const changeField$ = createAction('changeField$');
+export const onChangeField$ = createAction('onChangeField$');
 
 export const reducer$ = (actions) => Observable.merge(
   actions.clearSearch$.map(() => () => initialState),
@@ -32,16 +32,16 @@ export const reducer$ = (actions) => Observable.merge(
     loaded: true,
     data: {
       totalMatches: result.totalMatches,
-      matches: result.matches.map(data => {
+      matches: result.matches ? result.matches.map(data => {
         return new MusitObject({
           ...data,
           breadcrumb: getPath(data)
         });
-      })
+      }) : []
     },
     error: null
   })),
-  actions.changeField$.map((props) => (state) => ({
+  actions.onChangeField$.map((props) => (state) => ({
     ...state,
     params: {
       ...state.params,
@@ -53,6 +53,6 @@ export const reducer$ = (actions) => Observable.merge(
 export default createStore('objectSearchStore$', reducer$({
   clearSearch$,
   searchForObjects$,
-  changeField$
+  onChangeField$
 }), Observable.of(initialState));
 

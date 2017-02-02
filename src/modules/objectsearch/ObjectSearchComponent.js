@@ -9,7 +9,7 @@ import Loader from 'react-loader';
 import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import inject from 'react-rxjs/dist/RxInject';
-import objectSearchStore$, {clearSearch$, searchForObjects$, changeField$} from './objectSearchStore';
+import objectSearchStore$, {clearSearch$, searchForObjects$, onChangeField$} from './objectSearchStore';
 
 export function renderParam(id, props, style) {
   return (
@@ -171,7 +171,7 @@ const data = {
 const commands = {
   clearSearch$,
   searchForObjects$,
-  changeField$
+  onChangeField$
 };
 
 const props = {
