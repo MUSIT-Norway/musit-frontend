@@ -58,9 +58,9 @@ export const ObjectSearchComponent = (props) =>
           </Form>
           <br />
           <h4>
-            {props.loaded &&
+            {props.loaded && props.store.data &&
             (props.store.data.totalMatches > 0 ?
-                I18n.t('musit.objectsearch.results.title', {count: props.data.totalMatches})
+                I18n.t('musit.objectsearch.results.title', {count: props.store.data.totalMatches})
                 :
                 I18n.t('musit.objectsearch.results.noHit')
             )

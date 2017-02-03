@@ -29,13 +29,13 @@ export const reducer$ = (actions) => Observable.merge(
   actions.searchForObjects$.map((result) => (state) => ({
     ...state,
     data: {
-      totalMatches: result.totalMatches,
-      matches: result.matches.map(data => {
+      totalMatches: result.totalMatches ? result.totalMatches : 0,
+      matches: result.matches ? result.matches.map(data => {
         return new MusitObject({
           ...data,
           breadcrumb: getPath(data)
         });
-      })
+      }) : []
     }
   })),
   actions.onChangeField$.map(({ field, value }) => (state) => ({

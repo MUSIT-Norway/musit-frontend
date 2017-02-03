@@ -15,8 +15,8 @@ describe('objectSearchStore', () => {
     });
 
     // mock streams
-    const searchForObjectsdM= '--x-------------'
-    const onChangeFieldM    = '-x--------------'
+    const searchForObjectsdM= '--x-------------';
+    const onChangeFieldM    = '-x--------------';
     const expected          = 'abc-------------';
 
     const expectedStateMap = {
@@ -29,13 +29,13 @@ describe('objectSearchStore', () => {
         }
       },
       c: {
-        ...initialState,
+        data: {
+          totalMatches: 0,
+          matches: []
+        },
         params: {
           ...initialState.params,
           test: 'hallo'
-        },
-        data: {
-
         }
       }
     };
@@ -48,12 +48,15 @@ describe('objectSearchStore', () => {
       simpleGet: () => {
         return Observable.of({
           response: {
-            totalMatches: 0,
-            matches: [
-
-            ]
+            data: {
+            },
+            params: {
+              currentPage: 1,
+              perPage: 50,
+              test: 'hallo'
+            }
           }
-        })
+        });
       }
     }));
     const onChangeField$ = testScheduler.createHotObservable(onChangeFieldM, {x: {field: 'test', value: 'hallo'}});
