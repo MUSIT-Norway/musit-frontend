@@ -44,7 +44,13 @@ export const ObjectSearchComponent = (props) =>
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                props.searchForObjects(props.params, 1, props.appSession.getMuseumId(), props.appSession.getCollectionId());
+                props.searchForObjects({
+                  params:props.store.params,
+                  page: 1,
+                  museumId: props.appSession.getMuseumId(),
+                  collectionId: props.appSession.getCollectionId(),
+                  token: props.appSession.getAccessToken()
+                });
               }}
             >
               <FontAwesome name="search" style={{fontSize: '1.3em'}}/>
@@ -65,7 +71,7 @@ export const ObjectSearchComponent = (props) =>
           <div>
             <PagingToolbar
               numItems={props.store.data.totalMatches}
-              baseUrl={props.store.location.pathname}
+              baseUrl={props.location.pathname}
               currentPage={props.store.params.currentPage}
               perPage={props.store.params.perPage}
               onClick={(page) => props.searchForObjects(
@@ -152,7 +158,13 @@ export const ObjectSearchComponent = (props) =>
               numItems={props.store.data.totalMatches}
               currentPage={props.store.params.currentPage}
               perPage={props.store.params.perPage}
-              onClick={(page) => props.searchForObjects(props.store.params, page, props.appSession.getMuseumId(), props.appSession.getCollectionId())}
+              onClick={(page) => props.searchForObjects({
+                params:props.store.params,
+                page,
+                museumId: props.appSession.getMuseumId(),
+                collectionId: props.appSession.getCollectionId(),
+                token: props.appSession.getAccessToken()
+              })}
             />
           </div>
           }

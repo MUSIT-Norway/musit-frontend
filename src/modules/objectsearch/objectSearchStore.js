@@ -6,10 +6,10 @@ import { getPath } from '../../shared/util';
 
 
 export const searchForObjects = ({ simpleGet }) => (cmd) => {
-  return MusitObject.searchForObjects(simpleGet)(cmd.params, cmd.page, cmd.museumId, cmd.collectionId, cmd);
+  return MusitObject.searchForObjects(simpleGet)(cmd.params, cmd.page, cmd.museumId, cmd.collectionId, cmd.token, cmd);
 };
 
-const initialState = {
+export const initialState = {
   data: {
     totalMatches: 0,
     matches: []
@@ -36,14 +36,13 @@ export const reducer$ = (actions) => Observable.merge(
           breadcrumb: getPath(data)
         });
       })
-    },
-    error : null
+    }
   })),
-  actions.onChangeField$.map((props) => (state) => ({
+  actions.onChangeField$.map(({ field, value }) => (state) => ({
     ...state,
     params: {
       ...state.params,
-      [props.field]: props.value
+      [field]: value
     }
   }))
 );

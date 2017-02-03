@@ -26,8 +26,8 @@ export default {
           const museumNoQuery = `museumNo=${params.museumNo || ''}`;
           const subNoQuery = `subNo=${params.subNo || ''}`;
           const termQuery = `term=${params.term || ''}`;
-          const pageQuery = `page=${page}`;
-          const limitQuery = `limit=${params.perPage}`;
+          const pageQuery = `page=${page || ''}`;
+          const limitQuery = `limit=${params.perPage || ''}`;
           return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
         }
       },
