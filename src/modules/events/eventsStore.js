@@ -35,9 +35,9 @@ export const loadEvents$ = createAction('loadEvents$').switchMap(loadEvents(ajax
 export const loadRootNode$ = createAction('loadRootNode$').switchMap(loadRootNode(ajax));
 
 export const reducer$ = (actions) => Observable.merge(
-  actions.clearEvents$.map(() => (state) => ({...state, data: []})),
+  actions.clearEvents$.map(() => (state) => ({...state, data: [], loading: true})),
   actions.loadRootNode$.map((rootNode) => (state) => ({...state, rootNode})),
-  actions.loadEvents$.map((data) => (state) => ({...state, data})),
+  actions.loadEvents$.map((data) => (state) => ({...state, data, loading: false})),
 );
 
 const store$ = createStore('events', reducer$({

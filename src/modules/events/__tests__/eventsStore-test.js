@@ -17,8 +17,8 @@ describe('eventsStore', () => {
     });
 
     // mock streams
-    const clearEventsM      = '--1------------';
-    const loadEventsM       = '-1-------------';
+    const clearEventsM      = '-1--------------';
+    const loadEventsM       = '--1-------------';
     const expected          = 'abc------------';
 
     const expectedStateMap = {
@@ -26,13 +26,15 @@ describe('eventsStore', () => {
         data: []
       },
       b: {
+        data: [],
+        loading: true
+      },
+      c: {
         data: [
           new Observation({ id: 23444, doneBy: 'Test 2', registeredBy: 'Test 3' }),
           new Control({ id: 1455, doneBy: 'Test 1', registeredBy: 'Test 4' })
-        ]
-      },
-      c: {
-        data: []
+        ],
+        loading: false
       }
     };
 
@@ -102,26 +104,32 @@ describe('eventsStore', () => {
     });
 
     // mock streams
-    const loadRootNodeM     = '---1-----------';
-    const clearEventsM      = '--1------------';
-    const loadEventsM       = '-1-------------';
-    const expected          = 'abcd-----------';
+    const loadRootNodeM     = '---1------------';
+    const clearEventsM      = '-1--------------';
+    const loadEventsM       = '--1-------------';
+    const expected          = 'abcd------------';
 
     const expectedStateMap = {
       a: {
         data: []
       },
       b: {
+        data: [],
+        loading: true
+      },
+      c: {
         data: [
           new Observation({ id: 23444, doneBy: undefined, registeredBy: undefined }),
           new Control({ id: 1455, doneBy: undefined, registeredBy: undefined })
-        ]
-      },
-      c: {
-        data: []
+        ],
+        loading: false
       },
       d: {
-        data: [],
+        data: [
+          new Observation({ id: 23444, doneBy: undefined, registeredBy: undefined }),
+          new Control({ id: 1455, doneBy: undefined, registeredBy: undefined })
+        ],
+        loading: false,
         rootNode: new MusitNode({nodeId: 1, name: 'Test'})
       }
     };
