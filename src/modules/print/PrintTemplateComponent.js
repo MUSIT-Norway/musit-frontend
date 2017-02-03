@@ -1,19 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import IFrame from '../../shared/IFrame';
-import Template from '../../models/PrintTemplate';
 import './PrintTemplateComponent.css';
 import Config from '../../config';
+import inject from 'react-rxjs/dist/RxInject';
+import store$, { loadTemplates$, renderTemplate$, clearAll$, clearRendered$ } from './printStore';
 
-export default class ChooseTemplate extends Component {
+export class ChooseTemplate extends Component {
   static propTypes = {
-    templates: PropTypes.arrayOf(PropTypes.instanceOf(Template)),
+    store: PropTypes.object.isRequired,
     loadTemplates: PropTypes.func.isRequired,
-    selectTemplate: PropTypes.func.isRequired,
-    clearDialog: PropTypes.func.isRequired,
+    renderTemplate: PropTypes.func.isRequired,
+    clearAll: PropTypes.func.isRequired,
     clearRendered: PropTypes.func.isRequired,
     marked: PropTypes.array,
     rendered: PropTypes.string
   };
+
+  static DEFAULT_CODE = 1;
 
   static defaultProps = {
     templates: []
@@ -29,22 +32,26 @@ export default class ChooseTemplate extends Component {
   }
 
   componentWillMount() {
-    this.props.clearDialog();
-    this.props.loadTemplates();
+    this.props.clearAll();
+    this.props.loadTemplates({
+      token: this.props.appSession.getAccessToken()
+    });
   }
 
   selectTemplate(e, templateId = e.target.value * 1) {
     this.props.clearRendered();
     if (templateId) {
-      this.props.selectTemplate(templateId);
-      this.props.renderTemplate(templateId, Config.print.labelConfig[templateId] || 1, this.props.marked.map(ntp => ({
+      const codeFormat = Config.print.labelConfig[templateId] || ChooseTemplate.DEFAULT_CODE;
+      const nodes = this.props.marked.map(ntp => ({
         uuid: ntp.nodeId,
         name: ntp.name
-      })));
+      }));
+      this.props.renderTemplate({ templateId, codeFormat, nodes, token: this.props.appSession.getAccessToken() });
     }
   }
 
   render() {
+    console.log(this.props.store.rendered);
     return (
       <div className="templatePrint">
         <select
@@ -52,12 +59,12 @@ export default class ChooseTemplate extends Component {
           onChange={this.selectTemplate}
         >
           <option>Select template</option>
-          {[].concat(this.props.templates).filter(t => t).map((template, i) =>
+          {[].concat(this.props.store.templates).filter(t => t).map((template, i) =>
             <option key={i} value={template.id}>{template.name}</option>
           )}
         </select>
         {' '}
-        {this.props.rendered &&
+        {this.props.store.rendered &&
           <input
             className="printTool"
             onClick={() => this.previewFrame.domNode.contentWindow.print()}
@@ -65,7 +72,7 @@ export default class ChooseTemplate extends Component {
             value="Print template"
           />
         }
-        {this.props.rendered &&
+        {this.props.store.rendered &&
           <IFrame
             ref={(child) => this.previewFrame = child}
             frameProps={{
@@ -74,10 +81,23 @@ export default class ChooseTemplate extends Component {
               frameBorder: 0,
               scrolling: 'yes'
             }}
-            content={this.props.rendered}
+            content={this.props.store.rendered}
           />
         }
       </div>
     );
   }
 }
+
+const data = {
+  store$
+};
+
+const commands = {
+  clearAll$,
+  clearRendered$,
+  loadTemplates$,
+  renderTemplate$
+};
+
+export default inject(data, commands)(ChooseTemplate);

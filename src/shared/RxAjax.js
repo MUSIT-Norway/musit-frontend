@@ -45,10 +45,10 @@ export const onFailure = (callback) => (error) => {
   return Observable.of({ error });
 };
 
-const ajax = (url, method, body, token, headers) =>
+export const ajax = (url, method, body, token, headers, responseType = 'json') =>
   Observable.ajax({
     url,
-    responseType: 'json',
+    responseType,
     method,
     body,
     headers: {
