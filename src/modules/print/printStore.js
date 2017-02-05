@@ -4,11 +4,11 @@ import * as ajaxMethods from '../../shared/RxAjax';
 import Config from '../../config';
 import Template from '../../models/template';
 
-const loadTemplates = ({ simpleGet }) => ({ token }) =>
+export const loadTemplates = ({ simpleGet }) => ({ token }) =>
   simpleGet(Config.magasin.urls.barcode.templatesUrl, token)
     .map(({ response }) => response && response.map(json => new Template(json)));
 
-const renderTemplate = ({ ajax }) => ({ templateId, codeFormat, nodes, token }) => {
+export const renderTemplate = ({ ajax }) => ({ templateId, codeFormat, nodes, token }) => {
   const data = nodes.map(node => ({ uuid: node.uuid, data: [{ field: 'name', value: node.name }] }));
   const url = Config.magasin.urls.barcode.templateRenderUrl(templateId, codeFormat);
   return ajax(url, 'POST', data, token, { 'Content-Type': 'application/json' }, 'text/html')

@@ -51,7 +51,6 @@ export class ChooseTemplate extends Component {
   }
 
   render() {
-    console.log(this.props.store.rendered);
     return (
       <div className="templatePrint">
         <select
