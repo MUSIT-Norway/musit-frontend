@@ -23,7 +23,7 @@ export class ChooseTemplate extends Component {
   };
 
   static contextTypes = {
-    closeModal: PropTypes.func.isRequired
+    closeModal: PropTypes.func
   };
 
   constructor(props, context) {

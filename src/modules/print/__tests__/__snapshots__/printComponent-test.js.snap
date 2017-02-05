@@ -1,0 +1,21 @@
+exports[`PrintTemplateComponent should display correctly 1`] = `
+<div
+  className="templatePrint">
+  <select
+    className="printTool"
+    onChange={[Function bound selectTemplate]}>
+    <option>
+      Select template
+    </option>
+    <option
+      value={1}>
+      Label-1 70mm x 37mm
+    </option>
+    <option
+      value={2}>
+      Label-2 105mm x 74mm
+    </option>
+  </select>
+   
+</div>
+`;
