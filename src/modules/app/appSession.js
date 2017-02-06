@@ -10,7 +10,6 @@ import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
 import Actor from '../../models/actor';
 import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
-import CodeReceiver from './codeReceiver';
 
 export class AppSession {
 
@@ -118,5 +117,3 @@ export const reducer$ = ({ setMuseumId$, setCollectionId$, setAccessToken$, load
 const session$ = createStore('appSession', reducer$(actions), Observable.of(initialState)).map(state => new AppSession(state));
 
 export default session$;
-
-CodeReceiver(session$);

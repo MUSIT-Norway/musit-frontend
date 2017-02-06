@@ -67,7 +67,7 @@ export default class MusitUserAccount extends Component {
     return (
       <OverlayTrigger overlay={tooltip} placement="left">
         <Dropdown id="dropdown-custom-1">
-          <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed', height: '50px' }}>
+          <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed', height: '55px' }}>
             <FontAwesome name="user" size="lg"/>
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ width: 200 }}>
