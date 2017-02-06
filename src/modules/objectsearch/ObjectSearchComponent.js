@@ -27,6 +27,15 @@ export function renderParam(id, props, style) {
   );
 }
 
+export function callSearchForObjects(page) => {
+    return props.searchForObjects({
+    params:props.store.params,
+    page,
+    museumId: props.appSession.getMuseumId(),
+    collectionId: props.appSession.getCollectionId(),
+    token: props.appSession.getAccessToken()})
+}
+
 export const ObjectSearchComponent = (props) =>
   <div style={{paddingTop: 20}}>
     <main>
@@ -74,12 +83,12 @@ export const ObjectSearchComponent = (props) =>
               baseUrl={props.location.pathname}
               currentPage={props.store.params.currentPage}
               perPage={props.store.params.perPage}
-              onClick={(page) => props.searchForObjects(
-                props.store.params,
+              onClick={(page) => props.searchForObjects({
+                params:props.store.params,
                 page,
-                props.appSession.getMuseumId(),
-                props.appSession.getCollectionId(),
-                props.appSession.getAccessToken())
+                museumId: props.appSession.getMuseumId(),
+                collectionId: props.appSession.getCollectionId(),
+                token: props.appSession.getAccessToken()})
               }
             />
             <Table>
@@ -178,7 +187,6 @@ const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   store$: objectSearchStore$
 };
-
 
 const commands = {
   clearSearch$,

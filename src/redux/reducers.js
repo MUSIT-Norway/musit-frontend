@@ -23,7 +23,6 @@ import storagePanelReducer from '../modules/storagefacility/reducers/panel';
 import storageUnitStatsReducer from '../modules/storagefacility/reducers/stats';
 import observationReducer from '../modules/observation/observationReducer';
 import controlReducer from '../modules/control/controlReducer';
-import ObjectSearchReducer from '../modules/objectsearch/reducer';
 import storageNodeGridReducer from '../modules/storagefacility/reducers/grid/nodes';
 import sessionReducer from './sessionReducer';
 
@@ -34,8 +33,7 @@ const rootReducer = combineReducers({
   storageUnitStats: storageUnitStatsReducer,
   storagePanelState: storagePanelStateReducer,
   observation: observationReducer,
-  control: controlReducer,
-  objectSearch: ObjectSearchReducer
+  control: controlReducer
 });
 
 export default rootReducer;

@@ -16,7 +16,7 @@ export const initialState = {
   },
   params: {
     currentPage: 1,
-    perPage: 50
+    perPage: 5
   }
 };
 
