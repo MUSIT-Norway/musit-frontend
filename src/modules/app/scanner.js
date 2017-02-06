@@ -78,7 +78,12 @@ export const reducer$ = (actions) => Observable.merge(
     }
     let buffer = `${state.buffer || ''}${String.fromCharCode(e.which).replace('\\+', '-')}`;
     if (UUID_REGEX.test(buffer)) {
-      scanForUUID(buffer);
+      scanForUUID(
+        buffer,
+        state.appSession.getMuseumId(),
+        state.appSession.getCollectionId(),
+        state.appSession.getAccessToken()
+      );
       buffer = '';
     } else if (buffer.length > 32) {
       buffer = '';
