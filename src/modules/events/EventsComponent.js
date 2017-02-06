@@ -12,6 +12,7 @@ import store$, {
   loadRootNode$,
   loadEvents$
 } from './eventsStore';
+import Loader from 'react-loader';
 
 export class EventsComponent extends React.Component {
   static propTypes = {
@@ -20,7 +21,8 @@ export class EventsComponent extends React.Component {
     route: React.PropTypes.object,
     loadEvents: React.PropTypes.func.isRequired,
     loadRootNode: React.PropTypes.func.isRequired,
-    clearEvents: React.PropTypes.func.isRequired
+    clearEvents: React.PropTypes.func.isRequired,
+    loader: React.PropTypes.element.isRequired
   }
 
   constructor(props) {
@@ -30,6 +32,10 @@ export class EventsComponent extends React.Component {
       showControls: this.props.route.showControls
     };
   }
+
+  static defaultProps = {
+    loader: <Loader loaded={false} />
+  };
 
   componentWillMount() {
     this.props.clearEvents();
@@ -67,6 +73,9 @@ export class EventsComponent extends React.Component {
   }
 
   makeContent() {
+    if (this.props.store.loading) {
+      return this.props.loader;
+    }
     const filtered = this.props.store.data.filter((e) => {
       if (e.eventType && this.state.showControls && this.state.showObservations) {
         return true;
