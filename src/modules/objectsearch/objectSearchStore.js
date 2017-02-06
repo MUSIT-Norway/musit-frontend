@@ -17,7 +17,7 @@ export const initialState = {
   },
   params: {
     currentPage: 1,
-    perPage: 5
+    perPage: 50
   }
 };
 
@@ -34,7 +34,6 @@ export const reducer$ = (actions) => Observable.merge(
         breadcrumb: getPath(data)
       });
     }) : [];
-    console.log(JSON.stringify(matches));
     return {
       ...state,
       loaded: true,

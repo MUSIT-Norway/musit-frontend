@@ -9,8 +9,8 @@ describe('objectSearchStore', () => {
 
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      console.log(JSON.stringify(actual, null, 2));
-      console.log(JSON.stringify(expected, null, 2));
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
       return assert.deepEqual(actual, expected);
     });
 
