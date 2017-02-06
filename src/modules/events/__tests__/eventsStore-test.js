@@ -19,7 +19,7 @@ describe('eventsStore', () => {
     // mock streams
     const clearEventsM      = '-1--------------';
     const loadEventsM       = '--1-------------';
-    const expected          = 'abc------------';
+    const expected          = 'abc-------------';
 
     const expectedStateMap = {
       a: {

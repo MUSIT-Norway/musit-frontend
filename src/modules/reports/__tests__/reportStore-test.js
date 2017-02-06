@@ -1,48 +1,67 @@
-import { TestScheduler, Subject } from 'rxjs/Rx';
+import { TestScheduler,Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$ } from '../reportStore';
+import { reducer$, loadKDReport } from '../reportStore';
 import { createStore } from 'react-rxjs/dist/RxStore';
+import Report from '../../../models/report';
 
 describe('KDReportStore', () => {
 
   it('testing reducer', () => {
-    const testScheduler = new TestScheduler(assert.deepEqual.bind(assert));
+    const testScheduler = new TestScheduler((actual, expected) => {
+      console.log(JSON.stringify(actual, null, 2));
+      console.log(JSON.stringify(expected, null, 2));
+      return assert.deepEqual(actual,expected);
+    });
 
     // mock streams
-    const nullMarbles       = '--------------';
-    const setLoadingM       = '-x------------';
-    const loadingChildrenM  = '------1--2----';
-    const expected          = 'ab----c--d----';
+
+    const loadKDReportM     = '1-----------';
+    const expected          = 'a-----------';
+
+
+    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, { 1: { kdreport: {} } })
+      .switchMap(loadKDReport({
+        simpleGet: {
+          reponse: Observable.of({
+            response: {
+              kdreport: {
+                totalArea: '4666.3',
+                perimeterSecurity: '34.3',
+                theftProtection: '44.4',
+                fireProtection: '4566.333',
+                waterDamageAssessment: '344.3',
+                routinesAndContingencyPlan: '433.2'
+              }
+            }
+          })
+        }
+      }));
 
     const expectedStateMap = {
-      a: {},
-      b: { data: {
-        kdreport:
-        {totalArea: '4666.3',
-          perimeterSecurity: '34.3',
-          theftProtection: '44.4',
-          fireProtection: '4566.333',
-          waterDamageAssessment:'344.3',
-          routinesAndContingencyPlan: '433.2'
-        }} }
+      a: {
+        data: new Report({
+          kdreport: {
+            totalArea: '4666.3',
+            perimeterSecurity: '34.3',
+            theftProtection: '44.4',
+            fireProtection: '4566.333',
+            waterDamageAssessment:'344.3',
+            routinesAndContingencyPlan: '433.2'
+          }
+        }),
+        loading: false
+      }
     };
 
     // mock up$ and down$ events
-    const clearRootNode$ = testScheduler.createHotObservable(nullMarbles);
-    const setLoading$ = testScheduler.createHotObservable(setLoadingM);
-    const loadNodes$ = testScheduler.createHotObservable(loadingChildrenM, {
-      1: { matches: [], totalMatches: 0},
-      2: { matches: [{ name: 'en node', nodeId: 'uuid', id: 1}], totalMatches: 1 }
-    });
-    const loadObjects$ = new Subject();
-    const loadStats$ = testScheduler.createHotObservable(nullMarbles);
-    const deleteNode$ = testScheduler.createHotObservable(nullMarbles);
-    const loadRootNode$ = testScheduler.createHotObservable(nullMarbles);
 
-    const state$ = reducer$({clearRootNode$, setLoading$, loadNodes$, loadObjects$, loadStats$, deleteNode$, loadRootNode$});
+
+    const state$ = reducer$({loadKDReport$});
+
 
     // assertion
     testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
+    console.log(expectedStateMap);
 
     // run tests
     testScheduler.flush();
