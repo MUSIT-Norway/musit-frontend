@@ -33,7 +33,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               componentClass="input"
               onChange={[Function onChange]}
               placeholder=" "
-              s={true}
               style={Object {}}
               type="text"
               value="" />
@@ -53,7 +52,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               componentClass="input"
               onChange={[Function onChange]}
               placeholder=" "
-              s={true}
               style={Object {}}
               type="text"
               value="" />
@@ -73,7 +71,6 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               componentClass="input"
               onChange={[Function onChange]}
               placeholder=" "
-              s={true}
               style={
                 Object {
                   "width": "440px"
@@ -101,7 +98,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
           </Button>
         </Form>
         <br />
-        <h4 />
+        <h4>
+          Søket ga 20 treff:
+        </h4>
         <Loader
           component="div"
           loaded={true}

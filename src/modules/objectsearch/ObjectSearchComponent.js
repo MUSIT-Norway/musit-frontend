@@ -17,7 +17,7 @@ export function renderParam(id, props, style) {
       <ControlLabel>{I18n.t(`musit.objectsearch.${id}.label`)}</ControlLabel>
       {' '}
       <FormControl
-        style={{...style}}s
+        style={{...style}}
         type="text"
         placeholder={I18n.t(`musit.objectsearch.${id}.placeHolder`)}
         value={props.store.params[id] || ''}
@@ -54,7 +54,6 @@ export const ObjectSearchComponent = (props) =>
               onClick={(e) => {
                 e.preventDefault();
                 callSearchForObjects(props, 1);
-                callSearchForObjects(props, 1);
               }}
             >
               <FontAwesome name="search" style={{fontSize: '1.3em'}}/>
@@ -62,7 +61,7 @@ export const ObjectSearchComponent = (props) =>
           </Form>
           <br />
           <h4>
-            {props.loaded && props.store.data &&
+            {props.store.loaded && props.store.data &&
             (props.store.data.totalMatches > 0 ?
                 I18n.t('musit.objectsearch.results.title', {count: props.store.data.totalMatches})
                 :
@@ -70,7 +69,7 @@ export const ObjectSearchComponent = (props) =>
             )
             }
           </h4>
-          <Loader loaded={!props.loading}>
+          <Loader loaded={!props.store.loading}>
           {props.store.data && props.store.data.matches.length > 0 &&
           <div>
             <PagingToolbar

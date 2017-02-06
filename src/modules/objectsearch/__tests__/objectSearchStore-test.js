@@ -30,6 +30,7 @@ describe('objectSearchStore', () => {
       },
       c: {
         loaded: true,
+        loading: false,
         data: {
           'totalMatches':31,
           'matches': [{

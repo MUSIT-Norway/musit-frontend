@@ -12,6 +12,7 @@ export const searchForObjects = ({ simpleGet }) => (cmd) => {
 export const initialState = {
   data: {
     loaded: false,
+    loading: true,
     totalMatches: 0,
     matches: []
   },
@@ -37,6 +38,7 @@ export const reducer$ = (actions) => Observable.merge(
     return {
       ...state,
       loaded: true,
+      loading: false,
       data: {
         totalMatches: result.totalMatches ? result.totalMatches : 0,
         matches
