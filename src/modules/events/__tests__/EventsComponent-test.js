@@ -4,6 +4,30 @@ import React from 'react';
 import { EventsComponent } from '../EventsComponent';
 import { AppSession } from '../../app/appSession';
 describe('EventsComponent', () => {
+  it('Check it renders when not loaded', () => {
+    const myDiv = shallow(
+      <EventsComponent
+        store={{
+          data: [],
+          loading: true
+        }}
+        loader={<span>loader</span>}
+        route={{
+          showObservations: true,
+          showControls: true
+        }}
+        params={{
+          id: '1'
+        }}
+        appSession={new AppSession({})}
+        clearEvents={() => true}
+        loadEvents={() => true}
+        loadRootNode={() => true}
+      />
+    );
+    expect(shallowToJson(myDiv)).toMatchSnapshot();
+  });
+
   it('Check it renders.', () => {
     const myDiv = shallow(
       <EventsComponent
