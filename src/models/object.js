@@ -107,9 +107,7 @@ MusitObject.pickObject = (object, breadcrumb, museumId, collectionId, token, cal
 };
 
 MusitObject.searchForObjects = (ajaxGet) => (params, page, museumId, collectionId, token, callback) => {
-  console.log('enter', params, page, museumId, collectionId, token, callback);
   const url = Config.magasin.urls.thingaggregate.searchObjectUrl(params, page, collectionId, museumId);
-  console.log(url);
   return ajaxGet(url, token, callback)
     .map(({ response }) => response)
     .map(data => {

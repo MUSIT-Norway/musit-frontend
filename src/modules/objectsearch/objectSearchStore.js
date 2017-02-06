@@ -11,6 +11,7 @@ export const searchForObjects = ({ simpleGet }) => (cmd) => {
 
 export const initialState = {
   data: {
+    loaded: false,
     totalMatches: 0,
     matches: []
   },
@@ -26,18 +27,22 @@ export const onChangeField$ = createAction('onChangeField$');
 
 export const reducer$ = (actions) => Observable.merge(
   actions.clearSearch$.map(() => () => initialState),
-  actions.searchForObjects$.map((result) => (state) => ({
-    ...state,
-    data: {
-      totalMatches: result.totalMatches ? result.totalMatches : 0,
-      matches: result.matches ? result.matches.map(data => {
-        return new MusitObject({
-          ...data,
-          breadcrumb: getPath(data)
-        });
-      }) : []
-    }
-  })),
+  actions.searchForObjects$.map((result) => (state) => {
+    const matches = result.matches ? result.matches.map(data => {
+      return new MusitObject({
+        ...data,
+        breadcrumb: getPath(data)
+      });
+    }) : [];
+    console.log(JSON.stringify(matches));
+    return {
+      ...state,
+      loaded: true,
+      data: {
+        totalMatches: result.totalMatches ? result.totalMatches : 0,
+        matches
+      }
+    };}),
   actions.onChangeField$.map(({ field, value }) => (state) => ({
     ...state,
     params: {

@@ -42,21 +42,15 @@ describe('ObjectSearchComponent', () => {
   it('should display object 1', () => {
     const wrapper = shallow(
       <ObjectSearchComponent
-        location={{
-          query: {
-            page: '1'
-          },
-          pathname: '/#/search/objects'
+        store={{
+          loaded: true,
+          data: testData,
+          params: {
+            currentPage: 1,
+            perPage: 5
+          }
         }}
-        loaded={true}
-        data={testData}
         onChangeField={() => true}
-        params={{
-          museumNo: '1234',
-          subNo: '455',
-          term: 'Lololol',
-          currentPage: 1
-        }}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

@@ -29,9 +29,80 @@ describe('objectSearchStore', () => {
         }
       },
       c: {
+        loaded: true,
         data: {
-          totalMatches: 0,
-          matches: []
+          'totalMatches':31,
+          'matches': [{
+            'id': 14,
+            'museumId': 99,
+            'museumNo': 'MusK23',
+            'term': 'Lite skaft av ben',
+            'currentLocationId': 7,
+            'path': ',1,3,4,7,',
+            'pathNames': [{'nodeId': 1, 'name': 'Utviklingsmuseet'}, {
+              'nodeId': 3,
+              'name': 'Utviklingsmuseet Org'
+            }, {'nodeId': 4, 'name': 'Forskningens hus'}, {'nodeId': 7, 'name': 'Forskningsværelset'}],
+            'breadcrumb': [{'id': 1, 'name': 'Utviklingsmuseet', 'url': '/magasin/1'}, {
+              'id': 3,
+              'name': 'Utviklingsmuseet Org',
+              'url': '/magasin/3'
+            }, {'id': 4, 'name': 'Forskningens hus', 'url': '/magasin/4'}, {
+              'id': 7,
+              'name': 'Forskningsværelset',
+              'url': '/magasin/7'
+            }]
+          }, {
+            'id': 15,
+            'museumId': 99,
+            'museumNo': 'MusK24',
+            'subNo': 'a',
+            'term': 'Lendeklede',
+            'currentLocationId': 7,
+            'path': ',1,3,4,7,',
+            'pathNames': [{'nodeId': 1, 'name': 'Utviklingsmuseet'}, {
+              'nodeId': 3,
+              'name': 'Utviklingsmuseet Org'
+            }, {'nodeId': 4, 'name': 'Forskningens hus'}, {'nodeId': 7, 'name': 'Forskningsværelset'}],
+            'breadcrumb': [{'id': 1, 'name': 'Utviklingsmuseet', 'url': '/magasin/1'}, {
+              'id': 3,
+              'name': 'Utviklingsmuseet Org',
+              'url': '/magasin/3'
+            }, {'id': 4, 'name': 'Forskningens hus', 'url': '/magasin/4'}, {
+              'id': 7,
+              'name': 'Forskningsværelset',
+              'url': '/magasin/7'
+            }]
+          }, {
+            'id': 16,
+            'museumId': 99,
+            'museumNo': 'MusK24',
+            'subNo': 'b',
+            'term': 'Kokekar',
+            'currentLocationId': 1,
+            'path': ',1,',
+            'pathNames': [{'nodeId': 1, 'name': 'Utviklingsmuseet'}],
+            'breadcrumb': [{'id': 1, 'name': 'Utviklingsmuseet', 'url': '/magasin/1'}]
+          }, {
+            'id': 20,
+            'museumId': 99,
+            'museumNo': 'MusK33',
+            'term': 'Bronsjespenne',
+            'currentLocationId': 1,
+            'path': ',1,',
+            'pathNames': [{'nodeId': 1, 'name': 'Utviklingsmuseet'}],
+            'breadcrumb': [{'id': 1, 'name': 'Utviklingsmuseet', 'url': '/magasin/1'}]
+          }, {
+            'id': 21,
+            'museumId': 99,
+            'museumNo': 'MusK34',
+            'subNo': 'a',
+            'term': 'Kniv',
+            'currentLocationId': 1,
+            'path': ',1,',
+            'pathNames': [{'nodeId': 1, 'name': 'Utviklingsmuseet'}],
+            'breadcrumb': [{'id': 1, 'name': 'Utviklingsmuseet', 'url': '/magasin/1'}]
+          }]
         },
         params: {
           ...initialState.params,
@@ -47,14 +118,107 @@ describe('objectSearchStore', () => {
     ).switchMap(searchForObjects({
       simpleGet: () => {
         return Observable.of({
-          response: {
-            data: {
-            },
-            params: {
-              currentPage: 1,
-              perPage: 50,
-              test: 'hallo'
-            }
+          response:  {
+            'totalMatches':31,
+            'matches':[
+              {
+                'id':14,
+                'museumId':99,
+                'museumNo':'MusK23',
+                'term':'Lite skaft av ben',
+                'currentLocationId':7,
+                'path':',1,3,4,7,',
+                'pathNames':[
+                  {
+                    'nodeId':1,
+                    'name':'Utviklingsmuseet'
+                  },
+                  {
+                    'nodeId':3,
+                    'name':'Utviklingsmuseet Org'
+                  },
+                  {
+                    'nodeId':4,
+                    'name':'Forskningens hus'
+                  },
+                  {
+                    'nodeId':7,
+                    'name':'Forskningsværelset'
+                  }
+                ]
+              },
+              {
+                'id':15,
+                'museumId':99,
+                'museumNo':'MusK24',
+                'subNo':'a',
+                'term':'Lendeklede',
+                'currentLocationId':7,
+                'path':',1,3,4,7,',
+                'pathNames':[
+                  {
+                    'nodeId':1,
+                    'name':'Utviklingsmuseet'
+                  },
+                  {
+                    'nodeId':3,
+                    'name':'Utviklingsmuseet Org'
+                  },
+                  {
+                    'nodeId':4,
+                    'name':'Forskningens hus'
+                  },
+                  {
+                    'nodeId':7,
+                    'name':'Forskningsværelset'
+                  }
+                ]
+              },
+              {
+                'id':16,
+                'museumId':99,
+                'museumNo':'MusK24',
+                'subNo':'b',
+                'term':'Kokekar',
+                'currentLocationId':1,
+                'path':',1,',
+                'pathNames':[
+                  {
+                    'nodeId':1,
+                    'name':'Utviklingsmuseet'
+                  }
+                ]
+              },
+              {
+                'id':20,
+                'museumId':99,
+                'museumNo':'MusK33',
+                'term':'Bronsjespenne',
+                'currentLocationId':1,
+                'path':',1,',
+                'pathNames':[
+                  {
+                    'nodeId':1,
+                    'name':'Utviklingsmuseet'
+                  }
+                ]
+              },
+              {
+                'id':21,
+                'museumId':99,
+                'museumNo':'MusK34',
+                'subNo':'a',
+                'term':'Kniv',
+                'currentLocationId':1,
+                'path':',1,',
+                'pathNames':[
+                  {
+                    'nodeId':1,
+                    'name':'Utviklingsmuseet'
+                  }
+                ]
+              }
+            ]
           }
         });
       }

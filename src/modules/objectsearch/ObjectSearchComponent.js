@@ -20,7 +20,7 @@ export function renderParam(id, props, style) {
         style={{...style}}s
         type="text"
         placeholder={I18n.t(`musit.objectsearch.${id}.placeHolder`)}
-        value={props.params[id] || ''}
+        value={props.store.params[id] || ''}
         onChange={(e) => props.onChangeField(id, e.target.value)}
       />
     </FormGroup>
@@ -75,7 +75,6 @@ export const ObjectSearchComponent = (props) =>
           <div>
             <PagingToolbar
               numItems={props.store.data.totalMatches}
-              baseUrl={props.location.pathname}
               currentPage={props.store.params.currentPage}
               perPage={props.store.params.perPage}
               onClick={(page) => callSearchForObjects(props, page)
