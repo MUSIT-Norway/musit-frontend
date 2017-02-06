@@ -27,13 +27,13 @@ export function renderParam(id, props, style) {
   );
 }
 
-export function callSearchForObjects(page) => {
-    return props.searchForObjects({
+export function callSearchForObjects(props, page) {
+  return props.searchForObjects({
     params:props.store.params,
     page,
     museumId: props.appSession.getMuseumId(),
     collectionId: props.appSession.getCollectionId(),
-    token: props.appSession.getAccessToken()})
+    token: props.appSession.getAccessToken()});
 }
 
 export const ObjectSearchComponent = (props) =>
@@ -53,13 +53,8 @@ export const ObjectSearchComponent = (props) =>
               type="submit"
               onClick={(e) => {
                 e.preventDefault();
-                props.searchForObjects({
-                  params:props.store.params,
-                  page: 1,
-                  museumId: props.appSession.getMuseumId(),
-                  collectionId: props.appSession.getCollectionId(),
-                  token: props.appSession.getAccessToken()
-                });
+                callSearchForObjects(props, 1);
+                callSearchForObjects(props, 1);
               }}
             >
               <FontAwesome name="search" style={{fontSize: '1.3em'}}/>
@@ -83,12 +78,7 @@ export const ObjectSearchComponent = (props) =>
               baseUrl={props.location.pathname}
               currentPage={props.store.params.currentPage}
               perPage={props.store.params.perPage}
-              onClick={(page) => props.searchForObjects({
-                params:props.store.params,
-                page,
-                museumId: props.appSession.getMuseumId(),
-                collectionId: props.appSession.getCollectionId(),
-                token: props.appSession.getAccessToken()})
+              onClick={(page) => callSearchForObjects(props, page)
               }
             />
             <Table>
