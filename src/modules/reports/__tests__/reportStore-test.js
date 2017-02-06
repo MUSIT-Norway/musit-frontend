@@ -24,9 +24,7 @@ describe('KDReportStore', () => {
           fireProtection: '4566.333',
           waterDamageAssessment:'344.3',
           routinesAndContingencyPlan: '433.2'
-        }} },
-      c: { children: { loading: false, data: { matches: [], totalMatches: 0 }} },
-      d: { children: { loading: false, data: { matches: [{ name: 'en node', nodeId: 'uuid', id: 1}], totalMatches: 1 }} }
+        }} }
     };
 
     // mock up$ and down$ events
