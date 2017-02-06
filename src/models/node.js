@@ -74,4 +74,13 @@ MusitNode.pickNode = (node, breadcrumb) => {
   pickNode$.next({ value: node, path: breadcrumb });
 };
 
+MusitNode.findByBarcode = (barcode, museumId, token) => {
+  return simpleGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token);
+};
+
+MusitNode.findByUUID = (uuid, museumId, token) => {
+  return simpleGet(Config.magasin.urls.storagefacility.scanUrl(uuid, museumId), token);
+};
+
+
 export default MusitNode;

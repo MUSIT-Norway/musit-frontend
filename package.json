@@ -66,7 +66,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
-    "react-rxjs": "MUSIT-Norway/react-rxjs.git#v1.0.1",
+    "react-rxjs": "MUSIT-Norway/react-rxjs.git#v1.0.3",
     "bootstrap": "3.3.7",
     "es6-shim": "^0.35.1",
     "font-awesome": "4.6.3",

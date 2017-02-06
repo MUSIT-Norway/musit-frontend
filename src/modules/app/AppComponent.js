@@ -184,9 +184,13 @@ export class App extends Component {
 }
 
 const data = {
-  appSession$: { type: PropTypes.object.isRequired },
-  pickList$: { type: PropTypes.object.isRequired },
-  scanner$
+  appSession$: {
+    type: PropTypes.object.isRequired,
+    mapToProps: (appSession$) => ({
+      scanner$: scanner$(appSession$)
+    })
+  },
+  pickList$: { type: PropTypes.object.isRequired }
 };
 
 const commands = {

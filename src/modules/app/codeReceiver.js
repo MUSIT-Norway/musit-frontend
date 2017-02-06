@@ -10,17 +10,17 @@ import Config from '../../config';
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const OLD_REGEX = /^[0-9]{9,11}$/i;
-const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 const SCAN_START = 'musit/scan/start';
 const SCAN_SUCCESS = 'musit/scan/success';
 const SCAN_FAILURE = 'musit/scan/failure';
+const scanOldBarcodeObjectUrlFn = Config.magasin.urls.thingaggregate.scanOldUrl;
+const scanOldBarcodeNodeUrlFn = Config.magasin.urls.storagefacility.scanOldUrl;
+const scanUUIDNodeUrlFn = Config.magasin.urls.storagefacility.scanUrl;
+const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 const getPickListPath = (pathname) => ROUTE_PICKLIST_PATH.exec(pathname);
 const isNodePickList = (path) => path && path.length > 0 && path[1] === 'nodes';
 const isObjectPickList = (path) => path && path.length > 0 && path[1] === 'objects';
 const isStorageFacility = (pathname) => pathname.startsWith(ROUTE_SF);
-const scanOldBarcodeObjectUrlFn = Config.magasin.urls.thingaggregate.scanOldUrl;
-const scanOldBarcodeNodeUrlFn = Config.magasin.urls.storagefacility.scanOldUrl;
-const scanUUIDNodeUrlFn = Config.magasin.urls.storagefacility.scanUrl;
 const getRoutePathname = () => {
   const hash = window.location.hash;
   if (hash.indexOf('#') === -1) {
