@@ -1,5 +1,9 @@
 import entries from 'object.entries';
 import Config from '../config';
+import mapToBackEnd from './mapper/observation/to_backend';
+import mapToFrontEnd from './mapper/observation/to_frontend';
+import MusitActor from './actor';
+import uniq from 'lodash/uniq';
 
 class Observation {
   constructor(props) {
@@ -17,5 +21,25 @@ Observation.loadObservations = (ajaxGet) => ({ nodeId, museumId, token, callback
       return arr.map(json => new Observation(json));
     });
 };
+
+Observation.addObservation = (ajaxPost) => (nodeId, museumId, data, token) => {
+  const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`;
+  const dataToPost = mapToBackEnd(data, nodeId);
+  return ajaxPost(url, dataToPost, token);
+};
+
+Observation.getObservation = (ajaxGet, ajaxPost) => (nodeId, observationId, museumId, token) => {
+  const url =`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations/${observationId}`;
+  return ajaxGet(url, token)
+    .flatMap(observation => {
+      const actorIds = uniq([observation.response.doneBy, observation.response.registeredBy]).filter(p => p);
+      return MusitActor.getActorDetails(ajaxPost)(actorIds, token)
+        .map(actorDetails => new Observation(mapToFrontEnd({
+          ...observation.response,
+          ...MusitActor.getActorNames(actorDetails.response, observation.response.doneBy, observation.response.registeredBy)
+        })));
+    });
+};
+
 
 export default Observation;

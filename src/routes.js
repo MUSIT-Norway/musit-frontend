@@ -28,7 +28,7 @@ import AddStorageUnitPanel from './modules/storagefacility/AddNodeContainer';
 import EditStorageUnitPanel from './modules/storagefacility/EditNodeContainer';
 import AddObservationPage from './modules/observation/AddObservationContainer';
 import EditObservationPage from './modules/observation/EditObservationContainer';
-import ViewObservationPage from './modules/observation/ViewObservationContainer';
+import ViewObservationPage from './modules/observation/ViewObservationPage';
 import Reports from './modules/reports/ReportsOverview';
 import ControlViewContainer from './modules/control/ControlViewContainer';
 import ControlAddContainer from './modules/control/ControlAddContainer';

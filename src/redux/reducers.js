@@ -21,7 +21,6 @@ import { combineReducers } from 'redux';
 import storagePanelStateReducer from '../modules/storagefacility/reducers/panel/state';
 import storagePanelReducer from '../modules/storagefacility/reducers/panel';
 import storageUnitStatsReducer from '../modules/storagefacility/reducers/stats';
-import observationReducer from '../modules/observation/observationReducer';
 import controlReducer from '../modules/control/controlReducer';
 import ObjectSearchReducer from '../modules/objectsearch/reducer';
 import storageNodeGridReducer from '../modules/storagefacility/reducers/grid/nodes';
@@ -33,7 +32,6 @@ const rootReducer = combineReducers({
   storageGridUnit: storageNodeGridReducer,
   storageUnitStats: storageUnitStatsReducer,
   storagePanelState: storagePanelStateReducer,
-  observation: observationReducer,
   control: controlReducer,
   objectSearch: ObjectSearchReducer
 });
