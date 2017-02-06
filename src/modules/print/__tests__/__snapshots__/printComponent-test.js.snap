@@ -17,5 +17,20 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
     </option>
   </select>
    
+  <input
+    className="printTool"
+    onClick={[Function onClick]}
+    type="button"
+    value="Print template" />
+  <IFrame
+    content="<html>Some html</html>"
+    frameProps={
+      Object {
+        "frameBorder": 0,
+        "height": "95%",
+        "scrolling": "yes",
+        "width": "100%"
+      }
+    } />
 </div>
 `;
