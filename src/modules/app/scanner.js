@@ -8,6 +8,7 @@ import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import { addNode$ } from '../app/pickList';
 import { loadNode$, loadChildren$ } from '../movedialog/moveDialogStore';
+import * as ajax from '../../shared/RxAjax';
 
 const UUID_REGEX = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
@@ -17,8 +18,8 @@ const isMoveDialogActive = () => document.getElementsByClassName('moveDialog').l
 
 const noOp = () => false;
 
-const scanForUUID = (buffer, museumId, collectionId, token) => {
-  MusitNode.findByUUID(buffer, museumId, token)
+const scanForUUID = ({ simpleGet }) => (buffer, museumId, collectionId, token) => {
+  MusitNode.findByUUID(simpleGet)(buffer, museumId, token)
     .toPromise()
     .then(({ response }) => {
       if (response && response.nodeId) {
@@ -31,17 +32,13 @@ const scanForUUID = (buffer, museumId, collectionId, token) => {
           hashHistory.push(`/magasin/${response.id}`);
         }
       } else if (isNumber(buffer)) {
-        MusitObject.findByBarcode(buffer, museumId, collectionId, token)
+        MusitObject.findByBarcode(simpleGet)(buffer, museumId, collectionId, token)
           .toPromise()
           .then(maybeObj => {
             if (maybeObj.length && maybeObj.length > 0) {
               hashHistory.push(`/magasin/${maybeObj[0].currentLocationId}/objects`);
-            } else {
-              throw new Error('Fant ingen node eller object for ' + buffer);
             }
           }).catch(noOp);
-      } else {
-        throw new Error('Fant ingen node for ' + buffer);
       }
     }).catch(noOp);
 };
@@ -63,7 +60,7 @@ export const reducer$ = (actions) => Observable.merge(
     }
     let buffer = `${state.buffer || ''}${String.fromCharCode(e.which).replace(/\+/g, '-')}`;
     if (UUID_REGEX.test(buffer)) {
-      scanForUUID(
+      scanForUUID(ajax)(
         buffer,
         state.appSession.getMuseumId(),
         state.appSession.getCollectionId(),

@@ -74,12 +74,12 @@ MusitNode.pickNode = (node, breadcrumb) => {
   pickNode$.next({ value: node, path: breadcrumb });
 };
 
-MusitNode.findByBarcode = (barcode, museumId, token) => {
-  return simpleGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token);
+MusitNode.findByBarcode = (ajaxGet) => (barcode, museumId, token) => {
+  return ajaxGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token);
 };
 
-MusitNode.findByUUID = (uuid, museumId, token) => {
-  return simpleGet(Config.magasin.urls.storagefacility.scanUrl(uuid, museumId), token);
+MusitNode.findByUUID = (ajaxGet) => (uuid, museumId, token) => {
+  return ajaxGet(Config.magasin.urls.storagefacility.scanUrl(uuid, museumId), token);
 };
 
 
