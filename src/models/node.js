@@ -75,11 +75,13 @@ MusitNode.pickNode = (node, breadcrumb) => {
 };
 
 MusitNode.findByBarcode = (ajaxGet) => (barcode, museumId, token) => {
-  return ajaxGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token);
+  return ajaxGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token)
+    .map(({ response }) => response);
 };
 
 MusitNode.findByUUID = (ajaxGet) => (uuid, museumId, token) => {
-  return ajaxGet(Config.magasin.urls.storagefacility.scanUrl(uuid, museumId), token);
+  return ajaxGet(Config.magasin.urls.storagefacility.scanUrl(uuid, museumId), token)
+    .map(({ response }) => response);
 };
 
 

@@ -107,7 +107,8 @@ MusitObject.pickObject = (object, breadcrumb, museumId, collectionId, token, cal
 };
 
 MusitObject.findByBarcode = (ajaxGet) => (barcode, museumId, collectionId, token) => {
-  return ajaxGet(Config.magasin.urls.thingaggregate.scanOldUrl(barcode, museumId, collectionId), token);
+  return ajaxGet(Config.magasin.urls.thingaggregate.scanOldUrl(barcode, museumId, collectionId), token)
+    .map(({ response }) => response);
 };
 
 export default MusitObject;

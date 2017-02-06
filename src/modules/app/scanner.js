@@ -15,12 +15,10 @@ const isNodePickList = (path = ROUTE_PICKLIST_PATH.exec(getLocationPath())) => p
 const isStorageFacility = (pathname = getLocationPath()) => pathname.startsWith(ROUTE_SF);
 const isMoveDialogActive = () => document.getElementsByClassName('moveDialog').length > 0;
 
-const noOp = () => false;
-
 const scanForNode = ({ simpleGet }, { push }) => (buffer, museumId, token) => {
   MusitNode.findByUUID(simpleGet)(buffer, museumId, token)
     .toPromise()
-    .then(({ response }) => {
+    .then(response => {
       if (response && response.nodeId) {
         if (isMoveDialogActive()) {
           loadNode$.next({ nodeId: response.id, museumId, token });
@@ -31,7 +29,7 @@ const scanForNode = ({ simpleGet }, { push }) => (buffer, museumId, token) => {
           push(`/magasin/${response.id}`);
         }
       }
-    }).catch(noOp);
+    });
 };
 
 export const toggleEnabled$ = createAction('toggleEnabled$');
