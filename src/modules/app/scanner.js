@@ -2,9 +2,8 @@ import pathToRegexp from 'path-to-regexp';
 import { Observable } from 'rxjs';
 import { hashHistory } from 'react-router';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import { getLocationPath, isNumber, getPath } from '../../shared/util';
+import { getLocationPath, getPath } from '../../shared/util';
 import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
-import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import { addNode$ } from '../app/pickList';
 import { loadNode$, loadChildren$ } from '../movedialog/moveDialogStore';
@@ -18,7 +17,7 @@ const isMoveDialogActive = () => document.getElementsByClassName('moveDialog').l
 
 const noOp = () => false;
 
-const scanForUUID = ({ simpleGet }) => (buffer, museumId, collectionId, token) => {
+const scanForNode = ({ simpleGet }, { push }) => (buffer, museumId, token) => {
   MusitNode.findByUUID(simpleGet)(buffer, museumId, token)
     .toPromise()
     .then(({ response }) => {
@@ -29,16 +28,8 @@ const scanForUUID = ({ simpleGet }) => (buffer, museumId, collectionId, token) =
         } else if (isNodePickList()) {
           addNode$.next({ value: response, path: getPath(response)});
         } else if (isStorageFacility()) {
-          hashHistory.push(`/magasin/${response.id}`);
+          push(`/magasin/${response.id}`);
         }
-      } else if (isNumber(buffer)) {
-        MusitObject.findByBarcode(simpleGet)(buffer, museumId, collectionId, token)
-          .toPromise()
-          .then(maybeObj => {
-            if (maybeObj.length && maybeObj.length > 0) {
-              hashHistory.push(`/magasin/${maybeObj[0].currentLocationId}/objects`);
-            }
-          }).catch(noOp);
       }
     }).catch(noOp);
 };
@@ -47,7 +38,7 @@ export const toggleEnabled$ = createAction('toggleEnabled$');
 const keyPress$ = Observable.fromEvent(window.document.body, 'keypress');
 const scheduledClear$ = keyPress$.debounce(() => Observable.timer(300));
 
-export const reducer$ = (actions) => Observable.merge(
+export const reducer$ = (actions, scanUUID) => Observable.merge(
   actions.appSession$.map((appSession) => (state) => ({...state, appSession})),
   actions.scheduledClear$.map(() => (state) => {
     const code = /^[0-9]+$/.test(state.buffer) ? state.buffer : '';
@@ -60,10 +51,9 @@ export const reducer$ = (actions) => Observable.merge(
     }
     let buffer = `${state.buffer || ''}${String.fromCharCode(e.which).replace(/\+/g, '-')}`;
     if (UUID_REGEX.test(buffer)) {
-      scanForUUID(ajax)(
+      scanUUID(ajax, hashHistory)(
         buffer,
         state.appSession.getMuseumId(),
-        state.appSession.getCollectionId(),
         state.appSession.getAccessToken()
       );
       buffer = '';
@@ -74,9 +64,14 @@ export const reducer$ = (actions) => Observable.merge(
   })
 );
 
-export default (appSession$) => createStore('scanner', reducer$({
-  appSession$,
+const commands = {
   scheduledClear$,
   toggleEnabled$,
   keyPress$
-}), Observable.of({ enabled: false, buffer: null, code: null, matches: [] }));
+};
+
+export default (appSession$) => createStore(
+  'scanner',
+  reducer$({...commands, appSession$ },  scanForNode),
+  Observable.of({ enabled: false, buffer: null, code: null, matches: [] })
+);
