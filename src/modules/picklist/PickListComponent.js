@@ -11,7 +11,7 @@ import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
-import PrintTemplate from '../print/PrintTemplateContainer';
+import PrintTemplate from '../print/PrintTemplateComponent';
 import {
   toggleNode$,
   toggleMainObject$,
@@ -175,7 +175,7 @@ export class PickListContainer extends React.Component {
   }
 
   print(nodesToPrint) {
-    this.context.showModal('Choose template', <PrintTemplate marked={nodesToPrint} />);
+    this.context.showModal('Choose template', <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />);
   }
 
   toggleObject({item, on}) {
