@@ -1,7 +1,6 @@
 import pathToRegexp from 'path-to-regexp';
 import { Observable } from 'rxjs';
 import { hashHistory } from 'react-router';
-import { emitError } from '../../shared/errors';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { getLocationPath, isNumber, getPath } from '../../shared/util';
 import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
@@ -15,6 +14,8 @@ const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 const isNodePickList = (path = ROUTE_PICKLIST_PATH.exec(getLocationPath())) => path && path.length > 0 && path[1] === 'nodes';
 const isStorageFacility = (pathname = getLocationPath()) => pathname.startsWith(ROUTE_SF);
 const isMoveDialogActive = () => document.getElementsByClassName('moveDialog').length > 0;
+
+const noOp = () => false;
 
 const scanForUUID = (buffer, museumId, collectionId, token) => {
   MusitNode.findByUUID(buffer, museumId, token)
@@ -30,40 +31,24 @@ const scanForUUID = (buffer, museumId, collectionId, token) => {
           hashHistory.push(`/magasin/${response.id}`);
         }
       } else if (isNumber(buffer)) {
-        MusitObject.findByBarcode(buffer, museumId, collectionId, token).toPromise()
+        MusitObject.findByBarcode(buffer, museumId, collectionId, token)
+          .toPromise()
           .then(maybeObj => {
             if (maybeObj.length && maybeObj.length > 0) {
               hashHistory.push(`/magasin/${maybeObj[0].currentLocationId}/objects`);
             } else {
               throw new Error('Fant ingen node eller object for ' + buffer);
             }
-          });
+          }).catch(noOp);
       } else {
         throw new Error('Fant ingen node for ' + buffer);
       }
-    })
-    .catch((error) => {
-      if (error.response) {
-        emitError({
-          type: 'network',
-          error: {
-            ...error, response: {
-              ...error.response,
-              body: null
-            }
-          }
-        });
-      } else {
-        emitError({
-          message: error
-        });
-      }
-    });
+    }).catch(noOp);
 };
 
 export const toggleEnabled$ = createAction('toggleEnabled$');
 const keyPress$ = Observable.fromEvent(window.document.body, 'keypress');
-const scheduledClear$ = keyPress$.debounce(() => Observable.timer(500));
+const scheduledClear$ = keyPress$.debounce(() => Observable.timer(300));
 
 export const reducer$ = (actions) => Observable.merge(
   actions.appSession$.map((appSession) => (state) => ({...state, appSession})),
@@ -76,7 +61,7 @@ export const reducer$ = (actions) => Observable.merge(
     if (!state.enabled) {
       return state;
     }
-    let buffer = `${state.buffer || ''}${String.fromCharCode(e.which).replace('\\+', '-')}`;
+    let buffer = `${state.buffer || ''}${String.fromCharCode(e.which).replace(/\+/g, '-')}`;
     if (UUID_REGEX.test(buffer)) {
       scanForUUID(
         buffer,
@@ -85,7 +70,7 @@ export const reducer$ = (actions) => Observable.merge(
         state.appSession.getAccessToken()
       );
       buffer = '';
-    } else if (buffer.length > 32) {
+    } else if (buffer.length > 36) {
       buffer = '';
     }
     return {...state, buffer };
