@@ -39,7 +39,6 @@ export class ObjectSearchComponent extends React.Component {
                   type="submit"
                   onClick={(e) => {
                     e.preventDefault();
-                    console.log(this.museumNo.value);
                     this.searchForObjects(1);
                   }}
                 >
