@@ -23,17 +23,17 @@ describe('KDReportStore', () => {
     const cmd = {museumId: {getPath: () => '99'}, token: 'xcv'};
     const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {data: {}}})
       .switchMap(loadKDReport({
-          simpleGet: (x,y) => Observable.of({
-            response: {
-              totalArea: 4666.3,
-              perimeterSecurity: 34.3,
-              theftProtection: 44.4,
-              fireProtection: 4566.333,
-              waterDamageAssessment: 344.3,
-              routinesAndContingencyPlan: 433.2
-            }
-          })
-        }
+        simpleGet: () => Observable.of({
+          response: {
+            totalArea: 4666.3,
+            perimeterSecurity: 34.3,
+            theftProtection: 44.4,
+            fireProtection: 4566.333,
+            waterDamageAssessment: 344.3,
+            routinesAndContingencyPlan: 433.2
+          }
+        })
+      }
       )
       (cmd));
 
