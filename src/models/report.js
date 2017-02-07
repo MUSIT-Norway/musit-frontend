@@ -9,7 +9,9 @@ class Report {
 
 Report.getKDReport = (ajaxGet) => (token: string, museumId) => {
   const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/report`);
-  return ajaxGet(url, token).map(({response}) => response && new Report(response));
+  const r = ajaxGet(url, token).map(({ response }) => response && new Report(response));
+  console.log(r);
+  return r;
 };
 
 export default Report;

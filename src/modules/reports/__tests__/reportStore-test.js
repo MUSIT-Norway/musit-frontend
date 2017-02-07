@@ -16,28 +16,25 @@ describe('KDReportStore', () => {
     // mock streams
 
     const loadKDReportM = '--1----------';
-    const clearM        = '-1-----------';
+    const clearM        = '-x-----------';
     const expected      = 'cba----------';
 
 
-    const cmd = {museumId: {getPath: () => 'museum'}, token: 'xcv'};
-    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {data: []}})
+    const cmd = {museumId: {getPath: () => '99'}, token: 'xcv'};
+    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {data: {}}})
       .switchMap(loadKDReport({
-        simpleGet: () => {
-          return Observable.of({
-            response: [{
-              totalArea: '4666.3',
-              perimeterSecurity: '34.3',
-              theftProtection: '44.4',
-              fireProtection: '4566.333',
-              waterDamageAssessment: '344.3',
-              routinesAndContingencyPlan: '433.2'
+          simpleGet: (x,y) => Observable.of({
+            response: {
+              totalArea: 4666.3,
+              perimeterSecurity: 34.3,
+              theftProtection: 44.4,
+              fireProtection: 4566.333,
+              waterDamageAssessment: 344.3,
+              routinesAndContingencyPlan: 433.2
             }
-              ]
-          }
-          );
+          })
         }
-      })
+      )
       (cmd));
 
     const clear$ = testScheduler.createHotObservable(clearM);
@@ -47,12 +44,12 @@ describe('KDReportStore', () => {
       a: {
         data: new Report({
           kdreport: {
-            totalArea: '4666.3',
-            perimeterSecurity: '34.3',
-            theftProtection: '44.4',
-            fireProtection: '4566.333',
-            waterDamageAssessment: '344.3',
-            routinesAndContingencyPlan: '433.2'
+            totalArea: 4666.3,
+            perimeterSecurity: 34.3,
+            theftProtection: 44.4,
+            fireProtection: 4566.333,
+            waterDamageAssessment: 344.3,
+            routinesAndContingencyPlan: 433.2
           }
         }),
         loading: false
@@ -62,7 +59,6 @@ describe('KDReportStore', () => {
         loading: true
       },
       c: {
-        data: {}
       }
     };
 

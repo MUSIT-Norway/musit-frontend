@@ -11,9 +11,9 @@ const initialState = {
 
 export const clear$ = createAction('clear$');
 
-export const loadKDReport = ({simpleGet}) => (cmd) => Report.getKDReport (simpleGet) (cmd.token, cmd.museumId);
+export const loadKDReport = ({simpleGet}) => (cmd) => Report.getKDReport(simpleGet) (cmd.token, cmd.museumId);
 
-export const loadKDReport$  = createAction('loadKDReport$').switchMap(loadKDReport (ajax));
+export const loadKDReport$  = createAction('loadKDReport$').switchMap(loadKDReport(ajax));
 
 
 export const reducer$ = (actions) =>
