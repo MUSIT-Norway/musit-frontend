@@ -1,7 +1,7 @@
-import { TestScheduler,Observable } from 'rxjs/Rx';
+import {TestScheduler, Observable} from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, loadKDReport } from '../reportStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import {reducer$, loadKDReport} from '../reportStore';
+import {createStore} from 'react-rxjs/dist/RxStore';
 import Report from '../../../models/report';
 
 describe('KDReportStore', () => {
@@ -10,32 +10,34 @@ describe('KDReportStore', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       console.log(JSON.stringify(actual, null, 2));
       console.log(JSON.stringify(expected, null, 2));
-      return assert.deepEqual(actual,expected);
+      return assert.deepEqual(actual, expected);
     });
 
     // mock streams
 
-    const loadKDReportM     = '1-----------';
-    const expected          = 'a-----------';
+    const loadKDReportM = '1-----------';
+    const expected      = 'a-----------';
 
 
-    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, { 1: { kdreport: {} } })
+    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {data: {}}})
       .switchMap(loadKDReport({
-        simpleGet: {
-          reponse: Observable.of({
-            response: {
-              kdreport: {
-                totalArea: '4666.3',
-                perimeterSecurity: '34.3',
-                theftProtection: '44.4',
-                fireProtection: '4566.333',
-                waterDamageAssessment: '344.3',
-                routinesAndContingencyPlan: '433.2'
+        simpleGet: () => {
+          return Observable.of({
+              response: {
+                kdreport: {
+                  totalArea: '4666.3',
+                  perimeterSecurity: '34.3',
+                  theftProtection: '44.4',
+                  fireProtection: '4566.333',
+                  waterDamageAssessment: '344.3',
+                  routinesAndContingencyPlan: '433.2'
+                }
               }
             }
-          })
+          );
         }
-      }));
+      })
+      ({museumId: {getPath: () => 'museum'}, token: 'zxc'}));
 
     const expectedStateMap = {
       a: {
@@ -45,7 +47,7 @@ describe('KDReportStore', () => {
             perimeterSecurity: '34.3',
             theftProtection: '44.4',
             fireProtection: '4566.333',
-            waterDamageAssessment:'344.3',
+            waterDamageAssessment: '344.3',
             routinesAndContingencyPlan: '433.2'
           }
         }),
@@ -61,7 +63,6 @@ describe('KDReportStore', () => {
 
     // assertion
     testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
-    console.log(expectedStateMap);
 
     // run tests
     testScheduler.flush();
