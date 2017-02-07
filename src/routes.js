@@ -26,7 +26,7 @@ import StorageUnitsTable from './modules/storagefacility/TableComponent';
 import KDReportComponent from './modules/reports/KDReportComponent';
 import AddStorageUnitPanel from './modules/storagefacility/AddNodeContainer';
 import EditStorageUnitPanel from './modules/storagefacility/EditNodeContainer';
-import AddObservationPage from './modules/observation/AddObservationContainer';
+import AddObservationPage from './modules/observation/AddObservationPage';
 import EditObservationPage from './modules/observation/EditObservationContainer';
 import ViewObservationPage from './modules/observation/ViewObservationPage';
 import Reports from './modules/reports/ReportsOverview';

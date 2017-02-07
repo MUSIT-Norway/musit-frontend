@@ -22,10 +22,11 @@ Observation.loadObservations = (ajaxGet) => ({ nodeId, museumId, token, callback
     });
 };
 
-Observation.addObservation = (ajaxPost) => (nodeId, museumId, data, token) => {
+Observation.addObservation = (ajaxPost) => (nodeId, museumId, data, token, callback) => {
   const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`;
   const dataToPost = mapToBackEnd(data, nodeId);
-  return ajaxPost(url, dataToPost, token);
+  return ajaxPost(url, dataToPost, token, callback)
+    .map(({ response }) => response && new Observation(mapToFrontEnd(response)));
 };
 
 Observation.getObservation = (ajaxGet, ajaxPost) => (nodeId, observationId, museumId, token) => {
