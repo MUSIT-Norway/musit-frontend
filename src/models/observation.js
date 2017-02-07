@@ -36,7 +36,7 @@ Observation.getObservation = (ajaxGet, ajaxPost) => (nodeId, observationId, muse
       return MusitActor.getActorDetails(ajaxPost)(actorIds, token)
         .map(actorDetails => new Observation(mapToFrontEnd({
           ...observation.response,
-          ...MusitActor.getActorNames(actorDetails.response, observation.response.doneBy, observation.response.registeredBy)
+          ...MusitActor.getActorNames(actorDetails, observation.response.doneBy, observation.response.registeredBy)
         })));
     });
 };

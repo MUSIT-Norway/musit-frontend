@@ -9,7 +9,7 @@ export const loadRootNode = ({ simpleGet }) => (cmd) => {
 };
 
 export const getObservation = ({ simpleGet, simplePost }) => (cmd) => {
-  return Observation.getObservation(simpleGet, simplePost)(cmd.nodeId, cmd.observationId, cmd.museumId);
+  return Observation.getObservation(simpleGet, simplePost)(cmd.nodeId, cmd.observationId, cmd.museumId, cmd.token);
 };
 
 export const loadRootNode$ = createAction('loadRootNode$').switchMap(loadRootNode(ajax));
@@ -22,6 +22,6 @@ export const reducer$ = (actions) => Observable.merge(
   actions.setLoading$.map(() => (state) => ({...state, data: {}, rootNode: null, loading: true}))
 );
 
-const store$ = createStore('observation', reducer$({ setLoading$, getObservation$ }), Observable.of({ data: {}, rootNode: null }));
+const store$ = createStore('observation', reducer$({ setLoading$, getObservation$, loadRootNode$ }), Observable.of({ data: {}, rootNode: null }));
 
 export default store$;
