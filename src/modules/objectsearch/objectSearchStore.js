@@ -15,10 +15,6 @@ export const initialState = {
     loading: true,
     totalMatches: 0,
     matches: []
-  },
-  params: {
-    currentPage: 1,
-    perPage: 50
   }
 };
 

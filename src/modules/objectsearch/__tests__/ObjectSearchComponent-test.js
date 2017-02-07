@@ -47,6 +47,9 @@ describe('ObjectSearchComponent', () => {
           data: testData,
           params: {
             currentPage: 1,
+            museumNo: '1234',
+            subNo: '455',
+            term: 'Lololol',
             perPage: 5
           }
         }}

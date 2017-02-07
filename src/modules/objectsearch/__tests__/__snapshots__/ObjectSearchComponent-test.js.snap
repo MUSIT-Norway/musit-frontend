@@ -34,8 +34,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               onChange={[Function onChange]}
               placeholder=" "
               style={Object {}}
-              type="text"
-              value="" />
+              type="text" />
           </FormGroup>
            
           <FormGroup
@@ -53,8 +52,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               onChange={[Function onChange]}
               placeholder=" "
               style={Object {}}
-              type="text"
-              value="" />
+              type="text" />
           </FormGroup>
            
           <FormGroup
@@ -76,8 +74,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   "width": "440px"
                 }
               }
-              type="text"
-              value="" />
+              type="text" />
           </FormGroup>
            
           <Button
@@ -111,7 +108,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               currentPage={1}
               numItems={20}
               onClick={[Function onClick]}
-              perPage={5} />
+              perPage={50} />
             <Table
               bordered={false}
               bsClass="table"
@@ -1736,7 +1733,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               currentPage={1}
               numItems={20}
               onClick={[Function onClick]}
-              perPage={5} />
+              perPage={50} />
           </div>
         </Loader>
       </div>
