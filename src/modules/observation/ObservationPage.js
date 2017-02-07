@@ -29,8 +29,7 @@ export default class ObservationPage extends React.Component {
     onSaveObservation: PropTypes.func.isRequired,
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: React.PropTypes.bool,
-    cancelDisabled: React.PropTypes.bool,
-    museumId: React.PropTypes.object
+    cancelDisabled: React.PropTypes.bool
   }
 
   static defaultProps = {
@@ -245,7 +244,7 @@ export default class ObservationPage extends React.Component {
     const errors = this.validateForm(this.state);
     this.setState({ ...this.state, errors });
     if (Object.keys(errors).length === 0) {
-      this.props.onSaveObservation(this.props.id, this.state, this.props.museumId);
+      this.props.onSaveObservation(this.props.id, this.state);
     }
   }
 

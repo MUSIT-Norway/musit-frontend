@@ -1,0 +1,57 @@
+exports[`ControlMapperReducer maps to correct backend structure with no observations 1`] = `
+Object {
+  "affectedThing": 54,
+  "alcohol": Object {
+    "observation": undefined,
+    "ok": true
+  },
+  "cleaning": Object {
+    "observation": undefined,
+    "ok": true
+  },
+  "doneBy": "f4e1eba9-8add-4675-9836-db59f7115d7c",
+  "doneDate": "2016-10-31T23:00:00.000Z",
+  "eventType": "Control",
+  "gas": Object {
+    "observation": undefined,
+    "ok": true
+  },
+  "hypoxicAir": Object {
+    "observation": Object {
+      "note": undefined,
+      "range": Object {
+        "from": undefined,
+        "to": undefined
+      }
+    },
+    "ok": false
+  },
+  "lightingCondition": Object {
+    "observation": Object {
+      "lightingCondition": "Some light",
+      "note": undefined
+    },
+    "ok": false
+  },
+  "mold": Object {
+    "observation": undefined,
+    "ok": true
+  },
+  "pest": Object {
+    "observation": Object {
+      "identification": undefined,
+      "lifecycles": Array [],
+      "note": undefined
+    },
+    "ok": false
+  },
+  "relativeHumidity": Object {
+    "observation": undefined,
+    "ok": true
+  },
+  "temperature": Object {
+    "observation": undefined,
+    "ok": true
+  }
+}
+`;

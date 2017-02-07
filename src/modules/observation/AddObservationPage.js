@@ -14,6 +14,8 @@ export class AddObservationPage extends React.Component {
     params: PropTypes.object.isRequired,
     addObservation: PropTypes.func.isRequired,
     loadRootNode: PropTypes.func.isRequired,
+    emitError: PropTypes.func.isRequired,
+    emitSuccess: PropTypes.func.isRequired,
     actor: PropTypes.object,
     rootNode: React.PropTypes.object,
     appSession: PropTypes.object.isRequired
@@ -39,14 +41,15 @@ export class AddObservationPage extends React.Component {
             <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.add')}</h4>
             <ObservationPage
               id={this.props.params.id}
-              museumId={this.props.appSession.getMuseumId()}
-              onSaveObservation={(nodeId, data, museumId, token = this.props.appSession.getAccessToken()) => {
+              onSaveObservation={(nodeId, data) => {
+                const museumId = this.props.appSession.getMuseumId();
+                const token = this.props.appSession.getAccessToken();
                 this.props.addObservation({ nodeId, museumId, data, token,
                   onComplete: () => {
                     hashHistory.goBack();
-                    emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
+                    this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
                   },
-                  onFailure: (e) => emitError({ ...e, type: 'network' })
+                  onFailure: (e) => this.props.emitError({ ...e, type: 'network' })
                 });
               }}
               mode="ADD"
@@ -69,4 +72,9 @@ const commands = {
   addObservation$
 };
 
-export default inject(data, commands)(AddObservationPage);
+const props = {
+  emitError,
+  emitSuccess
+};
+
+export default inject(data, commands, props)(AddObservationPage);
