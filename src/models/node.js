@@ -4,7 +4,7 @@ import MuseumId from './museumId';
 import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import { addNode$ as pickNode$ } from '../modules/app/pickList';
-import { mapToBackend } from '../modules/storagefacility/reducers/mapper';
+import { mapToBackend } from './mapper';
 
 class MusitNode {
 

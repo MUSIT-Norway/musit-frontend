@@ -1,7 +1,7 @@
 import Config from '../../../../config';
 import { apiUrl } from '../../../../shared/util';
 
-import { mapToFrontend, mapToBackend } from '../mapper';
+import { mapToFrontend, mapToBackend } from '../../../../models/mapper';
 export const INSERT = 'musit/storageunit-container/INSERT';
 export const UPDATE = 'musit/storageunit-container/UPDATE';
 export const INSERT_SUCCESS = 'musit/storageunit-container/INSERT_SUCCESS';

@@ -1,5 +1,5 @@
 
-import { mapToFrontend } from '../mapper';
+import { mapToFrontend } from '../../../../models/mapper';
 const UPDATE = 'musit/storageunit-panel-state/UPDATE';
 const CLEAR = 'musit/storageunit-panel-state/CLEAR';
 

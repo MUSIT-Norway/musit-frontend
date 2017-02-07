@@ -1,5 +1,5 @@
 
-import { parseFloatFromString } from '../../../../shared/util';
+import { parseFloatFromString } from '../../shared/util';
 
 export const toBackend = (data, parentId) => {
   return {

@@ -1,6 +1,6 @@
 import {TestScheduler, Observable} from 'rxjs/Rx';
 import assert from 'assert';
-import {reducer$, loadKDReport} from '../reportStore';
+import { reducer$, loadKDReport } from '../reportStore';
 import {createStore} from 'react-rxjs/dist/RxStore';
 import Report from '../../../models/report';
 
@@ -15,29 +15,34 @@ describe('KDReportStore', () => {
 
     // mock streams
 
-    const loadKDReportM = '1-----------';
-    const expected      = 'a-----------';
+    const loadKDReportM = '--1----------';
+    const clearM        = '-1-----------'
+    const expected      = 'cba----------';
 
 
+    const cmd = { museumId: { getPath: () => 'museum', token: 'xcv'}};
     const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {data: {}}})
       .switchMap(loadKDReport({
         simpleGet: () => {
           return Observable.of({
             response: {
-              kdreport: {
-                totalArea: '4666.3',
-                perimeterSecurity: '34.3',
-                theftProtection: '44.4',
-                fireProtection: '4566.333',
-                waterDamageAssessment: '344.3',
-                routinesAndContingencyPlan: '433.2'
-              }
+                kdreport: {
+                  totalArea: '4666.3',
+                  perimeterSecurity: '34.3',
+                  theftProtection: '44.4',
+                  fireProtection: '4566.333',
+                  waterDamageAssessment: '344.3',
+                  routinesAndContingencyPlan: '433.2'
+                }
             }
           }
           );
         }
       })
-      ({museumId: {getPath: () => 'museum'}, token: 'zxc'}));
+      (cmd));
+
+    const clear$ = testScheduler.createHotObservable(clearM);
+
 
     const expectedStateMap = {
       a: {
@@ -52,13 +57,20 @@ describe('KDReportStore', () => {
           }
         }),
         loading: false
+      },
+      b: {
+        data: {},
+        loading: true
+      },
+      c: {
+        data: {}
       }
     };
 
     // mock up$ and down$ events
 
 
-    const state$ = reducer$({loadKDReport$});
+    const state$ = reducer$({loadKDReport$, clear$});
 
 
     // assertion
