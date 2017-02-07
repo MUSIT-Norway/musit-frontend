@@ -25,16 +25,16 @@ describe('KDReportStore', () => {
       .switchMap(loadKDReport({
         simpleGet: () => {
           return Observable.of({
-              response: [{
-                  totalArea: '4666.3',
-                  perimeterSecurity: '34.3',
-                  theftProtection: '44.4',
-                  fireProtection: '4566.333',
-                  waterDamageAssessment: '344.3',
-                  routinesAndContingencyPlan: '433.2'
-                }
-              ]
+            response: [{
+              totalArea: '4666.3',
+              perimeterSecurity: '34.3',
+              theftProtection: '44.4',
+              fireProtection: '4566.333',
+              waterDamageAssessment: '344.3',
+              routinesAndContingencyPlan: '433.2'
             }
+              ]
+          }
           );
         }
       })
