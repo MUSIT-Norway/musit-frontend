@@ -8,8 +8,8 @@ describe('KDReportStore', () => {
 
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      console.log(JSON.stringify(actual, null, 2));
-      console.log(JSON.stringify(expected, null, 2));
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
       return assert.deepEqual(actual, expected);
     });
 
@@ -22,17 +22,20 @@ describe('KDReportStore', () => {
 
     const cmd = {museumId: {getPath: () => '99'}, token: 'xcv'};
     const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {data: {}}})
-      .switchMap(loadKDReport({
-        simpleGet: () => Observable.of({
-          response: {
-            totalArea: 4666.3,
-            perimeterSecurity: 34.3,
-            theftProtection: 44.4,
-            fireProtection: 4566.333,
-            waterDamageAssessment: 344.3,
-            routinesAndContingencyPlan: 433.2
-          }
-        })
+      .flatMapTo(loadKDReport({
+        simpleGet: () => {
+          const r = Observable.of({
+            response: {
+              totalArea: 4666.3,
+              perimeterSecurity: 34.3,
+              theftProtection: 44.4,
+              fireProtection: 4566.333,
+              waterDamageAssessment: 344.3,
+              routinesAndContingencyPlan: 433.2
+            }
+          });
+          return r;
+        }
       }
       )
       (cmd));
@@ -51,12 +54,10 @@ describe('KDReportStore', () => {
             waterDamageAssessment: 344.3,
             routinesAndContingencyPlan: 433.2
           }
-        }),
-        loading: false
+        })
       },
       b: {
-        data: {},
-        loading: true
+        data: {}
       },
       c: {
       }
