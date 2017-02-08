@@ -14,7 +14,7 @@ export class EditObservationPage extends React.Component {
 
   static propTypes = {
     location: PropTypes.object.isRequired,
-    addControl: PropTypes.func.isRequired,
+    addObservation: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     rootNode: React.PropTypes.object,
     appSession: PropTypes.object.isRequired
@@ -81,7 +81,7 @@ export class EditObservationPage extends React.Component {
                 const museumId = this.props.appSession.getMuseumId();
                 const token = this.props.appSession.getAccessToken();
                 const controlData = this.props.location.state;
-                this.props.addControl({ nodeId, museumId, controlData, observations, token, callback: {
+                this.props.addObservation({ nodeId, museumId, controlData, observations, token, callback: {
                   onComplete: () => {
                     hashHistory.goBack();
                     this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
@@ -110,7 +110,7 @@ const commands = {
 const props = {
   emitError,
   emitSuccess,
-  addControl: Control.addControl
+  addObservation: (cmd) => Control.addControl()(cmd).toPromise()
 };
 
 export default inject(data, commands, props)(EditObservationPage);

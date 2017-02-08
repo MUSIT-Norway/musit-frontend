@@ -1,41 +1,20 @@
-import assert from 'assert';
+import { shallow } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
 import ObservationPage from '../ObservationPage';
+import MusitActor from '../../../models/actor';
 
 describe('Render edit observation page', () => {
-  const renderer = ReactTestUtils.createRenderer();
-  let observationPage;
-
-  beforeEach(() => {
-    renderer.render(
+  it('should set default date and have correct date format', () => {
+    const observationPage = shallow(
       <ObservationPage
-        translate={(key) => key}
-        params={{ }}
+        doneBy={new MusitActor({ dataportenId: '12345', fn: 'Jarl'})}
         onSaveObservation={() => true}
         doneDate={'2016-12-23T00:00:00.000Z'}
         mode="EDIT"
         id="1"
       />
     );
-    observationPage = renderer.getRenderOutput();
-  });
-
-  it('should set default date and have correct date format', () => {
-    const dateProps = observationPage
-            .props
-            .children
-            .props
-            .children[0]
-            .props
-            .children[1]
-            .props
-            .children[0]
-            .props
-            .children[1]
-            .props;
-
-    assert(dateProps.value === '23.12.2016');
-    assert(dateProps.disabled === true);
+    expect(shallowToJson(observationPage)).toMatchSnapshot();
   });
 });

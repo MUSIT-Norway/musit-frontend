@@ -59,7 +59,7 @@ export const ajax = (url, method, body, token, headers, responseType = 'json') =
 
 const simpleAjax = (ajax$, callback) => ajax$.do(onComplete(callback)).catch(onFailure(callback));
 
-export const get = (url, token) => ajax(url, 'GET', null, token);
+export const get = (url, token) => ajax(url, 'GET', { test: 'Hei' }, token);
 
 export const simpleGet = (url, token, callback) => simpleAjax(get(url, token), callback);
 

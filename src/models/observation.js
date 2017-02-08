@@ -4,6 +4,7 @@ import mapToBackEnd from './mapper/observation/to_backend';
 import mapToFrontEnd from './mapper/observation/to_frontend';
 import MusitActor from './actor';
 import uniq from 'lodash/uniq';
+import { simplePost, simpleGet } from '../shared/RxAjax';
 
 class Observation {
   constructor(props) {
@@ -11,25 +12,23 @@ class Observation {
   }
 }
 
-Observation.loadObservations = (ajaxGet) => ({ nodeId, museumId, token, callback }) => {
+Observation.loadObservations = (ajaxGet = simpleGet) => ({ nodeId, museumId, token, callback }) => {
   return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`, token, callback)
-    .map(({ response }) => response)
-    .map(arr => {
-      if (!arr) {
+    .map(({ response }) => {
+      if (!Array.isArray(response)) {
         return [];
       }
-      return arr.map(json => new Observation(json));
+      return response.map(json => new Observation(json));
     });
 };
 
-Observation.addObservation = (ajaxPost) => (nodeId, museumId, data, token, callback) => {
+Observation.addObservation = (ajaxPost = simplePost) => ({ nodeId, museumId, data, token, callback }) => {
   const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`;
   const dataToPost = mapToBackEnd(data, nodeId);
-  return ajaxPost(url, dataToPost, token, callback)
-    .map(({ response }) => response && new Observation(mapToFrontEnd(response)));
+  return ajaxPost(url, dataToPost, token, callback);
 };
 
-Observation.getObservation = (ajaxGet, ajaxPost) => (nodeId, observationId, museumId, token) => {
+Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) => (nodeId, observationId, museumId, token) => {
   const url =`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations/${observationId}`;
   return ajaxGet(url, token)
     .flatMap(observation => {

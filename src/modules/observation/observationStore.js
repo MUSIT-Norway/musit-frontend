@@ -8,28 +8,22 @@ export const loadRootNode = ({ simpleGet }) => (cmd) => {
   return MusitNode.getNode(simpleGet)(cmd.nodeId, cmd.museumId, cmd.token, cmd);
 };
 
-export const getObservation = ({ simpleGet, simplePost }) => (cmd) => {
-  return Observation.getObservation(simpleGet, simplePost)(cmd.nodeId, cmd.observationId, cmd.museumId, cmd.token);
+export const getObservation = ({ simpleGet, simplePost }) => ({ nodeId, observationId, museumId, token}) => {
+  return Observation.getObservation(simpleGet, simplePost)(nodeId, observationId, museumId, token);
 };
 
-export const addObservation = ({ simplePost }) => (cmd) => {
-  return Observation.addObservation(simplePost)(cmd.nodeId, cmd.museumId, cmd.data, cmd.token, cmd);
-};
-
-export const addObservation$ = createAction('addObservation$').switchMap(addObservation(ajax));
 export const loadRootNode$ = createAction('loadRootNode$').switchMap(loadRootNode(ajax));
-export const setLoading$ = createAction('clearObservation$');
-export const getObservation$ = createAction('loadObservation$').switchMap(getObservation(ajax));
+export const setLoading$ = createAction('setLoading$');
+export const getObservation$ = createAction('getObservation$').switchMap(getObservation(ajax));
 
 export const reducer$ = (actions) => Observable.merge(
-  actions.addObservation$.map((data) => (state) => ({...state, data})),
   actions.loadRootNode$.map((rootNode) => (state) => ({...state, rootNode})),
   actions.getObservation$.map((data) => (state) => ({...state, data, loading: false})),
   actions.setLoading$.map(() => (state) => ({...state, data: {}, rootNode: null, loading: true}))
 );
 
 const store$ = createStore('observation', reducer$({
-  setLoading$, getObservation$, loadRootNode$, addObservation$
+  setLoading$, getObservation$, loadRootNode$
 }), Observable.of({ data: {}, rootNode: null }));
 
 export default store$;
