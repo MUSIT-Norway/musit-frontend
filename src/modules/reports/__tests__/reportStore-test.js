@@ -3,6 +3,7 @@ import assert from 'assert';
 import { reducer$, loadKDReport } from '../reportStore';
 import {createStore} from 'react-rxjs/dist/RxStore';
 import Report from '../../../models/report';
+import MuseumId from '../../../models/museumId';
 
 describe('KDReportStore', () => {
 
@@ -15,16 +16,14 @@ describe('KDReportStore', () => {
 
     // mock streams
 
-    const loadKDReportM = '--1----------';
-    const clearM        = '-x-----------';
-    const expected      = 'cba----------';
+    const loadKDReportM = '-1-----------';
+    const clearM        = '--x----------';
+    const expected      = 'abc----------';
 
-
-    const cmd = {museumId: {getPath: () => '99'}, token: 'xcv'};
-    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {data: {}}})
-      .flatMapTo(loadKDReport({
+    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {token: '1234', museumId: new MuseumId(99)}})
+      .switchMap(loadKDReport({
         simpleGet: () => {
-          const r = Observable.of({
+          return Observable.of({
             response: {
               totalArea: 4666.3,
               perimeterSecurity: 34.3,
@@ -34,17 +33,13 @@ describe('KDReportStore', () => {
               routinesAndContingencyPlan: 433.2
             }
           });
-          return r;
         }
-      }
-      )
-      (cmd));
+      }));
 
     const clear$ = testScheduler.createHotObservable(clearM);
 
-
     const expectedStateMap = {
-      a: {
+      b: {
         data: new Report({
           kdreport: {
             totalArea: 4666.3,
@@ -54,12 +49,14 @@ describe('KDReportStore', () => {
             waterDamageAssessment: 344.3,
             routinesAndContingencyPlan: 433.2
           }
-        })
-      },
-      b: {
-        data: {}
+        }),
+        loaded: true
       },
       c: {
+        data: {},
+        loaded: false
+      },
+      a: {
       }
     };
 
