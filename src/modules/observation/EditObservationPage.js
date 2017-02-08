@@ -15,6 +15,8 @@ export class EditObservationPage extends React.Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
     addObservation: PropTypes.func.isRequired,
+    emitError: PropTypes.func.isRequired,
+    emitSuccess: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     rootNode: React.PropTypes.object,
     appSession: PropTypes.object.isRequired

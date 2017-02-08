@@ -41,7 +41,6 @@ export class AddObservationPage extends React.Component {
           <div>
             <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.add')}</h4>
             <ObservationPage
-              appSession={this.props.appSession}
               id={this.props.params.id}
               onSaveObservation={(nodeId, data) => {
                 const museumId = this.props.appSession.getMuseumId();

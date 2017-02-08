@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import ObservationPage from '../ObservationPage';
 import MusitActor from '../../../models/actor';
 
-describe('Render add observation page', () => {
+describe('Render observation page in add mode', () => {
   it('should set default date and have correct date format', () => {
     const onSaveObservation = sinon.spy();
     const observationPage = shallow(

@@ -1,4 +1,4 @@
-exports[`Render add observation page should set default date and have correct date format 1`] = `
+exports[`Render observation page in add mode should set default date and have correct date format 1`] = `
 <form
   onKeyDown={[Function onKeyDown]}
   onSubmit={[Function bound handleSubmit]}>
