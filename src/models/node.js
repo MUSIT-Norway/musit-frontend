@@ -28,9 +28,9 @@ MusitNode.getNode = (ajaxGet) => (id: number, museumId: MuseumId, token: string,
     .map(({ response }) => response && new MusitNode(response));
 };
 
-MusitNode.addNode = (ajaxPost) => (parentId: number,  museumId: MuseumId, token:string, data, callback) => {
+MusitNode.addNode = (ajaxPost) => (nodeId: number,  museumId: MuseumId, token:string, data, callback) => {
   const baseUrl= Config.magasin.urls.storagefacility.baseUrl(museumId);
-  const url = `${baseUrl}/${museumId.id}/${!parentId ? '/root' : ''}`;
+  const url = `${baseUrl}/${museumId.id}/${!nodeId ? '/root' : ''}`;
   const dataToPost = { data: mapToBackend(data) };
   return ajaxPost(url,dataToPost,token,callback).map(({ response }) => response && MusitNode(response));
 };

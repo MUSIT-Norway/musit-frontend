@@ -24,7 +24,7 @@ import AboutView from './modules/about/AboutPage';
 import PickListView from './modules/picklist/PickListComponent';
 import StorageUnitsTable from './modules/storagefacility/TableComponent';
 import KDReportComponent from './modules/reports/KDReportComponent';
-import AddStorageUnitPanel from './modules/storagefacility/AddNodeContainer';
+import AddStorageUnitPanel from './modules/storagefacility/AddNodeComponent';
 import EditStorageUnitPanel from './modules/storagefacility/EditNodeContainer';
 import AddObservationPage from './modules/observation/AddObservationContainer';
 import EditObservationPage from './modules/observation/EditObservationContainer';
