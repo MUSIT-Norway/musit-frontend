@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import StorageUnitContainer from './NodeDetails';
 import inject from 'react-rxjs/dist/RxInject';
-import  nodeStore$, { clearNode$, loadNode$, addNode$, updateState$} from './nodeStore';
+import  nodeStore$, { clearNode$, loadRootNode$, addNode$, updateState$} from './nodeStore';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import { hashHistory } from 'react-router';
@@ -13,56 +13,43 @@ export class AddStorageUnitContainer extends React.Component {
     updateState: PropTypes.func.isRequired,
     addNode: PropTypes.func.isRequired,
     clearNode: PropTypes.func.isRequired,
-    loadNode: PropTypes.func.isRequired,
-    unit: PropTypes.object,
+    loadRootNode: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired
   };
 
   componentWillMount() {
     this.props.clearNode();
-    this.loadNode(this.props.params.id,this.props.appSession.getMuseumId(), this.props.appSession.getAccessToken());
-
-  }
-
-
-  loadNode(parentId, museumId, token) {
-    const cmd = {parentId, museumId, token};
-    this.props.loadNode(cmd);
-  }
-
-  addNode(parentId, museumId, token, data, callback) {
-    const cmd = {nodeId: parentId, museumId, token, data, callback};
-    this.props.addNode(cmd);
+    this.props.loadRootNode({
+      id: this.props.params.id,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken()
+    });
   }
 
   render() {
-    console.log(this.props);
     return (
       <StorageUnitContainer
         {...this.props}
-        unit={this.props.store}
+        unit={this.props.store.unit}
         onLagreClick={(data) => {
-          const parentId = this.props.params.id;
+          const id = this.props.params.id;
           const museumId = this.props.appSession.getMuseumId();
           const token = this.props.appSession.getAccessToken();
-          const callback = {
+          this.props.addNode({ id, museumId, token, data, callback: {
             onSuccess: () => {
               hashHistory.goBack();
-              emitSuccess(
-                {
-                  type: 'saveSuccess',
-                  message:  I18n.t('musit.storageUnits.messages.saveNodeSuccess')
-                }
-                );
+              this.props.emitSuccess({
+                type: 'saveSuccess',
+                message:  I18n.t('musit.storageUnits.messages.saveNodeSuccess')
+              });
             },
             onFailure: (e) => {
-              emitError({...e, type: 'network'});
+              this.props.emitError({...e, type: 'network'});
             }
-          };
-          this.addNode(parentId, museumId,token, data, callback);
+          }});
         }}
         isAdd
-        loaded={!!this.props.unit}
+        loaded={!!this.props.store.unit}
       />
     );
   }
@@ -75,10 +62,15 @@ const data = {
 };
 
 const commands = {
-  loadNode$,
+  loadRootNode$,
   clearNode$,
   addNode$,
   updateState$
 };
 
-export default inject(data, commands)(AddStorageUnitContainer);
+const props = {
+  emitError,
+  emitSuccess
+};
+
+export default inject(data, commands, props)(AddStorageUnitContainer);

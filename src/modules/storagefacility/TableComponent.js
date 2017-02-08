@@ -77,18 +77,20 @@ export class StorageUnitsContainer extends React.Component {
     return state && state.currentPage;
   }
 
-  loadRootNode(nodeId, museumId, token) {
+  loadRootNode(id, museumId, token) {
     this.props.clearRootNode();
-    if (!nodeId) {
+    if (!id) {
       return;
     }
     this.props.loadRootNode({
-      nodeId,
+      id,
       museumId,
       token,
-      onComplete: node => {
-        if (node && !new MusitNode(node).isRootNode()) {
-          this.props.loadStats({nodeId, museumId, token});
+      callback: {
+        onComplete: node => {
+          if (node && !new MusitNode(node).isRootNode()) {
+            this.props.loadStats({id, museumId, token});
+          }
         }
       }
     });
@@ -154,21 +156,21 @@ export class StorageUnitsContainer extends React.Component {
     }
   }
 
-  loadNodes(nodeId, museumId, token, page) {
+  loadNodes(id, museumId, token, page) {
     this.props.setLoading();
     this.props.loadNodes({
-      nodeId,
+      id,
       museumId,
       page,
       token
     });
   }
 
-  loadObjects(nodeId, museumId, collectionId, token, page) {
-    if (nodeId) {
+  loadObjects(id, museumId, collectionId, token, page) {
+    if (id) {
       this.props.setLoading();
       this.props.loadObjects({
-        nodeId,
+        id,
         museumId,
         collectionId,
         page,

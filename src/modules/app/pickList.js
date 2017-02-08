@@ -20,9 +20,7 @@ export const addNode$ = new Subject();
 export const removeNode$ = new Subject();
 export const toggleNode$ = new Subject();
 export const clearNodes$ = new Subject();
-export const refreshNode$ = new Subject().flatMap((cmd) =>
-  MusitNode.getNode(simpleGet)(cmd.id, cmd.museumId, cmd.token, cmd)
-);
+export const refreshNode$ = new Subject().flatMap(MusitNode.getNode(simpleGet));
 
 const addItem = (item, items = []) => {
   if (items.findIndex(node => item.value.id === node.value.id) > -1) {
