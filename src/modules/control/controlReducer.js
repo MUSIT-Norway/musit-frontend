@@ -1,5 +1,5 @@
 import Config from '../../config';
-import { mapToBackend } from './mapper/to_backend';
+import { mapToBackend } from '../../models/mapper/control/to_backend';
 import uniq from 'lodash/uniq';
 import Actor from '../../models/actor';
 
