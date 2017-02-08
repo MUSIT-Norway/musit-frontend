@@ -1,5 +1,7 @@
 import entries from 'object.entries';
 import Config from '../config';
+import { mapToBackend } from './mapper/control/to_backend';
+import { simplePost, simpleGet } from '../shared/RxAjax';
 
 class Control {
   constructor(props) {
@@ -7,7 +9,7 @@ class Control {
   }
 }
 
-Control.loadControls = (ajaxGet) => ({ nodeId, museumId, token, callback }) => {
+Control.loadControls = (ajaxGet =  simpleGet) => ({ nodeId, museumId, token, callback }) => {
   return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`, token, callback)
     .map(({ response }) => response)
     .map(arr => {
@@ -15,6 +17,26 @@ Control.loadControls = (ajaxGet) => ({ nodeId, museumId, token, callback }) => {
         return [];
       }
       return arr.map(json => new Control(json));
+    });
+};
+
+Control.addControl = ({ nodeId, controlData, observations, museumId, token, callback }) => {
+  const data = mapToBackend(controlData, observations, nodeId);
+  const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
+  return simplePost(url, data, token, callback)
+    .toPromise();
+};
+
+Control.getControl = (ajaxGet) => (nodeId, controlId, museumId, token, callback) => {
+  const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls/${controlId}`;
+  // console.log(url);
+  return ajaxGet(url, token, callback)
+    .map(({ response }) => response)
+    .map(data => {
+      if (!data) {
+        return {...data, error: 'no response body'};
+      }
+      return data;
     });
 };
 
