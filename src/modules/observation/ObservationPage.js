@@ -23,7 +23,7 @@ export default class ObservationPage extends React.Component {
     id: PropTypes.string.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
     doneDate: PropTypes.string,
-    doneBy: PropTypes.object.isRequired,
+    doneBy: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
     registeredDate: PropTypes.string,
     registeredBy: PropTypes.string,
     onSaveObservation: PropTypes.func.isRequired,
