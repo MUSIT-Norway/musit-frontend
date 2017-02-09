@@ -1,4 +1,4 @@
-import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
+import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$, initialState, getControl, addControl } from '../controlStore';
 import { createStore } from 'react-rxjs/dist/RxStore';
@@ -22,15 +22,40 @@ describe('ControlStore', () => {
       a: initialState,
       b: {
         data: {
-          'id': 22,
-          'doneBy': '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-          'doneDate': '2017-02-07T13:01:53+00:00',
-          'affectedThing': 3,
-          'registeredBy': '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-          'registeredDate': '2017-02-07T13:02:09+00:00',
-          'eventType': 'Control',
-          'relativeHumidity': {'ok': false, 'observation': {'range': {'from': 12, 'to': 12}}},
-          'temperature': {'ok': true}
+          'id':51,
+          'doneBy':'7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+          'doneDate':'2017-02-09T09:52:11+00:00',
+          'affectedThing':3,
+          'registeredBy':'7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+          'registeredDate':'2017-02-09T09:52:26+00:00',
+          'eventType':'Control',
+          'alcohol':{
+            'ok':true
+          },
+          'cleaning':{
+            'ok':true
+          },
+          'gas':{
+            'ok':true
+          },
+          'hypoxicAir':{
+            'ok':true
+          },
+          'lightingCondition':{
+            'ok':true
+          },
+          'mold':{
+            'ok':true
+          },
+          'pest':{
+            'ok':true
+          },
+          'relativeHumidity':{
+            'ok':true
+          },
+          'temperature':{
+            'ok':true
+          }
         }
       }
     };
@@ -42,15 +67,40 @@ describe('ControlStore', () => {
       simpleGet: () => {
         return Observable.of({
           response: {
-            'id': 22,
-            'doneBy': '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-            'doneDate': '2017-02-07T13:01:53+00:00',
-            'affectedThing': 3,
-            'registeredBy': '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
-            'registeredDate': '2017-02-07T13:02:09+00:00',
-            'eventType': 'Control',
-            'relativeHumidity': {'ok': false, 'observation': {'range': {'from': 12, 'to': 12}}},
-            'temperature': {'ok': true}
+            'id':51,
+            'doneBy':'7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+            'doneDate':'2017-02-09T09:52:11+00:00',
+            'affectedThing':3,
+            'registeredBy':'7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+            'registeredDate':'2017-02-09T09:52:26+00:00',
+            'eventType':'Control',
+            'alcohol':{
+              'ok':true
+            },
+            'cleaning':{
+              'ok':true
+            },
+            'gas':{
+              'ok':true
+            },
+            'hypoxicAir':{
+              'ok':true
+            },
+            'lightingCondition':{
+              'ok':true
+            },
+            'mold':{
+              'ok':true
+            },
+            'pest':{
+              'ok':true
+            },
+            'relativeHumidity':{
+              'ok':true
+            },
+            'temperature':{
+              'ok':true
+            }
           }
         });
       }
