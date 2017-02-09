@@ -28,7 +28,7 @@ Observation.addObservation = (ajaxPost = simplePost) => ({ nodeId, museumId, dat
   return ajaxPost(url, dataToPost, token, callback);
 };
 
-Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) => (nodeId, observationId, museumId, token) => {
+Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({ nodeId, observationId, museumId, token }) => {
   const url =`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations/${observationId}`;
   return ajaxGet(url, token)
     .flatMap(observation => {
