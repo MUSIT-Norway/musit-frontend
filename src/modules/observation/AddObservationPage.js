@@ -25,7 +25,7 @@ export class AddObservationPage extends React.Component {
   componentWillMount() {
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
-        nodeId: this.props.params.id,
+        id: this.props.params.id,
         museumId: this.props.appSession.getMuseumId(),
         token: this.props.appSession.getAccessToken()
       });

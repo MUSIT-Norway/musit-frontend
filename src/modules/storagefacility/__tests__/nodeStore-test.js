@@ -27,7 +27,8 @@ describe('nodeStore', () => {
           environmentRequirement: {},
           environmentAssessment: {},
           securityAssessment: {}
-        }
+        },
+        loaded: false
       },
       c: {
         unit: {
@@ -35,6 +36,7 @@ describe('nodeStore', () => {
           environmentAssessment: {},
           securityAssessment: {}
         },
+        loaded: true,
         rootNode: { foo: 'bar' }
       },
       d: {
@@ -44,6 +46,7 @@ describe('nodeStore', () => {
           securityAssessment: {},
           bar: 'foo'
         },
+        loaded: true,
         rootNode: { foo: 'bar' }
       }
     };

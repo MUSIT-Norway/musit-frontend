@@ -3,7 +3,8 @@ import Config from '../config';
 import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import { addNode$ as pickNode$ } from '../modules/app/pickList';
-import { mapToBackend } from './mapper/node';
+import { mapToBackend, mapToFrontend } from './mapper/node';
+import MusitActor from './actor';
 
 class MusitNode {
 
@@ -24,7 +25,20 @@ class MusitNode {
 
 MusitNode.getNode = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
   return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${id}`, token, callback)
-    .map(({ response }) => response && new MusitNode(response));
+    .map((node) => node.response && new MusitNode(mapToFrontend(node.response)));
+};
+
+MusitNode.getNodeWithUpdatedBy = (ajaxGet = simpleGet) => (props) => {
+  return MusitNode.getNode(ajaxGet)(props)
+    .flatMap(node =>
+      MusitActor.getActor(ajaxGet)({ token: props.token, actorId: node.updatedBy })
+        .map(actor => {
+          if (!actor) {
+            return node;
+          }
+          return {...node, updatedByName: actor.fn};
+        })
+    );
 };
 
 MusitNode.addNode = (ajaxPost = simplePost) => ({id, museumId, token, data, callback}) => {

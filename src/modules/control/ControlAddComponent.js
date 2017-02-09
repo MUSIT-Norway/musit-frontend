@@ -31,6 +31,7 @@ import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
 import Control from '../../models/control';
 import store$, { loadRootNode$ } from './controlStore';
+import Loader from 'react-loader';
 
 export class ControlAddContainer extends React.Component {
   static propTypes = {
@@ -43,18 +44,6 @@ export class ControlAddContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      temperature: this.props.envReqData ? this.props.envReqData.temperature : ' ',
-      temperatureTolerance: this.props.envReqData ? this.props.envReqData.temperatureTolerance : ' ',
-      relativeHumidity: this.props.envReqData ? this.props.envReqData.relativeHumidity : ' ',
-      relativeHumidityInterval: this.props.envReqData ? this.props.envReqData.relativeHumidityTolerance : ' ',
-      inertAir: this.props.envReqData ? this.props.envReqData.hypoxicAir : ' ',
-      inertAirInterval: this.props.envReqData ? this.props.envReqData.hypoxicAirTolerance : ' ',
-      light: this.props.envReqData ? this.props.envReqData.lightingCondition : ' ',
-      cleaning: this.props.envReqData ? this.props.envReqData.cleaning : ' ',
-      doneDate: this.props.doneDate ? this.props.doneDate : new Date().toISOString(),
-      doneBy: this.props.appSession.getActor()
-    };
     this.onControlClick = this.onControlClick.bind(this);
     this.onControlClickOK = this.onControlClickOK.bind(this);
     this.onControlClickNOK = this.onControlClickNOK.bind(this);
@@ -68,6 +57,24 @@ export class ControlAddContainer extends React.Component {
         id: this.props.params.id,
         museumId: this.props.appSession.getMuseumId(),
         token: this.props.appSession.getAccessToken()
+      });
+    }
+  }
+
+  componentWillReceiveProps(next) {
+    if (next.store.rootNode && !this.props.store.rootNode) {
+      const requirement = next.store.rootNode.environmentRequirement;
+      this.setState({
+        temperature: requirement ? requirement.temperature : ' ',
+        temperatureTolerance: requirement ? requirement.temperatureTolerance : ' ',
+        relativeHumidity: requirement ? requirement.relativeHumidity : ' ',
+        relativeHumidityInterval: requirement ? requirement.relativeHumidityTolerance : ' ',
+        inertAir: requirement ? requirement.hypoxicAir : ' ',
+        inertAirInterval: requirement ? requirement.hypoxicAirTolerance : ' ',
+        light: requirement ? requirement.lightingCondition : ' ',
+        cleaning: requirement ? requirement.cleaning : ' ',
+        doneDate: this.props.doneDate ? this.props.doneDate : new Date().toISOString(),
+        doneBy: this.props.appSession.getActor()
       });
     }
   }
@@ -162,6 +169,9 @@ export class ControlAddContainer extends React.Component {
   }
 
   render() {
+    if (!this.state) {
+      return <Loader loaded={false} />;
+    }
     const breadcrumb = <Breadcrumb node={this.props.store.rootNode} disabled />;
     const translate = (k) => I18n.t(k);
 

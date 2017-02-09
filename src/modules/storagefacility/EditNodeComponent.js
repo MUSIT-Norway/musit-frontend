@@ -10,13 +10,11 @@ import { I18n } from 'react-i18nify';
 
 export class EditStorageUnitContainer extends React.Component {
   static propTypes = {
-    onLagreClick: PropTypes.func.isRequired,
+    editNode: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
-    getActorName: PropTypes.func.isRequired,
-    loadStorageUnit: PropTypes.func.isRequired,
+    getActor: PropTypes.func.isRequired,
     params: PropTypes.object,
     unit: PropTypes.object,
-    loaded: PropTypes.bool.isRequired,
     updateState: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired
   };
@@ -25,14 +23,13 @@ export class EditStorageUnitContainer extends React.Component {
     const id = (this.props.location.state && this.props.location.state.id) || this.props.params.id;
     const museumId = this.props.appSession.getMuseumId();
     const token = this.props.appSession.getAccessToken();
-    this.props.loadNode({ id, museumId, token, callback: {
-      onComplete: (node) => {
-        this.props.getActor({ token, actorId: node.response.updatedBy, callback: {
-          onComplete: (name) => this.props.updateState({...node.response, updatedByName: name.response.fn}),
-          onFailure: () => this.props.updateState(node.response)
-        }});
-      }
-    }});
+    this.props.loadNode({ id, museumId, token});
+  }
+
+  componentWillReceiveProps(next) {
+    if (next.store.rootNode && !this.props.store.rootNode) {
+      this.props.updateState(next.store.rootNode);
+    }
   }
 
   render() {
@@ -58,7 +55,7 @@ export class EditStorageUnitContainer extends React.Component {
             }
           }});
         }}
-        loaded={!!this.props.store.unit}
+        loaded={!!this.props.store.unit && this.props.store.loaded}
       />
     );
   }
