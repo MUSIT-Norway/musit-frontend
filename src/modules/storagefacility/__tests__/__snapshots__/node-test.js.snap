@@ -201,3 +201,943 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
   </div>
 </div>
 `;
+
+exports[`NodePanel should render properly  1`] = `
+<Layout
+  breadcrumb={
+    <function Breadcrumb() {_classCallCheck(this, Breadcrumb);return _possibleConstructorReturn(this, (Breadcrumb.__proto__ || Object.getPrototypeOf(Breadcrumb)).apply(this, arguments));}
+      disabled={true}
+      node={undefined} />
+  }
+  content={
+    <function (props, context, updater) {
+          // This constructor gets overridden by mocks. The argument is used
+          // by mocks to assert on what gets mounted.
+    
+          if (process.env.NODE_ENV !== 'production') {
+            process.env.NODE_ENV !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory') : void 0;
+          }
+    
+          // Wire up auto-binding
+          if (this.__reactAutoBindPairs.length) {
+            bindAutoBindMethods(this);
+          }
+    
+          this.props = props;
+          this.context = context;
+          this.refs = emptyObject;
+          this.updater = updater || ReactNoopUpdateQueue;
+    
+          this.state = null;
+    
+          // ReactClasses doesn't have constructors. Instead, they use the
+          // getInitialState and componentWillMount methods for initialization.
+    
+          var initialState = this.getInitialState ? this.getInitialState() : null;
+          if (process.env.NODE_ENV !== 'production') {
+            // We allow auto-mocks to proceed as if they're returning null.
+            if (initialState === undefined && this.getInitialState._isMockFunction) {
+              // This is probably bad practice. Consider warning here and
+              // deprecating this convenience.
+              initialState = null;
+            }
+          }
+          !(typeof initialState === 'object' && !Array.isArray(initialState)) ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s.getInitialState(): must return an object or null', Constructor.displayName || 'ReactCompositeComponent') : _prodInvariant('82', Constructor.displayName || 'ReactCompositeComponent') : void 0;
+    
+          this.state = initialState;
+        }
+      component="div"
+      loaded={true}
+      loadedClassName="loadedContent"
+      parentClassName="loader">
+      <function Grid() {
+          (0, _classCallCheck3['default'])(this, Grid);
+          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+        }
+        bsClass="container"
+        componentClass="div"
+        fluid={false}>
+        <function Row() {
+            (0, _classCallCheck3['default'])(this, Row);
+            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+          }
+          bsClass="row"
+          componentClass="div">
+          <function Col() {
+              (0, _classCallCheck3['default'])(this, Col);
+              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+            }
+            bsClass="col"
+            componentClass="div"
+            md={9}>
+            <form
+              onKeyDown={[Function onKeyDown]}
+              onSubmit={[Function onSubmit]}>
+              <div>
+                <h4
+                  style={
+                    Object {
+                      "textAlign": "center"
+                    }
+                  }>
+                  
+                  Egenskaper
+                </h4>
+                <function Grid() {
+                    (0, _classCallCheck3['default'])(this, Grid);
+                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                  }
+                  bsClass="container"
+                  componentClass="div"
+                  fluid={false}>
+                  <function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }
+                    bsClass="row"
+                    className="row-centered"
+                    componentClass="div">
+                    <function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="col"
+                      componentClass="div"
+                      md={5}>
+                      <function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="form"
+                        componentClass="form"
+                        horizontal={true}
+                        inline={false}>
+                        <div
+                          className="form-group">
+                          <label
+                            className="col-sm-3 control-label"
+                            htmlFor="storageUnitType">
+                            Type
+                            <span
+                              style={
+                                Object {
+                                  "color": "red"
+                                }
+                              }>
+                              *
+                            </span>
+                          </label>
+                          <div
+                            class="col-sm-4"
+                            is="null">
+                            <function MusitDropDownField() {_classCallCheck(this, MusitDropDownField);return _possibleConstructorReturn(this, (MusitDropDownField.__proto__ || Object.getPrototypeOf(MusitDropDownField)).apply(this, arguments));}
+                              disabled={true}
+                              id="type"
+                              items={
+                                Array [
+                                  "StorageUnit",
+                                  "Room",
+                                  "Building",
+                                  "Organisation"
+                                ]
+                              }
+                              maximumLength={100}
+                              onChange={[Function onChange]}
+                              placeHolder="Vennligst velg..."
+                              tooltip="Nodens type"
+                              translateKeyPrefix="musit.storageUnits.type.items."
+                              validate="text"
+                              value="Organisation" />
+                          </div>
+                        </div>
+                      </function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                  </function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }>
+                  <function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }
+                    bsClass="row"
+                    componentClass="div">
+                    <function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="col"
+                      componentClass="div"
+                      md={5}>
+                      <function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="form"
+                        componentClass="form"
+                        horizontal={true}
+                        inline={false}>
+                        <function FormGroup() {
+                            (0, _classCallCheck3['default'])(this, FormGroup);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }
+                          bsClass="form-group">
+                          <label
+                            className="col-sm-3 control-label"
+                            htmlFor="name">
+                            Navn
+                            <span
+                              style={
+                                Object {
+                                  "color": "red"
+                                }
+                              }>
+                              *
+                            </span>
+                          </label>
+                          <div
+                            class="col-sm-8"
+                            is="null">
+                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              id="name"
+                              maximumLength={100}
+                              onChange={[Function onChange]}
+                              placeHolder="Fritekst"
+                              tooltip="Navn på noden"
+                              validate="text"
+                              value="NHM" />
+                          </div>
+                        </function FormGroup() {
+                            (0, _classCallCheck3['default'])(this, FormGroup);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }>
+                      </function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                    <function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="col"
+                      componentClass="div"
+                      md={5}>
+                      <function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="form"
+                        componentClass="form"
+                        horizontal={true}
+                        inline={false}>
+                        <function FormGroup() {
+                            (0, _classCallCheck3['default'])(this, FormGroup);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }
+                          bsClass="form-group">
+                          <label
+                            className="col-sm-3 control-label"
+                            htmlFor="address">
+                            Adresse
+                          </label>
+                          <div
+                            class="col-sm-8"
+                            is="null">
+                            <function (initialProps) {
+                                  return _react2.default.createElement(Injected, initialProps);
+                                }
+                              id="addressField"
+                              onChange={[Function onChange]}
+                              placeHolder="Find address"
+                              value="Sars gate 11" />
+                          </div>
+                        </function FormGroup() {
+                            (0, _classCallCheck3['default'])(this, FormGroup);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }>
+                      </function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                  </function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }>
+                  <function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }
+                    bsClass="row"
+                    className="row-centered"
+                    componentClass="div">
+                    <function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="col"
+                      componentClass="div"
+                      md={5}>
+                      <function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="form"
+                        componentClass="form"
+                        horizontal={true}
+                        inline={false}>
+                        <div
+                          className="form-group">
+                          <label
+                            className="col-sm-3 control-label"
+                            htmlFor="comments2">
+                            Areal
+                          </label>
+                          <div
+                            class="col-sm-4"
+                            is="null">
+                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              id="area"
+                              onChange={[Function onChange]}
+                              placeHolder="fra"
+                              precision={3}
+                              tooltip="Nodens areal i m²"
+                              validate="number"
+                              value="10" />
+                          </div>
+                          <div
+                            class="col-sm-4"
+                            is="null">
+                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              id="areaTo"
+                              onChange={[Function onChange]}
+                              placeHolder="til"
+                              precision={3}
+                              tooltip="Nodens areal i m²"
+                              validate="number"
+                              value="12" />
+                          </div>
+                        </div>
+                      </function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                    <function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="col"
+                      componentClass="div"
+                      md={5}>
+                      <function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="form"
+                        componentClass="form"
+                        horizontal={true}
+                        inline={false}>
+                        <div
+                          className="form-group">
+                          <label
+                            className="col-sm-3 control-label"
+                            htmlFor="controlId">
+                            Høyde
+                          </label>
+                          <div
+                            class="col-sm-4"
+                            is="null">
+                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              id="height"
+                              onChange={[Function onChange]}
+                              placeHolder="fra"
+                              precision={3}
+                              tooltip="Nodens høyde i m"
+                              validate="number"
+                              value="3" />
+                          </div>
+                          <div
+                            class="col-sm-4"
+                            is="null">
+                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              id="heightTo"
+                              onChange={[Function onChange]}
+                              placeHolder="til"
+                              precision={3}
+                              tooltip="Nodens høyde i m"
+                              validate="number"
+                              value="5" />
+                          </div>
+                        </div>
+                      </function Form() {
+                          (0, _classCallCheck3['default'])(this, Form);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                  </function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }>
+                </function Grid() {
+                    (0, _classCallCheck3['default'])(this, Grid);
+                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                  }>
+                <function Row() {
+                    (0, _classCallCheck3['default'])(this, Row);
+                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                  }
+                  bsClass="row"
+                  componentClass="div">
+                  <function Col() {
+                      (0, _classCallCheck3['default'])(this, Col);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }
+                    bsClass="col"
+                    componentClass="div"
+                    style={
+                      Object {
+                        "textAlign": "center"
+                      }
+                    }>
+                    <h4>
+                      Miljødata
+                    </h4>
+                  </function Col() {
+                      (0, _classCallCheck3['default'])(this, Col);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }>
+                </function Row() {
+                    (0, _classCallCheck3['default'])(this, Row);
+                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                  }>
+                <div>
+                  <function Grid() {
+                      (0, _classCallCheck3['default'])(this, Grid);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }
+                    bsClass="container"
+                    componentClass="div"
+                    fluid={false}>
+                    <function Row() {
+                        (0, _classCallCheck3['default'])(this, Row);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="row"
+                      className="row-centered"
+                      componentClass="div">
+                      <function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="col"
+                        componentClass="div"
+                        md={5}>
+                        <function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }
+                          bsClass="form"
+                          componentClass="form"
+                          horizontal={true}
+                          inline={false}>
+                          <div
+                            className="form-group">
+                            <label
+                              className="col-sm-3 control-label"
+                              htmlFor="comments2">
+                              Temperatur
+                            </label>
+                            <div
+                              class="col-sm-4"
+                              is="null">
+                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                                id="temperature"
+                                onChange={[Function onChange]}
+                                placeHolder="°C"
+                                precision={3}
+                                tooltip="Krav til temperatur i °C"
+                                validate="number"
+                                value="12" />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              is="null">
+                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                                id="temperatureTolerance"
+                                onChange={[Function onChange]}
+                                placeHolder="°C"
+                                precision={0}
+                                tooltip="Toleranse"
+                                validate="number"
+                                value="3" />
+                            </div>
+                          </div>
+                        </function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }>
+                      </function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                      <function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="col"
+                        componentClass="div"
+                        md={5}>
+                        <function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }
+                          bsClass="form"
+                          componentClass="form"
+                          horizontal={true}
+                          inline={false}>
+                          <div
+                            className="form-group">
+                            <label
+                              className="col-sm-3 control-label"
+                              htmlFor="comments2">
+                              Rel. luftfuktighet
+                            </label>
+                            <div
+                              class="col-sm-4"
+                              is="null">
+                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                                id="relativeHumidity"
+                                onChange={[Function onChange]}
+                                placeHolder="%"
+                                precision={3}
+                                tooltip="Krav til relativ luftfuktighet i %"
+                                validate="number"
+                                value="67" />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              is="null">
+                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                                id="relativeHumidityTolerance"
+                                onChange={[Function onChange]}
+                                placeHolder="%"
+                                precision={0}
+                                tooltip="Toleranse"
+                                validate="number"
+                                value="8" />
+                            </div>
+                          </div>
+                        </function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }>
+                      </function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Row() {
+                        (0, _classCallCheck3['default'])(this, Row);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                    <function Row() {
+                        (0, _classCallCheck3['default'])(this, Row);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="row"
+                      className="row-centered"
+                      componentClass="div">
+                      <function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="col"
+                        componentClass="div"
+                        md={5}>
+                        <function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }
+                          bsClass="form"
+                          componentClass="form"
+                          horizontal={true}
+                          inline={false}>
+                          <div
+                            className="form-group">
+                            <label
+                              className="col-sm-3 control-label"
+                              htmlFor="comments2">
+                              Inertluft
+                            </label>
+                            <div
+                              class="col-sm-4"
+                              is="null">
+                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                                id="hypoxicAir"
+                                onChange={[Function onChange]}
+                                placeHolder="% O₂"
+                                precision={3}
+                                tooltip="Krav til inertluft i % O₂"
+                                validate="number"
+                                value="23" />
+                            </div>
+                            <div
+                              class="col-sm-4"
+                              is="null">
+                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                                id="hypoxicAirTolerance"
+                                onChange={[Function onChange]}
+                                placeHolder="% O₂"
+                                precision={0}
+                                tooltip="Toleranse"
+                                validate="number"
+                                value="2" />
+                            </div>
+                          </div>
+                        </function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }>
+                      </function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                      <function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="col"
+                        componentClass="div"
+                        md={5}>
+                        <function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }
+                          bsClass="form"
+                          componentClass="form"
+                          horizontal={true}
+                          inline={false}>
+                          <function FormGroup() {
+                              (0, _classCallCheck3['default'])(this, FormGroup);
+                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                            }
+                            bsClass="form-group">
+                            <label
+                              className="col-sm-3 control-label"
+                              htmlFor="cleaning">
+                              Renhold
+                            </label>
+                            <div
+                              class="col-sm-8"
+                              is="null">
+                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                                id="cleaning"
+                                maximumLength={100}
+                                onChange={[Function onChange]}
+                                tooltip="Krav til renhold"
+                                validate="text"
+                                value="Urent" />
+                            </div>
+                          </function FormGroup() {
+                              (0, _classCallCheck3['default'])(this, FormGroup);
+                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                            }>
+                        </function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }>
+                      </function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Row() {
+                        (0, _classCallCheck3['default'])(this, Row);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                    <function Row() {
+                        (0, _classCallCheck3['default'])(this, Row);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="row"
+                      className="row-centered"
+                      componentClass="div">
+                      <function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="col"
+                        componentClass="div"
+                        md={5}>
+                        <function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }
+                          bsClass="form"
+                          componentClass="form"
+                          horizontal={true}
+                          inline={false}>
+                          <function FormGroup() {
+                              (0, _classCallCheck3['default'])(this, FormGroup);
+                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                            }
+                            bsClass="form-group">
+                            <label
+                              className="col-sm-3 control-label"
+                              htmlFor="lightingCondition">
+                              Lysforhold
+                            </label>
+                            <div
+                              class="col-sm-8"
+                              is="null">
+                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                                id="lightingCondition"
+                                maximumLength={100}
+                                onChange={[Function onChange]}
+                                tooltip="Krav til lysforhold"
+                                validate="text"
+                                value="For mørkt" />
+                            </div>
+                          </function FormGroup() {
+                              (0, _classCallCheck3['default'])(this, FormGroup);
+                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                            }>
+                        </function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }>
+                      </function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Row() {
+                        (0, _classCallCheck3['default'])(this, Row);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                    <function Row() {
+                        (0, _classCallCheck3['default'])(this, Row);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="row"
+                      componentClass="div">
+                      <function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }
+                        bsClass="col"
+                        componentClass="div"
+                        md={5}>
+                        <function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }
+                          bsClass="form"
+                          componentClass="form"
+                          horizontal={true}
+                          inline={false}>
+                          <function FormGroup() {
+                              (0, _classCallCheck3['default'])(this, FormGroup);
+                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                            }
+                            bsClass="form-group">
+                            <label
+                              className="col-sm-3 control-label"
+                              htmlFor="comments">
+                              Kommentar
+                            </label>
+                            <div
+                              class="col-sm-8"
+                              is="null">
+                              <function MusitTextArea() {_classCallCheck(this, MusitTextArea);return _possibleConstructorReturn(this, (MusitTextArea.__proto__ || Object.getPrototypeOf(MusitTextArea)).apply(this, arguments));}
+                                id="comments"
+                                maximumLength={250}
+                                numberOfRows={4}
+                                onChange={[Function onChange]}
+                                tooltip="Kommentar"
+                                validate="text"
+                                value="Hei hei" />
+                            </div>
+                          </function FormGroup() {
+                              (0, _classCallCheck3['default'])(this, FormGroup);
+                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                            }>
+                        </function Form() {
+                            (0, _classCallCheck3['default'])(this, Form);
+                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                          }>
+                      </function Col() {
+                          (0, _classCallCheck3['default'])(this, Col);
+                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                        }>
+                    </function Row() {
+                        (0, _classCallCheck3['default'])(this, Row);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                  </function Grid() {
+                      (0, _classCallCheck3['default'])(this, Grid);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }>
+                </div>
+                <function Grid() {
+                    (0, _classCallCheck3['default'])(this, Grid);
+                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                  }
+                  bsClass="container"
+                  componentClass="div"
+                  fluid={false}>
+                  <function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }
+                    bsClass="row"
+                    componentClass="div">
+                    <br />
+                    <br />
+                    <function SaveCancel(props) {/* istanbul ignore next */_classCallCheck(this, SaveCancel);++cov_17eecvnpo6.f[0];++cov_17eecvnpo6.s[0];var _this = _possibleConstructorReturn(this, (SaveCancel.__proto__ || Object.getPrototypeOf(SaveCancel)).call(this, props)); /* istanbul ignore next */var _ref = (++cov_17eecvnpo6.s[1],
+                    
+                    
+                    
+                        props),id = _ref.id,saveDisabled = _ref.saveDisabled,onClickSave = _ref.onClickSave,cancelDisabled = _ref.cancelDisabled,onClickCancel = _ref.onClickCancel; /* istanbul ignore next */++cov_17eecvnpo6.s[2];
+                        /* istanbul ignore next */_this.fields = {
+                          save: {
+                            id: /* istanbul ignore next */'Save_' + ( /* istanbul ignore next */(++cov_17eecvnpo6.b[0][0], id) || /* istanbul ignore next */(++cov_17eecvnpo6.b[0][1], 1)),
+                            onClick: onClickSave,
+                            disabled: saveDisabled },
+                    
+                          cancel: {
+                            id: /* istanbul ignore next */'Cancel_' + ( /* istanbul ignore next */(++cov_17eecvnpo6.b[1][0], id) || /* istanbul ignore next */(++cov_17eecvnpo6.b[1][1], 1)),
+                            onClick: onClickCancel,
+                            disabled: cancelDisabled } }; /* istanbul ignore next */return _this;
+                    
+                    
+                      }
+                      onClickCancel={[Function onClickCancel]}
+                      onClickSave={[Function bound handleSubmit]}
+                      saveDisabled={undefined} />
+                  </function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }>
+                  <function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }
+                    bsClass="row"
+                    componentClass="div">
+                    <function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="col"
+                      componentClass="div"
+                      sm={8} />
+                    <function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }
+                      bsClass="col"
+                      componentClass="div"
+                      sm={4}>
+                      <span>
+                        <b>
+                          Sist endret av: 
+                        </b>
+                         
+                        <br />
+                        <b>
+                          Sist endret dato: 
+                        </b>
+                        09.02.2017
+                      </span>
+                    </function Col() {
+                        (0, _classCallCheck3['default'])(this, Col);
+                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                      }>
+                  </function Row() {
+                      (0, _classCallCheck3['default'])(this, Row);
+                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                    }>
+                </function Grid() {
+                    (0, _classCallCheck3['default'])(this, Grid);
+                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                  }>
+              </div>
+            </form>
+          </function Col() {
+              (0, _classCallCheck3['default'])(this, Col);
+              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+            }>
+        </function Row() {
+            (0, _classCallCheck3['default'])(this, Row);
+            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+          }>
+      </function Grid() {
+          (0, _classCallCheck3['default'])(this, Grid);
+          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+        }>
+    </function (props, context, updater) {
+          // This constructor gets overridden by mocks. The argument is used
+          // by mocks to assert on what gets mounted.
+    
+          if (process.env.NODE_ENV !== 'production') {
+            process.env.NODE_ENV !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory') : void 0;
+          }
+    
+          // Wire up auto-binding
+          if (this.__reactAutoBindPairs.length) {
+            bindAutoBindMethods(this);
+          }
+    
+          this.props = props;
+          this.context = context;
+          this.refs = emptyObject;
+          this.updater = updater || ReactNoopUpdateQueue;
+    
+          this.state = null;
+    
+          // ReactClasses doesn't have constructors. Instead, they use the
+          // getInitialState and componentWillMount methods for initialization.
+    
+          var initialState = this.getInitialState ? this.getInitialState() : null;
+          if (process.env.NODE_ENV !== 'production') {
+            // We allow auto-mocks to proceed as if they're returning null.
+            if (initialState === undefined && this.getInitialState._isMockFunction) {
+              // This is probably bad practice. Consider warning here and
+              // deprecating this convenience.
+              initialState = null;
+            }
+          }
+          !(typeof initialState === 'object' && !Array.isArray(initialState)) ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s.getInitialState(): must return an object or null', Constructor.displayName || 'ReactCompositeComponent') : _prodInvariant('82', Constructor.displayName || 'ReactCompositeComponent') : void 0;
+    
+          this.state = initialState;
+        }>
+  }
+  leftMenu={
+    <div
+      style={
+        Object {
+          "minHeight": 0
+        }
+      } />
+  }
+  title="Magasin"
+  toolbar={<span />} />
+`;
