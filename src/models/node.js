@@ -3,7 +3,7 @@ import Config from '../config';
 import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import { addNode$ as pickNode$ } from '../modules/app/pickList';
-import { mapToBackend } from './mapper';
+import { mapToBackend } from './mapper/node';
 
 class MusitNode {
 
@@ -29,16 +29,16 @@ MusitNode.getNode = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) =
 
 MusitNode.addNode = (ajaxPost = simplePost) => ({id, museumId, token, data, callback}) => {
   const baseUrl= Config.magasin.urls.storagefacility.baseUrl(museumId);
-  const url = `${baseUrl}/${museumId.id}/${!id ? '/root' : ''}`;
-  const dataToPost = { data: mapToBackend(data) };
-  return ajaxPost(url,dataToPost,token,callback).map(({ response }) => response && MusitNode(response));
+  const url = `${baseUrl}${!id ? '/root' : ''}`;
+  const dataToPost = mapToBackend(data, id);
+  return ajaxPost(url, dataToPost, token, callback).map(({ response }) => response && new MusitNode(response));
 };
 
 MusitNode.editNode = (ajaxPut = simplePut) => ({id,  museumId, token, data, callback}) => {
   const baseUrl= Config.magasin.urls.storagefacility.baseUrl(museumId);
-  const url = `${baseUrl}/${museumId.id}}/${id}`;
-  const dataToPost = { data: mapToBackend(data) };
-  return ajaxPut(url,dataToPost,token,callback).map(({ response }) => response && MusitNode(response));
+  const url = `${baseUrl}/${id}`;
+  const dataToPost = mapToBackend(data);
+  return ajaxPut(url,dataToPost,token,callback).map(({ response }) => response && new MusitNode(response));
 };
 
 MusitNode.getNodes = (ajaxGet = simpleGet) => ({id, page, museumId, token, callback}) => {
@@ -75,8 +75,7 @@ MusitNode.getStats = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) 
 
 MusitNode.deleteNode = (ajaxDel = simpleDel) => ({id, museumId, token, callback}) => {
   const baseUrl = Config.magasin.urls.storagefacility.baseUrl(museumId);
-  return ajaxDel(`${baseUrl}/${id}`, token, callback)
-    .toPromise();
+  return ajaxDel(`${baseUrl}/${id}`, token, callback);
 };
 
 MusitNode.moveNode = (ajaxPut = simplePut) => ({id, destination, doneBy, museumId, token, callback}) => {
@@ -84,7 +83,7 @@ MusitNode.moveNode = (ajaxPut = simplePut) => ({id, destination, doneBy, museumI
   return ajaxPut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveNode`, data, token, callback);
 };
 
-MusitNode.pickNode = (node, breadcrumb) => {
+MusitNode.pickNode = ({node, breadcrumb}) => {
   pickNode$.next({ value: node, path: breadcrumb });
 };
 

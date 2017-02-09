@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import StorageUnitContainer from './NodeDetails';
 import inject from 'react-rxjs/dist/RxInject';
-import  nodeStore$, { clearNode$, loadRootNode$, addNode$, updateState$} from './nodeStore';
+import  nodeStore$, { clearNode$, loadNode$, updateState$} from './nodeStore';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import { hashHistory } from 'react-router';
+import MusitNode from '../../models/node';
 
 export class AddStorageUnitContainer extends React.Component {
   static propTypes = {
@@ -13,13 +14,13 @@ export class AddStorageUnitContainer extends React.Component {
     updateState: PropTypes.func.isRequired,
     addNode: PropTypes.func.isRequired,
     clearNode: PropTypes.func.isRequired,
-    loadRootNode: PropTypes.func.isRequired,
+    loadNode: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired
   };
 
   componentWillMount() {
     this.props.clearNode();
-    this.props.loadRootNode({
+    this.props.loadNode({
       id: this.props.params.id,
       museumId: this.props.appSession.getMuseumId(),
       token: this.props.appSession.getAccessToken()
@@ -30,13 +31,14 @@ export class AddStorageUnitContainer extends React.Component {
     return (
       <StorageUnitContainer
         {...this.props}
+        rootNode={this.props.store.rootNode}
         unit={this.props.store.unit}
         onLagreClick={(data) => {
           const id = this.props.params.id;
           const museumId = this.props.appSession.getMuseumId();
           const token = this.props.appSession.getAccessToken();
           this.props.addNode({ id, museumId, token, data, callback: {
-            onSuccess: () => {
+            onComplete: () => {
               hashHistory.goBack();
               this.props.emitSuccess({
                 type: 'saveSuccess',
@@ -62,15 +64,15 @@ const data = {
 };
 
 const commands = {
-  loadRootNode$,
+  loadNode$,
   clearNode$,
-  addNode$,
   updateState$
 };
 
 const props = {
   emitError,
-  emitSuccess
+  emitSuccess,
+  addNode: (val) => MusitNode.addNode()(val).toPromise()
 };
 
 export default inject(data, commands, props)(AddStorageUnitContainer);

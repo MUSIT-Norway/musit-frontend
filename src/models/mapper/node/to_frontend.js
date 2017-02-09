@@ -1,5 +1,5 @@
 
-import { formatFloatToString, getPath } from '../../shared/util';
+import { formatFloatToString, getPath } from '../../../shared/util';
 
 const mapRequirement = (envReq, field) => {
   if (envReq[field] && (envReq[field].base || envReq[field].tolerance)) {

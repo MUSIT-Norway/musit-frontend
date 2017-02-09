@@ -1,6 +1,7 @@
 import find from 'lodash/find';
 import Config from '../config';
 import entries from 'object.entries';
+import { simpleGet, simplePost } from '../shared/RxAjax';
 
 /**
  * Encapsulates the responsibilities for the Actor model
@@ -49,7 +50,7 @@ class MusitActor {
   }
 }
 
-MusitActor.getActorDetails = (ajaxPost) => (actorIds, token, callback) => {
+MusitActor.getActors = (ajaxPost = simplePost) => (actorIds, token, callback) => {
   return ajaxPost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
     .map(({ response }) => response)
     .map(actors => {
@@ -58,6 +59,11 @@ MusitActor.getActorDetails = (ajaxPost) => (actorIds, token, callback) => {
       }
       return actors.map(a => new MusitActor(a));
     });
+};
+
+MusitActor.getActor = (ajaxGet = simpleGet) => ({ actorId, token, callback }) => {
+  return ajaxGet(`${Config.magasin.urls.actor.baseUrl}/${actorId}`, token, callback)
+    .map(({ response }) => response);
 };
 
 export default MusitActor;

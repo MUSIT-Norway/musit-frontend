@@ -20,18 +20,18 @@ class MusitObject {
     return this.id === this.mainObjectId;
   }
 
-  moveObject(destination, doneBy, museumId, collectionId, token, callback) {
+  moveObject({destination, doneBy, museumId, collectionId, token, callback}) {
     if (this.isMainObject()) {
       MusitObject.getMainObject(this.id, museumId, collectionId, token, { onFailure: callback.onFailure })
         .toPromise()
         .then(objects =>
           objects.forEach(obj =>
-            MusitObject.moveObject(obj.id, destination, doneBy, museumId, token, obj.isMainObject() ? callback : null)
+            MusitObject.moveObject()({ id: obj.id, destination, doneBy, museumId, token, callback: obj.isMainObject() ? callback : null })
               .toPromise()
           )
         );
     } else {
-      MusitObject.moveObject(this.id, destination, doneBy, museumId, token, callback)
+      MusitObject.moveObject()({ id: this.id, destination, doneBy, museumId, token, callback })
         .toPromise();
     }
   }

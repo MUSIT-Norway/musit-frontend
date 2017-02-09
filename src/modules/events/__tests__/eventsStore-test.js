@@ -1,19 +1,22 @@
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, loadEvents, loadRootNode } from '../eventsStore';
+import { reducer$, loadEvents} from '../eventsStore';
 import { createStore } from 'react-rxjs/dist/RxStore';
 import MuseumId from '../../../models/museumId';
 import Observation from '../../../models/observation';
 import Control from '../../../models/control';
 import MusitNode from '../../../models/node';
+const diff = require('deep-diff').diff;
 
 describe('eventsStore', () => {
 
   it('testing reducer with actors', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      return assert.deepEqual(actual, expected);
+      const difference = diff(actual, expected);
+      if (typeof difference !== 'undefined') {
+        console.log(difference);
+      }
+      return assert.equal(undefined, difference);
     });
 
     // mock streams
@@ -98,9 +101,11 @@ describe('eventsStore', () => {
 
   it('testing reducer with no actor hits', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      return assert.deepEqual(actual, expected);
+      const difference = diff(actual, expected);
+      if (typeof difference !== 'undefined') {
+        console.log(difference);
+      }
+      return assert.equal(undefined, difference);
     });
 
     // mock streams
@@ -135,17 +140,10 @@ describe('eventsStore', () => {
     };
 
     const clearEvents$ = testScheduler.createHotObservable(clearEventsM);
-    const loadRootNode$ = testScheduler.createHotObservable(loadRootNodeM, {1: {nodeId: 1, museumId: new MuseumId(1), token: '1234'}})
-      .switchMap(loadRootNode({
-        simpleGet: () => {
-          return Observable.of({
-            response: {
-              nodeId: 1,
-              name: 'Test'
-            }
-          });
-        }
-      }));
+    const loadRootNode$ = testScheduler.createHotObservable(loadRootNodeM, {1: new MusitNode({
+      nodeId: 1,
+      name: 'Test'
+    })});
     const loadEvents$ = testScheduler.createHotObservable(loadEventsM, {1: {nodeId: 1, museumId: new MuseumId(1), token: '1234'}})
       .switchMap(loadEvents({
         simpleGet: (url) => {
