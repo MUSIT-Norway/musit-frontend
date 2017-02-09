@@ -70,6 +70,7 @@ export default class SaveCancel extends Component {
       <Row>
         {showButton(
           <Button
+            className="submitButton"
             onClick={this.props.onClickSave}
             disabled={this.props.saveDisabled}
           >

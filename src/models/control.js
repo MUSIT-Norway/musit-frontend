@@ -20,23 +20,21 @@ Control.loadControls = (ajaxGet =  simpleGet) => ({ nodeId, museumId, token, cal
     });
 };
 
-Control.addControl = ({ nodeId, controlData, observations, museumId, token, callback }) => {
+Control.addControl = (ajaxPost = simplePost) => ({ nodeId, controlData, observations, museumId, token, callback }) => {
   const data = mapToBackend(controlData, observations, nodeId);
   const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
-  return simplePost(url, data, token, callback)
-    .toPromise();
+  return ajaxPost(url, data, token, callback);
 };
 
-Control.getControl = (ajaxGet) => (nodeId, controlId, museumId, token, callback) => {
+Control.getControl = (ajaxGet = simpleGet) => (nodeId, controlId, museumId, token, callback) => {
   const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls/${controlId}`;
   console.log(url);
   return ajaxGet(url, token, callback)
-    .map(({ response }) => response)
-    .map(data => {
-      if (!data) {
-        return {...data, error: 'no response body'};
+    .map(({response}) => {
+      if (!response) {
+        return {...response, error: 'no response body'};
       }
-      return data;
+      return response;
     });
 };
 

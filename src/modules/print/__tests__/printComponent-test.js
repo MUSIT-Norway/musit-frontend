@@ -1,9 +1,9 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
+import sinon from 'sinon';
 import { ChooseTemplate } from '../PrintTemplateComponent';
 import { AppSession } from '../../app/appSession';
-import sinon from 'sinon';
 
 describe('PrintTemplateComponent', () => {
   it('should display correctly', () => {
@@ -41,7 +41,7 @@ describe('PrintTemplateComponent', () => {
         ]}
     />);
     expect(clearAll.calledOnce).toBe(true);
-    expect(loadTemplates.calledOnce);
+    expect(loadTemplates.calledOnce).toBe(true);
     expect(loadTemplates.getCall(0).args[0].token).toBe('1234');
     expect(clearRendered.calledOnce).toBe(false);
     wrapper.find('select').simulate('change', { target: { value : 1}});

@@ -27,9 +27,6 @@ export const onFailure = (callback) => (error) => {
       emitError({ ...error, type: 'network'});
     }
     return Observable.empty();
-  case 404:
-    emitError({ ...error, type: 'network'});
-    break;
   default:
     break;
   }

@@ -1,41 +1,91 @@
-import assert from 'assert';
+import { shallow } from 'enzyme';
+import { RenderDoubleTextArea, RenderPest } from '../render';
 import React from 'react';
-import ReactTestUtils from 'react-addons-test-utils';
 import ObservationPage from '../ObservationPage';
+import MusitActor from '../../../models/actor';
 
-describe('Render edit observation page', () => {
-  const renderer = ReactTestUtils.createRenderer();
-  let observationPage;
-
-  beforeEach(() => {
-    renderer.render(
+describe('Render oobservation page in edit mode', () => {
+  it('should set default date and have correct date format', () => {
+    const observationPage = shallow(
       <ObservationPage
-        translate={(key) => key}
-        params={{ }}
+        observations={[
+          {
+            type: 'gas',
+            data: {
+              leftValue: 'pppppppppppppppp',
+              rightValue: undefined
+            }
+          },
+          {
+            type: 'lightCondition',
+            data: {
+              leftValue: 'pppppppppppppppp',
+              rightValue: undefined
+            }
+          },
+          {
+            type: 'cleaning',
+            data: {
+              leftValue: 'pppppppppppppppp',
+              rightValue: undefined
+            }
+          },
+          {
+            type: 'mold',
+            data: {
+              leftValue: 'pppppppppppppppp',
+              rightValue: undefined
+            }
+          },
+          {
+            type: 'skallsikring',
+            data: {
+              leftValue: 'pppppppppppppppp',
+              rightValue: undefined
+            }
+          },
+          {
+            type: 'tyverisikring',
+            data: {
+              leftValue: 'pppppppppppppppp',
+              rightValue: undefined
+            }
+          },
+          {
+            type: 'brannsikring',
+            data: {
+              leftValue: 'pppppppppppppppp',
+              rightValue: undefined
+            }
+          },
+          {
+            type: 'vannskaderisiko',
+            data: {
+              leftValue: 'pppppppppppppppp',
+              rightValue: undefined
+            }
+          },
+          {
+            type: 'pest',
+            data: {
+              identificationValue: 'kkk',
+              observations: [
+                {
+                  lifeCycle: 'puppe',
+                  count: '6'
+                }
+              ]
+            }
+          }
+        ]}
+        doneBy={new MusitActor({ dataportenId: '12345', fn: 'Jarl'})}
         onSaveObservation={() => true}
         doneDate={'2016-12-23T00:00:00.000Z'}
         mode="EDIT"
         id="1"
       />
     );
-    observationPage = renderer.getRenderOutput();
-  });
-
-  it('should set default date and have correct date format', () => {
-    const dateProps = observationPage
-            .props
-            .children
-            .props
-            .children[0]
-            .props
-            .children[1]
-            .props
-            .children[0]
-            .props
-            .children[1]
-            .props;
-
-    assert(dateProps.value === '23.12.2016');
-    assert(dateProps.disabled === true);
+    expect(observationPage.find(RenderDoubleTextArea).length).toBe(8);
+    expect(observationPage.find(RenderPest).length).toBe(1);
   });
 });

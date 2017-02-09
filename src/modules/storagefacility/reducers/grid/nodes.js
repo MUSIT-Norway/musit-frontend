@@ -1,5 +1,5 @@
 import Config from '../../../../config';
-import { mapToFrontend } from '../mapper';
+import { mapToFrontend } from '../../../../models/mapper/node';
 import { apiUrl } from '../../../../shared/util';
 
 export const LOAD_SEVERAL = 'musit/storageunit-grid/LOAD_SEVERAL';
