@@ -1,16 +1,16 @@
-import { TestScheduler, Observable } from 'rxjs/Rx';
+import { TestScheduler, Observable, Subject } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, initialState, getControl } from '../controlStore';
+import { reducer$, initialState } from '../controlStore';
 import { createStore } from 'react-rxjs/dist/RxStore';
 import MusemId from '../../../models/museumId';
+import Control from '../../../models/control';
 
 describe('ControlStore', () => {
 
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      console.log(JSON.stringify(actual, null, 2));
-      console.log(JSON.stringify(expected, null, 2));
-      // console.log(JSON.stringify(expectedStateMap, null, 2));
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
       return assert.deepEqual(actual, expected);
     });
 
@@ -23,10 +23,10 @@ describe('ControlStore', () => {
       b: {
         data: {
           'id':51,
-          'doneBy':'7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+          'doneBy':'Kumar',
           'doneDate':'2017-02-09T09:52:11+00:00',
           'affectedThing':3,
-          'registeredBy':'7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+          'registeredBy':'Kumar',
           'registeredDate':'2017-02-09T09:52:26+00:00',
           'eventType':'Control',
           'alcohol':{
@@ -63,8 +63,8 @@ describe('ControlStore', () => {
     // mock up$ and down$ events
     const getControl$ = testScheduler.createHotObservable(getControlM,
       {x: { token: '12344', museumId: new MusemId(1), nodeId: 1, controlId: 2}}
-    ).switchMap(getControl({
-      simpleGet: () => {
+    ).switchMap(Control.getControl(
+      () => {
         return Observable.of({
           response: {
             'id':51,
@@ -103,10 +103,20 @@ describe('ControlStore', () => {
             }
           }
         });
+      },
+      () => {
+        return Observable.of({
+          response: [
+            {
+              dataportenId: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+              fn: 'Kumar'
+            }
+          ]
+        });
       }
-    }));
+    ));
 
-    const state$ = reducer$({ getControl$ });
+    const state$ = reducer$({ clear$: new Subject(), loadRootNode$: new Subject(), getControl$ });
 
     // assertion
     testScheduler.expectObservable(createStore('test', state$, Observable.of(initialState))).toBe(expected, expectedStateMap);

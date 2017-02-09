@@ -26,22 +26,32 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import { parseUTCDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
+import store$, { getControl$, loadRootNode$ } from './controlStore';
+import Loader from 'react-loader';
 
 export class ControlViewContainer extends React.Component {
   static propTypes = {
     controls: React.PropTypes.object,
-    loadControl: React.PropTypes.func.isRequired,
+    getControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
-    doneBy: React.PropTypes.any,
     rootNode: React.PropTypes.object
   }
 
   componentWillMount() {
     if (this.props.params.controlId) {
-      this.props.loadControl(this.props.params.id, this.props.params.controlId, this.props.appSession.getMuseumId());
+      this.props.getControl({
+        nodeId: this.props.params.id,
+        controlId: this.props.params.controlId,
+        museumId: this.props.appSession.getMuseumId(),
+        token: this.props.appSession.getAccessToken()
+      });
     }
-    if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
+    if (!this.props.store.rootNode) {
+      this.props.loadRootNode({
+        id: this.props.params.id,
+        museumId: this.props.appSession.getMuseumId(),
+        token: this.props.appSession.getAccessToken()
+      });
     }
   }
 
@@ -50,14 +60,14 @@ export class ControlViewContainer extends React.Component {
   }
 
   render() {
-    if (!this.props.controls) {
-      return null;  // We need data to display. If there is no data, there is nothing to display. Maybe spin wheel?
+    if (!this.props.store.data) {
+      return <Loader loaded={false} />;
     }
-    const data = this.props.controls.data;
+    const data = this.props.store.data;
     return (
       <Layout
         title={I18n.t('musit.storageUnits.title')}
-        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
+        breadcrumb={<Breadcrumb node={this.props.store.rootNode} disabled />}
         content={
           <div>
             <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.viewControl.title')}</h4>
@@ -130,7 +140,13 @@ export class ControlViewContainer extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: React.PropTypes.object.isRequired },
+  store$
 };
 
-export default inject(data)(ControlViewContainer);
+const commands = {
+  getControl$,
+  loadRootNode$
+};
+
+export default inject(data, commands)(ControlViewContainer);
