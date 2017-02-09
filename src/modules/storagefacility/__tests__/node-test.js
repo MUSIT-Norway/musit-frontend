@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import React from 'react';
 import NodeLeftMenuComponent from '../TableLeftMenu';
 import NodeDetails from '../NodeDetails';
+import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel';
 
 describe('NodeLeftMenuComponent', () => {
 
@@ -123,7 +124,7 @@ describe ('NodePanel' ,() => {
       }}
       loaded={true}/>
     );
-    wrapper.find('SaveCancel').simulate('click');
+    wrapper.find(SaveCancel).find('submitButton').simulate('click');
     expect(onClickSave.calledOnce).toBe(true);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
