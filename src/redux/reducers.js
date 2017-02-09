@@ -20,14 +20,12 @@
 import { combineReducers } from 'redux';
 import observationReducer from '../modules/observation/observationReducer';
 import controlReducer from '../modules/control/controlReducer';
-import ObjectSearchReducer from '../modules/objectsearch/reducer';
 import sessionReducer from './sessionReducer';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   observation: observationReducer,
-  control: controlReducer,
-  objectSearch: ObjectSearchReducer
+  control: controlReducer
 });
 
 export default rootReducer;
