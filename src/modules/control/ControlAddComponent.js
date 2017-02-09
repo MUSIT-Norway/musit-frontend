@@ -34,7 +34,7 @@ import store$, { loadRootNode$ } from './controlStore';
 
 export class ControlAddContainer extends React.Component {
   static propTypes = {
-    saveControl: React.PropTypes.func.isRequired,
+    addControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
     appSession: React.PropTypes.object,
     envReqData: React.PropTypes.object,

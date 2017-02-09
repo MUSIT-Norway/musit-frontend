@@ -24,8 +24,6 @@ export class App extends Component {
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
-    setMuseumIdInRedux: PropTypes.func.isRequired,
-    setCollectionIdInRedux: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired
   }
 
