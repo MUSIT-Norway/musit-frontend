@@ -5,20 +5,30 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';
 import Actor from '../../models/actor';
 import inject from 'react-rxjs/dist/RxInject';
+import { hashHistory } from 'react-router';
+import { emitError, emitSuccess } from '../../shared/errors';
+import store$, { loadRootNode$ } from './observationStore';
+import Control from '../../models/control';
 
 export class EditObservationPage extends React.Component {
 
   static propTypes = {
     location: PropTypes.object.isRequired,
-    onSaveObservation: PropTypes.func.isRequired,
+    addObservation: PropTypes.func.isRequired,
+    emitError: PropTypes.func.isRequired,
+    emitSuccess: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     rootNode: React.PropTypes.object,
     appSession: PropTypes.object.isRequired
   }
 
   componentWillMount() {
-    if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
+    if (!this.props.store.rootNode) {
+      this.props.loadRootNode({
+        nodeId: this.props.params.id,
+        museumId: this.props.appSession.getMuseumId(),
+        token: this.props.appSession.getAccessToken()
+      });
     }
   }
 
@@ -60,17 +70,27 @@ export class EditObservationPage extends React.Component {
     return (
       <Layout
         title={'Magasin'}
-        breadcrumb={<Breadcrumb node={this.props.rootNode} disabled />}
+        breadcrumb={<Breadcrumb node={this.props.store.rootNode} disabled />}
         content={
           <div>
             <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.edit')}</h4>
             <ObservationPage
               id={this.props.params.id}
-              museumId={this.props.appSession.getMuseumId()}
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}
               doneBy={this.getDoneByFromLocationState()}
-              onSaveObservation={this.props.onSaveObservation(this.props.location.state, this.props.appSession.getMuseumId())}
+              onSaveObservation={(nodeId, observations) => {
+                const museumId = this.props.appSession.getMuseumId();
+                const token = this.props.appSession.getAccessToken();
+                const controlData = this.props.location.state;
+                this.props.addObservation({ nodeId, museumId, controlData, observations, token, callback: {
+                  onComplete: () => {
+                    hashHistory.goBack();
+                    this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
+                  },
+                  onFailure: (e) => this.props.emitError({ ...e, type: 'network' })
+                }});
+              }}
               mode="EDIT"
             />
           </div>
@@ -81,7 +101,18 @@ export class EditObservationPage extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: React.PropTypes.object.isRequired },
+  store$
 };
 
-export default inject(data)(EditObservationPage);
+const commands = {
+  loadRootNode$
+};
+
+const props = {
+  emitError,
+  emitSuccess,
+  addObservation: (cmd) => Control.addControl()(cmd).toPromise()
+};
+
+export default inject(data, commands, props)(EditObservationPage);

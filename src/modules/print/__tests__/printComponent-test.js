@@ -1,9 +1,9 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
+import sinon from 'sinon';
 import { ChooseTemplate } from '../PrintTemplateComponent';
 import { AppSession } from '../../app/appSession';
-import sinon from 'sinon';
 
 describe('PrintTemplateComponent', () => {
   it('should display correctly', () => {

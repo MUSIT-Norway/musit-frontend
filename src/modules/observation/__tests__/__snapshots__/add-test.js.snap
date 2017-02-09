@@ -1,0 +1,164 @@
+exports[`Render observation page in add mode should set default date and have correct date format 1`] = `
+<form
+  onKeyDown={[Function onKeyDown]}
+  onSubmit={[Function bound handleSubmit]}>
+  <Grid
+    bsClass="container"
+    componentClass="div"
+    fluid={false}>
+    <Row
+      bsClass="row"
+      componentClass="div">
+      <h3 />
+      <Row
+        bsClass="row"
+        componentClass="div">
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={5}
+          xs={12}>
+          <ControlLabel
+            bsClass="control-label"
+            srOnly={false}>
+            Utført dato
+          </ControlLabel>
+          <MusitDatePicker
+            dateFormat="DD.MM.YYYY"
+            disabled={false}
+            onChange={[Function onChange]}
+            onClear={[Function onClear]}
+            value="2017-02-08T11:14:25.889Z" />
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          sm={5}
+          xs={12}>
+          <ControlLabel
+            bsClass="control-label"
+            srOnly={false}>
+            Utført av
+          </ControlLabel>
+          <Component
+            id="doneByField"
+            onChange={[Function onChange]}
+            placeHolder="Find actor"
+            value="Jarl" />
+        </Col>
+      </Row>
+      <h3 />
+      <Row
+        bsClass="row"
+        componentClass="div">
+        <Col
+          bsClass="col"
+          componentClass="div"
+          xs={2}>
+          <FormGroup
+            bsClass="form-group"
+            controlId="formControlsSelect">
+            <FormControl
+              bsClass="form-control"
+              componentClass="select"
+              onChange={[Function bound onChangeTypeSelect]}
+              placeholder="select"
+              value="">
+              <option
+                value="">
+                Velg type
+              </option>
+              <option
+                value="gas">
+                Gass
+              </option>
+              <option
+                value="lightCondition">
+                Lysforhold
+              </option>
+              <option
+                value="cleaning">
+                Renhold
+              </option>
+              <option
+                value="pest">
+                Skadedyr
+              </option>
+              <option
+                value="mold">
+                Mugg
+              </option>
+              <option
+                value="skallsikring">
+                Skallsikring
+              </option>
+              <option
+                value="tyverisikring">
+                Tyverisikring
+              </option>
+              <option
+                value="brannsikring">
+                Brannsikring
+              </option>
+              <option
+                value="vannskaderisiko">
+                Vannskaderisiko
+              </option>
+              <option
+                value="relativeHumidity">
+                Relativ luftfuktighet
+              </option>
+              <option
+                value="hypoxicAir">
+                Inertluft
+              </option>
+              <option
+                value="temperature">
+                Temperatur
+              </option>
+              <option
+                value="alcohol">
+                Sprit
+              </option>
+            </FormControl>
+          </FormGroup>
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          xs={4}>
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="default"
+            disabled={false}
+            onClick={[Function onClick]}>
+            <FontAwesome
+              name="plus-circle" />
+             
+            Legg til ny
+          </Button>
+        </Col>
+      </Row>
+    </Row>
+    <br />
+    <Row
+      bsClass="row"
+      className="row-centered"
+      componentClass="div"
+      style={
+        Object {
+          "textAlign": "center"
+        }
+      }>
+      <br />
+      <SaveCancel
+        cancelDisabled={false}
+        onClickCancel={[Function onClickCancel]}
+        onClickSave={[Function bound handleSubmit]}
+        saveDisabled={true} />
+    </Row>
+  </Grid>
+</form>
+`;

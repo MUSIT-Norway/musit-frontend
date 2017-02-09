@@ -7,7 +7,7 @@ import {
     parseLightCondition,
     parseGas,
     parseMold
-} from '../../observation/mapper/to_backend';
+} from '../../../models/mapper/observation/to_backend';
 import { Option } from './../../../shared/util';
 import Actor from '../../../models/actor';
 
