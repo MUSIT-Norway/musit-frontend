@@ -25,7 +25,7 @@ export class ViewObservationPage extends React.Component {
       token: this.props.appSession.getAccessToken()
     });
     this.props.loadRootNode({
-      nodeId: this.props.params.id,
+      id: this.props.params.id,
       museumId: this.props.appSession.getMuseumId(),
       token: this.props.appSession.getAccessToken()
     });

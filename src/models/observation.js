@@ -33,7 +33,7 @@ Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({ 
   return ajaxGet(url, token)
     .flatMap(observation => {
       const actorIds = uniq([observation.response.doneBy, observation.response.registeredBy]).filter(p => p);
-      return MusitActor.getActorDetails(ajaxPost)(actorIds, token)
+      return MusitActor.getActors(ajaxPost)(actorIds, token)
         .map(actorDetails => new Observation(mapToFrontEnd({
           ...observation.response,
           ...MusitActor.getActorNames(actorDetails, observation.response.doneBy, observation.response.registeredBy)

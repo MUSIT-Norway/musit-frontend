@@ -41,7 +41,7 @@ describe('PrintTemplateComponent', () => {
         ]}
     />);
     expect(clearAll.calledOnce).toBe(true);
-    expect(loadTemplates.calledOnce);
+    expect(loadTemplates.calledOnce).toBe(true);
     expect(loadTemplates.getCall(0).args[0].token).toBe('1234');
     expect(clearRendered.calledOnce).toBe(false);
     wrapper.find('select').simulate('change', { target: { value : 1}});

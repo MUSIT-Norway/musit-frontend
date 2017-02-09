@@ -4,9 +4,7 @@ import Observation from '../../models/observation';
 import MusitNode from '../../models/node';
 import { simpleGet } from '../../shared/RxAjax';
 
-export const loadRootNode$ = createAction('loadRootNode$').switchMap((cmd) =>
-  MusitNode.getNode(simpleGet)(cmd.nodeId, cmd.museumId, cmd.token, cmd)
-);
+export const loadRootNode$ = createAction('loadRootNode$').switchMap((cmd) => MusitNode.getNode(simpleGet)(cmd));
 export const setLoading$ = createAction('setLoading$');
 export const getObservation$ = createAction('getObservation$').switchMap(Observation.getObservation());
 

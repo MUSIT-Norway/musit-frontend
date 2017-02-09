@@ -163,14 +163,14 @@ export class PickListContainer extends React.Component {
     }
 
     if (!error) {
-      moveFn(
-        toMove,
-        to.id,
-        this.props.appSession.getActor().getActorId(),
-        this.props.appSession.getMuseumId(),
-        this.props.appSession.getAccessToken(),
+      moveFn()({
+        id: toMove,
+        destination: to.id,
+        doneBy: this.props.appSession.getActor().getActorId(),
+        museumId: this.props.appSession.getMuseumId(),
+        token: this.props.appSession.getAccessToken(),
         callback
-      ).toPromise();
+      }).toPromise();
     }
   }
 

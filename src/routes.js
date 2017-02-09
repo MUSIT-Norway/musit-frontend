@@ -24,8 +24,8 @@ import AboutView from './modules/about/AboutPage';
 import PickListView from './modules/picklist/PickListComponent';
 import StorageUnitsTable from './modules/storagefacility/TableComponent';
 import KDReportComponent from './modules/reports/KDReportComponent';
-import AddStorageUnitPanel from './modules/storagefacility/AddNodeContainer';
-import EditStorageUnitPanel from './modules/storagefacility/EditNodeContainer';
+import AddStorageUnitPanel from './modules/storagefacility/AddNodeComponent';
+import EditStorageUnitPanel from './modules/storagefacility/EditNodeComponent';
 import AddObservationPage from './modules/observation/AddObservationPage';
 import EditObservationPage from './modules/observation/EditObservationPage';
 import ViewObservationPage from './modules/observation/ViewObservationPage';
@@ -33,7 +33,7 @@ import Reports from './modules/reports/ReportsOverview';
 import ControlViewContainer from './modules/control/ControlViewContainer';
 import ControlAddContainer from './modules/control/ControlAddContainer';
 import EventsContainer from './modules/events/EventsComponent';
-import ObjectSearchContainer from './modules/objectsearch/ObjectSearchContainer';
+import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import App from './modules/app/AppComponent';
 import * as path from './routes.path';
 
@@ -65,7 +65,7 @@ export default () => {
         <IndexRoute component={Reports} />
         <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportComponent} />
       </Route>
-      <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchContainer} />
+      <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchComponent} />
       <Route path="/about" component={AboutView} />
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />

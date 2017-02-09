@@ -1,7 +1,5 @@
 import { simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
-import MuseumId from './museumId';
-import CollectionId from './collectionId';
 import entries from 'object.entries';
 import { addObject$ as pickObject$ } from '../modules/app/pickList';
 import { getPath } from '../shared/util';
@@ -22,63 +20,61 @@ class MusitObject {
     return this.id === this.mainObjectId;
   }
 
-  moveObject(destination, doneBy, museumId, collectionId, token, callback) {
+  moveObject({destination, doneBy, museumId, collectionId, token, callback}) {
     if (this.isMainObject()) {
       MusitObject.getMainObject(this.id, museumId, collectionId, token, { onFailure: callback.onFailure })
         .toPromise()
         .then(objects =>
           objects.forEach(obj =>
-            MusitObject.moveObject(obj.id, destination, doneBy, museumId, token, obj.isMainObject() ? callback : null)
+            MusitObject.moveObject()({ id: obj.id, destination, doneBy, museumId, token, callback: obj.isMainObject() ? callback : null })
               .toPromise()
           )
         );
     } else {
-      MusitObject.moveObject(this.id, destination, doneBy, museumId, token, callback)
+      MusitObject.moveObject()({ id: this.id, destination, doneBy, museumId, token, callback })
         .toPromise();
     }
   }
 }
 
-MusitObject.getObjectLocation = (id: number, museumId: MuseumId, token: string, callback) => {
-  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`, token, callback)
+MusitObject.getObjectLocation = (ajaxGet = simpleGet) => ({ id, museumId, token, callback }) => {
+  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`, token, callback)
     .map(({ response }) => response);
 };
 
-MusitObject.getMainObject = (id: number, museumId: MuseumId, collectionId: CollectionId, token: string, callback) => {
-  return simpleGet(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/objects/${id}/children?${collectionId.getQuery()}`, token, callback)
+MusitObject.getMainObject = (ajaxGet = simpleGet) => ({ id, museumId, collectionId, token, callback }) => {
+  return ajaxGet(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/objects/${id}/children?${collectionId.getQuery()}`, token, callback)
     .map(({ response }) => response)
     .map(objects => objects.map(obj => new MusitObject(obj)));
 };
 
-MusitObject.getObjects = (id: number, page: number, museumId: MuseumId, collectionId: CollectionId, token: string, callback) => {
+MusitObject.getObjects = (ajaxGet = simpleGet) => ({id, page, museumId, collectionId, token, callback}) => {
   const baseUrl = Config.magasin.urls.thingaggregate.baseUrl(museumId);
   const url = `${baseUrl}/node/${id}/objects?${collectionId.getQuery()}&page=${page || 1}&limit=${Config.magasin.limit}`;
-  return simpleGet(url, token, callback)
-    .map(({ response }) => response)
-    .map(data => {
-      if (!data) {
-        return {...data, matches: [], error: 'no response body'};
+  return ajaxGet(url, token, callback)
+    .map(({ response }) => {
+      if (!response) {
+        return {...response, matches: [], error: 'no response body'};
       }
       return {
-        ...data,
-        matches: data.matches ? data.matches.map(obj => new MusitObject(obj)) : []
+        ...response,
+        matches: response.matches ? response.matches.map(obj => new MusitObject(obj)) : []
       };
     });
 };
 
-MusitObject.moveObject = (objectId, destination, doneBy, museumId, token, callback) => {
-  const data = { doneBy, destination, items: [].concat(objectId) };
-  return simplePut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveObject`, data, token, callback);
+MusitObject.moveObject = (ajaxPut = simplePut) => ({ id, destination, doneBy, museumId, token, callback }) => {
+  const data = { doneBy, destination, items: [].concat(id) };
+  return ajaxPut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveObject`, data, token, callback);
 };
 
-MusitObject.getLocationHistory = (id, museumId, token, callback) => {
-  return simpleGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`, token, callback)
-    .map(({ response }) => response)
-    .map(rowsJson => {
-      if (!Array.isArray(rowsJson)) {
+MusitObject.getLocationHistory = (ajaxGet = simpleGet) => ({ id, museumId, token, callback }) => {
+  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`, token, callback)
+    .map(({ response }) => {
+      if (!Array.isArray(response)) {
         return [];
       }
-      return rowsJson.map(data => {
+      return response.map(data => {
         return {
           ...data,
           from: {
@@ -94,16 +90,31 @@ MusitObject.getLocationHistory = (id, museumId, token, callback) => {
     });
 };
 
-MusitObject.pickObject = (object, breadcrumb, museumId, collectionId, token, callback) => {
-  if (object.isMainObject()) {
-    MusitObject.getMainObject(object.id, museumId, collectionId, token, callback)
+MusitObject.pickObject = (ajaxGet = simpleGet) => (props) => {
+  if (props.object.isMainObject()) {
+    MusitObject.getMainObject(ajaxGet)({ ...props, id: props.object.id })
       .toPromise()
       .then(objects =>
-        objects.forEach(obj => pickObject$.next({value: obj, path: breadcrumb}))
+        objects.forEach(obj => pickObject$.next({value: obj, path: props.breadcrumb}))
       );
   } else {
-    pickObject$.next({value: object, path: breadcrumb});
+    pickObject$.next({value: props.object, path: props.breadcrumb});
   }
+};
+
+MusitObject.searchForObjects = (ajaxGet) => (params, page, museumId, collectionId, token, callback) => {
+  const url = Config.magasin.urls.thingaggregate.searchObjectUrl(params, page, collectionId, museumId);
+  return ajaxGet(url, token, callback)
+    .map(({ response }) => response)
+    .map(data => {
+      if (!data) {
+        return {...data, matches: [], totalMatches: 0, error: 'no response body'};
+      }
+      return {
+        ...data,
+        matches: data.matches ? data.matches.map(obj => new MusitObject(obj)) : []
+      };
+    });
 };
 
 export default MusitObject;
