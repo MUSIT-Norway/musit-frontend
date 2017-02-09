@@ -1,6 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, initialState, getControl, addControl } from '../controlStore';
+import { reducer$, initialState, getControl } from '../controlStore';
 import { createStore } from 'react-rxjs/dist/RxStore';
 import MusemId from '../../../models/museumId';
 
