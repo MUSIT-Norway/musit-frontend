@@ -16,8 +16,8 @@ class MusitNode {
     return this.type === 'Root' || this.type === 'RootLoan';
   }
 
-  moveNode(destination, doneBy, museumId, token, callback) {
-    return MusitNode.moveNode(this.id, destination, doneBy, museumId, token, callback)
+  moveNode({ destination, doneBy, museumId, token, callback }) {
+    return MusitNode.moveNode()({ id: this.id, destination, doneBy, museumId, token, callback})
       .toPromise();
   }
 }

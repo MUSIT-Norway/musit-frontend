@@ -212,7 +212,7 @@ export class StorageUnitsContainer extends React.Component {
       nodeToMove.moveNode({ destination: toNode.id, doneBy: userId, museumId, token, callback: {
         onComplete: () => {
           onSuccess();
-          loadNodes();
+          loadNodes(nodeId);
           this.props.emitSuccess({
             type: 'movedSuccess',
             message: I18n.t('musit.moveModal.messages.nodeMoved', {name: nodeToMove.name, destination: toName})
