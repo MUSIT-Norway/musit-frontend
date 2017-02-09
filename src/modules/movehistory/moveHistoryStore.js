@@ -12,7 +12,7 @@ export const loadMoveHistory$ = new Subject().switchMap(cmd =>
   MusitObject.getLocationHistory(cmd.objectId, cmd.museumId, cmd.token, cmd)
     .flatMap(rows => {
       const actorIds = uniq(rows.map(r => r.doneBy)).filter(r => r);
-      return MusitActor.getActorDetails(simplePost)(actorIds, cmd.token)
+      return MusitActor.getActors(simplePost)(actorIds, cmd.token)
         .map(actors => {
           if (!Array.isArray(actors)) {
             return rows;

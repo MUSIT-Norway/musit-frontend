@@ -77,12 +77,12 @@ export class MusitModal extends Component {
     });
     this.props.clear();
     this.props.loadNode({
-      nodeId: id,
+      id: id,
       museumId: this.props.appSession.getMuseumId(),
       token: this.props.appSession.getAccessToken()
     });
     this.props.loadChildren({
-      nodeId: id,
+      id: id,
       museumId: this.props.appSession.getMuseumId(),
       token: this.props.appSession.getAccessToken(),
       page: {
@@ -180,4 +180,4 @@ const commands = {
   loadNode$
 };
 
-export default inject(data, commands)(MusitModal, true);
+export default inject(data, commands)(MusitModal);

@@ -78,13 +78,13 @@ export class ObjectSearchComponent extends React.Component {
                           onClick={(e) => {
                             e.preventDefault();
                             this.props.store.data.matches.forEach(obj =>
-                              this.props.pickObject(
-                                obj,
-                                obj.breadcrumb,
-                                this.props.appSession.getMuseumId(),
-                                this.props.appSession.getCollectionId(),
-                                this.props.appSession.getAccessToken()
-                              )
+                              this.props.pickObject({
+                                object: obj,
+                                breadcrumb: obj.breadcrumb,
+                                museumId: this.props.appSession.getMuseumId(),
+                                collectionId: this.props.appSession.getCollectionId(),
+                                token: this.props.appSession.getAccessToken()
+                              })
                             );
                           }}
                           title={I18n.t('musit.objectsearch.addAllToPickList')}
@@ -118,13 +118,13 @@ export class ObjectSearchComponent extends React.Component {
                               href=""
                               onClick={(e) => {
                                 e.preventDefault();
-                                this.props.pickObject(
-                                  data,
-                                  data.breadcrumb,
-                                  this.props.appSession.getMuseumId(),
-                                  this.props.appSession.getCollectionId(),
-                                  this.props.appSession.getAccessToken()
-                                );
+                                this.props.pickObject({
+                                  object: data,
+                                  breadcrumb: data.breadcrumb,
+                                  museumId: this.props.appSession.getMuseumId(),
+                                  collectionId: this.props.appSession.getCollectionId(),
+                                  token: this.props.appSession.getAccessToken()
+                                });
                               }}
                               title={I18n.t('musit.objectsearch.addToPickList')}
                             >
@@ -201,7 +201,7 @@ const commands = {
 };
 
 const props = {
-  pickObject: MusitObject.pickObject
+  pickObject: (val) => MusitObject.pickObject()(val)
 };
 
 export default inject(data, commands, props)(ObjectSearchComponent);
