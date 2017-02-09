@@ -2,9 +2,8 @@ import { Observable } from 'rxjs';
 import { createAction, createStore } from 'react-rxjs/dist/RxStore';
 import Observation from '../../models/observation';
 import MusitNode from '../../models/node';
-import { simpleGet } from '../../shared/RxAjax';
 
-export const loadRootNode$ = createAction('loadRootNode$').switchMap((cmd) => MusitNode.getNode(simpleGet)(cmd));
+export const loadRootNode$ = createAction('loadRootNode$').switchMap(MusitNode.getNode());
 export const setLoading$ = createAction('setLoading$');
 export const getObservation$ = createAction('getObservation$').switchMap(Observation.getObservation());
 
