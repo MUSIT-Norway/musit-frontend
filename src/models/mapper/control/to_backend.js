@@ -1,12 +1,12 @@
 import find from 'lodash/find';
 import {
-    parseAlcohol,
-    parseCleaning,
-    parseRangeObservation,
-    parsePest,
-    parseLightCondition,
-    parseGas,
-    parseMold
+  parseAlcohol,
+  parseCleaning,
+  parseRangeObservation,
+  parsePest,
+  parseLightCondition,
+  parseGas,
+  parseMold
 } from '../../../models/mapper/observation/to_backend';
 import { Option } from './../../../shared/util';
 import Actor from '../../../models/actor';

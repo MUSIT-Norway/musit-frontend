@@ -4,12 +4,10 @@ import {get as ajaxGet} from '../../shared/RxAjax';
 import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors';
-import { dispatchAction } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
 import Actor from '../../models/actor';
-import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
 import CodeReceiver from './codeReceiver';
 
 export class AppSession {
@@ -82,9 +80,7 @@ const loadAppSession = (accessToken = getAccessToken()) => {
           }));
         }
         const museumId = new MuseumId(groups[0].museumId);
-        dispatchAction({ type: SET_MUSEUM, museumId });
         const collectionId = new CollectionId(groups[0].collections[0].uuid);
-        dispatchAction({ type: SET_COLLECTION, collectionId });
         return {
           accessToken,
           actor: new Actor(currentUserRes.response),

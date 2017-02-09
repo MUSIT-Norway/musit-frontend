@@ -29,6 +29,8 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
+import Control from '../../models/control';
+import store$, { loadRootNode$ } from './controlStore';
 
 export class ControlAddContainer extends React.Component {
   static propTypes = {
@@ -61,18 +63,21 @@ export class ControlAddContainer extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.rootNode.path) {
-      this.props.loadStorageObj(this.props.params.id, this.props.appSession.getMuseumId());
+    if (!this.props.store.rootNode) {
+      this.props.loadRootNode({
+        id: this.props.params.id,
+        museumId: this.props.appSession.getMuseumId(),
+        token: this.props.appSession.getAccessToken()
+      });
     }
   }
 
   onControlClick(key, bool) {
-    const me = this;
     return () => {
-      if (me.state[key] != null && me.state[key] === bool) {
-        me.setState({ ...me.state, [key]: null });
+      if (this.state[key] != null && this.state[key] === bool) {
+        this.setState({ ...this.state, [key]: null });
       } else {
-        me.setState({ ...me.state, [key]: bool });
+        this.setState({ ...this.state, [key]: bool });
       }
     };
   }
@@ -109,12 +114,18 @@ export class ControlAddContainer extends React.Component {
         state: controlState
       });
     } else {
-      this.props.saveControl(this.props.params.id, this.props.appSession.getMuseumId(), controlState, {
-        onSuccess: () => {
-          hashHistory.goBack();
-          emitSuccess({ type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess')});
-        },
-        onFailure: (e) => emitError({...e, type: 'network'})
+      this.props.addControl({ 
+        nodeId: this.props.params.id,
+        museumId: this.props.appSession.getMuseumId(),
+        controlData: controlState,
+        token: this.props.appSession.getAccessToken(),
+        callback: {
+          onComplete: () => {
+            hashHistory.goBack();
+            emitSuccess({ type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess')});
+          },
+          onFailure: (e) => emitError({...e, type: 'network'})
+        }
       });
     }
   }
@@ -151,7 +162,7 @@ export class ControlAddContainer extends React.Component {
   }
 
   render() {
-    const breadcrumb = <Breadcrumb node={this.props.rootNode} disabled />;
+    const breadcrumb = <Breadcrumb node={this.props.store.rootNode} disabled />;
     const translate = (k) => I18n.t(k);
 
     const fields = [
@@ -311,7 +322,16 @@ export class ControlAddContainer extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: React.PropTypes.object.isRequired },
+  store$
 };
 
-export default inject(data)(ControlAddContainer);
+const commands = {
+  loadRootNode$
+};
+
+const props = {
+  addControl: (val) => Control.addControl()(val).toPromise()
+};
+
+export default inject(data, commands, props)(ControlAddContainer);

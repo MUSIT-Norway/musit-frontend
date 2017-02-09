@@ -5,7 +5,6 @@ import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import { connect } from 'react-redux';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
@@ -13,7 +12,6 @@ import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors';
 import notifiable from './Notifyable';
 import Loader from 'react-loader';
-import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
 import { actions } from '../app/appSession';
 const { loadAppSession$, setMuseumId$, setCollectionId$ } = actions;
 import { AppSession } from './appSession';
@@ -65,15 +63,12 @@ export class App extends Component {
 
   handleMuseumId(mid, cid) {
     this.props.setMuseumId(mid);
-    this.props.setMuseumIdInRedux(mid);
     this.props.setCollectionId(cid);
-    this.props.setCollectionIdInRedux(cid);
     hashHistory.push('/magasin');
   }
 
   handleCollectionId(cid) {
     this.props.setCollectionId(cid);
-    this.props.setCollectionIdInRedux(cid);
     const nodeId = this.props.params.id;
     if (nodeId) {
       hashHistory.push('/magasin/' + nodeId);
@@ -180,9 +175,4 @@ const commands = {
   setCollectionId$
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  setMuseumIdInRedux: (museumId) => dispatch({ type: SET_MUSEUM, museumId }),
-  setCollectionIdInRedux: (collectionId) => dispatch({ type: SET_COLLECTION, collectionId })
-});
-
-export default connect(null, mapDispatchToProps)(notifiable(inject(data, commands)(App)));
+export default notifiable(inject(data, commands)(App));
