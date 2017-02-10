@@ -79,7 +79,7 @@ export class AddressSuggest extends React.Component {
 
   render() {
     return (
-      <Autosuggest
+       <Autosuggest
         suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
         onSuggestionsUpdateRequested={this.requestSuggestionUpdate}

@@ -1,10 +1,9 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 import React from 'react';
 import NodeLeftMenuComponent from '../TableLeftMenu';
 import NodeDetails from '../NodeDetails';
-import SaveCancel from '../../../components/formfields/saveCancel/SaveCancel';
 
 describe('NodeLeftMenuComponent', () => {
 
@@ -84,8 +83,8 @@ describe ('NodePanel' ,() => {
   it('Testing buttons', () => {
     const onLagreClick = sinon.spy();
     const updateState = sinon.spy();
-    const onClickSave = sinon.spy();
-    const wrapper = shallow(<NodeDetails
+
+    const wrapper = mount(<NodeDetails
       onLagreClick={onLagreClick}
       updateState={updateState}
       unit={{
@@ -121,11 +120,11 @@ describe ('NodePanel' ,() => {
           temperature: true,
           preventiveConservation: true
         }
-      }}
-      loaded={true}/>
-    );
-    wrapper.find(SaveCancel).find('submitButton').simulate('click');
-    expect(onClickSave.calledOnce).toBe(true);
+      }} loaded={true}/>);
+
+    const sc = wrapper.find('Button');
+    sc.forEach(w => {console.log(w)});
+    expect(onLagreClick.calledOnce).toBe(true);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
