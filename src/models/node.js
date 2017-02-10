@@ -2,7 +2,6 @@ import { simpleGet, simpleDel, simplePut, simplePost } from '../shared/RxAjax';
 import Config from '../config';
 import entries from 'object.entries';
 import { getPath } from '../shared/util';
-import { addNode$ as pickNode$ } from '../modules/app/pickList';
 import { mapToBackend, mapToFrontend } from './mapper/node';
 import MusitActor from './actor';
 
@@ -97,7 +96,7 @@ MusitNode.moveNode = (ajaxPut = simplePut) => ({id, destination, doneBy, museumI
   return ajaxPut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveNode`, data, token, callback);
 };
 
-MusitNode.pickNode = ({node, breadcrumb}) => {
+MusitNode.pickNode = (pickNode$) => ({node, breadcrumb}) => {
   pickNode$.next({ value: node, path: breadcrumb });
 };
 

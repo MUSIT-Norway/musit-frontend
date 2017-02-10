@@ -11,6 +11,7 @@ import {Observable} from 'rxjs';
 import MusitObject from '../../models/object';
 import inject from 'react-rxjs/dist/RxInject';
 import objectSearchStore$, {clearSearch$, searchForObjects$, onChangeField$} from './objectSearchStore';
+import { addObject$ } from '../app/pickList';
 
 export class ObjectSearchComponent extends React.Component {
   constructor(props) {
@@ -201,7 +202,7 @@ const commands = {
 };
 
 const props = {
-  pickObject: (val) => MusitObject.pickObject()(val)
+  pickObject: MusitObject.pickObject(addObject$)
 };
 
 export default inject(data, commands, props)(ObjectSearchComponent);

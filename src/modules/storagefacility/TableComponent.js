@@ -27,6 +27,8 @@ import { Observable } from 'rxjs';
 
 import inject from 'react-rxjs/dist/RxInject';
 
+import { addNode$, addObject$ } from '../app/pickList';
+
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -445,7 +447,10 @@ export class StorageUnitsContainer extends React.Component {
             filter(matches, ['name'], searchPattern) : []}
           goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
-          pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
+          pickNode={(node) => {
+            console.log('picking', node);
+            this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb});
+          }}
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
         {showPaging &&
@@ -495,8 +500,8 @@ const commands = {
 };
 
 const props = {
-  pickNode: MusitNode.pickNode,
-  pickObject: (val) => MusitObject.pickObject()(val),
+  pickNode: MusitNode.pickNode(addNode$),
+  pickObject: MusitObject.pickObject(addObject$),
   deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
   emitError,
   emitSuccess

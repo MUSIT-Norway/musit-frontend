@@ -68,7 +68,8 @@ describe('pickList', () => {
       addNode$,
       refreshNode$,
       refreshObject$,
-      refreshMainObject$
+      refreshMainObject$,
+      refreshObjects$: new Subject()
     });
 
     // assertion
