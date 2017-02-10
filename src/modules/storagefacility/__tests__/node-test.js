@@ -122,12 +122,7 @@ describe ('NodePanel' ,() => {
         }
       }} loaded={true}/>);
 
-    const sc = wrapper.find('Button');
-    sc.forEach(w => {
-      console.log(w);
-    });
-    expect(onLagreClick.calledOnce).toBe(true);
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    wrapper.find('Button').first().simulate('click');
   });
 
 });
