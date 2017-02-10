@@ -34,10 +34,12 @@ Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({ 
     .flatMap(observation => {
       const actorIds = uniq([observation.response.doneBy, observation.response.registeredBy]).filter(p => p);
       return MusitActor.getActors(ajaxPost)(actorIds, token)
-        .map(actorDetails => new Observation(mapToFrontEnd({
-          ...observation.response,
-          ...MusitActor.getActorNames(actorDetails, observation.response.doneBy, observation.response.registeredBy)
-        })));
+        .map(actorDetails => {
+          return new Observation(mapToFrontEnd({
+            ...observation.response,
+            ...MusitActor.getActorNames(actorDetails, observation.response.doneBy, observation.response.registeredBy)
+          }));
+        });
     });
 };
 
