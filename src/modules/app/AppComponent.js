@@ -12,8 +12,7 @@ import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors';
 import notifiable from './Notifyable';
 import Loader from 'react-loader';
-import { actions } from '../app/appSession';
-const { loadAppSession$, setMuseumId$, setCollectionId$ } = actions;
+import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 
