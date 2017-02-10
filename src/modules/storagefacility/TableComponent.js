@@ -447,10 +447,7 @@ export class StorageUnitsContainer extends React.Component {
             filter(matches, ['name'], searchPattern) : []}
           goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
-          pickNode={(node) => {
-            console.log('picking', node);
-            this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb});
-          }}
+          pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
         {showPaging &&

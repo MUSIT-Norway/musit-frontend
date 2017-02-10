@@ -102,7 +102,6 @@ MusitObject.getLocationHistory = (ajaxGet = simpleGet) => ({ id, museumId, token
 
 
 MusitObject.pickObject = (pickObject$, ajaxGet = simpleGet) => (props) => {
-  console.log('pickObject');
   if (props.object.isMainObject()) {
     MusitObject.getMainObject(ajaxGet)({ ...props, id: props.object.id })
       .toPromise()
