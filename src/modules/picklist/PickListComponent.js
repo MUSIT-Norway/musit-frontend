@@ -19,7 +19,6 @@ import {
   removeNode$,
   removeObject$,
   refreshNode$,
-  refreshObject$,
   refreshObjects$
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
@@ -34,7 +33,6 @@ export class PickListContainer extends React.Component {
     removeObject: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired,
     refreshNode: PropTypes.func.isRequired,
-    refreshObject: PropTypes.func.isRequired,
     refreshObjects: PropTypes.func.isRequired,
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired
@@ -245,7 +243,6 @@ const data = {
 
 const commands = {
   refreshNode$,
-  refreshObject$,
   refreshObjects$,
   toggleObject$,
   toggleNode$,

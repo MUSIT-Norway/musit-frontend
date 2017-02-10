@@ -11,7 +11,6 @@ export const removeObject$ = createAction('removeObject$');
 export const toggleObject$ = createAction('toggleObject$');
 export const toggleMainObject$ = createAction('toggleMainObject$');
 export const clearObjects$ = createAction('clearObjects$');
-export const refreshObject$ = createAction('refreshObject$').flatMap(MusitObject.getObjectLocation());
 export const refreshObjects$ = createAction('refreshObject$').flatMap(MusitObject.getObjectLocations());
 export const addNode$ = createAction('addNode$');
 export const removeNode$ = createAction('removeNode$');
@@ -109,7 +108,6 @@ export const reducer$ = (actions) => Observable.empty().merge(
   actions.toggleMainObject$.map((item) => (state) => ({...state, objects: toggleMainObject(item, state.objects)})),
   actions.removeObject$.map((item) => (state) => ({...state, objects: removeItem(item, state.objects)})),
   actions.addObject$.map((item) => (state) => ({...state, objects: addItem(item, state.objects)})),
-  actions.refreshObject$.map((item) => (state) => ({...state, objects: refreshItem(item, state.objects)})),
   actions.refreshObjects$.map((itemLocations) => (state) => ({...state, objects: refreshObjects(state, itemLocations)})),
   actions.clearObjects$.map(() => (state) => ({...state, objects: []})),
   actions.toggleNode$.map((item) => (state) => ({...state, nodes: toggleItem(item, state.nodes)})),
@@ -129,7 +127,6 @@ export default createStore('pickList', reducer$({
   removeObject$,
   toggleObject$,
   toggleMainObject$,
-  refreshObject$,
   refreshObjects$,
   clearObjects$
 }), Observable.of({ nodes: [], objects: []}))
