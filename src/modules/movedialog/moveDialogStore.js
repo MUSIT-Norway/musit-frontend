@@ -15,11 +15,10 @@ const initialState = {
   }
 };
 
-export const reducer$ = (actions) =>
-  Observable.empty().merge(
-    actions.clear$.map(() => () => initialState),
-    actions.loadNode$.map((node) => (state) => ({...state, selectedNode: node})),
-    actions.loadChildren$.map((data) => (state) => ({...state, data: { ...data, loading: false }})),
-  );
+export const reducer$ = (actions) => Observable.merge(
+  actions.clear$.map(() => () => initialState),
+  actions.loadNode$.map((node) => (state) => ({...state, selectedNode: node})),
+  actions.loadChildren$.map((data) => (state) => ({...state, data: { ...data, loading: false }})),
+);
 
 export default createStore('moveDialog', reducer$({clear$, loadNode$, loadChildren$}), Observable.of(initialState));
