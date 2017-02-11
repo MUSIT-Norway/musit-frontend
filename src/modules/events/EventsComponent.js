@@ -39,13 +39,16 @@ export class EventsComponent extends React.Component {
 
   componentWillMount() {
     this.props.clearEvents();
-    const props = {
+    this.props.loadEvents({
       nodeId: this.props.params.id,
       museumId: this.props.appSession.getMuseumId(),
       token: this.props.appSession.getAccessToken()
-    };
-    this.props.loadEvents(props);
-    this.props.loadRootNode(props);
+    });
+    this.props.loadRootNode({
+      id: this.props.params.id,
+      museumId: this.props.appSession.getMuseumId(),
+      token: this.props.appSession.getAccessToken()
+    });
   }
 
   makeToolbar() {

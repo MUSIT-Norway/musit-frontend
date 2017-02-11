@@ -30,7 +30,7 @@ import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } fr
 import validateForm from './nodeValidator';
 import { I18n } from 'react-i18nify';
 
-export default class StorageUnitContainer extends Component {
+export default class NodeDetails extends Component {
   static propTypes = {
     unit: PropTypes.object.isRequired,
     params: PropTypes.object,
@@ -54,7 +54,7 @@ export default class StorageUnitContainer extends Component {
     const errors = validateForm(this.props);
     this.props.updateState({ ...this.props.unit, errors });
     if (Object.keys(errors).length === 0) {
-      this.props.onLagreClick(this.props.unit, this.props.appSession.getMuseumId());
+      this.props.onLagreClick(this.props.unit);
     }
   }
 
@@ -66,19 +66,19 @@ export default class StorageUnitContainer extends Component {
 
   updateEnvRequirements(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.environmentRequirement[key] = value;
+    newData.environmentRequirement = {...newData.environmentRequirement, [key]: value};
     this.props.updateState(newData);
   }
 
   updateEnvAssessments(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.environmentAssessment[key] = value;
+    newData.environmentAssessment = {...newData.environmentAssessment, [key]: value};
     this.props.updateState(newData);
   }
 
   updateSecAssessments(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.securityAssessment[key] = value;
+    newData.securityAssessment = {...newData.securityAssessment, [key]: value};
     this.props.updateState(newData);
   }
 

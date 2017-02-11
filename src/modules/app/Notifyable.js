@@ -1,39 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { emitSuccess, emitError } from '../../shared/errors';
-import * as loglevel from 'loglevel';
 import { I18n } from 'react-i18nify';
 
 export default (ComponentToWrap) => {
   const $ = global.jQuery;
 
   return class Notifyable extends Component {
-    static contextTypes = {
-      store: PropTypes.object.isRequired
-    }
-
     static childContextTypes = {
       showModal: PropTypes.func,
-      showConfirm: PropTypes.func,
-      showError: PropTypes.func,
-      showNotification: PropTypes.func,
-      logger: PropTypes.object,
-      store: PropTypes.object.isRequired
-    }
-
-    constructor(props, context) {
-      super(props, context);
-      this.showModal = this.showModal.bind(this);
+      showConfirm: PropTypes.func
     }
 
     getChildContext() {
       return {
         showModal: this.showModal,
-        showConfirm: this.showConfirm,
-        showError: emitError,
-        showNotification: emitSuccess,
-        logger: loglevel,
-        store: this.context.store
+        showConfirm: this.showConfirm
       };
     }
 
@@ -89,18 +70,14 @@ export default (ComponentToWrap) => {
         }
       });
 
-      const appContext = this.context;
-
       class ClosableAndProvided extends React.Component {
         static childContextTypes = {
           ...Notifyable.childContextTypes,
-          store: React.PropTypes.object,
           closeModal: React.PropTypes.func
         }
 
         getChildContext() {
           return {
-            ...appContext,
             closeModal: () => $dialog.dialog('close')
           };
         }

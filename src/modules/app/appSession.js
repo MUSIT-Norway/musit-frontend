@@ -1,15 +1,13 @@
 import {Observable} from 'rxjs';
-import { createStore, createActions } from 'react-rxjs/dist/RxStore';
-import {get as ajaxGet} from '../../shared/RxAjax';
+import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import { simpleGet } from '../../shared/RxAjax';
 import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors';
-import { dispatchAction } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
 import Actor from '../../models/actor';
-import { SET_COLLECTION, SET_MUSEUM } from '../../redux/sessionReducer';
 
 export class AppSession {
 
@@ -42,9 +40,10 @@ export class AppSession {
   }
 }
 
-const initialState = {accessToken: getAccessToken()};
+const initialState = { accessToken: getAccessToken() };
 
-const loadAppSession = (accessToken = getAccessToken()) => {
+const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
+  accessToken = accessToken || getAccessToken();
   if (!accessToken) {
     return Observable.empty();
   }
@@ -81,9 +80,7 @@ const loadAppSession = (accessToken = getAccessToken()) => {
           }));
         }
         const museumId = new MuseumId(groups[0].museumId);
-        dispatchAction({ type: SET_MUSEUM, museumId });
         const collectionId = new CollectionId(groups[0].collections[0].uuid);
-        dispatchAction({ type: SET_COLLECTION, collectionId });
         return {
           accessToken,
           actor: new Actor(currentUserRes.response),
@@ -96,24 +93,31 @@ const loadAppSession = (accessToken = getAccessToken()) => {
   );
 };
 
-export const actions = createActions('setMuseumId$', 'setCollectionId$', 'setAccessToken$', 'loadAppSession$');
+export const loadAppSession$ = createAction('loadAppSession$').switchMap(loadAppSession);
+export const setMuseumId$ = createAction('setMuseumId$');
+export const setCollectionId$ = createAction('setCollectionId$');
+export const setAccessToken$ = createAction('setAccessToken$');
 
-export const reducer$ = ({ setMuseumId$, setCollectionId$, setAccessToken$, loadAppSession$}) => Observable.merge(
-  setAccessToken$
+export const reducer$ = (actions, onError = emitError) => Observable.merge(
+  actions.setAccessToken$
     .map(accessToken => state => ({...state, accessToken})),
-  loadAppSession$
-    .switchMap(loadAppSession)
+  actions.loadAppSession$
     .map(session => state => ({...state, ...session}))
     .catch(error => {
-      emitError(error);
+      onError(error);
       return Observable.of(state => ({...state, accessToken: null}));
     }),
-  setMuseumId$
+  actions.setMuseumId$
     .map(museumId => state => ({...state, museumId})),
-  setCollectionId$
+  actions.setCollectionId$
     .map(collectionId => state => ({...state, collectionId}))
 );
 
-const session$ = createStore('appSession', reducer$(actions), Observable.of(initialState)).map(state => new AppSession(state));
+const session$ = createStore('appSession', reducer$({ 
+  setMuseumId$,
+  setCollectionId$,
+  setAccessToken$,
+  loadAppSession$
+}), Observable.of(initialState)).map(state => new AppSession(state));
 
 export default session$;

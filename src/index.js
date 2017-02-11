@@ -19,9 +19,6 @@
 import 'es6-shim';
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import createStore from './redux/configureStore.js';
-import ApiClient from './redux/ApiClient';
-import { Provider } from 'react-redux';
 import { Router, hashHistory } from 'react-router';
 import getRoutes from './routes';
 import config from './config';
@@ -37,6 +34,10 @@ import pickList$ from './modules/app/pickList';
 import provide from 'react-rxjs/dist/RxProvide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
+import initCodeReceiver from './modules/app/codeReceiver';
+
+initCodeReceiver(appSession$);
+
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
 
 notification$.subscribe((event) => {
@@ -58,14 +59,7 @@ notification$.subscribe((event) => {
 });
 
 function initReactJS() {
-  const client = new ApiClient();
   const dest = document.getElementById('content');
-  const store = createStore(client);
-
-  // ---- Global Store -----
-  // This is crucial for the parts of the app that are not in redux!
-  global.reduxStore = store;
-  // ---- Global Store -----
 
   I18n.loadTranslations(LanguageJson);
   const language = localStorage.getItem('language') || 'no';
@@ -83,7 +77,7 @@ function initReactJS() {
       onUpdate={() => window.scrollTo(0, 0)}
       history={hashHistory}
     >
-      {getRoutes(store)}
+      {getRoutes()}
     </Router>
   );
 
@@ -99,9 +93,7 @@ function initReactJS() {
   })(appRouter);
 
   ReactDOM.render(
-    <Provider store={store} key="provider">
-      <SessionProvided />
-    </Provider>,
+    <SessionProvided />,
     dest
   );
 

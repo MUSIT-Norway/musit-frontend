@@ -27,6 +27,8 @@ import { Observable } from 'rxjs';
 
 import inject from 'react-rxjs/dist/RxInject';
 
+import { addNode$, addObject$ } from '../app/pickList';
+
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -77,18 +79,20 @@ export class StorageUnitsContainer extends React.Component {
     return state && state.currentPage;
   }
 
-  loadRootNode(nodeId, museumId, token) {
+  loadRootNode(id, museumId, token) {
     this.props.clearRootNode();
-    if (!nodeId) {
+    if (!id) {
       return;
     }
     this.props.loadRootNode({
-      nodeId,
+      id,
       museumId,
       token,
-      onComplete: node => {
-        if (node && !new MusitNode(node).isRootNode()) {
-          this.props.loadStats({nodeId, museumId, token});
+      callback: {
+        onComplete: node => {
+          if (node && !new MusitNode(node).isRootNode()) {
+            this.props.loadStats({id, museumId, token});
+          }
         }
       }
     });
@@ -154,21 +158,32 @@ export class StorageUnitsContainer extends React.Component {
     }
   }
 
-  loadNodes(nodeId, museumId, token, page) {
+  loadNodes(
+    id,
+    museumId = this.props.appSession.getMuseumId(),
+    token = this.props.appSession.getAccessToken(),
+    page
+  ) {
     this.props.setLoading();
     this.props.loadNodes({
-      nodeId,
+      id,
       museumId,
       page,
       token
     });
   }
 
-  loadObjects(nodeId, museumId, collectionId, token, page) {
-    if (nodeId) {
+  loadObjects(
+    id,
+    museumId = this.props.appSession.getMuseumId(),
+    collectionId = this.props.appSession.getCollectionId(),
+    token = this.props.appSession.getAccessToken(),
+    page
+  ) {
+    if (id) {
       this.props.setLoading();
       this.props.loadObjects({
-        nodeId,
+        id,
         museumId,
         collectionId,
         page,
@@ -196,10 +211,10 @@ export class StorageUnitsContainer extends React.Component {
   ) => (toNode, toName, onSuccess) => {
     const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
     if (!errorMessage) {
-      nodeToMove.moveNode(toNode.id, userId, museumId, token, {
+      nodeToMove.moveNode({ destination: toNode.id, doneBy: userId, museumId, token, callback: {
         onComplete: () => {
           onSuccess();
-          loadNodes();
+          loadNodes(nodeId);
           this.props.emitSuccess({
             type: 'movedSuccess',
             message: I18n.t('musit.moveModal.messages.nodeMoved', {name: nodeToMove.name, destination: toName})
@@ -212,7 +227,7 @@ export class StorageUnitsContainer extends React.Component {
             message: I18n.t('musit.moveModal.messages.errorNode', {name: nodeToMove.name, destination: toName})
           });
         }
-      });
+      }});
     } else {
       this.props.emitError({
         type: 'errorOnMove',
@@ -241,10 +256,10 @@ export class StorageUnitsContainer extends React.Component {
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess) => {
     const description = objectToMove.getObjectDescription();
-    objectToMove.moveObject(toNode.id, userId, museumId, collectionId, token, {
+    objectToMove.moveObject({ destination: toNode.id, doneBy: userId, museumId, collectionId, token, callback: {
       onComplete: () => {
         onSuccess();
-        loadObjects();
+        loadObjects(nodeId);
         this.props.emitSuccess({
           type: 'movedSuccess',
           message: I18n.t('musit.moveModal.messages.objectMoved', {name: description, destination: toName})
@@ -257,7 +272,7 @@ export class StorageUnitsContainer extends React.Component {
           message: I18n.t('musit.moveModal.messages.errorObject', {name: description.name, destination: toName})
         });
       }
-    });
+    }});
   };
 
   showObjectMoveHistory(
@@ -336,7 +351,7 @@ export class StorageUnitsContainer extends React.Component {
               name: rootNode.name
             });
             confirm(message, () => {
-              deleteNode(rootNode.id, museumId, token, {
+              deleteNode({ id: rootNode.id, museumId, token, callback: {
                 onComplete: () => {
                   if (rootNode.isPartOf) {
                     hashHistory.replace(`/magasin/${rootNode.isPartOf}`);
@@ -364,7 +379,7 @@ export class StorageUnitsContainer extends React.Component {
                     });
                   }
                 }
-              });
+              }});
             });
           }}
         />
@@ -397,13 +412,13 @@ export class StorageUnitsContainer extends React.Component {
               filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             pickObject={(object) =>
-              this.props.pickObject(
+              this.props.pickObject({
                 object,
-                rootNode.breadcrumb,
+                breadcrumb: rootNode.breadcrumb,
                 museumId,
                 collectionId,
                 token
-              )
+              })
             }
             onMove={moveObject}
           />
@@ -432,7 +447,7 @@ export class StorageUnitsContainer extends React.Component {
             filter(matches, ['name'], searchPattern) : []}
           goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
-          pickNode={(node) => this.props.pickNode(node, rootNode.breadcrumb)}
+          pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
           onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
         />
         {showPaging &&
@@ -482,9 +497,9 @@ const commands = {
 };
 
 const props = {
-  pickNode: MusitNode.pickNode,
-  pickObject: MusitObject.pickObject,
-  deleteNode: MusitNode.deleteNode,
+  pickNode: MusitNode.pickNode(addNode$),
+  pickObject: MusitObject.pickObject(addObject$),
+  deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
   emitError,
   emitSuccess
 };

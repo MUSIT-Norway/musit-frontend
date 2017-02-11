@@ -1,6 +1,6 @@
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import PickListTable from './PickListTable';
 import { PageHeader, Grid } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -11,7 +11,7 @@ import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
-import PrintTemplate from '../print/PrintTemplateContainer';
+import PrintTemplate from '../print/PrintTemplateComponent';
 import {
   toggleNode$,
   toggleMainObject$,
@@ -19,27 +19,27 @@ import {
   removeNode$,
   removeObject$,
   refreshNode$,
-  refreshObject$
+  refreshObjects$
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
-    pickList: React.PropTypes.object.isRequired,
-    toggleNode: React.PropTypes.func.isRequired,
-    toggleObject: React.PropTypes.func.isRequired,
-    toggleMainObject: React.PropTypes.func.isRequired,
-    removeNode: React.PropTypes.func.isRequired,
-    removeObject: React.PropTypes.func.isRequired,
-    appSession: React.PropTypes.object.isRequired,
-    refreshNode: React.PropTypes.func.isRequired,
-    refreshObject: React.PropTypes.func.isRequired,
-    emitError: React.PropTypes.func.isRequired,
-    emitSuccess: React.PropTypes.func.isRequired
+    pickList: PropTypes.object.isRequired,
+    toggleNode: PropTypes.func.isRequired,
+    toggleObject: PropTypes.func.isRequired,
+    toggleMainObject: PropTypes.func.isRequired,
+    removeNode: PropTypes.func.isRequired,
+    removeObject: PropTypes.func.isRequired,
+    appSession: PropTypes.object.isRequired,
+    refreshNode: PropTypes.func.isRequired,
+    refreshObjects: PropTypes.func.isRequired,
+    emitError: PropTypes.func.isRequired,
+    emitSuccess: PropTypes.func.isRequired
   }
 
   static contextTypes = {
-    showModal: React.PropTypes.func.isRequired
+    showModal: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -96,13 +96,11 @@ export class PickListContainer extends React.Component {
 
   objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onComplete: () => {
-      items.map(p => p.value).map(item =>
-        this.props.refreshObject({
-          id: item.id,
-          museumId: this.props.appSession.getMuseumId(),
-          token: this.props.appSession.getAccessToken()
-        })
-      );
+      this.props.refreshObjects({
+        objectIds: items.map(item => item.value.id),
+        museumId: this.props.appSession.getMuseumId(),
+        token: this.props.appSession.getAccessToken()
+      });
       onSuccess();
       if (toMoveLength === 1) {
         this.props.emitSuccess({
@@ -163,19 +161,19 @@ export class PickListContainer extends React.Component {
     }
 
     if (!error) {
-      moveFn(
-        toMove,
-        to.id,
-        this.props.appSession.getActor().getActorId(),
-        this.props.appSession.getMuseumId(),
-        this.props.appSession.getAccessToken(),
+      moveFn()({
+        id: toMove,
+        destination: to.id,
+        doneBy: this.props.appSession.getActor().getActorId(),
+        museumId: this.props.appSession.getMuseumId(),
+        token: this.props.appSession.getAccessToken(),
         callback
-      ).toPromise();
+      }).toPromise();
     }
   }
 
   print(nodesToPrint) {
-    this.context.showModal('Choose template', <PrintTemplate marked={nodesToPrint} />);
+    this.context.showModal('Choose template', <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />);
   }
 
   toggleObject({item, on}) {
@@ -239,13 +237,13 @@ export class PickListContainer extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
-  pickList$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: PropTypes.object.isRequired },
+  pickList$: { type: PropTypes.object.isRequired }
 };
 
 const commands = {
   refreshNode$,
-  refreshObject$,
+  refreshObjects$,
   toggleObject$,
   toggleNode$,
   toggleMainObject$,

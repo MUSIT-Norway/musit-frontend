@@ -20,7 +20,16 @@ export default {
         baseUrl: (mid): string =>
           `/api/thingaggregate/${mid.getPath()}`,
         scanOldUrl: (oldBarcode, mid, collectionId) =>
-          `/api/thingaggregate/${mid.getPath()}/scan?oldBarcode=${oldBarcode}&${collectionId.getQuery()}`
+          `/api/thingaggregate/${mid.getPath()}/scan?oldBarcode=${oldBarcode}&${collectionId.getQuery()}`,
+        searchObjectUrl: (params, page, collectionId, museumId) : string => {
+          const baseUrl = `/api/thingaggregate/${museumId.getPath()}/objects/search`;
+          const museumNoQuery = `museumNo=${params.museumNo || ''}`;
+          const subNoQuery = `subNo=${params.subNo || ''}`;
+          const termQuery = `term=${params.term || ''}`;
+          const pageQuery = `page=${page || ''}`;
+          const limitQuery = `limit=${params.perPage || ''}`;
+          return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
+        }
       },
       actor: {
         searchUrl: (term, mid) =>
@@ -37,8 +46,6 @@ export default {
       barcode: {
         templatesUrl:
           '/api/barcode/templates',
-        templatePreviewUrl: (id, format, name, uuid) =>
-          `/api/barcode/templates/${id}/preview?codeFormat=${format}&name=${name}&uuid=${uuid}`,
         templateRenderUrl: (id, format) =>
           `/api/barcode/templates/${id}/render?codeFormat=${format}`
       },
