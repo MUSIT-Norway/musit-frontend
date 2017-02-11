@@ -34,7 +34,7 @@ import pickList$ from './modules/app/pickList';
 import provide from 'react-rxjs/dist/RxProvide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
-import initCodeReceiver from './modules/app/codeReceiver';
+import initCodeReceiver from './modules/app/scanner';
 
 initCodeReceiver(appSession$);
 
