@@ -1,9 +1,12 @@
 /* eslint-disable */
-import { TestScheduler, Subject } from 'rxjs/Rx';
+import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$ } from '../pickList';
 import { createStore } from 'react-rxjs/dist/RxStore';
 const diff = require('deep-diff').diff;
+import MusitObject from '../../../models/object';
+import MuseumId from '../../../models/museumId';
+import isEqual from 'lodash/isEqual';
 
 describe('pickList', () => {
 
@@ -75,13 +78,33 @@ describe('pickList', () => {
     const clearObjects$ = testScheduler.createHotObservable(clearObjects);
     const addObject$ = testScheduler.createHotObservable(addObject, {1: {value: {id: 1}, path: []}, 2: {value: {id: 2}, path: []}});
 
-    const refreshObjects$ = testScheduler.createHotObservable(refreshObjects,
-      {
-        1: [{ id: 1456, objectId: 1, path: ',3,', pathNames: [{nodeId: 3, name: 'test'}]}],
-        2: [{ id: 14578, objectId: 1, path: ',6,', pathNames: [{nodeId: 6, name: 'Code from Jarl'}]},
-            { id: 14579, objectId: 2, path: ',6,', pathNames: [{nodeId: 6, name: 'Code from Jarl'}]}
-        ],
-      });
+    const refreshObjects$ = testScheduler.createHotObservable(refreshObjects, {
+        1: { objectIds: [1], museumId: new MuseumId(99), token: '1224' },
+        2: { objectIds: [1, 2], museumId: new MuseumId(99), token: '1224' }
+    }).switchMap(MusitObject.getObjectLocations(
+      (url, data) =>  {
+        if (isEqual(data, [1])) return Observable.of({
+          response: [
+            {
+              node: { id: 1456, path: ',3,', pathNames: [{nodeId: 3, name: 'test'}] },
+              objectIds: [1]
+            }
+          ]
+        });
+        if (isEqual(data, [1, 2])) return Observable.of({
+          response: [
+            {
+              node: { id: 14578, path: ',6,', pathNames: [{nodeId: 6, name: 'Code from Jarl'}] },
+              objectIds: [1]
+            },
+            {
+              node: { id: 14579, path: ',6,', pathNames: [{nodeId: 6, name: 'Code from Jarl'}] },
+              objectIds: [2]
+            }
+          ]
+        })
+      }
+    ));
 
     const state$ = reducer$({
       clearObjects$,
