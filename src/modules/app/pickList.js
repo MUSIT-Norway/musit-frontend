@@ -1,25 +1,22 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { getPath, customSortingStorageNodeType } from '../../shared/util';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import orderBy from 'lodash/orderBy';
 import toLower from 'lodash/toLower';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
-export const addObject$ = new Subject();
-export const removeObject$ = new Subject();
-export const toggleObject$ = new Subject();
-export const toggleMainObject$ = new Subject();
-export const clearObjects$ = new Subject();
-export const refreshObject$ = new Subject().flatMap((cmd) =>
-  MusitObject.getObjectLocation()(cmd)
-    .map(location => ({...location, objectId: cmd.id}))
-);
-export const addNode$ = new Subject();
-export const removeNode$ = new Subject();
-export const toggleNode$ = new Subject();
-export const clearNodes$ = new Subject();
-export const refreshNode$ = new Subject().flatMap((cmd) => MusitNode.getNode()(cmd));
+export const addObject$ = createAction('addObject$');
+export const removeObject$ = createAction('removeObject$');
+export const toggleObject$ = createAction('toggleObject$');
+export const toggleMainObject$ = createAction('toggleMainObject$');
+export const clearObjects$ = createAction('clearObjects$');
+export const refreshObjects$ = createAction('refreshObject$').flatMap(MusitObject.getObjectLocations());
+export const addNode$ = createAction('addNode$');
+export const removeNode$ = createAction('removeNode$');
+export const toggleNode$ = createAction('toggleNode$');
+export const clearNodes$ = createAction('clearNodes$');
+export const refreshNode$ = createAction('refreshNode$').flatMap(MusitNode.getNode());
 
 const addItem = (item, items = []) => {
   if (items.findIndex(node => item.value.id === node.value.id) > -1) {
@@ -59,27 +56,50 @@ export const getPathString = (pathStr) => {
   return `,${pathStrArr.slice(0, -1).join(',').toString()},`;
 };
 
+const findItem = (itemsToRefresh, n) => {
+  return itemsToRefresh.find(item => {
+    const isMatchingId = n.value.id === item.id;
+    const isMatchingObjectId = n.value.id === item.objectId;
+    return isMatchingId || isMatchingObjectId;
+  });
+};
+
+const getItemPath = (itemToRefresh) => {
+  return getPath({
+    path: itemToRefresh.objectId ? itemToRefresh.path : getPathString(itemToRefresh.path),
+    pathNames: itemToRefresh.pathNames || [
+      {
+        name: itemToRefresh.name,
+        nodeId: itemToRefresh.id // intended
+      }
+    ]
+  });
+};
+
 const refreshItem = (oneOrMany, items = []) => {
   const itemsToRefresh = [].concat(oneOrMany);
   return items.map((n) => {
-    const itemToRefresh = itemsToRefresh.find(item => {
-      const isMatchingId = n.value.id === item.id;
-      const isMatchingObjectId = n.value.id === item.objectId;
-      return isMatchingId || isMatchingObjectId;
-    });
+    const itemToRefresh = findItem(itemsToRefresh, n);
     if (itemToRefresh) {
-      const node = {
-        path: itemToRefresh.objectId ? itemToRefresh.path : getPathString(itemToRefresh.path),
-        pathNames: itemToRefresh.pathNames || [
-          {
-            name: itemToRefresh.name,
-            nodeId: itemToRefresh.id // intended
-          }
-        ]
+      return {
+        ...n,
+        path: getItemPath(itemToRefresh)
       };
-      return { ...n, path: getPath(node) };
     }
     return n;
+  });
+};
+
+const refreshObjects = (state, itemLocations) => {
+  return state.objects.map(obj => {
+    const objFromServer = itemLocations.find(iloc => iloc.objectId === obj.value.id);
+    if (!objFromServer) {
+      return obj;
+    }
+    return {
+      ...obj,
+      path: getItemPath(objFromServer)
+    };
   });
 };
 
@@ -88,7 +108,7 @@ export const reducer$ = (actions) => Observable.empty().merge(
   actions.toggleMainObject$.map((item) => (state) => ({...state, objects: toggleMainObject(item, state.objects)})),
   actions.removeObject$.map((item) => (state) => ({...state, objects: removeItem(item, state.objects)})),
   actions.addObject$.map((item) => (state) => ({...state, objects: addItem(item, state.objects)})),
-  actions.refreshObject$.map((item) => (state) => ({...state, objects: refreshItem(item, state.objects)})),
+  actions.refreshObjects$.map((itemLocations) => (state) => ({...state, objects: refreshObjects(state, itemLocations)})),
   actions.clearObjects$.map(() => (state) => ({...state, objects: []})),
   actions.toggleNode$.map((item) => (state) => ({...state, nodes: toggleItem(item, state.nodes)})),
   actions.removeNode$.map((item) => (state) => ({...state, nodes: removeItem(item, state.nodes)})),
@@ -107,7 +127,7 @@ export default createStore('pickList', reducer$({
   removeObject$,
   toggleObject$,
   toggleMainObject$,
-  refreshObject$,
+  refreshObjects$,
   clearObjects$
 }), Observable.of({ nodes: [], objects: []}))
   .map(state => ({

@@ -1,8 +1,12 @@
 /* eslint-disable */
-import { TestScheduler, Subject } from 'rxjs/Rx';
+import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$ } from '../pickList';
 import { createStore } from 'react-rxjs/dist/RxStore';
+const diff = require('deep-diff').diff;
+import MusitObject from '../../../models/object';
+import MuseumId from '../../../models/museumId';
+import isEqual from 'lodash/isEqual';
 
 describe('pickList', () => {
 
@@ -10,27 +14,30 @@ describe('pickList', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       // console.log(JSON.stringify(actual, null, 2));
       // console.log(JSON.stringify(expected, null, 2));
-      return assert.deepEqual(actual, expected);
+      const difference = diff(actual, expected);
+      if (typeof difference !== 'undefined') {
+        console.log(difference);
+      }
+      return assert.equal(undefined, difference);
     });
 
     // mock streams
-    const toggleNode        = '---------------11--';
-    const refreshNode       = '-----------------1-';
-    const refreshObject     = '------1------------';
-    const clearNodes        = '--------x----------';
-    const removeObject      = '---------1---------';
-    const removeNode        = '------------------1';
-    const addNode           = '----1-------121----';
-    const clearObjects      = '----------x--------';
-    const addObject         = '---1---------------';
-    const expected          = 'a--de-m-fng-hijkjlo';
+    const toggleNode        = '---------------11--------';
+    const refreshNode       = '-----------------1-------';
+    const clearNodes        = '--------x----------------';
+    const removeObject      = '---------1---------------';
+    const removeNode        = '------------------1------';
+    const addNode           = '----1-------121----------';
+    const clearObjects      = '----------x--------------';
+    const addObject         = '---1---------------1--2--';
+    const refreshObjects    = '---------------------1--2';
+    const expected          = 'a--de---fng-hijkjlop-rs-u';
 
     const expectedStateMap = {
       a: {},
       d: { objects: [{ marked: false, value: {id: 1}, path: []}]},
       e: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: [{marked: false, value: {id: 1}, path: []}]},
-      m: { objects: [{ marked: false, value: {id: 1}, path: [{id: 1, name: 'Test', url: '/magasin/1'}, {id: 2, name: 'Tull', url: '/magasin/2'}]}], nodes: [{marked: false, value: {id: 1}, path: []}]},
-      f: { objects: [{ marked: false, value: {id: 1}, path: [{id: 1, name: 'Test', url: '/magasin/1'}, {id: 2, name: 'Tull', url: '/magasin/2'}]}], nodes: []},
+      f: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: []},
       n: { objects: [], nodes: []},
       g: { objects: [], nodes: []},
       h: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
@@ -38,7 +45,24 @@ describe('pickList', () => {
       j: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [] }]},
       k: { objects: [], nodes: [{ marked: true, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [] }]},
       l: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [{id: 1, name: 'Test', url: '/magasin/1'}] }]},
-      o: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }]}
+      o: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
+      p: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
+      r: {
+        objects: [{ marked: false, value: {id: 1}, path: [{id: 3, name: 'test', url: '/magasin/3'}]}],
+        nodes: [{ marked: false, value: {id: 1}, path: [] }]
+      },
+      s: {
+        objects: [{ marked: false, value: {id: 1}, path: [{id: 3, name: 'test', url: '/magasin/3'}]},
+          { marked: false, value: {id: 2}, path: []}
+        ],
+        nodes: [{ marked: false, value: {id: 1}, path: [] }]
+      },
+      u: {
+        objects: [{ marked: false, value: {id: 1}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]},
+                  { marked: false, value: {id: 2}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]}
+        ],
+        nodes: [{ marked: false, value: {id: 1}, path: [] }]
+      }
     };
 
     // mock up$ and down$ events
@@ -51,10 +75,36 @@ describe('pickList', () => {
     const toggleMainObject$ = new Subject();
     const refreshMainObject$ = new Subject();
     const removeObject$ = testScheduler.createHotObservable(removeObject, {1: {id: 1, museumNo: 'H1'}});
-    const refreshObject$ = testScheduler.createHotObservable(refreshObject,
-      {1: {id: 1456, objectId: 1, path: ',1,2,', pathNames: [{nodeId: 1, name: 'Test'}, {nodeId: 2, name: 'Tull'}]}});
     const clearObjects$ = testScheduler.createHotObservable(clearObjects);
-    const addObject$ = testScheduler.createHotObservable(addObject, {1: {value: {id: 1}, path: []}});
+    const addObject$ = testScheduler.createHotObservable(addObject, {1: {value: {id: 1}, path: []}, 2: {value: {id: 2}, path: []}});
+
+    const refreshObjects$ = testScheduler.createHotObservable(refreshObjects, {
+        1: { objectIds: [1], museumId: new MuseumId(99), token: '1224' },
+        2: { objectIds: [1, 2], museumId: new MuseumId(99), token: '1224' }
+    }).switchMap(MusitObject.getObjectLocations(
+      (url, data) =>  {
+        if (isEqual(data, [1])) return Observable.of({
+          response: [
+            {
+              node: { id: 1456, path: ',3,', pathNames: [{nodeId: 3, name: 'test'}] },
+              objectIds: [1]
+            }
+          ]
+        });
+        if (isEqual(data, [1, 2])) return Observable.of({
+          response: [
+            {
+              node: { id: 14578, path: ',6,', pathNames: [{nodeId: 6, name: 'Code from Jarl'}] },
+              objectIds: [1]
+            },
+            {
+              node: { id: 14579, path: ',6,', pathNames: [{nodeId: 6, name: 'Code from Jarl'}] },
+              objectIds: [2]
+            }
+          ]
+        })
+      }
+    ));
 
     const state$ = reducer$({
       clearObjects$,
@@ -67,8 +117,8 @@ describe('pickList', () => {
       toggleNode$,
       addNode$,
       refreshNode$,
-      refreshObject$,
-      refreshMainObject$
+      refreshMainObject$,
+      refreshObjects$
     });
 
     // assertion
