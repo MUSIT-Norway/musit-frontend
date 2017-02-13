@@ -7,6 +7,18 @@
         "loggedIn": "Logged in as %{name}",
         "logout": "Logout",
         "collection": "Collection",
+        "collections": {
+          "Alger": "Algae",
+          "Arkeologi": "Archaeology",
+          "Entomologi": "Entomology",
+          "Etnografi": "Ethnography",
+          "Karplanter": "Vascular plants",
+          "Lav": "Lichens",
+          "Marine evertebrater": "Marine invertebrates",
+          "Mose": "Bryophyte",
+          "Numismatikk": "Numismatic",
+          "Sopp": "Fungi"
+        },
         "museums": "Museum"
       },
       "errorMainMessages": {
@@ -623,6 +635,17 @@
         "loggedIn": "Logget inn som %{name}",
         "logout": "Logg ut",
         "collection": "Samling",
+        "collections": {
+          "Alger": "Alger",
+          "Arkeologi": "Arkeologi",
+          "Entomologi": "Entomologi",
+          "Etnografi": "Etnografi",
+          "Karplanter": "Karplanter",
+          "Lav": "Lav",
+          "Marine evertebrater": "Marine evertebrater",
+          "Mose": "Mose",
+          "Numismatikk": "Numismatikk"
+        },
         "museums": "Museum"
       },
       "errorMainMessages": {

@@ -96,7 +96,7 @@ export default class MusitUserAccount extends Component {
             {collectionDropdown &&
               collections.map((cc, i) =>
                 <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(new CollectionId(cc.uuid))}>
-                  {menuText(collectionId.uuid === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
+                  {menuText(collectionId.uuid === cc.uuid ? <FontAwesome name="check" /> : '', I18n.t(`musit.userProfile.collections.${cc.name}`))}
                 </MenuItem>
               )
             }
