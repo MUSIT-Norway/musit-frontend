@@ -20,8 +20,8 @@ describe('moveHistory', () => {
 
     // mock streams
     const clearM            = '---1-------';
-    const loadMoveHistoryM  = '-12--------';
-    const expected          = 'aaba-------';
+    const loadMoveHistoryM  = '-12-3------';
+    const expected          = 'aabac------';
 
     const expectedStateMap = {
       a: initialState,
@@ -30,7 +30,76 @@ describe('moveHistory', () => {
           {
             'registeredBy': 'f7144d5d-732f-487c-b2ef-e895ab5cf163',
             'registeredDate': '2017-02-13T14:34:51+00:00',
-            'doneBy': 'Ukjent',
+            'doneBy': 'Jarl',
+            'doneDate': '2017-02-13T14:34:51+00:00',
+            'from': {
+              'path': ',1,',
+              'pathNames': [
+                {
+                  'nodeId': 1,
+                  'name': 'Utviklingsmuseet'
+                }
+              ],
+              'breadcrumb': [
+                {
+                  'id': 1,
+                  'name': 'Utviklingsmuseet',
+                  'url': '/magasin/1'
+                }
+              ]
+            },
+            'to': {
+              'path': ',1,3,4,7,',
+              'pathNames': [
+                {
+                  'nodeId': 1,
+                  'name': 'Utviklingsmuseet'
+                },
+                {
+                  'nodeId': 3,
+                  'name': 'Utviklingsmuseet Org'
+                },
+                {
+                  'nodeId': 4,
+                  'name': 'Forskningens hus'
+                },
+                {
+                  'nodeId': 7,
+                  'name': 'Forskningsværelset'
+                }
+              ],
+              'breadcrumb': [
+                {
+                  'id': 1,
+                  'name': 'Utviklingsmuseet',
+                  'url': '/magasin/1'
+                },
+                {
+                  'id': 3,
+                  'name': 'Utviklingsmuseet Org',
+                  'url': '/magasin/3'
+                },
+                {
+                  'id': 4,
+                  'name': 'Forskningens hus',
+                  'url': '/magasin/4'
+                },
+                {
+                  'id': 7,
+                  'name': 'Forskningsværelset',
+                  'url': '/magasin/7'
+                }
+              ]
+            }
+          }
+        ]
+      },
+      c: {
+        data: [
+          {
+            'registeredBy': 'f7144d5d-732f-487c-b2ef-e895ab5cf163',
+            'registeredDate': '2017-02-13T14:34:51+00:00',
+            'doneBy': '00000000-0000-0000-0000-000000000000',
             'doneDate': '2017-02-13T14:34:51+00:00',
             'from': {
               'path': ',1,',
@@ -100,7 +169,8 @@ describe('moveHistory', () => {
     const clear$ = testScheduler.createHotObservable(clearM);
     const loadMoveHistory$ = testScheduler.createHotObservable(loadMoveHistoryM, {
       1: { objectId: 1234, museumId: new MuseumId(99), token: '1234' },
-      2: { objectId: 4566, museumId: new MuseumId(2), token: '1234' }
+      2: { objectId: 4566, museumId: new MuseumId(2), token: '1234' },
+      3: { objectId: 999, museumId: new MuseumId(2), token: '1234' }
     })
       .switchMap(MusitObject.getLocationHistory(
         (url) => {
@@ -114,7 +184,25 @@ describe('moveHistory', () => {
               response: [{
                 'registeredBy': 'f7144d5d-732f-487c-b2ef-e895ab5cf163',
                 'registeredDate': '2017-02-13T14:34:51+00:00',
-                'doneBy': 'Jarl',
+                'doneBy': 'f7144d5d-732f-487c-b2ef-e895ab5cf163',
+                'doneDate': '2017-02-13T14:34:51+00:00',
+                'from': {'path': ',1,', 'pathNames': [{'nodeId': 1, 'name': 'Utviklingsmuseet'}]},
+                'to': {
+                  'path': ',1,3,4,7,',
+                  'pathNames': [{'nodeId': 1, 'name': 'Utviklingsmuseet'}, {
+                    'nodeId': 3,
+                    'name': 'Utviklingsmuseet Org'
+                  }, {'nodeId': 4, 'name': 'Forskningens hus'}, {'nodeId': 7, 'name': 'Forskningsværelset'}]
+                }
+              }]
+            });
+          }
+          if (url.indexOf('objects/999/locations') > -1) {
+            return Observable.of({
+              response: [{
+                'registeredBy': 'f7144d5d-732f-487c-b2ef-e895ab5cf163',
+                'registeredDate': '2017-02-13T14:34:51+00:00',
+                'doneBy': '00000000-0000-0000-0000-000000000000',
                 'doneDate': '2017-02-13T14:34:51+00:00',
                 'from': {'path': ',1,', 'pathNames': [{'nodeId': 1, 'name': 'Utviklingsmuseet'}]},
                 'to': {
@@ -138,6 +226,9 @@ describe('moveHistory', () => {
                 }
               ]
             });
+          }
+          if  (data.find(d => d === '00000000-0000-0000-0000-000000000000')) {
+            return Observable.of({});
           }
           return Observable.of({
             response: []
