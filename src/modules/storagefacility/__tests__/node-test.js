@@ -1,4 +1,4 @@
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 import React from 'react';
@@ -84,7 +84,7 @@ describe ('NodePanel' ,() => {
     const onLagreClick = sinon.spy();
     const updateState = sinon.spy();
 
-    const wrapper = mount(<NodeDetails
+    const wrapper = shallow(<NodeDetails
       onLagreClick={onLagreClick}
       updateState={updateState}
       unit={{
@@ -122,7 +122,12 @@ describe ('NodePanel' ,() => {
         }
       }} loaded={true}/>);
 
-    wrapper.find('Button').first().simulate('click');
+
+    const root = wrapper.find('Layout');
+    console.log(root.html());
+
+    const ct = root.children('#div').children();
+    console.log(ct);
   });
 
 });
