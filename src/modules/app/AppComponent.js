@@ -15,16 +15,19 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import scanner$, { toggleEnabled$ } from './scanner';
+import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$ } from './scanner';
 
 export class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     appSession: PropTypes.instanceOf(AppSession).isRequired,
+    scanner: PropTypes.object.isRequired,
+    prepareSearch: PropTypes.func.isRequired,
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
-    pickList: PropTypes.object.isRequired
+    pickList: PropTypes.object.isRequired,
+    scanForOldBarCode: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -33,6 +36,7 @@ export class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.handleMuseumId = this.handleMuseumId.bind(this);
     this.handleCollectionId = this.handleCollectionId.bind(this);
+    this.searchForBarCode = this.searchForBarCode.bind(this);
   }
 
   componentWillMount() {
@@ -75,6 +79,16 @@ export class App extends Component {
     }
   }
 
+  searchForBarCode() {
+    this.props.prepareSearch();
+    this.props.scanForOldBarCode({
+      barcode: this.props.scanner.code,
+      token: this.props.appSession.getAccessToken(),
+      museumId: this.props.appSession.getMuseumId(),
+      collectionId: this.props.appSession.getCollectionId()
+    });
+  }
+
   getFooterClass(){
     let returnClassName;
     if (window.location.href.toLowerCase().includes('test:')) {
@@ -88,6 +102,7 @@ export class App extends Component {
     }
     return returnClassName;
   }
+
   render() {
     if (!this.props.appSession.getAccessToken()) {
       return (
@@ -163,14 +178,32 @@ export class App extends Component {
           {'Build number: ' + this.props.appSession.getBuildNumber()}
         </footer>
 
-        <Modal show={this.props.scanner.enabled && this.props.scanner.code} bsSize="small">
+        <Modal show={this.props.scanner.enabled && !!this.props.scanner.code} bsSize="small">
           <Modal.Body>
             <Form inline>
               <FormGroup controlId="barCode">
-                <input type="text" className="form-control" value={this.props.scanner.code || ''}/>
+                <input type="text" className="form-control" readOnly value={this.props.scanner.code || ''}/>
               </FormGroup>
-              <Button bsStyle="success">Search</Button>
+              <Button bsStyle="success" onClick={this.searchForBarCode}>Search</Button>
             </Form>
+            <Loader loaded={!this.props.scanner.searchPending} />
+            {this.props.scanner.searchComplete && (!this.props.scanner.matches || this.props.scanner.matches.length === 0) &&
+              <center>No matching node or object</center>
+            }
+            {this.props.scanner.matches && Array.isArray(this.props.scanner.matches) && this.props.scanner.matches.length > 0 &&
+              <ul>
+              {this.props.scanner.matches.map(match => {
+                return (
+                  <li>
+                    {this.props.params.id ? <a onClick={e => {
+                      e.preventDefault();
+                      hashHistory.push('/magasin/' + this.props.params.id + '/objects');
+                    }}>{match.getObjectDescription()}</a> : match.getObjectDescription()}
+                  </li>
+                );
+              })}
+              </ul>
+            }
           </Modal.Body>
         </Modal>
       </div>
@@ -192,7 +225,9 @@ const commands = {
   loadAppSession$,
   setMuseumId$,
   setCollectionId$,
-  toggleEnabled$
+  toggleEnabled$,
+  scanForOldBarCode$,
+  prepareSearch$
 };
 
 export default notifiable(inject(data, commands)(App));

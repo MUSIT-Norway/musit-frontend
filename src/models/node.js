@@ -100,14 +100,14 @@ MusitNode.pickNode = (pickNode$) => ({node, breadcrumb}) => {
   pickNode$.next({ value: node, path: breadcrumb });
 };
 
-MusitNode.findByBarcode = (ajaxGet) => (barcode, museumId, token) => {
+MusitNode.findByBarcode = (ajaxGet = simpleGet) => ({ barcode, museumId, token }) => {
   return ajaxGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token)
-    .map(({ response }) => response);
+    .map(({ response }) => response && new MusitNode(response));
 };
 
-MusitNode.findByUUID = (ajaxGet) => (uuid, museumId, token) => {
+MusitNode.findByUUID = (ajaxGet = simpleGet) => ({ uuid, museumId, token }) => {
   return ajaxGet(Config.magasin.urls.storagefacility.scanUrl(uuid, museumId), token)
-    .map(({ response }) => response);
+    .map(({ response }) => response && new MusitNode(response));
 };
 
 

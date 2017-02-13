@@ -27,9 +27,10 @@ describe('scanner', () => {
     const toggleEnabled$ = new Subject();
     const scanForUUID$ = new Subject();
     const scheduledClear$ = new Subject();
+    const scanForOldBarCode$ = new Subject();
     const appSession$ = testScheduler.createHotObservable(appSessionM, { 1: { token: '1223 '}});
 
-    const state$ = reducer$({ keyPress$, toggleEnabled$, scanForUUID$, scheduledClear$, appSession$ });
+    const state$ = reducer$({ keyPress$, toggleEnabled$, scanForUUID$, scheduledClear$, appSession$, scanForOldBarCode$ });
 
     // assertion
     testScheduler.expectObservable(createStore('test', state$, Observable.of(initialState))).toBe(expected, expectedStateMap);
