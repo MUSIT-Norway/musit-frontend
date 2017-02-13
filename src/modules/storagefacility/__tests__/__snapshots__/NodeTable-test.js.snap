@@ -1,0 +1,185 @@
+exports[`NodeTable should render properly  1`] = `
+<div>
+  <FormGroup
+    bsClass="form-group">
+    <div>
+      <Table
+        bordered={false}
+        bsClass="table"
+        condensed={true}
+        hover={true}
+        responsive={true}
+        striped={false}>
+        <thead>
+          <tr>
+            <th>
+              Navn
+            </th>
+            <th>
+              Type
+            </th>
+            <th />
+            <th />
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Carex
+              </a>
+            </td>
+            <td>
+              Blomst
+            </td>
+            <td />
+            <td />
+            <td />
+          </tr>
+          <tr>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Steinøks
+              </a>
+            </td>
+            <td>
+              VerktØY
+            </td>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}
+                title="Observasjoner og kontroller">
+                <span
+                  className="icon icon-musitcontrolobsicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt noden">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Blåveis
+              </a>
+            </td>
+            <td>
+              Blomst
+            </td>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}
+                title="Observasjoner og kontroller">
+                <span
+                  className="icon icon-musitcontrolobsicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt noden">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Neshorn
+              </a>
+            </td>
+            <td>
+              Dyr
+            </td>
+            <td />
+            <td />
+            <td />
+          </tr>
+          <tr>
+            <td>
+              <a
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Blåklokke
+              </a>
+            </td>
+            <td>
+              Blomstu
+            </td>
+            <td />
+            <td />
+            <td />
+          </tr>
+        </tbody>
+      </Table>
+    </div>
+  </FormGroup>
+</div>
+`;

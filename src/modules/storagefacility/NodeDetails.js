@@ -92,7 +92,7 @@ export default class NodeDetails extends Component {
         <label className="col-sm-3 control-label" htmlFor={field}>
           {this.translateEnvReqField(`${field}.labelText`)}
         </label>
-        <div class="col-sm-8" is="null">
+        <div className="col-sm-8" is="null">
           <Field
             id={field}
             tooltip={this.translateEnvReqField(`${field}.tooltip`)}
@@ -112,7 +112,7 @@ export default class NodeDetails extends Component {
         <label className="col-sm-3 control-label" htmlFor={field}>
           {this.translateEnvReqField(`${field}.labelText`)}
         </label>
-        <div class="col-sm-8" is="null">
+        <div className="col-sm-8" is="null">
           <TextArea
             id={field}
             numberOfRows={4}

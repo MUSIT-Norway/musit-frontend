@@ -847,7 +847,7 @@ exports[`NodePanel should render properly  1`] = `
                               Renhold
                             </label>
                             <div
-                              class="col-sm-8"
+                              className="col-sm-8"
                               is="null">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="cleaning"
@@ -906,7 +906,7 @@ exports[`NodePanel should render properly  1`] = `
                               Lysforhold
                             </label>
                             <div
-                              class="col-sm-8"
+                              className="col-sm-8"
                               is="null">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="lightingCondition"
@@ -964,7 +964,7 @@ exports[`NodePanel should render properly  1`] = `
                               Kommentar
                             </label>
                             <div
-                              class="col-sm-8"
+                              className="col-sm-8"
                               is="null">
                               <function MusitTextArea() {_classCallCheck(this, MusitTextArea);return _possibleConstructorReturn(this, (MusitTextArea.__proto__ || Object.getPrototypeOf(MusitTextArea)).apply(this, arguments));}
                                 id="comments"
@@ -1011,19 +1011,19 @@ exports[`NodePanel should render properly  1`] = `
                     componentClass="div">
                     <br />
                     <br />
-                    <function SaveCancel(props) {/* istanbul ignore next */_classCallCheck(this, SaveCancel);var _this = _possibleConstructorReturn(this, (SaveCancel.__proto__ || Object.getPrototypeOf(SaveCancel)).call(this, props)); /* istanbul ignore next */var id =
+                    <function SaveCancel(props) {/* istanbul ignore next */_classCallCheck(this, SaveCancel);++cov_17eecvnpo6.f[0];++cov_17eecvnpo6.s[0];var _this = _possibleConstructorReturn(this, (SaveCancel.__proto__ || Object.getPrototypeOf(SaveCancel)).call(this, props)); /* istanbul ignore next */var _ref = (++cov_17eecvnpo6.s[1],
                     
                     
                     
-                        props.id,saveDisabled = props.saveDisabled,onClickSave = props.onClickSave,cancelDisabled = props.cancelDisabled,onClickCancel = props.onClickCancel;
+                        props),id = _ref.id,saveDisabled = _ref.saveDisabled,onClickSave = _ref.onClickSave,cancelDisabled = _ref.cancelDisabled,onClickCancel = _ref.onClickCancel; /* istanbul ignore next */++cov_17eecvnpo6.s[2];
                         /* istanbul ignore next */_this.fields = {
                           save: {
-                            id: /* istanbul ignore next */'Save_' + (id || 1),
+                            id: /* istanbul ignore next */'Save_' + ( /* istanbul ignore next */(++cov_17eecvnpo6.b[0][0], id) || /* istanbul ignore next */(++cov_17eecvnpo6.b[0][1], 1)),
                             onClick: onClickSave,
                             disabled: saveDisabled },
                     
                           cancel: {
-                            id: /* istanbul ignore next */'Cancel_' + (id || 1),
+                            id: /* istanbul ignore next */'Cancel_' + ( /* istanbul ignore next */(++cov_17eecvnpo6.b[1][0], id) || /* istanbul ignore next */(++cov_17eecvnpo6.b[1][1], 1)),
                             onClick: onClickCancel,
                             disabled: cancelDisabled } }; /* istanbul ignore next */return _this;
                     
