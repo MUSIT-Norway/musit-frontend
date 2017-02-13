@@ -2,12 +2,14 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import NodeGrid from '../NodeTable';
+import { expect as e } from 'chai';
 
 
 
 describe ('NodeTable' ,() => {
 
-  const tableData =   [ {name: 'Carex', type: 'Blomst', isRootNode: () => true },
+  const tableData =   [
+    {name: 'Carex', type: 'Blomst', isRootNode: () => true },
     {name: 'Steinøks', type: 'Verktøy', isRootNode: () => false},
     {name: 'Blåveis', type: 'Blomst', isRootNode: () => false},
     {name: 'Neshorn', type: 'Dyr' , isRootNode: () => true},
@@ -31,6 +33,6 @@ describe ('NodeTable' ,() => {
 
 
   it('check content', () => {
-    expect(wrapper.find('tr').children()).length(tableData.length);
+    e(wrapper.find('tr')).to.have.length((tableData.length+1))
   });
 });
