@@ -195,14 +195,29 @@ export class App extends Component {
               {this.props.scanner.matches.map(match => {
                 return (
                   <li>
-                    {this.props.params.id ? <a onClick={e => {
-                      e.preventDefault();
-                      hashHistory.push('/magasin/' + this.props.params.id + '/objects');
-                    }}>{match.getObjectDescription()}</a> : match.getObjectDescription()}
+                    {this.props.params.id ?
+                      <a
+                        onClick={e => {
+                          e.preventDefault();
+                          hashHistory.push('/magasin/' + this.props.params.id + '/objects');
+                        }}
+                      >
+                        {match.getObjectDescription()}
+                      </a> : match.getObjectDescription()}
                   </li>
                 );
               })}
               </ul>
+            }
+            {this.props.scanner.matches && this.props.scanner.matches && !Array.isArray(this.props.scanner.matches) &&
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                  hashHistory.push('/magasin/' + this.props.scanner.matches.id);
+                }}
+              >
+                {this.props.scanner.matches.name}
+              </a>
             }
           </Modal.Body>
         </Modal>
