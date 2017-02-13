@@ -3,13 +3,6 @@ nav.fa {
   line-height: 20px;
 }
 
-.modal-container {
-  position: relative;
-}
-.modal-container .modal, .modal-container .modal-backdrop {
-  position: absolute;
-}
-
 .brand {
   position: absolute;
   top: 5px;

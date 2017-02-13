@@ -34,7 +34,7 @@ const scanForNode = ({ simpleGet }, { push }) => (buffer, museumId, token) => {
 
 export const toggleEnabled$ = createAction('toggleEnabled$');
 const keyPress$ = Observable.fromEvent(window.document.body, 'keypress');
-const scheduledClear$ = keyPress$.debounce(() => Observable.timer(300));
+const scheduledClear$ = keyPress$.debounce(() => Observable.timer(200));
 
 export const reducer$ = (actions, scanUUID) => Observable.merge(
   actions.appSession$.map((appSession) => (state) => ({...state, appSession})),
