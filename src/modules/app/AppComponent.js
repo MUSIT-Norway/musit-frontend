@@ -199,7 +199,7 @@ export class App extends Component {
                       <a
                         onClick={e => {
                           e.preventDefault();
-                          hashHistory.push('/magasin/' + this.props.params.id + '/objects');
+                          hashHistory.push('/magasin/' + match.currentLocationId + '/objects');
                         }}
                       >
                         {match.getObjectDescription()}
