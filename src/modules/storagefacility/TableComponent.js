@@ -27,6 +27,8 @@ import { Observable } from 'rxjs';
 
 import inject from 'react-rxjs/dist/RxInject';
 
+import { addNode$, addObject$ } from '../app/pickList';
+
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -495,8 +497,8 @@ const commands = {
 };
 
 const props = {
-  pickNode: MusitNode.pickNode,
-  pickObject: (val) => MusitObject.pickObject()(val),
+  pickNode: MusitNode.pickNode(addNode$),
+  pickObject: MusitObject.pickObject(addObject$),
   deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
   emitError,
   emitSuccess

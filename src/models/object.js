@@ -1,8 +1,11 @@
-import { simpleGet, simplePut } from '../shared/RxAjax';
+import { simpleGet, simplePut, simplePost } from '../shared/RxAjax';
 import Config from '../config';
 import entries from 'object.entries';
-import { addObject$ as pickObject$ } from '../modules/app/pickList';
 import { getPath } from '../shared/util';
+import flatMap from 'lodash/flatMap';
+import MusitActor from './actor';
+import uniq from 'lodash/uniq';
+import { I18n } from 'react-i18nify';
 
 class MusitObject {
   constructor(props) {
@@ -37,15 +40,21 @@ class MusitObject {
   }
 }
 
-MusitObject.getObjectLocation = (ajaxGet = simpleGet) => ({ id, museumId, token, callback }) => {
-  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/currentlocation`, token, callback)
-    .map(({ response }) => response);
-};
+MusitObject.getObjectLocations = (ajaxPost = simplePost) => ({ objectIds, museumId, token, callback }) =>
+  ajaxPost(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/currentlocations`, objectIds, token, callback)
+    .map(({ response }) => {
+      return flatMap(response, (ls) => {
+        return ls.objectIds.map(objectId => ({
+          objectId,
+          ...ls.node
+        })
+        );
+      });
+    });
 
 MusitObject.getMainObject = (ajaxGet = simpleGet) => ({ id, museumId, collectionId, token, callback }) => {
   return ajaxGet(`${Config.magasin.urls.thingaggregate.baseUrl(museumId)}/objects/${id}/children?${collectionId.getQuery()}`, token, callback)
-    .map(({ response }) => response)
-    .map(objects => objects.map(obj => new MusitObject(obj)));
+    .map(({ response }) => response && response.map(obj => new MusitObject(obj)));
 };
 
 MusitObject.getObjects = (ajaxGet = simpleGet) => ({id, page, museumId, collectionId, token, callback}) => {
@@ -68,8 +77,8 @@ MusitObject.moveObject = (ajaxPut = simplePut) => ({ id, destination, doneBy, mu
   return ajaxPut(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/moveObject`, data, token, callback);
 };
 
-MusitObject.getLocationHistory = (ajaxGet = simpleGet) => ({ id, museumId, token, callback }) => {
-  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${id}/locations`, token, callback)
+MusitObject.getLocationHistory = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({ objectId, museumId, token, callback }) => {
+  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/objects/${objectId}/locations`, token, callback)
     .map(({ response }) => {
       if (!Array.isArray(response)) {
         return [];
@@ -87,10 +96,27 @@ MusitObject.getLocationHistory = (ajaxGet = simpleGet) => ({ id, museumId, token
           }
         };
       });
+    })
+    .flatMap(rows => {
+      const actorIds = uniq(rows.map(r => r.doneBy)).filter(r => r);
+      return MusitActor.getActors(ajaxPost)(actorIds, token)
+        .map(actors => {
+          if (!Array.isArray(actors)) {
+            return rows;
+          }
+          return rows.map((data) => {
+            const doneBy = actors.find(a => a.hasActorId(data.doneBy));
+            return {
+              ...data,
+              doneBy: doneBy ? doneBy.fn : I18n.t('musit.unknown')
+            };
+          });
+        });
     });
 };
 
-MusitObject.pickObject = (ajaxGet = simpleGet) => (props) => {
+
+MusitObject.pickObject = (pickObject$, ajaxGet = simpleGet) => (props) => {
   if (props.object.isMainObject()) {
     MusitObject.getMainObject(ajaxGet)({ ...props, id: props.object.id })
       .toPromise()
