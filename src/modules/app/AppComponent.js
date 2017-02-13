@@ -3,7 +3,7 @@ import 'react-select/dist/react-select.css';
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem, Modal, Button } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Modal, Button, Form, FormGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
@@ -163,19 +163,16 @@ export class App extends Component {
           {'Build number: ' + this.props.appSession.getBuildNumber()}
         </footer>
 
-        {this.props.scanner.enabled && this.props.scanner.code && (
-          <Modal show={true}>
-            <Modal.Header closeButton>
-              <Modal.Title></Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <input type="text" style={{ width: '100%' }}  className="form-control" value={this.props.scanner.code || ''}/>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button>Close</Button>
-            </Modal.Footer>
-          </Modal>
-        )}
+        <Modal show={this.props.scanner.enabled && this.props.scanner.code} bsSize="small">
+          <Modal.Body>
+            <Form inline>
+              <FormGroup controlId="barCode">
+                <input type="text" className="form-control" value={this.props.scanner.code || ''}/>
+              </FormGroup>
+              <Button bsStyle="success">Search</Button>
+            </Form>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
