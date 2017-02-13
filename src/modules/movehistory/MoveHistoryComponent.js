@@ -28,7 +28,7 @@ import moveHistoryStore$, {
 } from './moveHistoryStore';
 import inject from 'react-rxjs/dist/RxInject';
 
-export class MoveHistoryModal extends Component {
+export class MoveHistoryComponent extends Component {
 
   static propTypes = {
     store: PropTypes.object.isRequired,
@@ -39,7 +39,7 @@ export class MoveHistoryModal extends Component {
   };
 
   static contextTypes = {
-    closeModal: PropTypes.func.isRequired
+    closeModal: PropTypes.func
   };
 
   componentDidMount() {
@@ -81,4 +81,4 @@ const commands = {
   loadMoveHistory$
 };
 
-export default inject(data, commands)(MoveHistoryModal);
+export default inject(data, commands)(MoveHistoryComponent);
