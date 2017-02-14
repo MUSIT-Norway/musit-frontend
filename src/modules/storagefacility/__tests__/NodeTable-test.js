@@ -33,6 +33,6 @@ describe ('NodeTable' ,() => {
 
 
   it('check content', () => {
-    e(wrapper.find('tr')).to.have.length((tableData.length+1))
+    e(wrapper.find('tr')).to.have.length((tableData.length+1));
   });
 });
