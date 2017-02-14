@@ -247,7 +247,7 @@ exports[`NodePanel should render properly  1`] = `
           this.state = initialState;
         }
       component="div"
-      loaded={true}
+      loaded={false}
       loadedClassName="loadedContent"
       parentClassName="loader">
       <function Grid() {
@@ -847,7 +847,7 @@ exports[`NodePanel should render properly  1`] = `
                               Renhold
                             </label>
                             <div
-                              className="col-sm-8"
+                              class="col-sm-8"
                               is="null">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="cleaning"
@@ -906,7 +906,7 @@ exports[`NodePanel should render properly  1`] = `
                               Lysforhold
                             </label>
                             <div
-                              className="col-sm-8"
+                              class="col-sm-8"
                               is="null">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="lightingCondition"
@@ -964,7 +964,7 @@ exports[`NodePanel should render properly  1`] = `
                               Kommentar
                             </label>
                             <div
-                              className="col-sm-8"
+                              class="col-sm-8"
                               is="null">
                               <function MusitTextArea() {_classCallCheck(this, MusitTextArea);return _possibleConstructorReturn(this, (MusitTextArea.__proto__ || Object.getPrototypeOf(MusitTextArea)).apply(this, arguments));}
                                 id="comments"

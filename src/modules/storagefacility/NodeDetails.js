@@ -92,7 +92,7 @@ export default class NodeDetails extends Component {
         <label className="col-sm-3 control-label" htmlFor={field}>
           {this.translateEnvReqField(`${field}.labelText`)}
         </label>
-        <div className="col-sm-8" is="null">
+        <div class="col-sm-8" is="null">
           <Field
             id={field}
             tooltip={this.translateEnvReqField(`${field}.tooltip`)}
@@ -112,7 +112,7 @@ export default class NodeDetails extends Component {
         <label className="col-sm-3 control-label" htmlFor={field}>
           {this.translateEnvReqField(`${field}.labelText`)}
         </label>
-        <div className="col-sm-8" is="null">
+        <div class="col-sm-8" is="null">
           <TextArea
             id={field}
             numberOfRows={4}
@@ -423,7 +423,7 @@ export default class NodeDetails extends Component {
                             return <p style={{ color: 'red' }} key={index}>{error}</p>;
                           })}
                           <br />
-                          {this.props.loading &&
+                          {this.props.loaded &&
                           <SaveCancel
                             saveDisabled={this.props.loading}
                             onClickSave={this.handleSubmit}

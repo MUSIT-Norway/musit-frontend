@@ -70,7 +70,7 @@ describe ('NodePanel' ,() => {
         }
       }}
       onLagreClick={(k) => k}
-      loaded={true}
+      loaded={false}
       updateState={(k) => k}/>
   );
 
