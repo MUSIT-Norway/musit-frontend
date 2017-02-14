@@ -42,16 +42,16 @@ describe ('NodeTable' ,() => {
   });
 
 
-  it('check count', () => {
+  it('check content', () => {
     wrapper.find('tr').forEach( (node, index) => {
       if (index) {
-        console.log(node.children(0).find('a').children(0).last().text());
-        //e(node.children(0).find('a').children(1)).to.equal('Hei');
+        const name = tableData[index-1].name;
+        e(node.find('td').first().last().text()).to.contain(name);
       }
     });
   });
 
-  it('check content', () => {
+  it('check count', () => {
     e(wrapper.find('tr')).to.have.length((tableData.length+1));
   });
 

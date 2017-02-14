@@ -44,24 +44,21 @@ describe ('ObjectTable' ,() => {
   it('check count', () => {
     wrapper.find('tr').forEach( (node, index) => {
       if (index) {
-        console.log(node.children(0).find('a').children(0).last().text());
-        //e(node.children(0).find('a').children(1)).to.equal('Hei');
+        e(node.childAt(1).text().trim()).to.equal(tableData[index-1].museumNo);
+        e(node.childAt(2).text().trim()).to.equal(tableData[index-1].subNo ? tableData[index-1].subNo:'');
+        e(node.childAt(3).text().trim()).to.equal(tableData[index-1].term);
       }
     });
   });
 
-  it('check content', () => {
+  it('check count', () => {
     e(wrapper.find('tr')).to.have.length((tableData.length+1));
   });
-
-
-
 
   it('check pickObject', () => {
     wrapper.find('.onPickObject').first().simulate('click');
     e(pickObject.calledOnce).to.be.true;
   });
-
 
   it('check pickObjects', () => {
     wrapper.find('.onPickObjects').first().simulate('click');
