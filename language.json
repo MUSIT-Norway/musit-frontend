@@ -20,7 +20,7 @@
           "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Fungi",
           "00000000-0000-0000-0000-000000000000": "All"
         },
-        "museums": "Museum",
+        "museum": "Museum",
         "museums": {
           "1": "AM",
           "2": "UM",
