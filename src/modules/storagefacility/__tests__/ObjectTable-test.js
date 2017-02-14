@@ -2,34 +2,33 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import sinon from 'sinon';
-import NodeGrid from '../NodeTable';
+import ObjectGrid from '../ObjectTable';
 import { expect as e } from 'chai';
 
 
 
-describe ('NodeTable' ,() => {
+describe ('ObjectTable' ,() => {
+
+
 
   const tableData = [
-    { name: 'NHM', type: 'Organisation', isRootNode: () => true },
-    { name: 'KHM', type: 'Organisation', isRootNode: () => true },
-    { name: 'Bygg 1', type: 'Building', isRootNode: () => false },
-    { name: 'Bygg 2', type: 'Building' , isRootNode: () => false },
-    { name: 'Rom 1', type: 'Room' , isRootNode: () => false }
+    { id: 1 , museumNo: 'TRH-V-1-2', subNo: '2', term: 'Carex'},
+    { id: 2 , museumNo: 'TRH-V-2', subNo: '2', term: 'Pinus sylvestris'},
+    { id: 3 , museumNo: 'UEM3', term: 'Steinøks'},
+    { id: 4 , museumNo: 'BG233', subNo: '233', term: 'Flintavslag'},
+    { id: 5 , museumNo: 'O-L-233', term: 'Cladionia'}
   ];
 
 
-
-  const onClick = sinon.spy();
-  const pickNode = sinon.spy();
+  const pickObject = sinon.spy();
+  const showMoveHistory = sinon.spy();
   const onMove = sinon.spy();
-  const goToEvents = sinon.spy();
   const wrapper = shallow(
-    <NodeGrid
+    <ObjectGrid
       tableData={ tableData }
-      goToEvents={goToEvents}
-      pickNode={pickNode}
+      pickObject={pickObject}
       onMove={onMove}
-      onClick={onClick}
+      showMoveHistory={showMoveHistory}
       onLagreClick={(k) => k }
       loaded={ true }
       updateState={(k) => k }
@@ -56,24 +55,28 @@ describe ('NodeTable' ,() => {
   });
 
 
-  it('check clickNameClick', () => {
-    wrapper.find('.onClickName').first().simulate('click');
-    e(onClick.calledOnce).to.be.true;
+
+
+  it('check pickObject', () => {
+    wrapper.find('.onPickObject').first().simulate('click');
+    e(pickObject.calledOnce).to.be.true;
   });
 
+
+  it('check pickObjects', () => {
+    wrapper.find('.onPickObjects').first().simulate('click');
+    e(pickObject.callCount).to.equal(tableData.length+1);
+  });
 
   it('check click onMove', () => {
     wrapper.find('.onMoveClick').first().simulate('click');
     e(onMove.calledOnce).to.be.true;
   });
 
-  it('check click goToEventClick', () => {
-    wrapper.find('.goToEventClick').first().simulate('click');
-    e(goToEvents.calledOnce).to.be.true;
+  it('check click onShowMoveHistory', () => {
+    wrapper.find('.onShowMoveHistory').first().simulate('click');
+    e(showMoveHistory.calledOnce).to.be.true;
   });
 
-  it('check click onPickClick', () => {
-    wrapper.find('.onPickClick').first().simulate('click');
-    e(pickNode.calledOnce).to.be.true;
-  });
 });
+

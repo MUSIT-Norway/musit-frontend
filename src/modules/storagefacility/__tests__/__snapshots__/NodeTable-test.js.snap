@@ -27,15 +27,16 @@ exports[`NodeTable should render properly  1`] = `
           <tr>
             <td>
               <a
+                className="onClickName"
                 href=""
                 onClick={[Function onClick]}>
                 <FontAwesome
                   name="folder" />
-                 Carex
+                 NHM
               </a>
             </td>
             <td>
-              Blomst
+              Organisasjon
             </td>
             <td />
             <td />
@@ -44,18 +45,38 @@ exports[`NodeTable should render properly  1`] = `
           <tr>
             <td>
               <a
+                className="onClickName"
                 href=""
                 onClick={[Function onClick]}>
                 <FontAwesome
                   name="folder" />
-                 Steinøks
+                 KHM
               </a>
             </td>
             <td>
-              VerktØY
+              Organisasjon
+            </td>
+            <td />
+            <td />
+            <td />
+          </tr>
+          <tr>
+            <td>
+              <a
+                className="onClickName"
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Bygg 1
+              </a>
+            </td>
+            <td>
+              Bygg
             </td>
             <td>
               <a
+                className="goToEventClick"
                 href=""
                 onClick={[Function onClick]}
                 title="Observasjoner og kontroller">
@@ -65,6 +86,7 @@ exports[`NodeTable should render properly  1`] = `
             </td>
             <td>
               <a
+                className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
                 title="Flytt noden">
@@ -79,6 +101,7 @@ exports[`NodeTable should render properly  1`] = `
             </td>
             <td>
               <a
+                className="onPickClick"
                 href=""
                 onClick={[Function onClick]}
                 title="Legg til plukklisten">
@@ -95,18 +118,20 @@ exports[`NodeTable should render properly  1`] = `
           <tr>
             <td>
               <a
+                className="onClickName"
                 href=""
                 onClick={[Function onClick]}>
                 <FontAwesome
                   name="folder" />
-                 Blåveis
+                 Bygg 2
               </a>
             </td>
             <td>
-              Blomst
+              Bygg
             </td>
             <td>
               <a
+                className="goToEventClick"
                 href=""
                 onClick={[Function onClick]}
                 title="Observasjoner og kontroller">
@@ -116,6 +141,7 @@ exports[`NodeTable should render properly  1`] = `
             </td>
             <td>
               <a
+                className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
                 title="Flytt noden">
@@ -130,6 +156,7 @@ exports[`NodeTable should render properly  1`] = `
             </td>
             <td>
               <a
+                className="onPickClick"
                 href=""
                 onClick={[Function onClick]}
                 title="Legg til plukklisten">
@@ -146,36 +173,57 @@ exports[`NodeTable should render properly  1`] = `
           <tr>
             <td>
               <a
+                className="onClickName"
                 href=""
                 onClick={[Function onClick]}>
                 <FontAwesome
                   name="folder" />
-                 Neshorn
+                 Rom 1
               </a>
             </td>
             <td>
-              Dyr
+              Rom
             </td>
-            <td />
-            <td />
-            <td />
-          </tr>
-          <tr>
             <td>
               <a
+                className="goToEventClick"
                 href=""
-                onClick={[Function onClick]}>
-                <FontAwesome
-                  name="folder" />
-                 Blåklokke
+                onClick={[Function onClick]}
+                title="Observasjoner og kontroller">
+                <span
+                  className="icon icon-musitcontrolobsicon" />
               </a>
             </td>
             <td>
-              Blomstu
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt noden">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
             </td>
-            <td />
-            <td />
-            <td />
+            <td>
+              <a
+                className="onPickClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
           </tr>
         </tbody>
       </Table>

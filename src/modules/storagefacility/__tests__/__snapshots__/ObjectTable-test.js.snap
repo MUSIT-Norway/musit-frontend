@@ -1,0 +1,356 @@
+exports[`ObjectTable should render properly  1`] = `
+<div>
+  <FormGroup
+    bsClass="form-group">
+    <div>
+      <Table
+        bordered={false}
+        bsClass="table"
+        condensed={true}
+        hover={true}
+        responsive={true}
+        striped={false}>
+        <thead>
+          <tr>
+            <th
+              style={
+                Object {
+                  "width": "20px"
+                }
+              } />
+            <th>
+              Museumsnr.
+            </th>
+            <th>
+              Unr.
+            </th>
+            <th>
+              Term/Artsnavn
+            </th>
+            <th />
+            <th />
+            <th>
+              <a
+                className="onPickObjects"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til alle i plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            className="mainObject">
+            <td
+              style={
+                Object {
+                  "width": "20px"
+                }
+              }>
+              <span
+                className="icon icon-musitobject" />
+            </td>
+            <td>
+               TRH-V-1-2
+            </td>
+            <td>
+              2
+            </td>
+            <td>
+              Carex
+            </td>
+            <td>
+              <a
+                className="onShowMoveHistory"
+                href=""
+                onClick={[Function onClick]}
+                title="Flyttehistorikk">
+                <span
+                  className="icon icon-musitmovehistoryicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt objektet">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onPickObject"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject">
+            <td
+              style={
+                Object {
+                  "width": "20px"
+                }
+              }>
+              <span
+                className="icon icon-musitobject" />
+            </td>
+            <td>
+               TRH-V-2
+            </td>
+            <td>
+              2
+            </td>
+            <td>
+              Pinus sylvestris
+            </td>
+            <td>
+              <a
+                className="onShowMoveHistory"
+                href=""
+                onClick={[Function onClick]}
+                title="Flyttehistorikk">
+                <span
+                  className="icon icon-musitmovehistoryicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt objektet">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onPickObject"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject">
+            <td
+              style={
+                Object {
+                  "width": "20px"
+                }
+              }>
+              <span
+                className="icon icon-musitobject" />
+            </td>
+            <td>
+               UEM3
+            </td>
+            <td />
+            <td>
+              Steinøks
+            </td>
+            <td>
+              <a
+                className="onShowMoveHistory"
+                href=""
+                onClick={[Function onClick]}
+                title="Flyttehistorikk">
+                <span
+                  className="icon icon-musitmovehistoryicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt objektet">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onPickObject"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject">
+            <td
+              style={
+                Object {
+                  "width": "20px"
+                }
+              }>
+              <span
+                className="icon icon-musitobject" />
+            </td>
+            <td>
+               BG233
+            </td>
+            <td>
+              233
+            </td>
+            <td>
+              Flintavslag
+            </td>
+            <td>
+              <a
+                className="onShowMoveHistory"
+                href=""
+                onClick={[Function onClick]}
+                title="Flyttehistorikk">
+                <span
+                  className="icon icon-musitmovehistoryicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt objektet">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onPickObject"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject">
+            <td
+              style={
+                Object {
+                  "width": "20px"
+                }
+              }>
+              <span
+                className="icon icon-musitobject" />
+            </td>
+            <td>
+               O-L-233
+            </td>
+            <td />
+            <td>
+              Cladionia
+            </td>
+            <td>
+              <a
+                className="onShowMoveHistory"
+                href=""
+                onClick={[Function onClick]}
+                title="Flyttehistorikk">
+                <span
+                  className="icon icon-musitmovehistoryicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt objektet">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onPickObject"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+    </div>
+  </FormGroup>
+</div>
+`;

@@ -38,10 +38,10 @@ export default class ObjectGrid extends Component {
                   <th />
                   <th />
                   <th>
-                    <a
+                    <a className="onPickObjects"
                       href=""
                       onClick={(e) => {
-                        e.preventDefault();
+                        e && e.preventDefault();
                         this.props.tableData.forEach(o => this.props.pickObject(o));
                       }}
                       title={I18n.t('musit.grid.object.iconTooltip.addAllToPickList')}
@@ -70,10 +70,10 @@ export default class ObjectGrid extends Component {
                     </td>
                     <td>
                       {isMainObject &&
-                      <a
+                      <a className="onShowMoveHistory"
                         href=""
                         onClick={(e) => {
-                          e.preventDefault();
+                          e && e.preventDefault();
                           this.props.showMoveHistory(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
@@ -84,10 +84,10 @@ export default class ObjectGrid extends Component {
                     </td>
                     <td>
                       {isMainObject &&
-                      <a
+                      <a className="onMoveClick"
                         href=""
                         onClick={(e) => {
-                          e.preventDefault();
+                          e && e.preventDefault();
                           this.props.onMove(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
@@ -98,10 +98,10 @@ export default class ObjectGrid extends Component {
                     </td>
                     <td>
                       {isMainObject &&
-                      <a
+                      <a className="onPickObject"
                         href=""
                         onClick={(e) => {
-                          e.preventDefault();
+                          e && e.preventDefault();
                           this.props.pickObject(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
