@@ -187,17 +187,20 @@ export class App extends Component {
           {'Build number: ' + this.props.appSession.getBuildNumber()}
         </footer>
 
-        <Modal show={this.props.scanner.enabled && !!this.props.scanner.code} bsSize="small">
+        <Modal show={this.props.scanner.enabled && !!this.props.scanner.code} bsSize="small" onHide={() => this.props.clearBuffer()}>
+          <Modal.Header closeButton>
+            <Modal.Title>{I18n.t('musit.errorMainMessages.scanner.title')}</Modal.Title>
+          </Modal.Header>
           <Modal.Body>
             <Form inline>
               <FormGroup controlId="barCode">
                 <input type="text" className="form-control" readOnly value={this.props.scanner.code || ''}/>
               </FormGroup>
-              <Button bsStyle="success" onClick={this.searchForBarCode}>Search</Button>
+              <Button bsStyle="success" onClick={this.searchForBarCode}>{I18n.t('musit.errorMainMessages.scanner.search')}</Button>
             </Form>
             <Loader loaded={!this.props.scanner.searchPending} />
             {this.props.scanner.searchComplete && (!this.props.scanner.matches || this.props.scanner.matches.length === 0) &&
-              <center>No matching node or object</center>
+              <center>{I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject')}</center>
             }
             {this.props.scanner.matches && Array.isArray(this.props.scanner.matches) && this.props.scanner.matches.length > 0 &&
               <ul>
