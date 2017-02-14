@@ -228,7 +228,11 @@ describe('moveHistory', () => {
             });
           }
           if  (data.find(d => d === '00000000-0000-0000-0000-000000000000')) {
-            return Observable.of({});
+            return Observable.of({
+              error: {
+                status: 404
+              }
+            });
           }
           return Observable.of({
             response: []

@@ -55,7 +55,7 @@ export default class NodeLeftMenuComponent extends Component {
           {I18n.t(`musit.leftMenu.node.${type}`)}
           <br />
           <ControlLabel>
-            {count === null ? '-' : count}
+            {count === null ? <FontAwesome name='spinner' spin/> : count}
           </ControlLabel>
         </div>
       );
