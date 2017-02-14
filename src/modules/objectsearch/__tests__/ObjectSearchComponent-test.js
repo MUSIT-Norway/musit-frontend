@@ -4,6 +4,7 @@ import React from 'react';
 import { ObjectSearchComponent } from '../ObjectSearchComponent';
 import { getPath } from '../../../shared/util';
 import MusitObject from '../../../models/object';
+import sinon from 'sinon';
 
 describe('ObjectSearchComponent', () => {
   const path = ',1,2,3,';
@@ -40,8 +41,10 @@ describe('ObjectSearchComponent', () => {
   };
 
   it('should display object 1', () => {
+    const clear = sinon.spy();
     const wrapper = shallow(
       <ObjectSearchComponent
+        clearSearch = {clear}
         store={{
           loaded: true,
           data: testData,

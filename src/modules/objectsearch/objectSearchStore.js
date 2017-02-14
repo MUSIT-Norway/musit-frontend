@@ -10,9 +10,8 @@ export const searchForObjects = ({ simpleGet }) => (cmd) => {
 };
 
 export const initialState = {
+  loaded: false,
   data: {
-    loaded: false,
-    loading: true,
     totalMatches: 0,
     matches: []
   }
@@ -23,7 +22,7 @@ export const searchForObjects$ = createAction('searchForObjects$').switchMap(sea
 export const onChangeField$ = createAction('onChangeField$');
 
 export const reducer$ = (actions) => Observable.merge(
-  actions.clearSearch$.map(() => () => initialState),
+  actions.clearSearch$.map(() => () => ({...initialState, loading : true})),
   actions.searchForObjects$.map((result) => (state) => {
     const matches = result.matches ? result.matches.map(data => {
       return new MusitObject({

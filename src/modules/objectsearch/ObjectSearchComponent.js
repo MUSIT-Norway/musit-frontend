@@ -37,6 +37,7 @@ export class ObjectSearchComponent extends React.Component {
                 {this.renderParam('term', {width: '440px'})}
                 {' '}
                 <Button
+                  className="SubmitButton"
                   type="submit"
                   onClick={(e) => {
                     e.preventDefault();
@@ -174,6 +175,7 @@ export class ObjectSearchComponent extends React.Component {
 
   searchForObjects(page) {
     this.setState({...this.state, currentPage: page});
+    this.props.clearSearch();
     return this.props.searchForObjects({
       params: {
         museumNo: this.museumNo.value,
