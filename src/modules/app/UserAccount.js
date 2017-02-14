@@ -83,7 +83,7 @@ export default class MusitUserAccount extends Component {
                   eventKey={cc.museumId}
                   onClick={() => this.props.handleMuseumId(new MuseumId(cc.museumId), new CollectionId(cid))}
                 >
-                  {menuText(museumId.id === cc.museumId ? <FontAwesome name="check"/> : '', cc.museumName)}
+                  {menuText(museumId.id === cc.museumId ? <FontAwesome name="check"/> : '', I18n.t(`musit.userProfile.museums.${cc.museumId}`))}
                 </MenuItem>;
               })
             }

@@ -20,7 +20,18 @@
           "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Fungi",
           "00000000-0000-0000-0000-000000000000": "All"
         },
-        "museums": "Museum"
+        "museums": "Museum",
+        "museums": {
+          "1": "AM",
+          "2": "UM",
+          "3": "KHM",
+          "4": "NHM",
+          "5": "VM",
+          "6": "TMU",
+          "7": "KMN",
+          "99": "Test",
+          "10000": "All"
+        }
       },
       "errorMainMessages": {
         "applicationError": "Application error.",
@@ -649,7 +660,18 @@
           "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Sopp",
           "00000000-0000-0000-0000-000000000000": "Alle"
         },
-        "museums": "Museum"
+        "museum": "Museum",
+        "museums": {
+          "1": "AM",
+          "2": "UM",
+          "3": "KHM",
+          "4": "NHM",
+          "5": "VM",
+          "6": "TMU",
+          "7": "KMN",
+          "99": "Test",
+          "10000": "Alle"
+        }
       },
       "errorMainMessages": {
         "applicationError": "Applikasjonsfeil.",
