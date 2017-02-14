@@ -83,7 +83,7 @@ export default class MusitUserAccount extends Component {
                   eventKey={cc.museumId}
                   onClick={() => this.props.handleMuseumId(new MuseumId(cc.museumId), new CollectionId(cid))}
                 >
-                  {menuText(museumId.id === cc.museumId ? <FontAwesome name="check"/> : '', cc.museumName)}
+                  {menuText(museumId.id === cc.museumId ? <FontAwesome name="check"/> : '', I18n.t(`musit.userProfile.museums.${cc.museumId}`))}
                 </MenuItem>;
               })
             }
@@ -96,7 +96,7 @@ export default class MusitUserAccount extends Component {
             {collectionDropdown &&
               collections.map((cc, i) =>
                 <MenuItem key={i} eventKey={cc.uuid} onClick={() => this.props.handleCollectionId(new CollectionId(cc.uuid))}>
-                  {menuText(collectionId.uuid === cc.uuid ? <FontAwesome name="check" /> : '', cc.name)}
+                  {menuText(collectionId.uuid === cc.uuid ? <FontAwesome name="check" /> : '', I18n.t(`musit.userProfile.collections.${cc.uuid}`))}
                 </MenuItem>
               )
             }
