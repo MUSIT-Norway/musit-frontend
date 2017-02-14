@@ -744,7 +744,7 @@ exports[`NodePanel should render properly  1`] = `
                                 precision={0}
                                 tooltip="Toleranse"
                                 validate="number"
-                                value="8" />
+                                value="2" />
                             </div>
                           </div>
                         </function Form() {

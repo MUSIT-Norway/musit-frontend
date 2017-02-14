@@ -48,7 +48,7 @@ describe ('NodePanel' ,() => {
           temperature: '12',
           temperatureTolerance: '3',
           relativeHumidity: '67',
-          relativeHumidityTolerance: '8',
+          relativeHumidityTolerance: '2',
           hypoxicAir: '23',
           hypoxicAirTolerance: '2',
           cleaning: 'Urent',
