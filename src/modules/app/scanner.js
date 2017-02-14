@@ -16,7 +16,7 @@ const isNodePickList = (path = ROUTE_PICKLIST_PATH.exec(getLocationPath())) => p
 const isStorageFacility = (pathname = getLocationPath()) => pathname.startsWith(ROUTE_SF);
 const isMoveDialogActive = () => document.getElementsByClassName('moveDialog').length > 0;
 
-const scanForNode = (ajaxGet = ajax.simpleGet, push = hashHistory.push.bind(hashHistory)) => ({ uuid, museumId, token }) => {
+export const scanForNode = (ajaxGet = ajax.simpleGet, push = hashHistory.push.bind(hashHistory)) => ({ uuid, museumId, token }) => {
   MusitNode.findByUUID(ajaxGet)({uuid, museumId, token})
     .toPromise()
     .then(response => {
@@ -33,22 +33,25 @@ const scanForNode = (ajaxGet = ajax.simpleGet, push = hashHistory.push.bind(hash
     });
 };
 
+export const scanForNodeOrObject = (get) => (cmd) =>
+  MusitNode.findByBarcode(get)(cmd)
+    .flatMap((nodeResponse) => {
+      if (!nodeResponse) {
+        return MusitObject.findByBarcode(get)(cmd);
+      }
+      return Observable.of(nodeResponse);
+    });
+
+export const clearBuffer$ = createAction('clearBuffer$');
 export const toggleEnabled$ = createAction('toggleEnabled$');
 export const prepareSearch$ = createAction('prepareSearch$');
-export const scanForOldBarCode$ = createAction('scanForOldBarCode$')
-  .switchMap(cmd =>
-    MusitNode.findByBarcode()(cmd)
-      .flatMap((nodeResponse) => {
-        if (!nodeResponse) {
-          return MusitObject.findByBarcode()(cmd);
-        }
-        return Observable.of(nodeResponse);
-      })
-  );
-const keyPress$ = Observable.fromEvent(window.document.body, 'keypress');
+export const scanForOldBarCode$ = createAction('scanForOldBarCode$').switchMap(scanForNodeOrObject());
+const keyPress$ = Observable.fromEvent(window.document.body, 'keypress')
+  .map(e => String.fromCharCode(e.which).replace(/\+/g, '-'));
 const scheduledClear$ = keyPress$.debounce(() => Observable.timer(200));
 
 export const reducer$ = (actions, scanUUID) => Observable.merge(
+  actions.clearBuffer$.map(() => (state) => ({...state, buffer: null, code: null, matches: null, searchComplete: false})),
   actions.prepareSearch$.map(() => (state) => ({...state, searchPending: true, searchComplete: false, matches: null})),
   actions.scanForOldBarCode$.map((matches) => (state) => ({...state, matches, searchPending: false, searchComplete: true})),
   actions.appSession$.map((appSession) => (state) => ({...state, appSession})),
@@ -60,11 +63,11 @@ export const reducer$ = (actions, scanUUID) => Observable.merge(
     return state;
   }),
   actions.toggleEnabled$.map(() => (state) => ({...state, enabled: !state.enabled })),
-  actions.keyPress$.map((e) => (state) => {
+  actions.keyPress$.map((char) => (state) => {
     if (!state.enabled) {
       return state;
     }
-    let buffer = `${state.buffer || ''}${String.fromCharCode(e.which).replace(/\+/g, '-')}`;
+    let buffer = `${state.buffer || ''}${char}`;
     if (UUID_REGEX.test(buffer)) {
       scanUUID({
         uuid: buffer,
@@ -84,7 +87,8 @@ const commands = {
   scheduledClear$,
   toggleEnabled$,
   prepareSearch$,
-  keyPress$
+  keyPress$,
+  clearBuffer$
 };
 
 export default (appSession$) => createStore(

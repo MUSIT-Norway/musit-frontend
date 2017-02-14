@@ -15,7 +15,7 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$ } from './scanner';
+import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$, clearBuffer$ } from './scanner';
 
 export class App extends Component {
   static propTypes = {
@@ -27,7 +27,9 @@ export class App extends Component {
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
-    scanForOldBarCode: PropTypes.func.isRequired
+    scanForOldBarCode: PropTypes.func.isRequired,
+    goTo: PropTypes.func.isRequired,
+    clearBuffer: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -109,8 +111,15 @@ export class App extends Component {
         <LoginComponent />
       );
     }
+
     if (!this.props.appSession.getBuildNumber()) {
       return <Loader loaded={false} />;
+    }
+
+    if (this.props.scanner.matches && this.props.scanner.matches && !Array.isArray(this.props.scanner.matches)) {
+      this.props.clearBuffer();
+      this.props.goTo('/magasin/' + this.props.scanner.matches.id);
+      return null;
     }
 
     return (
@@ -209,16 +218,6 @@ export class App extends Component {
               })}
               </ul>
             }
-            {this.props.scanner.matches && this.props.scanner.matches && !Array.isArray(this.props.scanner.matches) &&
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  hashHistory.push('/magasin/' + this.props.scanner.matches.id);
-                }}
-              >
-                {this.props.scanner.matches.name}
-              </a>
-            }
           </Modal.Body>
         </Modal>
       </div>
@@ -242,7 +241,12 @@ const commands = {
   setCollectionId$,
   toggleEnabled$,
   scanForOldBarCode$,
-  prepareSearch$
+  prepareSearch$,
+  clearBuffer$
 };
 
-export default notifiable(inject(data, commands)(App));
+const props = {
+  goTo: hashHistory.push.bind(hashHistory)
+};
+
+export default notifiable(inject(data, commands, props)(App));
