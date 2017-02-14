@@ -3,10 +3,10 @@ import MusitNode from '../../models/node';
 import { createStore } from 'react-rxjs/dist/RxStore';
 
 export const clear$ = new Subject();
-export const loadChildren$ = new Subject().switchMap(cmd => MusitNode.getNodes()(cmd));
-export const loadNode$ = new Subject().switchMap(cmd => MusitNode.getNode()(cmd));
+export const loadChildren$ = new Subject().switchMap(MusitNode.getNodes());
+export const loadNode$ = new Subject().switchMap(MusitNode.getNode());
 
-const initialState = {
+export const initialState = {
   selectedNode: null,
   data: {
     totalMatches: 0,
