@@ -1011,27 +1011,6 @@ exports[`NodePanel should render properly  1`] = `
                     componentClass="div">
                     <br />
                     <br />
-                    <function SaveCancel(props) {/* istanbul ignore next */_classCallCheck(this, SaveCancel);var _this = _possibleConstructorReturn(this, (SaveCancel.__proto__ || Object.getPrototypeOf(SaveCancel)).call(this, props)); /* istanbul ignore next */var id =
-                    
-                    
-                    
-                        props.id,saveDisabled = props.saveDisabled,onClickSave = props.onClickSave,cancelDisabled = props.cancelDisabled,onClickCancel = props.onClickCancel;
-                        /* istanbul ignore next */_this.fields = {
-                          save: {
-                            id: /* istanbul ignore next */'Save_' + (id || 1),
-                            onClick: onClickSave,
-                            disabled: saveDisabled },
-                    
-                          cancel: {
-                            id: /* istanbul ignore next */'Cancel_' + (id || 1),
-                            onClick: onClickCancel,
-                            disabled: cancelDisabled } }; /* istanbul ignore next */return _this;
-                    
-                    
-                      }
-                      onClickCancel={[Function onClickCancel]}
-                      onClickSave={[Function bound handleSubmit]}
-                      saveDisabled={undefined} />
                   </function Row() {
                       (0, _classCallCheck3['default'])(this, Row);
                       return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
