@@ -1163,7 +1163,7 @@
           "buildingAllowed": "Bare typen bygg er tillatt på dette nivå.",
           "organisationAllowedToMove": "Kun noder av type Organisasjon kan flyttes til en rotnode.",
           "buildingAllowedToMove": "Kun noder av type Bygg kan flyttes til en node type Organisasjon.",
-          "notAllowedToMove": "En node kan ikke flyttes inn i selv.",
+          "notAllowedToMove": "En node kan ikke flyttes inn i seg selv.",
           "placeHolder": "Vennligst velg...",
           "tooltip": "Nodens type",
           "items": {

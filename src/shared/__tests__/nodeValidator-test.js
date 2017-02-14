@@ -222,7 +222,7 @@ describe('Test node validation', () => {
 
   it('checkNodeBranchAndType fail', () => {
     const output = checkNodeBranchAndType(from_node_11, to_node_21);
-    expect(output.includes('En node kan ikke flyttes inn i selv')).toBe(true);
+    expect(output.includes('En node kan ikke flyttes inn i seg selv')).toBe(true);
   });
 
   it('checkNodeBranchAndType pass', () => {
@@ -242,7 +242,7 @@ describe('Test node validation', () => {
 
   it('checkNodeBranch fail', () => {
     const output = checkNodeBranch(from_node_11, to_node_21);
-    expect(output.includes('En node kan ikke flyttes inn i selv')).toBe(true);
+    expect(output.includes('En node kan ikke flyttes inn i seg selv')).toBe(true);
   });
 
   it('checkNodeBranch pass', () => {
