@@ -17,7 +17,8 @@
           "ef4dc066-b6f8-4155-89f8-7aa9aeeb2dc4": "Marine invertebrates",
           "d0dd5ad3-c22f-4ea0-8b52-dc5b0e17aa24": "Bryophyte",
           "8bbdf9b3-56d1-479a-9509-2ea82842e8f8": "Numismatic",
-          "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Fungi"
+          "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Fungi",
+          "00000000-0000-0000-0000-000000000000": "All"
         },
         "museums": "Museum"
       },
@@ -645,7 +646,8 @@
           "ef4dc066-b6f8-4155-89f8-7aa9aeeb2dc4": "Marine evertebrater",
           "d0dd5ad3-c22f-4ea0-8b52-dc5b0e17aa24": "Mose",
           "8bbdf9b3-56d1-479a-9509-2ea82842e8f8": "Numismatikk",
-          "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Sopp"
+          "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Sopp",
+          "00000000-0000-0000-0000-000000000000": "Alle"
         },
         "museums": "Museum"
       },
