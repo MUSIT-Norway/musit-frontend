@@ -7,7 +7,18 @@
         "loggedIn": "Logged in as %{name}",
         "logout": "Logout",
         "collection": "Collection",
-        "museums": "Museum"
+        "museum": "Museum",
+        "museums": {
+          "1": "AM",
+          "2": "UM",
+          "3": "KHM",
+          "4": "NHM",
+          "5": "VM",
+          "6": "TMU",
+          "7": "KMN",
+          "99": "Test",
+          "10000": "All"
+        }
       },
       "errorMainMessages": {
         "applicationError": "Application error.",
@@ -623,7 +634,18 @@
         "loggedIn": "Logget inn som %{name}",
         "logout": "Logg ut",
         "collection": "Samling",
-        "museums": "Museum"
+        "museum": "Museum",
+        "museums": {
+          "1": "AM",
+          "2": "UM",
+          "3": "KHM",
+          "4": "NHM",
+          "5": "VM",
+          "6": "TMU",
+          "7": "KMN",
+          "99": "Test",
+          "10000": "Alle"
+        }
       },
       "errorMainMessages": {
         "applicationError": "Applikasjonsfeil.",
