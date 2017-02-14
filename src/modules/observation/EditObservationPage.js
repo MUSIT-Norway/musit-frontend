@@ -86,7 +86,7 @@ export class EditObservationPage extends React.Component {
                 this.props.addObservation({ nodeId, museumId, controlData, observations, token, callback: {
                   onComplete: () => {
                     hashHistory.goBack();
-                    this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
+                    this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess') });
                   },
                   onFailure: (e) => this.props.emitError({ ...e, type: 'network' })
                 }});
