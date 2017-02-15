@@ -135,16 +135,16 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   onClickCrumb(node) {
-    hashHistory.push(node.url);
+    this.props.goTo(node.url);
   }
 
   showNodes(
     node = this.props.store.rootNode
   ) {
     if (node && node.id) {
-      hashHistory.push(`/magasin/${node.id}`);
+      this.props.goTo(`/magasin/${node.id}`);
     } else {
-      hashHistory.push('/magasin');
+      this.props.goTo('/magasin');
     }
   }
 
@@ -152,9 +152,9 @@ export class StorageUnitsContainer extends React.Component {
     node = this.props.store.rootNode
   ) {
     if (node) {
-      hashHistory.push(`/magasin/${node.id}/objects`);
+      this.props.goTo(`/magasin/${node.id}/objects`);
     } else {
-      hashHistory.push('/magasin');
+      this.props.goTo('/magasin');
     }
   }
 
@@ -330,21 +330,21 @@ export class StorageUnitsContainer extends React.Component {
           showButtons={rootNode && !rootNode.isRootNode()}
           onClickNewNode={() => {
             if (rootNode.id) {
-              hashHistory.push(`/magasin/${rootNode.id}/add`);
+              this.props.goTo(`/magasin/${rootNode.id}/add`);
             } else {
-              hashHistory.push('/magasin/add');
+              this.props.goTo('/magasin/add');
             }
           }}
           stats={stats}
           onClickProperties={() => {
-            hashHistory.push({
+            this.props.goTo({
               pathname: `/magasin/${rootNode.id}/view`,
               state: rootNode
             });
           }}
-          onClickControlObservations={() => hashHistory.push(`/magasin/${rootNode.id}/controlsobservations`)}
-          onClickObservations={() => hashHistory.push(`/magasin/${rootNode.id}/observations`)}
-          onClickController={() => hashHistory.push(`/magasin/${rootNode.id}/controls`)}
+          onClickControlObservations={() => this.props.goTo(`/magasin/${rootNode.id}/controlsobservations`)}
+          onClickObservations={() => this.props.goTo(`/magasin/${rootNode.id}/observations`)}
+          onClickController={() => this.props.goTo(`/magasin/${rootNode.id}/controls`)}
           onClickMoveNode={() => moveNode(rootNode)}
           onClickDelete={() => {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
@@ -445,10 +445,10 @@ export class StorageUnitsContainer extends React.Component {
         <NodeGrid
           tableData={matches && matches[0] && !!matches[0].name ?
             filter(matches, ['name'], searchPattern) : []}
-          goToEvents={(node) => hashHistory.push(`/magasin/${node.id}/controlsobservations`)}
+          goToEvents={(node) => this.props.goTo(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
           pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
-          onClick={(node) => hashHistory.push(`/magasin/${node.id}`)}
+          onClick={(node) => this.props.goTo(`/magasin/${node.id}`)}
         />
         {showPaging &&
           <PagingToolbar
@@ -501,7 +501,8 @@ const props = {
   pickObject: MusitObject.pickObject(addObject$),
   deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
   emitError,
-  emitSuccess
+  emitSuccess,
+  goTo: hashHistory.push.bind(hashHistory)
 };
 
 export default inject(data, commands, props)(StorageUnitsContainer);

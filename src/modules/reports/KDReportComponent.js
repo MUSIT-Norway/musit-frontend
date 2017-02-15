@@ -1,26 +1,28 @@
-import React from 'react';
+import React, { PropTypes, Component } from 'react';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import { formatFloatToString } from './../../shared/util';
 import { Observable } from 'rxjs';
-import reportStore$, { loadKDReport$, clear$ } from './reportStore';
+import store$, { loadKDReport$, clear$ } from './reportStore';
 import inject from 'react-rxjs/dist/RxInject';
 
-export class KDReport extends React.Component {
-  static propTypes= {
-    data: React.PropTypes.object,
-    loadKDReport: React.PropTypes.func
+export class KDReport extends Component {
+  static propTypes = {
+    store: PropTypes.object.isRequired,
+    appSession: PropTypes.object.isRequired,
+    loadKDReport: PropTypes.func.isRequired,
+    clear: PropTypes.func.isRequired
   };
 
   componentWillMount() {
     const museumId = this.props.appSession.getMuseumId();
     const token = this.props.appSession.getAccessToken();
-    this.props.loadKDReport({museumId, token});
+    this.props.clear();
+    this.props.loadKDReport({ museumId, token });
   }
 
   render() {
     const data = this.props.store.data.kdreport;
-
     return (
       <div>
         <main>
@@ -70,7 +72,7 @@ export class KDReport extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  store$: reportStore$
+  store$
 };
 
 const commands = {
@@ -78,4 +80,4 @@ const commands = {
   clear$
 };
 
-export default inject(data,commands)(KDReport);
+export default inject(data, commands)(KDReport);
