@@ -20,6 +20,9 @@ export class ObjectSearchComponent extends React.Component {
       perPage: 50,
       currentPage: 1
     };
+    this.getMuseumNo = props.getMuseumNo || (() => this.museumNo.value);
+    this.getSubNo = props.getSubNo || (() => this.subNo.value);
+    this.getTerm = props.getTerm || (() => this.term.value);
   }
 
   render() {
@@ -176,11 +179,12 @@ export class ObjectSearchComponent extends React.Component {
   searchForObjects(page) {
     this.setState({...this.state, currentPage: page});
     this.props.clearSearch();
+    console.log(this.museumNo);
     return this.props.searchForObjects({
       params: {
-        museumNo: this.museumNo.value,
-        subNo: this.subNo.value,
-        term: this.term.value,
+        museumNo: this.getMuseumNo(),
+        subNo: this.getSubNo(),
+        term: this.getTerm(),
         perPage: this.state.perPage
       },
       page,
