@@ -129,6 +129,3 @@ export const getLocationPath = () => {
   }
   return hash.substr(1, hash.indexOf('?') - 1);
 };
-
-export const getState = (id: string, field: string) => global.reduxStore.getState()[id][field];
-export const dispatchAction = (action: any) => global.reduxStore.dispatch(action);

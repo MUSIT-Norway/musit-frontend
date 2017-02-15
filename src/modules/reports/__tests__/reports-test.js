@@ -3,6 +3,7 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import ReportsOverview from '../ReportsOverview';
 import { KDReport } from '../KDReportComponent';
+import sinon from 'sinon';
 
 describe('Reports overview', () => {
   it('should display correctly', () => {
@@ -13,6 +14,8 @@ describe('Reports overview', () => {
 
 describe('KDReportComponent', () => {
   it('should display correctly', () => {
+    const clear = sinon.spy();
+    const loadKDReport = sinon.spy();
     const wrapper = shallow(<KDReport
       store={{
         data: {
@@ -22,10 +25,18 @@ describe('KDReportComponent', () => {
             theftProtection: 234.2,
             fireProtection: 34.3,
             waterDamageAssessment: 234.3,
-            routinesAndContingencyPlan: 2334.3}}}}
+            routinesAndContingencyPlan: 2334.3
+          }
+        }
+      }}
       appSession={{ getMuseumId: () => 1, getAccessToken: () => 'xxxx-xxxx-xxxx-xxxx' }}
-      loadKDReport={() => true}
+      loadKDReport={loadKDReport}
+      clear={clear}
     />);
+    expect(clear.callCount).toBe(1);
+    expect(loadKDReport.callCount).toBe(1);
+    expect(loadKDReport.getCall(0).args[0].token).toBe('xxxx-xxxx-xxxx-xxxx');
+    expect(loadKDReport.getCall(0).args[0].museumId).toBe(1);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
