@@ -423,11 +423,13 @@ export default class NodeDetails extends Component {
                             return <p style={{ color: 'red' }} key={index}>{error}</p>;
                           })}
                           <br />
+                          {this.props.loaded &&
                           <SaveCancel
                             saveDisabled={this.props.loading}
                             onClickSave={this.handleSubmit}
                             onClickCancel={() => hashHistory.goBack()}
                           />
+                          }
                         </Row>
                         <Row>
                           <Col sm={8} />
