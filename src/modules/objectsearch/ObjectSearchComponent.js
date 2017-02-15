@@ -20,6 +20,9 @@ export class ObjectSearchComponent extends React.Component {
       perPage: 50,
       currentPage: 1
     };
+    this.getMuseumNo = props.getMuseumNo || (() => this.museumNo.value);
+    this.getSubNo = props.getSubNo || (() => this.subNo.value);
+    this.getTerm = props.getTerm || (() => this.term.value);
   }
 
   render() {
@@ -37,6 +40,7 @@ export class ObjectSearchComponent extends React.Component {
                 {this.renderParam('term', {width: '440px'})}
                 {' '}
                 <Button
+                  className="SubmitButton"
                   type="submit"
                   onClick={(e) => {
                     e.preventDefault();
@@ -174,13 +178,12 @@ export class ObjectSearchComponent extends React.Component {
 
   searchForObjects(page) {
     this.setState({...this.state, currentPage: page});
+    this.props.clearSearch();
     return this.props.searchForObjects({
-      params: {
-        museumNo: this.museumNo.value,
-        subNo: this.subNo.value,
-        term: this.term.value,
-        perPage: this.state.perPage
-      },
+      museumNo: this.getMuseumNo(),
+      subNo: this.getSubNo(),
+      term: this.getTerm(),
+      perPage: this.state.perPage,
       page,
       museumId: this.props.appSession.getMuseumId(),
       collectionId: this.props.appSession.getCollectionId(),

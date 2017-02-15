@@ -21,13 +21,13 @@ export default {
           `/api/thingaggregate/${mid.getPath()}`,
         scanOldUrl: (oldBarcode, mid, collectionId) =>
           `/api/thingaggregate/${mid.getPath()}/scan?oldBarcode=${oldBarcode}&${collectionId.getQuery()}`,
-        searchObjectUrl: (params, page, collectionId, museumId) : string => {
+        searchObjectUrl: (museumNo, subNo, term, perPage, page, collectionId, museumId) : string => {
           const baseUrl = `/api/thingaggregate/${museumId.getPath()}/objects/search`;
-          const museumNoQuery = `museumNo=${params.museumNo || ''}`;
-          const subNoQuery = `subNo=${params.subNo || ''}`;
-          const termQuery = `term=${params.term || ''}`;
+          const museumNoQuery = `museumNo=${museumNo || ''}`;
+          const subNoQuery = `subNo=${subNo || ''}`;
+          const termQuery = `term=${term || ''}`;
           const pageQuery = `page=${page || ''}`;
-          const limitQuery = `limit=${params.perPage || ''}`;
+          const limitQuery = `limit=${perPage || ''}`;
           return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
         }
       },

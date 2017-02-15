@@ -133,8 +133,8 @@ MusitObject.findByBarcode = (ajaxGet = simpleGet) => ({ barcode, museumId, colle
     .map(({response}) => response && response.map(r => new MusitObject(r)));
 
 
-MusitObject.searchForObjects = (ajaxGet) => (params, page, museumId, collectionId, token, callback) => {
-  const url = Config.magasin.urls.thingaggregate.searchObjectUrl(params, page, collectionId, museumId);
+MusitObject.searchForObjects = (ajaxGet = simpleGet) => ({ museumNo, subNo, term, perPage, page, museumId, collectionId, token, callback }) => {
+  const url = Config.magasin.urls.thingaggregate.searchObjectUrl(museumNo, subNo, term, perPage, page, collectionId, museumId);
   return ajaxGet(url, token, callback)
     .map(({ response }) => response)
     .map(data => {
