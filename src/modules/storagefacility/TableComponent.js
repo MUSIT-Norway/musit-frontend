@@ -269,7 +269,7 @@ export class StorageUnitsContainer extends React.Component {
         this.props.emitError({
           type: 'errorOnMove',
           error: e,
-          message: I18n.t('musit.moveModal.messages.errorObject', {name: description.name, destination: toName})
+          message: I18n.t('musit.moveModal.messages.errorObject', {name: description, destination: toName})
         });
       }
     }});
