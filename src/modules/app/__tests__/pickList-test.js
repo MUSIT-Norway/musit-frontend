@@ -31,7 +31,7 @@ describe('pickList', () => {
     const clearObjects      = '----------x---------------';
     const addObject         = '---1---------------1--2---';
     const refreshObjects    = '---------------------1--2-';
-    const clear             = '-------------------------x';
+    const clearPicklist     = '-------------------------x';
     const expected          = 'a--de---fng-hijkjlop-rs-uv';
 
     const expectedStateMap = {
@@ -107,7 +107,7 @@ describe('pickList', () => {
         })
       }
     ));
-    const clear$ = testScheduler.createHotObservable(clear);
+    const clearPicklist$ = testScheduler.createHotObservable(clearPicklist);
 
     const state$ = reducer$({
       clearObjects$,
@@ -122,7 +122,7 @@ describe('pickList', () => {
       refreshNode$,
       refreshMainObject$,
       refreshObjects$,
-      clear$
+      clearPicklist$
     });
 
     // assertion

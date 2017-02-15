@@ -17,7 +17,7 @@ export const removeNode$ = createAction('removeNode$');
 export const toggleNode$ = createAction('toggleNode$');
 export const clearNodes$ = createAction('clearNodes$');
 export const refreshNode$ = createAction('refreshNode$').flatMap(MusitNode.getNode());
-export const clear$ = createAction('clear$');
+export const clearPicklist$ = createAction('clearPicklist$');
 
 const addItem = (item, items = []) => {
   if (items.findIndex(node => item.value.id === node.value.id) > -1) {
@@ -116,7 +116,7 @@ export const reducer$ = (actions) => Observable.empty().merge(
   actions.addNode$.map((item) => (state) => ({...state, nodes: addItem(item, state.nodes)})),
   actions.refreshNode$.map((item) => (state) => ({...state, nodes: refreshItem(item, state.nodes)})),
   actions.clearNodes$.map(() => (state) => ({...state, nodes: []})),
-  actions.clear$.map(() => (state) => ({...state, nodes: [], objects: []}))
+  actions.clearPicklist$.map(() => (state) => ({...state, nodes: [], objects: []}))
 );
 
 export default createStore('pickList', reducer$({
@@ -131,7 +131,7 @@ export default createStore('pickList', reducer$({
   toggleMainObject$,
   refreshObjects$,
   clearObjects$,
-  clear$
+  clearPicklist$
 }), Observable.of({ nodes: [], objects: []}))
   .map(state => ({
     nodes: orderBy(state.nodes, [(o) => customSortingStorageNodeType(o.value.type), (o) => toLower(o.value.name)]),
