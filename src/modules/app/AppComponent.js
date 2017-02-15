@@ -55,7 +55,6 @@ export class AppComponent extends Component {
       })
     }).then(response => {
       if (response.ok) {
-        localStorage.removeItem('jwtToken');
         localStorage.removeItem('accessToken');
         window.location.replace('https://auth.dataporten.no/logout');
       }
