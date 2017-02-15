@@ -64,6 +64,7 @@ export class StorageUnitsContainer extends React.Component {
     super(props);
     this.state = { searchPattern: '' };
     this.loadNodes = this.loadNodes.bind(this);
+    this.loadRootNode = this.loadRootNode.bind(this);
     this.loadObjects = this.loadObjects.bind(this);
     this.moveNode = this.moveNode.bind(this);
     this.moveObject = this.moveObject.bind(this);
@@ -207,13 +208,15 @@ export class StorageUnitsContainer extends React.Component {
     token = this.props.appSession.getAccessToken(),
     nodeId = this.props.store.rootNode.id,
     moveNode = this.props.moveNode,
-    loadNodes = this.loadNodes
+    loadNodes = this.loadNodes,
+    loadRootNode = this.loadRootNode
   ) => (toNode, toName, onSuccess) => {
     const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
     if (!errorMessage) {
       nodeToMove.moveNode({ destination: toNode.id, doneBy: userId, museumId, token, callback: {
         onComplete: () => {
           onSuccess();
+          loadRootNode(nodeId, museumId, token);
           loadNodes(nodeId);
           this.props.emitSuccess({
             type: 'movedSuccess',
@@ -269,7 +272,7 @@ export class StorageUnitsContainer extends React.Component {
         this.props.emitError({
           type: 'errorOnMove',
           error: e,
-          message: I18n.t('musit.moveModal.messages.errorObject', {name: description.name, destination: toName})
+          message: I18n.t('musit.moveModal.messages.errorObject', {name: description, destination: toName})
         });
       }
     }});

@@ -59,22 +59,22 @@ describe ('NodeTable' ,() => {
 
   it('check clickNameClick', () => {
     wrapper.find('.onClickName').first().simulate('click',dummyArg);
-    e(onClick.calledOnce).to.be.true;
+    e(onClick.calledOnce).to.equal(true);
   });
 
 
   it('check click onMove', () => {
     wrapper.find('.onMoveClick').first().simulate('click',dummyArg);
-    e(onMove.calledOnce).to.be.true;
+    e(onMove.calledOnce).to.equal(true);
   });
 
   it('check click goToEventClick', () => {
     wrapper.find('.goToEventClick').first().simulate('click',dummyArg);
-    e(goToEvents.calledOnce).to.be.true;
+    e(goToEvents.calledOnce).to.equal(true);
   });
 
   it('check click onPickClick', () => {
     wrapper.find('.onPickClick').first().simulate('click',dummyArg);
-    e(pickNode.calledOnce).to.be.true;
+    e(pickNode.calledOnce).to.equal(true);
   });
 });

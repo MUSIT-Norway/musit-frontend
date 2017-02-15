@@ -58,7 +58,7 @@ describe ('ObjectTable' ,() => {
 
   it('check pickObject', () => {
     wrapper.find('.onPickObject').first().simulate('click',dummyArg);
-    e(pickObject.calledOnce).to.be.true;
+    e(pickObject.calledOnce).to.equal(true);
   });
 
   it('check pickObjects', () => {
@@ -68,12 +68,12 @@ describe ('ObjectTable' ,() => {
 
   it('check click onMove', () => {
     wrapper.find('.onMoveClick').first().simulate('click',dummyArg);
-    e(onMove.calledOnce).to.be.true;
+    e(onMove.calledOnce).to.equal(true);
   });
 
   it('check click onShowMoveHistory', () => {
     wrapper.find('.onShowMoveHistory').first().simulate('click',dummyArg);
-    e(showMoveHistory.calledOnce).to.be.true;
+    e(showMoveHistory.calledOnce).to.equal(true);
   });
 
 });
