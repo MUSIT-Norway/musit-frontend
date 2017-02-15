@@ -179,14 +179,11 @@ export class ObjectSearchComponent extends React.Component {
   searchForObjects(page) {
     this.setState({...this.state, currentPage: page});
     this.props.clearSearch();
-    console.log(this.museumNo);
     return this.props.searchForObjects({
-      params: {
-        museumNo: this.getMuseumNo(),
-        subNo: this.getSubNo(),
-        term: this.getTerm(),
-        perPage: this.state.perPage
-      },
+      museumNo: this.getMuseumNo(),
+      subNo: this.getSubNo(),
+      term: this.getTerm(),
+      perPage: this.state.perPage,
       page,
       museumId: this.props.appSession.getMuseumId(),
       collectionId: this.props.appSession.getCollectionId(),

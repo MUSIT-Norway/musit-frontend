@@ -116,8 +116,8 @@ describe('objectSearchStore', () => {
     const clearSearch$ =  new Subject();
     const searchForObjects$ = testScheduler.createHotObservable(searchForObjectsdM,
       {x: { params: {}, token: '12344', museumId: new MusemId(1), collectionId: new CollectionId('12345')}}
-    ).switchMap(searchForObjects({
-      simpleGet: () => {
+    ).switchMap(searchForObjects(
+      () => {
         return Observable.of({
           response:  {
             'totalMatches':31,
@@ -223,7 +223,7 @@ describe('objectSearchStore', () => {
           }
         });
       }
-    }));
+    ));
     const onChangeField$ = testScheduler.createHotObservable(onChangeFieldM, {x: {field: 'test', value: 'hallo'}});
 
     const state$ = reducer$({clearSearch$, searchForObjects$, onChangeField$});

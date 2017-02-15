@@ -64,9 +64,6 @@ describe('ObjectSearchComponent', () => {
           data: testData,
           params: {
             currentPage: 1,
-            museumNo: '1234',
-            subNo: '455',
-            term: 'Lololol',
             perPage: 5
           }
         }}
@@ -81,9 +78,9 @@ describe('ObjectSearchComponent', () => {
     expect(searchForObjects.getCall(0).args[0].collectionId.uuid).toBe('ddd');
     expect(searchForObjects.getCall(0).args[0].museumId.id).toBe(99);
     expect(searchForObjects.getCall(0).args[0].page).toBe(1);
-    expect(searchForObjects.getCall(0).args[0].params.museumNo).toBe('kaka');
-    expect(searchForObjects.getCall(0).args[0].params.subNo).toBe('12');
-    expect(searchForObjects.getCall(0).args[0].params.term).toBe('a special kake');
-    expect(searchForObjects.getCall(0).args[0].params.perPage).toBe(50);
+    expect(searchForObjects.getCall(0).args[0].museumNo).toBe('kaka');
+    expect(searchForObjects.getCall(0).args[0].subNo).toBe('12');
+    expect(searchForObjects.getCall(0).args[0].term).toBe('a special kake');
+    expect(searchForObjects.getCall(0).args[0].perPage).toBe(50);
   });
 });
