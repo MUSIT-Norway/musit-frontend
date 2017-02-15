@@ -20,7 +20,18 @@
           "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Fungi",
           "00000000-0000-0000-0000-000000000000": "All"
         },
-        "museums": "Museum"
+        "museum": "Museum",
+        "museums": {
+          "1": "AM",
+          "2": "UM",
+          "3": "KHM",
+          "4": "NHM",
+          "5": "VM",
+          "6": "TMU",
+          "7": "KMN",
+          "99": "Test",
+          "10000": "All"
+        }
       },
       "errorMainMessages": {
         "applicationError": "Application error.",
@@ -30,7 +41,12 @@
         "notAuthenticated": "You are not logged in.",
         "badRequest": "Invalid data was rejected by the server.",
         "errorCode": "HTTP error code: %{status}",
-        "noGroups": "You do not have access to MUSITbasen. Please contact your Database Coordinator."
+        "noGroups": "You do not have access to MUSITbasen. Please contact your Database Coordinator.",
+        "scanner": {
+          "title": "Search for node or object",
+          "search": "Search",
+          "noMatchingNodeOrObject": "No matching node or object"
+        }
       },
       "notificationMessages": {
         "deleting": "Delete",
@@ -649,7 +665,18 @@
           "23ca0166-5f9e-44c2-ab0d-b4cdd704af07": "Sopp",
           "00000000-0000-0000-0000-000000000000": "Alle"
         },
-        "museums": "Museum"
+        "museum": "Museum",
+        "museums": {
+          "1": "AM",
+          "2": "UM",
+          "3": "KHM",
+          "4": "NHM",
+          "5": "VM",
+          "6": "TMU",
+          "7": "KMN",
+          "99": "Test",
+          "10000": "Alle"
+        }
       },
       "errorMainMessages": {
         "applicationError": "Applikasjonsfeil.",
@@ -659,7 +686,12 @@
         "notAuthenticated": "Du er ikke logget inn.",
         "badRequest": "Ugyldige data ble sendt til serveren.",
         "errorCode": "HTTP feilkode: %{status}",
-        "noGroups": "Du har ikke tilgang til MUSITbasen. Vennligst kontakt din Databasekoordinator."
+        "noGroups": "Du har ikke tilgang til MUSITbasen. Vennligst kontakt din Databasekoordinator.",
+        "scanner": {
+          "title": "Søk etter node eller objekt",
+          "search": "Søk",
+          "noMatchingNodeOrObject": "Fant ingen node eller objekt"
+        }
       },
       "notificationMessages": {
         "deleting": "Sletting",
@@ -1131,7 +1163,7 @@
           "buildingAllowed": "Bare typen bygg er tillatt på dette nivå.",
           "organisationAllowedToMove": "Kun noder av type Organisasjon kan flyttes til en rotnode.",
           "buildingAllowedToMove": "Kun noder av type Bygg kan flyttes til en node type Organisasjon.",
-          "notAllowedToMove": "En node kan ikke flyttes inn i selv.",
+          "notAllowedToMove": "En node kan ikke flyttes inn i seg selv.",
           "placeHolder": "Vennligst velg...",
           "tooltip": "Nodens type",
           "items": {

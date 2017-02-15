@@ -1,0 +1,233 @@
+exports[`NodeTable should render properly  1`] = `
+<div>
+  <FormGroup
+    bsClass="form-group">
+    <div>
+      <Table
+        bordered={false}
+        bsClass="table"
+        condensed={true}
+        hover={true}
+        responsive={true}
+        striped={false}>
+        <thead>
+          <tr>
+            <th>
+              Navn
+            </th>
+            <th>
+              Type
+            </th>
+            <th />
+            <th />
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <a
+                className="onClickName"
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 NHM
+              </a>
+            </td>
+            <td>
+              Organisasjon
+            </td>
+            <td />
+            <td />
+            <td />
+          </tr>
+          <tr>
+            <td>
+              <a
+                className="onClickName"
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 KHM
+              </a>
+            </td>
+            <td>
+              Organisasjon
+            </td>
+            <td />
+            <td />
+            <td />
+          </tr>
+          <tr>
+            <td>
+              <a
+                className="onClickName"
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Bygg 1
+              </a>
+            </td>
+            <td>
+              Bygg
+            </td>
+            <td>
+              <a
+                className="goToEventClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Observasjoner og kontroller">
+                <span
+                  className="icon icon-musitcontrolobsicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt noden">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onPickClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                className="onClickName"
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Bygg 2
+              </a>
+            </td>
+            <td>
+              Bygg
+            </td>
+            <td>
+              <a
+                className="goToEventClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Observasjoner og kontroller">
+                <span
+                  className="icon icon-musitcontrolobsicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt noden">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onPickClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a
+                className="onClickName"
+                href=""
+                onClick={[Function onClick]}>
+                <FontAwesome
+                  name="folder" />
+                 Rom 1
+              </a>
+            </td>
+            <td>
+              Rom
+            </td>
+            <td>
+              <a
+                className="goToEventClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Observasjoner og kontroller">
+                <span
+                  className="icon icon-musitcontrolobsicon" />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onMoveClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Flytt noden">
+                <FontAwesome
+                  name="truck"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+            <td>
+              <a
+                className="onPickClick"
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.5em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+    </div>
+  </FormGroup>
+</div>
+`;

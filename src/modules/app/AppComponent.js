@@ -3,7 +3,7 @@ import 'react-select/dist/react-select.css';
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Modal, Button, Form, FormGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
@@ -15,15 +15,21 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
+import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$, clearBuffer$ } from './scanner';
 
 export class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     appSession: PropTypes.instanceOf(AppSession).isRequired,
+    scanner: PropTypes.object.isRequired,
+    prepareSearch: PropTypes.func.isRequired,
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
-    pickList: PropTypes.object.isRequired
+    pickList: PropTypes.object.isRequired,
+    scanForOldBarCode: PropTypes.func.isRequired,
+    goTo: PropTypes.func.isRequired,
+    clearBuffer: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -32,6 +38,7 @@ export class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.handleMuseumId = this.handleMuseumId.bind(this);
     this.handleCollectionId = this.handleCollectionId.bind(this);
+    this.searchForBarCode = this.searchForBarCode.bind(this);
   }
 
   componentWillMount() {
@@ -74,6 +81,16 @@ export class App extends Component {
     }
   }
 
+  searchForBarCode() {
+    this.props.prepareSearch();
+    this.props.scanForOldBarCode({
+      barcode: this.props.scanner.code,
+      token: this.props.appSession.getAccessToken(),
+      museumId: this.props.appSession.getMuseumId(),
+      collectionId: this.props.appSession.getCollectionId()
+    });
+  }
+
   getFooterClass(){
     let returnClassName;
     if (window.location.href.toLowerCase().includes('test:')) {
@@ -87,15 +104,24 @@ export class App extends Component {
     }
     return returnClassName;
   }
+
   render() {
     if (!this.props.appSession.getAccessToken()) {
       return (
         <LoginComponent />
       );
     }
+
     if (!this.props.appSession.getBuildNumber()) {
       return <Loader loaded={false} />;
     }
+
+    if (this.props.scanner.matches && this.props.scanner.matches && !Array.isArray(this.props.scanner.matches)) {
+      this.props.clearBuffer();
+      this.props.goTo('/magasin/' + this.props.scanner.matches.id);
+      return null;
+    }
+
     return (
       <div>
         <Navbar fixedTop style={{ zIndex:1 }}>
@@ -120,6 +146,23 @@ export class App extends Component {
               </LinkContainer>
             </Nav>
             <Nav pullRight>
+              <LinkContainer to="/picklist/nodes">
+                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.pickList.nodes.length}</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/picklist/objects">
+                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.pickList.objects.length}</NavItem>
+              </LinkContainer>
+              <LinkContainer to={'/search/objects'}>
+                <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em', height: 25 }} /></NavItem>
+              </LinkContainer>
+              <LinkContainer to={'/scan'} active={this.props.scanner.enabled} onClick={(e) => {
+                e.preventDefault();
+                this.props.toggleEnabled();
+              }}>
+                <NavItem>
+                  <img src={require('./scanIcon.png')} height={25} alt="scan" />
+                </NavItem>
+              </LinkContainer>
               <MusitUserAccount
                 actor={this.props.appSession.getActor()}
                 groups={this.props.appSession.getGroups()}
@@ -133,19 +176,6 @@ export class App extends Component {
                 rootNode={this.props.rootNode}
               />
             </Nav>
-            <Nav pullRight>
-              <LinkContainer to={'/search/objects'}>
-                <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em' }} /></NavItem>
-              </LinkContainer>
-            </Nav>
-            <Nav pullRight>
-              <LinkContainer to="/picklist/nodes">
-                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.pickList.nodes.length}</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/picklist/objects">
-                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.pickList.objects.length}</NavItem>
-              </LinkContainer>
-            </Nav>
           </Navbar.Collapse>
         </Navbar>
 
@@ -156,20 +186,70 @@ export class App extends Component {
         <footer className={this.getFooterClass()}>
           {'Build number: ' + this.props.appSession.getBuildNumber()}
         </footer>
+
+        <Modal show={this.props.scanner.enabled && !!this.props.scanner.code} bsSize="small" onHide={() => this.props.clearBuffer()}>
+          <Modal.Header closeButton>
+            <Modal.Title>{I18n.t('musit.errorMainMessages.scanner.title')}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form inline>
+              <FormGroup controlId="barCode">
+                <input type="text" className="form-control" readOnly value={this.props.scanner.code || ''}/>
+              </FormGroup>
+              <Button bsStyle="success" onClick={this.searchForBarCode}>{I18n.t('musit.errorMainMessages.scanner.search')}</Button>
+            </Form>
+            <Loader loaded={!this.props.scanner.searchPending} />
+            {this.props.scanner.searchComplete && (!this.props.scanner.matches || this.props.scanner.matches.length === 0) &&
+              <center>{I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject')}</center>
+            }
+            {this.props.scanner.matches && Array.isArray(this.props.scanner.matches) && this.props.scanner.matches.length > 0 &&
+              <ul>
+              {this.props.scanner.matches.map(match => {
+                return (
+                  <li>
+                    {this.props.params.id ?
+                      <a
+                        onClick={e => {
+                          e.preventDefault();
+                          hashHistory.push('/magasin/' + match.currentLocationId + '/objects');
+                        }}
+                      >
+                        {match.getObjectDescription()}
+                      </a> : match.getObjectDescription()}
+                  </li>
+                );
+              })}
+              </ul>
+            }
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
 }
 
 const data = {
-  appSession$: { type: PropTypes.object.isRequired },
+  appSession$: {
+    type: PropTypes.object.isRequired,
+    mapToProps: (appSession$) => ({
+      scanner$: scanner$(appSession$)
+    })
+  },
   pickList$: { type: PropTypes.object.isRequired }
 };
 
 const commands = {
   loadAppSession$,
   setMuseumId$,
-  setCollectionId$
+  setCollectionId$,
+  toggleEnabled$,
+  scanForOldBarCode$,
+  prepareSearch$,
+  clearBuffer$
 };
 
-export default notifiable(inject(data, commands)(App));
+const props = {
+  goTo: hashHistory.push.bind(hashHistory)
+};
+
+export default notifiable(inject(data, commands, props)(App));

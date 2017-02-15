@@ -39,7 +39,7 @@ export default class NodeGrid extends Component {
                   const isRoot = c.isRootNode();
                   return <tr key={i}>
                     <td>
-                      <a
+                      <a className="onClickName"
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -54,7 +54,7 @@ export default class NodeGrid extends Component {
                       {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
                     </td>
                     <td>
-                      {!isRoot && <a
+                      {!isRoot && <a className="goToEventClick"
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -66,7 +66,7 @@ export default class NodeGrid extends Component {
                       </a>}
                     </td>
                     <td>
-                      {!isRoot && <a
+                      {!isRoot && <a className="onMoveClick"
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -78,7 +78,7 @@ export default class NodeGrid extends Component {
                       </a>}
                     </td>
                     <td>
-                      {!isRoot && <a
+                      {!isRoot && <a className="onPickClick"
                         href=""
                         onClick={(e) => {
                           e.preventDefault();

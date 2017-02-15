@@ -66,9 +66,9 @@ export default class MusitUserAccount extends Component {
 
     return (
       <OverlayTrigger overlay={tooltip} placement="left">
-        <Dropdown id="dropdown-custom-1" style={{ marginTop: 10 }} >
-          <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed' }}>
-            <FontAwesome name="user" size="lg" />
+        <Dropdown id="dropdown-custom-1">
+          <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: '#edededed', height: '55px' }}>
+            <FontAwesome name="user" size="lg"/>
           </Dropdown.Toggle>
           <Dropdown.Menu style={{ width: 200 }}>
             <MenuItem />
@@ -83,7 +83,7 @@ export default class MusitUserAccount extends Component {
                   eventKey={cc.museumId}
                   onClick={() => this.props.handleMuseumId(new MuseumId(cc.museumId), new CollectionId(cid))}
                 >
-                  {menuText(museumId.id === cc.museumId ? <FontAwesome name="check"/> : '', cc.museumName)}
+                  {menuText(museumId.id === cc.museumId ? <FontAwesome name="check"/> : '', I18n.t(`musit.userProfile.museums.${cc.museumId}`))}
                 </MenuItem>;
               })
             }

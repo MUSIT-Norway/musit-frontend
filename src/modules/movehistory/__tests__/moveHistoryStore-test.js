@@ -1,9 +1,8 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, initialState } from '../moveHistoryStore';
+import { reducer$, initialState, getLocationHistory } from '../moveHistoryStore';
 import { createStore } from 'react-rxjs/dist/RxStore';
 import MuseumId from '../../../models/museumId';
-import MusitObject from '../../../models/object';
 
 const diff = require('deep-diff').diff;
 
@@ -172,7 +171,7 @@ describe('moveHistory', () => {
       2: { objectId: 4566, museumId: new MuseumId(2), token: '1234' },
       3: { objectId: 999, museumId: new MuseumId(2), token: '1234' }
     })
-      .switchMap(MusitObject.getLocationHistory(
+      .switchMap(getLocationHistory(
         (url) => {
           if (url.indexOf('objects/1234/locations') > -1) {
             return Observable.of({

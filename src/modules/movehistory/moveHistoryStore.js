@@ -4,7 +4,9 @@ import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
 export const clear$ = new Subject();
 
-export const loadMoveHistory$ = createAction('loadMoveHistory$').switchMap(MusitObject.getLocationHistory());
+export const getLocationHistory = MusitObject.getLocationHistory;
+
+export const loadMoveHistory$ = createAction('loadMoveHistory$').switchMap(getLocationHistory());
 
 export const initialState = { data: [] };
 

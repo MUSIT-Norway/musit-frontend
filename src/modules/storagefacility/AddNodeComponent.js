@@ -69,10 +69,12 @@ const commands = {
   updateState$
 };
 
+const addNode = (val) => MusitNode.addNode()(val).toPromise();
+
 const props = {
   emitError,
   emitSuccess,
-  addNode: (val) => MusitNode.addNode()(val).toPromise()
+  addNode
 };
 
 export default inject(data, commands, props)(AddStorageUnitContainer);

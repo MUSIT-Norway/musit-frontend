@@ -119,5 +119,16 @@ export const getPath = (node: any) => {
   });
 };
 
+export const getLocationPath = () => {
+  const hash = window.location.hash;
+  if (hash.indexOf('#') === -1) {
+    return hash;
+  }
+  if (hash.indexOf('?') === -1) {
+    return hash.substr(1);
+  }
+  return hash.substr(1, hash.indexOf('?') - 1);
+};
+
 export const getState = (id: string, field: string) => global.reduxStore.getState()[id][field];
 export const dispatchAction = (action: any) => global.reduxStore.dispatch(action);
