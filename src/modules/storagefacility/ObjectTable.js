@@ -38,7 +38,7 @@ export default class ObjectGrid extends Component {
                   <th />
                   <th />
                   <th>
-                    <a
+                    <a className="onPickObjects"
                       href=""
                       onClick={(e) => {
                         e.preventDefault();
@@ -70,7 +70,7 @@ export default class ObjectGrid extends Component {
                     </td>
                     <td>
                       {isMainObject &&
-                      <a
+                      <a className="onShowMoveHistory"
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -84,7 +84,7 @@ export default class ObjectGrid extends Component {
                     </td>
                     <td>
                       {isMainObject &&
-                      <a
+                      <a className="onMoveClick"
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
@@ -98,7 +98,7 @@ export default class ObjectGrid extends Component {
                     </td>
                     <td>
                       {isMainObject &&
-                      <a
+                      <a className="onPickObject"
                         href=""
                         onClick={(e) => {
                           e.preventDefault();
