@@ -22,6 +22,7 @@ import {
   refreshObjects$
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
+import { showModal } from '../../shared/modal';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -36,10 +37,6 @@ export class PickListContainer extends React.Component {
     refreshObjects: PropTypes.func.isRequired,
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired
-  }
-
-  static contextTypes = {
-    showModal: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -59,7 +56,7 @@ export class PickListContainer extends React.Component {
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
     }
-    this.context.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveModal(items)}/>);
+    this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveModal(items)}/>);
   }
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
@@ -253,7 +250,8 @@ const commands = {
 
 const props = {
   emitError,
-  emitSuccess
+  emitSuccess,
+  showModal
 };
 
 export default inject(data, commands, props)(PickListContainer);
