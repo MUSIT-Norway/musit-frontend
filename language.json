@@ -41,7 +41,12 @@
         "notAuthenticated": "You are not logged in.",
         "badRequest": "Invalid data was rejected by the server.",
         "errorCode": "HTTP error code: %{status}",
-        "noGroups": "You do not have access to MUSITbasen. Please contact your Database Coordinator."
+        "noGroups": "You do not have access to MUSITbasen. Please contact your Database Coordinator.",
+        "scanner": {
+          "title": "Search for node or object",
+          "search": "Search",
+          "noMatchingNodeOrObject": "No matching node or object"
+        }
       },
       "notificationMessages": {
         "deleting": "Delete",
@@ -681,7 +686,12 @@
         "notAuthenticated": "Du er ikke logget inn.",
         "badRequest": "Ugyldige data ble sendt til serveren.",
         "errorCode": "HTTP feilkode: %{status}",
-        "noGroups": "Du har ikke tilgang til MUSITbasen. Vennligst kontakt din Databasekoordinator."
+        "noGroups": "Du har ikke tilgang til MUSITbasen. Vennligst kontakt din Databasekoordinator.",
+        "scanner": {
+          "title": "Søk etter node eller objekt",
+          "search": "Søk",
+          "noMatchingNodeOrObject": "Fant ingen node eller objekt"
+        }
       },
       "notificationMessages": {
         "deleting": "Sletting",

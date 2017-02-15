@@ -69,7 +69,7 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
-    "react-rxjs": "MUSIT-Norway/react-rxjs.git#v1.0.1",
+    "react-rxjs": "MUSIT-Norway/react-rxjs.git#v1.0.3",
     "bootstrap": "3.3.7",
     "es6-shim": "^0.35.1",
     "font-awesome": "4.6.3",
@@ -82,7 +82,7 @@
     "react": "15.3.2",
     "react-addons-test-utils": "15.3.2",
     "react-autosuggest": "3.7.4",
-    "react-bootstrap": "0.30.5",
+    "react-bootstrap": "0.30.7",
     "react-bootstrap-date-picker": "3.7.0",
     "react-dom": "15.3.2",
     "react-fontawesome": "1.2.0",
