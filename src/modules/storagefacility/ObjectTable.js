@@ -41,7 +41,7 @@ export default class ObjectGrid extends Component {
                     <a className="onPickObjects"
                       href=""
                       onClick={(e) => {
-                        e && e.preventDefault();
+                        e.preventDefault();
                         this.props.tableData.forEach(o => this.props.pickObject(o));
                       }}
                       title={I18n.t('musit.grid.object.iconTooltip.addAllToPickList')}
@@ -73,7 +73,7 @@ export default class ObjectGrid extends Component {
                       <a className="onShowMoveHistory"
                         href=""
                         onClick={(e) => {
-                          e && e.preventDefault();
+                          e.preventDefault();
                           this.props.showMoveHistory(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
@@ -87,7 +87,7 @@ export default class ObjectGrid extends Component {
                       <a className="onMoveClick"
                         href=""
                         onClick={(e) => {
-                          e && e.preventDefault();
+                          e.preventDefault();
                           this.props.onMove(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
@@ -101,7 +101,7 @@ export default class ObjectGrid extends Component {
                       <a className="onPickObject"
                         href=""
                         onClick={(e) => {
-                          e && e.preventDefault();
+                          e.preventDefault();
                           this.props.pickObject(c);
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}

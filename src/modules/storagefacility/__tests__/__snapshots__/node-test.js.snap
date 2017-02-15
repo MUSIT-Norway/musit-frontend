@@ -1044,7 +1044,7 @@ exports[`NodePanel should render properly  1`] = `
                         <b>
                           Sist endret dato: 
                         </b>
-                        14.02.2017
+                        15.02.2017
                       </span>
                     </function Col() {
                         (0, _classCallCheck3['default'])(this, Col);

@@ -23,6 +23,7 @@ describe ('ObjectTable' ,() => {
   const pickObject = sinon.spy();
   const showMoveHistory = sinon.spy();
   const onMove = sinon.spy();
+  const dummyArg = { preventDefault: () => null };
   const wrapper = shallow(
     <ObjectGrid
       tableData={ tableData }
@@ -56,22 +57,22 @@ describe ('ObjectTable' ,() => {
   });
 
   it('check pickObject', () => {
-    wrapper.find('.onPickObject').first().simulate('click');
+    wrapper.find('.onPickObject').first().simulate('click',dummyArg);
     e(pickObject.calledOnce).to.be.true;
   });
 
   it('check pickObjects', () => {
-    wrapper.find('.onPickObjects').first().simulate('click');
+    wrapper.find('.onPickObjects').first().simulate('click',dummyArg);
     e(pickObject.callCount).to.equal(tableData.length+1);
   });
 
   it('check click onMove', () => {
-    wrapper.find('.onMoveClick').first().simulate('click');
+    wrapper.find('.onMoveClick').first().simulate('click',dummyArg);
     e(onMove.calledOnce).to.be.true;
   });
 
   it('check click onShowMoveHistory', () => {
-    wrapper.find('.onShowMoveHistory').first().simulate('click');
+    wrapper.find('.onShowMoveHistory').first().simulate('click',dummyArg);
     e(showMoveHistory.calledOnce).to.be.true;
   });
 

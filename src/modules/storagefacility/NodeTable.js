@@ -42,7 +42,7 @@ export default class NodeGrid extends Component {
                       <a className="onClickName"
                         href=""
                         onClick={(e) => {
-                          e && e.preventDefault();
+                          e.preventDefault();
                           this.props.onClick(c);
                         }}
                       >
@@ -57,7 +57,7 @@ export default class NodeGrid extends Component {
                       {!isRoot && <a className="goToEventClick"
                         href=""
                         onClick={(e) => {
-                          e && e.preventDefault();
+                          e.preventDefault();
                           this.props.goToEvents(c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.observationAndControl')}
@@ -69,7 +69,7 @@ export default class NodeGrid extends Component {
                       {!isRoot && <a className="onMoveClick"
                         href=""
                         onClick={(e) => {
-                          e && e.preventDefault();
+                          e.preventDefault();
                           this.props.onMove(c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
@@ -81,7 +81,7 @@ export default class NodeGrid extends Component {
                       {!isRoot && <a className="onPickClick"
                         href=""
                         onClick={(e) => {
-                          e && e.preventDefault();
+                          e.preventDefault();
                           this.props.pickNode(c);
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}

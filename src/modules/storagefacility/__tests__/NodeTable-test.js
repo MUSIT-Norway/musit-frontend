@@ -23,6 +23,7 @@ describe ('NodeTable' ,() => {
   const pickNode = sinon.spy();
   const onMove = sinon.spy();
   const goToEvents = sinon.spy();
+  const dummyArg = { preventDefault: () => null };
   const wrapper = shallow(
     <NodeGrid
       tableData={ tableData }
@@ -57,23 +58,23 @@ describe ('NodeTable' ,() => {
 
 
   it('check clickNameClick', () => {
-    wrapper.find('.onClickName').first().simulate('click');
+    wrapper.find('.onClickName').first().simulate('click',dummyArg);
     e(onClick.calledOnce).to.be.true;
   });
 
 
   it('check click onMove', () => {
-    wrapper.find('.onMoveClick').first().simulate('click');
+    wrapper.find('.onMoveClick').first().simulate('click',dummyArg);
     e(onMove.calledOnce).to.be.true;
   });
 
   it('check click goToEventClick', () => {
-    wrapper.find('.goToEventClick').first().simulate('click');
+    wrapper.find('.goToEventClick').first().simulate('click',dummyArg);
     e(goToEvents.calledOnce).to.be.true;
   });
 
   it('check click onPickClick', () => {
-    wrapper.find('.onPickClick').first().simulate('click');
+    wrapper.find('.onPickClick').first().simulate('click',dummyArg);
     e(pickNode.calledOnce).to.be.true;
   });
 });
