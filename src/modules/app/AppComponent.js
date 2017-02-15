@@ -16,6 +16,7 @@ import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSessi
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$, clearBuffer$ } from './scanner';
+import {clear$} from './pickList';
 
 export class App extends Component {
   static propTypes = {
@@ -29,7 +30,8 @@ export class App extends Component {
     pickList: PropTypes.object.isRequired,
     scanForOldBarCode: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
-    clearBuffer: PropTypes.func.isRequired
+    clearBuffer: PropTypes.func.isRequired,
+    clear: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -68,6 +70,7 @@ export class App extends Component {
   handleMuseumId(mid, cid) {
     this.props.setMuseumId(mid);
     this.props.setCollectionId(cid);
+    this.props.clear;
     hashHistory.push('/magasin');
   }
 
@@ -245,7 +248,8 @@ const commands = {
   toggleEnabled$,
   scanForOldBarCode$,
   prepareSearch$,
-  clearBuffer$
+  clearBuffer$,
+  clear$
 };
 
 const props = {

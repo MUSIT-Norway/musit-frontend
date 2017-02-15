@@ -12,8 +12,8 @@ describe('pickList', () => {
 
   it('testing and clear', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
+       // console.log(JSON.stringify(actual, null, 2));
+       // console.log(JSON.stringify(expected, null, 2));
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
         console.log(difference);
@@ -22,16 +22,17 @@ describe('pickList', () => {
     });
 
     // mock streams
-    const toggleNode        = '---------------11--------';
-    const refreshNode       = '-----------------1-------';
-    const clearNodes        = '--------x----------------';
-    const removeObject      = '---------1---------------';
-    const removeNode        = '------------------1------';
-    const addNode           = '----1-------121----------';
-    const clearObjects      = '----------x--------------';
-    const addObject         = '---1---------------1--2--';
-    const refreshObjects    = '---------------------1--2';
-    const expected          = 'a--de---fng-hijkjlop-rs-u';
+    const toggleNode        = '---------------11---------';
+    const refreshNode       = '-----------------1--------';
+    const clearNodes        = '--------x-----------------';
+    const removeObject      = '---------1----------------';
+    const removeNode        = '------------------1-------';
+    const addNode           = '----1-------121-----------';
+    const clearObjects      = '----------x---------------';
+    const addObject         = '---1---------------1--2---';
+    const refreshObjects    = '---------------------1--2-';
+    const clear             = '-------------------------x';
+    const expected          = 'a--de---fng-hijkjlop-rs-uv';
 
     const expectedStateMap = {
       a: {},
@@ -62,7 +63,8 @@ describe('pickList', () => {
                   { marked: false, value: {id: 2}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]}
         ],
         nodes: [{ marked: false, value: {id: 1}, path: [] }]
-      }
+      },
+      v: {objects: [], nodes: []}
     };
 
     // mock up$ and down$ events
@@ -105,6 +107,7 @@ describe('pickList', () => {
         })
       }
     ));
+    const clear$ = testScheduler.createHotObservable(clear);
 
     const state$ = reducer$({
       clearObjects$,
@@ -118,7 +121,8 @@ describe('pickList', () => {
       addNode$,
       refreshNode$,
       refreshMainObject$,
-      refreshObjects$
+      refreshObjects$,
+      clear$
     });
 
     // assertion
