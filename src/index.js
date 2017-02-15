@@ -24,7 +24,6 @@ import getRoutes from './routes';
 import config from './config';
 import LanguageJson from '../language.json';
 import { I18n } from 'react-i18nify';
-import * as loglevel from 'loglevel';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'font-awesome/css/font-awesome.css';
@@ -34,9 +33,9 @@ import pickList$ from './modules/app/pickList';
 import provide from 'react-rxjs/dist/RxProvide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
+import queryParser from 'query-string';
 
 const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
-
 notification$.subscribe((event) => {
   event = {...event, message: null, body: event.message};
   if (event.level === 'error') {
@@ -55,19 +54,17 @@ notification$.subscribe((event) => {
   });
 });
 
-function initReactJS() {
+const accessToken = queryParser.parse(location.search)['_at'];
+if (accessToken) {
+  localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
+  window.location.href='/#/magasin';
+} else {
   const dest = document.getElementById('content');
 
   I18n.loadTranslations(LanguageJson);
   const language = localStorage.getItem('language') || 'no';
   localStorage.setItem('language', language);
   I18n.setLocale(language);
-
-  if (config.isDev) {
-    loglevel.setLevel('debug');
-  } else {
-    loglevel.setLevel('error');
-  }
 
   const appRouter = () => (
     <Router
@@ -97,13 +94,4 @@ function initReactJS() {
   if (config.isDev) {
     window.React = React;
   }
-}
-
-const parseQuery = require('query-string').parse;
-const accessToken = parseQuery(location.search)['_at'];
-if (accessToken) {
-  localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
-  window.location.href='/#/magasin';
-} else {
-  initReactJS();
 }
