@@ -126,7 +126,7 @@ export class AppComponent extends Component {
     ) {
       this.props.clearBuffer();
       this.props.goTo('/magasin/' + this.props.scanner.matches.id);
-      return null;
+      return <Loader loaded={false} />;
     }
 
     return (

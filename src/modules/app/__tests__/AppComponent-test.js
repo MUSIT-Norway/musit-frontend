@@ -36,8 +36,25 @@ describe('AppComponent', () => {
         setCollectionId={setCollectionId}
         loadAppSession={loadAppSession}
         pickList={{
-          nodes: [],
-          objects: []
+          nodes: [
+            {
+              marked: false,
+              value: {},
+              path: []
+            }
+          ],
+          objects: [
+            {
+              marked: false,
+              value: {},
+              path: []
+            },
+            {
+              marked: false,
+              value: {},
+              path: []
+            }
+          ]
         }}
         scanForOldBarCode={scanForOldBarCode}
         goTo={goTo}
@@ -49,7 +66,9 @@ describe('AppComponent', () => {
         <span>Yay</span>
       </AppComponent>
     );
+    expect(loadAppSession.calledOnce).toBe(true);
     wrapper.find('.toggleScanner').simulate('click', { preventDefault: () => true});
+    expect(toggleEnabled.calledOnce).toBe(true);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

@@ -76,6 +76,7 @@ exports[`AppComponent remders 1`] = `
             <span
               className="icon icon-musitpicklistnode" />
              
+            1
           </NavItem>
         </LinkContainer>
         <LinkContainer
@@ -88,6 +89,7 @@ exports[`AppComponent remders 1`] = `
             <span
               className="icon icon-musitpicklistobject" />
              
+            2
           </NavItem>
         </LinkContainer>
         <LinkContainer
