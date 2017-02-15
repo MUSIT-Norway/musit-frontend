@@ -28,7 +28,10 @@ export class AppComponent extends Component {
     pickList: PropTypes.object.isRequired,
     scanForOldBarCode: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
-    clearBuffer: PropTypes.func.isRequired
+    clearBuffer: PropTypes.func.isRequired,
+    clearObjects: PropTypes.func.isRequired,
+    clearNodes: PropTypes.func.isRequired,
+    toggleEnabled: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -106,6 +109,7 @@ export class AppComponent extends Component {
 
   render() {
     if (!this.props.appSession.getAccessToken()) {
+      console.log(this.props.appSession);
       return (
         <LoginComponent />
       );
@@ -115,7 +119,12 @@ export class AppComponent extends Component {
       return <Loader loaded={false} />;
     }
 
-    if (this.props.scanner.matches && this.props.scanner.matches && !Array.isArray(this.props.scanner.matches)) {
+    if (
+      this.props.scanner.enabled &&
+      this.props.scanner.matches &&
+      this.props.scanner.matches &&
+      !Array.isArray(this.props.scanner.matches)
+    ) {
       this.props.clearBuffer();
       this.props.goTo('/magasin/' + this.props.scanner.matches.id);
       return null;
@@ -154,7 +163,7 @@ export class AppComponent extends Component {
               <LinkContainer to={'/search/objects'}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em', height: 25 }} /></NavItem>
               </LinkContainer>
-              <LinkContainer to={'/scan'} active={this.props.scanner.enabled} onClick={(e) => {
+              <LinkContainer className="toggleScanner" to={'/scan'} active={this.props.scanner.enabled} onClick={(e) => {
                 e.preventDefault();
                 this.props.toggleEnabled();
               }}>
