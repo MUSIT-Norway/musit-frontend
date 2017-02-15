@@ -108,7 +108,6 @@ export class AppComponent extends Component {
 
   render() {
     if (!this.props.appSession.getAccessToken()) {
-      console.log(this.props.appSession);
       return (
         <LoginComponent />
       );
