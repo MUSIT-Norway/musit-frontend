@@ -22,17 +22,16 @@ describe('pickList', () => {
     });
 
     // mock streams
-    const toggleNode        = '---------------11---------';
-    const refreshNode       = '-----------------1--------';
-    const clearNodes        = '--------x-----------------';
-    const removeObject      = '---------1----------------';
-    const removeNode        = '------------------1-------';
-    const addNode           = '----1-------121-----------';
-    const clearObjects      = '----------x---------------';
-    const addObject         = '---1---------------1--2---';
-    const refreshObjects    = '---------------------1--2-';
-    const clearPicklist     = '-------------------------x';
-    const expected          = 'a--de---fng-hijkjlop-rs-uv';
+    const toggleNode        = '---------------11--------';
+    const refreshNode       = '-----------------1-------';
+    const clearNodes        = '--------x----------------';
+    const removeObject      = '---------1---------------';
+    const removeNode        = '------------------1------';
+    const addNode           = '----1-------121----------';
+    const clearObjects      = '----------x--------------';
+    const addObject         = '---1---------------1--2--';
+    const refreshObjects    = '---------------------1--2';
+    const expected          = 'a--de---fng-hijkjlop-rs-u';
 
     const expectedStateMap = {
       a: {},
@@ -63,8 +62,7 @@ describe('pickList', () => {
                   { marked: false, value: {id: 2}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]}
         ],
         nodes: [{ marked: false, value: {id: 1}, path: [] }]
-      },
-      v: {objects: [], nodes: []}
+      }
     };
 
     // mock up$ and down$ events
@@ -107,7 +105,6 @@ describe('pickList', () => {
         })
       }
     ));
-    const clearPicklist$ = testScheduler.createHotObservable(clearPicklist);
 
     const state$ = reducer$({
       clearObjects$,
@@ -121,8 +118,7 @@ describe('pickList', () => {
       addNode$,
       refreshNode$,
       refreshMainObject$,
-      refreshObjects$,
-      clearPicklist$
+      refreshObjects$
     });
 
     // assertion
