@@ -70,7 +70,7 @@ export class App extends Component {
   handleMuseumId(mid, cid) {
     this.props.setMuseumId(mid);
     this.props.setCollectionId(cid);
-    this.props.clear;
+    this.props.clear();
     hashHistory.push('/magasin');
   }
 
@@ -80,6 +80,7 @@ export class App extends Component {
     if (nodeId) {
       hashHistory.push('/magasin/' + nodeId);
     } else {
+      this.props.clear();
       hashHistory.push('/magasin');
     }
   }
