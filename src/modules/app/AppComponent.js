@@ -10,14 +10,13 @@ import './AppComponent.css';
 import Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors';
-import notifiable from './Notifyable';
 import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$, clearBuffer$ } from './scanner';
 
-export class App extends Component {
+export class AppComponent extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     appSession: PropTypes.instanceOf(AppSession).isRequired,
@@ -252,4 +251,4 @@ const props = {
   goTo: hashHistory.push.bind(hashHistory)
 };
 
-export default notifiable(inject(data, commands, props)(App));
+export default inject(data, commands, props)(AppComponent);

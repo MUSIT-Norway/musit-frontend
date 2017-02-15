@@ -29,6 +29,8 @@ import inject from 'react-rxjs/dist/RxInject';
 
 import { addNode$, addObject$ } from '../app/pickList';
 
+import { showConfirm, showModal } from '../../shared/modal';
+
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -53,11 +55,6 @@ export class StorageUnitsContainer extends React.Component {
     clearRootNode: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
     emitSuccess: React.PropTypes.func.isRequired
-  };
-
-  static contextTypes = {
-    showModal: React.PropTypes.func,
-    showConfirm: React.PropTypes.func
   };
 
   constructor(props) {
@@ -194,11 +191,10 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   showMoveNodeModal(
-    nodeToMove,
-    showModal = this.context.showModal
+    nodeToMove
   ) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />);
+    this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />);
   }
 
   moveNode = (
@@ -240,12 +236,11 @@ export class StorageUnitsContainer extends React.Component {
   };
 
   showMoveObjectModal(
-    objectToMove,
-    showModal = this.context.showModal
+    objectToMove
   ) {
     const objStr = objectToMove.getObjectDescription();
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
+    this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
   }
 
   moveObject = (
@@ -279,13 +274,12 @@ export class StorageUnitsContainer extends React.Component {
   };
 
   showObjectMoveHistory(
-    objectToShowHistoryFor,
-    showModal = this.context.showModal
+    objectToShowHistoryFor
   ) {
     const objStr = objectToShowHistoryFor.getObjectDescription();
     const componentToRender = <MusitModalHistory appSession={this.props.appSession} objectId={objectToShowHistoryFor.id} />;
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
-    showModal(title, componentToRender);
+    this.props.showModal(title, componentToRender);
   }
 
   makeToolbar(
@@ -324,7 +318,7 @@ export class StorageUnitsContainer extends React.Component {
     stats = this.props.store.stats,
     deleteNode = this.props.deleteNode,
     moveNode = this.showMoveNodeModal,
-    confirm = this.context.showConfirm
+    confirm = this.props.showConfirm
   ) {
     return (
       <div style={{ paddingTop: 10 }}>
@@ -503,6 +497,8 @@ const props = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
   deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
+  showConfirm,
+  showModal,
   emitError,
   emitSuccess,
   goTo: hashHistory.push.bind(hashHistory)
