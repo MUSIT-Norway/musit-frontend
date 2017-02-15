@@ -51,9 +51,9 @@ describe('ObjectSearchComponent', () => {
         getMuseumNo={() => 'kaka'}
         getSubNo={() => '12'}
         getTerm={() => 'a special kake'}
-        clearSearch = {clear}
-        searchForObjects = {searchForObjects}
-        onChangeField = {onChangeField}
+        clearSearch={clear}
+        searchForObjects={searchForObjects}
+        onChangeField={onChangeField}
         appSession={{
           getAccessToken: () => 'wakka',
           getMuseumId: () => new MuseumId(99),
