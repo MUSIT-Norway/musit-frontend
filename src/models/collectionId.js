@@ -3,6 +3,10 @@ class CollectionId {
     this.uuid = collectionId;
   }
 
+  getPath() {
+    return `collections/${this.uuid}`;
+  }
+
   getQuery() {
     return `collectionIds=${this.uuid}`;
   }

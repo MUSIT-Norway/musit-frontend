@@ -98,6 +98,34 @@ export const setMuseumId$ = createAction('setMuseumId$');
 export const setCollectionId$ = createAction('setCollectionId$');
 export const setAccessToken$ = createAction('setAccessToken$');
 
+export const refreshSession = (
+  setMuseum = ((id) => setMuseumId$.next(id)),
+  setCollection = ((id) => setCollectionId$.next(id))
+)  => (params, appSession, goto) => {
+
+  let museumId = appSession.getMuseumId();
+  if  (params.museumId && params.museumId !== museumId) {
+    setMuseum(params.museumId);
+    museumId = new MuseumId(params.museumId);
+  }
+  let collectionId = appSession.getCollectionId();
+  if  (params.collectionId && params.collectionId !== collectionId) {
+    setCollection(params.collectionId);
+    collectionId = new CollectionId(params.collectionId);
+  }
+
+  if (!museumId && !collectionId) {
+    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+      console.error('AppSession is empty. This is an invalid state. Attaching appSession and params.', appSession, params);
+    }
+    return false;
+  }
+
+  goto('/' + (museumId && museumId.getPath()) + '/' + (collectionId && collectionId.getPath()));
+
+  return true;
+};
+
 export const reducer$ = (actions, onError = emitError) => Observable.merge(
   actions.setAccessToken$
     .map(accessToken => state => ({...state, accessToken})),
