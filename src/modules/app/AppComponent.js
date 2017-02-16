@@ -15,7 +15,7 @@ import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSessi
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$, clearBuffer$ } from './scanner';
-import { clearObjects$, clearNodes$ } from './pickList';
+import { clearObjects$ as clearObjectPicklist$, clearNodes$ as clearNodePicklist$ } from './pickList';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -30,8 +30,8 @@ export class AppComponent extends Component {
     scanForOldBarCode: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     clearBuffer: PropTypes.func.isRequired,
-    clearObjects: PropTypes.func.isRequired,
-    clearNodes: PropTypes.func.isRequired
+    clearObjectPicklist: PropTypes.func.isRequired,
+    clearNodePicklist: PropTypes.func.isRequired
   }
 
   constructor(props, context) {
@@ -69,14 +69,14 @@ export class AppComponent extends Component {
   handleMuseumId(mid, cid) {
     this.props.setMuseumId(mid);
     this.props.setCollectionId(cid);
-    this.props.clearObjects();
-    this.props.clearNodes();
+    this.props.clearObjectPicklist();
+    this.props.clearNodePicklist();
     hashHistory.push('/magasin');
   }
 
   handleCollectionId(cid) {
     this.props.setCollectionId(cid);
-    this.props.clearObjects();
+    this.props.clearObjectPicklist();
     const nodeId = this.props.params.id;
     if (nodeId) {
       hashHistory.push('/magasin/' + nodeId);
@@ -250,8 +250,8 @@ const commands = {
   scanForOldBarCode$,
   prepareSearch$,
   clearBuffer$,
-  clearNodes$,
-  clearObjects$
+  clearObjectPicklist$,
+  clearNodePicklist$
 };
 
 const props = {
