@@ -47,8 +47,10 @@ export const toggleEnabled$ = createAction('toggleEnabled$');
 export const prepareSearch$ = createAction('prepareSearch$');
 export const scanForOldBarCode$ = createAction('scanForOldBarCode$').switchMap(scanForNodeOrObject());
 const keyPress$ = Observable.fromEvent(window.document.body, 'keypress')
-  .map(e => String.fromCharCode(e.which).replace(/\+/g, '-'));
-const scheduledClear$ = keyPress$.debounce(() => Observable.timer(200));
+  .filter(e => e.which !== 13)
+  .map(e => String.fromCharCode(e.which))
+  .map(c => c.replace(/\+/g, '-'));
+const scheduledClear$ = keyPress$.debounce(() => Observable.timer(50));
 
 export const reducer$ = (actions, scanUUID) => Observable.merge(
   actions.clearBuffer$.map(() => (state) => ({...state, buffer: null, code: null, matches: null, searchComplete: false})),
