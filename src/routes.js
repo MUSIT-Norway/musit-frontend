@@ -36,9 +36,11 @@ import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
 import * as path from './routes.path';
+import Init from './Init';
 
 export default () => {
   return (
+    <Route component={Init}>
     <Route path="/" component={AppComponent}>
       <IndexRedirect to={path.ROUTE_SF} />
       <Route path={path.ROUTE_SF}>
@@ -69,6 +71,7 @@ export default () => {
       <Route path="/about" component={AboutView} />
       -- Catch all route
       <Route path="/*" component={NotFound} status={404} />
+    </Route>
     </Route>
   );
 };

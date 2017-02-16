@@ -11,7 +11,7 @@ import Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors';
 import Loader from 'react-loader';
-import { loadAppSession$, setMuseumId$, setCollectionId$, refreshSession } from '../app/appSession';
+import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$, clearBuffer$ } from './scanner';
@@ -45,18 +45,6 @@ export class AppComponent extends Component {
 
   componentWillMount() {
     this.props.loadAppSession();
-  }
-
-  componentWillReceiveProps(next) {
-    console.log(next.appSession.getMuseumId(), this.props.appSession.getMuseumId());
-    if (this.isSessionLoaded() && next.appSession !== this.props.appSession) {
-      console.log('YEYEE');
-      /*this.props.refreshSession(
-        next.params,
-        next.appSession,
-        this.props.goTo
-      );*/
-    }
   }
 
   handleLogout() {
@@ -271,8 +259,7 @@ const commands = {
 };
 
 const props = {
-  goTo: hashHistory.push.bind(hashHistory),
-  refreshSession: refreshSession()
+  goTo: hashHistory.push.bind(hashHistory)
 };
 
 export default inject(data, commands, props)(AppComponent);
