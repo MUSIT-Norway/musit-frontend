@@ -42,8 +42,8 @@ describe ('NodePanel' ,() => {
         areaTo: '12',
         height: '3',
         heightTo:'5',
-        lastUpdateBy: 'Jarl André Hübenthal',
-        lastUpdateDate: '12.01.2001',
+        updatedByName: 'Jarl André Hübenthal',
+        updatedDate: '2017-02-19T15:04:31+01:00',
         environmentRequirement: {
           temperature: '12',
           temperatureTolerance: '3',
