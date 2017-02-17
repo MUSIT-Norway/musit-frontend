@@ -14,7 +14,7 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import scanner$, { toggleEnabled$, addMatches$, prepareSearch$, clearBuffer$, scanForNodeOrObject } from './scanner';
+import scanner$, { toggleEnabled$, addMatches$, prepareSearch$, clearBuffer$, scanForNodeOrObject, actOnObject } from './scanner';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -201,9 +201,10 @@ export class AppComponent extends Component {
                 return (
                   <li>
                       <a
+                        href="act on object"
                         onClick={e => {
                           e.preventDefault();
-                          hashHistory.push('/magasin/' + match.currentLocationId + '/objects');
+                          actOnObject(this.props.scanner.code, match);
                         }}
                       >
                         {match.getObjectDescription()}

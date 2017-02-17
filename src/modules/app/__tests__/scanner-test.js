@@ -9,8 +9,8 @@ describe('scanner', () => {
 
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      console.log(JSON.stringify(actual, null, 2));
-      console.log(JSON.stringify(expected, null, 2));
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
         console.log(difference);

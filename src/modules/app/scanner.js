@@ -31,12 +31,12 @@ const keyPress$ = Observable.fromEvent(window.document.body, 'keypress')
   .map(c => c.replace(/\+/g, '-'));
 const scheduledClear$ = keyPress$.debounce(() => Observable.timer(50));
 
-const actOnNode = (
+export const actOnNode = (
   response,
   museumId,
   token,
-  goTo,
-  showError
+  goTo = push,
+  showError = emitError
 ): Observable => {
   if (isMoveDialogActive()) {
     loadNode$.next({nodeId: response.id, museumId, token});
@@ -46,7 +46,7 @@ const actOnNode = (
   } else if (isStorageFacility()) {
     goTo(`/magasin/${response.id}`);
   } else {
-    showError({ message: 'Can only act on UUID scans from magasin, node picklist and move dialog'});
+    showError({ message: 'Can only act on UUID scans from magasin, node picklist or move dialog'});
   }
 };
 
@@ -68,6 +68,30 @@ export const scanForNode = (
     });
 };
 
+export const actOnObject = (
+  barcode,
+  response,
+  showError = emitError,
+  addMatches = (matches) => addMatches$.next(matches),
+  clearSearch = () => clearSearch$.next(),
+  goTo = push
+) => {
+  if (response.length === 1) {
+    if (isObjectPickList()) {
+      addObject$({ value: response[0], path: getPath(response[0])});
+    } else if (isStorageFacility()) {
+      goTo(`/magasin/${response[0].currentLocationId}/objects`);
+    } else {
+      showError({ message: 'Can only act on old barcode scans for objects from magasin or object picklist'});
+    }
+  } else if (response.length > 0) {
+    addMatches(response);
+  } else {
+    showError({ message: 'Could not find any match for ' + barcode});
+    clearSearch();
+  }
+};
+
 export const scanForNodeOrObject = (
   ajaxGet = ajax.simpleGet,
   goTo = push,
@@ -84,20 +108,7 @@ export const scanForNodeOrObject = (
     })
     .flatMap((response) => {
       if (Array.isArray(response)) {
-        if (response.length === 1) {
-          if (isObjectPickList()) {
-            addObject$({ value: response[0], path: getPath(response[0])});
-          } else if (isStorageFacility()) {
-            goTo(`/magasin/${response[0].currentLocationId}/objects`);
-          } else {
-            showError({ message: 'Can only act on old barcode scans for objects from magasin and object picklist'});
-          }
-        } else if (response.length > 0) {
-          addMatches(response);
-        } else {
-          showError({ message: 'Could not find any match for ' + cmd.barcode});
-          clearSearch();
-        }
+        actOnObject(cmd.barcode, response, showError, addMatches, clearSearch, goTo);
       } else if (response && response.nodeId) {
         actOnNode(response, cmd.museumId, cmd.token, goTo);
       } else {
