@@ -8,12 +8,10 @@ describe('RefreshSession', () => {
 
   let setMuseumId;
   let setCollectionId;
-  let goto;
 
   beforeEach(() => {
     setMuseumId = sinon.spy();
     setCollectionId = sinon.spy();
-    goto = sinon.spy();
   });
 
   it('It should refresh session if params is different.', () => {
@@ -25,13 +23,10 @@ describe('RefreshSession', () => {
       museumId: 99,
       collectionId: 'Lichens'
     });
-    refreshSession(setMuseumId, setCollectionId)(params, appSession, goto);
-    expect(goto.calledOnce).toBe(true);
+    refreshSession(setMuseumId, setCollectionId)(params, appSession);
     expect(setMuseumId.calledOnce).toBe(true);
-    expect(setMuseumId.getCall(0).args[0]).toBe(98);
-    expect(setCollectionId.calledOnce).toBe(true);
-    expect(setCollectionId.getCall(0).args[0]).toBe('Vascular Plant');
-    expect(goto.getCall(0).args[0]).toBe('/museum/98/collections/Vascular Plant');
+    expect(setMuseumId.getCall(0).args[0].id).toBe(98);
+    expect(setCollectionId.calledOnce).toBe(false);
   });
 
   it('It should NOT refresh museum if museumId is null.', () => {
@@ -43,12 +38,9 @@ describe('RefreshSession', () => {
       museumId: new MuseumId(99),
       collectionId: 'Lichens'
     });
-    refreshSession(setMuseumId, setCollectionId)(params, appSession, goto);
-    expect(goto.calledOnce).toBe(true);
+    refreshSession(setMuseumId, setCollectionId)(params, appSession);
     expect(setMuseumId.calledOnce).toBe(false);
-    expect(setCollectionId.calledOnce).toBe(true);
-    expect(setCollectionId.getCall(0).args[0]).toBe('Vascular Plant');
-    expect(goto.getCall(0).args[0]).toBe('/museum/99/collections/Vascular Plant');
+    expect(setCollectionId.calledOnce).toBe(false);
   });
 
   it('It should NOT refresh collection if collection is null.', () => {
@@ -60,11 +52,9 @@ describe('RefreshSession', () => {
       museumId: new MuseumId(99),
       collectionId: new CollectionId('Lichens')
     });
-    refreshSession(setMuseumId, setCollectionId)(params, appSession, goto);
-    expect(goto.calledOnce).toBe(true);
+    refreshSession(setMuseumId, setCollectionId)(params, appSession);
     expect(setMuseumId.calledOnce).toBe(false);
     expect(setCollectionId.calledOnce).toBe(false);
-    expect(goto.getCall(0).args[0]).toBe('/museum/99/collections/Lichens');
   });
 
   it('It should NOT do anything if appSession is empty.', () => {
@@ -76,8 +66,7 @@ describe('RefreshSession', () => {
       museumId: null,
       collectionId: null
     });
-    refreshSession(setMuseumId, setCollectionId)(params, appSession, goto);
-    expect(goto.calledOnce).toBe(false);
+    refreshSession(setMuseumId, setCollectionId)(params, appSession);
     expect(setMuseumId.calledOnce).toBe(false);
     expect(setCollectionId.calledOnce).toBe(false);
   });
@@ -91,10 +80,8 @@ describe('RefreshSession', () => {
       museumId: null,
       collectionId: null
     });
-    refreshSession(setMuseumId, setCollectionId)(params, appSession, goto);
-    expect(goto.calledOnce).toBe(true);
-    expect(setMuseumId.calledOnce).toBe(true);
-    expect(setCollectionId.calledOnce).toBe(true);
-    expect(goto.getCall(0).args[0]).toBe('/museum/99/collections/Vulcans');
+    refreshSession(setMuseumId, setCollectionId)(params, appSession);
+    expect(setMuseumId.calledOnce).toBe(false);
+    expect(setCollectionId.calledOnce).toBe(false);
   });
 });
