@@ -108,7 +108,7 @@ export const refreshSession = (
 )  => (params, appSession) => {
   const museumId = appSession.getMuseumId();
   const museumIdFromParam = new MuseumId(params.museumId * 1);
-  if  ( museumIdFromParam.id &&  museumId && museumIdFromParam.id !== museumId.id) {
+  if  ( museumIdFromParam.id && museumIdFromParam.id !== museumId.id) {
     setMuseum(museumIdFromParam);
   }
   const collectionId = appSession.getCollectionId();

@@ -70,18 +70,4 @@ describe('RefreshSession', () => {
     expect(setMuseumId.calledOnce).toBe(false);
     expect(setCollectionId.calledOnce).toBe(false);
   });
-
-  it('It should NOT fail if appSession is empty and params is non empty.', () => {
-    const params = {
-      museumId: 99,
-      collectionId: 'Vulcans'
-    };
-    const appSession = new AppSession({
-      museumId: null,
-      collectionId: null
-    });
-    refreshSession(setMuseumId, setCollectionId)(params, appSession);
-    expect(setMuseumId.calledOnce).toBe(false);
-    expect(setCollectionId.calledOnce).toBe(false);
-  });
 });
