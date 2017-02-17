@@ -71,17 +71,21 @@ export class AppComponent extends Component {
     this.props.setCollectionId(cid);
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
-    hashHistory.push('/magasin');
+    const midPath = mid.getPath();
+    const cidPath = cid.getPath();
+    hashHistory.push('/' + midPath + '/' + cidPath + '/magasin');
   }
 
   handleCollectionId(cid) {
     this.props.setCollectionId(cid);
     this.props.clearObjectPicklist();
     const nodeId = this.props.params.id;
+    const midPath = this.props.appSession.getMuseumId().getPath();
+    const cidPath = cid.getPath();
     if (nodeId) {
-      hashHistory.push('/magasin/' + nodeId);
+      hashHistory.push('/' + midPath + '/' + cidPath + '/magasin/' + nodeId);
     } else {
-      hashHistory.push('/magasin');
+      hashHistory.push('/' + midPath + '/' + cidPath + '/magasin');
     }
   }
 

@@ -2,35 +2,28 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import Loader from 'react-loader';
-
 import NodeGrid from './NodeTable';
 import ObjectGrid from './ObjectTable';
 import NodeLeftMenuComponent from './TableLeftMenu';
-
 import Layout from '../../components/layout';
 import Toolbar from '../../components/layout/Toolbar';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-
 import { blur, filter } from '../../shared/util';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import PagingToolbar from '../../shared/paging';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
-
 import MusitModal from '../movedialog/MoveDialogComponent';
 import MusitModalHistory from '../movehistory/MoveHistoryComponent';
-
 import Config from '../../config';
-
 import { Observable } from 'rxjs';
-
 import inject from 'react-rxjs/dist/RxInject';
-
 import { addNode$, addObject$ } from '../app/pickList';
-
 import { showConfirm, showModal } from '../../shared/modal';
-
+import { refreshSession } from '../app/appSession';
+import isEqual from 'lodash/isEqual';
+import isEqualWith from 'lodash/isEqualWith';
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -54,7 +47,8 @@ export class StorageUnitsContainer extends React.Component {
     setLoading: React.PropTypes.func.isRequired,
     clearRootNode: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
-    emitSuccess: React.PropTypes.func.isRequired
+    emitSuccess: React.PropTypes.func.isRequired,
+    refreshSession: React.PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -111,10 +105,22 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const museumHasChanged = newProps.appSession.getMuseumId() !== this.props.appSession.getMuseumId();
-    const collectionHasChanged = newProps.appSession.getCollectionId() !== this.props.appSession.getCollectionId();
-    const museumId = newProps.appSession.getMuseumId();
-    const collectionId = newProps.appSession.getCollectionId();
+    const newMid = newProps.appSession.getMuseumId();
+    const oldMid = this.props.appSession.getMuseumId();
+    const museumHasChanged = !isEqual(newMid, oldMid);
+    const newColl = newProps.appSession.getCollectionId();
+    const oldColl = this.props.appSession.getCollectionId();
+    const collectionHasChanged = !isEqual(newColl, oldColl);
+    const paramsDiffFromSession = !isEqualWith(newProps.params, newProps.appSession.state, (lhs, rhs) => {
+      return lhs.museumId * 1 === rhs.museumId.id && lhs.collectionIds === rhs.collectionId.uuid;
+    });
+
+    if (paramsDiffFromSession) {
+      this.props.refreshSession(newProps.params, newProps.appSession);
+    }
+
+    const museumId = newMid;
+    const collectionId = newColl;
     const token = this.props.appSession.getAccessToken();
     const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
@@ -139,20 +145,24 @@ export class StorageUnitsContainer extends React.Component {
   showNodes(
     node = this.props.store.rootNode
   ) {
+    const midPath = this.props.appSession.getMuseumId().getPath();
+    const cidPath = this.props.appSession.getCollectionId().getPath();
     if (node && node.id) {
-      this.props.goTo(`/magasin/${node.id}`);
+      this.props.goTo('/' + midPath + '/' + cidPath + '/magasin/' + node.id);
     } else {
-      this.props.goTo('/magasin');
+      this.props.goTo('/' + midPath + '/' + cidPath + '/magasin');
     }
   }
 
   showObjects(
     node = this.props.store.rootNode
   ) {
+    const midPath = this.props.appSession.getMuseumId().getPath();
+    const cidPath = this.props.appSession.getCollectionId().getPath();
     if (node) {
-      this.props.goTo(`/magasin/${node.id}/objects`);
+      this.props.goTo('/' + midPath + '/' + cidPath + '/magasin/' + node.id + '/objects');
     } else {
-      this.props.goTo('/magasin');
+      this.props.goTo('/' + midPath + '/' + cidPath + '/magasin');
     }
   }
 
@@ -425,8 +435,10 @@ export class StorageUnitsContainer extends React.Component {
               currentPage={currentPage}
               perPage={Config.magasin.limit}
               onClick={(cp) => {
+                const midPath = this.props.appSession.getMuseumId().getPath();
+                const cidPath = this.props.appSession.getCollectionId().getPath();
                 hashHistory.replace({
-                  pathname: `/magasin/${rootNode.id}/objects`,
+                  pathname: '/' + midPath + '/' + cidPath + '/magasin/' + rootNode.id + '/objects',
                   state: {
                     currentPage: cp
                   }
@@ -445,7 +457,11 @@ export class StorageUnitsContainer extends React.Component {
           goToEvents={(node) => this.props.goTo(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
           pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
-          onClick={(node) => this.props.goTo(`/magasin/${node.id}`)}
+          onClick={(node) => {
+            const midPath = this.props.appSession.getMuseumId().getPath();
+            const cidPath = this.props.appSession.getCollectionId().getPath();
+            this.props.goTo('/' + midPath + '/' + cidPath + '/magasin/' + node.id);
+          }}
         />
         {showPaging &&
           <PagingToolbar
@@ -501,7 +517,8 @@ const props = {
   showModal,
   emitError,
   emitSuccess,
-  goTo: hashHistory.push.bind(hashHistory)
+  goTo: hashHistory.push.bind(hashHistory),
+  refreshSession: refreshSession()
 };
 
 export default inject(data, commands, props)(StorageUnitsContainer);
