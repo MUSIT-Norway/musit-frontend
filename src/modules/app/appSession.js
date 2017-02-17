@@ -8,6 +8,7 @@ import { I18n } from 'react-i18nify';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
 import Actor from '../../models/actor';
+import orderBy from 'lodash/orderBy';
 
 export class AppSession {
 
@@ -41,6 +42,8 @@ export class AppSession {
 }
 
 const initialState = { accessToken: getAccessToken() };
+
+const orderByMuseumId = (arr, dir = 'desc') => orderBy(arr, ['museumId'], [dir]);
 
 const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
   accessToken = accessToken || getAccessToken();
@@ -79,6 +82,7 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
             museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
           }));
         }
+        groups = orderByMuseumId(groups);
         const museumId = new MuseumId(groups[0].museumId);
         const collectionId = new CollectionId(groups[0].collections[0].uuid);
         return {
