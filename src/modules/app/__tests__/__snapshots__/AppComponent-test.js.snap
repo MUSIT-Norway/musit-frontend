@@ -1,0 +1,223 @@
+exports[`AppComponent remders 1`] = `
+<div>
+  <Uncontrolled(Navbar)
+    bsStyle="default"
+    fixedTop={true}
+    style={
+      Object {
+        "zIndex": 1
+      }
+    }>
+    <NavbarHeader>
+      <NavbarBrand>
+        <IndexLink
+          activeStyle={
+            Object {
+              "color": "#33e0ff"
+            }
+          }
+          to="/about">
+          <div
+            className="brand">
+            <img
+              alt="logo"
+              height="40"
+              src="test-file-stub" />
+          </div>
+          <span>
+            MUSIT
+          </span>
+        </IndexLink>
+      </NavbarBrand>
+      <NavbarToggle />
+    </NavbarHeader>
+    <NavbarCollapse>
+      <Nav
+        bsClass="nav"
+        justified={false}
+        navbar={true}
+        pullLeft={false}
+        pullRight={false}
+        stacked={false}>
+        <LinkContainer
+          action="push"
+          onlyActiveOnIndex={false}
+          to="/magasin">
+          <NavItem
+            active={false}
+            disabled={false}>
+            Magasin
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer
+          action="push"
+          onlyActiveOnIndex={false}
+          to="/reports">
+          <NavItem
+            active={false}
+            disabled={false}>
+            Rapporter
+          </NavItem>
+        </LinkContainer>
+      </Nav>
+      <Nav
+        bsClass="nav"
+        justified={false}
+        pullLeft={false}
+        pullRight={true}
+        stacked={false}>
+        <LinkContainer
+          action="push"
+          onlyActiveOnIndex={false}
+          to="/picklist/nodes">
+          <NavItem
+            active={false}
+            disabled={false}>
+            <span
+              className="icon icon-musitpicklistnode" />
+             
+            1
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer
+          action="push"
+          onlyActiveOnIndex={false}
+          to="/picklist/objects">
+          <NavItem
+            active={false}
+            disabled={false}>
+            <span
+              className="icon icon-musitpicklistobject" />
+             
+            2
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer
+          action="push"
+          onlyActiveOnIndex={false}
+          to="/search/objects">
+          <NavItem
+            active={false}
+            disabled={false}>
+            <FontAwesome
+              name="search"
+              style={
+                Object {
+                  "fontSize": "1.3em",
+                  "height": 25
+                }
+              } />
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer
+          action="push"
+          active={undefined}
+          className="toggleScanner"
+          onClick={[Function onClick]}
+          onlyActiveOnIndex={false}
+          to="/scan">
+          <NavItem
+            active={false}
+            disabled={false}>
+            <img
+              alt="scan"
+              height={25}
+              src="test-file-stub" />
+          </NavItem>
+        </LinkContainer>
+        <MusitUserAccount
+          actor={
+            Object {
+              "dataportenId": "1234",
+              "fn": "Jarl"
+            }
+          }
+          groups={Array []}
+          handleCollectionId={[Function bound handleCollectionId]}
+          handleLanguage={[Function bound handleLanguage]}
+          handleLogout={[Function bound handleLogout]}
+          handleMuseumId={[Function bound handleMuseumId]}
+          rootNode={undefined}
+          selectedCollectionId={undefined}
+          selectedMuseumId={undefined}
+          token="1234" />
+      </Nav>
+    </NavbarCollapse>
+  </Uncontrolled(Navbar)>
+  <div
+    className="appContent">
+    <span>
+      Yay
+    </span>
+  </div>
+  <footer
+    className="footer version well">
+    Build number: 64
+  </footer>
+  <Modal
+    animation={true}
+    autoFocus={true}
+    backdrop={true}
+    bsClass="modal"
+    bsSize="small"
+    dialogComponentClass={[Function ModalDialog]}
+    enforceFocus={true}
+    keyboard={true}
+    manager={
+      ModalManager {
+        "containers": Array [],
+        "data": Array [],
+        "handleContainerOverflow": true,
+        "hideSiblingNodes": true,
+        "modals": Array []
+      }
+    }
+    onHide={[Function onHide]}
+    renderBackdrop={[Function renderBackdrop]}
+    show={false}>
+    <ModalHeader
+      aria-label="Close"
+      bsClass="modal-header"
+      closeButton={true}>
+      <ModalTitle
+        bsClass="modal-title"
+        componentClass="h4">
+        Søk etter node eller objekt
+      </ModalTitle>
+    </ModalHeader>
+    <ModalBody
+      bsClass="modal-body"
+      componentClass="div">
+      <Form
+        bsClass="form"
+        componentClass="form"
+        horizontal={false}
+        inline={true}>
+        <FormGroup
+          bsClass="form-group"
+          controlId="barCode">
+          <input
+            className="form-control"
+            readOnly={true}
+            type="text"
+            value="" />
+        </FormGroup>
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="success"
+          disabled={false}
+          onClick={[Function bound searchForBarCode]}>
+          Søk
+        </Button>
+      </Form>
+      <Loader
+        component="div"
+        loaded={true}
+        loadedClassName="loadedContent"
+        parentClassName="loader" />
+    </ModalBody>
+  </Modal>
+</div>
+`;
