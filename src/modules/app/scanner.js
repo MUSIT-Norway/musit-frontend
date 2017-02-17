@@ -10,6 +10,7 @@ import MusitObject from '../../models/object';
 import { addNode$, addObject$ } from '../app/pickList';
 import { loadNode$, loadChildren$ } from '../movedialog/moveDialogStore';
 import * as ajax from '../../shared/RxAjax';
+import { I18n } from 'react-i18nify';
 
 const UUID_REGEX = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
@@ -18,41 +19,43 @@ const isObjectPickList = (path = ROUTE_PICKLIST_PATH.exec(getLocationPath())) =>
 const isStorageFacility = (pathname = getLocationPath()) => pathname.startsWith(ROUTE_SF);
 const isMoveDialogActive = () => document.getElementsByClassName('moveDialog').length > 0;
 
-const push = hashHistory.push.bind(hashHistory);
-
 export const clearBuffer$ = createAction('clearBuffer$');
 export const toggleEnabled$ = createAction('toggleEnabled$');
 export const prepareSearch$ = createAction('prepareSearch$');
 export const clearSearch$ = createAction('clearSearch$');
 export const addMatches$ = createAction('addMatches$');
-const keyPress$ = Observable.fromEvent(window.document.body, 'keypress')
-  .filter(e => e.which !== 13)
-  .map(e => String.fromCharCode(e.which))
-  .map(c => c.replace(/\+/g, '-'));
-const scheduledClear$ = keyPress$.debounce(() => Observable.timer(50));
+const keyPress$ = (charStream = Observable.fromEvent(window.document.body, 'keypress')) =>
+  charStream
+    .filter(e => e.which !== 13 && e.which !== 10)
+    .map(e => String.fromCharCode(e.which))
+    .map(c => c.replace(/\+/g, '-'));
+const scheduledClear$ = keyPress$().debounce(() => Observable.timer(50));
 
 export const actOnNode = (
   response,
   museumId,
   token,
-  goTo = push,
-  showError = emitError
+  goTo = hashHistory.push,
+  showError = emitError,
+  moveDialog = isMoveDialogActive,
+  nodePickList = isNodePickList,
+  storageFacility = isStorageFacility
 ): Observable => {
-  if (isMoveDialogActive()) {
+  if (moveDialog()) {
     loadNode$.next({nodeId: response.id, museumId, token});
     loadChildren$.next({nodeId: response.id, museumId, token});
-  } else if (isNodePickList()) {
+  } else if (nodePickList()) {
     addNode$.next({value: response, path: getPath(response)});
-  } else if (isStorageFacility()) {
+  } else if (storageFacility()) {
     goTo(`/magasin/${response.id}`);
   } else {
-    showError({ message: 'Can only act on UUID scans from magasin, node picklist or move dialog'});
+    showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
   }
 };
 
 export const scanForNode = (
   ajaxGet = ajax.simpleGet,
-  goTo =  push,
+  goTo =  hashHistory.push,
   showError = emitError,
   clearSearch = () => clearSearch$.next()
 ) => ({ uuid, museumId, token }) => {
@@ -62,7 +65,7 @@ export const scanForNode = (
       if (response && response.nodeId) {
         actOnNode(response, museumId, token, goTo, showError);
       } else {
-        showError({ message: 'Could not find any match for ' + uuid});
+        showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', { uuid })});
         clearSearch();
       }
     });
@@ -74,30 +77,36 @@ export const actOnObject = (
   showError = emitError,
   addMatches = (matches) => addMatches$.next(matches),
   clearSearch = () => clearSearch$.next(),
-  goTo = push
+  goTo = hashHistory.push,
+  objectPickList = isObjectPickList,
+  storageFacility = isStorageFacility
 ) => {
   if (response.length === 1) {
-    if (isObjectPickList()) {
+    if (objectPickList()) {
       addObject$({ value: response[0], path: getPath(response[0])});
-    } else if (isStorageFacility()) {
+    } else if (storageFacility()) {
       goTo(`/magasin/${response[0].currentLocationId}/objects`);
     } else {
-      showError({ message: 'Can only act on old barcode scans for objects from magasin or object picklist'});
+      showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
     }
   } else if (response.length > 0) {
     addMatches(response);
   } else {
-    showError({ message: 'Could not find any match for ' + barcode});
+    showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', { barcode })});
     clearSearch();
   }
 };
 
 export const scanForNodeOrObject = (
   ajaxGet = ajax.simpleGet,
-  goTo = push,
+  goTo = hashHistory.push,
   showError = emitError,
   addMatches = (matches) => addMatches$.next(matches),
-  clearSearch = () => clearSearch$.next()
+  clearSearch = () => clearSearch$.next(),
+  moveDialog = isMoveDialogActive,
+  nodePickList = isNodePickList,
+  objectPickList = isObjectPickList,
+  storageFacility = isStorageFacility
 ) => (cmd): Observable =>
   MusitNode.findByBarcode(ajaxGet)(cmd)
     .flatMap((nodeResponse) => {
@@ -106,16 +115,15 @@ export const scanForNodeOrObject = (
       }
       return Observable.of(nodeResponse);
     })
-    .flatMap((response) => {
+    .do((response) => {
       if (Array.isArray(response)) {
-        actOnObject(cmd.barcode, response, showError, addMatches, clearSearch, goTo);
+        actOnObject(cmd.barcode, response, showError, addMatches, clearSearch, goTo, objectPickList, storageFacility);
       } else if (response && response.nodeId) {
-        actOnNode(response, cmd.museumId, cmd.token, goTo);
+        actOnNode(response, cmd.museumId, cmd.token, goTo, showError, moveDialog, nodePickList, storageFacility);
       } else {
-        showError({ message: 'Could not find any match for ' + cmd.barcode});
+        showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', { barcode: cmd.barcode })});
         clearSearch();
       }
-      return Observable.empty();
     })
     .toPromise();
 
@@ -157,7 +165,7 @@ const commands = {
   scheduledClear$,
   toggleEnabled$,
   prepareSearch$,
-  keyPress$,
+  keyPress$: keyPress$(),
   clearBuffer$,
   clearSearch$
 };
