@@ -11,7 +11,7 @@ describe('AppComponent', () => {
     const setMuseumId = sinon.spy();
     const setCollectionId = sinon.spy();
     const loadAppSession = sinon.spy();
-    const scanForOldBarCode = sinon.spy();
+    const scanForNodeOrObject = sinon.spy();
     const goTo = sinon.spy();
     const clearBuffer = sinon.spy();
     const clearObjects = sinon.spy();
@@ -56,7 +56,7 @@ describe('AppComponent', () => {
             }
           ]
         }}
-        scanForOldBarCode={scanForOldBarCode}
+        scanForNodeOrObject={scanForNodeOrObject}
         goTo={goTo}
         clearBuffer={clearBuffer}
         clearObjects={clearObjects}

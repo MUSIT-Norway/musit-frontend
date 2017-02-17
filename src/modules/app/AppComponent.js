@@ -14,7 +14,7 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import scanner$, { toggleEnabled$, scanForOldBarCode$, prepareSearch$, clearBuffer$ } from './scanner';
+import scanner$, { toggleEnabled$, addMatches$, prepareSearch$, clearBuffer$, scanForNodeOrObject, actOnObject } from './scanner';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -26,11 +26,9 @@ export class AppComponent extends Component {
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
-    scanForOldBarCode: PropTypes.func.isRequired,
+    scanForNodeOrObject: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     clearBuffer: PropTypes.func.isRequired,
-    clearObjects: PropTypes.func.isRequired,
-    clearNodes: PropTypes.func.isRequired,
     toggleEnabled: PropTypes.func.isRequired
   }
 
@@ -84,7 +82,7 @@ export class AppComponent extends Component {
 
   searchForBarCode() {
     this.props.prepareSearch();
-    this.props.scanForOldBarCode({
+    this.props.scanForNodeOrObject({
       barcode: this.props.scanner.code,
       token: this.props.appSession.getAccessToken(),
       museumId: this.props.appSession.getMuseumId(),
@@ -114,17 +112,6 @@ export class AppComponent extends Component {
     }
 
     if (!this.props.appSession.getBuildNumber()) {
-      return <Loader loaded={false} />;
-    }
-
-    if (
-      this.props.scanner.enabled &&
-      this.props.scanner.matches &&
-      this.props.scanner.matches &&
-      !Array.isArray(this.props.scanner.matches)
-    ) {
-      this.props.clearBuffer();
-      this.props.goTo('/magasin/' + this.props.scanner.matches.id);
       return <Loader loaded={false} />;
     }
 
@@ -213,15 +200,15 @@ export class AppComponent extends Component {
               {this.props.scanner.matches.map(match => {
                 return (
                   <li>
-                    {this.props.params.id ?
                       <a
+                        href="act on object"
                         onClick={e => {
                           e.preventDefault();
-                          hashHistory.push('/magasin/' + match.currentLocationId + '/objects');
+                          actOnObject(this.props.scanner.code, match);
                         }}
                       >
                         {match.getObjectDescription()}
-                      </a> : match.getObjectDescription()}
+                      </a>
                   </li>
                 );
               })}
@@ -249,13 +236,14 @@ const commands = {
   setMuseumId$,
   setCollectionId$,
   toggleEnabled$,
-  scanForOldBarCode$,
   prepareSearch$,
-  clearBuffer$
+  clearBuffer$,
+  addMatches$
 };
 
 const props = {
-  goTo: hashHistory.push.bind(hashHistory)
+  goTo: hashHistory.push.bind(hashHistory),
+  scanForNodeOrObject: scanForNodeOrObject()
 };
 
 export default inject(data, commands, props)(AppComponent);
