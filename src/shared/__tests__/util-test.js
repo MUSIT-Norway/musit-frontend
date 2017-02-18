@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { isDateBiggerThanToday, parseUTCDate, customSortingStorageNodeType } from '../util';
+import { isDateBiggerThanToday, parseUTCDate, customSortingStorageNodeType, localToISOString } from '../util';
 import moment from 'moment';
 
 describe('parseUTCDate', () => {
@@ -95,4 +95,15 @@ describe('isDateBiggerThanToday', () => {
     const newDate = undefined;
     assert(isDateBiggerThanToday(newDate) === false);
   });
+});
+
+
+
+describe('localToISOString', () => {
+  it('CheckNormalDateTime', () => {
+    const newDate = new Date();
+    const isoDat= localToISOString(newDate);
+    assert(moment(newDate).format('YYYYMMDD') === moment(isoDat).format('YYYYMMDD'));
+  });
+
 });

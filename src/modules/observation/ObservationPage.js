@@ -7,7 +7,7 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from './render';
-import { containsObjectWithField, parseUTCDate, DATE_FORMAT_DISPLAY, isDateBiggerThanToday } from '../../shared/util';
+import { containsObjectWithField, parseUTCDate, DATE_FORMAT_DISPLAY, isDateBiggerThanToday, localToISOString } from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
 import { hashHistory } from 'react-router';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
@@ -47,7 +47,7 @@ export default class ObservationPage extends React.Component {
     this.state = {
       selectedType: null,
       observations: props.observations,
-      doneDate: props.doneDate || new Date().toISOString(),
+      doneDate: props.doneDate || localToISOString(new Date()),
       doneBy: props.doneBy
     };
     this.isTypeSelectable = this.isTypeSelectable.bind(this);
@@ -123,7 +123,7 @@ export default class ObservationPage extends React.Component {
       if (isDateBiggerThanToday(newValue)) {
         emitError({ type: 'dateValidationError', message: I18n.t('musit.observation.page.dateValidation') });
 
-        this.setState({ ...this.state, doneDate: new Date().toISOString() });
+        this.setState({ ...this.state, doneDate: localToISOString(new Date()) });
       } else {
         this.setState({ ...this.state, doneDate: newValue });
       }

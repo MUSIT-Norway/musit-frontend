@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { localToISOString } from '../shared/util';
 
 import { DATE_FORMAT_DISPLAY } from './util';
 
@@ -13,7 +14,7 @@ const fixDate = (dateValue) => {
 };
 
 const getNow = () => {
-  return fixDate(new Date().toISOString());
+  return localToISOString(new Date());
 };
 
 const MusitDatePicker = (props) => {
