@@ -1,11 +1,11 @@
-import { shallow } from 'enzyme';
-import { shallowToJson } from 'enzyme-to-json';
+import { mount } from 'enzyme';
+import { mountToJson } from 'enzyme-to-json';
 import React from 'react';
 import ObservationControlGrid from '../EventsGrid';
 
 describe('ObservationControlGrid', () => {
   it('Check the 1st row Date value', () => {
-    const myDiv = shallow(
+    const myDiv = mount(
       <ObservationControlGrid
         id={"1"}
         translate={(key) => key}
@@ -24,7 +24,7 @@ describe('ObservationControlGrid', () => {
           {
             id: 1,
             doneDate: '2017-01-01T09:42:52+00:00',
-            doneBy: 'Blablabla...',
+            doneBy: undefined,
             registeredDate: '2017-01-04T09:42:57+00:00',
             registeredBy: 'Blabla...',
             eventType: 'control',
@@ -156,6 +156,6 @@ describe('ObservationControlGrid', () => {
         ]}
       />
     );
-    expect(shallowToJson(myDiv)).toMatchSnapshot();
+    expect(mountToJson(myDiv)).toMatchSnapshot();
   });
 });
