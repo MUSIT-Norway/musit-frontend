@@ -39,17 +39,18 @@ export class PickListContainer extends React.Component {
     emitSuccess: PropTypes.func.isRequired
   }
 
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.moveModal = this.moveModal.bind(this);
     this.print = this.print.bind(this);
+    this.showMoveNodes = this.showMoveNodes.bind(this);
   }
 
   isTypeNode() {
     return 'nodes' === this.props.route.type;
   }
 
-  showModal = (items) => {
+  showMoveNodes = (items) => {
     let title;
     if (this.isTypeNode()) {
       title = I18n.t('musit.moveModal.moveNodes');
@@ -170,7 +171,7 @@ export class PickListContainer extends React.Component {
   }
 
   print(nodesToPrint) {
-    this.context.showModal('Choose template', <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />);
+    this.props.showModal('Choose template', <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />);
   }
 
   toggleObject({item, on}) {
@@ -218,7 +219,7 @@ export class PickListContainer extends React.Component {
               }}
               toggle={(item, on) => this.isTypeNode() ? this.props.toggleNode({item, on}) : this.toggleObject({item, on})}
               remove={item => this.isTypeNode() ?  this.props.removeNode(item) :  this.props.removeObject(item)}
-              move={() => this.showModal(marked)}
+              move={this.showMoveNodes}
               print={this.print}
             />
             <div style={{ textAlign: 'left' }}>
