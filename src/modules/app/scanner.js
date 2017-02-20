@@ -76,8 +76,7 @@ export const scanForNode = (
   storageFacility = isStorageFacility
 ) => ({ uuid, museumId, token }) => {
   MusitNode.findByUUID(ajaxGet)({uuid, museumId, token})
-    .toPromise()
-    .then(response => {
+    .do(response => {
       if (response && response.nodeId) {
         actOnNode(
           response,
@@ -98,7 +97,7 @@ export const scanForNode = (
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', { uuid })});
         clearSearch();
       }
-    });
+    }).toPromise();
 };
 
 export const actOnObject = (
