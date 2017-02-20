@@ -97,7 +97,7 @@ export const actOnObject = (
       clearBuffer();
     } else if (storageFacility()) {
       if (!item.currentLocationId) {
-        showError({ message: 'Object has no location'});
+        showError({ message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
         clearSearch();
       } else {
         goTo(`/magasin/${item.currentLocationId}/objects`);
