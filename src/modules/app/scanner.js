@@ -37,19 +37,25 @@ export const actOnNode = (
   token,
   goTo = hashHistory.push,
   showError = emitError,
+  clearSearch = () => clearSearch$.next(),
+  clearBuffer = () => clearBuffer$.next(),
   moveDialog = isMoveDialogActive,
   nodePickList = isNodePickList,
   storageFacility = isStorageFacility
 ): Observable => {
   if (moveDialog()) {
-    loadNode$.next({nodeId: response.id, museumId, token});
-    loadChildren$.next({nodeId: response.id, museumId, token});
+    loadNode$.next({id: response.id, museumId, token});
+    loadChildren$.next({id: response.id, museumId, token});
+    clearBuffer();
   } else if (nodePickList()) {
     addNode$.next({value: response, path: getPath(response)});
+    clearBuffer();
   } else if (storageFacility()) {
     goTo(`/magasin/${response.id}`);
+    clearBuffer();
   } else {
     showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+    clearSearch();
   }
 };
 
@@ -57,13 +63,14 @@ export const scanForNode = (
   ajaxGet = ajax.simpleGet,
   goTo =  hashHistory.push,
   showError = emitError,
-  clearSearch = () => clearSearch$.next()
+  clearSearch = () => clearSearch$.next(),
+  clearBuffer = () => clearBuffer$.next(),
 ) => ({ uuid, museumId, token }) => {
   MusitNode.findByUUID(ajaxGet)({uuid, museumId, token})
     .toPromise()
     .then(response => {
       if (response && response.nodeId) {
-        actOnNode(response, museumId, token, goTo, showError);
+        actOnNode(response, museumId, token, goTo, showError, clearSearch, clearBuffer);
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', { uuid })});
         clearSearch();
@@ -76,18 +83,29 @@ export const actOnObject = (
   response,
   showError = emitError,
   addMatches = (matches) => addMatches$.next(matches),
+  addObject = (object) => addObject$.next(object),
   clearSearch = () => clearSearch$.next(),
+  clearBuffer = () => clearBuffer$.next(),
   goTo = hashHistory.push,
   objectPickList = isObjectPickList,
   storageFacility = isStorageFacility
 ) => {
-  if (response.length === 1) {
+  if (response.length === 1 || !Array.isArray(response)) {
+    const item = response.length ? response[0] : response;
     if (objectPickList()) {
-      addObject$({ value: response[0], path: getPath(response[0])});
+      addObject({ value: item, path: getPath(item)});
+      clearBuffer();
     } else if (storageFacility()) {
-      goTo(`/magasin/${response[0].currentLocationId}/objects`);
+      if (!item.currentLocationId) {
+        showError({ message: 'Object has no location'});
+        clearSearch();
+      } else {
+        goTo(`/magasin/${item.currentLocationId}/objects`);
+        clearBuffer();
+      }
     } else {
       showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+      clearSearch();
     }
   } else if (response.length > 0) {
     addMatches(response);
@@ -102,7 +120,9 @@ export const scanForNodeOrObject = (
   goTo = hashHistory.push,
   showError = emitError,
   addMatches = (matches) => addMatches$.next(matches),
+  addObject = (object) => addObject$.next(object),
   clearSearch = () => clearSearch$.next(),
+  clearBuffer = () => clearBuffer$.next(),
   moveDialog = isMoveDialogActive,
   nodePickList = isNodePickList,
   objectPickList = isObjectPickList,
@@ -117,9 +137,9 @@ export const scanForNodeOrObject = (
     })
     .do((response) => {
       if (Array.isArray(response)) {
-        actOnObject(cmd.barcode, response, showError, addMatches, clearSearch, goTo, objectPickList, storageFacility);
+        actOnObject(cmd.barcode, response, showError, addMatches, addObject, clearSearch, clearBuffer, goTo, objectPickList, storageFacility);
       } else if (response && response.nodeId) {
-        actOnNode(response, cmd.museumId, cmd.token, goTo, showError, moveDialog, nodePickList, storageFacility);
+        actOnNode(response, cmd.museumId, cmd.token, goTo, showError, clearSearch, clearBuffer, moveDialog, nodePickList, storageFacility);
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', { barcode: cmd.barcode })});
         clearSearch();
@@ -128,7 +148,7 @@ export const scanForNodeOrObject = (
     .toPromise();
 
 export const reducer$ = (actions, scanUUID) => Observable.merge(
-  actions.clearBuffer$.map(() => (state) => ({...state, buffer: null, code: null, matches: null, searchComplete: false})),
+  actions.clearBuffer$.map(() => (state) => ({...state, buffer: null, code: null, matches: null, searchComplete: false, searchPending: false})),
   actions.clearSearch$.map(() => (state) => ({...state, searchPending: false, searchComplete: false, matches: null})),
   actions.prepareSearch$.map(() => (state) => ({...state, searchPending: true, searchComplete: false, matches: null})),
   actions.addMatches$.map((matches) => (state) => ({...state, matches, searchPending: false, searchComplete: true})),
