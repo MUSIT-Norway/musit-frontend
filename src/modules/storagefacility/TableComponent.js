@@ -27,7 +27,7 @@ import { Observable } from 'rxjs';
 
 import inject from 'react-rxjs/dist/RxInject';
 
-import { addNode$, addObject$ } from '../app/pickList';
+import { addNode$, addObject$, isNodeAdded$, isObjectAdded$ } from '../app/pickList';
 
 import { showConfirm, showModal } from '../../shared/modal';
 
@@ -51,6 +51,8 @@ export class StorageUnitsContainer extends React.Component {
     params: React.PropTypes.object.isRequired,
     pickObject: React.PropTypes.func.isRequired,
     pickNode: React.PropTypes.func.isRequired,
+    isNodeAdded: React.PropTypes.func.isRequired,
+    isObjectAdded: React.PropTypes.func.isRequired,
     setLoading: React.PropTypes.func.isRequired,
     clearRootNode: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
@@ -419,6 +421,7 @@ export class StorageUnitsContainer extends React.Component {
                 token
               })
             }
+            isObjectAdded={() => this.props.isObjectAdded}
             onMove={moveObject}
           />
           {showPaging &&
@@ -447,6 +450,7 @@ export class StorageUnitsContainer extends React.Component {
           goToEvents={(node) => this.props.goTo(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
           pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
+          isNodeAdded={(node) => this.props.isNodeAdded({value: node })}
           onClick={(node) => this.props.goTo(`/magasin/${node.id}`)}
         />
         {showPaging &&
@@ -492,12 +496,16 @@ const commands = {
   loadRootNode$,
   loadNodes$,
   loadObjects$,
-  setLoading$
+  setLoading$,
+  isNodeAdded$,
+  isObjectAdded$
 };
 
 const props = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
+ // isNodeAdded: isNodeAdded$,
+  // isObjectAdded: isObjectAdded$,
   deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
   showConfirm,
   showModal,
