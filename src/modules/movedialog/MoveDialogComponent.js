@@ -28,7 +28,8 @@ import PagingToolbar from '../../shared/paging';
 import moveDialogStore$, {
   clear$,
   loadChildren$,
-  loadNode$
+  loadNode$,
+  setLoading$
 } from './moveDialogStore';
 import Loader from 'react-loader';
 import inject from 'react-rxjs/dist/RxInject';
@@ -42,6 +43,7 @@ export class MusitModal extends Component {
     loadNode: PropTypes.func.isRequired,
     loadChildren: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
     store: PropTypes.object,
     appSession: PropTypes.object.isRequired
   };
@@ -63,6 +65,7 @@ export class MusitModal extends Component {
 
   loadHome() {
     this.props.clear();
+    this.props.setLoading(true);
     this.props.loadChildren({
       id: null,
       museumId: this.props.appSession.getMuseumId(),
@@ -76,6 +79,7 @@ export class MusitModal extends Component {
       currentPage
     });
     this.props.clear();
+    this.props.setLoading(true);
     this.props.loadNode({
       id: id,
       museumId: this.props.appSession.getMuseumId(),
@@ -116,7 +120,7 @@ export class MusitModal extends Component {
         {I18n.t('musit.moveModal.noData')}
       </div>;
 
-    if (data.totalMatches > 0) {
+    if (!data.loading && data.totalMatches > 0) {
       body = (
         <div>
           <ModalNodeGrid
@@ -146,8 +150,21 @@ export class MusitModal extends Component {
         />
         <div style={{ paddingTop: '10px' }}>
           <SubmitButton
-            disabled={!isSelected}
-            onClick={() => this.props.onMove(selectedNode, selectedNode.name, this.context.closeModal)}
+            disabled={!isSelected || data.loading}
+            onClick={() => {
+              this.props.setLoading(true);
+              this.props.onMove(
+                selectedNode,
+                selectedNode.name,
+                () =>  {
+                  this.props.setLoading(false);
+                  this.context.closeModal();
+                },
+                () => {
+                  this.props.setLoading(false);
+                }
+              );
+            }}
             label={I18n.t('musit.moveModal.move')}
           />
           &nbsp;
@@ -177,7 +194,8 @@ const data = {
 const commands = {
   clear$,
   loadChildren$,
-  loadNode$
+  loadNode$,
+  setLoading$
 };
 
 export default inject(data, commands)(MusitModal);
