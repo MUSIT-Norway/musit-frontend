@@ -100,10 +100,30 @@ describe('isDateBiggerThanToday', () => {
 
 
 describe('localToISOString', () => {
-  it('CheckNormalDateTime', () => {
+
+  it('localTOIsoString should allways be equal to input date', () => {
     const newDate = new Date();
     const isoDat= localToISOString(newDate);
     assert(moment(newDate).format('YYYYMMDD') === moment(isoDat).format('YYYYMMDD'));
+  });
+
+  it('CheckAroundMidnight', () => {
+    const newDate = new Date('2017-02-20T00:00:01');
+    const isoDate= localToISOString(newDate);
+    assert(moment(newDate).format('YYYYMMDD') === moment(isoDate).format('YYYYMMDD'));
+  });
+
+});
+
+
+describe('toISOString', () => {
+
+  it('Date local time should not be equal to isoDate if local time has timeZoneOffset <> 0', () => {
+    const d = new Date();
+    const momentLocal = moment(d); // Local date
+    const i = momentLocal.toISOString().split('.')[0]; // Zulu time (without seconds
+    const l = momentLocal.format('YYYY-MM-DDTHH:mm:ssZ');
+    assert(d.getTimezoneOffset() !== 0 || i !== l); // If timeZone is different from zulu, local should be different from isoString
   });
 
 });
