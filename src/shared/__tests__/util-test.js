@@ -121,7 +121,7 @@ describe('toISOString', () => {
   it('Date local time should not be equal to isoDate if local time has timeZoneOffset <> 0', () => {
     const d = new Date();
     const momentLocal = moment(d); // Local date
-    const i = momentLocal.toISOString().split('.')[0]; // Zulu time (without seconds
+    const i = momentLocal.toISOString().split('.')[0]; // Zulu time (without milliseconds)
     const l = momentLocal.format('YYYY-MM-DDTHH:mm:ssZ');
     assert(d.getTimezoneOffset() !== 0 || i !== l); // If timeZone is different from zulu, local should be different from isoString
   });
