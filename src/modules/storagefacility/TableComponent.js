@@ -206,7 +206,7 @@ export class StorageUnitsContainer extends React.Component {
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes,
     loadRootNode = this.loadRootNode
-  ) => (toNode, toName, onSuccess) => {
+  ) => (toNode, toName, onSuccess, onFailure = () => true) => {
     const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
     if (!errorMessage) {
       nodeToMove.moveNode({ destination: toNode.id, doneBy: userId, museumId, token, callback: {
@@ -220,6 +220,7 @@ export class StorageUnitsContainer extends React.Component {
           });
         },
         onFailure: (e) => {
+          onFailure();
           this.props.emitError({
             type: 'errorOnMove',
             error: e,
@@ -228,6 +229,7 @@ export class StorageUnitsContainer extends React.Component {
         }
       }});
     } else {
+      onFailure();
       this.props.emitError({
         type: 'errorOnMove',
         message: errorMessage
@@ -250,9 +252,8 @@ export class StorageUnitsContainer extends React.Component {
     collectionId = this.props.appSession.getCollectionId(),
     token = this.props.appSession.getAccessToken(),
     nodeId = this.props.store.rootNode.id,
-    moveObject = this.props.moveObject,
     loadObjects = this.loadObjects
-  ) => (toNode, toName, onSuccess) => {
+  ) => (toNode, toName, onSuccess, onFailure = () => true) => {
     const description = objectToMove.getObjectDescription();
     objectToMove.moveObject({ destination: toNode.id, doneBy: userId, museumId, collectionId, token, callback: {
       onComplete: () => {
@@ -264,6 +265,7 @@ export class StorageUnitsContainer extends React.Component {
         });
       },
       onFailure: (e) => {
+        onFailure();
         this.props.emitError({
           type: 'errorOnMove',
           error: e,
