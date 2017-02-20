@@ -104,7 +104,7 @@ describe('scanner', () => {
       f: {
         ...initialState,
         buffer: null, code: null, matches: null,
-        searchPending: true, searchComplete: false,
+        searchPending: false, searchComplete: false,
         appSession: {token: '1223', museumId: new MuseumId(99)}
       }
     };
