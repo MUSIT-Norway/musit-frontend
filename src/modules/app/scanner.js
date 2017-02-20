@@ -24,31 +24,34 @@ export const toggleEnabled$ = createAction('toggleEnabled$');
 export const prepareSearch$ = createAction('prepareSearch$');
 export const clearSearch$ = createAction('clearSearch$');
 export const addMatches$ = createAction('addMatches$');
-const keyPress$ = (charStream = Observable.fromEvent(window.document.body, 'keypress')) =>
-  charStream
-    .filter(e => e.which !== 13 && e.which !== 10)
-    .map(e => String.fromCharCode(e.which))
-    .map(c => c.replace(/\+/g, '-'));
-const scheduledClear$ = keyPress$().debounce(() => Observable.timer(50));
+const bodyKeyPress = Observable.fromEvent(window.document.body, 'keypress');
+const keyPress$ = (charStream: Observable) => charStream
+  .filter(e => e.which !== 13 && e.which !== 10)
+  .map(e => String.fromCharCode(e.which))
+  .map(c => c.replace(/\+/g, '-'));
+const scheduledClear$ = keyPress$(bodyKeyPress).debounce(() => Observable.timer(50));
 
 export const actOnNode = (
   response,
   museumId,
   token,
-  goTo = hashHistory.push,
-  showError = emitError,
-  clearSearch = () => clearSearch$.next(),
-  clearBuffer = () => clearBuffer$.next(),
-  moveDialog = isMoveDialogActive,
-  nodePickList = isNodePickList,
-  storageFacility = isStorageFacility
-): Observable => {
+  goTo,
+  showError,
+  clearSearch,
+  clearBuffer,
+  loadNode,
+  loadChildren,
+  addNode,
+  moveDialog,
+  nodePickList,
+  storageFacility
+) => {
   if (moveDialog()) {
-    loadNode$.next({id: response.id, museumId, token});
-    loadChildren$.next({id: response.id, museumId, token});
+    loadNode({id: response.id, museumId, token});
+    loadChildren({id: response.id, museumId, token});
     clearBuffer();
   } else if (nodePickList()) {
-    addNode$.next({value: response, path: getPath(response)});
+    addNode({value: response, path: getPath(response)});
     clearBuffer();
   } else if (storageFacility()) {
     goTo(`/magasin/${response.id}`);
@@ -65,12 +68,32 @@ export const scanForNode = (
   showError = emitError,
   clearSearch = () => clearSearch$.next(),
   clearBuffer = () => clearBuffer$.next(),
+  loadNode = (node) => loadNode$.next(node),
+  loadChildren = (node) => loadChildren$.next(node),
+  addNode = (node) => addNode$.next(node),
+  moveDialog = isMoveDialogActive,
+  nodePickList = isNodePickList,
+  storageFacility = isStorageFacility
 ) => ({ uuid, museumId, token }) => {
   MusitNode.findByUUID(ajaxGet)({uuid, museumId, token})
     .toPromise()
     .then(response => {
       if (response && response.nodeId) {
-        actOnNode(response, museumId, token, goTo, showError, clearSearch, clearBuffer);
+        actOnNode(
+          response,
+          museumId,
+          token,
+          goTo,
+          showError,
+          clearSearch,
+          clearBuffer,
+          loadNode,
+          loadChildren,
+          addNode,
+          moveDialog,
+          nodePickList,
+          storageFacility
+        );
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', { uuid })});
         clearSearch();
@@ -123,6 +146,9 @@ export const scanForNodeOrObject = (
   addObject = (object) => addObject$.next(object),
   clearSearch = () => clearSearch$.next(),
   clearBuffer = () => clearBuffer$.next(),
+  loadNode = (node) => loadNode$.next(node),
+  loadChildren = (node) => loadChildren$.next(node),
+  addNode = (node) => addNode$.next(node),
   moveDialog = isMoveDialogActive,
   nodePickList = isNodePickList,
   objectPickList = isObjectPickList,
@@ -137,9 +163,34 @@ export const scanForNodeOrObject = (
     })
     .do((response) => {
       if (Array.isArray(response)) {
-        actOnObject(cmd.barcode, response, showError, addMatches, addObject, clearSearch, clearBuffer, goTo, objectPickList, storageFacility);
+        actOnObject(
+          cmd.barcode,
+          response,
+          showError,
+          addMatches,
+          addObject,
+          clearSearch,
+          clearBuffer,
+          goTo,
+          objectPickList,
+          storageFacility
+        );
       } else if (response && response.nodeId) {
-        actOnNode(response, cmd.museumId, cmd.token, goTo, showError, clearSearch, clearBuffer, moveDialog, nodePickList, storageFacility);
+        actOnNode(
+          response,
+          cmd.museumId,
+          cmd.token,
+          goTo,
+          showError,
+          clearSearch,
+          clearBuffer,
+          loadNode,
+          loadChildren,
+          addNode,
+          moveDialog,
+          nodePickList,
+          storageFacility
+        );
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', { barcode: cmd.barcode })});
         clearSearch();
@@ -185,7 +236,7 @@ const commands = {
   scheduledClear$,
   toggleEnabled$,
   prepareSearch$,
-  keyPress$: keyPress$(),
+  keyPress$: keyPress$(bodyKeyPress),
   clearBuffer$,
   clearSearch$
 };
