@@ -211,9 +211,9 @@ export class AppComponent extends Component {
             }
             {this.props.scanner.matches && Array.isArray(this.props.scanner.matches) && this.props.scanner.matches.length > 0 &&
               <ul>
-              {this.props.scanner.matches.map(match => {
+              {this.props.scanner.matches.map((match, i) => {
                 return (
-                  <li>
+                  <li key={i}>
                       <a
                         href="act on object"
                         onClick={e => {

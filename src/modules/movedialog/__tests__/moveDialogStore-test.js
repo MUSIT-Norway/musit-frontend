@@ -11,6 +11,8 @@ describe('moveDialog', () => {
 
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
         console.log(difference);
@@ -19,37 +21,50 @@ describe('moveDialog', () => {
     });
 
     // mock streams
+    const setLoadingM       = '--1--------';
     const clearM            = '-1---------';
-    const loadNodeM         = '--1--------';
-    const loadChildrenM     = '---1-------';
-    const expected          = 'aabc-------';
+    const loadNodeM         = '---1--------';
+    const loadChildrenM     = '----1-------';
+    const expected          = 'aadbc-------';
 
     const expectedStateMap = {
       a: initialState,
-      b: {...initialState, selectedNode: {
-        id: 1234,
-        name: 'Test',
-        type: 'Room',
-        environmentRequirement: {},
-        environmentAssessment: {},
-        securityAssessment: {},
-        breadcrumb: []
-      }},
-      c: {...initialState, selectedNode: {
-        id: 1234,
-        name: 'Test',
-        type: 'Room',
-        environmentRequirement: {},
-        environmentAssessment: {},
-        securityAssessment: {},
-        breadcrumb: []
-      }, data: {
-        matches: [],
-        loading: false
-      }}
+      b: {
+        ...initialState,
+        selectedNode: {
+          id: 1234,
+          name: 'Test',
+          type: 'Room',
+          environmentRequirement: {},
+          environmentAssessment: {},
+          securityAssessment: {},
+          breadcrumb: []
+        },
+        data: { 
+          ...initialState.data,
+          loading: true
+        }
+      },
+      c: {
+        ...initialState,
+        selectedNode: {
+          id: 1234,
+          name: 'Test',
+          type: 'Room',
+          environmentRequirement: {},
+          environmentAssessment: {},
+          securityAssessment: {},
+          breadcrumb: []
+        }, data: {
+          matches: [],
+          loading: false
+        }
+      },
+      d: { ...initialState, data: { ...initialState.data, loading: true } }
     };
 
     // mock up$ and down$ events
+    const setLoading$ = testScheduler.createHotObservable(setLoadingM, { 1: true });
     const clear$ = testScheduler.createHotObservable(clearM);
     const loadNode$ = testScheduler.createHotObservable(loadNodeM, { 1: { id: 1234, token: '1234', museumId: new MuseumId(99)}})
       .switchMap(MusitNode.getNode(
@@ -71,7 +86,7 @@ describe('moveDialog', () => {
         })
       ));
 
-    const state$ = reducer$({clear$, loadNode$, loadChildren$});
+    const state$ = reducer$({clear$, loadNode$, loadChildren$, setLoading$ });
 
     // assertion
     testScheduler.expectObservable(createStore('test', state$, Observable.of(initialState))).toBe(expected, expectedStateMap);

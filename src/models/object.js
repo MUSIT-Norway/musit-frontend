@@ -25,7 +25,7 @@ class MusitObject {
 
   moveObject({destination, doneBy, museumId, collectionId, token, callback}) {
     if (this.isMainObject()) {
-      MusitObject.getMainObject(this.id, museumId, collectionId, token, { onFailure: callback.onFailure })
+      MusitObject.getMainObject()({ id: this.id, museumId, collectionId, token, callback: { onFailure: callback.onFailure } })
         .toPromise()
         .then(objects =>
           objects.forEach(obj =>

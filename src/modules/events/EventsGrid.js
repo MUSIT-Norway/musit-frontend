@@ -18,7 +18,7 @@ export default class ObservationControlGrid extends Component {
       doneBy: PropTypes.oneOfType([
         React.PropTypes.number,
         React.PropTypes.string
-      ]).isRequired,
+      ]),
       registeredDate: PropTypes.string.isRequired,
       registeredBy: PropTypes.string.isRequired
     }))
@@ -101,7 +101,9 @@ export default class ObservationControlGrid extends Component {
                   return { index, item: controlOrObservation[type], type };
                 });
                 const icons = reduce(withIndexAndKey, (result, withIndex) => {
-                  result.push(this.getIcon(withIndex.item.ok, withIndex.type, withIndex.index));
+                  if (withIndex.item) {
+                    result.push(this.getIcon(withIndex.item.ok, withIndex.type, withIndex.index));
+                  }
                   return result;
                 }, []);
                 return (
