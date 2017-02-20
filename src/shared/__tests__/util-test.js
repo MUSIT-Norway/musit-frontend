@@ -101,7 +101,7 @@ describe('isDateBiggerThanToday', () => {
 
 describe('localToISOString', () => {
 
-  it('localTOIsoString should allways be equal to input date', () => {
+  it('localTOIsoString should always be equal to input date', () => {
     const newDate = new Date();
     const isoDat= localToISOString(newDate);
     assert(moment(newDate).format('YYYYMMDD') === moment(isoDat).format('YYYYMMDD'));
