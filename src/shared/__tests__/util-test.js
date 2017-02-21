@@ -123,8 +123,12 @@ describe('parseUTC and parseLocalDate around midnight', () => {
     const d = new Date(str);
     const localDate = moment(d).format('YYYYMMDD');
     const upcDate = parseUTCDate(str).format('YYYYMMDD');
-
-    expectChai(localDate).to.not.equal(upcDate);
+    const timezoneOffset = d.getTimezoneOffset();
+    if (timezoneOffset !== 0) {
+      expectChai(localDate).to.not.equal(upcDate);
+    } else {
+      expectChai(localDate).to.equal(upcDate);
+    }
   });
 
   it('parseLocalDate shows correct local date around midnight if local zone is GMT+1', () => {
