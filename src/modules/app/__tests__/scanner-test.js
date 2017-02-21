@@ -487,6 +487,210 @@ describe('scanner', () => {
     expect(addMatches.calledOnce).toBe(false);
   });
 
+  it('should give error message when scanning barcode that returns a node on a page that doesnt support scanning', () => {
+    const ajaxGet = () => {
+      return Observable.of({
+        response: {
+          id: 1,
+          nodeId: '1234',
+          name: 'Test',
+          type: 'Room'
+        }
+      });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const addMatches = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      addMatches,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null,
+      null,
+      null,
+      () => false,
+      () => false,
+      () => false,
+      () => false
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(true);
+    expect(showError.getCall(0).args[0].message).toEqual(
+      'Den scannede strekkoden tilhører en magasinnode. Dette skjermbildet håndterer kun scanning av objekter.'
+    );
+    expect(clearSearch.calledOnce).toBe(true);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(false);
+    expect(addMatches.calledOnce).toBe(false);
+  });
+
+  it('should update move dialog when scanning barcode that returns a node when move dialog is active', () => {
+    const ajaxGet = () => {
+      return Observable.of({
+        response: {
+          id: 1,
+          nodeId: '1234',
+          name: 'Test',
+          type: 'Room'
+        }
+      });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const addMatches = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const loadNode = sinon.spy();
+    const loadChildren = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      addMatches,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      null,
+      () => true,
+      () => false,
+      () => false,
+      () => false
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(false);
+    expect(clearSearch.calledOnce).toBe(false);
+    expect(addObject.calledOnce).toBe(false);
+    expect(loadNode.calledOnce).toBe(true);
+    const loadNodeCmd = loadNode.getCall(0).args[0];
+    expect(loadNodeCmd.token).toBe('1234');
+    expect(loadNodeCmd.id).toBe(1);
+    expect(loadNodeCmd.museumId).toEqual(new MuseumId(99));
+    expect(loadChildren.calledOnce).toBe(true);
+    const loadChildrenCmd = loadChildren.getCall(0).args[0];
+    expect(loadChildrenCmd.token).toBe('1234');
+    expect(loadChildrenCmd.id).toBe(1);
+    expect(loadChildrenCmd.museumId).toEqual(new MuseumId(99));
+    expect(clearBuffer.calledOnce).toBe(true);
+    expect(addMatches.calledOnce).toBe(false);
+  });
+
+  it('should add to node picklist when scanning barcode that returns a node when node picklist is active', () => {
+    const value = {
+      id: 1,
+      nodeId: '3456',
+      name: 'Test',
+      type: 'Room',
+      path: ',1,2,',
+      pathNames: [{ nodeId: 1, name: 'Test'}, { nodeId: 2, name: 'Tull'}]
+    };
+    const ajaxGet = () => {
+      return Observable.of({
+        response: value
+      });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const addMatches = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const loadNode = sinon.spy();
+    const loadChildren = sinon.spy();
+    const addNode = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      addMatches,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      addNode,
+      () => false,
+      () => true,
+      () => false,
+      () => false
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(false);
+    expect(clearSearch.calledOnce).toBe(false);
+    expect(addObject.calledOnce).toBe(false);
+    expect(addNode.calledOnce).toBe(true);
+    const addNodeCmd = addNode.getCall(0).args[0];
+    expect(addNodeCmd.value).toEqual({...value, breadcrumb:[
+      { id: 1, name: 'Test', url: '/magasin/1'},
+      { id: 2, name: 'Tull', url: '/magasin/2'}
+    ]});
+    expect(addNodeCmd.path).toEqual([{'id':1,'name':'Test','url':'/magasin/1'},{'id':2,'name':'Tull','url':'/magasin/2'}]);
+    expect(clearBuffer.calledOnce).toBe(true);
+    expect(addMatches.calledOnce).toBe(false);
+  });
+
+  it('should go to node location when scanning barcode that returns a node when storagefacility is active', () => {
+    const value = {
+      id: 45,
+      nodeId: '3456',
+      name: 'Test',
+      type: 'Room',
+      path: ',1,2,',
+      pathNames: [{ nodeId: 1, name: 'Test'}, { nodeId: 2, name: 'Tull'}]
+    };
+    const ajaxGet = () => {
+      return Observable.of({
+        response: value
+      });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const addMatches = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const loadNode = sinon.spy();
+    const loadChildren = sinon.spy();
+    const addNode = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      addMatches,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      addNode,
+      () => false,
+      () => false,
+      () => false,
+      () => true
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(true);
+    expect(goTo.getCall(0).args[0]).toEqual('/magasin/45');
+    expect(showError.calledOnce).toBe(false);
+    expect(clearSearch.calledOnce).toBe(false);
+    expect(addObject.calledOnce).toBe(false);
+    expect(addNode.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(true);
+    expect(addMatches.calledOnce).toBe(false);
+  });
+
   it('should have a working reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       // console.log(JSON.stringify(actual, null, 2));
