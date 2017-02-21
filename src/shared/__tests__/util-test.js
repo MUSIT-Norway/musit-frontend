@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { isDateBiggerThanToday, parseUTCDate, customSortingStorageNodeType, localToISOString } from '../util';
+import { isDateBiggerThanToday, parseUTCDate, parseLocalDate, customSortingStorageNodeType, localToISOString } from '../util';
 import moment from 'moment';
 
 describe('parseUTCDate', () => {
@@ -127,13 +127,21 @@ describe('toISOString', () => {
   });
 });
 
-describe('parseUTC around midnight', () => {
+describe('parseUTC and parseLocalDate around midnight', () => {
 
-  it('It shows wrong local date around midnight if local zone is GMT+1', () => {
-    const str = '2017-01-12T00:01:00.000+01:00';
+  const str = '2017-01-12T00:01:00.000+01:00';
+
+  it('parseUTC shows wrong local date around midnight if local zone is GMT+1', () => {
     const d = new Date(str);
     const m = moment(d).format('YYYYMMDD');
     const p = parseUTCDate(str).format('YYYYMMDD');
     assert(m !== p );
+  });
+
+  it('parseLocalDate shows correct local date around midnight if local zone is GMT+1', () => {
+    const d = new Date(str);
+    const m = moment(d).format('YYYYMMDD');
+    const p = parseLocalDate(str).format('YYYYMMDD');
+    assert(m === p );
   });
 });

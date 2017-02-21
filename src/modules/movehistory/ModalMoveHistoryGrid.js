@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
-import { localDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
+import { parseLocalDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 
 export default class ModalMoveHistoryGrid extends Component {
@@ -34,7 +34,7 @@ export default class ModalMoveHistoryGrid extends Component {
               {[].concat(this.props.tableData).map((c, i) =>
                 <tr key={i}>
                   <td>
-                    {` ${localDate(c.doneDate).format(DATE_FORMAT_DISPLAY)}`}
+                    {` ${parseLocalDate(c.doneDate).format(DATE_FORMAT_DISPLAY)}`}
                   </td>
                   <td>
                     {` ${c.doneBy}`}

@@ -40,7 +40,7 @@ export const parseUTCDate = (dateStr: string) => {
   return moment.utc(dateStr);
 };
 
-export const localDate = (dateStr: string) => {
+export const parseLocalDate = (dateStr: string) => {
   return moment(new Date(dateStr));
 };
 export const localToISOString = (d: Date)=> {

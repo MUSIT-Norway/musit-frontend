@@ -23,7 +23,7 @@ import ControlView from './ControlViewForm';
 import { MusitField } from '../../components/formfields';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import { localDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
+import { parseLocalDate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
 import store$, { getControl$, loadRootNode$ } from './controlStore';
@@ -56,7 +56,7 @@ export class ControlViewContainer extends React.Component {
   }
 
   getDate(data, field) {
-    return data && data[field] ? localDate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
+    return data && data[field] ? parseLocalDate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
   }
 
   render() {
