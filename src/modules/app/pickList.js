@@ -17,12 +17,9 @@ export const removeNode$ = createAction('removeNode$');
 export const toggleNode$ = createAction('toggleNode$');
 export const clearNodes$ = createAction('clearNodes$');
 export const refreshNode$ = createAction('refreshNode$').flatMap(MusitNode.getNode());
-export const isNodeAdded$ = createAction('isNodeAdded$');
-export const isObjectAdded$ = createAction('isObjectAdded$');
 
-const isItemAdded = (item, items = []) => {
-  console.log('Rituvesh Add called', item, items);
-  return (items.findIndex(node => item.value.id === node.value.id) > -1);
+export const isItemAdded = (item, items = []) => {
+  return items.findIndex(node => item.id === node.value.id) > -1;
 };
 
 const addItem = (item, items = []) => {
@@ -121,9 +118,7 @@ export const reducer$ = (actions) => Observable.empty().merge(
   actions.removeNode$.map((item) => (state) => ({...state, nodes: removeItem(item, state.nodes)})),
   actions.addNode$.map((item) => (state) => ({...state, nodes: addItem(item, state.nodes)})),
   actions.refreshNode$.map((item) => (state) => ({...state, nodes: refreshItem(item, state.nodes)})),
-  actions.clearNodes$.map(() => (state) => ({...state, nodes: []})),
-  actions.isNodeAdded$.map((item) => (state) => (isItemAdded(item, state.nodes))),
-  actions.isObjectAdded$.map((item) => (state) => (isItemAdded(item, state.objects)))
+  actions.clearNodes$.map(() => (state) => ({...state, nodes: []}))
 );
 
 export default createStore('pickList', reducer$({
@@ -137,9 +132,7 @@ export default createStore('pickList', reducer$({
   toggleObject$,
   toggleMainObject$,
   refreshObjects$,
-  clearObjects$,
-  isNodeAdded$,
-  isObjectAdded$
+  clearObjects$
 }), Observable.of({ nodes: [], objects: []}))
   .map(state => ({
     nodes: orderBy(state.nodes, [(o) => customSortingStorageNodeType(o.value.type), (o) => toLower(o.value.name)]),
