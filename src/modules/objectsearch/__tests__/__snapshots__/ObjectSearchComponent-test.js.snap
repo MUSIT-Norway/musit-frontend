@@ -140,7 +140,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         name="shopping-cart"
                         style={
                           Object {
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -222,7 +222,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -302,7 +302,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -382,7 +382,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -462,7 +462,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -542,7 +542,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -622,7 +622,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -702,7 +702,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -782,7 +782,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -862,7 +862,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -942,7 +942,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1022,7 +1022,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1102,7 +1102,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1182,7 +1182,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1262,7 +1262,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1342,7 +1342,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1422,7 +1422,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1502,7 +1502,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1582,7 +1582,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1662,7 +1662,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
@@ -1742,7 +1742,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         style={
                           Object {
                             "color": "Gray",
-                            "fontSize": "1.5em"
+                            "fontSize": "1.3em"
                           }
                         } />
                     </a>
