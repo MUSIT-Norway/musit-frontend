@@ -62,7 +62,7 @@ export class PickListContainer extends React.Component {
 
   nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onComplete: () => {
-      items.map(p => p.value).map(item =>
+      items.map(item =>
         this.props.refreshNode({
           id: item.id,
           museumId: this.props.appSession.getMuseumId(),
@@ -95,7 +95,7 @@ export class PickListContainer extends React.Component {
   objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
     onComplete: () => {
       this.props.refreshObjects({
-        objectIds: items.map(item => item.value.id),
+        objectIds: items.map(item => item.id),
         museumId: this.props.appSession.getMuseumId(),
         token: this.props.appSession.getAccessToken()
       });
@@ -132,9 +132,9 @@ export class PickListContainer extends React.Component {
   moveModal = (items) => (to, toName, onSuccess) => {
     const isNode = this.isTypeNode();
     const moveFn = isNode ? MusitNode.moveNode : MusitObject.moveObject;
-    const toMove = items.map(itemToMove => itemToMove.value.id);
+    const toMove = items.map(itemToMove => itemToMove.id);
     const toMoveLength = toMove.length;
-    const first = items[0].value;
+    const first = items[0];
     const name = isNode ? first.name : first.term;
     let callback;
     if (isNode) {
@@ -187,6 +187,7 @@ export class PickListContainer extends React.Component {
     const pickList = (this.props.pickList && this.props.pickList[type]) || [];
     const marked = pickList.filter(p => p.marked);
     const markedValues = marked.map(p => p.value);
+
     return (
       <div>
         <main>
