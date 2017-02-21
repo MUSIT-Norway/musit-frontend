@@ -45,11 +45,11 @@
         "scanner": {
           "title": "Search for node or object",
           "search": "Search",
-          "noMatchingNodeOrObject": "No matching node or object for %{barcode}",
-          "noMatchingNode": "No matching node for %{uuid}",
-          "cannotActOnObject": "Can only act on barcode scans for objects from magasin or object picklist",
-          "cannotActOnNode": "Can only act on UUID scans from magasin, node picklist or move dialog",
-          "noCurrentLocation": "Object has no location"
+          "noMatchingNodeOrObject": "Could not find any matching node or object with this barcode.",
+          "noMatchingNode": "Could not find any matching node with this barcode.",
+          "cannotActOnObject": "The barcode belongs to an object. This window can only act on barcodes for storage facility nodes.",
+          "cannotActOnNode": "The barcode belongs to a storage facility node. This window can only act on barcodes for objects.",
+          "noCurrentLocation": "Object has no storage facility location."
         }
       },
       "notificationMessages": {
@@ -694,11 +694,11 @@
         "scanner": {
           "title": "Søk etter node eller objekt",
           "search": "Søk",
-          "noMatchingNodeOrObject": "Fant ingen node eller objekt for %{barcode}",
-          "noMatchingNode": "Fant ingen node for %{uuid}",
-          "cannotActOnObject": "Kan bare reagere på object via magasin eller objekt plukkliste",
-          "cannotActOnNode": "Kan bare reagere på node fra magasin, node plukkliste eller flyttedialog",
-          "noCurrentLocation": "Objektet er ikke plassert"
+          "noMatchingNodeOrObject": "Fant ingen node eller objekt med denne strekkoden.",
+          "noMatchingNode": "Fant ingen node med denne strekkoden.",
+          "cannotActOnObject": "Den scannede strekkoden tilhører et objekt. Dette skjermbildet håndterer kun scanning av magasinnoder.",
+          "cannotActOnNode": "Den scannede strekkoden tilhører en magasinnode. Dette skjermbildet håndterer kun scanning av objekter.",
+          "noCurrentLocation": "Objektet har ingen plassering i magasinet."
         }
       },
       "notificationMessages": {
