@@ -39,6 +39,10 @@ export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY';
 export const parseUTCDate = (dateStr: string) => {
   return moment.utc(dateStr);
 };
+
+export const localDate = (dateStr: string) => {
+  return moment(new Date(dateStr));
+};
 export const localToISOString = (d: Date)=> {
   return moment(d).format('YYYY-MM-DDT00:00:00.000Z');
 };

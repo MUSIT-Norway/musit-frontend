@@ -4,7 +4,7 @@ import moment from 'moment';
 
 describe('parseUTCDate', () => {
   it('should accept full iso timestamp', () => {
-    const date = '2016-09-07T22:56:00.000Z';
+    const date = new Date('2016-09-07T00:56:00.000Z');
     const parsed = parseUTCDate(date);
     expect(parsed).toMatchSnapshot();
   });
@@ -125,5 +125,15 @@ describe('toISOString', () => {
     const l = momentLocal.format('YYYY-MM-DDTHH:mm:ssZ');
     assert(d.getTimezoneOffset() !== 0 || i !== l); // If timeZone is different from zulu, local should be different from isoString
   });
+});
 
+describe('parseUTC around midnight', () => {
+
+  it('It shows wrong local date around midnight if local zone is GMT+1', () => {
+    const str = '2017-01-12T00:01:00.000+01:00';
+    const d = new Date(str);
+    const m = moment(d).format('YYYYMMDD');
+    const p = parseUTCDate(str).format('YYYYMMDD');
+    assert(m !== p );
+  });
 });

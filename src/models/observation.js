@@ -25,6 +25,7 @@ Observation.loadObservations = (ajaxGet = simpleGet) => ({ nodeId, museumId, tok
 Observation.addObservation = (ajaxPost = simplePost) => ({ nodeId, museumId, data, token, callback }) => {
   const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/observations`;
   const dataToPost = mapToBackEnd(data, nodeId);
+  console.log('Model observation: ', dataToPost);
   return ajaxPost(url, dataToPost, token, callback);
 };
 

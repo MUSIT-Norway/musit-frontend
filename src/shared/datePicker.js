@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { localToISOString } from '../shared/util';
+import { localToISOString, localDate } from '../shared/util';
 
 import { DATE_FORMAT_DISPLAY } from './util';
 
@@ -9,7 +9,7 @@ const fixDate = (dateValue) => {
   if (!dateValue) {
     return '';
   }
-  const date = dateValue.split('T')[0];
+  const date = dateValue.format('YYYY-MM-DDTHH:mm:ss').split('T')[0];
   return `${date}T00:00:00.000Z`;
 };
 
@@ -23,7 +23,7 @@ const MusitDatePicker = (props) => {
       dateFormat={props.dateFormat}
       onClear={() => props.onClear(getNow())}
       value={props.value}
-      onChange={newDate => props.onChange(fixDate(newDate))}
+      onChange={newDate => props.onChange(fixDate(localDate(newDate)))}
       disabled={props.disabled}
     />
   );

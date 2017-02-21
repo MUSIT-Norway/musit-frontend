@@ -25,7 +25,7 @@ import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import AddressSuggest from '../../components/suggest/AddressSuggest';
 import Loader from 'react-loader';
-import { parseUTCDate } from '../../shared/util';
+import { localDate } from '../../shared/util';
 import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../components/formfields';
 import validateForm from './nodeValidator';
 import { I18n } from 'react-i18nify';
@@ -182,7 +182,7 @@ export default class NodeDetails extends Component {
   }
 
   renderLastChangeData(unit) {
-    const lastUpdateDate = parseUTCDate(unit.updatedDate).format('DD.MM.YYYY');
+    const lastUpdateDate = localDate(unit.updatedDate).format('DD.MM.YYYY');
     const lastUpdateBy = unit.updatedByName;
     return (
       <span>
