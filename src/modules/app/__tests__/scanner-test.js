@@ -1,14 +1,15 @@
 import { TestScheduler, Observable, Subject } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, scanForNode } from '../scanner';
+import { reducer$, scanForNode, scanForNodeOrObject } from '../scanner';
 import { createStore } from 'react-rxjs/dist/RxStore';
 import MuseumId from '../../../models/museumId';
+import CollectionId from '../../../models/collectionId';
 const diff = require('deep-diff').diff;
 import sinon from 'sinon';
 
 describe('scanner', () => {
 
-  it('should display error when scanning UUID that does not exist', () => {
+  it('should display error when scanning node UUID that does not exist', () => {
     const ajaxGet = () => Observable.of({ response:  null });
     const goTo = sinon.spy();
     const showError = sinon.spy();
@@ -18,7 +19,7 @@ describe('scanner', () => {
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
     const errorMsg = showError.getCall(0).args[0].message;
-    expect(errorMsg).toEqual('Fant ingen node for 1234');
+    expect(errorMsg).toEqual('Fant ingen node med denne strekkoden.');
     expect(clearSearch.calledOnce).toBe(true);
   });
 
@@ -118,7 +119,7 @@ describe('scanner', () => {
     expect(addNode.calledOnce).toBe(false);
   });
 
-  it('should give error when scanning on non supported page', () => {
+  it('should give error when scanning node on non supported page', () => {
     const value = {
       id: 1,
       nodeId: '3456',
@@ -141,12 +142,93 @@ describe('scanner', () => {
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
     const errorMsg = showError.getCall(0).args[0].message;
-    expect(errorMsg).toEqual('Kan bare reagere på node fra magasin, node plukkliste eller flyttedialog');
+    expect(errorMsg).toEqual('Den scannede strekkoden tilhører en magasinnode. Dette skjermbildet håndterer kun scanning av objekter.');
     expect(clearSearch.calledOnce).toBe(true);
     expect(clearBuffer.calledOnce).toBe(false);
     expect(loadNode.calledOnce).toBe(false);
     expect(loadChildren.calledOnce).toBe(false);
     expect(addNode.calledOnce).toBe(false);
+  });
+
+  it('should display error when scanning barcode that does not exist', () => {
+    const ajaxGet = () => Observable.of({ response: null });
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      null,
+      null,
+      clearSearch
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(true);
+    const errorMsg = showError.getCall(0).args[0].message;
+    expect(errorMsg).toEqual('Fant ingen node eller objekt med denne strekkoden.');
+    expect(clearSearch.calledOnce).toBe(true);
+  });
+
+  it('should display error when scanning barcode that does not exist', () => {
+    const ajaxGet = (url) => {
+      if (url.indexOf('thingaggregate') > -1) {
+        return Observable.of({
+          response: [
+            {
+              id: 1,
+              term: 'Some chair',
+              museumNo: 'MUSK45',
+              subNo: '99',
+              currentLocation: 45,
+              path: ',1,2,',
+              pathNames: [ { nodeId: 1, name: 'Test'}, { nodeId: 2, name: 'Tull'}]
+            }
+          ]
+        });
+      }
+      return Observable.of({ response: null });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      null,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null,
+      null,
+      null,
+      null,
+      null,
+      () => true
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(false);
+    expect(clearSearch.calledOnce).toBe(false);
+    expect(addObject.calledOnce).toBe(true);
+    expect(addObject.getCall(0).args[0].value).toEqual({
+      id: 1,
+      term: 'Some chair',
+      museumNo: 'MUSK45',
+      subNo: '99',
+      currentLocation: 45,
+      path: ',1,2,',
+      pathNames: [ { nodeId: 1, name: 'Test'}, { nodeId: 2, name: 'Tull'}]
+    });
+    expect(addObject.getCall(0).args[0].path).toEqual([
+      {'id': 1, 'name': 'Test', 'url': '/magasin/1'},
+      {'id': 2, 'name': 'Tull', 'url': '/magasin/2'}
+    ]);
+    expect(clearBuffer.calledOnce).toBe(true);
   });
 
   it('testing reducer', () => {
