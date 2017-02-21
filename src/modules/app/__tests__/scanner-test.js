@@ -487,7 +487,7 @@ describe('scanner', () => {
     expect(addMatches.calledOnce).toBe(false);
   });
 
-  it('testing reducer', () => {
+  it('have a working reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       // console.log(JSON.stringify(actual, null, 2));
       // console.log(JSON.stringify(expected, null, 2));
