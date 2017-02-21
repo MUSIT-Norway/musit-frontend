@@ -95,7 +95,7 @@ export class ObjectSearchComponent extends React.Component {
                           }}
                           title={I18n.t('musit.objectsearch.addAllToPickList')}
                         >
-                          <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
+                          <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart"/>
                         </a>
                       </th>
                     </tr>
@@ -135,8 +135,8 @@ export class ObjectSearchComponent extends React.Component {
                               title={I18n.t('musit.objectsearch.addToPickList')}
                             >
                               {this.props.isItemAdded(data, this.props.pickList.objects) ?
-                                <FontAwesome style={{ fontSize: '1.5em', color: 'Gray' }} name="shopping-cart"/> :
-                                <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
+                                <FontAwesome style={{ fontSize: '1.3em', color: 'Gray' }} name="shopping-cart"/> :
+                                <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart"/>
                               }
                             </a>
                             }
