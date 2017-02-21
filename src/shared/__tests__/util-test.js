@@ -1,6 +1,7 @@
 import assert from 'assert';
 import { isDateBiggerThanToday, parseUTCDate, parseISODate, customSortingStorageNodeType, formatISOString } from '../util';
 import moment from 'moment';
+import { expect as expectChai } from 'chai';
 
 describe('parseUTCDate', () => {
   it('should accept full iso timestamp', () => {
@@ -12,7 +13,7 @@ describe('parseUTCDate', () => {
   it('should accept standard simple ISO date format', () => {
     const date = '2016-12-23';
     const parsed = parseUTCDate(date);
-    assert(parsed.isValid() === true);
+    expectChai(parsed.isValid()).to.be.true;
   });
 });
 
@@ -23,77 +24,76 @@ describe('customSortingStorageNodeType', () => {
     const organisation = customSortingStorageNodeType('Organisation');
     const storageUnit = customSortingStorageNodeType('StorageUnit');
     const room = customSortingStorageNodeType('Room');
-    assert(organisation < building && building < room && room < storageUnit && storageUnit < unknown);
+    expectChai(organisation).to.be.below(building).to.be.below(room).to.be.below(storageUnit).to.be.below(unknown);
   });
-
 });
 
 
 describe('isDateBiggerThanToday', () => {
   it('Check Today', () => {
     const newDate = moment();
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check one day plus Today', () => {
     const newDate = moment().add(1, 'd');
-    assert(isDateBiggerThanToday(newDate) === true);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.true;
   });
   it('Check one month plus Today', () => {
     const newDate = moment().add(1, 'M');
-    assert(isDateBiggerThanToday(newDate) === true);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.true;
   });
   it('Check one year plus Today', () => {
     const newDate = moment().add(1, 'y');
-    assert(isDateBiggerThanToday(newDate) === true);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.true;
   });
   it('Check one day subtract from Today', () => {
     const newDate = moment().subtract(1, 'd');
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check one month subtract from Today', () => {
     const newDate = moment().subtract(2, 'M');
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check one year subtract from Today', () => {
     const newDate = moment().subtract(1, 'y');
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check Today minus one month three days', () => {
     let newDate = moment().subtract(3, 'd');
     newDate = newDate.subtract(1, 'd');
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check Today minus one month 15 days', () => {
     let newDate = moment().subtract(15, 'd');
     newDate = newDate.subtract(1, 'd');
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check Today minus one month 29 days', () => {
     let newDate = moment().subtract(29, 'd');
     newDate = newDate.subtract(1, 'd');
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check Today plus one month 14 days', () => {
     let newDate = moment().add(14, 'd');
     newDate = newDate.add(1, 'd');
-    assert(isDateBiggerThanToday(newDate) === true);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.true;
   });
   it('Check Today plus one month 29 days', () => {
     let newDate = moment().add(29, 'd');
     newDate = newDate.add(1, 'd');
-    assert(isDateBiggerThanToday(newDate) === true);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.true;
   });
   it('Check blank', () => {
     const newDate = '';
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check null', () => {
     const newDate = null;
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
   it('Check undefined', () => {
     const newDate = undefined;
-    assert(isDateBiggerThanToday(newDate) === false);
+    expectChai(isDateBiggerThanToday(newDate)).to.be.false;
   });
 });
 
@@ -104,28 +104,17 @@ describe('localToISOString', () => {
   it('localTOIsoString should always be equal to input date', () => {
     const newDate = new Date();
     const isoDat= formatISOString(newDate);
-    assert(moment(newDate).format('YYYYMMDD') === moment(isoDat).format('YYYYMMDD'));
+    expectChai(moment(newDate).format('YYYYMMDD')).to.equal(moment(isoDat).format('YYYYMMDD'));
   });
 
   it('CheckAroundMidnight', () => {
     const newDate = new Date('2017-02-20T00:00:01');
     const isoDate= formatISOString(newDate);
-    assert(moment(newDate).format('YYYYMMDD') === moment(isoDate).format('YYYYMMDD'));
+    expectChai(moment(newDate).format('YYYYMMDD')).to.equal(moment(isoDate).format('YYYYMMDD'));
   });
 
 });
 
-
-describe('toISOString', () => {
-
-  it('Date local time should not be equal to isoDate if local time has timeZoneOffset <> 0', () => {
-    const d = new Date();
-    const momentLocal = moment(d); // Local date
-    const i = momentLocal.toISOString().split('.')[0]; // Zulu time (without milliseconds)
-    const l = momentLocal.format('YYYY-MM-DDTHH:mm:ssZ');
-    assert(d.getTimezoneOffset() !== 0 || i !== l); // If timeZone is different from zulu, local should be different from isoString
-  });
-});
 
 describe('parseUTC and parseLocalDate around midnight', () => {
 
@@ -133,31 +122,30 @@ describe('parseUTC and parseLocalDate around midnight', () => {
 
   it('parseUTC shows wrong local date around midnight if local zone is GMT+1', () => {
     const d = new Date(str);
-    const m = moment(d).format('YYYYMMDD');
-    const p = parseUTCDate(str).format('YYYYMMDD');
-    assert(m !== p );
+    const localDate = moment(d).format('YYYYMMDD');
+    const upcDate = parseUTCDate(str).format('YYYYMMDD');
+
+    expectChai(localDate).to.not.equal(upcDate);
   });
 
   it('parseLocalDate shows correct local date around midnight if local zone is GMT+1', () => {
     const d = new Date(str);
-    const m = moment(d).format('YYYYMMDD');
-    const p = parseISODate(str).format('YYYYMMDD');
-    assert(m === p );
+    const localDate = moment(d).format('YYYYMMDD');
+    const parsedISODate = parseISODate(str).format('YYYYMMDD');
+    expectChai(localDate).to.equal(parsedISODate);
   });
 });
 
 describe('parseISOString and formatISOString are inverse functions', () => {
 
-
-
   it('Show inverseness on dates from times right before midnight', () => {
     const isoStr = '1999-12-31T23:59:59.999+01:00';
     const date = new Date(isoStr);
     const dateStr = 'YYYY-MM-DD';
-    const m = moment(date).format(dateStr);
-    const m1 = moment(formatISOString(date)).format(dateStr);
-    const m2 = parseISODate(isoStr).format('YYYY-MM-DD');
-    assert (m===m1 && m1 ===m2);
+    const localDate = moment(date).format(dateStr);
+    const dateAfterFormatISOString = moment(formatISOString(date)).format(dateStr);
+    const dateAfterParsedISODate = parseISODate(isoStr).format('YYYY-MM-DD');
+    expectChai(localDate).to.equal(dateAfterFormatISOString).and.equal(dateAfterParsedISODate);
   });
 
 
@@ -165,9 +153,9 @@ describe('parseISOString and formatISOString are inverse functions', () => {
     const isoStr = '1999-12-31T00:59:59.999+01:00';
     const date = new Date(isoStr);
     const dateStr = 'YYYY-MM-DD';
-    const m = moment(date).format(dateStr);
-    const m1 = moment(formatISOString(date)).format(dateStr);
-    const m2 = parseISODate(isoStr).format('YYYY-MM-DD');
-    assert (m===m1 && m1 ===m2);
+    const localDate = moment(date).format(dateStr);
+    const dateAfterFormatISOString = moment(formatISOString(date)).format(dateStr);
+    const dateAfterParsedISODate = parseISODate(isoStr).format('YYYY-MM-DD');
+    expectChai(localDate).to.equal(dateAfterFormatISOString).and.equal(dateAfterParsedISODate);
   });
 });
