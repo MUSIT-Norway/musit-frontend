@@ -1,4 +1,4 @@
-import { TestScheduler, Observable, Subject } from 'rxjs/Rx';
+import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { reducer$, scanForNode, scanForNodeOrObject } from '../scanner';
 import { createStore } from 'react-rxjs/dist/RxStore';
@@ -181,7 +181,7 @@ describe('scanner', () => {
               term: 'Some chair',
               museumNo: 'MUSK45',
               subNo: '99',
-              currentLocation: 45,
+              currentLocationId: 45,
               path: ',1,2,',
               pathNames: [ { nodeId: 1, name: 'Test'}, { nodeId: 2, name: 'Tull'}]
             }
@@ -220,7 +220,7 @@ describe('scanner', () => {
       term: 'Some chair',
       museumNo: 'MUSK45',
       subNo: '99',
-      currentLocation: 45,
+      currentLocationId: 45,
       path: ',1,2,',
       pathNames: [ { nodeId: 1, name: 'Test'}, { nodeId: 2, name: 'Tull'}]
     });
@@ -229,6 +229,262 @@ describe('scanner', () => {
       {'id': 2, 'name': 'Tull', 'url': '/magasin/2'}
     ]);
     expect(clearBuffer.calledOnce).toBe(true);
+  });
+
+  it('should display error when scanned barcode matches object without location', () => {
+    const ajaxGet = (url) => {
+      if (url.indexOf('thingaggregate') > -1) {
+        return Observable.of({
+          response: [
+            {
+              id: 1,
+              term: 'Some chair',
+              museumNo: 'MUSK45',
+              subNo: '99'
+            }
+          ]
+        });
+      }
+      return Observable.of({ response: null });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      null,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null,
+      null,
+      null,
+      null,
+      null,
+      () => false,
+      () => true
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(true);
+    const errorMsg = showError.getCall(0).args[0].message;
+    expect(errorMsg).toEqual('Objektet har ingen plassering i magasinet.');
+    expect(clearSearch.calledOnce).toBe(true);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(false);
+  });
+
+  it('should go to object location when scanned barcode matches object with location', () => {
+    const ajaxGet = (url) => {
+      if (url.indexOf('thingaggregate') > -1) {
+        return Observable.of({
+          response: [
+            {
+              id: 1,
+              term: 'Some chair',
+              museumNo: 'MUSK45',
+              subNo: '99',
+              currentLocationId: 45
+            }
+          ]
+        });
+      }
+      return Observable.of({ response: null });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      null,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null,
+      null,
+      null,
+      null,
+      null,
+      () => false,
+      () => true
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(true);
+    expect(goTo.getCall(0).args[0]).toEqual('/magasin/45/objects');
+    expect(showError.calledOnce).toBe(false);
+    expect(clearSearch.calledOnce).toBe(false);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(true);
+  });
+
+  it('should show error message when scanning on pages that doesnt support scanning', () => {
+    const ajaxGet = (url) => {
+      if (url.indexOf('thingaggregate') > -1) {
+        return Observable.of({
+          response: [
+            {
+              id: 1,
+              term: 'Some chair',
+              museumNo: 'MUSK45',
+              subNo: '99',
+              currentLocationId: 45
+            }
+          ]
+        });
+      }
+      return Observable.of({ response: null });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      null,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null,
+      null,
+      null,
+      null,
+      null,
+      () => false,
+      () => false
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(true);
+    const message = showError.getCall(0).args[0].message;
+    expect(message).toEqual('Den scannede strekkoden tilhører et objekt. Dette skjermbildet håndterer kun scanning av magasinnoder.');
+    expect(clearSearch.calledOnce).toBe(true);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(false);
+  });
+
+  it('should add to object picklist when scanning barcode that returns multiple objects', () => {
+    const ajaxGet = (url) => {
+      if (url.indexOf('thingaggregate') > -1) {
+        return Observable.of({
+          response: [
+            {
+              id: 1,
+              term: 'Some chair',
+              museumNo: 'MUSK45',
+              subNo: '99',
+              currentLocationId: 45
+            },
+            {
+              id: 2,
+              term: 'Some chair 2',
+              museumNo: 'MUSK47',
+              subNo: '99',
+              currentLocationId: 45
+            }
+          ]
+        });
+      }
+      return Observable.of({ response: null });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const addMatches = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      addMatches,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null,
+      null,
+      null,
+      null,
+      null,
+      () => false,
+      () => false
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(false);
+    expect(clearSearch.calledOnce).toBe(false);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(false);
+    expect(addMatches.calledOnce).toBe(true);
+    expect(addMatches.getCall(0).args[0]).toEqual(
+      [
+        {
+          id: 1,
+          term: 'Some chair',
+          museumNo: 'MUSK45',
+          subNo: '99',
+          currentLocationId: 45
+        },
+        {
+          id: 2,
+          term: 'Some chair 2',
+          museumNo: 'MUSK47',
+          subNo: '99',
+          currentLocationId: 45
+        }
+      ]
+    );
+  });
+
+  it('should give error message when scanning barcode that returns no objects', () => {
+    const ajaxGet = (url) => {
+      if (url.indexOf('thingaggregate') > -1) {
+        return Observable.of({
+          response: []
+        });
+      }
+      return Observable.of({ response: null });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const addMatches = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      addMatches,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null,
+      null,
+      null,
+      null,
+      null,
+      () => false,
+      () => false
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(true);
+    expect(showError.getCall(0).args[0].message).toEqual('Fant ingen node eller objekt med denne strekkoden.');
+    expect(clearSearch.calledOnce).toBe(true);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(false);
+    expect(addMatches.calledOnce).toBe(false);
   });
 
   it('testing reducer', () => {
@@ -245,31 +501,33 @@ describe('scanner', () => {
     const initialState = { enabled: false, code: '', matches: [] };
 
     // mock streams
+    const clearSearchM       = '---1---------';
+    const addMatchesM        = '----1--------';
     const prepareSearchM     = '--1----------';
     const scheduledClearM    = '-------------';
     const scanForUUIDM       = '-------------';
-    const toggleEnabledM     = '-------------';
+    const toggleEnabledM     = '------1------';
     const clearBufferM       = '-----1-------';
     const keyPressM          = '-------------';
     const appSessionM        = '-1-----------';
-    const expected           = 'abc--f-------';
+    const expected           = 'abcefgh------';
 
     const expectedStateMap = {
       a: initialState,
       b: {
         ...initialState,
-        appSession: { token: '1223', museumId: new MuseumId(99)}
+        appSession: {token: '1223', museumId: new MuseumId(99)}
       },
       c: {
         ...initialState,
-        appSession: { token: '1223', museumId: new MuseumId(99)},
+        appSession: {token: '1223', museumId: new MuseumId(99)},
         searchPending: true,
         searchComplete: false,
         matches: null
       },
       d: {
         ...initialState,
-        appSession: { token: '1223', museumId: new MuseumId(99)},
+        appSession: {token: '1223', museumId: new MuseumId(99)},
         searchPending: false,
         searchComplete: true,
         matches: [
@@ -284,57 +542,37 @@ describe('scanner', () => {
       },
       e: {
         ...initialState,
-        appSession: { token: '1223', museumId: new MuseumId(99)},
+        appSession: {token: '1223', museumId: new MuseumId(99)},
         searchPending: false,
-        searchComplete: true,
-        matches: {
-          id: 3,
-          name: 'Test',
-          type: 'Room',
-          path: ',1,2,3,',
-          pathNames: [
-            {
-              nodeId: 1,
-              name: 'Museum'
-            },
-            {
-              nodeId: 2,
-              name: 'Building'
-            },
-            {
-              nodeId: 3,
-              name: 'Box'
-            }
-          ],
-          breadcrumb: [
-            {
-              id: 1,
-              name: 'Museum',
-              url: '/magasin/1'
-            },
-            {
-              id: 2,
-              name: 'Building',
-              url: '/magasin/2'
-            },
-            {
-              id: 3,
-              name: 'Box',
-              url: '/magasin/3'
-            }
-          ]
-        }
+        searchComplete: false,
+        matches: null
       },
       f: {
         ...initialState,
+        appSession: {token: '1223', museumId: new MuseumId(99)},
+        searchPending: false,
+        searchComplete: true,
+        matches: [
+          1, 2, 3
+        ]
+      },
+      g: {
+        ...initialState,
+        buffer: null, code: null, matches: null,
+        searchPending: false, searchComplete: false,
+        appSession: {token: '1223', museumId: new MuseumId(99)}
+      },
+      h: {
+        ...initialState,
+        enabled: true,
         buffer: null, code: null, matches: null,
         searchPending: false, searchComplete: false,
         appSession: {token: '1223', museumId: new MuseumId(99)}
       }
     };
 
-    const clearSearch$ = new Subject();
-    const addMatches$ = new Subject();
+    const clearSearch$ = testScheduler.createHotObservable(clearSearchM);
+    const addMatches$ = testScheduler.createHotObservable(addMatchesM, { 1: [1, 2, 3]});
     const keyPress$ = testScheduler.createHotObservable(keyPressM);
     const clearBuffer$ = testScheduler.createHotObservable(clearBufferM);
     const toggleEnabled$ = testScheduler.createHotObservable(toggleEnabledM);
