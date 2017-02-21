@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { isDateBiggerThanToday, parseUTCDate, parseLocalDate, customSortingStorageNodeType, localToISOString } from '../util';
+import { isDateBiggerThanToday, parseUTCDate, parseISODate, customSortingStorageNodeType, formatISOString } from '../util';
 import moment from 'moment';
 
 describe('parseUTCDate', () => {
@@ -103,13 +103,13 @@ describe('localToISOString', () => {
 
   it('localTOIsoString should always be equal to input date', () => {
     const newDate = new Date();
-    const isoDat= localToISOString(newDate);
+    const isoDat= formatISOString(newDate);
     assert(moment(newDate).format('YYYYMMDD') === moment(isoDat).format('YYYYMMDD'));
   });
 
   it('CheckAroundMidnight', () => {
     const newDate = new Date('2017-02-20T00:00:01');
-    const isoDate= localToISOString(newDate);
+    const isoDate= formatISOString(newDate);
     assert(moment(newDate).format('YYYYMMDD') === moment(isoDate).format('YYYYMMDD'));
   });
 
@@ -141,7 +141,33 @@ describe('parseUTC and parseLocalDate around midnight', () => {
   it('parseLocalDate shows correct local date around midnight if local zone is GMT+1', () => {
     const d = new Date(str);
     const m = moment(d).format('YYYYMMDD');
-    const p = parseLocalDate(str).format('YYYYMMDD');
+    const p = parseISODate(str).format('YYYYMMDD');
     assert(m === p );
+  });
+});
+
+describe('parseISOString and formatISOString are inverse functions', () => {
+
+
+
+  it('Show inverseness on dates from times right before midnight', () => {
+    const isoStr = '1999-12-31T23:59:59.999+01:00';
+    const date = new Date(isoStr);
+    const dateStr = 'YYYY-MM-DD';
+    const m = moment(date).format(dateStr);
+    const m1 = moment(formatISOString(date)).format(dateStr);
+    const m2 = parseISODate(isoStr).format('YYYY-MM-DD');
+    assert (m===m1 && m1 ===m2);
+  });
+
+
+  it('Show inverseness on dates from times right after midnight', () => {
+    const isoStr = '1999-12-31T00:59:59.999+01:00';
+    const date = new Date(isoStr);
+    const dateStr = 'YYYY-MM-DD';
+    const m = moment(date).format(dateStr);
+    const m1 = moment(formatISOString(date)).format(dateStr);
+    const m2 = parseISODate(isoStr).format('YYYY-MM-DD');
+    assert (m===m1 && m1 ===m2);
   });
 });

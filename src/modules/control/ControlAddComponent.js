@@ -22,7 +22,7 @@ import PairedToogleButtons from './ToggleButtons';
 import DatePicker from '../../shared/datePicker';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import { hashHistory } from 'react-router';
-import { flatten, DATE_FORMAT_DISPLAY, hasProp, isDateBiggerThanToday, localToISOString } from '../../shared/util';
+import { flatten, DATE_FORMAT_DISPLAY, hasProp, isDateBiggerThanToday, formatISOString } from '../../shared/util';
 import ActorSuggest from '../../components/suggest/ActorSuggest';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
@@ -73,7 +73,7 @@ export class ControlAddContainer extends React.Component {
         inertAirInterval: requirement ? requirement.hypoxicAirTolerance : ' ',
         light: requirement ? requirement.lightingCondition : ' ',
         cleaning: requirement ? requirement.cleaning : ' ',
-        doneDate: this.props.doneDate ? this.props.doneDate : localToISOString(new Date()),
+        doneDate: this.props.doneDate ? this.props.doneDate : formatISOString(new Date()),
         doneBy: this.props.appSession.getActor()
       });
     }
@@ -141,7 +141,7 @@ export class ControlAddContainer extends React.Component {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
         emitError({ type: 'dateValidationError', message: I18n.t('musit.newControl.dateValidation') });
-        this.setState({ ...this.state, doneDate: localToISOString(new Date()) });
+        this.setState({ ...this.state, doneDate: formatISOString(new Date()) });
       } else {
         this.setState({ ...this.state, doneDate: newValue });
       }

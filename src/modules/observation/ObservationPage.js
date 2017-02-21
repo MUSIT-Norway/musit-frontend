@@ -7,7 +7,7 @@ import {
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from './render';
-import { containsObjectWithField, parseLocalDate, DATE_FORMAT_DISPLAY, isDateBiggerThanToday, localToISOString } from '../../shared/util';
+import { containsObjectWithField, parseISODate, DATE_FORMAT_DISPLAY, isDateBiggerThanToday, formatISOString } from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
 import { hashHistory } from 'react-router';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
@@ -47,7 +47,7 @@ export default class ObservationPage extends React.Component {
     this.state = {
       selectedType: null,
       observations: props.observations,
-      doneDate: props.doneDate || localToISOString(new Date()),
+      doneDate: props.doneDate || formatISOString(new Date()),
       doneBy: props.doneBy
     };
     this.isTypeSelectable = this.isTypeSelectable.bind(this);
@@ -123,7 +123,7 @@ export default class ObservationPage extends React.Component {
       if (isDateBiggerThanToday(newValue)) {
         emitError({ type: 'dateValidationError', message: I18n.t('musit.observation.page.dateValidation') });
 
-        this.setState({ ...this.state, doneDate: localToISOString(new Date()) });
+        this.setState({ ...this.state, doneDate: formatISOString(new Date()) });
       } else {
         this.setState({ ...this.state, doneDate: newValue });
       }
@@ -318,7 +318,7 @@ export default class ObservationPage extends React.Component {
                 {this.props.mode !== 'ADD' ?
                   <FormControl
                     componentClass="input"
-                    value={parseLocalDate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
+                    value={parseISODate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                  :
@@ -360,7 +360,7 @@ export default class ObservationPage extends React.Component {
                   <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
                   <FormControl
                     componentClass="input"
-                    value={parseLocalDate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
+                    value={parseISODate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
                     disabled
                   />
                 </Col>
