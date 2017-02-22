@@ -42,7 +42,7 @@ export class AppSession {
 
 const initialState = { accessToken: getAccessToken() };
 
-export const loadAppSession = (ajaxGet = simpleGet, accessToken) => () => {
+const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
   accessToken = accessToken || getAccessToken();
   if (!accessToken) {
     return Observable.empty();
@@ -51,11 +51,11 @@ export const loadAppSession = (ajaxGet = simpleGet, accessToken) => () => {
     ajaxGet(Config.magasin.urls.auth.buildInfo, accessToken),
     ajaxGet(Config.magasin.urls.actor.currentUser, accessToken),
     ajaxGet(Config.magasin.urls.auth.museumsUrl, accessToken)
-  ).switchMap(([buildInfoRes, currentUserRes, museumsRes]) => {
-    return ajaxGet(Config.magasin.urls.auth.groupsUrl(currentUserRes.response.dataportenUser), accessToken)
-      .flatMap(({response}) => {
+  ).switchMap(([buildInfoRes, currentUserRes, museumsRes]) =>
+    ajaxGet(Config.magasin.urls.auth.groupsUrl(currentUserRes.response.dataportenUser), accessToken)
+      .map(({response}) => {
         if (!response) {
-          return Observable.throw(new Error(I18n.t('musit.errorMainMessages.noGroups')));
+          throw new Error(I18n.t('musit.errorMainMessages.noGroups'));
         }
         const isGod = !!response.find(group => 10000 === group.permission);
         let groups;
@@ -81,16 +81,16 @@ export const loadAppSession = (ajaxGet = simpleGet, accessToken) => () => {
         }
         const museumId = new MuseumId(groups[0].museumId);
         const collectionId = new CollectionId(groups[0].collections[0].uuid);
-        return Observable.of({
+        return {
           accessToken,
           actor: new Actor(currentUserRes.response),
           groups,
           museumId,
           collectionId,
           buildInfo: buildInfoRes.response
-        });
-      });
-  });
+        };
+      })
+  );
 };
 
 export const loadAppSession$ = createAction('loadAppSession$').switchMap(loadAppSession);
@@ -104,7 +104,6 @@ export const reducer$ = (actions, onError = emitError) => Observable.merge(
   actions.loadAppSession$
     .map(session => state => ({...state, ...session}))
     .catch(error => {
-      console.log(error);
       onError(error);
       return Observable.of(state => ({...state, accessToken: null}));
     }),
@@ -114,7 +113,7 @@ export const reducer$ = (actions, onError = emitError) => Observable.merge(
     .map(collectionId => state => ({...state, collectionId}))
 );
 
-const session$ = createStore('appSession', reducer$({ 
+const session$ = createStore('appSession', reducer$({
   setMuseumId$,
   setCollectionId$,
   setAccessToken$,

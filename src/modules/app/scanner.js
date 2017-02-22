@@ -8,7 +8,7 @@ import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
 import { addNode$, addObject$ } from '../app/pickList';
-import { loadNode$, loadChildren$ } from '../movedialog/moveDialogStore';
+import { loadNode$, loadChildren$, PER_PAGE } from '../movedialog/moveDialogStore';
 import * as ajax from '../../shared/RxAjax';
 import { I18n } from 'react-i18nify';
 
@@ -46,7 +46,8 @@ export const actOnNode = (
   moveDialog,
   nodePickList,
   storageFacility,
-  moveHistory
+  moveHistory,
+  moveDialogStore$ = Observable.of({ page: 1 })
 ) => {
   const error = () => {
     showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
@@ -55,9 +56,16 @@ export const actOnNode = (
   if (moveHistory()) {
     error();
   } else if (moveDialog()) {
-    loadNode({id: response.id, museumId, token});
-    loadChildren({id: response.id, museumId, token});
-    clearBuffer();
+    moveDialogStore$
+      .map(state => state.page)
+      .do(currentPage => {
+        loadNode({id: response.id, museumId, token});
+        loadChildren({id: response.id, museumId, token, page: {
+          page: currentPage,
+          limit: PER_PAGE
+        }});
+        clearBuffer();
+      }).toPromise();
   } else if (nodePickList()) {
     addNode({value: response, path: getPath(response)});
     clearBuffer();
