@@ -171,7 +171,7 @@ describe('scanner', () => {
     expect(clearSearch.calledOnce).toBe(true);
   });
 
-  it('should display error when scanning barcode that does not exist', () => {
+  it('should add to object picklist when scanning barcode that returns a single object', () => {
     const ajaxGet = (url) => {
       if (url.indexOf('thingaggregate') > -1) {
         return Observable.of({
@@ -373,7 +373,7 @@ describe('scanner', () => {
     expect(clearBuffer.calledOnce).toBe(false);
   });
 
-  it('should add to object picklist when scanning barcode that returns multiple objects', () => {
+  it('should add matches to store when scanning barcode that returns multiple objects', () => {
     const ajaxGet = (url) => {
       if (url.indexOf('thingaggregate') > -1) {
         return Observable.of({
