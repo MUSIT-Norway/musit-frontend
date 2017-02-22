@@ -18,6 +18,7 @@ const isNodePickList = (path = ROUTE_PICKLIST_PATH.exec(getLocationPath())) => p
 const isObjectPickList = (path = ROUTE_PICKLIST_PATH.exec(getLocationPath())) => path && path.length > 0 && path[1] === 'objects';
 const isStorageFacility = (pathname = getLocationPath()) => pathname.startsWith(ROUTE_SF);
 const isMoveDialogActive = () => document.getElementsByClassName('moveDialog').length > 0;
+const isMoveHistoryActive = () => document.getElementsByClassName('moveHistory').length > 0;
 
 export const clearBuffer$ = createAction('clearBuffer$');
 export const toggleEnabled$ = createAction('toggleEnabled$');
@@ -44,9 +45,16 @@ export const actOnNode = (
   addNode,
   moveDialog,
   nodePickList,
-  storageFacility
+  storageFacility,
+  moveHistory
 ) => {
-  if (moveDialog()) {
+  const error = () => {
+    showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+    clearSearch();
+  };
+  if (moveHistory()) {
+    error();
+  } else if (moveDialog()) {
     loadNode({id: response.id, museumId, token});
     loadChildren({id: response.id, museumId, token});
     clearBuffer();
@@ -57,8 +65,7 @@ export const actOnNode = (
     goTo(`/magasin/${response.id}`);
     clearBuffer();
   } else {
-    showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
-    clearSearch();
+    error();
   }
 };
 
@@ -73,7 +80,8 @@ export const scanForNode = (
   addNode = (node) => addNode$.next(node),
   moveDialog = isMoveDialogActive,
   nodePickList = isNodePickList,
-  storageFacility = isStorageFacility
+  storageFacility = isStorageFacility,
+  moveHistory = isMoveHistoryActive
 ) => ({ uuid, museumId, token }) => {
   MusitNode.findByUUID(ajaxGet)({uuid, museumId, token})
     .do(response => {
@@ -91,7 +99,8 @@ export const scanForNode = (
           addNode,
           moveDialog,
           nodePickList,
-          storageFacility
+          storageFacility,
+          moveHistory
         );
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', { uuid })});
@@ -110,11 +119,19 @@ export const actOnObject = (
   clearBuffer = () => clearBuffer$.next(),
   goTo = hashHistory.push,
   objectPickList = isObjectPickList,
-  storageFacility = isStorageFacility
+  storageFacility = isStorageFacility,
+  moveDialog = isMoveDialogActive,
+  moveHistory = isMoveHistoryActive
 ) => {
   if (response.length === 1 || !Array.isArray(response)) {
     const item = response.length ? response[0] : response;
-    if (objectPickList()) {
+    const error = () => {
+      showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+      clearSearch();
+    };
+    if (moveHistory() || moveDialog()) {
+      error();
+    } else if (objectPickList()) {
       addObject({ value: item, path: getPath(item)});
       clearBuffer();
     } else if (storageFacility()) {
@@ -126,8 +143,7 @@ export const actOnObject = (
         clearBuffer();
       }
     } else {
-      showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
-      clearSearch();
+      error();
     }
   } else if (response.length > 0) {
     addMatches(response);
@@ -151,7 +167,8 @@ export const scanForNodeOrObject = (
   moveDialog = isMoveDialogActive,
   nodePickList = isNodePickList,
   objectPickList = isObjectPickList,
-  storageFacility = isStorageFacility
+  storageFacility = isStorageFacility,
+  moveHistory = isMoveHistoryActive
 ) => (cmd): Observable =>
   MusitNode.findByBarcode(ajaxGet)(cmd)
     .flatMap((nodeResponse) => {
@@ -172,7 +189,9 @@ export const scanForNodeOrObject = (
           clearBuffer,
           goTo,
           objectPickList,
-          storageFacility
+          storageFacility,
+          moveDialog,
+          moveHistory
         );
       } else if (response && response.nodeId) {
         actOnNode(
@@ -188,7 +207,8 @@ export const scanForNodeOrObject = (
           addNode,
           moveDialog,
           nodePickList,
-          storageFacility
+          storageFacility,
+          moveHistory
         );
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', { barcode: cmd.barcode })});
