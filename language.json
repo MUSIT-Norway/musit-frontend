@@ -52,8 +52,8 @@
           "search": "Search",
           "noMatchingNodeOrObject": "Could not find any matching node or object with this barcode.",
           "noMatchingNode": "Could not find any matching node with this barcode.",
-          "cannotActOnObject": "The barcode belongs to an object. This window can only act on barcodes for storage facility nodes.",
-          "cannotActOnNode": "The barcode belongs to a storage facility node. This window can only act on barcodes for objects.",
+          "cannotActOnObject": "This window can not act on barcodes for objects.",
+          "cannotActOnNode": "This window can not act on barcodes for storage facility nodes.",
           "noCurrentLocation": "Object has no storage facility location."
         }
       },
@@ -706,8 +706,8 @@
           "search": "Søk",
           "noMatchingNodeOrObject": "Fant ingen node eller objekt med denne strekkoden.",
           "noMatchingNode": "Fant ingen node med denne strekkoden.",
-          "cannotActOnObject": "Den scannede strekkoden tilhører et objekt. Dette skjermbildet håndterer kun scanning av magasinnoder.",
-          "cannotActOnNode": "Den scannede strekkoden tilhører en magasinnode. Dette skjermbildet håndterer kun scanning av objekter.",
+          "cannotActOnObject": "Dette skjermbildet håndterer ikke scanning av objekter.",
+          "cannotActOnNode": "Dette skjermbildet håndterer ikke scanning av noder.",
           "noCurrentLocation": "Objektet har ingen plassering i magasinet."
         }
       },

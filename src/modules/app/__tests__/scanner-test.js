@@ -142,7 +142,7 @@ describe('scanner', () => {
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
     const errorMsg = showError.getCall(0).args[0].message;
-    expect(errorMsg).toEqual('Den scannede strekkoden tilhører en magasinnode. Dette skjermbildet håndterer kun scanning av objekter.');
+    expect(errorMsg).toEqual('Dette skjermbildet håndterer ikke scanning av noder.');
     expect(clearSearch.calledOnce).toBe(true);
     expect(clearBuffer.calledOnce).toBe(false);
     expect(loadNode.calledOnce).toBe(false);
@@ -367,7 +367,7 @@ describe('scanner', () => {
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
     const message = showError.getCall(0).args[0].message;
-    expect(message).toEqual('Den scannede strekkoden tilhører et objekt. Dette skjermbildet håndterer kun scanning av magasinnoder.');
+    expect(message).toEqual('Dette skjermbildet håndterer ikke scanning av objekter.');
     expect(clearSearch.calledOnce).toBe(true);
     expect(addObject.calledOnce).toBe(false);
     expect(clearBuffer.calledOnce).toBe(false);
@@ -524,7 +524,7 @@ describe('scanner', () => {
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
     expect(showError.getCall(0).args[0].message).toEqual(
-      'Den scannede strekkoden tilhører en magasinnode. Dette skjermbildet håndterer kun scanning av objekter.'
+      'Dette skjermbildet håndterer ikke scanning av noder.'
     );
     expect(clearSearch.calledOnce).toBe(true);
     expect(addObject.calledOnce).toBe(false);
