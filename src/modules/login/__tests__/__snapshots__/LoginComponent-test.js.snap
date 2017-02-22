@@ -1,4 +1,25 @@
-exports[`AboutPage should have english text 1`] = `
+exports[`LoginPage should have a working login button 1`] = `
+<Button
+  active={false}
+  block={false}
+  bsClass="btn"
+  bsStyle="default"
+  className="loginButton"
+  disabled={false}
+  height="20"
+  onClick={[Function onClick]}
+  style={
+    Object {
+      "marginTop": "1em"
+    }
+  }>
+  <span>
+    Click Me
+  </span>
+</Button>
+`;
+
+exports[`LoginPage should have english text 1`] = `
 <div>
   <p>
     MUSIT - The University museums IT-organisation
@@ -19,7 +40,7 @@ exports[`AboutPage should have english text 1`] = `
 </div>
 `;
 
-exports[`AboutPage should have norwegian text 1`] = `
+exports[`LoginPage should have norwegian text 1`] = `
 <div>
   <p>
     MUSIT - Universitetsmuseenes IT-organisasjon
