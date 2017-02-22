@@ -1,19 +1,13 @@
 import React, { PropTypes } from 'react';
+import { formatISOString } from '../shared/util';
 
 import { DATE_FORMAT_DISPLAY } from './util';
 
 import DatePicker from 'react-bootstrap-date-picker';
 
-const fixDate = (dateValue) => {
-  if (!dateValue) {
-    return '';
-  }
-  const date = dateValue.split('T')[0];
-  return `${date}T00:00:00.000Z`;
-};
 
 const getNow = () => {
-  return fixDate(new Date().toISOString());
+  return formatISOString(new Date());
 };
 
 const MusitDatePicker = (props) => {
@@ -22,7 +16,7 @@ const MusitDatePicker = (props) => {
       dateFormat={props.dateFormat}
       onClear={() => props.onClear(getNow())}
       value={props.value}
-      onChange={newDate => props.onChange(fixDate(newDate))}
+      onChange={newDate => props.onChange(formatISOString(newDate))}
       disabled={props.disabled}
     />
   );

@@ -32,6 +32,6 @@ build:
    - npm install
    - npm run lint
    - npm run flow
-   - npm test -- --coverage --collectCoverageFrom='src/**/*.{js,jsx}'
+   - npm test a -- --coverage --collectCoverageFrom='src/**/*.{js,jsx}'
    - npm run codacy
    - npm run build

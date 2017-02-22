@@ -40,6 +40,13 @@ export const parseUTCDate = (dateStr: string) => {
   return moment.utc(dateStr);
 };
 
+export const parseISODate = (dateStr: string) => {
+  return moment(new Date(dateStr));
+};
+export const formatISOString = (d: Date)=> {
+  return moment(d).format('YYYY-MM-DDT00:00:00.000Z');
+};
+
 export const parseFloatFromString = (value: string): number => {
   return typeof value === 'string' ? window.parseFloat(value.replace(',', '.')) : value;
 };
