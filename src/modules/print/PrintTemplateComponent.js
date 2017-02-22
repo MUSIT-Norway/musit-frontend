@@ -4,6 +4,7 @@ import './PrintTemplateComponent.css';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
 import store$, { loadTemplates$, renderTemplate$, clearAll$, clearRendered$ } from './printStore';
+import { I18n } from 'react-i18nify';
 
 export class ChooseTemplate extends Component {
   static propTypes = {
@@ -57,7 +58,7 @@ export class ChooseTemplate extends Component {
           className="printTool"
           onChange={this.selectTemplate}
         >
-          <option>Select template</option>
+          <option>{I18n.t('musit.template.chooseTemplate')}</option>
           {[].concat(this.props.store.templates).filter(t => t).map((template, i) =>
             <option key={i} value={template.id}>{template.name}</option>
           )}
@@ -68,7 +69,7 @@ export class ChooseTemplate extends Component {
             className="printTool"
             onClick={() => this.previewFrame.domNode.contentWindow.print()}
             type="button"
-            value="Print template"
+            value={I18n.t('musit.template.printTemplate')}
           />
         }
         {this.props.store.rendered &&
