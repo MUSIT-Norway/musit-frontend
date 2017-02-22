@@ -171,7 +171,7 @@ export class PickListContainer extends React.Component {
   }
 
   print(nodesToPrint) {
-    this.props.showModal('Choose template', <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />);
+    this.props.showModal(I18n.t('musit.template.labelTemplates'), <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />);
   }
 
   toggleObject({item, on}) {

@@ -3,6 +3,11 @@
     "musit": {
       "unknown": "Unknown",
       "language": "Language",
+      "template": {
+        "chooseTemplate": "Choose template",
+        "labelTemplates": "Label templates",
+        "printTemplate": "Print template"
+      },
       "userProfile": {
         "loggedIn": "Logged in as %{name}",
         "logout": "Logout",
@@ -652,6 +657,11 @@
     "musit": {
       "unknown": "Ukjent",
       "language": "Språk",
+      "template": {
+        "chooseTemplate": "Velg etikettmal",
+        "labelTemplates": "Etikettmaler",
+        "printTemplate": "Skriv ut"
+      },
       "userProfile": {
         "loggedIn": "Logget inn som %{name}",
         "logout": "Logg ut",
