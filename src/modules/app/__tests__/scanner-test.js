@@ -36,7 +36,17 @@ describe('scanner', () => {
     const clearBuffer = sinon.spy();
     const loadNode = sinon.spy();
     const loadChildren = sinon.spy();
-    const scanForUUID = scanForNode(ajaxGet, goTo, showError, clearSearch, clearBuffer, loadNode, loadChildren, null, () => true);
+    const scanForUUID = scanForNode(
+      ajaxGet,
+      goTo,
+      showError,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      null,
+      () => true
+    );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(false);
@@ -206,7 +216,7 @@ describe('scanner', () => {
       null,
       null,
       null,
-      null,
+      () => false,
       null,
       () => true
     );
@@ -263,7 +273,7 @@ describe('scanner', () => {
       null,
       null,
       null,
-      null,
+      () => false,
       null,
       () => false,
       () => true
@@ -311,7 +321,7 @@ describe('scanner', () => {
       null,
       null,
       null,
-      null,
+      () => false,
       null,
       () => false,
       () => true
@@ -358,7 +368,7 @@ describe('scanner', () => {
       null,
       null,
       null,
-      null,
+      () => false,
       null,
       () => false,
       () => false
