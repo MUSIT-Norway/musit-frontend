@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import MusitNode from '../../models/node';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
-export const PER_PAGE = 1;
+export const PER_PAGE = 10;
 
 export const clear$ = createAction('clear$');
 export const setPage$ = createAction('setPage$');
