@@ -1,0 +1,52 @@
+exports[`SaveCancel should match snapshot 1`] = `
+<Row
+  bsClass="row"
+  componentClass="div">
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={2}
+    mdOffset={3}
+    sm={5}
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }
+    xs={6}>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      className="submitButton"
+      disabled={[Function saveDisabled]}
+      onClick={[Function onClickSave]}>
+      Lagre
+    </Button>
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={2}
+    sm={5}
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }
+    xs={6}>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      disabled={[Function cancelDisabled]}
+      onClick={[Function onClickCancel]}>
+      Avbryt
+    </Button>
+  </Col>
+</Row>
+`;
