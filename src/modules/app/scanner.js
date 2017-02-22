@@ -8,7 +8,7 @@ import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
 import { addNode$, addObject$ } from '../app/pickList';
-import { loadNode$, loadChildren$ } from '../movedialog/moveDialogStore';
+import moveDialogStore$, { loadNode$, loadChildren$, PER_PAGE } from '../movedialog/moveDialogStore';
 import * as ajax from '../../shared/RxAjax';
 import { I18n } from 'react-i18nify';
 
@@ -46,7 +46,8 @@ export const actOnNode = (
   moveDialog,
   nodePickList,
   storageFacility,
-  moveHistory
+  moveHistory,
+  moveDialog$
 ) => {
   const error = () => {
     showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
@@ -55,9 +56,20 @@ export const actOnNode = (
   if (moveHistory()) {
     error();
   } else if (moveDialog()) {
-    loadNode({id: response.id, museumId, token});
-    loadChildren({id: response.id, museumId, token});
-    clearBuffer();
+    const localSub = moveDialog$
+      .map(state => state.page)
+      .subscribe((currentPage) => {
+        if (localSub) {
+          localSub.unsubscribe();
+          return;
+        }
+        loadNode({id: response.id, museumId, token});
+        loadChildren({id: response.id, museumId, token, page: {
+          page: currentPage || 1,
+          limit: PER_PAGE
+        }});
+        clearBuffer();
+      });
   } else if (nodePickList()) {
     addNode({value: response, path: getPath(response)});
     clearBuffer();
@@ -81,7 +93,8 @@ export const scanForNode = (
   moveDialog = isMoveDialogActive,
   nodePickList = isNodePickList,
   storageFacility = isStorageFacility,
-  moveHistory = isMoveHistoryActive
+  moveHistory = isMoveHistoryActive,
+  moveDialog$ = moveDialogStore$
 ) => ({ uuid, museumId, token }) => {
   MusitNode.findByUUID(ajaxGet)({uuid, museumId, token})
     .do(response => {
@@ -100,7 +113,8 @@ export const scanForNode = (
           moveDialog,
           nodePickList,
           storageFacility,
-          moveHistory
+          moveHistory,
+          moveDialog$
         );
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', { uuid })});
@@ -168,7 +182,8 @@ export const scanForNodeOrObject = (
   nodePickList = isNodePickList,
   objectPickList = isObjectPickList,
   storageFacility = isStorageFacility,
-  moveHistory = isMoveHistoryActive
+  moveHistory = isMoveHistoryActive,
+  moveDialog$ = moveDialogStore$
 ) => (cmd): Observable =>
   MusitNode.findByBarcode(ajaxGet)(cmd)
     .flatMap((nodeResponse) => {
@@ -208,7 +223,8 @@ export const scanForNodeOrObject = (
           moveDialog,
           nodePickList,
           storageFacility,
-          moveHistory
+          moveHistory,
+          moveDialog$
         );
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', { barcode: cmd.barcode })});

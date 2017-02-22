@@ -113,7 +113,7 @@ export const reducer$ = (actions, onError = emitError) => Observable.merge(
     .map(collectionId => state => ({...state, collectionId}))
 );
 
-const session$ = createStore('appSession', reducer$({ 
+const session$ = createStore('appSession', reducer$({
   setMuseumId$,
   setCollectionId$,
   setAccessToken$,
