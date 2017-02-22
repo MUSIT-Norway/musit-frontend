@@ -44,7 +44,7 @@ describe('scanner', () => {
       clearBuffer,
       loadNode,
       loadChildren,
-      null,
+      null, // should never be called
       () => true
     );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
@@ -81,8 +81,18 @@ describe('scanner', () => {
     const loadNode = sinon.spy();
     const loadChildren = sinon.spy();
     const addNode = sinon.spy();
-    const scanForUUID = scanForNode(ajaxGet, goTo, showError, clearSearch, clearBuffer, loadNode, loadChildren, addNode,
-      () => false, () =>  true);
+    const scanForUUID = scanForNode(
+      ajaxGet,
+      goTo,
+      showError,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      addNode,
+      () => false,
+      () => true
+    );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(false);
@@ -116,8 +126,19 @@ describe('scanner', () => {
     const loadNode = sinon.spy();
     const loadChildren = sinon.spy();
     const addNode = sinon.spy();
-    const scanForUUID = scanForNode(ajaxGet, goTo, showError, clearSearch, clearBuffer, loadNode, loadChildren, addNode,
-      () => false, () =>  false, () => true);
+    const scanForUUID = scanForNode(
+      ajaxGet,
+      goTo,
+      showError,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      addNode,
+      () => false,
+      () =>  false,
+      () => true
+    );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
     expect(goTo.calledOnce).toBe(true);
     expect(goTo.getCall(0).args[0]).toEqual('/magasin/1');
@@ -146,8 +167,19 @@ describe('scanner', () => {
     const loadNode = sinon.spy();
     const loadChildren = sinon.spy();
     const addNode = sinon.spy();
-    const scanForUUID = scanForNode(ajaxGet, goTo, showError, clearSearch, clearBuffer, loadNode, loadChildren, addNode,
-      () => false, () =>  false, () => false);
+    const scanForUUID = scanForNode(
+      ajaxGet,
+      goTo,
+      showError,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      addNode,
+      () => false,
+      () =>  false,
+      () => false
+    );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
@@ -169,8 +201,8 @@ describe('scanner', () => {
       ajaxGet,
       goTo,
       showError,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
       clearSearch
     );
     scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
@@ -213,11 +245,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
-      null,
+      null, // should never be called
       () => true
     );
     scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
@@ -266,15 +298,15 @@ describe('scanner', () => {
       ajaxGet,
       goTo,
       showError,
-      null,
+      null, // should never be called
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
-      null,
+      null, // should never be called
       () => false,
       () => true
     );
@@ -318,11 +350,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
-      null,
+      null, // should never be called
       () => false,
       () => true
     );
@@ -365,11 +397,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
-      null,
+      null, // should never be called
       () => false,
       () => false
     );
@@ -421,11 +453,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
       () => false
     );
@@ -479,11 +511,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
       () => false
     );
@@ -522,9 +554,9 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
       () => false,
       () => false,
@@ -571,7 +603,7 @@ describe('scanner', () => {
       clearBuffer,
       loadNode,
       loadChildren,
-      null,
+      null, // should never be called
       () => true,
       () => false,
       () => false,
