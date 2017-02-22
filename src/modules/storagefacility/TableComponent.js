@@ -29,6 +29,8 @@ import inject from 'react-rxjs/dist/RxInject';
 
 import { addNode$, addObject$ } from '../app/pickList';
 
+import { BarCodeInput } from '../app/scanner';
+
 import { showConfirm, showModal } from '../../shared/modal';
 
 import tableStore$, {
@@ -470,13 +472,16 @@ export class StorageUnitsContainer extends React.Component {
 
   render() {
     return (
-      <Layout
-        title={I18n.t('musit.storageUnits.title')}
-        breadcrumb={<Breadcrumb node={this.props.store.rootNode} onClickCrumb={this.onClickCrumb} />}
-        toolbar={this.makeToolbar()}
-        leftMenu={this.makeLeftMenu()}
-        content={this.makeContentGrid()}
-      />
+      <div>
+        <BarCodeInput className="form-control" onChange={(event) => console.log(event)} />
+        <Layout
+          title={I18n.t('musit.storageUnits.title')}
+          breadcrumb={<Breadcrumb node={this.props.store.rootNode} onClickCrumb={this.onClickCrumb} />}
+          toolbar={this.makeToolbar()}
+          leftMenu={this.makeLeftMenu()}
+          content={this.makeContentGrid()}
+        />
+      </div>
     );
   }
 }

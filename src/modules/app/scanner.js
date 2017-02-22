@@ -11,6 +11,8 @@ import { addNode$, addObject$ } from '../app/pickList';
 import moveDialogStore$, { loadNode$, loadChildren$, PER_PAGE } from '../movedialog/moveDialogStore';
 import * as ajax from '../../shared/RxAjax';
 import { I18n } from 'react-i18nify';
+import { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 const UUID_REGEX = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
@@ -25,12 +27,56 @@ export const toggleEnabled$ = createAction('toggleEnabled$');
 export const prepareSearch$ = createAction('prepareSearch$');
 export const clearSearch$ = createAction('clearSearch$');
 export const addMatches$ = createAction('addMatches$');
+
 const bodyKeyPress = Observable.fromEvent(window.document.body, 'keypress');
 const keyPress$ = (charStream: Observable) => charStream
   .filter(e => e.which !== 13 && e.which !== 10)
   .map(e => String.fromCharCode(e.which))
   .map(c => c.replace(/\+/g, '-'));
+
 const scheduledClear$ = keyPress$(bodyKeyPress).debounce(() => Observable.timer(50));
+
+export class BarCodeInput extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { value: '' };
+  }
+
+  static defaultProps = {
+    onChange: () => undefined
+  };
+
+  componentDidMount() {
+    this.keyPressSubscription = Observable.fromEvent(this.input, 'keypress')
+      .do((e: Event) => e.preventDefault())
+      .filter((e: Event) => e.which !== 13 && e.which !== 10)
+      .map((e: Event) => String.fromCharCode(e.which))
+      .map((c: String) => c.replace(/\+/g, '-'))
+      .map((c: String) => this.state.value + c)
+      .subscribe((value) => {
+        if (!/^[0-9a-f\-]+$/.test(value)) {
+          this.setState({ value: ''});
+          return;
+        }
+        this.setState({ value });
+        this.props.onChange(value);
+      });
+  }
+
+  componentWillUnmount() {
+    this.keyPressSubscription.unsubscribe();
+  }
+
+  render() {
+    return <input
+      {...this.props}
+      onChange={undefined}
+      type="text"
+      ref={(input) => this.input = ReactDOM.findDOMNode(input)}
+      value={this.state.value}
+    />;
+  }
+}
 
 export const actOnNode = (
   response,
