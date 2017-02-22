@@ -58,33 +58,27 @@ export default class SaveCancel extends Component {
 
   render() {
     const { saveLabel, cancelLabel } = this.props;
-    const showButton = (data) => {
-      return (
-        <Col xs={6} sm={5} style={{ border: 'none', textAlign: 'center' }}>
-          {data}
-        </Col>
-      );
-    };
-
     return (
       <Row>
-        {showButton(
+        <Col xs={6} sm={5} md ={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
           <Button
             className="submitButton"
             onClick={this.props.onClickSave}
+            bsStyle="primary"
             disabled={this.props.saveDisabled}
           >
             {saveLabel || I18n.t('musit.texts.save')}
           </Button>
-        )}
-        {showButton(
+        </Col>
+        <Col xs={6} sm={5} md ={2} style={{ border: 'none', textAlign: 'center' }}>
           <Button
             onClick={this.props.onClickCancel}
+            bsStyle="primary"
             disabled={this.props.cancelDisabled}
           >
             {cancelLabel || I18n.t('musit.texts.cancel')}
           </Button>
-        )}
+        </Col>
       </Row>
     );
   }
