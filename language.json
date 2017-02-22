@@ -47,8 +47,8 @@
           "search": "Search",
           "noMatchingNodeOrObject": "Could not find any matching node or object with this barcode.",
           "noMatchingNode": "Could not find any matching node with this barcode.",
-          "cannotActOnObject": "This window can only act on barcodes for objects.",
-          "cannotActOnNode": "This window can only act on barcodes for storage facility nodes.",
+          "cannotActOnObject": "This window can not act on barcodes for objects.",
+          "cannotActOnNode": "This window can not act on barcodes for storage facility nodes.",
           "noCurrentLocation": "Object has no storage facility location."
         }
       },
