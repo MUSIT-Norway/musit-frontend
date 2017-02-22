@@ -11,7 +11,7 @@ describe('LoginPage', () => {
   it('should render norwegian text', () => {
     const wrapper = shallow(
       <LoginComponent
-        locale="no"
+        locale={() => 'no'}
       />
     );
     wrapper.setState({ showModal: true });
@@ -22,7 +22,7 @@ describe('LoginPage', () => {
   it('should render english text', () => {
     const wrapper = shallow(
       <LoginComponent
-        locale="en"
+        locale={() => 'en'}
       />
     );
     expect(wrapper.find(LoginComponentEn).length).toBe(1);
