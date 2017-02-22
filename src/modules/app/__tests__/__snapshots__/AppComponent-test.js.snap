@@ -206,7 +206,7 @@ exports[`AppComponent remders 1`] = `
           active={false}
           block={false}
           bsClass="btn"
-          bsStyle="success"
+          bsStyle="primary"
           disabled={false}
           onClick={[Function bound searchForBarCode]}>
           Søk
