@@ -56,16 +56,20 @@ export const actOnNode = (
   if (moveHistory()) {
     error();
   } else if (moveDialog()) {
-    moveDialog$
+    const localSub = moveDialog$
       .map(state => state.page)
-      .do(currentPage => {
+      .subscribe((currentPage) => {
+        if (localSub) {
+          localSub.unsubscribe();
+          return;
+        }
         loadNode({id: response.id, museumId, token});
         loadChildren({id: response.id, museumId, token, page: {
-          page: currentPage,
+          page: currentPage || 1,
           limit: PER_PAGE
         }});
         clearBuffer();
-      }).toPromise();
+      });
   } else if (nodePickList()) {
     addNode({value: response, path: getPath(response)});
     clearBuffer();
