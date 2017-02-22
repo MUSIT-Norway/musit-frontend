@@ -208,7 +208,7 @@ exports[`AppComponent remders 1`] = `
           bsClass="btn"
           bsStyle="primary"
           disabled={false}
-          onClick={[Function bound searchForBarCode]}>
+          onClick={[Function onClick]}>
           Søk
         </Button>
       </Form>
