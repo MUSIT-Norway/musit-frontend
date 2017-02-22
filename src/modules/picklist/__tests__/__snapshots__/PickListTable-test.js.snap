@@ -1,4 +1,198 @@
-exports[`PickListTable overview should display object-picklist correctly 1`] = `
+exports[`PickListComponent should display component (nodes) correctly 1`] = `
+<Injected
+  appSession={
+    AppSession {
+      "state": undefined
+    }
+  }
+  emitError={[Function emitError]}
+  emitSuccess={[Function emitSuccess]}
+  pickList={
+    Object {
+      "nodes": Array [
+        Object {
+          "marked": false,
+          "path": Array [
+            1
+          ],
+          "value": Object {
+            "id": 1,
+            "name": "Hei"
+          }
+        },
+        Object {
+          "marked": false,
+          "path": Array [
+            1,
+            2
+          ],
+          "value": Object {
+            "id": 2,
+            "name": "Hei"
+          }
+        },
+        Object {
+          "marked": true,
+          "path": Array [
+            1,
+            3
+          ],
+          "value": Object {
+            "id": 3,
+            "name": "Hei"
+          }
+        }
+      ],
+      "objects": Array [
+        Object {
+          "marked": false,
+          "path": Array [
+            1
+          ],
+          "value": Object {
+            "id": 1,
+            "name": "Test21"
+          }
+        },
+        Object {
+          "isMainObject": [Function isMainObject],
+          "marked": true,
+          "path": Array [
+            1,
+            2
+          ],
+          "value": Object {
+            "id": 2,
+            "mainObjectId": 1,
+            "name": "Test2"
+          }
+        },
+        Object {
+          "marked": false,
+          "path": Array [
+            1,
+            3
+          ],
+          "value": Object {
+            "id": 3,
+            "name": "Test23"
+          }
+        }
+      ]
+    }
+  }
+  refreshNode={[Function refreshNode]}
+  refreshObjects={[Function refreshObjects]}
+  removeNode={[Function removeNode]}
+  removeObject={[Function removeObject]}
+  route={
+    Object {
+      "type": "nodes"
+    }
+  }
+  toggleMainObject={[Function toggleMainObject]}
+  toggleNode={[Function toggleNode]}
+  toggleObject={[Function toggleObject]} />
+`;
+
+exports[`PickListComponent should display component (objects) correctly 1`] = `
+<Injected
+  appSession={
+    AppSession {
+      "state": undefined
+    }
+  }
+  emitError={[Function emitError]}
+  emitSuccess={[Function emitSuccess]}
+  pickList={
+    Object {
+      "nodes": Array [
+        Object {
+          "marked": false,
+          "path": Array [
+            1
+          ],
+          "value": Object {
+            "id": 1,
+            "name": "Hei"
+          }
+        },
+        Object {
+          "marked": false,
+          "path": Array [
+            1,
+            2
+          ],
+          "value": Object {
+            "id": 2,
+            "name": "Hei"
+          }
+        },
+        Object {
+          "marked": true,
+          "path": Array [
+            1,
+            3
+          ],
+          "value": Object {
+            "id": 3,
+            "name": "Hei"
+          }
+        }
+      ],
+      "objects": Array [
+        Object {
+          "marked": false,
+          "path": Array [
+            1
+          ],
+          "value": Object {
+            "id": 1,
+            "name": "Test21"
+          }
+        },
+        Object {
+          "isMainObject": [Function isMainObject],
+          "marked": true,
+          "path": Array [
+            1,
+            2
+          ],
+          "value": Object {
+            "id": 2,
+            "mainObjectId": 1,
+            "name": "Test2"
+          }
+        },
+        Object {
+          "marked": false,
+          "path": Array [
+            1,
+            3
+          ],
+          "value": Object {
+            "id": 3,
+            "name": "Test23"
+          }
+        }
+      ]
+    }
+  }
+  refreshNode={[Function refreshNode]}
+  refreshObjects={[Function refreshObjects]}
+  removeNode={[Function removeNode]}
+  removeObject={[Function removeObject]}
+  route={
+    Object {
+      "type": "objects"
+    }
+  }
+  toggleMainObject={[Function toggleMainObject]}
+  toggleNode={[Function toggleNode]}
+  toggleObject={[Function toggleObject]} />
+`;
+
+exports[`PickListTable should display node-picklist correctly 1`] = `
 <div>
   <Table
     bordered={false}
@@ -48,7 +242,7 @@ exports[`PickListTable overview should display object-picklist correctly 1`] = `
               }
             }
             title="Valgt objekte(r)">
-            (0)
+            (1)
           </span>
           <FontAwesome
             className="normalAction"
@@ -68,12 +262,85 @@ exports[`PickListTable overview should display object-picklist correctly 1`] = `
               }
             }
             title="Valgt objekte(r)">
-            (0)
+            (1)
           </span>
         </th>
       </tr>
     </thead>
-    <tbody />
+    <tbody>
+      <tr
+        className={undefined}>
+        <td
+          style={
+            Object {
+              "textAlign": "left",
+              "verticalAlign": "middle",
+              "width": "3em"
+            }
+          }>
+          <span>
+            <input
+              checked=""
+              onClick={[Function onClick]}
+              type="checkbox" />
+          </span>
+        </td>
+        <td>
+          <span
+            className="pickListIcon">
+            <span
+              className="icon icon-musitobject" />
+             
+            <div>
+              <span
+                style={
+                  Object {
+                    "paddingLeft": "1em"
+                  }
+                } />
+              <div
+                className="labelText" />
+            </div>
+          </span>
+        </td>
+      </tr>
+      <tr
+        className={undefined}>
+        <td
+          style={
+            Object {
+              "textAlign": "left",
+              "verticalAlign": "middle",
+              "width": "3em"
+            }
+          }>
+          <span>
+            <input
+              checked="checked"
+              onClick={[Function onClick]}
+              type="checkbox" />
+          </span>
+        </td>
+        <td>
+          <span
+            className="pickListIcon">
+            <span
+              className="icon icon-musitobject" />
+             
+            <div>
+              <span
+                style={
+                  Object {
+                    "paddingLeft": "1em"
+                  }
+                } />
+              <div
+                className="labelText" />
+            </div>
+          </span>
+        </td>
+      </tr>
+    </tbody>
   </Table>
 </div>
 `;
