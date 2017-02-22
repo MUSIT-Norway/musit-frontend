@@ -8,7 +8,7 @@ import { ROUTE_PICKLIST, ROUTE_SF } from '../../routes.path';
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
 import { addNode$, addObject$ } from '../app/pickList';
-import { loadNode$, loadChildren$, PER_PAGE } from '../movedialog/moveDialogStore';
+import moveDialogStore$, { loadNode$, loadChildren$, PER_PAGE } from '../movedialog/moveDialogStore';
 import * as ajax from '../../shared/RxAjax';
 import { I18n } from 'react-i18nify';
 
@@ -47,7 +47,7 @@ export const actOnNode = (
   nodePickList,
   storageFacility,
   moveHistory,
-  moveDialogStore$ = Observable.of({ page: 1 })
+  moveDialog$
 ) => {
   const error = () => {
     showError({ message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
@@ -56,7 +56,7 @@ export const actOnNode = (
   if (moveHistory()) {
     error();
   } else if (moveDialog()) {
-    moveDialogStore$
+    moveDialog$
       .map(state => state.page)
       .do(currentPage => {
         loadNode({id: response.id, museumId, token});
@@ -89,7 +89,8 @@ export const scanForNode = (
   moveDialog = isMoveDialogActive,
   nodePickList = isNodePickList,
   storageFacility = isStorageFacility,
-  moveHistory = isMoveHistoryActive
+  moveHistory = isMoveHistoryActive,
+  moveDialog$ = moveDialogStore$
 ) => ({ uuid, museumId, token }) => {
   MusitNode.findByUUID(ajaxGet)({uuid, museumId, token})
     .do(response => {
@@ -108,7 +109,8 @@ export const scanForNode = (
           moveDialog,
           nodePickList,
           storageFacility,
-          moveHistory
+          moveHistory,
+          moveDialog$
         );
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', { uuid })});
@@ -176,7 +178,8 @@ export const scanForNodeOrObject = (
   nodePickList = isNodePickList,
   objectPickList = isObjectPickList,
   storageFacility = isStorageFacility,
-  moveHistory = isMoveHistoryActive
+  moveHistory = isMoveHistoryActive,
+  moveDialog$ = moveDialogStore$
 ) => (cmd): Observable =>
   MusitNode.findByBarcode(ajaxGet)(cmd)
     .flatMap((nodeResponse) => {
@@ -216,7 +219,8 @@ export const scanForNodeOrObject = (
           moveDialog,
           nodePickList,
           storageFacility,
-          moveHistory
+          moveHistory,
+          moveDialog$
         );
       } else {
         showError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', { barcode: cmd.barcode })});
