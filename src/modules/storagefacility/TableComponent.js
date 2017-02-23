@@ -28,7 +28,7 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 
 import { addNode$, addObject$ } from '../app/pickList';
-
+import scanner$ from '../app/scanner2';
 import { showConfirm, showModal } from '../../shared/modal';
 
 import tableStore$, {
@@ -94,6 +94,26 @@ export class StorageUnitsContainer extends React.Component {
         }
       }
     });
+  }
+
+  componentDidMount() {
+    this.scanner = scanner$.subscribe((barCode) => {
+      if (!barCode.valid) {
+        return;
+      }
+      if (barCode.uuid) {
+        MusitNode.findByUUID()({
+          uuid: barCode.code,
+          museumId: this.props.appSession.getMuseumId(),
+          token: this.props.appSession.getAccessToken()
+        }).do((node) => node && hashHistory.push('/magasin/' + node.id))
+          .toPromise();
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.scanner.unsubscribe();
   }
 
   componentWillMount(

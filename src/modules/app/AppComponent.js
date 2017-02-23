@@ -14,7 +14,7 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import scanner$, { isScannerActive } from './scanner2';
+import { isScannerActive } from './scanner2';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -173,8 +173,7 @@ export class AppComponent extends Component {
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  pickList$: { type: PropTypes.object.isRequired },
-  scanner$
+  pickList$: { type: PropTypes.object.isRequired }
 };
 
 const commands = {
