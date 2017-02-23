@@ -29,8 +29,6 @@ import inject from 'react-rxjs/dist/RxInject';
 
 import { addNode$, addObject$ } from '../app/pickList';
 
-import { BarCodeInput } from '../app/scanner';
-
 import { showConfirm, showModal } from '../../shared/modal';
 
 import tableStore$, {
@@ -295,7 +293,8 @@ export class StorageUnitsContainer extends React.Component {
     searchPattern = this.state.searchPattern
   ) {
     return <Toolbar
-     showLeft={!showObjects}
+      showRight={!!showObjects}
+      showLeft={!showObjects}
       labelRight={I18n.t('musit.grid.button.objects')}
       labelLeft={I18n.t('musit.grid.button.nodes')}
       placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
@@ -471,28 +470,13 @@ export class StorageUnitsContainer extends React.Component {
 
   render() {
     return (
-      <div>
-        <BarCodeInput
-          ref={(barCode) => this.barCode = barCode}
-          style={{ width: 100 }}
-          className="form-control"
-          onEnter={() => {
-            console.log('DO STUFF', this.barCode.input.value);
-            this.barCode.input.value = '';
-          }}
-          onChange={(event) => {
-            const value = event.target.value;
-            console.debug(value);
-          }}
-        />
-        <Layout
-          title={I18n.t('musit.storageUnits.title')}
-          breadcrumb={<Breadcrumb node={this.props.store.rootNode} onClickCrumb={this.onClickCrumb} />}
-          toolbar={this.makeToolbar()}
-          leftMenu={this.makeLeftMenu()}
-          content={this.makeContentGrid()}
-        />
-      </div>
+      <Layout
+        title={I18n.t('musit.storageUnits.title')}
+        breadcrumb={<Breadcrumb node={this.props.store.rootNode} onClickCrumb={this.onClickCrumb} />}
+        toolbar={this.makeToolbar()}
+        leftMenu={this.makeLeftMenu()}
+        content={this.makeContentGrid()}
+      />
     );
   }
 }

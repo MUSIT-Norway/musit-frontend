@@ -15,7 +15,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import omit from 'lodash/omit';
 
-const UUID_REGEX = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
+const isUUID = (s) => /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(s);
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
 const isNodePickList = (path = ROUTE_PICKLIST_PATH.exec(getLocationPath())) => path && path.length > 0 && path[1] === 'nodes';
 const isObjectPickList = (path = ROUTE_PICKLIST_PATH.exec(getLocationPath())) => path && path.length > 0 && path[1] === 'objects';
@@ -46,7 +46,6 @@ export class BarCodeInput extends Component {
   componentDidMount() {
     this.onEnterSubscription = Observable.fromEvent(ReactDOM.findDOMNode(this), 'keydown')
       .do((e: Event) => {
-        console.log(e);
         if(e.which === 13) {
           this.props.onEnter();
         }
@@ -307,7 +306,7 @@ export const reducer$ = (actions, scanUUID) => Observable.merge(
       return state;
     }
     let buffer = `${state.buffer || ''}${char}`;
-    if (UUID_REGEX.test(buffer)) {
+    if (isUUID(buffer)) {
       scanUUID({
         uuid: buffer,
         museumId: state.appSession.getMuseumId(),
