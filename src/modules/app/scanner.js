@@ -11,7 +11,7 @@ import { addNode$, addObject$ } from '../app/pickList';
 import moveDialogStore$, { loadNode$, loadChildren$, PER_PAGE } from '../movedialog/moveDialogStore';
 import * as ajax from '../../shared/RxAjax';
 import { I18n } from 'react-i18nify';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 const UUID_REGEX = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
@@ -37,14 +37,11 @@ const keyPress$ = (charStream: Observable) => charStream
 const scheduledClear$ = keyPress$(bodyKeyPress).debounce(() => Observable.timer(50));
 
 export class BarCodeInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: '' };
-  }
 
-  static defaultProps = {
-    onChange: () => undefined
-  };
+  notifyChanged() {
+    const event = new Event('input', { bubbles: true });
+    this.input.dispatchEvent(event);
+  }
 
   componentDidMount() {
     this.keyPressSubscription = Observable.fromEvent(this.input, 'keypress')
@@ -52,14 +49,14 @@ export class BarCodeInput extends Component {
       .filter((e: Event) => e.which !== 13 && e.which !== 10)
       .map((e: Event) => String.fromCharCode(e.which))
       .map((c: String) => c.replace(/\+/g, '-'))
-      .map((c: String) => this.state.value + c)
+      .map((c: String) => this.input.value + c)
       .subscribe((value) => {
         if (!/^[0-9a-f\-]+$/.test(value)) {
-          this.setState({ value: ''});
+          this.input.value = '';
           return;
         }
-        this.setState({ value });
-        this.props.onChange(value);
+        this.input.value = value;
+        this.notifyChanged();
       });
   }
 
@@ -70,10 +67,8 @@ export class BarCodeInput extends Component {
   render() {
     return <input
       {...this.props}
-      onChange={undefined}
       type="text"
       ref={(input) => this.input = ReactDOM.findDOMNode(input)}
-      value={this.state.value}
     />;
   }
 }

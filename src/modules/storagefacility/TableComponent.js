@@ -473,7 +473,17 @@ export class StorageUnitsContainer extends React.Component {
   render() {
     return (
       <div>
-        <BarCodeInput className="form-control" onChange={(event) => console.log(event)} />
+        <BarCodeInput
+          className="form-control"
+          onChange={(event) => {
+            const value = event.target.value;
+            if (value === 'uuid') {
+              // TODO do stuff here
+              event.target.value = '';
+            }
+            console.debug(value);
+          }}
+        />
         <Layout
           title={I18n.t('musit.storageUnits.title')}
           breadcrumb={<Breadcrumb node={this.props.store.rootNode} onClickCrumb={this.onClickCrumb} />}
