@@ -29,14 +29,14 @@ import moveDialogStore$, {
   clear$,
   loadChildren$,
   loadNode$,
-  setLoading$
+  setLoading$,
+  setPage$,
+  PER_PAGE
 } from './moveDialogStore';
 import Loader from 'react-loader';
 import inject from 'react-rxjs/dist/RxInject';
 
-const PER_PAGE = 10;
-
-export class MusitModal extends Component {
+export class MoveDialogComponent extends Component {
 
   static propTypes = {
     onMove: PropTypes.func.isRequired,
@@ -44,20 +44,14 @@ export class MusitModal extends Component {
     loadChildren: PropTypes.func.isRequired,
     clear: PropTypes.func.isRequired,
     setLoading: PropTypes.func.isRequired,
-    store: PropTypes.object,
+    setPage: PropTypes.func.isRequired,
+    moveDialogStore: PropTypes.object,
     appSession: PropTypes.object.isRequired
   };
 
   static contextTypes = {
     closeModal: PropTypes.func.isRequired
   };
-
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      currentPage: 1
-    };
-  }
 
   componentDidMount() {
     this.loadHome();
@@ -74,11 +68,8 @@ export class MusitModal extends Component {
   }
 
   loadNode(id, currentPage = 1) {
-    this.setState({
-      ...this.state,
-      currentPage
-    });
     this.props.clear();
+    this.props.setPage(currentPage);
     this.props.setLoading(true);
     this.props.loadNode({
       id: id,
@@ -97,7 +88,7 @@ export class MusitModal extends Component {
   }
 
   render() {
-    const { data, selectedNode } = this.props.store;
+    const { data, selectedNode, page = 1 } = this.props.moveDialogStore;
 
     const isSelected = Object.keys({...selectedNode}).length > 0;
 
@@ -130,7 +121,7 @@ export class MusitModal extends Component {
           {data.totalMatches > PER_PAGE &&
           <PagingToolbar
             numItems={data.totalMatches}
-            currentPage={this.state.currentPage}
+            currentPage={page}
             perPage={PER_PAGE}
             onClick={(currentPage) => this.loadNode(selectedNode && selectedNode.id, currentPage)}
           />
@@ -188,14 +179,15 @@ export class MusitModal extends Component {
 }
 
 const data = {
-  store$: moveDialogStore$
+  moveDialogStore$
 };
 
 const commands = {
   clear$,
   loadChildren$,
   loadNode$,
-  setLoading$
+  setLoading$,
+  setPage$
 };
 
-export default inject(data, commands)(MusitModal);
+export default inject(data, commands)(MoveDialogComponent);
