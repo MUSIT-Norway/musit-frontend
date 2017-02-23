@@ -35,8 +35,6 @@ const keyPress$ = (charStream: Observable) => charStream
   .map(e => String.fromCharCode(e.which))
   .map(c => c.replace(/\+/g, '-'));
 
-const scheduledClear$ = keyPress$(bodyKeyPress).debounce(() => Observable.timer(50));
-
 export class BarCodeInput extends Component {
   notifyChanged() {
     const event = new Event('input', { bubbles: true });
@@ -292,15 +290,14 @@ export const reducer$ = (actions, scanUUID) => Observable.merge(
   actions.clearSearch$.map(() => (state) => ({...state, searchPending: false, searchComplete: false, matches: null})),
   actions.prepareSearch$.map(() => (state) => ({...state, searchPending: true, searchComplete: false, matches: null})),
   actions.addMatches$.map((matches) => (state) => ({...state, matches, searchPending: false, searchComplete: true})),
-  actions.appSession$.map((appSession) => (state) => ({...state, appSession})),
-  actions.scheduledClear$.map(() => (state) => {
+  actions.toggleEnabled$.map(() => (state) => ({...state, enabled: !state.enabled })),
+  actions.keyPress$.debounce(() => Observable.timer(50)).map(() => (state) => {
     const code = /^[0-9]+$/.test(state.buffer) ? state.buffer : '';
     if (state.code !== state.buffer) {
       return {...state, buffer: null, code, matches: null};
     }
     return state;
   }),
-  actions.toggleEnabled$.map(() => (state) => ({...state, enabled: !state.enabled })),
   actions.keyPress$.map((char) => (state) => {
     if (!state.enabled) {
       return state;
@@ -320,18 +317,18 @@ export const reducer$ = (actions, scanUUID) => Observable.merge(
   })
 );
 
-const commands = {
-  addMatches$,
-  scheduledClear$,
-  toggleEnabled$,
-  prepareSearch$,
-  keyPress$: keyPress$(bodyKeyPress),
-  clearBuffer$,
-  clearSearch$
-};
-
 export default (appSession$) => createStore(
   'scanner',
-  reducer$({...commands, appSession$ },  scanForNode()),
-  Observable.of({ enabled: false, buffer: null, code: null, matches: [] })
+  reducer$(
+    {
+      addMatches$,
+      toggleEnabled$,
+      prepareSearch$,
+      keyPress$: keyPress$(bodyKeyPress),
+      clearBuffer$,
+      clearSearch$
+    },
+    scanForNode()
+  ),
+  appSession$.map(appSession => () => ({ appSession, enabled: false, buffer: null, code: null, matches: [] }))
 );
