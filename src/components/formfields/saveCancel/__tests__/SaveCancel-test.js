@@ -5,23 +5,55 @@ import SaveCancel from '../SaveCancel';
 import sinon from 'sinon';
 import ReactTestUtils from 'react-addons-test-utils';
 
-// 1. save disabled 2. save not disabled + clicking 3. etc etc
 
 describe('SaveCancel snapshot', () => {
   const onClickSave = sinon.spy();
-  const onClickCancel = sinon.spy();
 
   it('should match snapshot', () => {
     const wrapper = shallow(
       <SaveCancel
+        id="2"
+        saveLabel="Hii"
         onClickSave={onClickSave}
-        onClickCancel={onClickCancel}
+        cancelDisabled={true}
       />
     );
+
+    expect(wrapper.find('.cancelButton').everyWhere(n => n.hasClass('cancelButton'))).toEqual(true);
+
+    expect(wrapper.find('[id="Save_2"]').everyWhere(n => n.hasClass('submitButton'))).toEqual(true);
+
+    expect(wrapper.find('[type="button"]').everyWhere(n => n.hasClass('submitButton'))).toEqual(true);
+
+    expect(wrapper.is('.cancelButton')).toEqual(false);
+
+    expect(wrapper.find('.cancelButton').text()).toEqual('<Button />');
+
+    expect(wrapper.find('.cancelButton').hasClass('disabled')).toEqual(false);
+
+    expect(wrapper.find('.submitButton').everyWhere(n => n.hasClass('submitButton'))).toEqual(true);
+
+    expect(wrapper.find('.submitButton').every(n => n.hasClass('submitButton'))).toEqual(false);
+
+    expect(wrapper.find('.submitButton').some('.submitButton')).toEqual(true);
+
+    expect(wrapper.find('.submitButton').someWhere(n => n.hasClass('submitButton'))).toEqual(true);
+
+    expect(wrapper.find('.submitButton').someWhere(n => n.hasClass('submitButton'))).toEqual(true);
+
+    expect(wrapper.find('.cancelButton').everyWhere(n => n.hasClass('cancelButton'))).toEqual(true);
+
+    expect(wrapper.find('.cancelButton').html()).toMatchSnapshot();
+
+    expect(wrapper.html()).toMatchSnapshot();
+
     expect(shallowToJson(wrapper)).toMatchSnapshot();
 
-  });
+    expect(wrapper.debug()).toMatchSnapshot();
 
+    expect(wrapper.find('.submitButton').text()).toBe('<Button />');
+
+  });
 });
 
 

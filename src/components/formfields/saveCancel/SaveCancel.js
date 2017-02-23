@@ -27,10 +27,10 @@ export default class SaveCancel extends Component {
     id: PropTypes.string,
     saveLabel: PropTypes.string,
     saveDisabled: PropTypes.bool,
-    onClickSave: PropTypes.func.isRequired,
+    onClickSave: PropTypes.func,
     cancelLabel: PropTypes.string,
     cancelDisabled: PropTypes.bool,
-    onClickCancel: PropTypes.func.isRequired
+    onClickCancel: PropTypes.func
   }
 
   constructor(props) {
@@ -46,36 +46,32 @@ export default class SaveCancel extends Component {
       save: {
         id: `Save_${id || 1}`,
         onClick: onClickSave,
-        disabled: saveDisabled
+        disabled: saveDisabled,
+        className: 'submitButton',
+        bsStyle: 'primary'
       },
       cancel: {
         id: `Cancel_${id || 1}`,
         onClick: onClickCancel,
-        disabled: cancelDisabled
+        disabled: cancelDisabled,
+        className: 'cancelButton',
+        bsStyle: 'primary'
       }
     };
   }
 
   render() {
     const { saveLabel, cancelLabel } = this.props;
+    const { save, cancel } = this.fields;
     return (
       <Row>
         <Col xs={6} sm={5} md ={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
-          <Button
-            className="submitButton"
-            onClick={this.props.onClickSave}
-            bsStyle="primary"
-            disabled={this.props.saveDisabled}
-          >
+          <Button {...save}>
             {saveLabel || I18n.t('musit.texts.save')}
           </Button>
         </Col>
         <Col xs={6} sm={5} md ={2} style={{ border: 'none', textAlign: 'center' }}>
-          <Button
-            onClick={this.props.onClickCancel}
-            bsStyle="primary"
-            disabled={this.props.cancelDisabled}
-          >
+          <Button  {...cancel}>
             {cancelLabel || I18n.t('musit.texts.cancel')}
           </Button>
         </Col>
