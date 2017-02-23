@@ -37,31 +37,38 @@ const keyPress$ = (charStream: Observable) => charStream
 const scheduledClear$ = keyPress$(bodyKeyPress).debounce(() => Observable.timer(50));
 
 export class BarCodeInput extends Component {
-
   notifyChanged() {
     const event = new Event('input', { bubbles: true });
     this.input.dispatchEvent(event);
   }
 
   componentDidMount() {
+    this.onEnterSubscription = Observable.fromEvent(ReactDOM.findDOMNode(this), 'keydown')
+      .do((e: Event) => {
+        console.log(e);
+        if(e.which === 13) {
+          this.props.onEnter();
+        }
+      }).subscribe();
     this.keyPressSubscription = Observable.fromEvent(this.input, 'keypress')
       .do((e: Event) => e.preventDefault())
-      .filter((e: Event) => e.which !== 13 && e.which !== 10)
+      .filter((e: Event) => e.which !== 13)
       .map((e: Event) => String.fromCharCode(e.which))
       .map((c: String) => c.replace(/\+/g, '-'))
       .map((c: String) => this.input.value + c)
       .subscribe((value) => {
         if (!/^[0-9a-f\-]+$/.test(value)) {
           this.input.value = '';
-          return;
+        } else {
+          this.input.value = value;
         }
-        this.input.value = value;
         this.notifyChanged();
       });
   }
 
   componentWillUnmount() {
     this.keyPressSubscription.unsubscribe();
+    this.onEnterSubscription.unsubscribe();
   }
 
   render() {
@@ -71,7 +78,12 @@ export class BarCodeInput extends Component {
       ref={(input) => this.input = ReactDOM.findDOMNode(input)}
     />;
   }
+
 }
+
+BarCodeInput.propTypes = {
+  onEnter: React.PropTypes.func.isRequired
+};
 
 export const actOnNode = (
   response,
