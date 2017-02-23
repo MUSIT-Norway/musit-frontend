@@ -26,7 +26,7 @@ import {
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
-import subscribe, { clear$ } from '../app/scanner2';
+import subscribe, { clear$ } from '../app/scanner';
 import { Observable } from 'rxjs';
 
 export class PickListContainer extends React.Component {

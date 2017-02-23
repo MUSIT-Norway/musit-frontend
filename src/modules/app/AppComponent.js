@@ -14,7 +14,7 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import { count$ } from './scanner2';
+import { count$ } from './scanner';
 
 export class AppComponent extends Component {
   static propTypes = {

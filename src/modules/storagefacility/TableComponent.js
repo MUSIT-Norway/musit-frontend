@@ -28,7 +28,7 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 
 import { addNode$, addObject$ } from '../app/pickList';
-import subscribe, { clear$ } from '../app/scanner2';
+import subscribe, { clear$ } from '../app/scanner';
 import { showConfirm, showModal } from '../../shared/modal';
 
 import tableStore$, {
