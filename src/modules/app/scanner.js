@@ -13,6 +13,7 @@ import * as ajax from '../../shared/RxAjax';
 import { I18n } from 'react-i18nify';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import omit from 'lodash/omit';
 
 const UUID_REGEX = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i;
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
@@ -72,8 +73,9 @@ export class BarCodeInput extends Component {
   }
 
   render() {
+    const props = omit(this.props, 'onEnter');
     return <input
-      {...this.props}
+      {...props}
       type="text"
       ref={(input) => this.input = ReactDOM.findDOMNode(input)}
     />;
