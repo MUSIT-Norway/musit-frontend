@@ -28,7 +28,7 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 
 import { addNode$, addObject$ } from '../app/pickList';
-import subscribe, { clear$, noMatchingNode, noMatchingNodeOrObject } from '../app/scanner2';
+import subscribe, { clear$ } from '../app/scanner2';
 import { showConfirm, showModal } from '../../shared/modal';
 
 import tableStore$, {
@@ -107,12 +107,11 @@ export class StorageUnitsContainer extends React.Component {
         MusitNode.findByUUID()(props)
           .do((response) => {
             if (!response) {
-              noMatchingNode(barCode);
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
             } else {
               this.actOnNode(response);
             }
-          })
-          .toPromise();
+          }).toPromise();
       } else {
         const props = {barcode: barCode.code, museumId, collectionId, token};
         MusitNode.findByBarcode()(props)
@@ -123,12 +122,16 @@ export class StorageUnitsContainer extends React.Component {
             return Observable.of(nodeResponse);
           }).do(response =>  {
             if (!response) {
-              noMatchingNodeOrObject(barCode);
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
             } else if(Array.isArray(response)) {
               if (response.length === 1) {
-                hashHistory.push('/magasin/' + response[0].id + '/objects');
+                if (!response[0].currentLocationId) {
+                  this.props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
+                } else {
+                  hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
+                }
               } else {
-                noMatchingNodeOrObject(barCode);
+                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
               }
             } else if (response.nodeId) {
               this.actOnNode(response);

@@ -26,7 +26,7 @@ import {
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
-import subscribe, { clear$, noMatchingNodeOrObject, noMatchingNode } from '../app/scanner2';
+import subscribe, { clear$ } from '../app/scanner2';
 import { Observable } from 'rxjs';
 
 export class PickListContainer extends React.Component {
@@ -62,7 +62,7 @@ export class PickListContainer extends React.Component {
         MusitNode.findByUUID()(props)
           .do((response) => {
             if (!response) {
-              noMatchingNode(barCode);
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
               return;
             }
             this.props.addNode({value: response, path: getPath(response)});
@@ -78,12 +78,12 @@ export class PickListContainer extends React.Component {
             return Observable.of(nodeResponse);
           }).do(response => {
             if (!response) {
-              noMatchingNodeOrObject(barCode);
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
             } else if(Array.isArray(response)) {
               if (response.length === 1) {
                 this.props.addObject({value: response[0], path: getPath(response[0])});
               } else {
-                noMatchingNodeOrObject(barCode);
+                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
               }
             } else if (response.nodeId) {
               this.props.addNode({value: response, path: getPath(response)});

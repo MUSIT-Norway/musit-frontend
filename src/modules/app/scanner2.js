@@ -1,16 +1,6 @@
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import omit from 'lodash/omit';
-import { I18n } from 'react-i18nify';
-import { emitError } from '../../shared/errors';
-
-export const noMatchingNode = (barCode) => {
-  emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
-};
-
-export const noMatchingNodeOrObject = (barCode) => {
-  emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-};
 
 const initialState = { buffer: '', code: '', uuid: false };
 
