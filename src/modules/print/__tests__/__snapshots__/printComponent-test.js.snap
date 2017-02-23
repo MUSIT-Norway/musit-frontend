@@ -5,7 +5,7 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
     className="printTool"
     onChange={[Function bound selectTemplate]}>
     <option>
-      Select template
+      Velg etikettmal
     </option>
     <option
       value={1}>
@@ -21,7 +21,7 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
     className="printTool"
     onClick={[Function onClick]}
     type="button"
-    value="Print template" />
+    value="Skriv ut" />
   <IFrame
     content="<html>Some html</html>"
     frameProps={

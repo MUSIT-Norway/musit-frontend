@@ -36,7 +36,17 @@ describe('scanner', () => {
     const clearBuffer = sinon.spy();
     const loadNode = sinon.spy();
     const loadChildren = sinon.spy();
-    const scanForUUID = scanForNode(ajaxGet, goTo, showError, clearSearch, clearBuffer, loadNode, loadChildren, null, () => true);
+    const scanForUUID = scanForNode(
+      ajaxGet,
+      goTo,
+      showError,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      null, // should never be called
+      () => true
+    );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(false);
@@ -71,8 +81,18 @@ describe('scanner', () => {
     const loadNode = sinon.spy();
     const loadChildren = sinon.spy();
     const addNode = sinon.spy();
-    const scanForUUID = scanForNode(ajaxGet, goTo, showError, clearSearch, clearBuffer, loadNode, loadChildren, addNode,
-      () => false, () =>  true);
+    const scanForUUID = scanForNode(
+      ajaxGet,
+      goTo,
+      showError,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      addNode,
+      () => false,
+      () => true
+    );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(false);
@@ -106,8 +126,19 @@ describe('scanner', () => {
     const loadNode = sinon.spy();
     const loadChildren = sinon.spy();
     const addNode = sinon.spy();
-    const scanForUUID = scanForNode(ajaxGet, goTo, showError, clearSearch, clearBuffer, loadNode, loadChildren, addNode,
-      () => false, () =>  false, () => true);
+    const scanForUUID = scanForNode(
+      ajaxGet,
+      goTo,
+      showError,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      addNode,
+      () => false,
+      () =>  false,
+      () => true
+    );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
     expect(goTo.calledOnce).toBe(true);
     expect(goTo.getCall(0).args[0]).toEqual('/magasin/1');
@@ -136,13 +167,24 @@ describe('scanner', () => {
     const loadNode = sinon.spy();
     const loadChildren = sinon.spy();
     const addNode = sinon.spy();
-    const scanForUUID = scanForNode(ajaxGet, goTo, showError, clearSearch, clearBuffer, loadNode, loadChildren, addNode,
-      () => false, () =>  false, () => false);
+    const scanForUUID = scanForNode(
+      ajaxGet,
+      goTo,
+      showError,
+      clearSearch,
+      clearBuffer,
+      loadNode,
+      loadChildren,
+      addNode,
+      () => false,
+      () =>  false,
+      () => false
+    );
     scanForUUID({ uuid: '1234', museumId: new MuseumId(99), token: '1234'});
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
     const errorMsg = showError.getCall(0).args[0].message;
-    expect(errorMsg).toEqual('Den scannede strekkoden tilhører en magasinnode. Dette skjermbildet håndterer kun scanning av objekter.');
+    expect(errorMsg).toEqual('Dette skjermbildet håndterer ikke scanning av noder.');
     expect(clearSearch.calledOnce).toBe(true);
     expect(clearBuffer.calledOnce).toBe(false);
     expect(loadNode.calledOnce).toBe(false);
@@ -159,8 +201,8 @@ describe('scanner', () => {
       ajaxGet,
       goTo,
       showError,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
       clearSearch
     );
     scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
@@ -203,11 +245,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      () => false,
+      null, // should never be called
       () => true
     );
     scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
@@ -256,15 +298,15 @@ describe('scanner', () => {
       ajaxGet,
       goTo,
       showError,
-      null,
+      null, // should never be called
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      () => false,
+      null, // should never be called
       () => false,
       () => true
     );
@@ -308,11 +350,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      () => false,
+      null, // should never be called
       () => false,
       () => true
     );
@@ -355,11 +397,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      () => false,
+      null, // should never be called
       () => false,
       () => false
     );
@@ -367,7 +409,7 @@ describe('scanner', () => {
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
     const message = showError.getCall(0).args[0].message;
-    expect(message).toEqual('Den scannede strekkoden tilhører et objekt. Dette skjermbildet håndterer kun scanning av magasinnoder.');
+    expect(message).toEqual('Dette skjermbildet håndterer ikke scanning av objekter.');
     expect(clearSearch.calledOnce).toBe(true);
     expect(addObject.calledOnce).toBe(false);
     expect(clearBuffer.calledOnce).toBe(false);
@@ -411,11 +453,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
       () => false
     );
@@ -469,11 +511,11 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
       () => false
     );
@@ -512,9 +554,9 @@ describe('scanner', () => {
       addObject,
       clearSearch,
       clearBuffer,
-      null,
-      null,
-      null,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
       () => false,
       () => false,
       () => false,
@@ -524,7 +566,7 @@ describe('scanner', () => {
     expect(goTo.calledOnce).toBe(false);
     expect(showError.calledOnce).toBe(true);
     expect(showError.getCall(0).args[0].message).toEqual(
-      'Den scannede strekkoden tilhører en magasinnode. Dette skjermbildet håndterer kun scanning av objekter.'
+      'Dette skjermbildet håndterer ikke scanning av noder.'
     );
     expect(clearSearch.calledOnce).toBe(true);
     expect(addObject.calledOnce).toBe(false);
@@ -561,7 +603,7 @@ describe('scanner', () => {
       clearBuffer,
       loadNode,
       loadChildren,
-      null,
+      null, // should never be called
       () => true,
       () => false,
       () => false,
@@ -689,6 +731,150 @@ describe('scanner', () => {
     expect(addNode.calledOnce).toBe(false);
     expect(clearBuffer.calledOnce).toBe(true);
     expect(addMatches.calledOnce).toBe(false);
+  });
+
+  it('should give error message when scanning barcode that returns a node when move history is active', () => {
+    const ajaxGet = () => {
+      return Observable.of({
+        response: {
+          id: 1,
+          nodeId: '1234',
+          name: 'Test',
+          type: 'Room'
+        }
+      });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const addMatches = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      addMatches,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      () => false, // move dialog
+      () => false,
+      () => false,
+      () => false,
+      () => true // move history
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(true);
+    expect(showError.getCall(0).args[0].message).toEqual(
+      'Dette skjermbildet håndterer ikke scanning av noder.'
+    );
+    expect(clearSearch.calledOnce).toBe(true);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(false);
+    expect(addMatches.calledOnce).toBe(false);
+  });
+
+  it('should give error message when scanning barcode that returns an object when move history is active', () => {
+    const ajaxGet = (url) => {
+      if (url.indexOf('thingaggregate') > -1) {
+        return Observable.of({
+          response: [
+            {
+              id: 1,
+              term: 'Some chair',
+              museumNo: 'MUSK45',
+              subNo: '99',
+              currentLocationId: 45
+            }
+          ]
+        });
+      }
+      return Observable.of({ response: null });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      null,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      () => false, // move dialog
+      null, // should never be called
+      () => false,
+      () => false,
+      () => true // move history
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(true);
+    const message = showError.getCall(0).args[0].message;
+    expect(message).toEqual('Dette skjermbildet håndterer ikke scanning av objekter.');
+    expect(clearSearch.calledOnce).toBe(true);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(false);
+  });
+
+  it('should give error message when scanning barcode that returns an object when move dialog is active', () => {
+    const ajaxGet = (url) => {
+      if (url.indexOf('thingaggregate') > -1) {
+        return Observable.of({
+          response: [
+            {
+              id: 1,
+              term: 'Some chair',
+              museumNo: 'MUSK45',
+              subNo: '99',
+              currentLocationId: 45
+            }
+          ]
+        });
+      }
+      return Observable.of({ response: null });
+    };
+    const goTo = sinon.spy();
+    const showError = sinon.spy();
+    const clearSearch = sinon.spy();
+    const addObject = sinon.spy();
+    const clearBuffer = sinon.spy();
+    const scanForUUID = scanForNodeOrObject(
+      ajaxGet,
+      goTo,
+      showError,
+      null,
+      addObject,
+      clearSearch,
+      clearBuffer,
+      null, // should never be called
+      null, // should never be called
+      null, // should never be called
+      () => true, // move dialog
+      null, // should never be called
+      () => false,
+      () => false,
+      () => false // move history
+    );
+    scanForUUID({ barcode: '1234', museumId: new MuseumId(99), collectionId: new CollectionId('1234'), token: '1234'});
+    expect(goTo.calledOnce).toBe(false);
+    expect(showError.calledOnce).toBe(true);
+    const message = showError.getCall(0).args[0].message;
+    expect(message).toEqual('Dette skjermbildet håndterer ikke scanning av objekter.');
+    expect(clearSearch.calledOnce).toBe(true);
+    expect(addObject.calledOnce).toBe(false);
+    expect(clearBuffer.calledOnce).toBe(false);
   });
 
   it('should have a working reducer', () => {

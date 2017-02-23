@@ -5,8 +5,8 @@ import EnglishTranslation from './TermsAndConditions_en.html.jsx';
 import inject from 'react-rxjs/dist/RxInject';
 
 export const TermsAndConditions = (props) => {
-  const Translated = props.locale === 'no' ? NorwegianTranslation : EnglishTranslation;
+  const Translated = props.locale() === 'no' ? NorwegianTranslation : EnglishTranslation;
   return <Translated {...props} />;
 };
 
-export default inject({}, {}, { locale: I18n._locale})(TermsAndConditions);
+export default inject({}, {}, { locale: () => I18n._locale})(TermsAndConditions);

@@ -9,7 +9,7 @@ describe('TermsAndConditions', () => {
   it('should render norwegian text', () => {
     const wrapper = shallow(
       <TermsAndConditions
-        locale="no"
+        locale={() => 'no'}
       />
     );
     expect(wrapper.find(TermsAndConditionsNo).length).toBe(1);
@@ -18,7 +18,7 @@ describe('TermsAndConditions', () => {
   it('should render english text', () => {
     const wrapper = shallow(
       <TermsAndConditions
-        locale="en"
+        locale={() => 'en'}
       />
     );
     expect(wrapper.find(TermsAndConditionsEn).length).toBe(1);
