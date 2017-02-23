@@ -14,13 +14,12 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import { isScannerActive } from './scanner2';
+import { count$ } from './scanner2';
 
 export class AppComponent extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     appSession: PropTypes.instanceOf(AppSession).isRequired,
-    scanner: PropTypes.object.isRequired,
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
@@ -136,8 +135,8 @@ export class AppComponent extends Component {
               <LinkContainer
                 className="toggleScanner"
                 to={'/scan'}
-                disabled={this.props.isScannerActive()}
-                active={this.props.isScannerActive()}
+                disabled={this.props.count.value > 0}
+                active={this.props.count.value > 0}
               >
                 <NavItem>
                   <img src={require('./scanIcon.png')} height={25} alt="scan" />
@@ -173,7 +172,8 @@ export class AppComponent extends Component {
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  pickList$: { type: PropTypes.object.isRequired }
+  pickList$: { type: PropTypes.object.isRequired },
+  count$
 };
 
 const commands = {
@@ -183,8 +183,7 @@ const commands = {
 };
 
 const props = {
-  goTo: hashHistory.push.bind(hashHistory),
-  isScannerActive
+  goTo: hashHistory.push.bind(hashHistory)
 };
 
 export default inject(data, commands, props)(AppComponent);

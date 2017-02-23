@@ -111,9 +111,9 @@ exports[`AppComponent remders 1`] = `
         </LinkContainer>
         <LinkContainer
           action="push"
-          active={undefined}
+          active={false}
           className="toggleScanner"
-          disabled={undefined}
+          disabled={false}
           onlyActiveOnIndex={false}
           to="/scan">
           <NavItem

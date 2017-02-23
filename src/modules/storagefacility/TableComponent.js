@@ -28,7 +28,7 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 
 import { addNode$, addObject$ } from '../app/pickList';
-import scanner$ from '../app/scanner2';
+import subscribe, { clear$ } from '../app/scanner2';
 import { showConfirm, showModal } from '../../shared/modal';
 
 import tableStore$, {
@@ -97,7 +97,7 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.scanner = scanner$.subscribe((barCode) => {
+    this.scanner = subscribe((barCode) => {
       if (!barCode.valid) {
         return;
       }
@@ -108,6 +108,9 @@ export class StorageUnitsContainer extends React.Component {
           token: this.props.appSession.getAccessToken()
         }).do((node) => node && hashHistory.push('/magasin/' + node.id))
           .toPromise();
+      } else {
+        console.log('DO stuff!');
+        this.props.clear();
       }
     });
   }
@@ -512,7 +515,8 @@ const commands = {
   loadRootNode$,
   loadNodes$,
   loadObjects$,
-  setLoading$
+  setLoading$,
+  clear$
 };
 
 const props = {

@@ -1,8 +1,10 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import omit from 'lodash/omit';
 
-const initialState = { buffer: '', code: '', invalid: false, uuid: false };
+const initialState = { buffer: '', code: '', valid: false, uuid: false };
 
-const clear$ = new Subject().map(() => () => initialState);
+export const clear$ = createAction('clear$').map(() => () => initialState);
 
 const keyPressReducer$ = Observable.fromEvent(window.document, 'keypress')
   .filter((e: Event) => e.which !== 13)
@@ -13,25 +15,29 @@ const keyPressReducer$ = Observable.fromEvent(window.document, 'keypress')
 const keyPressTimeout$ = keyPressReducer$.debounce(() => Observable.timer(50))
   .map(() => (state) => {
     const buffer = state.buffer;
-    let invalid = false;
-    if (!/^[0-9a-f\-]+$/.test(buffer)) {
-      invalid = true;
-    }
-    let uuid = false;
-    if (/^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(buffer)) {
-      uuid = true;
-    }
-    return {...state, buffer: '', code: buffer, invalid, uuid};
+    const valid = /^[0-9a-f\-]+$/i.test(buffer);
+    const uuid = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(buffer);
+    return {...state, buffer: '', code: buffer, valid, uuid};
   });
 
-const scanner$ = Observable.of(initialState)
-  .merge(keyPressReducer$, keyPressTimeout$, clear$)
-  .scan((value, reducer) => reducer(value))
-  .distinctUntilChanged()
-  .do((state) => console.log(JSON.stringify(state)))
-  .publishReplay(1)
-  .refCount();
+const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPressTimeout$, clear$), Observable.of(initialState))
+  .filter(state => state.code)
+  .map(state => omit(state, 'buffer'))
+  .distinctUntilChanged();
 
-export const isScannerActive = () => scanner$.operator.connectable._refCount > 0;
+const inc$ = createAction('inc$').map(() => (state) => ({...state, value: state.value + 1}));
+const dec$ = createAction('dec$').map(() => (state) => ({...state, value: state.value - 1}));
+export const count$ = createStore('count', Observable.merge(inc$, dec$), Observable.of({ value: 0 }));
 
-export default scanner$;
+const subscribe = (onNext, onError, onComplete) => {
+  inc$.next();
+  const subscription = scanner$.subscribe(onNext, onError, onComplete);
+  return {
+    unsubscribe: () => {
+      subscription.unsubscribe();
+      dec$.next();
+    }
+  };
+};
+
+export default subscribe;

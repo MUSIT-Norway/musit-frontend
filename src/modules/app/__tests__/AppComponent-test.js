@@ -19,6 +19,7 @@ describe('AppComponent', () => {
     const toggleEnabled = sinon.spy();
     const wrapper = shallow(
       <AppComponent
+        count={{ value: 0 }}
         appSession={new AppSession({
           accessToken: '1234',
           buildInfo: {
