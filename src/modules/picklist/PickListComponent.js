@@ -81,12 +81,22 @@ export class PickListContainer extends React.Component {
               this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
             } else if(Array.isArray(response)) {
               if (response.length === 1) {
-                this.props.addObject({value: response[0], path: getPath(response[0])});
+                const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+                if (!isMoveDialogActive) {
+                  this.props.addObject({value: response[0], path: getPath(response[0])});
+                } else {
+                  this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+                }
               } else {
                 this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
               }
             } else if (response.nodeId) {
-              this.props.addNode({value: response, path: getPath(response)});
+              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+              if (!isMoveDialogActive) {
+                this.props.addNode({value: response, path: getPath(response)});
+              } else {
+                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+              }
             }
           }).toPromise();
       }

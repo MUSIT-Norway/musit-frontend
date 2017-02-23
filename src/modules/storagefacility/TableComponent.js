@@ -109,7 +109,13 @@ export class StorageUnitsContainer extends React.Component {
             if (!response) {
               this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
             } else {
-              this.actOnNode(response);
+              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+              const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
+              if (!isMoveDialogActive && !isMoveHistoryActive) {
+                hashHistory.push('/magasin/' + response.id);
+              } else {
+                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+              }
             }
           }).toPromise();
       } else {
@@ -128,27 +134,29 @@ export class StorageUnitsContainer extends React.Component {
                 if (!response[0].currentLocationId) {
                   this.props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
                 } else {
-                  hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
+                  const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+                  const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
+                  if (!isMoveDialogActive && !isMoveHistoryActive) {
+                    hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
+                  } else {
+                    this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+                  }
                 }
               } else {
                 this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
               }
             } else if (response.nodeId) {
-              this.actOnNode(response);
+              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+              const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
+              if (!isMoveDialogActive && !isMoveHistoryActive) {
+                hashHistory.push('/magasin/' + response.id);
+              } else {
+                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+              }
             }
           }).toPromise();
       }
     });
-  }
-
-  actOnNode(node) {
-    const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
-    const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
-    if (!isMoveDialogActive && !isMoveHistoryActive) {
-      hashHistory.push('/magasin/' + node.id);
-    } else {
-      this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
-    }
   }
 
   componentWillUnmount() {
