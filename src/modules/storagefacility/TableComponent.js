@@ -27,6 +27,8 @@ import { Observable } from 'rxjs';
 
 import inject from 'react-rxjs/dist/RxInject';
 
+import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
+
 import { addNode$, addObject$ } from '../app/pickList';
 import subscribe, { clear$ } from '../app/scanner';
 import { showConfirm, showModal } from '../../shared/modal';
@@ -109,12 +111,14 @@ export class StorageUnitsContainer extends React.Component {
             if (!response) {
               this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
             } else {
-              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
               const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
-              if (!isMoveDialogActive && !isMoveHistoryActive) {
-                hashHistory.push('/magasin/' + response.id);
+              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+              if (isMoveDialogActive) {
+                this.props.updateMoveDialog(response, museumId, token);
+              } else if (isMoveHistoryActive) {
+                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
               } else {
-                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+                hashHistory.push('/magasin/' + response.id);
               }
             }
           }).toPromise();
@@ -134,24 +138,28 @@ export class StorageUnitsContainer extends React.Component {
                 if (!response[0].currentLocationId) {
                   this.props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
                 } else {
-                  const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
                   const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
-                  if (!isMoveDialogActive && !isMoveHistoryActive) {
-                    hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
-                  } else {
+                  const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+                  if (isMoveDialogActive) {
+                    this.props.updateMoveDialog(response[0], museumId, token);
+                  } else if (isMoveHistoryActive) {
                     this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+                  } else {
+                    hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
                   }
                 }
               } else {
                 this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
               }
             } else if (response.nodeId) {
-              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
               const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
-              if (!isMoveDialogActive && !isMoveHistoryActive) {
-                hashHistory.push('/magasin/' + response.id);
-              } else {
+              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+              if (isMoveDialogActive) {
+                this.props.updateMoveDialog(response, museumId, token);
+              } else if (isMoveHistoryActive) {
                 this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+              } else {
+                hashHistory.push('/magasin/' + response.id);
               }
             }
           }).toPromise();
@@ -560,13 +568,16 @@ const commands = {
   loadNodes$,
   loadObjects$,
   setLoading$,
-  clear$
+  clear$,
+  loadNode$,
+  loadChildren$
 };
 
 const props = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
   deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
+  updateMoveDialog,
   showConfirm,
   showModal,
   emitError,

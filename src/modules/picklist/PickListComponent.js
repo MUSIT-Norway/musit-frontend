@@ -13,6 +13,7 @@ import { emitError, emitSuccess } from '../../shared/errors';
 import { getPath } from '../../shared/util';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateComponent';
+import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 import {
   toggleNode$,
   toggleMainObject$,
@@ -65,7 +66,12 @@ export class PickListContainer extends React.Component {
               this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
               return;
             }
-            this.props.addNode({value: response, path: getPath(response)});
+            const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+            if (isMoveDialogActive) {
+              this.props.updateMoveDialog(response, museumId, token);
+            } else {
+              this.props.addNode({value: response, path: getPath(response)});
+            }
           })
           .toPromise();
       } else {
@@ -82,20 +88,20 @@ export class PickListContainer extends React.Component {
             } else if(Array.isArray(response)) {
               if (response.length === 1) {
                 const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
-                if (!isMoveDialogActive) {
-                  this.props.addObject({value: response[0], path: getPath(response[0])});
+                if (isMoveDialogActive) {
+                  this.props.updateMoveDialog(response[0], museumId, token);
                 } else {
-                  this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+                  this.props.addObject({value: response[0], path: getPath(response[0])});
                 }
               } else {
                 this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
               }
             } else if (response.nodeId) {
               const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
-              if (!isMoveDialogActive) {
-                this.props.addNode({value: response, path: getPath(response)});
+              if (isMoveDialogActive) {
+                this.props.updateMoveDialog(response, museumId, token);
               } else {
-                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+                this.props.addNode({value: response, path: getPath(response)});
               }
             }
           }).toPromise();
@@ -311,10 +317,13 @@ const commands = {
   removeNode$,
   addNode$,
   addObject$,
-  clear$
+  clear$,
+  loadChildren$,
+  loadNode$
 };
 
 const props = {
+  updateMoveDialog,
   emitError,
   emitSuccess,
   showModal
