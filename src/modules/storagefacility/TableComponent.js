@@ -101,15 +101,34 @@ export class StorageUnitsContainer extends React.Component {
       if (!barCode.valid) {
         return;
       }
+      const museumId = this.props.appSession.getMuseumId();
+      const token = this.props.appSession.getAccessToken();
       if (barCode.uuid) {
-        MusitNode.findByUUID()({
-          uuid: barCode.code,
-          museumId: this.props.appSession.getMuseumId(),
-          token: this.props.appSession.getAccessToken()
-        }).do((node) => node && hashHistory.push('/magasin/' + node.id))
+        const props = {uuid: barCode.code, museumId, token};
+        MusitNode.findByUUID()(props).do((node) => node && hashHistory.push('/magasin/' + node.id))
           .toPromise();
       } else {
-        console.log('DO stuff!');
+        const props = {barcode: barCode.code, museumId, token};
+        MusitNode.findByBarcode()(props)
+          .flatMap((nodeResponse) => {
+            if (!nodeResponse) {
+              return MusitObject.findByBarcode()(props);
+            }
+            return Observable.of(nodeResponse);
+          }).do(response =>  {
+            if (!response) {
+              return;
+            }
+            if(Array.isArray(response)) {
+              if (response.length === 1) {
+                hashHistory.push('/magasin/' + response[0].id + '/objects');
+              } else {
+                this.props.emitError({ message: 'Found multiple matches for barcode ' + barCode.code});
+              }
+            } else if (response.nodeId) {
+              hashHistory.push('/magasin/' + response.id);
+            }
+          }).toPromise();
         this.props.clear();
       }
     });

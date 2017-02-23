@@ -11,9 +11,6 @@ import { addNode$, addObject$ } from '../app/pickList';
 import moveDialogStore$, { loadNode$, loadChildren$, PER_PAGE } from '../movedialog/moveDialogStore';
 import * as ajax from '../../shared/RxAjax';
 import { I18n } from 'react-i18nify';
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import omit from 'lodash/omit';
 
 const isUUID = (s) => /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(s);
 const ROUTE_PICKLIST_PATH = pathToRegexp(ROUTE_PICKLIST);
@@ -28,61 +25,11 @@ export const toggleEnabled$ = createAction('toggleEnabled$');
 export const prepareSearch$ = createAction('prepareSearch$');
 export const clearSearch$ = createAction('clearSearch$');
 export const addMatches$ = createAction('addMatches$');
-
 const bodyKeyPress = Observable.fromEvent(window.document.body, 'keypress');
 const keyPress$ = (charStream: Observable) => charStream
   .filter(e => e.which !== 13 && e.which !== 10)
   .map(e => String.fromCharCode(e.which))
   .map(c => c.replace(/\+/g, '-'));
-
-export class BarCodeInput extends Component {
-  notifyChanged() {
-    const event = new Event('input', { bubbles: true });
-    this.input.dispatchEvent(event);
-  }
-
-  componentDidMount() {
-    this.onEnterSubscription = Observable.fromEvent(ReactDOM.findDOMNode(this), 'keydown')
-      .do((e: Event) => {
-        if(e.which === 13) {
-          this.props.onEnter();
-        }
-      }).subscribe();
-    this.keyPressSubscription = Observable.fromEvent(this.input, 'keypress')
-      .do((e: Event) => e.preventDefault())
-      .filter((e: Event) => e.which !== 13)
-      .map((e: Event) => String.fromCharCode(e.which))
-      .map((c: String) => c.replace(/\+/g, '-'))
-      .map((c: String) => this.input.value + c)
-      .subscribe((value) => {
-        if (!/^[0-9a-f\-]+$/.test(value)) {
-          this.input.value = '';
-        } else {
-          this.input.value = value;
-        }
-        this.notifyChanged();
-      });
-  }
-
-  componentWillUnmount() {
-    this.keyPressSubscription.unsubscribe();
-    this.onEnterSubscription.unsubscribe();
-  }
-
-  render() {
-    const props = omit(this.props, 'onEnter');
-    return <input
-      {...props}
-      type="text"
-      ref={(input) => this.input = ReactDOM.findDOMNode(input)}
-    />;
-  }
-
-}
-
-BarCodeInput.propTypes = {
-  onEnter: React.PropTypes.func.isRequired
-};
 
 export const actOnNode = (
   response,
