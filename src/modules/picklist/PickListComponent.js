@@ -10,6 +10,7 @@ import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
+import { getPath } from '../../shared/util';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateComponent';
 import {
@@ -19,10 +20,14 @@ import {
   removeNode$,
   removeObject$,
   refreshNode$,
-  refreshObjects$
+  refreshObjects$,
+  addNode$,
+  addObject$
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
+import subscribe, { clear$, noMatchingNodeOrObject, noMatchingNode } from '../app/scanner2';
+import { Observable } from 'rxjs';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -44,6 +49,52 @@ export class PickListContainer extends React.Component {
     this.moveModal = this.moveModal.bind(this);
     this.print = this.print.bind(this);
     this.showMoveNodes = this.showMoveNodes.bind(this);
+  }
+
+  componentWillMount() {
+    this.scanner = subscribe((barCode) => {
+      this.props.clear();
+      const museumId = this.props.appSession.getMuseumId();
+      const collectionId = this.props.appSession.getCollectionId();
+      const token = this.props.appSession.getAccessToken();
+      if (barCode.uuid) {
+        const props = {uuid: barCode.code, museumId, token};
+        MusitNode.findByUUID()(props)
+          .do((response) => {
+            if (!response) {
+              noMatchingNode(barCode);
+              return;
+            }
+            this.props.addNode({value: response, path: getPath(response)});
+          })
+          .toPromise();
+      } else {
+        const props = {barcode: barCode.code, museumId, collectionId, token};
+        MusitNode.findByBarcode()(props)
+          .flatMap((nodeResponse) => {
+            if (!nodeResponse) {
+              return MusitObject.findByBarcode()(props);
+            }
+            return Observable.of(nodeResponse);
+          }).do(response => {
+            if (!response) {
+              noMatchingNodeOrObject(barCode);
+            } else if(Array.isArray(response)) {
+              if (response.length === 1) {
+                this.props.addObject({value: response[0], path: getPath(response[0])});
+              } else {
+                noMatchingNodeOrObject(barCode);
+              }
+            } else if (response.nodeId) {
+              this.props.addNode({value: response, path: getPath(response)});
+            }
+          }).toPromise();
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.scanner.unsubscribe();
   }
 
   isTypeNode() {
@@ -247,7 +298,10 @@ const commands = {
   toggleNode$,
   toggleMainObject$,
   removeObject$,
-  removeNode$
+  removeNode$,
+  addNode$,
+  addObject$,
+  clear$
 };
 
 const props = {

@@ -28,7 +28,7 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 
 import { addNode$, addObject$ } from '../app/pickList';
-import subscribe, { clear$ } from '../app/scanner2';
+import subscribe, { clear$, noMatchingNode, noMatchingNodeOrObject } from '../app/scanner2';
 import { showConfirm, showModal } from '../../shared/modal';
 
 import tableStore$, {
@@ -98,17 +98,23 @@ export class StorageUnitsContainer extends React.Component {
 
   componentDidMount() {
     this.scanner = subscribe((barCode) => {
-      if (!barCode.valid) {
-        return;
-      }
+      this.props.clear();
       const museumId = this.props.appSession.getMuseumId();
+      const collectionId = this.props.appSession.getCollectionId();
       const token = this.props.appSession.getAccessToken();
       if (barCode.uuid) {
         const props = {uuid: barCode.code, museumId, token};
-        MusitNode.findByUUID()(props).do((node) => node && hashHistory.push('/magasin/' + node.id))
+        MusitNode.findByUUID()(props)
+          .do((response) => {
+            if (!response) {
+              noMatchingNode(barCode);
+            } else {
+              this.actOnNode(response);
+            }
+          })
           .toPromise();
       } else {
-        const props = {barcode: barCode.code, museumId, token};
+        const props = {barcode: barCode.code, museumId, collectionId, token};
         MusitNode.findByBarcode()(props)
           .flatMap((nodeResponse) => {
             if (!nodeResponse) {
@@ -117,21 +123,29 @@ export class StorageUnitsContainer extends React.Component {
             return Observable.of(nodeResponse);
           }).do(response =>  {
             if (!response) {
-              return;
-            }
-            if(Array.isArray(response)) {
+              noMatchingNodeOrObject(barCode);
+            } else if(Array.isArray(response)) {
               if (response.length === 1) {
                 hashHistory.push('/magasin/' + response[0].id + '/objects');
               } else {
-                this.props.emitError({ message: 'Found multiple matches for barcode ' + barCode.code});
+                noMatchingNodeOrObject(barCode);
               }
             } else if (response.nodeId) {
-              hashHistory.push('/magasin/' + response.id);
+              this.actOnNode(response);
             }
           }).toPromise();
-        this.props.clear();
       }
     });
+  }
+
+  actOnNode(node) {
+    const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+    const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
+    if (!isMoveDialogActive && !isMoveHistoryActive) {
+      hashHistory.push('/magasin/' + node.id);
+    } else {
+      this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+    }
   }
 
   componentWillUnmount() {

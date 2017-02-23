@@ -1,8 +1,18 @@
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import omit from 'lodash/omit';
+import { I18n } from 'react-i18nify';
+import { emitError } from '../../shared/errors';
 
-const initialState = { buffer: '', code: '', valid: false, uuid: false };
+export const noMatchingNode = (barCode) => {
+  emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
+};
+
+export const noMatchingNodeOrObject = (barCode) => {
+  emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+};
+
+const initialState = { buffer: '', code: '', uuid: false };
 
 export const clear$ = createAction('clear$').map(() => () => initialState);
 
@@ -15,9 +25,8 @@ const keyPressReducer$ = Observable.fromEvent(window.document, 'keypress')
 const keyPressTimer$ = keyPressReducer$.debounce(() => Observable.timer(50))
   .map(() => (state) => {
     const buffer = state.buffer;
-    const valid = /^[0-9a-f\-]+$/i.test(buffer);
     const uuid = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(buffer);
-    return {...state, buffer: '', code: buffer, valid, uuid};
+    return {...state, buffer: '', code: buffer, uuid};
   });
 
 const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPressTimer$, clear$), Observable.of(initialState))
@@ -27,6 +36,7 @@ const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPr
 
 const inc$ = createAction('inc$').map(() => (state) => ({...state, value: state.value + 1}));
 const dec$ = createAction('dec$').map(() => (state) => ({...state, value: state.value - 1}));
+
 export const count$ = createStore('count', Observable.merge(inc$, dec$), Observable.of({ value: 0 }));
 
 const subscribe = (onNext, onError, onComplete) => {
