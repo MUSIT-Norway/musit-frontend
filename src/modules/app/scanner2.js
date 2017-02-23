@@ -12,7 +12,7 @@ const keyPressReducer$ = Observable.fromEvent(window.document, 'keypress')
   .map((c: String) => c.replace(/\+/g, '-'))
   .map((c: String) => (state) => ({...state, buffer: state.buffer + c }));
 
-const keyPressTimeout$ = keyPressReducer$.debounce(() => Observable.timer(50))
+const keyPressTimer$ = keyPressReducer$.debounce(() => Observable.timer(50))
   .map(() => (state) => {
     const buffer = state.buffer;
     const valid = /^[0-9a-f\-]+$/i.test(buffer);
@@ -20,8 +20,8 @@ const keyPressTimeout$ = keyPressReducer$.debounce(() => Observable.timer(50))
     return {...state, buffer: '', code: buffer, valid, uuid};
   });
 
-const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPressTimeout$, clear$), Observable.of(initialState))
-  .filter(state => state.code)
+const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPressTimer$, clear$), Observable.of(initialState))
+  .filter(state => state.code !== '')
   .map(state => omit(state, 'buffer'))
   .distinctUntilChanged();
 
