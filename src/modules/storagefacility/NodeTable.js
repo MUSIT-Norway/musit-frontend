@@ -11,6 +11,7 @@ export default class NodeGrid extends Component {
     })),
     goToEvents: PropTypes.func.isRequired,
     pickNode: PropTypes.func.isRequired,
+    isNodeAdded: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired
   }
@@ -86,7 +87,11 @@ export default class NodeGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
                       >
-                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
+                        { c && this.props.isNodeAdded(c) ?
+                          <FontAwesome style={{ fontSize: '1.5em', color: 'Gray' }} name="shopping-cart"/> :
+                          <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
+                        }
+
                       </a>}
                     </td>
                   </tr>;

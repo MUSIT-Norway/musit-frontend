@@ -67,6 +67,10 @@ describe('ObjectSearchComponent', () => {
             perPage: 5
           }
         }}
+        pickList={{
+          objects: []
+        }}
+        isItemAdded={() => ('hi')}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
