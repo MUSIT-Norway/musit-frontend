@@ -19,6 +19,23 @@ export const initialState = {
   }
 };
 
+export const updateMoveDialog = (response, museumId, token) => {
+  loadNode$.next({
+    id: response.id,
+    museumId,
+    token
+  });
+  loadChildren$.next({
+    id: response.id,
+    museumId,
+    token,
+    page: {
+      page: 1,
+      limit: PER_PAGE
+    }
+  });
+};
+
 export const reducer$ = (actions) => Observable.merge(
   actions.clear$.map(() => () => initialState),
   actions.setLoading$.map((loading) => (state) => ({...state, data: { ...state.data, loading }})),

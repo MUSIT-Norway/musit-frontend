@@ -2,7 +2,7 @@ import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
 import React, { PropTypes } from 'react';
 import PickListTable from './PickListTable';
-import { PageHeader, Grid } from 'react-bootstrap';
+import { PageHeader, Grid, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
@@ -10,8 +10,10 @@ import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import { emitError, emitSuccess } from '../../shared/errors';
+import { getPath } from '../../shared/util';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateComponent';
+import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 import {
   toggleNode$,
   toggleMainObject$,
@@ -19,10 +21,14 @@ import {
   removeNode$,
   removeObject$,
   refreshNode$,
-  refreshObjects$
+  refreshObjects$,
+  addNode$,
+  addObject$
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
+import scanner$, { clear$ } from '../app/scanner';
+import scannerIcon from '../app/scanIcon.png';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -36,7 +42,8 @@ export class PickListContainer extends React.Component {
     refreshNode: PropTypes.func.isRequired,
     refreshObjects: PropTypes.func.isRequired,
     emitError: PropTypes.func.isRequired,
-    emitSuccess: PropTypes.func.isRequired
+    emitSuccess: PropTypes.func.isRequired,
+    classExistsOnDom: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -44,6 +51,89 @@ export class PickListContainer extends React.Component {
     this.moveModal = this.moveModal.bind(this);
     this.print = this.print.bind(this);
     this.showMoveNodes = this.showMoveNodes.bind(this);
+    this.toggleScanner = this.toggleScanner.bind(this);
+    this.state = { scannerEnabled: false };
+  }
+
+  enableScanner() {
+    this.disableScanner();
+    this.scanner = this.props.subscribeToScanner((barCode) => {
+      this.props.clear();
+      this.processBarcode(barCode);
+    });
+  }
+
+  disableScanner() {
+    if (this.scanner) {
+      this.scanner.unsubscribe();
+    }
+  }
+
+  toggleScanner() {
+    const scannerEnabled = !this.state.scannerEnabled;
+    this.setState({...this.state, scannerEnabled });
+    if (scannerEnabled) {
+      this.enableScanner();
+    } else {
+      this.disableScanner();
+    }
+  }
+
+  processBarcode(barCode) {
+    const isMoveDialogActive = this.props.classExistsOnDom('moveDialog');
+    const museumId = this.props.appSession.getMuseumId();
+    const collectionId = this.props.appSession.getCollectionId();
+    const token = this.props.appSession.getAccessToken();
+    const isNodeView = this.isTypeNode();
+    if (barCode.uuid) {
+      if (isNodeView) {
+        this.props.findByUUID({uuid: barCode.code, museumId, token})
+          .do((response) => {
+            if (!response) {
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
+              return;
+            }
+            if (isMoveDialogActive) {
+              this.props.updateMoveDialog(response, museumId, token);
+            } else {
+              this.props.addNode({value: response, path: getPath(response)});
+            }
+          }).toPromise();
+      } else {
+        this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+      }
+    } else {
+      const findByBarcode = isNodeView ? this.props.findNodeByBarcode : this.props.findObjectByBarcode;
+      findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
+        if (!response) {
+          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+          return;
+        }
+        if (!isNodeView && Array.isArray(response)) { // objects
+          if (response.length === 1) {
+            if (isMoveDialogActive) {
+              this.props.updateMoveDialog(response[0], museumId, token);
+            } else {
+              this.props.addObject({value: response[0], path: getPath(response[0])});
+            }
+          } else {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
+          }
+        } else if (isNodeView && response.nodeId) { // node
+          if (isMoveDialogActive) {
+            this.props.updateMoveDialog(response, museumId, token);
+          } else {
+            this.props.addNode({value: response, path: getPath(response)});
+          }
+        } else {
+          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+        }
+      }).toPromise();
+    }
+  }
+
+  componentWillUnmount() {
+    this.disableScanner();
   }
 
   isTypeNode() {
@@ -187,13 +277,27 @@ export class PickListContainer extends React.Component {
     const pickList = (this.props.pickList && this.props.pickList[type]) || [];
     const marked = pickList.filter(p => p.marked);
     const markedValues = marked.map(p => p.value);
-
+    const title = (
+      <div>
+        <span>{I18n.t(`musit.pickList.title.${this.props.route.type}`)}</span>
+        <div
+          style={{
+            float: 'right',
+            margin: '0 25px 0 0'
+          }}
+        >
+          <Button active={this.state.scannerEnabled} onClick={this.toggleScanner}>
+            <img src={scannerIcon} height={25} alt="scan" />
+          </Button>
+        </div>
+      </div>
+    );
     return (
       <div>
         <main>
           <Grid>
             <PageHeader>
-              {I18n.t(`musit.pickList.title.${this.props.route.type}`)}
+              {title}
             </PageHeader>
             <PickListTable
               picks={pickList}
@@ -247,10 +351,21 @@ const commands = {
   toggleNode$,
   toggleMainObject$,
   removeObject$,
-  removeNode$
+  removeNode$,
+  addNode$,
+  addObject$,
+  clear$,
+  loadChildren$,
+  loadNode$
 };
 
 const props = {
+  findByUUID: MusitNode.findByUUID(),
+  findNodeByBarcode: MusitNode.findByBarcode(),
+  findObjectByBarcode: MusitObject.findByBarcode(),
+  classExistsOnDom: (className) => document.getElementsByClassName(className).length > 0,
+  subscribeToScanner: (next, err, complete) => scanner$.subscribe(next, err, complete),
+  updateMoveDialog,
   emitError,
   emitSuccess,
   showModal

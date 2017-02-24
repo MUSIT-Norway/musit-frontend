@@ -19,6 +19,7 @@ describe('AppComponent', () => {
     const toggleEnabled = sinon.spy();
     const wrapper = shallow(
       <AppComponent
+        count={{ value: 0 }}
         appSession={new AppSession({
           accessToken: '1234',
           buildInfo: {
@@ -31,6 +32,7 @@ describe('AppComponent', () => {
           }
         })}
         scanner={{}}
+        isScannerActive={sinon.spy()}
         prepareSearch={prepareSearch}
         setMuseumId={setMuseumId}
         setCollectionId={setCollectionId}
@@ -67,8 +69,6 @@ describe('AppComponent', () => {
       </AppComponent>
     );
     expect(loadAppSession.calledOnce).toBe(true);
-    wrapper.find('.toggleScanner').simulate('click', { preventDefault: () => true});
-    expect(toggleEnabled.calledOnce).toBe(true);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
