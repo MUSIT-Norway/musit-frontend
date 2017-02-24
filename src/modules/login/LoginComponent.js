@@ -32,7 +32,7 @@ export class LoginComponent extends React.Component {
   }
 
   render() {
-    const Translated = this.props.getLocale() === 'no' ? NorwegianTranslation : EnglishTranslation;
+    const Translated = this.props.locale() === 'no' ? NorwegianTranslation : EnglishTranslation;
     return (
       <div>
         <main>
@@ -62,4 +62,4 @@ export class LoginComponent extends React.Component {
   }
 }
 
-export default inject({}, {}, { getLocale: () => I18n._locale })(LoginComponent);
+export default inject({}, {}, { locale: () => I18n._locale })(LoginComponent);

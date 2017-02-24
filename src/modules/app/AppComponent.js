@@ -203,7 +203,10 @@ export class AppComponent extends Component {
               <FormGroup controlId="barCode">
                 <input type="text" className="form-control" readOnly value={this.props.scanner.code || ''}/>
               </FormGroup>
-              <Button bsStyle="success" onClick={this.searchForBarCode}>{I18n.t('musit.errorMainMessages.scanner.search')}</Button>
+              <Button bsStyle="primary" onClick={(e) => {
+                e.preventDefault();
+                this.searchForBarCode();
+              }}>{I18n.t('musit.errorMainMessages.scanner.search')}</Button>
             </Form>
             <Loader loaded={!this.props.scanner.searchPending} />
             {this.props.scanner.searchComplete && (!this.props.scanner.matches || this.props.scanner.matches.length === 0) &&

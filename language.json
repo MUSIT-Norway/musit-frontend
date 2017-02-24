@@ -3,6 +3,11 @@
     "musit": {
       "unknown": "Unknown",
       "language": "Language",
+      "template": {
+        "chooseTemplate": "Choose template",
+        "labelTemplates": "Label templates",
+        "printTemplate": "Print template"
+      },
       "userProfile": {
         "loggedIn": "Logged in as %{name}",
         "logout": "Logout",
@@ -45,11 +50,11 @@
         "scanner": {
           "title": "Search for node or object",
           "search": "Search",
-          "noMatchingNodeOrObject": "No matching node or object for %{barcode}",
-          "noMatchingNode": "No matching node for %{uuid}",
-          "cannotActOnObject": "Can only act on barcode scans for objects from magasin or object picklist",
-          "cannotActOnNode": "Can only act on UUID scans from magasin, node picklist or move dialog",
-          "noCurrentLocation": "Object has no location"
+          "noMatchingNodeOrObject": "Could not find any matching node or object with this barcode.",
+          "noMatchingNode": "Could not find any matching node with this barcode.",
+          "cannotActOnObject": "This window can not act on barcodes for objects.",
+          "cannotActOnNode": "This window can not act on barcodes for storage facility nodes.",
+          "noCurrentLocation": "Object has no storage facility location."
         }
       },
       "notificationMessages": {
@@ -652,6 +657,11 @@
     "musit": {
       "unknown": "Ukjent",
       "language": "Språk",
+      "template": {
+        "chooseTemplate": "Velg etikettmal",
+        "labelTemplates": "Etikettmaler",
+        "printTemplate": "Skriv ut"
+      },
       "userProfile": {
         "loggedIn": "Logget inn som %{name}",
         "logout": "Logg ut",
@@ -694,11 +704,11 @@
         "scanner": {
           "title": "Søk etter node eller objekt",
           "search": "Søk",
-          "noMatchingNodeOrObject": "Fant ingen node eller objekt for %{barcode}",
-          "noMatchingNode": "Fant ingen node for %{uuid}",
-          "cannotActOnObject": "Kan bare reagere på object via magasin eller objekt plukkliste",
-          "cannotActOnNode": "Kan bare reagere på node fra magasin, node plukkliste eller flyttedialog",
-          "noCurrentLocation": "Objektet er ikke plassert"
+          "noMatchingNodeOrObject": "Fant ingen node eller objekt med denne strekkoden.",
+          "noMatchingNode": "Fant ingen node med denne strekkoden.",
+          "cannotActOnObject": "Dette skjermbildet håndterer ikke scanning av objekter.",
+          "cannotActOnNode": "Dette skjermbildet håndterer ikke scanning av noder.",
+          "noCurrentLocation": "Objektet har ingen plassering i magasinet."
         }
       },
       "notificationMessages": {

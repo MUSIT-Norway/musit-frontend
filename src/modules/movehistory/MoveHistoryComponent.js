@@ -55,7 +55,7 @@ export class MoveHistoryComponent extends Component {
     const moves = this.props.store.data;
     return (
       <Modal
-        className="my-modal"
+        className="moveHistory"
         body={
           <ModalMoveHistoryGrid
             tableData={moves}
