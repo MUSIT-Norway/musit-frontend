@@ -102,9 +102,12 @@ MusitNode.pickNode = (pickNode$) => ({node, breadcrumb}) => {
   pickNode$.next({ value: node, path: breadcrumb });
 };
 
-MusitNode.findByBarcode = (ajaxGet = simpleGet) => ({ barcode, museumId, collectionId, token}) => {
-  return ajaxGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token)
-    .map(({ response }) => response && new MusitNode(response))
+MusitNode.findByBarcode = (ajaxGet = simpleGet) => ({ barcode, museumId, token}) =>
+  ajaxGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token)
+    .map(({ response }) => response && new MusitNode(response));
+
+MusitNode.findNodeOrObjectByBarcode = (ajaxGet = simpleGet) => ({ barcode, museumId, collectionId, token}) => {
+  return MusitNode.findByBarcode(ajaxGet)({ barcode, museumId, token})
     .flatMap((nodeResponse) => {
       if (!nodeResponse) {
         return MusitObject.findByBarcode(ajaxGet)({ barcode, museumId, collectionId, token});

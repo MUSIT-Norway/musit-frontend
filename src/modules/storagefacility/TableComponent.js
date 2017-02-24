@@ -30,7 +30,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 
 import { addNode$, addObject$ } from '../app/pickList';
-import subscribe, { clear$ } from '../app/scanner';
+import subscribeToScanner, { clear$ } from '../app/scanner';
 import { showConfirm, showModal } from '../../shared/modal';
 
 import pickList$, { isItemAdded } from '../app/pickList';
@@ -105,7 +105,7 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.scanner = subscribe((barCode) => {
+    this.scanner = subscribeToScanner((barCode) => {
       this.props.clear();
       const museumId = this.props.appSession.getMuseumId();
       const collectionId = this.props.appSession.getCollectionId();
@@ -578,7 +578,7 @@ const props = {
   pickObject: MusitObject.pickObject(addObject$),
   deleteNode: MusitNode.deleteNode(),
   findByUUID: MusitNode.findByUUID(),
-  findByBarcode: MusitNode.findByBarcode(),
+  findByBarcode: MusitNode.findNodeOrObjectByBarcode(),
   goTo: hashHistory.push.bind(hashHistory),
   updateMoveDialog,
   isItemAdded,

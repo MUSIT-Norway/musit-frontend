@@ -29,7 +29,7 @@ const dec$ = createAction('dec$').map(() => (state) => ({...state, value: state.
 
 export const count$ = createStore('count', Observable.merge(inc$, dec$), Observable.of({ value: 0 }));
 
-const subscribe = (onNext, onError, onComplete) => {
+const subscribeToScanner = (onNext, onError, onComplete) => {
   inc$.next();
   const subscription = scanner$.subscribe(onNext, onError, onComplete);
   return {
@@ -40,4 +40,4 @@ const subscribe = (onNext, onError, onComplete) => {
   };
 };
 
-export default subscribe;
+export default subscribeToScanner;

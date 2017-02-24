@@ -27,7 +27,7 @@ import {
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
-import subscribe, { clear$ } from '../app/scanner';
+import subscribeToScanner, { clear$ } from '../app/scanner';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -52,30 +52,38 @@ export class PickListContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.scanner = subscribe((barCode) => {
+    this.scanner = subscribeToScanner((barCode) => {
       this.props.clear();
       const museumId = this.props.appSession.getMuseumId();
       const collectionId = this.props.appSession.getCollectionId();
       const token = this.props.appSession.getAccessToken();
+      const isNodeView = this.isTypeNode();
       if (barCode.uuid) {
-        this.props.findByUUID({uuid: barCode.code, museumId, token})
-          .do((response) => {
-            if (!response) {
-              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
-              return;
-            }
-            const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
-            if (isMoveDialogActive) {
-              this.props.updateMoveDialog(response, museumId, token);
-            } else {
-              this.props.addNode({value: response, path: getPath(response)});
-            }
-          }).toPromise();
+        if (isNodeView) {
+          this.props.findByUUID({uuid: barCode.code, museumId, token})
+            .do((response) => {
+              if (!response) {
+                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
+                return;
+              }
+              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+              if (isMoveDialogActive) {
+                this.props.updateMoveDialog(response, museumId, token);
+              } else {
+                this.props.addNode({value: response, path: getPath(response)});
+              }
+            }).toPromise();
+        } else {
+          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
+        }
       } else {
-        this.props.findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
+        const findByBarcode = isNodeView ? this.props.findNodeByBarcode : this.props.findObjectByBarcode;
+        findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
           if (!response) {
-            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-          } else if(Array.isArray(response)) {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+            return;
+          }
+          if(!isNodeView && Array.isArray(response)) { // objects
             if (response.length === 1) {
               const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
               if (isMoveDialogActive) {
@@ -84,15 +92,17 @@ export class PickListContainer extends React.Component {
                 this.props.addObject({value: response[0], path: getPath(response[0])});
               }
             } else {
-              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
             }
-          } else if (response.nodeId) {
+          } else if (isNodeView && response.nodeId) { // node
             const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
             if (isMoveDialogActive) {
               this.props.updateMoveDialog(response, museumId, token);
             } else {
               this.props.addNode({value: response, path: getPath(response)});
             }
+          } else {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
           }
         }).toPromise();
       }
@@ -314,7 +324,8 @@ const commands = {
 
 const props = {
   findByUUID: MusitNode.findByUUID(),
-  findByBarcode: MusitNode.findByBarcode(),
+  findNodeByBarcode: MusitNode.findByBarcode(),
+  findObjectByBarcode: MusitObject.findByBarcode(),
   updateMoveDialog,
   emitError,
   emitSuccess,
