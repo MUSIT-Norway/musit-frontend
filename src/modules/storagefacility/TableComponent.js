@@ -472,7 +472,6 @@ export class StorageUnitsContainer extends React.Component {
             this.props.goTo('/' + midPath + '/' + cidPath + '/magasin/' + node.id);
           }}
           isNodeAdded={(node) => this.props.isItemAdded( node , this.props.pickList.nodes )}
-          onClick={(node) => this.props.goTo(`/magasin/${node.id}`)}
         />
         {showPaging &&
           <PagingToolbar
