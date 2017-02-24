@@ -74,7 +74,7 @@ export class PickListContainer extends React.Component {
               }
             }).toPromise();
         } else {
-          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
+          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
         }
       } else {
         const findByBarcode = isNodeView ? this.props.findNodeByBarcode : this.props.findObjectByBarcode;
