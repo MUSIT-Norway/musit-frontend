@@ -12,6 +12,7 @@ import MusitObject from '../../models/object';
 import inject from 'react-rxjs/dist/RxInject';
 import objectSearchStore$, {clearSearch$, searchForObjects$, onChangeField$} from './objectSearchStore';
 import { addObject$ } from '../app/pickList';
+import pickList$, { isItemAdded } from '../app/pickList';
 
 export class ObjectSearchComponent extends React.Component {
   constructor(props) {
@@ -94,7 +95,7 @@ export class ObjectSearchComponent extends React.Component {
                           }}
                           title={I18n.t('musit.objectsearch.addAllToPickList')}
                         >
-                          <FontAwesome name="shopping-cart" style={{fontSize: '1.3em'}}/>
+                          <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart"/>
                         </a>
                       </th>
                     </tr>
@@ -133,7 +134,10 @@ export class ObjectSearchComponent extends React.Component {
                               }}
                               title={I18n.t('musit.objectsearch.addToPickList')}
                             >
-                              <FontAwesome name="shopping-cart" style={{fontSize: '1.3em'}}/>
+                              {this.props.isItemAdded(data, this.props.pickList.objects) ?
+                                <FontAwesome style={{ fontSize: '1.3em', color: 'Gray' }} name="shopping-cart"/> :
+                                <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart"/>
+                              }
                             </a>
                             }
                           </td>
@@ -195,7 +199,8 @@ export class ObjectSearchComponent extends React.Component {
 
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
-  store$: objectSearchStore$
+  store$: objectSearchStore$,
+  pickList$
 };
 
 const commands = {
@@ -205,7 +210,8 @@ const commands = {
 };
 
 const props = {
-  pickObject: MusitObject.pickObject(addObject$)
+  pickObject: MusitObject.pickObject(addObject$),
+  isItemAdded
 };
 
 export default inject(data, commands, props)(ObjectSearchComponent);

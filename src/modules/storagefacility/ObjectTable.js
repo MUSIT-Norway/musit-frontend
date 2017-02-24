@@ -13,6 +13,7 @@ export default class ObjectGrid extends Component {
       term: PropTypes.string.isRequired
     })).isRequired,
     pickObject: PropTypes.func.isRequired,
+    isObjectAdded: PropTypes.func.isRequired,
     showMoveHistory: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired
   }
@@ -106,7 +107,11 @@ export default class ObjectGrid extends Component {
                         }}
                         title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
                       >
-                        <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
+                        {this.props.isObjectAdded(c) ?
+                          <FontAwesome style={{ fontSize: '1.5em', color: 'Gray' }} name="shopping-cart"/> :
+                          <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
+                        }
+
                       </a>
                       }
                     </td>
