@@ -23,8 +23,7 @@ export class AppComponent extends Component {
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
-    pickList: PropTypes.object.isRequired,
-    goTo: PropTypes.func.isRequired
+    pickList: PropTypes.object.isRequired
   };
 
   constructor(props, context) {
@@ -182,8 +181,4 @@ const commands = {
   setCollectionId$
 };
 
-const props = {
-  goTo: hashHistory.push.bind(hashHistory)
-};
-
-export default inject(data, commands, props)(AppComponent);
+export default inject(data, commands)(AppComponent);

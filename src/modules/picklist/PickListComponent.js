@@ -41,7 +41,8 @@ export class PickListContainer extends React.Component {
     refreshNode: PropTypes.func.isRequired,
     refreshObjects: PropTypes.func.isRequired,
     emitError: PropTypes.func.isRequired,
-    emitSuccess: PropTypes.func.isRequired
+    emitSuccess: PropTypes.func.isRequired,
+    classExistsOnDom: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -54,6 +55,7 @@ export class PickListContainer extends React.Component {
   componentWillMount() {
     this.scanner = subscribeToScanner((barCode) => {
       this.props.clear();
+      const isMoveDialogActive = this.props.classExistsOnDom('moveDialog');
       const museumId = this.props.appSession.getMuseumId();
       const collectionId = this.props.appSession.getCollectionId();
       const token = this.props.appSession.getAccessToken();
@@ -66,7 +68,6 @@ export class PickListContainer extends React.Component {
                 this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
                 return;
               }
-              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
               if (isMoveDialogActive) {
                 this.props.updateMoveDialog(response, museumId, token);
               } else {
@@ -85,7 +86,6 @@ export class PickListContainer extends React.Component {
           }
           if(!isNodeView && Array.isArray(response)) { // objects
             if (response.length === 1) {
-              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
               if (isMoveDialogActive) {
                 this.props.updateMoveDialog(response[0], museumId, token);
               } else {
@@ -95,7 +95,6 @@ export class PickListContainer extends React.Component {
               this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
             }
           } else if (isNodeView && response.nodeId) { // node
-            const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
             if (isMoveDialogActive) {
               this.props.updateMoveDialog(response, museumId, token);
             } else {
@@ -326,6 +325,7 @@ const props = {
   findByUUID: MusitNode.findByUUID(),
   findNodeByBarcode: MusitNode.findByBarcode(),
   findObjectByBarcode: MusitObject.findByBarcode(),
+  classExistsOnDom: (className) => document.getElementsByClassName(className).length > 0,
   updateMoveDialog,
   emitError,
   emitSuccess,
