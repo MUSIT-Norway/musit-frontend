@@ -105,64 +105,55 @@ export class StorageUnitsContainer extends React.Component {
       const collectionId = this.props.appSession.getCollectionId();
       const token = this.props.appSession.getAccessToken();
       if (barCode.uuid) {
-        const props = {uuid: barCode.code, museumId, token};
-        MusitNode.findByUUID()(props)
-          .do((response) => {
-            if (!response) {
-              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
+        this.props.findByUUID({uuid: barCode.code, museumId, token}).do((response) => {
+          if (!response) {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
+          } else {
+            const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
+            const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+            if (isMoveDialogActive) {
+              this.props.updateMoveDialog(response, museumId, token);
+            } else if (isMoveHistoryActive) {
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
             } else {
-              const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
-              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
-              if (isMoveDialogActive) {
-                this.props.updateMoveDialog(response, museumId, token);
-              } else if (isMoveHistoryActive) {
-                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
-              } else {
-                hashHistory.push('/magasin/' + response.id);
-              }
+              hashHistory.push('/magasin/' + response.id);
             }
-          }).toPromise();
+          }
+        }).toPromise();
       } else {
-        const props = {barcode: barCode.code, museumId, collectionId, token};
-        MusitNode.findByBarcode()(props)
-          .flatMap((nodeResponse) => {
-            if (!nodeResponse) {
-              return MusitObject.findByBarcode()(props);
-            }
-            return Observable.of(nodeResponse);
-          }).do(response =>  {
-            if (!response) {
-              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-            } else if(Array.isArray(response)) {
-              if (response.length === 1) {
-                if (!response[0].currentLocationId) {
-                  this.props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
+        this.props.findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response =>  {
+          if (!response) {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+          } else if(Array.isArray(response)) {
+            if (response.length === 1) {
+              if (!response[0].currentLocationId) {
+                this.props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
+              } else {
+                const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
+                const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+                if (isMoveDialogActive) {
+                  this.props.updateMoveDialog(response[0], museumId, token);
+                } else if (isMoveHistoryActive) {
+                  this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
                 } else {
-                  const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
-                  const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
-                  if (isMoveDialogActive) {
-                    this.props.updateMoveDialog(response[0], museumId, token);
-                  } else if (isMoveHistoryActive) {
-                    this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
-                  } else {
-                    hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
-                  }
+                  hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
                 }
-              } else {
-                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
               }
-            } else if (response.nodeId) {
-              const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
-              const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
-              if (isMoveDialogActive) {
-                this.props.updateMoveDialog(response, museumId, token);
-              } else if (isMoveHistoryActive) {
-                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
-              } else {
-                hashHistory.push('/magasin/' + response.id);
-              }
+            } else {
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
             }
-          }).toPromise();
+          } else if (response.nodeId) {
+            const isMoveHistoryActive = document.getElementsByClassName('moveHistory').length > 0;
+            const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+            if (isMoveDialogActive) {
+              this.props.updateMoveDialog(response, museumId, token);
+            } else if (isMoveHistoryActive) {
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+            } else {
+              hashHistory.push('/magasin/' + response.id);
+            }
+          }
+        }).toPromise();
       }
     });
   }
@@ -577,6 +568,13 @@ const props = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
   deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
+  findByUUID: (cmd) => MusitNode.findByUUID()(cmd),
+  findByBarcode: (cmd) => MusitNode.findByBarcode()(cmd).flatMap((nodeResponse) => {
+    if (!nodeResponse) {
+      return MusitObject.findByBarcode()(cmd);
+    }
+    return Observable.of(nodeResponse);
+  }),
   updateMoveDialog,
   showConfirm,
   showModal,

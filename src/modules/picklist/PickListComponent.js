@@ -59,8 +59,7 @@ export class PickListContainer extends React.Component {
       const collectionId = this.props.appSession.getCollectionId();
       const token = this.props.appSession.getAccessToken();
       if (barCode.uuid) {
-        const props = {uuid: barCode.code, museumId, token};
-        MusitNode.findByUUID()(props)
+        this.props.findByUUID({uuid: barCode.code, museumId, token})
           .do((response) => {
             if (!response) {
               this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
@@ -72,39 +71,31 @@ export class PickListContainer extends React.Component {
             } else {
               this.props.addNode({value: response, path: getPath(response)});
             }
-          })
-          .toPromise();
+          }).toPromise();
       } else {
-        const props = {barcode: barCode.code, museumId, collectionId, token};
-        MusitNode.findByBarcode()(props)
-          .flatMap((nodeResponse) => {
-            if (!nodeResponse) {
-              return MusitObject.findByBarcode()(props);
-            }
-            return Observable.of(nodeResponse);
-          }).do(response => {
-            if (!response) {
-              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-            } else if(Array.isArray(response)) {
-              if (response.length === 1) {
-                const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
-                if (isMoveDialogActive) {
-                  this.props.updateMoveDialog(response[0], museumId, token);
-                } else {
-                  this.props.addObject({value: response[0], path: getPath(response[0])});
-                }
-              } else {
-                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-              }
-            } else if (response.nodeId) {
+        this.props.findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
+          if (!response) {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+          } else if(Array.isArray(response)) {
+            if (response.length === 1) {
               const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
               if (isMoveDialogActive) {
-                this.props.updateMoveDialog(response, museumId, token);
+                this.props.updateMoveDialog(response[0], museumId, token);
               } else {
-                this.props.addNode({value: response, path: getPath(response)});
+                this.props.addObject({value: response[0], path: getPath(response[0])});
               }
+            } else {
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
             }
-          }).toPromise();
+          } else if (response.nodeId) {
+            const isMoveDialogActive = document.getElementsByClassName('moveDialog').length > 0;
+            if (isMoveDialogActive) {
+              this.props.updateMoveDialog(response, museumId, token);
+            } else {
+              this.props.addNode({value: response, path: getPath(response)});
+            }
+          }
+        }).toPromise();
       }
     });
   }
@@ -326,7 +317,14 @@ const props = {
   updateMoveDialog,
   emitError,
   emitSuccess,
-  showModal
+  showModal,
+  findByUUID: (cmd) => MusitNode.findByUUID()(cmd),
+  findByBarcode: (cmd) => MusitNode.findByBarcode()(cmd).flatMap((nodeResponse) => {
+    if (!nodeResponse) {
+      return MusitObject.findByBarcode()(cmd);
+    }
+    return Observable.of(nodeResponse);
+  })
 };
 
 export default inject(data, commands, props)(PickListContainer);
