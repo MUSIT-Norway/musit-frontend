@@ -33,6 +33,7 @@ describe ('ObjectTable' ,() => {
       onLagreClick={(k) => k }
       loaded={ true }
       updateState={(k) => k }
+      isObjectAdded={(k) => k }
     />
   );
 

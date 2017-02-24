@@ -34,6 +34,7 @@ describe ('NodeTable' ,() => {
       onLagreClick={(k) => k }
       loaded={ true }
       updateState={(k) => k }
+      isNodeAdded={(k) => k }
     />
   );
 

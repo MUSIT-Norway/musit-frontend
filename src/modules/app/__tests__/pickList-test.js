@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$ } from '../pickList';
+import { reducer$, isItemAdded } from '../pickList';
 import { createStore } from 'react-rxjs/dist/RxStore';
 const diff = require('deep-diff').diff;
 import MusitObject from '../../../models/object';
@@ -126,5 +126,101 @@ describe('pickList', () => {
 
     // run tests
     testScheduler.flush();
+  });
+});
+
+
+describe('pickList isItemAdded', () => {
+
+  const node = {
+    "id": 23,
+    "nodeId": "775b4163-acea-4237-a558-8b1e004b9813",
+    "name": "q3",
+    "isPartOf": 2,
+    "groupRead": "foo",
+    "path": ",2,23,",
+    "type": "Organisation",
+    "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+    "updatedDate": "2017-02-09T14:43:02+00:00",
+    "breadcrumb": [{"id": 23, "name": "q3", "url": "/magasin/23"}, {"id": 23, "name": "q3", "url": "/magasin/23"}]
+  };
+
+  const nodePickList = [{
+    "marked": false,
+    "value": {
+      "id": 21,
+      "nodeId": "ab18d9be-a404-4147-8971-7514a53d0563",
+      "name": "q1",
+      "isPartOf": 2,
+      "groupRead": "foo",
+      "path": ",2,21,",
+      "type": "Organisation",
+      "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+      "updatedDate": "2017-02-09T14:42:43+00:00",
+      "breadcrumb": [{"id": 21, "name": "q1", "url": "/magasin/21"}, {"id": 21, "name": "q1", "url": "/magasin/21"}]
+    },
+    "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
+  }, {
+    "marked": false,
+    "value": {
+      "id": 22,
+      "nodeId": "6d57c513-0a22-4718-baa0-91aa8483d966",
+      "name": "q2",
+      "isPartOf": 2,
+      "groupRead": "foo",
+      "path": ",2,22,",
+      "type": "Organisation",
+      "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+      "updatedDate": "2017-02-09T14:42:53+00:00",
+      "breadcrumb": [{"id": 22, "name": "q2", "url": "/magasin/22"}, {"id": 22, "name": "q2", "url": "/magasin/22"}]
+    },
+    "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
+  }, {
+    "marked": false,
+    "value": {
+      "id": 23,
+      "nodeId": "775b4163-acea-4237-a558-8b1e004b9813",
+      "name": "q3",
+      "isPartOf": 2,
+      "groupRead": "foo",
+      "path": ",2,23,",
+      "type": "Organisation",
+      "updatedBy": "7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e",
+      "updatedDate": "2017-02-09T14:43:02+00:00",
+      "breadcrumb": [{"id": 23, "name": "q3", "url": "/magasin/23"}, {"id": 23, "name": "q3", "url": "/magasin/23"}]
+    },
+    "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
+  }];
+
+  it('Testing node in isItemAdded function', () => {
+    expect(isItemAdded(node, nodePickList)).toBe(true);
+  });
+
+  const object = {"id": 15, "museumId": 99, "museumNo": "MusK24", "subNo": "a", "term": "Lendeklede"}
+
+  const objectPickList = [{
+    "marked": false,
+    "value": {"id": 15, "museumId": 99, "museumNo": "MusK24", "subNo": "a", "term": "Lendeklede"},
+    "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
+  }, {
+    "marked": false,
+    "value": {"id": 16, "museumId": 99, "museumNo": "MusK24", "subNo": "b", "term": "Kokekar"},
+    "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
+  }, {
+    "marked": false,
+    "value": {"id": 20, "museumId": 99, "museumNo": "MusK33", "term": "Bronsjespenne"},
+    "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
+  }, {
+    "marked": false,
+    "value": {"id": 21, "museumId": 99, "museumNo": "MusK34", "subNo": "a", "term": "Kniv"},
+    "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
+  }, {
+    "marked": false,
+    "value": {"id": 22, "museumId": 99, "museumNo": "MusK34", "subNo": "b", "term": "Spydspiss"},
+    "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
+  }]
+
+  it('Testing object in isItemAdded function', () => {
+    expect(isItemAdded(object, objectPickList)).toBe(true);
   });
 });

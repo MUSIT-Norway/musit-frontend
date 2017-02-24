@@ -1,0 +1,55 @@
+exports[`SaveCancel snapshot should match snapshot 1`] = `
+<Row
+  bsClass="row"
+  componentClass="div">
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={2}
+    mdOffset={3}
+    sm={5}
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }
+    xs={6}>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      className="submitButton"
+      disabled={false}
+      id="Save_2"
+      onClick={[Function proxy]}>
+      Hii
+    </Button>
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={2}
+    sm={5}
+    style={
+      Object {
+        "border": "none",
+        "textAlign": "center"
+      }
+    }
+    xs={6}>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      className="cancelButton"
+      disabled={true}
+      id="Cancel_2"
+      onClick={undefined}>
+      Avbryt
+    </Button>
+  </Col>
+</Row>
+`;
