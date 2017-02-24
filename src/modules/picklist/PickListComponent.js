@@ -28,7 +28,6 @@ import {
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
 import subscribe, { clear$ } from '../app/scanner';
-import { Observable } from 'rxjs';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -314,17 +313,12 @@ const commands = {
 };
 
 const props = {
+  findByUUID: MusitNode.findByUUID(),
+  findByBarcode: MusitNode.findByBarcode(),
   updateMoveDialog,
   emitError,
   emitSuccess,
-  showModal,
-  findByUUID: (cmd) => MusitNode.findByUUID()(cmd),
-  findByBarcode: (cmd) => MusitNode.findByBarcode()(cmd).flatMap((nodeResponse) => {
-    if (!nodeResponse) {
-      return MusitObject.findByBarcode()(cmd);
-    }
-    return Observable.of(nodeResponse);
-  })
+  showModal
 };
 
 export default inject(data, commands, props)(PickListContainer);

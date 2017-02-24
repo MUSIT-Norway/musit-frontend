@@ -444,7 +444,7 @@ export class StorageUnitsContainer extends React.Component {
                     });
                   }
                 }
-              }});
+              }}).toPromise();
             });
           }}
         />
@@ -567,20 +567,15 @@ const commands = {
 const props = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
-  deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
-  findByUUID: (cmd) => MusitNode.findByUUID()(cmd),
-  findByBarcode: (cmd) => MusitNode.findByBarcode()(cmd).flatMap((nodeResponse) => {
-    if (!nodeResponse) {
-      return MusitObject.findByBarcode()(cmd);
-    }
-    return Observable.of(nodeResponse);
-  }),
+  deleteNode: MusitNode.deleteNode(),
+  findByUUID: MusitNode.findByUUID(),
+  findByBarcode: MusitNode.findByBarcode(),
+  goTo: hashHistory.push.bind(hashHistory),
   updateMoveDialog,
   showConfirm,
   showModal,
   emitError,
-  emitSuccess,
-  goTo: hashHistory.push.bind(hashHistory)
+  emitSuccess
 };
 
 export default inject(data, commands, props)(StorageUnitsContainer);

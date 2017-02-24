@@ -4,6 +4,8 @@ import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import { mapToBackend, mapToFrontend } from './mapper/node';
 import MusitActor from './actor';
+import MusitObject from './object';
+import { Observable } from 'rxjs';
 
 class MusitNode {
 
@@ -100,9 +102,15 @@ MusitNode.pickNode = (pickNode$) => ({node, breadcrumb}) => {
   pickNode$.next({ value: node, path: breadcrumb });
 };
 
-MusitNode.findByBarcode = (ajaxGet = simpleGet) => ({ barcode, museumId, token }) => {
+MusitNode.findByBarcode = (ajaxGet = simpleGet) => ({ barcode, museumId, collectionId, token}) => {
   return ajaxGet(Config.magasin.urls.storagefacility.scanOldUrl(barcode, museumId), token)
-    .map(({ response }) => response && new MusitNode(response));
+    .map(({ response }) => response && new MusitNode(response))
+    .flatMap((nodeResponse) => {
+      if (!nodeResponse) {
+        return MusitObject.findByBarcode(ajaxGet)({ barcode, museumId, collectionId, token});
+      }
+      return Observable.of(nodeResponse);
+    });
 };
 
 MusitNode.findByUUID = (ajaxGet = simpleGet) => ({ uuid, museumId, token }) => {
