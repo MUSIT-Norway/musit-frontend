@@ -52,6 +52,7 @@
           "search": "Search",
           "noMatchingNodeOrObject": "Could not find any matching node or object with this barcode.",
           "noMatchingNode": "Could not find any matching node with this barcode.",
+          "noMatchingObject": "Could not find any matching object with this barcode.",
           "cannotActOnObject": "This window can not act on barcodes for objects.",
           "cannotActOnNode": "This window can not act on barcodes for storage facility nodes.",
           "noCurrentLocation": "Object has no storage facility location."
@@ -706,6 +707,7 @@
           "search": "Søk",
           "noMatchingNodeOrObject": "Fant ingen node eller objekt med denne strekkoden.",
           "noMatchingNode": "Fant ingen node med denne strekkoden.",
+          "noMatchingObject": "Fant ingen objekt med denne strekkoden.",
           "cannotActOnObject": "Dette skjermbildet håndterer ikke scanning av objekter.",
           "cannotActOnNode": "Dette skjermbildet håndterer ikke scanning av noder.",
           "noCurrentLocation": "Objektet har ingen plassering i magasinet."

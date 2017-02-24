@@ -2,7 +2,7 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import Loader from 'react-loader';
-
+import { Button } from 'react-bootstrap';
 import NodeGrid from './NodeTable';
 import ObjectGrid from './ObjectTable';
 import NodeLeftMenuComponent from './TableLeftMenu';
@@ -27,8 +27,10 @@ import { Observable } from 'rxjs';
 
 import inject from 'react-rxjs/dist/RxInject';
 
-import { addNode$, addObject$ } from '../app/pickList';
+import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 
+import { addNode$, addObject$ } from '../app/pickList';
+import scanner$, { clear$ } from '../app/scanner';
 import { showConfirm, showModal } from '../../shared/modal';
 
 import pickList$, { isItemAdded } from '../app/pickList';
@@ -42,7 +44,7 @@ import tableStore$, {
   clearRootNode$
 } from './tableStore';
 
-
+import scannerIcon from '../app/scanIcon.png';
 
 export class StorageUnitsContainer extends React.Component {
   static propTypes = {
@@ -60,12 +62,12 @@ export class StorageUnitsContainer extends React.Component {
     emitError: React.PropTypes.func.isRequired,
     emitSuccess: React.PropTypes.func.isRequired,
     pickList: React.PropTypes.object.isRequired,
-    isItemAdded: React.PropTypes.object.isRequired
+    isItemAdded: React.PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
-    this.state = { searchPattern: '' };
+    this.state = { searchPattern: '', scannerEnabled: false };
     this.loadNodes = this.loadNodes.bind(this);
     this.loadRootNode = this.loadRootNode.bind(this);
     this.loadObjects = this.loadObjects.bind(this);
@@ -75,6 +77,7 @@ export class StorageUnitsContainer extends React.Component {
     this.onClickCrumb = this.onClickCrumb.bind(this);
     this.showMoveNodeModal = this.showMoveNodeModal.bind(this);
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
+    this.toggleScanner = this.toggleScanner.bind(this);
   }
 
   getCurrentPage(
@@ -100,6 +103,87 @@ export class StorageUnitsContainer extends React.Component {
         }
       }
     });
+  }
+
+  enableScanner() {
+    this.disableScanner();
+    this.scanner = this.props.subscribeToScanner((barCode) => {
+      this.props.clear();
+      this.processBarcode(barCode);
+    });
+  }
+
+  disableScanner() {
+    if (this.scanner) {
+      this.scanner.unsubscribe();
+    }
+  }
+
+  toggleScanner() {
+    const scannerEnabled = !this.state.scannerEnabled;
+    this.setState({...this.state, scannerEnabled });
+    if (scannerEnabled) {
+      this.enableScanner();
+    } else {
+      this.disableScanner();
+    }
+  }
+
+  processBarcode(barCode) {
+    const isMoveHistoryActive = this.props.classExistsOnDom('moveHistory');
+    const isMoveDialogActive = this.props.classExistsOnDom('moveDialog');
+    const museumId = this.props.appSession.getMuseumId();
+    const collectionId = this.props.appSession.getCollectionId();
+    const token = this.props.appSession.getAccessToken();
+    if (barCode.uuid) {
+      this.props.findByUUID({uuid: barCode.code, museumId, token}).do((response) => {
+        if (!response) {
+          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
+        } else {
+          if (isMoveDialogActive) {
+            this.props.updateMoveDialog(response, museumId, token);
+          } else if (isMoveHistoryActive) {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+          } else {
+            hashHistory.push('/magasin/' + response.id);
+          }
+        }
+      }).toPromise();
+    } else {
+      this.props.findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
+        if (!response) {
+          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+        } else if (Array.isArray(response)) {
+          if (response.length === 1) {
+            if (!response[0].currentLocationId) {
+              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
+            } else {
+              if (isMoveDialogActive) {
+                this.props.updateMoveDialog(response[0], museumId, token);
+              } else if (isMoveHistoryActive) {
+                this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+              } else {
+                hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
+              }
+            }
+          } else {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+          }
+        } else if (response.nodeId) {
+          if (isMoveDialogActive) {
+            this.props.updateMoveDialog(response, museumId, token);
+          } else if (isMoveHistoryActive) {
+            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+          } else {
+            hashHistory.push('/magasin/' + response.id);
+          }
+        }
+      }).toPromise();
+    }
+  }
+
+  componentWillUnmount() {
+    this.disableScanner();
   }
 
   componentWillMount(
@@ -305,6 +389,8 @@ export class StorageUnitsContainer extends React.Component {
       labelLeft={I18n.t('musit.grid.button.nodes')}
       placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
       searchValue={searchPattern}
+      scannerEnabled={this.state.scannerEnabled}
+      toggleScanner={this.toggleScanner}
       onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
       clickShowRight={() => {
         this.showObjects();
@@ -384,7 +470,7 @@ export class StorageUnitsContainer extends React.Component {
                     });
                   }
                 }
-              }});
+              }}).toPromise();
             });
           }}
         />
@@ -477,9 +563,24 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   render() {
+    const title = (
+      <div>
+        <span>{I18n.t('musit.storageUnits.title')}</span>
+        <div
+          style={{
+            float: 'right',
+            margin: '0 25px 0 0'
+          }}
+        >
+          <Button active={this.state.scannerEnabled} onClick={this.toggleScanner}>
+            <img src={scannerIcon} height={25} alt="scan" />
+          </Button>
+        </div>
+      </div>
+    );
     return (
       <Layout
-        title={I18n.t('musit.storageUnits.title')}
+        title={title}
         breadcrumb={<Breadcrumb node={this.props.tableStore.rootNode} onClickCrumb={this.onClickCrumb} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
@@ -501,19 +602,27 @@ const commands = {
   loadRootNode$,
   loadNodes$,
   loadObjects$,
-  setLoading$
+  setLoading$,
+  clear$,
+  loadNode$,
+  loadChildren$
 };
 
 const props = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
+  deleteNode: MusitNode.deleteNode(),
+  findByUUID: MusitNode.findByUUID(),
+  findByBarcode: MusitNode.findNodeOrObjectByBarcode(),
+  goTo: hashHistory.push.bind(hashHistory),
+  classExistsOnDom: (className) => document.getElementsByClassName(className).length > 0,
+  subscribeToScanner: (next, err, complete) => scanner$.subscribe(next, err, complete),
+  updateMoveDialog,
   isItemAdded,
-  deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
   showConfirm,
   showModal,
   emitError,
-  emitSuccess,
-  goTo: hashHistory.push.bind(hashHistory)
+  emitSuccess
 };
 
 export default inject(data, commands, props)(StorageUnitsContainer);

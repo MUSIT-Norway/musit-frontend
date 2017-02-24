@@ -65,12 +65,12 @@ export default class SaveCancel extends Component {
     const { save, cancel } = this.fields;
     return (
       <Row>
-        <Col xs={6} sm={5} md ={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
+        <Col xs={6} sm={5} md={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
           <Button {...save}>
             {saveLabel || I18n.t('musit.texts.save')}
           </Button>
         </Col>
-        <Col xs={6} sm={5} md ={2} style={{ border: 'none', textAlign: 'center' }}>
+        <Col xs={6} sm={5} md={2} style={{ border: 'none', textAlign: 'center' }}>
           <Button  {...cancel}>
             {cancelLabel || I18n.t('musit.texts.cancel')}
           </Button>
