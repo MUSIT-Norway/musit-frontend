@@ -8,6 +8,7 @@ import find from 'lodash/find';
 import { I18n } from 'react-i18nify';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
+import orderBy from 'lodash/orderBy';
 
 export default class MusitUserAccount extends Component {
   static propTypes = {
@@ -22,13 +23,15 @@ export default class MusitUserAccount extends Component {
     handleCollectionId: React.PropTypes.func.isRequired
   }
 
+  orderByCollection = (arr, dir = 'asc') => orderBy(arr, ['name'], [dir]);
+
   getCollections(mid, groups) {
-    return uniqBy(flatten(groups.filter(g => g.museumId === mid.id).map(g => g.collections)), c => c.uuid);
+    const collections = uniqBy(flatten(groups.filter(g => g.museumId === mid.id).map(g => g.collections)), c => c.uuid);
+    return this.orderByCollection(collections);
   }
 
   adminLink() {
     const { token } = this.props;
-
     return (
       <MenuItem onSelect={() => document.getElementById('userGroupAdmin').submit()}>
         <form id={'userGroupAdmin'} method={'POST'} encType={'application/x-www-form-urlencoded'} action={'/service_auth/web'}>
