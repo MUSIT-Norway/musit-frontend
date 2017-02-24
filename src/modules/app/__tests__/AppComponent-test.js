@@ -62,6 +62,8 @@ describe('AppComponent', () => {
         clearObjects={clearObjects}
         clearNodes={clearNodes}
         toggleEnabled={toggleEnabled}
+        clearObjectPicklist={(a) => (a)}
+        clearNodePicklist={(a) => (a)}
       >
         <span>Yay</span>
       </AppComponent>
