@@ -27,10 +27,10 @@ export default class SaveCancel extends Component {
     id: PropTypes.string,
     saveLabel: PropTypes.string,
     saveDisabled: PropTypes.bool,
-    onClickSave: PropTypes.func.isRequired,
+    onClickSave: PropTypes.func,
     cancelLabel: PropTypes.string,
     cancelDisabled: PropTypes.bool,
-    onClickCancel: PropTypes.func.isRequired
+    onClickCancel: PropTypes.func
   }
 
   constructor(props) {
@@ -46,45 +46,35 @@ export default class SaveCancel extends Component {
       save: {
         id: `Save_${id || 1}`,
         onClick: onClickSave,
-        disabled: saveDisabled
+        disabled: saveDisabled,
+        className: 'submitButton',
+        bsStyle: 'primary'
       },
       cancel: {
         id: `Cancel_${id || 1}`,
         onClick: onClickCancel,
-        disabled: cancelDisabled
+        disabled: cancelDisabled,
+        className: 'cancelButton',
+        bsStyle: 'primary'
       }
     };
   }
 
   render() {
     const { saveLabel, cancelLabel } = this.props;
-    const showButton = (data) => {
-      return (
-        <Col xs={6} sm={5} style={{ border: 'none', textAlign: 'center' }}>
-          {data}
-        </Col>
-      );
-    };
-
+    const { save, cancel } = this.fields;
     return (
       <Row>
-        {showButton(
-          <Button
-            className="submitButton"
-            onClick={this.props.onClickSave}
-            disabled={this.props.saveDisabled}
-          >
+        <Col xs={6} sm={5} md ={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
+          <Button {...save}>
             {saveLabel || I18n.t('musit.texts.save')}
           </Button>
-        )}
-        {showButton(
-          <Button
-            onClick={this.props.onClickCancel}
-            disabled={this.props.cancelDisabled}
-          >
+        </Col>
+        <Col xs={6} sm={5} md ={2} style={{ border: 'none', textAlign: 'center' }}>
+          <Button  {...cancel}>
             {cancelLabel || I18n.t('musit.texts.cancel')}
           </Button>
-        )}
+        </Col>
       </Row>
     );
   }

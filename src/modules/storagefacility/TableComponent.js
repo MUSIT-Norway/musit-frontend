@@ -24,6 +24,8 @@ import { showConfirm, showModal } from '../../shared/modal';
 import { refreshSession } from '../app/appSession';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
+import pickList$, { isItemAdded } from '../app/pickList';
+
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -33,9 +35,11 @@ import tableStore$, {
   clearRootNode$
 } from './tableStore';
 
+
+
 export class StorageUnitsContainer extends React.Component {
   static propTypes = {
-    store: React.PropTypes.object.isRequired,
+    tableStore: React.PropTypes.object.isRequired,
     loadNodes: React.PropTypes.func.isRequired,
     loadObjects: React.PropTypes.func.isRequired,
     loadStats: React.PropTypes.func.isRequired,
@@ -48,7 +52,9 @@ export class StorageUnitsContainer extends React.Component {
     clearRootNode: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
     emitSuccess: React.PropTypes.func.isRequired,
-    refreshSession: React.PropTypes.func.isRequired
+    refreshSession: React.PropTypes.func.isRequired,
+    pickList: React.PropTypes.object.isRequired,
+    isItemAdded: React.PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -143,7 +149,7 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   showNodes(
-    node = this.props.store.rootNode
+    node = this.props.tableStore.rootNode
   ) {
     const midPath = this.props.appSession.getMuseumId().getPath();
     const cidPath = this.props.appSession.getCollectionId().getPath();
@@ -155,7 +161,7 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   showObjects(
-    node = this.props.store.rootNode
+    node = this.props.tableStore.rootNode
   ) {
     const midPath = this.props.appSession.getMuseumId().getPath();
     const cidPath = this.props.appSession.getCollectionId().getPath();
@@ -212,7 +218,7 @@ export class StorageUnitsContainer extends React.Component {
     userId = this.props.appSession.getActor().getActorId(),
     museumId = this.props.appSession.getMuseumId(),
     token = this.props.appSession.getAccessToken(),
-    nodeId = this.props.store.rootNode.id,
+    nodeId = this.props.tableStore.rootNode.id,
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes,
     loadRootNode = this.loadRootNode
@@ -261,7 +267,7 @@ export class StorageUnitsContainer extends React.Component {
     museumId = this.props.appSession.getMuseumId(),
     collectionId = this.props.appSession.getCollectionId(),
     token = this.props.appSession.getAccessToken(),
-    nodeId = this.props.store.rootNode.id,
+    nodeId = this.props.tableStore.rootNode.id,
     loadObjects = this.loadObjects
   ) => (toNode, toName, onSuccess, onFailure = () => true) => {
     const description = objectToMove.getObjectDescription();
@@ -326,8 +332,8 @@ export class StorageUnitsContainer extends React.Component {
   makeLeftMenu(
     museumId = this.props.appSession.getMuseumId(),
     token = this.props.appSession.getAccessToken(),
-    rootNode = this.props.store.rootNode,
-    stats = this.props.store.stats,
+    rootNode = this.props.tableStore.rootNode,
+    stats = this.props.tableStore.stats,
     deleteNode = this.props.deleteNode,
     moveNode = this.showMoveNodeModal,
     confirm = this.props.showConfirm
@@ -401,8 +407,8 @@ export class StorageUnitsContainer extends React.Component {
     museumId = this.props.appSession.getMuseumId(),
     collectionId = this.props.appSession.getCollectionId(),
     token = this.props.appSession.getAccessToken(),
-    rootNode = this.props.store.rootNode,
-    children = this.props.store.children,
+    rootNode = this.props.tableStore.rootNode,
+    children = this.props.tableStore.children,
     showObjects = this.props.route.showObjects,
     moveNode = this.showMoveNodeModal,
     moveObject = this.showMoveObjectModal,
@@ -429,6 +435,7 @@ export class StorageUnitsContainer extends React.Component {
                 token
               })
             }
+            isObjectAdded={(object) => this.props.isItemAdded( object , this.props.pickList.objects )}
             onMove={moveObject}
           />
           {showPaging &&
@@ -464,6 +471,8 @@ export class StorageUnitsContainer extends React.Component {
             const cidPath = this.props.appSession.getCollectionId().getPath();
             this.props.goTo('/' + midPath + '/' + cidPath + '/magasin/' + node.id);
           }}
+          isNodeAdded={(node) => this.props.isItemAdded( node , this.props.pickList.nodes )}
+          onClick={(node) => this.props.goTo(`/magasin/${node.id}`)}
         />
         {showPaging &&
           <PagingToolbar
@@ -488,7 +497,7 @@ export class StorageUnitsContainer extends React.Component {
     return (
       <Layout
         title={I18n.t('musit.storageUnits.title')}
-        breadcrumb={<Breadcrumb node={this.props.store.rootNode} onClickCrumb={this.onClickCrumb} />}
+        breadcrumb={<Breadcrumb node={this.props.tableStore.rootNode} onClickCrumb={this.onClickCrumb} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContentGrid()}
@@ -499,7 +508,8 @@ export class StorageUnitsContainer extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  store$: tableStore$
+  tableStore$,
+  pickList$
 };
 
 const commands = {
@@ -514,6 +524,7 @@ const commands = {
 const props = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
+  isItemAdded,
   deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
   showConfirm,
   showModal,

@@ -102,6 +102,7 @@ exports[`ObjectTable should render properly  1`] = `
                   name="shopping-cart"
                   style={
                     Object {
+                      "color": "Gray",
                       "fontSize": "1.5em"
                     }
                   } />
@@ -163,6 +164,7 @@ exports[`ObjectTable should render properly  1`] = `
                   name="shopping-cart"
                   style={
                     Object {
+                      "color": "Gray",
                       "fontSize": "1.5em"
                     }
                   } />
@@ -222,6 +224,7 @@ exports[`ObjectTable should render properly  1`] = `
                   name="shopping-cart"
                   style={
                     Object {
+                      "color": "Gray",
                       "fontSize": "1.5em"
                     }
                   } />
@@ -283,6 +286,7 @@ exports[`ObjectTable should render properly  1`] = `
                   name="shopping-cart"
                   style={
                     Object {
+                      "color": "Gray",
                       "fontSize": "1.5em"
                     }
                   } />
@@ -342,6 +346,7 @@ exports[`ObjectTable should render properly  1`] = `
                   name="shopping-cart"
                   style={
                     Object {
+                      "color": "Gray",
                       "fontSize": "1.5em"
                     }
                   } />
