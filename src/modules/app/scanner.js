@@ -24,20 +24,4 @@ const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPr
   .map(state => omit(state, 'buffer'))
   .distinctUntilChanged();
 
-const inc$ = createAction('inc$').map(() => (state) => ({...state, value: state.value + 1}));
-const dec$ = createAction('dec$').map(() => (state) => ({...state, value: state.value - 1}));
-
-export const count$ = createStore('count', Observable.merge(inc$, dec$), Observable.of({ value: 0 }));
-
-const subscribeToScanner = (onNext, onError, onComplete) => {
-  inc$.next();
-  const subscription = scanner$.subscribe(onNext, onError, onComplete);
-  return {
-    unsubscribe: () => {
-      subscription.unsubscribe();
-      dec$.next();
-    }
-  };
-};
-
-export default subscribeToScanner;
+export default scanner$;

@@ -14,7 +14,6 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import { count$ } from './scanner';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -131,16 +130,6 @@ export class AppComponent extends Component {
               <LinkContainer to={'/search/objects'}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em', height: 25 }} /></NavItem>
               </LinkContainer>
-              <LinkContainer
-                className="toggleScanner"
-                to={'/scan'}
-                disabled={this.props.count.value > 0}
-                active={this.props.count.value > 0}
-              >
-                <NavItem>
-                  <img src={require('./scanIcon.png')} height={25} alt="scan" />
-                </NavItem>
-              </LinkContainer>
               <MusitUserAccount
                 actor={this.props.appSession.getActor()}
                 groups={this.props.appSession.getGroups()}
@@ -171,8 +160,7 @@ export class AppComponent extends Component {
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
-  pickList$: { type: PropTypes.object.isRequired },
-  count$
+  pickList$: { type: PropTypes.object.isRequired }
 };
 
 const commands = {

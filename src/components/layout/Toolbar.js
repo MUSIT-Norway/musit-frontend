@@ -56,10 +56,10 @@ export default class Toolbar extends React.Component {
       <div className="wrapper">
         {optionalSearch}
         <div className="toolBarButtons">
-          <Button active={showLeft} onClick={() => clickShowLeft()}>
+          <Button active={showLeft} onClick={clickShowLeft}>
             <FontAwesome name={showLeft ? 'check-square-o' : 'square-o'} />{' '}{labelLeft}
           </Button>
-          <Button active={showRight} onClick={() => clickShowRight()}>
+          <Button active={showRight} onClick={clickShowRight}>
             <FontAwesome name={showRight ? 'check-square-o' : 'square-o'} />{' '}{labelRight}
           </Button>
         </div>

@@ -109,22 +109,6 @@ exports[`AppComponent remders 1`] = `
               } />
           </NavItem>
         </LinkContainer>
-        <LinkContainer
-          action="push"
-          active={false}
-          className="toggleScanner"
-          disabled={false}
-          onlyActiveOnIndex={false}
-          to="/scan">
-          <NavItem
-            active={false}
-            disabled={false}>
-            <img
-              alt="scan"
-              height={25}
-              src="test-file-stub" />
-          </NavItem>
-        </LinkContainer>
         <MusitUserAccount
           actor={
             Object {

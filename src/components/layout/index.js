@@ -22,7 +22,7 @@ import { Grid, Row, Col, PageHeader } from 'react-bootstrap';
 
 export default class Layout extends React.Component {
   static propTypes = {
-    title: React.PropTypes.string.isRequired,
+    title: React.PropTypes.any.isRequired,
     leftMenu: React.PropTypes.object,
     content: React.PropTypes.object.isRequired,
     breadcrumb: React.PropTypes.element,
