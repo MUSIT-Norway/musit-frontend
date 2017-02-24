@@ -7,9 +7,10 @@ import ReactTestUtils from 'react-addons-test-utils';
 
 
 describe('SaveCancel snapshot', () => {
-  const onClickSave = sinon.spy();
+
 
   it('should match snapshot', () => {
+    const onClickSave = sinon.spy();
     const wrapper = shallow(
       <SaveCancel
         id="2"
@@ -52,6 +53,31 @@ describe('SaveCancel snapshot', () => {
     expect(wrapper.debug()).toMatchSnapshot();
 
     expect(wrapper.find('.submitButton').text()).toBe('<Button />');
+
+  });
+
+  it('should react on clickCancel', () => {
+    const onClickSave = sinon.spy();
+    const onClickCancel= sinon.spy();
+    const wrapper = shallow(
+      <SaveCancel onClickCancel={onClickCancel} onClickSave={onClickSave}/>
+    );
+    const c = wrapper.children().last().children().last();
+    c.simulate('click');
+    expect(onClickSave.calledOnce).toBe(false);
+    expect(onClickCancel.calledOnce).toBe(true);
+
+  });
+  it('should react on clickSave', () => {
+    const onClickSave = sinon.spy();
+    const onClickCancel= sinon.spy();
+    const wrapper = shallow(
+      <SaveCancel onClickCancel={onClickCancel} onClickSave={onClickSave}/>
+    );
+    const s = wrapper.children().first().children().first();
+    s.simulate('click');
+    expect(onClickSave.calledOnce).toBe(true);
+    expect(onClickCancel.calledOnce).toBe(false);
 
   });
 });
