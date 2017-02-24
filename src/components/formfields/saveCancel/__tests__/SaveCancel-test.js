@@ -20,39 +20,8 @@ describe('SaveCancel snapshot', () => {
       />
     );
 
-    expect(wrapper.find('.cancelButton').everyWhere(n => n.hasClass('cancelButton'))).toEqual(true);
-
-    expect(wrapper.find('[id="Save_2"]').everyWhere(n => n.hasClass('submitButton'))).toEqual(true);
-
-    expect(wrapper.find('[type="button"]').everyWhere(n => n.hasClass('submitButton'))).toEqual(true);
-
-    expect(wrapper.is('.cancelButton')).toEqual(false);
-
-    expect(wrapper.find('.cancelButton').text()).toEqual('<Button />');
-
     expect(wrapper.find('.cancelButton').hasClass('disabled')).toEqual(false);
-
-    expect(wrapper.find('.submitButton').everyWhere(n => n.hasClass('submitButton'))).toEqual(true);
-
-    expect(wrapper.find('.submitButton').every(n => n.hasClass('submitButton'))).toEqual(false);
-
-    expect(wrapper.find('.submitButton').some('.submitButton')).toEqual(true);
-
-    expect(wrapper.find('.submitButton').someWhere(n => n.hasClass('submitButton'))).toEqual(true);
-
-    expect(wrapper.find('.submitButton').someWhere(n => n.hasClass('submitButton'))).toEqual(true);
-
-    expect(wrapper.find('.cancelButton').everyWhere(n => n.hasClass('cancelButton'))).toEqual(true);
-
-    expect(wrapper.find('.cancelButton').html()).toMatchSnapshot();
-
-    expect(wrapper.html()).toMatchSnapshot();
-
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-
-    expect(wrapper.debug()).toMatchSnapshot();
-
-    expect(wrapper.find('.submitButton').text()).toBe('<Button />');
 
   });
 
@@ -62,8 +31,7 @@ describe('SaveCancel snapshot', () => {
     const wrapper = shallow(
       <SaveCancel onClickCancel={onClickCancel} onClickSave={onClickSave}/>
     );
-    const c = wrapper.children().last().children().last();
-    c.simulate('click');
+    wrapper.find('.cancelButton').simulate('click');
     expect(onClickSave.calledOnce).toBe(false);
     expect(onClickCancel.calledOnce).toBe(true);
 
@@ -74,11 +42,9 @@ describe('SaveCancel snapshot', () => {
     const wrapper = shallow(
       <SaveCancel onClickCancel={onClickCancel} onClickSave={onClickSave}/>
     );
-    const s = wrapper.children().first().children().first();
-    s.simulate('click');
+    wrapper.find('.submitButton').simulate('click');
     expect(onClickSave.calledOnce).toBe(true);
     expect(onClickCancel.calledOnce).toBe(false);
-
   });
 });
 

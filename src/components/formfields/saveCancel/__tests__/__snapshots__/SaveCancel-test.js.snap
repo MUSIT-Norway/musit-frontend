@@ -1,8 +1,4 @@
-exports[`SaveCancel snapshot should match snapshot 1`] = `"<button id=\"Cancel_2\" disabled=\"\" type=\"button\" class=\"cancelButton btn btn-primary\">Avbryt</button>"`;
-
-exports[`SaveCancel snapshot should match snapshot 2`] = `"<div class=\"row\"><div style=\"border:none;text-align:center;\" class=\"col-md-2 col-md-offset-3 col-sm-5 col-xs-6\"><button id=\"Save_2\" type=\"button\" class=\"submitButton btn btn-primary\">Hii</button></div><div style=\"border:none;text-align:center;\" class=\"col-md-2 col-sm-5 col-xs-6\"><button id=\"Cancel_2\" disabled=\"\" type=\"button\" class=\"cancelButton btn btn-primary\">Avbryt</button></div></div>"`;
-
-exports[`SaveCancel snapshot should match snapshot 3`] = `
+exports[`SaveCancel snapshot should match snapshot 1`] = `
 <Row
   bsClass="row"
   componentClass="div">
@@ -56,19 +52,4 @@ exports[`SaveCancel snapshot should match snapshot 3`] = `
     </Button>
   </Col>
 </Row>
-`;
-
-exports[`SaveCancel snapshot should match snapshot 4`] = `
-"<Row componentClass=\"div\" bsClass=\"row\">
-<Col xs={6} sm={5} md={2} mdOffset={3} style={{...}} componentClass=\"div\" bsClass=\"col\">
-<Button id=\"Save_2\" onClick={[Function]} disabled={false} className=\"submitButton\" bsStyle=\"primary\" active={false} block={false} bsClass=\"btn\">
-Hii
-</Button>
-</Col>
-<Col xs={6} sm={5} md={2} style={{...}} componentClass=\"div\" bsClass=\"col\">
-<Button id=\"Cancel_2\" onClick={[undefined]} disabled={true} className=\"cancelButton\" bsStyle=\"primary\" active={false} block={false} bsClass=\"btn\">
-Avbryt
-</Button>
-</Col>
-</Row>"
 `;
