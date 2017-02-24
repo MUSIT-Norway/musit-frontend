@@ -14,7 +14,7 @@ describe('PickListComponent', () => {
   const  pickList={
     nodes: [
       {
-        marked: false,
+        marked: true,
         value: {id: 1, name: 'Hei'},
         path: [1]
       },
@@ -51,7 +51,6 @@ describe('PickListComponent', () => {
 
   it('should display component (nodes) correctly', () => {
 
-
     const wrapper = shallow(<PickListComponent
       route={{type : 'nodes'}}
       pickList={pickList}
@@ -74,8 +73,6 @@ describe('PickListComponent', () => {
 
 
   it('should display component (objects) correctly', () => {
-
-
     const wrapper = shallow(<PickListComponent
       route={{type : 'objects'}}
       pickList={pickList}
@@ -93,6 +90,32 @@ describe('PickListComponent', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
+  it('Testing functions', () => {
+
+    const onToggleNode = sinon.spy();
+    const onToggleObject = sinon.spy();
+
+
+
+    const wrapper = shallow(<PickListComponent
+      route={{type : 'objects'}}
+      pickList={pickList}
+      toggleNode={onToggleNode}
+      toggleObject={onToggleObject}
+      toggleMainObject={(x) => x}
+      removeNode={(x) => x}
+      removeObject={(x) => x}
+      appSession={ new AppSession()}
+      refreshNode={(x) => x}
+      refreshObjects={(x) => x}
+      emitError={(x) => x}
+      emitSuccess={(x) => x}
+      iconRendrer={ (x) => x}
+    />);
+
+    console.log(shallowToJson(wrapper));
+    console.log(wrapper.find({prop: 'pickList'}));
+  });
 });
 
 
@@ -242,3 +265,5 @@ describe('PickListTable', () => {
   });
 
 });
+
+

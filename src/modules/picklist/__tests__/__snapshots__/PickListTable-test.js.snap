@@ -11,7 +11,7 @@ exports[`PickListComponent should display component (nodes) correctly 1`] = `
     Object {
       "nodes": Array [
         Object {
-          "marked": false,
+          "marked": true,
           "path": Array [
             1
           ],
@@ -108,7 +108,7 @@ exports[`PickListComponent should display component (objects) correctly 1`] = `
     Object {
       "nodes": Array [
         Object {
-          "marked": false,
+          "marked": true,
           "path": Array [
             1
           ],
