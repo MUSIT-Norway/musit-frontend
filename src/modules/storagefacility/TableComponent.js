@@ -105,7 +105,7 @@ export class StorageUnitsContainer extends React.Component {
     });
   }
 
-  enabbleScanner() {
+  enableScanner() {
     this.disableScanner();
     this.scanner = this.props.subscribeToScanner((barCode) => {
       this.props.clear();
@@ -123,7 +123,7 @@ export class StorageUnitsContainer extends React.Component {
     const scannerEnabled = !this.state.scannerEnabled;
     this.setState({...this.state, scannerEnabled });
     if (scannerEnabled) {
-      this.enabbleScanner();
+      this.enableScanner();
     } else {
       this.disableScanner();
     }

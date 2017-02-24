@@ -55,7 +55,7 @@ export class PickListContainer extends React.Component {
     this.state = { scannerEnabled: false };
   }
 
-  enabbleScanner() {
+  enableScanner() {
     this.disableScanner();
     this.scanner = this.props.subscribeToScanner((barCode) => {
       this.props.clear();
@@ -73,7 +73,7 @@ export class PickListContainer extends React.Component {
     const scannerEnabled = !this.state.scannerEnabled;
     this.setState({...this.state, scannerEnabled });
     if (scannerEnabled) {
-      this.enabbleScanner();
+      this.enableScanner();
     } else {
       this.disableScanner();
     }
