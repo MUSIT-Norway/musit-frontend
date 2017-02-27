@@ -4,7 +4,7 @@ import omit from 'lodash/omit';
 
 const initialState = { buffer: '', code: '', uuid: false };
 
-export const clear$ = createAction('clear$').map(() => () => initialState);
+export const clearScanner$ = createAction('clearScanner$').map(() => () => initialState);
 
 const keyPressReducer$ = Observable.fromEvent(window.document, 'keypress')
   .filter((e: Event) => e.which !== 13)
@@ -19,7 +19,7 @@ const keyPressTimer$ = keyPressReducer$.debounce(() => Observable.timer(50))
     return {...state, buffer: '', code: buffer, uuid};
   });
 
-const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPressTimer$, clear$), Observable.of(initialState))
+const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPressTimer$, clearScanner$), Observable.of(initialState))
   .filter(state => state.code !== '')
   .map(state => omit(state, 'buffer'))
   .distinctUntilChanged();
