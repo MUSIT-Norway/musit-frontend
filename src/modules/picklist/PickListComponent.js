@@ -56,7 +56,7 @@ export class PickListContainer extends React.Component {
 
   showMoveNodes = (items) => {
     let title;
-    if (this.props.isTypeNode()) {
+    if (this.props.isTypeNode(this.props)) {
       title = I18n.t('musit.moveModal.moveNodes');
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
@@ -134,7 +134,7 @@ export class PickListContainer extends React.Component {
   })
 
   moveModal = (items) => (to, toName, onSuccess) => {
-    const isNode = this.props.isTypeNode();
+    const isNode = this.props.isTypeNode(this.props);
     const moveFn = isNode ? MusitNode.moveNode : MusitObject.moveObject;
     const toMove = items.map(itemToMove => itemToMove.id);
     const toMoveLength = toMove.length;
