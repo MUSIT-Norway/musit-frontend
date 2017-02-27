@@ -22,7 +22,6 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 import { addNode$, addObject$ } from '../app/pickList';
-import scanner$, { clearScanner$ } from '../app/scanner';
 import { showConfirm, showModal } from '../../shared/modal';
 import pickList$, { isItemAdded } from '../app/pickList';
 import tableStore$, {
@@ -34,7 +33,7 @@ import tableStore$, {
   clearRootNode$
 } from './tableStore';
 import scannerIcon from '../app/scannerIcon.png';
-import wrapWithScanner from '../app/scannerWrapper';
+import connectToScanner from '../app/scanner';
 
 export class TableComponent extends React.Component {
   static propTypes = {
@@ -480,7 +479,7 @@ export class TableComponent extends React.Component {
             margin: '0 25px 0 0'
           }}
         >
-          <Button active={this.props.scannerEnabled} onClick={this.props.toggleScanner}>
+          <Button active={this.props.scannerEnabled} onClick={() => this.props.toggleScanner()}>
             <img src={scannerIcon} height={25} alt="scan" />
           </Button>
         </div>
@@ -511,7 +510,6 @@ const commands = {
   loadNodes$,
   loadObjects$,
   setLoading$,
-  clearScanner$,
   loadNode$,
   loadChildren$
 };
@@ -520,11 +518,7 @@ const customProps = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
   deleteNode: MusitNode.deleteNode(),
-  findByUUID: MusitNode.findByUUID(),
-  findByBarcode: MusitNode.findNodeOrObjectByBarcode(),
-  goTo: hashHistory.push.bind(hashHistory),
-  classExistsOnDom: (className) => document.getElementsByClassName(className).length > 0,
-  subscribeToScanner: (next, err, complete) => scanner$.subscribe(next, err, complete),
+  goTo: hashHistory.push,
   updateMoveDialog,
   isItemAdded,
   showConfirm,
@@ -540,7 +534,7 @@ const processBarcode = (barCode, props) => {
   const collectionId = props.appSession.getCollectionId();
   const token = props.appSession.getAccessToken();
   if (barCode.uuid) {
-    props.findByUUID({uuid: barCode.code, museumId, token}).do((response) => {
+    props.findNodeByUUID({uuid: barCode.code, museumId, token}).do((response) => {
       if (!response) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
       } else {
@@ -549,12 +543,12 @@ const processBarcode = (barCode, props) => {
         } else if (isMoveHistoryActive) {
           props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
         } else {
-          hashHistory.push('/magasin/' + response.id);
+          props.goTo('/magasin/' + response.id);
         }
       }
     }).toPromise();
-  } else {
-    props.findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
+  } else if (barCode.number) {
+    props.findNodeOrObjectByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
       if (!response) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
       } else if (Array.isArray(response)) {
@@ -567,7 +561,7 @@ const processBarcode = (barCode, props) => {
             } else if (isMoveHistoryActive) {
               props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
             } else {
-              hashHistory.push('/magasin/' + response[0].currentLocationId + '/objects');
+              props.goTo('/magasin/' + response[0].currentLocationId + '/objects');
             }
           }
         } else {
@@ -579,11 +573,11 @@ const processBarcode = (barCode, props) => {
         } else if (isMoveHistoryActive) {
           props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
         } else {
-          hashHistory.push('/magasin/' + response.id);
+          props.goTo('/magasin/' + response.id);
         }
       }
     }).toPromise();
   }
 };
 
-export default inject(data, commands, customProps)(wrapWithScanner(processBarcode)(TableComponent));
+export default inject(data, commands, customProps)(connectToScanner(processBarcode)(TableComponent));

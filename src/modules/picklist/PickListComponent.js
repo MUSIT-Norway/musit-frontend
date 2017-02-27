@@ -27,9 +27,8 @@ import {
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
-import scanner$, { clearScanner$ } from '../app/scanner';
 import scannerIcon from '../app/scannerIcon.png';
-import wrapWithScanner from '../app/scannerWrapper';
+import connectToScanner from '../app/scanner';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -44,7 +43,8 @@ export class PickListContainer extends React.Component {
     refreshObjects: PropTypes.func.isRequired,
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired,
-    classExistsOnDom: PropTypes.func.isRequired
+    toggleScanner: PropTypes.func.isRequired,
+    scannerEnabled: PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -200,7 +200,7 @@ export class PickListContainer extends React.Component {
             margin: '0 25px 0 0'
           }}
         >
-          <Button active={this.props.scannerEnabled} onClick={this.props.toggleScanner}>
+          <Button active={this.props.scannerEnabled} onClick={() => this.props.toggleScanner()}>
             <img src={scannerIcon} height={25} alt="scan" />
           </Button>
         </div>
@@ -268,17 +268,11 @@ const commands = {
   removeNode$,
   addNode$,
   addObject$,
-  clearScanner$,
   loadChildren$,
   loadNode$
 };
 
 const customProps = {
-  findByUUID: MusitNode.findByUUID(),
-  findNodeByBarcode: MusitNode.findByBarcode(),
-  findObjectByBarcode: MusitObject.findByBarcode(),
-  classExistsOnDom: (className) => document.getElementsByClassName(className).length > 0,
-  subscribeToScanner: (next, err, complete) => scanner$.subscribe(next, err, complete),
   updateMoveDialog,
   emitError,
   emitSuccess,
@@ -294,7 +288,7 @@ const processBarcode = (barCode, props) => {
   const isNodeView = props.isTypeNode(props);
   if (barCode.uuid) {
     if (isNodeView) {
-      props.findByUUID({uuid: barCode.code, museumId, token})
+      props.findNodeByUUID({uuid: barCode.code, museumId, token})
         .do((response) => {
           if (!response) {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
@@ -309,7 +303,7 @@ const processBarcode = (barCode, props) => {
     } else {
       props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
     }
-  } else {
+  } else if (barCode.number) {
     const findByBarcode = isNodeView ? props.findNodeByBarcode : props.findObjectByBarcode;
     findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
       if (!response) {
@@ -339,4 +333,4 @@ const processBarcode = (barCode, props) => {
   }
 };
 
-export default inject(data, commands, customProps)(wrapWithScanner(processBarcode)(PickListContainer));
+export default inject(data, commands, customProps)(connectToScanner(processBarcode)(PickListContainer));
