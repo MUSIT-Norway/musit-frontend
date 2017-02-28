@@ -6,31 +6,35 @@ import { AppSession } from './appSession';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 
-const initialState = { buffer: '', code: '', uuid: false, number: false };
+export const initialState = { buffer: '', code: '', uuid: false, number: false };
 
-const clearScanner$ = createAction('clearScanner$').map(() => () => initialState);
-
-const keyPressReducer$ = Observable.fromEvent(window.document, 'keypress')
+export const charReducer$ = (source$) => source$
   .filter((e: Event) => e.which !== 13)
   .map((e: Event) => String.fromCharCode(e.which))
   .map((c: String) => c.replace(/\+/g, '-'))
   .map((c: String) => (state) => ({...state, buffer: state.buffer + c }));
 
-const keyPressTimer$ = keyPressReducer$.debounce(() => Observable.timer(50)).map(() => (state) => {
-  const buffer = state.buffer;
-  const number = /^\d+$/.test(buffer);
-  const uuid = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(buffer);
-  return {...state, buffer: '', code: buffer, uuid, number};
-});
+export const charDebouncer$ = (source$) => source$
+  .map(() => (state) => {
+    const buffer = state.buffer;
+    const number = /^\d+$/.test(buffer);
+    const uuid = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(buffer);
+    return {...state, buffer: '', code: buffer, uuid, number};
+  });
 
-const scanner$ = createStore('scanner', Observable.merge(keyPressReducer$, keyPressTimer$, clearScanner$), Observable.of(initialState))
-  .filter(state => state.code !== '')
+const clearScanner$ = createAction('clearScanner$').map(() => () => initialState);
+const reducer$ = charReducer$(Observable.fromEvent(window.document, 'keypress'));
+const debouncer$ = charDebouncer$(reducer$.debounce(() => Observable.timer(50)));
+const scanner$ = createStore('scanner', Observable.merge(reducer$, debouncer$, clearScanner$), Observable.of(initialState));
+
+export const makeStream = (source$) => source$
+  .filter(state => state.code  !== '')
   .map(state => omit(state, 'buffer'))
   .distinctUntilChanged();
 
 export const connectToScanner = (
   processBarcode,
-  source$ = scanner$,
+  source$ = makeStream(scanner$),
   clearSource = clearScanner$.next.bind(clearScanner$),
   findNodeByUUID = MusitNode.findByUUID(),
   findNodeByBarcode = MusitNode.findByBarcode(),
@@ -68,6 +72,7 @@ export const connectToScanner = (
     disableScanner() {
       if (this.subscription) {
         this.subscription.unsubscribe();
+        this.subscription = null;
       }
     }
 
