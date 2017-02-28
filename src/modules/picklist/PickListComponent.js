@@ -27,8 +27,8 @@ import {
 } from '../app/pickList';
 import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
-import scanner$, { clear$ } from '../app/scanner';
-import scannerIcon from '../app/scanIcon.png';
+import scannerIcon from '../app/scannerIcon.png';
+import connectToScanner from '../app/scanner';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -43,7 +43,8 @@ export class PickListContainer extends React.Component {
     refreshObjects: PropTypes.func.isRequired,
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired,
-    classExistsOnDom: PropTypes.func.isRequired
+    toggleScanner: PropTypes.func.isRequired,
+    scannerEnabled: PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -51,98 +52,11 @@ export class PickListContainer extends React.Component {
     this.moveModal = this.moveModal.bind(this);
     this.print = this.print.bind(this);
     this.showMoveNodes = this.showMoveNodes.bind(this);
-    this.toggleScanner = this.toggleScanner.bind(this);
-    this.state = { scannerEnabled: false };
-  }
-
-  enableScanner() {
-    this.disableScanner();
-    this.scanner = this.props.subscribeToScanner((barCode) => {
-      this.props.clear();
-      this.processBarcode(barCode);
-    });
-  }
-
-  disableScanner() {
-    if (this.scanner) {
-      this.scanner.unsubscribe();
-    }
-  }
-
-  toggleScanner() {
-    const scannerEnabled = !this.state.scannerEnabled;
-    this.setState({...this.state, scannerEnabled });
-    if (scannerEnabled) {
-      this.enableScanner();
-    } else {
-      this.disableScanner();
-    }
-  }
-
-  processBarcode(barCode) {
-    const isMoveDialogActive = this.props.classExistsOnDom('moveDialog');
-    const museumId = this.props.appSession.getMuseumId();
-    const collectionId = this.props.appSession.getCollectionId();
-    const token = this.props.appSession.getAccessToken();
-    const isNodeView = this.isTypeNode();
-    if (barCode.uuid) {
-      if (isNodeView) {
-        this.props.findByUUID({uuid: barCode.code, museumId, token})
-          .do((response) => {
-            if (!response) {
-              this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
-              return;
-            }
-            if (isMoveDialogActive) {
-              this.props.updateMoveDialog(response, museumId, token);
-            } else {
-              this.props.addNode({value: response, path: getPath(response)});
-            }
-          }).toPromise();
-      } else {
-        this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-      }
-    } else {
-      const findByBarcode = isNodeView ? this.props.findNodeByBarcode : this.props.findObjectByBarcode;
-      findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
-        if (!response) {
-          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-          return;
-        }
-        if (!isNodeView && Array.isArray(response)) { // objects
-          if (response.length === 1) {
-            if (isMoveDialogActive) {
-              this.props.updateMoveDialog(response[0], museumId, token);
-            } else {
-              this.props.addObject({value: response[0], path: getPath(response[0])});
-            }
-          } else {
-            this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
-          }
-        } else if (isNodeView && response.nodeId) { // node
-          if (isMoveDialogActive) {
-            this.props.updateMoveDialog(response, museumId, token);
-          } else {
-            this.props.addNode({value: response, path: getPath(response)});
-          }
-        } else {
-          this.props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-        }
-      }).toPromise();
-    }
-  }
-
-  componentWillUnmount() {
-    this.disableScanner();
-  }
-
-  isTypeNode() {
-    return 'nodes' === this.props.route.type;
   }
 
   showMoveNodes = (items) => {
     let title;
-    if (this.isTypeNode()) {
+    if (this.props.isTypeNode(this.props)) {
       title = I18n.t('musit.moveModal.moveNodes');
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
@@ -220,7 +134,7 @@ export class PickListContainer extends React.Component {
   })
 
   moveModal = (items) => (to, toName, onSuccess) => {
-    const isNode = this.isTypeNode();
+    const isNode = this.props.isTypeNode(this.props);
     const moveFn = isNode ? MusitNode.moveNode : MusitObject.moveObject;
     const toMove = items.map(itemToMove => itemToMove.id);
     const toMoveLength = toMove.length;
@@ -286,7 +200,7 @@ export class PickListContainer extends React.Component {
             margin: '0 25px 0 0'
           }}
         >
-          <Button active={this.state.scannerEnabled} onClick={this.toggleScanner}>
+          <Button active={this.props.scannerEnabled} onClick={() => this.props.toggleScanner()}>
             <img src={scannerIcon} height={25} alt="scan" />
           </Button>
         </div>
@@ -302,15 +216,15 @@ export class PickListContainer extends React.Component {
             <PickListTable
               picks={pickList}
               marked={markedValues}
-              isnode={this.isTypeNode()}
+              isnode={this.props.isTypeNode(this.props)}
               iconRendrer={(pick) => (pick.value.name ? <FontAwesome name="folder"/> :
                 <span className='icon icon-musitobject'/>)
               }
               labelRendrer={(pick) => {
                 return (
                   <div>
-                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span> : null}
-                    {!this.isTypeNode() ? <span style={{ paddingLeft: '1em' }}>{pick.value.subNo}</span> : null}
+                    {!this.props.isTypeNode(this.props) ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span> : null}
+                    {!this.props.isTypeNode(this.props) ? <span style={{ paddingLeft: '1em' }}>{pick.value.subNo}</span> : null}
                     <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.term}</span>
                     <div className="labelText">
                       <Breadcrumb
@@ -322,14 +236,14 @@ export class PickListContainer extends React.Component {
                   </div>
                 );
               }}
-              toggle={(item, on) => this.isTypeNode() ? this.props.toggleNode({item, on}) : this.toggleObject({item, on})}
-              remove={item => this.isTypeNode() ?  this.props.removeNode(item) :  this.props.removeObject(item)}
+              toggle={(item, on) => this.props.isTypeNode(this.props) ? this.props.toggleNode({item, on}) : this.toggleObject({item, on})}
+              remove={item => this.props.isTypeNode(this.props) ?  this.props.removeNode(item) :  this.props.removeObject(item)}
               move={this.showMoveNodes}
               print={this.print}
             />
             <div style={{ textAlign: 'left' }}>
               {marked.length}/{pickList.length} &nbsp;
-              {this.isTypeNode() ? I18n.t('musit.pickList.footer.nodeSelected')
+              {this.props.isTypeNode(this.props) ? I18n.t('musit.pickList.footer.nodeSelected')
                 : I18n.t('musit.pickList.footer.objectSelected') }
             </div>
           </Grid>
@@ -354,21 +268,65 @@ const commands = {
   removeNode$,
   addNode$,
   addObject$,
-  clear$,
   loadChildren$,
   loadNode$
 };
 
-const props = {
-  findByUUID: MusitNode.findByUUID(),
-  findNodeByBarcode: MusitNode.findByBarcode(),
-  findObjectByBarcode: MusitObject.findByBarcode(),
-  classExistsOnDom: (className) => document.getElementsByClassName(className).length > 0,
-  subscribeToScanner: (next, err, complete) => scanner$.subscribe(next, err, complete),
+const customProps = {
   updateMoveDialog,
   emitError,
   emitSuccess,
-  showModal
+  showModal,
+  isTypeNode: (props) => 'nodes' === props.route.type
 };
 
-export default inject(data, commands, props)(PickListContainer);
+export const processBarcode = (barCode, props) => {
+  const isMoveDialogActive = props.classExistsOnDom('moveDialog');
+  const museumId = props.appSession.getMuseumId();
+  const collectionId = props.appSession.getCollectionId();
+  const token = props.appSession.getAccessToken();
+  const isNodeView = props.isTypeNode(props);
+  if (barCode.uuid) {
+    if (isNodeView) {
+      props.findNodeByUUID({uuid: barCode.code, museumId, token})
+        .do((response) => {
+          if (!response) {
+            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
+          } else if (isMoveDialogActive) {
+            props.updateMoveDialog(response, museumId, token);
+          } else {
+            props.addNode({value: response, path: getPath(response)});
+          }
+        }).toPromise();
+    } else {
+      props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
+    }
+  } else if (barCode.number) {
+    const findByBarcode = isNodeView ? props.findNodeByBarcode : props.findObjectByBarcode;
+    findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
+      if (!response) {
+        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+      } else if (!isNodeView && Array.isArray(response)) { // objects
+        if (response.length === 1) {
+          if (isMoveDialogActive) {
+            props.updateMoveDialog(response[0], museumId, token);
+          } else {
+            props.addObject({value: response[0], path: getPath(response[0])});
+          }
+        } else {
+          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
+        }
+      } else if (isNodeView && response.nodeId) { // node
+        if (isMoveDialogActive) {
+          props.updateMoveDialog(response, museumId, token);
+        } else {
+          props.addNode({value: response, path: getPath(response)});
+        }
+      } else {
+        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+      }
+    }).toPromise();
+  }
+};
+
+export default inject(data, commands, customProps)(connectToScanner(processBarcode)(PickListContainer));
