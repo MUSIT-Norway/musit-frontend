@@ -15,7 +15,7 @@ exports[`KDReportComponent should display correctly 1`] = `
           componentClass="div">
           <PageHeader
             bsClass="page-header">
-            Rapport - Sikring av samlinger
+            Report - Security assessment of collections
           </PageHeader>
           <Table
             bordered={false}
@@ -32,7 +32,7 @@ exports[`KDReportComponent should display correctly 1`] = `
             <tbody>
               <tr>
                 <td>
-                  Totalt areal:
+                  Total area:
                 </td>
                 <td>
                   1,23
@@ -41,7 +41,7 @@ exports[`KDReportComponent should display correctly 1`] = `
               </tr>
               <tr>
                 <td>
-                  Skallsikring:
+                  Perimeter security:
                 </td>
                 <td>
                   23,34
@@ -50,7 +50,7 @@ exports[`KDReportComponent should display correctly 1`] = `
               </tr>
               <tr>
                 <td>
-                  Tyverisikring:
+                  Theft protection:
                 </td>
                 <td>
                   234,2
@@ -59,7 +59,7 @@ exports[`KDReportComponent should display correctly 1`] = `
               </tr>
               <tr>
                 <td>
-                  Brannsikring:
+                  Fire protection:
                 </td>
                 <td>
                   34,3
@@ -68,7 +68,7 @@ exports[`KDReportComponent should display correctly 1`] = `
               </tr>
               <tr>
                 <td>
-                  Vannskaderisiko:
+                  Water damage assessment:
                 </td>
                 <td>
                   234,3
@@ -77,7 +77,7 @@ exports[`KDReportComponent should display correctly 1`] = `
               </tr>
               <tr>
                 <td>
-                  Rutiner og beredskap:
+                  Routines and contingency plan:
                 </td>
                 <td>
                   2334,3
@@ -110,7 +110,7 @@ exports[`Reports overview should display correctly 1`] = `
           componentClass="div">
           <PageHeader
             bsClass="page-header">
-            Rapporter
+            Reports
           </PageHeader>
           <Table
             bordered={false}
@@ -122,10 +122,10 @@ exports[`Reports overview should display correctly 1`] = `
             <thead>
               <tr>
                 <th>
-                  Tittel
+                  Title
                 </th>
                 <th>
-                  Beskrivelse
+                  Description
                 </th>
               </tr>
             </thead>
@@ -135,11 +135,11 @@ exports[`Reports overview should display correctly 1`] = `
                 <td>
                   <a
                     href="/#/reports/kdreport">
-                    Sikring av samlinger
+                    Security assessment of collections
                   </a>
                 </td>
                 <td>
-                  Sikringsindikatorer som rapporteres til KD.
+                  Security assessment indicators reported to KD.
                 </td>
               </tr>
             </tbody>

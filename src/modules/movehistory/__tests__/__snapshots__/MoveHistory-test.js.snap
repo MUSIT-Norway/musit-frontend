@@ -12,16 +12,16 @@ exports[`MoveHistory should match snapshot 1`] = `
       <thead>
         <tr>
           <th>
-            Utført dato
+            Performed date
           </th>
           <th>
-            Utført av
+            Performed by
           </th>
           <th>
-            Fra
+            From
           </th>
           <th>
-            Til
+            To
           </th>
         </tr>
       </thead>

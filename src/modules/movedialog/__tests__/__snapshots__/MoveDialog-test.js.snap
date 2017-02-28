@@ -25,7 +25,7 @@ exports[`ModalNodeGrid should match snapshot 1`] = `
           </td>
           <td
             id="0_StorageUnit">
-            Lagringsenhet
+            Storage unit
           </td>
         </tr>
         <tr
@@ -42,7 +42,7 @@ exports[`ModalNodeGrid should match snapshot 1`] = `
           </td>
           <td
             id="1_StorageUnit">
-            Lagringsenhet
+            Storage unit
           </td>
         </tr>
         <tr
@@ -59,7 +59,7 @@ exports[`ModalNodeGrid should match snapshot 1`] = `
           </td>
           <td
             id="2_Room">
-            Rom
+            Room
           </td>
         </tr>
       </tbody>

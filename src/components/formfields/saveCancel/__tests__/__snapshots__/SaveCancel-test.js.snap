@@ -48,7 +48,7 @@ exports[`SaveCancel snapshot should match snapshot 1`] = `
       disabled={true}
       id="Cancel_2"
       onClick={undefined}>
-      Avbryt
+      Cancel
     </Button>
   </Col>
 </Row>

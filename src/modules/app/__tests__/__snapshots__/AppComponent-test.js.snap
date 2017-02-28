@@ -46,7 +46,7 @@ exports[`AppComponent remders 1`] = `
           <NavItem
             active={false}
             disabled={false}>
-            Magasin
+            Storage facility
           </NavItem>
         </LinkContainer>
         <LinkContainer
@@ -56,7 +56,7 @@ exports[`AppComponent remders 1`] = `
           <NavItem
             active={false}
             disabled={false}>
-            Rapporter
+            Reports
           </NavItem>
         </LinkContainer>
       </Nav>

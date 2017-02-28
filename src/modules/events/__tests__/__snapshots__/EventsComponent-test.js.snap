@@ -26,14 +26,14 @@ exports[`EventsComponent Check it renders when not loaded 1`] = `
         selectObservation={true} />
     </div>
   }
-  title="Magasin"
+  title="Storage facility"
   toolbar={
     <function Toolbar() {_classCallCheck(this, Toolbar);return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));}
       clickShowLeft={[Function clickShowLeft]}
       clickShowRight={[Function clickShowRight]}
-      labelLeft="Observasjoner"
-      labelRight="Kontroller"
-      placeHolderSearch="Filtrer i listen"
+      labelLeft="Observations"
+      labelRight="Controls"
+      placeHolderSearch="Filter the list"
       showLeft={true}
       showRight={true} />
   } />
@@ -55,7 +55,7 @@ exports[`EventsComponent Check it renders. 1`] = `
           "textAlign": "center"
         }
       }>
-      Ingen kontroller eller observasjoner
+      No controls or observations
     </div>
   }
   leftMenu={
@@ -73,14 +73,14 @@ exports[`EventsComponent Check it renders. 1`] = `
         selectObservation={true} />
     </div>
   }
-  title="Magasin"
+  title="Storage facility"
   toolbar={
     <function Toolbar() {_classCallCheck(this, Toolbar);return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));}
       clickShowLeft={[Function clickShowLeft]}
       clickShowRight={[Function clickShowRight]}
-      labelLeft="Observasjoner"
-      labelRight="Kontroller"
-      placeHolderSearch="Filtrer i listen"
+      labelLeft="Observations"
+      labelRight="Controls"
+      placeHolderSearch="Filter the list"
       showLeft={true}
       showRight={true} />
   } />

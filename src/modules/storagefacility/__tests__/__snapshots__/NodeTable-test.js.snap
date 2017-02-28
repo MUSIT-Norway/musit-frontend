@@ -13,7 +13,7 @@ exports[`NodeTable should render properly  1`] = `
         <thead>
           <tr>
             <th>
-              Navn
+              Name
             </th>
             <th>
               Type
@@ -36,7 +36,7 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
             <td>
-              Organisasjon
+              Organisation
             </td>
             <td />
             <td />
@@ -54,7 +54,7 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
             <td>
-              Organisasjon
+              Organisation
             </td>
             <td />
             <td />
@@ -72,14 +72,14 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
             <td>
-              Bygg
+              Building
             </td>
             <td>
               <a
                 className="goToEventClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Observasjoner og kontroller">
+                title="Observations and controls">
                 <span
                   className="icon icon-musitcontrolobsicon" />
               </a>
@@ -89,7 +89,7 @@ exports[`NodeTable should render properly  1`] = `
                 className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Flytt noden">
+                title="Move node">
                 <FontAwesome
                   name="truck"
                   style={
@@ -104,7 +104,7 @@ exports[`NodeTable should render properly  1`] = `
                 className="onPickClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                title="Add to picklist">
                 <FontAwesome
                   name="shopping-cart"
                   style={
@@ -128,14 +128,14 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
             <td>
-              Bygg
+              Building
             </td>
             <td>
               <a
                 className="goToEventClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Observasjoner og kontroller">
+                title="Observations and controls">
                 <span
                   className="icon icon-musitcontrolobsicon" />
               </a>
@@ -145,7 +145,7 @@ exports[`NodeTable should render properly  1`] = `
                 className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Flytt noden">
+                title="Move node">
                 <FontAwesome
                   name="truck"
                   style={
@@ -160,7 +160,7 @@ exports[`NodeTable should render properly  1`] = `
                 className="onPickClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                title="Add to picklist">
                 <FontAwesome
                   name="shopping-cart"
                   style={
@@ -184,14 +184,14 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
             <td>
-              Rom
+              Room
             </td>
             <td>
               <a
                 className="goToEventClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Observasjoner og kontroller">
+                title="Observations and controls">
                 <span
                   className="icon icon-musitcontrolobsicon" />
               </a>
@@ -201,7 +201,7 @@ exports[`NodeTable should render properly  1`] = `
                 className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Flytt noden">
+                title="Move node">
                 <FontAwesome
                   name="truck"
                   style={
@@ -216,7 +216,7 @@ exports[`NodeTable should render properly  1`] = `
                 className="onPickClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                title="Add to picklist">
                 <FontAwesome
                   name="shopping-cart"
                   style={

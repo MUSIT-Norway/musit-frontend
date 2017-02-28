@@ -12,7 +12,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
       fluid={false}>
       <div>
         <h1>
-          Objektsøk
+          Object search
         </h1>
         <Form
           bsClass="form"
@@ -25,7 +25,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             <ControlLabel
               bsClass="control-label"
               srOnly={false}>
-              Museumnr.
+              Museum No.
             </ControlLabel>
              
             <FormControl
@@ -43,7 +43,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             <ControlLabel
               bsClass="control-label"
               srOnly={false}>
-              Unr.
+              U. No.
             </ControlLabel>
              
             <FormControl
@@ -61,7 +61,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
             <ControlLabel
               bsClass="control-label"
               srOnly={false}>
-              Term/Artsnavn
+              Artefact/Species
             </ControlLabel>
              
             <FormControl
@@ -97,7 +97,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
         </Form>
         <br />
         <h4>
-          Søket ga 20 treff:
+          Your search gave 20 hits:
         </h4>
         <Loader
           component="div"
@@ -120,22 +120,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
               <thead>
                 <tr>
                   <th>
-                    Museumnr.
+                    Museum No.
                   </th>
                   <th>
-                    Unr.
+                    U. No.
                   </th>
                   <th>
-                    Term/Artsnavn
+                    Artefact/Species
                   </th>
                   <th>
-                    Plassering
+                    Location
                   </th>
                   <th>
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til alle i plukklisten">
+                      title="Add all">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -216,7 +216,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -296,7 +296,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -376,7 +376,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -456,7 +456,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -536,7 +536,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -616,7 +616,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -696,7 +696,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -776,7 +776,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -856,7 +856,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -936,7 +936,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1016,7 +1016,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1096,7 +1096,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1176,7 +1176,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1256,7 +1256,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1336,7 +1336,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1416,7 +1416,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1496,7 +1496,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1576,7 +1576,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1656,7 +1656,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={
@@ -1736,7 +1736,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <a
                       href=""
                       onClick={[Function onClick]}
-                      title="Legg til plukklisten">
+                      title="Add to picklist">
                       <FontAwesome
                         name="shopping-cart"
                         style={

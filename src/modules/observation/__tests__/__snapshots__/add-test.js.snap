@@ -21,7 +21,7 @@ exports[`Render observation page in add mode should set default date and have co
           <ControlLabel
             bsClass="control-label"
             srOnly={false}>
-            Utført dato
+            Performed date
           </ControlLabel>
           <MusitDatePicker
             dateFormat="DD.MM.YYYY"
@@ -38,7 +38,7 @@ exports[`Render observation page in add mode should set default date and have co
           <ControlLabel
             bsClass="control-label"
             srOnly={false}>
-            Utført av
+            Performed by
           </ControlLabel>
           <Component
             id="doneByField"
@@ -66,59 +66,59 @@ exports[`Render observation page in add mode should set default date and have co
               value="">
               <option
                 value="">
-                Velg type
+                Choose type
               </option>
               <option
                 value="gas">
-                Gass
+                Gas
               </option>
               <option
                 value="lightCondition">
-                Lysforhold
+                Lighting condition
               </option>
               <option
                 value="cleaning">
-                Renhold
+                Cleaning
               </option>
               <option
                 value="pest">
-                Skadedyr
+                Pest
               </option>
               <option
                 value="mold">
-                Mugg
+                Mold
               </option>
               <option
                 value="skallsikring">
-                Skallsikring
+                Perimeter security
               </option>
               <option
                 value="tyverisikring">
-                Tyverisikring
+                Theft protection
               </option>
               <option
                 value="brannsikring">
-                Brannsikring
+                Fire protection
               </option>
               <option
                 value="vannskaderisiko">
-                Vannskaderisiko
+                Water damage assessment
               </option>
               <option
                 value="relativeHumidity">
-                Relativ luftfuktighet
+                Relative humidity
               </option>
               <option
                 value="hypoxicAir">
-                Inertluft
+                Hypoxic air
               </option>
               <option
                 value="temperature">
-                Temperatur
+                Temperature
               </option>
               <option
                 value="alcohol">
-                Sprit
+                Alcohol
               </option>
             </FormControl>
           </FormGroup>
@@ -137,7 +137,7 @@ exports[`Render observation page in add mode should set default date and have co
             <FontAwesome
               name="plus-circle" />
              
-            Legg til ny
+            Add new
           </Button>
         </Col>
       </Row>

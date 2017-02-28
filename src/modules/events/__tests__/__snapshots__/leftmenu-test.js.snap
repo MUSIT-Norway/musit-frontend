@@ -29,7 +29,7 @@ exports[`LeftMenu Check the new observation button is created. 1`] = `
               "padding": "2px"
             }
           } />
-        Ny observasjon
+        New observation
       </Button>
     </Col>
     <Col
@@ -58,7 +58,7 @@ exports[`LeftMenu Check the new observation button is created. 1`] = `
               "padding": "2px"
             }
           } />
-        Ny kontroll
+        New control
       </Button>
     </Col>
   </Row>
