@@ -280,7 +280,7 @@ const customProps = {
   isTypeNode: (props) => 'nodes' === props.route.type
 };
 
-const processBarcode = (barCode, props) => {
+export const processBarcode = (barCode, props) => {
   const isMoveDialogActive = props.classExistsOnDom('moveDialog');
   const museumId = props.appSession.getMuseumId();
   const collectionId = props.appSession.getCollectionId();
@@ -292,25 +292,21 @@ const processBarcode = (barCode, props) => {
         .do((response) => {
           if (!response) {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
-            return;
-          }
-          if (isMoveDialogActive) {
+          } else if (isMoveDialogActive) {
             props.updateMoveDialog(response, museumId, token);
           } else {
             props.addNode({value: response, path: getPath(response)});
           }
         }).toPromise();
     } else {
-      props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+      props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
     }
   } else if (barCode.number) {
     const findByBarcode = isNodeView ? props.findNodeByBarcode : props.findObjectByBarcode;
     findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
       if (!response) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-        return;
-      }
-      if (!isNodeView && Array.isArray(response)) { // objects
+      } else if (!isNodeView && Array.isArray(response)) { // objects
         if (response.length === 1) {
           if (isMoveDialogActive) {
             props.updateMoveDialog(response[0], museumId, token);
