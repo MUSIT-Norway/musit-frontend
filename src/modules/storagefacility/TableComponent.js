@@ -2,6 +2,7 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import Loader from 'react-loader';
+import { Button } from 'react-bootstrap';
 import NodeGrid from './NodeTable';
 import ObjectGrid from './ObjectTable';
 import NodeLeftMenuComponent from './TableLeftMenu';
@@ -24,8 +25,8 @@ import { showConfirm, showModal } from '../../shared/modal';
 import { refreshSession } from '../app/appSession';
 import isEqual from 'lodash/isEqual';
 import isEqualWith from 'lodash/isEqualWith';
+import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 import pickList$, { isItemAdded } from '../app/pickList';
-
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -34,10 +35,10 @@ import tableStore$, {
   setLoading$,
   clearRootNode$
 } from './tableStore';
+import scannerIcon from '../app/scannerIcon.png';
+import connectToScanner from '../app/scanner';
 
-
-
-export class StorageUnitsContainer extends React.Component {
+export class TableComponent extends React.Component {
   static propTypes = {
     tableStore: React.PropTypes.object.isRequired,
     loadNodes: React.PropTypes.func.isRequired,
@@ -54,7 +55,9 @@ export class StorageUnitsContainer extends React.Component {
     emitSuccess: React.PropTypes.func.isRequired,
     refreshSession: React.PropTypes.func.isRequired,
     pickList: React.PropTypes.object.isRequired,
-    isItemAdded: React.PropTypes.object.isRequired
+    isItemAdded: React.PropTypes.func.isRequired,
+    toggleScanner: React.PropTypes.func.isRequired,
+    scannerEnabled: React.PropTypes.bool.isRequired
   };
 
   constructor(props) {
@@ -394,7 +397,7 @@ export class StorageUnitsContainer extends React.Component {
                     });
                   }
                 }
-              }});
+              }}).toPromise();
             });
           }}
         />
@@ -493,9 +496,24 @@ export class StorageUnitsContainer extends React.Component {
   }
 
   render() {
+    const title = (
+      <div>
+        <span>{I18n.t('musit.storageUnits.title')}</span>
+        <div
+          style={{
+            float: 'right',
+            margin: '0 25px 0 0'
+          }}
+        >
+          <Button active={this.props.scannerEnabled} onClick={() => this.props.toggleScanner()}>
+            <img src={scannerIcon} height={25} alt="scan" />
+          </Button>
+        </div>
+      </div>
+    );
     return (
       <Layout
-        title={I18n.t('musit.storageUnits.title')}
+        title={title}
         breadcrumb={<Breadcrumb node={this.props.tableStore.rootNode} onClickCrumb={this.onClickCrumb} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
@@ -517,20 +535,72 @@ const commands = {
   loadRootNode$,
   loadNodes$,
   loadObjects$,
-  setLoading$
+  setLoading$,
+  loadNode$,
+  loadChildren$
 };
 
-const props = {
+const customProps = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
+  deleteNode: MusitNode.deleteNode(),
+  refreshSession: refreshSession(),
+  goTo: hashHistory.push,
+  updateMoveDialog,
   isItemAdded,
-  deleteNode: (val) => MusitNode.deleteNode()(val).toPromise(),
   showConfirm,
   showModal,
   emitError,
-  emitSuccess,
-  goTo: hashHistory.push.bind(hashHistory),
-  refreshSession: refreshSession()
+  emitSuccess
 };
 
-export default inject(data, commands, props)(StorageUnitsContainer);
+export const processBarcode = (barCode, props) => {
+  const isMoveHistoryActive = props.classExistsOnDom('moveHistory');
+  const isMoveDialogActive = props.classExistsOnDom('moveDialog');
+  const museumId = props.appSession.getMuseumId();
+  const collectionId = props.appSession.getCollectionId();
+  const token = props.appSession.getAccessToken();
+  if (barCode.uuid) {
+    props.findNodeByUUID({uuid: barCode.code, museumId, token}).do((response) => {
+      if (!response) {
+        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
+      } else if (isMoveDialogActive) {
+        props.updateMoveDialog(response, museumId, token);
+      } else if (isMoveHistoryActive) {
+        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+      } else {
+        props.goTo('/magasin/' + response.id);
+      }
+    }).toPromise();
+  } else if (barCode.number) {
+    props.findNodeOrObjectByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
+      if (!response) {
+        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+      } else if (Array.isArray(response)) {
+        if (response.length === 1) {
+          if (!response[0].currentLocationId) {
+            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
+          } else if (isMoveDialogActive) {
+            props.updateMoveDialog(response[0], museumId, token);
+          } else if (isMoveHistoryActive) {
+            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+          } else {
+            props.goTo('/magasin/' + response[0].currentLocationId + '/objects');
+          }
+        } else {
+          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+        }
+      } else if (response.nodeId) {
+        if (isMoveDialogActive) {
+          props.updateMoveDialog(response, museumId, token);
+        } else if (isMoveHistoryActive) {
+          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+        } else {
+          props.goTo('/magasin/' + response.id);
+        }
+      }
+    }).toPromise();
+  }
+};
+
+export default inject(data, commands, customProps)(connectToScanner(processBarcode)(TableComponent));

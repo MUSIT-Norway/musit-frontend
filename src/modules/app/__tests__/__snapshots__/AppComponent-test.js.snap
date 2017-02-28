@@ -109,22 +109,6 @@ exports[`AppComponent remders 1`] = `
               } />
           </NavItem>
         </LinkContainer>
-        <LinkContainer
-          action="push"
-          active={undefined}
-          className="toggleScanner"
-          onClick={[Function onClick]}
-          onlyActiveOnIndex={false}
-          to="/scan">
-          <NavItem
-            active={false}
-            disabled={false}>
-            <img
-              alt="scan"
-              height={25}
-              src="test-file-stub" />
-          </NavItem>
-        </LinkContainer>
         <MusitUserAccount
           actor={
             Object {
@@ -154,70 +138,5 @@ exports[`AppComponent remders 1`] = `
     className="footer version well">
     Build number: 64
   </footer>
-  <Modal
-    animation={true}
-    autoFocus={true}
-    backdrop={true}
-    bsClass="modal"
-    bsSize="small"
-    dialogComponentClass={[Function ModalDialog]}
-    enforceFocus={true}
-    keyboard={true}
-    manager={
-      ModalManager {
-        "containers": Array [],
-        "data": Array [],
-        "handleContainerOverflow": true,
-        "hideSiblingNodes": true,
-        "modals": Array []
-      }
-    }
-    onHide={[Function onHide]}
-    renderBackdrop={[Function renderBackdrop]}
-    show={false}>
-    <ModalHeader
-      aria-label="Close"
-      bsClass="modal-header"
-      closeButton={true}>
-      <ModalTitle
-        bsClass="modal-title"
-        componentClass="h4">
-        Søk etter node eller objekt
-      </ModalTitle>
-    </ModalHeader>
-    <ModalBody
-      bsClass="modal-body"
-      componentClass="div">
-      <Form
-        bsClass="form"
-        componentClass="form"
-        horizontal={false}
-        inline={true}>
-        <FormGroup
-          bsClass="form-group"
-          controlId="barCode">
-          <input
-            className="form-control"
-            readOnly={true}
-            type="text"
-            value="" />
-        </FormGroup>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="primary"
-          disabled={false}
-          onClick={[Function onClick]}>
-          Søk
-        </Button>
-      </Form>
-      <Loader
-        component="div"
-        loaded={true}
-        loadedClassName="loadedContent"
-        parentClassName="loader" />
-    </ModalBody>
-  </Modal>
 </div>
 `;
