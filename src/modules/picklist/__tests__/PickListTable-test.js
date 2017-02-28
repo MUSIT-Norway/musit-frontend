@@ -1,9 +1,9 @@
-import {shallow} from 'enzyme';
-import {shallowToJson} from 'enzyme-to-json';
+import {shallow, mount} from 'enzyme';
+import {shallowToJson, mountToJson} from 'enzyme-to-json';
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import PickListTable from '../PickListTable';
-import PickListComponent from '../PickListComponent';
+import { PickListContainer } from '../PickListComponent';
 import { AppSession } from '../../app/appSession';
 import { expect as e } from 'chai';
 import sinon from 'sinon';
@@ -51,7 +51,7 @@ describe('PickListComponent', () => {
 
   it('should display component (nodes) correctly', () => {
 
-    const wrapper = shallow(<PickListComponent
+    const wrapper = shallow(<PickListContainer
       route={{type : 'nodes'}}
       pickList={pickList}
       toggleNode={(x) => x}
@@ -64,6 +64,7 @@ describe('PickListComponent', () => {
       refreshObjects={(x) => x}
       emitError={(x) => x}
       emitSuccess={(x) => x}
+      classExistsOnDom={ (x) => x}
     />);
 
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -73,7 +74,7 @@ describe('PickListComponent', () => {
 
 
   it('should display component (objects) correctly', () => {
-    const wrapper = shallow(<PickListComponent
+    const wrapper = shallow(<PickListContainer
       route={{type : 'objects'}}
       pickList={pickList}
       toggleNode={(x) => x}
@@ -86,6 +87,7 @@ describe('PickListComponent', () => {
       refreshObjects={(x) => x}
       emitError={(x) => x}
       emitSuccess={(x) => x}
+      classExistsOnDom={ (x) => x}
     />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -97,7 +99,7 @@ describe('PickListComponent', () => {
 
 
 
-    const wrapper = shallow(<PickListComponent
+    const wrapper = mount(<PickListContainer
       route={{type : 'objects'}}
       pickList={pickList}
       toggleNode={onToggleNode}
@@ -111,10 +113,13 @@ describe('PickListComponent', () => {
       emitError={(x) => x}
       emitSuccess={(x) => x}
       iconRendrer={ (x) => x}
+      classExistsOnDom={ (x) => x}
     />);
 
-    console.log(shallowToJson(wrapper));
-    console.log(wrapper.find({prop: 'pickList'}));
+
+    const t = wrapper.find('Grid').children(0).find('div');
+
+    console.log(mountToJson(t));
   });
 });
 
@@ -265,5 +270,3 @@ describe('PickListTable', () => {
   });
 
 });
-
-
