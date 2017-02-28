@@ -91,7 +91,6 @@ export class Option {
     }
     return func(this.value);
   }
-
 }
 
 const testing = process.env.NODE_ENV === 'test';

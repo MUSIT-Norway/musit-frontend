@@ -6,4 +6,3 @@ if (typeof localStorage === 'undefined' || localStorage === null) {
 import LanguageJson from '../language.json';
 import { I18n } from 'react-i18nify';
 I18n.loadTranslations(LanguageJson);
-I18n.setLocale('no');
