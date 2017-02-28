@@ -65,8 +65,8 @@ describe('PickListComponent', () => {
       emitError={(x) => x}
       emitSuccess={(x) => x}
       classExistsOnDom={(x) => x}
-      isTypeNode={(x) => true }
-      toggleScanner={(x) => true}
+      isTypeNode={() => true }
+      toggleScanner={() => true}
       scannerEnabled={true}
     />);
 
@@ -91,8 +91,8 @@ describe('PickListComponent', () => {
       emitError={(x) => x}
       emitSuccess={(x) => x}
       classExistsOnDom={ (x) => x}
-      isTypeNode={ (x) => false  }
-      toggleScanner={(x) => true}
+      isTypeNode={ () => false  }
+      toggleScanner={() => true}
       scannerEnabled={true}
     />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -120,8 +120,8 @@ describe('PickListComponent', () => {
       emitSuccess={(x) => x}
       iconRendrer={ (x) => x}
       classExistsOnDom={ (x) => x}
-      isTypeNode={ (x) => false }
-      toggleScanner={(x) => true}
+      isTypeNode={ () => false }
+      toggleScanner={() => true}
       scannerEnabled={true}
     />);
 
