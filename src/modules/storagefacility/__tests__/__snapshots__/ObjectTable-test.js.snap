@@ -19,13 +19,13 @@ exports[`ObjectTable should render properly  1`] = `
                 }
               } />
             <th>
-              Museum No.
+              Museumsnr.
             </th>
             <th>
-              U. No.
+              Unr.
             </th>
             <th>
-              Artefact/Species
+              Term/Artsnavn
             </th>
             <th />
             <th />
@@ -34,7 +34,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onPickObjects"
                 href=""
                 onClick={[Function onClick]}
-                title="Add all to picklist">
+                title="Legg til alle i plukklisten">
                 <FontAwesome
                   name="shopping-cart"
                   style={
@@ -72,7 +72,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onShowMoveHistory"
                 href=""
                 onClick={[Function onClick]}
-                title="Move history">
+                title="Flyttehistorikk">
                 <span
                   className="icon icon-musitmovehistoryicon" />
               </a>
@@ -82,7 +82,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Move object">
+                title="Flytt objektet">
                 <FontAwesome
                   name="truck"
                   style={
@@ -97,7 +97,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onPickObject"
                 href=""
                 onClick={[Function onClick]}
-                title="Add to picklist">
+                title="Legg til plukklisten">
                 <FontAwesome
                   name="shopping-cart"
                   style={
@@ -134,7 +134,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onShowMoveHistory"
                 href=""
                 onClick={[Function onClick]}
-                title="Move history">
+                title="Flyttehistorikk">
                 <span
                   className="icon icon-musitmovehistoryicon" />
               </a>
@@ -144,7 +144,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Move object">
+                title="Flytt objektet">
                 <FontAwesome
                   name="truck"
                   style={
@@ -159,7 +159,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onPickObject"
                 href=""
                 onClick={[Function onClick]}
-                title="Add to picklist">
+                title="Legg til plukklisten">
                 <FontAwesome
                   name="shopping-cart"
                   style={
@@ -194,7 +194,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onShowMoveHistory"
                 href=""
                 onClick={[Function onClick]}
-                title="Move history">
+                title="Flyttehistorikk">
                 <span
                   className="icon icon-musitmovehistoryicon" />
               </a>
@@ -204,7 +204,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Move object">
+                title="Flytt objektet">
                 <FontAwesome
                   name="truck"
                   style={
@@ -219,7 +219,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onPickObject"
                 href=""
                 onClick={[Function onClick]}
-                title="Add to picklist">
+                title="Legg til plukklisten">
                 <FontAwesome
                   name="shopping-cart"
                   style={
@@ -256,7 +256,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onShowMoveHistory"
                 href=""
                 onClick={[Function onClick]}
-                title="Move history">
+                title="Flyttehistorikk">
                 <span
                   className="icon icon-musitmovehistoryicon" />
               </a>
@@ -266,7 +266,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Move object">
+                title="Flytt objektet">
                 <FontAwesome
                   name="truck"
                   style={
@@ -281,7 +281,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onPickObject"
                 href=""
                 onClick={[Function onClick]}
-                title="Add to picklist">
+                title="Legg til plukklisten">
                 <FontAwesome
                   name="shopping-cart"
                   style={
@@ -316,7 +316,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onShowMoveHistory"
                 href=""
                 onClick={[Function onClick]}
-                title="Move history">
+                title="Flyttehistorikk">
                 <span
                   className="icon icon-musitmovehistoryicon" />
               </a>
@@ -326,7 +326,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onMoveClick"
                 href=""
                 onClick={[Function onClick]}
-                title="Move object">
+                title="Flytt objektet">
                 <FontAwesome
                   name="truck"
                   style={
@@ -341,7 +341,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="onPickObject"
                 href=""
                 onClick={[Function onClick]}
-                title="Add to picklist">
+                title="Legg til plukklisten">
                 <FontAwesome
                   name="shopping-cart"
                   style={

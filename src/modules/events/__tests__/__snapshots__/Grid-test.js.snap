@@ -169,19 +169,19 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                 <tr>
                   <th />
                   <th>
-                    Date
+                    Dato
                   </th>
                   <th>
-                    Types
+                    Typer
                   </th>
                   <th>
-                    Performed by
+                    Utført av
                   </th>
                   <th>
-                    Reg. date
+                    Reg. dato
                   </th>
                   <th>
-                    Reg. by
+                    Reg. av
                   </th>
                 </tr>
               </thead>
@@ -198,7 +198,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -214,7 +214,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Lighting condition" />
+                      title="Lysforhold" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -241,7 +241,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -257,7 +257,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Temperature" />
+                      title="Temperatur" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy" />
@@ -282,7 +282,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -298,7 +298,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Hypoxic air" />
+                      title="Inertluft" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -325,7 +325,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -341,7 +341,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Relative humidity" />
+                      title="Relativ luftfuktighet" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -368,7 +368,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -384,7 +384,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Cleaning" />
+                      title="Renhold" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -411,7 +411,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -427,7 +427,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Mold" />
+                      title="Mugg" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -454,7 +454,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -470,7 +470,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Alcohol" />
+                      title="Sprit" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -497,7 +497,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -513,7 +513,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Gas" />
+                      title="Gass" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -540,7 +540,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -556,7 +556,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Water damage assessment" />
+                      title="Vannskaderisiko" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -583,7 +583,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -599,7 +599,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Fire protection" />
+                      title="Brannsikring" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -626,7 +626,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -642,7 +642,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Theft protection" />
+                      title="Tyverisikring" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -669,7 +669,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -685,7 +685,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Perimeter security" />
+                      title="Skallsikring" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">
@@ -712,7 +712,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                     id="1_2017-01-01T09:42:52+00:00_type">
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Control" />
+                      title="Kontroll" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_date">
@@ -728,7 +728,7 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
                           "padding": "2px"
                         }
                       }
-                      title="Pest" />
+                      title="Skadedyr" />
                   </td>
                   <td
                     id="1_2017-01-01T09:42:52+00:00_doneBy">

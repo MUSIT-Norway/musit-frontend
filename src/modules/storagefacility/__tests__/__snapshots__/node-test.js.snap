@@ -26,7 +26,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
             "padding": "2px"
           }
         } />
-      New node
+      Ny node
     </Button>
   </div>
   <hr />
@@ -37,7 +37,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
         "textAlign": "center"
       }
     }>
-    No. of sub nodes:
+    Antall undernoder:
     <br />
     <ControlLabel
       bsClass="control-label"
@@ -52,7 +52,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
         "textAlign": "center"
       }
     }>
-    No. of objects:
+    Objekter på node:
     <br />
     <ControlLabel
       bsClass="control-label"
@@ -67,7 +67,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
         "textAlign": "center"
       }
     }>
-    Total no. of objects:
+    Totalt ant. objekter:
     <br />
     <ControlLabel
       bsClass="control-label"
@@ -104,7 +104,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
           }
         } />
       <br />
-      Properties
+      Egenskaper
     </Button>
   </div>
   <div
@@ -134,7 +134,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
           }
         } />
       <br />
-      Contr./Observ.
+      Kontr./Observ.
     </Button>
   </div>
   <div
@@ -165,7 +165,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
           }
         } />
       <br />
-      Move node
+      Flytt node
     </Button>
   </div>
   <div
@@ -196,7 +196,7 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
           }
         } />
       <br />
-      Delete
+      Slett
     </Button>
   </div>
 </div>
@@ -281,7 +281,7 @@ exports[`NodePanel should render properly  1`] = `
                     }
                   }>
                   
-                  Properties
+                  Egenskaper
                 </h4>
                 <function Grid() {
                     (0, _classCallCheck3['default'])(this, Grid);
@@ -343,8 +343,8 @@ exports[`NodePanel should render properly  1`] = `
                               }
                               maximumLength={100}
                               onChange={[Function onChange]}
-                              placeHolder="Please choose..."
-                              tooltip="Type of node"
+                              placeHolder="Vennligst velg..."
+                              tooltip="Nodens type"
                               translateKeyPrefix="musit.storageUnits.type.items."
                               validate="text"
                               value="Organisation" />
@@ -391,7 +391,7 @@ exports[`NodePanel should render properly  1`] = `
                           <label
                             className="col-sm-3 control-label"
                             htmlFor="name">
-                            Name
+                            Navn
                             <span
                               style={
                                 Object {
@@ -408,8 +408,8 @@ exports[`NodePanel should render properly  1`] = `
                               id="name"
                               maximumLength={100}
                               onChange={[Function onChange]}
-                              placeHolder="Free text"
-                              tooltip="Node name"
+                              placeHolder="Fritekst"
+                              tooltip="Navn på noden"
                               validate="text"
                               value="NHM" />
                           </div>
@@ -448,7 +448,7 @@ exports[`NodePanel should render properly  1`] = `
                           <label
                             className="col-sm-3 control-label"
                             htmlFor="address">
-                            Address
+                            Adresse
                           </label>
                           <div
                             class="col-sm-8"
@@ -504,7 +504,7 @@ exports[`NodePanel should render properly  1`] = `
                           <label
                             className="col-sm-3 control-label"
                             htmlFor="comments2">
-                            Area
+                            Areal
                           </label>
                           <div
                             class="col-sm-4"
@@ -512,9 +512,9 @@ exports[`NodePanel should render properly  1`] = `
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="area"
                               onChange={[Function onChange]}
-                              placeHolder="from"
+                              placeHolder="fra"
                               precision={3}
-                              tooltip="Node area in m²"
+                              tooltip="Nodens areal i m²"
                               validate="number"
                               value="10" />
                           </div>
@@ -524,9 +524,9 @@ exports[`NodePanel should render properly  1`] = `
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="areaTo"
                               onChange={[Function onChange]}
-                              placeHolder="to"
+                              placeHolder="til"
                               precision={3}
-                              tooltip="Node area in m²"
+                              tooltip="Nodens areal i m²"
                               validate="number"
                               value="12" />
                           </div>
@@ -559,7 +559,7 @@ exports[`NodePanel should render properly  1`] = `
                           <label
                             className="col-sm-3 control-label"
                             htmlFor="controlId">
-                            Height
+                            Høyde
                           </label>
                           <div
                             class="col-sm-4"
@@ -567,9 +567,9 @@ exports[`NodePanel should render properly  1`] = `
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="height"
                               onChange={[Function onChange]}
-                              placeHolder="from"
+                              placeHolder="fra"
                               precision={3}
-                              tooltip="Node height in m"
+                              tooltip="Nodens høyde i m"
                               validate="number"
                               value="3" />
                           </div>
@@ -579,9 +579,9 @@ exports[`NodePanel should render properly  1`] = `
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="heightTo"
                               onChange={[Function onChange]}
-                              placeHolder="to"
+                              placeHolder="til"
                               precision={3}
-                              tooltip="Node height in m"
+                              tooltip="Nodens høyde i m"
                               validate="number"
                               value="5" />
                           </div>
@@ -620,7 +620,7 @@ exports[`NodePanel should render properly  1`] = `
                       }
                     }>
                     <h4>
-                      Environmental conditions
+                      Miljødata
                     </h4>
                   </function Col() {
                       (0, _classCallCheck3['default'])(this, Col);
@@ -665,7 +665,7 @@ exports[`NodePanel should render properly  1`] = `
                             <label
                               className="col-sm-3 control-label"
                               htmlFor="comments2">
-                              Temperature
+                              Temperatur
                             </label>
                             <div
                               class="col-sm-4"
@@ -675,7 +675,7 @@ exports[`NodePanel should render properly  1`] = `
                                 onChange={[Function onChange]}
                                 placeHolder="°C"
                                 precision={3}
-                                tooltip="Temperature requirement in °C"
+                                tooltip="Krav til temperatur i °C"
                                 validate="number"
                                 value="12" />
                             </div>
@@ -687,7 +687,7 @@ exports[`NodePanel should render properly  1`] = `
                                 onChange={[Function onChange]}
                                 placeHolder="°C"
                                 precision={0}
-                                tooltip="Tolerance"
+                                tooltip="Toleranse"
                                 validate="number"
                                 value="3" />
                             </div>
@@ -720,7 +720,7 @@ exports[`NodePanel should render properly  1`] = `
                             <label
                               className="col-sm-3 control-label"
                               htmlFor="comments2">
-                              Rel. humidity
+                              Rel. luftfuktighet
                             </label>
                             <div
                               class="col-sm-4"
@@ -730,7 +730,7 @@ exports[`NodePanel should render properly  1`] = `
                                 onChange={[Function onChange]}
                                 placeHolder="%"
                                 precision={3}
-                                tooltip="Relative humidity requirement in %"
+                                tooltip="Krav til relativ luftfuktighet i %"
                                 validate="number"
                                 value="67" />
                             </div>
@@ -742,7 +742,7 @@ exports[`NodePanel should render properly  1`] = `
                                 onChange={[Function onChange]}
                                 placeHolder="%"
                                 precision={0}
-                                tooltip="Tolerance"
+                                tooltip="Toleranse"
                                 validate="number"
                                 value="2" />
                             </div>
@@ -786,7 +786,7 @@ exports[`NodePanel should render properly  1`] = `
                             <label
                               className="col-sm-3 control-label"
                               htmlFor="comments2">
-                              Hypoxic air
+                              Inertluft
                             </label>
                             <div
                               class="col-sm-4"
@@ -796,7 +796,7 @@ exports[`NodePanel should render properly  1`] = `
                                 onChange={[Function onChange]}
                                 placeHolder="% O₂"
                                 precision={3}
-                                tooltip="Hypoxic air requirement in % O₂"
+                                tooltip="Krav til inertluft i % O₂"
                                 validate="number"
                                 value="23" />
                             </div>
@@ -808,7 +808,7 @@ exports[`NodePanel should render properly  1`] = `
                                 onChange={[Function onChange]}
                                 placeHolder="% O₂"
                                 precision={0}
-                                tooltip="Tolerance"
+                                tooltip="Toleranse"
                                 validate="number"
                                 value="2" />
                             </div>
@@ -844,7 +844,7 @@ exports[`NodePanel should render properly  1`] = `
                             <label
                               className="col-sm-3 control-label"
                               htmlFor="cleaning">
-                              Cleaning
+                              Renhold
                             </label>
                             <div
                               class="col-sm-8"
@@ -853,7 +853,7 @@ exports[`NodePanel should render properly  1`] = `
                                 id="cleaning"
                                 maximumLength={100}
                                 onChange={[Function onChange]}
-                                tooltip="Cleaning requirement"
+                                tooltip="Krav til renhold"
                                 validate="text"
                                 value="Urent" />
                             </div>
@@ -903,7 +903,7 @@ exports[`NodePanel should render properly  1`] = `
                             <label
                               className="col-sm-3 control-label"
                               htmlFor="lightingCondition">
-                              Lighting condition
+                              Lysforhold
                             </label>
                             <div
                               class="col-sm-8"
@@ -912,7 +912,7 @@ exports[`NodePanel should render properly  1`] = `
                                 id="lightingCondition"
                                 maximumLength={100}
                                 onChange={[Function onChange]}
-                                tooltip="Lighting condition requirement"
+                                tooltip="Krav til lysforhold"
                                 validate="text"
                                 value="For mørkt" />
                             </div>
@@ -961,7 +961,7 @@ exports[`NodePanel should render properly  1`] = `
                             <label
                               className="col-sm-3 control-label"
                               htmlFor="comments">
-                              Comment
+                              Kommentar
                             </label>
                             <div
                               class="col-sm-8"
@@ -971,7 +971,7 @@ exports[`NodePanel should render properly  1`] = `
                                 maximumLength={250}
                                 numberOfRows={4}
                                 onChange={[Function onChange]}
-                                tooltip="Comment"
+                                tooltip="Kommentar"
                                 validate="text"
                                 value="Hei hei" />
                             </div>
@@ -1037,13 +1037,13 @@ exports[`NodePanel should render properly  1`] = `
                       sm={4}>
                       <span>
                         <b>
-                          Last updated by: 
+                          Sist endret av: 
                         </b>
                          
                         Jarl André Hübenthal
                         <br />
                         <b>
-                          Last updated: 
+                          Sist endret dato: 
                         </b>
                         19.02.2017
                       </span>
@@ -1118,6 +1118,6 @@ exports[`NodePanel should render properly  1`] = `
         }
       } />
   }
-  title="Storage facility"
+  title="Magasin"
   toolbar={<span />} />
 `;

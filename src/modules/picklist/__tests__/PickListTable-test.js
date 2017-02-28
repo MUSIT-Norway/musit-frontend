@@ -64,7 +64,10 @@ describe('PickListComponent', () => {
       refreshObjects={(x) => x}
       emitError={(x) => x}
       emitSuccess={(x) => x}
-      classExistsOnDom={ (x) => x}
+      classExistsOnDom={(x) => x}
+      isTypeNode={(x) => true }
+      toggleScanner={(x) => true}
+      scannerEnabled={true}
     />);
 
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -88,6 +91,9 @@ describe('PickListComponent', () => {
       emitError={(x) => x}
       emitSuccess={(x) => x}
       classExistsOnDom={ (x) => x}
+      isTypeNode={ (x) => false  }
+      toggleScanner={(x) => true}
+      scannerEnabled={true}
     />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -114,10 +120,13 @@ describe('PickListComponent', () => {
       emitSuccess={(x) => x}
       iconRendrer={ (x) => x}
       classExistsOnDom={ (x) => x}
+      isTypeNode={ (x) => false }
+      toggleScanner={(x) => true}
+      scannerEnabled={true}
     />);
 
 
-    const t = wrapper.find('Grid').children(0).find('div');
+    const t = wrapper.find('Grid').children().find('div');
 
     console.log(mountToJson(t));
   });
