@@ -104,7 +104,6 @@ describe('PickListComponent', () => {
     const onToggleObject = sinon.spy();
 
 
-
     const wrapper = mount(<PickListContainer
       route={{type : 'objects'}}
       pickList={pickList}
@@ -125,8 +124,10 @@ describe('PickListComponent', () => {
       scannerEnabled={true}
     />);
 
-
-    const t = wrapper.find('Grid').children().find('div');
+    const t = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('th').first();
+    const a = t.find({name: 'truck'});
+    a.simulate('click');
+    e(PickListContainer.prototype.moveModal).to.have.property('callcount', 1);
 
     console.log(mountToJson(t));
   });
