@@ -59,7 +59,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="icon icon-musitobject" />
             </td>
             <td>
-               TRH-V-1-2
+              TRH-V-1-2
             </td>
             <td>
               2
@@ -121,7 +121,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="icon icon-musitobject" />
             </td>
             <td>
-               TRH-V-2
+              TRH-V-2
             </td>
             <td>
               2
@@ -183,7 +183,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="icon icon-musitobject" />
             </td>
             <td>
-               UEM3
+              UEM3
             </td>
             <td />
             <td>
@@ -243,7 +243,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="icon icon-musitobject" />
             </td>
             <td>
-               BG233
+              BG233
             </td>
             <td>
               233
@@ -305,7 +305,7 @@ exports[`ObjectTable should render properly  1`] = `
                 className="icon icon-musitobject" />
             </td>
             <td>
-               O-L-233
+              O-L-233
             </td>
             <td />
             <td>

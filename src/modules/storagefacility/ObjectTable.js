@@ -8,7 +8,7 @@ export default class ObjectGrid extends Component {
   static propTypes = {
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
-      museumNo: PropTypes.string.isRequired,
+      museumNo: PropTypes.string,
       subNo: PropTypes.string,
       term: PropTypes.string.isRequired
     })).isRequired,
@@ -61,7 +61,7 @@ export default class ObjectGrid extends Component {
                       <span className="icon icon-musitobject"/>
                     </td>
                     <td>
-                      {` ${c.museumNo}`}
+                      {c.museumNo}
                     </td>
                     <td>
                       {c.subNo}
