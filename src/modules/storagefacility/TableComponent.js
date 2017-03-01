@@ -425,10 +425,8 @@ export class TableComponent extends React.Component {
               currentPage={currentPage}
               perPage={Config.magasin.limit}
               onClick={(cp) => {
-                const midPath = this.props.appSession.getMuseumId().getPath();
-                const cidPath = this.props.appSession.getCollectionId().getPath();
                 hashHistory.replace({
-                  pathname: '/' + midPath + '/' + cidPath + '/magasin/' + rootNode.id + '/objects',
+                  pathname: Config.magasin.urls.client.storagefacility.goToObjects(rootNode.id, this.props.appSession),
                   state: {
                     currentPage: cp
                   }
