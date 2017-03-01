@@ -19,7 +19,7 @@ describe('PickListComponent', () => {
         path: [1]
       },
       {
-        marked: false,
+        marked: true,
         value: {id: 2, name: 'Hei'},
         path: [1, 2]
       },
@@ -36,14 +36,15 @@ describe('PickListComponent', () => {
     ],
     objects: [
       {
-        marked: false,
-        value: {id: 1, name: 'Test21'},
+        marked: true,
+        value: {id: 1, name: 'Test21', mainObjectId: 1},
+        isMainObject: () => true,
         path: [1]
       },
       {
         marked: true,
         value: {id: 2, mainObjectId: 1, name: 'Test2'},
-        isMainObject: () => true,
+        isMainObject: () => false,
         path: [1, 2]
       },
       {
@@ -142,6 +143,7 @@ describe('PickListComponent', () => {
     const onToggleObject = sinon.spy();
     const onRemoveObject = sinon.spy();
     const onRemoveNode = sinon.spy();
+    const onToggleMainObject = sinon.spy();
 
 
     const wrapper = mount(<PickListContainer
@@ -149,7 +151,7 @@ describe('PickListComponent', () => {
       pickList={pickList}
       toggleNode={onToggleNode}
       toggleObject={onToggleObject}
-      toggleMainObject={(x) => x}
+      toggleMainObject={onToggleMainObject}
       removeNode={onRemoveNode}
       removeObject={onRemoveObject}
       appSession={ new AppSession()}
@@ -167,6 +169,12 @@ describe('PickListComponent', () => {
     const t = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(2);
     t.simulate('click');
     e(onRemoveObject.calledOnce).to.equal(true);
+
+    const mo = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(0).find('input');
+
+    console.log(mountToJson(mo));
+    mo.simulate('change');
+    e(onToggleMainObject.calledOnce).to.equal(true);
   });
 
 
