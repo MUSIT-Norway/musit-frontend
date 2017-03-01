@@ -380,12 +380,12 @@ export class TableComponent extends React.Component {
                   });
                 },
                 onFailure: (e) => {
-                  if (e.status===403) {
+                  if (e.status === 403) {
                     this.props.emitError({
                       type: 'deleteError',
                       message: I18n.t('musit.errorMainMessages.notAllowed')
                     });
-                  } else if (e.status===400) {
+                  } else if (e.status === 400) {
                     this.props.emitError({
                       type: 'deleteError',
                       message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')
@@ -426,8 +426,7 @@ export class TableComponent extends React.Component {
       return (
         <Loader loaded={!isLoading}>
           <ObjectGrid
-            tableData={matches && matches[0] && !!matches[0].museumNo ?
-              filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
+            tableData={matches ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             pickObject={(object) =>
               this.props.pickObject({
@@ -464,8 +463,7 @@ export class TableComponent extends React.Component {
     return (
       <Loader loaded={!isLoading}>
         <NodeGrid
-          tableData={matches && matches[0] && !!matches[0].name ?
-            filter(matches, ['name'], searchPattern) : []}
+          tableData={matches ? filter(matches, ['name'], searchPattern) : []}
           goToEvents={(node) => this.props.goTo(`/magasin/${node.id}/controlsobservations`)}
           onMove={moveNode}
           pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
