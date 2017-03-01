@@ -13,6 +13,7 @@ import store$, {
   loadEvents$
 } from './eventsStore';
 import Loader from 'react-loader';
+import Config from '../../config';
 
 export class EventsComponent extends React.Component {
   static propTypes = {
@@ -69,8 +70,10 @@ export class EventsComponent extends React.Component {
         id={this.props.params.id}
         selectObservation
         selectControl
-        onClickNewObservation={() => hashHistory.push(`/magasin/${this.props.params.id}/observation/add`)}
-        onClickNewControl={() => hashHistory.push(`/magasin/${this.props.params.id}/control/add`)}
+        onClickNewObservation={() =>
+          hashHistory.push(Config.magasin.urls.client.storagefacility.addObservation(this.props.params.id, this.props.appSession))
+        }
+        onClickNewControl={() => hashHistory.push(Config.magasin.urls.client.storagefacility.addControl(this.props.params.id, this.props.appSession))}
       />
     </div>;
   }
@@ -98,6 +101,7 @@ export class EventsComponent extends React.Component {
     }
     return <ObservationControlGrid
       id={this.props.params.id}
+      appSession={this.props.appSession}
       tableData={filtered}
     />;
   }

@@ -15,6 +15,7 @@ import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSessi
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import { clearObjects$ as clearObjectPicklist$, clearNodes$ as clearNodePicklist$ } from './pickList';
+import Config from '../../config';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -65,21 +66,18 @@ export class AppComponent extends Component {
     this.props.setCollectionId(cid);
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
-    const midPath = mid.getPath();
-    const cidPath = cid.getPath();
-    hashHistory.push('/' + midPath + '/' + cidPath + '/magasin');
+    hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
   }
 
   handleCollectionId(cid) {
     this.props.setCollectionId(cid);
     this.props.clearObjectPicklist();
     const nodeId = this.props.params.id;
-    const midPath = this.props.appSession.getMuseumId().getPath();
-    const cidPath = cid.getPath();
+    const appSession = this.props.appSession;
     if (nodeId) {
-      hashHistory.push('/' + midPath + '/' + cidPath + '/magasin/' + nodeId);
+      hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(nodeId, appSession));
     } else {
-      hashHistory.push('/' + midPath + '/' + cidPath + '/magasin');
+      hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
   }
 

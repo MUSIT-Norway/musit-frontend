@@ -16,15 +16,24 @@ export default {
             `${clientContextUrl(appSession)}/magasin`,
           goToNode: (node, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${node.id}`,
+          addNode: (node, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${node.id}/add`,
+          editNode: (node, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${node.id}/view`,
           goToObjects: (node, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${node.id}/objects`,
-          addObservation: '',
-          editObservation: '',
-          viewObservation: '',
-          addControl: '',
-          viewControl: '',
-          addNode: '',
-          editNode: ''
+          addObservation: (id, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${id}/observation/add`,
+          editObservation: (id, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${id}/observation/edit`,
+          viewObservation: (nodeId, observationId, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/${observationId}`,
+          addControl: (id, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${id}/control/add`,
+          viewControl: (nodeId, controlId, appSession : AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/control/${controlId}`,
+          viewControlsObservations: (id, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${id}/controlsobservations`
         }
       },
       api: {
