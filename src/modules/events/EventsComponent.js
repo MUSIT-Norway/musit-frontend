@@ -1,6 +1,6 @@
 import React from 'react';
-import ObservationControlGrid from './EventsGrid';
-import ObservationControlComponent from './EventsLeftMenu';
+import EventsGrid from './EventsGrid';
+import EventsLeftMenu from './EventsLeftMenu';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import Toolbar from '../../components/layout/Toolbar';
@@ -65,15 +65,15 @@ export class EventsComponent extends React.Component {
   }
 
   makeLeftMenu() {
+    const nodeId = this.props.params.id;
+    const appSession = this.props.appSession;
     return <div style={{ paddingTop: 10 }}>
-      <ObservationControlComponent
+      <EventsLeftMenu
         id={this.props.params.id}
         selectObservation
         selectControl
-        onClickNewObservation={() =>
-          hashHistory.push(Config.magasin.urls.client.storagefacility.addObservation(this.props.params.id, this.props.appSession))
-        }
-        onClickNewControl={() => hashHistory.push(Config.magasin.urls.client.storagefacility.addControl(this.props.params.id, this.props.appSession))}
+        onClickNewObservation={() => hashHistory.push(Config.magasin.urls.client.storagefacility.addObservation(nodeId, appSession))}
+        onClickNewControl={() => hashHistory.push(Config.magasin.urls.client.storagefacility.addControl(nodeId, appSession))}
       />
     </div>;
   }
@@ -99,11 +99,23 @@ export class EventsComponent extends React.Component {
         </div>
       );
     }
-    return <ObservationControlGrid
-      id={this.props.params.id}
-      appSession={this.props.appSession}
+    const nodeId = this.props.params.id;
+    const appSession = this.props.appSession;
+    return <EventsGrid
+      id={nodeId}
+      showControl={ctl => hashHistory.push(Config.magasin.urls.client.storagefacility.viewControl(nodeId, ctl.id, appSession))}
+      showObservation={obs => hashHistory.push(Config.magasin.urls.client.storagefacility.viewObservation(nodeId, obs.id, appSession))}
       tableData={filtered}
     />;
+  }
+
+  showNodes(node) {
+    const appSession = this.props.appSession;
+    if (node && node.id) {
+      hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, appSession));
+    } else {
+      hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
+    }
   }
 
   render() {
@@ -113,7 +125,7 @@ export class EventsComponent extends React.Component {
         breadcrumb={
           <Breadcrumb
             node={this.props.store.rootNode}
-            onClickCrumb={(node) => hashHistory.push(node.url)}
+            onClickCrumb={(node) => this.showNodes(node)}
             allActive
           />
         }

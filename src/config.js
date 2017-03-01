@@ -14,14 +14,14 @@ export default {
         storagefacility: {
           goToRoot: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin`,
-          goToNode: (node, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${node.id}`,
-          addNode: (node, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${node.id}/add`,
-          editNode: (node, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${node.id}/view`,
-          goToObjects: (node, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${node.id}/objects`,
+          goToNode: (id, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${id}`,
+          addNode: (id, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${id}/add`,
+          editNode: (id, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${id}/view`,
+          goToObjects: (id, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${id}/objects`,
           addObservation: (id, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${id}/observation/add`,
           editObservation: (id, appSession: AppSession) =>

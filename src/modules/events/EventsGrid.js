@@ -1,18 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
-import { hashHistory } from 'react-router';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import reduce from 'lodash/reduce';
 import keys from 'lodash/keys';
 import map from 'lodash/map';
-import Config from '../../config';
 
 export default class ObservationControlGrid extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    appSession: PropTypes.object,
-    showMode: PropTypes.oneOf(['ALL', 'CONTROLS', 'OBSERVATIONS', '']),
+    showControl: PropTypes.func.isRequired,
+    showObservation: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       eventType: PropTypes.string.isRequired,
@@ -115,13 +113,9 @@ export default class ObservationControlGrid extends Component {
                     id={`${controlOrObservation.id}_${controlOrObservation.doneDate}`}
                     onClick={() => {
                       if (controlOrObservation.eventType.toLowerCase() === 'control') {
-                        hashHistory.push(
-                          Config.magasin.urls.client.storagefacility.viewControl(this.props.id, controlOrObservation.id, this.props.appSession)
-                          );
+                        this.props.showControl(controlOrObservation);
                       } else {
-                        hashHistory.push(
-                          Config.magasin.urls.client.storagefacility.viewObservation(this.props.id, controlOrObservation.id, this.props.appSession)
-                          );
+                        this.props.showObservation(controlOrObservation);
                       }
                     }}
                   >
