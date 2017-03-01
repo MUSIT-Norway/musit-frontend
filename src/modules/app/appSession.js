@@ -51,11 +51,11 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
     return Observable.empty();
   }
   return Observable.forkJoin(
-    ajaxGet(Config.magasin.urls.auth.buildInfo, accessToken),
-    ajaxGet(Config.magasin.urls.actor.currentUser, accessToken),
-    ajaxGet(Config.magasin.urls.auth.museumsUrl, accessToken)
+    ajaxGet(Config.magasin.urls.api.auth.buildInfo, accessToken),
+    ajaxGet(Config.magasin.urls.api.actor.currentUser, accessToken),
+    ajaxGet(Config.magasin.urls.api.auth.museumsUrl, accessToken)
   ).switchMap(([buildInfoRes, currentUserRes, museumsRes]) =>
-    ajaxGet(Config.magasin.urls.auth.groupsUrl(currentUserRes.response.dataportenUser), accessToken)
+    ajaxGet(Config.magasin.urls.api.auth.groupsUrl(currentUserRes.response.dataportenUser), accessToken)
       .map(({response}) => {
         if (!response) {
           throw new Error(I18n.t('musit.errorMainMessages.noGroups'));

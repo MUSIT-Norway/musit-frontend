@@ -12,7 +12,7 @@ class Control {
 }
 
 Control.loadControls = (ajaxGet =  simpleGet) => ({ nodeId, museumId, token, callback }) => {
-  return ajaxGet(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`, token, callback)
+  return ajaxGet(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls`, token, callback)
     .map(({ response }) => response)
     .map(arr => {
       if (!arr) {
@@ -24,12 +24,12 @@ Control.loadControls = (ajaxGet =  simpleGet) => ({ nodeId, museumId, token, cal
 
 Control.addControl = (ajaxPost = simplePost) => ({ nodeId, controlData, observations, museumId, token, callback }) => {
   const data = mapToBackend(controlData, observations, nodeId);
-  const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
-  return ajaxPost(url, data, token, callback);
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
+  return ajaxPost(url, {...data, number: data.person  * 1}, token, callback);
 };
 
 Control.getControl = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({ nodeId, controlId, museumId, token, callback }) => {
-  const url = `${Config.magasin.urls.storagefacility.baseUrl(museumId)}/${nodeId}/controls/${controlId}`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls/${controlId}`;
   return ajaxGet(url, token, callback)
     .flatMap(control => {
       if (!control.response) {

@@ -100,10 +100,6 @@ export const apiUrl = (url: string): string => {
   return `${testing ? 'http://localhost' : ''}${url}`;
 };
 
-export const isNumber = (n: number) => {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
-
 export const getPath = (node: any) => {
   const nodeIds = (node.path != null ? node.path : '').split(',').slice(1).map(p => parseFloat(p)).filter(n => n);
   const pathNames = node.pathNames || [{
@@ -124,15 +120,4 @@ export const getPath = (node: any) => {
       url: '/magasin/' + pathMatch.nodeId
     };
   });
-};
-
-export const getLocationPath = () => {
-  const hash = window.location.hash;
-  if (hash.indexOf('#') === -1) {
-    return hash;
-  }
-  if (hash.indexOf('?') === -1) {
-    return hash.substr(1);
-  }
-  return hash.substr(1, hash.indexOf('?') - 1);
 };

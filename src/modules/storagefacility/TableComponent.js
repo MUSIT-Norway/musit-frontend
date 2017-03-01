@@ -57,7 +57,8 @@ export class TableComponent extends React.Component {
     pickList: React.PropTypes.object.isRequired,
     isItemAdded: React.PropTypes.func.isRequired,
     toggleScanner: React.PropTypes.func.isRequired,
-    scannerEnabled: React.PropTypes.bool.isRequired
+    scannerEnabled: React.PropTypes.bool.isRequired,
+    goTo: React.PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -69,14 +70,12 @@ export class TableComponent extends React.Component {
     this.moveNode = this.moveNode.bind(this);
     this.moveObject = this.moveObject.bind(this);
     this.showObjectMoveHistory = this.showObjectMoveHistory.bind(this);
-    this.onClickCrumb = this.onClickCrumb.bind(this);
     this.showMoveNodeModal = this.showMoveNodeModal.bind(this);
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
+    this.showNodes = this.showNodes.bind(this);
   }
 
-  getCurrentPage(
-    state = this.props.location.state
-  ) {
+  getCurrentPage(state = this.props.location.state) {
     return state && state.currentPage;
   }
 
@@ -147,31 +146,21 @@ export class TableComponent extends React.Component {
     }
   }
 
-  onClickCrumb(node) {
-    this.props.goTo(node.url);
-  }
-
-  showNodes(
-    node = this.props.tableStore.rootNode
-  ) {
-    const midPath = this.props.appSession.getMuseumId().getPath();
-    const cidPath = this.props.appSession.getCollectionId().getPath();
+  showNodes(node = this.props.tableStore.rootNode) {
+    const appSession = this.props.appSession;
     if (node && node.id) {
-      this.props.goTo('/' + midPath + '/' + cidPath + '/magasin/' + node.id);
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(node, appSession));
     } else {
-      this.props.goTo('/' + midPath + '/' + cidPath + '/magasin');
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
   }
 
-  showObjects(
-    node = this.props.tableStore.rootNode
-  ) {
-    const midPath = this.props.appSession.getMuseumId().getPath();
-    const cidPath = this.props.appSession.getCollectionId().getPath();
+  showObjects(node = this.props.tableStore.rootNode) {
+    const appSession = this.props.appSession;
     if (node) {
-      this.props.goTo('/' + midPath + '/' + cidPath + '/magasin/' + node.id + '/objects');
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(node, appSession));
     } else {
-      this.props.goTo('/' + midPath + '/' + cidPath + '/magasin');
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
   }
 
@@ -209,9 +198,7 @@ export class TableComponent extends React.Component {
     }
   }
 
-  showMoveNodeModal(
-    nodeToMove
-  ) {
+  showMoveNodeModal(nodeToMove) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
     this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />);
   }
@@ -512,7 +499,7 @@ export class TableComponent extends React.Component {
     return (
       <Layout
         title={title}
-        breadcrumb={<Breadcrumb node={this.props.tableStore.rootNode} onClickCrumb={this.onClickCrumb} />}
+        breadcrumb={<Breadcrumb node={this.props.tableStore.rootNode} onClickCrumb={this.showNodes} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContentGrid()}
