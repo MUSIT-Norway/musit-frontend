@@ -179,7 +179,6 @@ describe('PickListComponent', () => {
     e(onToggleMainObject.calledOnce).to.equal(true);
 
     const o = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(2).childAt(0).childAt(0).childAt(0);
-    console.log(mountToJson(o));
     o.simulate('change');
     e(onToggleObject.calledOnce).to.equal(true);
   });
