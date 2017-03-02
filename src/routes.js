@@ -35,6 +35,7 @@ import ControlAddContainer from './modules/control/ControlAddComponent';
 import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
+import SampleComponentAdd from './modules/sample/sampleComponent';
 import * as path from './routes.path';
 
 export default () => {
@@ -56,6 +57,7 @@ export default () => {
         <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
         <Route path={path.ROUTE_SF_OBJECTS} showObjects component={StorageUnitsTable} />
         <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
+        <Route path={path.ROUTE_ANALYSIS_SAMPLE_ADD} component={SampleComponentAdd}/>
       </Route>
       <Route path={path.ROUTE_PICKLIST_ROOT}>
         <Route path="nodes" type="nodes" component={PickListView} />
