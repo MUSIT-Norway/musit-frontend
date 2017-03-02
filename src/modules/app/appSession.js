@@ -48,7 +48,7 @@ const getAppSession = () => {
   return session;
 };
 
-const initialState = {};
+const initialState = getAppSession();
 
 const loadAppSession = (ajaxGet = simpleGet) => {
   const session = getAppSession();
