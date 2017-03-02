@@ -117,7 +117,7 @@ export const getPath = (node: any) => {
     return {
       id: pathMatch.nodeId,
       name: pathMatch.name,
-      url: '/magasin/' + pathMatch.nodeId
+      url: ' '
     };
   });
 };

@@ -1,7 +1,7 @@
-export const ROUTE_PICKLIST_ROOT = '/picklist/';
-export const ROUTE_REPORTS = '/reports';
-export const ROUTE_REPORTS_KDREPORT = '/reports/kdreport';
-export const ROUTE_SEARCH_OBJECTS = '/search/objects';
+export const ROUTE_PICKLIST_ROOT = '/(museum/:museumId/)(collections/:collectionIds/)picklist/';
+export const ROUTE_REPORTS = '/(museum/:museumId/)(collections/:collectionIds/)reports';
+export const ROUTE_REPORTS_KDREPORT = '/(museum/:museumId/)(collections/:collectionIds/)reports/kdreport';
+export const ROUTE_SEARCH_OBJECTS = '/(museum/:museumId/)(collections/:collectionIds/)search/objects';
 export const ROUTE_SF = '/(museum/:museumId/)(collections/:collectionIds/)magasin';
 export const ROUTE_SF_ADD = '/(museum/:museumId/)(collections/:collectionIds/)magasin/add';
 export const ROUTE_SF_NODE = '/(museum/:museumId/)(collections/:collectionIds/)magasin/:id';

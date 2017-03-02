@@ -25,7 +25,7 @@ Control.loadControls = (ajaxGet =  simpleGet) => ({ nodeId, museumId, token, cal
 Control.addControl = (ajaxPost = simplePost) => ({ nodeId, controlData, observations, museumId, token, callback }) => {
   const data = mapToBackend(controlData, observations, nodeId);
   const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
-  return ajaxPost(url, {...data, number: data.person  * 1}, token, callback);
+  return ajaxPost(url, data, token, callback);
 };
 
 Control.getControl = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({ nodeId, controlId, museumId, token, callback }) => {

@@ -13,6 +13,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import objectSearchStore$, {clearSearch$, searchForObjects$, onChangeField$} from './objectSearchStore';
 import { addObject$ } from '../app/pickList';
 import pickList$, { isItemAdded } from '../app/pickList';
+import Config from '../../config';
 
 export class ObjectSearchComponent extends React.Component {
   constructor(props) {
@@ -114,7 +115,9 @@ export class ObjectSearchComponent extends React.Component {
                             <Breadcrumb
                               node={data}
                               allActive
-                              onClickCrumb={(node) => hashHistory.push(node.url) }
+                              onClickCrumb={(node) => hashHistory.push(
+                                Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession)
+                                )}
                             />
                             }
                           </td>

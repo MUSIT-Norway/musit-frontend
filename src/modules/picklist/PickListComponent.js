@@ -29,6 +29,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
 import scannerIcon from '../app/scannerIcon.png';
 import connectToScanner from '../app/scanner';
+import Config from '../../config';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -229,7 +230,9 @@ export class PickListContainer extends React.Component {
                     <div className="labelText">
                       <Breadcrumb
                         node={pick.path}
-                        onClickCrumb={node => hashHistory.push(`/magasin/${!node.id || node.id === -1 ? '' : node.id}`)}
+                        onClickCrumb={node => hashHistory.push(
+                          Config.magasin.urls.client.storagefacility.goToNode(!node.id || node.id === -1 ? '' : node.id, this.props.appSession)
+                          )}
                         allActive
                       />
                     </div>

@@ -39,6 +39,16 @@ export class AppSession {
   getBuildNumber() {
     return this.state.buildInfo && this.state.buildInfo.buildInfoBuildNumber;
   }
+
+  /**
+   * Similar to copy on case classes in Scala
+   *
+   * @param props properties that should override properties in appSession state
+   * @returns {AppSession}
+   */
+  copy(props) {
+    return new AppSession({...this.state, ...props});
+  }
 }
 
 const initialState = { accessToken: getAccessToken() };

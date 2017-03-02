@@ -61,23 +61,24 @@ export class AppComponent extends Component {
     window.location.reload(true);
   }
 
-  handleMuseumId(mid, cid) {
-    this.props.setMuseumId(mid);
-    this.props.setCollectionId(cid);
+  handleMuseumId(museumId, collectionId) {
+    this.props.setMuseumId(museumId);
+    this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
-    hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
+    const localAppSession = this.props.appSession.copy({museumId, collectionId});
+    hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
   }
 
-  handleCollectionId(cid) {
-    this.props.setCollectionId(cid);
+  handleCollectionId(collectionId) {
+    this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
     const nodeId = this.props.params.id;
-    const appSession = this.props.appSession;
+    const localAppSession = this.props.appSession.copy({collectionId});
     if (nodeId) {
-      hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(nodeId, appSession));
+      hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession));
     } else {
-      hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
+      hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
     }
   }
 
@@ -129,18 +130,18 @@ export class AppComponent extends Component {
               <LinkContainer to="/magasin">
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
-              <LinkContainer to="/reports">
+              <LinkContainer to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
             </Nav>
             <Nav pullRight>
-              <LinkContainer to="/picklist/nodes">
+              <LinkContainer to={Config.magasin.urls.client.picklist.goToPicklistNodes(this.props.appSession)}>
                 <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.pickList.nodes.length}</NavItem>
               </LinkContainer>
-              <LinkContainer to="/picklist/objects">
+              <LinkContainer to={Config.magasin.urls.client.picklist.goToPicklistObjects(this.props.appSession)}>
                 <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.pickList.objects.length}</NavItem>
               </LinkContainer>
-              <LinkContainer to={'/search/objects'}>
+              <LinkContainer to={Config.magasin.urls.client.searchObjects.goToSearchObjects(this.props.appSession)}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em', height: 25 }} /></NavItem>
               </LinkContainer>
               <MusitUserAccount
