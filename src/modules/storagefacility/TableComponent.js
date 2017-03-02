@@ -335,7 +335,7 @@ export class TableComponent extends React.Component {
           showButtons={rootNode && !rootNode.isRootNode()}
           onClickNewNode={() => {
             if (rootNode.id) {
-              this.props.goTo(`/magasin/${rootNode.id}/add`);
+              this.props.goTo(Config.magasin.urls.client.storagefacility.addNode(rootNode, this.props.appSession));
             } else {
               this.props.goTo('/magasin/add');
             }
@@ -343,13 +343,15 @@ export class TableComponent extends React.Component {
           stats={stats}
           onClickProperties={() => {
             this.props.goTo({
-              pathname: `/magasin/${rootNode.id}/view`,
+              pathname: Config.magasin.urls.client.storagefacility.editNode(rootNode, this.props.appSession),
               state: rootNode
             });
           }}
-          onClickControlObservations={() => this.props.goTo(`/magasin/${rootNode.id}/controlsobservations`)}
-          onClickObservations={() => this.props.goTo(`/magasin/${rootNode.id}/observations`)}
-          onClickController={() => this.props.goTo(`/magasin/${rootNode.id}/controls`)}
+          onClickControlObservations={() =>
+            this.props.goTo(
+              Config.magasin.urls.client.storagefacility.viewControlsObservations(rootNode.id, this.props.appSession)
+              )
+          }
           onClickMoveNode={() => moveNode(rootNode)}
           onClickDelete={() => {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
@@ -433,10 +435,8 @@ export class TableComponent extends React.Component {
               currentPage={currentPage}
               perPage={Config.magasin.limit}
               onClick={(cp) => {
-                const midPath = this.props.appSession.getMuseumId().getPath();
-                const cidPath = this.props.appSession.getCollectionId().getPath();
                 hashHistory.replace({
-                  pathname: '/' + midPath + '/' + cidPath + '/magasin/' + rootNode.id + '/objects',
+                  pathname: Config.magasin.urls.client.storagefacility.goToNode(rootNode, this.props.appSession),
                   state: {
                     currentPage: cp
                   }
@@ -455,9 +455,7 @@ export class TableComponent extends React.Component {
           onMove={moveNode}
           pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
           onClick={(node) => {
-            const midPath = this.props.appSession.getMuseumId().getPath();
-            const cidPath = this.props.appSession.getCollectionId().getPath();
-            this.props.goTo('/' + midPath + '/' + cidPath + '/magasin/' + node.id);
+            this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(node, this.props.appSession));
           }}
           isNodeAdded={(node) => this.props.isItemAdded( node , this.props.pickList.nodes )}
         />
@@ -468,7 +466,7 @@ export class TableComponent extends React.Component {
             perPage={Config.magasin.limit}
             onClick={(cp) => {
               hashHistory.replace({
-                pathname: `/magasin/${rootNode.id}`,
+                pathname: Config.magasin.urls.client.storagefacility.goToNode(rootNode, this.props.appSession),
                 state: {
                   currentPage: cp
                 }
@@ -554,7 +552,7 @@ export const processBarcode = (barCode, props) => {
       } else if (isMoveHistoryActive) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
       } else {
-        props.goTo('/magasin/' + response.id);
+        props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response, this.props.appSession));
       }
     }).toPromise();
   } else if (barCode.number) {
@@ -581,7 +579,7 @@ export const processBarcode = (barCode, props) => {
         } else if (isMoveHistoryActive) {
           props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
         } else {
-          props.goTo('/magasin/' + response.id);
+          props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response, this.props.appSession));
         }
       }
     }).toPromise();
