@@ -37,25 +37,20 @@ export default class SaveCancel extends Component {
     super(props);
     const {
       id,
-      saveDisabled,
       onClickSave,
-      cancelDisabled,
       onClickCancel
     } = props;
     this.fields = {
       save: {
         id: `Save_${id || 1}`,
         onClick: onClickSave,
-        disabled: saveDisabled,
         className: 'submitButton',
         bsStyle: 'primary'
       },
       cancel: {
         id: `Cancel_${id || 1}`,
         onClick: onClickCancel,
-        disabled: cancelDisabled,
-        className: 'cancelButton',
-        bsStyle: 'primary'
+        className: 'cancelButton'
       }
     };
   }
@@ -66,12 +61,18 @@ export default class SaveCancel extends Component {
     return (
       <Row>
         <Col xs={6} sm={5} md={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
-          <Button {...save}>
+          <Button
+            {...save}
+            disabled={this.props.saveDisabled}
+          >
             {saveLabel || I18n.t('musit.texts.save')}
           </Button>
         </Col>
         <Col xs={6} sm={5} md={2} style={{ border: 'none', textAlign: 'center' }}>
-          <Button  {...cancel}>
+          <Button
+            {...cancel}
+            disabled={this.props.cancelDisabled}
+          >
             {cancelLabel || I18n.t('musit.texts.cancel')}
           </Button>
         </Col>
