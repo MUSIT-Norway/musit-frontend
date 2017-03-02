@@ -32,7 +32,7 @@ describe('form stream', () => {
     });
 
     // mock streams
-    const updateFieldM  = '-123-----------';
+    const updateFieldM  = '-xyz-----------';
     const expected      = 'abcc-----------';
 
     const expectedStateMap = {
@@ -71,15 +71,15 @@ describe('form stream', () => {
     };
 
     const update$: Subject<Update<*>> = testScheduler.createHotObservable(updateFieldM, {
-      [1]: {
+      x: {
         name: 'name',
         value: 'Ja'
       },
-      [2]: {
+      y: {
         name: 'name',
         value: 'Jar'
       },
-      [3]: {
+      z: {
         name: 'bogus name that does not exist',
         value: 'some great value'
       }
