@@ -37,19 +37,24 @@ describe('PickListComponent', () => {
     objects: [
       {
         marked: true,
-        value: {id: 1, name: 'Test21', mainObjectId: 1},
-        isMainObject: () => true,
+        value: {
+          id: 1, name: 'Test21', mainObjectId: 1,
+          isMainObject: () => true
+        },
         path: [1]
       },
       {
         marked: true,
-        value: {id: 2, mainObjectId: 1, name: 'Test2'},
-        isMainObject: () => false,
+        value: {
+          id: 2, name: 'Test2', mainObjectId: 1,
+          isMainObject: () => false
+        },
         path: [1, 2]
       },
       {
         marked: false,
-        value: {id: 3, name: 'Test23'},
+        value: {id: 3, name: 'Test23',
+          isMainObject: () => true},
         path: [1, 3]
       }
     ]
@@ -136,7 +141,6 @@ describe('PickListComponent', () => {
   });
 
 
-
   it('Testing functions objects', () => {
 
     const onToggleNode = sinon.spy();
@@ -170,11 +174,14 @@ describe('PickListComponent', () => {
     t.simulate('click');
     e(onRemoveObject.calledOnce).to.equal(true);
 
-    const mo = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(0).find('input');
-
-    console.log(mountToJson(mo));
+    const mo = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(0).childAt(0).childAt(0).childAt(0);
     mo.simulate('change');
     e(onToggleMainObject.calledOnce).to.equal(true);
+
+    const o = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(2).childAt(0).childAt(0).childAt(0);
+    console.log(mountToJson(o));
+    o.simulate('change');
+    e(onToggleObject.calledOnce).to.equal(true);
   });
 
 
@@ -224,7 +231,6 @@ describe('PickListComponent', () => {
     const a0 = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(2);
     a0.simulate('click');
     e(onShowModal.calledOnce).to.equal(true);
-
 
 
     const b = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(4);

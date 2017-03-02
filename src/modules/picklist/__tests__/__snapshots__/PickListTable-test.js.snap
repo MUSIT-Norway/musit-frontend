@@ -59,19 +59,18 @@ exports[`PickListComponent Should mount 1`] = `
       ],
       "objects": Array [
         Object {
-          "isMainObject": [Function isMainObject],
           "marked": true,
           "path": Array [
             1
           ],
           "value": Object {
             "id": 1,
+            "isMainObject": [Function isMainObject],
             "mainObjectId": 1,
             "name": "Test21"
           }
         },
         Object {
-          "isMainObject": [Function isMainObject],
           "marked": true,
           "path": Array [
             1,
@@ -79,6 +78,7 @@ exports[`PickListComponent Should mount 1`] = `
           ],
           "value": Object {
             "id": 2,
+            "isMainObject": [Function isMainObject],
             "mainObjectId": 1,
             "name": "Test2"
           }
@@ -91,6 +91,7 @@ exports[`PickListComponent Should mount 1`] = `
           ],
           "value": Object {
             "id": 3,
+            "isMainObject": [Function isMainObject],
             "name": "Test23"
           }
         }
@@ -166,11 +167,13 @@ exports[`PickListComponent Should mount 1`] = `
               Array [
                 Object {
                   "id": 1,
+                  "isMainObject": [Function isMainObject],
                   "mainObjectId": 1,
                   "name": "Test21"
                 },
                 Object {
                   "id": 2,
+                  "isMainObject": [Function isMainObject],
                   "mainObjectId": 1,
                   "name": "Test2"
                 }
@@ -180,19 +183,18 @@ exports[`PickListComponent Should mount 1`] = `
             picks={
               Array [
                 Object {
-                  "isMainObject": [Function isMainObject],
                   "marked": true,
                   "path": Array [
                     1
                   ],
                   "value": Object {
                     "id": 1,
+                    "isMainObject": [Function isMainObject],
                     "mainObjectId": 1,
                     "name": "Test21"
                   }
                 },
                 Object {
-                  "isMainObject": [Function isMainObject],
                   "marked": true,
                   "path": Array [
                     1,
@@ -200,6 +202,7 @@ exports[`PickListComponent Should mount 1`] = `
                   ],
                   "value": Object {
                     "id": 2,
+                    "isMainObject": [Function isMainObject],
                     "mainObjectId": 1,
                     "name": "Test2"
                   }
@@ -212,6 +215,7 @@ exports[`PickListComponent Should mount 1`] = `
                   ],
                   "value": Object {
                     "id": 3,
+                    "isMainObject": [Function isMainObject],
                     "name": "Test23"
                   }
                 }
@@ -320,7 +324,7 @@ exports[`PickListComponent Should mount 1`] = `
                     </thead>
                     <tbody>
                       <tr
-                        className={undefined}>
+                        className="mainObject">
                         <td
                           style={
                             Object {
@@ -332,7 +336,7 @@ exports[`PickListComponent Should mount 1`] = `
                           <span>
                             <input
                               checked="checked"
-                              disabled={true}
+                              onChange={[Function onChange]}
                               type="checkbox" />
                           </span>
                         </td>
@@ -483,7 +487,7 @@ exports[`PickListComponent Should mount 1`] = `
                         </td>
                       </tr>
                       <tr
-                        className={undefined}>
+                        className="childObject">
                         <td
                           style={
                             Object {
@@ -693,7 +697,7 @@ exports[`PickListComponent Should mount 1`] = `
                         </td>
                       </tr>
                       <tr
-                        className={undefined}>
+                        className="mainObject">
                         <td
                           style={
                             Object {
@@ -1091,11 +1095,13 @@ exports[`PickListComponent should display component (objects) correctly 1`] = `
           Array [
             Object {
               "id": 1,
+              "isMainObject": [Function isMainObject],
               "mainObjectId": 1,
               "name": "Test21"
             },
             Object {
               "id": 2,
+              "isMainObject": [Function isMainObject],
               "mainObjectId": 1,
               "name": "Test2"
             }
@@ -1105,19 +1111,18 @@ exports[`PickListComponent should display component (objects) correctly 1`] = `
         picks={
           Array [
             Object {
-              "isMainObject": [Function isMainObject],
               "marked": true,
               "path": Array [
                 1
               ],
               "value": Object {
                 "id": 1,
+                "isMainObject": [Function isMainObject],
                 "mainObjectId": 1,
                 "name": "Test21"
               }
             },
             Object {
-              "isMainObject": [Function isMainObject],
               "marked": true,
               "path": Array [
                 1,
@@ -1125,6 +1130,7 @@ exports[`PickListComponent should display component (objects) correctly 1`] = `
               ],
               "value": Object {
                 "id": 2,
+                "isMainObject": [Function isMainObject],
                 "mainObjectId": 1,
                 "name": "Test2"
               }
@@ -1137,6 +1143,7 @@ exports[`PickListComponent should display component (objects) correctly 1`] = `
               ],
               "value": Object {
                 "id": 3,
+                "isMainObject": [Function isMainObject],
                 "name": "Test23"
               }
             }
