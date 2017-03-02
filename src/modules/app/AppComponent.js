@@ -127,7 +127,7 @@ export class AppComponent extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
-              <LinkContainer to="/magasin">
+              <LinkContainer to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
               <LinkContainer to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}>

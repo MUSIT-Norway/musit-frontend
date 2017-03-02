@@ -172,17 +172,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -252,17 +252,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -332,17 +332,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -412,17 +412,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -492,17 +492,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -572,17 +572,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -652,17 +652,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -732,17 +732,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -812,17 +812,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -892,17 +892,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -972,17 +972,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1052,17 +1052,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1132,17 +1132,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1212,17 +1212,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1292,17 +1292,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1372,17 +1372,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1452,17 +1452,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1532,17 +1532,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1612,17 +1612,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,
@@ -1692,17 +1692,17 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "id": 1,
                               "name": "Root",
-                              "url": " "
+                              "url": "/magasin/1"
                             },
                             Object {
                               "id": 2,
                               "name": "Musit",
-                              "url": " "
+                              "url": "/magasin/2"
                             },
                             Object {
                               "id": 3,
                               "name": "Kontoret",
-                              "url": " "
+                              "url": "/magasin/3"
                             }
                           ],
                           "id": 1,

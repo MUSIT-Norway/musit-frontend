@@ -11,13 +11,19 @@ export default {
     limit: 25,
     urls: {
       client: {
+        about: {
+          goToAbout: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/about`
+        },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin`
         },
         report: {
           goToReport: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/reports`
+            `${clientContextUrl(appSession)}/reports`,
+          goToKdReport: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/reports/kdreport`
         },
         picklist: {
           goToPicklistObjects: (appSession: AppSession) =>

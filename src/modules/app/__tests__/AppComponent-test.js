@@ -22,6 +22,8 @@ describe('AppComponent', () => {
         count={{ value: 0 }}
         appSession={new AppSession({
           accessToken: '1234',
+          museumId: 99,
+          collectionId: '1234',
           buildInfo: {
             buildInfoBuildNumber: '64'
           },
