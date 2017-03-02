@@ -20,7 +20,7 @@ export const clearRendered$ = createAction('clearRendered$');
 export const loadTemplates$ = createAction('loadTemplates$').switchMap(loadTemplates(ajaxMethods));
 export const renderTemplate$ = createAction('renderTemplate$').switchMap(renderTemplate(ajaxMethods));
 
-const initialState = { templates: [] };
+const initialState = { templates: [], rendered: null };
 
 export const reducer$ = (actions) => Observable.merge(
   actions.clearAll$.map(() => () => initialState),

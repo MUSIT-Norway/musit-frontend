@@ -1,5 +1,5 @@
 /* @flow */
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
 export type Field<T> = {
@@ -18,22 +18,30 @@ export type Update<T> = {
   value: T | null
 };
 
-const updateForm$: Observable<Update<any>> = createAction('updateForm$');
+export const updateForm$: Subject<Update<*>> = createAction('updateForm$');
 
-const reducer$: Observable<Field<any>[]> = updateForm$.map((update: Update<any>, state: Field<any>[]) => {
-  const field: ?Field<any> = state.find((f: Field<any>) => f.name === update.name);
-  if (!field) {
-    return state;
-  }
-  const error: any = field.validator.call(update.value);
-  const updated: Field<any> = {
-    ...field,
-    value: update.value,
-    status: { valid: !error, error }
-  };
-  return state.filter((f: Field<any>) => f.name !== field.name).push(updated);
-});
+const reducer$: Observable<Field<*>[]> = (update$: Subject<Update<*>>) =>
+  update$.map((update: Update<*>) => (state: Field<*>[]) => {
+    const field: ?Field<*> = state.find((f: Field<*>) => f.name === update.name);
+    if (!field) {
+      return state;
+    }
+    const error: any = field.validator(update.value);
+    const updated: Field<*> = {
+      ...field,
+      value: update.value,
+      status: { valid: !error, error }
+    };
+    return [
+      ...state.filter((f: Field<*>) => f.name !== field.name),
+      updated
+    ];
+  });
 
-const createForm$ = (name: string = 'defaultForm', fields: Field<any>[]) => createStore(name, reducer$, fields);
+const createForm$ = (
+  name: string,
+  fields: Field<*>[],
+  update$: Subject<Update<*>> = updateForm$
+) => createStore(name, reducer$(update$), Observable.of(fields));
 
 export default createForm$;

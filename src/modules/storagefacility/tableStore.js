@@ -11,7 +11,7 @@ export const loadStats$ = createAction('loadStats$').switchMap(MusitNode.getStat
 export const loadRootNode$ = createAction('loadRootNode$').switchMap(MusitNode.getNode());
 
 export const reducer$ = (actions) => Observable.merge(
-  actions.clearRootNode$.map(() => () => ({ rootNode: null, stats: null })),
+  actions.clearRootNode$.map(() => (state) => ({ ...state, rootNode: null, stats: null })),
   actions.loadStats$.map((stats) => (state) => ({ ...state, stats})),
   actions.loadRootNode$.map((rootNode) => (state) => ({...state, rootNode})),
   actions.setLoading$.map(() => state => ({...state, children: { data: null, loading: true }})),
