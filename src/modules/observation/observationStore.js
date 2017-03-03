@@ -13,8 +13,9 @@ export const reducer$ = (actions) => Observable.merge(
   actions.setLoading$.map(() => (state) => ({...state, data: {}, rootNode: null, loading: true}))
 );
 
-const store$ = createStore('observation', reducer$({
-  setLoading$, getObservation$, loadRootNode$
-}), Observable.of({ data: {}, rootNode: null }));
+export const initialState = { data: {}, rootNode: null };
+
+const store$ = (actions$ = { setLoading$, getObservation$, loadRootNode$ }) =>
+  createStore('observation', reducer$(actions$), Observable.of(initialState));
 
 export default store$;

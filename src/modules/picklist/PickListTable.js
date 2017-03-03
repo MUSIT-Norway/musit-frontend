@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -16,7 +15,7 @@ export default class PickListComponent extends Component {
     iconRendrer: React.PropTypes.func.isRequired,
     labelRendrer: React.PropTypes.func.isRequired,
     isnode: React.PropTypes.bool
-  }
+  };
 
   render() {
     const {
@@ -104,7 +103,7 @@ export default class PickListComponent extends Component {
                         <input
                           type="checkbox"
                           checked={isItemMarked ? 'checked' : ''}
-                          onClick={() => this.props.toggle(item)}
+                          onChange={() => this.props.toggle(item)}
                         />
                         :
                         <input

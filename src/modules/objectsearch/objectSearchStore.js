@@ -45,9 +45,6 @@ export const reducer$ = (actions) => Observable.merge(
   }))
 );
 
-export default createStore('objectSearchStore$', reducer$({
-  clearSearch$,
-  searchForObjects$,
-  onChangeField$
-}), Observable.of(initialState));
+export default (actions$ = {clearSearch$, searchForObjects$, onChangeField$}) =>
+  createStore('objectSearchStore$', reducer$(actions$), Observable.of(initialState));
 

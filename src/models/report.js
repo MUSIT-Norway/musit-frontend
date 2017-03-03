@@ -10,7 +10,7 @@ class Report {
 }
 
 Report.getKDReport = (ajaxGet = simpleGet) => ({ token, museumId }) => {
-  const url = apiUrl(`${Config.magasin.urls.storagefacility.baseUrl(museumId)}/report`);
+  const url = apiUrl(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/report`);
   return ajaxGet(url, token).map(({response}) => {
     return response && new Report(response);
   });

@@ -1,7 +1,6 @@
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, initialState, searchForObjects } from '../objectSearchStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import store$, { initialState, searchForObjects } from '../objectSearchStore';
 import MusemId from '../../../models/museumId';
 import CollectionId from '../../../models/collectionId';
 
@@ -226,10 +225,10 @@ describe('objectSearchStore', () => {
     ));
     const onChangeField$ = testScheduler.createHotObservable(onChangeFieldM, {x: {field: 'test', value: 'hallo'}});
 
-    const state$ = reducer$({clearSearch$, searchForObjects$, onChangeField$});
+    const state$ = store$({clearSearch$, searchForObjects$, onChangeField$});
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$, Observable.of(initialState))).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();
