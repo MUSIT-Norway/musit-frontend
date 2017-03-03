@@ -18,8 +18,6 @@ export type Update<T> = {
   value: T | null
 };
 
-export const updateForm$: Subject<Update<*>> = createAction('updateForm$');
-
 const reducer$: Observable<Field<*>[]> = (update$: Subject<Update<*>>) =>
   update$.map((update: Update<*>) => (state: Field<*>[]) => {
     const field: ?Field<*> = state.find((f: Field<*>) => f.name === update.name);
@@ -41,7 +39,10 @@ const reducer$: Observable<Field<*>[]> = (update$: Subject<Update<*>>) =>
 const createForm$ = (
   name: string,
   fields: Field<*>[],
-  update$: Subject<Update<*>> = updateForm$
-) => createStore(name, reducer$(update$), Observable.of(fields));
+  updateField$?: Subject<Update<*>>
+) => ({
+  updateField$: updateField$ || createAction(name + ': updateField$'),
+  form$: createStore(name, reducer$(updateField$), Observable.of(fields))
+});
 
 export default createForm$;

@@ -85,7 +85,7 @@ describe('form stream', () => {
       }
     });
 
-    const form$ = createForm('test', [name], update$);
+    const { form$ } = createForm('test', [name], update$);
 
     // assertion
     testScheduler.expectObservable(form$).toBe(expected, expectedStateMap);
