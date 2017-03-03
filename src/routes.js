@@ -36,6 +36,7 @@ import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
 import * as path from './routes.path';
+import AddAnalysis from './modules/analysis/addAnalysis';
 
 export default () => {
   return (
@@ -56,6 +57,9 @@ export default () => {
         <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
         <Route path={path.ROUTE_SF_OBJECTS} showObjects component={StorageUnitsTable} />
         <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
+        <Route path={path.ROUTE_ANALYSIS_ADD} component={AddAnalysis} />
+
+
       </Route>
       <Route path={path.ROUTE_PICKLIST_ROOT}>
         <Route path="nodes" type="nodes" component={PickListView} />

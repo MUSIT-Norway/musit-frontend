@@ -17,3 +17,4 @@ export const ROUTE_SF_NODE_OBSERVATIONS_EDIT= '/magasin/:id/observation/edit';
 export const ROUTE_SF_NODE_OBSERVATIONS_VIEW= '/magasin/:id/observation/:obsId';
 export const ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS = '/magasin/:id/controlsobservations';
 export const ROUTE_SF_OBJECTS = '/magasin/:id/objects';
+export const ROUTE_ANALYSIS_ADD = '/analysis/add';
