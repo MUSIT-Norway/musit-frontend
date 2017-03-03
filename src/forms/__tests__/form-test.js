@@ -7,6 +7,7 @@ import assert from 'assert';
 import createForm  from '../form';
 import type { Field } from '../form';
 import type { Update } from '../form';
+import type { Load } from '../form';
 const diff = require('deep-diff').diff;
 
 const minLength = (length: number) => (value: string) => {
@@ -32,8 +33,9 @@ describe('form stream', () => {
     });
 
     // mock streams
+    const loadM         = '----xy---------';
     const updateFieldM  = '-xyz-----------';
-    const expected      = 'abcc-----------';
+    const expected      = 'abccdd---------';
 
     const expectedStateMap = {
       a: [
@@ -62,6 +64,17 @@ describe('form stream', () => {
             valid: true
           }
         }
+      ],
+      d: [
+        {
+          name: 'name',
+          validator: minimumThreeChars,
+          value: 'Kalle',
+          origValue: 'Kalle',
+          status: {
+            valid: true
+          }
+        }
       ]
     };
 
@@ -85,7 +98,24 @@ describe('form stream', () => {
       }
     });
 
-    const { form$ } = createForm('test', [name], update$);
+    const load$: Subject<Load<*>[]> = testScheduler.createHotObservable(loadM, {
+      x: [
+        {
+          name: 'name',
+          value: 'Kalle',
+          origValue: 'Kalle'
+        }
+      ],
+      y: [
+        {
+          name: 'bogus name that does not exist',
+          value: 'Silly value',
+          origValue: 'Silly value'
+        }
+      ]
+    });
+
+    const { form$ } = createForm('test', [name], update$, load$);
 
     // assertion
     testScheduler.expectObservable(form$).toBe(expected, expectedStateMap);
