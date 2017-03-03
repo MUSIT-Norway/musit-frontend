@@ -30,6 +30,8 @@ import { showModal } from '../../shared/modal';
 import scannerIcon from '../app/scannerIcon.png';
 import connectToScanner from '../app/scanner';
 import Config from '../../config';
+import { makeUrlAware } from '../app/appSession';
+import flowRight from 'lodash/flowRight';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -332,4 +334,8 @@ export const processBarcode = (barCode, props) => {
   }
 };
 
-export default inject(data, commands, customProps)(connectToScanner(processBarcode)(PickListContainer));
+export default flowRight([
+  inject(data, commands, customProps),
+  connectToScanner(processBarcode),
+  makeUrlAware
+])(PickListContainer);

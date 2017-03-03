@@ -9,6 +9,8 @@ import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
 import Actor from '../../models/actor';
 import orderBy from 'lodash/orderBy';
+import React from 'react';
+import isEqualWith from 'lodash/isEqualWith';
 
 export class AppSession {
 
@@ -151,3 +153,29 @@ const session$ = createStore('appSession', reducer$({
 }), Observable.of(initialState)).map(state => new AppSession(state));
 
 export default session$;
+
+export const makeUrlAware = (Component) => {
+  return class Wrapper extends React.Component {
+    static propTypes = {
+      appSession: React.PropTypes.instanceOf(AppSession).isRequired
+    };
+
+    static defaultProps = {
+      refreshSession: refreshSession()
+    };
+
+    componentWillReceiveProps(newProps) {
+      const paramsDiffFromSession = !isEqualWith(newProps.params, newProps.appSession, (lhs, rhs) => {
+        return lhs.museumId * 1 === rhs.getMuseumId().id && lhs.collectionIds === rhs.getCollectionId().uuid;
+      });
+
+      if (paramsDiffFromSession) {
+        this.props.refreshSession(newProps.params, newProps.appSession);
+      }
+    }
+
+    render() {
+      return <Component {...this.props} />;
+    }
+  };
+};

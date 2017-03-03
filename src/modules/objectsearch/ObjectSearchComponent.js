@@ -14,6 +14,8 @@ import objectSearchStore$, {clearSearch$, searchForObjects$, onChangeField$} fro
 import { addObject$ } from '../app/pickList';
 import pickList$, { isItemAdded } from '../app/pickList';
 import Config from '../../config';
+import flowRight from 'lodash/flowRight';
+import { makeUrlAware } from '../app/appSession';
 
 export class ObjectSearchComponent extends React.Component {
   constructor(props) {
@@ -217,6 +219,9 @@ const props = {
   isItemAdded
 };
 
-export default inject(data, commands, props)(ObjectSearchComponent);
+export default flowRight([
+  inject(data, commands, props),
+  makeUrlAware
+])(ObjectSearchComponent);
 
 

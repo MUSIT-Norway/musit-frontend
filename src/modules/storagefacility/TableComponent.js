@@ -22,9 +22,7 @@ import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 import { addNode$, addObject$ } from '../app/pickList';
 import { showConfirm, showModal } from '../../shared/modal';
-import { refreshSession } from '../app/appSession';
-import isEqual from 'lodash/isEqual';
-import isEqualWith from 'lodash/isEqualWith';
+import { makeUrlAware } from '../app/appSession';
 import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 import pickList$, { isItemAdded } from '../app/pickList';
 import tableStore$, {
@@ -37,6 +35,7 @@ import tableStore$, {
 } from './tableStore';
 import scannerIcon from '../app/scannerIcon.png';
 import connectToScanner from '../app/scanner';
+import flowRight from 'lodash/flowRight';
 
 export class TableComponent extends React.Component {
   static propTypes = {
@@ -113,22 +112,10 @@ export class TableComponent extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const newMid = newProps.appSession.getMuseumId();
-    const oldMid = this.props.appSession.getMuseumId();
-    const museumHasChanged = !isEqual(newMid, oldMid);
-    const newColl = newProps.appSession.getCollectionId();
-    const oldColl = this.props.appSession.getCollectionId();
-    const collectionHasChanged = !isEqual(newColl, oldColl);
-    const paramsDiffFromSession = !isEqualWith(newProps.params, newProps.appSession.state, (lhs, rhs) => {
-      return lhs.museumId * 1 === rhs.museumId.id && lhs.collectionIds === rhs.collectionId.uuid;
-    });
-
-    if (paramsDiffFromSession) {
-      this.props.refreshSession(newProps.params, newProps.appSession);
-    }
-
-    const museumId = newMid;
-    const collectionId = newColl;
+    const museumHasChanged = newProps.appSession.getMuseumId() !== this.props.appSession.getMuseumId();
+    const collectionHasChanged = newProps.appSession.getCollectionId() !== this.props.appSession.getCollectionId();
+    const museumId = newProps.appSession.getMuseumId();
+    const collectionId = newProps.appSession.getCollectionId();
     const token = this.props.appSession.getAccessToken();
     const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
@@ -515,7 +502,6 @@ const customProps = {
   pickNode: MusitNode.pickNode(addNode$),
   pickObject: MusitObject.pickObject(addObject$),
   deleteNode: MusitNode.deleteNode(),
-  refreshSession: refreshSession(),
   goTo: hashHistory.push,
   updateMoveDialog,
   isItemAdded,
@@ -574,4 +560,8 @@ export const processBarcode = (barCode, props) => {
   }
 };
 
-export default inject(data, commands, customProps)(connectToScanner(processBarcode)(TableComponent));
+export default flowRight([
+  inject(data, commands, customProps),
+  connectToScanner(processBarcode),
+  makeUrlAware
+])(TableComponent);
