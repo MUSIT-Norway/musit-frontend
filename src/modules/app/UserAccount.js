@@ -23,11 +23,9 @@ export default class MusitUserAccount extends Component {
     handleCollectionId: React.PropTypes.func.isRequired
   }
 
-  orderByCollection = (arr, dir = 'asc') => orderBy(arr, ['name'], [dir]);
-
   getCollections(mid, groups) {
     const collections = uniqBy(flatten(groups.filter(g => g.museumId === mid.id).map(g => g.collections)), c => c.uuid);
-    return this.orderByCollection(collections);
+    return orderBy(collections, ['name'], ['asc']);
   }
 
   adminLink() {

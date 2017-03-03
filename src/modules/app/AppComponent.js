@@ -67,7 +67,7 @@ export class AppComponent extends Component {
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
     const localAppSession = this.props.appSession.copy({museumId, collectionId});
-    hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
+    this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
   }
 
   handleCollectionId(collectionId) {
@@ -76,9 +76,9 @@ export class AppComponent extends Component {
     const nodeId = this.props.params.id;
     const localAppSession = this.props.appSession.copy({collectionId});
     if (nodeId) {
-      hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession));
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession));
     } else {
-      hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
     }
   }
 

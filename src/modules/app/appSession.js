@@ -55,8 +55,6 @@ export class AppSession {
 
 const initialState = { accessToken: getAccessToken() };
 
-const orderByMuseumId = (arr, dir = 'desc') => orderBy(arr, ['museumId'], [dir]);
-
 const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
   accessToken = accessToken || getAccessToken();
   if (!accessToken) {
@@ -94,13 +92,13 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
             museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
           }));
         }
-        groups = orderByMuseumId(groups);
-        const museumId = new MuseumId(groups[0].museumId);
-        const collectionId = new CollectionId(groups[0].collections[0].uuid);
+        const orderedGroups = orderBy(groups, ['museumId'], ['desc']);
+        const museumId = new MuseumId(orderedGroups[0].museumId);
+        const collectionId = new CollectionId(orderedGroups[0].collections[0].uuid);
         return {
           accessToken,
           actor: new Actor(currentUserRes.response),
-          groups,
+          groups: orderedGroups,
           museumId,
           collectionId,
           buildInfo: buildInfoRes.response
