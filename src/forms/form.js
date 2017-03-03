@@ -24,10 +24,10 @@ export type Load<T> = {
   origValue?: T | null
 };
 
-const load = (acc: Field<*>[], loadField: Load<*>) => {
-  const field: ?Field<*> = acc.find((f: Field<*>) => f.name === loadField.name);
+const load = (state: Field<*>[], loadField: Load<*>) => {
+  const field: ?Field<*> = state.find((f: Field<*>) => f.name === loadField.name);
   if (!field) {
-    return acc;
+    return state;
   }
   const error: any = field.validator(loadField.value);
   const updated: Field<*> = {
@@ -37,12 +37,12 @@ const load = (acc: Field<*>[], loadField: Load<*>) => {
     status: {valid: !error, error}
   };
   return [
-    ...acc.filter((f: Field<*>) => f.name !== field.name),
+    ...state.filter((f: Field<*>) => f.name !== field.name),
     updated
   ];
 };
 
-const update = (updateField: Update<*>) => (state: Field<*>[]) => {
+const update = (state: Field<*>[], updateField: Update<*>) => {
   const field: ?Field<*> = state.find((f: Field<*>) => f.name === updateField.name);
   if (!field) {
     return state;
@@ -61,7 +61,7 @@ const update = (updateField: Update<*>) => (state: Field<*>[]) => {
 
 const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Load<*>[]>) => Observable.merge(
   loadForm$.map((loadForm: Load<*>[]) => (state: Field<*>[]) => loadForm.reduce(load, state)),
-  updateField$.map(update)
+  updateField$.map((updateField: Update<*>) => (state: Field<*>[]) => update(state, updateField))
 );
 
 const createForm$ = (
