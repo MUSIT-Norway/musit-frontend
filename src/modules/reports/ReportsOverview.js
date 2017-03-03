@@ -15,7 +15,7 @@ const reports = [
   }
 ];
 
-const ReportsOverview = (props) => {
+export const ReportsOverview = (props) => {
   return (
     <div>
       <main>
