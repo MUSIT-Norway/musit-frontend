@@ -4,6 +4,7 @@ import { simpleGet } from '../../shared/RxAjax';
 import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors';
+import { getDisplayName } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
@@ -155,7 +156,7 @@ const session$ = createStore('appSession', reducer$({
 export default session$;
 
 export const makeUrlAware = (Component) => {
-  return class Wrapper extends React.Component {
+  class Wrapper extends React.Component {
     static propTypes = {
       appSession: React.PropTypes.instanceOf(AppSession).isRequired
     };
@@ -177,5 +178,7 @@ export const makeUrlAware = (Component) => {
     render() {
       return <Component {...this.props} />;
     }
-  };
+  }
+  Wrapper.displayName = `UrlAware(${getDisplayName(Component)})`;
+  return Wrapper;
 };
