@@ -51,13 +51,14 @@ describe('PickListComponent for nodes', () => {
       },
       {
         marked: false,
-        value: {id: 3, name: 'Test23',
-          isMainObject: () => true},
+        value: {
+          id: 3, name: 'Test23',
+          isMainObject: () => true
+        },
         path: [1, 3]
       }
     ]
   };
-
 
 
   it('should display component (nodes) correctly', () => {
@@ -119,23 +120,22 @@ describe('PickListComponent for nodes', () => {
 
 
     const scanButton = wrapper.find('Grid').childAt(0).childAt(0).childAt(0).childAt(1).childAt(0);
-    //console.log(mountToJson(scanButton));
     scanButton.simulate('click');
     e(onToggleScanner.calledOnce).to.equal(true);
 
 
-    const a = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(0).childAt(0);
-    a.simulate('change');
+    const checkBox = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(0).childAt(0);
+    checkBox.simulate('change');
     e(onToggleNode.calledOnce).to.equal(true);
 
 
-    const a0 = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(2);
-    a0.simulate('click');
+    const modalButton = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(2);
+    modalButton.simulate('click');
     e(onShowModal.calledOnce).to.equal(true);
 
 
-    const b = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(4);
-    b.simulate('click');
+    const removeButton = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(4);
+    removeButton.simulate('click');
     e(onRemoveNode.calledOnce).to.equal(true);
 
 

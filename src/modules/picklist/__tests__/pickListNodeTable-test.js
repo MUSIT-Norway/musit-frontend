@@ -46,13 +46,17 @@ describe('PickListTable for nodes', () => {
   });
 
   it('Testing functions for node table', () => {
+
     const pickList = [{marked: false, value: {id: 1}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]},
       {marked: true, value: {id: 2}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]}
     ];
+
     const marked = pickList.filter(p => p.marked);
+
     const markedValues = marked.map(p => p.value);
 
     const onMove = sinon.spy();
+
     const onPrint = sinon.spy();
 
     const onToggle = sinon.spy();
@@ -72,31 +76,32 @@ describe('PickListTable for nodes', () => {
               }
       labelRendrer={(pick) => {
         return (
-                  <div>
-                    {null}
-                    {null}
-                    <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.term}</span>
-                    <div className="labelText">
-                    </div>
+                <div>
+                  {null}
+                  {null}
+                  <span style={{ paddingLeft: '1em' }}>{pick.value.name ?
+                  pick.value.name :
+                  pick.value.term}</span>
+                  <div className="labelText">
                   </div>
-                );
+                </div>
+               );
       }}
     />);
+
     e(wrapper.find('div').find('Table').find('tbody').find('tr')).to.have.length(pickList.length);
 
-    const b = wrapper.find({name: 'print'}).first();
-    b.simulate('click');
+    const checkBox = wrapper.find({name: 'print'}).first();
+    checkBox.simulate('click');
     e(onPrint.called).to.equal(true);
 
-    const a = wrapper.find({name: 'truck'});
-    a.simulate('click');
+    const moveButton = wrapper.find({name: 'truck'});
+    moveButton.simulate('click');
     e(onMove.called).to.equal(true);
 
-    const c = wrapper.find({name: 'remove'}).first();
-    c.simulate('click');
+    const removeButton = wrapper.find({name: 'remove'}).first();
+    removeButton.simulate('click');
     e(onRemove.called).to.equal(true);
 
   });
-
-
 });

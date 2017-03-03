@@ -1,9 +1,9 @@
-import { processBarcode } from '../PickListComponent';
-import { AppSession } from '../../app/appSession';
+import {processBarcode} from '../PickListComponent';
+import {AppSession} from '../../app/appSession';
 import sinon from 'sinon';
 import MuseumId from '../../../models/museumId';
 import CollectionId from '../../../models/collectionId';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
 describe('processBarcode', () => {
 
@@ -49,7 +49,7 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should update move dialog when receiving a uuid that exists when move dialog is open', () =>  {
+  it('should update move dialog when receiving a uuid that exists when move dialog is open', () => {
     const updateMoveDialog = sinon.spy();
     const props = {
       findNodeByUUID: () => Observable.of({
@@ -65,7 +65,7 @@ describe('processBarcode', () => {
     expect(updateMoveDialog.calledOnce).toBe(true);
   });
 
-  it('should add to node picklist when receiving a uuid that exists', () =>  {
+  it('should add to node picklist when receiving a uuid that exists', () => {
     const addNode = sinon.spy();
     const props = {
       findNodeByUUID: () => Observable.of({
@@ -81,7 +81,7 @@ describe('processBarcode', () => {
     expect(addNode.calledOnce).toBe(true);
   });
 
-  it('should emit error when receiving a number that does not exists when node picklist is active', () =>  {
+  it('should emit error when receiving a number that does not exists when node picklist is active', () => {
     const emitError = sinon.spy();
     const props = {
       findNodeByBarcode: () => Observable.of(null),
@@ -94,7 +94,7 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should emit error when receiving a number that does not exists when object picklist is active', () =>  {
+  it('should emit error when receiving a number that does not exists when object picklist is active', () => {
     const emitError = sinon.spy();
     const props = {
       findObjectByBarcode: () => Observable.of(null),
@@ -107,7 +107,7 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should update move dialog when receiving a number that resolves to a single object when move dialog is active', () =>  {
+  it('should update move dialog when receiving a number that resolves to a single object when move dialog is active', () => {
     const updateMoveDialog = sinon.spy();
     const props = {
       findObjectByBarcode: () => Observable.of([
@@ -125,7 +125,7 @@ describe('processBarcode', () => {
     expect(updateMoveDialog.calledOnce).toBe(true);
   });
 
-  it('should add to object picklist when receiving a number that resolves to a single object', () =>  {
+  it('should add to object picklist when receiving a number that resolves to a single object', () => {
     const addObject = sinon.spy();
     const props = {
       findObjectByBarcode: () => Observable.of([
@@ -143,7 +143,7 @@ describe('processBarcode', () => {
     expect(addObject.calledOnce).toBe(true);
   });
 
-  it('should emit error when receiving a number that resolves to multiple objects', () =>  {
+  it('should emit error when receiving a number that resolves to multiple objects', () => {
     const emitError = sinon.spy();
     const props = {
       findObjectByBarcode: () => Observable.of([
@@ -165,7 +165,7 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should update move dialog when receiving a number that resolves to a single node', () =>  {
+  it('should update move dialog when receiving a number that resolves to a single node', () => {
     const updateMoveDialog = sinon.spy();
     const props = {
       findNodeByBarcode: () => Observable.of({
@@ -182,7 +182,7 @@ describe('processBarcode', () => {
     expect(updateMoveDialog.calledOnce).toBe(true);
   });
 
-  it('should add to node picklist when receiving a number that resolves to a single node', () =>  {
+  it('should add to node picklist when receiving a number that resolves to a single node', () => {
     const addNode = sinon.spy();
     const props = {
       findNodeByBarcode: () => Observable.of({
@@ -199,7 +199,7 @@ describe('processBarcode', () => {
     expect(addNode.calledOnce).toBe(true);
   });
 
-  it('should emit error when receiving a number that resolves to a bogus response (nodes active)', () =>  {
+  it('should emit error when receiving a number that resolves to a bogus response (nodes active)', () => {
     const emitError = sinon.spy();
     const props = {
       findNodeByBarcode: () => Observable.of({
@@ -216,7 +216,7 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should emit error when receiving a number that resolves to a bogus response (objects active)', () =>  {
+  it('should emit error when receiving a number that resolves to a bogus response (objects active)', () => {
     const emitError = sinon.spy();
     const props = {
       findObjectByBarcode: () => Observable.of({

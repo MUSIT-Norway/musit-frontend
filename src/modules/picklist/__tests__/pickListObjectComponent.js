@@ -51,8 +51,10 @@ describe('PickListComponent for objects', () => {
       },
       {
         marked: false,
-        value: {id: 3, name: 'Test23',
-          isMainObject: () => true},
+        value: {
+          id: 3, name: 'Test23',
+          isMainObject: () => true
+        },
         path: [1, 3]
       }
     ]
@@ -62,8 +64,11 @@ describe('PickListComponent for objects', () => {
   it('Should mount', () => {
 
     const onToggleNode = sinon.spy();
+
     const onToggleObject = sinon.spy();
+
     const onRemoveObject = sinon.spy();
+
     const onRemoveNode = sinon.spy();
 
 
@@ -117,9 +122,13 @@ describe('PickListComponent for objects', () => {
   it('Testing functions objects', () => {
 
     const onToggleNode = sinon.spy();
+
     const onToggleObject = sinon.spy();
+
     const onRemoveObject = sinon.spy();
+
     const onRemoveNode = sinon.spy();
+
     const onToggleMainObject = sinon.spy();
 
 
@@ -143,16 +152,16 @@ describe('PickListComponent for objects', () => {
       scannerEnabled={true}
     />);
 
-    const t = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(2);
-    t.simulate('click');
+    const removeButton = wrapper.find('Grid').children().find('Table').children().find('thead').children().find('tr').childAt(1).childAt(2);
+    removeButton.simulate('click');
     e(onRemoveObject.calledOnce).to.equal(true);
 
-    const mo = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(0).childAt(0).childAt(0).childAt(0);
-    mo.simulate('change');
+    const toggleMainObj = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(0).childAt(0).childAt(0).childAt(0);
+    toggleMainObj.simulate('change');
     e(onToggleMainObject.calledOnce).to.equal(true);
 
-    const o = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(2).childAt(0).childAt(0).childAt(0);
-    o.simulate('change');
+    const toggleObj = wrapper.find('Grid').children().find('Table').children().find('tbody').childAt(2).childAt(0).childAt(0).childAt(0);
+    toggleObj.simulate('change');
     e(onToggleObject.calledOnce).to.equal(true);
   });
 
