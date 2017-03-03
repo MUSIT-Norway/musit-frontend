@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Table, FormGroup } from 'react-bootstrap';
-import { hashHistory } from 'react-router';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import reduce from 'lodash/reduce';
@@ -10,7 +9,8 @@ import map from 'lodash/map';
 export default class ObservationControlGrid extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
-    showMode: PropTypes.oneOf(['ALL', 'CONTROLS', 'OBSERVATIONS', '']),
+    showControl: PropTypes.func.isRequired,
+    showObservation: PropTypes.func.isRequired,
     tableData: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       eventType: PropTypes.string.isRequired,
@@ -113,9 +113,9 @@ export default class ObservationControlGrid extends Component {
                     id={`${controlOrObservation.id}_${controlOrObservation.doneDate}`}
                     onClick={() => {
                       if (controlOrObservation.eventType.toLowerCase() === 'control') {
-                        hashHistory.push(`magasin/${this.props.id}/control/${controlOrObservation.id}`);
+                        this.props.showControl(controlOrObservation);
                       } else {
-                        hashHistory.push(`magasin/${this.props.id}/observation/${controlOrObservation.id}`);
+                        this.props.showObservation(controlOrObservation);
                       }
                     }}
                   >

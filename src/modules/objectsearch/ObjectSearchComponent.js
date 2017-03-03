@@ -12,7 +12,10 @@ import MusitObject from '../../models/object';
 import inject from 'react-rxjs/dist/RxInject';
 import objectSearchStore$, {clearSearch$, searchForObjects$, onChangeField$} from './objectSearchStore';
 import { addObject$ } from '../app/pickList';
-import pickList$, { isItemAdded } from '../app/pickList';
+import { isItemAdded } from '../app/pickList';
+import Config from '../../config';
+import flowRight from 'lodash/flowRight';
+import { makeUrlAware } from '../app/appSession';
 
 export class ObjectSearchComponent extends React.Component {
   constructor(props) {
@@ -24,6 +27,12 @@ export class ObjectSearchComponent extends React.Component {
     this.getMuseumNo = props.getMuseumNo || (() => this.museumNo.value);
     this.getSubNo = props.getSubNo || (() => this.subNo.value);
     this.getTerm = props.getTerm || (() => this.term.value);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id) {
+      this.searchForObjects(1, nextProps.appSession.getMuseumId());
+    }
   }
 
   render() {
@@ -114,7 +123,13 @@ export class ObjectSearchComponent extends React.Component {
                             <Breadcrumb
                               node={data}
                               allActive
-                              onClickCrumb={(node) => hashHistory.push(node.url) }
+                              onClickCrumb={(node) => {
+                                if(node.id) {
+                                  hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession));
+                                } else {
+                                  hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
+                                }
+                              }}
                             />
                             }
                           </td>
@@ -180,7 +195,7 @@ export class ObjectSearchComponent extends React.Component {
     );
   }
 
-  searchForObjects(page) {
+  searchForObjects(page, museumId = this.props.appSession.getMuseumId()) {
     this.setState({...this.state, currentPage: page});
     this.props.clearSearch();
     return this.props.searchForObjects({
@@ -189,7 +204,7 @@ export class ObjectSearchComponent extends React.Component {
       term: this.getTerm(),
       perPage: this.state.perPage,
       page,
-      museumId: this.props.appSession.getMuseumId(),
+      museumId,
       collectionId: this.props.appSession.getCollectionId(),
       token: this.props.appSession.getAccessToken()
     });
@@ -199,8 +214,8 @@ export class ObjectSearchComponent extends React.Component {
 
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
-  store$: objectSearchStore$,
-  pickList$
+  pickList$: { type: React.PropTypes.object.isRequired },
+  store$: objectSearchStore$()
 };
 
 const commands = {
@@ -214,6 +229,9 @@ const props = {
   isItemAdded
 };
 
-export default inject(data, commands, props)(ObjectSearchComponent);
+export default flowRight([
+  inject(data, commands, props),
+  makeUrlAware
+])(ObjectSearchComponent);
 
 

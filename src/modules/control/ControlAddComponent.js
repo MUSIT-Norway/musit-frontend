@@ -32,6 +32,8 @@ import inject from 'react-rxjs/dist/RxInject';
 import Control from '../../models/control';
 import store$, { loadRootNode$ } from './controlStore';
 import Loader from 'react-loader';
+import Config from '../../config';
+
 
 export class ControlAddContainer extends React.Component {
   static propTypes = {
@@ -117,7 +119,7 @@ export class ControlAddContainer extends React.Component {
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
       hashHistory.replace({
-        pathname: `/magasin/${this.props.params.id}/observation/edit`,
+        pathname: Config.magasin.urls.client.storagefacility.editObservation(this.props.params.id, this.props.appSession),
         state: controlState
       });
     } else {
@@ -333,7 +335,7 @@ export class ControlAddContainer extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  store$
+  store$: store$()
 };
 
 const commands = {

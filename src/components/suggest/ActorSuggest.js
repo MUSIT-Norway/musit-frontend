@@ -72,7 +72,7 @@ export class ActorSuggest extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  suggest$: suggest$Fn('actorSuggest', Config.magasin.urls.actor.searchUrl)
+  suggest$: suggest$Fn('actorSuggest', Config.magasin.urls.api.actor.searchUrl)
 };
 
 const commands = { update$, clear$ };

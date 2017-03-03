@@ -42,7 +42,7 @@ exports[`AppComponent remders 1`] = `
         <LinkContainer
           action="push"
           onlyActiveOnIndex={false}
-          to="/magasin">
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/magasin">
           <NavItem
             active={false}
             disabled={false}>
@@ -52,7 +52,7 @@ exports[`AppComponent remders 1`] = `
         <LinkContainer
           action="push"
           onlyActiveOnIndex={false}
-          to="/reports">
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/reports">
           <NavItem
             active={false}
             disabled={false}>
@@ -69,7 +69,7 @@ exports[`AppComponent remders 1`] = `
         <LinkContainer
           action="push"
           onlyActiveOnIndex={false}
-          to="/picklist/nodes">
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/picklist/nodes">
           <NavItem
             active={false}
             disabled={false}>
@@ -82,7 +82,7 @@ exports[`AppComponent remders 1`] = `
         <LinkContainer
           action="push"
           onlyActiveOnIndex={false}
-          to="/picklist/objects">
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/picklist/objects">
           <NavItem
             active={false}
             disabled={false}>
@@ -95,7 +95,7 @@ exports[`AppComponent remders 1`] = `
         <LinkContainer
           action="push"
           onlyActiveOnIndex={false}
-          to="/search/objects">
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/search/objects">
           <NavItem
             active={false}
             disabled={false}>
@@ -122,8 +122,16 @@ exports[`AppComponent remders 1`] = `
           handleLogout={[Function bound handleLogout]}
           handleMuseumId={[Function bound handleMuseumId]}
           rootNode={undefined}
-          selectedCollectionId={undefined}
-          selectedMuseumId={undefined}
+          selectedCollectionId={
+            CollectionId {
+              "uuid": "00000000-0000-0000-0000-000000000000"
+            }
+          }
+          selectedMuseumId={
+            MuseumId {
+              "id": 99
+            }
+          }
           token="1234" />
       </Nav>
     </NavbarCollapse>

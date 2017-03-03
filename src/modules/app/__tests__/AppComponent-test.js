@@ -4,6 +4,8 @@ import React from 'react';
 import sinon from 'sinon';
 import { AppComponent } from '../AppComponent';
 import { AppSession } from '../appSession';
+import MuseumId from '../../../models/museumId';
+import ColletionId from '../../../models/collectionId';
 
 describe('AppComponent', () => {
   it('remders', () => {
@@ -22,6 +24,8 @@ describe('AppComponent', () => {
         count={{ value: 0 }}
         appSession={new AppSession({
           accessToken: '1234',
+          museumId: new MuseumId(99),
+          collectionId: new ColletionId('00000000-0000-0000-0000-000000000000'),
           buildInfo: {
             buildInfoBuildNumber: '64'
           },
@@ -64,6 +68,8 @@ describe('AppComponent', () => {
         clearObjects={clearObjects}
         clearNodes={clearNodes}
         toggleEnabled={toggleEnabled}
+        clearObjectPicklist={(a) => (a)}
+        clearNodePicklist={(a) => (a)}
       >
         <span>Yay</span>
       </AppComponent>

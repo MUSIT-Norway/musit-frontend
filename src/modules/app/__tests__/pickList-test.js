@@ -1,8 +1,7 @@
 /* eslint-disable */
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, isItemAdded } from '../pickList';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import store$, { isItemAdded } from '../pickList';
 const diff = require('deep-diff').diff;
 import MusitObject from '../../../models/object';
 import MuseumId from '../../../models/museumId';
@@ -34,8 +33,8 @@ describe('pickList', () => {
     const expected          = 'a--de---fng-hijkjlop-rs-u';
 
     const expectedStateMap = {
-      a: {},
-      d: { objects: [{ marked: false, value: {id: 1}, path: []}]},
+      a: { nodes: [], objects: []},
+      d: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: []},
       e: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: [{marked: false, value: {id: 1}, path: []}]},
       f: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: []},
       n: { objects: [], nodes: []},
@@ -106,7 +105,7 @@ describe('pickList', () => {
       }
     ));
 
-    const state$ = reducer$({
+    const state$ = store$({
       clearObjects$,
       removeObject$,
       toggleObject$,
@@ -122,7 +121,7 @@ describe('pickList', () => {
     });
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

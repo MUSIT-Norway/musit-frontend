@@ -15,8 +15,5 @@ export const reducer$ = (actions) => Observable.merge(
   actions.getControl$.map((data) => (state) => ({...state,  data}))
 );
 
-export default createStore('controlStore$', reducer$({
-  clear$,
-  loadRootNode$,
-  getControl$
-}), Observable.of(initialState));
+export default (actions$ = {clear$, loadRootNode$, getControl$}) =>
+  createStore('controlStore$', reducer$(actions$), Observable.of(initialState));

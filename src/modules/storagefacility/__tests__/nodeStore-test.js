@@ -1,13 +1,14 @@
 import { TestScheduler } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$ } from '../nodeStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import store$ from '../nodeStore';
 const diff = require('deep-diff').diff;
 
 describe('nodeStore', () => {
 
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
         console.log(difference);
@@ -21,7 +22,14 @@ describe('nodeStore', () => {
     const expected          = 'abcd-------';
 
     const expectedStateMap = {
-      a: {},
+      a: {
+        'unit': {
+          'environmentRequirement': {},
+          'environmentAssessment': {},
+          'securityAssessment': {}
+        },
+        'loaded': false
+      },
       b: {
         unit: {
           environmentRequirement: {},
@@ -56,10 +64,10 @@ describe('nodeStore', () => {
     const loadNode$ = testScheduler.createHotObservable(loadNodeM, { 1: { foo: 'bar' }});
     const updateState$ = testScheduler.createHotObservable(updateStateM, { 1: { bar: 'foo' }});
 
-    const state$ = reducer$({clearNode$, loadNode$, updateState$});
+    const state$ = store$({clearNode$, loadNode$, updateState$});
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();
