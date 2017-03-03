@@ -1,4 +1,5 @@
 /* @flow */
+import React from 'react';
 import moment from 'moment';
 
 export const flatten = (arr: []) => {
@@ -20,6 +21,10 @@ export const filter = (arr: any[], fields: string[], pattern: string) => {
   return arr.filter((row) => {
     return fields.find((field) => contains(row[field], pattern));
   });
+};
+
+export const getDisplayName = (Component: React.Component<*, *, *>) => {
+  return Component.displayName || Component.name || 'Component';
 };
 
 export const blur = () => {
