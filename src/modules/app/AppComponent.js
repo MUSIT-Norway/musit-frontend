@@ -186,7 +186,7 @@ const commands = {
 };
 
 const props = {
-  goTo: hashHistory.push.bind(hashHistory)
+  goTo: hashHistory.push
 };
 
 export default inject(data, commands, props)(AppComponent);

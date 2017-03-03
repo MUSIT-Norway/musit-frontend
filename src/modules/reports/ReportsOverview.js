@@ -1,16 +1,21 @@
 import React from 'react';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
+import Config from '../../config';
+import inject from 'react-rxjs/dist/RxInject';
+import { hashHistory } from 'react-router';
+import flowRight from 'lodash/flowRight';
+import { makeUrlAware } from '../app/appSession';
 
 const reports = [
   {
     title: 'musit.reports.securingCollections.title',
-    url: '/#/reports/kdreport',
+    url: Config.magasin.urls.client.report.goToKdReport,
     description: 'musit.reports.securingCollections.description'
   }
 ];
 
-export default () => {
+const ReportsOverview = (props) => {
   return (
     <div>
       <main>
@@ -28,18 +33,27 @@ export default () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {reports.map((report, index) =>
-                    <tr key={index} id={report.id}>
-                      <td>
-                        <a href={report.url}>
-                          {I18n.t(report.title)}
-                        </a>
-                      </td>
-                      <td>
-                        {I18n.t(report.description)}
-                      </td>
-                    </tr>
-                  )}
+                  {reports.map((report, index) => {
+                    const url = report.url(props.appSession);
+                    return (
+                      <tr key={index} id={report.id}>
+                        <td>
+                          <a
+                            href={url}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              hashHistory.push(url);
+                            }}
+                          >
+                            {I18n.t(report.title)}
+                          </a>
+                        </td>
+                        <td>
+                          {I18n.t(report.description)}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
             </Row>
@@ -49,3 +63,12 @@ export default () => {
     </div>
   );
 };
+
+const data = {
+  appSession$: { type: React.PropTypes.object.isRequired }
+};
+
+export default flowRight([
+  inject(data),
+  makeUrlAware
+])(ReportsOverview);

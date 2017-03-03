@@ -29,6 +29,12 @@ export class ObjectSearchComponent extends React.Component {
     this.getTerm = props.getTerm || (() => this.term.value);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id) {
+      this.searchForObjects(1, nextProps.appSession.getMuseumId());
+    }
+  }
+
   render() {
     return (
       <div style={{paddingTop: 20}}>
@@ -185,7 +191,7 @@ export class ObjectSearchComponent extends React.Component {
     );
   }
 
-  searchForObjects(page) {
+  searchForObjects(page, museumId = this.props.appSession.getMuseumId()) {
     this.setState({...this.state, currentPage: page});
     this.props.clearSearch();
     return this.props.searchForObjects({
@@ -194,7 +200,7 @@ export class ObjectSearchComponent extends React.Component {
       term: this.getTerm(),
       perPage: this.state.perPage,
       page,
-      museumId: this.props.appSession.getMuseumId(),
+      museumId,
       collectionId: this.props.appSession.getCollectionId(),
       token: this.props.appSession.getAccessToken()
     });
