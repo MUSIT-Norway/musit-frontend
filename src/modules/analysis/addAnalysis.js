@@ -154,6 +154,7 @@ const AddAnalysis = () => {
               id="formControlsText"
               type="text"
               label="Ekstern kilde"
+              placeholder="http://www.lenke.no"
             />
             <Col md={2}>
               <Button>Lagre</Button>
@@ -174,7 +175,7 @@ const AddAnalysis = () => {
               <b>Kommentar / resultat</b>
             </Col>
             <Col md={4}>
-              <FormControl componentClass="textarea" placeholder="textarea" />
+              <FormControl componentClass="textarea" placeholder="" />
             </Col>
           </FormGroup>
           <FormGroup>
