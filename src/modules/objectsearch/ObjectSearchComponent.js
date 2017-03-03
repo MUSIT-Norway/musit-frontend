@@ -123,9 +123,13 @@ export class ObjectSearchComponent extends React.Component {
                             <Breadcrumb
                               node={data}
                               allActive
-                              onClickCrumb={(node) => hashHistory.push(
-                                Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession)
-                                )}
+                              onClickCrumb={(node) => {
+                                if(node.id) {
+                                  hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession));
+                                } else {
+                                  hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
+                                }
+                              }}
                             />
                             }
                           </td>

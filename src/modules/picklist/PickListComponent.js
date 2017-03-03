@@ -232,9 +232,13 @@ export class PickListContainer extends React.Component {
                     <div className="labelText">
                       <Breadcrumb
                         node={pick.path}
-                        onClickCrumb={node => hashHistory.push(
-                          Config.magasin.urls.client.storagefacility.goToNode(!node.id || node.id === -1 ? '' : node.id, this.props.appSession)
-                          )}
+                        onClickCrumb={node => {
+                          if(node.id) {
+                            hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession));
+                          } else {
+                            hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
+                          }
+                        }}
                         allActive
                       />
                     </div>
