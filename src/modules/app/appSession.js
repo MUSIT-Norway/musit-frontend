@@ -2,7 +2,6 @@ import {Observable} from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { simpleGet } from '../../shared/RxAjax';
 import Config from '../../config';
-import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import MuseumId from '../../models/museumId';
@@ -40,10 +39,20 @@ export class AppSession {
   }
 }
 
-const initialState = { accessToken: getAccessToken() };
+const getAppSession = () => {
+  let session = {};
+  const appSessionStr = localStorage.getItem('appSession');
+  if (appSessionStr) {
+    session = JSON.parse(appSessionStr) || {};
+  }
+  return session;
+};
 
-const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
-  accessToken = accessToken || getAccessToken();
+const initialState = getAppSession();
+
+const loadAppSession = (ajaxGet = simpleGet) => {
+  const session = getAppSession();
+  const accessToken = session.accessToken;
   if (!accessToken) {
     return Observable.empty();
   }
@@ -79,14 +88,15 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
             museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
           }));
         }
-        const museumId = new MuseumId(groups[0].museumId);
-        const collectionId = new CollectionId(groups[0].collections[0].uuid);
+        const museumId = session.museumId || groups[0].museumId;
+        const collectionId = session.collectionId || groups[0].collections[0].uuid;
+        localStorage.setItem('appSession', JSON.stringify({...session, museumId, collectionId}));
         return {
           accessToken,
           actor: new Actor(currentUserRes.response),
           groups,
-          museumId,
-          collectionId,
+          museumId: new MuseumId(museumId),
+          collectionId: new CollectionId(collectionId),
           buildInfo: buildInfoRes.response
         };
       })
@@ -94,8 +104,14 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
 };
 
 export const loadAppSession$ = createAction('loadAppSession$').switchMap(loadAppSession);
-export const setMuseumId$ = createAction('setMuseumId$');
-export const setCollectionId$ = createAction('setCollectionId$');
+export const setMuseumId$ = createAction('setMuseumId$').do(mid => {
+  const session = getAppSession();
+  localStorage.setItem('appSession', JSON.stringify({...session, museumId: mid.id}));
+});
+export const setCollectionId$ = createAction('setCollectionId$').do(cid => {
+  const session = getAppSession();
+  localStorage.setItem('appSession', JSON.stringify({...session, collectionId: cid.uuid}));
+});
 export const setAccessToken$ = createAction('setAccessToken$');
 
 export const reducer$ = (actions, onError = emitError) => Observable.merge(

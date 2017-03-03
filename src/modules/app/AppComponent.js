@@ -45,7 +45,7 @@ export class AppComponent extends Component {
       })
     }).then(response => {
       if (response.ok) {
-        localStorage.removeItem('accessToken');
+        localStorage.removeItem('appSession');
         window.location.replace('https://auth.dataporten.no/logout');
       }
     }).catch(error => emitError({ type: 'network', error}));

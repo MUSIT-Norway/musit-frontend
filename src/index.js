@@ -56,7 +56,9 @@ notification$.subscribe((event) => {
 
 const accessToken = queryParser.parse(location.search)['_at'];
 if (accessToken) {
-  localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
+  const currentSessionStr = localStorage.getItem('appSession');
+  const currentSessionObj = JSON.parse(currentSessionStr) || {};
+  localStorage.setItem('appSession', JSON.stringify({...currentSessionObj, accessToken }));
   window.location.href='/#/magasin';
 } else {
   const dest = document.getElementById('content');
