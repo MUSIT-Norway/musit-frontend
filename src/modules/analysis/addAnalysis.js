@@ -1,164 +1,214 @@
 import React from 'react';
 import {
+  Radio,
   PageHeader,
   Form,
   FormGroup,
   Col,
-  DropdownButton,
   FormControl,
-  MenuItem,
-  ControlLabel,
-  InputGroup
+  Button,
+  Well
+
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 
 
 function FieldGroup({id, label, ...props}) {
   return (
-    <FormGroup controlId={id}>
-      <Col componentClass={ControlLabel} md={1}>{label}</Col>
+    <div controlId={id}>
+      <Col md={1}><b>{label}</b></Col>
       <Col md={2}>
         <FormControl {... props} />
+      </Col>
+    </div>
+  );
+}
+
+function AddButton({id, label, md, ...props}) {
+  return (
+    <FormGroup controlId={id}>
+      <Col md={md}>
+        <Button {... props}>
+          <FontAwesome name='plus-circle'/>{' '}
+          {label}
+        </Button>
       </Col>
     </FormGroup>
   );
 }
+function newLine() {
+  return <Form horizontal><FormGroup />
+    <hr/>
+  </Form>;
+}
+
 const AddAnalysis = () => {
   return (
-    <Form>
+    <div>
       <br/>
       <PageHeader>{'Registrere analyse'}</PageHeader>
-      <FormGroup>
-        <Col md={12}><b> HID:: </b>123</Col>
-      </FormGroup>
-      <FormGroup>
-        <Col md={2}>
-          <b>Registrert:</b>
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col md={2}>
-          <FontAwesome name='user'/>{' '}
-          Per Hansen
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col md={8}>
-          <FontAwesome name='clock-o'/>{' '}
-          15.12.2017
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col md={2}>
-          <b>Sist endret:</b>
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col md={2}>
-          <FontAwesome name='user'/>{' '}
-          Per Hansen
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col md={2}>
-          <FontAwesome name='clock-o'/>{' '}
-          15.12.2017
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col md={6}>
-          <a href=''>Se endringshistorikk</a>
-        </Col>
-      </FormGroup>
-      <hr/>
-      <br/>
-      <FieldGroup
-        id="formControlsText"
-        type="text"
-        label="Text"
-        placeholder="Enter text"
-      />
-      <hr/>
-      <InputGroup style={{minWidth:'796px'}}>
-        <Col md={4}>
-          <b>Analysetype</b>{' '}
-          <DropdownButton bsStyle={'Default'} title='Velg type' id="bg-nested-dropdown">
-            <MenuItem eventKey="1">Vev</MenuItem>
-            <MenuItem eventKey="2">Blad</MenuItem>
-          </DropdownButton>
-        </Col>
-        <Col md={4}>
-          <b>Analyseundertype</b>{' '}
-          <DropdownButton bsStyle={'Default'} title='Velg type' id="bg-nested-dropdown">
-            <MenuItem eventKey="1">Tallus</MenuItem>
-            <MenuItem eventKey="2">Klorofyll</MenuItem>
-          </DropdownButton>
-        </Col>
-      </InputGroup>
-      <br/>
-      <Form inline>
-        <FormGroup style={{minWidth:'796px'}}>
-          <Col md={4}>
-            <b>Status</b>{' '}
-            <DropdownButton bsStyle={'Default'} title='Velg status' id="bg-nested-dropdown">
-              <MenuItem eventKey="1">Nyskilt</MenuItem>
-              <MenuItem eventKey="2">Separert</MenuItem>
-            </DropdownButton>
+      <Form>
+        <FormGroup>
+          <Col md={12}><b> HID:: </b>123</Col>
+          <Col md={1}><b>Registrert:</b></Col>
+          <Col md={1}><FontAwesome name='user'/>{' '}
+            Per Hansen
           </Col>
-
+          <Col md={10}>
+            <FontAwesome name='clock-o'/>{' '}
+            15.12.2017
+          </Col>
+          <Col md={1}><b>Sist endret:</b></Col>
+          <Col md={1}><FontAwesome name='user'/>{' '}Per Hansen</Col>
+          <Col md={1}><FontAwesome name='clock-o'/>{' '}15.12.2017</Col>
+          <Col md={9}><a href=''>Se endringshistorikk</a></Col>
         </FormGroup>
       </Form>
-      <br/>
+      {newLine()}
+      <from inline>
+        <FieldGroup
+          id="formControlsText"
+          type="text"
+          label="saksnummber"
+        />
+        <AddButton
+          id="1"
+          label="Legg til saksnummer"
+          md={5}
+        />
+      </from>
+      {newLine()}
 
-      <Form inline>
-        <InputGroup style={{minWidth:'796px'}}>
-          <Col md={3}>
-            <ControlLabel>Analysevolum/-vekt</ControlLabel>
+      <from>
+        <Col md={12}><b>Objekt</b></Col>
+        <Col md={1}>Nuseumsnr: <b>1234 </b></Col>
+        <Col md={1}>Unt: <b>12345678911</b></Col>
+        <Col md={10}>Term/artsnavn: <b>Kniv</b></Col>
+        <AddButton
+          id="2"
+          label="Legg til objekt"
+          md={12}
+        />
+      </from>
+      {newLine()}
+      <Form>
+
+        <FormGroup>
+          <Col md={12}>
+            <b>Personer tilknyttet analysen</b>
           </Col>
-          <Col md={3}>
-            <FormControl type="text" placeholder="Vekt/Volum"/>
+        </FormGroup>
+        <FieldGroup
+          id="navn"
+          type="text"
+          label="Navn"
+          placeholder="Fornavn Etternavn"
+        />
+        <FormGroup>
+          <Col md={7}>
+            <b>Rolle</b>{' '}
+            <Radio inline>
+              Ansvarlig
+            </Radio>
+            {' '}
+            <Radio inline>
+              Administrert av
+            </Radio>
           </Col>
-          <Col md={3}>
-            <DropdownButton bsStyle={'Default'} title='Velg måleenhet' id="bg-nested-dropdown">
-              <MenuItem eventKey="1">Gr</MenuItem>
-              <MenuItem eventKey="2">Liter</MenuItem>
-            </DropdownButton>
-          </Col>
-        </InputGroup>
+        </FormGroup>
+        <AddButton
+          id="3"
+          label="Legg til person"
+          md={12}
+        />
       </Form>
-      <br/>
-      <Form inline>
-        <InputGroup style={{minWidth:'796px'}}>
-          <Col md={3}>
-            <ControlLabel>Lagringskontainer</ControlLabel>
-          </Col>
-          <Col md={3}>
-            <DropdownButton bsStyle={'Default'} title='Velg kontainer' id="bg-nested-dropdown">
-              <MenuItem eventKey="1">Kapsel</MenuItem>
-              <MenuItem eventKey="2">Reagensrør</MenuItem>
-              <MenuItem eventKey="2">Glassplate</MenuItem>
-            </DropdownButton>
-          </Col>
-          <Col md={3}>
-            <DropdownButton bsStyle={'Default'} title='Velg lagringsmedium' id="bg-nested-dropdown">
-              <MenuItem eventKey="1">Etanol</MenuItem>
-              <MenuItem eventKey="2">Aceton</MenuItem>
-            </DropdownButton>
-          </Col>
-        </InputGroup>
-      </Form>
-      <br/>
-      <Form inline>
-        <InputGroup style={{minWidth:'796px'}}>
-          <Col md={3}>
-            <ControlLabel>Kommentar</ControlLabel>
-          </Col>
-          <Col md={9}>
-            <FormControl componentClass='textarea' placeholder='Kommentar'/>
-          </Col>
-        </InputGroup>
-      </Form>
-    </Form>);
+      {newLine()}
+
+      <FormGroup>
+        <Col md={1}>
+          <b>Analysested</b>
+        </Col>
+        <Col md={2}>
+          <FormControl componentClass="select" placeholder="Velg sted">
+            <option value="Velgsted">Velg sted</option>
+            <option value="other">...</option>
+          </FormControl>
+        </Col>
+      </FormGroup>
+      {newLine()}
+      <Well>
+        <Form horizontal>
+          <FormGroup>
+            <Col md={1}>
+              <b>Type analyse</b>
+            </Col>
+            <Col md={2}>
+              <FormControl componentClass="select" placeholder="Velg kategori">
+                <option value="select">Velg kategori</option>
+                <option value="other">...</option>
+              </FormControl>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <FieldGroup
+              id="formControlsText"
+              type="text"
+              label="Ekstern kilde"
+            />
+            <Col md={2}>
+              <Button>Lagre</Button>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <FieldGroup
+              id="formControlsText"
+              type="text"
+              label="Ladt opp fil"
+            />
+            <Col md={2}>
+              <Button>Bla gjennom</Button>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col md={1}>
+              <b>Kommentar / resultat</b>
+            </Col>
+            <Col md={4}>
+              <FormControl componentClass="textarea" placeholder="textarea" />
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col md={1}>
+              <b>Klausulering</b>
+            </Col>
+            <Col md={5}>
+              <Radio  readOnly inline>
+                Ja
+              </Radio>
+              <Radio inline checked readOnly>
+                Nei
+              </Radio>
+            </Col>
+          </FormGroup>
+
+        </Form>
+      </Well>
+      <FormGroup>
+        <Col md={1}>
+          <b>Avslutt analyse</b>
+        </Col>
+        <Col md={5}>
+          <Radio checked inline>
+            Ja
+          </Radio>
+          <Radio inline  checked readOnly>
+            Nei
+          </Radio>
+        </Col>
+      </FormGroup>
+
+
+    </div>);
 };
 
 export default AddAnalysis;
