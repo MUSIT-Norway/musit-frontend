@@ -1,7 +1,6 @@
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, loadEvents} from '../eventsStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import store$, { loadEvents} from '../eventsStore';
 import MuseumId from '../../../models/museumId';
 import Observation from '../../../models/observation';
 import Control from '../../../models/control';
@@ -90,10 +89,10 @@ describe('eventsStore', () => {
         })
       }));
 
-    const state$ = reducer$({ clearEvents$, loadRootNode$, loadEvents$ });
+    const state$ = store$({ clearEvents$, loadRootNode$, loadEvents$ });
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$, Observable.of({ data: []}))).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();
@@ -172,10 +171,10 @@ describe('eventsStore', () => {
         simplePost: () => Observable.of({ response: [] })
       }));
 
-    const state$ = reducer$({ clearEvents$, loadRootNode$, loadEvents$ });
+    const state$ = store$({ clearEvents$, loadRootNode$, loadEvents$ });
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$, Observable.of({ data: []}))).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

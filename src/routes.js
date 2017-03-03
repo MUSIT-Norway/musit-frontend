@@ -43,7 +43,7 @@ export default () => {
       <Route path="magasin">
         <IndexRoute component={StorageUnitsTable} />
         <Route path="add" add component={AddStorageUnitPanel} />
-        <Route path="add/:id" add component={AddStorageUnitPanel} />
+        <Route path=":id/add" add component={AddStorageUnitPanel} />
         <Route path=":id/view" component={EditStorageUnitPanel} />
         <Route path=":id/controls" showControls showObservations={false} component={EventsContainer} />
         <Route path=":id/controlsobservations" showObservations showControls component={EventsContainer} />

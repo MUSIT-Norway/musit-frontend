@@ -16,4 +16,5 @@ export const reducer$ = (actions) =>
     actions.loadMoveHistory$.map((data) => (state) => ({...state, data}))
   );
 
-export default createStore('moveHistory', reducer$({clear$, loadMoveHistory$}), Observable.of(initialState));
+export default (actions$ = {clear$, loadMoveHistory$}) =>
+  createStore('moveHistory', reducer$(actions$), Observable.of(initialState));

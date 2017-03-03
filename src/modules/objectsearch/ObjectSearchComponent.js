@@ -12,7 +12,7 @@ import MusitObject from '../../models/object';
 import inject from 'react-rxjs/dist/RxInject';
 import objectSearchStore$, {clearSearch$, searchForObjects$, onChangeField$} from './objectSearchStore';
 import { addObject$ } from '../app/pickList';
-import pickList$, { isItemAdded } from '../app/pickList';
+import { isItemAdded } from '../app/pickList';
 import Config from '../../config';
 import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../app/appSession';
@@ -214,8 +214,8 @@ export class ObjectSearchComponent extends React.Component {
 
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
-  store$: objectSearchStore$,
-  pickList$
+  pickList$: { type: React.PropTypes.object.isRequired },
+  store$: objectSearchStore$()
 };
 
 const commands = {

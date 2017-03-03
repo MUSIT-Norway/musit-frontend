@@ -24,7 +24,7 @@ import { addNode$, addObject$ } from '../app/pickList';
 import { showConfirm, showModal } from '../../shared/modal';
 import { makeUrlAware } from '../app/appSession';
 import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
-import pickList$, { isItemAdded } from '../app/pickList';
+import { isItemAdded } from '../app/pickList';
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -483,8 +483,8 @@ export class TableComponent extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  tableStore$,
-  pickList$
+  tableStore$: tableStore$(),
+  pickList$: { type: React.PropTypes.object.isRequired }
 };
 
 const commands = {

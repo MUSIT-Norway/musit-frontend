@@ -1,7 +1,6 @@
 import {TestScheduler} from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$ } from '../reportStore';
-import {createStore} from 'react-rxjs/dist/RxStore';
+import store$ from '../reportStore';
 
 describe('KDReportStore', () => {
 
@@ -48,17 +47,19 @@ describe('KDReportStore', () => {
         loaded: false
       },
       a: {
+        'data': {},
+        'loaded': false
       }
     };
 
     // mock up$ and down$ events
 
 
-    const state$ = reducer$({loadKDReport$, clear$});
+    const state$ = store$({loadKDReport$, clear$});
 
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

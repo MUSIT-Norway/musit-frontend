@@ -139,7 +139,7 @@ export class EventsComponent extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  store$
+  store$: store$()
 };
 
 const commands = {

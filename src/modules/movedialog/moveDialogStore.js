@@ -44,4 +44,5 @@ export const reducer$ = (actions) => Observable.merge(
   actions.setPage$.map((page) => (state) => ({...state, page}))
 );
 
-export default createStore('moveDialog', reducer$({clear$, setPage$, loadNode$, loadChildren$, setLoading$}), Observable.of(initialState));
+export default (actions$ = {clear$, setPage$, loadNode$, loadChildren$, setLoading$}) =>
+  createStore('moveDialog', reducer$(actions$), Observable.of(initialState));

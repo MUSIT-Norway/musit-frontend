@@ -144,12 +144,8 @@ export const reducer$ = (actions, onError = emitError) => Observable.merge(
     .map(collectionId => state => ({...state, collectionId}))
 );
 
-const session$ = createStore('appSession', reducer$({
-  setMuseumId$,
-  setCollectionId$,
-  setAccessToken$,
-  loadAppSession$
-}), Observable.of(initialState)).map(state => new AppSession(state));
+const session$ = (actions$ = { setMuseumId$, setCollectionId$, setAccessToken$, loadAppSession$ }) =>
+  createStore('appSession', reducer$(actions$), Observable.of(initialState)).map(state => new AppSession(state));
 
 export default session$;
 
