@@ -11,7 +11,7 @@ const FormInput = (props) => (
     <ControlLabel>{props.field.name}</ControlLabel>
     <FormControl
       value={props.field.value || ''}
-      onChange={(e) => props.onChange({ name: props.field.name, value: e.target.value })}
+      onChange={(e) => props.onChangeField({ name: props.field.name, value: e.target.value })}
     />
   </FormGroup>
 );
@@ -20,9 +20,9 @@ const SampleFormPage = (props) => (
   <Well>
     <Form>
       <h1>Test</h1>
-      <FormInput field={props.form.hid} onChange={props.updateForm} />
-      <FormInput field={props.form.registeredBy} onChange={props.updateForm} />
-      <FormInput field={props.form.registeredDate} onChange={props.updateForm} />
+      <FormInput field={props.form.hid} onChangeField={props.updateForm} />
+      <FormInput field={props.form.registeredBy} onChangeField={props.updateForm} />
+      <FormInput field={props.form.registeredDate} onChangeField={props.updateForm} />
     </Form>
   </Well>
 
