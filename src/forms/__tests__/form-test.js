@@ -38,14 +38,14 @@ describe('form stream', () => {
     const expected      = 'abccdd---------';
 
     const expectedStateMap = {
-      a: [
-        {
+      a: {
+        name: {
           name: 'name',
           validator: minimumThreeChars
         }
-      ],
-      b: [
-        {
+      },
+      b: {
+        name: {
           name: 'name',
           validator: minimumThreeChars,
           value: 'Ja',
@@ -54,9 +54,9 @@ describe('form stream', () => {
             error: 'Name is not valid'
           }
         }
-      ],
-      c: [
-        {
+      },
+      c: {
+        name: {
           name: 'name',
           validator: minimumThreeChars,
           value: 'Jar',
@@ -64,9 +64,9 @@ describe('form stream', () => {
             valid: true
           }
         }
-      ],
-      d: [
-        {
+      },
+      d: {
+        name: {
           name: 'name',
           validator: minimumThreeChars,
           value: 'Kalle',
@@ -75,7 +75,7 @@ describe('form stream', () => {
             valid: true
           }
         }
-      ]
+      }
     };
 
     const name: Field<string> = {
@@ -115,10 +115,10 @@ describe('form stream', () => {
       ]
     });
 
-    const { form$ } = createForm('test', [name], update$, load$);
+    const testForm = createForm('test', [name], update$, load$);
 
     // assertion
-    testScheduler.expectObservable(form$).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(testForm.form$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

@@ -35,6 +35,7 @@ import ControlAddContainer from './modules/control/ControlAddComponent';
 import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
+import SampleForm from './modules/test/SampleFormPage';
 
 export default () => {
   return (
@@ -66,6 +67,7 @@ export default () => {
       </Route>
       <Route path="search/objects" component={ObjectSearchComponent} />
       <Route path="about" component={AboutView} />
+      <Route path="test" component={SampleForm} />
       -- Catch all route
       <Route path="*" component={NotFound} status={404} />
     </Route>

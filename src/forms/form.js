@@ -24,58 +24,49 @@ export type Load<T> = {
   origValue?: T | null
 };
 
-const load = (state: Field<*>[], loadField: Load<*>) => {
-  const field: ?Field<*> = state.find((f: Field<*>) => f.name === loadField.name);
-  if (!field) {
-    return state;
-  }
-  const error: any = field.validator(loadField.value);
-  const updated: Field<*> = {
+const updateField = (field: Field<*>, data: Update<*> | Load<*>): Field<*> => {
+  const error = field.validator(data.value);
+  return {
     ...field,
-    value: loadField.value,
-    origValue: loadField.origValue,
+    value: data.value,
+    origValue: data.origValue && data.origValue,
     status: {valid: !error, error}
   };
-  return [
-    ...state.filter((f: Field<*>) => f.name !== field.name),
-    updated
-  ];
 };
 
-const update = (state: Field<*>[], updateField: Update<*>) => {
-  const field: ?Field<*> = state.find((f: Field<*>) => f.name === updateField.name);
-  if (!field) {
+const updateForm = (state: Field<*>[], data: Update<*> | Load<*>): Field<*>[] => {
+  const fieldIndex: number = state.findIndex((f: Field<*>) => f.name === data.name);
+  if (fieldIndex === -1) {
     return state;
   }
-  const error: any = field.validator(updateField.value);
-  const updated: Field<*> = {
-    ...field,
-    value: updateField.value,
-    status: {valid: !error, error}
-  };
-  return [
-    ...state.filter((f: Field<*>) => f.name !== field.name),
-    updated
-  ];
+  const updated = updateField(state[fieldIndex], data);
+  return state.slice(0, fieldIndex).concat([updated]).concat(state.slice(fieldIndex + 1));
 };
 
 const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Load<*>[]>) => Observable.merge(
-  loadForm$.map((loadForm: Load<*>[]) => (state: Field<*>[]) => loadForm.reduce(load, state)),
-  updateField$.map((updateField: Update<*>) => (state: Field<*>[]) => update(state, updateField))
+  loadForm$.map((load: Load<*>[]) => (state: Field<*>[]) => load.reduce(updateForm, state)),
+  updateField$.map((update: Update<*>) => (state: Field<*>[]) => updateForm(state, update))
 );
+
+export type FormDetails = {
+  updateField$: Subject<Update<*>>,
+  loadForm$: Subject<Load<*>[]>,
+  form$: Observable<Field<*>[]>
+};
 
 const createForm$ = (
   name: string,
   fields: Field<*>[],
   updateField$?: Subject<Update<*>>,
   loadForm$?: Subject<Load<*>[]>
-) => {
+): FormDetails => {
   updateField$ = updateField$ || createAction(name + ': updateField$');
   loadForm$ = loadForm$ || createAction(name + ': updateForm$');
   return {
     updateField$,
     loadForm$,
     form$: createStore(name, reducer$(updateField$, loadForm$), Observable.of(fields))
+      .map(form => form.reduce((acc, f) => ({...acc, [f.name]: f}), {}))
   };
 };
 
