@@ -29,7 +29,7 @@ const updateField = (field: Field<*>, data: Update<*> | Load<*>): Field<*> => {
   return {
     ...field,
     value: data.value,
-    origValue: data.origValue && data.origValue,
+    origValue: data.origValue ? data.origValue : field.origValue,
     status: {valid: !error, error}
   };
 };
