@@ -1,6 +1,7 @@
 /* @flow */
 import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
+import isEmpty from 'lodash/isEmpty';
 
 export type Field<T> = {
   name: string,
@@ -30,7 +31,7 @@ const updateField = (field: Field<*>, data: Update<*> | Load<*>): Field<*> => {
     ...field,
     value: data.value,
     origValue: data.origValue ? data.origValue : field.origValue,
-    status: {valid: !error, error}
+    status: { valid: isEmpty(error), error: error }
   };
 };
 
@@ -49,7 +50,7 @@ const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Load<*>[]
 );
 
 export type FormDetails = {
-  updateField$: Subject<Update<*>>,
+  updateForm$: Subject<Update<*>>,
   loadForm$: Subject<Load<*>[]>,
   form$: Observable<Field<*>[]>
 };
@@ -57,15 +58,15 @@ export type FormDetails = {
 const createForm$ = (
   name: string,
   fields: Field<*>[],
-  updateField$?: Subject<Update<*>>,
+  updateForm$?: Subject<Update<*>>,
   loadForm$?: Subject<Load<*>[]>
 ): FormDetails => {
-  updateField$ = updateField$ || createAction(name + ': updateField$');
-  loadForm$ = loadForm$ || createAction(name + ': updateForm$');
+  updateForm$ = updateForm$ || createAction(name + ': updateForm$');
+  loadForm$ = loadForm$ || createAction(name + ': loadForm$');
   return {
-    updateField$,
+    updateForm$,
     loadForm$,
-    form$: createStore(name, reducer$(updateField$, loadForm$), Observable.of(fields))
+    form$: createStore(name, reducer$(updateForm$, loadForm$), Observable.of(fields))
       .map(form => form.reduce((acc, f) => ({...acc, [f.name]: f}), {}))
   };
 };

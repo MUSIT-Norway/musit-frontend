@@ -39,37 +39,40 @@ import SampleForm from './modules/test/SampleFormPage';
 
 export default () => {
   return (
-    <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
-      <IndexRedirect to="magasin" />
-      <Route path="magasin">
-        <IndexRoute component={StorageUnitsTable} />
-        <Route path="add" add component={AddStorageUnitPanel} />
-        <Route path=":id/add" add component={AddStorageUnitPanel} />
-        <Route path=":id/view" component={EditStorageUnitPanel} />
-        <Route path=":id/controls" showControls showObservations={false} component={EventsContainer} />
-        <Route path=":id/controlsobservations" showObservations showControls component={EventsContainer} />
-        <Route path=":id/control/add" component={ControlAddContainer} />
-        <Route path=":id/control/:controlId" component={ControlViewContainer} />
-        <Route path=":id/observations" showObservations showControls={false} component={EventsContainer} />
-        <Route path=":id/observation/add" component={AddObservationPage} />
-        <Route path=":id/observation/edit" component={EditObservationPage} />
-        <Route path=":id/observation/:obsId" component={ViewObservationPage} />
-        <Route path=":id/objects" showObjects component={StorageUnitsTable} />
-        <Route path=":id" component={StorageUnitsTable} />
-      </Route>
-      <Route path="picklist">
-        <Route path="nodes" type="nodes" component={PickListView} />
-        <Route path="objects" type="objects" component={PickListView} />
-      </Route>
-      <Route path="reports">
-        <IndexRoute component={Reports} />
-        <Route path="kdreport" component={KDReportComponent} />
-      </Route>
-      <Route path="search/objects" component={ObjectSearchComponent} />
-      <Route path="about" component={AboutView} />
+    <Route>
       <Route path="test" component={SampleForm} />
-      -- Catch all route
-      <Route path="*" component={NotFound} status={404} />
+      <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
+        <IndexRedirect to="magasin" />
+        <Route path="magasin">
+          <IndexRoute component={StorageUnitsTable} />
+          <Route path="add" add component={AddStorageUnitPanel} />
+          <Route path=":id/add" add component={AddStorageUnitPanel} />
+          <Route path=":id/view" component={EditStorageUnitPanel} />
+          <Route path=":id/controls" showControls showObservations={false} component={EventsContainer} />
+          <Route path=":id/controlsobservations" showObservations showControls component={EventsContainer} />
+          <Route path=":id/control/add" component={ControlAddContainer} />
+          <Route path=":id/control/:controlId" component={ControlViewContainer} />
+          <Route path=":id/observations" showObservations showControls={false} component={EventsContainer} />
+          <Route path=":id/observation/add" component={AddObservationPage} />
+          <Route path=":id/observation/edit" component={EditObservationPage} />
+          <Route path=":id/observation/:obsId" component={ViewObservationPage} />
+          <Route path=":id/objects" showObjects component={StorageUnitsTable} />
+          <Route path=":id" component={StorageUnitsTable} />
+        </Route>
+        <Route path="picklist">
+          <Route path="nodes" type="nodes" component={PickListView} />
+          <Route path="objects" type="objects" component={PickListView} />
+        </Route>
+        <Route path="reports">
+          <IndexRoute component={Reports} />
+          <Route path="kdreport" component={KDReportComponent} />
+        </Route>
+        <Route path="search/objects" component={ObjectSearchComponent} />
+        <Route path="about" component={AboutView} />
+        -- Catch all route
+        <Route path="*" component={NotFound} status={404} />
+      </Route>
     </Route>
+
   );
 };

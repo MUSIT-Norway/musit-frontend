@@ -1,43 +1,9 @@
-/* @flow */
 import type { Field } from '../../forms/form';
-import type { FormDetails } from '../../forms/form';
 import createForm from '../../forms/form';
+import { composeValidators, isRequired, isNumeric, isAlphaNumeric } from 'revalidate';
 
-const minLength = (length: number) => (value: string) => {
-  const valid = value.length >= length;
-  if (!valid) {
-    return 'Minimum three characters required';
-  }
-};
+const hid: Field<string> = { name: 'hid', validator: composeValidators(isRequired, isNumeric)('hid') };
+const registeredBy: Field<string> = { name: 'registeredBy', validator: composeValidators(isRequired, isAlphaNumeric)('registeredBy') };
+const registeredDate: Field<string> = { name: 'registeredDate', validator: composeValidators(isRequired)('registeredDate')};
 
-const minimumThreeChars = minLength(3);
-
-const isDefined = (value: any) => {
-  const valid = value !== null && typeof value !== 'undefined';
-  if (!valid) {
-    return 'Required';
-  }
-};
-
-const hid: Field<string> = {
-  name: 'hid',
-  validator: minimumThreeChars
-};
-
-const registeredBy: Field<string> = {
-  name: 'registeredBy',
-  validator: isDefined
-};
-
-const registeredDate: Field<string> = {
-  name: 'registeredDate',
-  validator: isDefined
-};
-
-const sampleForm: FormDetails = createForm('sampleForm', [
-  hid,
-  registeredBy,
-  registeredDate
-]);
-
-export default sampleForm;
+export default createForm('sampleForm', [ hid, registeredBy, registeredDate ]);
