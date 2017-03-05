@@ -1,6 +1,8 @@
 exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
 <ObservationControlGrid
   id="1"
+  showControl={[Function showControl]}
+  showObservation={[Function showObservation]}
   tableData={
     Array [
       Object {

@@ -9,6 +9,8 @@ describe('ObservationControlGrid', () => {
       <ObservationControlGrid
         id={"1"}
         translate={(key) => key}
+        showControl={() => true}
+        showObservation={() => true}
         tableData={[
           {
             id: 1,

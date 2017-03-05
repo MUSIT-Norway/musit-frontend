@@ -1,7 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, initialState } from '../moveDialogStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import store$, { initialState } from '../moveDialogStore';
 import MuseumId from '../../../models/museumId';
 import MusitNode from '../../../models/node';
 
@@ -120,10 +119,10 @@ describe('moveDialog', () => {
         })
       ));
 
-    const state$ = reducer$({clear$, loadNode$, loadChildren$, setLoading$, setPage$ });
+    const state$ = store$({clear$, loadNode$, loadChildren$, setLoading$, setPage$ });
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$, Observable.of(initialState))).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

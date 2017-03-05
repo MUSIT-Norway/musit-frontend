@@ -5,6 +5,8 @@ import { formatFloatToString } from './../../shared/util';
 import { Observable } from 'rxjs';
 import store$, { loadKDReport$, clear$ } from './reportStore';
 import inject from 'react-rxjs/dist/RxInject';
+import { makeUrlAware } from '../app/appSession';
+import flowRight from 'lodash/flowRight';
 
 export class KDReport extends Component {
   static propTypes = {
@@ -15,10 +17,18 @@ export class KDReport extends Component {
   };
 
   componentWillMount() {
-    const museumId = this.props.appSession.getMuseumId();
-    const token = this.props.appSession.getAccessToken();
+    this.loadKDReport();
+  }
+
+  loadKDReport(museumId = this.props.appSession.getMuseumId(), token = this.props.appSession.getAccessToken()) {
     this.props.clear();
-    this.props.loadKDReport({ museumId, token });
+    this.props.loadKDReport({museumId, token});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id) {
+      this.loadKDReport(nextProps.appSession.getMuseumId());
+    }
   }
 
   render() {
@@ -72,7 +82,7 @@ export class KDReport extends Component {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  store$
+  store$: store$()
 };
 
 const commands = {
@@ -80,4 +90,7 @@ const commands = {
   clear$
 };
 
-export default inject(data, commands)(KDReport);
+export default flowRight([
+  inject(data, commands),
+  makeUrlAware
+])(KDReport);

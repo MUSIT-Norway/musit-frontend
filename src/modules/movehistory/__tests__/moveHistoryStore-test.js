@@ -1,7 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, initialState, getLocationHistory } from '../moveHistoryStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import store$, { initialState, getLocationHistory } from '../moveHistoryStore';
 import MuseumId from '../../../models/museumId';
 
 const diff = require('deep-diff').diff;
@@ -239,10 +238,10 @@ describe('moveHistory', () => {
         }
       ));
 
-    const state$ = reducer$({clear$, loadMoveHistory$});
+    const state$ = store$({clear$, loadMoveHistory$});
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$, Observable.of(initialState))).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

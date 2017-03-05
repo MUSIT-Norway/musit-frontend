@@ -29,6 +29,9 @@ import inject from 'react-rxjs/dist/RxInject';
 import { showModal } from '../../shared/modal';
 import scannerIcon from '../app/scannerIcon.png';
 import connectToScanner from '../app/scanner';
+import Config from '../../config';
+import { makeUrlAware } from '../app/appSession';
+import flowRight from 'lodash/flowRight';
 
 export class PickListContainer extends React.Component {
   static propTypes = {
@@ -229,7 +232,13 @@ export class PickListContainer extends React.Component {
                     <div className="labelText">
                       <Breadcrumb
                         node={pick.path}
-                        onClickCrumb={node => hashHistory.push(`/magasin/${!node.id || node.id === -1 ? '' : node.id}`)}
+                        onClickCrumb={node => {
+                          if(node.id) {
+                            hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession));
+                          } else {
+                            hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
+                          }
+                        }}
                         allActive
                       />
                     </div>
@@ -329,4 +338,8 @@ export const processBarcode = (barCode, props) => {
   }
 };
 
-export default inject(data, commands, customProps)(connectToScanner(processBarcode)(PickListContainer));
+export default flowRight([
+  inject(data, commands, customProps),
+  connectToScanner(processBarcode),
+  makeUrlAware
+])(PickListContainer);

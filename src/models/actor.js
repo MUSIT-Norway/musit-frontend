@@ -51,7 +51,7 @@ class MusitActor {
 }
 
 MusitActor.getActors = (ajaxPost = simplePost) => (actorIds, token, callback) => {
-  return ajaxPost(`${Config.magasin.urls.actor.baseUrl}/details`, actorIds, token, callback)
+  return ajaxPost(`${Config.magasin.urls.api.actor.baseUrl}/details`, actorIds, token, callback)
     .map(({ response }) => response)
     .map((actors) => {
       if (!actors) {
@@ -62,7 +62,7 @@ MusitActor.getActors = (ajaxPost = simplePost) => (actorIds, token, callback) =>
 };
 
 MusitActor.getActor = (ajaxGet = simpleGet) => ({ actorId, token, callback }) => {
-  return ajaxGet(`${Config.magasin.urls.actor.baseUrl}/${actorId}`, token, callback)
+  return ajaxGet(`${Config.magasin.urls.api.actor.baseUrl}/${actorId}`, token, callback)
     .map(({ response }) => response)
     .map((actor) => {
       if (!actor) {

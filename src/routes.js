@@ -40,9 +40,9 @@ import * as path from './routes.path';
 
 export default () => {
   return (
-    <Route path="/" component={AppComponent}>
-      <IndexRedirect to={path.ROUTE_SF} />
-      <Route path={path.ROUTE_SF}>
+    <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
+      <IndexRedirect to="magasin" />
+      <Route path="magasin">
         <IndexRoute component={StorageUnitsTable} />
         <Route path={path.ROUTE_SF_ADD} add component={AddStorageUnitPanel} />
         <Route path={path.ROUTE_SF_NODE_ADD} add component={AddStorageUnitPanel} />
@@ -59,18 +59,18 @@ export default () => {
         <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
         <Route path={path.ROUTE_ANALYSIS_SAMPLE_ADD} component={SampleComponentAdd}/>
       </Route>
-      <Route path={path.ROUTE_PICKLIST_ROOT}>
+      <Route path="picklist">
         <Route path="nodes" type="nodes" component={PickListView} />
         <Route path="objects" type="objects" component={PickListView} />
       </Route>
-      <Route path={path.ROUTE_REPORTS}>
+      <Route path="reports">
         <IndexRoute component={Reports} />
-        <Route path={path.ROUTE_REPORTS_KDREPORT} component={KDReportComponent} />
+        <Route path="kdreport" component={KDReportComponent} />
       </Route>
-      <Route path={path.ROUTE_SEARCH_OBJECTS} component={ObjectSearchComponent} />
-      <Route path="/about" component={AboutView} />
+      <Route path="search/objects" component={ObjectSearchComponent} />
+      <Route path="about" component={AboutView} />
       -- Catch all route
-      <Route path="/*" component={NotFound} status={404} />
+      <Route path="*" component={NotFound} status={404} />
     </Route>
   );
 };

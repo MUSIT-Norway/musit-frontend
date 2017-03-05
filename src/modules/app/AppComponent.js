@@ -14,6 +14,8 @@ import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
+import { clearObjects$ as clearObjectPicklist$, clearNodes$ as clearNodePicklist$ } from './pickList';
+import Config from '../../config';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -22,7 +24,10 @@ export class AppComponent extends Component {
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
-    pickList: PropTypes.object.isRequired
+    pickList: PropTypes.object.isRequired,
+    goTo: PropTypes.func.isRequired,
+    clearObjectPicklist: PropTypes.func.isRequired,
+    clearNodePicklist: PropTypes.func.isRequired
   };
 
   constructor(props, context) {
@@ -56,19 +61,24 @@ export class AppComponent extends Component {
     window.location.reload(true);
   }
 
-  handleMuseumId(mid, cid) {
-    this.props.setMuseumId(mid);
-    this.props.setCollectionId(cid);
-    hashHistory.push('/magasin');
+  handleMuseumId(museumId, collectionId) {
+    this.props.setMuseumId(museumId);
+    this.props.setCollectionId(collectionId);
+    this.props.clearObjectPicklist();
+    this.props.clearNodePicklist();
+    const localAppSession = this.props.appSession.copy({museumId, collectionId});
+    this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
   }
 
-  handleCollectionId(cid) {
-    this.props.setCollectionId(cid);
+  handleCollectionId(collectionId) {
+    this.props.setCollectionId(collectionId);
+    this.props.clearObjectPicklist();
     const nodeId = this.props.params.id;
+    const localAppSession = this.props.appSession.copy({collectionId});
     if (nodeId) {
-      hashHistory.push('/magasin/' + nodeId);
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession));
     } else {
-      hashHistory.push('/magasin');
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
     }
   }
 
@@ -86,6 +96,10 @@ export class AppComponent extends Component {
     return returnClassName;
   }
 
+  isSessionLoaded() {
+    return !!this.props.appSession.getBuildNumber();
+  }
+
   render() {
     if (!this.props.appSession.getAccessToken()) {
       return (
@@ -93,7 +107,7 @@ export class AppComponent extends Component {
       );
     }
 
-    if (!this.props.appSession.getBuildNumber()) {
+    if (!this.isSessionLoaded()) {
       return <Loader loaded={false} />;
     }
 
@@ -113,21 +127,21 @@ export class AppComponent extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
-              <LinkContainer to="/magasin">
+              <LinkContainer to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
-              <LinkContainer to="/reports">
+              <LinkContainer to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
             </Nav>
             <Nav pullRight>
-              <LinkContainer to="/picklist/nodes">
+              <LinkContainer to={Config.magasin.urls.client.picklist.goToPicklistNodes(this.props.appSession)}>
                 <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.pickList.nodes.length}</NavItem>
               </LinkContainer>
-              <LinkContainer to="/picklist/objects">
+              <LinkContainer to={Config.magasin.urls.client.picklist.goToPicklistObjects(this.props.appSession)}>
                 <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.pickList.objects.length}</NavItem>
               </LinkContainer>
-              <LinkContainer to={'/search/objects'}>
+              <LinkContainer to={Config.magasin.urls.client.searchObjects.goToSearchObjects(this.props.appSession)}>
                 <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em', height: 25 }} /></NavItem>
               </LinkContainer>
               <MusitUserAccount
@@ -166,7 +180,13 @@ const data = {
 const commands = {
   loadAppSession$,
   setMuseumId$,
-  setCollectionId$
+  setCollectionId$,
+  clearObjectPicklist$,
+  clearNodePicklist$
 };
 
-export default inject(data, commands)(AppComponent);
+const props = {
+  goTo: hashHistory.push
+};
+
+export default inject(data, commands, props)(AppComponent);

@@ -1,7 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$ } from '../observationStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import store$, {initialState} from '../observationStore';
 import MusitNode from '../../../models/node';
 import Observation from '../../../models/observation';
 import MuseumId from '../../../models/museumId';
@@ -25,7 +24,7 @@ describe('printStore', () => {
     const expected          = 'abcd----------';
 
     const expectedStateMap = {
-      a: {},
+      a: initialState,
       b: {
         data: {},
         rootNode: null,
@@ -170,10 +169,10 @@ describe('printStore', () => {
       })
     ));
 
-    const state$ = reducer$({loadRootNode$, setLoading$, getObservation$});
+    const state$ = store$({loadRootNode$, setLoading$, getObservation$});
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();
