@@ -1,7 +1,6 @@
 import { TestScheduler, Observable, Subject } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, initialState } from '../controlStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import store$, { initialState } from '../controlStore';
 import MusemId from '../../../models/museumId';
 import Control from '../../../models/control';
 
@@ -116,10 +115,10 @@ describe('ControlStore', () => {
       }
     ));
 
-    const state$ = reducer$({ clear$: new Subject(), loadRootNode$: new Subject(), getControl$ });
+    const state$ = store$({ clear$: new Subject(), loadRootNode$: new Subject(), getControl$ });
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$, Observable.of(initialState))).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

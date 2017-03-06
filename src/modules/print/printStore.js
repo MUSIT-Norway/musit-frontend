@@ -5,12 +5,12 @@ import Config from '../../config';
 import Template from '../../models/template';
 
 export const loadTemplates = ({ simpleGet }) => ({ token }) =>
-  simpleGet(Config.magasin.urls.barcode.templatesUrl, token)
+  simpleGet(Config.magasin.urls.api.barcode.templatesUrl, token)
     .map(({ response }) => response && response.map(json => new Template(json)));
 
 export const renderTemplate = ({ ajax }) => ({ templateId, codeFormat, nodes, token }) => {
   const data = nodes.map(node => ({ uuid: node.uuid, data: [{ field: 'name', value: node.name }] }));
-  const url = Config.magasin.urls.barcode.templateRenderUrl(templateId, codeFormat);
+  const url = Config.magasin.urls.api.barcode.templateRenderUrl(templateId, codeFormat);
   return ajax(url, 'POST', data, token, { 'Content-Type': 'application/json' }, 'text/html')
     .map(({response}) => response);
 };
@@ -20,7 +20,7 @@ export const clearRendered$ = createAction('clearRendered$');
 export const loadTemplates$ = createAction('loadTemplates$').switchMap(loadTemplates(ajaxMethods));
 export const renderTemplate$ = createAction('renderTemplate$').switchMap(renderTemplate(ajaxMethods));
 
-const initialState = { templates: [] };
+const initialState = { templates: [], rendered: null };
 
 export const reducer$ = (actions) => Observable.merge(
   actions.clearAll$.map(() => () => initialState),

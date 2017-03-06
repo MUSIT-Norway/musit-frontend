@@ -14,9 +14,7 @@ export default class NodeLeftMenuComponent extends Component {
       totalObjects: PropTypes.number
     }),
     onClickProperties: PropTypes.func.isRequired,
-    onClickObservations: PropTypes.func,
     onClickControlObservations: PropTypes.func.isRequired,
-    onClickController: PropTypes.func,
     onClickMoveNode: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired,
     showButtons: PropTypes.bool

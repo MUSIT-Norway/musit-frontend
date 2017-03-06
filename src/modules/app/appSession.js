@@ -4,10 +4,14 @@ import { simpleGet } from '../../shared/RxAjax';
 import Config from '../../config';
 import {getAccessToken} from '../../shared/token';
 import { emitError } from '../../shared/errors';
+import { getDisplayName } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import MuseumId from '../../models/museumId';
 import CollectionId from '../../models/collectionId';
 import Actor from '../../models/actor';
+import orderBy from 'lodash/orderBy';
+import React from 'react';
+import isEqualWith from 'lodash/isEqualWith';
 
 export class AppSession {
 
@@ -38,6 +42,16 @@ export class AppSession {
   getBuildNumber() {
     return this.state.buildInfo && this.state.buildInfo.buildInfoBuildNumber;
   }
+
+  /**
+   * Similar to copy on case classes in Scala
+   *
+   * @param props properties that should override properties in appSession state
+   * @returns {AppSession}
+   */
+  copy(props) {
+    return new AppSession({...this.state, ...props});
+  }
 }
 
 const initialState = { accessToken: getAccessToken() };
@@ -48,11 +62,11 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
     return Observable.empty();
   }
   return Observable.forkJoin(
-    ajaxGet(Config.magasin.urls.auth.buildInfo, accessToken),
-    ajaxGet(Config.magasin.urls.actor.currentUser, accessToken),
-    ajaxGet(Config.magasin.urls.auth.museumsUrl, accessToken)
+    ajaxGet(Config.magasin.urls.api.auth.buildInfo, accessToken),
+    ajaxGet(Config.magasin.urls.api.actor.currentUser, accessToken),
+    ajaxGet(Config.magasin.urls.api.auth.museumsUrl, accessToken)
   ).switchMap(([buildInfoRes, currentUserRes, museumsRes]) =>
-    ajaxGet(Config.magasin.urls.auth.groupsUrl(currentUserRes.response.dataportenUser), accessToken)
+    ajaxGet(Config.magasin.urls.api.auth.groupsUrl(currentUserRes.response.dataportenUser), accessToken)
       .map(({response}) => {
         if (!response) {
           throw new Error(I18n.t('musit.errorMainMessages.noGroups'));
@@ -79,12 +93,13 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
             museumName: museumsRes.response.find(m => m.id === group.museumId).shortName
           }));
         }
-        const museumId = new MuseumId(groups[0].museumId);
-        const collectionId = new CollectionId(groups[0].collections[0].uuid);
+        const orderedGroups = orderBy(groups, ['museumId'], ['desc']);
+        const museumId = new MuseumId(orderedGroups[0].museumId);
+        const collectionId = new CollectionId(orderedGroups[0].collections[0].uuid);
         return {
           accessToken,
           actor: new Actor(currentUserRes.response),
-          groups,
+          groups: orderedGroups,
           museumId,
           collectionId,
           buildInfo: buildInfoRes.response
@@ -97,6 +112,22 @@ export const loadAppSession$ = createAction('loadAppSession$').switchMap(loadApp
 export const setMuseumId$ = createAction('setMuseumId$');
 export const setCollectionId$ = createAction('setCollectionId$');
 export const setAccessToken$ = createAction('setAccessToken$');
+
+export const refreshSession = (
+  setMuseum = ((id) => setMuseumId$.next(id)),
+  setCollection = ((id) => setCollectionId$.next(id))
+)  => (params, appSession) => {
+  const museumId = appSession.getMuseumId();
+  const museumIdFromParam = new MuseumId(params.museumId * 1);
+  if  ( museumIdFromParam.id && museumIdFromParam.id !== museumId.id) {
+    setMuseum(museumIdFromParam);
+  }
+  const collectionId = appSession.getCollectionId();
+  const collectionIdFromParam = new CollectionId(params.collectionIds);
+  if  (collectionIdFromParam.uuid && collectionIdFromParam.uuid !== collectionId.uuid) {
+    setCollection(collectionIdFromParam);
+  }
+};
 
 export const reducer$ = (actions, onError = emitError) => Observable.merge(
   actions.setAccessToken$
@@ -113,11 +144,35 @@ export const reducer$ = (actions, onError = emitError) => Observable.merge(
     .map(collectionId => state => ({...state, collectionId}))
 );
 
-const session$ = createStore('appSession', reducer$({
-  setMuseumId$,
-  setCollectionId$,
-  setAccessToken$,
-  loadAppSession$
-}), Observable.of(initialState)).map(state => new AppSession(state));
+const session$ = (actions$ = { setMuseumId$, setCollectionId$, setAccessToken$, loadAppSession$ }) =>
+  createStore('appSession', reducer$(actions$), Observable.of(initialState)).map(state => new AppSession(state));
 
 export default session$;
+
+export const makeUrlAware = (Component) => {
+  class Wrapper extends React.Component {
+    static propTypes = {
+      appSession: React.PropTypes.instanceOf(AppSession).isRequired
+    };
+
+    static defaultProps = {
+      refreshSession: refreshSession()
+    };
+
+    componentWillReceiveProps(newProps) {
+      const paramsDiffFromSession = !isEqualWith(newProps.params, newProps.appSession, (lhs, rhs) => {
+        return lhs.museumId * 1 === rhs.getMuseumId().id && lhs.collectionIds === rhs.getCollectionId().uuid;
+      });
+
+      if (paramsDiffFromSession) {
+        this.props.refreshSession(newProps.params, newProps.appSession);
+      }
+    }
+
+    render() {
+      return <Component {...this.props} />;
+    }
+  }
+  Wrapper.displayName = `UrlAware(${getDisplayName(Component)})`;
+  return Wrapper;
+};

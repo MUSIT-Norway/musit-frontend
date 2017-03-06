@@ -134,7 +134,8 @@ exports[`Reports overview should display correctly 1`] = `
                 id={undefined}>
                 <td>
                   <a
-                    href="/#/reports/kdreport">
+                    href="/museum/99/collections/1234/reports/kdreport"
+                    onClick={[Function onClick]}>
                     Sikring av samlinger
                   </a>
                 </td>

@@ -20,10 +20,11 @@ import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 import Config from '../../config';
 import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
-import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 import { addNode$, addObject$ } from '../app/pickList';
 import { showConfirm, showModal } from '../../shared/modal';
-import pickList$, { isItemAdded } from '../app/pickList';
+import { makeUrlAware } from '../app/appSession';
+import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
+import { isItemAdded } from '../app/pickList';
 import tableStore$, {
   loadNodes$,
   loadStats$,
@@ -34,6 +35,7 @@ import tableStore$, {
 } from './tableStore';
 import scannerIcon from '../app/scannerIcon.png';
 import connectToScanner from '../app/scanner';
+import flowRight from 'lodash/flowRight';
 
 export class TableComponent extends React.Component {
   static propTypes = {
@@ -50,10 +52,12 @@ export class TableComponent extends React.Component {
     clearRootNode: React.PropTypes.func.isRequired,
     emitError: React.PropTypes.func.isRequired,
     emitSuccess: React.PropTypes.func.isRequired,
+    refreshSession: React.PropTypes.func.isRequired,
     pickList: React.PropTypes.object.isRequired,
     isItemAdded: React.PropTypes.func.isRequired,
     toggleScanner: React.PropTypes.func.isRequired,
-    scannerEnabled: React.PropTypes.bool.isRequired
+    scannerEnabled: React.PropTypes.bool.isRequired,
+    goTo: React.PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -65,14 +69,12 @@ export class TableComponent extends React.Component {
     this.moveNode = this.moveNode.bind(this);
     this.moveObject = this.moveObject.bind(this);
     this.showObjectMoveHistory = this.showObjectMoveHistory.bind(this);
-    this.onClickCrumb = this.onClickCrumb.bind(this);
     this.showMoveNodeModal = this.showMoveNodeModal.bind(this);
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
+    this.showNodes = this.showNodes.bind(this);
   }
 
-  getCurrentPage(
-    state = this.props.location.state
-  ) {
+  getCurrentPage(state = this.props.location.state) {
     return state && state.currentPage;
   }
 
@@ -131,27 +133,21 @@ export class TableComponent extends React.Component {
     }
   }
 
-  onClickCrumb(node) {
-    this.props.goTo(node.url);
-  }
-
-  showNodes(
-    node = this.props.tableStore.rootNode
-  ) {
+  showNodes(node = this.props.tableStore.rootNode) {
+    const appSession = this.props.appSession;
     if (node && node.id) {
-      this.props.goTo(`/magasin/${node.id}`);
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(node.id, appSession));
     } else {
-      this.props.goTo('/magasin');
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
   }
 
-  showObjects(
-    node = this.props.tableStore.rootNode
-  ) {
+  showObjects(node = this.props.tableStore.rootNode) {
+    const appSession = this.props.appSession;
     if (node) {
-      this.props.goTo(`/magasin/${node.id}/objects`);
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(node.id, appSession));
     } else {
-      this.props.goTo('/magasin');
+      this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
   }
 
@@ -189,9 +185,7 @@ export class TableComponent extends React.Component {
     }
   }
 
-  showMoveNodeModal(
-    nodeToMove
-  ) {
+  showMoveNodeModal(nodeToMove) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
     this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />);
   }
@@ -236,9 +230,7 @@ export class TableComponent extends React.Component {
     }
   };
 
-  showMoveObjectModal(
-    objectToMove
-  ) {
+  showMoveObjectModal(objectToMove) {
     const objStr = objectToMove.getObjectDescription();
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
     this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
@@ -326,23 +318,17 @@ export class TableComponent extends React.Component {
         <NodeLeftMenuComponent
           showNewNode={!!rootNode}
           showButtons={rootNode && !rootNode.isRootNode()}
-          onClickNewNode={() => {
-            if (rootNode.id) {
-              this.props.goTo(`/magasin/${rootNode.id}/add`);
-            } else {
-              this.props.goTo('/magasin/add');
-            }
-          }}
+          onClickNewNode={() => this.props.goTo(Config.magasin.urls.client.storagefacility.addNode(rootNode.id, this.props.appSession))}
           stats={stats}
           onClickProperties={() => {
             this.props.goTo({
-              pathname: `/magasin/${rootNode.id}/view`,
+              pathname: Config.magasin.urls.client.storagefacility.editNode(rootNode.id, this.props.appSession),
               state: rootNode
             });
           }}
-          onClickControlObservations={() => this.props.goTo(`/magasin/${rootNode.id}/controlsobservations`)}
-          onClickObservations={() => this.props.goTo(`/magasin/${rootNode.id}/observations`)}
-          onClickController={() => this.props.goTo(`/magasin/${rootNode.id}/controls`)}
+          onClickControlObservations={() =>
+            this.props.goTo(Config.magasin.urls.client.storagefacility.viewControlsObservations(rootNode.id, this.props.appSession))
+          }
           onClickMoveNode={() => moveNode(rootNode)}
           onClickDelete={() => {
             const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
@@ -352,7 +338,7 @@ export class TableComponent extends React.Component {
               deleteNode({ id: rootNode.id, museumId, token, callback: {
                 onComplete: () => {
                   if (rootNode.isPartOf) {
-                    hashHistory.replace(`/magasin/${rootNode.isPartOf}`);
+                    hashHistory.replace(Config.magasin.urls.client.storagefacility.goToNode(rootNode.isPartOf, this.props.appSession));
                   }
                   this.props.emitSuccess({
                     type: 'deleteSuccess',
@@ -427,7 +413,7 @@ export class TableComponent extends React.Component {
               perPage={Config.magasin.limit}
               onClick={(cp) => {
                 hashHistory.replace({
-                  pathname: `/magasin/${rootNode.id}/objects`,
+                  pathname: Config.magasin.urls.client.storagefacility.goToObjects(rootNode.id, this.props.appSession),
                   state: {
                     currentPage: cp
                   }
@@ -442,11 +428,11 @@ export class TableComponent extends React.Component {
       <Loader loaded={!isLoading}>
         <NodeGrid
           tableData={matches ? filter(matches, ['name'], searchPattern) : []}
-          goToEvents={(node) => this.props.goTo(`/magasin/${node.id}/controlsobservations`)}
+          goToEvents={(node) => this.props.goTo(Config.magasin.urls.client.storagefacility.viewControlsObservations(node.id, this.props.appSession))}
           onMove={moveNode}
           pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
+          onClick={(node) => this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession))}
           isNodeAdded={(node) => this.props.isItemAdded( node , this.props.pickList.nodes )}
-          onClick={(node) => this.props.goTo(`/magasin/${node.id}`)}
         />
         {showPaging &&
           <PagingToolbar
@@ -455,7 +441,7 @@ export class TableComponent extends React.Component {
             perPage={Config.magasin.limit}
             onClick={(cp) => {
               hashHistory.replace({
-                pathname: `/magasin/${rootNode.id}`,
+                pathname: Config.magasin.urls.client.storagefacility.goToNode(rootNode.id, this.props.appSession),
                 state: {
                   currentPage: cp
                 }
@@ -486,7 +472,7 @@ export class TableComponent extends React.Component {
     return (
       <Layout
         title={title}
-        breadcrumb={<Breadcrumb node={this.props.tableStore.rootNode} onClickCrumb={this.onClickCrumb} />}
+        breadcrumb={<Breadcrumb node={this.props.tableStore.rootNode} onClickCrumb={this.showNodes} />}
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContentGrid()}
@@ -497,8 +483,8 @@ export class TableComponent extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  tableStore$,
-  pickList$
+  tableStore$: tableStore$(),
+  pickList$: { type: React.PropTypes.object.isRequired }
 };
 
 const commands = {
@@ -540,7 +526,7 @@ export const processBarcode = (barCode, props) => {
       } else if (isMoveHistoryActive) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
       } else {
-        props.goTo('/magasin/' + response.id);
+        props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response.id, props.appSession));
       }
     }).toPromise();
   } else if (barCode.number) {
@@ -556,7 +542,7 @@ export const processBarcode = (barCode, props) => {
           } else if (isMoveHistoryActive) {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
           } else {
-            props.goTo('/magasin/' + response[0].currentLocationId + '/objects');
+            props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(response[0].currentLocationId , props.appSession));
           }
         } else {
           props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
@@ -567,11 +553,15 @@ export const processBarcode = (barCode, props) => {
         } else if (isMoveHistoryActive) {
           props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
         } else {
-          props.goTo('/magasin/' + response.id);
+          props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response.id, props.appSession));
         }
       }
     }).toPromise();
   }
 };
 
-export default inject(data, commands, customProps)(connectToScanner(processBarcode)(TableComponent));
+export default flowRight([
+  inject(data, commands, customProps),
+  connectToScanner(processBarcode),
+  makeUrlAware
+])(TableComponent);

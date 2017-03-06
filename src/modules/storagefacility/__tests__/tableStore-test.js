@@ -1,7 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$ } from '../tableStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import tableStore$ from '../tableStore';
 import MusitNode from '../../../models/node';
 import MusitObject from '../../../models/object';
 import MuseumId from '../../../models/museumId';
@@ -197,10 +196,10 @@ describe('tableStore', () => {
         })
       ));
 
-    const state$ = reducer$({clearRootNode$, setLoading$, loadNodes$, loadObjects$, loadStats$, loadRootNode$});
+    const state$ = tableStore$({clearRootNode$, setLoading$, loadNodes$, loadObjects$, loadStats$, loadRootNode$});
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();

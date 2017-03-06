@@ -1,4 +1,5 @@
 /* @flow */
+import React from 'react';
 import moment from 'moment';
 
 export const flatten = (arr: []) => {
@@ -20,6 +21,10 @@ export const filter = (arr: any[], fields: string[], pattern: string) => {
   return arr.filter((row) => {
     return fields.find((field) => contains(row[field], pattern));
   });
+};
+
+export const getDisplayName = (Component: React.Component<*, *, *>) => {
+  return Component.displayName || Component.name || 'Component';
 };
 
 export const blur = () => {
@@ -91,17 +96,12 @@ export class Option {
     }
     return func(this.value);
   }
-
 }
 
 const testing = process.env.NODE_ENV === 'test';
 
 export const apiUrl = (url: string): string => {
   return `${testing ? 'http://localhost' : ''}${url}`;
-};
-
-export const isNumber = (n: number) => {
-  return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
 export const getPath = (node: any) => {
@@ -124,15 +124,4 @@ export const getPath = (node: any) => {
       url: '/magasin/' + pathMatch.nodeId
     };
   });
-};
-
-export const getLocationPath = () => {
-  const hash = window.location.hash;
-  if (hash.indexOf('#') === -1) {
-    return hash;
-  }
-  if (hash.indexOf('?') === -1) {
-    return hash.substr(1);
-  }
-  return hash.substr(1, hash.indexOf('?') - 1);
 };

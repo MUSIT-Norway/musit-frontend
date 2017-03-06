@@ -63,7 +63,7 @@ export class EditStorageUnitContainer extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  store$: nodeStore$
+  store$: nodeStore$()
 };
 
 const commands = {

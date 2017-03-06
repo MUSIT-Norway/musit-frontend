@@ -78,11 +78,11 @@ if (accessToken) {
   const SessionProvided = provide({
     appSession$: {
       type: PropTypes.object,
-      value: appSession$
+      value: appSession$()
     },
     pickList$: {
       type: PropTypes.object,
-      value: pickList$
+      value: pickList$()
     }
   })(appRouter);
 

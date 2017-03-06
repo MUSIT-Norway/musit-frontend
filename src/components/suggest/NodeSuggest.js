@@ -93,7 +93,7 @@ export class NodeSuggest extends React.Component {
 }
 
 const data = {
-  suggest$: suggest$Fn('nodeSuggest', Config.magasin.urls.storagefacility.searchUrl)
+  suggest$: suggest$Fn('nodeSuggest', Config.magasin.urls.api.storagefacility.searchUrl)
 };
 
 const commands = { update$, clear$ };
