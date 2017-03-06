@@ -16,7 +16,6 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 import React from 'react';
 import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import NotFound from './components/NotFound';
@@ -35,42 +34,46 @@ import ControlAddContainer from './modules/control/ControlAddComponent';
 import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
-import  SampleComponentAdd  from './modules/sample/sampleComponent';
-import * as path from './routes.path';
+import SampleFormPage from './modules/test/SampleFormPage';
+import SampleFormPageAdd  from './modules/sample/SampleFormPageAdd';
 
 export default () => {
   return (
-    <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
-      <IndexRedirect to="magasin" />
-      <Route path="magasin">
-        <IndexRoute component={StorageUnitsTable} />
-        <Route path={path.ROUTE_SF_ADD} add component={AddStorageUnitPanel} />
-        <Route path={path.ROUTE_SF_NODE_ADD} add component={AddStorageUnitPanel} />
-        <Route path={path.ROUTE_SF_NODE_VIEW} component={EditStorageUnitPanel} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS} showControls showObservations={false} component={EventsContainer} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_AND_OBSERVATIONS} showObservations showControls component={EventsContainer} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_ADD} component={ControlAddContainer} />
-        <Route path={path.ROUTE_SF_NODE_CONTROLS_VIEW} component={ControlViewContainer} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS} showObservations showControls={false} component={EventsContainer} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_ADD} component={AddObservationPage} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_EDIT} component={EditObservationPage} />
-        <Route path={path.ROUTE_SF_NODE_OBSERVATIONS_VIEW} component={ViewObservationPage} />
-        <Route path={path.ROUTE_SF_OBJECTS} showObjects component={StorageUnitsTable} />
-        <Route path={path.ROUTE_SF_NODE} component={StorageUnitsTable} />
-        <Route path={path.ROUTE_ANALYSIS_SAMPLE_ADD} component={SampleComponentAdd}/>
+    <Route>
+      <Route path="test" component={SampleFormPage} />
+      <Route path="analysis/sample/add" component={SampleFormPageAdd}/>
+      <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
+        <IndexRedirect to="magasin" />
+        <Route path="magasin">
+          <IndexRoute component={StorageUnitsTable} />
+          <Route path="add" add component={AddStorageUnitPanel} />
+          <Route path=":id/add" add component={AddStorageUnitPanel} />
+          <Route path=":id/view" component={EditStorageUnitPanel} />
+          <Route path=":id/controls" showControls showObservations={false} component={EventsContainer} />
+          <Route path=":id/controlsobservations" showObservations showControls component={EventsContainer} />
+          <Route path=":id/control/add" component={ControlAddContainer} />
+          <Route path=":id/control/:controlId" component={ControlViewContainer} />
+          <Route path=":id/observations" showObservations showControls={false} component={EventsContainer} />
+          <Route path=":id/observation/add" component={AddObservationPage} />
+          <Route path=":id/observation/edit" component={EditObservationPage} />
+          <Route path=":id/observation/:obsId" component={ViewObservationPage} />
+          <Route path=":id/objects" showObjects component={StorageUnitsTable} />
+          <Route path=":id" component={StorageUnitsTable} />
+        </Route>
+        <Route path="picklist">
+          <Route path="nodes" type="nodes" component={PickListView} />
+          <Route path="objects" type="objects" component={PickListView} />
+        </Route>
+        <Route path="reports">
+          <IndexRoute component={Reports} />
+          <Route path="kdreport" component={KDReportComponent} />
+        </Route>
+        <Route path="search/objects" component={ObjectSearchComponent} />
+        <Route path="about" component={AboutView} />
+        -- Catch all route
+        <Route path="*" component={NotFound} status={404} />
       </Route>
-      <Route path="picklist">
-        <Route path="nodes" type="nodes" component={PickListView} />
-        <Route path="objects" type="objects" component={PickListView} />
-      </Route>
-      <Route path="reports">
-        <IndexRoute component={Reports} />
-        <Route path="kdreport" component={KDReportComponent} />
-      </Route>
-      <Route path="search/objects" component={ObjectSearchComponent} />
-      <Route path="about" component={AboutView} />
-      -- Catch all route
-      <Route path="*" component={NotFound} status={404} />
     </Route>
+
   );
 };
