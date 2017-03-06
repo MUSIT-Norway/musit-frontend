@@ -1,33 +1,42 @@
 import type { Field } from '../../forms/form';
 import createForm from '../../forms/form';
 import {
+  stringMapper,
+  numberMapper
+} from '../../forms/mappers';
+import {
+  isDecimalNumber,
+  isNumberInRange
+} from '../../forms/validators';
+import {
   composeValidators,
   isRequired,
-  isNumeric,
   isAlphaNumeric
 } from 'revalidate';
 
-const hid: Field<string> = {
+const hid: Field<number> = {
   name: 'hid',
-  validator: composeValidators(
-    isRequired,
-    isNumeric
-  )('hid')
+  mapper: numberMapper,
+  validator: {
+    rawValidator: composeValidators(isRequired, isDecimalNumber(0, 3)),
+    valueValidator: isNumberInRange(-1000, +1000)
+  }
 };
 
 const registeredBy: Field<string> = {
   name: 'registeredBy',
-  validator: composeValidators(
-    isRequired,
-    isAlphaNumeric
-  )('registeredBy')
+  mapper: stringMapper,
+  validator: {
+    rawValidator: composeValidators(isRequired, isAlphaNumeric)
+  }
 };
 
 const registeredDate: Field<string> = {
   name: 'registeredDate',
-  validator: composeValidators(
-    isRequired
-  )('RegisteredDate')
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
 };
 
 export default createForm('sampleForm', [ hid, registeredBy, registeredDate ]);

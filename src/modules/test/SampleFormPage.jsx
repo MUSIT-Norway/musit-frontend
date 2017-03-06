@@ -10,8 +10,8 @@ const FormInput = (props) => (
   >
     <ControlLabel>{props.field.name}</ControlLabel>
     <FormControl
-      value={props.field.value || ''}
-      onChange={(e) => props.onChangeField({ name: props.field.name, value: e.target.value })}
+      value={props.field.rawValue || ''}
+      onChange={(e) => props.onChangeField({ name: props.field.name, rawValue: e.target.value })}
     />
   </FormGroup>
 );
