@@ -18,3 +18,8 @@ export const isDecimalNumber = (minPrecision = 0, maxPrecision = Number.MAX_SAFE
   },
   field => field + ' must be a decimal number'
 );
+
+export const noValidation = {
+  rawValidator: () => () => null,
+  valueValidator: () => () => null
+};

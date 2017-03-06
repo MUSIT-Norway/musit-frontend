@@ -33,10 +33,7 @@ const registeredBy: Field<string> = {
 
 const registeredDate: Field<string> = {
   name: 'registeredDate',
-  mapper: stringMapper,
-  validator: {
-    rawValidator: isRequired
-  }
+  mapper: stringMapper
 };
 
 export default createForm('sampleForm', [ hid, registeredBy, registeredDate ]);

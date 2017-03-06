@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import isEmpty from 'lodash/isEmpty';
 import { stringMapper } from './mappers';
+import { noValidation } from './validators';
 
 export type Field<T> = {
   name: string,
@@ -66,11 +67,6 @@ export type FormDetails = {
   updateForm$: Subject<Update<*>>,
   loadForm$: Subject<Update<*>[]>,
   form$: Observable<Field<*>[]>
-};
-
-export const noValidation = {
-  rawValidator: () => null,
-  valueValidator: () => null
 };
 
 const createForm$ = (

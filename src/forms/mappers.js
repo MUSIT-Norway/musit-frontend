@@ -1,6 +1,6 @@
 export const stringMapper = {
   fromRaw: (s: ?string) => s,
-  toRaw: (s: ?any) =>  '' + s
+  toRaw: (s: ?any) =>  s ? '' + s : null
 };
 
 export const numberMapper = {
