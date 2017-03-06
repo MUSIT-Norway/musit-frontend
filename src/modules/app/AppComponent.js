@@ -130,6 +130,9 @@ export class AppComponent extends Component {
               <LinkContainer to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
+              <LinkContainer to={Config.magasin.urls.client.analysis.addAnalysis(this.props.appSession)}>
+                <NavItem>{ I18n.t('musit.analysis.analysis') }</NavItem>
+              </LinkContainer>
               <LinkContainer to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>

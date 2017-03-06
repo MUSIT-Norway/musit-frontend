@@ -1,4 +1,5 @@
 import React from 'react';
+import { I18n } from 'react-i18nify';
 import {
   Radio,
   PageHeader,
@@ -10,13 +11,12 @@ import {
   Well,
   Table,
   Panel
-
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import {SaveCancel} from '../../components/formfields/index';
 
 function LabelFormat(label, md = 1) {
-  return (<Col md={md} style={{ textAlign: 'right', padding: '10px' }}><b>{label}</b></Col>);
+  return (<Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>);
 }
 function FieldGroup({id, label, md = 1, ...props}) {
   return (
@@ -29,10 +29,10 @@ function FieldGroup({id, label, md = 1, ...props}) {
   );
 }
 
-function AddButton({id, label, md, ...props}) {
+function AddButton({id, label, md, mdOffset = 0, ...props}) {
   return (
     <div controlId={id}>
-      <Col md={md}>
+      <Col md={md} mdOffset={mdOffset}>
         <Button {... props}>
           <FontAwesome name='plus-circle'/>{' '}
           {label}
@@ -53,42 +53,47 @@ const AddAnalysis = () => {
   return (
     <div>
       <br/>
-      <PageHeader style={{ paddingLeft: 20 }}>{'Registrere analyse'}</PageHeader>
+      <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
       <Form>
         <FormGroup>
-          <Col sm={12} md={12}><b> HID: </b>123</Col>
-          <Col sm={1} md={1}><b>Registrert:</b></Col>
-          <Col sm={1} md={1}><FontAwesome name='user'/>{' '}
+          {LabelFormat('HID:', 1)}
+          <Col style={{ padding: '7px' }}>123</Col>
+          {LabelFormat('Registrert:', 1)}
+          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}
             Per Hansen
           </Col>
-          <Col sm={10} md={10}>
+          <Col md={10} style={{ padding: '7px' }}>
             <FontAwesome name='clock-o'/>{' '}
             15.12.2017
           </Col>
-          <Col sm={1} md={1}><b>Sist endret:</b></Col>
-          <Col sm={1} md={1}><FontAwesome name='user'/>{' '}Per Hansen</Col>
-          <Col sm={1} md={1}><FontAwesome name='clock-o'/>{' '}15.12.2017</Col>
-          <Col sm={9} md={9}><a href=''>Se endringshistorikk</a></Col>
+          {LabelFormat('Sist endret:', 1)}
+          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}Per Hansen</Col>
+          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='clock-o'/>{' '}15.12.2017</Col>
+          <Col md={9} style={{ padding: '7px' }}><a href=''>Se endringshistorikk</a></Col>
         </FormGroup>
       </Form>
       {newLine()}
-      <Form inline>
-        <FieldGroup
-          id="formControlsText"
-          type="text"
-          label="saksnummber"
-        />
-        <AddButton
-          id="1"
-          label="Legg til saksnummer"
-          md={5}
-        />
+      <Form>
+        <FormGroup>
+          <FieldGroup
+            id="formControlsText"
+            type="text"
+            label="saksnummber"
+          />
+        </FormGroup>
+        <FormGroup>
+          <AddButton
+            id="1"
+            label="Legg til saksnummer"
+            md={5}
+          />
+        </FormGroup>
       </Form>
       {newLine()}
 
       <Form inline>
-        <Col md={12}><b>Objekt</b></Col>
-        <Col md={6}>
+        <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
+        <Col mdOffset={1} md={5}>
           <Table bordered>
             <thead>
             <th>Museumsnr</th>
@@ -117,16 +122,15 @@ const AddAnalysis = () => {
         <AddButton
           id="2"
           label="Legg til objekt"
-          md={12}
+          md={11}
+          mdOffset={1}
         />
       </Form>
       {newLine()}
       <Form horizontal style={{ paddingLeft: 20 }}>
 
         <FormGroup>
-          <Col md={12}>
-            <b>Personer tilknyttet analysen</b>
-          </Col>
+          <Col md={12}><h5><b>Personer tilknyttet analysen</b></h5></Col>
         </FormGroup>
         <FormGroup>
           <FieldGroup
@@ -202,10 +206,10 @@ const AddAnalysis = () => {
           <FormGroup>
             {LabelFormat('Klausulering', 1)}
             <Col md={5}>
-              <Radio readOnly inline>
+              <Radio checked readOnly inline>
                 Ja
               </Radio>
-              <Radio inline checked readOnly>
+              <Radio inline readOnly>
                 Nei
               </Radio>
             </Col>
@@ -215,7 +219,7 @@ const AddAnalysis = () => {
               <FormGroup>
                 <FieldGroup
                   id="navn"
-                  md={2}
+                  md={1}
                   type="text"
                   label="Klausulert for"
                   placeholder="Fornavn Etternavn"
@@ -224,7 +228,7 @@ const AddAnalysis = () => {
               <FormGroup>
                 <FieldGroup
                   id="navn"
-                  md={2}
+                  md={1}
                   type="text"
                   label="Årsak til klausulering"
                 />
@@ -232,7 +236,7 @@ const AddAnalysis = () => {
               <FormGroup>
                 <FieldGroup
                   id="navn"
-                  md={2}
+                  md={1}
                   type="text"
                   label="Sluttdato"
                   value="15.02.2017"
@@ -241,7 +245,7 @@ const AddAnalysis = () => {
               <FormGroup>
                 <FieldGroup
                   id="navn"
-                  md={2}
+                  md={1}
                   type="text"
                   label="Opphevet av"
                   placeholder="Fornavn Etternavn"
@@ -272,11 +276,23 @@ const AddAnalysis = () => {
         </FormGroup>
       </Form>
 
-
       {newLine()}
       <SaveCancel/>
-
-
+      {newLine()}
+      <Form horizontal>
+        <FormGroup>
+          <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
+        </FormGroup>
+        <FormGroup>
+          <Col mdOffset={1}>PerHansen- 15.02.2017</Col>
+        </FormGroup>
+        <FormGroup>
+          <Col mdOffset={1}>PerHansen- 15.02.2017</Col>
+        </FormGroup>
+        <FormGroup>
+          <Col mdOffset={1}><a href=''>Se mer</a></Col>
+        </FormGroup>
+      </Form>
     </div>);
 };
 
