@@ -11,6 +11,7 @@ import {
 
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import {SaveCancel} from '../../components/formfields/index';
 
 
 function FieldGroup({id, label, ...props}) {
@@ -47,21 +48,21 @@ const AddAnalysis = () => {
     <div>
       <br/>
       <PageHeader>{'Registrere analyse'}</PageHeader>
-      <Form>
+      <Form horizontal>
         <FormGroup>
-          <Col md={12}><b> HID:: </b>123</Col>
-          <Col md={1}><b>Registrert:</b></Col>
-          <Col md={1}><FontAwesome name='user'/>{' '}
+          <Col sm={12} md={12}><b> HID: </b>123</Col>
+          <Col sm={1} md={1}><b>Registrert:</b></Col>
+          <Col sm={1} md={1}><FontAwesome name='user'/>{' '}
             Per Hansen
           </Col>
-          <Col md={10}>
+          <Col sm={10} md={10}>
             <FontAwesome name='clock-o'/>{' '}
             15.12.2017
           </Col>
-          <Col md={1}><b>Sist endret:</b></Col>
-          <Col md={1}><FontAwesome name='user'/>{' '}Per Hansen</Col>
-          <Col md={1}><FontAwesome name='clock-o'/>{' '}15.12.2017</Col>
-          <Col md={9}><a href=''>Se endringshistorikk</a></Col>
+          <Col sm={1} md={1}><b>Sist endret:</b></Col>
+          <Col sm={1} md={1}><FontAwesome name='user'/>{' '}Per Hansen</Col>
+          <Col sm={1} md={1}><FontAwesome name='clock-o'/>{' '}15.12.2017</Col>
+          <Col sm={9} md={9}><a href=''>Se endringshistorikk</a></Col>
         </FormGroup>
       </Form>
       {newLine()}
@@ -194,19 +195,23 @@ const AddAnalysis = () => {
 
         </Form>
       </Well>
-      <FormGroup>
-        <Col md={1}>
-          <b>Avslutt analyse</b>
-        </Col>
-        <Col md={5}>
-          <Radio checked inline>
-            Ja
-          </Radio>
-          <Radio inline  checked readOnly>
-            Nei
-          </Radio>
-        </Col>
-      </FormGroup>
+      <Form>
+        <FormGroup>
+          <Col md={1}>
+            <b>Avslutt analyse</b>
+          </Col>
+          <Col md={5}>
+            <Radio checked inline>
+              Ja
+            </Radio>
+            <Radio inline  checked readOnly>
+              Nei
+            </Radio>
+          </Col>
+        </FormGroup>
+      </Form>
+      {newLine()}
+      <SaveCancel/>
 
 
     </div>);
