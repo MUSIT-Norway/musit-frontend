@@ -42,24 +42,22 @@ export const SampleComponentAdd = (props) => {
     <PageHeader>
       {props.form.header || 'Registrer prøveuttak'}
     </PageHeader>
-    <Row>
+    <Row className='row-centered'>
       <Col md={12}><b>{'Avledet fra objekt'}</b></Col>
     </Row>
     <Row className='row-centered'>
-    <Col md={1}>
-      {'Musno: '}<b>{'1234'}</b>
-    </Col>
-    <Col md={1}>
-      {'Unr: '}<b>{props.form.subNo.value || 123344}</b>
-    </Col>
-    <Col md={2}>
-      {'Term/artsnavn: '}<b>{props.form.termSpeciesName.value || 'Carex saxatilis'}</b>
-    </Col>
-    <Col md={1}><Button>{props.form.showObjectText || 'Vis Objektet'} </Button>
-    </Col>
+      <Col md={1}>
+        {'Musno: '}<b>{'1234'}</b>
+      </Col>
+      <Col md={1}>
+        {'Unr: '}<b>{props.form.subNo.value || 123344}</b>
+      </Col>
+      <Col md={2}>
+        {'Term/artsnavn: '}<b>{props.form.termSpeciesName.value || 'Carex saxatilis'}</b>
+      </Col>
+      <Col md={1}><Button>{props.form.showObjectText || 'Vis Objektet'} </Button>
+      </Col>
     </Row>
-    <br/>
-    <br/>
     <hr/>
     <Row>
       <Col md={1}><b>{'PrøveID: '}</b>{props.form.sampleId.value || 66777}</Col>
@@ -78,7 +76,6 @@ export const SampleComponentAdd = (props) => {
         {props.form.registeredDate.value || '11.03.2017'}
       </Col>
     </Row>
-    <br/>
     <Row>
       <Col md={1}>
         <ControlLabel>Sist endret:</ControlLabel>
@@ -171,9 +168,9 @@ export const SampleComponentAdd = (props) => {
     </Row>
     <br/>
     <Row className='row-centered'>
-    <Col md={1}>
-      <ControlLabel>{'Note'}</ControlLabel>
-    </Col>
+      <Col md={1}>
+        <ControlLabel>{'Note'}</ControlLabel>
+      </Col>
       <Col md={3
       }>
         <MemoInput field={props.form.sampleNote} onChangeField={props.updateForm}/>
