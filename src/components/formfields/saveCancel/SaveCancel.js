@@ -50,7 +50,8 @@ export default class SaveCancel extends Component {
       cancel: {
         id: `Cancel_${id || 1}`,
         onClick: onClickCancel,
-        className: 'cancelButton'
+        className: 'cancelButton',
+        bsStyle: 'link'
       }
     };
   }

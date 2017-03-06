@@ -59,6 +59,7 @@ export default () => {
           <Route path=":id/observation/:obsId" component={ViewObservationPage} />
           <Route path=":id/objects" showObjects component={StorageUnitsTable} />
           <Route path=":id" component={StorageUnitsTable} />
+          <Route path={'/analysis/add'} component={AddAnalysis} />
         </Route>
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />
@@ -72,7 +73,6 @@ export default () => {
         <Route path="about" component={AboutView} />
         -- Catch all route
         <Route path="*" component={NotFound} status={404} />
-        <Route path={'/analysis/add'} component={AddAnalysis} />
       </Route>
     </Route>
 
