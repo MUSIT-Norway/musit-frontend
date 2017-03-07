@@ -1,4 +1,4 @@
-if (typeof localStorage === 'undefined' || localStorage === null) {
+if (!global.localStorage) {
   const LocalStorage = require('node-localstorage').LocalStorage;
   global.localStorage = new LocalStorage('./');
 }

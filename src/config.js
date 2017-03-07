@@ -11,10 +11,6 @@ export default {
     limit: 25,
     urls: {
       client: {
-        about: {
-          goToAbout: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/about`
-        },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin`
