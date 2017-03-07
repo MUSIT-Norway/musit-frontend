@@ -29,6 +29,7 @@ export const reducer$ = (actions) => Observable.merge(
   actions.renderTemplate$.map((rendered) => (state) => ({...state, rendered}))
 );
 
-const store$ = createStore('print', reducer$({ clearAll$, clearRendered$, loadTemplates$, renderTemplate$ }), Observable.of(initialState));
+export const store$ = (actions = { clearAll$, clearRendered$, loadTemplates$, renderTemplate$ }) =>
+  createStore('print', reducer$(actions), Observable.of(initialState));
 
-export default store$;
+export default store$();

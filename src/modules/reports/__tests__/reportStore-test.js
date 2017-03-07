@@ -1,6 +1,6 @@
 import {TestScheduler} from 'rxjs/Rx';
 import assert from 'assert';
-import store$ from '../reportStore';
+import { store$ } from '../reportStore';
 
 describe('KDReportStore', () => {
 

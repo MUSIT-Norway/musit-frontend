@@ -121,7 +121,7 @@ export const reducer$ = (actions) => Observable.empty().merge(
   actions.clearNodes$.map(() => (state) => ({...state, nodes: []}))
 );
 
-export default (actions$ = {
+export const store$ = (actions$ = {
   addNode$,
   removeNode$,
   toggleNode$,
@@ -133,9 +133,10 @@ export default (actions$ = {
   toggleMainObject$,
   refreshObjects$,
   clearObjects$
-}) =>
-  createStore('pickList', reducer$(actions$), Observable.of({ nodes: [], objects: []}))
-    .map(state => ({
-      nodes: orderBy(state.nodes, [(o) => customSortingStorageNodeType(o.value.type), (o) => toLower(o.value.name)]),
-      objects: orderBy(state.objects, [(o) => toLower(o.value.museumNo), (o) => toLower(o.value.subNo), (o) => toLower(o.value.term)])
-    }));
+}) => createStore('pickList', reducer$(actions$), Observable.of({ nodes: [], objects: []}))
+  .map(state => ({
+    nodes: orderBy(state.nodes, [(o) => customSortingStorageNodeType(o.value.type), (o) => toLower(o.value.name)]),
+    objects: orderBy(state.objects, [(o) => toLower(o.value.museumNo), (o) => toLower(o.value.subNo), (o) => toLower(o.value.term)])
+  }));
+
+export default store$();

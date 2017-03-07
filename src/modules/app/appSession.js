@@ -54,6 +54,34 @@ export class AppSession {
   }
 }
 
+export const makeUrlAware = (Component) => {
+  class Wrapper extends React.Component {
+    static propTypes = {
+      appSession: React.PropTypes.instanceOf(AppSession).isRequired
+    };
+
+    static defaultProps = {
+      refreshSession: refreshSession()
+    };
+
+    componentWillReceiveProps(newProps) {
+      const paramsDiffFromSession = !isEqualWith(newProps.params, newProps.appSession, (lhs, rhs) => {
+        return lhs.museumId * 1 === rhs.getMuseumId().id && lhs.collectionIds === rhs.getCollectionId().uuid;
+      });
+
+      if (paramsDiffFromSession) {
+        this.props.refreshSession(newProps.params, newProps.appSession);
+      }
+    }
+
+    render() {
+      return <Component {...this.props} />;
+    }
+  }
+  Wrapper.displayName = `UrlAware(${getDisplayName(Component)})`;
+  return Wrapper;
+};
+
 const initialState = { accessToken: getAccessToken() };
 
 const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
@@ -147,32 +175,4 @@ export const reducer$ = (actions, onError = emitError) => Observable.merge(
 const session$ = (actions$ = { setMuseumId$, setCollectionId$, setAccessToken$, loadAppSession$ }) =>
   createStore('appSession', reducer$(actions$), Observable.of(initialState)).map(state => new AppSession(state));
 
-export default session$;
-
-export const makeUrlAware = (Component) => {
-  class Wrapper extends React.Component {
-    static propTypes = {
-      appSession: React.PropTypes.instanceOf(AppSession).isRequired
-    };
-
-    static defaultProps = {
-      refreshSession: refreshSession()
-    };
-
-    componentWillReceiveProps(newProps) {
-      const paramsDiffFromSession = !isEqualWith(newProps.params, newProps.appSession, (lhs, rhs) => {
-        return lhs.museumId * 1 === rhs.getMuseumId().id && lhs.collectionIds === rhs.getCollectionId().uuid;
-      });
-
-      if (paramsDiffFromSession) {
-        this.props.refreshSession(newProps.params, newProps.appSession);
-      }
-    }
-
-    render() {
-      return <Component {...this.props} />;
-    }
-  }
-  Wrapper.displayName = `UrlAware(${getDisplayName(Component)})`;
-  return Wrapper;
-};
+export default session$();

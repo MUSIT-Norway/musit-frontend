@@ -16,7 +16,8 @@ export class EditStorageUnitContainer extends React.Component {
     params: PropTypes.object,
     unit: PropTypes.object,
     updateState: PropTypes.func.isRequired,
-    appSession: PropTypes.object.isRequired
+    appSession: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
   };
 
   componentWillMount() {
@@ -27,7 +28,7 @@ export class EditStorageUnitContainer extends React.Component {
   }
 
   componentWillReceiveProps(next) {
-    if (next.store.rootNode && !this.props.store.rootNode) {
+    if (next.store.rootNode && !this.props.nodeStore.rootNode) {
       this.props.updateState(next.store.rootNode);
     }
   }
@@ -36,8 +37,8 @@ export class EditStorageUnitContainer extends React.Component {
     return (
       <StorageUnitContainer
         {...this.props}
-        unit={this.props.store.unit}
-        rootNode={this.props.store.rootNode}
+        unit={this.props.nodeStore.unit}
+        rootNode={this.props.nodeStore.rootNode}
         onLagreClick={(data) => {
           const id = this.props.params.id;
           const museumId = this.props.appSession.getMuseumId();
@@ -55,7 +56,7 @@ export class EditStorageUnitContainer extends React.Component {
             }
           }});
         }}
-        loaded={!!this.props.store.unit && this.props.store.loaded}
+        loaded={!!this.props.nodeStore.unit && this.props.nodeStore.loaded}
       />
     );
   }
@@ -63,7 +64,7 @@ export class EditStorageUnitContainer extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  store$: nodeStore$()
+  nodeStore$
 };
 
 const commands = {
