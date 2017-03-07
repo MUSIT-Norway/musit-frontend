@@ -59,7 +59,7 @@ describe('ObjectSearchComponent', () => {
           getMuseumId: () => new MuseumId(99),
           getCollectionId: () => new CollectionId('ddd')
         }}
-        store={{
+        objectSearchStore={{
           loaded: true,
           data: testData,
           params: {

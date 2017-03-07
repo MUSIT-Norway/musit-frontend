@@ -483,7 +483,7 @@ export class TableComponent extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  tableStore$: tableStore$(),
+  tableStore$,
   pickList$: { type: React.PropTypes.object.isRequired }
 };
 

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import store$, { isItemAdded } from '../pickList';
+import { store$, isItemAdded } from '../pickList';
 const diff = require('deep-diff').diff;
 import MusitObject from '../../../models/object';
 import MuseumId from '../../../models/museumId';

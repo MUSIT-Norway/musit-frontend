@@ -1,6 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import store$, {initialState} from '../observationStore';
+import { store$, initialState } from '../observationStore';
 import MusitNode from '../../../models/node';
 import Observation from '../../../models/observation';
 import MuseumId from '../../../models/museumId';
