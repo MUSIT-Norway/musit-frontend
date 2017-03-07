@@ -73,7 +73,7 @@ export class MoveHistoryComponent extends Component {
 }
 
 const data = {
-  store$: moveHistoryStore$
+  store$: moveHistoryStore$()
 };
 
 const commands = {

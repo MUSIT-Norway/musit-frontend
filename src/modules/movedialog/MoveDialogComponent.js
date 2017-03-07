@@ -179,7 +179,7 @@ export class MoveDialogComponent extends Component {
 }
 
 const data = {
-  moveDialogStore$
+  moveDialogStore$: moveDialogStore$()
 };
 
 const commands = {
