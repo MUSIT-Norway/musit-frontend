@@ -15,10 +15,6 @@ export default {
           addAnalysis: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/analysis/add`
         },
-        about: {
-          goToAbout: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/about`
-        },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin`

@@ -5,15 +5,15 @@ declare var it: any;
 import { TestScheduler, Subject } from 'rxjs/Rx';
 import assert from 'assert';
 import createForm  from '../form';
+import { stringMapper } from '../mappers';
 import type { Field } from '../form';
 import type { Update } from '../form';
-import type { Load } from '../form';
 const diff = require('deep-diff').diff;
 
-const minLength = (length: number) => (value: string) => {
-  const valid = value.length >= length;
+const minLength = (length: number) => (field: string) => (value: ?string) => {
+  const valid = value && value.length >= length;
   if (!valid) {
-    return 'Name is not valid';
+    return field + ' is not valid';
   }
 };
 
@@ -33,32 +33,41 @@ describe('form stream', () => {
     });
 
     // mock streams
-    const loadM         = '----xy---------';
+    const loadM         = '----xyz--------';
     const updateFieldM  = '-xyz-----------';
-    const expected      = 'abccdd---------';
+    const expected      = 'abccdde--------';
+
+    const validator = {
+      rawValidator: minimumThreeChars
+    };
 
     const expectedStateMap = {
       a: {
         name: {
           name: 'name',
-          validator: minimumThreeChars
+          validator: validator,
+          mapper: stringMapper
         }
       },
       b: {
         name: {
           name: 'name',
-          validator: minimumThreeChars,
-          value: 'Ja',
+          validator: validator,
+          mapper: stringMapper,
+          rawValue: 'Ja',
+          value: null,
           status: {
             valid: false,
-            error: 'Name is not valid'
+            error: 'name is not valid'
           }
         }
       },
       c: {
         name: {
           name: 'name',
-          validator: minimumThreeChars,
+          validator: validator,
+          mapper: stringMapper,
+          rawValue: 'Jar',
           value: 'Jar',
           status: {
             valid: true
@@ -68,11 +77,27 @@ describe('form stream', () => {
       d: {
         name: {
           name: 'name',
-          validator: minimumThreeChars,
+          validator: validator,
+          mapper: stringMapper,
+          rawValue: 'Kalle',
           value: 'Kalle',
-          origValue: 'Kalle',
+          defaultValue: 'Kalle',
           status: {
             valid: true
+          }
+        }
+      },
+      e: {
+        name: {
+          name: 'name',
+          validator: validator,
+          mapper: stringMapper,
+          rawValue: 'pe',
+          value: null,
+          defaultValue: 'pe',
+          status: {
+            valid: false,
+            error: 'name is not valid'
           }
         }
       }
@@ -80,37 +105,44 @@ describe('form stream', () => {
 
     const name: Field<string> = {
       name: 'name',
-      validator: minimumThreeChars
+      mapper: stringMapper,
+      validator: validator
     };
 
     const update$: Subject<Update<*>> = testScheduler.createHotObservable(updateFieldM, {
       x: {
         name: 'name',
-        value: 'Ja'
+        rawValue: 'Ja'
       },
       y: {
         name: 'name',
-        value: 'Jar'
+        rawValue: 'Jar'
       },
       z: {
         name: 'bogus name that does not exist',
-        value: 'some great value'
+        rawValue: 'some great value'
       }
     });
 
-    const load$: Subject<Load<*>[]> = testScheduler.createHotObservable(loadM, {
+    const load$: Subject<Update<*>[]> = testScheduler.createHotObservable(loadM, {
       x: [
         {
           name: 'name',
-          value: 'Kalle',
-          origValue: 'Kalle'
+          rawValue: 'Kalle',
+          defaultValue: 'Kalle'
         }
       ],
       y: [
         {
           name: 'bogus name that does not exist',
-          value: 'Silly value',
-          origValue: 'Silly value'
+          rawValue: 'Silly value',
+          defaultValue: 'Silly value'
+        }
+      ],
+      z: [
+        {
+          name: 'name',
+          defaultValue: 'pe'
         }
       ]
     });
