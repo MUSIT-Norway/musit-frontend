@@ -135,7 +135,7 @@ export class ControlAddContainer extends React.Component {
           },
           onFailure: (e) => emitError({...e, type: 'network'})
         }
-      });
+      }).toPromise();
     }
   }
 
@@ -343,7 +343,7 @@ const commands = {
 };
 
 const props = {
-  addControl: (val) => Control.addControl()(val).toPromise()
+  addControl: Control.addControl()
 };
 
 export default inject(data, commands, props)(ControlAddContainer);

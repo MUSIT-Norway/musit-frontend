@@ -4,7 +4,6 @@ import inject from 'react-rxjs/dist/RxInject';
 import { emitError, emitSuccess } from '../../shared/errors';
 import  nodeStore$, { clearNode$, loadNode$, updateState$} from './nodeStore';
 import MusitNode from '../../models/node';
-import MusitActor from '../../models/actor';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 
@@ -12,12 +11,11 @@ export class EditStorageUnitContainer extends React.Component {
   static propTypes = {
     editNode: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
-    getActor: PropTypes.func.isRequired,
     params: PropTypes.object,
     unit: PropTypes.object,
     updateState: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired
+    nodeStore: PropTypes.object.isRequired
   };
 
   componentWillMount() {
@@ -28,8 +26,8 @@ export class EditStorageUnitContainer extends React.Component {
   }
 
   componentWillReceiveProps(next) {
-    if (next.store.rootNode && !this.props.nodeStore.rootNode) {
-      this.props.updateState(next.store.rootNode);
+    if (next.nodeStore.rootNode && !this.props.nodeStore.rootNode) {
+      this.props.updateState(next.nodeStore.rootNode);
     }
   }
 
@@ -54,7 +52,7 @@ export class EditStorageUnitContainer extends React.Component {
             onFailure: (e) => {
               this.props.emitError({...e, type: 'network'});
             }
-          }});
+          }}).toPromise();
         }}
         loaded={!!this.props.nodeStore.unit && this.props.nodeStore.loaded}
       />
@@ -76,8 +74,7 @@ const commands = {
 const props = {
   emitError,
   emitSuccess,
-  editNode: (val) => MusitNode.editNode()(val).toPromise(),
-  getActor: (val) => MusitActor.getActor()(val).toPromise()
+  editNode: MusitNode.editNode()
 };
 
 export default inject(data, commands, props)(EditStorageUnitContainer);
