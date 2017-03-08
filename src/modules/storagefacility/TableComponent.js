@@ -518,45 +518,49 @@ export const processBarcode = (barCode, props) => {
   const collectionId = props.appSession.getCollectionId();
   const token = props.appSession.getAccessToken();
   if (barCode.uuid) {
-    props.findNodeByUUID({uuid: barCode.code, museumId, token}).do((response) => {
-      if (!response) {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
-      } else if (isMoveDialogActive) {
-        props.updateMoveDialog(response, museumId, token);
-      } else if (isMoveHistoryActive) {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
-      } else {
-        props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response.id, props.appSession));
-      }
-    }).toPromise();
-  } else if (barCode.number) {
-    props.findNodeOrObjectByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
-      if (!response) {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-      } else if (Array.isArray(response)) {
-        if (response.length === 1) {
-          if (!response[0].currentLocationId) {
-            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
-          } else if (isMoveDialogActive) {
-            props.updateMoveDialog(response[0], museumId, token);
-          } else if (isMoveHistoryActive) {
-            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
-          } else {
-            props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(response[0].currentLocationId , props.appSession));
-          }
-        } else {
-          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-        }
-      } else if (response.nodeId) {
-        if (isMoveDialogActive) {
+    props.findNodeByUUID({uuid: barCode.code, museumId, token})
+      .toPromise()
+      .then((response) => {
+        if (!response) {
+          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
+        } else if (isMoveDialogActive) {
           props.updateMoveDialog(response, museumId, token);
         } else if (isMoveHistoryActive) {
-          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
         } else {
           props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response.id, props.appSession));
         }
-      }
-    }).toPromise();
+      });
+  } else if (barCode.number) {
+    props.findNodeOrObjectByBarcode({barcode: barCode.code, museumId, collectionId, token})
+      .toPromise()
+      .then(response => {
+        if (!response) {
+          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+        } else if (Array.isArray(response)) {
+          if (response.length === 1) {
+            if (!response[0].currentLocationId) {
+              props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
+            } else if (isMoveDialogActive) {
+              props.updateMoveDialog(response[0], museumId, token);
+            } else if (isMoveHistoryActive) {
+              props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
+            } else {
+              props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(response[0].currentLocationId , props.appSession));
+            }
+          } else {
+            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+          }
+        } else if (response.nodeId) {
+          if (isMoveDialogActive) {
+            props.updateMoveDialog(response, museumId, token);
+          } else if (isMoveHistoryActive) {
+            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
+          } else {
+            props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response.id, props.appSession));
+          }
+        }
+      });
   }
 };
 
