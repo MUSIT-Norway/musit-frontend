@@ -48,7 +48,7 @@ export class AddStorageUnitContainer extends React.Component {
             onFailure: (e) => {
               this.props.emitError({...e, type: 'network'});
             }
-          }});
+          }}).toPromise();
         }}
         isAdd
         loaded={!!this.props.nodeStore.unit}
@@ -69,12 +69,10 @@ const commands = {
   updateState$
 };
 
-const addNode = (val) => MusitNode.addNode()(val).toPromise();
-
 const props = {
   emitError,
   emitSuccess,
-  addNode
+  addNode: MusitNode.addNode()
 };
 
 export default inject(data, commands, props)(AddStorageUnitContainer);

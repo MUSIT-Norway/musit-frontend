@@ -51,7 +51,7 @@ export class AddObservationPage extends React.Component {
                     this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
                   },
                   onFailure: (e) => this.props.emitError({ ...e, type: 'network' })
-                }});
+                }}).toPromise();
               }}
               mode="ADD"
               doneBy={this.props.appSession.getActor()}
@@ -75,7 +75,7 @@ const commands = {
 const props = {
   emitError,
   emitSuccess,
-  addObservation: (cmd) => Observation.addObservation()(cmd).toPromise()
+  addObservation: Observation.addObservation()
 };
 
 export default inject(data, commands, props)(AddObservationPage);

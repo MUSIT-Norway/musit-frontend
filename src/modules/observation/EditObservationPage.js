@@ -89,7 +89,7 @@ export class EditObservationPage extends React.Component {
                     this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess') });
                   },
                   onFailure: (e) => this.props.emitError({ ...e, type: 'network' })
-                }});
+                }}).toPromise();
               }}
               mode="EDIT"
             />
@@ -112,7 +112,7 @@ const commands = {
 const props = {
   emitError,
   emitSuccess,
-  addObservation: (cmd) => Control.addControl()(cmd).toPromise()
+  addObservation: Control.addControl()
 };
 
 export default inject(data, commands, props)(EditObservationPage);
