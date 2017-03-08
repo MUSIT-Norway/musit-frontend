@@ -17,7 +17,7 @@ export class EditStorageUnitContainer extends React.Component {
     unit: PropTypes.object,
     updateState: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired,
-    store: PropTypes.object.isRequired
+    nodeStore: PropTypes.object.isRequired
   };
 
   componentWillMount() {
@@ -28,8 +28,8 @@ export class EditStorageUnitContainer extends React.Component {
   }
 
   componentWillReceiveProps(next) {
-    if (next.store.rootNode && !this.props.nodeStore.rootNode) {
-      this.props.updateState(next.store.rootNode);
+    if (next.nodeStore.rootNode && !this.props.nodeStore.rootNode) {
+      this.props.updateState(next.nodeStore.rootNode);
     }
   }
 
