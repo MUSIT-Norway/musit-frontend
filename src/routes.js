@@ -36,13 +36,10 @@ import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
 import AddAnalysis from './modules/analysis/addAnalysis';
-import SampleForm from './modules/test/SampleFormPage';
 
 export default () => {
   return (
     <Route>
-
-      <Route path="test" component={SampleForm} />
       <Route path="analysis/add" component={AddAnalysis} />
       <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
         <IndexRedirect to="magasin" />
