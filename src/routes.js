@@ -42,6 +42,7 @@ export default () => {
   return (
     <Route>
       <Route path="test" component={SampleForm} />
+      <Route path="analysis/add" component={AddAnalysis} />
       <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
         <IndexRedirect to="magasin" />
         <Route path="magasin">
@@ -70,7 +71,6 @@ export default () => {
         </Route>
         <Route path="search/objects" component={ObjectSearchComponent} />
         <Route path="about" component={AboutView} />
-        <Route path="analysis/add" component={AddAnalysis} />
         -- Catch all route
         <Route path="*" component={NotFound} status={404} />
       </Route>

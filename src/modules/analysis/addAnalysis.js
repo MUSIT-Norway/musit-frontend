@@ -20,7 +20,7 @@ function LabelFormat(label, md = 1) {
 }
 function FieldGroup({id, label, md = 1, ...props}) {
   return (
-    <div controlId={id}>
+    <div id={id}>
       {LabelFormat(label, md)}
       <Col md={2}>
         <FormControl {... props} />
@@ -31,7 +31,7 @@ function FieldGroup({id, label, md = 1, ...props}) {
 
 function AddButton({id, label, md, mdOffset = 0, ...props}) {
   return (
-    <div controlId={id}>
+    <div id={id}>
       <Col md={md} mdOffset={mdOffset}>
         <Button {... props}>
           <FontAwesome name='plus-circle'/>{' '}
@@ -96,9 +96,11 @@ const AddAnalysis = () => {
         <Col mdOffset={1} md={5}>
           <Table bordered>
             <thead>
+            <tr>
             <th>Museumsnr</th>
             <th>Unt</th>
             <th>Term/artsnavn</th>
+              </tr>
             </thead>
             <tbody>
             <tr>
