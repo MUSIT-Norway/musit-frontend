@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import IFrame from '../../shared/IFrame';
+import IFrame from '../../components/IFrame';
 import './PrintTemplateComponent.css';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';

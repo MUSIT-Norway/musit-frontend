@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { formatISOString } from '../shared/util';
 
-import { DATE_FORMAT_DISPLAY } from './util';
+import { DATE_FORMAT_DISPLAY } from '../shared/util';
 
 import DatePicker from 'react-bootstrap-date-picker';
 
