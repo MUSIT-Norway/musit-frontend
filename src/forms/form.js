@@ -34,8 +34,8 @@ const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
   const defaultValue = data.defaultValue || field.defaultValue;
   const rawValue = data.rawValue || field.mapper.toRaw(defaultValue);
   const rawError = field.validator.rawValidator && field.validator.rawValidator(field.name)(rawValue);
-  const value = !rawError ? field.mapper.fromRaw(rawValue) : null;
-  const valueError = value && field.validator.valueValidator && field.validator.valueValidator(field.name)(value);
+  const value = field.mapper.fromRaw(rawValue);
+  const valueError = !rawError && field.validator.valueValidator && field.validator.valueValidator(field.name)(value);
   const error = rawError || valueError;
   return {
     ...field,

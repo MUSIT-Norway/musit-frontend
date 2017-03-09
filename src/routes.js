@@ -16,7 +16,6 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 import React from 'react';
 import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import NotFound from './components/NotFound';
@@ -35,11 +34,13 @@ import ControlAddContainer from './modules/control/ControlAddComponent';
 import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
+import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
 import AddAnalysis from './modules/analysis/addAnalysis';
 
 export default () => {
   return (
     <Route>
+      <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
       <Route path="analysis/add" component={AddAnalysis} />
       <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
         <IndexRedirect to="magasin" />
