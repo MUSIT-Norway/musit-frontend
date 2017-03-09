@@ -34,5 +34,10 @@ describe('AnalysisSampleFormPageAdd', () => {
     }});
     expect(updateForm.getCall(1).args[0].name).toBe('weight');
     expect(updateForm.getCall(1).args[0].rawValue).toBe('1,45');
+    wrapper.find('.phone').simulate('change', { target: {
+      value: '12-33'
+    }});
+    expect(updateForm.getCall(2).args[0].name).toBe('phone');
+    expect(updateForm.getCall(2).args[0].rawValue).toBe('12-33');
   });
 });
