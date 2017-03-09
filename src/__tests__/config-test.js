@@ -1,5 +1,12 @@
 import Config from '../config';
 import MuseumId from '../models/museumId';
+import routes from '../routes';
+
+describe('routes', () => {
+  it('should be a function', () => {
+    expect(routes()).not.toBe(null);
+  });
+});
 
 describe('Config urls', () => {
   it('storagefacility searchUrl', () => {
