@@ -1,3 +1,4 @@
+/* @flow */
 import React, { PropTypes } from 'react';
 import {
   PageHeader,
@@ -13,7 +14,11 @@ import {
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 
-const FieldInput = ({ field, onChangeInput, inputProps }) => (
+type Field = { name: string, rawValue: ?string };
+type Update = (update: Field) => void;
+
+type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: any };
+const FieldInput = ({ field, onChangeInput, inputProps } : FieldInputProps) => (
   <FormGroup
     controlId={field.name}
     validationState={field.status && !field.status.valid ? 'error' : null}
@@ -26,7 +31,10 @@ const FieldInput = ({ field, onChangeInput, inputProps }) => (
   </FormGroup>
 );
 
-const SampleFormPageAddComponent = ({ form, updateForm }) => {
+type FormData = { note: Field,  weight: Field }
+type Props = { form: FormData, updateForm: Update };
+
+const SampleAddComponent = ({ form, updateForm } : Props) => {
   return (
     <Form style={{ padding: 20 }}>
       <PageHeader>
@@ -138,6 +146,9 @@ const SampleFormPageAddComponent = ({ form, updateForm }) => {
           <FieldInput
             field={form.weight}
             onChangeInput={updateForm}
+            inputProps={{
+              className: 'weight'
+            }}
           />
         </Col>
         <Col md={1}>
@@ -188,6 +199,7 @@ const SampleFormPageAddComponent = ({ form, updateForm }) => {
             field={form.note}
             onChangeInput={updateForm}
             inputProps={{
+              className: 'note',
               componentClass: 'textarea',
               placeholder: form.note.name
             }}
@@ -207,11 +219,12 @@ const FieldShape = {
   })
 };
 
-SampleFormPageAddComponent.propTypes = {
+SampleAddComponent.propTypes = {
   form: PropTypes.shape({
     note: PropTypes.shape(FieldShape).isRequired,
     weight: PropTypes.shape(FieldShape).isRequired
-  }).isRequired
+  }).isRequired,
+  updateForm: PropTypes.func.isRequired
 };
 
-export default SampleFormPageAddComponent;
+export default SampleAddComponent;

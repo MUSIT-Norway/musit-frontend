@@ -1,16 +1,34 @@
-/**
- * Created by steinaol on 06.03.17.
- */
-import { shallow } from 'enzyme';
-import { shallowToJson } from 'enzyme-to-json';
+import { mount } from 'enzyme';
 import React from 'react';
-import SampleFormPageAdd from '../SampleFormAddContainer';
-
+import SampleAddComponent from '../SampleAddComponent';
+import sinon from 'sinon';
 
 describe('AnalysisSampleFormPageAdd', () => {
 
   it('should display correctly', () => {
-    const wrapper=shallow(<SampleFormPageAdd/>);
-    expect(shallowToJson(wrapper)).toMatchSnapshot();
+    const updateForm = sinon.spy();
+    const wrapper = mount(<SampleAddComponent
+      form={{
+        note: {
+          name: 'note',
+          rawValue: 'hei'
+        },
+        weight: {
+          name: 'weight',
+          rawValue: '1,23'
+        }
+      }}
+      updateForm={updateForm}
+    />);
+    wrapper.find('.note').simulate('change', { target: {
+      value: 'Heisann'
+    }});
+    expect(updateForm.getCall(0).args[0].name).toBe('note');
+    expect(updateForm.getCall(0).args[0].rawValue).toBe('Heisann');
+    wrapper.find('.weight').simulate('change', { target: {
+      value: '1,45'
+    }});
+    expect(updateForm.getCall(1).args[0].name).toBe('weight');
+    expect(updateForm.getCall(1).args[0].rawValue).toBe('1,45');
   });
 });
