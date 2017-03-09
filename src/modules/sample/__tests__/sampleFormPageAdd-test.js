@@ -16,6 +16,10 @@ describe('AnalysisSampleFormPageAdd', () => {
         weight: {
           name: 'weight',
           rawValue: '1,23'
+        },
+        phone: {
+          name: 'phone',
+          rawValue: '11-23'
         }
       }}
       updateForm={updateForm}

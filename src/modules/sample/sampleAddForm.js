@@ -5,11 +5,16 @@ import {
   composeValidators,
   isNumber,
   isRequired,
-  isNumberInRange
+  isNumberInRange,
+  isSpecialPhone
 } from '../../forms/validators';
+import type {
+  Phone
+} from '../../forms/types';
 import {
   stringMapper,
-  numberMapper
+  numberMapper,
+  specialPhoneMapper
 } from '../../forms/mappers';
 
 const note: Field<string> = {
@@ -29,4 +34,12 @@ const weight: Field<number> = {
   }
 };
 
-export default createForm('sampleFormAdd.js', [ note, weight ]);
+const phone: Field<Phone> = {
+  name: 'phone',
+  mapper: specialPhoneMapper,
+  validator: {
+    rawValidator: composeValidators(isRequired, isSpecialPhone)
+  }
+};
+
+export default createForm('sampleFormAdd.js', [ note, weight, phone ]);

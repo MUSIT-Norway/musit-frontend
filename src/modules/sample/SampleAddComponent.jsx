@@ -31,7 +31,7 @@ const FieldInput = ({ field, onChangeInput, inputProps } : FieldInputProps) => (
   </FormGroup>
 );
 
-type FormData = { note: Field,  weight: Field }
+type FormData = { note: Field,  weight: Field, phone: Field }
 type Props = { form: FormData, updateForm: Update };
 
 const SampleAddComponent = ({ form, updateForm } : Props) => {
@@ -206,6 +206,21 @@ const SampleAddComponent = ({ form, updateForm } : Props) => {
           />
         </Col>
       </Row>
+      <br />
+      <Row className='row-centered'>
+        <Col md={1}>
+          <ControlLabel>Test</ControlLabel>
+        </Col>
+        <Col md={1}>
+          <FieldInput
+            field={form.phone}
+            onChangeInput={updateForm}
+            inputProps={{
+              className: 'phone'
+            }}
+          />
+        </Col>
+      </Row>
     </Form>
   );
 };
@@ -222,7 +237,8 @@ const FieldShape = {
 SampleAddComponent.propTypes = {
   form: PropTypes.shape({
     note: PropTypes.shape(FieldShape).isRequired,
-    weight: PropTypes.shape(FieldShape).isRequired
+    weight: PropTypes.shape(FieldShape).isRequired,
+    phone: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
   updateForm: PropTypes.func.isRequired
 };
