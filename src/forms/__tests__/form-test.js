@@ -55,7 +55,7 @@ describe('form stream', () => {
           validator: validator,
           mapper: stringMapper,
           rawValue: 'Ja',
-          value: null,
+          value: 'Ja',
           status: {
             valid: false,
             error: 'name is not valid'
@@ -93,7 +93,7 @@ describe('form stream', () => {
           validator: validator,
           mapper: stringMapper,
           rawValue: 'pe',
-          value: null,
+          value: 'pe',
           defaultValue: 'pe',
           status: {
             valid: false,

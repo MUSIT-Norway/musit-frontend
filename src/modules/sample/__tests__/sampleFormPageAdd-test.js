@@ -4,7 +4,7 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import SampleFormPageAdd from '../SampleFormPageAdd';
+import SampleFormPageAdd from '../SampleFormAddContainer';
 
 
 describe('AnalysisSampleFormPageAdd', () => {

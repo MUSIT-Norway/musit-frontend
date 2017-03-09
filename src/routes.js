@@ -34,12 +34,14 @@ import ControlAddContainer from './modules/control/ControlAddComponent';
 import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
-import SampleFormPageAdd  from './modules/sample/SampleFormPageAdd';
+import SampleFormAddContainer  from './modules/sample/SampleFormAddContainer';
+import AddAnalysis from './modules/analysis/addAnalysis';
 
 export default () => {
   return (
     <Route>
-      <Route path="analysis/sample/add" component={SampleFormPageAdd}/>
+      <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
+      <Route path="analysis/add" component={AddAnalysis} />
       <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
         <IndexRedirect to="magasin" />
         <Route path="magasin">

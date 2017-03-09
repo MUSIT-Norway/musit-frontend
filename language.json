@@ -1,6 +1,10 @@
 {
   "en": {
     "musit": {
+      "analysis": {
+        "analysis": "Analysis",
+        "registeringAnalysis": "Registering analysis"
+      },
       "unknown": "Unknown",
       "language": "Language",
       "template": {
@@ -656,6 +660,10 @@
   },
   "no": {
     "musit": {
+      "analysis": {
+        "analysis": "Analyse",
+        "registeringAnalysis": "Registrere analyse"
+      },
       "unknown": "Ukjent",
       "language": "Språk",
       "template": {
