@@ -11,7 +11,7 @@ export const isNumberInRange = (from, to) => createValidator(
 
 export const isDecimalNumber = (minPrecision = 0, maxPrecision = Number.MAX_SAFE_INTEGER) => createValidator(
   message => value => {
-    const regex = new RegExp('^-?\\d+\\,?\\d{' + minPrecision + ',' + maxPrecision + '}$');
+    const regex = new RegExp('^-?\\d+,?\\d{' + minPrecision + ',' + maxPrecision + '}$');
     if (!regex.test(value)) {
       return message;
     }
