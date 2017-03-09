@@ -11,6 +11,10 @@ export default {
     limit: 25,
     urls: {
       client: {
+        analysis: {
+          addAnalysis: () =>
+            '/analysis/add'
+        },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin`
@@ -57,6 +61,12 @@ export default {
         }
       },
       api: {
+        analysis: {
+          baseUrl:
+            '/api/analysis/',
+          addUrl:
+            '/api/analysis/add'
+        },
         storagefacility: {
           searchUrl: (term, mid) =>
             `/api/storagefacility/v1/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,

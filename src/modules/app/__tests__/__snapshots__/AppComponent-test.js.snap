@@ -52,6 +52,16 @@ exports[`AppComponent remders 1`] = `
         <LinkContainer
           action="push"
           onlyActiveOnIndex={false}
+          to="/analysis/add">
+          <NavItem
+            active={false}
+            disabled={false}>
+            Analyse
+          </NavItem>
+        </LinkContainer>
+        <LinkContainer
+          action="push"
+          onlyActiveOnIndex={false}
           to="/museum/99/collections/00000000-0000-0000-0000-000000000000/reports">
           <NavItem
             active={false}
