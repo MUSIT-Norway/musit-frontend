@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import IFrame from '../../shared/IFrame';
+import IFrame from '../../components/IFrame';
 import './PrintTemplateComponent.css';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
@@ -67,7 +67,13 @@ export class ChooseTemplate extends Component {
         {this.props.store.rendered &&
           <input
             className="printTool"
-            onClick={() => this.previewFrame.domNode.contentWindow.print()}
+            onClick={() => {
+              const iFrame = this.previewFrame.domNode.contentWindow;
+              const result = iFrame.document.execCommand('print', false, null);
+              if (!result) {
+                iFrame.print();
+              }
+            }}
             type="button"
             value={I18n.t('musit.template.printTemplate')}
           />

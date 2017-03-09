@@ -24,7 +24,7 @@ import Modal from '../../components/modal/MusitModal';
 import SubmitButton from '../../components/buttons/submit';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
-import PagingToolbar from '../../shared/paging';
+import PagingToolbar from '../../components/PagingToolbar';
 import moveDialogStore$, {
   clear$,
   loadChildren$,
