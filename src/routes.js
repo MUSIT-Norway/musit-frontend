@@ -34,7 +34,7 @@ import ControlAddContainer from './modules/control/ControlAddComponent';
 import EventsContainer from './modules/events/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
-import SampleFormAddContainer  from './modules/sample/SampleAddContainer';
+import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
 import AddAnalysis from './modules/analysis/addAnalysis';
 
 export default () => {
