@@ -4,7 +4,6 @@ import inject from 'react-rxjs/dist/RxInject';
 import { emitError, emitSuccess } from '../../shared/errors';
 import  nodeStore$, { clearNode$, loadNode$, updateState$} from './nodeStore';
 import MusitNode from '../../models/node';
-import MusitActor from '../../models/actor';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 
@@ -12,11 +11,11 @@ export class EditStorageUnitContainer extends React.Component {
   static propTypes = {
     editNode: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
-    getActor: PropTypes.func.isRequired,
     params: PropTypes.object,
     unit: PropTypes.object,
     updateState: PropTypes.func.isRequired,
-    appSession: PropTypes.object.isRequired
+    appSession: PropTypes.object.isRequired,
+    nodeStore: PropTypes.object.isRequired
   };
 
   componentWillMount() {
@@ -27,8 +26,8 @@ export class EditStorageUnitContainer extends React.Component {
   }
 
   componentWillReceiveProps(next) {
-    if (next.store.rootNode && !this.props.store.rootNode) {
-      this.props.updateState(next.store.rootNode);
+    if (next.nodeStore.rootNode && !this.props.nodeStore.rootNode) {
+      this.props.updateState(next.nodeStore.rootNode);
     }
   }
 
@@ -36,8 +35,8 @@ export class EditStorageUnitContainer extends React.Component {
     return (
       <StorageUnitContainer
         {...this.props}
-        unit={this.props.store.unit}
-        rootNode={this.props.store.rootNode}
+        unit={this.props.nodeStore.unit}
+        rootNode={this.props.nodeStore.rootNode}
         onLagreClick={(data) => {
           const id = this.props.params.id;
           const museumId = this.props.appSession.getMuseumId();
@@ -53,9 +52,9 @@ export class EditStorageUnitContainer extends React.Component {
             onFailure: (e) => {
               this.props.emitError({...e, type: 'network'});
             }
-          }});
+          }}).toPromise();
         }}
-        loaded={!!this.props.store.unit && this.props.store.loaded}
+        loaded={!!this.props.nodeStore.unit && this.props.nodeStore.loaded}
       />
     );
   }
@@ -63,7 +62,7 @@ export class EditStorageUnitContainer extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  store$: nodeStore$()
+  nodeStore$
 };
 
 const commands = {
@@ -75,8 +74,7 @@ const commands = {
 const props = {
   emitError,
   emitSuccess,
-  editNode: (val) => MusitNode.editNode()(val).toPromise(),
-  getActor: (val) => MusitActor.getActor()(val).toPromise()
+  editNode: MusitNode.editNode()
 };
 
 export default inject(data, commands, props)(EditStorageUnitContainer);

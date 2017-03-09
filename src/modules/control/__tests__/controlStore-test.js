@@ -1,6 +1,6 @@
 import { TestScheduler, Observable, Subject } from 'rxjs/Rx';
 import assert from 'assert';
-import store$, { initialState } from '../controlStore';
+import { store$, initialState } from '../controlStore';
 import MusemId from '../../../models/museumId';
 import Control from '../../../models/control';
 

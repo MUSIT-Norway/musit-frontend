@@ -1,6 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import store$, { initialState, getLocationHistory } from '../moveHistoryStore';
+import { store$, initialState, getLocationHistory } from '../moveHistoryStore';
 import MuseumId from '../../../models/museumId';
 
 const diff = require('deep-diff').diff;

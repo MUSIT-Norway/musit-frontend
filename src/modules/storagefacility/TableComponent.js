@@ -12,7 +12,7 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import { blur, filter } from '../../shared/util';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
-import PagingToolbar from '../../shared/paging';
+import PagingToolbar from '../../components/PagingToolbar';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import MusitModal from '../movedialog/MoveDialogComponent';
@@ -483,7 +483,7 @@ export class TableComponent extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  tableStore$: tableStore$(),
+  tableStore$,
   pickList$: { type: React.PropTypes.object.isRequired }
 };
 

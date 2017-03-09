@@ -1,6 +1,6 @@
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import store$, { loadEvents} from '../eventsStore';
+import { store$, loadEvents} from '../eventsStore';
 import MuseumId from '../../../models/museumId';
 import Observation from '../../../models/observation';
 import Control from '../../../models/control';

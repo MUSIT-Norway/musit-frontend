@@ -31,7 +31,7 @@ import inject from 'react-rxjs/dist/RxInject';
 export class MoveHistoryComponent extends Component {
 
   static propTypes = {
-    store: PropTypes.object.isRequired,
+    moveHistoryStore: PropTypes.object.isRequired,
     objectId: PropTypes.number.isRequired,
     appSession: PropTypes.object.isRequired,
     loadMoveHistory: PropTypes.func.isRequired,
@@ -52,7 +52,7 @@ export class MoveHistoryComponent extends Component {
   }
 
   render() {
-    const moves = this.props.store.data;
+    const moves = this.props.moveHistoryStore.data;
     return (
       <Modal
         className="moveHistory"
@@ -73,7 +73,7 @@ export class MoveHistoryComponent extends Component {
 }
 
 const data = {
-  store$: moveHistoryStore$
+  moveHistoryStore$
 };
 
 const commands = {

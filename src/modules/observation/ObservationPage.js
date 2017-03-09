@@ -11,7 +11,7 @@ import { containsObjectWithField, parseISODate, DATE_FORMAT_DISPLAY, isDateBigge
 import FontAwesome from 'react-fontawesome';
 import { hashHistory } from 'react-router';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
-import DatePicker from '../../shared/datePicker';
+import DatePicker from '../../components/DatePicker';
 import ActorSuggest from '../../components/suggest/ActorSuggest';
 import * as validation from './observationValidation';
 import { I18n } from 'react-i18nify';

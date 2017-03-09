@@ -41,6 +41,7 @@ import SampleForm from './modules/test/SampleFormPage';
 export default () => {
   return (
     <Route>
+
       <Route path="test" component={SampleForm} />
       <Route path="analysis/add" component={AddAnalysis} />
       <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>

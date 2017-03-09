@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 class IFrame extends React.Component {
 
   static propTypes = {
-    frameProps: React.PropTypes.object,
-    content: React.PropTypes.string
+    frameProps: PropTypes.object,
+    content: PropTypes.string
   };
 
   static defaultProps = {
@@ -23,7 +23,7 @@ class IFrame extends React.Component {
 
   render() {
     return (
-      <iframe {...this.props.frameProps} onLoad={this.onLoad} />
+      <iframe {...this.props.frameProps} />
     );
   }
 

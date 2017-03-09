@@ -82,7 +82,7 @@ export class KDReport extends Component {
 
 const data = {
   appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  store$: store$()
+  store$
 };
 
 const commands = {

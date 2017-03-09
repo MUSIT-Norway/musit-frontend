@@ -21,5 +21,7 @@ export const reducer$ = (actions) => Observable.merge(
   actions.updateState$.map((unit) => (state) => ({...state, unit: {...initialState.unit, ...unit}}))
 );
 
-export default (actions$ = {clearNode$, updateState$, loadNode$}) =>
+export const store$ = (actions$ = {clearNode$, updateState$, loadNode$}) =>
   createStore('node', reducer$(actions$), Observable.of(initialState));
+
+export default store$();

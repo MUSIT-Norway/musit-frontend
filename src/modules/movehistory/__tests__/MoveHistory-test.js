@@ -16,7 +16,7 @@ describe('MoveHistoryComponent', () => {
         objectId={1234}
         clear={clear}
         loadMoveHistory={loadMoveHistory}
-        store={{
+        moveHistoryStore={{
           data: [{
             doneDate: '2017-02-13T23:28:02+01:00',
             doneBy: 'Jarl',
