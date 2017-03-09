@@ -1,7 +1,8 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$, loadTemplates, renderTemplate } from '../printStore';
+import { reducer$ } from '../printStore';
 import { createStore } from 'react-rxjs/dist/RxStore';
+import Template from '../../../models/template';
 
 describe('printStore', () => {
   /*eslint-disable */
@@ -81,8 +82,8 @@ describe('printStore', () => {
     const clearAll$ = testScheduler.createHotObservable(clearAllM);
     const clearRendered$ = testScheduler.createHotObservable(clearRenderedM);
     const loadTemplates$ = testScheduler.createHotObservable(loadTemplatesM, { 1: { token: '1234' }})
-        .switchMap(loadTemplates({
-          simpleGet: () => Observable.of({
+        .switchMap(Template.loadTemplates(
+          () => Observable.of({
             response: [{
               'id': 1,
               'name': 'Label-1 70mm x 37mm',
@@ -99,15 +100,15 @@ describe('printStore', () => {
               'rowsPerPage': 4
             }]
           })
-        }));
+        ));
     const renderTemplate$ = testScheduler.createHotObservable(renderTemplateM, { 1: { token: '1234', templateId: 1, codeFormat: 1, nodes: [
         { nodeId: 1, name: 'Test 1' },
         { nodeId: 2, name: 'Test 2' }
-    ]}}).switchMap(renderTemplate({
-      ajax: () => Observable.of({
+    ]}}).switchMap(Template.renderTemplate(
+      () => Observable.of({
         response: '<!DOCTYPE html> <html lang="en"> <head> <link rel="stylesheet" href="/service_barcode/assets/css/portrait.css"> <link rel="stylesheet" href="/service_barcode/assets/css/label1.css"> </head> <body> <div class="labelsContainer"> <div class="label"> <div class="top"> <div class="codeImage"> <img width="90px" height="90px" src="/service_barcode/barcode/d3982b48-56c7-4d27-bc81-6e38b59d57ed?codeFormat=1" /> </div> <div class="name">Utviklingsmuseet Org</div> </div> <div class="uuid">d3982b48-56c7-4d27-bc81-6e38b59d57ed</div> </div> </div> </body> </html>'
       })
-    }));
+    ));
 
     const state$ = reducer$({clearAll$, clearRendered$, loadTemplates$, renderTemplate$});
 

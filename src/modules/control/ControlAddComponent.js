@@ -19,7 +19,7 @@
 import React from 'react';
 import { Grid, Row, Col, FormControl } from 'react-bootstrap';
 import PairedToogleButtons from './ToggleButtons';
-import DatePicker from '../../shared/datePicker';
+import DatePicker from '../../components/DatePicker';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import { hashHistory } from 'react-router';
 import { flatten, DATE_FORMAT_DISPLAY, hasProp, isDateBiggerThanToday, formatISOString } from '../../shared/util';
@@ -135,7 +135,7 @@ export class ControlAddContainer extends React.Component {
           },
           onFailure: (e) => emitError({...e, type: 'network'})
         }
-      });
+      }).toPromise();
     }
   }
 
@@ -335,7 +335,7 @@ export class ControlAddContainer extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  store$: store$()
+  store$
 };
 
 const commands = {
@@ -343,7 +343,7 @@ const commands = {
 };
 
 const props = {
-  addControl: (val) => Control.addControl()(val).toPromise()
+  addControl: Control.addControl()
 };
 
 export default inject(data, commands, props)(ControlAddContainer);

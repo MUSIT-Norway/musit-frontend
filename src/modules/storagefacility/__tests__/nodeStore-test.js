@@ -1,6 +1,6 @@
 import { TestScheduler } from 'rxjs/Rx';
 import assert from 'assert';
-import store$ from '../nodeStore';
+import { store$ } from '../nodeStore';
 const diff = require('deep-diff').diff;
 
 describe('nodeStore', () => {

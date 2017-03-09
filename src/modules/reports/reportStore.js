@@ -16,4 +16,7 @@ export const reducer$ = (actions) => Observable.merge(
   actions.loadKDReport$.map((kdreport) => (state) => ({...state, data: { kdreport }, loaded: true}))
 );
 
-export default (actions$ = { clear$, loadKDReport$ }) => createStore('reportStore', reducer$(actions$), Observable.of(initialState));
+export const store$ = (actions$ = { clear$, loadKDReport$ }) =>
+  createStore('reportStore', reducer$(actions$), Observable.of(initialState));
+
+export default store$();

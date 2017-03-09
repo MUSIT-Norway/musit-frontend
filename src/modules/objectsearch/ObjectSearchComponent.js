@@ -4,7 +4,7 @@ import {I18n} from 'react-i18nify';
 import {Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table} from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import PagingToolbar from '../../shared/paging';
+import PagingToolbar from '../../components/PagingToolbar';
 import {hashHistory} from 'react-router';
 import Loader from 'react-loader';
 import {Observable} from 'rxjs';
@@ -18,6 +18,11 @@ import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../app/appSession';
 
 export class ObjectSearchComponent extends React.Component {
+
+  static propTypes = {
+    objectSearchStore: React.PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -36,6 +41,7 @@ export class ObjectSearchComponent extends React.Component {
   }
 
   render() {
+    const store = this.props.objectSearchStore;
     return (
       <div style={{paddingTop: 20}}>
         <main>
@@ -62,19 +68,19 @@ export class ObjectSearchComponent extends React.Component {
               </Form>
               <br />
               <h4>
-                {this.props.store.loaded &&
-                (this.props.store.data.totalMatches > 0 ?
-                    I18n.t('musit.objectsearch.results.title', {count: this.props.store.data.totalMatches})
+                {store.loaded &&
+                (store.data.totalMatches > 0 ?
+                    I18n.t('musit.objectsearch.results.title', {count: store.data.totalMatches})
                     :
                     I18n.t('musit.objectsearch.results.noHit')
                 )
                 }
               </h4>
-              <Loader loaded={!this.props.store.loading}>
-                {this.props.store.data.matches.length > 0 &&
+              <Loader loaded={!store.loading}>
+                {store.data.matches.length > 0 &&
                 <div>
                   <PagingToolbar
-                    numItems={this.props.store.data.totalMatches}
+                    numItems={store.data.totalMatches}
                     currentPage={this.state.currentPage}
                     perPage={this.state.perPage}
                     onClick={(page) => this.searchForObjects(page)
@@ -92,7 +98,7 @@ export class ObjectSearchComponent extends React.Component {
                           href=""
                           onClick={(e) => {
                             e.preventDefault();
-                            this.props.store.data.matches.forEach(obj =>
+                            store.data.matches.forEach(obj =>
                               this.props.pickObject({
                                 object: obj,
                                 breadcrumb: obj.breadcrumb,
@@ -110,7 +116,7 @@ export class ObjectSearchComponent extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {this.props.store.data.matches.map((data, i) => {
+                    {store.data.matches.map((data, i) => {
                       const isMainObject = !data.mainObjectId || data.isMainObject();
                       const isChildObject = data.mainObjectId && !data.isMainObject();
                       return (
@@ -162,7 +168,7 @@ export class ObjectSearchComponent extends React.Component {
                     </tbody>
                   </Table>
                   <PagingToolbar
-                    numItems={this.props.store.data.totalMatches}
+                    numItems={store.data.totalMatches}
                     currentPage={this.state.currentPage}
                     perPage={this.state.perPage}
                     onClick={(page) => {
@@ -215,7 +221,7 @@ export class ObjectSearchComponent extends React.Component {
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
   pickList$: { type: React.PropTypes.object.isRequired },
-  store$: objectSearchStore$()
+  objectSearchStore$
 };
 
 const commands = {

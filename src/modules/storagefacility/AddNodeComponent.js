@@ -9,7 +9,7 @@ import MusitNode from '../../models/node';
 
 export class AddStorageUnitContainer extends React.Component {
   static propTypes = {
-    store: React.PropTypes.object.isRequired,
+    nodeStore: React.PropTypes.object.isRequired,
     params: PropTypes.object,
     updateState: PropTypes.func.isRequired,
     addNode: PropTypes.func.isRequired,
@@ -31,8 +31,8 @@ export class AddStorageUnitContainer extends React.Component {
     return (
       <StorageUnitContainer
         {...this.props}
-        rootNode={this.props.store.rootNode}
-        unit={this.props.store.unit}
+        rootNode={this.props.nodeStore.rootNode}
+        unit={this.props.nodeStore.unit}
         onLagreClick={(data) => {
           const id = this.props.params.id;
           const museumId = this.props.appSession.getMuseumId();
@@ -48,10 +48,10 @@ export class AddStorageUnitContainer extends React.Component {
             onFailure: (e) => {
               this.props.emitError({...e, type: 'network'});
             }
-          }});
+          }}).toPromise();
         }}
         isAdd
-        loaded={!!this.props.store.unit}
+        loaded={!!this.props.nodeStore.unit}
       />
     );
   }
@@ -60,7 +60,7 @@ export class AddStorageUnitContainer extends React.Component {
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
-  store$: nodeStore$()
+  nodeStore$
 };
 
 const commands = {
@@ -69,12 +69,10 @@ const commands = {
   updateState$
 };
 
-const addNode = (val) => MusitNode.addNode()(val).toPromise();
-
 const props = {
   emitError,
   emitSuccess,
-  addNode
+  addNode: MusitNode.addNode()
 };
 
 export default inject(data, commands, props)(AddStorageUnitContainer);

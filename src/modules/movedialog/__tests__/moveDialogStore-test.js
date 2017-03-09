@@ -1,6 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import store$, { initialState } from '../moveDialogStore';
+import { store$, initialState } from '../moveDialogStore';
 import MuseumId from '../../../models/museumId';
 import MusitNode from '../../../models/node';
 

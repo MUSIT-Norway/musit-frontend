@@ -36,6 +36,7 @@ export const reducer$ = (actions) => Observable.merge(
   actions.loadEvents$.map((data) => (state) => ({...state, data, loading: false})),
 );
 
-const store$ = (actions$ = {clearEvents$, loadEvents$, loadRootNode$}) => createStore('events', reducer$(actions$), Observable.of({ data: [] }));
+export const store$ = (actions$ = {clearEvents$, loadEvents$, loadRootNode$}) =>
+  createStore('events', reducer$(actions$), Observable.of({ data: [] }));
 
-export default store$;
+export default store$();

@@ -2,40 +2,54 @@
 import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import isEmpty from 'lodash/isEmpty';
+import { stringMapper } from './mappers';
+import { noValidation } from './validators';
 
 export type Field<T> = {
   name: string,
-  value?: T | null,
-  origValue?: T | null,
-  validator: Function,
+  rawValue?: ?string,
+  defaultValue?: ?T,
+  value?: ?T,
   status?: {
     valid: boolean,
     error?: any
+  },
+  mapper: {
+    fromRaw: (s: ?string) => ?T,
+    toRaw: (t: ?T) => ?string
+  },
+  validator: {
+    rawValidator?: (field: string) => (s: ?string) => ?string,
+    valueValidator?: (field: string) => (t: ?T) => ?string
   }
 };
 
 export type Update<T> = {
   name: string,
-  value: T | null
+  rawValue: ?string,
+  defaultValue?: ?T
 };
 
-export type Load<T> = {
-  name: string,
-  value: T | null,
-  origValue?: T | null
-};
-
-const updateField = (field: Field<*>, data: Update<*> | Load<*>): Field<*> => {
-  const error = field.validator(data.value);
+const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
+  const defaultValue = data.defaultValue || field.defaultValue;
+  const rawValue = data.rawValue || field.mapper.toRaw(defaultValue);
+  const rawError = field.validator.rawValidator && field.validator.rawValidator(field.name)(rawValue);
+  const value = !rawError ? field.mapper.fromRaw(rawValue) : null;
+  const valueError = value && field.validator.valueValidator && field.validator.valueValidator(field.name)(value);
+  const error = rawError || valueError;
   return {
     ...field,
-    value: data.value,
-    origValue: data.origValue ? data.origValue : field.origValue,
-    status: { valid: isEmpty(error), error: error }
+    rawValue,
+    value,
+    defaultValue,
+    status: {
+      valid: isEmpty(error),
+      error
+    }
   };
 };
 
-const updateForm = (state: Field<*>[], data: Update<*> | Load<*>): Field<*>[] => {
+const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
   const fieldIndex: number = state.findIndex((f: Field<*>) => f.name === data.name);
   if (fieldIndex === -1) {
     return state;
@@ -44,14 +58,14 @@ const updateForm = (state: Field<*>[], data: Update<*> | Load<*>): Field<*>[] =>
   return state.slice(0, fieldIndex).concat([updated]).concat(state.slice(fieldIndex + 1));
 };
 
-const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Load<*>[]>) => Observable.merge(
-  loadForm$.map((load: Load<*>[]) => (state: Field<*>[]) => load.reduce(updateForm, state)),
+const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Update<*>[]>) => Observable.merge(
+  loadForm$.map((load: Update<*>[]) => (state: Field<*>[]) => load.reduce(updateForm, state)),
   updateField$.map((update: Update<*>) => (state: Field<*>[]) => updateForm(state, update))
 );
 
 export type FormDetails = {
   updateForm$: Subject<Update<*>>,
-  loadForm$: Subject<Load<*>[]>,
+  loadForm$: Subject<Update<*>[]>,
   form$: Observable<Field<*>[]>
 };
 
@@ -59,14 +73,19 @@ const createForm$ = (
   name: string,
   fields: Field<*>[],
   updateForm$?: Subject<Update<*>>,
-  loadForm$?: Subject<Load<*>[]>
+  loadForm$?: Subject<Update<*>[]>
 ): FormDetails => {
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
+  const initialFields = fields.reduce((acc, field) => [...acc, {
+    ...field,
+    validator: field.validator || noValidation,
+    mapper: field.mapper || stringMapper
+  }], []);
   return {
     updateForm$,
     loadForm$,
-    form$: createStore(name, reducer$(updateForm$, loadForm$), Observable.of(fields))
+    form$: createStore(name, reducer$(updateForm$, loadForm$), Observable.of(initialFields))
       .map(form => form.reduce((acc, f) => ({...acc, [f.name]: f}), {}))
   };
 };

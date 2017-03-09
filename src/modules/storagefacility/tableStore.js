@@ -19,5 +19,7 @@ export const reducer$ = (actions) => Observable.merge(
   actions.loadObjects$.map((data) => (state) => ({...state, children: { data, loading: false }}))
 );
 
-export default (actions$ = {clearRootNode$, setLoading$, loadStats$, loadRootNode$, loadObjects$, loadNodes$}) =>
+export const store$ = (actions$ = {clearRootNode$, setLoading$, loadStats$, loadRootNode$, loadObjects$, loadNodes$}) =>
   createStore('storageFacility', reducer$(actions$));
+
+export default store$();
