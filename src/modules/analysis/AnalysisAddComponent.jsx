@@ -250,6 +250,7 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
                   type="text"
                   label="Sluttdato"
                   value="15.02.2017"
+                  readOnly
                 />
               </FormGroup>
               <FormGroup>
@@ -263,7 +264,7 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
               </FormGroup>
             </Panel>
           </FormGroup>
-
+e
         </Form>
       </Well>
       <Form horizontal style={{ paddingLeft: 20 }}>
@@ -274,17 +275,18 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
           {LabelFormat('Kommentar til analysen', 1)}
           <Col md={5}>
             <FormControl
-              onChangeInput={updateForm}
+              className="note"
+              onChange={(e) => updateForm({name: form.note.name, rawValue: e.target.value })}
               componentClass="textarea"
               placeholder={form.note.name}
-
+              value={form.note.rawValue || ''}
             />
           </Col>
         </FormGroup>
         <FormGroup>
           {LabelFormat('Avslutt analyse', 1)}
           <Col md={5}>
-            <Radio checked inline>
+            <Radio inline readOnly>
               Ja
             </Radio>
             <Radio inline checked readOnly>
