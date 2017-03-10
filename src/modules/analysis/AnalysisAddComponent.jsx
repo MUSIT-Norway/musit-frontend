@@ -1,4 +1,5 @@
-import React from 'react';
+/* @flow */
+import React, { PropTypes } from 'react';
 import { I18n } from 'react-i18nify';
 import {
   Radio,
@@ -14,6 +15,13 @@ import {
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import {SaveCancel} from '../../components/formfields/index';
+
+
+type Field = { name: string, rawValue: ?string };
+type Update = (update: Field) => void;
+// type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: any };
+type FormData = { note: Field }
+type Props = { form: FormData, updateForm: Update };
 
 function LabelFormat(label, md = 1) {
   return (<Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>);
@@ -49,7 +57,7 @@ function newLine() {
 
 const expanded = true;
 
-const AddAnalysis = () => {
+const AnalysisAdd = ({ form, updateForm } : Props) => {
   return (
     <div>
       <br/>
@@ -242,6 +250,7 @@ const AddAnalysis = () => {
                   type="text"
                   label="Sluttdato"
                   value="15.02.2017"
+                  readOnly
                 />
               </FormGroup>
               <FormGroup>
@@ -255,20 +264,29 @@ const AddAnalysis = () => {
               </FormGroup>
             </Panel>
           </FormGroup>
-
+e
         </Form>
       </Well>
       <Form horizontal style={{ paddingLeft: 20 }}>
-        <FormGroup>
+        <FormGroup
+          controlId={form.note.name}
+          validationState={form.note.status && !form.note.status.valid ? 'error' : null}
+        >
           {LabelFormat('Kommentar til analysen', 1)}
           <Col md={5}>
-            <FormControl componentClass="textarea" placeholder=""/>
+            <FormControl
+              className="note"
+              onChange={(e) => updateForm({name: form.note.name, rawValue: e.target.value })}
+              componentClass="textarea"
+              placeholder={form.note.name}
+              value={form.note.rawValue || ''}
+            />
           </Col>
         </FormGroup>
         <FormGroup>
           {LabelFormat('Avslutt analyse', 1)}
           <Col md={5}>
-            <Radio checked inline>
+            <Radio inline readOnly>
               Ja
             </Radio>
             <Radio inline checked readOnly>
@@ -298,4 +316,21 @@ const AddAnalysis = () => {
     </div>);
 };
 
-export default AddAnalysis;
+const FieldShape = {
+  name: PropTypes.string.isRequired,
+  rawValue: PropTypes.string,
+  status: PropTypes.shape({
+    valid: PropTypes.bool.isRequired,
+    error: PropTypes.any
+  })
+};
+
+AnalysisAdd.propTypes = {
+  form: PropTypes.shape({
+    note: PropTypes.shape(FieldShape).isRequired
+  }).isRequired,
+  updateForm: PropTypes.func.isRequired
+};
+
+
+export default AnalysisAdd;
