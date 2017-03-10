@@ -49,16 +49,34 @@ exports[`AppComponent remders 1`] = `
             Magasin
           </NavItem>
         </LinkContainer>
-        <LinkContainer
-          action="push"
-          onlyActiveOnIndex={false}
-          to="/analysis/add">
-          <NavItem
-            active={false}
-            disabled={false}>
-            Analyse
-          </NavItem>
-        </LinkContainer>
+        <NavDropdown
+          id="analysis-dropdown"
+          title="Analyse">
+          <LinkContainer
+            action="push"
+            onlyActiveOnIndex={false}
+            to="/analysis/add">
+            <MenuItem
+              bsClass="dropdown"
+              disabled={false}
+              divider={false}
+              header={false}>
+              Registrer analyse
+            </MenuItem>
+          </LinkContainer>
+          <LinkContainer
+            action="push"
+            onlyActiveOnIndex={false}
+            to="/analysis/sample/add">
+            <MenuItem
+              bsClass="dropdown"
+              disabled={false}
+              divider={false}
+              header={false}>
+              Registrer prøveuttak
+            </MenuItem>
+          </LinkContainer>
+        </NavDropdown>
         <LinkContainer
           action="push"
           onlyActiveOnIndex={false}

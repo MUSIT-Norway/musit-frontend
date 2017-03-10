@@ -662,7 +662,9 @@
     "musit": {
       "analysis": {
         "analysis": "Analyse",
-        "registeringAnalysis": "Registrere analyse"
+        "sample": "Prøveuttak",
+        "registeringAnalysis": "Registrer analyse",
+        "registeringSample": "Registrer prøveuttak"
       },
       "unknown": "Ukjent",
       "language": "Språk",

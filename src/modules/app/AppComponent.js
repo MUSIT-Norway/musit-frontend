@@ -3,7 +3,7 @@ import 'react-select/dist/react-select.css';
 import React, { Component, PropTypes } from 'react';
 import { IndexLink, hashHistory } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
@@ -130,9 +130,18 @@ export class AppComponent extends Component {
               <LinkContainer to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
-              <LinkContainer to={Config.magasin.urls.client.analysis.addAnalysis(this.props.appSession)}>
-                <NavItem>{ I18n.t('musit.analysis.analysis') }</NavItem>
-              </LinkContainer>
+              <NavDropdown title={I18n.t('musit.analysis.analysis')} id="analysis-dropdown">
+                <LinkContainer to={Config.magasin.urls.client.analysis.addAnalysis(this.props.appSession)}>
+                  <MenuItem>
+                      {I18n.t('musit.analysis.registeringAnalysis')}
+                  </MenuItem>
+                </LinkContainer>
+                <LinkContainer to={Config.magasin.urls.client.analysis.addSample(this.props.appSession)}>
+                  <MenuItem>
+                    {I18n.t('musit.analysis.registeringSample')}
+                  </MenuItem>
+                </LinkContainer>
+              </NavDropdown>
               <LinkContainer to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
