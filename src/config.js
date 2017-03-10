@@ -13,7 +13,9 @@ export default {
       client: {
         analysis: {
           addAnalysis: () =>
-            '/analysis/add'
+            '/analysis/add',
+          addSample: () =>
+            '/analysis/sample/add'
         },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
