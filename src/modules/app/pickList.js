@@ -24,7 +24,7 @@ export const isItemAdded = (item, items = []) => {
 
 const addItem = (item, items = []) => {
   if (items.findIndex(node => item.value.id === node.value.id) > -1) {
-    return items;
+    return items.filter(node => item.value.id !== node.value.id);
   }
   return items.concat({ marked: false, value: item.value, path: item.path});
 };
