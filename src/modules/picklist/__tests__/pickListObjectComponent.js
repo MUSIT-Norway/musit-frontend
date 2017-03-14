@@ -1,7 +1,7 @@
 import {shallow, mount} from 'enzyme';
 import {shallowToJson, mountToJson} from 'enzyme-to-json';
 import React from 'react';
-import {PickListContainer} from '../PickListComponent';
+import {PickListComponent} from '../PickListComponent';
 import {AppSession} from '../../app/appSession';
 import {expect as e} from 'chai';
 import sinon from 'sinon';
@@ -72,7 +72,7 @@ describe('PickListComponent for objects', () => {
     const onRemoveNode = sinon.spy();
 
 
-    const wrapper = mount(<PickListContainer
+    const wrapper = mount(<PickListComponent
       route={{type : 'objects'}}
       pickList={pickList}
       toggleNode={onToggleNode}
@@ -97,7 +97,7 @@ describe('PickListComponent for objects', () => {
 
 
   it('should display component (objects) correctly', () => {
-    const wrapper = shallow(<PickListContainer
+    const wrapper = shallow(<PickListComponent
       route={{type : 'objects'}}
       pickList={pickList}
       toggleNode={(x) => x}
@@ -132,7 +132,7 @@ describe('PickListComponent for objects', () => {
     const onToggleMainObject = sinon.spy();
 
 
-    const wrapper = mount(<PickListContainer
+    const wrapper = mount(<PickListComponent
       route={{type : 'objects'}}
       pickList={pickList}
       toggleNode={onToggleNode}

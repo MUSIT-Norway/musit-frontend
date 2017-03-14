@@ -1,5 +1,5 @@
 exports[`PickListComponent for objects Should mount 1`] = `
-<PickListContainer
+<PickListComponent
   appSession={
     AppSession {
       "state": undefined
@@ -159,759 +159,691 @@ exports[`PickListComponent for objects Should mount 1`] = `
               </h1>
             </div>
           </PageHeader>
-          <PickListComponent
-            iconRendrer={[Function iconRendrer]}
-            isnode={false}
-            labelRendrer={[Function labelRendrer]}
-            marked={
-              Array [
-                Object {
-                  "id": 1,
-                  "isMainObject": [Function isMainObject],
-                  "mainObjectId": 1,
-                  "name": "Test21"
-                },
-                Object {
-                  "id": 2,
-                  "isMainObject": [Function isMainObject],
-                  "mainObjectId": 1,
-                  "name": "Test2"
-                }
-              ]
-            }
-            move={[Function bound ]}
-            picks={
-              Array [
-                Object {
-                  "marked": true,
-                  "path": Array [
-                    1
-                  ],
-                  "value": Object {
-                    "id": 1,
-                    "isMainObject": [Function isMainObject],
-                    "mainObjectId": 1,
-                    "name": "Test21"
-                  }
-                },
-                Object {
-                  "marked": true,
-                  "path": Array [
-                    1,
-                    2
-                  ],
-                  "value": Object {
-                    "id": 2,
-                    "isMainObject": [Function isMainObject],
-                    "mainObjectId": 1,
-                    "name": "Test2"
-                  }
-                },
-                Object {
-                  "marked": false,
-                  "path": Array [
-                    1,
-                    3
-                  ],
-                  "value": Object {
-                    "id": 3,
-                    "isMainObject": [Function isMainObject],
-                    "name": "Test23"
-                  }
-                }
-              ]
-            }
-            print={[Function bound print]}
-            remove={[Function remove]}
-            toggle={[Function toggle]}>
-            <div>
-              <Table
-                bordered={false}
-                bsClass="table"
-                condensed={true}
-                hover={true}
-                responsive={true}
-                striped={true}>
-                <div
-                  className="table-responsive">
-                  <table
-                    className="table table-striped table-condensed table-hover">
-                    <thead>
-                      <tr>
-                        <th
+          <Table
+            bordered={false}
+            bsClass="table"
+            condensed={true}
+            hover={true}
+            responsive={true}
+            striped={true}>
+            <div
+              className="table-responsive">
+              <table
+                className="table table-striped table-condensed table-hover">
+                <thead>
+                  <tr>
+                    <th
+                      style={
+                        Object {
+                          "textAlign": "left",
+                          "width": "2em"
+                        }
+                      }>
+                      <input
+                        checked={false}
+                        className="normalAction"
+                        onChange={[Function onChange]}
+                        title="Velg alle"
+                        type="checkbox" />
+                    </th>
+                    <th
+                      style={
+                        Object {
+                          "textAlign": "left",
+                          "verticalAlign": "bottom"
+                        }
+                      }>
+                      <FontAwesome
+                        className="normalActionNoPadding"
+                        name="truck"
+                        onClick={[Function onClick]}
+                        style={
+                          Object {
+                            "fontSize": "1.5em"
+                          }
+                        }
+                        title="Flytt valgte objekter">
+                        <span
+                          className="fa fa-truck normalActionNoPadding"
+                          onClick={[Function onClick]}
                           style={
                             Object {
-                              "textAlign": "left",
-                              "width": "2em"
+                              "fontSize": "1.5em"
                             }
-                          }>
-                          <input
-                            checked={false}
-                            className="normalAction"
-                            onChange={[Function onChange]}
-                            title="Velg alle"
-                            type="checkbox" />
-                        </th>
-                        <th
+                          }
+                          title="Flytt valgte objekter" />
+                      </FontAwesome>
+                      <span
+                        className="normalActionNoPadding"
+                        style={
+                          Object {
+                            "fontSize": "0.8em"
+                          }
+                        }
+                        title="Valgt objekte(r)">
+                        (2)
+                      </span>
+                      <FontAwesome
+                        className="normalAction"
+                        name="remove"
+                        onClick={[Function onClick]}
+                        style={
+                          Object {
+                            "fontSize": "1.5em"
+                          }
+                        }
+                        title="Fjern valgte objekter fra listen">
+                        <span
+                          className="fa fa-remove normalAction"
+                          onClick={[Function onClick]}
                           style={
                             Object {
-                              "textAlign": "left",
-                              "verticalAlign": "bottom"
+                              "fontSize": "1.5em"
                             }
-                          }>
-                          <FontAwesome
-                            className="normalActionNoPadding"
-                            name="truck"
-                            onClick={[Function onClick]}
-                            style={
-                              Object {
-                                "fontSize": "1.5em"
-                              }
-                            }
-                            title="Flytt valgte objekter">
-                            <span
-                              className="fa fa-truck normalActionNoPadding"
-                              onClick={[Function onClick]}
-                              style={
-                                Object {
-                                  "fontSize": "1.5em"
-                                }
-                              }
-                              title="Flytt valgte objekter" />
-                          </FontAwesome>
+                          }
+                          title="Fjern valgte objekter fra listen" />
+                      </FontAwesome>
+                      <span
+                        className="normalActionNoPadding"
+                        style={
+                          Object {
+                            "fontSize": "0.8em"
+                          }
+                        }
+                        title="Valgt objekte(r)">
+                        (2)
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    className="mainObject">
+                    <td
+                      style={
+                        Object {
+                          "textAlign": "left",
+                          "verticalAlign": "middle",
+                          "width": "3em"
+                        }
+                      }>
+                      <span>
+                        <input
+                          checked="checked"
+                          onChange={[Function onChange]}
+                          type="checkbox" />
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        className="pickListIcon">
+                        <FontAwesome
+                          name="folder">
                           <span
-                            className="normalActionNoPadding"
-                            style={
-                              Object {
-                                "fontSize": "0.8em"
-                              }
-                            }
-                            title="Valgt objekte(r)">
-                            (2)
-                          </span>
-                          <FontAwesome
-                            className="normalAction"
-                            name="remove"
-                            onClick={[Function onClick]}
-                            style={
-                              Object {
-                                "fontSize": "1.5em"
-                              }
-                            }
-                            title="Fjern valgte objekter fra listen">
-                            <span
-                              className="fa fa-remove normalAction"
-                              onClick={[Function onClick]}
-                              style={
-                                Object {
-                                  "fontSize": "1.5em"
-                                }
-                              }
-                              title="Fjern valgte objekter fra listen" />
-                          </FontAwesome>
+                            className="fa fa-folder" />
+                        </FontAwesome>
+                        <div>
                           <span
-                            className="normalActionNoPadding"
                             style={
                               Object {
-                                "fontSize": "0.8em"
+                                "paddingLeft": "1em"
                               }
-                            }
-                            title="Valgt objekte(r)">
-                            (2)
-                          </span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        className="mainObject">
-                        <td
-                          style={
-                            Object {
-                              "textAlign": "left",
-                              "verticalAlign": "middle",
-                              "width": "3em"
-                            }
-                          }>
-                          <span>
-                            <input
-                              checked="checked"
-                              onChange={[Function onChange]}
-                              type="checkbox" />
-                          </span>
-                        </td>
-                        <td>
+                            } />
                           <span
-                            className="pickListIcon">
-                            <FontAwesome
-                              name="folder">
-                              <span
-                                className="fa fa-folder" />
-                            </FontAwesome>
-                            <div>
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                } />
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                } />
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                }>
-                                Test21
-                              </span>
-                              <div
-                                className="labelText">
-                                <Breadcrumb
-                                  allActive={true}
-                                  node={
-                                    Array [
-                                      1
-                                    ]
-                                  }
-                                  onClickCrumb={[Function onClickCrumb]}>
-                                  <div>
-                                    <OverlayTrigger
-                                      defaultOverlayShown={false}
-                                      overlay={
-                                        <function Popover() {
-                                            (0, _classCallCheck3['default'])(this, Popover);
-                                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                          }
-                                          bsClass="popover"
-                                          id="breadcrumb tooltip"
-                                          placement="right">
-                                          Magasin
-                                        </function Popover() {
-                                            (0, _classCallCheck3['default'])(this, Popover);
-                                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                          }>
+                            style={
+                              Object {
+                                "paddingLeft": "1em"
+                              }
+                            } />
+                          <span
+                            style={
+                              Object {
+                                "paddingLeft": "1em"
+                              }
+                            }>
+                            Test21
+                          </span>
+                          <div
+                            className="labelText">
+                            <Breadcrumb
+                              allActive={true}
+                              node={
+                                Array [
+                                  1
+                                ]
+                              }
+                              onClickCrumb={[Function onClickCrumb]}>
+                              <div>
+                                <OverlayTrigger
+                                  defaultOverlayShown={false}
+                                  overlay={
+                                    <function Popover() {
+                                        (0, _classCallCheck3['default'])(this, Popover);
+                                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
                                       }
-                                      placement="top"
-                                      trigger={
-                                        Array [
-                                          "hover",
-                                          "focus"
-                                        ]
+                                      bsClass="popover"
+                                      id="breadcrumb tooltip"
+                                      placement="right">
+                                      Magasin
+                                    </function Popover() {
+                                        (0, _classCallCheck3['default'])(this, Popover);
+                                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
                                       }>
-                                      <span
-                                        aria-describedby="breadcrumb tooltip"
-                                        onBlur={[Function bound handleDelayedHide]}
-                                        onClick={null}
-                                        onFocus={[Function bound handleDelayedShow]}
-                                        onMouseOut={[Function anonymous]}
-                                        onMouseOver={[Function anonymous]}>
-                                        <a
-                                          href="/magasin"
-                                          onClick={[Function anonymous]}>
-                                          <FontAwesome
-                                            name="home"
+                                  }
+                                  placement="top"
+                                  trigger={
+                                    Array [
+                                      "hover",
+                                      "focus"
+                                    ]
+                                  }>
+                                  <span
+                                    aria-describedby="breadcrumb tooltip"
+                                    onBlur={[Function bound handleDelayedHide]}
+                                    onClick={null}
+                                    onFocus={[Function bound handleDelayedShow]}
+                                    onMouseOut={[Function anonymous]}
+                                    onMouseOver={[Function anonymous]}>
+                                    <a
+                                      href="/magasin"
+                                      onClick={[Function anonymous]}>
+                                      <FontAwesome
+                                        name="home"
+                                        style={
+                                          Object {
+                                            "fontSize": "1.5em",
+                                            "padding": "1px"
+                                          }
+                                        }>
+                                        <span
+                                          className="fa fa-home"
+                                          style={
+                                            Object {
+                                              "fontSize": "1.5em",
+                                              "padding": "1px"
+                                            }
+                                          } />
+                                      </FontAwesome>
+                                    </a>
+                                  </span>
+                                </OverlayTrigger>
+                                <span>
+                                  <OverlayTrigger
+                                    defaultOverlayShown={false}
+                                    overlay={
+                                      <function Popover() {
+                                          (0, _classCallCheck3['default'])(this, Popover);
+                                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                        }
+                                        bsClass="popover"
+                                        id="breadcrumb tooltip"
+                                        placement="right" />
+                                    }
+                                    placement="top"
+                                    trigger={
+                                      Array [
+                                        "hover",
+                                        "focus"
+                                      ]
+                                    }>
+                                    <span
+                                      aria-describedby="breadcrumb tooltip"
+                                      onBlur={[Function bound handleDelayedHide]}
+                                      onClick={null}
+                                      onFocus={[Function bound handleDelayedShow]}
+                                      onMouseOut={[Function anonymous]}
+                                      onMouseOver={[Function anonymous]}>
+                                      <span>
+                                        <FontAwesome
+                                          name="folder"
+                                          style={
+                                            Object {
+                                              "padding": "1px"
+                                            }
+                                          }>
+                                          <span
+                                            className="fa fa-folder"
                                             style={
                                               Object {
-                                                "fontSize": "1.5em",
                                                 "padding": "1px"
                                               }
-                                            }>
-                                            <span
-                                              className="fa fa-home"
-                                              style={
-                                                Object {
-                                                  "fontSize": "1.5em",
-                                                  "padding": "1px"
-                                                }
-                                              } />
-                                          </FontAwesome>
-                                        </a>
+                                            } />
+                                        </FontAwesome>
                                       </span>
-                                    </OverlayTrigger>
-                                    <span>
-                                      <OverlayTrigger
-                                        defaultOverlayShown={false}
-                                        overlay={
-                                          <function Popover() {
-                                              (0, _classCallCheck3['default'])(this, Popover);
-                                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                            }
-                                            bsClass="popover"
-                                            id="breadcrumb tooltip"
-                                            placement="right" />
-                                        }
-                                        placement="top"
-                                        trigger={
-                                          Array [
-                                            "hover",
-                                            "focus"
-                                          ]
+                                    </span>
+                                  </OverlayTrigger>
+                                </span>
+                              </div>
+                            </Breadcrumb>
+                          </div>
+                        </div>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="childObject">
+                    <td
+                      style={
+                        Object {
+                          "textAlign": "left",
+                          "verticalAlign": "middle",
+                          "width": "3em"
+                        }
+                      }>
+                      <span>
+                        <input
+                          checked="checked"
+                          disabled={true}
+                          type="checkbox" />
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        className="pickListIcon">
+                        <FontAwesome
+                          name="folder">
+                          <span
+                            className="fa fa-folder" />
+                        </FontAwesome>
+                        <div>
+                          <span
+                            style={
+                              Object {
+                                "paddingLeft": "1em"
+                              }
+                            } />
+                          <span
+                            style={
+                              Object {
+                                "paddingLeft": "1em"
+                              }
+                            } />
+                          <span
+                            style={
+                              Object {
+                                "paddingLeft": "1em"
+                              }
+                            }>
+                            Test2
+                          </span>
+                          <div
+                            className="labelText">
+                            <Breadcrumb
+                              allActive={true}
+                              node={
+                                Array [
+                                  1,
+                                  2
+                                ]
+                              }
+                              onClickCrumb={[Function onClickCrumb]}>
+                              <div>
+                                <OverlayTrigger
+                                  defaultOverlayShown={false}
+                                  overlay={
+                                    <function Popover() {
+                                        (0, _classCallCheck3['default'])(this, Popover);
+                                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                      }
+                                      bsClass="popover"
+                                      id="breadcrumb tooltip"
+                                      placement="right">
+                                      Magasin
+                                    </function Popover() {
+                                        (0, _classCallCheck3['default'])(this, Popover);
+                                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                      }>
+                                  }
+                                  placement="top"
+                                  trigger={
+                                    Array [
+                                      "hover",
+                                      "focus"
+                                    ]
+                                  }>
+                                  <span
+                                    aria-describedby="breadcrumb tooltip"
+                                    onBlur={[Function bound handleDelayedHide]}
+                                    onClick={null}
+                                    onFocus={[Function bound handleDelayedShow]}
+                                    onMouseOut={[Function anonymous]}
+                                    onMouseOver={[Function anonymous]}>
+                                    <a
+                                      href="/magasin"
+                                      onClick={[Function anonymous]}>
+                                      <FontAwesome
+                                        name="home"
+                                        style={
+                                          Object {
+                                            "fontSize": "1.5em",
+                                            "padding": "1px"
+                                          }
                                         }>
                                         <span
-                                          aria-describedby="breadcrumb tooltip"
-                                          onBlur={[Function bound handleDelayedHide]}
-                                          onClick={null}
-                                          onFocus={[Function bound handleDelayedShow]}
-                                          onMouseOut={[Function anonymous]}
-                                          onMouseOver={[Function anonymous]}>
-                                          <span>
-                                            <FontAwesome
-                                              name="folder"
-                                              style={
-                                                Object {
-                                                  "padding": "1px"
-                                                }
-                                              }>
-                                              <span
-                                                className="fa fa-folder"
-                                                style={
-                                                  Object {
-                                                    "padding": "1px"
-                                                  }
-                                                } />
-                                            </FontAwesome>
-                                          </span>
-                                        </span>
-                                      </OverlayTrigger>
-                                    </span>
-                                  </div>
-                                </Breadcrumb>
-                              </div>
-                            </div>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr
-                        className="childObject">
-                        <td
-                          style={
-                            Object {
-                              "textAlign": "left",
-                              "verticalAlign": "middle",
-                              "width": "3em"
-                            }
-                          }>
-                          <span>
-                            <input
-                              checked="checked"
-                              disabled={true}
-                              type="checkbox" />
-                          </span>
-                        </td>
-                        <td>
-                          <span
-                            className="pickListIcon">
-                            <FontAwesome
-                              name="folder">
-                              <span
-                                className="fa fa-folder" />
-                            </FontAwesome>
-                            <div>
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                } />
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                } />
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                }>
-                                Test2
-                              </span>
-                              <div
-                                className="labelText">
-                                <Breadcrumb
-                                  allActive={true}
-                                  node={
-                                    Array [
-                                      1,
-                                      2
-                                    ]
-                                  }
-                                  onClickCrumb={[Function onClickCrumb]}>
-                                  <div>
-                                    <OverlayTrigger
-                                      defaultOverlayShown={false}
-                                      overlay={
-                                        <function Popover() {
-                                            (0, _classCallCheck3['default'])(this, Popover);
-                                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                          }
-                                          bsClass="popover"
-                                          id="breadcrumb tooltip"
-                                          placement="right">
-                                          Magasin
-                                        </function Popover() {
-                                            (0, _classCallCheck3['default'])(this, Popover);
-                                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                          className="fa fa-home"
+                                          style={
+                                            Object {
+                                              "fontSize": "1.5em",
+                                              "padding": "1px"
+                                            }
+                                          } />
+                                      </FontAwesome>
+                                    </a>
+                                  </span>
+                                </OverlayTrigger>
+                                <span>
+                                  <OverlayTrigger
+                                    defaultOverlayShown={false}
+                                    overlay={
+                                      <function Popover() {
+                                          (0, _classCallCheck3['default'])(this, Popover);
+                                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                        }
+                                        bsClass="popover"
+                                        id="breadcrumb tooltip"
+                                        placement="right" />
+                                    }
+                                    placement="top"
+                                    trigger={
+                                      Array [
+                                        "hover",
+                                        "focus"
+                                      ]
+                                    }>
+                                    <span
+                                      aria-describedby="breadcrumb tooltip"
+                                      onBlur={[Function bound handleDelayedHide]}
+                                      onClick={null}
+                                      onFocus={[Function bound handleDelayedShow]}
+                                      onMouseOut={[Function anonymous]}
+                                      onMouseOver={[Function anonymous]}>
+                                      <span>
+                                        <FontAwesome
+                                          name="folder"
+                                          style={
+                                            Object {
+                                              "padding": "1px"
+                                            }
                                           }>
-                                      }
-                                      placement="top"
-                                      trigger={
-                                        Array [
-                                          "hover",
-                                          "focus"
-                                        ]
-                                      }>
-                                      <span
-                                        aria-describedby="breadcrumb tooltip"
-                                        onBlur={[Function bound handleDelayedHide]}
-                                        onClick={null}
-                                        onFocus={[Function bound handleDelayedShow]}
-                                        onMouseOut={[Function anonymous]}
-                                        onMouseOver={[Function anonymous]}>
-                                        <a
-                                          href="/magasin"
-                                          onClick={[Function anonymous]}>
-                                          <FontAwesome
-                                            name="home"
+                                          <span
+                                            className="fa fa-folder"
                                             style={
                                               Object {
-                                                "fontSize": "1.5em",
                                                 "padding": "1px"
                                               }
-                                            }>
-                                            <span
-                                              className="fa fa-home"
-                                              style={
-                                                Object {
-                                                  "fontSize": "1.5em",
-                                                  "padding": "1px"
-                                                }
-                                              } />
-                                          </FontAwesome>
-                                        </a>
+                                            } />
+                                        </FontAwesome>
                                       </span>
-                                    </OverlayTrigger>
-                                    <span>
-                                      <OverlayTrigger
-                                        defaultOverlayShown={false}
-                                        overlay={
-                                          <function Popover() {
-                                              (0, _classCallCheck3['default'])(this, Popover);
-                                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                            }
-                                            bsClass="popover"
-                                            id="breadcrumb tooltip"
-                                            placement="right" />
-                                        }
-                                        placement="top"
-                                        trigger={
-                                          Array [
-                                            "hover",
-                                            "focus"
-                                          ]
-                                        }>
-                                        <span
-                                          aria-describedby="breadcrumb tooltip"
-                                          onBlur={[Function bound handleDelayedHide]}
-                                          onClick={null}
-                                          onFocus={[Function bound handleDelayedShow]}
-                                          onMouseOut={[Function anonymous]}
-                                          onMouseOver={[Function anonymous]}>
-                                          <span>
-                                            <FontAwesome
-                                              name="folder"
-                                              style={
-                                                Object {
-                                                  "padding": "1px"
-                                                }
-                                              }>
-                                              <span
-                                                className="fa fa-folder"
-                                                style={
-                                                  Object {
-                                                    "padding": "1px"
-                                                  }
-                                                } />
-                                            </FontAwesome>
-                                          </span>
-                                        </span>
-                                      </OverlayTrigger>
                                     </span>
-                                    <span>
-                                      <OverlayTrigger
-                                        defaultOverlayShown={false}
-                                        overlay={
-                                          <function Popover() {
-                                              (0, _classCallCheck3['default'])(this, Popover);
-                                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                            }
-                                            bsClass="popover"
-                                            id="breadcrumb tooltip"
-                                            placement="right" />
+                                  </OverlayTrigger>
+                                </span>
+                                <span>
+                                  <OverlayTrigger
+                                    defaultOverlayShown={false}
+                                    overlay={
+                                      <function Popover() {
+                                          (0, _classCallCheck3['default'])(this, Popover);
+                                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
                                         }
-                                        placement="top"
-                                        trigger={
-                                          Array [
-                                            "hover",
-                                            "focus"
-                                          ]
-                                        }>
-                                        <span
-                                          aria-describedby="breadcrumb tooltip"
-                                          onBlur={[Function bound handleDelayedHide]}
-                                          onClick={null}
-                                          onFocus={[Function bound handleDelayedShow]}
-                                          onMouseOut={[Function anonymous]}
-                                          onMouseOver={[Function anonymous]}>
-                                          <span>
-                                            <FontAwesome
-                                              name="folder"
-                                              style={
-                                                Object {
-                                                  "padding": "1px"
-                                                }
-                                              }>
-                                              <span
-                                                className="fa fa-folder"
-                                                style={
-                                                  Object {
-                                                    "padding": "1px"
-                                                  }
-                                                } />
-                                            </FontAwesome>
-                                          </span>
-                                        </span>
-                                      </OverlayTrigger>
-                                    </span>
-                                  </div>
-                                </Breadcrumb>
-                              </div>
-                            </div>
-                          </span>
-                        </td>
-                      </tr>
-                      <tr
-                        className="mainObject">
-                        <td
-                          style={
-                            Object {
-                              "textAlign": "left",
-                              "verticalAlign": "middle",
-                              "width": "3em"
-                            }
-                          }>
-                          <span>
-                            <input
-                              checked=""
-                              onChange={[Function onChange]}
-                              type="checkbox" />
-                          </span>
-                        </td>
-                        <td>
-                          <span
-                            className="pickListIcon">
-                            <FontAwesome
-                              name="folder">
-                              <span
-                                className="fa fa-folder" />
-                            </FontAwesome>
-                            <div>
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                } />
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                } />
-                              <span
-                                style={
-                                  Object {
-                                    "paddingLeft": "1em"
-                                  }
-                                }>
-                                Test23
-                              </span>
-                              <div
-                                className="labelText">
-                                <Breadcrumb
-                                  allActive={true}
-                                  node={
-                                    Array [
-                                      1,
-                                      3
-                                    ]
-                                  }
-                                  onClickCrumb={[Function onClickCrumb]}>
-                                  <div>
-                                    <OverlayTrigger
-                                      defaultOverlayShown={false}
-                                      overlay={
-                                        <function Popover() {
-                                            (0, _classCallCheck3['default'])(this, Popover);
-                                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                          }
-                                          bsClass="popover"
-                                          id="breadcrumb tooltip"
-                                          placement="right">
-                                          Magasin
-                                        </function Popover() {
-                                            (0, _classCallCheck3['default'])(this, Popover);
-                                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                        bsClass="popover"
+                                        id="breadcrumb tooltip"
+                                        placement="right" />
+                                    }
+                                    placement="top"
+                                    trigger={
+                                      Array [
+                                        "hover",
+                                        "focus"
+                                      ]
+                                    }>
+                                    <span
+                                      aria-describedby="breadcrumb tooltip"
+                                      onBlur={[Function bound handleDelayedHide]}
+                                      onClick={null}
+                                      onFocus={[Function bound handleDelayedShow]}
+                                      onMouseOut={[Function anonymous]}
+                                      onMouseOver={[Function anonymous]}>
+                                      <span>
+                                        <FontAwesome
+                                          name="folder"
+                                          style={
+                                            Object {
+                                              "padding": "1px"
+                                            }
                                           }>
-                                      }
-                                      placement="top"
-                                      trigger={
-                                        Array [
-                                          "hover",
-                                          "focus"
-                                        ]
-                                      }>
-                                      <span
-                                        aria-describedby="breadcrumb tooltip"
-                                        onBlur={[Function bound handleDelayedHide]}
-                                        onClick={null}
-                                        onFocus={[Function bound handleDelayedShow]}
-                                        onMouseOut={[Function anonymous]}
-                                        onMouseOver={[Function anonymous]}>
-                                        <a
-                                          href="/magasin"
-                                          onClick={[Function anonymous]}>
-                                          <FontAwesome
-                                            name="home"
+                                          <span
+                                            className="fa fa-folder"
                                             style={
                                               Object {
-                                                "fontSize": "1.5em",
                                                 "padding": "1px"
                                               }
-                                            }>
-                                            <span
-                                              className="fa fa-home"
-                                              style={
-                                                Object {
-                                                  "fontSize": "1.5em",
-                                                  "padding": "1px"
-                                                }
-                                              } />
-                                          </FontAwesome>
-                                        </a>
+                                            } />
+                                        </FontAwesome>
                                       </span>
-                                    </OverlayTrigger>
-                                    <span>
-                                      <OverlayTrigger
-                                        defaultOverlayShown={false}
-                                        overlay={
-                                          <function Popover() {
-                                              (0, _classCallCheck3['default'])(this, Popover);
-                                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                            }
-                                            bsClass="popover"
-                                            id="breadcrumb tooltip"
-                                            placement="right" />
-                                        }
-                                        placement="top"
-                                        trigger={
-                                          Array [
-                                            "hover",
-                                            "focus"
-                                          ]
-                                        }>
-                                        <span
-                                          aria-describedby="breadcrumb tooltip"
-                                          onBlur={[Function bound handleDelayedHide]}
-                                          onClick={null}
-                                          onFocus={[Function bound handleDelayedShow]}
-                                          onMouseOut={[Function anonymous]}
-                                          onMouseOver={[Function anonymous]}>
-                                          <span>
-                                            <FontAwesome
-                                              name="folder"
-                                              style={
-                                                Object {
-                                                  "padding": "1px"
-                                                }
-                                              }>
-                                              <span
-                                                className="fa fa-folder"
-                                                style={
-                                                  Object {
-                                                    "padding": "1px"
-                                                  }
-                                                } />
-                                            </FontAwesome>
-                                          </span>
-                                        </span>
-                                      </OverlayTrigger>
                                     </span>
-                                    <span>
-                                      <OverlayTrigger
-                                        defaultOverlayShown={false}
-                                        overlay={
-                                          <function Popover() {
-                                              (0, _classCallCheck3['default'])(this, Popover);
-                                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                                            }
-                                            bsClass="popover"
-                                            id="breadcrumb tooltip"
-                                            placement="right" />
-                                        }
-                                        placement="top"
-                                        trigger={
-                                          Array [
-                                            "hover",
-                                            "focus"
-                                          ]
-                                        }>
-                                        <span
-                                          aria-describedby="breadcrumb tooltip"
-                                          onBlur={[Function bound handleDelayedHide]}
-                                          onClick={null}
-                                          onFocus={[Function bound handleDelayedShow]}
-                                          onMouseOut={[Function anonymous]}
-                                          onMouseOver={[Function anonymous]}>
-                                          <span>
-                                            <FontAwesome
-                                              name="folder"
-                                              style={
-                                                Object {
-                                                  "padding": "1px"
-                                                }
-                                              }>
-                                              <span
-                                                className="fa fa-folder"
-                                                style={
-                                                  Object {
-                                                    "padding": "1px"
-                                                  }
-                                                } />
-                                            </FontAwesome>
-                                          </span>
-                                        </span>
-                                      </OverlayTrigger>
-                                    </span>
-                                  </div>
-                                </Breadcrumb>
+                                  </OverlayTrigger>
+                                </span>
                               </div>
-                            </div>
+                            </Breadcrumb>
+                          </div>
+                        </div>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="mainObject">
+                    <td
+                      style={
+                        Object {
+                          "textAlign": "left",
+                          "verticalAlign": "middle",
+                          "width": "3em"
+                        }
+                      }>
+                      <span>
+                        <input
+                          checked=""
+                          onChange={[Function onChange]}
+                          type="checkbox" />
+                      </span>
+                    </td>
+                    <td>
+                      <span
+                        className="pickListIcon">
+                        <FontAwesome
+                          name="folder">
+                          <span
+                            className="fa fa-folder" />
+                        </FontAwesome>
+                        <div>
+                          <span
+                            style={
+                              Object {
+                                "paddingLeft": "1em"
+                              }
+                            } />
+                          <span
+                            style={
+                              Object {
+                                "paddingLeft": "1em"
+                              }
+                            } />
+                          <span
+                            style={
+                              Object {
+                                "paddingLeft": "1em"
+                              }
+                            }>
+                            Test23
                           </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </Table>
+                          <div
+                            className="labelText">
+                            <Breadcrumb
+                              allActive={true}
+                              node={
+                                Array [
+                                  1,
+                                  3
+                                ]
+                              }
+                              onClickCrumb={[Function onClickCrumb]}>
+                              <div>
+                                <OverlayTrigger
+                                  defaultOverlayShown={false}
+                                  overlay={
+                                    <function Popover() {
+                                        (0, _classCallCheck3['default'])(this, Popover);
+                                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                      }
+                                      bsClass="popover"
+                                      id="breadcrumb tooltip"
+                                      placement="right">
+                                      Magasin
+                                    </function Popover() {
+                                        (0, _classCallCheck3['default'])(this, Popover);
+                                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                      }>
+                                  }
+                                  placement="top"
+                                  trigger={
+                                    Array [
+                                      "hover",
+                                      "focus"
+                                    ]
+                                  }>
+                                  <span
+                                    aria-describedby="breadcrumb tooltip"
+                                    onBlur={[Function bound handleDelayedHide]}
+                                    onClick={null}
+                                    onFocus={[Function bound handleDelayedShow]}
+                                    onMouseOut={[Function anonymous]}
+                                    onMouseOver={[Function anonymous]}>
+                                    <a
+                                      href="/magasin"
+                                      onClick={[Function anonymous]}>
+                                      <FontAwesome
+                                        name="home"
+                                        style={
+                                          Object {
+                                            "fontSize": "1.5em",
+                                            "padding": "1px"
+                                          }
+                                        }>
+                                        <span
+                                          className="fa fa-home"
+                                          style={
+                                            Object {
+                                              "fontSize": "1.5em",
+                                              "padding": "1px"
+                                            }
+                                          } />
+                                      </FontAwesome>
+                                    </a>
+                                  </span>
+                                </OverlayTrigger>
+                                <span>
+                                  <OverlayTrigger
+                                    defaultOverlayShown={false}
+                                    overlay={
+                                      <function Popover() {
+                                          (0, _classCallCheck3['default'])(this, Popover);
+                                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                        }
+                                        bsClass="popover"
+                                        id="breadcrumb tooltip"
+                                        placement="right" />
+                                    }
+                                    placement="top"
+                                    trigger={
+                                      Array [
+                                        "hover",
+                                        "focus"
+                                      ]
+                                    }>
+                                    <span
+                                      aria-describedby="breadcrumb tooltip"
+                                      onBlur={[Function bound handleDelayedHide]}
+                                      onClick={null}
+                                      onFocus={[Function bound handleDelayedShow]}
+                                      onMouseOut={[Function anonymous]}
+                                      onMouseOver={[Function anonymous]}>
+                                      <span>
+                                        <FontAwesome
+                                          name="folder"
+                                          style={
+                                            Object {
+                                              "padding": "1px"
+                                            }
+                                          }>
+                                          <span
+                                            className="fa fa-folder"
+                                            style={
+                                              Object {
+                                                "padding": "1px"
+                                              }
+                                            } />
+                                        </FontAwesome>
+                                      </span>
+                                    </span>
+                                  </OverlayTrigger>
+                                </span>
+                                <span>
+                                  <OverlayTrigger
+                                    defaultOverlayShown={false}
+                                    overlay={
+                                      <function Popover() {
+                                          (0, _classCallCheck3['default'])(this, Popover);
+                                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
+                                        }
+                                        bsClass="popover"
+                                        id="breadcrumb tooltip"
+                                        placement="right" />
+                                    }
+                                    placement="top"
+                                    trigger={
+                                      Array [
+                                        "hover",
+                                        "focus"
+                                      ]
+                                    }>
+                                    <span
+                                      aria-describedby="breadcrumb tooltip"
+                                      onBlur={[Function bound handleDelayedHide]}
+                                      onClick={null}
+                                      onFocus={[Function bound handleDelayedShow]}
+                                      onMouseOut={[Function anonymous]}
+                                      onMouseOver={[Function anonymous]}>
+                                      <span>
+                                        <FontAwesome
+                                          name="folder"
+                                          style={
+                                            Object {
+                                              "padding": "1px"
+                                            }
+                                          }>
+                                          <span
+                                            className="fa fa-folder"
+                                            style={
+                                              Object {
+                                                "padding": "1px"
+                                              }
+                                            } />
+                                        </FontAwesome>
+                                      </span>
+                                    </span>
+                                  </OverlayTrigger>
+                                </span>
+                              </div>
+                            </Breadcrumb>
+                          </div>
+                        </div>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-          </PickListComponent>
+          </Table>
           <div
             style={
               Object {
@@ -922,7 +854,7 @@ exports[`PickListComponent for objects Should mount 1`] = `
       </Grid>
     </main>
   </div>
-</PickListContainer>
+</PickListComponent>
 `;
 
 exports[`PickListComponent for objects should display component (objects) correctly 1`] = `
@@ -960,71 +892,261 @@ exports[`PickListComponent for objects should display component (objects) correc
           </div>
         </div>
       </PageHeader>
-      <PickListComponent
-        iconRendrer={[Function iconRendrer]}
-        isnode={false}
-        labelRendrer={[Function labelRendrer]}
-        marked={
-          Array [
-            Object {
-              "id": 1,
-              "isMainObject": [Function isMainObject],
-              "mainObjectId": 1,
-              "name": "Test21"
-            },
-            Object {
-              "id": 2,
-              "isMainObject": [Function isMainObject],
-              "mainObjectId": 1,
-              "name": "Test2"
-            }
-          ]
-        }
-        move={[Function bound ]}
-        picks={
-          Array [
-            Object {
-              "marked": true,
-              "path": Array [
-                1
-              ],
-              "value": Object {
-                "id": 1,
-                "isMainObject": [Function isMainObject],
-                "mainObjectId": 1,
-                "name": "Test21"
-              }
-            },
-            Object {
-              "marked": true,
-              "path": Array [
-                1,
-                2
-              ],
-              "value": Object {
-                "id": 2,
-                "isMainObject": [Function isMainObject],
-                "mainObjectId": 1,
-                "name": "Test2"
-              }
-            },
-            Object {
-              "marked": false,
-              "path": Array [
-                1,
-                3
-              ],
-              "value": Object {
-                "id": 3,
-                "isMainObject": [Function isMainObject],
-                "name": "Test23"
-              }
-            }
-          ]
-        }
-        print={[Function bound print]}
-        remove={[Function remove]}
-        toggle={[Function toggle]} />
+      <Table
+        bordered={false}
+        bsClass="table"
+        condensed={true}
+        hover={true}
+        responsive={true}
+        striped={true}>
+        <thead>
+          <tr>
+            <th
+              style={
+                Object {
+                  "textAlign": "left",
+                  "width": "2em"
+                }
+              }>
+              <input
+                checked={false}
+                className="normalAction"
+                onChange={[Function onChange]}
+                title="Velg alle"
+                type="checkbox" />
+            </th>
+            <th
+              style={
+                Object {
+                  "textAlign": "left",
+                  "verticalAlign": "bottom"
+                }
+              }>
+              <FontAwesome
+                className="normalActionNoPadding"
+                name="truck"
+                onClick={[Function onClick]}
+                style={
+                  Object {
+                    "fontSize": "1.5em"
+                  }
+                }
+                title="Flytt valgte objekter" />
+              <span
+                className="normalActionNoPadding"
+                style={
+                  Object {
+                    "fontSize": "0.8em"
+                  }
+                }
+                title="Valgt objekte(r)">
+                (2)
+              </span>
+              <FontAwesome
+                className="normalAction"
+                name="remove"
+                onClick={[Function onClick]}
+                style={
+                  Object {
+                    "fontSize": "1.5em"
+                  }
+                }
+                title="Fjern valgte objekter fra listen" />
+              <span
+                className="normalActionNoPadding"
+                style={
+                  Object {
+                    "fontSize": "0.8em"
+                  }
+                }
+                title="Valgt objekte(r)">
+                (2)
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            className="mainObject">
+            <td
+              style={
+                Object {
+                  "textAlign": "left",
+                  "verticalAlign": "middle",
+                  "width": "3em"
+                }
+              }>
+              <span>
+                <input
+                  checked="checked"
+                  onChange={[Function onChange]}
+                  type="checkbox" />
+              </span>
+            </td>
+            <td>
+              <span
+                className="pickListIcon">
+                <FontAwesome
+                  name="folder" />
+                 
+                <div>
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    } />
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    } />
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    }>
+                    Test21
+                  </span>
+                  <div
+                    className="labelText">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        Array [
+                          1
+                        ]
+                      }
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </div>
+                </div>
+              </span>
+            </td>
+          </tr>
+          <tr
+            className="childObject">
+            <td
+              style={
+                Object {
+                  "textAlign": "left",
+                  "verticalAlign": "middle",
+                  "width": "3em"
+                }
+              }>
+              <span>
+                <input
+                  checked="checked"
+                  disabled={true}
+                  type="checkbox" />
+              </span>
+            </td>
+            <td>
+              <span
+                className="pickListIcon">
+                <FontAwesome
+                  name="folder" />
+                 
+                <div>
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    } />
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    } />
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    }>
+                    Test2
+                  </span>
+                  <div
+                    className="labelText">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        Array [
+                          1,
+                          2
+                        ]
+                      }
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </div>
+                </div>
+              </span>
+            </td>
+          </tr>
+          <tr
+            className="mainObject">
+            <td
+              style={
+                Object {
+                  "textAlign": "left",
+                  "verticalAlign": "middle",
+                  "width": "3em"
+                }
+              }>
+              <span>
+                <input
+                  checked=""
+                  onChange={[Function onChange]}
+                  type="checkbox" />
+              </span>
+            </td>
+            <td>
+              <span
+                className="pickListIcon">
+                <FontAwesome
+                  name="folder" />
+                 
+                <div>
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    } />
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    } />
+                  <span
+                    style={
+                      Object {
+                        "paddingLeft": "1em"
+                      }
+                    }>
+                    Test23
+                  </span>
+                  <div
+                    className="labelText">
+                    <Breadcrumb
+                      allActive={true}
+                      node={
+                        Array [
+                          1,
+                          3
+                        ]
+                      }
+                      onClickCrumb={[Function onClickCrumb]} />
+                  </div>
+                </div>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </Table>
       <div
         style={
           Object {

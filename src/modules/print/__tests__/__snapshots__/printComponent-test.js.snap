@@ -1,36 +1,155 @@
 exports[`PrintTemplateComponent should display correctly 1`] = `
-<div
-  className="templatePrint">
-  <select
-    className="printTool"
-    onChange={[Function bound selectTemplate]}>
-    <option>
-      Velg etikettmal
-    </option>
-    <option
-      value={1}>
-      Label-1 70mm x 37mm
-    </option>
-    <option
-      value={2}>
-      Label-2 105mm x 74mm
-    </option>
-  </select>
-   
-  <input
-    className="printTool"
-    onClick={[Function onClick]}
-    type="button"
-    value="Skriv ut" />
-  <IFrame
-    content="<html>Some html</html>"
-    frameProps={
-      Object {
-        "frameBorder": 0,
-        "height": "95%",
-        "scrolling": "yes",
-        "width": "100%"
+<PrintTemplateComponent
+  appSession={
+    AppSession {
+      "state": Object {
+        "accessToken": "1234"
       }
-    } />
-</div>
+    }
+  }
+  clearAll={[Function proxy]}
+  clearRendered={[Function proxy]}
+  loadTemplates={[Function proxy]}
+  marked={
+    Array [
+      Object {
+        "path": Array [
+          Object {
+            "id": 1,
+            "name": "Utviklingsmuseet",
+            "url": "/magasin/1"
+          },
+          Object {
+            "id": 3,
+            "name": "Utviklingsmuseet Org",
+            "url": "/magasin/3"
+          },
+          Object {
+            "id": 4,
+            "name": "Forskningens hus",
+            "url": "/magasin/4"
+          },
+          Object {
+            "id": 7,
+            "name": "Forskningsværelset",
+            "url": "/magasin/7"
+          },
+          Object {
+            "id": 61,
+            "name": "kkk",
+            "url": "/magasin/61"
+          }
+        ],
+        "value": Object {
+          "name": "Test 1",
+          "nodeId": 1
+        }
+      },
+      Object {
+        "path": Array [
+          Object {
+            "id": 1,
+            "name": "Utviklingsmuseet",
+            "url": "/magasin/1"
+          },
+          Object {
+            "id": 3,
+            "name": "Utviklingsmuseet Org",
+            "url": "/magasin/3"
+          }
+        ],
+        "value": Object {
+          "name": "Test 2",
+          "nodeId": 2
+        }
+      }
+    ]
+  }
+  renderTemplate={[Function proxy]}
+  setLevel={[Function proxy]}
+  setTemplateId={[Function proxy]}
+  store={
+    Object {
+      "rendered": "<html>Some html</html>",
+      "templateId": 4,
+      "templates": Array [
+        Object {
+          "colsPerPage": 3,
+          "id": 1,
+          "labelHeight": 37,
+          "labelWidth": 70,
+          "name": "Label-1 70mm x 37mm",
+          "rowsPerPage": 8
+        },
+        Object {
+          "colsPerPage": 2,
+          "id": 4,
+          "labelHeight": 74,
+          "labelWidth": 105,
+          "name": "Label-2 105mm x 74mm",
+          "rowsPerPage": 4
+        }
+      ]
+    }
+  }
+  templates={Array []}
+  writeToDocument={[Function proxy]}>
+  <div
+    className="templatePrint">
+    <select
+      className="printTool template"
+      onChange={[Function bound selectTemplate]}>
+      <option>
+        Velg etikettmal
+      </option>
+      <option
+        value={1}>
+        Label-1 70mm x 37mm
+      </option>
+      <option
+        value={4}>
+        Label-2 105mm x 74mm
+      </option>
+    </select>
+    <select
+      className="printTool level"
+      defaultValue={undefined}
+      onChange={[Function bound selectLevel]}>
+      <option
+        value={-2}>
+        To nærmeste
+      </option>
+      <option
+        value={2}>
+        Fra bygg
+      </option>
+      <option
+        value={0}>
+        Hele stien
+      </option>
+    </select>
+    <input
+      className="printTool"
+      onClick={[Function onClick]}
+      type="button"
+      value="Skriv ut" />
+    <IFrame
+      content="<html>Some html</html>"
+      frameProps={
+        Object {
+          "frameBorder": 0,
+          "height": "95%",
+          "scrolling": "yes",
+          "width": "100%"
+        }
+      }
+      writeToDocument={[Function proxy]}>
+      <iframe
+        frameBorder={0}
+        height="95%"
+        scrolling="yes"
+        width="100%" />
+    </IFrame>
+  </div>
+</PrintTemplateComponent>
 `;
