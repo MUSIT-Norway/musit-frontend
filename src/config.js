@@ -69,6 +69,10 @@ export default {
           addUrl:
             '/api/analysis/add'
         },
+        samples: {
+          baseUrl: (mid): string =>
+            `api/${mid.getMuseumId()}/samples`
+        },
         storagefacility: {
           searchUrl: (term, mid) =>
             `/api/storagefacility/v1/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
