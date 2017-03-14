@@ -41,26 +41,26 @@ describe('pickList', () => {
       g: { objects: [], nodes: []},
       h: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
       i: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [] }]},
-      j: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [] }]},
-      k: { objects: [], nodes: [{ marked: true, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [] }]},
-      l: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [{id: 1, name: 'Test', url: '/magasin/1'}] }]},
-      o: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
-      p: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
+      j: { objects: [], nodes: [{ marked: false, value: {id: 2}, path: [] }]},
+      k: { objects: [], nodes: [{ marked: false, value: {id: 2}, path: [] }]},
+      l: { objects: [], nodes: [{ marked: false, value: {id: 2}, path: [{id: 1, name: 'Test', url: '/magasin/1'}] }]},
+      o: { objects: [], nodes: []},
+      p: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: []},
       r: {
         objects: [{ marked: false, value: {id: 1}, path: [{id: 3, name: 'test', url: '/magasin/3'}]}],
-        nodes: [{ marked: false, value: {id: 1}, path: [] }]
+        nodes: []
       },
       s: {
         objects: [{ marked: false, value: {id: 1}, path: [{id: 3, name: 'test', url: '/magasin/3'}]},
           { marked: false, value: {id: 2}, path: []}
         ],
-        nodes: [{ marked: false, value: {id: 1}, path: [] }]
+        nodes: []
       },
       u: {
         objects: [{ marked: false, value: {id: 1}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]},
                   { marked: false, value: {id: 2}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]}
         ],
-        nodes: [{ marked: false, value: {id: 1}, path: [] }]
+        nodes: []
       }
     };
 
