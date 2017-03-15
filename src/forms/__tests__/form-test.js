@@ -133,14 +133,12 @@ describe('form stream', () => {
       x: [
         {
           name: 'name',
-          rawValue: 'Kalle',
           defaultValue: 'Kalle'
         }
       ],
       y: [
         {
           name: 'bogus name that does not exist',
-          rawValue: 'Silly value',
           defaultValue: 'Silly value'
         }
       ],
