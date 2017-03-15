@@ -22,6 +22,136 @@ import { I18n } from 'react-i18nify';
 import { PropTypes } from 'react';
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
+import { checkNodeBranchAndType } from '../../shared/nodeValidator';
+
+const nodeCallback = (appSession, toName, toMoveLength, name, items, onSuccess) => {
+  return {
+    onComplete: () => {
+      items.map(item =>
+        refreshNode$.next({
+          id: item.id,
+          museumId: appSession.getMuseumId(),
+          token: appSession.getAccessToken()
+        })
+      );
+      onSuccess();
+      if (toMoveLength === 1) {
+        emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })
+        });
+      } else {
+        emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })
+        });
+      }
+    },
+    onFailure: (error) => {
+      if (toMoveLength === 1) {
+        emitError({
+          type: 'errorOnMove',
+          error,
+          message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })
+        });
+      } else {
+        emitError({
+          type: 'errorOnMove',
+          error,
+          message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })
+        });
+      }
+    }
+  };
+};
+
+const objectCallback = (appSession, toName, toMoveLength, name, items, onSuccess) => {
+  return {
+    onComplete: () => {
+      refreshObjects$.next({
+        objectIds: items.map(item => item.id),
+        museumId: appSession.getMuseumId(),
+        token: appSession.getAccessToken()
+      });
+      onSuccess();
+      if (toMoveLength === 1) {
+        emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.objectMoved', {name, destination: toName})
+        });
+      } else {
+        emitSuccess({
+          type: 'movedSuccess',
+          message: I18n.t('musit.moveModal.messages.objectsMoved', {count: toMoveLength, destination: toName})
+        });
+      }
+    },
+    onFailure: (error) => {
+      if (toMoveLength === 1) {
+        emitError({
+          type: 'errorOnMove',
+          error,
+          message: I18n.t('musit.moveModal.messages.errorObject', {name, destination: toName})
+        });
+      } else {
+        emitError({
+          type: 'errorOnMove',
+          error,
+          message: I18n.t('musit.moveModal.messages.errorObjects', {count: toMoveLength, destination: toName})
+        });
+      }
+    }
+  };
+};
+
+const moveItems = (
+  appSession,
+  items,
+  isNode,
+  moveNode = MusitNode.moveNode(),
+  moveObject = MusitObject.moveObject()
+) => {
+  return (to, toName, onSuccess) => {
+    const moveFunction = isNode ? moveNode : moveObject;
+    const idsToMove = items.map(itemToMove => itemToMove.id);
+
+    const toMoveLength = idsToMove.length;
+    const first = items[0];
+    const name = isNode ? first.name : first.term;
+    let callback;
+    if (isNode) {
+      callback = nodeCallback(appSession, toName, toMoveLength, name, items, onSuccess);
+    } else {
+      callback = objectCallback(appSession, toName, toMoveLength, name, items, onSuccess);
+    }
+
+    let error = false;
+    if (isNode) {
+      const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
+      const errorMessages = itemsWithError.map(fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.value.name})` );
+      if (errorMessages.length > 0) {
+        error = true;
+        for (const errorMessage of errorMessages) {
+          emitError({
+            type: 'errorOnMove',
+            message: errorMessage
+          });
+        }
+      }
+    }
+
+    if (!error) {
+      moveFunction({
+        id: idsToMove,
+        destination: to.id,
+        doneBy: appSession.getActor().getActorId(),
+        museumId: appSession.getMuseumId(),
+        token: appSession.getAccessToken(),
+        callback
+      }).toPromise();
+    }
+  };
+};
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired },
@@ -49,7 +179,8 @@ const customProps = {
   showModal,
   moveNode: MusitNode.moveNode(),
   moveObject: MusitObject.moveObject(),
-  isTypeNode: (props) => 'nodes' === props.route.type
+  isTypeNode: (props) => 'nodes' === props.route.type,
+  moveItems
 };
 
 export const processBarcode = (barCode, props) => {

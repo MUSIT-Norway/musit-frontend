@@ -77,6 +77,7 @@ describe('PickListComponent for nodes', () => {
       emitError={(x) => x}
       emitSuccess={(x) => x}
       classExistsOnDom={(x) => x}
+      moveItems={(x) => x}
       isTypeNode={() => true}
       toggleScanner={() => true}
       scannerEnabled={true}
@@ -112,6 +113,7 @@ describe('PickListComponent for nodes', () => {
       emitSuccess={(x) => x}
       iconRendrer={ (x) => x}
       classExistsOnDom={ (x) => x}
+      moveItems={(x) => x}
       isTypeNode={() => true}
       toggleScanner={onToggleScanner}
       scannerEnabled={true}

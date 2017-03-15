@@ -10,6 +10,7 @@ exports[`PickListComponent for objects Should mount 1`] = `
   emitSuccess={[Function emitSuccess]}
   iconRendrer={[Function iconRendrer]}
   isTypeNode={[Function isTypeNode]}
+  moveItems={[Function moveItems]}
   pickList={
     Object {
       "nodes": Array [

@@ -7,7 +7,6 @@ import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import Config from '../../config';
-import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import PrintTemplate from '../print/PrintTemplateContainer';
 import scannerIcon from '../app/scannerIcon.png';
 
@@ -25,15 +24,18 @@ export class PickListComponent extends React.Component {
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired,
     toggleScanner: PropTypes.func.isRequired,
-    scannerEnabled: PropTypes.bool.isRequired
+    scannerEnabled: PropTypes.bool.isRequired,
+    moveItems: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
     this.print = this.print.bind(this);
-    this.moveModal = this.moveModal.bind(this);
     this.showMoveNodes = this.showMoveNodes.bind(this);
-    this.nodeCallback = this.nodeCallback.bind(this);
+  }
+
+  isNodeView() {
+    return this.props.isTypeNode(this.props);
   }
 
   showMoveNodes(items) {
@@ -47,131 +49,9 @@ export class PickListComponent extends React.Component {
       title,
       <MusitModal
         appSession={this.props.appSession}
-        onMove={this.moveModal(items)}
+        onMove={this.props.moveItems(this.props.appSession, items, this.isNodeView())}
       />
     );
-  }
-
-  nodeCallback(toName, toMoveLength, name, items, onSuccess) {
-    return {
-      onComplete: () => {
-        items.map(item =>
-          this.props.refreshNode({
-            id: item.id,
-            museumId: this.props.appSession.getMuseumId(),
-            token: this.props.appSession.getAccessToken()
-          })
-        );
-        onSuccess();
-        if (toMoveLength === 1) {
-          this.props.emitSuccess({
-            type: 'movedSuccess',
-            message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })
-          });
-        } else {
-          this.props.emitSuccess({
-            type: 'movedSuccess',
-            message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })
-          });
-        }
-      },
-      onFailure: (error) => {
-        if (toMoveLength === 1) {
-          this.props.emitError({
-            type: 'errorOnMove',
-            error,
-            message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })
-          });
-        } else {
-          this.props.emitError({
-            type: 'errorOnMove',
-            error,
-            message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })
-          });
-        }
-      }
-    };
-  }
-
-  objectCallback(toName, toMoveLength, name, items, onSuccess) {
-    return {
-      onComplete: () => {
-        this.props.refreshObjects({
-          objectIds: items.map(item => item.id),
-          museumId: this.props.appSession.getMuseumId(),
-          token: this.props.appSession.getAccessToken()
-        });
-        onSuccess();
-        if (toMoveLength === 1) {
-          this.props.emitSuccess({
-            type: 'movedSuccess',
-            message: I18n.t('musit.moveModal.messages.objectMoved', {name, destination: toName})
-          });
-        } else {
-          this.props.emitSuccess({
-            type: 'movedSuccess',
-            message: I18n.t('musit.moveModal.messages.objectsMoved', {count: toMoveLength, destination: toName})
-          });
-        }
-      },
-      onFailure: (error) => {
-        if (toMoveLength === 1) {
-          this.props.emitError({
-            type: 'errorOnMove',
-            error,
-            message: I18n.t('musit.moveModal.messages.errorObject', {name, destination: toName})
-          });
-        } else {
-          this.props.emitError({
-            type: 'errorOnMove',
-            error,
-            message: I18n.t('musit.moveModal.messages.errorObjects', {count: toMoveLength, destination: toName})
-          });
-        }
-      }
-    };
-  }
-
-  moveModal(items) {
-    return (to, toName, onSuccess) => {
-      const isNode = this.props.isTypeNode(this.props);
-      const moveFunction = isNode ? this.props.moveNode : this.props.moveObject;
-      const toMove = items.map(itemToMove => itemToMove.id);
-      const toMoveLength = toMove.length;
-      const first = items[0];
-      const name = isNode ? first.name : first.term;
-      let callback;
-      if (isNode) {
-        callback = this.nodeCallback(toName, toMoveLength, name, items, onSuccess);
-      } else {
-        callback = this.objectCallback(toName, toMoveLength, name, items, onSuccess);
-      }
-      let error = false;
-      if (isNode) {
-        const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
-        const errorMessages = itemsWithError.map(fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.value.name})` );
-        if (errorMessages.length > 0) {
-          error = true;
-          for (const errorMessage of errorMessages) {
-            this.props.emitError({
-              type: 'errorOnMove',
-              message: errorMessage
-            });
-          }
-        }
-      }
-
-      if (!error) {
-        moveFunction({
-          id: toMove,
-          destination: to.id,
-          doneBy: this.props.appSession.getActor().getActorId(),
-          museumId: this.props.appSession.getMuseumId(),
-          token: this.props.appSession.getAccessToken(),
-          callback
-        }).toPromise();
-      }
-    };
   }
 
   print(nodesToPrint) {
@@ -236,26 +116,28 @@ export class PickListComponent extends React.Component {
     );
   }
 
+  remove(item) {
+    if (this.isNodeView()) {
+      this.props.removeNode(item);
+    } else {
+      this.props.removeObject(item);
+    }
+  }
+
+  toggle(item, on) {
+    if (this.isNodeView()) {
+      this.props.toggleNode({item, on});
+    } else {
+      this.toggleObject({item, on});
+    }
+  }
+
   render() {
     const type = this.props.route.type;
-    const pickList = (this.props.pickList && this.props.pickList[type]) || [];
+    const pickList = this.props.pickList[type] || [];
     const marked = pickList.filter(p => p.marked);
     const markedValues = marked.map(p => p.value);
-    const isNode = this.props.isTypeNode(this.props);
-    const remove = (item) => {
-      if (isNode) {
-        this.props.removeNode(item);
-      } else {
-        this.props.removeObject(item);
-      }
-    };
-    const toggle = (item, on) => {
-      if (isNode) {
-        this.props.toggleNode({item, on});
-      } else {
-        this.toggleObject({item, on});
-      }
-    };
+    const isNode = this.isNodeView();
     return (
       <div>
         <main>
@@ -286,7 +168,7 @@ export class PickListComponent extends React.Component {
                     className="normalAction"
                     type="checkbox"
                     checked={marked.length === pickList.length && pickList.length !== 0}
-                    onChange={(e) => toggle(pickList.map(p => p.value), e.target.checked)}
+                    onChange={(e) => this.toggle(pickList.map(p => p.value), e.target.checked)}
                     title={I18n.t('musit.pickList.tooltip.checkBoxMarkAll')}
                   />
                 </th>
@@ -323,7 +205,7 @@ export class PickListComponent extends React.Component {
                     name="remove"
                     onClick={() => {
                       if (marked.length > 0) {
-                        remove(markedValues);
+                        this.remove(markedValues);
                       }
                     }}
                     title={I18n.t(`musit.pickList.tooltip.${isNode ? 'removeSelectedNodesFromList' : 'removeSelectedObjectsFromList'}`)}
@@ -346,7 +228,7 @@ export class PickListComponent extends React.Component {
                           <input
                             type="checkbox"
                             checked={isItemMarked ? 'checked' : ''}
-                            onChange={() => toggle(item)}
+                            onChange={() => this.toggle(item)}
                           />
                           :
                           <input
