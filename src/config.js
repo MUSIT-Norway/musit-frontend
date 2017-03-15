@@ -71,7 +71,7 @@ export default {
         },
         samples: {
           baseUrl: (mid): string =>
-            `api/${mid.getMuseumId()}/samples`
+            `api/${mid.getPath()}/samples`
         },
         storagefacility: {
           searchUrl: (term, mid) =>

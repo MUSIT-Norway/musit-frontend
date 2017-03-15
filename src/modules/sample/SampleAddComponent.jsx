@@ -31,9 +31,9 @@ const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
   </FormGroup>
 );
 
-type FieldDropDownProps = {field: Field, title: string,  onSelectInput: Update, selectItems: Array<string>, inputProps?: any};
+type FieldDropDownProps = {field: Field, title: any, onSelectInput: Update, selectItems: Array<string>, inputProps?: any};
 
-const FieldDropDown =  ({field, onSelectInput, selectItems, inputProps, title} : FieldDropDownProps) => (
+const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : FieldDropDownProps) => (
   <FormGroup
     controlId={field.name}
     validationState={field.status && !field.status.valid ? 'error' : null}
@@ -41,11 +41,17 @@ const FieldDropDown =  ({field, onSelectInput, selectItems, inputProps, title} :
     <DropdownButton
       {...inputProps}
       bsStyle="default"
-      title={title}
-      id="type"
-      onChange={ (e) => onSelectInput({name: field.name, rawValue: e.target.value }) }
+      title={field.value ? field.value : title}
+      id={field.name}
     >
-      { selectItems.map((v,i) => <MenuItem key={i}>{v}</MenuItem>) }
+      { selectItems.map((v, i) =>
+        <MenuItem
+          key={i}
+          onClick={ (e) => {
+            onSelectInput({name: field.name, rawValue: e.target.text });
+          }
+          }>{v}
+        </MenuItem>) }
     </DropdownButton>
   </FormGroup>
 );
@@ -53,11 +59,18 @@ const FieldDropDown =  ({field, onSelectInput, selectItems, inputProps, title} :
 type FormData = {
   note: Field, sampleSize: Field, status: Field,
   container: Field, storageMedium: Field, sampleType: Field,
-  sampleSubType: Field, sizeUnit: Field
+  sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
+  term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field,
+  updateDate: Field, sampleId: Field
 }
-type Props = {form: FormData, updateForm: Update};
+type Props = {form: FormData, updateForm: Update, addSample: any, appSession: any};
 
-const SampleAddComponent = ({form, updateForm} : Props) => {
+const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) => {
+  const token = appSession.getAccessToken();
+  const museumId = appSession.getMuseumId();
+  const data={};
+
+  console.log('Form', form);
   return (
     <Form style={{ padding: 20 }}>
       <PageHeader>
@@ -70,13 +83,13 @@ const SampleAddComponent = ({form, updateForm} : Props) => {
       </Row>
       <Row className='row-centered'>
         <Col md={1}>
-          Musno: <b>1234</b>
+          Musno: <b>{ form.museumId.value || '1234' }</b>
         </Col>
         <Col md={1}>
-          Unr: <b>123344</b>
+          Unr: <b>{ form.subNo.value || '4566b' }</b>
         </Col>
         <Col md={2}>
-          Term/artsnavn: <b>Carex saxatilis</b>
+          Term/artsnavn: <b>{ form.term_species.value || 'Carex saxatilis'}</b>
         </Col>
         <Col md={1}>
           <Button>Vis Objektet</Button>
@@ -94,10 +107,10 @@ const SampleAddComponent = ({form, updateForm} : Props) => {
           <ControlLabel>Registrert:</ControlLabel>
         </Col>
         <Col md={1}>
-          <FontAwesome name='user'/> Per Hansen
+          <FontAwesome name='user'/> {form.registeredBy.value||'Line A. Sjo' }
         </Col>
         <Col md={1}>
-          <FontAwesome name='clock-o'/> 11.03.2017
+          <FontAwesome name='clock-o'/> {form.registeredDate.value||'11.03.2017' }
         </Col>
       </Row>
       <Row>
@@ -105,10 +118,10 @@ const SampleAddComponent = ({form, updateForm} : Props) => {
           <ControlLabel>Sist endret:</ControlLabel>
         </Col>
         <Col md={1}>
-          <FontAwesome name='user'/> Line Hansen
+          <FontAwesome name='user'/> {form.updateBy.value||'Stein Olsen' }
         </Col>
         <Col md={1}>
-          <FontAwesome name='clock-o'/> 11.03.2017
+          <FontAwesome name='clock-o'/> {form.updateDate.value||'11.03.2017' }
         </Col>
         <Col md={2}>
           <a href=''>Se endringshistorikk</a>
@@ -188,20 +201,20 @@ const SampleAddComponent = ({form, updateForm} : Props) => {
         </Col>
         <Col md={1}>
           <FieldDropDown
-             field={form.container}
-             title={'Velg kontainer'}
-             onSelectInput={updateForm}
-             selectItems={['Kapsel', 'Reagensrør', 'Glassplate']}
-             inputProps={{className: 'storageContainer'}}
+            field={form.container}
+            title={form.container.value||'Velg kontainer'}
+            onSelectInput={updateForm}
+            selectItems={['Kapsel', 'Reagensrør', 'Glassplate']}
+            inputProps={{className: 'storageContainer'}}
           />
         </Col>
         <Col md={1}>
           <FieldDropDown
-             field={form.storageMedium}
-             title={'Velg langringsmedium'}
-             onSelectInput={updateForm}
-             selectItems={['Etanol', 'Aceton', 'Vann']}
-             inputProps={{className: 'storageMedium'}}
+            field={form.storageMedium}
+            title={'Velg langringsmedium'}
+            onSelectInput={updateForm}
+            selectItems={['Etanol', 'Aceton', 'Vann']}
+            inputProps={{className: 'storageMedium'}}
           />
         </Col>
       </Row>
@@ -222,6 +235,13 @@ const SampleAddComponent = ({form, updateForm} : Props) => {
           />
         </Col>
       </Row>
+      <Row className='row-centered'>
+        <Col>
+          <Button onClick={() => addSample({museumId, token, data})}>
+            Add
+          </Button>
+        </Col>
+      </Row>
     </Form>
   );
 };
@@ -229,6 +249,7 @@ const SampleAddComponent = ({form, updateForm} : Props) => {
 const FieldShape = {
   name: PropTypes.string.isRequired,
   rawValue: PropTypes.string,
+  value: PropTypes.string,
   status: PropTypes.shape({
     valid: PropTypes.bool.isRequired,
     error: PropTypes.any
@@ -238,6 +259,13 @@ const FieldShape = {
 SampleAddComponent.propTypes = {
   form: PropTypes.shape({
     note: PropTypes.shape(FieldShape).isRequired,
+    museumId:PropTypes.shape(FieldShape).isRequired,
+    subNo: PropTypes.shape(FieldShape).isRequired,
+    term_species: PropTypes.shape(FieldShape).isRequired,
+    registeredBy: PropTypes.shape(FieldShape).isRequired,
+    registeredDate: PropTypes.shape(FieldShape).isRequired,
+    updateBy: PropTypes.shape(FieldShape).isRequired,
+    updateDate: PropTypes.shape(FieldShape).isRequired,
     sampleType: PropTypes.shape(FieldShape).isRequired,
     sampleSubType: PropTypes.shape(FieldShape).isRequired,
     sampleSize: PropTypes.shape(FieldShape).isRequired,
@@ -246,7 +274,8 @@ SampleAddComponent.propTypes = {
     container: PropTypes.shape(FieldShape).isRequired,
     storageMedium: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
-  updateForm: PropTypes.func.isRequired
+  updateForm: PropTypes.func.isRequired,
+  appSession: PropTypes.object.isRequired
 };
 
 export default SampleAddComponent;

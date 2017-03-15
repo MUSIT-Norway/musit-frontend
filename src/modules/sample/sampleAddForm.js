@@ -13,6 +13,79 @@ import {
   numberMapper
 } from '../../forms/mappers';
 
+const museumId: Field<string> = {
+  name: 'museumId',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const subNo: Field<string> = {
+  name: 'subNo',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const term_species: Field<string> = {
+  name: 'term_species',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const responsible: Field<string> = {
+  name: 'responsible',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const sampleId: Field<string> = {
+  name: 'sampleId',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const registeredBy: Field<string> = {
+  name: 'registeredBy',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const registeredDate: Field<string> = {
+  name: 'registeredDate',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const updateBy: Field<string> = {
+  name: 'updateBy',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const updateDate: Field<string> = {
+  name: 'updateDate',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+
 const container: Field<string> = {
   name: 'container',
   mapper: stringMapper,
@@ -79,4 +152,6 @@ const status: Field<string> = {
 };
 
 
-export default createForm('sampleFormAdd.js', [note, status, sampleSize, sizeUnit, container, storageMedium, sampleSubType, sampleType]);
+export default createForm('sampleFormAdd.js', [note, status, sampleSize, sizeUnit, container,
+  storageMedium, sampleSubType, sampleType, museumId, subNo, term_species, sampleId, registeredBy,
+registeredDate, responsible, updateBy, updateDate]);
