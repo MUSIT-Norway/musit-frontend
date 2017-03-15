@@ -79,6 +79,7 @@ const createForm$ = (
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
   const initialFields = fields.reduce((acc, field) => [...acc, {
     ...field,
+    rawValue: field.mapper.toRaw(field.defaultValue),
     validator: field.validator || noValidation,
     mapper: field.mapper || stringMapper
   }], []);
