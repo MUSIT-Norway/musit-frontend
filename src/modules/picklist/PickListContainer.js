@@ -24,11 +24,19 @@ import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 
-const nodeCallback = (appSession, toName, toMoveLength, name, items, onSuccess) => {
+export const nodeCallback = (
+  appSession,
+  toName,
+  toMoveLength,
+  name,
+  items,
+  onSuccess,
+  refreshNode = refreshNode$.next.bind(refreshNode$)
+) => {
   return {
     onComplete: () => {
       items.map(item =>
-        refreshNode$.next({
+        refreshNode({
           id: item.id,
           museumId: appSession.getMuseumId(),
           token: appSession.getAccessToken()
@@ -65,10 +73,18 @@ const nodeCallback = (appSession, toName, toMoveLength, name, items, onSuccess) 
   };
 };
 
-const objectCallback = (appSession, toName, toMoveLength, name, items, onSuccess) => {
+export const objectCallback = (
+  appSession,
+  toName,
+  toMoveLength,
+  name,
+  items,
+  onSuccess,
+  refreshObjects = refreshObjects$.next.bind(refreshObjects$)
+) => {
   return {
     onComplete: () => {
-      refreshObjects$.next({
+      refreshObjects({
         objectIds: items.map(item => item.id),
         museumId: appSession.getMuseumId(),
         token: appSession.getAccessToken()
@@ -104,14 +120,14 @@ const objectCallback = (appSession, toName, toMoveLength, name, items, onSuccess
   };
 };
 
-const moveItems = (
+export const moveItems = (
   appSession,
   items,
   isNode,
   moveNode = MusitNode.moveNode(),
   moveObject = MusitObject.moveObject()
 ) => {
-  return (to, toName, onSuccess) => {
+  return (to, toName, onSuccess): void => {
     const moveFunction = isNode ? moveNode : moveObject;
     const idsToMove = items.map(itemToMove => itemToMove.id);
 
