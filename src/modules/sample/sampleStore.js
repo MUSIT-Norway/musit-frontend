@@ -9,13 +9,13 @@ const initialState = {
   loaded: false
 };
 
-export const clearSample$ = createAction('clearSample$');
+export const clearForm$ = createAction('clearForm$');
 
 export const reducer$ = (actions) => Observable.merge(
-  actions.clearSample$.map(() => () => initialState)
+  actions.clearForm$.map(() => () => initialState)
 );
 
-export const store$ = (actions$ = {clearSample$}) =>
+export const store$ = (actions$ = { clearForm$ }) =>
   createStore('sample', reducer$(actions$), Observable.of(initialState));
 
 export default store$();

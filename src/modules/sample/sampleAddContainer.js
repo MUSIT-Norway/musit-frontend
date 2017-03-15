@@ -3,7 +3,7 @@ import sampleForm from './sampleAddForm';
 import SampleFormAddComponent from './SampleAddComponent';
 import Sample from '../../models/sample';
 import {emitError, emitSuccess} from '../../shared/errors';
-import  sampleStore$, { clearSample$} from './sampleStore';
+import  sampleStore$, { clearForm$ } from './sampleStore';
 
 const {form$, updateForm$} = sampleForm;
 const data = {form$, sampleStore$};
@@ -13,5 +13,5 @@ const props = {
   emitError
 };
 
-const commands = {updateForm$, clearSample$};
+const commands = {updateForm$, clearForm$};
 export default inject(data, commands, props)(SampleFormAddComponent);

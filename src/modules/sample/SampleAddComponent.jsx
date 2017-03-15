@@ -1,5 +1,5 @@
 /* @flow */
-import React, { PropTypes } from 'react';
+import React, {PropTypes} from 'react';
 import {
   PageHeader,
   Form,
@@ -14,11 +14,11 @@ import {
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 
-type Field = { name: string, rawValue: ?string };
+type Field = {name: string, rawValue: ?string};
 type Update = (update: Field) => void;
 
-type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: any };
-const FieldInput = ({ field, onChangeInput, inputProps } : FieldInputProps) => (
+type FieldInputProps = {field: Field, onChangeInput: Update, inputProps?: any};
+const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
   <FormGroup
     controlId={field.name}
     validationState={field.status && !field.status.valid ? 'error' : null}
@@ -31,10 +31,33 @@ const FieldInput = ({ field, onChangeInput, inputProps } : FieldInputProps) => (
   </FormGroup>
 );
 
-type FormData = { note: Field,  weight: Field, phone: Field }
-type Props = { form: FormData, updateForm: Update };
+type FieldDropDownProps = {field: Field, title: string,  onSelectInput: Update, selectItems: Array<string>, inputProps?: any};
 
-const SampleAddComponent = ({ form, updateForm } : Props) => {
+const FieldDropDown =  ({field, onSelectInput, selectItems, inputProps, title} : FieldDropDownProps) => (
+  <FormGroup
+    controlId={field.name}
+    validationState={field.status && !field.status.valid ? 'error' : null}
+  >
+    <DropdownButton
+      {...inputProps}
+      bsStyle="default"
+      title={title}
+      id="type"
+      onChange={ (e) => onSelectInput({name: field.name, rawValue: e.target.value }) }
+    >
+      { selectItems.map((v,i) => <MenuItem key={i}>{v}</MenuItem>) }
+    </DropdownButton>
+  </FormGroup>
+);
+
+type FormData = {
+  note: Field, sampleSize: Field, status: Field,
+  container: Field, storageMedium: Field, sampleType: Field,
+  sampleSubType: Field, sizeUnit: Field
+}
+type Props = {form: FormData, updateForm: Update};
+
+const SampleAddComponent = ({form, updateForm} : Props) => {
   return (
     <Form style={{ padding: 20 }}>
       <PageHeader>
@@ -98,27 +121,24 @@ const SampleAddComponent = ({ form, updateForm } : Props) => {
           <b>Prøvetype</b>
         </Col>
         <Col md={1}>
-          <DropdownButton
-            bsStyle="default"
-            title="Velg type"
-            id="type"
-          >
-            <MenuItem eventKey="1">Vev</MenuItem>
-            <MenuItem eventKey="2">Blad</MenuItem>
-          </DropdownButton>
+          <FieldDropDown
+            field={form.sampleType}
+            title={'Velg type'}
+            onSelectInput={updateForm}
+            selectItems={['Vev', 'DNA-ekstrakt', 'Bein']}
+          />
         </Col>
         <Col md={1}>
           <b>Prøveundertype</b>
         </Col>
         <Col md={1}>
-          <DropdownButton
-            bsStyle="default"
-            title="Velg type"
-            id="subtype"
-          >
-            <MenuItem eventKey="1">Tallus</MenuItem>
-            <MenuItem eventKey="2">Klorofyll</MenuItem>
-          </DropdownButton>
+          <FieldDropDown
+            field={form.sampleSubType}
+            title={'Velg type'}
+            onSelectInput={updateForm}
+            selectItems={['Tallus', 'Klorofyll']}
+            inputProps={{className: 'sampleSubType'}}
+          />
         </Col>
       </Row>
       <br/>
@@ -127,14 +147,14 @@ const SampleAddComponent = ({ form, updateForm } : Props) => {
           <b>Status</b>
         </Col>
         <Col md={1}>
-          <DropdownButton
-            bsStyle="default"
-            title="Velg type"
-            id="status"
-          >
-            <MenuItem eventKey="1">Skilt</MenuItem>
-            <MenuItem eventKey="2">Gift</MenuItem>
-          </DropdownButton>
+          <FieldDropDown
+            field={form.status}
+            title={'Velg type'}
+            onSelectInput={updateForm}
+            selectItems={['Skilt', 'Ugift', 'Separert']}
+            inputProps={{className: 'status'}}
+          />
+
         </Col>
       </Row>
       <br/>
@@ -144,22 +164,21 @@ const SampleAddComponent = ({ form, updateForm } : Props) => {
         </Col>
         <Col md={1}>
           <FieldInput
-            field={form.weight}
+            field={form.sampleSize}
             onChangeInput={updateForm}
             inputProps={{
-              className: 'weight'
+              className: 'sampleSize'
             }}
           />
         </Col>
         <Col md={1}>
-          <DropdownButton
-            bsStyle="default"
-            title="Velg måleenhet"
-            id="måleenhet"
-          >
-            <MenuItem eventKey="1">Gr</MenuItem>
-            <MenuItem eventKey="2">Liter</MenuItem>
-          </DropdownButton>
+          <FieldDropDown
+            field={form.sizeUnit}
+            title={'Velg måleenhet'}
+            onSelectInput={updateForm}
+            selectItems={['gr', 'mm', 'µ']}
+            inputProps={{className: 'sizeUnit'}}
+          />
         </Col>
       </Row>
       <br/>
@@ -168,25 +187,22 @@ const SampleAddComponent = ({ form, updateForm } : Props) => {
           <ControlLabel>Lagringskontainer</ControlLabel>
         </Col>
         <Col md={1}>
-          <DropdownButton
-            bsStyle="default"
-            title="Velg kontainer"
-            id="kontainer"
-          >
-            <MenuItem eventKey="1">Kapsel</MenuItem>
-            <MenuItem eventKey="2">Reagensrør</MenuItem>
-            <MenuItem eventKey="2">Glassplate</MenuItem>
-          </DropdownButton>
+          <FieldDropDown
+             field={form.container}
+             title={'Velg kontainer'}
+             onSelectInput={updateForm}
+             selectItems={['Kapsel', 'Reagensrør', 'Glassplate']}
+             inputProps={{className: 'storageContainer'}}
+          />
         </Col>
         <Col md={1}>
-          <DropdownButton
-            bsStyle="default"
-            title="Velg lagringsmedium"
-            id="lagringsmedium"
-          >
-            <MenuItem eventKey="1">Etanol</MenuItem>
-            <MenuItem eventKey="2">Aceton</MenuItem>
-          </DropdownButton>
+          <FieldDropDown
+             field={form.storageMedium}
+             title={'Velg langringsmedium'}
+             onSelectInput={updateForm}
+             selectItems={['Etanol', 'Aceton', 'Vann']}
+             inputProps={{className: 'storageMedium'}}
+          />
         </Col>
       </Row>
       <br/>
@@ -202,21 +218,6 @@ const SampleAddComponent = ({ form, updateForm } : Props) => {
               className: 'note',
               componentClass: 'textarea',
               placeholder: form.note.name
-            }}
-          />
-        </Col>
-      </Row>
-      <br />
-      <Row className='row-centered'>
-        <Col md={1}>
-          <ControlLabel>Test</ControlLabel>
-        </Col>
-        <Col md={1}>
-          <FieldInput
-            field={form.phone}
-            onChangeInput={updateForm}
-            inputProps={{
-              className: 'phone'
             }}
           />
         </Col>
@@ -237,8 +238,13 @@ const FieldShape = {
 SampleAddComponent.propTypes = {
   form: PropTypes.shape({
     note: PropTypes.shape(FieldShape).isRequired,
-    weight: PropTypes.shape(FieldShape).isRequired,
-    phone: PropTypes.shape(FieldShape).isRequired
+    sampleType: PropTypes.shape(FieldShape).isRequired,
+    sampleSubType: PropTypes.shape(FieldShape).isRequired,
+    sampleSize: PropTypes.shape(FieldShape).isRequired,
+    sizeUnit: PropTypes.shape(FieldShape).isRequired,
+    status: PropTypes.shape(FieldShape).isRequired,
+    container: PropTypes.shape(FieldShape).isRequired,
+    storageMedium: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
   updateForm: PropTypes.func.isRequired
 };
