@@ -45,6 +45,7 @@ describe('form stream', () => {
       a: {
         name: {
           name: 'name',
+          rawValue: null,
           validator: validator,
           mapper: stringMapper
         }
