@@ -1,5 +1,5 @@
 import React from 'react';
-import {Form, PageHeader, FormControl, FormGroup, Col, Row, Button} from 'react-bootstrap';
+import {Form, PageHeader, FormControl, FormGroup, Col, Row, Button, ControlLabel} from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 
 
