@@ -1,4 +1,4 @@
-import { stringMapper, numberMapper, specialPhoneMapper } from '../mappers';
+import { stringMapper, numberMapper, specialPhoneMapper, booleanMapper } from '../mappers';
 
 describe('mappers', () => {
   describe('stringMapper', () => {
@@ -31,6 +31,15 @@ describe('mappers', () => {
     });
     it('fromRaw should map string to phone', () => {
       expect(specialPhoneMapper.fromRaw('22-45')).toEqual({ ext: 22, num: 45 });
+    });
+  });
+
+  describe('booleanMapper', () => {
+    it('toRaw should map true to true', () => {
+      expect(booleanMapper.toRaw(true)).toEqual(true);
+    });
+    it('fromRaw should map true to true', () => {
+      expect(booleanMapper.fromRaw(true)).toEqual(true);
     });
   });
 });

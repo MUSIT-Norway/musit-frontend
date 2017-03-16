@@ -20,7 +20,30 @@ import {SaveCancel} from '../../components/formfields/index';
 type Field = { name: string, rawValue: ?string };
 type Update = (update: Field) => void;
 // type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: any };
-type FormData = { note: Field }
+type FormData = {
+  id: Field,
+  registeredBy: Field,
+  registeredDate: Field,
+  doneBy: Field,
+  doneDate: Field,
+  eventDate: Field,
+  objectId: Field,
+  partOf: Field,
+  result: Field,
+  caseNumber: Field,
+  actor: Field,
+  role: Field,
+  place: Field,
+  analysisTypeId: Field,
+  externalSource: Field,
+  comments: Field,
+  restrictions: Field,
+  restrictionsFor: Field,
+  reasonForRestrictions: Field,
+  restrictionsEndDate: Field,
+  repealedBy: Field,
+  note: Field,
+  completeAnalysis: Field}
 type Props = { form: FormData, updateForm: Update };
 
 function LabelFormat(label, md = 1) {
@@ -64,19 +87,19 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
       <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
       <Form>
         <FormGroup>
-          {LabelFormat('HID:', 1)}
-          <Col style={{ padding: '7px' }}>123</Col>
+          {LabelFormat('HID:')}
+          <Col style={{ padding: '7px' }}>{form.id.rawValue || ''}</Col>
           {LabelFormat('Registrert:', 1)}
           <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}
-            Per Hansen
+            {form.registeredBy.rawValue || ''}
           </Col>
           <Col md={10} style={{ padding: '7px' }}>
             <FontAwesome name='clock-o'/>{' '}
-            15.12.2017
+            {form.registeredDate.rawValue || ''}
           </Col>
           {LabelFormat('Sist endret:', 1)}
-          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}Per Hansen</Col>
-          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='clock-o'/>{' '}15.12.2017</Col>
+          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}{form.doneBy.rawValue || ''}</Col>
+          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='clock-o'/>{' '}{form.doneDate.rawValue || ''}</Col>
           <Col md={9} style={{ padding: '7px' }}><a href=''>Se endringshistorikk</a></Col>
         </FormGroup>
       </Form>
@@ -87,6 +110,8 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
             id="formControlsText"
             type="text"
             label="saksnummber"
+            value={form.caseNumber.rawValue || ''}
+            onChange={(e) => updateForm({name: form.caseNumber.name, rawValue: e.target.value })}
           />
         </FormGroup>
         <FormGroup>
@@ -148,6 +173,8 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
             type="text"
             label="Navn"
             placeholder="Fornavn Etternavn"
+            value={form.actor.rawValue || ''}
+            onChange={(e) => updateForm({name: form.actor.name, rawValue: e.target.value })}
           />
           {LabelFormat('Rolle', 1)}
           <Col md={1}>
@@ -192,6 +219,8 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
               type="text"
               label="Ekstern kilde"
               placeholder="http://www.lenke.no"
+              value={form.externalSource.rawValue || ''}
+              onChange={(e) => updateForm({name: form.externalSource.name, rawValue: e.target.value })}
             />
             <Col md={2}>
               <Button>Lagre</Button>
@@ -210,7 +239,12 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
           <FormGroup>
             {LabelFormat('Kommentar / resultat', 1)}
             <Col md={5}>
-              <FormControl componentClass="textarea" placeholder=""/>
+              <FormControl
+                componentClass="textarea"
+                placeholder=""
+                value={form.comments.rawValue || ''}
+                onChange={(e) => updateForm({name: form.comments.name, rawValue: e.target.value })}
+              />
             </Col>
           </FormGroup>
           <FormGroup>
@@ -233,6 +267,8 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
                   type="text"
                   label="Klausulert for"
                   placeholder="Fornavn Etternavn"
+                  value={form.restrictionsFor.rawValue || ''}
+                  onChange={(e) => updateForm({name: form.restrictionsFor.name, rawValue: e.target.value })}
                 />
               </FormGroup>
               <FormGroup>
@@ -241,6 +277,8 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
                   md={1}
                   type="text"
                   label="Årsak til klausulering"
+                  value={form.reasonForRestrictions.rawValue || ''}
+                  onChange={(e) => updateForm({name: form.reasonForRestrictions.name, rawValue: e.target.value })}
                 />
               </FormGroup>
               <FormGroup>
@@ -249,7 +287,7 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
                   md={1}
                   type="text"
                   label="Sluttdato"
-                  value="15.02.2017"
+                  value={form.restrictionsEndDate.rawValue || ''}
                   readOnly
                 />
               </FormGroup>
@@ -260,11 +298,12 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
                   type="text"
                   label="Opphevet av"
                   placeholder="Fornavn Etternavn"
+                  value={form.repealedBy.rawValue || ''}
+                  onChange={(e) => updateForm({name: form.repealedBy.name, rawValue: e.target.value })}
                 />
               </FormGroup>
             </Panel>
           </FormGroup>
-e
         </Form>
       </Well>
       <Form horizontal style={{ paddingLeft: 20 }}>
@@ -304,10 +343,10 @@ e
           <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
         </FormGroup>
         <FormGroup>
-          <Col mdOffset={1}>PerHansen- 15.02.2017</Col>
+          <Col mdOffset={1}>{form.registeredBy.rawValue || ''} - {form.registeredDate.rawValue || ''}</Col>
         </FormGroup>
         <FormGroup>
-          <Col mdOffset={1}>PerHansen- 15.02.2017</Col>
+          <Col mdOffset={1}>{form.doneBy.rawValue || ''} - {form.doneDate.rawValue || ''}</Col>
         </FormGroup>
         <FormGroup>
           <Col mdOffset={1}><a href=''>Se mer</a></Col>
@@ -320,16 +359,38 @@ const FieldShape = {
   name: PropTypes.string.isRequired,
   rawValue: PropTypes.string,
   status: PropTypes.shape({
-    valid: PropTypes.bool.isRequired,
+    valid: PropTypes.bool,
     error: PropTypes.any
   })
 };
 
 AnalysisAdd.propTypes = {
   form: PropTypes.shape({
+    id: PropTypes.shape(FieldShape).isRequired,
+    registeredBy: PropTypes.shape(FieldShape).isRequired,
+    registeredDate: PropTypes.shape(FieldShape).isRequired,
+    doneBy: PropTypes.shape(FieldShape).isRequired,
+    doneDate: PropTypes.shape(FieldShape).isRequired,
+    eventDate: PropTypes.shape(FieldShape).isRequired,
+    objectId: PropTypes.shape(FieldShape).isRequired,
+    partOf: PropTypes.shape(FieldShape).isRequired,
+    result: PropTypes.shape(FieldShape).isRequired,
+    caseNumber: PropTypes.shape(FieldShape).isRequired,
+    actor: PropTypes.shape(FieldShape).isRequired,
+    role: PropTypes.shape(FieldShape).isRequired,
+    place: PropTypes.shape(FieldShape).isRequired,
+    analysisTypeId: PropTypes.shape(FieldShape).isRequired,
+    externalSource: PropTypes.shape(FieldShape).isRequired,
+    comments: PropTypes.shape(FieldShape).isRequired,
+    restrictions: PropTypes.shape(FieldShape).isRequired,
+    restrictionsFor: PropTypes.shape(FieldShape).isRequired,
+    reasonForRestrictions: PropTypes.shape(FieldShape).isRequired,
+    restrictionsEndDate: PropTypes.shape(FieldShape).isRequired,
+    repealedBy: PropTypes.shape(FieldShape).isRequired,
     note: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
-  updateForm: PropTypes.func.isRequired
+  updateForm: PropTypes.func.isRequired,
+  loadForm: PropTypes.func.isRequired
 };
 
 
