@@ -1,4 +1,4 @@
-import {processBarcode} from '../PickListComponent';
+import {processBarcode} from '../PickListContainer';
 import {AppSession} from '../../app/appSession';
 import sinon from 'sinon';
 import MuseumId from '../../../models/museumId';
