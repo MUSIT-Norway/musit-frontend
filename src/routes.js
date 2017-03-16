@@ -31,11 +31,12 @@ import ViewObservationPage from './modules/observation/ViewObservationPage';
 import Reports from './modules/reports/ReportsOverview';
 import ControlViewContainer from './modules/control/ControlViewComponent';
 import ControlAddContainer from './modules/control/ControlAddComponent';
-import EventsContainer from './modules/events/EventsComponent';
+import EventsContainer from './modules/controlsobservations/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
+import AllEvents from './modules/events/EventsContainer';
 
 export default () => {
   return (
@@ -60,6 +61,7 @@ export default () => {
           <Route path=":id/objects" showObjects component={StorageUnitsTable} />
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
+        <Route path="events" component={AllEvents} />
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />
           <Route path="objects" type="objects" component={PickListView} />

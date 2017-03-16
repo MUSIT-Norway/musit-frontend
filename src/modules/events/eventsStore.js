@@ -1,42 +1,37 @@
+// @flow
+import { createStore } from 'react-rxjs/dist/RxStore';
 import { Observable } from 'rxjs';
-import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-import Control from '../../models/control';
-import Observation from '../../models/observation';
-import MusitActor from '../../models/actor';
-import MusitNode from '../../models/node';
-import orderBy from 'lodash/orderBy';
-import uniq from 'lodash/uniq';
-import flatten from 'lodash/flatten';
-import concat from 'lodash/concat';
-import * as ajax from '../../shared/RxAjax';
 
-export const loadEvents = ({ simpleGet, simplePost }) => (props) => {
-  const controls$ = Control.loadControls(simpleGet)(props);
-  const observations$ = Observation.loadObservations(simpleGet)(props);
-  return Observable.forkJoin(controls$, observations$).flatMap(([controls, observations]) => {
-    const events = orderBy(concat(controls, observations), ['doneDate', 'id'], ['desc', 'desc']);
-    const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(p => p);
-    return MusitActor.getActors(simplePost)(actorIds, props.token)
-      .map((actors) =>
-        events.map((data) => ({
-          ...data,
-          ...MusitActor.getActorNames(actors || [], data.doneBy, data.registeredBy)
-        }))
-      );
-  });
+type Event = {
+  id: number,
+  type: string,
+  registeredDate: string,
+  registeredBy: string
 };
 
-export const clearEvents$ = createAction('clearEvents$');
-export const loadEvents$ = createAction('loadEvents$').switchMap(loadEvents(ajax));
-export const loadRootNode$ = createAction('loadRootNode$').switchMap(MusitNode.getNode());
+const initialState: Event[] = [
+  {
+    id: 1,
+    type: 'Sample',
+    registeredDate: '2017-03-16T13:30:36+00:00',
+    registeredBy: 'Karl parl'
+  },
+  {
+    id: 2,
+    type: 'Analyses',
+    registeredDate: '2017-03-16T13:30:36+00:00',
+    registeredBy: 'Karl parl'
+  },
+  {
+    id: 2,
+    type: 'Sample',
+    registeredDate: '2017-03-16T13:30:36+00:00',
+    registeredBy: 'Karl parl'
+  }
+];
 
-export const reducer$ = (actions) => Observable.merge(
-  actions.clearEvents$.map(() => (state) => ({...state, data: [], loading: true})),
-  actions.loadRootNode$.map((rootNode) => (state) => ({...state, rootNode})),
-  actions.loadEvents$.map((data) => (state) => ({...state, data, loading: false})),
-);
+const reducer$ = Observable.empty();
 
-export const store$ = (actions$ = {clearEvents$, loadEvents$, loadRootNode$}) =>
-  createStore('events', reducer$(actions$), Observable.of({ data: [] }));
+const eventsStore$ = createStore('allEvents', reducer$, Observable.of(initialState));
 
-export default store$();
+export default eventsStore$;
