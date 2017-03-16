@@ -1,6 +1,8 @@
-import { simpleGet } from '../shared/RxAjax';
+import {simpleGet} from '../shared/RxAjax';
 import Config from '../config';
 import entries from 'object.entries';
+import orderBy from 'lodash/orderBy';
+
 
 class MusitAnalysis {
   constructor(props) {
@@ -10,7 +12,7 @@ class MusitAnalysis {
 
 MusitAnalysis.getAllAnalysisTypes = (ajaxGet = simpleGet) => ({museumId, token, callback}) => {
   return ajaxGet(`${Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId)}`, token, callback)
-    .map((analysisTypes) => analysisTypes.response);
+    .map((analysisTypes) => orderBy(analysisTypes.response, ['name'], ['asc']));
 };
 
 
