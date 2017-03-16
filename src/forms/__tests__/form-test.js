@@ -45,7 +45,8 @@ describe('form stream', () => {
       a: {
         name: {
           name: 'name',
-          rawValue: null,
+          rawValue: '1',
+          defaultValue: '1',
           validator: validator,
           mapper: stringMapper
         }
@@ -56,6 +57,7 @@ describe('form stream', () => {
           validator: validator,
           mapper: stringMapper,
           rawValue: 'Ja',
+          defaultValue: '1',
           value: 'Ja',
           status: {
             valid: false,
@@ -69,6 +71,7 @@ describe('form stream', () => {
           validator: validator,
           mapper: stringMapper,
           rawValue: 'Jar',
+          defaultValue: '1',
           value: 'Jar',
           status: {
             valid: true
@@ -107,6 +110,7 @@ describe('form stream', () => {
     const name: Field<string> = {
       name: 'name',
       mapper: stringMapper,
+      defaultValue: '1',
       validator: validator
     };
 
@@ -129,14 +133,12 @@ describe('form stream', () => {
       x: [
         {
           name: 'name',
-          rawValue: 'Kalle',
           defaultValue: 'Kalle'
         }
       ],
       y: [
         {
           name: 'bogus name that does not exist',
-          rawValue: 'Silly value',
           defaultValue: 'Silly value'
         }
       ],
