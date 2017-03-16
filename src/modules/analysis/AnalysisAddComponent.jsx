@@ -102,7 +102,7 @@ const mount = (f) => (Component) => {
 };
 
 
-const AnalysisAdd = ({ form, updateForm } : Props) => {
+const AnalysisAdd = ({ form, updateForm, store } : Props) => {
   return (
     <div>
       <br/>
@@ -230,8 +230,10 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
             {LabelFormat('Type analyse', 1)}
             <Col md={2}>
               <FormControl componentClass="select" placeholder="Velg kategori">
-                <option value="select">Velg kategori</option>
-                <option value="other">...</option>
+                <option>Velg kategori</option>
+                {store.data ?
+                  store.data.map((a) => <option key={a.id} value={a.name}>{a.name}</option>)
+                  : ''}
               </FormControl>
             </Col>
           </FormGroup>
