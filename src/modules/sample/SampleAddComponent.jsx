@@ -63,14 +63,17 @@ type FormData = {
   term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field,
   updateDate: Field, sampleId: Field
 }
-type Props = {form: FormData, updateForm: Update, addSample: any, appSession: any};
+type Props = {form: FormData, updateForm: Update, addSample: Function, appSession: {
+  getMuseumId: Function,
+  getAccessToken: Function
+}};
 
 const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) => {
   const token = appSession.getAccessToken();
   const museumId = appSession.getMuseumId();
-  const data={};
+  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
 
-  console.log('Form', form);
+  const data=myReduce(form);
   return (
     <Form style={{ padding: 20 }}>
       <PageHeader>
@@ -237,7 +240,11 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
       <Row className='row-centered'>
         <Col>
-          <Button onClick={() => addSample({museumId, token, data})}>
+          <Button onClick={() => addSample({museumId, token, data})
+          .toPromise()
+          .then(
+            null
+          )}>
             Add
           </Button>
         </Col>

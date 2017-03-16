@@ -13,6 +13,7 @@ class Sample {
 Sample.addSample = (ajaxPost = simplePost) => ({museumId, token, data, callback}) => {
   const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
   const url = baseUrl;
+  console.log(museumId);
   return ajaxPost(url, data, token, callback).map(({ response }) => response && new Sample(response));
 };
 
