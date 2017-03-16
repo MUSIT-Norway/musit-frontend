@@ -63,11 +63,27 @@ export default {
         }
       },
       api: {
+        analysisType: {
+          getAllAnalysisTypes: (mid) =>
+            `api/management/${mid.getPath()}/analyses/types`,
+          getAnalysisById: (mid, id) =>
+            `api/management/${mid.getPath()}/analyses/types/${id}`,
+          getAnalysisTypesForCategory: (mid, id) =>
+            `api/management/${mid.getPath()}/analyses/types/categories/${id}`,
+          getAnalysisTypesForCollection: (mid, id) =>
+            `api/management/${mid.getPath()}/analyses/types/musemcollections/${id}`
+        },
         analysis: {
-          baseUrl:
-            '/api/analysis/',
-          addUrl:
-            '/api/analysis/add'
+          saveAnalysisEvent: (mid) =>
+          `api/management/${mid.getPath()}/analyses`,
+          getAnalysisById: (mid, id) =>
+            `api/management/${mid.getPath()}/analyses/${id}`,
+          getChildAnalyses: (mid, id) =>
+            `api/management/${mid.getPath()}/analyses/${id}/children`,
+          saveResult: (mid, id) =>
+            `api/management/${mid.getPath()}/analyses/${id}/results`,
+          getAnalysisForObject: (mid, id) =>
+            `api/management/${mid.getPath()}/analyses/objects/${id}`
         },
         storagefacility: {
           searchUrl: (term, mid) =>
