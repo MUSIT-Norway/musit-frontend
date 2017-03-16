@@ -53,6 +53,14 @@ const sampleId: Field<string> = {
   }
 };
 
+const createdDate: Field<string> = {
+  name: 'createdDate',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
 const registeredBy: Field<string> = {
   name: 'registeredBy',
   mapper: stringMapper,
@@ -154,4 +162,4 @@ const status: Field<string> = {
 
 export default createForm('sampleFormAdd.js', [note, status, sampleSize, sizeUnit, container,
   storageMedium, sampleSubType, sampleType, museumId, subNo, term_species, sampleId, registeredBy,
-registeredDate, responsible, updateBy, updateDate]);
+registeredDate, responsible, updateBy, updateDate, createdDate]);

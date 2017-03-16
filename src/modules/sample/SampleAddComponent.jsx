@@ -61,19 +61,29 @@ type FormData = {
   container: Field, storageMedium: Field, sampleType: Field,
   sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
   term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field,
-  updateDate: Field, sampleId: Field
+  updateDate: Field, sampleId: Field, createdDate: Field
 }
-type Props = {form: FormData, updateForm: Update, addSample: Function, appSession: {
-  getMuseumId: Function,
-  getAccessToken: Function
-}};
+type Props = {
+  form: FormData, updateForm: Update, addSample: Function, appSession: {
+    getMuseumId: Function,
+    getAccessToken: Function,
+    getActor: Function
+  }
+};
 
 const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) => {
   const token = appSession.getAccessToken();
   const museumId = appSession.getMuseumId();
+
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
 
-  const data=myReduce(form);
+  const data = myReduce(form);
+  data['createdDate'] = '2017-03-19';
+  data['status'] = 2;
+  data['responsible'] = appSession.getActor().dataportenId;
+  data['isCollectionObject'] = false;
+  data['museumId'] = museumId.id;
+
   return (
     <Form style={{ padding: 20 }}>
       <PageHeader>
@@ -110,10 +120,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
           <ControlLabel>Registrert:</ControlLabel>
         </Col>
         <Col md={1}>
-          <FontAwesome name='user'/> {form.registeredBy.value||'Line A. Sjo' }
+          <FontAwesome name='user'/> {form.registeredBy.value || 'Line A. Sjo' }
         </Col>
         <Col md={1}>
-          <FontAwesome name='clock-o'/> {form.registeredDate.value||'11.03.2017' }
+          <FontAwesome name='clock-o'/> {form.registeredDate.value || '11.03.2017' }
         </Col>
       </Row>
       <Row>
@@ -121,10 +131,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
           <ControlLabel>Sist endret:</ControlLabel>
         </Col>
         <Col md={1}>
-          <FontAwesome name='user'/> {form.updateBy.value||'Stein Olsen' }
+          <FontAwesome name='user'/> {form.updateBy.value || 'Stein Olsen' }
         </Col>
         <Col md={1}>
-          <FontAwesome name='clock-o'/> {form.updateDate.value||'11.03.2017' }
+          <FontAwesome name='clock-o'/> {form.updateDate.value || '11.03.2017' }
         </Col>
         <Col md={2}>
           <a href=''>Se endringshistorikk</a>
@@ -239,14 +249,22 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
         </Col>
       </Row>
       <Row className='row-centered'>
-        <Col>
+        <Col md={4}>
           <Button onClick={() => addSample({museumId, token, data})
           .toPromise()
           .then(
             null
           )}>
-            Add
+            Lagre
           </Button>
+        </Col>
+        <Col md={4}>
+          <a onClick={
+            (e) => {
+              e.preventDefault();
+            }}>
+            Avbryt
+          </a>
         </Col>
       </Row>
     </Form>
@@ -266,7 +284,7 @@ const FieldShape = {
 SampleAddComponent.propTypes = {
   form: PropTypes.shape({
     note: PropTypes.shape(FieldShape).isRequired,
-    museumId:PropTypes.shape(FieldShape).isRequired,
+    museumId: PropTypes.shape(FieldShape).isRequired,
     subNo: PropTypes.shape(FieldShape).isRequired,
     term_species: PropTypes.shape(FieldShape).isRequired,
     registeredBy: PropTypes.shape(FieldShape).isRequired,
