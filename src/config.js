@@ -12,8 +12,8 @@ export default {
     urls: {
       client: {
         analysis: {
-          addAnalysis: () =>
-            '/analysis/add',
+          addAnalysis: (appSession: AppSession) =>
+          `${clientContextUrl(appSession)}/analysis/add`,
           addSample: () =>
             '/analysis/sample/add'
         },
@@ -65,7 +65,7 @@ export default {
       api: {
         analysisType: {
           getAllAnalysisTypes: (mid) =>
-            `api/management/${mid.getPath()}/analyses/types`,
+            `api/management/${mid.id}/analyses/types`,
           getAnalysisById: (mid, id) =>
             `api/management/${mid.getPath()}/analyses/types/${id}`,
           getAnalysisTypesForCategory: (mid, id) =>

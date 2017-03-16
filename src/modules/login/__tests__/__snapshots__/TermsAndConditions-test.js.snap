@@ -18,7 +18,6 @@ exports[`TermsAndConditions should have english text 1`] = `
   }
   onHide={[Function noop]}
   renderBackdrop={[Function renderBackdrop]}
-  restoreFocus={true}
   show={false}>
   <ModalHeader
     aria-label="Close"
@@ -85,7 +84,6 @@ exports[`TermsAndConditions should have norwegian text 1`] = `
   }
   onHide={[Function noop]}
   renderBackdrop={[Function renderBackdrop]}
-  restoreFocus={true}
   show={false}>
   <ModalHeader
     aria-label="Close"

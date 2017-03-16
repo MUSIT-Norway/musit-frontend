@@ -44,7 +44,10 @@ type FormData = {
   repealedBy: Field,
   note: Field,
   completeAnalysis: Field}
-type Props = { form: FormData, updateForm: Update };
+type Props = { form: FormData, updateForm: Update, clearAnalysisTypes: Function,
+  loadAnalysisTypes: Function,
+  store: any,
+appSession: any};
 
 function LabelFormat(label, md = 1) {
   return (<Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>);
@@ -78,7 +81,26 @@ function newLine() {
   </Form>;
 }
 
+
 const expanded = true;
+
+const mount = (f) => (Component) => {
+  class MountWrapper extends React.Component  {
+    componentWillMount() {
+      f(this.props);
+    }
+
+    render() {
+      return (
+        <Component
+          {...this.props}
+        />
+      );
+    }
+  }
+  return MountWrapper;
+};
+
 
 const AnalysisAdd = ({ form, updateForm } : Props) => {
   return (
@@ -130,10 +152,10 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
           <Table bordered>
             <thead>
             <tr>
-            <th>Museumsnr</th>
-            <th>Unt</th>
-            <th>Term/artsnavn</th>
-              </tr>
+              <th>Museumsnr</th>
+              <th>Unt</th>
+              <th>Term/artsnavn</th>
+            </tr>
             </thead>
             <tbody>
             <tr>
@@ -363,6 +385,15 @@ const FieldShape = {
     error: PropTypes.any
   })
 };
+const FieldShapeBoolean = {
+  name: PropTypes.string.isRequired,
+  rawValue: PropTypes.bool,
+  status: PropTypes.shape({
+    valid: PropTypes.bool,
+    error: PropTypes.any
+  })
+};
+
 
 AnalysisAdd.propTypes = {
   form: PropTypes.shape({
@@ -382,7 +413,7 @@ AnalysisAdd.propTypes = {
     analysisTypeId: PropTypes.shape(FieldShape).isRequired,
     externalSource: PropTypes.shape(FieldShape).isRequired,
     comments: PropTypes.shape(FieldShape).isRequired,
-    restrictions: PropTypes.shape(FieldShape).isRequired,
+    restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
     restrictionsFor: PropTypes.shape(FieldShape).isRequired,
     reasonForRestrictions: PropTypes.shape(FieldShape).isRequired,
     restrictionsEndDate: PropTypes.shape(FieldShape).isRequired,
@@ -390,8 +421,15 @@ AnalysisAdd.propTypes = {
     note: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
   updateForm: PropTypes.func.isRequired,
-  loadForm: PropTypes.func.isRequired
+  loadForm: PropTypes.func.isRequired,
+  clearAnalysisTypes: PropTypes.func.isRequired,
+  loadAnalysisTypes: PropTypes.func.isRequired,
+  store: PropTypes.object
 };
 
-
-export default AnalysisAdd;
+export default mount(p => {
+  p.loadAnalysisTypes({
+    museumId: p.appSession.getMuseumId(),
+    token: p.appSession.getAccessToken()
+  });
+})(AnalysisAdd);

@@ -41,7 +41,6 @@ export default () => {
   return (
     <Route>
       <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
-      <Route path="analysis/add" component={AnalysisAddContainer} />
       <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
         <IndexRedirect to="magasin" />
         <Route path="magasin">
@@ -60,6 +59,7 @@ export default () => {
           <Route path=":id/objects" showObjects component={StorageUnitsTable} />
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
+        <Route path="analysis/add" component={AnalysisAddContainer} />
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />
           <Route path="objects" type="objects" component={PickListView} />
