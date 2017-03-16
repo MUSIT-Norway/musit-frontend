@@ -1,7 +1,7 @@
 import {shallow, mount} from 'enzyme';
 import {shallowToJson} from 'enzyme-to-json';
 import React from 'react';
-import {PickListContainer} from '../PickListComponent';
+import {PickListComponent} from '../PickListComponent';
 import {AppSession} from '../../app/appSession';
 import {expect as e} from 'chai';
 import sinon from 'sinon';
@@ -63,7 +63,7 @@ describe('PickListComponent for nodes', () => {
 
   it('should display component (nodes) correctly', () => {
 
-    const wrapper = shallow(<PickListContainer
+    const wrapper = shallow(<PickListComponent
       route={{type : 'nodes'}}
       pickList={pickList}
       toggleNode={(x) => x}
@@ -77,6 +77,7 @@ describe('PickListComponent for nodes', () => {
       emitError={(x) => x}
       emitSuccess={(x) => x}
       classExistsOnDom={(x) => x}
+      moveItems={(x) => x}
       isTypeNode={() => true}
       toggleScanner={() => true}
       scannerEnabled={true}
@@ -97,7 +98,7 @@ describe('PickListComponent for nodes', () => {
     const onToggleScanner = sinon.spy();
 
 
-    const wrapper = mount(<PickListContainer
+    const wrapper = mount(<PickListComponent
       route={{type : 'nodes'}}
       pickList={pickList}
       toggleNode={onToggleNode}
@@ -112,6 +113,7 @@ describe('PickListComponent for nodes', () => {
       emitSuccess={(x) => x}
       iconRendrer={ (x) => x}
       classExistsOnDom={ (x) => x}
+      moveItems={(x) => x}
       isTypeNode={() => true}
       toggleScanner={onToggleScanner}
       scannerEnabled={true}

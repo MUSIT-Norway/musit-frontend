@@ -392,7 +392,8 @@ export class TableComponent extends React.Component {
       return (
         <Loader loaded={!isLoading}>
           <ObjectGrid
-            tableData={matches ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
+            tableData={matches && matches[0] && matches[0] instanceof MusitObject ?
+              filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             pickObject={(object) =>
               this.props.pickObject({
@@ -427,7 +428,8 @@ export class TableComponent extends React.Component {
     return (
       <Loader loaded={!isLoading}>
         <NodeGrid
-          tableData={matches ? filter(matches, ['name'], searchPattern) : []}
+          tableData={matches && matches[0] && matches[0] instanceof MusitNode ?
+            filter(matches, ['name'], searchPattern) : []}
           goToEvents={(node) => this.props.goTo(Config.magasin.urls.client.storagefacility.viewControlsObservations(node.id, this.props.appSession))}
           onMove={moveNode}
           pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
