@@ -1,11 +1,12 @@
 import React from 'react';
-import {Form, PageHeader, FormControl, FormGroup} from 'react-bootstrap';
+import {Form, PageHeader, FormControl, FormGroup, Col, Row, Button} from 'react-bootstrap';
+import FontAwesome from 'react-fontawesome';
 
 
 
-const FieldReadOnly = (value) => (
+const FieldReadOnly = ({field}) => (
   <FormGroup>
-    <FormControl.Static {field}>
+    <FormControl.Static>
       {field}
     </FormControl.Static>
   </FormGroup>
@@ -148,11 +149,7 @@ const SampleViewComponent = () => {
       </Row>
       <Row className='row-centered'>
         <Col md={4}>
-          <Button onClick={() => addSample({museumId, token, data})
-            .toPromise()
-            .then(
-              null
-            )}>
+          <Button>
             Lagre
           </Button>
         </Col>
