@@ -16,10 +16,10 @@ import {
 import FontAwesome from 'react-fontawesome';
 import {SaveCancel} from '../../components/formfields/index';
 
-
 type Field = { name: string, rawValue: ?string };
 type Update = (update: Field) => void;
-// type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: any };
+
+
 type FormData = {
   id: Field,
   registeredBy: Field,
@@ -43,11 +43,18 @@ type FormData = {
   restrictionsEndDate: Field,
   repealedBy: Field,
   note: Field,
-  completeAnalysis: Field}
-type Props = { form: FormData, updateForm: Update, clearAnalysisTypes: Function,
+  completeAnalysis: Field
+};
+
+type Props = {
+  form: FormData,
+  updateForm: Update,
+  clearAnalysisTypes: Function,
   loadAnalysisTypes: Function,
   store: any,
-appSession: any};
+  appSession: any,
+  saveAnalysisEvent: Function
+};
 
 function LabelFormat(label, md = 1) {
   return (<Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>);
@@ -84,22 +91,7 @@ function newLine() {
 
 const expanded = true;
 
-const mount = (f) => (Component) => {
-  class MountWrapper extends React.Component  {
-    componentWillMount() {
-      f(this.props);
-    }
 
-    render() {
-      return (
-        <Component
-          {...this.props}
-        />
-      );
-    }
-  }
-  return MountWrapper;
-};
 
 
 const AnalysisAdd = ({ form, updateForm, store } : Props) => {
@@ -430,12 +422,8 @@ AnalysisAdd.propTypes = {
   loadForm: PropTypes.func.isRequired,
   clearAnalysisTypes: PropTypes.func.isRequired,
   loadAnalysisTypes: PropTypes.func.isRequired,
-  store: PropTypes.object
+  store: PropTypes.object,
+  saveAnalysisEvent: PropTypes.func
 };
 
-export default mount(p => {
-  p.loadAnalysisTypes({
-    museumId: p.appSession.getMuseumId(),
-    token: p.appSession.getAccessToken()
-  });
-})(AnalysisAdd);
+export default AnalysisAdd;

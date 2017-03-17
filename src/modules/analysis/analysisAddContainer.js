@@ -6,6 +6,10 @@ import store$, {
   clearAnalysisTypes$,
   loadAnalysisTypes$
 } from './analysisStore';
+import MusitAnalysis from '../../models/analysis';
+import { makeUrlAware } from '../app/appSession';
+import flowRight from 'lodash/flowRight';
+
 
 const { form$, updateForm$, loadForm$ } = analysisAddForm;
 const data = {
@@ -13,4 +17,35 @@ const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
   store$ };
 const commands = { updateForm$, loadForm$, clearAnalysisTypes$, loadAnalysisTypes$ };
-export default inject(data, commands)(AnalysisAddComponent);
+const props = {
+  saveAnalysisEvent: MusitAnalysis.saveAnalysisEvent()
+};
+
+const mount = (f) => (Component) => {
+  class MountWrapper extends React.Component  {
+    componentWillMount() {
+      f(this.props);
+    }
+
+    render() {
+      return (
+        <Component
+          {...this.props}
+        />
+      );
+    }
+  }
+  return MountWrapper;
+};
+
+
+export default flowRight([
+  inject(data, commands, props),
+  mount(p => {
+    p.loadAnalysisTypes({
+      museumId: p.appSession.getMuseumId(),
+      token: p.appSession.getAccessToken()
+    });
+  }),
+  makeUrlAware
+])(AnalysisAddComponent);

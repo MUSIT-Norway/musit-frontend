@@ -74,6 +74,7 @@ const caseNumber: Field<number> = {
   }
 };
 
+
 const fieldsArray = [
   id,
   registeredBy,
