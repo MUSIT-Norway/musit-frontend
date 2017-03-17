@@ -10,7 +10,6 @@ const FieldReadOnly = ({field}) => (
       {field}
     </FormControl.Static>
   </FormGroup>
-  
 );
 
 

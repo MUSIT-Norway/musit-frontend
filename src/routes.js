@@ -36,6 +36,7 @@ import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent'
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
+import SampleViewContainer  from './modules/sample/sampleViewContainer';
 
 export default () => {
   return (
@@ -60,6 +61,7 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
+        <Route path="analysis/sample/view" component={SampleViewContainer}/>
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />
           <Route path="objects" type="objects" component={PickListView} />

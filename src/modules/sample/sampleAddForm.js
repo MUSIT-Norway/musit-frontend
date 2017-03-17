@@ -123,7 +123,7 @@ const sampleSize: Field<number> = {
   mapper: numberMapper,
   validator: {
     rawValidator: composeValidators(isRequired, isNumber(0, 2)),
-    valueValidator: isNumberInRange(0, 10)
+    valueValidator: isNumberInRange(0, Number.MAX_VALUE)
   }
 };
 
