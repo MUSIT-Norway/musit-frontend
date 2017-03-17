@@ -70,9 +70,11 @@ export default {
       api: {
         analysis: {
           baseUrl:
-            '/api/analysis/',
-          addUrl:
-            '/api/analysis/add'
+            '/api/analyses/'
+        },
+        samples: {
+          baseUrl: (mid): string =>
+            `api/management/${mid.id}/samples`
         },
         storagefacility: {
           searchUrl: (term, mid) =>
