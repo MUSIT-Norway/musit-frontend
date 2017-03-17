@@ -92,9 +92,7 @@ function newLine() {
 const expanded = true;
 
 
-
-
-const AnalysisAdd = ({ form, updateForm, store } : Props) => {
+const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => {
   return (
     <div>
       <br/>
@@ -153,7 +151,7 @@ const AnalysisAdd = ({ form, updateForm, store } : Props) => {
             <tbody>
             {store.objectsData ?
               store.objectsData.map((a) =>
-                <tr>
+                <tr key={a.uuid}>
                   <td>{a.museumNumber}</td>
                   <td>{a.subNumber}</td>
                   <td>{a.term}</td>
@@ -348,7 +346,18 @@ const AnalysisAdd = ({ form, updateForm, store } : Props) => {
       </Form>
 
       {newLine()}
-      <SaveCancel/>
+      <SaveCancel
+        onClickSave={() => saveAnalysisEvent({
+          museumId: appSession.getMuseumId(),
+          data: {
+            analysisTypeId: '1bbf15cb-8348-4e66-99a4-bc314da57a42',
+            eventDate: '2017-03-16T14:37:45+00:00',
+            note: 'test record',
+            objectIds: ['1cbf15cb-8348-4e66-99a4-bc314da57a42', '2cbf15cb-8348-4e66-99a4-bc314da57a42', '3cbf15cb-8348-4e66-99a4-bc314da57a42']
+          },
+          token: appSession.getAccessToken()
+        })}
+      />
       {newLine()}
       <Form horizontal>
         <FormGroup>
