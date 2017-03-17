@@ -56,6 +56,17 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : 
   </FormGroup>
 );
 
+
+type FieldReadOnlyProps = {field: Field, label: string, defaultValue: string, inputProps?: any};
+
+const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyProps) => {
+  const value=field.rawValue;
+  return (<span { ...inputProps}>
+    {label} <b> {value||defaultValue}</b>
+    </span>
+  );
+};
+
 type FormData = {
   note: Field, sampleSize: Field, status: Field,
   container: Field, storageMedium: Field, sampleType: Field,
@@ -82,7 +93,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
   data['status'] = 2;
   data['responsible'] = appSession.getActor().dataportenId;
   data['isCollectionObject'] = false;
-  data['museumId'] = museumId.id;
+  data['museumId'] =  form.museumId;
 
   return (
     <Form style={{ padding: 20 }}>
@@ -96,13 +107,28 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
       <Row className='row-centered'>
         <Col md={1}>
-          Musno: <b>{ form.museumId.value || '1234' }</b>
+          <FieldReadOnly
+            field={form.museumId}
+            inputProps={{className: 'museumId'}}
+            label='MusNo:'
+            defaultValue='1234'
+          />
         </Col>
         <Col md={1}>
-          Unr: <b>{ form.subNo.value || '4566b' }</b>
+          <FieldReadOnly
+            field={form.subNo}
+            inputProps={{className: 'subNo'}}
+            label='Unr:'
+            defaultValue='6789'
+          />
         </Col>
         <Col md={2}>
-          Term/artsnavn: <b>{ form.term_species.value || 'Carex saxatilis'}</b>
+          <FieldReadOnly
+            field={form.term_species}
+            inputProps={{className: 'term_species'}}
+            label='Term/artsnavn:'
+            defaultValue='Carex saxatilis'
+          />
         </Col>
         <Col md={1}>
           <Button>Vis Objektet</Button>
@@ -152,6 +178,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             title={'Velg type'}
             onSelectInput={updateForm}
             selectItems={['Vev', 'DNA-ekstrakt', 'Bein']}
+            inputProps={{className: 'sampleType'}}
           />
         </Col>
         <Col md={1}>
