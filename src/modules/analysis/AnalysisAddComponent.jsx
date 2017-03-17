@@ -151,6 +151,9 @@ const AnalysisAdd = ({ form, updateForm, store } : Props) => {
             </tr>
             </thead>
             <tbody>
+            {store.data.analysisTypes ?
+              store.data.analysisTypes.map((a) => <option key={a.id} value={a.name}>{a.name}</option>)
+              : ''}
             <tr>
               <td>1234</td>
               <td>12345678911</td>
