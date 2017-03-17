@@ -20,7 +20,7 @@ import React from 'react';
 import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import NotFound from './components/NotFound';
 import AboutView from './modules/about/AboutPage';
-import PickListView from './modules/picklist/PickListComponent';
+import PickListView from './modules/picklist/PickListContainer';
 import StorageUnitsTable from './modules/storagefacility/TableComponent';
 import KDReportComponent from './modules/reports/KDReportComponent';
 import AddStorageUnitPanel from './modules/storagefacility/AddNodeComponent';
@@ -36,11 +36,11 @@ import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent'
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
+import CenteredLayout from './components/layout/CenteredLayout';
 
 export default () => {
   return (
     <Route>
-      <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
       <Route path="/(museum/:museumId/)(collections/:collectionIds/)" component={AppComponent}>
         <IndexRedirect to="magasin" />
         <Route path="magasin">
@@ -59,7 +59,10 @@ export default () => {
           <Route path=":id/objects" showObjects component={StorageUnitsTable} />
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
-        <Route path="analysis/add" component={AnalysisAddContainer} />
+        <Route component={CenteredLayout}>
+          <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
+          <Route path="analysis/add" component={AnalysisAddContainer} />
+        </Route>
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />
           <Route path="objects" type="objects" component={PickListView} />

@@ -9,6 +9,7 @@ import store$, {
 import MusitAnalysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
+import mount from '../../shared/mount';
 
 
 const { form$, updateForm$, loadForm$ } = analysisAddForm;
@@ -20,24 +21,6 @@ const commands = { updateForm$, loadForm$, clearAnalysisTypes$, loadAnalysisType
 const props = {
   saveAnalysisEvent: MusitAnalysis.saveAnalysisEvent()
 };
-
-const mount = (f) => (Component) => {
-  class MountWrapper extends React.Component  {
-    componentWillMount() {
-      f(this.props);
-    }
-
-    render() {
-      return (
-        <Component
-          {...this.props}
-        />
-      );
-    }
-  }
-  return MountWrapper;
-};
-
 
 export default flowRight([
   inject(data, commands, props),

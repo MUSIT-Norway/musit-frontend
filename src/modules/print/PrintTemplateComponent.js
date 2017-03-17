@@ -2,17 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import IFrame from '../../components/IFrame';
 import './PrintTemplateComponent.css';
 import Config from '../../config';
-import inject from 'react-rxjs/dist/RxInject';
-import store$, { loadTemplates$, renderTemplate$, clearAll$, clearRendered$ } from './printStore';
 import { I18n } from 'react-i18nify';
+import reduce from 'lodash/reduce';
 
-export class ChooseTemplate extends Component {
+export class PrintTemplateComponent extends Component {
   static propTypes = {
     store: PropTypes.object.isRequired,
     loadTemplates: PropTypes.func.isRequired,
     renderTemplate: PropTypes.func.isRequired,
+    setTemplateId: PropTypes.func.isRequired,
     clearAll: PropTypes.func.isRequired,
     clearRendered: PropTypes.func.isRequired,
+    writeToDocument: PropTypes.func.isRequired,
+    setLevel: PropTypes.func.isRequired,
     marked: PropTypes.array,
     rendered: PropTypes.string
   };
@@ -30,6 +32,7 @@ export class ChooseTemplate extends Component {
   constructor(props, context) {
     super(props, context);
     this.selectTemplate = this.selectTemplate.bind(this);
+    this.selectLevel = this.selectLevel.bind(this);
   }
 
   componentWillMount() {
@@ -39,23 +42,39 @@ export class ChooseTemplate extends Component {
     });
   }
 
-  selectTemplate(e, templateId = e.target.value * 1) {
+  canSelectPath(templateId) {
+    return Config.print.labelConfig.canSelectPath[templateId];
+  }
+
+  selectTemplate(e, templateId = e.target.value * 1, level = this.props.store.level) {
+    this.props.setTemplateId(templateId);
     this.props.clearRendered();
     if (templateId) {
-      const codeFormat = Config.print.labelConfig[templateId] || ChooseTemplate.DEFAULT_CODE;
-      const nodes = this.props.marked.map(ntp => ({
-        uuid: ntp.nodeId,
-        name: ntp.name
+      const codeFormat = Config.print.labelConfig.codeFormat[templateId] || PrintTemplateComponent.DEFAULT_CODE;
+      const nodes = this.props.marked.map(markedNode => ({
+        uuid: markedNode.value.nodeId,
+        name: this.canSelectPath(templateId) ? PrintTemplateComponent.getDisplayName(markedNode, level) : markedNode.value.name
       }));
       this.props.renderTemplate({ templateId, codeFormat, nodes, token: this.props.appSession.getAccessToken() });
     }
+  }
+
+  static getDisplayName(node, skipCount) {
+    const subPath = node.path.slice(skipCount);
+    const pathStr = reduce(subPath, (acc, p) => (acc !== '' ? acc + ' - ' : '') + p.name, '');
+    return pathStr + ' - ' + node.value.name;
+  }
+
+  selectLevel(e, level = e.target.value * 1) {
+    this.props.setLevel(level);
+    this.selectTemplate(null, this.props.store.templateId, level);
   }
 
   render() {
     return (
       <div className="templatePrint">
         <select
-          className="printTool"
+          className="printTool template"
           onChange={this.selectTemplate}
         >
           <option>{I18n.t('musit.template.chooseTemplate')}</option>
@@ -63,6 +82,18 @@ export class ChooseTemplate extends Component {
             <option key={i} value={template.id}>{template.name}</option>
           )}
         </select>
+        {' '}
+        {this.canSelectPath(this.props.store.templateId) &&
+        <select
+          className="printTool level"
+          onChange={this.selectLevel}
+          defaultValue={this.props.store.level}
+        >
+          <option value={-2}>To nærmeste</option>
+          <option value={2}>Fra bygg</option>
+          <option value={0}>Hele stien</option>
+        </select>
+        }
         {' '}
         {this.props.store.rendered &&
           <input
@@ -88,22 +119,10 @@ export class ChooseTemplate extends Component {
               scrolling: 'yes'
             }}
             content={this.props.store.rendered}
+            writeToDocument={this.props.writeToDocument}
           />
         }
       </div>
     );
   }
 }
-
-const data = {
-  store$
-};
-
-const commands = {
-  clearAll$,
-  clearRendered$,
-  loadTemplates$,
-  renderTemplate$
-};
-
-export default inject(data, commands)(ChooseTemplate);

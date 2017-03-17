@@ -5,7 +5,8 @@ class IFrame extends React.Component {
 
   static propTypes = {
     frameProps: PropTypes.object,
-    content: PropTypes.string
+    content: PropTypes.string,
+    writeToDocument: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -16,9 +17,7 @@ class IFrame extends React.Component {
 
   updateIFrameContents() {
     const contentWindow = this.domNode.contentWindow;
-    contentWindow.document.open();
-    contentWindow.document.write(this.props.content);
-    contentWindow.document.close();
+    this.props.writeToDocument(contentWindow, this.props.content);
   }
 
   render() {

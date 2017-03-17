@@ -4,20 +4,17 @@ import React from 'react';
 import sinon from 'sinon';
 import NodeGrid from '../NodeTable';
 import { expect as e } from 'chai';
-
-
+import MusitNode from '../../../models/node';
 
 describe ('NodeTable' ,() => {
 
   const tableData = [
-    { name: 'NHM', type: 'Organisation', isRootNode: () => true },
-    { name: 'KHM', type: 'Organisation', isRootNode: () => true },
-    { name: 'Bygg 1', type: 'Building', isRootNode: () => false },
-    { name: 'Bygg 2', type: 'Building' , isRootNode: () => false },
-    { name: 'Rom 1', type: 'Room' , isRootNode: () => false }
+    new MusitNode({ name: 'NHM', type: 'Organisation', isRootNode: () => true }),
+    new MusitNode({ name: 'KHM', type: 'Organisation', isRootNode: () => true }),
+    new MusitNode({ name: 'Bygg 1', type: 'Building', isRootNode: () => false }),
+    new MusitNode({ name: 'Bygg 2', type: 'Building' , isRootNode: () => false }),
+    new MusitNode({ name: 'Rom 1', type: 'Room' , isRootNode: () => false })
   ];
-
-
 
   const onClick = sinon.spy();
   const pickNode = sinon.spy();
