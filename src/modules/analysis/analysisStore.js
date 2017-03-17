@@ -8,7 +8,7 @@ export const loadAnalysisTypes$ = createAction('loadAnalysisTypes$').switchMap(M
 
 export const reducer$ = (actions) => Observable.merge(
   actions.clearAnalysisTypes$.map(() => (state) => ({...state, data: [], loading: true})),
-  actions.loadAnalysisTypes$.map((data) => (state) => ({...state, data, loading: false})),
+  actions.loadAnalysisTypes$.map((data) => (state) => ({...state, data: {analysisTypes: data }, loading: false})),
 );
 
 export const store$ = (actions$ = {clearAnalysisTypes$, loadAnalysisTypes$}) =>

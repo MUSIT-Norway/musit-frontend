@@ -155,6 +155,7 @@ const AnalysisAdd = ({ form, updateForm, store } : Props) => {
               <th>Museumsnr</th>
               <th>Unt</th>
               <th>Term/artsnavn</th>
+              <th>UUID</th>
             </tr>
             </thead>
             <tbody>
@@ -162,16 +163,19 @@ const AnalysisAdd = ({ form, updateForm, store } : Props) => {
               <td>1234</td>
               <td>12345678911</td>
               <td>Spyd</td>
+              <td>1cbf15cb-8348-4e66-99a4-bc314da57a42</td>
             </tr>
             <tr>
               <td>2345</td>
               <td>12345678912</td>
               <td>Beltering</td>
+              <td>2cbf15cb-8348-4e66-99a4-bc314da57a42</td>
             </tr>
             <tr>
               <td>3455</td>
               <td>12345678911</td>
               <td>Øsekar</td>
+              <td>3cbf15cb-8348-4e66-99a4-bc314da57a42</td>
             </tr>
             </tbody>
           </Table>
@@ -231,8 +235,8 @@ const AnalysisAdd = ({ form, updateForm, store } : Props) => {
             <Col md={2}>
               <FormControl componentClass="select" placeholder="Velg kategori">
                 <option>Velg kategori</option>
-                {store.data ?
-                  store.data.map((a) => <option key={a.id} value={a.name}>{a.name}</option>)
+                {store.data.analysisTypes ?
+                  store.data.analysisTypes.map((a) => <option key={a.id} value={a.name}>{a.name}</option>)
                   : ''}
               </FormControl>
             </Col>
