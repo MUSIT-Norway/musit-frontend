@@ -104,17 +104,17 @@ const AnalysisAdd = ({ form, updateForm, store } : Props) => {
           {LabelFormat('HID:')}
           <Col style={{ padding: '7px' }}>{form.id.rawValue || ''}</Col>
           {LabelFormat('Registrert:', 1)}
-          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}
+          <Col md={2} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}
             {form.registeredBy.rawValue || ''}
           </Col>
-          <Col md={10} style={{ padding: '7px' }}>
+          <Col md={9} style={{ padding: '7px' }}>
             <FontAwesome name='clock-o'/>{' '}
             {form.registeredDate.rawValue || ''}
           </Col>
           {LabelFormat('Sist endret:', 1)}
-          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}{form.doneBy.rawValue || ''}</Col>
-          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='clock-o'/>{' '}{form.doneDate.rawValue || ''}</Col>
-          <Col md={9} style={{ padding: '7px' }}><a href=''>Se endringshistorikk</a></Col>
+          <Col md={2} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}{form.doneBy.rawValue || ''}</Col>
+          <Col md={2} style={{ padding: '7px' }}><FontAwesome name='clock-o'/>{' '}{form.doneDate.rawValue || ''}</Col>
+          <Col md={7} style={{ padding: '7px' }}><a href=''>Se endringshistorikk</a></Col>
         </FormGroup>
       </Form>
       {newLine()}
@@ -151,27 +151,16 @@ const AnalysisAdd = ({ form, updateForm, store } : Props) => {
             </tr>
             </thead>
             <tbody>
-            {store.data.analysisTypes ?
-              store.data.analysisTypes.map((a) => <option key={a.id} value={a.name}>{a.name}</option>)
+            {store.objectsData ?
+              store.objectsData.map((a) =>
+                <tr>
+                  <td>{a.museumNumber}</td>
+                  <td>{a.subNumber}</td>
+                  <td>{a.term}</td>
+                  <td>{a.uuid}</td>
+                </tr>
+              )
               : ''}
-            <tr>
-              <td>1234</td>
-              <td>12345678911</td>
-              <td>Spyd</td>
-              <td>1cbf15cb-8348-4e66-99a4-bc314da57a42</td>
-            </tr>
-            <tr>
-              <td>2345</td>
-              <td>12345678912</td>
-              <td>Beltering</td>
-              <td>2cbf15cb-8348-4e66-99a4-bc314da57a42</td>
-            </tr>
-            <tr>
-              <td>3455</td>
-              <td>12345678911</td>
-              <td>Øsekar</td>
-              <td>3cbf15cb-8348-4e66-99a4-bc314da57a42</td>
-            </tr>
             </tbody>
           </Table>
         </Col>
