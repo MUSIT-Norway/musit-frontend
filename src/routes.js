@@ -37,6 +37,7 @@ import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
 import SampleViewContainer  from './modules/sample/sampleViewContainer';
+import CenteredLayout from './components/layout/CenteredLayout';
 
 export default () => {
   return (
@@ -60,8 +61,11 @@ export default () => {
           <Route path=":id/objects" showObjects component={StorageUnitsTable} />
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
-        <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
-        <Route path="analysis/sample/view" component={SampleViewContainer}/>
+
+        <Route component={CenteredLayout}>
+          <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
+          <Route path="analysis/sample/view" component={SampleViewContainer}/>
+        </Route>
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />
           <Route path="objects" type="objects" component={PickListView} />
