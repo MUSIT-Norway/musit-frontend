@@ -104,6 +104,5 @@ describe('AnalysisSampleFormPageAdd', () => {
     }});
     expect(updateForm.getCall(1).args[0].name).toBe('sampleSize');
     expect(updateForm.getCall(1).args[0].rawValue).toBe('1,23');
-
   });
 });

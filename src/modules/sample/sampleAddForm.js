@@ -159,7 +159,25 @@ const status: Field<string> = {
   }
 };
 
+const fields = [
+  note,
+  status,
+  sampleSize,
+  sizeUnit,
+  container,
+  storageMedium,
+  sampleSubType,
+  sampleType,
+  museumId,
+  subNo,
+  term_species,
+  sampleId,
+  registeredBy,
+  registeredDate,
+  responsible,
+  updateBy,
+  updateDate,
+  createdDate
+];
 
-export default createForm('sampleFormAdd.js', [note, status, sampleSize, sizeUnit, container,
-  storageMedium, sampleSubType, sampleType, museumId, subNo, term_species, sampleId, registeredBy,
-registeredDate, responsible, updateBy, updateDate, createdDate]);
+export default createForm('sampleFormAdd.js', fields );

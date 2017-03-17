@@ -17,7 +17,7 @@ import FontAwesome from 'react-fontawesome';
 type Field = {name: string, rawValue: ?string};
 type Update = (update: Field) => void;
 
-type FieldInputProps = {field: Field, onChangeInput: Update, inputProps?: any};
+type FieldInputProps = {field: Field, onChangeInput: Update, inputProps?: {className?: string, style?:{}}};
 const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
   <FormGroup
     controlId={field.name}
@@ -31,7 +31,13 @@ const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
   </FormGroup>
 );
 
-type FieldDropDownProps = {field: Field, title: any, onSelectInput: Update, selectItems: Array<string>, inputProps?: any};
+type FieldDropDownProps = {
+                            field: Field,
+                            title: any,
+                            onSelectInput: Update,
+                            selectItems: Array<string>,
+                            inputProps?:  {className?: string, style?:{}}
+                          };
 
 const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : FieldDropDownProps) => (
   <FormGroup
@@ -56,8 +62,7 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : 
   </FormGroup>
 );
 
-
-type FieldReadOnlyProps = {field: Field, label: string, defaultValue: string, inputProps?: any};
+type FieldReadOnlyProps = {field: Field, label: string, defaultValue: string, inputProps?:  {className?: string, style?:{}}};
 
 const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyProps) => {
   const value=field.rawValue;
@@ -83,17 +88,7 @@ type Props = {
 };
 
 const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) => {
-  const token = appSession.getAccessToken();
-  const museumId = appSession.getMuseumId();
 
-  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-
-  const data = myReduce(form);
-  data['createdDate'] = '2017-03-19';
-  data['status'] = 2;
-  data['responsible'] = appSession.getActor().dataportenId;
-  data['isCollectionObject'] = false;
-  data['museumId'] =  form.museumId;
 
   return (
     <Form style={{ padding: 20 }}>
@@ -277,11 +272,9 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
       <Row className='row-centered'>
         <Col md={4}>
-          <Button onClick={() => addSample({museumId, token, data})
+          <Button onClick={() => SampleAddComponent.submitSample(appSession, form, addSample)
           .toPromise()
-          .then(
-            null
-          )}>
+          }>
             Lagre
           </Button>
         </Col>
@@ -296,6 +289,22 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
     </Form>
   );
+};
+
+SampleAddComponent.submitSample =  (appSession, form, addSample) => {
+
+  const token = appSession.getAccessToken();
+  const museumId = appSession.getMuseumId();
+  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+  const data = myReduce(form);
+
+  data['createdDate'] = '2017-03-19';
+  data['status'] = 2;
+  data['responsible'] = appSession.getActor().dataportenId;
+  data['isCollectionObject'] = false;
+  data['museumId'] =  99;
+
+  return addSample({museumId,token, data});
 };
 
 const FieldShape = {
