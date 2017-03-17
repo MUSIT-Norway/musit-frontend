@@ -24,9 +24,9 @@ const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
     validationState={field.status && !field.status.valid ? 'error' : null}
   >
     <FormControl
-      {...inputProps}
-      value={field.rawValue || ''}
-      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value })}
+        {...inputProps}
+        value={field.rawValue || ''}
+        onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value })}
     />
   </FormGroup>
 );
