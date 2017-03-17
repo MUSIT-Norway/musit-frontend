@@ -12,7 +12,9 @@ import {
   ControlLabel,
   Row
 } from 'react-bootstrap';
+import Config from '../../config';
 import FontAwesome from 'react-fontawesome';
+import { hashHistory } from 'react-router';
 
 type Field = {name: string, rawValue: ?string};
 type Update = (update: Field) => void;
@@ -273,7 +275,9 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       <Row className='row-centered'>
         <Col md={4}>
           <Button onClick={() => SampleAddComponent.submitSample(appSession, form, addSample)
-          .toPromise()
+          .toPromise().then(
+            hashHistory.push(Config.magasin.urls.client.analysis.gotoSample('e741df4d-aff3-468b-b80a-9fcd682c2ab5'))
+          )
           }>
             Lagre
           </Button>

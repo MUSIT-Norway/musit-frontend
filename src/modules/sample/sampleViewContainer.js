@@ -3,7 +3,7 @@ import sampleForm from './sampleAddForm';
 import SampleViewComponent from './SampleViewComponent';
 import React from 'react';
 import {Observable} from 'rxjs';
-import {mount} from '../../components/Mount';
+import  mount from '../../shared/mount';
 import flowRight from 'lodash/flowRight';
 import {emitError, emitSuccess} from '../../shared/errors';
 import  sampleStore$, {loadForm$} from './sampleStore';
@@ -21,4 +21,4 @@ const props = {
 
 const commands = {loadForm$};
 
-export default flowRight([inject, mount])(data, commands, props)(SampleViewComponent);
+export default flowRight([inject, mount ((p) => (p.loadSample(p.params.sampleId)))])(data, commands, props)(SampleViewComponent);

@@ -11,11 +11,11 @@ const initialState = {
 };
 
 export const clearForm$ = createAction('clearForm$');
-export const loadForm$ = createAction('loadForm$').flatMap(Sample.loadSample());
+export const loadForm$ = createAction('loadForm$').switchMap(Sample.loadSample());
 
 export const reducer$ = (actions) => Observable.merge(
   actions.clearForm$.map(() => () => initialState),
-  actions.loadForm$.map(() => () => initialState)
+  actions.loadForm$.map((data) => (state) => ({ ...state, data, loading: false}))
 );
 
 export const store$ = (actions$ = { clearForm$, loadForm$ }) =>

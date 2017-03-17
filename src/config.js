@@ -20,7 +20,8 @@ export default {
           addAnalysis: () =>
             '/analysis/add',
           addSample: () =>
-            '/analysis/sample/add'
+            '/analysis/sample/add',
+          gotoSample: (id) => `/analysis/sample/${id}`
         },
         magasin: {
           goToMagasin: (appSession: AppSession) =>

@@ -64,7 +64,7 @@ export default () => {
 
         <Route component={CenteredLayout}>
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
-          <Route path="analysis/sample/view" component={SampleViewContainer}/>
+          <Route path="analysis/sample/:sampleId" component={SampleViewContainer}/>
         </Route>
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />
