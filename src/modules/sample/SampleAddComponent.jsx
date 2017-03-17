@@ -24,20 +24,20 @@ const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
     validationState={field.status && !field.status.valid ? 'error' : null}
   >
     <FormControl
-        {...inputProps}
-        value={field.rawValue || ''}
-        onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value })}
+      {...inputProps}
+      value={field.rawValue || ''}
+      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value })}
     />
   </FormGroup>
 );
 
 type FieldDropDownProps = {
-                            field: Field,
-                            title: any,
-                            onSelectInput: Update,
-                            selectItems: Array<string>,
-                            inputProps?:  {className?: string, style?:{}}
-                          };
+  field: Field,
+  title: any,
+  onSelectInput: Update,
+  selectItems: Array<string>,
+  inputProps?:  {className?: string, style?:{}}
+};
 
 const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : FieldDropDownProps) => (
   <FormGroup
@@ -65,9 +65,10 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : 
 type FieldReadOnlyProps = {field: Field, label: string, defaultValue: string, inputProps?:  {className?: string, style?:{}}};
 
 const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyProps) => {
-  const value=field.rawValue;
-  return (<span { ...inputProps}>
-    {label} <b> {value||defaultValue}</b>
+  const value = field.rawValue;
+  return (
+    <span { ...inputProps}>
+      {label} <b> {value || defaultValue}</b>
     </span>
   );
 };
@@ -101,7 +102,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
         </Col>
       </Row>
       <Row className='row-centered'>
-        <Col md={1}>
+        <Col md={2}>
           <FieldReadOnly
             field={form.museumId}
             inputProps={{className: 'museumId'}}
@@ -109,7 +110,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             defaultValue='1234'
           />
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FieldReadOnly
             field={form.subNo}
             inputProps={{className: 'subNo'}}
@@ -117,7 +118,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             defaultValue='6789'
           />
         </Col>
-        <Col md={2}>
+        <Col md={3}>
           <FieldReadOnly
             field={form.term_species}
             inputProps={{className: 'term_species'}}
@@ -131,30 +132,30 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
       <hr/>
       <Row>
-        <Col md={1}>
+        <Col md={2}>
           <b>PrøveID: </b>66777
         </Col>
       </Row>
       <br/>
       <Row>
-        <Col md={1}>
+        <Col md={2}>
           <ControlLabel>Registrert:</ControlLabel>
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FontAwesome name='user'/> {form.registeredBy.value || 'Line A. Sjo' }
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FontAwesome name='clock-o'/> {form.registeredDate.value || '11.03.2017' }
         </Col>
       </Row>
       <Row>
-        <Col md={1}>
+        <Col md={2}>
           <ControlLabel>Sist endret:</ControlLabel>
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FontAwesome name='user'/> {form.updateBy.value || 'Stein Olsen' }
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FontAwesome name='clock-o'/> {form.updateDate.value || '11.03.2017' }
         </Col>
         <Col md={2}>
@@ -164,10 +165,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       <br/>
       <hr/>
       <Row className='row-centered'>
-        <Col md={1}>
+        <Col md={2}>
           <b>Prøvetype</b>
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FieldDropDown
             field={form.sampleType}
             title={'Velg type'}
@@ -176,10 +177,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             inputProps={{className: 'sampleType'}}
           />
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <b>Prøveundertype</b>
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FieldDropDown
             field={form.sampleSubType}
             title={'Velg type'}
@@ -191,10 +192,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
       <br/>
       <Row className='row-centered'>
-        <Col md={1}>
+        <Col md={2}>
           <b>Status</b>
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FieldDropDown
             field={form.status}
             title={'Velg type'}
@@ -202,15 +203,14 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             selectItems={['Skilt', 'Ugift', 'Separert']}
             inputProps={{className: 'status'}}
           />
-
         </Col>
       </Row>
       <br/>
       <Row className='row-centered'>
-        <Col md={1}>
+        <Col md={2}>
           <ControlLabel>Målevolum/-vekt</ControlLabel>
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FieldInput
             field={form.sampleSize}
             onChangeInput={updateForm}
@@ -219,7 +219,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             }}
           />
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FieldDropDown
             field={form.sizeUnit}
             title={'Velg måleenhet'}
@@ -231,10 +231,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
       <br/>
       <Row className='row-centered'>
-        <Col md={1}>
+        <Col md={2}>
           <ControlLabel>Lagringskontainer</ControlLabel>
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FieldDropDown
             field={form.container}
             title={form.container.value||'Velg kontainer'}
@@ -243,7 +243,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             inputProps={{className: 'storageContainer'}}
           />
         </Col>
-        <Col md={1}>
+        <Col md={2}>
           <FieldDropDown
             field={form.storageMedium}
             title={'Velg langringsmedium'}
@@ -255,10 +255,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
       <br/>
       <Row className='row-centered'>
-        <Col md={1}>
+        <Col md={2}>
           <ControlLabel>{'Note'}</ControlLabel>
         </Col>
-        <Col md={3}>
+        <Col md={5}>
           <FieldInput
             field={form.note}
             onChangeInput={updateForm}
@@ -291,7 +291,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
   );
 };
 
-SampleAddComponent.submitSample =  (appSession, form, addSample) => {
+SampleAddComponent.submitSample = (appSession, form, addSample) => {
 
   const token = appSession.getAccessToken();
   const museumId = appSession.getMuseumId();
@@ -302,9 +302,9 @@ SampleAddComponent.submitSample =  (appSession, form, addSample) => {
   data['status'] = 2;
   data['responsible'] = appSession.getActor().dataportenId;
   data['isCollectionObject'] = false;
-  data['museumId'] =  99;
+  data['museumId'] = 99;
 
-  return addSample({museumId,token, data});
+  return addSample({museumId, token, data});
 };
 
 const FieldShape = {
