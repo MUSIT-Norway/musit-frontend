@@ -35,7 +35,8 @@ export const reducer$ = (actions) => Observable.merge(
         totalMatches: result.totalMatches ? result.totalMatches : 0,
         matches
       }
-    };}),
+    };
+  }),
   actions.onChangeField$.map(({ field, value }) => (state) => ({
     ...state,
     params: {

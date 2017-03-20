@@ -7,7 +7,7 @@ describe('ObservationControlGrid', () => {
   it('Check the 1st row Date value', () => {
     const myDiv = mount(
       <ObservationControlGrid
-        id={"1"}
+        id="1"
         translate={(key) => key}
         showControl={() => true}
         showObservation={() => true}
