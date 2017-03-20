@@ -19,7 +19,7 @@ const data = {
   store$ };
 const commands = { updateForm$, loadForm$, clearAnalysisTypes$, loadAnalysisTypes$ };
 const props = {
-  saveAnalysisEvent: MusitAnalysis.saveAnalysisEvent()
+  saveAnalysisEvent: (val) => MusitAnalysis.saveAnalysisEvent()(val).toPromise()
 };
 
 export default flowRight([

@@ -43,7 +43,7 @@ const getBoolField = (field, value = false): Field<boolean> => {
 
 const id = getStrField('id', '123');
 const registeredBy = getStrField('registeredBy', 'Per Hansen');
-const registeredDate = getStrField('registeredDate', '12.12.2012');
+const registeredDate = getStrField('registeredDate', '2017-03-16T14:37:45+00:00');
 const doneBy = getStrField('doneBy', 'Per Hansen');
 const doneDate = getStrField('doneDate', '12.12.2012');
 const eventDate = getStrField('eventDate', '13.12.2012');

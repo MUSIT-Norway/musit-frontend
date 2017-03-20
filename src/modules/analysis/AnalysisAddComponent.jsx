@@ -215,10 +215,14 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
           <FormGroup>
             {LabelFormat('Type analyse', 1)}
             <Col md={2}>
-              <FormControl componentClass="select" placeholder="Velg kategori">
+              <FormControl
+                componentClass="select"
+                placeholder="Velg kategori"
+                onChange={(e) => updateForm({name: form.analysisTypeId.name, rawValue: e.target.value })}
+              >
                 <option>Velg kategori</option>
                 {store.data.analysisTypes ?
-                  store.data.analysisTypes.map((a) => <option key={a.id} value={a.name}>{a.name}</option>)
+                  store.data.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)
                   : ''}
               </FormControl>
             </Col>
@@ -350,10 +354,10 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
         onClickSave={() => saveAnalysisEvent({
           museumId: appSession.getMuseumId(),
           data: {
-            analysisTypeId: '1bbf15cb-8348-4e66-99a4-bc314da57a42',
-            eventDate: '2017-03-16T14:37:45+00:00',
-            note: 'test record',
-            objectIds: ['1cbf15cb-8348-4e66-99a4-bc314da57a42', '2cbf15cb-8348-4e66-99a4-bc314da57a42', '3cbf15cb-8348-4e66-99a4-bc314da57a42']
+            analysisTypeId: form.analysisTypeId.rawValue || '',
+            eventDate: form.registeredDate.rawValue || '',
+            note: form.note.rawValue || '',
+            objectIds: store.objectsData.map((a) => a.uuid)
           },
           token: appSession.getAccessToken()
         })}
