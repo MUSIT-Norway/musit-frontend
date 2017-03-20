@@ -7,7 +7,7 @@ describe('LeftMenu', () => {
   it('Check the new observation button is created.', () => {
     const myDiv = shallow(
       <LeftMenu
-        id={"1"}
+        id="1"
         translate={(key) => key}
         selectObservation={(key) => key}
         selectControl={(key) => key}
