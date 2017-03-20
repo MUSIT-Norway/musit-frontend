@@ -14,6 +14,7 @@ const data = {
   form$,
   sampleStore$
 };
+
 const props = {
   emitSuccess,
   emitError
@@ -21,4 +22,9 @@ const props = {
 
 const commands = {loadForm$};
 
-export default flowRight([inject, mount ((p) => (p.loadSample(p.params.sampleId)))])(data, commands, props)(SampleViewComponent);
+export default flowRight([inject (data, commands, props),mount ((p) => {
+  p.loadForm(p);
+})]) (SampleViewComponent);
+
+
+//export default flowRight([(inject (data, commands, props)) , (mount ((p) => (Sample.loadSample(p.params.sampleId)))), (SampleViewComponent)]);
