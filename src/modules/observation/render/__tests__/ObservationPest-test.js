@@ -14,27 +14,27 @@ describe('ObservationPest', () => {
         id="test"
         addIconWidth={2}
         removeIconWidth={2}
-        newButtonLabel={"New"}
+        newButtonLabel="New"
         newButtonOnClick={() => true}
-        countLabel={"Count label"}
+        countLabel="Count label"
         countOnChange={() => true}
-        countPlaceHolder={"Count placeholder"}
-        countTooltip={"Count tooltip"}
+        countPlaceHolder="Count placeholder"
+        countTooltip="Count tooltip"
         countWidth={2}
         countPrecision={0}
-        countValidate={"number"}
+        countValidate="number"
         lifeCycleItems={[
           'Adult',
           'Puppe',
           'Whateva'
         ]}
-        lifeCycleLabel={"LifeCycle label"}
+        lifeCycleLabel="LifeCycle label"
         lifeCycleOnChange={() => true}
         lifeCycleOnRemove={() => true}
-        lifeCyclePlaceHolder={"LifeCycle placeholder"}
-        lifeCycleTooltip={"LifeCycle tooltip"}
+        lifeCyclePlaceHolder="LifeCycle placeholder"
+        lifeCycleTooltip="LifeCycle tooltip"
         lifeCycleWidth={2}
-        lifeCycleValidate={"text"}
+        lifeCycleValidate="text"
         commentsLeftLabel="Left label"
         commentsLeftValue="left value"
         commentsLeftTooltip="Left tooltip"
