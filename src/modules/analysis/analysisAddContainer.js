@@ -7,7 +7,7 @@ import store$, {
   loadAnalysisTypes$
 } from './analysisStore';
 import MusitAnalysis from '../../models/analysis';
-import { makeUrlAware, AppSession } from '../app/appSession';
+import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 
@@ -18,23 +18,8 @@ const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
   store$ };
 const commands = { updateForm$, loadForm$, clearAnalysisTypes$, loadAnalysisTypes$ };
-
-const saveAnalysisEvent = () => {
-  MusitAnalysis.saveAnalysisEvent()({
-    museumId: AppSession.getMuseumId(),
-    data: {
-      analysisTypeId: form$.analysisTypeId.rawValue || '',
-      eventDate: form$.registeredDate.rawValue || '',
-      note: form$.note.rawValue || '',
-      objectIds: store$.objectsData.map((a) => a.uuid)
-    },
-    token: AppSession.getAccessToken()
-  }).toPromise();
-};
-
 const props = {
-  //saveAnalysisEvent: (val) => MusitAnalysis.saveAnalysisEvent()(val).toPromise()
-  saveAnalysisEvent
+  saveAnalysisEvent: (val) => MusitAnalysis.saveAnalysisEvent()(val).toPromise()
 };
 
 export default flowRight([

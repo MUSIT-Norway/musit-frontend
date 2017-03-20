@@ -2,7 +2,6 @@ import {Observable} from 'rxjs';
 import {createStore, createAction} from 'react-rxjs/dist/RxStore';
 import MusitAnalysis from '../../models/analysis';
 
-
 const objectsData =
   [{ museumNumber: '123',
     subNumber: '12345678911',

@@ -88,11 +88,22 @@ function newLine() {
   </Form>;
 }
 
-
+const getVal = (form, field) => form[field] && (form[field].rawValue || '');
 const expanded = true;
 
+const saveAnalysisEventLocal = (appSession, form, store, saveAnalysisEvent) =>{
+  return saveAnalysisEvent({
+    museumId: appSession.getMuseumId(),
+    data: {
+      analysisTypeId: getVal(form, 'analysisTypeId'),
+      eventDate: getVal(form, 'registeredDate'),
+      note: getVal(form, 'note'),
+      objectIds: store.objectsData.map((a) => a.uuid)
+    },
+    token: appSession.getAccessToken()});
+};
 
-const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => {
+const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => {
   return (
     <div>
       <br/>
@@ -100,18 +111,18 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
       <Form>
         <FormGroup>
           {LabelFormat('HID:')}
-          <Col style={{ padding: '7px' }}>{form.id.rawValue || ''}</Col>
+          <Col style={{ padding: '7px' }}>{getVal(form, 'id')}</Col>
           {LabelFormat('Registrert:', 1)}
           <Col md={2} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}
-            {form.registeredBy.rawValue || ''}
+            {getVal(form, 'registeredBy')}
           </Col>
           <Col md={9} style={{ padding: '7px' }}>
             <FontAwesome name='clock-o'/>{' '}
-            {form.registeredDate.rawValue || ''}
+            {getVal(form, 'registeredDate')}
           </Col>
           {LabelFormat('Sist endret:', 1)}
-          <Col md={2} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}{form.doneBy.rawValue || ''}</Col>
-          <Col md={2} style={{ padding: '7px' }}><FontAwesome name='clock-o'/>{' '}{form.doneDate.rawValue || ''}</Col>
+          <Col md={2} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}{getVal(form, 'doneBy')}</Col>
+          <Col md={2} style={{ padding: '7px' }}><FontAwesome name='clock-o'/>{' '}{getVal(form, 'doneDate')}</Col>
           <Col md={7} style={{ padding: '7px' }}><a href=''>Se endringshistorikk</a></Col>
         </FormGroup>
       </Form>
@@ -122,7 +133,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
             id="formControlsText"
             type="text"
             label="saksnummber"
-            value={form.caseNumber.rawValue || ''}
+            value={getVal(form, 'caseNumber')}
             onChange={(e) => updateForm({name: form.caseNumber.name, rawValue: e.target.value })}
           />
         </FormGroup>
@@ -181,7 +192,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
             type="text"
             label="Navn"
             placeholder="Fornavn Etternavn"
-            value={form.actor.rawValue || ''}
+            value={getVal(form, 'actor')}
             onChange={(e) => updateForm({name: form.actor.name, rawValue: e.target.value })}
           />
           {LabelFormat('Rolle', 1)}
@@ -233,7 +244,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
               type="text"
               label="Ekstern kilde"
               placeholder="http://www.lenke.no"
-              value={form.externalSource.rawValue || ''}
+              value={getVal(form, 'externalSource')}
               onChange={(e) => updateForm({name: form.externalSource.name, rawValue: e.target.value })}
             />
             <Col md={2}>
@@ -256,7 +267,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
               <FormControl
                 componentClass="textarea"
                 placeholder=""
-                value={form.comments.rawValue || ''}
+                value={getVal(form, 'comments')}
                 onChange={(e) => updateForm({name: form.comments.name, rawValue: e.target.value })}
               />
             </Col>
@@ -281,7 +292,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
                   type="text"
                   label="Klausulert for"
                   placeholder="Fornavn Etternavn"
-                  value={form.restrictionsFor.rawValue || ''}
+                  value={getVal(form, 'restrictionsFor')}
                   onChange={(e) => updateForm({name: form.restrictionsFor.name, rawValue: e.target.value })}
                 />
               </FormGroup>
@@ -291,7 +302,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
                   md={1}
                   type="text"
                   label="Årsak til klausulering"
-                  value={form.reasonForRestrictions.rawValue || ''}
+                  value={getVal(form, 'reasonForRestrictions')}
                   onChange={(e) => updateForm({name: form.reasonForRestrictions.name, rawValue: e.target.value })}
                 />
               </FormGroup>
@@ -301,7 +312,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
                   md={1}
                   type="text"
                   label="Sluttdato"
-                  value={form.restrictionsEndDate.rawValue || ''}
+                  value={getVal(form, 'restrictionsEndDate')}
                   readOnly
                 />
               </FormGroup>
@@ -312,7 +323,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
                   type="text"
                   label="Opphevet av"
                   placeholder="Fornavn Etternavn"
-                  value={form.repealedBy.rawValue || ''}
+                  value={getVal(form, 'repealedBy')}
                   onChange={(e) => updateForm({name: form.repealedBy.name, rawValue: e.target.value })}
                 />
               </FormGroup>
@@ -332,7 +343,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
               onChange={(e) => updateForm({name: form.note.name, rawValue: e.target.value })}
               componentClass="textarea"
               placeholder={form.note.name}
-              value={form.note.rawValue || ''}
+              value={getVal(form, 'note')}
             />
           </Col>
         </FormGroup>
@@ -351,7 +362,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
 
       {newLine()}
       <SaveCancel
-        onClickSave={() => saveAnalysisEvent()}
+        onClickSave={() => saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent)}
       />
       {newLine()}
       <Form horizontal>
@@ -359,10 +370,10 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
           <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
         </FormGroup>
         <FormGroup>
-          <Col mdOffset={1}>{form.registeredBy.rawValue || ''} - {form.registeredDate.rawValue || ''}</Col>
+          <Col mdOffset={1}>{getVal(form, 'registeredBy')} - {getVal(form, 'registeredDate')}</Col>
         </FormGroup>
         <FormGroup>
-          <Col mdOffset={1}>{form.doneBy.rawValue || ''} - {form.doneDate.rawValue || ''}</Col>
+          <Col mdOffset={1}>{getVal(form, 'doneBy')} - {getVal(form, 'doneDate')}</Col>
         </FormGroup>
         <FormGroup>
           <Col mdOffset={1}><a href=''>Se mer</a></Col>
@@ -370,6 +381,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => 
       </Form>
     </div>);
 };
+
 
 const FieldShape = {
   name: PropTypes.string.isRequired,
@@ -391,34 +403,34 @@ const FieldShapeBoolean = {
 
 AnalysisAdd.propTypes = {
   form: PropTypes.shape({
-    id: PropTypes.shape(FieldShape).isRequired,
-    registeredBy: PropTypes.shape(FieldShape).isRequired,
-    registeredDate: PropTypes.shape(FieldShape).isRequired,
-    doneBy: PropTypes.shape(FieldShape).isRequired,
-    doneDate: PropTypes.shape(FieldShape).isRequired,
-    eventDate: PropTypes.shape(FieldShape).isRequired,
-    objectId: PropTypes.shape(FieldShape).isRequired,
-    partOf: PropTypes.shape(FieldShape).isRequired,
-    result: PropTypes.shape(FieldShape).isRequired,
-    caseNumber: PropTypes.shape(FieldShape).isRequired,
-    actor: PropTypes.shape(FieldShape).isRequired,
-    role: PropTypes.shape(FieldShape).isRequired,
-    place: PropTypes.shape(FieldShape).isRequired,
-    analysisTypeId: PropTypes.shape(FieldShape).isRequired,
-    externalSource: PropTypes.shape(FieldShape).isRequired,
-    comments: PropTypes.shape(FieldShape).isRequired,
-    restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
-    restrictionsFor: PropTypes.shape(FieldShape).isRequired,
-    reasonForRestrictions: PropTypes.shape(FieldShape).isRequired,
-    restrictionsEndDate: PropTypes.shape(FieldShape).isRequired,
-    repealedBy: PropTypes.shape(FieldShape).isRequired,
-    note: PropTypes.shape(FieldShape).isRequired
+    id: PropTypes.shape(FieldShape),
+    registeredBy: PropTypes.shape(FieldShape),
+    registeredDate: PropTypes.shape(FieldShape),
+    doneBy: PropTypes.shape(FieldShape),
+    doneDate: PropTypes.shape(FieldShape),
+    eventDate: PropTypes.shape(FieldShape),
+    objectId: PropTypes.shape(FieldShape),
+    partOf: PropTypes.shape(FieldShape),
+    result: PropTypes.shape(FieldShape),
+    caseNumber: PropTypes.shape(FieldShape),
+    actor: PropTypes.shape(FieldShape),
+    role: PropTypes.shape(FieldShape),
+    place: PropTypes.shape(FieldShape),
+    analysisTypeId: PropTypes.shape(FieldShape),
+    externalSource: PropTypes.shape(FieldShape),
+    comments: PropTypes.shape(FieldShape),
+    restrictions: PropTypes.shape(FieldShapeBoolean),
+    restrictionsFor: PropTypes.shape(FieldShape),
+    reasonForRestrictions: PropTypes.shape(FieldShape),
+    restrictionsEndDate: PropTypes.shape(FieldShape),
+    repealedBy: PropTypes.shape(FieldShape),
+    note: PropTypes.shape(FieldShape)
   }).isRequired,
-  updateForm: PropTypes.func.isRequired,
-  loadForm: PropTypes.func.isRequired,
-  clearAnalysisTypes: PropTypes.func.isRequired,
-  loadAnalysisTypes: PropTypes.func.isRequired,
-  store: PropTypes.object,
+  updateForm: PropTypes.func,
+  loadForm: PropTypes.func,
+  clearAnalysisTypes: PropTypes.func,
+  loadAnalysisTypes: PropTypes.func,
+  store: PropTypes.object.isRequired,
   saveAnalysisEvent: PropTypes.func
 };
 

@@ -17,9 +17,7 @@ MusitAnalysis.getAllAnalysisTypes = (ajaxGet = simpleGet) => ({museumId, token, 
 
 MusitAnalysis.saveAnalysisEvent = (ajaxPost = simplePost) => ({ museumId, data, token, callback}) => {
   const url= Config.magasin.urls.api.analysis.saveAnalysisEvent(museumId);
-  const resp = ajaxPost(url, data, token, callback).map(({ response }) => response && new MusitAnalysis(response) );
-  console.log(resp);
-  return resp;
+  return ajaxPost(url, data, token, callback).map(({ response }) => response && new MusitAnalysis(response) );
 };
 
 
