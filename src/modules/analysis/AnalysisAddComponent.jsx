@@ -92,7 +92,7 @@ function newLine() {
 const expanded = true;
 
 
-const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => {
+const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent } : Props) => {
   return (
     <div>
       <br/>
@@ -351,16 +351,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
 
       {newLine()}
       <SaveCancel
-        onClickSave={() => saveAnalysisEvent({
-          museumId: appSession.getMuseumId(),
-          data: {
-            analysisTypeId: form.analysisTypeId.rawValue || '',
-            eventDate: form.registeredDate.rawValue || '',
-            note: form.note.rawValue || '',
-            objectIds: store.objectsData.map((a) => a.uuid)
-          },
-          token: appSession.getAccessToken()
-        })}
+        onClickSave={() => saveAnalysisEvent()}
       />
       {newLine()}
       <Form horizontal>
