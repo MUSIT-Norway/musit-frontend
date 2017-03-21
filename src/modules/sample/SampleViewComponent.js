@@ -2,7 +2,7 @@ import React from 'react';
 import {Form, PageHeader, FormControl, FormGroup, Col, Row, Button, ControlLabel} from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Config from '../../config';
-import { hashHistory } from 'react-router';
+import {hashHistory} from 'react-router';
 
 
 const FieldReadOnly = ({field, label}) => (
@@ -133,7 +133,7 @@ const SampleViewComponent = (props) => {
       </Row>
       <Row className='row-centered'>
         <Col md={4}>
-          <Button onClick ={()=> {
+          <Button onClick={()=> {
             hashHistory.push(Config.magasin.urls.client.analysis.editSample(props.params.sampleId));
           }}>
             Endre

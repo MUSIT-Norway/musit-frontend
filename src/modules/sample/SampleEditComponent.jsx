@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap';
 import Config from '../../config';
 import FontAwesome from 'react-fontawesome';
-import { hashHistory } from 'react-router';
+import {hashHistory} from 'react-router';
 
 type Field = {name: string, rawValue: ?string};
 type Update = (update: Field) => void;
@@ -85,7 +85,7 @@ type FormData = {
 type Props = {
   form: FormData,
   updateForm: Update,
-   editSample: Function,
+  editSample: Function,
   appSession: {
     getMuseumId: Function,
     getAccessToken: Function,
