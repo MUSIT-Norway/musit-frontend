@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import {emitError, emitSuccess} from '../../shared/errors';
 import  sampleStore$, { clearForm$ } from './sampleStore';
 
-const {form$, updateForm$} = sampleForm;
+const {form$, updateForm$, loadForm$} = sampleForm;
 
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
@@ -19,5 +19,5 @@ const props = {
   emitError
 };
 
-const commands = {updateForm$, clearForm$};
+const commands = {updateForm$, clearForm$,loadForm$};
 export default inject(data, commands, props)(SampleFormAddComponent);

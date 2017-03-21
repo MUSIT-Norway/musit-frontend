@@ -7,7 +7,8 @@ const initialState = {
   data: {
 
   },
-  loaded: false
+  loaded: true,
+  loading: false
 };
 
 export const clearForm$ = createAction('clearForm$');

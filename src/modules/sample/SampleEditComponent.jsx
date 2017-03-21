@@ -76,11 +76,23 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
 };
 
 type FormData = {
-  note: Field, size: Field, status: Field,
-  container: Field, storageMedium: Field, sampleType: Field,
-  sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
-  term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field
+  note: Field,
+  size: Field,
+  status: Field,
+  container: Field,
+  storageMedium: Field,
+  sampleType: Field,
+  sampleSubType: Field,
+  sizeUnit: Field,
+  museumId: Field,
+  subNo: Field,
+  term_species: Field,
+  registeredBy: Field,
+  registeredDate: Field,
+  updateBy: Field,
+  updateDate: Field,
+  sampleId: Field,
+  createdDate: Field
 }
 type Props = {
   form: FormData,
@@ -98,7 +110,42 @@ type Props = {
 
 const SampleEditComponent = ({params, form, updateForm, editSample, appSession} : Props) => {
   const id = params.sampleId;
-  console.log(id);
+
+  const sampleValues = [
+    'Frø',
+    'Vev'
+  ];
+
+  const sampleSubValues = (v) => {
+    switch (v) {
+    case 'Frø':
+      return ['Pollen', 'Korn', 'Erter'];
+    case 'Vev':
+      return ['Thallus', 'Bein', 'Blod', 'Ascus'];
+    default:
+      return [];
+    }
+  };
+
+
+  const containerTypes = [
+    'Kapsel',
+    'Glassplate',
+    'Kolbe'
+  ];
+
+  const containerSubTypes = (v) => {
+    switch (v) {
+      case 'Kapsel':
+        return ['Etanol', 'Aceton', 'Vann'];
+      case 'Glassplate':
+        return [];
+      case 'Koble':
+        return ['Aceton', 'Etanol', 'H2O'];
+      default:
+        return [];
+    }
+  };
 
   return (
     <Form style={{ padding: 20 }}>
@@ -182,7 +229,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
             field={form.sampleType}
             title={'Velg type'}
             onSelectInput={updateForm}
-            selectItems={['Vev', 'DNA-ekstrakt', 'Bein']}
+            selectItems={sampleValues}
             inputProps={{className: 'sampleType'}}
           />
         </Col>
@@ -194,7 +241,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
             field={form.sampleSubType}
             title={'Velg type'}
             onSelectInput={updateForm}
-            selectItems={['Tallus', 'Klorofyll']}
+            selectItems={sampleSubValues(form.sampleType.rawValue)}
             inputProps={{className: 'sampleSubType'}}
           />
         </Col>
@@ -248,7 +295,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
             field={form.container}
             title={form.container.value||'Velg kontainer'}
             onSelectInput={updateForm}
-            selectItems={['Kapsel', 'Reagensrør', 'Glassplate']}
+            selectItems={containerTypes}
             inputProps={{className: 'storageContainer'}}
           />
         </Col>
@@ -257,7 +304,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
             field={form.storageMedium}
             title={'Velg langringsmedium'}
             onSelectInput={updateForm}
-            selectItems={['Etanol', 'Aceton', 'Vann']}
+            selectItems={containerSubTypes(form.container.rawValue)}
             inputProps={{className: 'storageMedium'}}
           />
         </Col>

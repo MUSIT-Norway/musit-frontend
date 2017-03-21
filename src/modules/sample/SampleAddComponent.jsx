@@ -14,7 +14,7 @@ import {
 } from 'react-bootstrap';
 import Config from '../../config';
 import FontAwesome from 'react-fontawesome';
-import { hashHistory } from 'react-router';
+import {hashHistory} from 'react-router';
 
 type Field = {name: string, rawValue: ?string};
 type Update = (update: Field) => void;
@@ -75,6 +75,7 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
+
 type FormData = {
   note: Field, size: Field, status: Field,
   container: Field, storageMedium: Field, sampleType: Field,
@@ -83,14 +84,50 @@ type FormData = {
   updateDate: Field, sampleId: Field, createdDate: Field
 }
 type Props = {
-  form: FormData, updateForm: Update, addSample: Function, appSession: {
+  form: FormData, updateForm: Update, addSample: Function, clearForm: Function, appSession: {
     getMuseumId: Function,
     getAccessToken: Function,
     getActor: Function
   }
 };
 
-const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) => {
+const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm} : Props) => {
+
+  const sampleValues = [
+    'Frø',
+    'Vev'
+  ];
+
+  const sampleSubValues = (v) => {
+    switch (v) {
+    case 'Frø':
+      return ['Pollen', 'Korn', 'Erter'];
+    case 'Vev':
+      return ['Thallus', 'Bein', 'Blod', 'Ascus'];
+    default:
+      return [];
+    }
+  };
+
+
+  const containerTypes = [
+    'Kapsel',
+    'Glassplate',
+    'Kolbe'
+  ];
+
+  const containerSubTypes = (v) => {
+    switch (v) {
+      case 'Kapsel':
+        return ['Etanol', 'Aceton', 'Vann'];
+      case 'Glassplate':
+        return [];
+      case 'Koble':
+        return ['Aceton', 'Etanol', 'H2O'];
+      default:
+        return [];
+    }
+  };
 
 
   return (
@@ -175,7 +212,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             field={form.sampleType}
             title={'Velg type'}
             onSelectInput={updateForm}
-            selectItems={['Vev', 'DNA-ekstrakt', 'Bein']}
+            selectItems={sampleValues}
             inputProps={{className: 'sampleType'}}
           />
         </Col>
@@ -187,7 +224,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             field={form.sampleSubType}
             title={'Velg type'}
             onSelectInput={updateForm}
-            selectItems={['Tallus', 'Klorofyll']}
+            selectItems={sampleSubValues(form.sampleType.rawValue)}
             inputProps={{className: 'sampleSubType'}}
           />
         </Col>
@@ -241,7 +278,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             field={form.container}
             title={form.container.value||'Velg kontainer'}
             onSelectInput={updateForm}
-            selectItems={['Kapsel', 'Reagensrør', 'Glassplate']}
+            selectItems={containerTypes}
             inputProps={{className: 'storageContainer'}}
           />
         </Col>
@@ -250,7 +287,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
             field={form.storageMedium}
             title={'Velg langringsmedium'}
             onSelectInput={updateForm}
-            selectItems={['Etanol', 'Aceton', 'Vann']}
+            selectItems={containerSubTypes(form.container.rawValue)}
             inputProps={{className: 'storageMedium'}}
           />
         </Col>
@@ -285,10 +322,14 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
           </Button>
         </Col>
         <Col md={4}>
-          <a onClick={
-            (e) => {
-              e.preventDefault();
-            }}>
+          <a
+            href="#"
+            onClick={
+                (e)=>{
+                  SampleAddComponent.clear(e,clearForm).toPromise().then(
+                    hashHistory.refresh());
+                }}
+          >
             Avbryt
           </a>
         </Col>
@@ -296,6 +337,12 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
     </Form>
   );
 };
+
+SampleAddComponent.clear = (e, clearForm) => {
+  e.preventDefault();
+  return clearForm();
+};
+
 
 SampleAddComponent.submitSample = (appSession, form, addSample) => {
 
