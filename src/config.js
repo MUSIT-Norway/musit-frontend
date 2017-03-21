@@ -70,7 +70,9 @@ export default {
       api: {
         analysis: {
           baseUrl:
-            '/api/analyses/'
+            '/api/analyses/',
+          analysesForObject: (mid, objectId): string =>
+            `/api/management/${mid.id}/analyses/objects/${objectId}`
         },
         samples: {
           baseUrl: (mid): string =>

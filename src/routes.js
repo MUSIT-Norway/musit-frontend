@@ -62,7 +62,7 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route component={CenteredLayout}>
-          <Route path="events" component={AllEvents} />
+          <Route path="events/:objectId/:id" component={AllEvents} />
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
         </Route>
         <Route path="picklist">

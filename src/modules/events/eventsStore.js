@@ -1,36 +1,22 @@
 // @flow
-import { createStore } from 'react-rxjs/dist/RxStore';
+import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { Observable } from 'rxjs';
+import Analyses from '../../models/analyses';
+import MusitObject from '../../models/object';
 
-type Event = {
-  id: number,
-  type: string,
-  registeredDate: string,
-  registeredBy: string
-};
+const initialState = [];
 
-const initialState: Event[] = [
-  {
-    id: 1,
-    type: 'Sample',
-    registeredDate: '2017-03-16T13:30:36+00:00',
-    registeredBy: 'Karl parl'
-  },
-  {
-    id: 2,
-    type: 'Analyses',
-    registeredDate: '2017-03-16T13:30:36+00:00',
-    registeredBy: 'Karl parl'
-  },
-  {
-    id: 2,
-    type: 'Sample',
-    registeredDate: '2017-03-16T13:30:36+00:00',
-    registeredBy: 'Karl parl'
-  }
-];
+const concatAnalysesWithMoves = (val) =>
+  Observable.forkJoin(
+    Analyses.getAnalysesForObject()(val),
+    MusitObject.getLocationHistory()(val)
+  ).map(([analyses, moves]) =>
+    analyses.concat(moves.map(m => ({...m, type: 'Move'})))
+  );
 
-const reducer$ = Observable.empty();
+export const loadAnalyses$ = createAction('loadAnalyses$').switchMap(concatAnalysesWithMoves);
+
+const reducer$ = loadAnalyses$.map((data) => () => data);
 
 const eventsStore$ = createStore('allEvents', reducer$, Observable.of(initialState));
 
