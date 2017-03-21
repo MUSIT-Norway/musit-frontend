@@ -118,8 +118,8 @@ const note: Field<string> = {
   }
 };
 
-const sampleSize: Field<number> = {
-  name: 'sampleSize',
+const size: Field<number> = {
+  name: 'size',
   mapper: numberMapper,
   validator: {
     rawValidator: composeValidators(isRequired, isNumber(0, 2)),
@@ -162,7 +162,7 @@ const status: Field<string> = {
 const fields = [
   note,
   status,
-  sampleSize,
+  size,
   sizeUnit,
   container,
   storageMedium,

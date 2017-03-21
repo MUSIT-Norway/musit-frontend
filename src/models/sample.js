@@ -11,13 +11,15 @@ class Sample {
 Sample.addSample = (ajaxPost = simplePost) => ({museumId, token, data, callback}) => {
   const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
   const url = baseUrl;
-  return ajaxPost(url, data, token, callback).map(({ response }) => response && new Sample(response));
+  const resp = ajaxPost(url, data, token, callback);
+  return resp.map(({response}) => response);
 };
 
 
 Sample.loadSample = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
   const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
   const url = `${baseUrl}/${id}`;
+  console.log('URL', url, token);
   return ajaxGet(url, token, callback).map(({ response }) => response && new Sample(response));
 };
 

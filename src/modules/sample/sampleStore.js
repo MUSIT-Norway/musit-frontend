@@ -4,21 +4,23 @@ import  Sample  from '../../models/sample';
 
 
 const initialState = {
-  sampleObject: {
+  data: {
 
   },
   loaded: false
 };
 
 export const clearForm$ = createAction('clearForm$');
-export const loadForm$ = createAction('loadForm$').switchMap(Sample.loadSample());
+export const loadSample$ = createAction('loadSample$').switchMap(Sample.loadSample());
 
 export const reducer$ = (actions) => Observable.merge(
   actions.clearForm$.map(() => () => initialState),
-  actions.loadForm$.map((data) => (state) => ({ ...state, data, loading: false}))
+  actions.loadSample$.map((data) => (state) => {
+    console.log('LoadForm',data, state); return { ...state, data, loading: false, loaded: true};
+  })
 );
 
-export const store$ = (actions$ = { clearForm$, loadForm$ }) =>
+export const store$ = (actions$ = { clearForm$, loadSample$ }) =>
   createStore('sample', reducer$(actions$), Observable.of(initialState));
 
 export default store$();

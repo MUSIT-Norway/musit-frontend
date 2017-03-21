@@ -27,7 +27,7 @@ const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
   >
     <FormControl
       {...inputProps}
-      value={field.rawValue || ''}
+      value={field.rawValue||''}
       onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value })}
     />
   </FormGroup>
@@ -76,7 +76,7 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
 };
 
 type FormData = {
-  note: Field, sampleSize: Field, status: Field,
+  note: Field, size: Field, status: Field,
   container: Field, storageMedium: Field, sampleType: Field,
   sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
   term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field,
@@ -214,7 +214,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
         </Col>
         <Col md={2}>
           <FieldInput
-            field={form.sampleSize}
+            field={form.size}
             onChangeInput={updateForm}
             inputProps={{
               className: 'sampleSize'
@@ -275,8 +275,11 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       <Row className='row-centered'>
         <Col md={4}>
           <Button onClick={() => SampleAddComponent.submitSample(appSession, form, addSample)
-          .toPromise().then(
-            hashHistory.push(Config.magasin.urls.client.analysis.gotoSample('e741df4d-aff3-468b-b80a-9fcd682c2ab5'))
+            .toPromise().then((value) => {
+              console.log('Verdi i then ',value);
+              hashHistory.push(Config.magasin.urls.client.analysis
+              .gotoSample(value));
+            }
           )
           }>
             Lagre
@@ -314,7 +317,10 @@ SampleAddComponent.submitSample = (appSession, form, addSample) => {
 const FieldShape = {
   name: PropTypes.string.isRequired,
   rawValue: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType[
+    PropTypes.string,
+      PropTypes.number
+    ],
   status: PropTypes.shape({
     valid: PropTypes.bool.isRequired,
     error: PropTypes.any
@@ -333,7 +339,7 @@ SampleAddComponent.propTypes = {
     updateDate: PropTypes.shape(FieldShape).isRequired,
     sampleType: PropTypes.shape(FieldShape).isRequired,
     sampleSubType: PropTypes.shape(FieldShape).isRequired,
-    sampleSize: PropTypes.shape(FieldShape).isRequired,
+    size: PropTypes.shape(FieldShape).isRequired,
     sizeUnit: PropTypes.shape(FieldShape).isRequired,
     status: PropTypes.shape(FieldShape).isRequired,
     container: PropTypes.shape(FieldShape).isRequired,
