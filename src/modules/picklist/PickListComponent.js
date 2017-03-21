@@ -1,39 +1,16 @@
-import MusitNode from '../../models/node';
-import MusitObject from '../../models/object';
 import React, { PropTypes } from 'react';
-import PickListTable from './PickListTable';
-import { PageHeader, Grid, Button } from 'react-bootstrap';
+import { PageHeader, Grid, Button, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
-import { emitError, emitSuccess } from '../../shared/errors';
-import { getPath } from '../../shared/util';
-import { checkNodeBranchAndType } from '../../shared/nodeValidator';
-import PrintTemplate from '../print/PrintTemplateComponent';
-import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
-import {
-  toggleNode$,
-  toggleMainObject$,
-  toggleObject$,
-  removeNode$,
-  removeObject$,
-  refreshNode$,
-  refreshObjects$,
-  addNode$,
-  addObject$
-} from '../app/pickList';
-import inject from 'react-rxjs/dist/RxInject';
-import { showModal } from '../../shared/modal';
-import scannerIcon from '../app/scannerIcon.png';
-import connectToScanner from '../app/scanner';
 import Config from '../../config';
-import { makeUrlAware } from '../app/appSession';
-import flowRight from 'lodash/flowRight';
+import PrintTemplate from '../print/PrintTemplateContainer';
+import scannerIcon from '../app/scannerIcon.png';
 
-export class PickListContainer extends React.Component {
+export class PickListComponent extends React.Component {
   static propTypes = {
     pickList: PropTypes.object.isRequired,
     toggleNode: PropTypes.func.isRequired,
@@ -47,138 +24,44 @@ export class PickListContainer extends React.Component {
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired,
     toggleScanner: PropTypes.func.isRequired,
-    scannerEnabled: PropTypes.bool.isRequired
-  }
+    scannerEnabled: PropTypes.bool.isRequired,
+    moveItems: PropTypes.func.isRequired
+  };
 
   constructor(props) {
     super(props);
-    this.moveModal = this.moveModal.bind(this);
     this.print = this.print.bind(this);
     this.showMoveNodes = this.showMoveNodes.bind(this);
   }
 
-  showMoveNodes = (items) => {
+  isNodeView() {
+    return this.props.isTypeNode(this.props);
+  }
+
+  showMoveNodes(items) {
     let title;
     if (this.props.isTypeNode(this.props)) {
       title = I18n.t('musit.moveModal.moveNodes');
     } else {
       title = I18n.t('musit.moveModal.moveObjects');
     }
-    this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveModal(items)}/>);
-  }
-
-  nodeCallback = (toName, toMoveLength, name, items, onSuccess) => ({
-    onComplete: () => {
-      items.map(item =>
-        this.props.refreshNode({
-          id: item.id,
-          museumId: this.props.appSession.getMuseumId(),
-          token: this.props.appSession.getAccessToken()
-        })
-      );
-      onSuccess();
-      if (toMoveLength === 1) {
-        this.props.emitSuccess({
-          type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })
-        });
-      } else {
-        this.props.emitSuccess({
-          type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })
-        });
-      }
-    },
-    onFailure: (e) => {
-      if (toMoveLength === 1) {
-        this.props.emitError({type: 'errorOnMove', error: e, message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })});
-      } else {
-        this.props.emitError({type: 'errorOnMove', error: e,
-          message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })});
-      }
-    }
-  })
-
-  objectCallback = (toName, toMoveLength, name, items, onSuccess) => ({
-    onComplete: () => {
-      this.props.refreshObjects({
-        objectIds: items.map(item => item.id),
-        museumId: this.props.appSession.getMuseumId(),
-        token: this.props.appSession.getAccessToken()
-      });
-      onSuccess();
-      if (toMoveLength === 1) {
-        this.props.emitSuccess({
-          type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.objectMoved', { name, destination: toName })
-        });
-      } else {
-        this.props.emitSuccess({
-          type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.objectsMoved', { count: toMoveLength, destination: toName })
-        });
-      }
-    },
-    onFailure: (error) => {
-      if (toMoveLength === 1) {
-        this.props.emitError({
-          type: 'errorOnMove',
-          error,
-          message: I18n.t('musit.moveModal.messages.errorObject', { name, destination: toName })
-        });
-      } else {
-        this.props.emitError({
-          type: 'errorOnMove',
-          error,
-          message: I18n.t('musit.moveModal.messages.errorObjects', { count: toMoveLength, destination: toName })
-        });
-      }
-    }
-  })
-
-  moveModal = (items) => (to, toName, onSuccess) => {
-    const isNode = this.props.isTypeNode(this.props);
-    const moveFn = isNode ? MusitNode.moveNode : MusitObject.moveObject;
-    const toMove = items.map(itemToMove => itemToMove.id);
-    const toMoveLength = toMove.length;
-    const first = items[0];
-    const name = isNode ? first.name : first.term;
-    let callback;
-    if (isNode) {
-      callback = this.nodeCallback(toName, toMoveLength, name, items, onSuccess);
-    } else {
-      callback = this.objectCallback(toName, toMoveLength, name, items, onSuccess);
-    }
-
-    let error = false;
-    if (isNode) {
-      const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
-      const errorMessages = itemsWithError.map(fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.value.name})` );
-      if (errorMessages.length > 0) {
-        error = true;
-        for (const errorMessage of errorMessages) {
-          this.props.emitError({
-            type: 'errorOnMove',
-            message: errorMessage
-          });
-        }
-      }
-    }
-
-    if (!error) {
-      moveFn()({
-        id: toMove,
-        destination: to.id,
-        doneBy: this.props.appSession.getActor().getActorId(),
-        museumId: this.props.appSession.getMuseumId(),
-        token: this.props.appSession.getAccessToken(),
-        callback
-      }).toPromise();
-    }
+    this.props.showModal(
+      title,
+      <MusitModal
+        appSession={this.props.appSession}
+        onMove={this.props.moveItems(this.props.appSession, items, this.isNodeView())}
+      />
+    );
   }
 
   print(nodesToPrint) {
-    this.props.showModal(I18n.t('musit.template.labelTemplates'), <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />);
+    this.props.showModal(
+      I18n.t('musit.template.labelTemplates'),
+      <PrintTemplate
+        appSession={this.props.appSession}
+        marked={nodesToPrint}
+      />
+    );
   }
 
   toggleObject({item, on}) {
@@ -189,70 +72,186 @@ export class PickListContainer extends React.Component {
     }
   }
 
-  render() {
-    const type = this.props.route.type;
-    const pickList = (this.props.pickList && this.props.pickList[type]) || [];
-    const marked = pickList.filter(p => p.marked);
-    const markedValues = marked.map(p => p.value);
-    const title = (
+  iconRenderer(pick) {
+    if (pick.value.name) {
+      return <FontAwesome name="folder"/>;
+    }
+    return <span className='icon icon-musitobject'/>;
+  }
+
+  labelRenderer(isNode, pick) {
+    return (
       <div>
-        <span>{I18n.t(`musit.pickList.title.${this.props.route.type}`)}</span>
-        <div
-          style={{
-            float: 'right',
-            margin: '0 25px 0 0'
-          }}
-        >
-          <Button active={this.props.scannerEnabled} onClick={() => this.props.toggleScanner()}>
-            <img src={scannerIcon} height={25} alt="scan" />
-          </Button>
+        {!isNode ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span> : null}
+        {!isNode ? <span style={{ paddingLeft: '1em' }}>{pick.value.subNo}</span> : null}
+        <span style={{ paddingLeft: '1em' }}>
+            {pick.value.name ? pick.value.name : pick.value.term}
+          </span>
+        <div className="labelText">
+          <Breadcrumb
+            node={pick.path}
+            onClickCrumb={node => {
+              if(node.id) {
+                hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession));
+              } else {
+                hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
+              }
+            }}
+            allActive
+          />
         </div>
       </div>
     );
+  }
+
+  selectedCount(isNode, count) {
+    return (
+      <span
+        className="normalActionNoPadding"
+        style={{ fontSize: '0.8em' }}
+        title={I18n.t(`musit.pickList.tooltip.${isNode ? 'selectedNodeCount' : 'selectedObjectCount'}`)}
+      >
+        {`(${count})`}
+      </span>
+    );
+  }
+
+  remove(item) {
+    if (this.isNodeView()) {
+      this.props.removeNode(item);
+    } else {
+      this.props.removeObject(item);
+    }
+  }
+
+  toggle(item, on) {
+    if (this.isNodeView()) {
+      this.props.toggleNode({item, on});
+    } else {
+      this.toggleObject({item, on});
+    }
+  }
+
+  render() {
+    const type = this.props.route.type;
+    const pickList = this.props.pickList[type] || [];
+    const marked = pickList.filter(p => p.marked);
+    const markedValues = marked.map(p => p.value);
+    const isNode = this.isNodeView();
     return (
       <div>
         <main>
           <Grid>
             <PageHeader>
-              {title}
+              <div>
+                <span>{I18n.t(`musit.pickList.title.${this.props.route.type}`)}</span>
+                <div
+                  style={{
+                    float: 'right',
+                    margin: '0 25px 0 0'
+                  }}
+                >
+                  <Button
+                    active={this.props.scannerEnabled}
+                    onClick={() => this.props.toggleScanner()}
+                  >
+                    <img src={scannerIcon} height={25} alt="scan" />
+                  </Button>
+                </div>
+              </div>
             </PageHeader>
-            <PickListTable
-              picks={pickList}
-              marked={markedValues}
-              isnode={this.props.isTypeNode(this.props)}
-              iconRendrer={(pick) => (pick.value.name ? <FontAwesome name="folder"/> :
-                <span className='icon icon-musitobject'/>)
-              }
-              labelRendrer={(pick) => {
+            <Table responsive striped condensed hover>
+              <thead>
+              <tr>
+                <th style={{ width: '2em', textAlign: 'left' }}>
+                  <input
+                    className="normalAction"
+                    type="checkbox"
+                    checked={marked.length === pickList.length && pickList.length !== 0}
+                    onChange={(e) => this.toggle(pickList.map(p => p.value), e.target.checked)}
+                    title={I18n.t('musit.pickList.tooltip.checkBoxMarkAll')}
+                  />
+                </th>
+                <th style={{ verticalAlign: 'bottom', textAlign: 'left' }}>
+                  { isNode ?
+                    <FontAwesome
+                      className="normalActionNoPadding"
+                      style={{ fontSize: '1.5em' }}
+                      name="print"
+                      onClick={() => {
+                        if (marked.length > 0) {
+                          this.print(marked);
+                        }
+                      }}
+                      title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
+                    /> : null
+                  }
+                  { isNode ? this.selectedCount(isNode, marked.length) : null}
+                  <FontAwesome
+                    className={isNode ? 'normalAction' : 'normalActionNoPadding'}
+                    name="truck"
+                    style={{ fontSize: '1.5em' }}
+                    onClick={() => {
+                      if (marked.length > 0) {
+                        this.showMoveNodes(markedValues);
+                      }
+                    }}
+                    title={I18n.t(`musit.pickList.tooltip.${isNode ? 'moveSelectedNodes' : 'moveSelectedObjects'}`)}
+                  />
+                  {this.selectedCount(isNode, marked.length)}
+                  <FontAwesome
+                    className="normalAction"
+                    style={{ fontSize: '1.5em' }}
+                    name="remove"
+                    onClick={() => {
+                      if (marked.length > 0) {
+                        this.remove(markedValues);
+                      }
+                    }}
+                    title={I18n.t(`musit.pickList.tooltip.${isNode ? 'removeSelectedNodesFromList' : 'removeSelectedObjectsFromList'}`)}
+                  />
+                  {this.selectedCount(isNode, marked.length)}
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              {pickList.map((pick, i) => {
+                const item = pick.value;
+                const isItemMarked = pick.marked;
+                const isMainObject = item.isMainObject && (!item.mainObjectId || item.isMainObject());
+                const isChildObject = item.isMainObject && (item.mainObjectId && !item.isMainObject());
                 return (
-                  <div>
-                    {!this.props.isTypeNode(this.props) ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span> : null}
-                    {!this.props.isTypeNode(this.props) ? <span style={{ paddingLeft: '1em' }}>{pick.value.subNo}</span> : null}
-                    <span style={{ paddingLeft: '1em' }}>{pick.value.name ? pick.value.name : pick.value.term}</span>
-                    <div className="labelText">
-                      <Breadcrumb
-                        node={pick.path}
-                        onClickCrumb={node => {
-                          if(node.id) {
-                            hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession));
-                          } else {
-                            hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
-                          }
-                        }}
-                        allActive
-                      />
-                    </div>
-                  </div>
+                  <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject' }>
+                    <td style={{ width: '3em', textAlign: 'left', verticalAlign: 'middle' }}>
+                      <span>
+                        {!item.mainObjectId || isMainObject ?
+                          <input
+                            type="checkbox"
+                            checked={isItemMarked ? 'checked' : ''}
+                            onChange={() => this.toggle(item)}
+                          />
+                          :
+                          <input
+                            type="checkbox"
+                            checked={isItemMarked ? 'checked' : ''}
+                            disabled
+                          />
+                        }
+                      </span>
+                    </td>
+                    <td>
+                      <span className="pickListIcon">
+                        {this.iconRenderer(pick)} {this.labelRenderer(isNode, pick)}
+                      </span>
+                    </td>
+                  </tr>
                 );
-              }}
-              toggle={(item, on) => this.props.isTypeNode(this.props) ? this.props.toggleNode({item, on}) : this.toggleObject({item, on})}
-              remove={item => this.props.isTypeNode(this.props) ?  this.props.removeNode(item) :  this.props.removeObject(item)}
-              move={this.showMoveNodes}
-              print={this.print}
-            />
+              })}
+              </tbody>
+            </Table>
             <div style={{ textAlign: 'left' }}>
               {marked.length}/{pickList.length} &nbsp;
-              {this.props.isTypeNode(this.props) ? I18n.t('musit.pickList.footer.nodeSelected')
+              {isNode ? I18n.t('musit.pickList.footer.nodeSelected')
                 : I18n.t('musit.pickList.footer.objectSelected') }
             </div>
           </Grid>
@@ -261,85 +260,3 @@ export class PickListContainer extends React.Component {
     );
   }
 }
-
-const data = {
-  appSession$: { type: PropTypes.object.isRequired },
-  pickList$: { type: PropTypes.object.isRequired }
-};
-
-const commands = {
-  refreshNode$,
-  refreshObjects$,
-  toggleObject$,
-  toggleNode$,
-  toggleMainObject$,
-  removeObject$,
-  removeNode$,
-  addNode$,
-  addObject$,
-  loadChildren$,
-  loadNode$
-};
-
-const customProps = {
-  updateMoveDialog,
-  emitError,
-  emitSuccess,
-  showModal,
-  isTypeNode: (props) => 'nodes' === props.route.type
-};
-
-export const processBarcode = (barCode, props) => {
-  const isMoveDialogActive = props.classExistsOnDom('moveDialog');
-  const museumId = props.appSession.getMuseumId();
-  const collectionId = props.appSession.getCollectionId();
-  const token = props.appSession.getAccessToken();
-  const isNodeView = props.isTypeNode(props);
-  if (barCode.uuid) {
-    if (isNodeView) {
-      props.findNodeByUUID({uuid: barCode.code, museumId, token})
-        .do((response) => {
-          if (!response) {
-            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
-          } else if (isMoveDialogActive) {
-            props.updateMoveDialog(response, museumId, token);
-          } else {
-            props.addNode({value: response, path: getPath(response)});
-          }
-        }).toPromise();
-    } else {
-      props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
-    }
-  } else if (barCode.number) {
-    const findByBarcode = isNodeView ? props.findNodeByBarcode : props.findObjectByBarcode;
-    findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
-      if (!response) {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-      } else if (!isNodeView && Array.isArray(response)) { // objects
-        if (response.length === 1) {
-          if (isMoveDialogActive) {
-            props.updateMoveDialog(response[0], museumId, token);
-          } else {
-            props.addObject({value: response[0], path: getPath(response[0])});
-          }
-        } else {
-          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
-        }
-      } else if (isNodeView && response.nodeId) { // node
-        if (isMoveDialogActive) {
-          props.updateMoveDialog(response, museumId, token);
-        } else {
-          props.addNode({value: response, path: getPath(response)});
-        }
-      } else {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-      }
-    }).toPromise();
-  }
-};
-
-export default flowRight([
-  inject(data, commands, customProps),
-  connectToScanner(processBarcode),
-  makeUrlAware
-])(PickListContainer);

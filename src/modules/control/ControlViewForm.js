@@ -111,7 +111,8 @@ export default class ControlView extends Component {
             {ok ? null : <FontAwesome name="sort-desc" style={{ 'fontSize': 'x-large' }} />}
           </Button>
         </Col>
-    ); }
+    );
+  }
 
   oneTableRow(control, eventType, index) {
     return (

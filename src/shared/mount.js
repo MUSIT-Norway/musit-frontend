@@ -1,9 +1,9 @@
 // @flow
-import React from 'react';
+import React  from 'react';
 
 type Props = any;
 
-export const mount = (onMount: (props: Props) => void) => (Component: *) => {
+const mount = (onMount: (props: Props) => void) => (Component: any) => {
   class MountWrapper extends React.Component {
     props: Props;
 
@@ -21,3 +21,5 @@ export const mount = (onMount: (props: Props) => void) => (Component: *) => {
   }
   return MountWrapper;
 };
+
+export default mount;

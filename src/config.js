@@ -6,7 +6,12 @@ export default {
   isDev: process.env.NODE_ENV === 'development',
   isFake: false,
   useDevTools: process.env.DEV_TOOLS || false,
-  print: { labelConfig: { 4: 2 } },
+  print: {
+    labelConfig: {
+      codeFormat: { 4: 2 },
+      canSelectPath: { 4: true, 5: true }
+    }
+  },
   magasin: {
     limit: 25,
     urls: {
@@ -65,9 +70,11 @@ export default {
       api: {
         analysis: {
           baseUrl:
-            '/api/analysis/',
-          addUrl:
-            '/api/analysis/add'
+            '/api/analyses/'
+        },
+        samples: {
+          baseUrl: (mid): string =>
+            `api/management/${mid.id}/samples`
         },
         storagefacility: {
           searchUrl: (term, mid) =>

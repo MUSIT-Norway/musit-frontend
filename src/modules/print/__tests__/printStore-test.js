@@ -1,19 +1,25 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
-import { reducer$ } from '../printStore';
-import { createStore } from 'react-rxjs/dist/RxStore';
+import { store$ } from '../printStore';
 import Template from '../../../models/template';
+const diff = require('deep-diff').diff;
 
 describe('printStore', () => {
   /*eslint-disable */
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-        // console.log(JSON.stringify(actual, null, 2));
-        // console.log(JSON.stringify(expected, null, 2));
-      return assert.deepEqual(actual, expected);
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
+      const difference = diff(actual, expected);
+      if (typeof difference !== 'undefined') {
+        console.log(difference);
+      }
+      return assert.equal(undefined, difference);
     });
 
     // mock streams
+    const setTemplateIdM    = '--------------';
+    const setLevelM         = '--------------';
     const clearAllM         = '----1---------';
     const clearRenderedM    = '---1----------';
     const loadTemplatesM    = '-1------------';
@@ -21,8 +27,14 @@ describe('printStore', () => {
     const expected          = 'abcde---------';
 
     const expectedStateMap = {
-      a: {},
+      a: {
+        templates: [],
+        rendered: null,
+        level: 0
+      },
       b: {
+        rendered: null,
+        level: 0,
         templates: [{
           'id': 1,
           'name': 'Label-1 70mm x 37mm',
@@ -40,6 +52,7 @@ describe('printStore', () => {
         }]
       },
       c: {
+        level: 0,
         templates: [{
           'id': 1,
           'name': 'Label-1 70mm x 37mm',
@@ -58,6 +71,7 @@ describe('printStore', () => {
         rendered: '<!DOCTYPE html> <html lang="en"> <head> <link rel="stylesheet" href="/service_barcode/assets/css/portrait.css"> <link rel="stylesheet" href="/service_barcode/assets/css/label1.css"> </head> <body> <div class="labelsContainer"> <div class="label"> <div class="top"> <div class="codeImage"> <img width="90px" height="90px" src="/service_barcode/barcode/d3982b48-56c7-4d27-bc81-6e38b59d57ed?codeFormat=1" /> </div> <div class="name">Utviklingsmuseet Org</div> </div> <div class="uuid">d3982b48-56c7-4d27-bc81-6e38b59d57ed</div> </div> </div> </body> </html>'
       },
       d: {
+        level: 0,
         templates: [{
           'id': 1,
           'name': 'Label-1 70mm x 37mm',
@@ -75,11 +89,13 @@ describe('printStore', () => {
         }],
         rendered: null
       },
-      e: { templates: [], rendered: null }
+      e: { templates: [], rendered: null, level: 0 }
     };
 
     // mock up$ and down$ events
     const clearAll$ = testScheduler.createHotObservable(clearAllM);
+    const setLevel$ = testScheduler.createHotObservable(setLevelM);
+    const setTemplateId$ = testScheduler.createHotObservable(setTemplateIdM);
     const clearRendered$ = testScheduler.createHotObservable(clearRenderedM);
     const loadTemplates$ = testScheduler.createHotObservable(loadTemplatesM, { 1: { token: '1234' }})
         .switchMap(Template.loadTemplates(
@@ -110,10 +126,10 @@ describe('printStore', () => {
       })
     ));
 
-    const state$ = reducer$({clearAll$, clearRendered$, loadTemplates$, renderTemplate$});
+    const state$ = store$({clearAll$, clearRendered$, loadTemplates$, renderTemplate$, setLevel$, setTemplateId$});
 
     // assertion
-    testScheduler.expectObservable(createStore('test', state$)).toBe(expected, expectedStateMap);
+    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();
