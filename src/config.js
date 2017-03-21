@@ -21,7 +21,8 @@ export default {
             '/analysis/add',
           addSample: () =>
             '/analysis/sample/add',
-          gotoSample: (id) => `/analysis/sample/${id}`
+          gotoSample: (id) => `/analysis/sample/${id}`,
+          editSample: (id) => `/analysis/sample/${id}/edit`
         },
         magasin: {
           goToMagasin: (appSession: AppSession) =>

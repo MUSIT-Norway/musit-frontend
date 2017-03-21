@@ -180,4 +180,4 @@ const fields = [
   createdDate
 ];
 
-export default createForm('sampleFormAdd.js', fields );
+export default createForm('sampleForm.js', fields );

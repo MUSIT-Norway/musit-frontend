@@ -1,12 +1,14 @@
 import React from 'react';
 import {Form, PageHeader, FormControl, FormGroup, Col, Row, Button, ControlLabel} from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import Config from '../../config';
+import { hashHistory } from 'react-router';
 
 
-const FieldReadOnly = ({field}) => (
+const FieldReadOnly = ({field, label}) => (
   <FormGroup>
     <FormControl.Static>
-      {field}
+      <span><b>{label}</b>{`:  ${field}`}</span>
     </FormControl.Static>
   </FormGroup>
 );
@@ -14,7 +16,6 @@ const FieldReadOnly = ({field}) => (
 
 const SampleViewComponent = (props) => {
   const form = props.form;
-  console.log('Form', form);
   return (
     <Form style={{ padding: 20 }}>
       <PageHeader>
@@ -50,7 +51,7 @@ const SampleViewComponent = (props) => {
         <Col md={2}>
           <ControlLabel>Registrert:</ControlLabel>
         </Col>
-        <Col md={2}>
+        <Col md={4}>
           <FontAwesome name='user'/> {form.registeredBy.defaultValue || 'Line A. Sjo' }
         </Col>
         <Col md={2}>
@@ -61,11 +62,11 @@ const SampleViewComponent = (props) => {
         <Col md={2}>
           <ControlLabel>Sist endret:</ControlLabel>
         </Col>
-        <Col md={2}>
+        <Col md={4}>
           <FontAwesome name='user'/> {form.updateBy.defaultValue || 'Stein Olsen' }
         </Col>
         <Col md={2}>
-          <FontAwesome name='clock-o'/> {form.updateDate.defaultValue || '11.03.2017' }
+          <FontAwesome name='clock-o'/> {form.updateDate.defaultValue || '11.03.2017'}
         </Col>
         <Col md={3}>
           <a href=''>Se endringshistorikk</a>
@@ -75,18 +76,14 @@ const SampleViewComponent = (props) => {
       <hr/>
       <Row className='row-centered'>
         <Col md={2}>
-          <b>Prøvetype</b>
-        </Col>
-        <Col md={2}>
           <FieldReadOnly
+            label={'Prøvetype'}
             field={form.sampleType.defaultValue}
           />
         </Col>
-        <Col md={2}>
-          <b>Prøveundertype</b>
-        </Col>
-        <Col md={2}>
+        <Col md={3}>
           <FieldReadOnly
+            label={'Prøveundertype'}
             field={form.sampleSubType.defaultValue}
           />
         </Col>
@@ -94,10 +91,8 @@ const SampleViewComponent = (props) => {
       <br/>
       <Row className='row-centered'>
         <Col md={2}>
-          <b>Status</b>
-        </Col>
-        <Col md={2}>
           <FieldReadOnly
+            label={'Status'}
             field={form.status.defaultValue}
           />
 
@@ -105,50 +100,42 @@ const SampleViewComponent = (props) => {
       </Row>
       <br/>
       <Row className='row-centered'>
-        <Col md={2}>
-          <b>Målevolum/-vekt</b>
-        </Col>
-        <Col md={2}>
+        <Col md={3}>
           <FieldReadOnly
-            field={form.size.defaultValue}
-          />
-        </Col>
-        <Col md={2}>
-          <FieldReadOnly
-            field={form.sizeUnit.defaultValue}
+            label={'Målvolum/-vekt'}
+            field={`${form.size.defaultValue} ${form.sizeUnit.defaultValue}`}
           />
         </Col>
       </Row>
       <br/>
       <Row className='row-centered'>
-        <Col md={1}>
-          <ControlLabel>Lagringskontainer</ControlLabel>
-        </Col>
-        <Col md={2}>
+        <Col md={3}>
           <FieldReadOnly
+            label={'Lagringskontainer'}
             field={form.container.defaultValue}
           />
         </Col>
-        <Col md={2}>
+        <Col md={3}>
           <FieldReadOnly
+            label={'Lagringsmedium'}
             field={form.storageMedium.defaultValue}
           />
         </Col>
       </Row>
       <br/>
       <Row className='row-centered'>
-        <Col md={2}>
-          <ControlLabel>{'Note'}</ControlLabel>
-        </Col>
         <Col md={3}>
           <FieldReadOnly
+            label={'Note'}
             field={form.note.defaultValue}
           />
         </Col>
       </Row>
       <Row className='row-centered'>
         <Col md={4}>
-          <Button>
+          <Button onClick ={()=> {
+            hashHistory.push(Config.magasin.urls.client.analysis.editSample(props.params.sampleId));
+          }}>
             Endre
           </Button>
         </Col>

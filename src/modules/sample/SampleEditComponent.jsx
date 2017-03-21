@@ -83,20 +83,27 @@ type FormData = {
   updateDate: Field, sampleId: Field, createdDate: Field
 }
 type Props = {
-  form: FormData, updateForm: Update, addSample: Function, appSession: {
+  form: FormData,
+  updateForm: Update,
+   editSample: Function,
+  appSession: {
     getMuseumId: Function,
     getAccessToken: Function,
     getActor: Function
+  },
+  params: {
+    sampleId: string
   }
 };
 
-const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) => {
-
+const SampleEditComponent = ({params, form, updateForm, editSample, appSession} : Props) => {
+  const id = params.sampleId;
+  console.log(id);
 
   return (
     <Form style={{ padding: 20 }}>
       <PageHeader>
-        Registrer prøveuttak
+        Endre prøveuttak
       </PageHeader>
       <Row className='row-centered'>
         <Col md={12}>
@@ -274,10 +281,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
       </Row>
       <Row className='row-centered'>
         <Col md={4}>
-          <Button onClick={() => SampleAddComponent.submitSample(appSession, form, addSample)
-            .toPromise().then((value) => {
+          <Button onClick={() => SampleEditComponent.submitSample(id, appSession, form, editSample)
+            .toPromise().then(() => {
               hashHistory.push(Config.magasin.urls.client.analysis
-              .gotoSample(value));
+              .gotoSample(id));
             }
           )
           }>
@@ -297,8 +304,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession} : Props) =
   );
 };
 
-SampleAddComponent.submitSample = (appSession, form, addSample) => {
-
+SampleEditComponent.submitSample = (id, appSession, form, editSample) => {
   const token = appSession.getAccessToken();
   const museumId = appSession.getMuseumId();
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
@@ -310,7 +316,7 @@ SampleAddComponent.submitSample = (appSession, form, addSample) => {
   data['isCollectionObject'] = false;
   data['museumId'] = 99;
 
-  return addSample({museumId, token, data});
+  return editSample({id, museumId, token, data});
 };
 
 const FieldShape = {
@@ -326,7 +332,7 @@ const FieldShape = {
   })
 };
 
-SampleAddComponent.propTypes = {
+SampleEditComponent.propTypes = {
   form: PropTypes.shape({
     note: PropTypes.shape(FieldShape).isRequired,
     museumId: PropTypes.shape(FieldShape).isRequired,
@@ -348,4 +354,4 @@ SampleAddComponent.propTypes = {
   appSession: PropTypes.object.isRequired
 };
 
-export default SampleAddComponent;
+export default SampleEditComponent;

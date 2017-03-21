@@ -1,5 +1,5 @@
 import inject from 'react-rxjs/dist/RxInject';
-import sampleForm from './sampleAddForm';
+import sampleForm from './sampleForm';
 import SampleFormAddComponent from './SampleAddComponent';
 import Sample from '../../models/sample';
 import React from 'react';
@@ -8,6 +8,7 @@ import {emitError, emitSuccess} from '../../shared/errors';
 import  sampleStore$, { clearForm$ } from './sampleStore';
 
 const {form$, updateForm$} = sampleForm;
+
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
   form$,

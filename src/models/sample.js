@@ -1,4 +1,4 @@
-import { simplePost, simpleGet } from '../shared/RxAjax';
+import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import entries from 'object.entries';
 
@@ -11,15 +11,20 @@ class Sample {
 Sample.addSample = (ajaxPost = simplePost) => ({museumId, token, data, callback}) => {
   const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
   const url = baseUrl;
-  const resp = ajaxPost(url, data, token, callback);
-  return resp.map(({response}) => response);
+  return ajaxPost(url, data, token, callback).map(({response}) => response);
+};
+
+Sample.editSample = (ajaxPut = simplePut) => ({id,museumId, token, data, callback}) => {
+  const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
+  const url = `${baseUrl}/${id}`;
+  return ajaxPut(url, data, token, callback).map(({response}) => response && new Sample(response));
+
 };
 
 
 Sample.loadSample = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
   const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
   const url = `${baseUrl}/${id}`;
-  console.log('URL', url, token);
   return ajaxGet(url, token, callback).map(({ response }) => response && new Sample(response));
 };
 
