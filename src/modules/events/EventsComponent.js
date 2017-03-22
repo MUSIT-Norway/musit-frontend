@@ -4,7 +4,7 @@ const Tr = require('reactable').Tr;
 const Td = require('reactable').Td;
 import './eventsComponent.css';
 
-export const EventsComponent = (props) => (
+export const EventsComponent = ({ events }) => (
   <div>
     <br />
     <Table
@@ -20,7 +20,7 @@ export const EventsComponent = (props) => (
       defaultSort={{ column: 'eventDate', direction: 'desc' }}
       noDataText="Ingen hendelser funnet på objektet"
     >
-      {props.events && props.events.map((event, i) =>
+      {events.map((event, i) =>
         <Tr key={i}>
           <Td column="eventDate">{event.eventDate}</Td>
           <Td column="type">{event.type}</Td>
