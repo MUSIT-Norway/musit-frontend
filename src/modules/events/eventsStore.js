@@ -24,7 +24,7 @@ const concatAnalysesWithMoves = (val) =>
   })
   .flatMap((events) => {
     const actorIds = uniq(events.map(r => r.registeredBy )).filter(r => r);
-    const eventsWithNames = MusitActor.getActors()(actorIds, val.token)
+    return MusitActor.getActors()(actorIds, val.token)
      .map(actors => {
        if (!Array.isArray(actors)) {
          return events;
@@ -37,7 +37,6 @@ const concatAnalysesWithMoves = (val) =>
          };
        });
      });
-    return eventsWithNames.map(arr => arr.map(m => ({...m, eventDate: formatEventDate(m)})));
   });
 
 export const loadAnalyses$ = createAction('loadAnalyses$').switchMap(concatAnalysesWithMoves);
