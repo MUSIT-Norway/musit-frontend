@@ -16,11 +16,11 @@ const commands = { loadAnalyses$ };
 
 export default flowRight([
   inject(data, commands),
-  mount(props => {
-    const museumId = props.appSession.getMuseumId();
-    const token = props.appSession.getAccessToken();
-    const objectId = props.params.id;
-    const id = props.params.objectId;
-    props.loadAnalyses({ museumId, token, id, objectId });
+  mount(({ appSession, location: { state }, loadAnalyses }) => {
+    const museumId = appSession.getMuseumId();
+    const token = appSession.getAccessToken();
+    const objectId = state.id;
+    const id = state.uuid;
+    loadAnalyses({ museumId, token, id, objectId });
   })
 ])(EventsComponent);

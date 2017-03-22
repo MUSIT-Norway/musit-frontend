@@ -7,8 +7,9 @@ import { parseISODate, DATE_FORMAT_DISPLAY } from '../../shared/util';
 import MusitActor from '../../models/actor';
 import uniq from 'lodash/uniq';
 import { I18n } from 'react-i18nify';
+import concat from 'lodash/concat';
 
-const initialState = [];
+const initialState = null;
 
 const concatAnalysesWithMoves = (val) =>
   Observable.forkJoin(
@@ -17,7 +18,7 @@ const concatAnalysesWithMoves = (val) =>
       locations.map(loc => ({...loc, type: 'MoveObject', eventDate: loc.registeredDate }))
     )
   ).map(([analyses, moves]) => {
-    const events = analyses.concat(moves);
+    const events = concat(analyses || [], moves || []);
     return events.map(m => ({...m, eventDate: parseISODate(m.eventDate).format(DATE_FORMAT_DISPLAY)}));
   })
   .flatMap((events) => {

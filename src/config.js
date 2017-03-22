@@ -40,7 +40,9 @@ export default {
         },
         searchObjects: {
           goToSearchObjects: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/search/objects`
+            `${clientContextUrl(appSession)}/search/objects`,
+          goToObjectEvents: (object) =>
+            `/events/${object.id}`
         },
         storagefacility: {
           goToRoot: (appSession: AppSession) =>

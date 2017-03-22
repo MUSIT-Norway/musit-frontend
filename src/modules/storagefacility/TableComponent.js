@@ -395,6 +395,12 @@ export class TableComponent extends React.Component {
             tableData={matches && matches[0] && matches[0] instanceof MusitObject ?
               filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
+            goToObjectEvents={(object) => {
+              this.props.goTo({
+                pathname: Config.magasin.urls.client.searchObjects.goToObjectEvents(object),
+                state: object
+              });
+            }}
             pickObject={(object) =>
               this.props.pickObject({
                 object,
