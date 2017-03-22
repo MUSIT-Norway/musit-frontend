@@ -40,6 +40,12 @@ class MusitObject {
   }
 }
 
+// Object types
+// [
+MusitObject.COLLECTION_OBJECT = 'collection';
+MusitObject.SAMPLE_OBJECT = 'sample';
+// ]
+
 MusitObject.getObjectLocations = (ajaxPost = simplePost) => ({ objectIds, museumId, token, callback }) =>
   ajaxPost(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/objects/currentlocations`, objectIds, token, callback)
     .map(({ response }) => {
@@ -72,8 +78,11 @@ MusitObject.getObjects = (ajaxGet = simpleGet) => ({id, page, museumId, collecti
     });
 };
 
-MusitObject.moveObject = (ajaxPut = simplePut) => ({ id, destination, doneBy, museumId, token, callback }) => {
-  const data = { doneBy, destination, items: [].concat(id) };
+MusitObject.moveObject = (ajaxPut = simplePut) => (
+  { id, destination, doneBy, objectType = MusitObject.COLLECTION_OBJECT, museumId, token, callback }
+) => {
+  const items = [].concat(id).map((objectId) => ({ id: objectId, objectType }));
+  const data = { doneBy, destination, items };
   return ajaxPut(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/moveObject`, data, token, callback);
 };
 
