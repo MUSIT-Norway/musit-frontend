@@ -271,7 +271,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
             field={form.size}
             onChangeInput={updateForm}
             inputProps={{
-              className: 'sampleSize'
+              className: 'size'
             }}
           />
         </Col>

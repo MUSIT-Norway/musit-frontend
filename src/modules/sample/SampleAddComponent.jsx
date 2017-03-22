@@ -192,7 +192,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           <ControlLabel>Sist endret:</ControlLabel>
         </Col>
         <Col md={2}>
-          <FontAwesome name='user'/> {form.updateBy.value || 'Stein Olsen' }
+          <FontAwesome className='updateBy' name='user'/> {form.updateBy.value || 'Stein Olsen' }
         </Col>
         <Col md={2}>
           <FontAwesome name='clock-o'/> {form.updateDate.value || '11.03.2017' }
@@ -254,7 +254,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
             field={form.size}
             onChangeInput={updateForm}
             inputProps={{
-              className: 'sampleSize'
+              className: 'size'
             }}
           />
         </Col>
