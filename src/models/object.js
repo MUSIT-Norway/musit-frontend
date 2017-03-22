@@ -58,6 +58,10 @@ MusitObject.getObjectLocations = (ajaxPost = simplePost) => ({ objectIds, museu
       });
     });
 
+MusitObject.getObjectLocation = (ajaxGet = simpleGet) => ({ objectId, museumId, token, callback }) =>
+  ajaxGet(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/objects/${objectId}/currentlocation`, token, callback)
+    .map(({ response }) => ({...response, breadcrumb: getPath(response)}));
+
 MusitObject.getMainObject = (ajaxGet = simpleGet) => ({ id, museumId, collectionId, token, callback }) => {
   return ajaxGet(`${Config.magasin.urls.api.thingaggregate.baseUrl(museumId)}/objects/${id}/children?${collectionId.getQuery()}`, token, callback)
     .map(({ response }) => response && response.map(obj => new MusitObject(obj)));

@@ -4,6 +4,7 @@ const Tr = require('reactable').Tr;
 const Td = require('reactable').Td;
 import './eventsComponent.css';
 import { Row, Col } from 'react-bootstrap';
+import Breadcrumb from '../../components/layout/Breadcrumb';
 
 export const EventsComponent = ({ events, location: { state } }) => (
   <div>
@@ -38,11 +39,11 @@ export const EventsComponent = ({ events, location: { state } }) => (
         Plassering:
       </Col>
       <Col sm={10}>
-        Universitetsmuseumet / Universitetsmuseumet Org / Forskningens hus / Boksen i lageret
+        {events.currentLocation && <Breadcrumb node={events.currentLocation.breadcrumb} disabled />}
       </Col>
     </Row>
     <br />
-    {events &&
+    {events.data &&
       <Table
         className="table"
         columns={[
@@ -56,7 +57,7 @@ export const EventsComponent = ({ events, location: { state } }) => (
         defaultSort={{ column: 'eventDate', direction: 'desc' }}
         noDataText="Ingen hendelser funnet på objektet"
       >
-        {events.map((event, i) =>
+        {events.data.map((event, i) =>
           <Tr key={i}>
             <Td column="eventDate">{event.eventDate}</Td>
             <Td column="type">{event.type}</Td>
