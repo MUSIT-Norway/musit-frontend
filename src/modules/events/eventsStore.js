@@ -10,17 +10,15 @@ import { I18n } from 'react-i18nify';
 
 const initialState = [];
 
-const formatEventDate = (event) => parseISODate(event.registeredDate).format(DATE_FORMAT_DISPLAY);
-
 const concatAnalysesWithMoves = (val) =>
   Observable.forkJoin(
     Analyses.getAnalysesForObject()(val),
     MusitObject.getLocationHistory()(val).map(locations =>
-      locations.map(loc => ({...loc, type: 'MoveObject' }))
+      locations.map(loc => ({...loc, type: 'MoveObject', eventDate: loc.registeredDate }))
     )
   ).map(([analyses, moves]) => {
     const events = analyses.concat(moves);
-    return events.map(m => ({...m, eventDate: formatEventDate(m)}));
+    return events.map(m => ({...m, eventDate: parseISODate(m.eventDate).format(DATE_FORMAT_DISPLAY)}));
   })
   .flatMap((events) => {
     const actorIds = uniq(events.map(r => r.registeredBy )).filter(r => r);
