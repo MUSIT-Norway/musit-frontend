@@ -2,48 +2,47 @@ import React from 'react';
 const Table = require('reactable').Table;
 const Tr = require('reactable').Tr;
 const Td = require('reactable').Td;
-import './eventsComponent.css';
 import { Row, Col } from 'react-bootstrap';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 
-export const EventsComponent = ({ events, location: { state } }) => (
+export const EventsComponent = ({ eventsStore: { object, data, currentLocation } }) => (
   <div>
     <h1>Hendelser</h1>
     <hr />
     <Row>
-        <Col sm={2}>
-          Museumsnr:
-        </Col>
-        <Col sm={10}>
-          {state.museumNo}
-        </Col>
-    </Row>
-    <Row>
       <Col sm={2}>
-        Unr:
+        <b>Museumsnr:</b>
       </Col>
       <Col sm={10}>
-        {state.subNo}
+        {object && object.museumNo}
       </Col>
     </Row>
     <Row>
       <Col sm={2}>
-        Term/Artsnavn:
+        <b>Unr:</b>
       </Col>
       <Col sm={10}>
-        {state.term}
+        {object && object.subNo}
       </Col>
     </Row>
     <Row>
       <Col sm={2}>
-        Plassering:
+        <b>Term/Artsnavn:</b>
       </Col>
       <Col sm={10}>
-        {events.currentLocation && <Breadcrumb node={events.currentLocation.breadcrumb} disabled />}
+        {object && object.term}
+      </Col>
+    </Row>
+    <Row>
+      <Col sm={2}>
+        <b>Plassering:</b>
+      </Col>
+      <Col sm={10}>
+        {currentLocation && <Breadcrumb node={currentLocation.breadcrumb} disabled />}
       </Col>
     </Row>
     <br />
-    {events.data &&
+    {data &&
       <Table
         className="table"
         columns={[
@@ -57,7 +56,7 @@ export const EventsComponent = ({ events, location: { state } }) => (
         defaultSort={{ column: 'eventDate', direction: 'desc' }}
         noDataText="Ingen hendelser funnet på objektet"
       >
-        {events.data.map((event, i) =>
+        {data.map((event, i) =>
           <Tr key={i}>
             <Td column="eventDate">{event.eventDate}</Td>
             <Td column="type">{event.type}</Td>

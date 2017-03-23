@@ -37,6 +37,6 @@ export const reducer$ = (actions) => Observable.merge(
 );
 
 export const store$ = (actions$ = {clearEvents$, loadEvents$, loadRootNode$}) =>
-  createStore('events', reducer$(actions$), Observable.of({ data: [] }));
+  createStore('controlsAndObservations', reducer$(actions$), Observable.of({ data: [] }));
 
 export default store$();
