@@ -36,7 +36,7 @@ import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent'
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
-import AllEvents from './modules/events/EventsContainer';
+import AllEvents from './modules/events/eventsContainer';
 import CenteredLayout from './components/layout/CenteredLayout';
 
 export default () => {

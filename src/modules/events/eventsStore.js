@@ -1,4 +1,3 @@
-// @flow
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { Observable } from 'rxjs';
 import Event from '../../models/event';
@@ -11,13 +10,14 @@ export const getCurrentLocation$ = createAction('getCurrentLocation$').switchMap
 export const setObject$ = createAction('setObject$');
 export const clear$ = createAction('clear$');
 
-const reducer$ = Observable.merge(
-  clear$.map(() => () => initialState),
-  loadAnalyses$.map((data) => (state) => ({...state, data})),
-  getCurrentLocation$.map((currentLocation) => (state) => ({...state, currentLocation})),
-  setObject$.map((object) => (state) => ({...state, object}))
+const reducer$ = (actions) => Observable.merge(
+  actions.clear$.map(() => () => initialState),
+  actions.loadAnalyses$.map((data) => (state) => ({...state, data})),
+  actions.getCurrentLocation$.map((currentLocation) => (state) => ({...state, currentLocation})),
+  actions.setObject$.map((object) => (state) => ({...state, object}))
 );
 
-const eventsStore$ = createStore('eventsStore', reducer$, Observable.of(initialState));
+export const eventsStore$ = (actions = { loadAnalyses$, getCurrentLocation$, setObject$, clear$ }) =>
+  createStore('eventsStore', reducer$(actions), Observable.of(initialState));
 
-export default eventsStore$;
+export default eventsStore$();

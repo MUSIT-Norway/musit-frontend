@@ -7,7 +7,7 @@ import Control from '../../../models/control';
 import MusitNode from '../../../models/node';
 const diff = require('deep-diff').diff;
 
-describe('eventsStore', () => {
+describe('controlsAndObservationsStore', () => {
 
   it('testing reducer with actors', () => {
     const testScheduler = new TestScheduler((actual, expected) => {

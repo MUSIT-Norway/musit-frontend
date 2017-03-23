@@ -1,4 +1,3 @@
-// @flow
 import EventsComponent from './EventsComponent';
 import inject from 'react-rxjs/dist/RxInject';
 import eventsStore$, { loadAnalyses$, getCurrentLocation$, setObject$, clear$ } from './eventsStore.js';
@@ -14,16 +13,17 @@ const data = {
 
 const commands = { loadAnalyses$, getCurrentLocation$, setObject$, clear$ };
 
+export const onMount = ({ appSession, location: { state }, loadAnalyses, getCurrentLocation, setObject, clear }) => {
+  const museumId = appSession.getMuseumId();
+  const token = appSession.getAccessToken();
+  const objectId = state.id;
+  clear();
+  setObject(state);
+  loadAnalyses({ museumId, token, id: state.uuid, objectId }); // TODO Fix this when backend is behaving
+  getCurrentLocation({ museumId, token, objectId });
+};
+
 export default flowRight([
   inject(data, commands),
-  mount(({ appSession, location: { state }, loadAnalyses, getCurrentLocation, setObject, clear }) => {
-    const museumId = appSession.getMuseumId();
-    const token = appSession.getAccessToken();
-    const objectId = state.id;
-    const id = state.uuid;
-    clear();
-    setObject(state);
-    loadAnalyses({ museumId, token, id, objectId });
-    getCurrentLocation({ museumId, token, id, objectId });
-  })
+  mount(onMount)
 ])(EventsComponent);

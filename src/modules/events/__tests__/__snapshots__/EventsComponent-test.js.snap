@@ -1,0 +1,227 @@
+exports[`EventsComponent should render a table of events 1`] = `
+<div>
+  <h1>
+    Hendelser
+  </h1>
+  <hr />
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={2}>
+      <b>
+        Museumsnr:
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}>
+      MUSK123
+    </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={2}>
+      <b>
+        Unr:
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}>
+      PIKACHU 1
+    </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={2}>
+      <b>
+        Term/Artsnavn:
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}>
+      Fugl 1
+    </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={2}>
+      <b>
+        Plassering:
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}>
+      <Breadcrumb
+        disabled={true}
+        node={
+          Array [
+            Object {
+              "name": "Museum",
+              "url": "/magasin/1"
+            },
+            Object {
+              "name": "Org",
+              "url": "/magasin/2"
+            },
+            Object {
+              "name": "Bygg",
+              "url": "/magasin/3"
+            },
+            Object {
+              "name": "Rom",
+              "url": "/magasin/4"
+            }
+          ]
+        } />
+    </Col>
+  </Row>
+  <br />
+  <Table
+    className="table"
+    columns={
+      Array [
+        Object {
+          "key": "eventDate",
+          "label": "Dato"
+        },
+        Object {
+          "key": "type",
+          "label": "Type hendelse"
+        },
+        Object {
+          "key": "registeredBy",
+          "label": "Utført av"
+        },
+        Object {
+          "key": "note",
+          "label": "Kommentar"
+        },
+        Object {
+          "key": "id",
+          "label": ""
+        }
+      ]
+    }
+    defaultSort={
+      Object {
+        "column": "eventDate",
+        "direction": "desc"
+      }
+    }
+    defaultSortDescending={false}
+    filterBy=""
+    hideFilterInput={false}
+    itemsPerPage={0}
+    noDataText="Ingen hendelser funnet på objektet"
+    sortBy={false}
+    sortable={
+      Array [
+        "type",
+        "eventDate",
+        "registeredBy",
+        "note"
+      ]
+    }>
+    <Tr>
+      <Td
+        column="eventDate">
+        dato 1
+      </Td>
+      <Td
+        column="type">
+        MoveObject
+      </Td>
+      <Td
+        column="registeredBy">
+        Santa 1
+      </Td>
+      <Td
+        column="note">
+        Some note 1
+      </Td>
+      <Td
+        column="id">
+        <a
+          href="#"
+          onClick={[Function onClick]}>
+          Les mer
+        </a>
+      </Td>
+    </Tr>
+    <Tr>
+      <Td
+        column="eventDate">
+        dato 2
+      </Td>
+      <Td
+        column="type">
+        MoveObject
+      </Td>
+      <Td
+        column="registeredBy">
+        Santa 2
+      </Td>
+      <Td
+        column="note">
+        Some note 2
+      </Td>
+      <Td
+        column="id">
+        <a
+          href="#"
+          onClick={[Function onClick]}>
+          Les mer
+        </a>
+      </Td>
+    </Tr>
+    <Tr>
+      <Td
+        column="eventDate">
+        dato 3
+      </Td>
+      <Td
+        column="type">
+        Analyse
+      </Td>
+      <Td
+        column="registeredBy">
+        Santa 3
+      </Td>
+      <Td
+        column="note">
+        Some note 3
+      </Td>
+      <Td
+        column="id">
+        <a
+          href="#"
+          onClick={[Function onClick]}>
+          Les mer
+        </a>
+      </Td>
+    </Tr>
+  </Table>
+</div>
+`;
