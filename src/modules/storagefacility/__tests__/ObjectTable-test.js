@@ -25,7 +25,7 @@ describe ('ObjectTable' ,() => {
       tableData={ tableData }
       pickObject={pickObject}
       onMove={onMove}
-      showMoveHistory={showMoveHistory}
+      showObjectEvents={showMoveHistory}
       onLagreClick={(k) => k }
       loaded={ true }
       updateState={(k) => k }
