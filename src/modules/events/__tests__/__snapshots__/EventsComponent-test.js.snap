@@ -159,15 +159,13 @@ exports[`EventsComponent should render a table of events 1`] = `
       </Td>
       <Td
         column="note">
-        Some note 1
+        <span>
+          Some note 1
+        </span>
       </Td>
       <Td
         column="id">
-        <a
-          href="#"
-          onClick={[Function onClick]}>
-          Les mer
-        </a>
+        Les mer
       </Td>
     </Tr>
     <Tr>
@@ -185,15 +183,13 @@ exports[`EventsComponent should render a table of events 1`] = `
       </Td>
       <Td
         column="note">
-        Some note 2
+        <span>
+          Some note 2
+        </span>
       </Td>
       <Td
         column="id">
-        <a
-          href="#"
-          onClick={[Function onClick]}>
-          Les mer
-        </a>
+        Les mer
       </Td>
     </Tr>
     <Tr>
@@ -211,15 +207,13 @@ exports[`EventsComponent should render a table of events 1`] = `
       </Td>
       <Td
         column="note">
-        Some note 3
+        <span>
+          Some note 3
+        </span>
       </Td>
       <Td
         column="id">
-        <a
-          href="#"
-          onClick={[Function onClick]}>
-          Les mer
-        </a>
+        Les mer
       </Td>
     </Tr>
   </Table>
