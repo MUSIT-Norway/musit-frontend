@@ -58,8 +58,7 @@ exports[`ObjectTable should render properly  1`] = `
               <span
                 className="icon icon-musitobject" />
             </td>
-            <td
-              onClick={[Function onClick]}>
+            <td>
               TRH-V-1-2
             </td>
             <td>
@@ -121,8 +120,7 @@ exports[`ObjectTable should render properly  1`] = `
               <span
                 className="icon icon-musitobject" />
             </td>
-            <td
-              onClick={[Function onClick]}>
+            <td>
               TRH-V-2
             </td>
             <td>
@@ -184,8 +182,7 @@ exports[`ObjectTable should render properly  1`] = `
               <span
                 className="icon icon-musitobject" />
             </td>
-            <td
-              onClick={[Function onClick]}>
+            <td>
               UEM3
             </td>
             <td />
@@ -245,8 +242,7 @@ exports[`ObjectTable should render properly  1`] = `
               <span
                 className="icon icon-musitobject" />
             </td>
-            <td
-              onClick={[Function onClick]}>
+            <td>
               BG233
             </td>
             <td>
@@ -308,8 +304,7 @@ exports[`ObjectTable should render properly  1`] = `
               <span
                 className="icon icon-musitobject" />
             </td>
-            <td
-              onClick={[Function onClick]}>
+            <td>
               O-L-233
             </td>
             <td />

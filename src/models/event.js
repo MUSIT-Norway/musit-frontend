@@ -13,7 +13,7 @@ export default class Event {}
 Event.concatAnalysesWithMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => (val) =>
   Observable.forkJoin(
     Analyses.getAnalysesForObject(ajaxGet)(val),
-    MusitObject.getLocationHistory(ajaxGet)(val).map(locations =>
+    MusitObject.getLocationHistory(ajaxGet, ajaxPost)(val).map(locations =>
       locations.map(loc => ({...loc, type: 'MoveObject', eventDate: loc.registeredDate }))
     )
   ).map(([analyses, moves]) => {
@@ -23,15 +23,15 @@ Event.concatAnalysesWithMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => 
     const actorIds = uniq(events.map(r => r.registeredBy )).filter(r => r);
     return MusitActor.getActors(ajaxPost)(actorIds, val.token)
       .map(actors => {
-        if (!Array.isArray(actors)) {
-          return events;
+        if (Array.isArray(actors)) {
+          return events.map((data) => {
+            const registeredBy = actors.find(a => a.hasActorId(data.registeredBy));
+            return {
+              ...data,
+              registeredBy: registeredBy ? registeredBy.fn : I18n.t('musit.unknown')
+            };
+          });
         }
-        return events.map((data) => {
-          const registeredBy = actors.find(a => a.hasActorId(data.registeredBy));
-          return {
-            ...data,
-            registeredBy: registeredBy ? registeredBy.fn : I18n.t('musit.unknown')
-          };
-        });
+        return events;
       });
   });

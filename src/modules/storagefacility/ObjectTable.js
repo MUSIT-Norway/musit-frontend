@@ -9,7 +9,7 @@ export default class ObjectGrid extends Component {
     tableData: PropTypes.arrayOf(PropTypes.instanceOf(MusitObject)).isRequired,
     pickObject: PropTypes.func.isRequired,
     isObjectAdded: PropTypes.func.isRequired,
-    showMoveHistory: PropTypes.func.isRequired,
+    showObjectEvents: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired
   }
 
@@ -56,9 +56,7 @@ export default class ObjectGrid extends Component {
                       <td style={{width:'20px'}}>
                         <span className="icon icon-musitobject"/>
                       </td>
-                      <td onClick={() => {
-                        this.props.goToObjectEvents(c);
-                      }}>
+                      <td>
                         {c.museumNo}
                       </td>
                       <td>
@@ -73,7 +71,7 @@ export default class ObjectGrid extends Component {
                           href=""
                           onClick={(e) => {
                             e.preventDefault();
-                            this.props.showMoveHistory(c);
+                            this.props.showObjectEvents(c);
                           }}
                           title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
                         >
