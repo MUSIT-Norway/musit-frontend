@@ -133,14 +133,14 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
 
   const containerSubTypes = (v) => {
     switch (v) {
-      case 'Kapsel':
-        return ['Etanol', 'Aceton', 'Vann'];
-      case 'Glassplate':
-        return [];
-      case 'Koble':
-        return ['Aceton', 'Etanol', 'H2O'];
-      default:
-        return [];
+    case 'Kapsel':
+      return ['Etanol', 'Aceton', 'Vann'];
+    case 'Glassplate':
+      return [];
+    case 'Kolbe':
+      return ['Aceton', 'Etanol', 'H2O'];
+    default:
+      return [];
     }
   };
 

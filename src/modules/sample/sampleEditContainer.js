@@ -32,7 +32,7 @@ export default flowRight([
     const museumId = appSession.state.museumId;
     const accessToken = appSession.state.accessToken;
     const val = {id: sampleId, museumId: museumId, token: accessToken};
-    loadSample(val).toPromise().then((v) => {
+    loadSample(val).then((v) => {
       const formData = Object.keys(v).reduce((akk, key: string) => ([...akk, {name: key, defaultValue: v[key]}]), []);
       loadForm(formData);
     });

@@ -76,18 +76,18 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
 };
 
 const submitSample = (id, appSession, form, editSample) => {
-    const token = appSession.getAccessToken();
-    const museumId = appSession.getMuseumId();
-    const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-    const data = myReduce(form);
+  const token = appSession.getAccessToken();
+  const museumId = appSession.getMuseumId();
+  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+  const data = myReduce(form);
 
-    data['createdDate'] = '2017-03-19';
-    data['status'] = 2;
-    data['responsible'] = appSession.getActor().dataportenId;
-    data['isCollectionObject'] = false;
-    data['museumId'] = 99;
+  data['createdDate'] = '2017-03-19';
+  data['status'] = 2;
+  data['responsible'] = appSession.getActor().dataportenId;
+  data['isCollectionObject'] = false;
+  data['museumId'] = 99;
 
-    return editSample({id, museumId, token, data});
+  return editSample({id, museumId, token, data});
 };
 
 type FormData = {
@@ -151,14 +151,14 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
 
   const containerSubTypes = (v) => {
     switch (v) {
-      case 'Kapsel':
-        return ['Etanol', 'Aceton', 'Vann'];
-      case 'Glassplate':
-        return [];
-      case 'Koble':
-        return ['Aceton', 'Etanol', 'H2O'];
-      default:
-        return [];
+    case 'Kapsel':
+      return ['Etanol', 'Aceton', 'Vann'];
+    case 'Glassplate':
+      return [];
+    case 'Koble':
+      return ['Aceton', 'Etanol', 'H2O'];
+    default:
+      return [];
     }
   };
 
