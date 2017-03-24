@@ -31,8 +31,8 @@ export default flowRight([
     const sampleId = params.sampleId;
     const museumId = appSession.state.museumId;
     const accessToken = appSession.state.accessToken;
-    const i = {id: sampleId, museumId: museumId, token: accessToken};
-    loadSample(i).toPromise().then((v) => {
+    const val = {id: sampleId, museumId: museumId, token: accessToken};
+    loadSample(val).toPromise().then((v) => {
       const formData = Object.keys(v).reduce((akk, key: string) => ([...akk, {name: key, defaultValue: v[key]}]), []);
       loadForm(formData);
     });
