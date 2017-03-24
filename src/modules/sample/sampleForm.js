@@ -118,12 +118,12 @@ const note: Field<string> = {
   }
 };
 
-const sampleSize: Field<number> = {
-  name: 'sampleSize',
+const size: Field<number> = {
+  name: 'size',
   mapper: numberMapper,
   validator: {
     rawValidator: composeValidators(isRequired, isNumber(0, 2)),
-    valueValidator: isNumberInRange(0, 10)
+    valueValidator: isNumberInRange(0, Number.MAX_VALUE)
   }
 };
 
@@ -162,7 +162,7 @@ const status: Field<string> = {
 const fields = [
   note,
   status,
-  sampleSize,
+  size,
   sizeUnit,
   container,
   storageMedium,
@@ -180,4 +180,4 @@ const fields = [
   createdDate
 ];
 
-export default createForm('sampleFormAdd.js', fields );
+export default createForm('sampleForm.js', fields );

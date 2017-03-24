@@ -1,13 +1,13 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import SampleAddComponent from '../SampleAddComponent';
+import SampleEditComponent from '../SampleEditComponent';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import MuseumId from '../../../models/museumId';
 import MusitActor from '../../../models/actor';
 import { AppSession } from '../../app/appSession';
 
-describe('AnalysisSampleFormPageAdd', () => {
+describe('AnalysisSampleFormPageEdit', () => {
 
   it('should display correctly', () => {
     const appSession = new AppSession({
@@ -16,8 +16,9 @@ describe('AnalysisSampleFormPageAdd', () => {
       actor: new MusitActor({ dataportenId: '12345', fn: 'Jarl'})
     });
     const updateForm = sinon.spy();
-    const wrapper = mount(<SampleAddComponent
+    const wrapper = mount(<SampleEditComponent
       appSession={appSession}
+      params={{sampleId: '0000-1111-2222-3333'}}
       form={{
         note: {
           name: 'note',

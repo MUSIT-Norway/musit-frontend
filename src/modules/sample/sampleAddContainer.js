@@ -1,22 +1,25 @@
 import inject from 'react-rxjs/dist/RxInject';
-import sampleForm from './sampleAddForm';
+import sampleForm from './sampleForm';
 import SampleFormAddComponent from './SampleAddComponent';
 import Sample from '../../models/sample';
 import React from 'react';
 import {Observable} from 'rxjs';
 import {emitError, emitSuccess} from '../../shared/errors';
-import  sampleStore$, { clearForm$ } from './sampleStore';
+import { toPromise } from '../../shared/util';
 
-const {form$, updateForm$} = sampleForm;
+const {form$, updateForm$, loadForm$} = sampleForm;
+
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
-  form$,
-  sampleStore$};
+  form$
+};
+
 const props = {
-  addSample: Sample.addSample(),
+  addSample: toPromise(Sample.addSample()),
   emitSuccess,
   emitError
 };
 
-const commands = {updateForm$, clearForm$};
+const commands = {updateForm$, loadForm$};
+
 export default inject(data, commands, props)(SampleFormAddComponent);

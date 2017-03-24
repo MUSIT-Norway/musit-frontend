@@ -36,6 +36,9 @@ import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent'
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
+import SampleViewContainer  from './modules/sample/sampleViewContainer';
+import SampleEditContainer  from './modules/sample/sampleEditContainer';
+
 import CenteredLayout from './components/layout/CenteredLayout';
 
 export default () => {
@@ -60,8 +63,11 @@ export default () => {
           <Route path=":id/objects" showObjects component={StorageUnitsTable} />
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
+
         <Route component={CenteredLayout}>
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
+          <Route path="analysis/sample/:sampleId/edit" component={SampleEditContainer}/>
+          <Route path="analysis/sample/:sampleId" component={SampleViewContainer}/>
         </Route>
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />

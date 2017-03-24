@@ -1,6 +1,9 @@
 /* @flow */
 import React from 'react';
 import moment from 'moment';
+import { Observable } from 'rxjs';
+
+export const toPromise = (fn: (val: {}) => Observable) => (val: {}) => fn(val).toPromise();
 
 export const flatten = (arr: []) => {
   const obj = {};
