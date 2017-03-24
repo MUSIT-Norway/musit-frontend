@@ -7,7 +7,7 @@ import {hashHistory} from 'react-router';
 const FieldReadOnly = ({field, label}) => (
   <FormGroup>
     <FormControl.Static>
-      <span><b>{label}</b>{`:  ${field}`}</span>
+      <span className={field.name}><b>{label}</b>{`:  ${field.defaultValue}`}</span>
     </FormControl.Static>
   </FormGroup>
 );
@@ -76,13 +76,13 @@ const SampleViewComponent = (props) => {
         <Col md={2}>
           <FieldReadOnly
             label={'Prøvetype'}
-            field={form.sampleType.defaultValue}
+            field={form.sampleType}
           />
         </Col>
         <Col md={3}>
           <FieldReadOnly
             label={'Prøveundertype'}
-            field={form.sampleSubType.defaultValue}
+            field={form.sampleSubType}
           />
         </Col>
       </Row>
@@ -91,7 +91,7 @@ const SampleViewComponent = (props) => {
         <Col md={2}>
           <FieldReadOnly
             label={'Status'}
-            field={form.status.defaultValue}
+            field={form.status}
           />
 
         </Col>
@@ -101,7 +101,7 @@ const SampleViewComponent = (props) => {
         <Col md={3}>
           <FieldReadOnly
             label={'Målvolum/-vekt'}
-            field={`${form.size.defaultValue} ${form.sizeUnit.defaultValue}`}
+            field={`${form.size} ${form.sizeUnit}`}
           />
         </Col>
       </Row>
@@ -110,13 +110,13 @@ const SampleViewComponent = (props) => {
         <Col md={3}>
           <FieldReadOnly
             label={'Lagringskontainer'}
-            field={form.container.defaultValue}
+            field={form.container}
           />
         </Col>
         <Col md={3}>
           <FieldReadOnly
             label={'Lagringsmedium'}
-            field={form.storageMedium.defaultValue}
+            field={form.storageMedium}
           />
         </Col>
       </Row>
@@ -125,7 +125,7 @@ const SampleViewComponent = (props) => {
         <Col md={3}>
           <FieldReadOnly
             label={'Note'}
-            field={form.note.defaultValue}
+            field={form.note}
           />
         </Col>
       </Row>
