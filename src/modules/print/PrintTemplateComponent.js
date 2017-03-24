@@ -61,8 +61,9 @@ export class PrintTemplateComponent extends Component {
 
   static getDisplayName(node, skipCount) {
     const subPath = node.path.slice(skipCount);
-    const pathStr = reduce(subPath, (acc, p) => (acc !== '' ? acc + ' - ' : '') + p.name, '');
-    return pathStr + ' - ' + node.value.name;
+    const pathStr = reduce(subPath, (acc, p) => (acc !== '' ? acc + ' / ' : '') + p.name, '');
+    console.log('Pathstring: '+pathStr);
+    return pathStr ?  pathStr + ' / ' + node.value.name : node.value.name;
   }
 
   selectLevel(e, level = e.target.value * 1) {
