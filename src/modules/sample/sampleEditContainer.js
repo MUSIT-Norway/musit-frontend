@@ -5,31 +5,36 @@ import React from 'react';
 import {Observable} from 'rxjs';
 import  mount from '../../shared/mount';
 import {emitError, emitSuccess} from '../../shared/errors';
+import { toPromise } from '../../shared/util';
 import Sample from '../../models/sample';
+import flowRight from 'lodash/flowRight';
 
+const { form$, loadForm$, updateForm$ } = sampleForm;
 
-const {form$, loadForm$, updateForm$} = sampleForm;
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
   form$
 };
 
+const commands = {loadForm$, updateForm$};
+
 const props = {
-  loadSample: Sample.loadSample(),
-  editSample: Sample.editSample(),
+  loadSample: toPromise(Sample.loadSample()),
+  editSample: toPromise(Sample.editSample()),
   emitSuccess,
   emitError
 };
 
-const commands = {loadForm$, updateForm$};
-
-export default inject (data, commands, props) (mount ((p) => {
-  const sampleId = p.params.sampleId;
-  const museumId = p.appSession.state.museumId;
-  const accessToken = p.appSession.state.accessToken;
-  const i = {id: sampleId, museumId: museumId, token: accessToken};
-  p.loadSample(i).toPromise().then ((v)=> {
-    const  r = Object.keys(v).reduce((akk, key: string) => ([...akk, {name: key, defaultValue: v[key]}]), []);
-    p.loadForm(r);
-  } );
-}) (SampleEditComponent));
+export default flowRight([
+  inject(data, commands, props),
+  mount(({ loadSample, loadForm, params, appSession }) => {
+    const sampleId = params.sampleId;
+    const museumId = appSession.state.museumId;
+    const accessToken = appSession.state.accessToken;
+    const i = {id: sampleId, museumId: museumId, token: accessToken};
+    loadSample(i).toPromise().then((v) => {
+      const formData = Object.keys(v).reduce((akk, key: string) => ([...akk, {name: key, defaultValue: v[key]}]), []);
+      loadForm(formData);
+    });
+  })
+])(SampleEditComponent);

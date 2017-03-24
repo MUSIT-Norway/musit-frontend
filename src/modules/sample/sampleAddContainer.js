@@ -5,19 +5,23 @@ import Sample from '../../models/sample';
 import React from 'react';
 import {Observable} from 'rxjs';
 import {emitError, emitSuccess} from '../../shared/errors';
-import  sampleStore$, { clearForm$ } from './sampleStore';
+import { toPromise } from '../../shared/util';
+import sampleStore$, { clearForm$ } from './sampleStore';
 
 const {form$, updateForm$, loadForm$} = sampleForm;
 
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
   form$,
-  sampleStore$};
+  sampleStore$
+};
+
 const props = {
-  addSample: Sample.addSample(),
+  addSample: toPromise(Sample.addSample()),
   emitSuccess,
   emitError
 };
 
 const commands = {updateForm$, clearForm$,loadForm$};
+
 export default inject(data, commands, props)(SampleFormAddComponent);

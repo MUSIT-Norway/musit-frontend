@@ -6,9 +6,10 @@ import {Observable} from 'rxjs';
 import  mount from '../../shared/mount';
 import {emitError, emitSuccess} from '../../shared/errors';
 import Sample from '../../models/sample';
-
+import flowRight from 'lodash/flowRight';
 
 const {form$, loadForm$} = sampleForm;
+
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
   form$
@@ -22,16 +23,16 @@ const props = {
 
 const commands = {loadForm$};
 
-
-export default inject (data, commands, props) (mount ((p) => {
-  console.log('Props', p);
-  const sampleId = p.params.sampleId;
-  const museumId = p.appSession.state.museumId;
-  const accessToken = p.appSession.state.accessToken;
-  const i = {id: sampleId, museumId: museumId, token: accessToken};
-  console.log('I', i);
-  p.loadSample(i).toPromise().then ((v)=> {
-    const  r = Object.keys(v).reduce((akk, key: string) => ([...akk, {name: key, defaultValue: v[key]}]), []);
-    p.loadForm(r);
-  } );
-}) (SampleViewComponent));
+export default flowRight([
+  inject(data, commands, props),
+  mount(({ loadSample, loadForm, params, appSession }) => {
+    const sampleId = params.sampleId;
+    const museumId = appSession.state.museumId;
+    const accessToken = appSession.state.accessToken;
+    const i = {id: sampleId, museumId: museumId, token: accessToken};
+    loadSample(i).toPromise().then((v) => {
+      const formData = Object.keys(v).reduce((akk, key: string) => ([...akk, {name: key, defaultValue: v[key]}]), []);
+      loadForm(formData);
+    });
+  })
+])(SampleViewComponent);

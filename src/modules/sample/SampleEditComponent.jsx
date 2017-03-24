@@ -75,6 +75,21 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
+const submitSample = (id, appSession, form, editSample) => {
+    const token = appSession.getAccessToken();
+    const museumId = appSession.getMuseumId();
+    const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+    const data = myReduce(form);
+
+    data['createdDate'] = '2017-03-19';
+    data['status'] = 2;
+    data['responsible'] = appSession.getActor().dataportenId;
+    data['isCollectionObject'] = false;
+    data['museumId'] = 99;
+
+    return editSample({id, museumId, token, data});
+};
+
 type FormData = {
   note: Field,
   size: Field,
@@ -328,42 +343,23 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
       </Row>
       <Row className='row-centered'>
         <Col md={4}>
-          <Button onClick={() => SampleEditComponent.submitSample(id, appSession, form, editSample)
-            .toPromise().then(() => {
-              hashHistory.push(Config.magasin.urls.client.analysis
-              .gotoSample(id));
+          <Button
+            onClick={() =>
+              submitSample(id, appSession, form, editSample)
+                .then(() => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(id)))
             }
-          )
-          }>
+          >
             Lagre
           </Button>
         </Col>
         <Col md={4}>
-          <a onClick={
-            (e) => {
-              e.preventDefault();
-            }}>
+          <a onClick={(e) => e.preventDefault()}>
             Avbryt
           </a>
         </Col>
       </Row>
     </Form>
   );
-};
-
-SampleEditComponent.submitSample = (id, appSession, form, editSample) => {
-  const token = appSession.getAccessToken();
-  const museumId = appSession.getMuseumId();
-  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-  const data = myReduce(form);
-
-  data['createdDate'] = '2017-03-19';
-  data['status'] = 2;
-  data['responsible'] = appSession.getActor().dataportenId;
-  data['isCollectionObject'] = false;
-  data['museumId'] = 99;
-
-  return editSample({id, museumId, token, data});
 };
 
 const FieldShape = {

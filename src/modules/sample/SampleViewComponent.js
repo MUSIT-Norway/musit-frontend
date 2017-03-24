@@ -4,7 +4,6 @@ import FontAwesome from 'react-fontawesome';
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 
-
 const FieldReadOnly = ({field, label}) => (
   <FormGroup>
     <FormControl.Static>
@@ -12,7 +11,6 @@ const FieldReadOnly = ({field, label}) => (
     </FormControl.Static>
   </FormGroup>
 );
-
 
 const SampleViewComponent = (props) => {
   const form = props.form;
@@ -133,17 +131,14 @@ const SampleViewComponent = (props) => {
       </Row>
       <Row className='row-centered'>
         <Col md={4}>
-          <Button onClick={()=> {
-            hashHistory.push(Config.magasin.urls.client.analysis.editSample(props.params.sampleId));
-          }}>
+          <Button
+            onClick={() => hashHistory.push(Config.magasin.urls.client.analysis.editSample(props.params.sampleId))}
+          >
             Endre
           </Button>
         </Col>
         <Col md={4}>
-          <a onClick={
-              (e) => {
-                e.preventDefault();
-              }}>
+          <a onClick={(e) => e.preventDefault()}>
             Avbryt
           </a>
         </Col>

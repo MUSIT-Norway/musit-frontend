@@ -75,6 +75,20 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
+const submitSample = (appSession, form, addSample) => {
+  const token = appSession.getAccessToken();
+  const museumId = appSession.getMuseumId();
+  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+  const data = myReduce(form);
+
+  data['createdDate'] = '2017-03-19';
+  data['status'] = 2;
+  data['responsible'] = appSession.getActor().dataportenId;
+  data['isCollectionObject'] = false;
+  data['museumId'] = 99;
+
+  return addSample({museumId, token, data});
+};
 
 type FormData = {
   note: Field, size: Field, status: Field,
@@ -82,7 +96,8 @@ type FormData = {
   sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
   term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field,
   updateDate: Field, sampleId: Field, createdDate: Field
-}
+};
+
 type Props = {
   form: FormData, updateForm: Update, addSample: Function, clearForm: Function, appSession: {
     getMuseumId: Function,
@@ -311,24 +326,23 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
       </Row>
       <Row className='row-centered'>
         <Col md={4}>
-          <Button onClick={() => SampleAddComponent.submitSample(appSession, form, addSample)
-            .toPromise().then((value) => {
-              hashHistory.push(Config.magasin.urls.client.analysis
-              .gotoSample(value));
+          <Button
+            onClick={() =>
+              submitSample(appSession, form, addSample)
+                .then((value) => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(value)))
             }
-          )
-          }>
+          >
             Lagre
           </Button>
         </Col>
         <Col md={4}>
           <a
             href="#"
-            onClick={
-                (e)=>{
-                  SampleAddComponent.clear(e,clearForm).toPromise().then(
-                    hashHistory.refresh());
-                }}
+            onClick={(e) => {
+              e.preventDefault();
+              clearForm();
+              hashHistory.refresh();
+            }}
           >
             Avbryt
           </a>
@@ -336,28 +350,6 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
       </Row>
     </Form>
   );
-};
-
-SampleAddComponent.clear = (e, clearForm) => {
-  e.preventDefault();
-  return clearForm();
-};
-
-
-SampleAddComponent.submitSample = (appSession, form, addSample) => {
-
-  const token = appSession.getAccessToken();
-  const museumId = appSession.getMuseumId();
-  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-  const data = myReduce(form);
-
-  data['createdDate'] = '2017-03-19';
-  data['status'] = 2;
-  data['responsible'] = appSession.getActor().dataportenId;
-  data['isCollectionObject'] = false;
-  data['museumId'] = 99;
-
-  return addSample({museumId, token, data});
 };
 
 const FieldShape = {
