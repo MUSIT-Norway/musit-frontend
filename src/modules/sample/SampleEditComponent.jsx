@@ -75,7 +75,7 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (appSession, form, addSample) => {
+const submitSample = (id, appSession, form, editSample) => {
   const token = appSession.getAccessToken();
   const museumId = appSession.getMuseumId();
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
@@ -87,26 +87,44 @@ const submitSample = (appSession, form, addSample) => {
   data['isCollectionObject'] = false;
   data['museumId'] = 99;
 
-  return addSample({museumId, token, data});
+  return editSample({id, museumId, token, data});
 };
 
 type FormData = {
-  note: Field, size: Field, status: Field,
-  container: Field, storageMedium: Field, sampleType: Field,
-  sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
-  term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field
-};
-
+  note: Field,
+  size: Field,
+  status: Field,
+  container: Field,
+  storageMedium: Field,
+  sampleType: Field,
+  sampleSubType: Field,
+  sizeUnit: Field,
+  museumId: Field,
+  subNo: Field,
+  term_species: Field,
+  registeredBy: Field,
+  registeredDate: Field,
+  updateBy: Field,
+  updateDate: Field,
+  sampleId: Field,
+  createdDate: Field
+}
 type Props = {
-  form: FormData, updateForm: Update, addSample: Function, clearForm: Function, appSession: {
+  form: FormData,
+  updateForm: Update,
+  editSample: Function,
+  appSession: {
     getMuseumId: Function,
     getAccessToken: Function,
     getActor: Function
+  },
+  params: {
+    sampleId: string
   }
 };
 
-const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm} : Props) => {
+const SampleEditComponent = ({params, form, updateForm, editSample, appSession} : Props) => {
+  const id = params.sampleId;
 
   const sampleValues = [
     'Frø',
@@ -137,18 +155,17 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
       return ['Etanol', 'Aceton', 'Vann'];
     case 'Glassplate':
       return [];
-    case 'Kolbe':
+    case 'Koble':
       return ['Aceton', 'Etanol', 'H2O'];
     default:
       return [];
     }
   };
 
-
   return (
     <Form style={{ padding: 20 }}>
       <PageHeader>
-        Registrer prøveuttak
+        Endre prøveuttak
       </PageHeader>
       <Row className='row-centered'>
         <Col md={12}>
@@ -207,7 +224,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           <ControlLabel>Sist endret:</ControlLabel>
         </Col>
         <Col md={2}>
-          <FontAwesome className='updateBy' name='user'/> {form.updateBy.value || 'Stein Olsen' }
+          <FontAwesome name='user'/> {form.updateBy.value || 'Stein Olsen' }
         </Col>
         <Col md={2}>
           <FontAwesome name='clock-o'/> {form.updateDate.value || '11.03.2017' }
@@ -328,22 +345,15 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
         <Col md={4}>
           <Button
             onClick={() =>
-              submitSample(appSession, form, addSample)
-                .then((value) => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(value)))
+              submitSample(id, appSession, form, editSample)
+                .then(() => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(id)))
             }
           >
             Lagre
           </Button>
         </Col>
         <Col md={4}>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              clearForm();
-              hashHistory.refresh();
-            }}
-          >
+          <a onClick={(e) => e.preventDefault()}>
             Avbryt
           </a>
         </Col>
@@ -365,7 +375,7 @@ const FieldShape = {
   })
 };
 
-SampleAddComponent.propTypes = {
+SampleEditComponent.propTypes = {
   form: PropTypes.shape({
     note: PropTypes.shape(FieldShape).isRequired,
     museumId: PropTypes.shape(FieldShape).isRequired,
@@ -387,4 +397,4 @@ SampleAddComponent.propTypes = {
   appSession: PropTypes.object.isRequired
 };
 
-export default SampleAddComponent;
+export default SampleEditComponent;
