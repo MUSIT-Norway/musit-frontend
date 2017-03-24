@@ -1,7 +1,8 @@
 import {TestScheduler, Observable} from 'rxjs/Rx';
 import assert from 'assert';
 import {store$} from '../sampleStore';
-import {editSample, loadSample} from '../../../models/sample';
+import MuseumId  from '../../../models/museumId';
+import Sample from '../../../models/sample';
 const diff = require('deep-diff').diff;
 
 
@@ -25,7 +26,7 @@ describe('sampleStore', () => {
     const expectedStateMap = {
       a: {
         data: {},
-        loaded: false,
+        loaded: false
       },
       b: {
         data: {
@@ -40,6 +41,7 @@ describe('sampleStore', () => {
     };
 
     const clearForm$ = testScheduler.createHotObservable(clearFormM);
+
     const loadSample$ = testScheduler.createHotObservable(editSampleM, {
       1: {
         sampleId: 'xxxxxx-3433-3443-yyyyyy',
@@ -47,21 +49,23 @@ describe('sampleStore', () => {
         token: '1234'
       }
     });
+
     const editSample$ = testScheduler.createHotObservable(loadSampleM, {
       1: {
         data: {sampleId: 'xxxxxx-1234-2345-3456-yyyyyy'},
         loaded: true
       }
     })
-      .switchMap(loadSample({
-        simpleGet: (url) => Observable.of({
+      .switchMap(Sample.loadSample({
+        simpleGet: () => Observable.of({
           response: {
             data: {
               sampleId: 'xxxxxx-3433-3443-yyyyyy'
             },
             loaded: true
           }
-        })}));
+        })
+      }));
 
     const state$ = store$({clearForm$, loadSample$, editSample$});
 
@@ -71,6 +75,6 @@ describe('sampleStore', () => {
     // run tests
     testScheduler.flush();
   })
-    ;
+  ;
 
-  });
+});
