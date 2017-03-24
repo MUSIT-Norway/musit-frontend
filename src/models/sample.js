@@ -9,18 +9,15 @@ class Sample {
 }
 
 Sample.addSample = (ajaxPost = simplePost) => ({museumId, token, data, callback}) => {
-  const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
-  const url = baseUrl;
+  const url = Config.magasin.urls.api.samples.baseUrl(museumId);
   return ajaxPost(url, data, token, callback).map(({response}) => response);
 };
 
-Sample.editSample = (ajaxPut = simplePut) => ({id,museumId, token, data, callback}) => {
+Sample.editSample = (ajaxPut = simplePut) => ({id, museumId, token, data, callback}) => {
   const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
   const url = `${baseUrl}/${id}`;
   return ajaxPut(url, data, token, callback).map(({response}) => response && new Sample(response));
-
 };
-
 
 Sample.loadSample = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
   const baseUrl= Config.magasin.urls.api.samples.baseUrl(museumId);
