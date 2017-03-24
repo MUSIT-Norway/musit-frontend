@@ -1,0 +1,9 @@
+.my-modal {
+  min-width: 900px;
+  max-width: 1100px;
+}
+.my-modal .table {
+  padding: 5px;
+  word-wrap: break-word;
+
+}

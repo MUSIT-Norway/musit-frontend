@@ -16,6 +16,7 @@ import PagingToolbar from '../../components/PagingToolbar';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import MusitModal from '../movedialog/MoveDialogComponent';
+import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 import Config from '../../config';
 import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
@@ -67,6 +68,7 @@ export class TableComponent extends React.Component {
     this.loadObjects = this.loadObjects.bind(this);
     this.moveNode = this.moveNode.bind(this);
     this.moveObject = this.moveObject.bind(this);
+    this.showObjectMoveHistory = this.showObjectMoveHistory.bind(this);
     this.showMoveNodeModal = this.showMoveNodeModal.bind(this);
     this.showMoveObjectModal = this.showMoveObjectModal.bind(this);
     this.showNodes = this.showNodes.bind(this);
@@ -264,6 +266,15 @@ export class TableComponent extends React.Component {
     }});
   };
 
+  showObjectMoveHistory(
+    objectToShowHistoryFor
+  ) {
+    const objStr = objectToShowHistoryFor.getObjectDescription();
+    const componentToRender = <MusitModalHistory appSession={this.props.appSession} objectId={objectToShowHistoryFor.id} />;
+    const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
+    this.props.showModal(title, componentToRender);
+  }
+
   makeToolbar(
     nodeId = this.props.params.id,
     museumId = this.props.appSession.getMuseumId(),
@@ -369,7 +380,8 @@ export class TableComponent extends React.Component {
     children = this.props.tableStore.children,
     showObjects = this.props.route.showObjects,
     moveNode = this.showMoveNodeModal,
-    moveObject = this.showMoveObjectModal
+    moveObject = this.showMoveObjectModal,
+    showHistory = this.showObjectMoveHistory
   ) {
     const currentPage = this.getCurrentPage() || 1;
     const matches = children && children.data && children.data.matches;
@@ -382,12 +394,7 @@ export class TableComponent extends React.Component {
           <ObjectGrid
             tableData={matches && matches[0] && matches[0] instanceof MusitObject ?
               filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
-            showObjectEvents={(object) => {
-              this.props.goTo({
-                pathname: Config.magasin.urls.client.searchObjects.goToObjectEvents(object),
-                state: object
-              });
-            }}
+            showMoveHistory={showHistory}
             pickObject={(object) =>
               this.props.pickObject({
                 object,

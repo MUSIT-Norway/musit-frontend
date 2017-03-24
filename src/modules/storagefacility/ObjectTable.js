@@ -9,7 +9,7 @@ export default class ObjectGrid extends Component {
     tableData: PropTypes.arrayOf(PropTypes.instanceOf(MusitObject)).isRequired,
     pickObject: PropTypes.func.isRequired,
     isObjectAdded: PropTypes.func.isRequired,
-    showObjectEvents: PropTypes.func.isRequired,
+    showMoveHistory: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired
   }
 
@@ -51,68 +51,66 @@ export default class ObjectGrid extends Component {
                 {this.props.tableData.map((c, i) => {
                   const isMainObject = !c.mainObjectId || c.isMainObject();
                   const isChildObject = c.mainObjectId && !isMainObject;
-                  return (
-                    <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}>
-                      <td style={{width:'20px'}}>
-                        <span className="icon icon-musitobject"/>
-                      </td>
-                      <td>
-                        {c.museumNo}
-                      </td>
-                      <td>
-                        {c.subNo}
-                      </td>
-                      <td>
-                        {c.term}
-                      </td>
-                      <td>
-                        {isMainObject &&
-                        <a className="onShowMoveHistory"
-                          href=""
-                          onClick={(e) => {
-                            e.preventDefault();
-                            this.props.showObjectEvents(c);
-                          }}
-                          title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
-                        >
-                          <span className="icon icon-musitmovehistoryicon"/>
-                        </a>
+                  return <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}>
+                    <td style={{width:'20px'}}>
+                      <span className="icon icon-musitobject"/>
+                    </td>
+                    <td>
+                      {c.museumNo}
+                    </td>
+                    <td>
+                      {c.subNo}
+                    </td>
+                    <td>
+                      {c.term}
+                    </td>
+                    <td>
+                      {isMainObject &&
+                      <a className="onShowMoveHistory"
+                        href=""
+                        onClick={(e) => {
+                          e.preventDefault();
+                          this.props.showMoveHistory(c);
+                        }}
+                        title={I18n.t('musit.grid.object.iconTooltip.moveObjectHistory')}
+                      >
+                        <span className="icon icon-musitmovehistoryicon"/>
+                      </a>
+                      }
+                    </td>
+                    <td>
+                      {isMainObject &&
+                      <a className="onMoveClick"
+                        href=""
+                        onClick={(e) => {
+                          e.preventDefault();
+                          this.props.onMove(c);
+                        }}
+                        title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
+                      >
+                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck"/>
+                      </a>
+                      }
+                    </td>
+                    <td>
+                      {isMainObject &&
+                      <a className="onPickObject"
+                        href=""
+                        onClick={(e) => {
+                          e.preventDefault();
+                          this.props.pickObject(c);
+                        }}
+                        title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
+                      >
+                        {this.props.isObjectAdded(c) ?
+                          <FontAwesome style={{ fontSize: '1.5em', color: 'Gray' }} name="shopping-cart"/> :
+                          <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
                         }
-                      </td>
-                      <td>
-                        {isMainObject &&
-                        <a className="onMoveClick"
-                          href=""
-                          onClick={(e) => {
-                            e.preventDefault();
-                            this.props.onMove(c);
-                          }}
-                          title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
-                        >
-                          <FontAwesome style={{ fontSize: '1.5em' }} name="truck"/>
-                        </a>
-                        }
-                      </td>
-                      <td>
-                        {isMainObject &&
-                        <a className="onPickObject"
-                          href=""
-                          onClick={(e) => {
-                            e.preventDefault();
-                            this.props.pickObject(c);
-                          }}
-                          title={I18n.t('musit.grid.object.iconTooltip.addToPickList')}
-                        >
-                          {this.props.isObjectAdded(c) ?
-                            <FontAwesome style={{ fontSize: '1.5em', color: 'Gray' }} name="shopping-cart"/> :
-                            <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
-                          }
 
-                        </a>
-                        }
-                      </td>
-                    </tr>
-                  );
+                      </a>
+                      }
+                    </td>
+                  </tr>;
                 })}
               </tbody>
             </Table>
