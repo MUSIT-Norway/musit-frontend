@@ -79,8 +79,8 @@ describe('PrintTemplateComponent', () => {
     expect(renderTemplate.getCall(0).args[0].codeFormat).toBe(2);
     expect(renderTemplate.getCall(0).args[0].templateId).toBe(4);
     expect(renderTemplate.getCall(0).args[0].nodes).toEqual([
-      {'uuid':1,'name':'Utviklingsmuseet - Utviklingsmuseet Org - Forskningens hus - Forskningsværelset - kkk - Test 1'},
-      {'uuid':2,'name':'Utviklingsmuseet - Utviklingsmuseet Org - Test 2'}
+      {'uuid':1,'name':'Utviklingsmuseet / Utviklingsmuseet Org / Forskningens hus / Forskningsværelset / kkk / Test 1'},
+      {'uuid':2,'name':'Utviklingsmuseet / Utviklingsmuseet Org / Test 2'}
     ]);
     wrapper.setProps({ store: {...store, templateId: 4} });
     wrapper.find('select.level').simulate('change', { target: { value : -2 }});
@@ -90,8 +90,8 @@ describe('PrintTemplateComponent', () => {
     expect(renderTemplate.getCall(1).args[0].codeFormat).toBe(2);
     expect(renderTemplate.getCall(1).args[0].templateId).toBe(4);
     expect(renderTemplate.getCall(1).args[0].nodes).toEqual([
-      {'uuid':1,'name':'Forskningsværelset - kkk - Test 1'},
-      {'uuid':2,'name':'Utviklingsmuseet - Utviklingsmuseet Org - Test 2'}
+      {'uuid':1,'name':'Forskningsværelset / kkk / Test 1'},
+      {'uuid':2,'name':'Utviklingsmuseet / Utviklingsmuseet Org / Test 2'}
     ]);
     expect(mountToJson(wrapper)).toMatchSnapshot();
   });
