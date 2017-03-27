@@ -144,7 +144,7 @@ export const moveItems = (
     let error = false;
     if (isNode) {
       const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
-      const errorMessages = itemsWithError.map(fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.value.name})` );
+      const errorMessages = itemsWithError.map(fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.name})` );
       if (errorMessages.length > 0) {
         error = true;
         for (const errorMessage of errorMessages) {
