@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
 
 export default class Event {}
 
-Event.concatAnalysesWithMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => (val) =>
+Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => (val) =>
   Observable.forkJoin(
     Analyses.getAnalysesForObject(ajaxGet)(val),
-    MusitObject.getLocationHistory(ajaxGet, ajaxPost)(val).map(locations =>
+    MusitObject.getLocationHistory(ajaxGet)(val).map(locations =>
       locations.map(loc => ({...loc, type: 'MoveObject', eventDate: loc.registeredDate }))
     )
   ).map(([analyses, moves]) => {

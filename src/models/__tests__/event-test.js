@@ -58,7 +58,7 @@ describe('Event model', () => {
       });
     };
 
-    const fn = Event.concatAnalysesWithMoves(get, post);
+    const fn = Event.getAnalysesAndMoves(get, post);
 
     const props = {
       token: '1234',

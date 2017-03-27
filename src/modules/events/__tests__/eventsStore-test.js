@@ -53,9 +53,9 @@ describe('eventsStore', () => {
     const clear$ = testScheduler.createHotObservable(clearM);
     const getCurrentLocation$ = testScheduler.createHotObservable(getCurrentLocM, { 1: currentLocation });
     const setObject$ = testScheduler.createHotObservable(setObjectM, { 1: object });
-    const loadAnalyses$ = testScheduler.createHotObservable(loadAnalysesM, { 1: [] });
+    const loadEvents$ = testScheduler.createHotObservable(loadAnalysesM, { 1: [] });
 
-    const state$ = eventsStore$({clear$, getCurrentLocation$, setObject$, loadAnalyses$});
+    const state$ = eventsStore$({clear$, getCurrentLocation$, setObject$, loadEvents$});
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
