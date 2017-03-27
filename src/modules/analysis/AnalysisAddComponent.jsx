@@ -154,9 +154,8 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
             <thead>
             <tr>
               <th>Museumsnr</th>
-              <th>Unt</th>
+              <th>Unr</th>
               <th>Term/artsnavn</th>
-              <th>UUID</th>
             </tr>
             </thead>
             <tbody>
@@ -166,7 +165,6 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
                   <td>{a.museumNumber}</td>
                   <td>{a.subNumber}</td>
                   <td>{a.term}</td>
-                  <td>{a.uuid}</td>
                 </tr>
               )
               : ''}
