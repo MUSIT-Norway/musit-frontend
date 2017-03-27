@@ -17,7 +17,7 @@ type SampleObjectInput = {
       hasAnalyse: boolean }]
 };
 
-const SamplesForObject = (input: SampleObjectInput) => {
+const SamplesForObjectComponent = (input: SampleObjectInput) => {
   return (<div>
     <FormGroup>
       <ControlLabel>
@@ -65,6 +65,6 @@ const SamplesForObject = (input: SampleObjectInput) => {
   </div>);
 };
 
-export default SamplesForObject;
+export default SamplesForObjectComponent;
 
 
