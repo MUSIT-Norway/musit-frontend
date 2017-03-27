@@ -1,6 +1,7 @@
 import inject from 'react-rxjs/dist/RxInject';
 import sampleForm from './sampleForm';
-import SamplesForObjectComponent from 'SamplesForObjectComponent';import React from 'react';
+import SamplesForObjectComponent from './SamplesForObjectComponent';
+import React from 'react';
 import {Observable} from 'rxjs';
 import  mount from '../../shared/mount';
 import {emitError, emitSuccess} from '../../shared/errors';

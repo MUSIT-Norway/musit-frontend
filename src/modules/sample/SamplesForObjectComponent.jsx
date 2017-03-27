@@ -46,7 +46,7 @@ const SamplesForObjectComponent = (input: SampleObjectInput) => {
              {key: 'sampleType', label: 'Prøvetype' },
              {key: 'sampleSubType', label: 'Prøveundertype' },
              {key: 'status', label: 'Status' },
-             {key: 'hasAnalyse', label: 'Analyse'},
+             {key: 'hasAnalyse', label: 'Analyse'}
            ]}
            sortable={['id', 'date']}
            defaultSort={{ column: 'id', direction: 'desc' }}
