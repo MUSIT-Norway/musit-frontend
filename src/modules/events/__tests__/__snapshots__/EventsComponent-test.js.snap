@@ -1,87 +1,221 @@
-exports[`EventsComponent Check it renders when not loaded 1`] = `
-<Layout
-  breadcrumb={
-    <function Breadcrumb() {_classCallCheck(this, Breadcrumb);return _possibleConstructorReturn(this, (Breadcrumb.__proto__ || Object.getPrototypeOf(Breadcrumb)).apply(this, arguments));}
-      allActive={true}
-      node={undefined}
-      onClickCrumb={[Function onClickCrumb]} />
-  }
-  content={
-    <span>
-      loader
-    </span>
-  }
-  leftMenu={
-    <div
-      style={
+exports[`EventsComponent should render a table of events 1`] = `
+<div>
+  <h1>
+    Hendelser
+  </h1>
+  <hr />
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={2}>
+      <b>
+        Museumsnr:
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}>
+      MUSK123
+    </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={2}>
+      <b>
+        Unr:
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}>
+      PIKACHU 1
+    </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={2}>
+      <b>
+        Term/Artsnavn:
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}>
+      Fugl 1
+    </Col>
+  </Row>
+  <Row
+    bsClass="row"
+    componentClass="div">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={2}>
+      <b>
+        Plassering:
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      sm={10}>
+      <Breadcrumb
+        disabled={true}
+        node={
+          Array [
+            Object {
+              "name": "Museum",
+              "url": "/magasin/1"
+            },
+            Object {
+              "name": "Org",
+              "url": "/magasin/2"
+            },
+            Object {
+              "name": "Bygg",
+              "url": "/magasin/3"
+            },
+            Object {
+              "name": "Rom",
+              "url": "/magasin/4"
+            }
+          ]
+        } />
+    </Col>
+  </Row>
+  <br />
+  <Table
+    className="table"
+    columns={
+      Array [
         Object {
-          "paddingTop": 10
-        }
-      }>
-      <function ObservationControlComponent() {_classCallCheck(this, ObservationControlComponent);return _possibleConstructorReturn(this, (ObservationControlComponent.__proto__ || Object.getPrototypeOf(ObservationControlComponent)).apply(this, arguments));}
-        id="1"
-        onClickNewControl={[Function onClickNewControl]}
-        onClickNewObservation={[Function onClickNewObservation]}
-        selectControl={true}
-        selectObservation={true} />
-    </div>
-  }
-  title="Magasin"
-  toolbar={
-    <function Toolbar() {_classCallCheck(this, Toolbar);return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));}
-      clickShowLeft={[Function clickShowLeft]}
-      clickShowRight={[Function clickShowRight]}
-      labelLeft="Observasjoner"
-      labelRight="Kontroller"
-      placeHolderSearch="Filtrer i listen"
-      showLeft={true}
-      showRight={true} />
-  } />
-`;
-
-exports[`EventsComponent Check it renders. 1`] = `
-<Layout
-  breadcrumb={
-    <function Breadcrumb() {_classCallCheck(this, Breadcrumb);return _possibleConstructorReturn(this, (Breadcrumb.__proto__ || Object.getPrototypeOf(Breadcrumb)).apply(this, arguments));}
-      allActive={true}
-      node={undefined}
-      onClickCrumb={[Function onClickCrumb]} />
-  }
-  content={
-    <div
-      style={
+          "key": "eventDate",
+          "label": "Dato"
+        },
         Object {
-          "color": "grey",
-          "textAlign": "center"
-        }
-      }>
-      Ingen kontroller eller observasjoner
-    </div>
-  }
-  leftMenu={
-    <div
-      style={
+          "key": "type",
+          "label": "Type hendelse"
+        },
         Object {
-          "paddingTop": 10
+          "key": "registeredBy",
+          "label": "Utført av"
+        },
+        Object {
+          "key": "note",
+          "label": "Kommentar"
+        },
+        Object {
+          "key": "id",
+          "label": ""
         }
-      }>
-      <function ObservationControlComponent() {_classCallCheck(this, ObservationControlComponent);return _possibleConstructorReturn(this, (ObservationControlComponent.__proto__ || Object.getPrototypeOf(ObservationControlComponent)).apply(this, arguments));}
-        id="1"
-        onClickNewControl={[Function onClickNewControl]}
-        onClickNewObservation={[Function onClickNewObservation]}
-        selectControl={true}
-        selectObservation={true} />
-    </div>
-  }
-  title="Magasin"
-  toolbar={
-    <function Toolbar() {_classCallCheck(this, Toolbar);return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));}
-      clickShowLeft={[Function clickShowLeft]}
-      clickShowRight={[Function clickShowRight]}
-      labelLeft="Observasjoner"
-      labelRight="Kontroller"
-      placeHolderSearch="Filtrer i listen"
-      showLeft={true}
-      showRight={true} />
-  } />
+      ]
+    }
+    defaultSort={
+      Object {
+        "column": "eventDate",
+        "direction": "desc"
+      }
+    }
+    defaultSortDescending={false}
+    filterBy=""
+    hideFilterInput={false}
+    itemsPerPage={0}
+    noDataText="Ingen hendelser funnet på objektet"
+    sortBy={false}
+    sortable={
+      Array [
+        "type",
+        "eventDate",
+        "registeredBy",
+        "note"
+      ]
+    }>
+    <Tr>
+      <Td
+        column="eventDate">
+        dato 1
+      </Td>
+      <Td
+        column="type">
+        MoveObject
+      </Td>
+      <Td
+        column="registeredBy">
+        Santa 1
+      </Td>
+      <Td
+        column="note">
+        <span>
+          Some note 1
+        </span>
+      </Td>
+      <Td
+        column="id">
+        Les mer
+      </Td>
+    </Tr>
+    <Tr>
+      <Td
+        column="eventDate">
+        dato 2
+      </Td>
+      <Td
+        column="type">
+        MoveObject
+      </Td>
+      <Td
+        column="registeredBy">
+        Santa 2
+      </Td>
+      <Td
+        column="note">
+        <span>
+          Some note 2
+        </span>
+      </Td>
+      <Td
+        column="id">
+        Les mer
+      </Td>
+    </Tr>
+    <Tr>
+      <Td
+        column="eventDate">
+        dato 3
+      </Td>
+      <Td
+        column="type">
+        Analyse
+      </Td>
+      <Td
+        column="registeredBy">
+        Santa 3
+      </Td>
+      <Td
+        column="note">
+        <span>
+          Some note 3
+        </span>
+      </Td>
+      <Td
+        column="id">
+        Les mer
+      </Td>
+    </Tr>
+  </Table>
+</div>
 `;
