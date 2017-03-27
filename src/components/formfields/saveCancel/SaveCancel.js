@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -18,66 +17,55 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component, PropTypes } from 'react';
-import { Button, Row, Col } from 'react-bootstrap';
-import { I18n } from 'react-i18nify';
+import React, {PropTypes} from 'react';
+import {Button, Row, Col} from 'react-bootstrap';
+import {I18n} from 'react-i18nify';
 
-export default class SaveCancel extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    saveLabel: PropTypes.string,
-    saveDisabled: PropTypes.bool,
-    onClickSave: PropTypes.func,
-    cancelLabel: PropTypes.string,
-    cancelDisabled: PropTypes.bool,
-    onClickCancel: PropTypes.func
-  }
 
-  constructor(props) {
-    super(props);
-    const {
-      id,
-      onClickSave,
-      onClickCancel
-    } = props;
-    this.fields = {
-      save: {
-        id: `Save_${id || 1}`,
-        onClick: onClickSave,
-        className: 'submitButton',
-        bsStyle: 'primary'
-      },
-      cancel: {
-        id: `Cancel_${id || 1}`,
-        onClick: onClickCancel,
-        className: 'cancelButton',
-        bsStyle: 'link'
-      }
-    };
-  }
+export default function SaveCancel(props) {
+  const save = {
+    id: `Save_${props.id || 1}`,
+    onClick: props.onClickSave,
+    className: 'submitButton',
+    bsStyle: 'primary'
+  };
+  const cancel = {
+    id: `Cancel_${props.id || 1}`,
+    onClick: props.onClickCancel,
+    className: 'cancelButton',
+    bsStyle: 'link'
+  };
 
-  render() {
-    const { saveLabel, cancelLabel } = this.props;
-    const { save, cancel } = this.fields;
-    return (
-      <Row>
-        <Col xs={6} sm={5} md={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
-          <Button
-            {...save}
-            disabled={this.props.saveDisabled}
-          >
-            {saveLabel || I18n.t('musit.texts.save')}
-          </Button>
-        </Col>
-        <Col xs={6} sm={5} md={2} style={{ border: 'none', textAlign: 'center' }}>
-          <Button
-            {...cancel}
-            disabled={this.props.cancelDisabled}
-          >
-            {cancelLabel || I18n.t('musit.texts.cancel')}
-          </Button>
-        </Col>
-      </Row>
-    );
-  }
+  return (
+    <Row>
+      <Col xs={6} sm={5} md={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
+        <Button
+          {...save}
+          disabled={props.saveDisabled}
+        >
+          {props.saveLabel || I18n.t('musit.texts.save')}
+        </Button>
+      </Col>
+      <Col xs={6} sm={5} md={2} style={{ border: 'none', textAlign: 'center' }}>
+        <Button
+          {...cancel}
+          disabled={props.cancelDisabled}
+        >
+          {props.cancelLabel || I18n.t('musit.texts.cancel')}
+        </Button>
+      </Col>
+    </Row>
+  );
 }
+
+SaveCancel.propTypes = {
+  id: PropTypes.string,
+  saveLabel: PropTypes.string,
+  saveDisabled: PropTypes.bool,
+  onClickSave: PropTypes.func,
+  cancelLabel: PropTypes.string,
+  cancelDisabled: PropTypes.bool,
+  onClickCancel: PropTypes.func
+};
+
+SaveCancel.displayName = 'SaveCancel';
