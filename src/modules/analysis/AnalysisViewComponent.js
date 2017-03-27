@@ -17,11 +17,7 @@ import FontAwesome from 'react-fontawesome';
 import {SaveCancel} from '../../components/formfields/index';
 
 
-type Field = { name: string, rawValue: ?string };
-type Update = (update: Field) => void;
-// type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: any };
-type FormData = { note: Field }
-type Props = { form: FormData, updateForm: Update };
+type Props = { store: any };
 
 function LabelFormat(label, md = 1) {
   return (<Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>);
@@ -57,7 +53,7 @@ function newLine() {
 
 const expanded = true;
 
-const AnalysisAdd = ({ form, updateForm } : Props) => {
+const AnalysisView = ({ store } : Props) => {
   return (
     <div>
       <br/>
@@ -105,10 +101,10 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
           <Table bordered>
             <thead>
             <tr>
-            <th>Museumsnr</th>
-            <th>Unt</th>
-            <th>Term/artsnavn</th>
-              </tr>
+              <th>Museumsnr</th>
+              <th>Unt</th>
+              <th>Term/artsnavn</th>
+            </tr>
             </thead>
             <tbody>
             <tr>
@@ -264,21 +260,18 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
               </FormGroup>
             </Panel>
           </FormGroup>
+          e
         </Form>
       </Well>
       <Form horizontal style={{ paddingLeft: 20 }}>
         <FormGroup
-          controlId={form.note.name}
-          validationState={form.note.status && !form.note.status.valid ? 'error' : null}
         >
           {LabelFormat('Kommentar til analysen', 1)}
           <Col md={5}>
             <FormControl
               className="note"
-              onChange={(e) => updateForm({name: form.note.name, rawValue: e.target.value })}
               componentClass="textarea"
-              placeholder={form.note.name}
-              value={form.note.rawValue || ''}
+              value={store.data && store.data.analysis && store.data.analysis.note && store.data.analysis.note || ''}
             />
           </Col>
         </FormGroup>
@@ -315,21 +308,10 @@ const AnalysisAdd = ({ form, updateForm } : Props) => {
     </div>);
 };
 
-const FieldShape = {
-  name: PropTypes.string.isRequired,
-  rawValue: PropTypes.string,
-  status: PropTypes.shape({
-    valid: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  })
-};
 
-AnalysisAdd.propTypes = {
-  form: PropTypes.shape({
-    note: PropTypes.shape(FieldShape).isRequired
-  }).isRequired,
-  updateForm: PropTypes.func.isRequired
+AnalysisView.propTypes = {
+  store: PropTypes.object
 };
 
 
-export default AnalysisAdd;
+export default AnalysisView;
