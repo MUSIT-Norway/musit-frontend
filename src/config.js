@@ -92,7 +92,9 @@ export default {
           saveResult: (mid, id) =>
             `api/management/${mid.id}/analyses/${id}/results`,
           getAnalysisForObject: (mid, id) =>
-            `api/management/${mid.id}/analyses/objects/${id}`
+            `api/management/${mid.id}/analyses/objects/${id}`,
+          analysesForObject: (mid, objectId): string =>
+            `/api/management/${mid.id}/analyses/objects/${objectId}`
         },
         samples: {
           baseUrl: (mid): string =>
