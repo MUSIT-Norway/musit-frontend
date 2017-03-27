@@ -31,14 +31,14 @@ import ViewObservationPage from './modules/observation/ViewObservationPage';
 import Reports from './modules/reports/ReportsOverview';
 import ControlViewContainer from './modules/control/ControlViewComponent';
 import ControlAddContainer from './modules/control/ControlAddComponent';
-import EventsContainer from './modules/events/EventsComponent';
+import EventsContainer from './modules/controlsobservations/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
+import AllEvents from './modules/events/eventsContainer';
 import SampleViewContainer  from './modules/sample/sampleViewContainer';
 import SampleEditContainer  from './modules/sample/sampleEditContainer';
-
 import CenteredLayout from './components/layout/CenteredLayout';
 
 export default () => {
@@ -63,6 +63,7 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route component={CenteredLayout}>
+          <Route path="events/:objectId" component={AllEvents} />
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
           <Route path="analysis/add" component={AnalysisAddContainer} />
           <Route path="analysis/sample/:sampleId/edit" component={SampleEditContainer}/>

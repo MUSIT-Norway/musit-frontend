@@ -3,9 +3,6 @@ import Config from '../config';
 import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import flatMap from 'lodash/flatMap';
-import MusitActor from './actor';
-import uniq from 'lodash/uniq';
-import { I18n } from 'react-i18nify';
 
 class MusitObject {
   constructor(props) {
@@ -58,6 +55,10 @@ MusitObject.getObjectLocations = (ajaxPost = simplePost) => ({ objectIds, museu
       });
     });
 
+MusitObject.getObjectLocation = (ajaxGet = simpleGet) => ({ objectId, museumId, token, callback }) =>
+  ajaxGet(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/objects/${objectId}/currentlocation`, token, callback)
+    .map(({ response }) => ({...response, breadcrumb: getPath(response)}));
+
 MusitObject.getMainObject = (ajaxGet = simpleGet) => ({ id, museumId, collectionId, token, callback }) => {
   return ajaxGet(`${Config.magasin.urls.api.thingaggregate.baseUrl(museumId)}/objects/${id}/children?${collectionId.getQuery()}`, token, callback)
     .map(({ response }) => response && response.map(obj => new MusitObject(obj)));
@@ -86,7 +87,7 @@ MusitObject.moveObject = (ajaxPut = simplePut) => (
   return ajaxPut(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/moveObject`, data, token, callback);
 };
 
-MusitObject.getLocationHistory = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({ objectId, museumId, token, callback }) => {
+MusitObject.getLocationHistory = (ajaxGet = simpleGet) => ({ objectId, museumId, token, callback }) => {
   return ajaxGet(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/objects/${objectId}/locations`, token, callback)
     .map(({ response }) => {
       if (!Array.isArray(response)) {
@@ -105,22 +106,6 @@ MusitObject.getLocationHistory = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
           }
         };
       });
-    })
-    .flatMap(rows => {
-      const actorIds = uniq(rows.map(r => r.doneBy)).filter(r => r);
-      return MusitActor.getActors(ajaxPost)(actorIds, token)
-        .map(actors => {
-          if (!Array.isArray(actors)) {
-            return rows;
-          }
-          return rows.map((data) => {
-            const doneBy = actors.find(a => a.hasActorId(data.doneBy));
-            return {
-              ...data,
-              doneBy: doneBy ? doneBy.fn : I18n.t('musit.unknown')
-            };
-          });
-        });
     });
 };
 
