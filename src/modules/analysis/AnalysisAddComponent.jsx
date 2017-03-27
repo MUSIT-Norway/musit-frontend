@@ -88,7 +88,7 @@ function newLine() {
   </Form>;
 }
 
-const getVal = (form, field) => form[field] && (form[field].rawValue || '');
+const getVal = (form, field) => form[field] && (form[field].rawValue || ''); // TODO may be inline
 const expanded = true;
 
 const saveAnalysisEventLocal = (appSession, form, store, saveAnalysisEvent) =>{

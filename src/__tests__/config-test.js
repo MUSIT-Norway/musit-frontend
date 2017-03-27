@@ -80,6 +80,42 @@ describe('Config urls', () => {
     {
       actual: urls.api.thingaggregate.scanOldUrl(1234, new MuseumId(99), new CollectionId('1234')),
       expected: '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
+    },
+    {
+      actual: urls.api.analysisType.getAllAnalysisTypes(new MuseumId(99)),
+      expected: 'api/management/99/analyses/types'
+    },
+    {
+      actual: urls.api.analysisType.getAnalysisById(new MuseumId(99), 123),
+      expected: 'api/management/99/analyses/types/123'
+    },
+    {
+      actual: urls.api.analysisType.getAnalysisTypesForCategory(new MuseumId(99), 123),
+      expected: 'api/management/99/analyses/types/categories/123'
+    },
+    {
+      actual: urls.api.analysisType.getAnalysisTypesForCollection(new MuseumId(99), 123),
+      expected: 'api/management/99/analyses/types/musemcollections/123'
+    },
+    {
+      actual: urls.api.analysis.saveAnalysisEvent(new MuseumId(99)),
+      expected: 'api/management/99/analyses'
+    },
+    {
+      actual: urls.api.analysis.getAnalysisById(new MuseumId(99), 123),
+      expected: 'api/management/99/analyses/123'
+    },
+    {
+      actual: urls.api.analysis.getChildAnalyses(new MuseumId(99), 123),
+      expected: 'api/management/99/analyses/123/children'
+    },
+    {
+      actual: urls.api.analysis.saveResult(new MuseumId(99), 123),
+      expected: 'api/management/99/analyses/123/results'
+    },
+    {
+      actual: urls.api.analysis.getAnalysisForObject(new MuseumId(99), 123),
+      expected: 'api/management/99/analyses/objects/123'
     }
   ];
 
