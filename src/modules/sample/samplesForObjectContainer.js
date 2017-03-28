@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import  mount from '../../shared/mount';
 import {emitError, emitSuccess} from '../../shared/errors';
 import flowRight from 'lodash/flowRight';
-import sampleStore$, {loadSamplesForObject$} from 'sampleStore';
+import sampleStore$, {loadSamplesForObject$} from './sampleStore';
 
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},

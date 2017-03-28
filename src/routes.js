@@ -69,7 +69,7 @@ export default () => {
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
           <Route path="analysis/sample/:sampleId/edit" component={SampleEditContainer}/>
           <Route path="analysis/sample/:sampleId" component={SampleViewContainer}/>
-          <Route path="analysis/sample/:parentId/objects" component={SamplesForObjectContainer}/>
+          <Route path="analysis/sample/objects/:parentId" component={SamplesForObjectContainer}/>
         </Route>
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />

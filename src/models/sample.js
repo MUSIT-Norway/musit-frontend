@@ -27,11 +27,9 @@ Sample.loadSample = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) =
 
 Sample.loadSamplesForObject = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
   //TODO: Get object details for object
-  const objectDetails = {museNo: 'TRH-V-1234', subNo: '3', term_species: 'Carex saxatilis'};
-  const url= Config.magasin.urls.api.samplesForObject(museumId,id);
-  const samples = ajaxGet(url, token, callback).map(({ response }) => response).onError(() =>
-    [{sampleId: '1', sampleType: 'Rør', sampleSubType: 'Vev', status: 'Ja', hasAnalyse: false}]);
-  return { ...objectDetails, data: samples};
+  //const objectDetails = {museNo: 'TRH-V-1234', subNo: '3', term_species: 'Carex saxatilis'};
+  const url= Config.magasin.urls.api.samples.samplesForObject(museumId,id);
+  return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
 export default Sample;

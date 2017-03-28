@@ -23,7 +23,7 @@ export default {
             '/analysis/sample/add',
           gotoSample: (id) => `/analysis/sample/${id}`,
           editSample: (id) => `/analysis/sample/${id}/edit`,
-          sampleForObject: (id) => `/analysis/sample/${id}/children`
+          sampleForObject: (id) => `/analysis/sample/objects/${id}`
         },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
