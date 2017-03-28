@@ -25,7 +25,10 @@ describe('analysisStore', () => {
 
     const expectedStateMap = {
       a: {
-        objectsData
+        objectsData,
+        data: {
+          analysisTypes: []
+        }
       },
       b: {
         objectsData,

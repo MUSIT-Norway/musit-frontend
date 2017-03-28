@@ -71,7 +71,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       bsClass="form-group">
       <FieldGroup
         id="formControlsText"
-        label="saksnummber"
+        label="saksnummer"
         onChange={[Function anonymous]}
         type="text"
         value="1234" />
