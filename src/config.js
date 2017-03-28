@@ -18,7 +18,7 @@ export default {
       client: {
         analysis: {
           addAnalysis: (appSession: AppSession) =>
-          `${clientContextUrl(appSession)}/analysis/add`,
+            `${clientContextUrl(appSession)}/analysis/add`,
           addSample: () =>
             '/analysis/sample/add',
           gotoSample: (id) => `/analysis/sample/${id}`,
@@ -74,25 +74,25 @@ export default {
       api: {
         analysisType: {
           getAllAnalysisTypes: (mid) =>
-            `api/management/${mid.id}/analyses/types`,
+            `/api/management/${mid.id}/analyses/types`,
           getAnalysisById: (mid, id) =>
-            `api/management/${mid.id}/analyses/types/${id}`,
+            `/api/management/${mid.id}/analyses/types/${id}`,
           getAnalysisTypesForCategory: (mid, id) =>
-            `api/management/${mid.id}/analyses/types/categories/${id}`,
+            `/api/management/${mid.id}/analyses/types/categories/${id}`,
           getAnalysisTypesForCollection: (mid, id) =>
-            `api/management/${mid.id}/analyses/types/musemcollections/${id}`
+            `/api/management/${mid.id}/analyses/types/musemcollections/${id}`
         },
         analysis: {
           saveAnalysisEvent: (mid) =>
-          `api/management/${mid.id}/analyses`,
+            `/api/management/${mid.id}/analyses`,
           getAnalysisById: (mid, id) =>
-            `api/management/${mid.id}/analyses/${id}`,
+            `/api/management/${mid.id}/analyses/${id}`,
           getChildAnalyses: (mid, id) =>
-            `api/management/${mid.id}/analyses/${id}/children`,
+            `/api/management/${mid.id}/analyses/${id}/children`,
           saveResult: (mid, id) =>
-            `api/management/${mid.id}/analyses/${id}/results`,
+            `/api/management/${mid.id}/analyses/${id}/results`,
           getAnalysisForObject: (mid, id) =>
-            `api/management/${mid.id}/analyses/objects/${id}`,
+            `/api/management/${mid.id}/analyses/objects/${id}`,
           analysesForObject: (mid, objectId): string =>
             `/api/management/${mid.id}/analyses/objects/${objectId}`
         },

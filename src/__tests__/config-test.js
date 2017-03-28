@@ -83,39 +83,39 @@ describe('Config urls', () => {
     },
     {
       actual: urls.api.analysisType.getAllAnalysisTypes(new MuseumId(99)),
-      expected: 'api/management/99/analyses/types'
+      expected: '/api/management/99/analyses/types'
     },
     {
       actual: urls.api.analysisType.getAnalysisById(new MuseumId(99), 123),
-      expected: 'api/management/99/analyses/types/123'
+      expected: '/api/management/99/analyses/types/123'
     },
     {
       actual: urls.api.analysisType.getAnalysisTypesForCategory(new MuseumId(99), 123),
-      expected: 'api/management/99/analyses/types/categories/123'
+      expected: '/api/management/99/analyses/types/categories/123'
     },
     {
       actual: urls.api.analysisType.getAnalysisTypesForCollection(new MuseumId(99), 123),
-      expected: 'api/management/99/analyses/types/musemcollections/123'
+      expected: '/api/management/99/analyses/types/musemcollections/123'
     },
     {
       actual: urls.api.analysis.saveAnalysisEvent(new MuseumId(99)),
-      expected: 'api/management/99/analyses'
+      expected: '/api/management/99/analyses'
     },
     {
       actual: urls.api.analysis.getAnalysisById(new MuseumId(99), 123),
-      expected: 'api/management/99/analyses/123'
+      expected: '/api/management/99/analyses/123'
     },
     {
       actual: urls.api.analysis.getChildAnalyses(new MuseumId(99), 123),
-      expected: 'api/management/99/analyses/123/children'
+      expected: '/api/management/99/analyses/123/children'
     },
     {
       actual: urls.api.analysis.saveResult(new MuseumId(99), 123),
-      expected: 'api/management/99/analyses/123/results'
+      expected: '/api/management/99/analyses/123/results'
     },
     {
       actual: urls.api.analysis.getAnalysisForObject(new MuseumId(99), 123),
-      expected: 'api/management/99/analyses/objects/123'
+      expected: '/api/management/99/analyses/objects/123'
     }
   ];
 

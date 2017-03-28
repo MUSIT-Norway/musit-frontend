@@ -72,7 +72,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       <FieldGroup
         id="formControlsText"
         label="saksnummber"
-        onChange={[Function onChange]}
+        onChange={[Function anonymous]}
         type="text"
         value="1234" />
     </FormGroup>
@@ -195,7 +195,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       <FieldGroup
         id="navn"
         label="Navn"
-        onChange={[Function onChange]}
+        onChange={[Function anonymous]}
         placeholder="Fornavn Etternavn"
         type="text"
         value="Test Name Actor" />
@@ -304,7 +304,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           <FormControl
             bsClass="form-control"
             componentClass="select"
-            onChange={[Function onChange]}
+            onChange={[Function anonymous]}
             placeholder="Velg kategori">
             <option>
               Velg kategori
@@ -325,7 +325,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
         <FieldGroup
           id="formControlsText"
           label="Ekstern kilde"
-          onChange={[Function onChange]}
+          onChange={[Function anonymous]}
           placeholder="http://www.lenke.no"
           type="text"
           value="www.musit.uio.no" />
@@ -386,7 +386,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           <FormControl
             bsClass="form-control"
             componentClass="textarea"
-            onChange={[Function onChange]}
+            onChange={[Function anonymous]}
             placeholder=""
             value="comments" />
         </Col>
@@ -448,7 +448,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               id="navn"
               label="Klausulert for"
               md={1}
-              onChange={[Function onChange]}
+              onChange={[Function anonymous]}
               placeholder="Fornavn Etternavn"
               type="text"
               value="Test name" />
@@ -459,7 +459,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               id="navn"
               label="Årsak til klausulering"
               md={1}
-              onChange={[Function onChange]}
+              onChange={[Function anonymous]}
               type="text"
               value="Reason for Restrictions" />
           </FormGroup>
@@ -479,7 +479,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               id="navn"
               label="Opphevet av"
               md={1}
-              onChange={[Function onChange]}
+              onChange={[Function anonymous]}
               placeholder="Fornavn Etternavn"
               type="text"
               value="repealed By Person Name" />
@@ -524,7 +524,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           bsClass="form-control"
           className="note"
           componentClass="textarea"
-          onChange={[Function onChange]}
+          onChange={[Function anonymous]}
           placeholder="note"
           value="test note" />
       </Col>
@@ -569,7 +569,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
   </Form>
   <NewLine />
   <SaveCancel
-    onClickSave={[Function onClickSave]} />
+    onClickSave={[Function anonymous]} />
   <NewLine />
   <Form
     bsClass="form"

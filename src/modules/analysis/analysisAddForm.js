@@ -13,7 +13,7 @@ import {
   booleanMapper
 } from '../../forms/mappers';
 
-const getStrField = (field, value = ''): Field<string> => {
+export const getStrField = (field: string, value: string = ''): Field<string> => {
   return  {
     name: field,
     mapper: stringMapper,
@@ -24,7 +24,7 @@ const getStrField = (field, value = ''): Field<string> => {
   };
 };
 
-const getBoolField = (field, value = false): Field<boolean> => {
+export const getBoolField = (field: string, value: boolean = false): Field<boolean> => {
   return  {
     name: field,
     defaultValue: value,

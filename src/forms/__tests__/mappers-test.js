@@ -41,5 +41,14 @@ describe('mappers', () => {
     it('fromRaw should map true to true', () => {
       expect(booleanMapper.fromRaw(true)).toEqual(true);
     });
+    it('fromRaw should map empty string to false', () => {
+      expect(booleanMapper.toRaw('')).toEqual(false);
+    });
+    it('fromRaw should map null to false', () => {
+      expect(booleanMapper.toRaw(null)).toEqual(false);
+    });
+    it('fromRaw should map undefined to false', () => {
+      expect(booleanMapper.toRaw()).toEqual(false);
+    });
   });
 });

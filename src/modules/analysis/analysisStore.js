@@ -2,7 +2,7 @@ import {Observable} from 'rxjs';
 import {createStore, createAction} from 'react-rxjs/dist/RxStore';
 import MusitAnalysis from '../../models/analysis';
 
-const objectsData = [
+export const objectsData = [
   {
     museumNumber: '123',
     subNumber: '12345678911',
@@ -26,10 +26,10 @@ const objectsData = [
 export const loadAnalysisTypes$ = createAction('loadAnalysisTypes$').switchMap(MusitAnalysis.getAllAnalysisTypes());
 
 export const reducer$ = (actions) => Observable.merge(
-  actions.loadAnalysisTypes$.map((data) => (state) => ({...state, data: {analysisTypes: data}, loading: false})),
+  actions.loadAnalysisTypes$.map((analysisTypes) => (state) => ({...state, data: { analysisTypes }})),
 );
 
 export const store$ = (actions$ = {loadAnalysisTypes$}) =>
-  createStore('analysisStore', reducer$(actions$), Observable.of({objectsData, data: []}));
+  createStore('analysisStore', reducer$(actions$), Observable.of({ objectsData }));
 
 export default store$();
