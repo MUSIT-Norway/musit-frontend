@@ -5,20 +5,13 @@ import {
   composeValidators,
   isNumber,
   isRequired,
-  isNumberInRange //,
-//  isSpecialPhone
+  isNumberInRange
 } from '../../forms/validators';
-
-// import type {
-//   Phone
-// } from '../../forms/types';
 import {
   stringMapper,
   numberMapper,
-  booleanMapper//,
-  // specialPhoneMapper
+  booleanMapper
 } from '../../forms/mappers';
-
 
 const getStrField = (field, value = ''): Field<string> => {
   return  {
@@ -36,8 +29,7 @@ const getBoolField = (field, value = false): Field<boolean> => {
     name: field,
     defaultValue: value,
     mapper: booleanMapper,
-    validator: {
-    }
+    validator: {}
   };
 };
 
@@ -74,8 +66,7 @@ const caseNumber: Field<number> = {
   }
 };
 
-
-const fieldsArray = [
+export const fieldsArray = [
   id,
   registeredBy,
   registeredDate,
@@ -100,6 +91,7 @@ const fieldsArray = [
   note,
   completeAnalysis
 ];
+
 export default createForm('analysisAddForm.js', fieldsArray);
 
 

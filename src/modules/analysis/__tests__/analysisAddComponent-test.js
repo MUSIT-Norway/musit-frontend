@@ -1,29 +1,31 @@
-import {mount} from 'enzyme';
+import {mount, shallow} from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import AnalysisAddComponent from '../AnalysisAddComponent';
+import { fieldsArray } from '../analysisAddForm';
 import sinon from 'sinon';
 
-
-const objectsData =
-  [{
+const objectsData = [
+  {
     museumNumber: '123',
     subNumber: '12345678911',
     term: 'Spyd',
     uuid: '1cbf15cb-8348-4e66-99a4-bc314da57a42'
   },
-    {
-      museumNumber: '124',
-      subNumber: '12345678912',
-      term: 'Beltering',
-      uuid: '2cbf15cb-8348-4e66-99a4-bc314da57a42'
-    },
-    {
-      museumNumber: '125',
-      subNumber: '12345678913',
-      term: 'Øsekar',
-      uuid: '3cbf15cb-8348-4e66-99a4-bc314da57a42'
-    }
-  ];
+  {
+    museumNumber: '124',
+    subNumber: '12345678912',
+    term: 'Beltering',
+    uuid: '2cbf15cb-8348-4e66-99a4-bc314da57a42'
+  },
+  {
+    museumNumber: '125',
+    subNumber: '12345678913',
+    term: 'Øsekar',
+    uuid: '3cbf15cb-8348-4e66-99a4-bc314da57a42'
+  }
+];
+
 const analysisTypes = [
   {
     category: 8,
@@ -36,6 +38,7 @@ const analysisTypes = [
     name: '3D-skanning, strukturert lys'
   }
 ];
+
 const store = {
   data: {
     analysisTypes: analysisTypes
@@ -43,16 +46,16 @@ const store = {
   objectsData: objectsData
 };
 
+const form = fieldsArray.reduce((acc, n) => ({...acc, [n.name]: {
+  name: n.name,
+  rawValue: n.name === 'note' ? 'test note' : n.mapper.toRaw(n.defaultValue)
+}}), {});
+
 describe('AnalysisAddComponent', () => {
-  it('should display correctly', () => {
+  it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
     const wrapper = mount(<AnalysisAddComponent
-      form={{
-        note: {
-          name: 'note',
-          rawValue: 'test note'
-        }
-      }}
+      form={form}
       updateForm={updateForm}
       store={store}
     />);
@@ -65,4 +68,13 @@ describe('AnalysisAddComponent', () => {
     expect(updateForm.getCall(0).args[0].rawValue).toBe('note changed');
   });
 
+  it('should render properly', () => {
+    const updateForm = sinon.spy();
+    const wrapper = shallow(<AnalysisAddComponent
+      form={form}
+      updateForm={updateForm}
+      store={store}
+    />);
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
+  });
 });
