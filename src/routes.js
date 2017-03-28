@@ -3,7 +3,7 @@ import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import NotFound from './components/NotFound';
 import AboutView from './modules/about/AboutPage';
 import PickListView from './modules/picklist/PickListContainer';
-import StorageUnitsTable from './modules/storagefacility/TableComponent';
+import StorageUnitsTable from './modules/storagefacility/TableContainer';
 import KDReportComponent from './modules/reports/KDReportComponent';
 import AddStorageUnitPanel from './modules/storagefacility/AddNodeComponent';
 import EditStorageUnitPanel from './modules/storagefacility/EditNodeComponent';
