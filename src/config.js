@@ -102,13 +102,13 @@ export default {
         },
         storagefacility: {
           searchUrl: (term, mid) =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
+            `/api/storagefacility/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
           scanUrl: (uuid, mid) =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes/scan?storageNodeId=${uuid}&`,
+            `/api/storagefacility/${mid.getPath()}/storagenodes/scan?storageNodeId=${uuid}&`,
           scanOldUrl: (oldBarcode, mid) =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes/scan?oldBarcode=${oldBarcode}`,
+            `/api/storagefacility/${mid.getPath()}/storagenodes/scan?oldBarcode=${oldBarcode}`,
           baseUrl: (mid): string =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes`
+            `/api/storagefacility/${mid.getPath()}/storagenodes`
         },
         thingaggregate: {
           baseUrl: (mid): string =>
@@ -128,15 +128,15 @@ export default {
 
         actor: {
           searchUrl: (term, mid) =>
-            `/api/actor/v1/person?${mid.getQuery()}&search=[${encodeURIComponent(term)}]`,
+            `/api/actor/person?${mid.getQuery()}&search=[${encodeURIComponent(term)}]`,
           baseUrl:
-            '/api/actor/v1/person',
+            '/api/actor/person',
           currentUser:
-            '/api/actor/v1/dataporten/currentUser'
+            '/api/actor/dataporten/currentUser'
         },
         geolocation: {
           searchUrl: (term) =>
-            `/api/geolocation/v1/address?search=[${encodeURIComponent(term)}]`
+            `/api/geolocation/address?search=[${encodeURIComponent(term)}]`
         },
         barcode: {
           templatesUrl:
