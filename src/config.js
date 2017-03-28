@@ -22,7 +22,8 @@ export default {
           addSample: () =>
             '/analysis/sample/add',
           gotoSample: (id) => `/analysis/sample/${id}`,
-          editSample: (id) => `/analysis/sample/${id}/edit`
+          editSample: (id) => `/analysis/sample/${id}/edit`,
+          sampleForObject: (id) => `/analysis/sample/${id}/children`
         },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
@@ -73,14 +74,16 @@ export default {
       },
       api: {
         analysis: {
-          baseUrl:
-            '/api/analyses/',
+          baseUrl: (mid) =>
+            `/api/management/${mid.id}analyses/`,
           analysesForObject: (mid, objectId): string =>
             `/api/management/${mid.id}/analyses/objects/${objectId}`
         },
         samples: {
           baseUrl: (mid): string =>
-            `api/management/${mid.id}/samples`
+            `api/management/${mid.id}/samples`,
+          samplesForObject: (mid, objectId): string => `api/management/${mid.id}/samples/${objectId}/children`
+
         },
         storagefacility: {
           searchUrl: (term, mid) =>

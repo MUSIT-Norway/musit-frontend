@@ -17,26 +17,60 @@ type SampleObjectInput = {
       hasAnalyse: boolean }]
 };
 
-const SamplesForObjectComponent = (input: SampleObjectInput) => {
+const SamplesForObjectComponent = (sampleStore: SampleObjectInput) => {
+  const inp = sampleStore || {
+      musNo: 'TRH-V-1233',
+      subNo: null,
+      term_species: 'Carex saxatilis',
+      data: [
+        {
+        id: '123',
+        date: '1992-12-22',
+        sampleType: 'Vev',
+        sampleSubType: 'DNA',
+        status: 'Forrurenset',
+        hasAnalyse: true},
+        {
+          id: '1423',
+          date: '1992-12-01',
+          sampleType: 'Vev',
+          sampleSubType: 'Muscle',
+          status: 'Rent',
+          hasAnalyse: false},
+        {
+          id: '1233',
+          date: '1992-11-12',
+          sampleType: 'Vev',
+          sampleSubType: 'Bone',
+          status: 'Forrurenset',
+          hasAnalyse: false},
+        {
+          id: '1231',
+          date: '1992-12-12',
+          sampleType: 'Vev',
+          sampleSubType: 'Skin',
+          status: 'Forrurenset',
+          hasAnalyse: true}
+          ]
+    };
   return (<div>
     <FormGroup>
       <ControlLabel>
         Musno
       </ControlLabel>
-      <FormControl value={input.musNo}/>
+      <FormControl value={inp.musNo}/>
     </FormGroup>
     <FormGroup>
       <ControlLabel>
         Subno
       </ControlLabel>
-      <FormControl value={input.subNo}/>
+      <FormControl value={inp.subNo}/>
     </FormGroup>
-
     <FormGroup>
       <ControlLabel>
         Term/species
       </ControlLabel>
-      <FormControl value={input.term_species}/>
+      <FormControl value={inp.term_species}/>
     </FormGroup>
 
     <Table className="sampleTable"
@@ -51,14 +85,14 @@ const SamplesForObjectComponent = (input: SampleObjectInput) => {
            sortable={['id', 'date']}
            defaultSort={{ column: 'id', direction: 'desc' }}
            noDataText="Ingen prøver funnet på objektet">
-      {input.data.map((event, i) =>
+      {inp.data.map((event, i) =>
         <Tr key={i}>
-          <Td column="id">{input.data[i].id}</Td>
-          <Td column="date">{input.data[i].date}</Td>
-          <Td column="sampleType">{input.data[i].sampleType}</Td>
-          <Td column="sampleSubType">{input.data[i].sampleSubType}</Td>
-          <Td column="status">{input.data[i].status}</Td>
-          <Td column="hasAnalyse">{input.data[i].hasAnalyse}</Td>
+          <Td column="id">{inp.data[i].id}</Td>
+          <Td column="date">{inp.data[i].date}</Td>
+          <Td column="sampleType">{inp.data[i].sampleType}</Td>
+          <Td column="sampleSubType">{inp.data[i].sampleSubType}</Td>
+          <Td column="status">{inp.data[i].status}</Td>
+          <Td column="hasAnalyse">{inp.data[i].hasAnalyse}</Td>
         </Tr>
       )}
     </Table>
