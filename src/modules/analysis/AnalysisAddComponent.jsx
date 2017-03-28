@@ -134,7 +134,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
         <FieldGroup
           id="formControlsText"
           type="text"
-          label="saksnummber"
+          label="saksnummer"
           value={getValue(form.caseNumber)}
           onChange={updateFormField(form.caseNumber, updateForm)}
         />
@@ -220,7 +220,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
-              {store.data.analysisTypes && store.data.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+              {store.data.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
             </FormControl>
           </Col>
         </FormGroup>

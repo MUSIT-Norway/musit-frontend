@@ -30,6 +30,6 @@ export const reducer$ = (actions) => Observable.merge(
 );
 
 export const store$ = (actions$ = {loadAnalysisTypes$}) =>
-  createStore('analysisStore', reducer$(actions$), Observable.of({ objectsData }));
+  createStore('analysisStore', reducer$(actions$), Observable.of({ objectsData, data: { analysisTypes: [] } }));
 
 export default store$();
