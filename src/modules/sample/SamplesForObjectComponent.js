@@ -9,50 +9,50 @@ type SampleObjectInput = {
   term_species: string,
   data:[
     {
-      id: number,
-      date: string,
-      sampleType: string,
-      sampleSubType: string,
-      status: number,
-      hasAnalyse: boolean }]
+    id: number,
+    date: string,
+    sampleType: string,
+    sampleSubType: string,
+    status: number,
+    hasAnalyse: boolean }]
 };
 
-const SamplesForObjectComponent = (sampleStore: SampleObjectInput) => {
+const SamplesForObjectComponent = ( sampleStore: SampleObjectInput ) => {
   const inp = sampleStore || {
-      musNo: 'TRH-V-1233',
-      subNo: null,
-      term_species: 'Carex saxatilis',
-      data: [
-        {
+    musNo: 'TRH-V-1233',
+    subNo: null,
+    term_species: 'Carex saxatilis',
+    data: [
+      {
         id: '123',
         date: '1992-12-22',
         sampleType: 'Vev',
         sampleSubType: 'DNA',
         status: 'Forrurenset',
         hasAnalyse: true},
-        {
-          id: '1423',
-          date: '1992-12-01',
-          sampleType: 'Vev',
-          sampleSubType: 'Muscle',
-          status: 'Rent',
-          hasAnalyse: false},
-        {
-          id: '1233',
-          date: '1992-11-12',
-          sampleType: 'Vev',
-          sampleSubType: 'Bone',
-          status: 'Forrurenset',
-          hasAnalyse: false},
-        {
-          id: '1231',
-          date: '1992-12-12',
-          sampleType: 'Vev',
-          sampleSubType: 'Skin',
-          status: 'Forrurenset',
-          hasAnalyse: true}
-          ]
-    };
+      {
+        id: '1423',
+        date: '1992-12-01',
+        sampleType: 'Vev',
+        sampleSubType: 'Muscle',
+        status: 'Rent',
+        hasAnalyse: false},
+      {
+        id: '1233',
+        date: '1992-11-12',
+        sampleType: 'Vev',
+        sampleSubType: 'Bone',
+        status: 'Forrurenset',
+        hasAnalyse: false},
+      {
+        id: '1231',
+        date: '1992-12-12',
+        sampleType: 'Vev',
+        sampleSubType: 'Skin',
+        status: 'Forrurenset',
+        hasAnalyse: true}
+    ]
+  };
   return (<div>
     <FormGroup>
       <ControlLabel>

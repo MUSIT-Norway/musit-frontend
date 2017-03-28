@@ -14,7 +14,7 @@ const reducer$ = (actions) => Observable.merge(
   actions.loadSamplesForObject$.map((data) => () => ({data}))
 );
 
-export const sampleStore = (actions = { loadSamplesForObject$,  clear$ }) =>
-  createStore('sampleStore', reducer$(actions), Observable.of(initialState));
+export const sampleStore$ = (actions = { loadSamplesForObject$,  clear$ }) =>
+  createStore('sampleStore$', reducer$(actions), Observable.of(initialState));
 
-export default sampleStore();
+export default sampleStore$();

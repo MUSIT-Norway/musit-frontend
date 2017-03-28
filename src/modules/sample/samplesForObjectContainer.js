@@ -7,7 +7,6 @@ import {emitError, emitSuccess} from '../../shared/errors';
 import flowRight from 'lodash/flowRight';
 import sampleStore$, {loadSamplesForObject$} from 'sampleStore';
 
-
 const data = {
   appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
   sampleStore$
@@ -18,7 +17,6 @@ const props = {
   emitError
 };
 
-
 const commands = {loadSamplesForObject$};
 
 const onMount = ({ loadSamplesForObject, params, appSession }) => {
@@ -27,7 +25,6 @@ const onMount = ({ loadSamplesForObject, params, appSession }) => {
   const accessToken = appSession.state.accessToken;
   const val = {objectId: objectId, museumId: museumId, token: accessToken};
   loadSamplesForObject(val);
-
 };
 
 export default flowRight([
