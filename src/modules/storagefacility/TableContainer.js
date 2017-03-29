@@ -65,7 +65,7 @@ export const processBarcode = (barCode, props) => {
       if (!response) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
       } else if (isMoveDialogActive) {
-        props.updateMoveDialog(response, museumId, token);
+        props.updateMoveDialog(response.id, museumId, token);
       } else if (isMoveHistoryActive) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
       } else {
@@ -81,7 +81,7 @@ export const processBarcode = (barCode, props) => {
           if (!response[0].currentLocationId) {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
           } else if (isMoveDialogActive) {
-            props.updateMoveDialog(response[0], museumId, token);
+            props.updateMoveDialog(response[0].currentLocationId, museumId, token);
           } else if (isMoveHistoryActive) {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
           } else {
@@ -92,7 +92,7 @@ export const processBarcode = (barCode, props) => {
         }
       } else if (response.nodeId) {
         if (isMoveDialogActive) {
-          props.updateMoveDialog(response, museumId, token);
+          props.updateMoveDialog(response.id, museumId, token);
         } else if (isMoveHistoryActive) {
           props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
         } else {

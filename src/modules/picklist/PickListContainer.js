@@ -212,7 +212,7 @@ export const processBarcode = (barCode, props) => {
           if (!response) {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
           } else if (isMoveDialogActive) {
-            props.updateMoveDialog(response, museumId, token);
+            props.updateMoveDialog(response.id, museumId, token);
           } else {
             props.addNode({value: response, path: getPath(response)});
           }
@@ -228,7 +228,7 @@ export const processBarcode = (barCode, props) => {
       } else if (!isNodeView && Array.isArray(response)) { // objects
         if (response.length === 1) {
           if (isMoveDialogActive) {
-            props.updateMoveDialog(response[0], museumId, token);
+            props.updateMoveDialog(response[0].currentLocationId, museumId, token);
           } else {
             props.addObject({value: response[0], path: getPath(response[0])});
           }
@@ -237,7 +237,7 @@ export const processBarcode = (barCode, props) => {
         }
       } else if (isNodeView && response.nodeId) { // node
         if (isMoveDialogActive) {
-          props.updateMoveDialog(response, museumId, token);
+          props.updateMoveDialog(response.id, museumId, token);
         } else {
           props.addNode({value: response, path: getPath(response)});
         }
