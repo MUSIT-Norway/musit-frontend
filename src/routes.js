@@ -22,6 +22,7 @@ import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
 import AllEvents from './modules/events/eventsContainer';
 import SampleViewContainer  from './modules/sample/sampleViewContainer';
 import SampleEditContainer  from './modules/sample/sampleEditContainer';
+
 import CenteredLayout from './components/layout/CenteredLayout';
 
 export default () => {
@@ -46,6 +47,8 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route component={CenteredLayout}>
+          <Route path="analysis/add" component={AnalysisAddContainer} />
+          <Route path="analysis/:analysisId" component={AnalysisViewContainer}/>
           <Route path="events/:objectId" component={AllEvents} />
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
           <Route path="analysis/add" component={AnalysisAddContainer} />
