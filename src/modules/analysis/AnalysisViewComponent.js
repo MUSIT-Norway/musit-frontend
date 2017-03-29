@@ -260,7 +260,6 @@ const AnalysisView = ({ store } : Props) => {
               </FormGroup>
             </Panel>
           </FormGroup>
-          e
         </Form>
       </Well>
       <Form horizontal style={{ paddingLeft: 20 }}>
