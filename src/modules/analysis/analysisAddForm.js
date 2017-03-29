@@ -13,25 +13,21 @@ import {
   booleanMapper
 } from '../../forms/mappers';
 
-export const getStrField = (field: string, value: string = ''): Field<string> => {
-  return  {
-    name: field,
-    mapper: stringMapper,
-    defaultValue: value,
-    validator: {
-      rawValidator: isRequired
-    }
-  };
-};
+export const getStrField = (field: string, value: string = ''): Field<string> => ({
+  name: field,
+  mapper: stringMapper,
+  defaultValue: value,
+  validator: {
+    rawValidator: isRequired
+  }
+});
 
-export const getBoolField = (field: string, value: boolean = false): Field<boolean> => {
-  return  {
-    name: field,
-    defaultValue: value,
-    mapper: booleanMapper,
-    validator: {}
-  };
-};
+export const getBoolField = (field: string, value: boolean = false): Field<boolean> => ({
+  name: field,
+  defaultValue: value,
+  mapper: booleanMapper,
+  validator: {}
+});
 
 const id = getStrField('id', '123');
 const registeredBy = getStrField('registeredBy', 'Per Hansen');
