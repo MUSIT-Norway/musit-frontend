@@ -107,7 +107,7 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should update move dialog when receiving a number that resolves to a single object when move dialog is active', () => {
+  it('should emit error when receiving a number that resolves to a single object when move dialog is active', () => {
     const emitError = sinon.spy();
     const props = {
       findObjectByBarcode: () => Observable.of([
