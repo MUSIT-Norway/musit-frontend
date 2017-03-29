@@ -57,7 +57,8 @@ Sample.loadSamplesForObject = () => () => {
       sampleType: 'Vev',
       sampleSubType: 'Skin',
       status: 'Forrurenset',
-      hasAnalyse: true}];
+      hasAnalyse: true}
+  ];
   //return ajaxGet(url, token, callback).map(({ response }) => response);
   return Observable.of ({ ...objectDetails, data: data});
 };

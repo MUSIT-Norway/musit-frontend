@@ -1,4 +1,3 @@
-/* @flow*/
 import React from 'react';
 const {Table, Tr, Td} = require('reactable');
 import {Row, Col, Well} from 'react-bootstrap';
