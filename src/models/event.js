@@ -1,5 +1,5 @@
 import { simpleGet, simplePost } from '../shared/RxAjax';
-import Analyses from './analyses';
+import Analysis from './analysis';
 import MusitObject from './object';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import MusitActor from './actor';
@@ -12,7 +12,7 @@ export default class Event {}
 
 Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => (val) =>
   Observable.forkJoin(
-    Analyses.getAnalysesForObject(ajaxGet)(val),
+    Analysis.getAnalysesForObject(ajaxGet)(val),
     MusitObject.getLocationHistory(ajaxGet)(val).map(locations =>
       locations.map(loc => ({...loc, type: 'MoveObject', eventDate: loc.registeredDate }))
     )

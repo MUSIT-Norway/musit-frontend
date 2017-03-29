@@ -18,8 +18,6 @@ const { Table } = require('reactable');
 import { AppSession } from '../app/appSession';
 
 type Field = { name: string, rawValue: ?string };
-type Update = (update: Field) => void;
-
 type FormData = {
   id: Field,
   registeredBy: Field,
@@ -45,26 +43,20 @@ type FormData = {
   note: Field,
   completeAnalysis: Field
 };
-
 type AnalysisType = { id: number, name: string };
-
-type Store = {
-  objectsData: any[],
-  data: {
-    analysisTypes: AnalysisType[]
-  }
-};
-
+type ObjectData = { uuid: string }
+type Store = { objectsData: ObjectData[], data: { analysisTypes: AnalysisType[] } };
+type Update = (update: Field) => void;
 type Props = {
   form: FormData,
   updateForm: Update,
-  clearAnalysisTypes: Function,
-  loadAnalysisTypes: Function,
   store: Store,
   appSession: AppSession,
   saveAnalysisEvent: Function
 };
 
+// TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
+// TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
 const labelFormat = (label, md = 1) => (
   <Col md={md} style={{ textAlign: 'right', padding: '7px' }}>
     <b>{label}</b>
@@ -100,18 +92,23 @@ const NewLine = () => (
 
 const getValue = (field) => field.rawValue || '';
 
-export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, store: Store, saveAnalysisEvent: Function) => () => saveAnalysisEvent({
-  museumId: appSession.getMuseumId(),
-  data: {
-    analysisTypeId: getValue(form.analysisTypeId),
-    eventDate: getValue(form.registeredDate),
-    note: getValue(form.note),
-    objectIds: store.objectsData.map((a) => a.uuid)
-  },
-  token: appSession.getAccessToken()
-});
+export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, store: Store, saveAnalysisEvent: Function) =>
+  () => saveAnalysisEvent({
+    museumId: appSession.getMuseumId(),
+    data: {
+      analysisTypeId: getValue(form.analysisTypeId),
+      eventDate: getValue(form.registeredDate),
+      note: getValue(form.note),
+      objectIds: store.objectsData.map((a) => a.uuid)
+    },
+    token: appSession.getAccessToken()
+  });
 
-const updateFormField = (field, updateFormFn) => (e) => updateFormFn({name: field.name, rawValue: e.target.value });
+const updateFormField = (field, updateForm) =>
+  (e) => updateForm({
+    name: field.name,
+    rawValue: e.target.value
+  });
 
 const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => (
   <div>
@@ -388,33 +385,30 @@ const FieldShapeBoolean = {
 
 AnalysisAdd.propTypes = {
   form: PropTypes.shape({
-    id: PropTypes.shape(FieldShape),
-    registeredBy: PropTypes.shape(FieldShape),
-    registeredDate: PropTypes.shape(FieldShape),
-    doneBy: PropTypes.shape(FieldShape),
-    doneDate: PropTypes.shape(FieldShape),
-    eventDate: PropTypes.shape(FieldShape),
-    objectId: PropTypes.shape(FieldShape),
-    partOf: PropTypes.shape(FieldShape),
-    result: PropTypes.shape(FieldShape),
-    caseNumber: PropTypes.shape(FieldShape),
-    actor: PropTypes.shape(FieldShape),
-    role: PropTypes.shape(FieldShape),
-    place: PropTypes.shape(FieldShape),
-    analysisTypeId: PropTypes.shape(FieldShape),
-    externalSource: PropTypes.shape(FieldShape),
-    comments: PropTypes.shape(FieldShape),
-    restrictions: PropTypes.shape(FieldShapeBoolean),
-    restrictionsFor: PropTypes.shape(FieldShape),
-    reasonForRestrictions: PropTypes.shape(FieldShape),
-    restrictionsEndDate: PropTypes.shape(FieldShape),
-    repealedBy: PropTypes.shape(FieldShape),
-    note: PropTypes.shape(FieldShape)
+    id: PropTypes.shape(FieldShape).isRequired,
+    registeredBy: PropTypes.shape(FieldShape).isRequired,
+    registeredDate: PropTypes.shape(FieldShape).isRequired,
+    doneBy: PropTypes.shape(FieldShape).isRequired,
+    doneDate: PropTypes.shape(FieldShape).isRequired,
+    eventDate: PropTypes.shape(FieldShape).isRequired,
+    objectId: PropTypes.shape(FieldShape).isRequired,
+    partOf: PropTypes.shape(FieldShape).isRequired,
+    result: PropTypes.shape(FieldShape).isRequired,
+    caseNumber: PropTypes.shape(FieldShape).isRequired,
+    actor: PropTypes.shape(FieldShape).isRequired,
+    role: PropTypes.shape(FieldShape).isRequired,
+    place: PropTypes.shape(FieldShape).isRequired,
+    analysisTypeId: PropTypes.shape(FieldShape).isRequired,
+    externalSource: PropTypes.shape(FieldShape).isRequired,
+    comments: PropTypes.shape(FieldShape).isRequired,
+    restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
+    restrictionsFor: PropTypes.shape(FieldShape).isRequired,
+    reasonForRestrictions: PropTypes.shape(FieldShape).isRequired,
+    restrictionsEndDate: PropTypes.shape(FieldShape).isRequired,
+    repealedBy: PropTypes.shape(FieldShape).isRequired,
+    note: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
-  updateForm: PropTypes.func,
-  loadForm: PropTypes.func,
-  clearAnalysisTypes: PropTypes.func,
-  loadAnalysisTypes: PropTypes.func,
+  updateForm: PropTypes.func.isRequired,
   store: PropTypes.object.isRequired,
   saveAnalysisEvent: PropTypes.func
 };
