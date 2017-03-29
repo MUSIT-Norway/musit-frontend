@@ -1,16 +1,14 @@
-import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
+import { TestScheduler } from 'rxjs/Rx';
 import assert from 'assert';
-import { store$, loadEvents} from '../eventsStore';
-import MuseumId from '../../../models/museumId';
-import Observation from '../../../models/observation';
-import Control from '../../../models/control';
-import MusitNode from '../../../models/node';
+import { eventsStore$ } from '../eventsStore';
 const diff = require('deep-diff').diff;
 
 describe('eventsStore', () => {
 
-  it('testing reducer with actors', () => {
+  it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
         console.log(difference);
@@ -18,160 +16,46 @@ describe('eventsStore', () => {
       return assert.equal(undefined, difference);
     });
 
+    const object = {
+      id: 1,
+      term: 'Fugl'
+    };
+
+    const currentLocation = {
+      id: 1,
+      name: 'Node'
+    };
+
     // mock streams
-    const clearEventsM      = '-1--------------';
-    const loadEventsM       = '--1-------------';
-    const expected          = 'abc-------------';
+    const clearM            = '-1---------';
+    const getCurrentLocM    = '----1------';
+    const setObjectM        = '--1--------';
+    const loadAnalysesM     = '---1-------';
+    const expected          = 'aabcd------';
 
     const expectedStateMap = {
-      a: {
-        data: []
-      },
+      a: {},
       b: {
-        data: [],
-        loading: true
+        object
       },
       c: {
-        data: [
-          new Observation({ id: 23444, doneBy: 'Test 2', registeredBy: 'Test 3' }),
-          new Control({ id: 1455, doneBy: 'Test 1', registeredBy: 'Test 4' })
-        ],
-        loading: false
+        object,
+        data: []
+      },
+      d: {
+        object,
+        data: [],
+        currentLocation
       }
     };
 
-    const clearEvents$ = testScheduler.createHotObservable(clearEventsM);
-    const loadRootNode$ = new Subject();
-    const loadEvents$ = testScheduler.createHotObservable(loadEventsM, {1: {nodeId: 1, museumId: new MuseumId(1), token: '1234'}})
-      .switchMap(loadEvents({
-        simpleGet: (url) => {
-          if (url.indexOf('controls') > -1) {
-            return Observable.of({
-              response: [
-                {
-                  id: 1455,
-                  doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c',
-                  registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
-                }
-              ]
-            });
-          } else if(url.indexOf('observations') > -1) {
-            return Observable.of({
-              response: [
-                {
-                  id: 23444,
-                  doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b',
-                  registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
-                }
-              ]
-            });
-          }
-        },
-        simplePost: () => Observable.of({
-          response: [
-            {
-              fn: 'Test 1',
-              dataportenId: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c'
-            },
-            {
-              fn: 'Test 2',
-              dataportenId: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b'
-            },
-            {
-              fn: 'Test 3',
-              dataportenId: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
-            },
-            {
-              fn: 'Test 4',
-              dataportenId: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
-            }
-          ]
-        })
-      }));
+    // mock up$ and down$ events
+    const clear$ = testScheduler.createHotObservable(clearM);
+    const getCurrentLocation$ = testScheduler.createHotObservable(getCurrentLocM, { 1: currentLocation });
+    const setObject$ = testScheduler.createHotObservable(setObjectM, { 1: object });
+    const loadEvents$ = testScheduler.createHotObservable(loadAnalysesM, { 1: [] });
 
-    const state$ = store$({ clearEvents$, loadRootNode$, loadEvents$ });
-
-    // assertion
-    testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
-
-    // run tests
-    testScheduler.flush();
-  });
-
-  it('testing reducer with no actor hits', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
-
-    // mock streams
-    const loadRootNodeM     = '---1------------';
-    const clearEventsM      = '-1--------------';
-    const loadEventsM       = '--1-------------';
-    const expected          = 'abcd------------';
-
-    const expectedStateMap = {
-      a: {
-        data: []
-      },
-      b: {
-        data: [],
-        loading: true
-      },
-      c: {
-        data: [
-          new Observation({ id: 23444, doneBy: undefined, registeredBy: undefined }),
-          new Control({ id: 1455, doneBy: undefined, registeredBy: undefined })
-        ],
-        loading: false
-      },
-      d: {
-        data: [
-          new Observation({ id: 23444, doneBy: undefined, registeredBy: undefined }),
-          new Control({ id: 1455, doneBy: undefined, registeredBy: undefined })
-        ],
-        loading: false,
-        rootNode: new MusitNode({nodeId: 1, name: 'Test'})
-      }
-    };
-
-    const clearEvents$ = testScheduler.createHotObservable(clearEventsM);
-    const loadRootNode$ = testScheduler.createHotObservable(loadRootNodeM, {1: new MusitNode({
-      nodeId: 1,
-      name: 'Test'
-    })});
-    const loadEvents$ = testScheduler.createHotObservable(loadEventsM, {1: {nodeId: 1, museumId: new MuseumId(1), token: '1234'}})
-      .switchMap(loadEvents({
-        simpleGet: (url) => {
-          if (url.indexOf('controls') > -1) {
-            return Observable.of({
-              response: [
-                {
-                  id: 1455,
-                  doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592c',
-                  registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f3'
-                }
-              ]
-            });
-          } else if(url.indexOf('observations') > -1) {
-            return Observable.of({
-              response: [
-                {
-                  id: 23444,
-                  doneBy: 'eaf19dfb-ec28-4fbd-8602-e4be062e592b',
-                  registeredBy: '97ce5637-6e6d-418e-bc45-a2637c9945f2'
-                }
-              ]
-            });
-          }
-        },
-        simplePost: () => Observable.of({ response: [] })
-      }));
-
-    const state$ = store$({ clearEvents$, loadRootNode$, loadEvents$ });
+    const state$ = eventsStore$({clear$, getCurrentLocation$, setObject$, loadEvents$});
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);

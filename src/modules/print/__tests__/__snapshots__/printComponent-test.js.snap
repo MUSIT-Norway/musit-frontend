@@ -62,6 +62,13 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
           "name": "Test 2",
           "nodeId": 2
         }
+      },
+      Object {
+        "path": Array [],
+        "value": Object {
+          "name": "Test 3",
+          "nodeId": 25
+        }
       }
     ]
   }

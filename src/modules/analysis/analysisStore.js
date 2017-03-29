@@ -1,6 +1,7 @@
 import {Observable} from 'rxjs';
 import {createStore, createAction} from 'react-rxjs/dist/RxStore';
-import MusitAnalysis from '../../models/analysis';
+
+import Analysis from '../../models/analysis';
 
 const objectsData =
   [
@@ -25,17 +26,16 @@ const objectsData =
   ];
 
 
-export const clearAnalysisTypes$ = createAction('clearAnalysisTypes$');
-export const loadAnalysisTypes$ = createAction('loadAnalysisTypes$').switchMap(MusitAnalysis.getAllAnalysisTypes());
-export const loadAnalysis$ = createAction('loadAnalysis$').switchMap(MusitAnalysis.getAnalysisById());
+export const loadAnalysisTypes$ = createAction('loadAnalysisTypes$').switchMap(Analysis.getAllAnalysisTypes());
+export const loadAnalysis$ = createAction('loadAnalysis$').switchMap(Analysis.getAnalysisById());
 
 export const reducer$ = (actions) => Observable.merge(
-  actions.clearAnalysisTypes$.map(() => (state) => ({...state, data: [], loading: true})),
   actions.loadAnalysisTypes$.map((data) => (state) => ({...state, data: {analysisTypes: data}, loading: false})),
   actions.loadAnalysis$.map((data) => (state) => ({...state, data: {analysis: data}, loading: false})),
 );
 
-export const store$ = (actions$ = {clearAnalysisTypes$, loadAnalysisTypes$, loadAnalysis$}) =>
+export const store$ = (actions$ = {loadAnalysisTypes$, loadAnalysis$}) =>
   createStore('analysisStore', reducer$(actions$), Observable.of({objectsData, data: []}));
 
 export default store$();
+

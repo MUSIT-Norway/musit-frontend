@@ -17,8 +17,8 @@ export default {
     urls: {
       client: {
         analysis: {
-          addAnalysis: () =>
-            '/analysis/add',
+          addAnalysis: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/analysis/add`,
           addSample: () =>
             '/analysis/sample/add',
           gotoSample: (id) => `/analysis/sample/${id}`,
@@ -42,7 +42,9 @@ export default {
         },
         searchObjects: {
           goToSearchObjects: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/search/objects`
+            `${clientContextUrl(appSession)}/search/objects`,
+          goToObjectEvents: (object) =>
+            `/events/${object.id}`
         },
         storagefacility: {
           goToRoot: (appSession: AppSession) =>
@@ -72,27 +74,25 @@ export default {
       api: {
         analysisType: {
           getAllAnalysisTypes: (mid) =>
-            `api/management/${mid.id}/analyses/types`,
+            `/api/management/${mid.id}/analyses/types`,
           getAnalysisById: (mid, id) =>
-            `api/management/${mid.id}/analyses/types/${id}`,
+            `/api/management/${mid.id}/analyses/types/${id}`,
           getAnalysisTypesForCategory: (mid, id) =>
-            `api/management/${mid.id}/analyses/types/categories/${id}`,
+            `/api/management/${mid.id}/analyses/types/categories/${id}`,
           getAnalysisTypesForCollection: (mid, id) =>
-            `api/management/${mid.id}/analyses/types/musemcollections/${id}`
+            `/api/management/${mid.id}/analyses/types/musemcollections/${id}`
         },
         analysis: {
-          baseUrl:
-            '/api/analyses/',
           saveAnalysisEvent: (mid) =>
-            `api/management/${mid.id}/analyses`,
+            `/api/management/${mid.id}/analyses`,
           getAnalysisById: (mid, id) =>
-            `api/management/${mid.id}/analyses/${id}`,
+            `/api/management/${mid.id}/analyses/${id}`,
           getChildAnalyses: (mid, id) =>
-            `api/management/${mid.id}/analyses/${id}/children`,
+            `/api/management/${mid.id}/analyses/${id}/children`,
           saveResult: (mid, id) =>
-            `api/management/${mid.id}/analyses/${id}/results`,
+            `/api/management/${mid.id}/analyses/${id}/results`,
           getAnalysisForObject: (mid, id) =>
-            `api/management/${mid.id}/analyses/objects/${id}`,
+            `/api/management/${mid.id}/analyses/objects/${id}`,
           analysesForObject: (mid, objectId): string =>
             `/api/management/${mid.id}/analyses/objects/${objectId}`
         },
@@ -102,13 +102,13 @@ export default {
         },
         storagefacility: {
           searchUrl: (term, mid) =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
+            `/api/storagefacility/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
           scanUrl: (uuid, mid) =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes/scan?storageNodeId=${uuid}&`,
+            `/api/storagefacility/${mid.getPath()}/storagenodes/scan?storageNodeId=${uuid}&`,
           scanOldUrl: (oldBarcode, mid) =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes/scan?oldBarcode=${oldBarcode}`,
+            `/api/storagefacility/${mid.getPath()}/storagenodes/scan?oldBarcode=${oldBarcode}`,
           baseUrl: (mid): string =>
-            `/api/storagefacility/v1/${mid.getPath()}/storagenodes`
+            `/api/storagefacility/${mid.getPath()}/storagenodes`
         },
         thingaggregate: {
           baseUrl: (mid): string =>
@@ -128,15 +128,15 @@ export default {
 
         actor: {
           searchUrl: (term, mid) =>
-            `/api/actor/v1/person?${mid.getQuery()}&search=[${encodeURIComponent(term)}]`,
+            `/api/actor/person?${mid.getQuery()}&search=[${encodeURIComponent(term)}]`,
           baseUrl:
-            '/api/actor/v1/person',
+            '/api/actor/person',
           currentUser:
-            '/api/actor/v1/dataporten/currentUser'
+            '/api/actor/dataporten/currentUser'
         },
         geolocation: {
           searchUrl: (term) =>
-            `/api/geolocation/v1/address?search=[${encodeURIComponent(term)}]`
+            `/api/geolocation/address?search=[${encodeURIComponent(term)}]`
         },
         barcode: {
           templatesUrl:
