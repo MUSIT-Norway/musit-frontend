@@ -17,6 +17,7 @@ import EventsContainer from './modules/controlsobservations/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
+import AnalysisViewContainer from './modules/analysis/analysisViewContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
 import AllEvents from './modules/events/eventsContainer';
 import SampleViewContainer  from './modules/sample/sampleViewContainer';
@@ -48,6 +49,7 @@ export default () => {
           <Route path="events/:objectId" component={AllEvents} />
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
           <Route path="analysis/add" component={AnalysisAddContainer} />
+          <Route path="analysis/:analysisID" component={AnalysisViewContainer} />
           <Route path="analysis/sample/:sampleId/edit" component={SampleEditContainer}/>
           <Route path="analysis/sample/:sampleId" component={SampleViewContainer}/>
         </Route>
