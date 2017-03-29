@@ -107,8 +107,8 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should update move dialog when receiving a number that resolves to a single object when move dialog is active', () => {
-    const updateMoveDialog = sinon.spy();
+  it('should emit error when receiving a number that resolves to a single object when move dialog is active', () => {
+    const emitError = sinon.spy();
     const props = {
       findObjectByBarcode: () => Observable.of([
         {
@@ -119,10 +119,10 @@ describe('processBarcode', () => {
       isTypeNode: () => false,
       classExistsOnDom: (clazz) => clazz === 'moveDialog',
       appSession,
-      updateMoveDialog
+      emitError
     };
     processBarcode(barCodeWithNumber, props);
-    expect(updateMoveDialog.calledOnce).toBe(true);
+    expect(emitError.calledOnce).toBe(true);
   });
 
   it('should add to object picklist when receiving a number that resolves to a single object', () => {

@@ -1,4 +1,4 @@
-import { processBarcode } from '../TableComponent';
+import { processBarcode } from '../TableContainer';
 import { AppSession } from '../../app/appSession';
 import sinon from 'sinon';
 import MuseumId from '../../../models/museumId';
@@ -109,8 +109,8 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should update move dialog when receiving an number that resolves to an array with a single object when move dialog is open', () =>  {
-    const updateMoveDialog = sinon.spy();
+  it('should emit error when receiving an number that resolves to an array with a single object when move dialog is open', () =>  {
+    const emitError = sinon.spy();
     const props = {
       findNodeOrObjectByBarcode: () => Observable.of([
         {
@@ -121,10 +121,10 @@ describe('processBarcode', () => {
       ]),
       classExistsOnDom: (clazz) => clazz === 'moveDialog',
       appSession,
-      updateMoveDialog
+      emitError
     };
     processBarcode(barCodeWithNumber, props);
-    expect(updateMoveDialog.calledOnce).toBe(true);
+    expect(emitError.calledOnce).toBe(true);
   });
 
   it('should emit error when receiving an number that resolves to an array with a single object when move history is open', () =>  {
@@ -142,7 +142,7 @@ describe('processBarcode', () => {
       emitError
     };
     processBarcode(barCodeWithNumber, props);
-    expect(emitError.calledOnce).toBe(true);
+    expect(emitError.calledOnce).toBe(false);
   });
 
   it('should go to node location when receiving an number that resolves to an array with a single object', () =>  {
@@ -215,7 +215,7 @@ describe('processBarcode', () => {
       emitError
     };
     processBarcode(barCodeWithNumber, props);
-    expect(emitError.calledOnce).toBe(true);
+    expect(emitError.calledOnce).toBe(false);
   });
 
   it('should go to node location when receiving an number that resolves to a node', () =>  {
