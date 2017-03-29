@@ -31,6 +31,11 @@ Analysis.getAnalysisById = (ajaxGet = simpleGet) => ({museumId, id, token, callb
     .map((analysis) => analysis.response);
 };
 
+Analysis.getAnalysisTypeById = (ajaxGet = simpleGet) => ({museumId, id, token, callback}) => {
+  return ajaxGet(`${Config.magasin.urls.api.analysisType.getAnalysisTypeById(museumId, id)}`, token, callback)
+    .map(({response}) => response);
+};
+
 Analysis.getAnalysisByIdWithName = (ajaxGet = simpleGet) => (props) => {
   return Analysis.getAnalysisById(ajaxGet)(props)
     .flatMap(analysis =>
