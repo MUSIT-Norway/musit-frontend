@@ -27,7 +27,7 @@ const objectsData =
 
 
 export const loadAnalysisTypes$ = createAction('loadAnalysisTypes$').switchMap(Analysis.getAllAnalysisTypes());
-export const loadAnalysis$ = createAction('loadAnalysis$').switchMap(Analysis.getAnalysisById());
+export const loadAnalysis$ = createAction('loadAnalysis$').switchMap(Analysis.getAnalysisByIdWithName());
 
 export const reducer$ = (actions) => Observable.merge(
   actions.loadAnalysisTypes$.map((analysisTypes) => (state) => ({...state, data: { analysisTypes }})),

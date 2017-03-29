@@ -14,8 +14,6 @@ import {
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import {SaveCancel} from '../../components/formfields/index';
-
 
 type Props = { store: any };
 
@@ -27,7 +25,7 @@ function FieldGroup({id, label, md = 1, ...props}) {
     <div id={id}>
       {LabelFormat(label, md)}
       <Col md={2}>
-        <FormControl {... props} />
+        <FormControl {... props} readOnly/>
       </Col>
     </div>
   );
@@ -45,268 +43,276 @@ function AddButton({id, label, md, mdOffset = 0, ...props}) {
     </div>
   );
 }
-function newLine() {
+function NewLine() {
   return <Form horizontal><FormGroup />
     <hr/>
   </Form>;
 }
 
-const expanded = true;
+const getValue = (store, field) => {
+  let val = '';
+  if (store.data && store.data.analysis && store.data.analysis[field]) {
+    if (store.data.analysis.type === 'AnalysisCollection' && field !== 'id') {
+      val = store.data.analysis.events[0][field];
+    } else {
+      val = store.data.analysis[field];
+    }
+  } else {
+    val = '';
+  }
+  return val;
+};
 
-const AnalysisView = ({ store } : Props) => {
-  return (
-    <div>
-      <br/>
-      <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
-      <Form>
+
+
+// TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
+// TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
+const labelFormat = (label, md = 1) => (
+  <Col md={md} style={{ textAlign: 'right', padding: '7px' }}>
+    <b>{label}</b>
+  </Col>
+);
+
+const AnalysisView = ({ store } : Props) => (
+  <div>
+    <br/>
+    <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
+    <Col md={12}>
+      <strong>HID:</strong>{' '}{getValue(store, 'id')}
+    </Col>
+    <Col md={12}>
+      <strong>Registrert:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(store, 'registeredByName')}{' '}
+      <FontAwesome name='clock-o'/>{' '}{getValue(store, 'registeredDate')}
+    </Col>
+    <Col md={12}>
+      <strong>Sist endret:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(store, 'doneBy')}{' '}
+      <FontAwesome name='clock-o'/>{' '}{getValue(store, 'doneDate')}{' '}<a href=''>Se endringshistorikk</a>
+    </Col>
+    <NewLine />
+    <Form>
+      <FormGroup>
+        <FieldGroup
+          id="formControlsText"
+          type="text"
+          label="saksnummer"
+          value={getValue(store, 'caseNumber')}
+        />
+      </FormGroup>
+      <FormGroup>
+        <AddButton
+          id="1"
+          label="Legg til saksnummer"
+          md={5}
+        />
+      </FormGroup>
+    </Form>
+    <NewLine />
+    <Form inline>
+      <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
+      <Col mdOffset={1} md={5}>
+        <Table
+          className="table"
+          columns={[
+            { key: 'museumNumber', label: 'Museumsnr'},
+            { key: 'subNumber', label: 'Unr'},
+            { key: 'term', label: 'Term/artsnavn' }
+          ]}
+          data={store.objectsData}
+          sortable={['museumNumber', 'subNumber', 'term']}
+          noDataText="Ingen objekter"
+        />
+      </Col>
+      <AddButton
+        id="2"
+        label="Legg til objekt"
+        md={11}
+        mdOffset={1}
+      />
+    </Form>
+    <NewLine />
+    <Form horizontal style={{ paddingLeft: 20 }}>
+      <FormGroup>
+        <Col md={12}><h5><b>Personer tilknyttet analysen</b></h5></Col>
+      </FormGroup>
+      <FormGroup>
+        <FieldGroup
+          id="navn"
+          type="text"
+          label="Navn"
+          placeholder="Fornavn Etternavn"
+          value={getValue(store, 'actor')}
+        />
+        {labelFormat('Rolle', 1)}
+        <Col md={1}>
+          <FormControl componentClass="select" placeholder="Velg rolle">
+            <option value="Velgsted">Velg rolle</option>
+            <option value="other">...</option>
+          </FormControl>
+        </Col>
+        <AddButton
+          id="3"
+          label="Legg til person"
+          md={2}
+        />
+      </FormGroup>
+    </Form>
+    <NewLine />
+    <FormGroup>
+      {labelFormat('Analysested', 1)}
+      <Col md={2}>
+        <FormControl componentClass="select" placeholder="Velg sted">
+          <option value="Velgsted">Velg sted</option>
+          <option value="other">...</option>
+        </FormControl>
+      </Col>
+    </FormGroup>
+    <NewLine />
+    <Well>
+      <Form horizontal>
         <FormGroup>
-          {LabelFormat('HID:', 1)}
-          <Col style={{ padding: '7px' }}>123</Col>
-          {LabelFormat('Registrert:', 1)}
-          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}
-            Per Hansen
-          </Col>
-          <Col md={10} style={{ padding: '7px' }}>
-            <FontAwesome name='clock-o'/>{' '}
-            15.12.2017
-          </Col>
-          {LabelFormat('Sist endret:', 1)}
-          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='user'/>{' '}Per Hansen</Col>
-          <Col md={1} style={{ padding: '7px' }}><FontAwesome name='clock-o'/>{' '}15.12.2017</Col>
-          <Col md={9} style={{ padding: '7px' }}><a href=''>Se endringshistorikk</a></Col>
+          <FieldGroup
+            id="Type analyse"
+            md={1}
+            type="text"
+            label="Type analyse"
+            value={getValue(store, 'analysisTypeId')}
+          />
         </FormGroup>
-      </Form>
-      {newLine()}
-      <Form>
         <FormGroup>
           <FieldGroup
             id="formControlsText"
             type="text"
-            label="saksnummber"
+            label="Ekstern kilde"
+            placeholder="http://www.lenke.no"
+            value={getValue(store, 'externalSource')}
           />
-        </FormGroup>
-        <FormGroup>
-          <AddButton
-            id="1"
-            label="Legg til saksnummer"
-            md={5}
-          />
-        </FormGroup>
-      </Form>
-      {newLine()}
-
-      <Form inline>
-        <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
-        <Col mdOffset={1} md={5}>
-          <Table bordered>
-            <thead>
-            <tr>
-              <th>Museumsnr</th>
-              <th>Unt</th>
-              <th>Term/artsnavn</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>1234</td>
-              <td>12345678911</td>
-              <td>Spyd</td>
-            </tr>
-            <tr>
-              <td>2345</td>
-              <td>12345678912</td>
-              <td>Beltering</td>
-            </tr>
-            <tr>
-              <td>3455</td>
-              <td>12345678911</td>
-              <td>Øsekar</td>
-            </tr>
-            </tbody>
-          </Table>
-        </Col>
-        <AddButton
-          id="2"
-          label="Legg til objekt"
-          md={11}
-          mdOffset={1}
-        />
-      </Form>
-      {newLine()}
-      <Form horizontal style={{ paddingLeft: 20 }}>
-
-        <FormGroup>
-          <Col md={12}><h5><b>Personer tilknyttet analysen</b></h5></Col>
+          <Col md={2}>
+            <Button>Lagre</Button>
+          </Col>
         </FormGroup>
         <FormGroup>
           <FieldGroup
-            id="navn"
+            id="formControlsText"
             type="text"
-            label="Navn"
-            placeholder="Fornavn Etternavn"
+            label="Ladt opp fil"
           />
-          {LabelFormat('Rolle', 1)}
-          <Col md={1}>
-            <FormControl componentClass="select" placeholder="Velg rolle">
-              <option value="Velgsted">Velg rolle</option>
-              <option value="other">...</option>
-            </FormControl>
+          <Col md={2}>
+            <Button>Bla gjennom</Button>
           </Col>
-          <AddButton
-            id="3"
-            label="Legg til person"
-            md={2}
-          />
         </FormGroup>
-      </Form>
-      {newLine()}
-
-      <FormGroup>
-        {LabelFormat('Analysested', 1)}
-        <Col md={2}>
-          <FormControl componentClass="select" placeholder="Velg sted">
-            <option value="Velgsted">Velg sted</option>
-            <option value="other">...</option>
-          </FormControl>
-        </Col>
-      </FormGroup>
-      {newLine()}
-      <Well>
-        <Form horizontal>
-          <FormGroup>
-            {LabelFormat('Type analyse', 1)}
-            <Col md={2}>
-              <FormControl componentClass="select" placeholder="Velg kategori">
-                <option value="select">Velg kategori</option>
-                <option value="other">...</option>
-              </FormControl>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <FieldGroup
-              id="formControlsText"
-              type="text"
-              label="Ekstern kilde"
-              placeholder="http://www.lenke.no"
-            />
-            <Col md={2}>
-              <Button>Lagre</Button>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <FieldGroup
-              id="formControlsText"
-              type="text"
-              label="Ladt opp fil"
-            />
-            <Col md={2}>
-              <Button>Bla gjennom</Button>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            {LabelFormat('Kommentar / resultat', 1)}
-            <Col md={5}>
-              <FormControl componentClass="textarea" placeholder=""/>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            {LabelFormat('Klausulering', 1)}
-            <Col md={5}>
-              <Radio checked readOnly inline>
-                Ja
-              </Radio>
-              <Radio inline readOnly>
-                Nei
-              </Radio>
-            </Col>
-          </FormGroup>
-          <FormGroup>
-            <Panel collapsible expanded={expanded} style={{border:'none', backgroundColor: '#f5f5f5'}}>
-              <FormGroup>
-                <FieldGroup
-                  id="navn"
-                  md={1}
-                  type="text"
-                  label="Klausulert for"
-                  placeholder="Fornavn Etternavn"
-                />
-              </FormGroup>
-              <FormGroup>
-                <FieldGroup
-                  id="navn"
-                  md={1}
-                  type="text"
-                  label="Årsak til klausulering"
-                />
-              </FormGroup>
-              <FormGroup>
-                <FieldGroup
-                  id="navn"
-                  md={1}
-                  type="text"
-                  label="Sluttdato"
-                  value="15.02.2017"
-                  readOnly
-                />
-              </FormGroup>
-              <FormGroup>
-                <FieldGroup
-                  id="navn"
-                  md={1}
-                  type="text"
-                  label="Opphevet av"
-                  placeholder="Fornavn Etternavn"
-                />
-              </FormGroup>
-            </Panel>
-          </FormGroup>
-        </Form>
-      </Well>
-      <Form horizontal style={{ paddingLeft: 20 }}>
-        <FormGroup
-        >
-          {LabelFormat('Kommentar til analysen', 1)}
+        <FormGroup>
+          {labelFormat('Kommentar / resultat', 1)}
           <Col md={5}>
             <FormControl
-              className="note"
               componentClass="textarea"
-              value={store.data && store.data.analysis && store.data.analysis.note && store.data.analysis.note || ''}
+              placeholder=""
+              value={getValue(store, 'comments')}
+              readOnly
             />
           </Col>
         </FormGroup>
         <FormGroup>
-          {LabelFormat('Avslutt analyse', 1)}
+          {labelFormat('Klausulering', 1)}
           <Col md={5}>
-            <Radio inline readOnly>
+            <Radio checked readOnly inline>
               Ja
             </Radio>
-            <Radio inline checked readOnly>
+            <Radio inline readOnly>
               Nei
             </Radio>
           </Col>
         </FormGroup>
+        <FormGroup>
+          <Panel collapsible expanded style={{border:'none', backgroundColor: '#f5f5f5'}}>
+            <FormGroup>
+              <FieldGroup
+                id="navn"
+                md={1}
+                type="text"
+                label="Klausulert for"
+                placeholder="Fornavn Etternavn"
+                value={getValue(store, 'restrictionsFor')}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="navn"
+                md={1}
+                type="text"
+                label="Årsak til klausulering"
+                value={getValue(store, 'reasonForRestrictions')}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="navn"
+                md={1}
+                type="text"
+                label="Sluttdato"
+                value={getValue(store, 'restrictionsEndDate')}
+                readOnly
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="navn"
+                md={1}
+                type="text"
+                label="Opphevet av"
+                placeholder="Fornavn Etternavn"
+                value={getValue(store, 'repealedBy')}
+              />
+            </FormGroup>
+          </Panel>
+        </FormGroup>
       </Form>
-
-      {newLine()}
-      <SaveCancel/>
-      {newLine()}
-      <Form horizontal>
-        <FormGroup>
-          <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
-        </FormGroup>
-        <FormGroup>
-          <Col mdOffset={1}>PerHansen- 15.02.2017</Col>
-        </FormGroup>
-        <FormGroup>
-          <Col mdOffset={1}>PerHansen- 15.02.2017</Col>
-        </FormGroup>
-        <FormGroup>
-          <Col mdOffset={1}><a href=''>Se mer</a></Col>
-        </FormGroup>
-      </Form>
-    </div>);
-};
-
+    </Well>
+    <Form horizontal style={{ paddingLeft: 20 }}>
+      <FormGroup
+      >
+        {labelFormat('Kommentar til analysen', 1)}
+        <Col md={5}>
+          <FormControl
+            className="note"
+            componentClass="textarea"
+            value={store.data && store.data.analysis && store.data.analysis.note && store.data.analysis.note || ''}
+            readOnly
+          />
+        </Col>
+      </FormGroup>
+      <FormGroup>
+        {labelFormat('Avslutt analyse', 1)}
+        <Col md={5}>
+          <Radio inline readOnly>
+            Ja
+          </Radio>
+          <Radio inline checked readOnly>
+            Nei
+          </Radio>
+        </Col>
+      </FormGroup>
+    </Form>
+    <NewLine />
+    <button>
+      close
+    </button>
+    <NewLine />
+    <Form horizontal>
+      <FormGroup>
+        <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
+      </FormGroup>
+      <FormGroup>
+        <Col mdOffset={1}>{getValue(store, 'registeredBy')} - {getValue(store, 'registeredDate')}</Col>
+      </FormGroup>
+      <FormGroup>
+        <Col mdOffset={1}>{getValue(store, 'doneBy')} - {getValue(store, 'doneDate')}</Col>
+      </FormGroup>
+      <FormGroup>
+        <Col mdOffset={1}><a href=''>Se mer</a></Col>
+      </FormGroup>
+    </Form>
+  </div>
+);
 
 AnalysisView.propTypes = {
   store: PropTypes.object
