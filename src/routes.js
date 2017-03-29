@@ -49,7 +49,7 @@ export default () => {
           <Route path="events/:objectId" component={AllEvents} />
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
           <Route path="analysis/add" component={AnalysisAddContainer} />
-          <Route path="analysis/:analysisID" component={AnalysisViewContainer} />
+          <Route path="analysis/:analysisId" component={AnalysisViewContainer} />
           <Route path="analysis/sample/:sampleId/edit" component={SampleEditContainer}/>
           <Route path="analysis/sample/:sampleId" component={SampleViewContainer}/>
         </Route>
