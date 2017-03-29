@@ -11,7 +11,8 @@ const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, d
     </h1>
     <br/>
     <Well>
-      Objektinfo
+      <b>Objektinfo</b>
+      <br/><br/>
       <Row>
         <Col md={2}>
           <b>MusNo:</b>{musNo}
@@ -27,7 +28,6 @@ const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, d
       </Row>
     </Well>
     <br/>
-
     <Table className="table"
            columns={[
              {key: 'id', label: 'Sample ID'},
@@ -35,7 +35,8 @@ const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, d
              {key: 'sampleType', label: 'Prøvetype'},
              {key: 'sampleSubType', label: 'Prøveundertype'},
              {key: 'status', label: 'Status'},
-             {key: 'hasAnalyse', label: 'Analyse'}
+             {key: 'hasAnalyse', label: 'Analyse'},
+             {key: 'showInfo', label: 'Vis detaljer'}
            ]}
            sortable={['id', 'date']}
            noDataText="Ingen prøver funnet på objektet">
@@ -47,6 +48,7 @@ const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, d
           <Td column="sampleSubType">{e.sampleSubType}</Td>
           <Td column="status">{e.status}</Td>
           <Td column="hasAnalyse">{e.hasAnalyse}</Td>
+          <Td column="showInfo"><a href={e.details}>Se mer / Rediger</a></Td>
         </Tr>
       )}
     </Table>

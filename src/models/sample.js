@@ -36,28 +36,32 @@ Sample.loadSamplesForObject = () => () => {
       sampleType: 'Vev',
       sampleSubType: 'DNA',
       status: 'Forrurenset',
-      hasAnalyse: true},
+      hasAnalyse: true,
+      details: 'xxxx'},
     {
       id: '1423',
       date: '1992-12-01',
       sampleType: 'Vev',
       sampleSubType: 'Muscle',
       status: 'Rent',
-      hasAnalyse: false},
+      hasAnalyse: false,
+      details: 'xxxx'},
     {
       id: '1233',
       date: '1992-11-12',
       sampleType: 'Vev',
       sampleSubType: 'Bone',
       status: 'Forrurenset',
-      hasAnalyse: false},
+      hasAnalyse: false,
+      details: 'xxxx'},
     {
       id: '1231',
       date: '1992-12-12',
       sampleType: 'Vev',
       sampleSubType: 'Skin',
       status: 'Forrurenset',
-      hasAnalyse: true}
+      hasAnalyse: true,
+      details: 'xxxx'}
   ];
   //return ajaxGet(url, token, callback).map(({ response }) => response);
   return Observable.of ({ ...objectDetails, data: data});

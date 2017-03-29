@@ -13,26 +13,14 @@ The University museums of Norway hold in trust regional and global scientific co
 
 MUSIT strives for greater integration between its databases and is an open source initiative cooperating with other projects such as DINA (National History museum of Stockholm - Sweden), and Kotka (National History museum of Helsinki - Finland).
 
+## Prerequisites
+
+To get started you need to install the following components on your computer:
+
+* [NodeJS](https://nodejs.org) v7.5 (use nvm to switch between versions https://github.com/creationix/nvm).
+
 ## License
 All code is protected under the [GPL v2 or later](http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and copyright holder is [MUSIT](http://musit.uio.no) as a part of [University of Oslo](http://www.uio.no).
-
-## Requirements
-
-* [Node.js](http://nodejs.org/)
-
-## Installation Steps
-
-### Develop without backend
-1. Clone repo
-2. Run `npm install`
-4. Run `npm run start`
-5. Open `http://localhost:3000`
-
-### Deploy
-1. Clone repo
-2. Run `npm install`
-3. Run `npm run build`
-4. Copy files under `public` to web server (nginx/apache)
 
 # Credits
 
