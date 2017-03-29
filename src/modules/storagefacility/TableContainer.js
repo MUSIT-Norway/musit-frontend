@@ -76,26 +76,27 @@ export const processBarcode = (barCode, props) => {
     props.findNodeOrObjectByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
       if (!response) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-      } else if (Array.isArray(response)) {
-        if (response.length === 1) {
-          if (!response[0].currentLocationId) {
-            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
-          } else if (isMoveDialogActive) {
-            props.updateMoveDialog(response[0].currentLocationId, museumId, token);
-          } else if (isMoveHistoryActive) {
-            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
-          } else {
-            props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(response[0].currentLocationId , props.appSession));
-          }
-        } else {
-          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+      } else {
+        if (isMoveHistoryActive) {
+          return;
         }
-      } else if (response.nodeId) {
         if (isMoveDialogActive) {
-          props.updateMoveDialog(response.id, museumId, token);
-        } else if (isMoveHistoryActive) {
-          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnNode')});
-        } else {
+          if (!response.nodeId) {
+            props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode') });
+          } else {
+            props.updateMoveDialog(response.id, museumId, token);
+          }
+        } else if (Array.isArray(response)) {
+          if (response.length === 1) {
+            if (!response[0].currentLocationId) {
+              props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
+            } else {
+              props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(response[0].currentLocationId , props.appSession));
+            }
+          } else {
+            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+          }
+        } else if (response.nodeId) {
           props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response.id, props.appSession));
         }
       }
