@@ -13,9 +13,9 @@ import scannerIcon from '../app/scannerIcon.png';
 export class PickListComponent extends React.Component {
   static propTypes = {
     pickList: PropTypes.object.isRequired,
-    toggleNode: PropTypes.func.isRequired,
-    toggleObject: PropTypes.func.isRequired,
-    toggleMainObject: PropTypes.func.isRequired,
+    markNode: PropTypes.func.isRequired,
+    markObject: PropTypes.func.isRequired,
+    markMainObject: PropTypes.func.isRequired,
     removeNode: PropTypes.func.isRequired,
     removeObject: PropTypes.func.isRequired,
     appSession: PropTypes.object.isRequired,
@@ -66,9 +66,9 @@ export class PickListComponent extends React.Component {
 
   toggleObject({item, on}) {
     if (item.mainObjectId && item.isMainObject()) {
-      this.props.toggleMainObject({item, on});
+      this.props.markMainObject({item, on});
     } else {
-      this.props.toggleObject({item, on});
+      this.props.markObject({item, on});
     }
   }
 
@@ -126,7 +126,7 @@ export class PickListComponent extends React.Component {
 
   toggle(item, on) {
     if (this.isNodeView()) {
-      this.props.toggleNode({item, on});
+      this.props.markNode({item, on});
     } else {
       this.toggleObject({item, on});
     }

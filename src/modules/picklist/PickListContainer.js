@@ -2,9 +2,9 @@ import { emitError, emitSuccess } from '../../shared/errors';
 import { getPath } from '../../shared/util';
 import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 import {
-  toggleNode$,
-  toggleMainObject$,
-  toggleObject$,
+  markNode$,
+  markMainObject$,
+  markObject$,
   removeNode$,
   removeObject$,
   refreshNode$,
@@ -177,9 +177,9 @@ const data = {
 const commands = {
   refreshNode$,
   refreshObjects$,
-  toggleObject$,
-  toggleNode$,
-  toggleMainObject$,
+  markObject$,
+  markNode$,
+  markMainObject$,
   removeObject$,
   removeNode$,
   addNode$,

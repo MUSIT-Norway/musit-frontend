@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
-import { addNode$, addObject$ } from '../app/pickList';
+import { toggleNode$, toggleObject$ } from '../app/pickList';
 import { showConfirm, showModal } from '../../shared/modal';
 import { makeUrlAware } from '../app/appSession';
 import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
@@ -42,8 +42,8 @@ const commands = {
 };
 
 const customProps = {
-  pickNode: MusitNode.pickNode(addNode$),
-  pickObject: MusitObject.pickObject(addObject$),
+  pickNode: MusitNode.pickNode(toggleNode$),
+  pickObject: MusitObject.pickObject(toggleObject$),
   deleteNode: MusitNode.deleteNode(),
   goTo: hashHistory.push,
   updateMoveDialog,
