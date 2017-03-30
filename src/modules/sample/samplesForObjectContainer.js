@@ -23,7 +23,8 @@ const onMount = ({ loadSamplesForObject, params, appSession }) => {
   const objectId = params.parentId;
   const museumId = appSession.state.museumId;
   const accessToken = appSession.state.accessToken;
-  const val = {objectId: objectId, museumId: museumId, token: accessToken};
+  const collectionId = appSession.state.collectionId;
+  const val = {objectId: objectId, museumId: museumId, token: accessToken, collectionId: collectionId};
   loadSamplesForObject(val);
 };
 

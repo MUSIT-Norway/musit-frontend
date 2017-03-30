@@ -1,8 +1,7 @@
 import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import entries from 'object.entries';
-import Object from './object';
-import { Observable } from 'rxjs';
+import object from './object';
 
 class Sample {
   constructor(props) {
@@ -27,11 +26,14 @@ Sample.loadSample = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) =
   return ajaxGet(url, token, callback).map(({ response }) => response && new Sample(response));
 };
 
-Sample.loadSamplesForObject  = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
-  const url=Config.magasin.urls.api.thingaggregate.objectDetailsUrl(museumId,id);
-  const objResp = Object.getObjectDetails(ajaxGet)({id,museumId,token}).map(({response}) => response);
-  const sampleRes= ajaxGet(url, token, callback).map(({response})=> response);
-  return Observable.of({...objResp, data: sampleRes});
+Sample.loadSamplesForObject  = (ajaxGet = simpleGet) => ({objectId, museumId, token, collectionId, callback}) => {
+  const url=Config.magasin.urls.api.samples.samplesForObject(museumId,objectId);
+  const objResp = object.getObjectDetails(ajaxGet)({id: objectId,museumId,token,collectionId}).map(({response}) => {
+    return response;
+  });
+
+  const sampleRes= ajaxGet(url, token, callback);
+  return {...objResp, data: sampleRes};
 };
 
 export default Sample;

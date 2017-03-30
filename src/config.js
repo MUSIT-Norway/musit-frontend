@@ -127,7 +127,8 @@ export default {
             const limitQuery = `limit=${perPage || ''}`;
             return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
           },
-          objectDetailsUrl: (mid, objectUUID): string => `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}`
+          objectDetailsUrl: (mid, objectUUID, collectionId): string =>
+            `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}&${collectionId.getQuery()}`
         }
         ,
 
