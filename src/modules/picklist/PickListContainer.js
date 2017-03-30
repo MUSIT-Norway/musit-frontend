@@ -2,9 +2,9 @@ import { emitError, emitSuccess } from '../../shared/errors';
 import { getPath } from '../../shared/util';
 import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
 import {
-  toggleNode$,
-  toggleMainObject$,
-  toggleObject$,
+  markNode$,
+  markMainObject$,
+  markObject$,
   removeNode$,
   removeObject$,
   refreshNode$,
@@ -177,9 +177,9 @@ const data = {
 const commands = {
   refreshNode$,
   refreshObjects$,
-  toggleObject$,
-  toggleNode$,
-  toggleMainObject$,
+  markObject$,
+  markNode$,
+  markMainObject$,
   removeObject$,
   removeNode$,
   addNode$,
@@ -212,7 +212,7 @@ export const processBarcode = (barCode, props) => {
           if (!response) {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
           } else if (isMoveDialogActive) {
-            props.updateMoveDialog(response, museumId, token);
+            props.updateMoveDialog(response.id, museumId, token);
           } else {
             props.addNode({value: response, path: getPath(response)});
           }
@@ -225,24 +225,24 @@ export const processBarcode = (barCode, props) => {
     findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
       if (!response) {
         props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-      } else if (!isNodeView && Array.isArray(response)) { // objects
-        if (response.length === 1) {
-          if (isMoveDialogActive) {
-            props.updateMoveDialog(response[0], museumId, token);
-          } else {
-            props.addObject({value: response[0], path: getPath(response[0])});
-          }
-        } else {
-          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
-        }
-      } else if (isNodeView && response.nodeId) { // node
-        if (isMoveDialogActive) {
-          props.updateMoveDialog(response, museumId, token);
-        } else {
-          props.addNode({value: response, path: getPath(response)});
-        }
       } else {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+        if (isMoveDialogActive) {
+          if (!response.nodeId) {
+            props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode') });
+          } else {
+            props.updateMoveDialog(response.id, museumId, token);
+          }
+        } else if (!isNodeView && Array.isArray(response)) { // objects
+          if (response.length === 1) {
+            props.addObject({value: response[0], path: getPath(response[0])});
+          } else {
+            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
+          }
+        } else if (isNodeView && response.nodeId) { // node
+          props.addNode({value: response, path: getPath(response)});
+        } else {
+          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+        }
       }
     }).toPromise();
   }
