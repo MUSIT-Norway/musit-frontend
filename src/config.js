@@ -118,7 +118,7 @@ export default {
             `/api/thingaggregate/${mid.getPath()}`,
           scanOldUrl: (oldBarcode, mid, collectionId) =>
             `/api/thingaggregate/${mid.getPath()}/scan?oldBarcode=${oldBarcode}&${collectionId.getQuery()}`,
-          searchObjectUrl: (museumNo, subNo, term, perPage, page, collectionId, museumId) : string => {
+          searchObjectUrl: (museumNo, subNo, term, perPage, page, collectionId, museumId): string => {
             const baseUrl = `/api/thingaggregate/${museumId.getPath()}/objects/search`;
             const museumNoQuery = `museumNo=${museumNo || ''}`;
             const subNoQuery = `subNo=${subNo || ''}`;
@@ -126,8 +126,10 @@ export default {
             const pageQuery = `page=${page || ''}`;
             const limitQuery = `limit=${perPage || ''}`;
             return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
-          }
-        },
+          },
+          objectDetailsUrl: (mid, objectUUID): string => `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}`
+        }
+        ,
 
         actor: {
           searchUrl: (term, mid) =>

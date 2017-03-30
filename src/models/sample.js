@@ -1,6 +1,7 @@
 import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import entries from 'object.entries';
+import Object from './object';
 import { Observable } from 'rxjs';
 
 class Sample {
@@ -26,45 +27,11 @@ Sample.loadSample = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) =
   return ajaxGet(url, token, callback).map(({ response }) => response && new Sample(response));
 };
 
-Sample.loadSamplesForObject = () => () => {
-  //TODO: Get object details for object
-  const objectDetails = {musNo: 'TRH-V-1234', subNo: '3', term_species: 'Carex saxatilis'};
-  const data =  [
-    {
-      id: '123',
-      date: '1992-12-22',
-      sampleType: 'Vev',
-      sampleSubType: 'DNA',
-      status: 'Forrurenset',
-      hasAnalyse: true,
-      details: 'xxxx'},
-    {
-      id: '1423',
-      date: '1992-12-01',
-      sampleType: 'Vev',
-      sampleSubType: 'Muscle',
-      status: 'Rent',
-      hasAnalyse: false,
-      details: 'xxxx'},
-    {
-      id: '1233',
-      date: '1992-11-12',
-      sampleType: 'Vev',
-      sampleSubType: 'Bone',
-      status: 'Forrurenset',
-      hasAnalyse: false,
-      details: 'xxxx'},
-    {
-      id: '1231',
-      date: '1992-12-12',
-      sampleType: 'Vev',
-      sampleSubType: 'Skin',
-      status: 'Forrurenset',
-      hasAnalyse: true,
-      details: 'xxxx'}
-  ];
-  //return ajaxGet(url, token, callback).map(({ response }) => response);
-  return Observable.of ({ ...objectDetails, data: data});
+Sample.loadSamplesForObject  = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
+  const url=Config.magasin.urls.api.thingaggregate.objectDetailsUrl(museumId,id);
+  const objResp = Object.getObjectDetails(ajaxGet)({id,museumId,token}).map(({response}) => response);
+  const sampleRes= ajaxGet(url, token, callback).map(({response})=> response);
+  return Observable.of({...objResp, data: sampleRes});
 };
 
 export default Sample;
