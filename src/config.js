@@ -111,7 +111,15 @@ export default {
           scanOldUrl: (oldBarcode, mid) =>
             `/api/storagefacility/${mid.getPath()}/storagenodes/scan?oldBarcode=${oldBarcode}`,
           baseUrl: (mid): string =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes`
+            `/api/storagefacility/${mid.getPath()}/storagenodes`,
+          currentLocation: (mid, objectId): String =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/${objectId}/currentlocation`,
+          currentLocations: (mid): String =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/currentlocations`,
+          moveObject: (mid): string =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/moveObject`,
+          objectLocations: (mid, objectId): string =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/${objectId}/locations`
         },
         thingaggregate: {
           baseUrl: (mid): string =>
@@ -128,10 +136,12 @@ export default {
             return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
           },
           objectDetailsUrl: (mid, objectUUID, collectionId): string =>
-            `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}?${collectionId.getQuery()}`
-        }
-        ,
-
+            `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}?${collectionId.getQuery()}`,
+          getMainObject: (mid, objectId, collectionId): string =>
+            `/api/thingaggregate/${mid.getPath()}/objects/${objectId}/children?${collectionId.getQuery()}`,
+          getObjectForCollection: (mid, id, collectionId, page, limit): string =>
+            `/api/thingaggregate/${mid.getPath()}/node/${id}/objects/?${collectionId.getQuery()}&page=${page}&limit=${limit}`
+        },
         actor: {
           searchUrl: (term, mid) =>
             `/api/actor/person?${mid.getQuery()}&search=[${encodeURIComponent(term)}]`,

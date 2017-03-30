@@ -77,6 +77,21 @@ describe('Config urls', () => {
           name: 'scanOldUrl',
           actual: urls.api.storagefacility.scanOldUrl(1234, new MuseumId(99)),
           expected: '/api/storagefacility/museum/99/storagenodes/scan?oldBarcode=1234'
+        },
+        {
+          name: 'currentLocation',
+          actual: urls.api.storagefacility.currentLocation(new MuseumId(99), 123),
+          expected: '/api/storagefacility/museum/99/storagenodes/objects/123/currentlocation'
+        },
+        {
+          name: 'currentLocations',
+          actual: urls.api.storagefacility.currentLocations(new MuseumId(99)),
+          expected: '/api/storagefacility/museum/99/storagenodes/objects/currentlocations'
+        },
+        {
+          name: 'objectLocations',
+          actual: urls.api.storagefacility.objectLocations(new MuseumId(99), 123),
+          expected: '/api/storagefacility/museum/99/storagenodes/objects/123/locations'
         }
       ]
     },
@@ -118,6 +133,16 @@ describe('Config urls', () => {
           name: 'scanOldUrl',
           actual: urls.api.thingaggregate.scanOldUrl(1234, new MuseumId(99), new CollectionId('1234')),
           expected: '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
+        },
+        {
+          name: 'getMainObject',
+          actual: urls.api.thingaggregate.getMainObject(new MuseumId(99), 2344, new CollectionId('1234')),
+          expected: '/api/thingaggregate/museum/99/objects/2344/children?collectionIds=1234'
+        },
+        {
+          name: 'getObjectForCollection',
+          actual: urls.api.thingaggregate.getObjectForCollection(new MuseumId(99), 433, new CollectionId('1234'), 1, 20),
+          expected: '/api/thingaggregate/museum/99/node/433/objects/?collectionIds=1234&page=1&limit=20'
         }
       ]
     },
