@@ -10,6 +10,9 @@ exports[`PickListComponent for objects Should mount 1`] = `
   emitSuccess={[Function emitSuccess]}
   iconRendrer={[Function iconRendrer]}
   isTypeNode={[Function isTypeNode]}
+  markMainObject={[Function markMainObject]}
+  markNode={[Function proxy]}
+  markObject={[Function proxy]}
   moveItems={[Function moveItems]}
   pickList={
     Object {
@@ -109,9 +112,6 @@ exports[`PickListComponent for objects Should mount 1`] = `
     }
   }
   scannerEnabled={true}
-  toggleMainObject={[Function toggleMainObject]}
-  toggleNode={[Function proxy]}
-  toggleObject={[Function proxy]}
   toggleScanner={[Function toggleScanner]}>
   <div>
     <main>
