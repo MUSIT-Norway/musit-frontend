@@ -21,6 +21,7 @@ describe('AppComponent', () => {
     const toggleEnabled = sinon.spy();
     const wrapper = shallow(
       <AppComponent
+        enableAnalysis={true}
         count={{ value: 0 }}
         appSession={new AppSession({
           accessToken: '1234',
