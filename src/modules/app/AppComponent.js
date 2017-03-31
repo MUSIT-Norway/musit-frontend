@@ -25,6 +25,7 @@ export class AppComponent extends Component {
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
+    enableAnalysis: PropTypes.bool.isRequired,
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
     clearNodePicklist: PropTypes.func.isRequired
@@ -130,7 +131,7 @@ export class AppComponent extends Component {
               <LinkContainer to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
-              {Config.isDev &&
+              {this.props.enableAnalysis &&
               <NavDropdown title={I18n.t('musit.analysis.analysis')} id="analysis-dropdown">
                 <LinkContainer to={Config.magasin.urls.client.analysis.addAnalysis(this.props.appSession)}>
                   <MenuItem>
@@ -200,7 +201,8 @@ const commands = {
 };
 
 const props = {
-  goTo: hashHistory.push
+  goTo: hashHistory.push,
+  enableAnalysis: Config.isDev
 };
 
 export default inject(data, commands, props)(AppComponent);
