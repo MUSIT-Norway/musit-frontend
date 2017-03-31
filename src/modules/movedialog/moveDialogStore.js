@@ -19,14 +19,14 @@ export const initialState = {
   }
 };
 
-export const updateMoveDialog = (response, museumId, token) => {
+export const updateMoveDialog = (nodeId, museumId, token) => {
   loadNode$.next({
-    id: response.id,
+    id: nodeId,
     museumId,
     token
   });
   loadChildren$.next({
-    id: response.id,
+    id: nodeId,
     museumId,
     token,
     page: {

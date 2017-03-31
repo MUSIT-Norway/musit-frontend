@@ -7,14 +7,16 @@ import toLower from 'lodash/toLower';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
 export const addObject$ = createAction('addObject$');
-export const removeObject$ = createAction('removeObject$');
 export const toggleObject$ = createAction('toggleObject$');
-export const toggleMainObject$ = createAction('toggleMainObject$');
+export const removeObject$ = createAction('removeObject$');
+export const markObject$ = createAction('markObject$');
+export const markMainObject$ = createAction('markMainObject$');
 export const clearObjects$ = createAction('clearObjects$');
 export const refreshObjects$ = createAction('refreshObject$').flatMap(MusitObject.getObjectLocations());
 export const addNode$ = createAction('addNode$');
-export const removeNode$ = createAction('removeNode$');
 export const toggleNode$ = createAction('toggleNode$');
+export const removeNode$ = createAction('removeNode$');
+export const markNode$ = createAction('markNode$');
 export const clearNodes$ = createAction('clearNodes$');
 export const refreshNode$ = createAction('refreshNode$').flatMap(MusitNode.getNode());
 
@@ -22,9 +24,12 @@ export const isItemAdded = (item, items = []) => {
   return items.findIndex(node => item.id === node.value.id) > -1;
 };
 
-const toggleItem = (item, items = []) => {
+const addItem = (item, items = [], toggle) => {
   if (items.findIndex(node => item.value.id === node.value.id) > -1) {
-    return items.filter(node => item.value.id !== node.value.id);
+    if (toggle) {
+      return items.filter(node => item.value.id !== node.value.id);
+    }
+    return items;
   }
   return items.concat({ marked: false, value: item.value, path: item.path});
 };
@@ -108,29 +113,33 @@ const refreshObjects = (state, itemLocations) => {
 };
 
 export const reducer$ = (actions) => Observable.empty().merge(
-  actions.toggleObject$.map((item) => (state) => ({...state, objects: toggleMarked(item, state.objects)})),
-  actions.toggleMainObject$.map((item) => (state) => ({...state, objects: toggleMainObject(item, state.objects)})),
+  actions.markObject$.map((item) => (state) => ({...state, objects: toggleMarked(item, state.objects)})),
+  actions.markMainObject$.map((item) => (state) => ({...state, objects: toggleMainObject(item, state.objects)})),
   actions.removeObject$.map((item) => (state) => ({...state, objects: removeItem(item, state.objects)})),
-  actions.addObject$.map((item) => (state) => ({...state, objects: toggleItem(item, state.objects)})),
+  actions.addObject$.map((item) => (state) => ({...state, objects: addItem(item, state.objects)})),
+  actions.toggleObject$.map((item) => (state) => ({...state, objects: addItem(item, state.objects, true)})),
   actions.refreshObjects$.map((itemLocations) => (state) => ({...state, objects: refreshObjects(state, itemLocations)})),
   actions.clearObjects$.map(() => (state) => ({...state, objects: []})),
-  actions.toggleNode$.map((item) => (state) => ({...state, nodes: toggleMarked(item, state.nodes)})),
+  actions.markNode$.map((item) => (state) => ({...state, nodes: toggleMarked(item, state.nodes)})),
   actions.removeNode$.map((item) => (state) => ({...state, nodes: removeItem(item, state.nodes)})),
-  actions.addNode$.map((item) => (state) => ({...state, nodes: toggleItem(item, state.nodes)})),
+  actions.addNode$.map((item) => (state) => ({...state, nodes: addItem(item, state.nodes)})),
+  actions.toggleNode$.map((item) => (state) => ({...state, nodes: addItem(item, state.nodes, true)})),
   actions.refreshNode$.map((item) => (state) => ({...state, nodes: refreshItem(item, state.nodes)})),
   actions.clearNodes$.map(() => (state) => ({...state, nodes: []}))
 );
 
 export const store$ = (actions$ = {
   addNode$,
-  removeNode$,
   toggleNode$,
+  removeNode$,
+  markNode$,
   refreshNode$,
   clearNodes$,
   addObject$,
-  removeObject$,
   toggleObject$,
-  toggleMainObject$,
+  removeObject$,
+  markObject$,
+  markMainObject$,
   refreshObjects$,
   clearObjects$
 }) => createStore('pickList', reducer$(actions$), Observable.of({ nodes: [], objects: []}))

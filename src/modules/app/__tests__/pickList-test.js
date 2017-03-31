@@ -41,41 +41,43 @@ describe('pickList', () => {
       g: { objects: [], nodes: []},
       h: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
       i: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [] }]},
-      j: { objects: [], nodes: [{ marked: false, value: {id: 2}, path: [] }]},
-      k: { objects: [], nodes: [{ marked: false, value: {id: 2}, path: [] }]},
-      l: { objects: [], nodes: [{ marked: false, value: {id: 2}, path: [{id: 1, name: 'Test', url: '/magasin/1'}] }]},
-      o: { objects: [], nodes: []},
-      p: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: []},
+      j: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [] }]},
+      k: { objects: [], nodes: [{ marked: true, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [] }]},
+      l: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }, { marked: false, value: {id: 2}, path: [{id: 1, name: 'Test', url: '/magasin/1'}] }]},
+      o: { objects: [], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
+      p: { objects: [{ marked: false, value: {id: 1}, path: []}], nodes: [{ marked: false, value: {id: 1}, path: [] }]},
       r: {
         objects: [{ marked: false, value: {id: 1}, path: [{id: 3, name: 'test', url: '/magasin/3'}]}],
-        nodes: []
+        nodes: [{ marked: false, value: {id: 1}, path: [] }]
       },
       s: {
         objects: [{ marked: false, value: {id: 1}, path: [{id: 3, name: 'test', url: '/magasin/3'}]},
           { marked: false, value: {id: 2}, path: []}
         ],
-        nodes: []
+        nodes: [{ marked: false, value: {id: 1}, path: [] }]
       },
       u: {
         objects: [{ marked: false, value: {id: 1}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]},
                   { marked: false, value: {id: 2}, path: [{id: 6, name: 'Code from Jarl', url: '/magasin/6'}]}
         ],
-        nodes: []
+        nodes: [{ marked: false, value: {id: 1}, path: [] }]
       }
     };
 
     // mock up$ and down$ events
-    const toggleNode$ = testScheduler.createHotObservable(toggleNode, {1: {item: {id: 1}}});
+    const markNode$ = testScheduler.createHotObservable(toggleNode, {1: {item: {id: 1}}});
     const removeNode$ = testScheduler.createHotObservable(removeNode, {1: {id: 2, name: 'Tull'}});
     const refreshNode$ = testScheduler.createHotObservable(refreshNode, {1: {id: 2, path: ',1,2,', pathNames: [{nodeId: 1, name: 'Test'}]}});
     const clearNodes$ = testScheduler.createHotObservable(clearNodes);
     const addNode$ = testScheduler.createHotObservable(addNode, {1: {value: {id: 1}, path: []}, 2: {value: {id: 2}, path: []}});
-    const toggleObject$ = new Subject();
-    const toggleMainObject$ = new Subject();
+    const toggleNode$ = new Subject();
+    const markObject$ = new Subject();
+    const markMainObject$ = new Subject();
     const refreshMainObject$ = new Subject();
     const removeObject$ = testScheduler.createHotObservable(removeObject, {1: {id: 1, museumNo: 'H1'}});
     const clearObjects$ = testScheduler.createHotObservable(clearObjects);
     const addObject$ = testScheduler.createHotObservable(addObject, {1: {value: {id: 1}, path: []}, 2: {value: {id: 2}, path: []}});
+    const toggleObject$ = new Subject();
 
     const refreshObjects$ = testScheduler.createHotObservable(refreshObjects, {
         1: { objectIds: [1], museumId: new MuseumId(99), token: '1224' },
@@ -108,13 +110,15 @@ describe('pickList', () => {
     const state$ = store$({
       clearObjects$,
       removeObject$,
-      toggleObject$,
-      toggleMainObject$,
+      markObject$,
+      markMainObject$,
       addObject$,
+      toggleObject$,
       clearNodes$,
       removeNode$,
-      toggleNode$,
+      markNode$,
       addNode$,
+      toggleNode$,
       refreshNode$,
       refreshMainObject$,
       refreshObjects$

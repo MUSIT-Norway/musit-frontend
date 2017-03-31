@@ -66,9 +66,9 @@ describe('PickListComponent for nodes', () => {
     const wrapper = shallow(<PickListComponent
       route={{type : 'nodes'}}
       pickList={pickList}
-      toggleNode={(x) => x}
-      toggleObject={(x) => x}
-      toggleMainObject={(x) => x}
+      markNode={(x) => x}
+      markObject={(x) => x}
+      markMainObject={(x) => x}
       removeNode={(x) => x}
       removeObject={(x) => x}
       appSession={ new AppSession()}
@@ -101,9 +101,9 @@ describe('PickListComponent for nodes', () => {
     const wrapper = mount(<PickListComponent
       route={{type : 'nodes'}}
       pickList={pickList}
-      toggleNode={onToggleNode}
-      toggleObject={onToggleObject}
-      toggleMainObject={(x) => x}
+      markNode={onToggleNode}
+      markObject={onToggleObject}
+      markMainObject={(x) => x}
       removeNode={onRemoveNode}
       removeObject={onRemoveObject}
       appSession={new AppSession()}
