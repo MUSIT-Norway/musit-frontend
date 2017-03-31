@@ -19,7 +19,7 @@ const props = {
 
 const commands = {loadSamplesForObject$};
 
-const onMount = ({ loadSamplesForObject, params, appSession }) => {
+export const onMount = ({ loadSamplesForObject, params, appSession }) => {
   const objectId = params.parentId;
   const museumId = appSession.state.museumId;
   const accessToken = appSession.state.accessToken;

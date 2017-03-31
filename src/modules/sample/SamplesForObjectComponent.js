@@ -3,7 +3,7 @@ const {Table, Tr, Td} = require('reactable');
 import {Row, Col, Well} from 'react-bootstrap';
 
 
-const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, data}}) => {
+const SamplesForObjectComponent = ({sampleStore:{ museumNo, subNo, term, data}}) => {
 
   return (<div>
     <h1>
@@ -15,7 +15,7 @@ const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, d
       <br/><br/>
       <Row>
         <Col md={2}>
-          <b>MusNo:</b>{musNo}
+          <b>MusNo:</b>{museumNo}
         </Col>
         <Col md={2}>
         <b>SubNo: </b>
@@ -23,7 +23,7 @@ const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, d
         </Col>
         <Col md={3}>
         <b>Term/Species: </b>
-          {term_species}
+          {term}
         </Col>
       </Row>
     </Well>
@@ -31,7 +31,7 @@ const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, d
     <Table className="table"
            columns={[
              {key: 'id', label: 'Sample ID'},
-             {key: 'date', label: 'Dato'},
+             {key: 'createdDate', label: 'Dato'},
              {key: 'sampleType', label: 'Prøvetype'},
              {key: 'sampleSubType', label: 'Prøveundertype'},
              {key: 'status', label: 'Status'},
@@ -40,10 +40,10 @@ const SamplesForObjectComponent = ({sampleStore: { musNo, subNo, term_species, d
            ]}
            sortable={['id', 'date']}
            noDataText="Ingen prøver funnet på objektet">
-      {data.map((e,i) =>
+      {data && data.map((e,i) =>
         <Tr key={i}>
           <Td column="id">{e.id}</Td>
-          <Td column="date">{e.date}</Td>
+          <Td column="createdDate">{e.createdDate}</Td>
           <Td column="sampleType">{e.sampleType}</Td>
           <Td column="sampleSubType">{e.sampleSubType}</Td>
           <Td column="status">{e.status}</Td>

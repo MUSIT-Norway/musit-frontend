@@ -66,9 +66,7 @@ MusitObject.getMainObject = (ajaxGet = simpleGet) => ({ id, museumId, collection
 
 MusitObject.getObjectDetails = (ajaxGet = simpleGet) => ({id, museumId, collectionId, token, callback}) => {
   const url = Config.magasin.urls.api.thingaggregate.objectDetailsUrl(museumId,id,collectionId);
-  const r =  ajaxGet(url,token, callback).map(({ response }) => response);
-  console.log('R', r);
-  return r;
+  return ajaxGet(url,token, callback).map(({response}) => response);
 };
 
 

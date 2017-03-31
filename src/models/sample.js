@@ -2,6 +2,8 @@ import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import entries from 'object.entries';
 import object from './object';
+import {Observable} from 'rxjs';
+import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 
 class Sample {
   constructor(props) {
@@ -28,12 +30,16 @@ Sample.loadSample = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) =
 
 Sample.loadSamplesForObject  = (ajaxGet = simpleGet) => ({objectId, museumId, token, collectionId, callback}) => {
   const url=Config.magasin.urls.api.samples.samplesForObject(museumId,objectId);
-  const objResp = object.getObjectDetails(ajaxGet)({id: objectId,museumId,token,collectionId}).map(({response}) => {
-    return response;
+  const objResp = object.getObjectDetails(ajaxGet)({id: objectId,museumId,token,collectionId});
+  const sampleRes= ajaxGet(url, token, callback).map(e => e.response);
+  const r= Observable.forkJoin(sampleRes,objResp).map(([samples,obj]) => {
+    console.log('O',obj);
+    console.log('S', samples);
+    return {...obj, data: samples.map(a => ({...a, createdDate: parseISODate(a.createdDate,DATE_FORMAT_DISPLAY) }))};
   });
+  console.log('R',r);
+  return r;
 
-  const sampleRes= ajaxGet(url, token, callback);
-  return {...objResp, data: sampleRes};
 };
 
 export default Sample;

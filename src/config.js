@@ -128,7 +128,7 @@ export default {
             return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
           },
           objectDetailsUrl: (mid, objectUUID, collectionId): string =>
-            `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}&${collectionId.getQuery()}`
+            `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}?${collectionId.getQuery()}`
         }
         ,
 

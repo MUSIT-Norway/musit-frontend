@@ -11,7 +11,7 @@ export const clear$ = createAction('clear$');
 
 const reducer$ = (actions) => Observable.merge(
   actions.clear$.map(() => () => initialState),
-  actions.loadSamplesForObject$.map((data) => (state) => ({...state, data }))
+  actions.loadSamplesForObject$.map((data) => (state) => ({...state, ...data }))
 );
 
 export const sampleStore$ = (actions = { loadSamplesForObject$,  clear$ }) =>
