@@ -75,8 +75,6 @@ export default {
         analysisType: {
           getAllAnalysisTypes: (mid) =>
             `/api/management/${mid.id}/analyses/types`,
-          getAnalysisTypeById: (mid, id) =>
-            `/api/management/${mid.id}/analyses/types/${id}`,
           getAnalysisTypesForCategory: (mid, id) =>
             `/api/management/${mid.id}/analyses/types/categories/${id}`,
           getAnalysisTypesForCollection: (mid, id) =>

@@ -10,6 +10,13 @@ class Analysis {
   }
 }
 
+Analysis.getAnalysisTypesForCollection  = (ajaxGet = simpleGet) => ({museumId, collectionId, token, callback}) => {
+  const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(museumId, collectionId);
+  const call = ajaxGet(url, token, callback).map(({response}) => response);
+  return call;
+};
+
+
 Analysis.getAllAnalysisTypes = (ajaxGet = simpleGet) => ({museumId, token, callback}) => {
   return ajaxGet(`${Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId)}`, token, callback)
     .map(({response}) => orderBy(response, ['name'], ['asc']));

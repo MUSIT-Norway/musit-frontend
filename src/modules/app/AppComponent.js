@@ -12,6 +12,7 @@ import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors';
 import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
+import { getAnalysisTypesForCollection$ } from '../../modules/analysis/analysisStore';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import { clearObjects$ as clearObjectPicklist$, clearNodes$ as clearNodePicklist$ } from './pickList';
@@ -27,7 +28,8 @@ export class AppComponent extends Component {
     pickList: PropTypes.object.isRequired,
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
-    clearNodePicklist: PropTypes.func.isRequired
+    clearNodePicklist: PropTypes.func.isRequired,
+    getAnalysisTypesForCollection: PropTypes.func.isRequired
   };
 
   constructor(props, context) {
@@ -68,6 +70,11 @@ export class AppComponent extends Component {
     this.props.clearNodePicklist();
     const localAppSession = this.props.appSession.copy({museumId, collectionId});
     this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
+    this.props.getAnalysisTypesForCollection({
+      museumId: localAppSession.state.museumId,
+      collectionId: localAppSession.state.collectionId.uuid,
+      token: this.props.appSession.state.accessToken
+    });
   }
 
   handleCollectionId(collectionId) {
@@ -194,7 +201,8 @@ const commands = {
   setMuseumId$,
   setCollectionId$,
   clearObjectPicklist$,
-  clearNodePicklist$
+  clearNodePicklist$,
+  getAnalysisTypesForCollection$
 };
 
 const props = {

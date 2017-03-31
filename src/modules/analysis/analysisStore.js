@@ -28,13 +28,15 @@ const objectsData =
 
 export const loadAnalysisTypes$ = createAction('loadAnalysisTypes$').switchMap(Analysis.getAllAnalysisTypes());
 export const loadAnalysis$ = createAction('loadAnalysis$').switchMap(Analysis.getAnalysisByIdWithName());
+export const getAnalysisTypesForCollection$ = createAction('getAnalysisTypesForCollection$').switchMap(Analysis.getAnalysisTypesForCollection());
 
 export const reducer$ = (actions) => Observable.merge(
   actions.loadAnalysisTypes$.map((analysisTypes) => (state) => ({...state, data: { analysisTypes }})),
   actions.loadAnalysis$.map((data) => (state) => ({...state, data: {analysis: data}, loading: false})),
+  actions.getAnalysisTypesForCollection$.map((analysisTypes) => (state) => ({...state, data: { analysisTypes }}))
 );
 
-export const store$ = (actions$ = {loadAnalysisTypes$, loadAnalysis$}) =>
+export const store$ = (actions$ = {getAnalysisTypesForCollection$, loadAnalysisTypes$, loadAnalysis$}) =>
   createStore('analysisStore', reducer$(actions$), Observable.of({ objectsData, data: { analysisTypes: [] } }));
 
 export default store$();
