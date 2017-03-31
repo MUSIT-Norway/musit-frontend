@@ -31,11 +31,11 @@ describe('samplesForObjectContainer', () => {
       appSession: new AppSession({
         museumId: new MuseumId(99),
         collectionId: new CollectionId('1234567'),
-        accessToken: '1234',
+        accessToken: '1234'
       }),
       params: {parentId: '12344'},
       sampleStore: data,
-      loadSamplesForObject,
+      loadSamplesForObject
     };
     onMount(props);
     expect(loadSamplesForObject.callCount).toBe(1);

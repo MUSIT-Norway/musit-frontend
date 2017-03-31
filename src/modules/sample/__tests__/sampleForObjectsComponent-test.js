@@ -30,7 +30,7 @@ describe('SamplesForObject', () => {
           status: 2,
           createdDate: '2011-11-11'}
       ]
-    }
+    };
 
     const wrapper = shallow(<SamplesForObjectComponent
       sampleStore={data}

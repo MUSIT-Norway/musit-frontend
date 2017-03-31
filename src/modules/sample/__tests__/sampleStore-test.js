@@ -11,7 +11,7 @@ describe('eventsStore', () => {
        console.log(JSON.stringify(expected, null, 2));*/
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
-        console.log(difference);
+       // console.log(difference);
       }
       return assert.equal(undefined, difference);
     });
