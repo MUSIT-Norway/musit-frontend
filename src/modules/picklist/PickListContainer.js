@@ -31,6 +31,7 @@ export const nodeCallback = (
   name,
   items,
   onSuccess,
+  onFailure,
   refreshNode = refreshNode$.next.bind(refreshNode$)
 ) => {
   return {
@@ -56,6 +57,7 @@ export const nodeCallback = (
       }
     },
     onFailure: (error) => {
+      onFailure();
       if (toMoveLength === 1) {
         emitError({
           type: 'errorOnMove',
@@ -80,6 +82,7 @@ export const objectCallback = (
   name,
   items,
   onSuccess,
+  onFailure,
   refreshObjects = refreshObjects$.next.bind(refreshObjects$)
 ) => {
   return {
@@ -103,6 +106,7 @@ export const objectCallback = (
       }
     },
     onFailure: (error) => {
+      onFailure();
       if (toMoveLength === 1) {
         emitError({
           type: 'errorOnMove',
@@ -127,7 +131,7 @@ export const moveItems = (
   moveNode = MusitNode.moveNode(),
   moveObject = MusitObject.moveObject()
 ) => {
-  return (to, toName, onSuccess): void => {
+  return (to, toName, onSuccess, onFailure = () => true): void => {
     const moveFunction = isNode ? moveNode : moveObject;
     const idsToMove = items.map(itemToMove => itemToMove.id);
 
@@ -136,9 +140,9 @@ export const moveItems = (
     const name = isNode ? first.name : first.term;
     let callback;
     if (isNode) {
-      callback = nodeCallback(appSession, toName, toMoveLength, name, items, onSuccess);
+      callback = nodeCallback(appSession, toName, toMoveLength, name, items, onSuccess, onFailure);
     } else {
-      callback = objectCallback(appSession, toName, toMoveLength, name, items, onSuccess);
+      callback = objectCallback(appSession, toName, toMoveLength, name, items, onSuccess, onFailure);
     }
 
     let error = false;
@@ -165,6 +169,8 @@ export const moveItems = (
         token: appSession.getAccessToken(),
         callback
       }).toPromise();
+    } else {
+      onFailure();
     }
   };
 };
