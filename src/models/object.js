@@ -64,6 +64,13 @@ MusitObject.getMainObject = (ajaxGet = simpleGet) => ({ id, museumId, collection
     .map(({ response }) => response && response.map(obj => new MusitObject(obj)));
 };
 
+MusitObject.getObjectDetails = (ajaxGet = simpleGet) => ({id, museumId, collectionId, token, callback}) => {
+  const url = Config.magasin.urls.api.thingaggregate.objectDetailsUrl(museumId,id,collectionId);
+  return ajaxGet(url,token, callback).map(({response}) => response);
+};
+
+
+
 MusitObject.getObjects = (ajaxGet = simpleGet) => ({id, page, museumId, collectionId, token, callback}) => {
   const baseUrl = Config.magasin.urls.api.thingaggregate.baseUrl(museumId);
   const url = `${baseUrl}/node/${id}/objects?${collectionId.getQuery()}&page=${page || 1}&limit=${Config.magasin.limit}`;

@@ -22,6 +22,7 @@ import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
 import AllEvents from './modules/events/eventsContainer';
 import SampleViewContainer  from './modules/sample/sampleViewContainer';
 import SampleEditContainer  from './modules/sample/sampleEditContainer';
+import SamplesForObjectContainer from './modules/sample/samplesForObjectContainer';
 
 import CenteredLayout from './components/layout/CenteredLayout';
 
@@ -55,6 +56,7 @@ export default () => {
           <Route path="analysis/:analysisId" component={AnalysisViewContainer} />
           <Route path="analysis/sample/:sampleId/edit" component={SampleEditContainer}/>
           <Route path="analysis/sample/:sampleId" component={SampleViewContainer}/>
+          <Route path="analysis/sample/objects/:parentId" component={SamplesForObjectContainer}/>
         </Route>
         <Route path="picklist">
           <Route path="nodes" type="nodes" component={PickListView} />

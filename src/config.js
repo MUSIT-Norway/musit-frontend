@@ -22,7 +22,8 @@ export default {
           addSample: () =>
             '/analysis/sample/add',
           gotoSample: (id) => `/analysis/sample/${id}`,
-          editSample: (id) => `/analysis/sample/${id}/edit`
+          editSample: (id) => `/analysis/sample/${id}/edit`,
+          sampleForObject: (id) => `/analysis/sample/objects/${id}`
         },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
@@ -96,7 +97,9 @@ export default {
         },
         samples: {
           baseUrl: (mid): string =>
-            `api/management/${mid.id}/samples`
+            `api/management/${mid.id}/samples`,
+          samplesForObject: (mid, objectId): string => `api/management/${mid.id}/samples/${objectId}/children`
+
         },
         storagefacility: {
           searchUrl: (term, mid) =>
@@ -113,7 +116,7 @@ export default {
             `/api/thingaggregate/${mid.getPath()}`,
           scanOldUrl: (oldBarcode, mid, collectionId) =>
             `/api/thingaggregate/${mid.getPath()}/scan?oldBarcode=${oldBarcode}&${collectionId.getQuery()}`,
-          searchObjectUrl: (museumNo, subNo, term, perPage, page, collectionId, museumId) : string => {
+          searchObjectUrl: (museumNo, subNo, term, perPage, page, collectionId, museumId): string => {
             const baseUrl = `/api/thingaggregate/${museumId.getPath()}/objects/search`;
             const museumNoQuery = `museumNo=${museumNo || ''}`;
             const subNoQuery = `subNo=${subNo || ''}`;
@@ -121,8 +124,11 @@ export default {
             const pageQuery = `page=${page || ''}`;
             const limitQuery = `limit=${perPage || ''}`;
             return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
-          }
-        },
+          },
+          objectDetailsUrl: (mid, objectUUID, collectionId): string =>
+            `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}?${collectionId.getQuery()}`
+        }
+        ,
 
         actor: {
           searchUrl: (term, mid) =>
