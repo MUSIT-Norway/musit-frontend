@@ -18,18 +18,9 @@ exports[`PickListComponent for nodes should display component (nodes) correctly 
                 "margin": "0 25px 0 0"
               }
             }>
-            <Button
-              active={true}
-              block={false}
-              bsClass="btn"
-              bsStyle="default"
-              disabled={false}
-              onClick={[Function onClick]}>
-              <img
-                alt="scan"
-                height={25}
-                src="test-file-stub" />
-            </Button>
+            <ScannerButton
+              enabled={true}
+              onClick={[Function toggleScanner]} />
           </div>
         </div>
       </PageHeader>
