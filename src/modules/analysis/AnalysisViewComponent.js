@@ -10,6 +10,7 @@ import {
   FormControl,
   Button,
   Well,
+  Table,
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -62,15 +63,23 @@ const getAnalysisTypeTerm = (store) => {
   return val;
 };
 
+const getTableRow = (a) => {
+  return  <tr>
+      <td>{a.museumNo}</td>
+      <td>{a.subNo}</td>
+      <td>{a.term}</td>
+    </tr>;
+};
 const getObjectsValue= (store) => {
   let val = '';
   if (store.analysis) {
+
     if (store.analysis.type === 'AnalysisCollection') {
       val = store.analysis.events.map((a) => {
-        return <div>{a.term}</div> ;
+        return getTableRow(a) ;
       });
     } else {
-      val = store.analysis.term;
+      val = getTableRow(store.analysis);
     }
   } else {
     val = '';
@@ -138,7 +147,18 @@ const AnalysisView = ({ store } : Props) => (
     <Form inline>
       <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
       <Col mdOffset={1} md={5}>
-        {getObjectsValue(store)}
+        <Table responsive>
+          <thead>
+          <tr>
+            <th>Museumsnr</th>
+            <th>Unr</th>
+            <th>Term/artsnavn</th>
+          </tr>
+          </thead>
+          <tbody>
+          {getObjectsValue(store)}
+          </tbody>
+        </Table>
       </Col>
       <AddButton
         id="2"
