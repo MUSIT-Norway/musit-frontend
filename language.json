@@ -10,7 +10,10 @@
       "template": {
         "chooseTemplate": "Choose template",
         "labelTemplates": "Label templates",
-        "printTemplate": "Print template"
+        "printTemplate": "Print template",
+        "fullPath": "Complete path",
+        "pathFromBuilding": "Path including building",
+        "pathWithTwoClosest": "Path – two levels"
       },
       "userProfile": {
         "loggedIn": "Logged in as %{name}",
@@ -671,7 +674,10 @@
       "template": {
         "chooseTemplate": "Velg etikettmal",
         "labelTemplates": "Etikettmaler",
-        "printTemplate": "Skriv ut"
+        "printTemplate": "Skriv ut",
+        "fullPath": "Hel sti",
+        "pathFromBuilding": "Sti fra bygg",
+        "pathWithTwoClosest": "Sti: to nærmeste nivåer"
       },
       "userProfile": {
         "loggedIn": "Logget inn som %{name}",
