@@ -5,26 +5,8 @@ import {Row, Col, Tabs, Tab} from 'react-bootstrap';
 import type { T_ObjectData } from '../../types/object';
 import type { T_Samples } from '../../types/samples';
 import type { T_Events } from  '../../types/events';
+import EventTableComponent from '../../components/events/eventTableComponent';
 
-type EventTypeProps = { events: T_Events };
-const EventTable = ({ events }: EventTypeProps) => {
-  const cols = [
-    {key: 'date', label: 'Dato'},
-    {key: 'doneBy', label: 'Utført av'},
-    {key: 'eventType', label: 'Hendelsestype'},
-    {key: 'keyData', label: 'Nøkkeldata'},
-    {key: 'note', label: 'Kommentar'}
-  ];
-  return (
-    <Table
-      className="table"
-      columns={cols}>
-      {events && events.map((e) => (
-        <Tr><Td>{e.date}</Td> <Td>{e.doneBy}</Td><Td>{e.eventType}</Td><Td>{e.keyData}</Td><Td>{e.note}</Td></Tr>)
-      )}
-    </Table>
-  );
-};
 
 type SampleTypeProps = { samples: T_Samples };
 const SampleTable = ({ samples }: SampleTypeProps) => {
@@ -48,7 +30,7 @@ const SampleTable = ({ samples }: SampleTypeProps) => {
   );
 };
 
-type ViewObjectComponentProps = { objectData: T_ObjectData, events: T_Events, samples: T_Samples }
+type ViewObjectComponentProps = { objectData: T_ObjectData, events: T_Events, samples: T_Samples };
 export const ViewObjectComponent = ({ objectData, events, samples }: ViewObjectComponentProps) => {
   return (
     <div>
@@ -65,9 +47,9 @@ export const ViewObjectComponent = ({ objectData, events, samples }: ViewObjectC
       </Row>
       <Tabs>
         <Tab title="Hendelser">
-          <EventTable events={events} >
+          <EventTableComponent events={events} >
 
-          </EventTable>
+          </EventTableComponent>
         </Tab>
         <Tab title="Relaterte objekter">
           <SampleTable samples={samples}>

@@ -2,8 +2,9 @@
 
 
 type T_EventData = {
-  date: string,
+  eventDate: string,
   doneBy: string,
+  registeredBy: string,
   eventType: string,
   keyData: string,
   note: string
