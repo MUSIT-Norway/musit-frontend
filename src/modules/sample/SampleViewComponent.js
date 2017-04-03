@@ -4,10 +4,10 @@ import FontAwesome from 'react-fontawesome';
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 
-const FieldReadOnly = ({field, label}) => (
+const FieldReadOnly = ({field, label, postFix}) => (
   <FormGroup>
     <FormControl.Static>
-      <span className={field.name}><b>{label}</b>{`:  ${field.defaultValue}`}</span>
+      <span className={field.name}><b>{label}</b>{`:  ${field.defaultValue}${postFix ? ' '+postFix.defaultValue : ''}`}</span>
     </FormControl.Static>
   </FormGroup>
 );
@@ -86,7 +86,6 @@ const SampleViewComponent = (props) => {
           />
         </Col>
       </Row>
-      <br/>
       <Row className='row-centered'>
         <Col md={2}>
           <FieldReadOnly
@@ -96,16 +95,15 @@ const SampleViewComponent = (props) => {
 
         </Col>
       </Row>
-      <br/>
       <Row className='row-centered'>
         <Col md={3}>
           <FieldReadOnly
             label={'Målvolum/-vekt'}
-            field={`${form.size} ${form.sizeUnit}`}
+            field={form.size}
+            postFix={form.sizeUnit}
           />
         </Col>
       </Row>
-      <br/>
       <Row className='row-centered'>
         <Col md={3}>
           <FieldReadOnly
@@ -120,7 +118,6 @@ const SampleViewComponent = (props) => {
           />
         </Col>
       </Row>
-      <br/>
       <Row className='row-centered'>
         <Col md={3}>
           <FieldReadOnly
