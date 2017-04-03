@@ -3,6 +3,8 @@ import Config from '../config';
 import entries from 'object.entries';
 import orderBy from 'lodash/orderBy';
 import MusitActor from './actor';
+import MusitObject from './object';
+import {Observable} from 'rxjs';
 
 class Analysis {
   constructor(props) {
@@ -10,7 +12,7 @@ class Analysis {
   }
 }
 
-Analysis.getAnalysisTypesForCollection  = (ajaxGet = simpleGet) => ({museumId, collectionId, token, callback}) => {
+Analysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) => ({museumId, collectionId, token, callback}) => {
   const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(museumId, collectionId);
   const call = ajaxGet(url, token, callback).map(({response}) => response);
   return call;
@@ -43,7 +45,7 @@ Analysis.getAnalysisTypeById = (ajaxGet = simpleGet) => ({museumId, id, token, c
     .map(({response}) => response);
 };
 
-Analysis.getAnalysisByIdWithName = (ajaxGet = simpleGet) => (props) => {
+Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) => (props) => {
   return Analysis.getAnalysisById(ajaxGet)(props)
     .flatMap(analysis =>
       MusitActor.getActor(ajaxGet)({token: props.token, actorId: analysis.registeredBy})
@@ -53,6 +55,44 @@ Analysis.getAnalysisByIdWithName = (ajaxGet = simpleGet) => (props) => {
           }
           return {...analysis, registeredByName: actor.fn};
         })
+    ).flatMap(analysis => {
+      if (analysis.type === 'AnalysisCollection') {
+        return Observable.forkJoin(analysis.events.map(a => {
+          return MusitObject.getObjectDetails(ajaxGet)({
+            id: a.objectId,
+            museumId: props.museumId,
+            collectionId: props.collectionId,
+            token: props.token
+          });
+        })).map(arrayOfObjectDetails => {
+          const actualValues = arrayOfObjectDetails.filter(a => a);
+          if (actualValues.length === 0) {
+            return analysis;
+          }
+          return {
+            ...analysis, events: analysis.events.map(e => {
+              const od = arrayOfObjectDetails.find(objD => objD.uuid === e.objectId);
+              if (!od) {
+                return e;
+              }
+              return {...e, ...od};
+            })
+          };
+        });
+      }
+      return MusitObject.getObjectDetails(ajaxGet)({
+        id: analysis.objectId,
+        museumId: props.museumId,
+        collectionId: props.collectionId,
+        token: props.token
+      }).map(object => {
+        if (!object) {
+          return analysis;
+        }
+        return {...analysis, museumNo: object.museumNo, subNo: object.subNo, term: object.term};
+      });
+
+    }
     );
 };
 

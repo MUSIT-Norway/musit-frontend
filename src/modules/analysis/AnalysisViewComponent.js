@@ -10,7 +10,6 @@ import {
   FormControl,
   Button,
   Well,
-  Table,
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -35,7 +34,7 @@ function AddButton({id, label, md, mdOffset = 0, ...props}) {
   return (
     <div id={id}>
       <Col md={md} mdOffset={mdOffset}>
-        <Button {... props}>
+        <Button {... props} disabled>
           <FontAwesome name='plus-circle'/>{' '}
           {label}
         </Button>
@@ -48,14 +47,43 @@ function NewLine() {
     <hr/>
   </Form>;
 }
+const getAnalysisTypeTerm = (store) => {
+  let val = '';
+  if (store.analysis && store.analysisTypes) {
+    const foundType = store.analysisTypes.find((a) => a.id === store.analysis.analysisTypeId);
+    if (foundType) {
+      val = foundType.name;
+    } else {
+      val = '';
+    }
+  } else {
+    val = '';
+  }
+  return val;
+};
 
+const getObjectsValue= (store) => {
+  let val = '';
+  if (store.analysis) {
+    if (store.analysis.type === 'AnalysisCollection') {
+      val = store.analysis.events.map((a) => {
+        return <div>{a.term}</div> ;
+      });
+    } else {
+      val = store.analysis.term;
+    }
+  } else {
+    val = '';
+  }
+  return val;
+};
 const getValue = (store, field) => {
   let val = '';
-  if (store.data && store.data.analysis && store.data.analysis[field]) {
-    if (store.data.analysis.type === 'AnalysisCollection' && field !== 'id') {
-      val = store.data.analysis.events[0][field];
+  if (store.analysis) {
+    if (store.analysis.type === 'AnalysisCollection' && field !== 'id' && field !== 'registeredByName') {
+      val = store.analysis.events[0][field];
     } else {
-      val = store.data.analysis[field];
+      val = store.analysis[field];
     }
   } else {
     val = '';
@@ -86,7 +114,7 @@ const AnalysisView = ({ store } : Props) => (
     </Col>
     <Col md={12}>
       <strong>Sist endret:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(store, 'doneBy')}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(store, 'doneDate')}{' '}<a href=''>Se endringshistorikk</a>
+      <FontAwesome name='clock-o'/>{' '}{getValue(store, 'eventDate')}{' '}<a >Se endringshistorikk</a>
     </Col>
     <NewLine />
     <Form>
@@ -110,17 +138,7 @@ const AnalysisView = ({ store } : Props) => (
     <Form inline>
       <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
       <Col mdOffset={1} md={5}>
-        <Table
-          className="table"
-          columns={[
-            { key: 'museumNumber', label: 'Museumsnr'},
-            { key: 'subNumber', label: 'Unr'},
-            { key: 'term', label: 'Term/artsnavn' }
-          ]}
-          data={store.objectsData}
-          sortable={['museumNumber', 'subNumber', 'term']}
-          noDataText="Ingen objekter"
-        />
+        {getObjectsValue(store)}
       </Col>
       <AddButton
         id="2"
@@ -144,7 +162,7 @@ const AnalysisView = ({ store } : Props) => (
         />
         {labelFormat('Rolle', 1)}
         <Col md={1}>
-          <FormControl componentClass="select" placeholder="Velg rolle">
+          <FormControl disabled componentClass="select" placeholder="Velg rolle">
             <option value="Velgsted">Velg rolle</option>
             <option value="other">...</option>
           </FormControl>
@@ -160,7 +178,7 @@ const AnalysisView = ({ store } : Props) => (
     <FormGroup>
       {labelFormat('Analysested', 1)}
       <Col md={2}>
-        <FormControl componentClass="select" placeholder="Velg sted">
+        <FormControl componentClass="select" disabled placeholder="Velg sted">
           <option value="Velgsted">Velg sted</option>
           <option value="other">...</option>
         </FormControl>
@@ -175,7 +193,7 @@ const AnalysisView = ({ store } : Props) => (
             md={1}
             type="text"
             label="Type analyse"
-            value={getValue(store, 'analysisTypeId')}
+            value={getAnalysisTypeTerm(store)}
           />
         </FormGroup>
         <FormGroup>
@@ -187,7 +205,7 @@ const AnalysisView = ({ store } : Props) => (
             value={getValue(store, 'externalSource')}
           />
           <Col md={2}>
-            <Button>Lagre</Button>
+            <Button disabled>Lagre</Button>
           </Col>
         </FormGroup>
         <FormGroup>
@@ -197,7 +215,7 @@ const AnalysisView = ({ store } : Props) => (
             label="Ladt opp fil"
           />
           <Col md={2}>
-            <Button>Bla gjennom</Button>
+            <Button disabled>Bla gjennom</Button>
           </Col>
         </FormGroup>
         <FormGroup>
@@ -275,7 +293,7 @@ const AnalysisView = ({ store } : Props) => (
           <FormControl
             className="note"
             componentClass="textarea"
-            value={store.data && store.data.analysis && store.data.analysis.note && store.data.analysis.note || ''}
+            value={getValue(store, 'note')}
             readOnly
           />
         </Col>
@@ -302,10 +320,10 @@ const AnalysisView = ({ store } : Props) => (
         <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}>{getValue(store, 'registeredBy')} - {getValue(store, 'registeredDate')}</Col>
+        <Col mdOffset={1}>{getValue(store, 'registeredByName')} - {getValue(store, 'registeredDate')}</Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}>{getValue(store, 'doneBy')} - {getValue(store, 'doneDate')}</Col>
+        <Col mdOffset={1}>{getValue(store, 'doneBy')} - {getValue(store, 'eventDate')}</Col>
       </FormGroup>
       <FormGroup>
         <Col mdOffset={1}><a href=''>Se mer</a></Col>
