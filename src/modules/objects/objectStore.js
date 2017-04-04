@@ -8,12 +8,11 @@ const initialState = { objectData: {}, events: [], samples: [] };
 const loadObjectData =  () => (val) => {
 
   const object$ = MusitObject.getObjectDetails() (val);
-
-  object$.toPromise().then((value)=>{
-    const v = {id: value.id, objectId: value.uuid, token: val.token, museumId: val.museumId, callBack:val.callBack};
-    const events$ = Event.getAnalysesAndMoves() (v);
-    const samples$ = Sample.loadSamplesForObject2() (v);
-    return Observable.forkJoin(object$,events$, samples$).map(([objectData, events, samples]) => ({ objectData, events, samples }));
+  object$.map(({ response }) => {
+    const v = {id: response.id, objectId: response.uuid, token: val.token, museumId: val.museumId, callBack:val.callBack};
+    const events$=Event.getAnalysesAndMoves() (v);
+    const samples$=Sample.loadSamplesForObject2() (v);
+    return Observable.forkJoin(events$,samples$).map(([e,s])=> ({objectData: response,events: e, samples: s})).map(r => r);
   });
 };
 
