@@ -4,7 +4,6 @@ import {Row, Col, Well} from 'react-bootstrap';
 
 
 const SamplesForObjectComponent = ({sampleStore:{ museumNo, subNo, term, data}}) => {
-
   return (<div>
     <h1>
       Prøver for objekt
