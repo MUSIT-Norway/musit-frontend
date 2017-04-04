@@ -135,13 +135,10 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
   );
 };
 
-
-
 export const loadAppSession$ = createAction('loadAppSession$').switchMap(loadAppSession);
 export const setMuseumId$ = createAction('setMuseumId$');
 export const setCollectionId$ = createAction('setCollectionId$');
 export const setAccessToken$ = createAction('setAccessToken$');
-
 
 export const refreshSession = (
   setMuseum = ((id) => setMuseumId$.next(id)),

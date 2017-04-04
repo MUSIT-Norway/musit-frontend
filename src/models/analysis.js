@@ -14,10 +14,8 @@ class Analysis {
 
 Analysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) => ({museumId, collectionId, token, callback}) => {
   const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(museumId, collectionId);
-  const call = ajaxGet(url, token, callback).map(({response}) => response);
-  return call;
+  return ajaxGet(url, token, callback).map(({response}) => response);
 };
-
 
 Analysis.getAllAnalysisTypes = (ajaxGet = simpleGet) => ({museumId, token, callback}) => {
   return ajaxGet(`${Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId)}`, token, callback)
@@ -35,13 +33,12 @@ Analysis.getAnalysesForObject = (ajaxGet = simpleGet) => ({museumId, token, id, 
 };
 
 Analysis.getAnalysisById = (ajaxGet = simpleGet) => ({museumId, id, token, callback}) => {
-  const url = `${Config.magasin.urls.api.analysis.getAnalysisById(museumId, id)}`;
-  return ajaxGet(url, token, callback)
-    .map((analysis) => analysis.response);
+  const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
+  return ajaxGet(url, token, callback).map((analysis) => analysis.response);
 };
 
 Analysis.getAnalysisTypeById = (ajaxGet = simpleGet) => ({museumId, id, token, callback}) => {
-  return ajaxGet(`${Config.magasin.urls.api.analysisType.getAnalysisTypeById(museumId, id)}`, token, callback)
+  return ajaxGet(Config.magasin.urls.api.analysisType.getAnalysisTypeById(museumId, id), token, callback)
     .map(({response}) => response);
 };
 
@@ -91,7 +88,6 @@ Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) => (props) => {
         }
         return {...analysis, museumNo: object.museumNo, subNo: object.subNo, term: object.term};
       });
-
     }
     );
 };

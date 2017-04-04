@@ -12,7 +12,6 @@ import LoginComponent from '../login/LoginComponent';
 import {emitError} from '../../shared/errors';
 import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
-import { getAnalysisTypesForCollection$ } from '../../modules/analysis/analysisStore';
 import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import { clearObjects$ as clearObjectPicklist$, clearNodes$ as clearNodePicklist$ } from './pickList';
@@ -26,10 +25,10 @@ export class AppComponent extends Component {
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
+    enableAnalysis: PropTypes.bool.isRequired,
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
-    clearNodePicklist: PropTypes.func.isRequired,
-    getAnalysisTypesForCollection: PropTypes.func.isRequired
+    clearNodePicklist: PropTypes.func.isRequired
   };
 
   constructor(props, context) {
@@ -70,11 +69,6 @@ export class AppComponent extends Component {
     this.props.clearNodePicklist();
     const localAppSession = this.props.appSession.copy({museumId, collectionId});
     this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
-    this.props.getAnalysisTypesForCollection({
-      museumId: localAppSession.state.museumId,
-      collectionId: localAppSession.state.collectionId.uuid,
-      token: this.props.appSession.state.accessToken
-    });
   }
 
   handleCollectionId(collectionId) {
@@ -137,10 +131,11 @@ export class AppComponent extends Component {
               <LinkContainer to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
               </LinkContainer>
+              {this.props.enableAnalysis &&
               <NavDropdown title={I18n.t('musit.analysis.analysis')} id="analysis-dropdown">
                 <LinkContainer to={Config.magasin.urls.client.analysis.addAnalysis(this.props.appSession)}>
                   <MenuItem>
-                      {I18n.t('musit.analysis.registeringAnalysis')}
+                    {I18n.t('musit.analysis.registeringAnalysis')}
                   </MenuItem>
                 </LinkContainer>
                 <LinkContainer to={Config.magasin.urls.client.analysis.addSample(this.props.appSession)}>
@@ -149,6 +144,7 @@ export class AppComponent extends Component {
                   </MenuItem>
                 </LinkContainer>
               </NavDropdown>
+              }
               <LinkContainer to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}>
                 <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
               </LinkContainer>
@@ -201,12 +197,12 @@ const commands = {
   setMuseumId$,
   setCollectionId$,
   clearObjectPicklist$,
-  clearNodePicklist$,
-  getAnalysisTypesForCollection$
+  clearNodePicklist$
 };
 
 const props = {
-  goTo: hashHistory.push
+  goTo: hashHistory.push,
+  enableAnalysis: Config.isDev
 };
 
 export default inject(data, commands, props)(AppComponent);
