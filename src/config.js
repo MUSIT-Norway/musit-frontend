@@ -152,7 +152,7 @@ export default {
           getMainObject: (mid: MuseumId, objectId: number, collectionId: CollectionId): string =>
             `/api/thingaggregate/${mid.getPath()}/objects/${objectId}/children?${collectionId.getQuery()}`,
           getObjectForCollection: (mid: MuseumId, nodeId: number, collectionId: CollectionId, page: number, limit: number): string =>
-            `/api/thingaggregate/${mid.getPath()}/node/${nodeId}/objects/?${collectionId.getQuery()}&page=${page}&limit=${limit}`
+            `/api/thingaggregate/${mid.getPath()}/node/${nodeId}/objects?${collectionId.getQuery()}&page=${page}&limit=${limit}`
         },
         actor: {
           searchUrl: (term: string, mid: MuseumId): string =>
