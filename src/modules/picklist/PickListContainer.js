@@ -23,6 +23,7 @@ import { PropTypes } from 'react';
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
+import type { MovableObject } from '../../types/movableObject';
 
 export const nodeCallback = (
   appSession,
@@ -80,7 +81,7 @@ export const objectCallback = (
   toName,
   toMoveLength,
   name,
-  items,
+  items: Array<MovableObject>,
   onSuccess,
   onFailure,
   refreshObjects = refreshObjects$.next.bind(refreshObjects$)
@@ -88,7 +89,7 @@ export const objectCallback = (
   return {
     onComplete: () => {
       refreshObjects({
-        objectIds: items.map(item => item.id),
+        movableObjects: items,
         museumId: appSession.getMuseumId(),
         token: appSession.getAccessToken()
       });
@@ -142,7 +143,8 @@ export const moveItems = (
     if (isNode) {
       callback = nodeCallback(appSession, toName, toMoveLength, name, items, onSuccess, onFailure);
     } else {
-      callback = objectCallback(appSession, toName, toMoveLength, name, items, onSuccess, onFailure);
+      const movableObject: Array<MovableObject> = idsToMove.map(id => ({id: id, objectType: 'collection'}));
+      callback = objectCallback(appSession, toName, toMoveLength, name, movableObject, onSuccess, onFailure);
     }
 
     let error = false;

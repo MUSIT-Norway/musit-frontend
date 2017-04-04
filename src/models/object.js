@@ -3,6 +3,8 @@ import Config from '../config';
 import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import flatMap from 'lodash/flatMap';
+import type { MovableObject } from '../../types/movableObject';
+import MuseumId from './museumId';
 
 class MusitObject {
   constructor(props) {
@@ -43,17 +45,10 @@ MusitObject.COLLECTION_OBJECT = 'collection';
 MusitObject.SAMPLE_OBJECT = 'sample';
 // ]
 
-MusitObject.getObjectLocations = (ajaxPost = simplePost) => ({ objectIds, museumId, token, callback }) =>
-  ajaxPost(Config.magasin.urls.api.storagefacility.currentLocations(museumId), objectIds, token, callback)
-    .map(({ response }) => {
-      return flatMap(response, (ls) => {
-        return ls.objectIds.map(objectId => ({
-          objectId,
-          ...ls.node
-        })
-        );
-      });
-    });
+MusitObject.getObjectLocations =
+  (ajaxPost = simplePost) => (obs: {movableObjects: Array<MovableObject>, museumId: MuseumId, token: string, callback: ?any}) =>
+    ajaxPost(Config.magasin.urls.api.storagefacility.currentLocations(obs.museumId), obs.movableObjects, obs.token, obs.callback)
+      .map(({response}) => flatMap(response, (ls) => ls.objectIds.map(objectId => ({ objectId, ...ls.node}))));
 
 MusitObject.getObjectLocation = (ajaxGet = simpleGet) => ({ objectId, museumId, token, callback }) =>
   ajaxGet(Config.magasin.urls.api.storagefacility.currentLocation(museumId, objectId), token, callback)
