@@ -89,9 +89,9 @@ export class PrintTemplateComponent extends Component {
           onChange={this.selectLevel}
           defaultValue={this.props.store.level}
         >
-          <option value={-2}>To nærmeste</option>
-          <option value={2}>Fra bygg</option>
-          <option value={0}>Hele stien</option>
+          <option value={-2}>{I18n.t('musit.template.pathWithTwoClosest')}</option>
+          <option value={2}>{I18n.t('musit.template.pathFromBuilding')}</option>
+          <option value={0}>{I18n.t('musit.template.fullPath')}</option>
         </select>
         }
         {' '}
