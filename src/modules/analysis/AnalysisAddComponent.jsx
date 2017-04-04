@@ -46,7 +46,7 @@ type FormData = {
 
 type AnalysisType = { id: number, name: string };
 type ObjectData = { uuid: string }
-type Store = { objectsData: ObjectData[], data: { analysisTypes: AnalysisType[] } };
+type Store = { objectsData: ObjectData[], analysisTypes: AnalysisType[] };
 type Update = (update: Field) => void;
 type Props = {
   form: FormData,
@@ -218,7 +218,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
-              {store.data.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+              {store.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
             </FormControl>
           </Col>
         </FormGroup>

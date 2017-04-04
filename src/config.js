@@ -1,4 +1,7 @@
+/* @flow */
 import { AppSession } from './modules/app/appSession';
+import CollectionId from './models/collectionId';
+import MuseumId from './models/museumId';
 
 const clientContextUrl = (appSession: AppSession) => `/${appSession.getMuseumId().getPath()}/${appSession.getCollectionId().getPath()}`;
 
@@ -8,8 +11,8 @@ export default {
   useDevTools: process.env.DEV_TOOLS || false,
   print: {
     labelConfig: {
-      codeFormat: { 4: 2 },
-      canSelectPath: { 4: true, 5: true }
+      codeFormat: { '4': 2 },
+      canSelectPath: { '4': true, '5': true }
     }
   },
   magasin: {
@@ -21,9 +24,12 @@ export default {
             `${clientContextUrl(appSession)}/analysis/add`,
           addSample: () =>
             '/analysis/sample/add',
-          gotoSample: (id) => `/analysis/sample/${id}`,
-          editSample: (id) => `/analysis/sample/${id}/edit`,
-          sampleForObject: (id) => `/analysis/sample/objects/${id}`
+          gotoSample: (sampleId: string) =>
+            `/analysis/sample/${sampleId}`,
+          editSample: (sampleId: string) =>
+            `/analysis/sample/${sampleId}/edit`,
+          sampleForObject: (sampleId: string) =>
+            `/analysis/sample/objects/${sampleId}`
         },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
@@ -43,82 +49,94 @@ export default {
         },
         searchObjects: {
           goToSearchObjects: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/search/objects`,
-          goToObjectEvents: (object) =>
-            `/events/${object.id}`
+            `${clientContextUrl(appSession)}/search/objects`
         },
         storagefacility: {
           goToRoot: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin`,
-          goToNode: (id, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${id}`,
-          addNode: (id, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${id}/add`,
-          editNode: (id, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${id}/view`,
-          goToObjects: (id, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${id}/objects`,
-          addObservation: (id, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${id}/observation/add`,
-          editObservation: (id, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${id}/observation/edit`,
-          viewObservation: (nodeId, observationId, appSession: AppSession) =>
+          goToNode: (nodeId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}`,
+          addNode: (nodeId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/add`,
+          editNode: (nodeId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/view`,
+          goToObjects: (nodeId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/objects`,
+          addObservation: (nodeId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/add`,
+          editObservation: (nodeId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/edit`,
+          viewObservation: (nodeId: number, observationId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/${observationId}`,
-          addControl: (id, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${id}/control/add`,
-          viewControl: (nodeId, controlId, appSession : AppSession) =>
+          addControl: (nodeId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/control/add`,
+          viewControl: (nodeId: number, controlId: number, appSession : AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/control/${controlId}`,
-          viewControlsObservations: (id, appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/magasin/${id}/controlsobservations`
+          viewControlsObservations: (nodeId: number, appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/controlsobservations`
         }
       },
       api: {
         analysisType: {
-          getAllAnalysisTypes: (mid) =>
+          getAllAnalysisTypes: (mid: MuseumId) =>
             `/api/management/${mid.id}/analyses/types`,
-          getAnalysisById: (mid, id) =>
-            `/api/management/${mid.id}/analyses/types/${id}`,
-          getAnalysisTypesForCategory: (mid, id) =>
-            `/api/management/${mid.id}/analyses/types/categories/${id}`,
-          getAnalysisTypesForCollection: (mid, id) =>
-            `/api/management/${mid.id}/analyses/types/musemcollections/${id}`
+          getAnalysisTypesForCategory: (mid: MuseumId, categoryId: string) =>
+            `/api/management/${mid.id}/analyses/types/categories/${categoryId}`,
+          getAnalysisTypesForCollection: (mid: MuseumId, musemcollectionId: string) =>
+            `/api/management/${mid.id}/analyses/types/musemcollections/${musemcollectionId}`
         },
         analysis: {
-          saveAnalysisEvent: (mid) =>
+          saveAnalysisEvent: (mid: MuseumId) =>
             `/api/management/${mid.id}/analyses`,
-          getAnalysisById: (mid, id) =>
-            `/api/management/${mid.id}/analyses/${id}`,
-          getChildAnalyses: (mid, id) =>
-            `/api/management/${mid.id}/analyses/${id}/children`,
-          saveResult: (mid, id) =>
-            `/api/management/${mid.id}/analyses/${id}/results`,
-          getAnalysisForObject: (mid, id) =>
+          getAnalysisById: (mid: MuseumId, analysisId: number) =>
+            `/api/management/${mid.id}/analyses/${analysisId}`,
+          getChildAnalyses: (mid: MuseumId, analysisId: number) =>
+            `/api/management/${mid.id}/analyses/${analysisId}/children`,
+          saveResult: (mid: MuseumId, analysisId: number) =>
+            `/api/management/${mid.id}/analyses/${analysisId}/results`,
+          getAnalysisForObject: (mid: MuseumId, id: number) =>
             `/api/management/${mid.id}/analyses/objects/${id}`,
-          analysesForObject: (mid, objectId): string =>
+          analysesForObject: (mid: MuseumId, objectId: number): string =>
             `/api/management/${mid.id}/analyses/objects/${objectId}`
         },
         samples: {
-          baseUrl: (mid): string =>
+          baseUrl: (mid: MuseumId): string =>
             `api/management/${mid.id}/samples`,
-          samplesForObject: (mid, objectId): string => `api/management/${mid.id}/samples/${objectId}/children`
-
+          samplesForObject: (mid: MuseumId, objectId: number): string =>
+            `api/management/${mid.id}/samples/${objectId}/children`
         },
         storagefacility: {
-          searchUrl: (term, mid) =>
+          searchUrl: (term: string, mid: MuseumId) =>
             `/api/storagefacility/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
-          scanUrl: (uuid, mid) =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes/scan?storageNodeId=${uuid}&`,
-          scanOldUrl: (oldBarcode, mid) =>
+          scanUrl: (storageNodeId: string, mid: MuseumId) =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/scan?storageNodeId=${storageNodeId}&`,
+          scanOldUrl: (oldBarcode: number, mid: MuseumId) =>
             `/api/storagefacility/${mid.getPath()}/storagenodes/scan?oldBarcode=${oldBarcode}`,
-          baseUrl: (mid): string =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes`
+          baseUrl: (mid: MuseumId): string =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes`,
+          currentLocation: (mid: MuseumId, objectId: number): string =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/${objectId}/currentlocation`,
+          currentLocations: (mid: MuseumId): string =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/currentlocations`,
+          moveObject: (mid: MuseumId): string =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/moveObject`,
+          objectLocations: (mid: MuseumId, objectId: number): string =>
+            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/${objectId}/locations`
         },
         thingaggregate: {
-          baseUrl: (mid): string =>
+          baseUrl: (mid: MuseumId): string =>
             `/api/thingaggregate/${mid.getPath()}`,
-          scanOldUrl: (oldBarcode, mid, collectionId) =>
+          scanOldUrl: (oldBarcode: number, mid: MuseumId, collectionId: CollectionId) =>
             `/api/thingaggregate/${mid.getPath()}/scan?oldBarcode=${oldBarcode}&${collectionId.getQuery()}`,
-          searchObjectUrl: (museumNo, subNo, term, perPage, page, collectionId, museumId): string => {
+          searchObjectUrl: (
+              museumNo: ?string,
+              subNo: ?string,
+              term: ?string,
+              perPage: ?number,
+              page: ?number,
+              collectionId: CollectionId,
+              museumId: MuseumId
+          ) : string => {
             const baseUrl = `/api/thingaggregate/${museumId.getPath()}/objects/search`;
             const museumNoQuery = `museumNo=${museumNo || ''}`;
             const subNoQuery = `subNo=${subNo || ''}`;
@@ -127,13 +145,15 @@ export default {
             const limitQuery = `limit=${perPage || ''}`;
             return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
           },
-          objectDetailsUrl: (mid, objectUUID, collectionId): string =>
-            `api/thingaggregate/${mid.getPath()}/objects/${objectUUID}?${collectionId.getQuery()}`
-        }
-        ,
-
+          objectDetailsUrl: (mid: MuseumId, objectId: number, collectionId: CollectionId): string =>
+            `api/thingaggregate/${mid.getPath()}/objects/${objectId}?${collectionId.getQuery()}`,
+          getMainObject: (mid: MuseumId, objectId: number, collectionId: CollectionId): string =>
+            `/api/thingaggregate/${mid.getPath()}/objects/${objectId}/children?${collectionId.getQuery()}`,
+          getObjectForCollection: (mid: MuseumId, nodeId: number, collectionId: CollectionId, page: number, limit: number): string =>
+            `/api/thingaggregate/${mid.getPath()}/node/${nodeId}/objects?${collectionId.getQuery()}&page=${page}&limit=${limit}`
+        },
         actor: {
-          searchUrl: (term, mid) =>
+          searchUrl: (term: string, mid: MuseumId): string =>
             `/api/actor/person?${mid.getQuery()}&search=[${encodeURIComponent(term)}]`,
           baseUrl:
             '/api/actor/person',
@@ -141,17 +161,17 @@ export default {
             '/api/actor/dataporten/currentUser'
         },
         geolocation: {
-          searchUrl: (term) =>
+          searchUrl: (term: string): string =>
             `/api/geolocation/address?search=[${encodeURIComponent(term)}]`
         },
         barcode: {
           templatesUrl:
             '/api/barcode/templates',
-          templateRenderUrl: (id, format) =>
-            `/api/barcode/templates/${id}/render?codeFormat=${format}`
+          templateRenderUrl: (templateId: number, format: number) =>
+            `/api/barcode/templates/${templateId}/render?codeFormat=${format}`
         },
         auth: {
-          groupsUrl: (feideEmail) =>
+          groupsUrl: (feideEmail: string): string =>
             `/api/auth/rest/groups/${feideEmail}`,
           museumsUrl:
             '/api/auth/rest/museums',

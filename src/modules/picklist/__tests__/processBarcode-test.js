@@ -107,15 +107,10 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should emit error when receiving a number that resolves to a single object when move dialog is active', () => {
+  it('should emit error when receiving a number that is not found when move dialog is active', () => {
     const emitError = sinon.spy();
     const props = {
-      findObjectByBarcode: () => Observable.of([
-        {
-          id: 1,
-          term: 'Fugl'
-        }
-      ]),
+      findNodeByBarcode: () => Observable.of(null),
       isTypeNode: () => false,
       classExistsOnDom: (clazz) => clazz === 'moveDialog',
       appSession,

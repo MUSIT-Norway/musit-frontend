@@ -12,7 +12,6 @@ import Actor from '../../models/actor';
 import orderBy from 'lodash/orderBy';
 import React from 'react';
 import isEqualWith from 'lodash/isEqualWith';
-
 export class AppSession {
 
   constructor(state) {
