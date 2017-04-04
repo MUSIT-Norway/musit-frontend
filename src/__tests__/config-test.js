@@ -142,7 +142,7 @@ describe('Config urls', () => {
         {
           name: 'getObjectForCollection',
           actual: urls.api.thingaggregate.getObjectForCollection(new MuseumId(99), 433, new CollectionId('1234'), 1, 20),
-          expected: '/api/thingaggregate/museum/99/node/433/objects/?collectionIds=1234&page=1&limit=20'
+          expected: '/api/thingaggregate/museum/99/node/433/objects?collectionIds=1234&page=1&limit=20'
         }
       ]
     },
