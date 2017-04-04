@@ -55,52 +55,52 @@ const customProps = {
 };
 
 export const processBarcode = (barCode, props) => {
-  const isMoveHistoryActive = props.classExistsOnDom('moveHistory');
+  if (props.classExistsOnDom('moveHistory')) {
+    return;
+  }
   const isMoveDialogActive = props.classExistsOnDom('moveDialog');
   const museumId = props.appSession.getMuseumId();
   const collectionId = props.appSession.getCollectionId();
   const token = props.appSession.getAccessToken();
   if (barCode.uuid) {
     props.findNodeByUUID({uuid: barCode.code, museumId, token}).do((response) => {
-      if (!response) {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode', {uuid: barCode.code})});
+      if (!response || !response.nodeId) {
+        props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
       } else if (isMoveDialogActive) {
         props.updateMoveDialog(response.id, museumId, token);
-      } else if (isMoveHistoryActive) {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.cannotActOnObject')});
       } else {
         props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response.id, props.appSession));
       }
     }).toPromise();
   } else if (barCode.number) {
-    props.findNodeOrObjectByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
-      if (!response) {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
-      } else {
-        if (isMoveHistoryActive) {
-          return;
+    const ajaxProps = { barcode: barCode.code, museumId, collectionId, token };
+    if (isMoveDialogActive) {
+      props.findNodeByBarcode(ajaxProps).do(response => {
+        if (!response || !response.nodeId) {
+          props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode') });
+        } else {
+          props.updateMoveDialog(response.id, museumId, token);
         }
-        if (isMoveDialogActive) {
-          if (!response.nodeId) {
-            props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode') });
-          } else {
-            props.updateMoveDialog(response.id, museumId, token);
-          }
-        } else if (Array.isArray(response)) {
+      }).toPromise();
+    } else {
+      props.findNodeOrObjectByBarcode(ajaxProps).do(response => {
+        if (response && Array.isArray(response)) {
           if (response.length === 1) {
             if (!response[0].currentLocationId) {
-              props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation')});
+              props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noCurrentLocation') });
             } else {
               props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(response[0].currentLocationId , props.appSession));
             }
           } else {
-            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject', {barcode: barCode.code})});
+            props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject' )});
           }
-        } else if (response.nodeId) {
+        } else if (response && response.nodeId) {
           props.goTo(Config.magasin.urls.client.storagefacility.goToNode(response.id, props.appSession));
+        } else {
+          props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNodeOrObject')});
         }
-      }
-    }).toPromise();
+      }).toPromise();
+    }
   }
 };
 
