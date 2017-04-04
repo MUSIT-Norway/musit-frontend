@@ -217,7 +217,7 @@ describe('analysisStore', () => {
 
     // mock up$ and down$ events
     const loadAnalysis$ = testScheduler.createHotObservable(loadAnalysisM,
-      { 1: {
+      { '1': {
         analysisTypeId:'8453873d-227c-4205-a231-bf7e04164fab',
         eventDate : '2017-03-16T14:37:45+00:00',
         id : 2,
@@ -233,7 +233,7 @@ describe('analysisStore', () => {
         type : 'Analysis'
       }});
     const loadAnalysisTypes$ = testScheduler.createHotObservable(loadAnalysisTypesM,
-      { 1: [{
+      { '1': [{
         id: 'fabe6462-ea94-43ce-bf7f-724a4191e114',
         category: 2,
         name: 'C/N-ratio',
@@ -249,7 +249,7 @@ describe('analysisStore', () => {
         ]
       }]});
     const getAnalysisTypesForCollection$ = testScheduler.createHotObservable(getAnalysisTypesForCollectionM,
-      { 1: [
+      { '1': [
         {
           id: '55fdf44b-f4dc-45d1-bdb6-ee6e745123a0',
           category: 2,

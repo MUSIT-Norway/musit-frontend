@@ -49,27 +49,23 @@ Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) => (props) => {
         })
     ).flatMap(analysis => {
       if (analysis.type === 'AnalysisCollection') {
-        return Observable.forkJoin(analysis.events.map(a => {
-          return MusitObject.getObjectDetails(ajaxGet)({
+        return Observable.forkJoin(analysis.events.map(a => (
+          MusitObject.getObjectDetails(ajaxGet)({
             id: a.objectId,
             museumId: props.museumId,
             collectionId: props.collectionId,
             token: props.token
-          });
-        })).map(arrayOfObjectDetails => {
+          })
+        ))).map(arrayOfObjectDetails => {
           const actualValues = arrayOfObjectDetails.filter(a => a);
           if (actualValues.length === 0) {
             return analysis;
           }
-          return {
-            ...analysis, events: analysis.events.map(e => {
-              const od = arrayOfObjectDetails.find(objD => objD.uuid === e.objectId);
-              if (!od) {
-                return e;
-              }
-              return {...e, ...od};
-            })
-          };
+          const events = analysis.events.map(e => {
+            const od = arrayOfObjectDetails.find(objD => objD.uuid === e.objectId);
+            return od ? {...e, ...od} : e;
+          });
+          return {...analysis, events: events};
         });
       }
       return MusitObject.getObjectDetails(ajaxGet)({

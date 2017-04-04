@@ -1,6 +1,6 @@
 /* @flow */
-import React, { PropTypes } from 'react';
-import { I18n } from 'react-i18nify';
+import React, {PropTypes} from 'react';
+import {I18n} from 'react-i18nify';
 import {
   Radio,
   PageHeader,
@@ -48,58 +48,39 @@ function NewLine() {
     <hr/>
   </Form>;
 }
+
 const getAnalysisTypeTerm = (store) => {
-  let val = '';
   if (store.analysis && store.analysisTypes) {
     const foundType = store.analysisTypes.find((a) => a.id === store.analysis.analysisTypeId);
-    if (foundType) {
-      val = foundType.name;
-    } else {
-      val = '';
-    }
-  } else {
-    val = '';
+    return foundType ? foundType.name : '';
   }
-  return val;
 };
 
 const getTableRow = (a) => {
-  return  <tr>
-      <td>{a.museumNo}</td>
-      <td>{a.subNo}</td>
-      <td>{a.term}</td>
-    </tr>;
+  return <tr>
+    <td>{a.museumNo}</td>
+    <td>{a.subNo}</td>
+    <td>{a.term}</td>
+  </tr>;
 };
-const getObjectsValue= (store) => {
-  let val = '';
+const getObjectsValue = (store) => {
   if (store.analysis) {
-
     if (store.analysis.type === 'AnalysisCollection') {
-      val = store.analysis.events.map((a) => {
-        return getTableRow(a) ;
-      });
-    } else {
-      val = getTableRow(store.analysis);
+      return store.analysis.events.map(a => getTableRow(a));
     }
-  } else {
-    val = '';
+    return getTableRow(store.analysis);
   }
-  return val;
+  return '';
 };
 const getValue = (store, field) => {
-  let val = '';
   if (store.analysis) {
     if (store.analysis.type === 'AnalysisCollection' && field !== 'id' && field !== 'registeredByName') {
-      val = store.analysis.events[0][field];
-    } else {
-      val = store.analysis[field];
+      return store.analysis.events[0][field];
     }
-  } else {
-    val = '';
+    return store.analysis[field];
   }
-  return val;
+  return '';
 };
-
 
 
 // TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
@@ -110,7 +91,7 @@ const labelFormat = (label, md = 1) => (
   </Col>
 );
 
-const AnalysisView = ({ store } : Props) => (
+const AnalysisView = ({store} : Props) => (
   <div>
     <br/>
     <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
@@ -355,6 +336,5 @@ const AnalysisView = ({ store } : Props) => (
 AnalysisView.propTypes = {
   store: PropTypes.object
 };
-
 
 export default AnalysisView;
