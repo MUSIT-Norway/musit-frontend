@@ -1,4 +1,8 @@
+// @flow
+
 class CollectionId {
+  uuid: string;
+
   constructor(collectionId: string) {
     this.uuid = collectionId;
   }

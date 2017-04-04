@@ -2,7 +2,7 @@ import Config from '../config';
 import MuseumId from '../models/museumId';
 import CollectionId from '../models/collectionId';
 import routes from '../routes';
-import { AppSession } from '../modules/app/appSession';
+import { AppSession } from '../modules/app/appSession';
 
 describe('routes', () => {
   it('should be a function', () => {
@@ -12,11 +12,15 @@ describe('routes', () => {
 
 const urls = Config.magasin.urls;
 
-const appSession = new AppSession({ museumId: new MuseumId(99), collectionId: new CollectionId('1234'), accessToken: '1234'});
+const appSession = new AppSession({
+  museumId: new MuseumId(99),
+  collectionId: new CollectionId('1234'),
+  accessToken: '1234'
+});
 
 describe('Config urls', () => {
 
-  const data = [
+  const client = [
     {
       actual: urls.client.storagefacility.goToRoot(appSession),
       expected: '/museum/99/collections/1234/magasin'
@@ -52,70 +56,155 @@ describe('Config urls', () => {
     {
       actual: urls.client.storagefacility.viewControlsObservations(1, appSession),
       expected: '/museum/99/collections/1234/magasin/1/controlsobservations'
-    },
-    {
-      actual: urls.api.auth.groupsUrl('someUser@feide.no'),
-      expected: '/api/auth/rest/groups/someUser@feide.no'
-    },
-    {
-      actual: urls.api.storagefacility.searchUrl('Øne', new MuseumId(99)),
-      expected: '/api/storagefacility/museum/99/storagenodes/search?searchStr=%C3%98ne&'
-    },
-    {
-      actual: urls.api.actor.searchUrl('Øne', new MuseumId(99)),
-      expected: '/api/actor/person?museumId=99&search=[%C3%98ne]'
-    },
-    {
-      actual: urls.api.geolocation.searchUrl('Øne'),
-      expected: '/api/geolocation/address?search=[%C3%98ne]'
-    },
-    {
-      actual: urls.api.storagefacility.scanUrl('0000-0000', new MuseumId(99)),
-      expected: '/api/storagefacility/museum/99/storagenodes/scan?storageNodeId=0000-0000&'
-    },
-    {
-      actual: urls.api.storagefacility.scanOldUrl(1234, new MuseumId(99)),
-      expected: '/api/storagefacility/museum/99/storagenodes/scan?oldBarcode=1234'
-    },
-    {
-      actual: urls.api.thingaggregate.scanOldUrl(1234, new MuseumId(99), new CollectionId('1234')),
-      expected: '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
-    },
-    {
-      actual: urls.api.analysisType.getAllAnalysisTypes(new MuseumId(99)),
-      expected: '/api/management/99/analyses/types'
-    },
-    {
-      actual: urls.api.analysisType.getAnalysisTypesForCategory(new MuseumId(99), 123),
-      expected: '/api/management/99/analyses/types/categories/123'
-    },
-    {
-      actual: urls.api.analysisType.getAnalysisTypesForCollection(new MuseumId(99), 123),
-      expected: '/api/management/99/analyses/types/musemcollections/123'
-    },
-    {
-      actual: urls.api.analysis.saveAnalysisEvent(new MuseumId(99)),
-      expected: '/api/management/99/analyses'
-    },
-    {
-      actual: urls.api.analysis.getAnalysisById(new MuseumId(99), 123),
-      expected: '/api/management/99/analyses/123'
-    },
-    {
-      actual: urls.api.analysis.getChildAnalyses(new MuseumId(99), 123),
-      expected: '/api/management/99/analyses/123/children'
-    },
-    {
-      actual: urls.api.analysis.saveResult(new MuseumId(99), 123),
-      expected: '/api/management/99/analyses/123/results'
-    },
-    {
-      actual: urls.api.analysis.getAnalysisForObject(new MuseumId(99), 123),
-      expected: '/api/management/99/analyses/objects/123'
     }
   ];
 
-  it('should have working urls', () => {
-    data.forEach((test) => expect(test.actual).toEqual(test.expected));
+  const serviceEndpoints = [
+    {
+      service: 'storagefacility',
+      endpoints: [
+        {
+          name: 'searchUrl',
+          actual: urls.api.storagefacility.searchUrl('Øne', new MuseumId(99)),
+          expected: '/api/storagefacility/museum/99/storagenodes/search?searchStr=%C3%98ne&'
+        },
+        {
+          name: 'scanUrl',
+          actual: urls.api.storagefacility.scanUrl('0000-0000', new MuseumId(99)),
+          expected: '/api/storagefacility/museum/99/storagenodes/scan?storageNodeId=0000-0000&'
+        },
+        {
+          name: 'scanOldUrl',
+          actual: urls.api.storagefacility.scanOldUrl(1234, new MuseumId(99)),
+          expected: '/api/storagefacility/museum/99/storagenodes/scan?oldBarcode=1234'
+        },
+        {
+          name: 'currentLocation',
+          actual: urls.api.storagefacility.currentLocation(new MuseumId(99), 123),
+          expected: '/api/storagefacility/museum/99/storagenodes/objects/123/currentlocation'
+        },
+        {
+          name: 'currentLocations',
+          actual: urls.api.storagefacility.currentLocations(new MuseumId(99)),
+          expected: '/api/storagefacility/museum/99/storagenodes/objects/currentlocations'
+        },
+        {
+          name: 'objectLocations',
+          actual: urls.api.storagefacility.objectLocations(new MuseumId(99), 123),
+          expected: '/api/storagefacility/museum/99/storagenodes/objects/123/locations'
+        }
+      ]
+    },
+    {
+      service: 'auth',
+      endpoints: [
+        {
+          name: 'groupsUrl',
+          actual: urls.api.auth.groupsUrl('someUser@feide.no'),
+          expected: '/api/auth/rest/groups/someUser@feide.no'
+        }
+      ]
+    },
+
+    {
+      service: 'actor',
+      endpoints: [
+        {
+          name: 'searchUrl',
+          actual: urls.api.actor.searchUrl('Øne', new MuseumId(99)),
+          expected: '/api/actor/person?museumId=99&search=[%C3%98ne]'
+        }
+      ]
+    },
+    {
+      service: 'geolocation',
+      endpoints: [
+        {
+          name: 'searchUrl',
+          actual: urls.api.geolocation.searchUrl('Øne'),
+          expected: '/api/geolocation/address?search=[%C3%98ne]'
+        }
+      ]
+    },
+    {
+      service: 'thingaggregate',
+      endpoints: [
+        {
+          name: 'scanOldUrl',
+          actual: urls.api.thingaggregate.scanOldUrl(1234, new MuseumId(99), new CollectionId('1234')),
+          expected: '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
+        },
+        {
+          name: 'getMainObject',
+          actual: urls.api.thingaggregate.getMainObject(new MuseumId(99), 2344, new CollectionId('1234')),
+          expected: '/api/thingaggregate/museum/99/objects/2344/children?collectionIds=1234'
+        },
+        {
+          name: 'getObjectForCollection',
+          actual: urls.api.thingaggregate.getObjectForCollection(new MuseumId(99), 433, new CollectionId('1234'), 1, 20),
+          expected: '/api/thingaggregate/museum/99/node/433/objects?collectionIds=1234&page=1&limit=20'
+        }
+      ]
+    },
+    {
+      service: 'managment',
+      endpoints: [
+        {
+          name: 'getAllAnalysisTypes',
+          actual: urls.api.analysisType.getAllAnalysisTypes(new MuseumId(99)),
+          expected: '/api/management/99/analyses/types'
+        },
+        {
+          name: 'getAnalysisTypesForCategory',
+          actual: urls.api.analysisType.getAnalysisTypesForCategory(new MuseumId(99), 123),
+          expected: '/api/management/99/analyses/types/categories/123'
+        },
+        {
+          name: 'getAnalysisTypesForCollection',
+          actual: urls.api.analysisType.getAnalysisTypesForCollection(new MuseumId(99), 123),
+          expected: '/api/management/99/analyses/types/musemcollections/123'
+        },
+        {
+          name: 'saveAnalysisEvent',
+          actual: urls.api.analysis.saveAnalysisEvent(new MuseumId(99)),
+          expected: '/api/management/99/analyses'
+        },
+        {
+          name: 'getAnalysisById',
+          actual: urls.api.analysis.getAnalysisById(new MuseumId(99), 123),
+          expected: '/api/management/99/analyses/123'
+        },
+        {
+          name: 'getChildAnalyses',
+          actual: urls.api.analysis.getChildAnalyses(new MuseumId(99), 123),
+          expected: '/api/management/99/analyses/123/children'
+        },
+        {
+          name: 'saveResult',
+          actual: urls.api.analysis.saveResult(new MuseumId(99), 123),
+          expected: '/api/management/99/analyses/123/results'
+        },
+        {
+          name: 'getAnalysisForObject',
+          actual: urls.api.analysis.getAnalysisForObject(new MuseumId(99), 123),
+          expected: '/api/management/99/analyses/objects/123'
+        }
+      ]
+    }
+  ];
+
+  it('should have working client paths', () => {
+    client.forEach((test) => expect(test.actual).toEqual(test.expected));
   });
+
+  serviceEndpoints.forEach(
+    (se) => describe(`Service api ${se.service}`, () => {
+      se.endpoints.forEach((t) => {
+        it(t.name, () => {
+          expect(t.actual).toEqual(t.expected);
+        });
+      });
+    })
+  );
+
 });
