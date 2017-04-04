@@ -155,11 +155,6 @@ describe('Config urls', () => {
           expected: '/api/management/99/analyses/types'
         },
         {
-          name: 'getAnalysisById',
-          actual: urls.api.analysisType.getAnalysisById(new MuseumId(99), 123),
-          expected: '/api/management/99/analyses/types/123'
-        },
-        {
           name: 'getAnalysisTypesForCategory',
           actual: urls.api.analysisType.getAnalysisTypesForCategory(new MuseumId(99), 123),
           expected: '/api/management/99/analyses/types/categories/123'

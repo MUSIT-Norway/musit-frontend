@@ -17,11 +17,13 @@ import EventsContainer from './modules/controlsobservations/EventsComponent';
 import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
+import AnalysisViewContainer from './modules/analysis/analysisViewContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
 import AllEvents from './modules/events/eventsContainer';
 import SampleViewContainer  from './modules/sample/sampleViewContainer';
 import SampleEditContainer  from './modules/sample/sampleEditContainer';
 import SamplesForObjectContainer from './modules/sample/samplesForObjectContainer';
+
 import CenteredLayout from './components/layout/CenteredLayout';
 
 export default () => {
@@ -46,9 +48,12 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route component={CenteredLayout}>
+          <Route path="analysis/add" component={AnalysisAddContainer} />
+          <Route path="analysis/:analysisId" component={AnalysisViewContainer}/>
           <Route path="events/:objectId" component={AllEvents} />
           <Route path="analysis/sample/add" component={SampleFormAddContainer}/>
           <Route path="analysis/add" component={AnalysisAddContainer} />
+          <Route path="analysis/:analysisId" component={AnalysisViewContainer} />
           <Route path="analysis/sample/:sampleId/edit" component={SampleEditContainer}/>
           <Route path="analysis/sample/:sampleId" component={SampleViewContainer}/>
           <Route path="analysis/sample/objects/:parentId" component={SamplesForObjectContainer}/>

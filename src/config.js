@@ -80,8 +80,6 @@ export default {
         analysisType: {
           getAllAnalysisTypes: (mid: MuseumId) =>
             `/api/management/${mid.id}/analyses/types`,
-          getAnalysisById: (mid: MuseumId, typeId: string) =>
-            `/api/management/${mid.id}/analyses/types/${typeId}`,
           getAnalysisTypesForCategory: (mid: MuseumId, categoryId: string) =>
             `/api/management/${mid.id}/analyses/types/categories/${categoryId}`,
           getAnalysisTypesForCollection: (mid: MuseumId, musemcollectionId: string) =>
