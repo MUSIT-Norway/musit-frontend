@@ -43,6 +43,7 @@ type FormData = {
   note: Field,
   completeAnalysis: Field
 };
+
 type AnalysisType = { id: number, name: string };
 type ObjectData = { uuid: string }
 type Store = { objectsData: ObjectData[], data: { analysisTypes: AnalysisType[] } };

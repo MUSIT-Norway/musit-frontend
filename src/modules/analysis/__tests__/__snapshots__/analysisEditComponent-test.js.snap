@@ -1,0 +1,628 @@
+exports[`AnalysisEditComponent should render properly 1`] = `
+<div>
+  <br />
+  <PageHeader
+    bsClass="page-header"
+    style={
+      Object {
+        "paddingLeft": 20
+      }
+    }>
+    Registrer analyse
+  </PageHeader>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={12}>
+    <strong>
+      HID:
+    </strong>
+     
+    123
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={12}>
+    <strong>
+      Registrert:
+    </strong>
+     
+    <FontAwesome
+      name="user" />
+     
+    Per Hansen
+     
+    <FontAwesome
+      name="clock-o" />
+     
+    2017-03-16T14:37:45+00:00
+  </Col>
+  <Col
+    bsClass="col"
+    componentClass="div"
+    md={12}>
+    <strong>
+      Sist endret:
+    </strong>
+     
+    <FontAwesome
+      name="user" />
+     
+    Per Hansen
+     
+    <FontAwesome
+      name="clock-o" />
+     
+    12.12.2012
+     
+    <a
+      href="">
+      Se endringshistorikk
+    </a>
+  </Col>
+  <NewLine />
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={false}
+    inline={false}>
+    <FormGroup
+      bsClass="form-group">
+      <FieldGroup
+        id="formControlsText"
+        label="saksnummer"
+        onChange={[Function anonymous]}
+        type="text"
+        value="1234" />
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <AddButton
+        id="1"
+        label="Legg til saksnummer"
+        md={5} />
+    </FormGroup>
+  </Form>
+  <NewLine />
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={false}
+    inline={true}>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      md={12}>
+      <h5>
+        <b>
+          Objekt/prøve
+        </b>
+      </h5>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      md={5}
+      mdOffset={1}>
+      <Table
+        className="table"
+        columns={
+          Array [
+            Object {
+              "key": "museumNumber",
+              "label": "Museumsnr"
+            },
+            Object {
+              "key": "subNumber",
+              "label": "Unr"
+            },
+            Object {
+              "key": "term",
+              "label": "Term/artsnavn"
+            }
+          ]
+        }
+        data={
+          Array [
+            Object {
+              "museumNumber": "123",
+              "subNumber": "12345678911",
+              "term": "Spyd",
+              "uuid": "1cbf15cb-8348-4e66-99a4-bc314da57a42"
+            },
+            Object {
+              "museumNumber": "124",
+              "subNumber": "12345678912",
+              "term": "Beltering",
+              "uuid": "2cbf15cb-8348-4e66-99a4-bc314da57a42"
+            },
+            Object {
+              "museumNumber": "125",
+              "subNumber": "12345678913",
+              "term": "Øsekar",
+              "uuid": "3cbf15cb-8348-4e66-99a4-bc314da57a42"
+            }
+          ]
+        }
+        defaultSort={false}
+        defaultSortDescending={false}
+        filterBy=""
+        hideFilterInput={false}
+        itemsPerPage={0}
+        noDataText="Ingen objekter"
+        sortBy={false}
+        sortable={
+          Array [
+            "museumNumber",
+            "subNumber",
+            "term"
+          ]
+        } />
+    </Col>
+    <AddButton
+      id="2"
+      label="Legg til objekt"
+      md={11}
+      mdOffset={1} />
+  </Form>
+  <NewLine />
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    style={
+      Object {
+        "paddingLeft": 20
+      }
+    }>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={12}>
+        <h5>
+          <b>
+            Personer tilknyttet analysen
+          </b>
+        </h5>
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <FieldGroup
+        id="navn"
+        label="Navn"
+        onChange={[Function anonymous]}
+        placeholder="Fornavn Etternavn"
+        type="text"
+        value="Test Name Actor" />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={1}
+        style={
+          Object {
+            "padding": "7px",
+            "textAlign": "right"
+          }
+        }>
+        <b>
+          Rolle
+        </b>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={1}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="select"
+          placeholder="Velg rolle">
+          <option
+            value="Velgsted">
+            Velg rolle
+          </option>
+          <option
+            value="other">
+            ...
+          </option>
+        </FormControl>
+      </Col>
+      <AddButton
+        id="3"
+        label="Legg til person"
+        md={2} />
+    </FormGroup>
+  </Form>
+  <NewLine />
+  <FormGroup
+    bsClass="form-group">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      md={1}
+      style={
+        Object {
+          "padding": "7px",
+          "textAlign": "right"
+        }
+      }>
+      <b>
+        Analysested
+      </b>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      md={2}>
+      <FormControl
+        bsClass="form-control"
+        componentClass="select"
+        placeholder="Velg sted">
+        <option
+          value="Velgsted">
+          Velg sted
+        </option>
+        <option
+          value="other">
+          ...
+        </option>
+      </FormControl>
+    </Col>
+  </FormGroup>
+  <NewLine />
+  <Well
+    bsClass="well">
+    <Form
+      bsClass="form"
+      componentClass="form"
+      horizontal={true}
+      inline={false}>
+      <FormGroup
+        bsClass="form-group">
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={1}
+          style={
+            Object {
+              "padding": "7px",
+              "textAlign": "right"
+            }
+          }>
+          <b>
+            Type analyse
+          </b>
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={2}>
+          <FormControl
+            bsClass="form-control"
+            componentClass="select"
+            onChange={[Function anonymous]}
+            placeholder="Velg kategori">
+            <option>
+              Velg kategori
+            </option>
+            <option
+              value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
+              3D-skanning, laser
+            </option>
+            <option
+              value="b39399ab-aabd-4ebc-903b-adcf6876a364">
+              3D-skanning, strukturert lys
+            </option>
+          </FormControl>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <FieldGroup
+          id="formControlsText"
+          label="Ekstern kilde"
+          onChange={[Function anonymous]}
+          placeholder="http://www.lenke.no"
+          type="text"
+          value="www.musit.uio.no" />
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={2}>
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="default"
+            disabled={false}>
+            Lagre
+          </Button>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <FieldGroup
+          id="formControlsText"
+          label="Ladt opp fil"
+          type="text" />
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={2}>
+          <Button
+            active={false}
+            block={false}
+            bsClass="btn"
+            bsStyle="default"
+            disabled={false}>
+            Bla gjennom
+          </Button>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={1}
+          style={
+            Object {
+              "padding": "7px",
+              "textAlign": "right"
+            }
+          }>
+          <b>
+            Kommentar / resultat
+          </b>
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={5}>
+          <FormControl
+            bsClass="form-control"
+            componentClass="textarea"
+            onChange={[Function anonymous]}
+            placeholder=""
+            value="comments" />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={1}
+          style={
+            Object {
+              "padding": "7px",
+              "textAlign": "right"
+            }
+          }>
+          <b>
+            Klausulering
+          </b>
+        </Col>
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={5}>
+          <Radio
+            bsClass="radio"
+            checked={true}
+            disabled={false}
+            inline={true}
+            readOnly={true}>
+            Ja
+          </Radio>
+          <Radio
+            bsClass="radio"
+            disabled={false}
+            inline={true}
+            readOnly={true}>
+            Nei
+          </Radio>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <Panel
+          bsClass="panel"
+          bsStyle="default"
+          collapsible={true}
+          defaultExpanded={false}
+          expanded={true}
+          style={
+            Object {
+              "backgroundColor": "#f5f5f5",
+              "border": "none"
+            }
+          }>
+          <FormGroup
+            bsClass="form-group">
+            <FieldGroup
+              id="navn"
+              label="Klausulert for"
+              md={1}
+              onChange={[Function anonymous]}
+              placeholder="Fornavn Etternavn"
+              type="text"
+              value="Test name" />
+          </FormGroup>
+          <FormGroup
+            bsClass="form-group">
+            <FieldGroup
+              id="navn"
+              label="Årsak til klausulering"
+              md={1}
+              onChange={[Function anonymous]}
+              type="text"
+              value="Reason for Restrictions" />
+          </FormGroup>
+          <FormGroup
+            bsClass="form-group">
+            <FieldGroup
+              id="navn"
+              label="Sluttdato"
+              md={1}
+              readOnly={true}
+              type="text"
+              value="13.12.2012" />
+          </FormGroup>
+          <FormGroup
+            bsClass="form-group">
+            <FieldGroup
+              id="navn"
+              label="Opphevet av"
+              md={1}
+              onChange={[Function anonymous]}
+              placeholder="Fornavn Etternavn"
+              type="text"
+              value="repealed By Person Name" />
+          </FormGroup>
+        </Panel>
+      </FormGroup>
+    </Form>
+  </Well>
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    style={
+      Object {
+        "paddingLeft": 20
+      }
+    }>
+    <FormGroup
+      bsClass="form-group"
+      controlId="note"
+      validationState={null}>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={1}
+        style={
+          Object {
+            "padding": "7px",
+            "textAlign": "right"
+          }
+        }>
+        <b>
+          Kommentar til analysen
+        </b>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={5}>
+        <FormControl
+          bsClass="form-control"
+          className="note"
+          componentClass="textarea"
+          onChange={[Function anonymous]}
+          placeholder="note"
+          value="test note" />
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={1}
+        style={
+          Object {
+            "padding": "7px",
+            "textAlign": "right"
+          }
+        }>
+        <b>
+          Avslutt analyse
+        </b>
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={5}>
+        <Radio
+          bsClass="radio"
+          disabled={false}
+          inline={true}
+          readOnly={true}>
+          Ja
+        </Radio>
+        <Radio
+          bsClass="radio"
+          checked={true}
+          disabled={false}
+          inline={true}
+          readOnly={true}>
+          Nei
+        </Radio>
+      </Col>
+    </FormGroup>
+  </Form>
+  <NewLine />
+  <SaveCancel
+    onClickSave={[Function anonymous]} />
+  <NewLine />
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        mdOffset={1}>
+        <h5>
+          <b>
+            Endringshistorikk
+          </b>
+        </h5>
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        mdOffset={1}>
+        Per Hansen
+         - 
+        2017-03-16T14:37:45+00:00
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        mdOffset={1}>
+        Per Hansen
+         - 
+        12.12.2012
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        mdOffset={1}>
+        <a
+          href="">
+          Se mer
+        </a>
+      </Col>
+    </FormGroup>
+  </Form>
+</div>
+`;
