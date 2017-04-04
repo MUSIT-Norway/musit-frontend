@@ -113,6 +113,7 @@ export class ObjectSearchComponent extends React.Component {
                           <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart"/>
                         </a>
                       </th>
+                      <th>{'Se objekt'}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -161,6 +162,17 @@ export class ObjectSearchComponent extends React.Component {
                               }
                             </a>
                             }
+                          </td>
+                          <td>
+                            <a
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                                hashHistory.push(Config.magasin.urls.client.object.gotoObject(data.uuid));
+                              }
+                              }>
+                              {'Vis'}
+                              </a>
                           </td>
                         </tr>
                       );
