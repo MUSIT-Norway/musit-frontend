@@ -1,7 +1,8 @@
 /* @flow */
 
 export type T_ObjectData = {
-  objectId: string,
+  objectId: number,
+  objectUUID: string,
   objectType: string,
   subNo: string,
   term: string,

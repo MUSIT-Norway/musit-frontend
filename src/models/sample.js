@@ -36,16 +36,13 @@ Sample.loadSamplesForObject = (ajaxGet = simpleGet) => ({id, museumId, token, co
     return {...obj, data: samples.map(a => ({...a, createdDate: parseISODate(a.createdDate, DATE_FORMAT_DISPLAY)}))};
   });
   return r;
-
 };
 
 
 Sample.loadSamplesForObject2 = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
   const url = Config.magasin.urls.api.samples.samplesForObject(museumId, id);
-  const sampleRes = ajaxGet(url, token, callback).map(e => e.response);
-  const r = sampleRes.map(({response}) => ({...response, createdDate: parseISODate(response.createdDate, DATE_FORMAT_DISPLAY)}));
-  return r;
-
+  return ajaxGet(url, token, callback).map(({ response }) => (
+    (response && response.map((r) => ({...r, createdDate: parseISODate(r.createdDate, DATE_FORMAT_DISPLAY)}))) || []));
 };
 
 export default Sample;

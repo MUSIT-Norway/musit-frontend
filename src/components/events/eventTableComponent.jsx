@@ -14,12 +14,11 @@ export const EventTableComponent = ({ events }: EventTypeProps) => {
           { key: 'eventDate', label: 'Dato' },
           { key: 'eventType', label: 'Type hendelse' },
           { key: 'registeredBy', label: 'Utført av' },
-          { key: 'keyData', label: 'Nøkkeldata av' },
+          { key: 'keyData', label: 'Nøkkeldata' },
           { key: 'note', label: 'Kommentar' },
           { key: 'id', label: '' }
         ]}
         sortable={['eventType', 'eventDate', 'registeredBy', 'note' ]}
-        defaultSort={{ column: 'eventDate', direction: 'desc' }}
         noDataText="Ingen hendelser funnet på objektet"
       >
         {events && events.map((event, i) =>
