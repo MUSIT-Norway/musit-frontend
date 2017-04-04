@@ -22,7 +22,7 @@ export const ViewObjectComponent = ({ objectStore: {objectData, events, samples 
           <Col md={3}><b>Term/artsnavn:</b>{' '}{objectData && objectData.term}</Col>
         </Row>
       </div>
-      <Tabs id = "objectDetails">
+      <Tabs id="objectDetails">
         <Tab
           title="Hendelser"
           eventKey={0} id="1">
