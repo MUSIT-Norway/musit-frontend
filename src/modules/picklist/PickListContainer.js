@@ -143,7 +143,7 @@ export const moveItems = (
     if (isNode) {
       callback = nodeCallback(appSession, toName, toMoveLength, name, items, onSuccess, onFailure);
     } else {
-      const movableObject: Array<MovableObject> = idsToMove.map(id => ({id: id, objectType: 'collection'}));
+      const movableObject: Array<MovableObject> = items.map(item => ({id: item.id, objectType: item.objectType}));
       callback = objectCallback(appSession, toName, toMoveLength, name, movableObject, onSuccess, onFailure);
     }
 
