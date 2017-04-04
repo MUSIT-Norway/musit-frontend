@@ -2,7 +2,6 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import Loader from 'react-loader';
-import { Button } from 'react-bootstrap';
 import NodeGrid from './NodeTable';
 import ObjectGrid from './ObjectTable';
 import NodeLeftMenuComponent from './TableLeftMenu';
@@ -17,7 +16,7 @@ import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import MusitModal from '../movedialog/MoveDialogComponent';
 import MusitModalHistory from '../movehistory/MoveHistoryComponent';
 import Config from '../../config';
-import scannerIcon from '../app/scannerIcon.png';
+import ScannerButton from '../../components/scanner/ScannerButton';
 
 export default class TableComponent extends React.Component {
   static propTypes = {
@@ -447,9 +446,7 @@ export default class TableComponent extends React.Component {
             margin: '0 25px 0 0'
           }}
         >
-          <Button active={this.props.scannerEnabled} onClick={() => this.props.toggleScanner()}>
-            <img src={scannerIcon} height={25} alt="scan" />
-          </Button>
+          <ScannerButton enabled={this.props.scannerEnabled} onClick={this.props.toggleScanner} />
         </div>
       </div>
     );
