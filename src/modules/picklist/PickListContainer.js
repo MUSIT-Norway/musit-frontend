@@ -213,7 +213,7 @@ export const processBarcode = (barCode, props) => {
   const isNodeView = props.isTypeNode(props);
   if (barCode.uuid) {
     if (isNodeView) {
-      props.findNodeByUUID({uuid: barCode.code, museumId, token})
+      props.findNodeByUUID({ uuid: barCode.code, museumId, token})
         .do((response) => {
           if (!response) {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
@@ -227,30 +227,33 @@ export const processBarcode = (barCode, props) => {
       props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
     }
   } else if (barCode.number) {
-    const findByBarcode = isNodeView ? props.findNodeByBarcode : props.findObjectByBarcode;
-    findByBarcode({barcode: barCode.code, museumId, collectionId, token}).do(response => {
-      if (!response) {
-        props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-      } else {
-        if (isMoveDialogActive) {
-          if (!response.nodeId) {
-            props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode') });
-          } else {
-            props.updateMoveDialog(response.id, museumId, token);
-          }
-        } else if (!isNodeView && Array.isArray(response)) { // objects
+    const ajaxProps = { barcode: barCode.code, museumId, collectionId, token };
+    if (isMoveDialogActive) {
+      props.findNodeByBarcode(ajaxProps).do(response => {
+        if (!response || !response.nodeId) {
+          props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode') });
+        } else {
+          props.updateMoveDialog(response.id, museumId, token);
+        }
+      }).toPromise();
+    } else {
+      const findByBarcode = isNodeView ? props.findNodeByBarcode : props.findObjectByBarcode;
+      findByBarcode(ajaxProps).do(response => {
+        if (!response) {
+          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
+        } else if (!isNodeView && Array.isArray(response)) {
           if (response.length === 1) {
-            props.addObject({value: response[0], path: getPath(response[0])});
+            props.addObject({ value: response[0], path: getPath(response[0]) });
           } else {
             props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
           }
-        } else if (isNodeView && response.nodeId) { // node
-          props.addNode({value: response, path: getPath(response)});
+        } else if (isNodeView && !!response.nodeId) {
+          props.addNode({ value: response, path: getPath(response) });
         } else {
           props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
         }
-      }
-    }).toPromise();
+      }).toPromise();
+    }
   }
 };
 
