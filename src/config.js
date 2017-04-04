@@ -20,6 +20,8 @@ export default {
     urls: {
       client: {
         analysis: {
+          editAnalysis: (appSession: AppSession, analysisId: string) =>
+            `${clientContextUrl(appSession)}/analysis/edit/${analysisId}`,
           addAnalysis: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/analysis/add`,
           addSample: () =>
