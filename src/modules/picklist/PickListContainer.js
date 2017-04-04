@@ -212,20 +212,20 @@ export const processBarcode = (barCode, props) => {
   const token = props.appSession.getAccessToken();
   const isNodeView = props.isTypeNode(props);
   if (barCode.uuid) {
-    if (isNodeView) {
-      props.findNodeByUUID({ uuid: barCode.code, museumId, token})
-        .do((response) => {
-          if (!response) {
-            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
-          } else if (isMoveDialogActive) {
-            props.updateMoveDialog(response.id, museumId, token);
-          } else {
-            props.addNode({value: response, path: getPath(response)});
-          }
-        }).toPromise();
-    } else {
-      props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
+    if (!isNodeView && !isMoveDialogActive) {
+      return props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
     }
+    props.findNodeByUUID({uuid: barCode.code, museumId, token})
+      .do((response) => {
+        if (!response) {
+          return props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
+        }
+        if (isMoveDialogActive) {
+          props.updateMoveDialog(response.id, museumId, token);
+        } else if (isNodeView) {
+          props.addNode({value: response, path: getPath(response)});
+        }
+      }).toPromise();
   } else if (barCode.number) {
     const ajaxProps = { barcode: barCode.code, museumId, collectionId, token };
     if (isMoveDialogActive) {
