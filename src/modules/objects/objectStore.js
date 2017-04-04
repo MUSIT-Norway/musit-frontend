@@ -6,7 +6,9 @@ import Event from '../../models/event';
 const initialState = { objectData: {}, events: [], samples: [] };
 
 const loadObjectData =  () => (val) => {
+
   const object$ = MusitObject.getObjectDetails() (val);
+
   object$.toPromise().then((value)=>{
     const v = {id: value.id, objectId: value.uuid, token: val.token, museumId: val.museumId, callBack:val.callBack};
     const events$ = Event.getAnalysesAndMoves() (v);
