@@ -137,24 +137,29 @@ exports[`PickListComponent for objects Should mount 1`] = `
                         "margin": "0 25px 0 0"
                       }
                     }>
-                    <Button
-                      active={true}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="default"
-                      disabled={false}
-                      onClick={[Function onClick]}>
-                      <button
-                        className="btn btn-default active"
+                    <ScannerButton
+                      enabled={true}
+                      onClick={[Function toggleScanner]}>
+                      <Button
+                        active={true}
+                        block={false}
+                        bsClass="btn"
+                        bsStyle="default"
+                        className="scannerEnabled"
                         disabled={false}
-                        onClick={[Function onClick]}
-                        type="button">
-                        <img
-                          alt="scan"
-                          height={25}
-                          src="test-file-stub" />
-                      </button>
-                    </Button>
+                        onClick={[Function onClick]}>
+                        <button
+                          className="scannerEnabled btn btn-default active"
+                          disabled={false}
+                          onClick={[Function onClick]}
+                          type="button">
+                          <img
+                            alt="scan"
+                            height={25}
+                            src="test-file-stub" />
+                        </button>
+                      </Button>
+                    </ScannerButton>
                   </div>
                 </div>
               </h1>
@@ -878,18 +883,9 @@ exports[`PickListComponent for objects should display component (objects) correc
                 "margin": "0 25px 0 0"
               }
             }>
-            <Button
-              active={true}
-              block={false}
-              bsClass="btn"
-              bsStyle="default"
-              disabled={false}
-              onClick={[Function onClick]}>
-              <img
-                alt="scan"
-                height={25}
-                src="test-file-stub" />
-            </Button>
+            <ScannerButton
+              enabled={true}
+              onClick={[Function toggleScanner]} />
           </div>
         </div>
       </PageHeader>

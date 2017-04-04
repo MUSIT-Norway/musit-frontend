@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { PageHeader, Grid, Button, Table } from 'react-bootstrap';
+import { PageHeader, Grid, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
@@ -8,7 +8,7 @@ import MusitModal from '../movedialog/MoveDialogComponent';
 import './PickListComponent.css';
 import Config from '../../config';
 import PrintTemplate from '../print/PrintTemplateContainer';
-import scannerIcon from '../app/scannerIcon.png';
+import ScannerButton from '../../components/scanner/ScannerButton';
 
 export class PickListComponent extends React.Component {
   static propTypes = {
@@ -151,12 +151,7 @@ export class PickListComponent extends React.Component {
                     margin: '0 25px 0 0'
                   }}
                 >
-                  <Button
-                    active={this.props.scannerEnabled}
-                    onClick={() => this.props.toggleScanner()}
-                  >
-                    <img src={scannerIcon} height={25} alt="scan" />
-                  </Button>
+                  <ScannerButton enabled={this.props.scannerEnabled} onClick={this.props.toggleScanner} />
                 </div>
               </div>
             </PageHeader>
