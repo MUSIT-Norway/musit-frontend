@@ -124,15 +124,15 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
       onChange={[Function bound selectLevel]}>
       <option
         value={-2}>
-        To nærmeste
+        Sti: to nærmeste nivåer
       </option>
       <option
         value={2}>
-        Fra bygg
+        Sti fra bygg
       </option>
       <option
         value={0}>
-        Hele stien
+        Hel sti
       </option>
     </select>
     <input

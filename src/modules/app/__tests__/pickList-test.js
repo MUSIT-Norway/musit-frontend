@@ -80,8 +80,8 @@ describe('pickList', () => {
     const toggleObject$ = new Subject();
 
     const refreshObjects$ = testScheduler.createHotObservable(refreshObjects, {
-        1: { objectIds: [1], museumId: new MuseumId(99), token: '1224' },
-        2: { objectIds: [1, 2], museumId: new MuseumId(99), token: '1224' }
+        1: { movableObjects: [1], museumId: new MuseumId(99), token: '1224' },
+        2: { movableObjects: [1, 2], museumId: new MuseumId(99), token: '1224' }
     }).switchMap(MusitObject.getObjectLocations(
       (url, data) =>  {
         if (isEqual(data, [1])) return Observable.of({
@@ -221,7 +221,7 @@ describe('pickList isItemAdded', () => {
     "marked": false,
     "value": {"id": 22, "museumId": 99, "museumNo": "MusK34", "subNo": "b", "term": "Spydspiss"},
     "path": [{"id": 2, "name": "Utenfor museet", "url": "/magasin/2"}]
-  }]
+  }];
 
   it('Testing object in isItemAdded function', () => {
     expect(isItemAdded(object, objectPickList)).toBe(true);

@@ -100,6 +100,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "codacy": "cat coverage/lcov.info | ./node_modules/.bin/codacy-coverage",
+    "coverage": "npm test a -- --coverage --collectCoverageFrom='src/**/*.{js,jsx}'",
     "flow": "./node_modules/.bin/flow check --show-all-errors",
     "lint": "./node_modules/.bin/eslint .",
     "lint:fix": "./node_modules/.bin/eslint . --fix",
