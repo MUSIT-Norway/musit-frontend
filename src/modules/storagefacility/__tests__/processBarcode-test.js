@@ -40,6 +40,7 @@ describe('processBarcode', () => {
     const props = {
       findNodeByUUID: () => Observable.of({
         id: 1,
+        nodeId: '1234',
         name: 'Test'
       }),
       classExistsOnDom: (clazz) => clazz === 'moveDialog',
@@ -53,16 +54,12 @@ describe('processBarcode', () => {
   it('should emit error when receiving a uuid that exists when move history is open', () =>  {
     const emitError = sinon.spy();
     const props = {
-      findNodeByUUID: () => Observable.of({
-        id: 1,
-        name: 'Test'
-      }),
       classExistsOnDom: (clazz) => clazz === 'moveHistory',
       appSession,
       emitError
     };
     processBarcode(barCodeWithUUID, props);
-    expect(emitError.calledOnce).toBe(true);
+    expect(emitError.calledOnce).toBe(false);
   });
 
   it('should go to node location when receiving a uuid that exists', () =>  {
@@ -70,6 +67,7 @@ describe('processBarcode', () => {
     const props = {
       findNodeByUUID: () => Observable.of({
         id: 1,
+        nodeId: '12344',
         name: 'Test'
       }),
       classExistsOnDom: () => false,
@@ -109,16 +107,10 @@ describe('processBarcode', () => {
     expect(emitError.calledOnce).toBe(true);
   });
 
-  it('should emit error when receiving an number that resolves to an array with a single object when move dialog is open', () =>  {
+  it('should emit error when receiving an number that does not exist when move dialog is open', () =>  {
     const emitError = sinon.spy();
     const props = {
-      findNodeOrObjectByBarcode: () => Observable.of([
-        {
-          id: 1,
-          term: 'Fugl',
-          currentLocationId: 45
-        }
-      ]),
+      findNodeByBarcode: () => Observable.of(null),
       classExistsOnDom: (clazz) => clazz === 'moveDialog',
       appSession,
       emitError
@@ -189,7 +181,7 @@ describe('processBarcode', () => {
   it('should update move dialog when receiving an number that resolves to a node when move dialog is open', () =>  {
     const updateMoveDialog = sinon.spy();
     const props = {
-      findNodeOrObjectByBarcode: () => Observable.of({
+      findNodeByBarcode: () => Observable.of({
         id: 1,
         nodeId: 'someUUID',
         name: 'Test'
@@ -232,5 +224,17 @@ describe('processBarcode', () => {
     };
     processBarcode(barCodeWithNumber, props);
     expect(goTo.calledOnce).toBe(true);
+  });
+
+  it('should emit error if nothing found', () =>  {
+    const emitError = sinon.spy();
+    const props = {
+      findNodeOrObjectByBarcode: () => Observable.of(null),
+      classExistsOnDom: () => false,
+      appSession,
+      emitError
+    };
+    processBarcode(barCodeWithNumber, props);
+    expect(emitError.calledOnce).toBe(true);
   });
 });
