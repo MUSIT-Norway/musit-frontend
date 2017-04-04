@@ -9,7 +9,6 @@ const loadObjectData =  () => (val) => {
   const object$ = MusitObject.getObjectDetails() (val);
   object$.toPromise().then((value)=>{
     const v = {id: value.id, objectId: value.uuid, token: val.token, museumId: val.museumId, callBack:val.callBack};
-    console.log('V',v);
     const events$ = Event.getAnalysesAndMoves() (v);
     const samples$ = Sample.loadSamplesForObject2() (v);
     return Observable.forkJoin(object$,events$, samples$).map(([objectData, events, samples]) => ({ objectData, events, samples }));

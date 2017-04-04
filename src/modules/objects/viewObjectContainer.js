@@ -26,7 +26,6 @@ export const onMount = ({ loadObject , params, appSession }: any) => {
   const accessToken:string = appSession.state.accessToken;
   const collectionId: string = appSession.state.collectionId;
   const val = {id: objectId, museumId: museumId, token: accessToken, collectionId: collectionId};
-  console.log('I on mount', val);
   loadObject(val);
 };
 

@@ -11,7 +11,6 @@ import SampleTableComponent from '../../components/samples/sampleTableComponent'
 type ViewObjectComponentProps = { objectStore: {objectData: T_ObjectData, events: T_Events, samples: T_Samples} };
 
 export const ViewObjectComponent = ({ objectStore: {objectData, events, samples }}: ViewObjectComponentProps) => {
-  console.log(objectData);
   return (
     <div>
       <PageHeader>Objektvisning</PageHeader>
