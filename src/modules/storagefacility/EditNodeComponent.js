@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import StorageUnitContainer from './NodeDetails';
 import inject from 'react-rxjs/dist/RxInject';
 import { emitError, emitSuccess } from '../../shared/errors';
-import  nodeStore$, { clearNode$, loadNode$, updateState$} from './nodeStore';
+import nodeStore$, { clearNode$, loadNode$, updateState$ } from './nodeStore';
 import MusitNode from '../../models/node';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
@@ -19,10 +19,11 @@ export class EditStorageUnitContainer extends React.Component {
   };
 
   componentWillMount() {
-    const id = (this.props.location.state && this.props.location.state.id) || this.props.params.id;
+    const id = (this.props.location.state && this.props.location.state.id) ||
+      this.props.params.id;
     const museumId = this.props.appSession.getMuseumId();
     const token = this.props.appSession.getAccessToken();
-    this.props.loadNode({ id, museumId, token});
+    this.props.loadNode({ id, museumId, token });
   }
 
   componentWillReceiveProps(next) {
@@ -37,22 +38,30 @@ export class EditStorageUnitContainer extends React.Component {
         {...this.props}
         unit={this.props.nodeStore.unit}
         rootNode={this.props.nodeStore.rootNode}
-        onLagreClick={(data) => {
+        onLagreClick={data => {
           const id = this.props.params.id;
           const museumId = this.props.appSession.getMuseumId();
           const token = this.props.appSession.getAccessToken();
-          this.props.editNode({ id, museumId, token, data, callback: {
-            onComplete: () => {
-              hashHistory.goBack();
-              this.props.emitSuccess({
-                type: 'saveSuccess',
-                message:  I18n.t('musit.storageUnits.messages.saveNodeSuccess')
-              });
-            },
-            onFailure: (e) => {
-              this.props.emitError({...e, type: 'network'});
-            }
-          }}).toPromise();
+          this.props
+            .editNode({
+              id,
+              museumId,
+              token,
+              data,
+              callback: {
+                onComplete: () => {
+                  hashHistory.goBack();
+                  this.props.emitSuccess({
+                    type: 'saveSuccess',
+                    message: I18n.t('musit.storageUnits.messages.saveNodeSuccess')
+                  });
+                },
+                onFailure: e => {
+                  this.props.emitError({ ...e, type: 'network' });
+                }
+              }
+            })
+            .toPromise();
         }}
         loaded={!!this.props.nodeStore.unit && this.props.nodeStore.loaded}
       />

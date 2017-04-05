@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -19,11 +18,14 @@
  */
 
 import React, { Component, PropTypes } from 'react';
-import { MusitField, MusitTextArea, MusitDropDownField } from '../../../components/formfields';
+import {
+  MusitField,
+  MusitTextArea,
+  MusitDropDownField
+} from '../../../components/formfields';
 import { Row, ControlLabel, Col } from 'react-bootstrap';
 
 export default class ObervationStatusPercentageComment extends Component {
-
   static propTypes = {
     // Status
     statusLabel: PropTypes.string.isRequired,
@@ -58,7 +60,7 @@ export default class ObervationStatusPercentageComment extends Component {
     commentWidth: PropTypes.number.isRequired,
     // Other
     disabled: PropTypes.bool
-  }
+  };
 
   static defaultProps = {
     // Status
@@ -77,14 +79,15 @@ export default class ObervationStatusPercentageComment extends Component {
     commentValidate: 'text',
     commentMaximumLength: 250,
     commentNumberOfRows: 5
-  }
+  };
 
   render() {
     return (
       <Row>
         <Col xs={12} sm={this.props.statusWidth} md={this.props.statusWidth}>
           <ControlLabel>
-            {this.props.statusLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+            {this.props.statusLabel}
+            {!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
           </ControlLabel>
           <MusitDropDownField
             value={this.props.statusValue}

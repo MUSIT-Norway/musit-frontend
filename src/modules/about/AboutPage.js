@@ -7,8 +7,10 @@ import EnglishTranslation from './AboutPage_en.html.jsx';
 import Logos from '../../components/logos/Logos';
 import inject from 'react-rxjs/dist/RxInject';
 
-export const AboutPage = (props) => {
-  const Translated = props.getLocale() === 'no' ? NorwegianTranslation : EnglishTranslation;
+export const AboutPage = props => {
+  const Translated = props.getLocale() === 'no'
+    ? NorwegianTranslation
+    : EnglishTranslation;
   return (
     <div>
       <main>

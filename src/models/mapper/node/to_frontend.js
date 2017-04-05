@@ -1,4 +1,3 @@
-
 import { formatFloatToString, getPath } from '../../../shared/util';
 
 const mapRequirement = (envReq, field) => {
@@ -17,7 +16,7 @@ const mapRequirement = (envReq, field) => {
   return null;
 };
 
-export const toFrontend = (data) => {
+export const toFrontend = data => {
   return {
     ...data,
     breadcrumb: getPath(data),
@@ -25,14 +24,17 @@ export const toFrontend = (data) => {
     areaTo: formatFloatToString(data.areaTo),
     height: formatFloatToString(data.height),
     heightTo: formatFloatToString(data.heightTo),
-    environmentRequirement: data.environmentRequirement ? {
-      cleaning: data.environmentRequirement.cleaning,
-      lightingCondition: data.environmentRequirement.lightingCondition,
-      comments: data.environmentRequirement.comment || data.environmentRequirement.comments,
-      ...mapRequirement(data.environmentRequirement, 'temperature'),
-      ...mapRequirement(data.environmentRequirement, 'hypoxicAir'),
-      ...mapRequirement(data.environmentRequirement, 'relativeHumidity')
-    } : {},
+    environmentRequirement: data.environmentRequirement
+      ? {
+          cleaning: data.environmentRequirement.cleaning,
+          lightingCondition: data.environmentRequirement.lightingCondition,
+          comments: data.environmentRequirement.comment ||
+            data.environmentRequirement.comments,
+          ...mapRequirement(data.environmentRequirement, 'temperature'),
+          ...mapRequirement(data.environmentRequirement, 'hypoxicAir'),
+          ...mapRequirement(data.environmentRequirement, 'relativeHumidity')
+        }
+      : {},
     environmentAssessment: data.environmentAssessment || {},
     securityAssessment: data.securityAssessment || {}
   };

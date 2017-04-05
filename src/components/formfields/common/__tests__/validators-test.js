@@ -20,21 +20,54 @@ describe('Vaidation', () => {
     const toBigNumberFormat = { ...numberTestProps, value: '123456', precision: 3 };
     const toSmallNumberFormat = { ...numberTestProps, value: '1', precision: 3 };
     const emptyNumberFormat = { ...numberTestProps, value: '', precision: 3 };
-    const emptyPassingNumberFormat = { ...numberTestProps, value: '', minimumLength: 0, precision: 3 };
-    const defaultValidator = { ...numberTestProps, validator: 'error'};
+    const emptyPassingNumberFormat = {
+      ...numberTestProps,
+      value: '',
+      minimumLength: 0,
+      precision: 3
+    };
+    const defaultValidator = { ...numberTestProps, validator: 'error' };
 
     assert.equal(validate(naturalFormat), 'success', 'naturalFormat is not working.');
-    assert.equal(validate(naturalWithErrorFormat), 'error', 'naturalWithErrorFormat is working.');
-    assert.equal(validate(naturalWithDescimalFormat), 'error', 'naturalWithDescimalFormat is working.');
+    assert.equal(
+      validate(naturalWithErrorFormat),
+      'error',
+      'naturalWithErrorFormat is working.'
+    );
+    assert.equal(
+      validate(naturalWithDescimalFormat),
+      'error',
+      'naturalWithDescimalFormat is working.'
+    );
     assert.equal(validate(defaultFormat), 'success', 'defaultFormat is not working.');
     assert.equal(validate(wrongFormat), 'error', 'defaultFormat is working.');
-    assert.equal(validate(negativeNumberFormat), 'success', 'negativeNumberFormat is not working.');
-    assert.equal(validate(toManyDescimalsFormat), 'error', 'toManyDescimalsFormat is working.');
+    assert.equal(
+      validate(negativeNumberFormat),
+      'success',
+      'negativeNumberFormat is not working.'
+    );
+    assert.equal(
+      validate(toManyDescimalsFormat),
+      'error',
+      'toManyDescimalsFormat is working.'
+    );
     assert.equal(validate(toBigNumberFormat), 'error', 'toBigNumberFormat is working.');
-    assert.equal(validate(toSmallNumberFormat), 'error', 'toSmallNumberFormat is working.');
+    assert.equal(
+      validate(toSmallNumberFormat),
+      'error',
+      'toSmallNumberFormat is working.'
+    );
     assert.equal(validate(emptyNumberFormat), 'error', 'emptyNumberFormat is working.');
-    assert.equal(validate(emptyPassingNumberFormat), 'success', 'emptyPassingNumberFormat is not working.');
-    assert.equal(validate(numberTestProps), 'error', 'missing important props is working.');
+    assert.equal(
+      validate(emptyPassingNumberFormat),
+      'success',
+      'emptyPassingNumberFormat is not working.'
+    );
+    assert.equal(
+      validate(numberTestProps),
+      'error',
+      'missing important props is working.'
+    );
     assert.equal(validate(defaultValidator), 'error', 'should return error');
   });
 });

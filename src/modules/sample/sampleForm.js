@@ -1,5 +1,5 @@
 /* @flow */
-import type {Field} from '../../forms/form';
+import type { Field } from '../../forms/form';
 import createForm from '../../forms/form';
 import {
   composeValidators,
@@ -8,10 +8,7 @@ import {
   isNumberInRange
 } from '../../forms/validators';
 
-import {
-  stringMapper,
-  numberMapper
-} from '../../forms/mappers';
+import { stringMapper, numberMapper } from '../../forms/mappers';
 
 const museumId: Field<string> = {
   name: 'museumId',
@@ -92,7 +89,6 @@ const updateDate: Field<string> = {
     rawValidator: isRequired
   }
 };
-
 
 const container: Field<string> = {
   name: 'container',
@@ -180,4 +176,4 @@ const fields = [
   createdDate
 ];
 
-export default createForm('sampleForm.js', fields );
+export default createForm('sampleForm.js', fields);

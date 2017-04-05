@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import StorageUnitContainer from './NodeDetails';
 import inject from 'react-rxjs/dist/RxInject';
-import  nodeStore$, { clearNode$, loadNode$, updateState$} from './nodeStore';
+import nodeStore$, { clearNode$, loadNode$, updateState$ } from './nodeStore';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { I18n } from 'react-i18nify';
 import { hashHistory } from 'react-router';
@@ -33,22 +33,30 @@ export class AddStorageUnitContainer extends React.Component {
         {...this.props}
         rootNode={this.props.nodeStore.rootNode}
         unit={this.props.nodeStore.unit}
-        onLagreClick={(data) => {
+        onLagreClick={data => {
           const id = this.props.params.id;
           const museumId = this.props.appSession.getMuseumId();
           const token = this.props.appSession.getAccessToken();
-          this.props.addNode({ id, museumId, token, data, callback: {
-            onComplete: () => {
-              hashHistory.goBack();
-              this.props.emitSuccess({
-                type: 'saveSuccess',
-                message:  I18n.t('musit.storageUnits.messages.saveNodeSuccess')
-              });
-            },
-            onFailure: (e) => {
-              this.props.emitError({...e, type: 'network'});
-            }
-          }}).toPromise();
+          this.props
+            .addNode({
+              id,
+              museumId,
+              token,
+              data,
+              callback: {
+                onComplete: () => {
+                  hashHistory.goBack();
+                  this.props.emitSuccess({
+                    type: 'saveSuccess',
+                    message: I18n.t('musit.storageUnits.messages.saveNodeSuccess')
+                  });
+                },
+                onFailure: e => {
+                  this.props.emitError({ ...e, type: 'network' });
+                }
+              }
+            })
+            .toPromise();
         }}
         isAdd
         loaded={!!this.props.nodeStore.unit}
@@ -56,7 +64,6 @@ export class AddStorageUnitContainer extends React.Component {
     );
   }
 }
-
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },

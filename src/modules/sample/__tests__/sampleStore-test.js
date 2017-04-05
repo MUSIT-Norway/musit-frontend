@@ -1,27 +1,24 @@
-import {TestScheduler} from 'rxjs/Rx';
+import { TestScheduler } from 'rxjs/Rx';
 import assert from 'assert';
-import {sampleStore$} from '../sampleStore';
+import { sampleStore$ } from '../sampleStore';
 const diff = require('deep-diff').diff;
 
 describe('eventsStore', () => {
-
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       /* console.log(JSON.stringify(actual, null, 2));
        console.log(JSON.stringify(expected, null, 2));*/
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
-       // console.log(difference);
+        // console.log(difference);
       }
       return assert.equal(undefined, difference);
     });
 
-
     // mock streams
-    const clearM =            '-1---------';
-    const loadSampleStoreM =  '--1--------';
-    const expected =          'aab--------';
-
+    const clearM = '-1---------';
+    const loadSampleStoreM = '--1--------';
+    const expected = 'aab--------';
 
     const expectedStateMap = {
       a: {
@@ -69,17 +66,15 @@ describe('eventsStore', () => {
         museumNo: 'MUS-1',
         subNo: 'AAA',
         term: 'Carex'
-      }});
+      }
+    });
 
-    const state$ = sampleStore$({clear$, loadSamplesForObject$});
-
+    const state$ = sampleStore$({ clear$, loadSamplesForObject$ });
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
 
     // run tests
     testScheduler.flush();
-
-
   });
 });

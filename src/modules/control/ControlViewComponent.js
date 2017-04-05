@@ -35,7 +35,7 @@ export class ControlViewContainer extends React.Component {
     getControl: React.PropTypes.func.isRequired,
     params: React.PropTypes.object,
     rootNode: React.PropTypes.object
-  }
+  };
 
   componentWillMount() {
     if (this.props.params.controlId) {
@@ -56,7 +56,9 @@ export class ControlViewContainer extends React.Component {
   }
 
   getDate(data, field) {
-    return data && data[field] ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY) : '';
+    return data && data[field]
+      ? parseISODate(data[field]).format(DATE_FORMAT_DISPLAY)
+      : '';
   }
 
   render() {
@@ -102,7 +104,7 @@ export class ControlViewContainer extends React.Component {
                     disabled
                   />
                 </Col>
-                <Col sm={4} md={5} >
+                <Col sm={4} md={5}>
                   <ControlLabel>{I18n.t('musit.texts.registeredBy')}</ControlLabel>
                   <br />
                   <MusitField
@@ -117,13 +119,13 @@ export class ControlViewContainer extends React.Component {
               </Row>
               <Row>
                 <Col sm={8} md={10}>
-                  <ControlView
-                    id="1"
-                    controlsJson={data}
-                  />
+                  <ControlView id="1" controlsJson={data} />
                 </Col>
               </Row>
-              <Row className="row-centered" style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}>
+              <Row
+                className="row-centered"
+                style={{ textAlign: 'center', border: '12px', borderColor: 'red' }}
+              >
                 <Col xs={10}>
                   <Button onClick={() => hashHistory.goBack()}>
                     {I18n.t('musit.texts.close')}
@@ -134,7 +136,6 @@ export class ControlViewContainer extends React.Component {
           </div>
         }
       />
-
     );
   }
 }

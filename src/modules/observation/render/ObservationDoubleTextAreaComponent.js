@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -36,19 +35,20 @@ export default class ObservationDoubleTextAreaComponent extends Component {
     rightWidth: PropTypes.number.isRequired,
     onChangeRight: PropTypes.func.isRequired,
     disabled: PropTypes.bool
-  }
+  };
 
   static defaultProps = {
     leftValue: '',
     rightValue: ''
-  }
+  };
 
   render() {
     return (
       <Row>
         <Col xs={12} sm={this.props.leftWidth}>
           <ControlLabel>
-            {this.props.leftLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+            {this.props.leftLabel}
+            {!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
           </ControlLabel>
           <MusitTextArea
             value={this.props.leftValue}

@@ -7,11 +7,7 @@ import {
   isRequired,
   isNumberInRange
 } from '../../forms/validators';
-import {
-  stringMapper,
-  numberMapper,
-  booleanMapper
-} from '../../forms/mappers';
+import { stringMapper, numberMapper, booleanMapper } from '../../forms/mappers';
 
 export const getStrField = (field: string, value: string = ''): Field<string> => ({
   name: field,
@@ -41,12 +37,18 @@ const result = getStrField('result', 'result');
 const actor = getStrField('actor', 'Test Name Actor');
 const role = getStrField('role', 'Creator');
 const place = getStrField('place', 'Oslo, Norway');
-const analysisTypeId = getStrField('analysisTypeId', 'b15ee459-38c9-414f-8b54-7c6439b44d3d');
+const analysisTypeId = getStrField(
+  'analysisTypeId',
+  'b15ee459-38c9-414f-8b54-7c6439b44d3d'
+);
 const externalSource = getStrField('externalSource', 'www.musit.uio.no');
 const comments = getStrField('comments', 'comments');
 const restrictions = getBoolField('restrictions', true);
 const restrictionsFor = getStrField('restrictionsFor', 'Test name');
-const reasonForRestrictions = getStrField('reasonForRestrictions', 'Reason for Restrictions');
+const reasonForRestrictions = getStrField(
+  'reasonForRestrictions',
+  'Reason for Restrictions'
+);
 const restrictionsEndDate = getStrField('restrictionsEndDate', '13.12.2012');
 const repealedBy = getStrField('repealedBy', 'repealed By Person Name');
 const note = getStrField('note', 'default value of note');
@@ -89,5 +91,3 @@ export const fieldsArray = [
 ];
 
 export default createForm('analysisAddForm.js', fieldsArray);
-
-

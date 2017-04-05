@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -19,11 +18,11 @@
  */
 import React from 'react';
 
-const NotFound = () =>
+const NotFound = () => (
   <div className="container">
     <h1>Not found! 404!</h1>
     <p>The route you are looking for does not exist!</p>
-  </div>;
-
+  </div>
+);
 
 export default NotFound;

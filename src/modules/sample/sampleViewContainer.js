@@ -2,16 +2,16 @@ import inject from 'react-rxjs/dist/RxInject';
 import sampleForm from './sampleForm';
 import SampleViewComponent from './SampleViewComponent';
 import React from 'react';
-import {Observable} from 'rxjs';
-import  mount from '../../shared/mount';
-import {emitError, emitSuccess} from '../../shared/errors';
+import { Observable } from 'rxjs';
+import mount from '../../shared/mount';
+import { emitError, emitSuccess } from '../../shared/errors';
 import Sample from '../../models/sample';
 import flowRight from 'lodash/flowRight';
 
-const {form$, loadForm$} = sampleForm;
+const { form$, loadForm$ } = sampleForm;
 
 const data = {
-  appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   form$
 };
 
@@ -21,7 +21,7 @@ const props = {
   emitError
 };
 
-const commands = {loadForm$};
+const commands = { loadForm$ };
 
 export default flowRight([
   inject(data, commands, props),
@@ -29,9 +29,12 @@ export default flowRight([
     const sampleId = params.sampleId;
     const museumId = appSession.state.museumId;
     const accessToken = appSession.state.accessToken;
-    const val = {id: sampleId, museumId: museumId, token: accessToken};
-    loadSample(val).toPromise().then((v) => {
-      const formData = Object.keys(v).reduce((akk, key: string) => ([...akk, {name: key, defaultValue: v[key]}]), []);
+    const val = { id: sampleId, museumId: museumId, token: accessToken };
+    loadSample(val).toPromise().then(v => {
+      const formData = Object.keys(v).reduce(
+        (akk, key: string) => [...akk, { name: key, defaultValue: v[key] }],
+        []
+      );
       loadForm(formData);
     });
   })

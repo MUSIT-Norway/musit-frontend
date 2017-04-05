@@ -4,7 +4,6 @@ import { store$ } from '../nodeStore';
 const diff = require('deep-diff').diff;
 
 describe('nodeStore', () => {
-
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       // console.log(JSON.stringify(actual, null, 2));
@@ -16,19 +15,19 @@ describe('nodeStore', () => {
       return assert.equal(undefined, difference);
     });
     // mock streams
-    const clearNodeM        = '-1---------';
-    const loadNodeM         = '--1--------';
-    const updateStateM      = '---1-------';
-    const expected          = 'abcd-------';
+    const clearNodeM = '-1---------';
+    const loadNodeM = '--1--------';
+    const updateStateM = '---1-------';
+    const expected = 'abcd-------';
 
     const expectedStateMap = {
       a: {
-        'unit': {
-          'environmentRequirement': {},
-          'environmentAssessment': {},
-          'securityAssessment': {}
+        unit: {
+          environmentRequirement: {},
+          environmentAssessment: {},
+          securityAssessment: {}
         },
-        'loaded': false
+        loaded: false
       },
       b: {
         unit: {
@@ -61,10 +60,12 @@ describe('nodeStore', () => {
 
     // mock up$ and down$ events
     const clearNode$ = testScheduler.createHotObservable(clearNodeM);
-    const loadNode$ = testScheduler.createHotObservable(loadNodeM, { 1: { foo: 'bar' }});
-    const updateState$ = testScheduler.createHotObservable(updateStateM, { 1: { bar: 'foo' }});
+    const loadNode$ = testScheduler.createHotObservable(loadNodeM, { 1: { foo: 'bar' } });
+    const updateState$ = testScheduler.createHotObservable(updateStateM, {
+      1: { bar: 'foo' }
+    });
 
-    const state$ = store$({clearNode$, loadNode$, updateState$});
+    const state$ = store$({ clearNode$, loadNode$, updateState$ });
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);

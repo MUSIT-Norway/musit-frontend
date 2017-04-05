@@ -1,12 +1,11 @@
-import {processBarcode} from '../PickListContainer';
-import {AppSession} from '../../app/appSession';
+import { processBarcode } from '../PickListContainer';
+import { AppSession } from '../../app/appSession';
 import sinon from 'sinon';
 import MuseumId from '../../../models/museumId';
 import CollectionId from '../../../models/collectionId';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 describe('processBarcode', () => {
-
   const appSession = new AppSession({
     accessToken: '1234',
     museumId: new MuseumId(99),
@@ -52,12 +51,13 @@ describe('processBarcode', () => {
   it('should update move dialog when receiving a uuid that exists when move dialog is open', () => {
     const updateMoveDialog = sinon.spy();
     const props = {
-      findNodeByUUID: () => Observable.of({
-        id: 1,
-        name: 'Test'
-      }),
+      findNodeByUUID: () =>
+        Observable.of({
+          id: 1,
+          name: 'Test'
+        }),
       isTypeNode: () => true,
-      classExistsOnDom: (clazz) => clazz === 'moveDialog',
+      classExistsOnDom: clazz => clazz === 'moveDialog',
       appSession,
       updateMoveDialog
     };
@@ -68,10 +68,11 @@ describe('processBarcode', () => {
   it('should add to node picklist when receiving a uuid that exists', () => {
     const addNode = sinon.spy();
     const props = {
-      findNodeByUUID: () => Observable.of({
-        id: 1,
-        name: 'Test'
-      }),
+      findNodeByUUID: () =>
+        Observable.of({
+          id: 1,
+          name: 'Test'
+        }),
       isTypeNode: () => true,
       classExistsOnDom: () => false,
       appSession,
@@ -112,7 +113,7 @@ describe('processBarcode', () => {
     const props = {
       findNodeByBarcode: () => Observable.of(null),
       isTypeNode: () => false,
-      classExistsOnDom: (clazz) => clazz === 'moveDialog',
+      classExistsOnDom: clazz => clazz === 'moveDialog',
       appSession,
       emitError
     };
@@ -123,12 +124,13 @@ describe('processBarcode', () => {
   it('should add to object picklist when receiving a number that resolves to a single object', () => {
     const addObject = sinon.spy();
     const props = {
-      findObjectByBarcode: () => Observable.of([
-        {
-          id: 1,
-          term: 'Fugl'
-        }
-      ]),
+      findObjectByBarcode: () =>
+        Observable.of([
+          {
+            id: 1,
+            term: 'Fugl'
+          }
+        ]),
       isTypeNode: () => false,
       classExistsOnDom: () => false,
       appSession,
@@ -141,16 +143,17 @@ describe('processBarcode', () => {
   it('should emit error when receiving a number that resolves to multiple objects', () => {
     const emitError = sinon.spy();
     const props = {
-      findObjectByBarcode: () => Observable.of([
-        {
-          id: 1,
-          term: 'Fugl'
-        },
-        {
-          id: 2,
-          term: 'Fisk'
-        }
-      ]),
+      findObjectByBarcode: () =>
+        Observable.of([
+          {
+            id: 1,
+            term: 'Fugl'
+          },
+          {
+            id: 2,
+            term: 'Fisk'
+          }
+        ]),
       isTypeNode: () => false,
       classExistsOnDom: () => false,
       appSession,
@@ -163,13 +166,14 @@ describe('processBarcode', () => {
   it('should update move dialog when receiving a number that resolves to a single node', () => {
     const updateMoveDialog = sinon.spy();
     const props = {
-      findNodeByBarcode: () => Observable.of({
-        id: 1,
-        name: 'Test',
-        nodeId: '1234'
-      }),
+      findNodeByBarcode: () =>
+        Observable.of({
+          id: 1,
+          name: 'Test',
+          nodeId: '1234'
+        }),
       isTypeNode: () => true,
-      classExistsOnDom: (clazz) => clazz === 'moveDialog',
+      classExistsOnDom: clazz => clazz === 'moveDialog',
       appSession,
       updateMoveDialog
     };
@@ -180,11 +184,12 @@ describe('processBarcode', () => {
   it('should add to node picklist when receiving a number that resolves to a single node', () => {
     const addNode = sinon.spy();
     const props = {
-      findNodeByBarcode: () => Observable.of({
-        id: 1,
-        name: 'Test',
-        nodeId: '1234'
-      }),
+      findNodeByBarcode: () =>
+        Observable.of({
+          id: 1,
+          name: 'Test',
+          nodeId: '1234'
+        }),
       isTypeNode: () => true,
       classExistsOnDom: () => false,
       appSession,
@@ -197,11 +202,12 @@ describe('processBarcode', () => {
   it('should emit error when receiving a number that resolves to a bogus response (nodes active)', () => {
     const emitError = sinon.spy();
     const props = {
-      findNodeByBarcode: () => Observable.of({
-        id: 1,
-        name: 'Test'
-        // Missing nodeId!
-      }),
+      findNodeByBarcode: () =>
+        Observable.of({
+          id: 1,
+          name: 'Test'
+          // Missing nodeId!
+        }),
       isTypeNode: () => true,
       classExistsOnDom: () => false,
       appSession,
@@ -214,11 +220,12 @@ describe('processBarcode', () => {
   it('should emit error when receiving a number that resolves to a bogus response (objects active)', () => {
     const emitError = sinon.spy();
     const props = {
-      findObjectByBarcode: () => Observable.of({
-        id: 1,
-        name: 'Test'
-        // Missing nodeId!
-      }),
+      findObjectByBarcode: () =>
+        Observable.of({
+          id: 1,
+          name: 'Test'
+          // Missing nodeId!
+        }),
       isTypeNode: () => false,
       classExistsOnDom: () => false,
       appSession,

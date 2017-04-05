@@ -7,11 +7,7 @@ import Toolbar from '../../components/layout/Toolbar';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import inject from 'react-rxjs/dist/RxInject';
-import store$, {
-  clearEvents$,
-  loadRootNode$,
-  loadEvents$
-} from './eventsStore';
+import store$, { clearEvents$, loadRootNode$, loadEvents$ } from './eventsStore';
 import Loader from 'react-loader';
 import Config from '../../config';
 
@@ -24,7 +20,7 @@ export class EventsComponent extends React.Component {
     loadRootNode: React.PropTypes.func.isRequired,
     clearEvents: React.PropTypes.func.isRequired,
     loader: React.PropTypes.element.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -53,36 +49,54 @@ export class EventsComponent extends React.Component {
   }
 
   makeToolbar() {
-    return <Toolbar
-      showRight={this.state.showControls}
-      showLeft={this.state.showObservations}
-      labelRight={I18n.t('musit.grid.button.controls')}
-      labelLeft={I18n.t('musit.grid.button.observations')}
-      placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
-      clickShowRight={() => this.setState({ ...this.state, showControls: !this.state.showControls })}
-      clickShowLeft={() => this.setState({ ...this.state, showObservations: !this.state.showObservations })}
-    />;
+    return (
+      <Toolbar
+        showRight={this.state.showControls}
+        showLeft={this.state.showObservations}
+        labelRight={I18n.t('musit.grid.button.controls')}
+        labelLeft={I18n.t('musit.grid.button.observations')}
+        placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
+        clickShowRight={() =>
+          this.setState({ ...this.state, showControls: !this.state.showControls })}
+        clickShowLeft={() =>
+          this.setState({
+            ...this.state,
+            showObservations: !this.state.showObservations
+          })}
+      />
+    );
   }
 
   makeLeftMenu() {
     const nodeId = this.props.params.id;
     const appSession = this.props.appSession;
-    return <div style={{ paddingTop: 10 }}>
-      <EventsLeftMenu
-        id={this.props.params.id}
-        selectObservation
-        selectControl
-        onClickNewObservation={() => hashHistory.push(Config.magasin.urls.client.storagefacility.addObservation(nodeId, appSession))}
-        onClickNewControl={() => hashHistory.push(Config.magasin.urls.client.storagefacility.addControl(nodeId, appSession))}
-      />
-    </div>;
+    return (
+      <div style={{ paddingTop: 10 }}>
+        <EventsLeftMenu
+          id={this.props.params.id}
+          selectObservation
+          selectControl
+          onClickNewObservation={() =>
+            hashHistory.push(
+              Config.magasin.urls.client.storagefacility.addObservation(
+                nodeId,
+                appSession
+              )
+            )}
+          onClickNewControl={() =>
+            hashHistory.push(
+              Config.magasin.urls.client.storagefacility.addControl(nodeId, appSession)
+            )}
+        />
+      </div>
+    );
   }
 
   makeContent() {
     if (this.props.store.loading) {
       return this.props.loader;
     }
-    const filtered = this.props.store.data.filter((e) => {
+    const filtered = this.props.store.data.filter(e => {
       if (e.eventType && this.state.showControls && this.state.showObservations) {
         return true;
       } else if (e.eventType && this.state.showControls) {
@@ -101,18 +115,36 @@ export class EventsComponent extends React.Component {
     }
     const nodeId = this.props.params.id;
     const appSession = this.props.appSession;
-    return <EventsGrid
-      id={nodeId}
-      showControl={ctl => hashHistory.push(Config.magasin.urls.client.storagefacility.viewControl(nodeId, ctl.id, appSession))}
-      showObservation={obs => hashHistory.push(Config.magasin.urls.client.storagefacility.viewObservation(nodeId, obs.id, appSession))}
-      tableData={filtered}
-    />;
+    return (
+      <EventsGrid
+        id={nodeId}
+        showControl={ctl =>
+          hashHistory.push(
+            Config.magasin.urls.client.storagefacility.viewControl(
+              nodeId,
+              ctl.id,
+              appSession
+            )
+          )}
+        showObservation={obs =>
+          hashHistory.push(
+            Config.magasin.urls.client.storagefacility.viewObservation(
+              nodeId,
+              obs.id,
+              appSession
+            )
+          )}
+        tableData={filtered}
+      />
+    );
   }
 
   showNodes(node) {
     const appSession = this.props.appSession;
     if (node && node.id) {
-      hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, appSession));
+      hashHistory.push(
+        Config.magasin.urls.client.storagefacility.goToNode(node.id, appSession)
+      );
     } else {
       hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
@@ -125,7 +157,7 @@ export class EventsComponent extends React.Component {
         breadcrumb={
           <Breadcrumb
             node={this.props.store.rootNode}
-            onClickCrumb={(node) => this.showNodes(node)}
+            onClickCrumb={node => this.showNodes(node)}
             allActive
           />
         }

@@ -1,6 +1,6 @@
 /* @flow */
-import React, {PropTypes} from 'react';
-import {I18n} from 'react-i18nify';
+import React, { PropTypes } from 'react';
+import { I18n } from 'react-i18nify';
 import {
   Radio,
   PageHeader,
@@ -18,25 +18,25 @@ import FontAwesome from 'react-fontawesome';
 type Props = { store: any };
 
 function LabelFormat(label, md = 1) {
-  return (<Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>);
+  return <Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>;
 }
-function FieldGroup({id, label, md = 1, ...props}) {
+function FieldGroup({ id, label, md = 1, ...props }) {
   return (
     <div id={id}>
       {LabelFormat(label, md)}
       <Col md={2}>
-        <FormControl {... props} readOnly/>
+        <FormControl {...props} readOnly />
       </Col>
     </div>
   );
 }
 
-function AddButton({id, label, md, mdOffset = 0, ...props}) {
+function AddButton({ id, label, md, mdOffset = 0, ...props }) {
   return (
     <div id={id}>
       <Col md={md} mdOffset={mdOffset}>
-        <Button {... props} disabled>
-          <FontAwesome name='plus-circle'/>{' '}
+        <Button {...props} disabled>
+          <FontAwesome name="plus-circle" />{' '}
           {label}
         </Button>
       </Col>
@@ -44,26 +44,33 @@ function AddButton({id, label, md, mdOffset = 0, ...props}) {
   );
 }
 function NewLine() {
-  return <Form horizontal><FormGroup />
-    <hr/>
-  </Form>;
+  return (
+    <Form horizontal>
+      <FormGroup />
+      <hr />
+    </Form>
+  );
 }
 
-const getAnalysisTypeTerm = (store) => {
+const getAnalysisTypeTerm = store => {
   if (store.analysis && store.analysisTypes) {
-    const foundType = store.analysisTypes.find((a) => a.id === store.analysis.analysisTypeId);
+    const foundType = store.analysisTypes.find(
+      a => a.id === store.analysis.analysisTypeId
+    );
     return foundType ? foundType.name : '';
   }
 };
 
-const getTableRow = (a) => {
-  return <tr>
-    <td>{a.museumNo}</td>
-    <td>{a.subNo}</td>
-    <td>{a.term}</td>
-  </tr>;
+const getTableRow = a => {
+  return (
+    <tr>
+      <td>{a.museumNo}</td>
+      <td>{a.subNo}</td>
+      <td>{a.term}</td>
+    </tr>
+  );
 };
-const getObjectsValue = (store) => {
+const getObjectsValue = store => {
   if (store.analysis) {
     if (store.analysis.type === 'AnalysisCollection') {
       return store.analysis.events.map(a => getTableRow(a));
@@ -74,14 +81,17 @@ const getObjectsValue = (store) => {
 };
 const getValue = (store, field) => {
   if (store.analysis) {
-    if (store.analysis.type === 'AnalysisCollection' && field !== 'id' && field !== 'registeredByName') {
+    if (
+      store.analysis.type === 'AnalysisCollection' &&
+      field !== 'id' &&
+      field !== 'registeredByName'
+    ) {
       return store.analysis.events[0][field];
     }
     return store.analysis[field];
   }
   return '';
 };
-
 
 // TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
 // TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
@@ -91,20 +101,36 @@ const labelFormat = (label, md = 1) => (
   </Col>
 );
 
-const AnalysisView = ({store} : Props) => (
+const AnalysisView = ({ store }: Props) => (
   <div>
-    <br/>
-    <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
+    <br />
+    <PageHeader style={{ paddingLeft: 20 }}>
+      {I18n.t('musit.analysis.registeringAnalysis')}
+    </PageHeader>
     <Col md={12}>
       <strong>HID:</strong>{' '}{getValue(store, 'id')}
     </Col>
     <Col md={12}>
-      <strong>Registrert:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(store, 'registeredByName')}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(store, 'registeredDate')}
+      <strong>Registrert:</strong>
+      {' '}
+      <FontAwesome name="user" />
+      {' '}
+      {getValue(store, 'registeredByName')}
+      {' '}
+      <FontAwesome name="clock-o" />{' '}{getValue(store, 'registeredDate')}
     </Col>
     <Col md={12}>
-      <strong>Sist endret:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(store, 'doneBy')}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(store, 'eventDate')}{' '}<a >Se endringshistorikk</a>
+      <strong>Sist endret:</strong>
+      {' '}
+      <FontAwesome name="user" />
+      {' '}
+      {getValue(store, 'doneBy')}
+      {' '}
+      <FontAwesome name="clock-o" />
+      {' '}
+      {getValue(store, 'eventDate')}
+      {' '}
+      <a>Se endringshistorikk</a>
     </Col>
     <NewLine />
     <Form>
@@ -117,11 +143,7 @@ const AnalysisView = ({store} : Props) => (
         />
       </FormGroup>
       <FormGroup>
-        <AddButton
-          id="1"
-          label="Legg til saksnummer"
-          md={5}
-        />
+        <AddButton id="1" label="Legg til saksnummer" md={5} />
       </FormGroup>
     </Form>
     <NewLine />
@@ -130,23 +152,18 @@ const AnalysisView = ({store} : Props) => (
       <Col mdOffset={1} md={5}>
         <Table responsive>
           <thead>
-          <tr>
-            <th>Museumsnr</th>
-            <th>Unr</th>
-            <th>Term/artsnavn</th>
-          </tr>
+            <tr>
+              <th>Museumsnr</th>
+              <th>Unr</th>
+              <th>Term/artsnavn</th>
+            </tr>
           </thead>
           <tbody>
-          {getObjectsValue(store)}
+            {getObjectsValue(store)}
           </tbody>
         </Table>
       </Col>
-      <AddButton
-        id="2"
-        label="Legg til objekt"
-        md={11}
-        mdOffset={1}
-      />
+      <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
     </Form>
     <NewLine />
     <Form horizontal style={{ paddingLeft: 20 }}>
@@ -168,11 +185,7 @@ const AnalysisView = ({store} : Props) => (
             <option value="other">...</option>
           </FormControl>
         </Col>
-        <AddButton
-          id="3"
-          label="Legg til person"
-          md={2}
-        />
+        <AddButton id="3" label="Legg til person" md={2} />
       </FormGroup>
     </Form>
     <NewLine />
@@ -210,11 +223,7 @@ const AnalysisView = ({store} : Props) => (
           </Col>
         </FormGroup>
         <FormGroup>
-          <FieldGroup
-            id="formControlsText"
-            type="text"
-            label="Ladt opp fil"
-          />
+          <FieldGroup id="formControlsText" type="text" label="Ladt opp fil" />
           <Col md={2}>
             <Button disabled>Bla gjennom</Button>
           </Col>
@@ -242,7 +251,11 @@ const AnalysisView = ({store} : Props) => (
           </Col>
         </FormGroup>
         <FormGroup>
-          <Panel collapsible expanded style={{border:'none', backgroundColor: '#f5f5f5'}}>
+          <Panel
+            collapsible
+            expanded
+            style={{ border: 'none', backgroundColor: '#f5f5f5' }}
+          >
             <FormGroup>
               <FieldGroup
                 id="navn"
@@ -287,8 +300,7 @@ const AnalysisView = ({store} : Props) => (
       </Form>
     </Well>
     <Form horizontal style={{ paddingLeft: 20 }}>
-      <FormGroup
-      >
+      <FormGroup>
         {labelFormat('Kommentar til analysen', 1)}
         <Col md={5}>
           <FormControl
@@ -321,13 +333,17 @@ const AnalysisView = ({store} : Props) => (
         <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}>{getValue(store, 'registeredByName')} - {getValue(store, 'registeredDate')}</Col>
+        <Col mdOffset={1}>
+          {getValue(store, 'registeredByName')} - {getValue(store, 'registeredDate')}
+        </Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}>{getValue(store, 'doneBy')} - {getValue(store, 'eventDate')}</Col>
+        <Col mdOffset={1}>
+          {getValue(store, 'doneBy')} - {getValue(store, 'eventDate')}
+        </Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}><a href=''>Se mer</a></Col>
+        <Col mdOffset={1}><a href="">Se mer</a></Col>
       </FormGroup>
     </Form>
   </div>

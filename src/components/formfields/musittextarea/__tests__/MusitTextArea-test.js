@@ -30,7 +30,7 @@ describe('MusitTextArea', () => {
         value=""
         onChange={() => null}
       />
-      );
+    );
 
     const actualDiv = ReactDOM.findDOMNode(myDiv);
     const field = actualDiv.querySelectorAll('textarea')[0];
@@ -46,7 +46,7 @@ describe('MusitTextArea', () => {
         value="123454566"
         onChange={() => null}
       />
-      );
+    );
 
     const actualDiv = ReactDOM.findDOMNode(myDiv);
     const field = actualDiv.querySelectorAll('textarea')[0];

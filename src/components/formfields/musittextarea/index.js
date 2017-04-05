@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -22,7 +21,6 @@ import React, { Component, PropTypes } from 'react';
 import validate from '../common/validators';
 
 export default class MusitTextArea extends Component {
-
   static propTypes = {
     value: PropTypes.string, // Should be any
     placeHolder: PropTypes.string,
@@ -34,7 +32,7 @@ export default class MusitTextArea extends Component {
     precision: PropTypes.number,
     numberOfRows: PropTypes.number,
     disabled: PropTypes.bool
-  }
+  };
 
   classNameOnlyWithInput() {
     let lvString = '';
@@ -47,17 +45,17 @@ export default class MusitTextArea extends Component {
   }
 
   render() {
-    const lcPlaceholder = 
+    const lcPlaceholder = (
       <textarea
         className="form-control"
         placeholder={this.props.placeHolder}
         value={this.props.value}
         rows={this.props.numberOfRows}
         disabled={this.props.disabled}
-        onChange={(event) => this.props.onChange(event.target.value)}
+        onChange={event => this.props.onChange(event.target.value)}
         title={this.props.tooltip}
-      />;
-    
+      />
+    );
 
     return (
       <div className={this.classNameOnlyWithInput()}>
