@@ -26,7 +26,11 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import AddressSuggest from '../../components/suggest/AddressSuggest';
 import Loader from 'react-loader';
 import { parseISODate } from '../../shared/util';
-import { MusitTextArea as TextArea, MusitDropDownField, MusitField as Field } from '../../components/formfields';
+import {
+  MusitTextArea as TextArea,
+  MusitDropDownField,
+  MusitField as Field
+} from '../../components/formfields';
 import validateForm from './nodeValidator';
 import { I18n } from 'react-i18nify';
 
@@ -39,7 +43,7 @@ export default class NodeDetails extends Component {
     path: React.PropTypes.arrayOf(React.PropTypes.object),
     loaded: React.PropTypes.bool.isRequired,
     updateState: React.PropTypes.func.isRequired
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -66,19 +70,19 @@ export default class NodeDetails extends Component {
 
   updateEnvRequirements(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.environmentRequirement = {...newData.environmentRequirement, [key]: value};
+    newData.environmentRequirement = { ...newData.environmentRequirement, [key]: value };
     this.props.updateState(newData);
   }
 
   updateEnvAssessments(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.environmentAssessment = {...newData.environmentAssessment, [key]: value};
+    newData.environmentAssessment = { ...newData.environmentAssessment, [key]: value };
     this.props.updateState(newData);
   }
 
   updateSecAssessments(data, key, value) {
     const newData = Object.assign({}, data);
-    newData.securityAssessment = {...newData.securityAssessment, [key]: value};
+    newData.securityAssessment = { ...newData.securityAssessment, [key]: value };
     this.props.updateState(newData);
   }
 
@@ -146,7 +150,8 @@ export default class NodeDetails extends Component {
       <div>
         <Checkbox
           checked={!!this.props.unit.securityAssessment[field]}
-          onChange={(event) => this.updateSecAssessments(this.props.unit, field, event.target.checked)}
+          onChange={event =>
+            this.updateSecAssessments(this.props.unit, field, event.target.checked)}
         >
           {I18n.t(`musit.storageUnits.securityAssessment.${field}`)}
         </Checkbox>
@@ -159,7 +164,8 @@ export default class NodeDetails extends Component {
       <div>
         <Checkbox
           checked={!!this.props.unit.environmentAssessment[field]}
-          onChange={(event) => this.updateEnvAssessments(this.props.unit, field, event.target.checked)}
+          onChange={event =>
+            this.updateEnvAssessments(this.props.unit, field, event.target.checked)}
         >
           {I18n.t(`musit.storageUnits.environmentalAssessment.${field}`)}
         </Checkbox>
@@ -186,9 +192,12 @@ export default class NodeDetails extends Component {
     const lastUpdateBy = unit.updatedByName;
     return (
       <span>
-        <b>{I18n.t('musit.storageUnits.lastUpdateBy')}</b> {this.props.isAdd ? '' : lastUpdateBy}
+        <b>{I18n.t('musit.storageUnits.lastUpdateBy')}</b>
+        {' '}
+        {this.props.isAdd ? '' : lastUpdateBy}
         <br />
-        <b>{I18n.t('musit.storageUnits.lastUpdateDate')}</b>{this.props.isAdd ? '' : lastUpdateDate}
+        <b>{I18n.t('musit.storageUnits.lastUpdateDate')}</b>
+        {this.props.isAdd ? '' : lastUpdateDate}
       </span>
     );
   }
@@ -204,7 +213,7 @@ export default class NodeDetails extends Component {
               <Row>
                 <Col md={9}>
                   <form
-                    onKeyDown={(e) => {
+                    onKeyDown={e => {
                       if (e.keyCode === 13 && e.target.type !== 'textarea') {
                         e.preventDefault();
                       }
@@ -213,7 +222,9 @@ export default class NodeDetails extends Component {
                   >
                     <div>
                       <h4 style={{ textAlign: 'center' }}>
-                        {this.props.isAdd ? `${I18n.t('musit.storageUnits.newNode')} - ` : ''}
+                        {this.props.isAdd
+                          ? `${I18n.t('musit.storageUnits.newNode')} - `
+                          : ''}
                         {I18n.t('musit.storageUnits.header')}
                       </h4>
                       <Grid>
@@ -221,20 +232,35 @@ export default class NodeDetails extends Component {
                           <Col md={5}>
                             <Form horizontal>
                               <div className="form-group">
-                                <label className="col-sm-3 control-label" htmlFor="storageUnitType">
+                                <label
+                                  className="col-sm-3 control-label"
+                                  htmlFor="storageUnitType"
+                                >
                                   {I18n.t('musit.storageUnits.type.labelText')}
-                                  { <span style={{ color: 'red' }}>*</span> }
+                                  {<span style={{ color: 'red' }}>*</span>}
                                 </label>
                                 <div class="col-sm-4" is="null">
                                   <MusitDropDownField
                                     id="type"
                                     validate="text"
                                     tooltip={I18n.t('musit.storageUnits.type.tooltip')}
-                                    placeHolder={I18n.t('musit.storageUnits.type.placeHolder')}
+                                    placeHolder={I18n.t(
+                                      'musit.storageUnits.type.placeHolder'
+                                    )}
                                     maximumLength={100}
-                                    items={['StorageUnit', 'Room', 'Building', 'Organisation']}
+                                    items={[
+                                      'StorageUnit',
+                                      'Room',
+                                      'Building',
+                                      'Organisation'
+                                    ]}
                                     translateKeyPrefix={'musit.storageUnits.type.items.'}
-                                    onChange={storageType => this.updateStorageUnit(this.props.unit, 'type', storageType)}
+                                    onChange={storageType =>
+                                      this.updateStorageUnit(
+                                        this.props.unit,
+                                        'type',
+                                        storageType
+                                      )}
                                     value={this.props.unit.type}
                                     disabled={!this.props.isAdd}
                                   />
@@ -249,15 +275,22 @@ export default class NodeDetails extends Component {
                               <FormGroup>
                                 <label className="col-sm-3 control-label" htmlFor="name">
                                   {I18n.t('musit.storageUnits.name.labelText')}
-                                  { <span style={{ color: 'red' }}>*</span> }
+                                  {<span style={{ color: 'red' }}>*</span>}
                                 </label>
                                 <div class="col-sm-8" is="null">
                                   <Field
                                     id="name"
                                     tooltip={I18n.t('musit.storageUnits.name.tooltip')}
                                     validate="text"
-                                    placeHolder={I18n.t('musit.storageUnits.name.placeHolder')}
-                                    onChange={storageUnitName => this.updateStorageUnit(this.props.unit, 'name', storageUnitName)}
+                                    placeHolder={I18n.t(
+                                      'musit.storageUnits.name.placeHolder'
+                                    )}
+                                    onChange={storageUnitName =>
+                                      this.updateStorageUnit(
+                                        this.props.unit,
+                                        'name',
+                                        storageUnitName
+                                      )}
                                     maximumLength={100}
                                     value={this.props.unit.name || ''}
                                   />
@@ -266,11 +299,14 @@ export default class NodeDetails extends Component {
                             </Form>
                           </Col>
                           <Col md={5}>
-                            {(this.props.unit.type === 'Building'
-                            || this.props.unit.type === 'Organisation') &&
+                            {(this.props.unit.type === 'Building' ||
+                              this.props.unit.type === 'Organisation') &&
                               <Form horizontal>
                                 <FormGroup>
-                                  <label className="col-sm-3 control-label" htmlFor="address">
+                                  <label
+                                    className="col-sm-3 control-label"
+                                    htmlFor="address"
+                                  >
                                     {I18n.t('musit.storageUnits.address.labelText')}
                                   </label>
                                   <div class="col-sm-8" is="null">
@@ -278,27 +314,42 @@ export default class NodeDetails extends Component {
                                       id="addressField"
                                       value={this.props.unit.address}
                                       placeHolder="Find address"
-                                      onChange={(address) => {
-                                        this.updateStorageUnit(this.props.unit, 'address', address);
+                                      onChange={address => {
+                                        this.updateStorageUnit(
+                                          this.props.unit,
+                                          'address',
+                                          address
+                                        );
                                       }}
                                     />
                                   </div>
                                 </FormGroup>
-                              </Form>
-                            }
+                              </Form>}
                           </Col>
                         </Row>
                         <Row className="row-centered">
                           <Col md={5}>
                             <Form horizontal>
                               <div className="form-group">
-                                <label className="col-sm-3 control-label" htmlFor="comments2">
-                                  {I18n.t('musit.storageUnits.area.labelText')}</label>
+                                <label
+                                  className="col-sm-3 control-label"
+                                  htmlFor="comments2"
+                                >
+                                  {I18n.t('musit.storageUnits.area.labelText')}
+                                </label>
                                 <div class="col-sm-4" is="null">
-                                  {this.renderStorageUnitNumberField('area', this.props.unit, 3)}
+                                  {this.renderStorageUnitNumberField(
+                                    'area',
+                                    this.props.unit,
+                                    3
+                                  )}
                                 </div>
                                 <div class="col-sm-4" is="null">
-                                  {this.renderStorageUnitNumberField('areaTo', this.props.unit, 3)}
+                                  {this.renderStorageUnitNumberField(
+                                    'areaTo',
+                                    this.props.unit,
+                                    3
+                                  )}
                                 </div>
                               </div>
                             </Form>
@@ -306,13 +357,25 @@ export default class NodeDetails extends Component {
                           <Col md={5}>
                             <Form horizontal>
                               <div className="form-group">
-                                <label className="col-sm-3 control-label" htmlFor="controlId">
-                                  {I18n.t('musit.storageUnits.height.labelText')}</label>
+                                <label
+                                  className="col-sm-3 control-label"
+                                  htmlFor="controlId"
+                                >
+                                  {I18n.t('musit.storageUnits.height.labelText')}
+                                </label>
                                 <div class="col-sm-4" is="null">
-                                  {this.renderStorageUnitNumberField('height', this.props.unit, 3)}
+                                  {this.renderStorageUnitNumberField(
+                                    'height',
+                                    this.props.unit,
+                                    3
+                                  )}
                                 </div>
                                 <div class="col-sm-4" is="null">
-                                  {this.renderStorageUnitNumberField('heightTo', this.props.unit, 3)}
+                                  {this.renderStorageUnitNumberField(
+                                    'heightTo',
+                                    this.props.unit,
+                                    3
+                                  )}
                                 </div>
                               </div>
                             </Form>
@@ -330,13 +393,25 @@ export default class NodeDetails extends Component {
                             <Col md={5}>
                               <Form horizontal>
                                 <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
-                                    {this.translateEnvReqField('temperature.labelText')}</label>
+                                  <label
+                                    className="col-sm-3 control-label"
+                                    htmlFor="comments2"
+                                  >
+                                    {this.translateEnvReqField('temperature.labelText')}
+                                  </label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderEnvReqNumberField('temperature', this.props.unit, 3)}
+                                    {this.renderEnvReqNumberField(
+                                      'temperature',
+                                      this.props.unit,
+                                      3
+                                    )}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderEnvReqNumberField('temperatureTolerance', this.props.unit, 0)}
+                                    {this.renderEnvReqNumberField(
+                                      'temperatureTolerance',
+                                      this.props.unit,
+                                      0
+                                    )}
                                   </div>
                                 </div>
                               </Form>
@@ -344,13 +419,27 @@ export default class NodeDetails extends Component {
                             <Col md={5}>
                               <Form horizontal>
                                 <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
-                                    {this.translateEnvReqField('relativeHumidity.labelText')}</label>
+                                  <label
+                                    className="col-sm-3 control-label"
+                                    htmlFor="comments2"
+                                  >
+                                    {this.translateEnvReqField(
+                                      'relativeHumidity.labelText'
+                                    )}
+                                  </label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderEnvReqNumberField('relativeHumidity', this.props.unit, 3)}
+                                    {this.renderEnvReqNumberField(
+                                      'relativeHumidity',
+                                      this.props.unit,
+                                      3
+                                    )}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderEnvReqNumberField('relativeHumidityTolerance', this.props.unit, 0)}
+                                    {this.renderEnvReqNumberField(
+                                      'relativeHumidityTolerance',
+                                      this.props.unit,
+                                      0
+                                    )}
                                   </div>
                                 </div>
                               </Form>
@@ -360,13 +449,25 @@ export default class NodeDetails extends Component {
                             <Col md={5}>
                               <Form horizontal>
                                 <div className="form-group">
-                                  <label className="col-sm-3 control-label" htmlFor="comments2">
-                                    {this.translateEnvReqField('hypoxicAir.labelText')}</label>
+                                  <label
+                                    className="col-sm-3 control-label"
+                                    htmlFor="comments2"
+                                  >
+                                    {this.translateEnvReqField('hypoxicAir.labelText')}
+                                  </label>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderEnvReqNumberField('hypoxicAir', this.props.unit, 3)}
+                                    {this.renderEnvReqNumberField(
+                                      'hypoxicAir',
+                                      this.props.unit,
+                                      3
+                                    )}
                                   </div>
                                   <div class="col-sm-4" is="null">
-                                    {this.renderEnvReqNumberField('hypoxicAirTolerance', this.props.unit, 0)}
+                                    {this.renderEnvReqNumberField(
+                                      'hypoxicAirTolerance',
+                                      this.props.unit,
+                                      0
+                                    )}
                                   </div>
                                 </div>
                               </Form>
@@ -397,39 +498,48 @@ export default class NodeDetails extends Component {
                         <Grid>
                           <Row>
                             <Col lg={5} md={5} sm={5} xs={10} offset={1}>
-                              <ControlLabel>{I18n.t('musit.storageUnits.securityAssessment.securityAssessment')}
+                              <ControlLabel>
+                                {I18n.t(
+                                  'musit.storageUnits.securityAssessment.securityAssessment'
+                                )}
                               </ControlLabel>
                               {this.renderSecurityAssessmentField('perimeter')}
                               {this.renderSecurityAssessmentField('theftProtection')}
                               {this.renderSecurityAssessmentField('fireProtection')}
                               {this.renderSecurityAssessmentField('waterDamage')}
-                              {this.renderSecurityAssessmentField('routinesAndContingencyPlan')}
+                              {this.renderSecurityAssessmentField(
+                                'routinesAndContingencyPlan'
+                              )}
                             </Col>
                             <Col lg={5} md={5} sm={5} xs={10} offset={1}>
                               <ControlLabel>
-                                {I18n.t('musit.storageUnits.environmentalAssessment.environmentalAssessment')}
+                                {I18n.t(
+                                  'musit.storageUnits.environmentalAssessment.environmentalAssessment'
+                                )}
                               </ControlLabel>
                               {this.renderEnvironmentAssessmentField('relativeHumidity')}
                               {this.renderEnvironmentAssessmentField('lightingCondition')}
                               {this.renderEnvironmentAssessmentField('temperature')}
-                              {this.renderEnvironmentAssessmentField('preventiveConservation')}
+                              {this.renderEnvironmentAssessmentField(
+                                'preventiveConservation'
+                              )}
                             </Col>
                           </Row>
                         </Grid>}
                       <Grid>
                         <Row>
                           <br />
-                          {this.props.unit.errors && values(this.props.unit.errors).map((error, index) => {
-                            return <p style={{ color: 'red' }} key={index}>{error}</p>;
-                          })}
+                          {this.props.unit.errors &&
+                            values(this.props.unit.errors).map((error, index) => {
+                              return <p style={{ color: 'red' }} key={index}>{error}</p>;
+                            })}
                           <br />
                           {this.props.loaded &&
-                          <SaveCancel
-                            saveDisabled={this.props.loading}
-                            onClickSave={this.handleSubmit}
-                            onClickCancel={() => hashHistory.goBack()}
-                          />
-                          }
+                            <SaveCancel
+                              saveDisabled={this.props.loading}
+                              onClickSave={this.handleSubmit}
+                              onClickCancel={() => hashHistory.goBack()}
+                            />}
                         </Row>
                         <Row>
                           <Col sm={8} />
@@ -437,7 +547,7 @@ export default class NodeDetails extends Component {
                             {this.renderLastChangeData(this.props.unit)}
                           </Col>
                         </Row>
-                        </Grid>
+                      </Grid>
                     </div>
                   </form>
                 </Col>

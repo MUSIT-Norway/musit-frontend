@@ -1,6 +1,6 @@
 import React from 'react';
 import EventsComponent from '../EventsComponent';
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 
 describe('EventsComponent', () => {

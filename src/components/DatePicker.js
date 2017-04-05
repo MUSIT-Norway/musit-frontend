@@ -5,12 +5,11 @@ import { DATE_FORMAT_DISPLAY } from '../shared/util';
 
 import DatePicker from 'react-bootstrap-date-picker';
 
-
 const getNow = () => {
   return formatISOString(new Date());
 };
 
-const MusitDatePicker = (props) => {
+const MusitDatePicker = props => {
   return (
     <DatePicker
       dateFormat={props.dateFormat}

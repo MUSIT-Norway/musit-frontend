@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react';
 import { Button, Row, Col } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -9,16 +8,16 @@ export default class ObservationControlComponent extends Component {
     id: PropTypes.string.isRequired,
     onClickNewObservation: PropTypes.func.isRequired,
     onClickNewControl: PropTypes.func.isRequired
-  }
+  };
 
   render() {
     const { id, onClickNewControl, onClickNewObservation } = this.props;
-    const getTranslate = (term) => I18n.t(`musit.leftMenu.observationControl.${term}`);
+    const getTranslate = term => I18n.t(`musit.leftMenu.observationControl.${term}`);
     const buttonLogic = (type, eventType) => {
       return (
         <Button
           id={`${id}_${type}`}
-          onClick={(event) => eventType(event.target.value)}
+          onClick={event => eventType(event.target.value)}
           style={{ textAlign: 'left', width: '100%' }}
         >
           <FontAwesome name="plus-circle" style={{ padding: '2px' }} />

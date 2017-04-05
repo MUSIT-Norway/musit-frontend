@@ -7,7 +7,7 @@ describe('ModalNodeGrid', () => {
   it('should match snapshot', () => {
     const wrapper = shallow(
       <ModalNodeGrid
-        onClick={(key) => key}
+        onClick={key => key}
         tableData={[
           {
             name: 'Eske',

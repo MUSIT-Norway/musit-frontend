@@ -9,12 +9,15 @@ import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
 import Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
-import {emitError} from '../../shared/errors';
+import { emitError } from '../../shared/errors';
 import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
-import { AppSession } from './appSession';
+import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
-import { clearObjects$ as clearObjectPicklist$, clearNodes$ as clearNodePicklist$ } from './pickList';
+import {
+  clearObjects$ as clearObjectPicklist$,
+  clearNodes$ as clearNodePicklist$
+} from './pickList';
 import Config from '../../config';
 
 export class AppComponent extends Component {
@@ -49,12 +52,14 @@ export class AppComponent extends Component {
       headers: new Headers({
         Authorization: 'Bearer ' + this.props.appSession.getAccessToken()
       })
-    }).then(response => {
-      if (response.ok) {
-        localStorage.removeItem('accessToken');
-        window.location.replace('https://auth.dataporten.no/logout');
-      }
-    }).catch(error => emitError({ type: 'network', error}));
+    })
+      .then(response => {
+        if (response.ok) {
+          localStorage.removeItem('accessToken');
+          window.location.replace('https://auth.dataporten.no/logout');
+        }
+      })
+      .catch(error => emitError({ type: 'network', error }));
   }
 
   handleLanguage(l) {
@@ -67,7 +72,7 @@ export class AppComponent extends Component {
     this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
-    const localAppSession = this.props.appSession.copy({museumId, collectionId});
+    const localAppSession = this.props.appSession.copy({ museumId, collectionId });
     this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
   }
 
@@ -75,21 +80,25 @@ export class AppComponent extends Component {
     this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
     const nodeId = this.props.params.id;
-    const localAppSession = this.props.appSession.copy({collectionId});
+    const localAppSession = this.props.appSession.copy({ collectionId });
     if (nodeId) {
-      this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession));
+      this.props.goTo(
+        Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession)
+      );
     } else {
-      this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
+      this.props.goTo(
+        Config.magasin.urls.client.storagefacility.goToRoot(localAppSession)
+      );
     }
   }
 
-  getFooterClass(){
+  getFooterClass() {
     let returnClassName;
     if (window.location.href.toLowerCase().includes('test:')) {
       returnClassName = 'footer backgroundUTV';
     } else if (window.location.href.toLowerCase().includes('utv.uio.no')) {
       returnClassName = 'footer backgroundUTV';
-    } else if (window.location.href.toLowerCase().includes('test.uio.no')){
+    } else if (window.location.href.toLowerCase().includes('test.uio.no')) {
       returnClassName = 'footer backgroundTEST';
     } else {
       returnClassName = 'footer version well';
@@ -103,9 +112,7 @@ export class AppComponent extends Component {
 
   render() {
     if (!this.props.appSession.getAccessToken()) {
-      return (
-        <LoginComponent />
-      );
+      return <LoginComponent />;
     }
 
     if (!this.isSessionLoaded()) {
@@ -114,7 +121,7 @@ export class AppComponent extends Component {
 
     return (
       <div>
-        <Navbar fixedTop style={{ zIndex:1 }}>
+        <Navbar fixedTop style={{ zIndex: 1 }}>
           <Navbar.Header>
             <Navbar.Brand>
               <IndexLink to={'/about'} activeStyle={{ color: '#33e0ff' }}>
@@ -128,36 +135,72 @@ export class AppComponent extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav navbar>
-              <LinkContainer to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}>
-                <NavItem>{ I18n.t('musit.texts.magazine') }</NavItem>
+              <LinkContainer
+                to={Config.magasin.urls.client.magasin.goToMagasin(this.props.appSession)}
+              >
+                <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
               </LinkContainer>
               {this.props.enableAnalysis &&
-              <NavDropdown title={I18n.t('musit.analysis.analysis')} id="analysis-dropdown">
-                <LinkContainer to={Config.magasin.urls.client.analysis.addAnalysis(this.props.appSession)}>
-                  <MenuItem>
-                    {I18n.t('musit.analysis.registeringAnalysis')}
-                  </MenuItem>
-                </LinkContainer>
-                <LinkContainer to={Config.magasin.urls.client.analysis.addSample(this.props.appSession)}>
-                  <MenuItem>
-                    {I18n.t('musit.analysis.registeringSample')}
-                  </MenuItem>
-                </LinkContainer>
-              </NavDropdown>
-              }
-              <LinkContainer to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}>
-                <NavItem>{ I18n.t('musit.reports.reports') }</NavItem>
+                <NavDropdown
+                  title={I18n.t('musit.analysis.analysis')}
+                  id="analysis-dropdown"
+                >
+                  <LinkContainer
+                    to={Config.magasin.urls.client.analysis.addAnalysis(
+                      this.props.appSession
+                    )}
+                  >
+                    <MenuItem>
+                      {I18n.t('musit.analysis.registeringAnalysis')}
+                    </MenuItem>
+                  </LinkContainer>
+                  <LinkContainer
+                    to={Config.magasin.urls.client.analysis.addSample(
+                      this.props.appSession
+                    )}
+                  >
+                    <MenuItem>
+                      {I18n.t('musit.analysis.registeringSample')}
+                    </MenuItem>
+                  </LinkContainer>
+                </NavDropdown>}
+              <LinkContainer
+                to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}
+              >
+                <NavItem>{I18n.t('musit.reports.reports')}</NavItem>
               </LinkContainer>
             </Nav>
             <Nav pullRight>
-              <LinkContainer to={Config.magasin.urls.client.picklist.goToPicklistNodes(this.props.appSession)}>
-                <NavItem><span className="icon icon-musitpicklistnode" />{' '}{this.props.pickList.nodes.length}</NavItem>
+              <LinkContainer
+                to={Config.magasin.urls.client.picklist.goToPicklistNodes(
+                  this.props.appSession
+                )}
+              >
+                <NavItem>
+                  <span className="icon icon-musitpicklistnode" />
+                  {' '}
+                  {this.props.pickList.nodes.length}
+                </NavItem>
               </LinkContainer>
-              <LinkContainer to={Config.magasin.urls.client.picklist.goToPicklistObjects(this.props.appSession)}>
-                <NavItem><span className="icon icon-musitpicklistobject" />{' '}{this.props.pickList.objects.length}</NavItem>
+              <LinkContainer
+                to={Config.magasin.urls.client.picklist.goToPicklistObjects(
+                  this.props.appSession
+                )}
+              >
+                <NavItem>
+                  <span className="icon icon-musitpicklistobject" />
+                  {' '}
+                  {this.props.pickList.objects.length}
+                </NavItem>
               </LinkContainer>
-              <LinkContainer to={Config.magasin.urls.client.searchObjects.goToSearchObjects(this.props.appSession)}>
-                <NavItem><FontAwesome name="search" style={{ fontSize: '1.3em', height: 25 }} /></NavItem>
+              <LinkContainer
+                to={Config.magasin.urls.client.searchObjects.goToSearchObjects(
+                  this.props.appSession
+                )}
+              >
+                <NavItem>
+                  <FontAwesome name="search" style={{ fontSize: '1.3em', height: 25 }} />
+                </NavItem>
               </LinkContainer>
               <MusitUserAccount
                 actor={this.props.appSession.getActor()}

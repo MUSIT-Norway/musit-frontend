@@ -6,14 +6,13 @@ import NodeGrid from '../NodeTable';
 import { expect as e } from 'chai';
 import MusitNode from '../../../models/node';
 
-describe ('NodeTable' ,() => {
-
+describe('NodeTable', () => {
   const tableData = [
     new MusitNode({ name: 'NHM', type: 'Organisation', isRootNode: () => true }),
     new MusitNode({ name: 'KHM', type: 'Organisation', isRootNode: () => true }),
     new MusitNode({ name: 'Bygg 1', type: 'Building', isRootNode: () => false }),
-    new MusitNode({ name: 'Bygg 2', type: 'Building' , isRootNode: () => false }),
-    new MusitNode({ name: 'Rom 1', type: 'Room' , isRootNode: () => false })
+    new MusitNode({ name: 'Bygg 2', type: 'Building', isRootNode: () => false }),
+    new MusitNode({ name: 'Rom 1', type: 'Room', isRootNode: () => false })
   ];
 
   const onClick = sinon.spy();
@@ -23,56 +22,52 @@ describe ('NodeTable' ,() => {
   const dummyArg = { preventDefault: () => null };
   const wrapper = shallow(
     <NodeGrid
-      tableData={ tableData }
+      tableData={tableData}
       goToEvents={goToEvents}
       pickNode={pickNode}
       onMove={onMove}
       onClick={onClick}
-      onLagreClick={(k) => k }
-      loaded={ true }
-      updateState={(k) => k }
-      isNodeAdded={(k) => k }
+      onLagreClick={k => k}
+      loaded={true}
+      updateState={k => k}
+      isNodeAdded={k => k}
     />
   );
-
 
   it('should render properly ', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-
   it('check content', () => {
-    wrapper.find('tr').forEach( (node, index) => {
+    wrapper.find('tr').forEach((node, index) => {
       if (index) {
-        const name = tableData[index-1].name;
+        const name = tableData[index - 1].name;
         e(node.find('td').first().last().text()).to.contain(name);
       }
     });
   });
 
   it('check count', () => {
-    e(wrapper.find('tr')).to.have.length((tableData.length+1));
+    e(wrapper.find('tr')).to.have.length(tableData.length + 1);
   });
 
-
   it('check clickNameClick', () => {
-    wrapper.find('.onClickName').first().simulate('click',dummyArg);
+    wrapper.find('.onClickName').first().simulate('click', dummyArg);
     e(onClick.calledOnce).to.equal(true);
   });
 
-
   it('check click onMove', () => {
-    wrapper.find('.onMoveClick').first().simulate('click',dummyArg);
+    wrapper.find('.onMoveClick').first().simulate('click', dummyArg);
     e(onMove.calledOnce).to.equal(true);
   });
 
   it('check click goToEventClick', () => {
-    wrapper.find('.goToEventClick').first().simulate('click',dummyArg);
+    wrapper.find('.goToEventClick').first().simulate('click', dummyArg);
     e(goToEvents.calledOnce).to.equal(true);
   });
 
   it('check click onPickClick', () => {
-    wrapper.find('.onPickClick').first().simulate('click',dummyArg);
+    wrapper.find('.onPickClick').first().simulate('click', dummyArg);
     e(pickNode.calledOnce).to.equal(true);
   });
 });

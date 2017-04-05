@@ -1,6 +1,4 @@
-import {
-  mapToBackend
-} from '../to_backend';
+import { mapToBackend } from '../to_backend';
 import Actor from '../../../../models/actor';
 
 describe('ControlMapperReducer', () => {
@@ -23,9 +21,7 @@ describe('ControlMapperReducer', () => {
       observations: [
         {
           type: 'hypoxicAir',
-          data: {
-
-          }
+          data: {}
         },
         {
           type: 'lightCondition',

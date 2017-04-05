@@ -5,7 +5,6 @@ import SaveCancel from '../SaveCancel';
 import sinon from 'sinon';
 
 describe('SaveCancel snapshot', () => {
-
   it('should match snapshot', () => {
     const onClickSave = sinon.spy();
     const wrapper = shallow(
@@ -22,9 +21,9 @@ describe('SaveCancel snapshot', () => {
 
   it('should react on clickCancel', () => {
     const onClickSave = sinon.spy();
-    const onClickCancel= sinon.spy();
+    const onClickCancel = sinon.spy();
     const wrapper = shallow(
-      <SaveCancel onClickCancel={onClickCancel} onClickSave={onClickSave}/>
+      <SaveCancel onClickCancel={onClickCancel} onClickSave={onClickSave} />
     );
     wrapper.find('.cancelButton').simulate('click');
     expect(onClickSave.calledOnce).toBe(false);
@@ -33,13 +32,12 @@ describe('SaveCancel snapshot', () => {
 
   it('should react on clickSave', () => {
     const onClickSave = sinon.spy();
-    const onClickCancel= sinon.spy();
+    const onClickCancel = sinon.spy();
     const wrapper = shallow(
-      <SaveCancel onClickCancel={onClickCancel} onClickSave={onClickSave}/>
+      <SaveCancel onClickCancel={onClickCancel} onClickSave={onClickSave} />
     );
     wrapper.find('.submitButton').simulate('click');
     expect(onClickSave.calledOnce).toBe(true);
     expect(onClickCancel.calledOnce).toBe(false);
   });
 });
-

@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -47,20 +46,21 @@ export default class ObservationFromToNumberCommentComponent extends Component {
     onChangeComment: PropTypes.func.isRequired,
     // Other
     disabled: PropTypes.bool
-  }
+  };
 
   static defaultProps = {
     fromValue: '',
     toValue: '',
     commentValue: ''
-  }
+  };
 
   render() {
     return (
       <Row>
         <Col xs={12} sm={this.props.fromWidth} md={this.props.fromWidth}>
           <ControlLabel>
-            {this.props.fromLabel}{!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
+            {this.props.fromLabel}
+            {!this.props.disabled ? <span style={{ color: 'red' }}>*</span> : ''}
           </ControlLabel>
           <MusitField
             value={this.props.fromValue}

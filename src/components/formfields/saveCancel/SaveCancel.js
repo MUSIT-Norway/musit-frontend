@@ -1,10 +1,16 @@
-import React, {PropTypes} from 'react';
-import {Button, Row, Col} from 'react-bootstrap';
-import {I18n} from 'react-i18nify';
+import React, { PropTypes } from 'react';
+import { Button, Row, Col } from 'react-bootstrap';
+import { I18n } from 'react-i18nify';
 
-const SaveCancel = (props) => (
+const SaveCancel = props => (
   <Row>
-    <Col xs={6} sm={5} md={2} mdOffset={3} style={{ border: 'none', textAlign: 'center' }}>
+    <Col
+      xs={6}
+      sm={5}
+      md={2}
+      mdOffset={3}
+      style={{ border: 'none', textAlign: 'center' }}
+    >
       <Button
         id={`Save_${props.id || 1}`}
         onClick={props.onClickSave}

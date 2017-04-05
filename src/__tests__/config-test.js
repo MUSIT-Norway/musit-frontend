@@ -19,7 +19,6 @@ const appSession = new AppSession({
 });
 
 describe('Config urls', () => {
-
   const client = [
     {
       actual: urls.client.storagefacility.goToRoot(appSession),
@@ -131,17 +130,31 @@ describe('Config urls', () => {
       endpoints: [
         {
           name: 'scanOldUrl',
-          actual: urls.api.thingaggregate.scanOldUrl(1234, new MuseumId(99), new CollectionId('1234')),
+          actual: urls.api.thingaggregate.scanOldUrl(
+            1234,
+            new MuseumId(99),
+            new CollectionId('1234')
+          ),
           expected: '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
         },
         {
           name: 'getMainObject',
-          actual: urls.api.thingaggregate.getMainObject(new MuseumId(99), 2344, new CollectionId('1234')),
+          actual: urls.api.thingaggregate.getMainObject(
+            new MuseumId(99),
+            2344,
+            new CollectionId('1234')
+          ),
           expected: '/api/thingaggregate/museum/99/objects/2344/children?collectionIds=1234'
         },
         {
           name: 'getObjectForCollection',
-          actual: urls.api.thingaggregate.getObjectForCollection(new MuseumId(99), 433, new CollectionId('1234'), 1, 20),
+          actual: urls.api.thingaggregate.getObjectForCollection(
+            new MuseumId(99),
+            433,
+            new CollectionId('1234'),
+            1,
+            20
+          ),
           expected: '/api/thingaggregate/museum/99/node/433/objects?collectionIds=1234&page=1&limit=20'
         }
       ]
@@ -156,12 +169,18 @@ describe('Config urls', () => {
         },
         {
           name: 'getAnalysisTypesForCategory',
-          actual: urls.api.analysisType.getAnalysisTypesForCategory(new MuseumId(99), 123),
+          actual: urls.api.analysisType.getAnalysisTypesForCategory(
+            new MuseumId(99),
+            123
+          ),
           expected: '/api/management/99/analyses/types/categories/123'
         },
         {
           name: 'getAnalysisTypesForCollection',
-          actual: urls.api.analysisType.getAnalysisTypesForCollection(new MuseumId(99), 123),
+          actual: urls.api.analysisType.getAnalysisTypesForCollection(
+            new MuseumId(99),
+            123
+          ),
           expected: '/api/management/99/analyses/types/musemcollections/123'
         },
         {
@@ -194,17 +213,15 @@ describe('Config urls', () => {
   ];
 
   it('should have working client paths', () => {
-    client.forEach((test) => expect(test.actual).toEqual(test.expected));
+    client.forEach(test => expect(test.actual).toEqual(test.expected));
   });
 
-  serviceEndpoints.forEach(
-    (se) => describe(`Service api ${se.service}`, () => {
-      se.endpoints.forEach((t) => {
+  serviceEndpoints.forEach(se =>
+    describe(`Service api ${se.service}`, () => {
+      se.endpoints.forEach(t => {
         it(t.name, () => {
           expect(t.actual).toEqual(t.expected);
         });
       });
-    })
-  );
-
+    }));
 });

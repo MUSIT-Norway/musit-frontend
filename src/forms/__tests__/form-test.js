@@ -4,23 +4,24 @@ declare var it: any;
 
 import { TestScheduler, Subject } from 'rxjs/Rx';
 import assert from 'assert';
-import createForm  from '../form';
+import createForm from '../form';
 import { stringMapper } from '../mappers';
 import type { Field } from '../form';
 import type { Update } from '../form';
 const diff = require('deep-diff').diff;
 
-const minLength = (length: number) => (field: string) => (value: ?string) => {
-  const valid = value && value.length >= length;
-  if (!valid) {
-    return field + ' is not valid';
-  }
-};
+const minLength = (length: number) =>
+  (field: string) =>
+    (value: ?string) => {
+      const valid = value && value.length >= length;
+      if (!valid) {
+        return field + ' is not valid';
+      }
+    };
 
 const minimumThreeChars = minLength(3);
 
 describe('form stream', () => {
-
   it('should validate updates', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       // console.log(JSON.stringify(actual, null, 2));
@@ -33,9 +34,9 @@ describe('form stream', () => {
     });
 
     // mock streams
-    const loadM         = '----xyz--------';
-    const updateFieldM  = '-xyz-----------';
-    const expected      = 'abccdde--------';
+    const loadM = '----xyz--------';
+    const updateFieldM = '-xyz-----------';
+    const expected = 'abccdde--------';
 
     const validator = {
       rawValidator: minimumThreeChars

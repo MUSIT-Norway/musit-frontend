@@ -12,7 +12,7 @@ export default class NodeGrid extends Component {
     isNodeAdded: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired,
     onClick: PropTypes.func.isRequired
-  }
+  };
 
   render() {
     return (
@@ -36,63 +36,79 @@ export default class NodeGrid extends Component {
               <tbody>
                 {this.props.tableData.map((c, i) => {
                   const isRoot = c.isRootNode();
-                  return <tr key={i}>
-                    <td>
-                      <a className="onClickName"
-                        href=""
-                        onClick={(e) => {
-                          e.preventDefault();
-                          this.props.onClick(c);
-                        }}
-                      >
-                        <FontAwesome name="folder"/>
-                        {` ${c.name}`}
-                      </a>
-                    </td>
-                    <td>
-                      {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
-                    </td>
-                    <td>
-                      {!isRoot && <a className="goToEventClick"
-                        href=""
-                        onClick={(e) => {
-                          e.preventDefault();
-                          this.props.goToEvents(c);
-                        }}
-                        title={I18n.t('musit.grid.node.iconTooltip.observationAndControl')}
-                      >
-                        <span className="icon icon-musitcontrolobsicon"/>
-                      </a>}
-                    </td>
-                    <td>
-                      {!isRoot && <a className="onMoveClick"
-                        href=""
-                        onClick={(e) => {
-                          e.preventDefault();
-                          this.props.onMove(c);
-                        }}
-                        title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
-                      >
-                        <FontAwesome style={{ fontSize: '1.5em' }} name="truck"/>
-                      </a>}
-                    </td>
-                    <td>
-                      {!isRoot && <a className="onPickClick"
-                        href=""
-                        onClick={(e) => {
-                          e.preventDefault();
-                          this.props.pickNode(c);
-                        }}
-                        title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
-                      >
-                        { c && this.props.isNodeAdded(c) ?
-                          <FontAwesome style={{ fontSize: '1.5em', color: 'Gray' }} name="shopping-cart"/> :
-                          <FontAwesome style={{ fontSize: '1.5em' }} name="shopping-cart"/>
-                        }
+                  return (
+                    <tr key={i}>
+                      <td>
+                        <a
+                          className="onClickName"
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.onClick(c);
+                          }}
+                        >
+                          <FontAwesome name="folder" />
+                          {` ${c.name}`}
+                        </a>
+                      </td>
+                      <td>
+                        {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
+                      </td>
+                      <td>
+                        {!isRoot &&
+                          <a
+                            className="goToEventClick"
+                            href=""
+                            onClick={e => {
+                              e.preventDefault();
+                              this.props.goToEvents(c);
+                            }}
+                            title={I18n.t(
+                              'musit.grid.node.iconTooltip.observationAndControl'
+                            )}
+                          >
+                            <span className="icon icon-musitcontrolobsicon" />
+                          </a>}
+                      </td>
+                      <td>
+                        {!isRoot &&
+                          <a
+                            className="onMoveClick"
+                            href=""
+                            onClick={e => {
+                              e.preventDefault();
+                              this.props.onMove(c);
+                            }}
+                            title={I18n.t('musit.grid.node.iconTooltip.moveNode')}
+                          >
+                            <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
+                          </a>}
+                      </td>
+                      <td>
+                        {!isRoot &&
+                          <a
+                            className="onPickClick"
+                            href=""
+                            onClick={e => {
+                              e.preventDefault();
+                              this.props.pickNode(c);
+                            }}
+                            title={I18n.t('musit.grid.node.iconTooltip.addToPickList')}
+                          >
+                            {c && this.props.isNodeAdded(c)
+                              ? <FontAwesome
+                                  style={{ fontSize: '1.5em', color: 'Gray' }}
+                                  name="shopping-cart"
+                                />
+                              : <FontAwesome
+                                  style={{ fontSize: '1.5em' }}
+                                  name="shopping-cart"
+                                />}
 
-                      </a>}
-                    </td>
-                  </tr>;
+                          </a>}
+                      </td>
+                    </tr>
+                  );
                 })}
               </tbody>
             </Table>

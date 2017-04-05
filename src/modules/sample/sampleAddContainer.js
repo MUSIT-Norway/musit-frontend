@@ -3,14 +3,14 @@ import sampleForm from './sampleForm';
 import SampleFormAddComponent from './SampleAddComponent';
 import Sample from '../../models/sample';
 import React from 'react';
-import {Observable} from 'rxjs';
-import {emitError, emitSuccess} from '../../shared/errors';
+import { Observable } from 'rxjs';
+import { emitError, emitSuccess } from '../../shared/errors';
 import { toPromise } from '../../shared/util';
 
-const {form$, updateForm$, loadForm$} = sampleForm;
+const { form$, updateForm$, loadForm$ } = sampleForm;
 
 const data = {
-  appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   form$
 };
 
@@ -20,6 +20,6 @@ const props = {
   emitError
 };
 
-const commands = {updateForm$, loadForm$};
+const commands = { updateForm$, loadForm$ };
 
 export default inject(data, commands, props)(SampleFormAddComponent);

@@ -29,8 +29,8 @@ describe('ObjectSearchComponent', () => {
   ];
   const testData = {
     totalMatches: 20,
-    matches: Array(20).fill(new MusitObject(
-      {
+    matches: Array(20).fill(
+      new MusitObject({
         museumNo: '12345',
         subNo: '45',
         term: 'Fuglekasse',
@@ -38,8 +38,8 @@ describe('ObjectSearchComponent', () => {
         breadcrumb: getPath({ path, pathNames }),
         path: path,
         pathNames: pathNames
-      }
-    ))
+      })
+    )
   };
 
   it('should display object 1', () => {
@@ -70,7 +70,7 @@ describe('ObjectSearchComponent', () => {
         pickList={{
           objects: []
         }}
-        isItemAdded={() => ('hi')}
+        isItemAdded={() => 'hi'}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

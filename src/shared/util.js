@@ -3,13 +3,14 @@ import React from 'react';
 import moment from 'moment';
 import { Observable } from 'rxjs';
 
-export const toPromise = (fn: (val: {}) => Observable) => (val: {}) => fn(val).toPromise();
+export const toPromise = (fn: (val: {}) => Observable) =>
+  (val: {}) => fn(val).toPromise();
 
 export const flatten = (arr: []) => {
   const obj = {};
 
   for (let i = 0; i < arr.length; i++) {
-    Object.keys(arr[i]).forEach((x) => {
+    Object.keys(arr[i]).forEach(x => {
       obj[x] = arr[i][x];
     });
   }
@@ -21,8 +22,8 @@ export const filter = (arr: any[], fields: string[], pattern: string) => {
   const contains = (s: any, p: string) => {
     return (s || '').toString().toLowerCase().indexOf(p.toLowerCase()) !== -1;
   };
-  return arr.filter((row) => {
-    return fields.find((field) => contains(row[field], pattern));
+  return arr.filter(row => {
+    return fields.find(field => contains(row[field], pattern));
   });
 };
 
@@ -40,7 +41,11 @@ export const blur = () => {
   }
 };
 
-export const containsObjectWithField = (arr: any[], field: string, value: string): boolean => arr.filter((e) => e[field] === value).length > 0;
+export const containsObjectWithField = (
+  arr: any[],
+  field: string,
+  value: string
+): boolean => arr.filter(e => e[field] === value).length > 0;
 
 export const DATE_FORMAT_DISPLAY = 'DD.MM.YYYY';
 
@@ -51,7 +56,7 @@ export const parseUTCDate = (dateStr: string) => {
 export const parseISODate = (dateStr: string) => {
   return moment(new Date(dateStr));
 };
-export const formatISOString = (d: Date)=> {
+export const formatISOString = (d: Date) => {
   return moment(d).format('YYYY-MM-DDT00:00:00.000Z');
 };
 
@@ -67,14 +72,18 @@ export const hasProp = (obj: any, prop: string): boolean => {
   return {}.hasOwnProperty.call(obj, prop);
 };
 
-
 export const customSortingStorageNodeType = (type: string): string => {
   switch (type) {
-  case 'Organisation' : return '01';
-  case 'Building': return '02';
-  case 'Room': return '03';
-  case 'StorageUnit': return '04';
-  default: return '99';
+    case 'Organisation':
+      return '01';
+    case 'Building':
+      return '02';
+    case 'Room':
+      return '03';
+    case 'StorageUnit':
+      return '04';
+    default:
+      return '99';
   }
 };
 
@@ -108,11 +117,17 @@ export const apiUrl = (url: string): string => {
 };
 
 export const getPath = (node: any) => {
-  const nodeIds = (node.path != null ? node.path : '').split(',').slice(1).map(p => parseFloat(p)).filter(n => n);
-  const pathNames = node.pathNames || [{
-    nodeId: node.id,
-    name: node.name
-  }];
+  const nodeIds = (node.path != null ? node.path : '')
+    .split(',')
+    .slice(1)
+    .map(p => parseFloat(p))
+    .filter(n => n);
+  const pathNames = node.pathNames || [
+    {
+      nodeId: node.id,
+      name: node.name
+    }
+  ];
   return nodeIds.map(nodeId => {
     let pathMatch = pathNames.find(e => e.nodeId === nodeId);
     if (!pathMatch) {

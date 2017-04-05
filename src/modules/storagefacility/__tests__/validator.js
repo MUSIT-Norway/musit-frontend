@@ -5,7 +5,7 @@ describe('Test root level check for Organisation', () => {
     id: 1,
     name: 'root-node',
     path: ',1,',
-    pathNames:[
+    pathNames: [
       {
         nodeId: 1,
         name: 'root-node'
@@ -34,7 +34,11 @@ describe('Test root level check for Organisation', () => {
   };
 
   it('Check Organisation check fail', () => {
-    expect(validateForm(propTypes).type.includes('Bare typen organisasjon er tillatt på dette nivå.')).toBe(true);
+    expect(
+      validateForm(propTypes).type.includes(
+        'Bare typen organisasjon er tillatt på dette nivå.'
+      )
+    ).toBe(true);
   });
 
   const propTypesPass = JSON.parse(JSON.stringify(propTypes));
@@ -45,14 +49,13 @@ describe('Test root level check for Organisation', () => {
   });
 });
 
-
 describe('Test one level below the root level: check for building.', () => {
   const rootNode = {
     id: 2,
     name: 'Utviklingsmuseet',
-    isPartOf:1,
+    isPartOf: 1,
     path: ',1,2,',
-    pathNames:[
+    pathNames: [
       {
         nodeId: 1,
         name: 'root-node'
@@ -72,7 +75,7 @@ describe('Test one level below the root level: check for building.', () => {
 
   const unit = {
     name: 'Test name',
-    isPartOf:1,
+    isPartOf: 1,
     environmentRequirement: {},
     securityAssessment: {},
     environmentAssessment: {},
@@ -85,7 +88,9 @@ describe('Test one level below the root level: check for building.', () => {
   };
 
   it('Test building check fail', () => {
-    expect(validateForm(propTypes).type.includes('Bare typen bygg er tillatt på dette nivå.')).toBe(true);
+    expect(
+      validateForm(propTypes).type.includes('Bare typen bygg er tillatt på dette nivå.')
+    ).toBe(true);
   });
 
   const propTypesPass = JSON.parse(JSON.stringify(propTypes));
@@ -94,16 +99,15 @@ describe('Test one level below the root level: check for building.', () => {
   it('Test Building check pass:Error list is empty for Building', () => {
     expect(validateForm(propTypesPass).type).toBe(undefined);
   });
-
 });
 
 describe('Test three level below the root level: Organisation should allow anything.', () => {
   const rootNode = {
     id: 5,
     name: 'Utviklingsmuseet',
-    isPartOf:1,
+    isPartOf: 1,
     path: ',1,2,3,5',
-    pathNames:[
+    pathNames: [
       {
         nodeId: 1,
         name: 'root-node'
@@ -131,7 +135,7 @@ describe('Test three level below the root level: Organisation should allow anyth
 
   const unit = {
     name: 'Test name',
-    isPartOf:1,
+    isPartOf: 1,
     environmentRequirement: {},
     securityAssessment: {},
     environmentAssessment: {},
@@ -165,6 +169,4 @@ describe('Test three level below the root level: Organisation should allow anyth
   it('Test Building check pass:Error list is empty for Building', () => {
     expect(validateForm(propTypesPass).type).toBe(undefined);
   });
-
 });
-

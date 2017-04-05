@@ -22,7 +22,13 @@ import PairedToogleButtons from './ToggleButtons';
 import DatePicker from '../../components/DatePicker';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import { hashHistory } from 'react-router';
-import { flatten, DATE_FORMAT_DISPLAY, hasProp, isDateBiggerThanToday, formatISOString } from '../../shared/util';
+import {
+  flatten,
+  DATE_FORMAT_DISPLAY,
+  hasProp,
+  isDateBiggerThanToday,
+  formatISOString
+} from '../../shared/util';
 import ActorSuggest from '../../components/suggest/ActorSuggest';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
@@ -34,7 +40,6 @@ import store$, { loadRootNode$ } from './controlStore';
 import Loader from 'react-loader';
 import Config from '../../config';
 
-
 export class ControlAddContainer extends React.Component {
   static propTypes = {
     addControl: React.PropTypes.func.isRequired,
@@ -42,7 +47,7 @@ export class ControlAddContainer extends React.Component {
     appSession: React.PropTypes.object,
     envReqData: React.PropTypes.object,
     rootNode: React.PropTypes.object
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -70,7 +75,9 @@ export class ControlAddContainer extends React.Component {
         temperature: requirement ? requirement.temperature : ' ',
         temperatureTolerance: requirement ? requirement.temperatureTolerance : ' ',
         relativeHumidity: requirement ? requirement.relativeHumidity : ' ',
-        relativeHumidityInterval: requirement ? requirement.relativeHumidityTolerance : ' ',
+        relativeHumidityInterval: requirement
+          ? requirement.relativeHumidityTolerance
+          : ' ',
         inertAir: requirement ? requirement.hypoxicAir : ' ',
         inertAirInterval: requirement ? requirement.hypoxicAirTolerance : ' ',
         light: requirement ? requirement.lightingCondition : ' ',
@@ -100,16 +107,23 @@ export class ControlAddContainer extends React.Component {
   }
 
   oneStateIsNotOK() {
-    return Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] === false).length > 0;
+    return Object.keys(this.state).filter(
+      k => k.endsWith('OK') && this.state[k] === false
+    ).length > 0;
   }
 
   onClickSave() {
     // Could extract it, but its only used here and in the method aboveonFailure
     const controls = Object.keys(this.state)
-        .filter((k) => k.endsWith('OK') && this.state[k] !== null && typeof this.state[k] !== 'undefined')
-        .map((k) => ({
-          [k]: this.state[k]
-        }));
+      .filter(
+        k =>
+          k.endsWith('OK') &&
+          this.state[k] !== null &&
+          typeof this.state[k] !== 'undefined'
+      )
+      .map(k => ({
+        [k]: this.state[k]
+      }));
     // Create a nice representation of the control state
     const controlState = {
       ...flatten(controls),
@@ -119,41 +133,54 @@ export class ControlAddContainer extends React.Component {
     if (this.oneStateIsNotOK()) {
       // push a new path onto the history, with the provided nice control state
       hashHistory.replace({
-        pathname: Config.magasin.urls.client.storagefacility.editObservation(this.props.params.id, this.props.appSession),
+        pathname: Config.magasin.urls.client.storagefacility.editObservation(
+          this.props.params.id,
+          this.props.appSession
+        ),
         state: controlState
       });
     } else {
-      this.props.addControl({ 
-        nodeId: this.props.params.id,
-        museumId: this.props.appSession.getMuseumId(),
-        controlData: controlState,
-        token: this.props.appSession.getAccessToken(),
-        callback: {
-          onComplete: () => {
-            hashHistory.goBack();
-            emitSuccess({ type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess')});
-          },
-          onFailure: (e) => emitError({...e, type: 'network'})
-        }
-      }).toPromise();
+      this.props
+        .addControl({
+          nodeId: this.props.params.id,
+          museumId: this.props.appSession.getMuseumId(),
+          controlData: controlState,
+          token: this.props.appSession.getAccessToken(),
+          callback: {
+            onComplete: () => {
+              hashHistory.goBack();
+              emitSuccess({
+                type: 'saveSuccess',
+                message: I18n.t('musit.newControl.saveControlSuccess')
+              });
+            },
+            onFailure: e => emitError({ ...e, type: 'network' })
+          }
+        })
+        .toPromise();
     }
   }
 
-  setDate = (newValue) => {
+  setDate = newValue => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
-        emitError({ type: 'dateValidationError', message: I18n.t('musit.newControl.dateValidation') });
+        emitError({
+          type: 'dateValidationError',
+          message: I18n.t('musit.newControl.dateValidation')
+        });
         this.setState({ ...this.state, doneDate: formatISOString(new Date()) });
       } else {
         this.setState({ ...this.state, doneDate: newValue });
       }
     }
-  }
+  };
 
   handleSubmit(event) {
     event.preventDefault();
     const errors = [];
-    const controls = Object.keys(this.state).filter((k) => k.endsWith('OK') && this.state[k] !== null);
+    const controls = Object.keys(this.state).filter(
+      k => k.endsWith('OK') && this.state[k] !== null
+    );
     if (controls.length === 0) {
       errors.push(I18n.t('musit.newControl.controlsRequired'));
     }
@@ -175,7 +202,7 @@ export class ControlAddContainer extends React.Component {
       return <Loader loaded={false} />;
     }
     const breadcrumb = <Breadcrumb node={this.props.store.rootNode} disabled />;
-    const translate = (k) => I18n.t(k);
+    const translate = k => I18n.t(k);
 
     const fields = [
       {
@@ -207,18 +234,22 @@ export class ControlAddContainer extends React.Component {
       { key: 'pest' }
     ];
 
-    const renderReadOnly = (e) => {
-      const make = (v) => <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />;
+    const renderReadOnly = e => {
+      const make = v => (
+        <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
+      );
 
       if (hasProp(e, 'leftValue') && hasProp(e, 'rightValue')) {
-        return <div>
-          <Col xs={5}>
-            {make(e.leftValue)}
-          </Col>
-          <Col xs={4}>
-            {make(e.rightValue)}
-          </Col>
-        </div>;
+        return (
+          <div>
+            <Col xs={5}>
+              {make(e.leftValue)}
+            </Col>
+            <Col xs={4}>
+              {make(e.rightValue)}
+            </Col>
+          </div>
+        );
       }
 
       if (hasProp(e, 'leftValue')) {
@@ -234,7 +265,9 @@ export class ControlAddContainer extends React.Component {
         breadcrumb={breadcrumb}
         content={
           <form onSubmit={this.handleSubmit}>
-            <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.newControl.title', false)}</h4>
+            <h4 style={{ textAlign: 'center' }}>
+              {I18n.t('musit.newControl.title', false)}
+            </h4>
             <Grid>
               <Row>
                 <Col xs={3}>
@@ -252,7 +285,8 @@ export class ControlAddContainer extends React.Component {
                         <DatePicker
                           dateFormat={DATE_FORMAT_DISPLAY}
                           value={this.state.doneDate}
-                          onClear={(newValue) => this.setState({ ...this.state, doneDate: newValue })}
+                          onClear={newValue =>
+                            this.setState({ ...this.state, doneDate: newValue })}
                           onChange={newValue => {
                             this.setDate(newValue);
                           }}
@@ -302,9 +336,9 @@ export class ControlAddContainer extends React.Component {
                     <Col xs={9}>
                       <Row>
                         <Col xs={5}>
-                          {hasProp(e, 'leftValue') ?
-                            <label> {translate('musit.newControl.envdata')} </label> : ''
-                          }
+                          {hasProp(e, 'leftValue')
+                            ? <label> {translate('musit.newControl.envdata')} </label>
+                            : ''}
                         </Col>
                       </Row>
                       <Row>
@@ -315,15 +349,22 @@ export class ControlAddContainer extends React.Component {
                 );
               })}
               <hr />
-              {this.state.errors && this.state.errors.map((e, i) => {
-                return <center><span key={i} style={{ color: 'red' }}>{e}</span></center>;
-              })}
+              {this.state.errors &&
+                this.state.errors.map((e, i) => {
+                  return (
+                    <center><span key={i} style={{ color: 'red' }}>{e}</span></center>
+                  );
+                })}
               <hr />
               <SaveCancel
-                saveLabel={translate(this.oneStateIsNotOK() ? 'musit.newControl.registerObservations' : 'musit.texts.save')}
+                saveLabel={translate(
+                  this.oneStateIsNotOK()
+                    ? 'musit.newControl.registerObservations'
+                    : 'musit.texts.save'
+                )}
                 translate={translate}
-                onClickSave={(e) => this.handleSubmit(e)}
-                onClickCancel={() => hashHistory.goBack() }
+                onClickSave={e => this.handleSubmit(e)}
+                onClickCancel={() => hashHistory.goBack()}
               />
             </Grid>
           </form>

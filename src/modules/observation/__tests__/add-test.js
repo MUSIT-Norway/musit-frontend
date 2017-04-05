@@ -10,7 +10,7 @@ describe('Render observation page in add mode', () => {
     const onSaveObservation = sinon.spy();
     const observationPage = shallow(
       <ObservationPage
-        doneBy={new MusitActor({ dataportenId: '12345', fn: 'Jarl'})}
+        doneBy={new MusitActor({ dataportenId: '12345', fn: 'Jarl' })}
         doneDate="2017-02-08T11:14:25.889Z"
         onSaveObservation={onSaveObservation}
         mode="ADD"
