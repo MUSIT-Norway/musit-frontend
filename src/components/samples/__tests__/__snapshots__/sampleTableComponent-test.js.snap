@@ -1,0 +1,114 @@
+exports[`EventTableComponent should render header, body and footer 1`] = `
+<div>
+  <Table
+    className="table"
+    columns={
+      Array [
+        Object {
+          "key": "id",
+          "label": "Sample ID"
+        },
+        Object {
+          "key": "createdDate",
+          "label": "Dato"
+        },
+        Object {
+          "key": "sampleType",
+          "label": "Prøvetype"
+        },
+        Object {
+          "key": "sampleSubType",
+          "label": "Prøveundertype"
+        },
+        Object {
+          "key": "status",
+          "label": "Status"
+        },
+        Object {
+          "key": "hasAnalyse",
+          "label": "Analyse"
+        },
+        Object {
+          "key": "showInfo",
+          "label": "Vis detaljer"
+        }
+      ]
+    }
+    defaultSort={false}
+    defaultSortDescending={false}
+    filterBy=""
+    hideFilterInput={false}
+    itemsPerPage={0}
+    noDataText="Ingen prøver funnet på objektet"
+    sortBy={false}
+    sortable={
+      Array [
+        "id",
+        "date"
+      ]
+    }>
+    <Tr>
+      <Td
+        column="id">
+        1233-111-2222-222
+      </Td>
+      <Td
+        column="createdDate">
+        1999-01-20
+      </Td>
+      <Td
+        column="sampleType">
+        Vev
+      </Td>
+      <Td
+        column="sampleSubType">
+        Muskel
+      </Td>
+      <Td
+        column="status">
+        2
+      </Td>
+      <Td
+        column="hasAnalyse" />
+      <Td
+        column="showInfo">
+        <a
+          href={undefined}>
+          Se mer / Rediger
+        </a>
+      </Td>
+    </Tr>
+    <Tr>
+      <Td
+        column="id">
+        1233-111-2155-222
+      </Td>
+      <Td
+        column="createdDate">
+        1999-01-29
+      </Td>
+      <Td
+        column="sampleType">
+        Blad
+      </Td>
+      <Td
+        column="sampleSubType">
+        Underblad
+      </Td>
+      <Td
+        column="status">
+        24
+      </Td>
+      <Td
+        column="hasAnalyse" />
+      <Td
+        column="showInfo">
+        <a
+          href={undefined}>
+          Se mer / Rediger
+        </a>
+      </Td>
+    </Tr>
+  </Table>
+</div>
+`;
