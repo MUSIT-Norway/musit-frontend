@@ -114,6 +114,7 @@ export class ObjectSearchComponent extends React.Component {
                         </a>
                       </th>
                       <th>{Config.isDev && 'Se objekt'}</th>
+                      <th>{Config.isDev && 'Legg til prøve'}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -173,6 +174,17 @@ export class ObjectSearchComponent extends React.Component {
                               }>
                               {Config.isDev && 'Vis'}
                               </a>
+                          </td>
+                          <td>
+                            <a
+                              href=""
+                              onClick={(e) => {
+                                e.preventDefault();
+                                hashHistory.push(Config.magasin.urls.client.analysis.addSampleFromObject(data.uuid));
+                              }
+                              }>
+                              {Config.isDev && 'Ny'}
+                            </a>
                           </td>
                         </tr>
                       );
