@@ -1,6 +1,5 @@
 /* @flow */
 
-
 type T_EventData = {
   eventDate: string,
   doneBy: string,
@@ -9,7 +8,5 @@ type T_EventData = {
   keyData: string,
   note: string
 };
-
-
 
 export type T_Events = T_EventData[];

@@ -1,17 +1,14 @@
-import {TestScheduler} from 'rxjs/Rx';
-import {objectStore$, initialState} from '../objectStore';
+import { TestScheduler } from 'rxjs/Rx';
+import { objectStore$, initialState } from '../objectStore';
 import assert from 'assert';
 
-
 describe('objectStore', () => {
-
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       /*  console.log(JSON.stringify(actual, null, 2));
        console.log(JSON.stringify(expected, null, 2));*/
       return assert.deepEqual(actual, expected);
     });
-
 
     const objData = {
       objectData: {
@@ -116,7 +113,6 @@ describe('objectStore', () => {
       ]
     };
 
-
     // mock streams
     const clearM = '-x--------------';
     const loadObjectM = '--x-------------';
@@ -129,10 +125,10 @@ describe('objectStore', () => {
 
     // mock up$ and down$ events
 
-    const clear$ = testScheduler.createHotObservable(clearM, {x: initialState});
-    const loadObject$ = testScheduler.createHotObservable(loadObjectM, {x: objData});
+    const clear$ = testScheduler.createHotObservable(clearM, { x: initialState });
+    const loadObject$ = testScheduler.createHotObservable(loadObjectM, { x: objData });
 
-    const state$ = objectStore$({clear$, loadObject$});
+    const state$ = objectStore$({ clear$, loadObject$ });
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);
@@ -140,5 +136,4 @@ describe('objectStore', () => {
     // run tests
     testScheduler.flush();
   });
-})
-;
+});

@@ -35,14 +35,18 @@ Sample.loadSample = (ajaxGet = simpleGet) =>
     );
   };
 
-
-
-
-Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({id, museumId, token, callback}) => {
-  const url = Config.magasin.urls.api.samples.samplesForObject(museumId, id);
-  return ajaxGet(url, token, callback).map(({ response }) => (
-    (response && response.map((r) => ({...r, createdDate: parseISODate(r.createdDate, DATE_FORMAT_DISPLAY)}))) || []));
-};
+Sample.loadSampleDataForObject = (ajaxGet = simpleGet) =>
+  ({ id, museumId, token, callback }) => {
+    const url = Config.magasin.urls.api.samples.samplesForObject(museumId, id);
+    return ajaxGet(url, token, callback).map(
+      ({ response }) =>
+        (response &&
+          response.map(r => ({
+            ...r,
+            createdDate: parseISODate(r.createdDate, DATE_FORMAT_DISPLAY)
+          }))) || []
+    );
+  };
 
 Sample.loadSamplesForObject = (ajaxGet = simpleGet) =>
   ({ objectId, museumId, token, collectionId, callback }) => {

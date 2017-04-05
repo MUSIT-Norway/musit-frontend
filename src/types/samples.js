@@ -13,7 +13,6 @@ type T_SampleData = {
   createdDate: string
 };
 
-
 export type T_Samples = T_SampleData[];
 
 export type SamplesPropsType = { samples: T_Samples };

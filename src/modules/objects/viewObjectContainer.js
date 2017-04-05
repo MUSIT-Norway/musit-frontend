@@ -1,15 +1,15 @@
 /* @flow */
-import ViewObjectComponent  from './ViewObjectComponent';
+import ViewObjectComponent from './ViewObjectComponent';
 import inject from 'react-rxjs/dist/RxInject';
 import objectStore$, { loadObject$ } from './objectStore';
 import React from 'react';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
-import {emitError, emitSuccess} from '../../shared/errors';
-import  mount from '../../shared/mount';
+import { emitError, emitSuccess } from '../../shared/errors';
+import mount from '../../shared/mount';
 
 const data: {} = {
-  appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   objectStore$
 };
 
@@ -18,17 +18,22 @@ const props: {} = {
   emitError
 };
 
-const commands: {} = {loadObject$};
+const commands: {} = { loadObject$ };
 
-export const onMount = ({ loadObject , params, appSession }: any) => {
+export const onMount = ({ loadObject, params, appSession }: any) => {
   const objectId: string = params.objectId;
   const museumId: number = appSession.state.museumId;
-  const accessToken:string = appSession.state.accessToken;
+  const accessToken: string = appSession.state.accessToken;
   const collectionId: string = appSession.state.collectionId;
-  const val = {id: objectId, museumId: museumId, token: accessToken, collectionId: collectionId};
+  const val = {
+    id: objectId,
+    museumId: museumId,
+    token: accessToken,
+    collectionId: collectionId
+  };
   loadObject(val);
 };
 
-export default flowRight([
-  inject(data, commands, props), mount(onMount)]
-)(ViewObjectComponent);
+export default flowRight([inject(data, commands, props), mount(onMount)])(
+  ViewObjectComponent
+);

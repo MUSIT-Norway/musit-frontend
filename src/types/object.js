@@ -8,4 +8,3 @@ export type T_ObjectData = {
   term: string,
   museumNo: string
 };
-

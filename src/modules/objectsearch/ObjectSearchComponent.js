@@ -82,135 +82,135 @@ export class ObjectSearchComponent extends React.Component {
               <br />
               <h4>
                 {store.loaded &&
-                (store.data.totalMatches > 0
-                  ? I18n.t('musit.objectsearch.results.title', {
-                    count: store.data.totalMatches
-                  })
-                  : I18n.t('musit.objectsearch.results.noHit'))}
+                  (store.data.totalMatches > 0
+                    ? I18n.t('musit.objectsearch.results.title', {
+                        count: store.data.totalMatches
+                      })
+                    : I18n.t('musit.objectsearch.results.noHit'))}
               </h4>
               <Loader loaded={!store.loading}>
                 {store.data.matches.length > 0 &&
-                <div>
-                  <PagingToolbar
-                    numItems={store.data.totalMatches}
-                    currentPage={this.state.currentPage}
-                    perPage={this.state.perPage}
-                    onClick={page => this.searchForObjects(page)}
-                  />
-                  <Table>
-                    <thead>
-                    <tr>
-                      <th>{I18n.t('musit.objectsearch.museumNo.label')}</th>
-                      <th>{I18n.t('musit.objectsearch.subNo.label')}</th>
-                      <th>{I18n.t('musit.objectsearch.term.label')}</th>
-                      <th>{I18n.t('musit.objectsearch.location.label')}</th>
-                      <th>
-                        <a
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            store.data.matches.forEach(obj =>
-                              this.props.pickObject({
-                                object: obj,
-                                breadcrumb: obj.breadcrumb,
-                                museumId: this.props.appSession.getMuseumId(),
-                                collectionId: this.props.appSession.getCollectionId(),
-                                token: this.props.appSession.getAccessToken()
-                              }));
-                          }}
-                          title={I18n.t('musit.objectsearch.addAllToPickList')}
-                        >
-                          <FontAwesome
-                            style={{ fontSize: '1.3em' }}
-                            name="shopping-cart"
-                          />
-                        </a>
-                      </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {store.data.matches.map((data, i) => {
-                      const isMainObject = !data.mainObjectId || data.isMainObject();
-                      const isChildObject = data.mainObjectId && !data.isMainObject();
-                      return (
-                        <tr
-                          key={i}
-                          className={
-                            isChildObject
-                              ? 'childObject'
-                              : isMainObject && 'mainObject'
-                          }
-                        >
-                          <td className="museumNo">{data.museumNo}</td>
-                          <td className="subNo">{data.subNo}</td>
-                          <td className="term">{data.term}</td>
-                          <td className="path">
-                            {data.breadcrumb.length > 0 &&
-                            <Breadcrumb
-                              node={data}
-                              allActive
-                              onClickCrumb={node => {
-                                if (node.id) {
-                                  hashHistory.push(
-                                    Config.magasin.urls.client.storagefacility.goToNode(
-                                      node.id,
-                                      this.props.appSession
-                                    )
-                                  );
-                                } else {
-                                  hashHistory.push(
-                                    Config.magasin.urls.client.storagefacility.goToRoot(
-                                      this.props.appSession
-                                    )
-                                  );
-                                }
-                              }}
-                            />}
-                          </td>
-                          <td className="move">
-                            {isMainObject &&
+                  <div>
+                    <PagingToolbar
+                      numItems={store.data.totalMatches}
+                      currentPage={this.state.currentPage}
+                      perPage={this.state.perPage}
+                      onClick={page => this.searchForObjects(page)}
+                    />
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>{I18n.t('musit.objectsearch.museumNo.label')}</th>
+                          <th>{I18n.t('musit.objectsearch.subNo.label')}</th>
+                          <th>{I18n.t('musit.objectsearch.term.label')}</th>
+                          <th>{I18n.t('musit.objectsearch.location.label')}</th>
+                          <th>
                             <a
                               href=""
                               onClick={e => {
                                 e.preventDefault();
-                                this.props.pickObject({
-                                  object: data,
-                                  breadcrumb: data.breadcrumb,
-                                  museumId: this.props.appSession.getMuseumId(),
-                                  collectionId: this.props.appSession.getCollectionId(),
-                                  token: this.props.appSession.getAccessToken()
-                                });
+                                store.data.matches.forEach(obj =>
+                                  this.props.pickObject({
+                                    object: obj,
+                                    breadcrumb: obj.breadcrumb,
+                                    museumId: this.props.appSession.getMuseumId(),
+                                    collectionId: this.props.appSession.getCollectionId(),
+                                    token: this.props.appSession.getAccessToken()
+                                  }));
                               }}
-                              title={I18n.t('musit.objectsearch.addToPickList')}
+                              title={I18n.t('musit.objectsearch.addAllToPickList')}
                             >
-                              {this.props.isItemAdded(
-                                data,
-                                this.props.pickList.objects
-                              )
-                                ? <FontAwesome
-                                  style={{ fontSize: '1.3em', color: 'Gray' }}
-                                  name="shopping-cart"
-                                />
-                                : <FontAwesome
-                                  style={{ fontSize: '1.3em' }}
-                                  name="shopping-cart"
-                                />}
-                            </a>}
-                          </td>
+                              <FontAwesome
+                                style={{ fontSize: '1.3em' }}
+                                name="shopping-cart"
+                              />
+                            </a>
+                          </th>
                         </tr>
-                      );
-                    })}
-                    </tbody>
-                  </Table>
-                  <PagingToolbar
-                    numItems={store.data.totalMatches}
-                    currentPage={this.state.currentPage}
-                    perPage={this.state.perPage}
-                    onClick={page => {
-                      this.searchForObjects(page);
-                    }}
-                  />
-                </div>}
+                      </thead>
+                      <tbody>
+                        {store.data.matches.map((data, i) => {
+                          const isMainObject = !data.mainObjectId || data.isMainObject();
+                          const isChildObject = data.mainObjectId && !data.isMainObject();
+                          return (
+                            <tr
+                              key={i}
+                              className={
+                                isChildObject
+                                  ? 'childObject'
+                                  : isMainObject && 'mainObject'
+                              }
+                            >
+                              <td className="museumNo">{data.museumNo}</td>
+                              <td className="subNo">{data.subNo}</td>
+                              <td className="term">{data.term}</td>
+                              <td className="path">
+                                {data.breadcrumb.length > 0 &&
+                                  <Breadcrumb
+                                    node={data}
+                                    allActive
+                                    onClickCrumb={node => {
+                                      if (node.id) {
+                                        hashHistory.push(
+                                          Config.magasin.urls.client.storagefacility.goToNode(
+                                            node.id,
+                                            this.props.appSession
+                                          )
+                                        );
+                                      } else {
+                                        hashHistory.push(
+                                          Config.magasin.urls.client.storagefacility.goToRoot(
+                                            this.props.appSession
+                                          )
+                                        );
+                                      }
+                                    }}
+                                  />}
+                              </td>
+                              <td className="move">
+                                {isMainObject &&
+                                  <a
+                                    href=""
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.props.pickObject({
+                                        object: data,
+                                        breadcrumb: data.breadcrumb,
+                                        museumId: this.props.appSession.getMuseumId(),
+                                        collectionId: this.props.appSession.getCollectionId(),
+                                        token: this.props.appSession.getAccessToken()
+                                      });
+                                    }}
+                                    title={I18n.t('musit.objectsearch.addToPickList')}
+                                  >
+                                    {this.props.isItemAdded(
+                                      data,
+                                      this.props.pickList.objects
+                                    )
+                                      ? <FontAwesome
+                                          style={{ fontSize: '1.3em', color: 'Gray' }}
+                                          name="shopping-cart"
+                                        />
+                                      : <FontAwesome
+                                          style={{ fontSize: '1.3em' }}
+                                          name="shopping-cart"
+                                        />}
+                                  </a>}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </Table>
+                    <PagingToolbar
+                      numItems={store.data.totalMatches}
+                      currentPage={this.state.currentPage}
+                      perPage={this.state.perPage}
+                      onClick={page => {
+                        this.searchForObjects(page);
+                      }}
+                    />
+                  </div>}
               </Loader>
             </div>
           </Grid>
