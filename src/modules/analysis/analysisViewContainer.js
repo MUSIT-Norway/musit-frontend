@@ -1,23 +1,21 @@
 import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
 import AnalysisViewComponent from './AnalysisViewComponent';
-import {makeUrlAware} from '../app/appSession';
+import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 
-import store$, {
-  loadAnalysis$,
-  getAnalysisTypesForCollection$
-} from './analysisStore';
+import store$, { loadAnalysis$, getAnalysisTypesForCollection$ } from './analysisStore';
 
 const data = {
-  appSession$: {type: React.PropTypes.object.isRequired},
+  appSession$: { type: React.PropTypes.object.isRequired },
   store$
 };
-const commands = {loadAnalysis$, getAnalysisTypesForCollection$};
+const commands = { loadAnalysis$, getAnalysisTypesForCollection$ };
 
-
-export const onMount = ({getAnalysisTypesForCollection, appSession, loadAnalysis, params}) => {
+export const onMount = (
+  { getAnalysisTypesForCollection, appSession, loadAnalysis, params }
+) => {
   getAnalysisTypesForCollection({
     museumId: appSession.getMuseumId(),
     collectionId: appSession.getCollectionId().uuid,
@@ -31,8 +29,6 @@ export const onMount = ({getAnalysisTypesForCollection, appSession, loadAnalysis
   });
 };
 
-export default flowRight([
-  inject(data, commands),
-  mount(onMount),
-  makeUrlAware
-])(AnalysisViewComponent);
+export default flowRight([inject(data, commands), mount(onMount), makeUrlAware])(
+  AnalysisViewComponent
+);

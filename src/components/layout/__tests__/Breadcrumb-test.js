@@ -4,7 +4,6 @@ import React from 'react';
 import Breadcrumb from '../Breadcrumb';
 
 describe('StorageUnitsContainer_Breadcrumb_test', () => {
-
   it('Breadcrumb first element should have name "Museum": ', () => {
     const nodes = [
       { id: 1, name: 'Museum', type: 'Building', url: '/test/1' },

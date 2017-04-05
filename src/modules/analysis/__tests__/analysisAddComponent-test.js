@@ -1,11 +1,11 @@
-import {mount, shallow} from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import AnalysisAddComponent, { saveAnalysisEventLocal } from '../AnalysisAddComponent';
-import { fieldsArray } from '../analysisAddForm';
+import { fieldsArray } from '../analysisAddForm';
 import sinon from 'sinon';
-import { AppSession } from '../../app/appSession';
-import MuseumId from '../../../models/museumId';
+import { AppSession } from '../../app/appSession';
+import MuseumId from '../../../models/museumId';
 
 const objectsData = [
   {
@@ -46,15 +46,24 @@ const store = {
   objectsData: objectsData
 };
 
-const form = fieldsArray.reduce((acc, n) => ({...acc, [n.name]: {
-  name: n.name,
-  rawValue: n.name === 'note' ? 'test note' : n.mapper.toRaw(n.defaultValue)
-}}), {});
+const form = fieldsArray.reduce(
+  (acc, n) => ({
+    ...acc,
+    [n.name]: {
+      name: n.name,
+      rawValue: n.name === 'note' ? 'test note' : n.mapper.toRaw(n.defaultValue)
+    }
+  }),
+  {}
+);
 
 describe('AnalysisAddComponent', () => {
   it('saveAnalysisEventLocal should call saveAnalysisEvent', () => {
     const saveAnalysisEvent = sinon.spy();
-    const appSession = new AppSession({ museumId: new MuseumId(99), accessToken: '1234' });
+    const appSession = new AppSession({
+      museumId: new MuseumId(99),
+      accessToken: '1234'
+    });
     saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent)();
     expect(saveAnalysisEvent.callCount).toBe(1);
     expect(saveAnalysisEvent.getCall(0).args[0].museumId).toEqual(new MuseumId(99));
@@ -63,11 +72,9 @@ describe('AnalysisAddComponent', () => {
 
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
-    const wrapper = mount(<AnalysisAddComponent
-      form={form}
-      updateForm={updateForm}
-      store={store}
-    />);
+    const wrapper = mount(
+      <AnalysisAddComponent form={form} updateForm={updateForm} store={store} />
+    );
     wrapper.find('.note').simulate('change', {
       target: {
         value: 'note changed'
@@ -79,11 +86,9 @@ describe('AnalysisAddComponent', () => {
 
   it('should render properly', () => {
     const updateForm = sinon.spy();
-    const wrapper = shallow(<AnalysisAddComponent
-      form={form}
-      updateForm={updateForm}
-      store={store}
-    />);
+    const wrapper = shallow(
+      <AnalysisAddComponent form={form} updateForm={updateForm} store={store} />
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

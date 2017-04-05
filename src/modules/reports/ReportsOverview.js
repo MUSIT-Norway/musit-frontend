@@ -15,7 +15,7 @@ const reports = [
   }
 ];
 
-export const ReportsOverview = (props) => {
+export const ReportsOverview = props => {
   return (
     <div>
       <main>
@@ -40,7 +40,7 @@ export const ReportsOverview = (props) => {
                         <td>
                           <a
                             href={url}
-                            onClick={(e) => {
+                            onClick={e => {
                               e.preventDefault();
                               hashHistory.push(url);
                             }}
@@ -68,7 +68,4 @@ const data = {
   appSession$: { type: React.PropTypes.object.isRequired }
 };
 
-export default flowRight([
-  inject(data),
-  makeUrlAware
-])(ReportsOverview);
+export default flowRight([inject(data), makeUrlAware])(ReportsOverview);

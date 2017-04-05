@@ -1,24 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {I18n} from 'react-i18nify';
-import {Grid, Form, FormGroup, FormControl, ControlLabel, Button, Table} from 'react-bootstrap';
+import { I18n } from 'react-i18nify';
+import {
+  Grid,
+  Form,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Button,
+  Table
+} from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import PagingToolbar from '../../components/PagingToolbar';
-import {hashHistory} from 'react-router';
+import { hashHistory } from 'react-router';
 import Loader from 'react-loader';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import inject from 'react-rxjs/dist/RxInject';
-import objectSearchStore$, {clearSearch$, searchForObjects$, onChangeField$} from './objectSearchStore';
-import { addObject$ } from '../app/pickList';
+import objectSearchStore$, {
+  clearSearch$,
+  searchForObjects$,
+  onChangeField$
+} from './objectSearchStore';
+import { addObject$ } from '../app/pickList';
 import { isItemAdded } from '../app/pickList';
 import Config from '../../config';
 import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../app/appSession';
 
 export class ObjectSearchComponent extends React.Component {
-
   static propTypes = {
     objectSearchStore: React.PropTypes.object.isRequired
   };
@@ -35,7 +46,9 @@ export class ObjectSearchComponent extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id) {
+    if (
+      nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id
+    ) {
       this.searchForObjects(1, nextProps.appSession.getMuseumId());
     }
   }
@@ -43,7 +56,7 @@ export class ObjectSearchComponent extends React.Component {
   render() {
     const store = this.props.objectSearchStore;
     return (
-      <div style={{paddingTop: 20}}>
+      <div style={{ paddingTop: 20 }}>
         <main>
           <Grid>
             <div>
@@ -53,28 +66,27 @@ export class ObjectSearchComponent extends React.Component {
                 {' '}
                 {this.renderParam('subNo')}
                 {' '}
-                {this.renderParam('term', {width: '440px'})}
+                {this.renderParam('term', { width: '440px' })}
                 {' '}
                 <Button
                   className="SubmitButton"
                   type="submit"
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
                     this.searchForObjects(1);
                   }}
                 >
-                  <FontAwesome name="search" style={{fontSize: '1.3em'}}/>
+                  <FontAwesome name="search" style={{ fontSize: '1.3em' }} />
                 </Button>
               </Form>
               <br />
               <h4>
                 {store.loaded &&
-                (store.data.totalMatches > 0 ?
-                    I18n.t('musit.objectsearch.results.title', {count: store.data.totalMatches})
-                    :
-                    I18n.t('musit.objectsearch.results.noHit')
-                )
-                }
+                (store.data.totalMatches > 0
+                  ? I18n.t('musit.objectsearch.results.title', {
+                    count: store.data.totalMatches
+                  })
+                  : I18n.t('musit.objectsearch.results.noHit'))}
               </h4>
               <Loader loaded={!store.loading}>
                 {store.data.matches.length > 0 &&
@@ -83,8 +95,7 @@ export class ObjectSearchComponent extends React.Component {
                     numItems={store.data.totalMatches}
                     currentPage={this.state.currentPage}
                     perPage={this.state.perPage}
-                    onClick={(page) => this.searchForObjects(page)
-                    }
+                    onClick={page => this.searchForObjects(page)}
                   />
                   <Table>
                     <thead>
@@ -96,7 +107,7 @@ export class ObjectSearchComponent extends React.Component {
                       <th>
                         <a
                           href=""
-                          onClick={(e) => {
+                          onClick={e => {
                             e.preventDefault();
                             store.data.matches.forEach(obj =>
                               this.props.pickObject({
@@ -105,16 +116,16 @@ export class ObjectSearchComponent extends React.Component {
                                 museumId: this.props.appSession.getMuseumId(),
                                 collectionId: this.props.appSession.getCollectionId(),
                                 token: this.props.appSession.getAccessToken()
-                              })
-                            );
+                              }));
                           }}
                           title={I18n.t('musit.objectsearch.addAllToPickList')}
                         >
-                          <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart"/>
+                          <FontAwesome
+                            style={{ fontSize: '1.3em' }}
+                            name="shopping-cart"
+                          />
                         </a>
                       </th>
-                      <th>{Config.isDev && 'Se objekt'}</th>
-                      <th>{Config.isDev && 'Legg til prøve'}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -122,7 +133,14 @@ export class ObjectSearchComponent extends React.Component {
                       const isMainObject = !data.mainObjectId || data.isMainObject();
                       const isChildObject = data.mainObjectId && !data.isMainObject();
                       return (
-                        <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject'}>
+                        <tr
+                          key={i}
+                          className={
+                            isChildObject
+                              ? 'childObject'
+                              : isMainObject && 'mainObject'
+                          }
+                        >
                           <td className="museumNo">{data.museumNo}</td>
                           <td className="subNo">{data.subNo}</td>
                           <td className="term">{data.term}</td>
@@ -131,21 +149,29 @@ export class ObjectSearchComponent extends React.Component {
                             <Breadcrumb
                               node={data}
                               allActive
-                              onClickCrumb={(node) => {
-                                if(node.id) {
-                                  hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession));
+                              onClickCrumb={node => {
+                                if (node.id) {
+                                  hashHistory.push(
+                                    Config.magasin.urls.client.storagefacility.goToNode(
+                                      node.id,
+                                      this.props.appSession
+                                    )
+                                  );
                                 } else {
-                                  hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
+                                  hashHistory.push(
+                                    Config.magasin.urls.client.storagefacility.goToRoot(
+                                      this.props.appSession
+                                    )
+                                  );
                                 }
                               }}
-                            />
-                            }
+                            />}
                           </td>
                           <td className="move">
                             {isMainObject &&
                             <a
                               href=""
-                              onClick={(e) => {
+                              onClick={e => {
                                 e.preventDefault();
                                 this.props.pickObject({
                                   object: data,
@@ -157,34 +183,19 @@ export class ObjectSearchComponent extends React.Component {
                               }}
                               title={I18n.t('musit.objectsearch.addToPickList')}
                             >
-                              {this.props.isItemAdded(data, this.props.pickList.objects) ?
-                                <FontAwesome style={{ fontSize: '1.3em', color: 'Gray' }} name="shopping-cart"/> :
-                                <FontAwesome style={{ fontSize: '1.3em' }} name="shopping-cart"/>
-                              }
-                            </a>
-                            }
-                          </td>
-                          <td>
-                            <a
-                              href=""
-                              onClick={(e) => {
-                                e.preventDefault();
-                                hashHistory.push(Config.magasin.urls.client.object.gotoObject(data.uuid));
-                              }
-                              }>
-                              {Config.isDev && 'Vis'}
-                              </a>
-                          </td>
-                          <td>
-                            <a
-                              href=""
-                              onClick={(e) => {
-                                e.preventDefault();
-                                hashHistory.push(Config.magasin.urls.client.analysis.addSampleFromObject(data.uuid));
-                              }
-                              }>
-                              {Config.isDev && 'Ny'}
-                            </a>
+                              {this.props.isItemAdded(
+                                data,
+                                this.props.pickList.objects
+                              )
+                                ? <FontAwesome
+                                  style={{ fontSize: '1.3em', color: 'Gray' }}
+                                  name="shopping-cart"
+                                />
+                                : <FontAwesome
+                                  style={{ fontSize: '1.3em' }}
+                                  name="shopping-cart"
+                                />}
+                            </a>}
                           </td>
                         </tr>
                       );
@@ -195,12 +206,11 @@ export class ObjectSearchComponent extends React.Component {
                     numItems={store.data.totalMatches}
                     currentPage={this.state.currentPage}
                     perPage={this.state.perPage}
-                    onClick={(page) => {
+                    onClick={page => {
                       this.searchForObjects(page);
                     }}
                   />
-                </div>
-                }
+                </div>}
               </Loader>
             </div>
           </Grid>
@@ -215,18 +225,18 @@ export class ObjectSearchComponent extends React.Component {
         <ControlLabel>{I18n.t(`musit.objectsearch.${id}.label`)}</ControlLabel>
         {' '}
         <FormControl
-          style={{...style}}
+          style={{ ...style }}
           type="text"
           placeholder={I18n.t(`musit.objectsearch.${id}.placeHolder`)}
-          onChange={(e) => this.props.onChangeField(id, e.target.value)}
-          ref={ (field) => this[id] = ReactDOM.findDOMNode(field) }
+          onChange={e => this.props.onChangeField(id, e.target.value)}
+          ref={field => this[id] = ReactDOM.findDOMNode(field)}
         />
       </FormGroup>
     );
   }
 
   searchForObjects(page, museumId = this.props.appSession.getMuseumId()) {
-    this.setState({...this.state, currentPage: page});
+    this.setState({ ...this.state, currentPage: page });
     this.props.clearSearch();
     return this.props.searchForObjects({
       museumNo: this.getMuseumNo(),
@@ -241,9 +251,8 @@ export class ObjectSearchComponent extends React.Component {
   }
 }
 
-
 const data = {
-  appSession$: {type: React.PropTypes.instanceOf(Observable).isRequired},
+  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
   pickList$: { type: React.PropTypes.object.isRequired },
   objectSearchStore$
 };
@@ -259,9 +268,6 @@ const props = {
   isItemAdded
 };
 
-export default flowRight([
-  inject(data, commands, props),
-  makeUrlAware
-])(ObjectSearchComponent);
-
-
+export default flowRight([inject(data, commands, props), makeUrlAware])(
+  ObjectSearchComponent
+);

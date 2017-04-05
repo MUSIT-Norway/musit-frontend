@@ -22,14 +22,10 @@ import ModalMoveHistoryGrid from './ModalMoveHistoryGrid';
 import Modal from '../../components/modal/MusitModal';
 import CancelButton from '../../components/buttons/cancel';
 import { I18n } from 'react-i18nify';
-import moveHistoryStore$, {
-  clear$,
-  loadMoveHistory$
-} from './moveHistoryStore';
+import moveHistoryStore$, { clear$, loadMoveHistory$ } from './moveHistoryStore';
 import inject from 'react-rxjs/dist/RxInject';
 
 export class MoveHistoryComponent extends Component {
-
   static propTypes = {
     moveHistoryStore: PropTypes.object.isRequired,
     objectId: PropTypes.number.isRequired,
@@ -56,11 +52,7 @@ export class MoveHistoryComponent extends Component {
     return (
       <Modal
         className="moveHistory"
-        body={
-          <ModalMoveHistoryGrid
-            tableData={moves}
-          />
-        }
+        body={<ModalMoveHistoryGrid tableData={moves} />}
         footer={
           <CancelButton
             onClick={this.context.closeModal}

@@ -1,11 +1,10 @@
 import React from 'react';
 import AutoSuggest from 'react-autosuggest';
 import Config from '../../config';
-import suggest$Fn, { update$, clear$} from './suggestStore';
+import suggest$Fn, { update$, clear$ } from './suggestStore';
 import inject from 'react-rxjs/dist/RxInject';
 
 export class NodeSuggest extends React.Component {
-
   static propTypes = {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
@@ -63,16 +62,14 @@ export class NodeSuggest extends React.Component {
 
   renderNodeSuggestion(suggestion) {
     const suggestionText = suggestion.name;
-    return (
-      <span className={'suggestion-content'}>{suggestionText}</span>
-    );
+    return <span className={'suggestion-content'}>{suggestionText}</span>;
   }
 
   requestSuggestionUpdate(update) {
     if (update.value.length > 2) {
       const museumId = this.props.appSession.getMuseumId();
       const token = this.props.appSession.getAccessToken();
-      this.props.update({update, museumId, token});
+      this.props.update({ update, museumId, token });
     }
   }
 
@@ -85,7 +82,7 @@ export class NodeSuggest extends React.Component {
         getSuggestionValue={this.getNodeSuggestionValue}
         renderSuggestion={this.renderNodeSuggestion}
         inputProps={{ ...this.nodeProps, value: this.state.value }}
-        shouldRenderSuggestions={(v) => v !== 'undefined'}
+        shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
     );

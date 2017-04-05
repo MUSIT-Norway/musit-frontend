@@ -5,9 +5,7 @@ import NotFound from '../Logos';
 
 describe('Logos', () => {
   it('should match snapshot', () => {
-    const wrapper = shallow(
-      <NotFound />
-    );
+    const wrapper = shallow(<NotFound />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

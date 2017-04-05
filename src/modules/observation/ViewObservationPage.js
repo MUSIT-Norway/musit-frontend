@@ -7,14 +7,13 @@ import inject from 'react-rxjs/dist/RxInject';
 import store$, { setLoading$, loadRootNode$, getObservation$ } from './observationStore';
 
 export class ViewObservationPage extends React.Component {
-
   static propTypes = {
     params: PropTypes.object.isRequired,
     setLoading: PropTypes.func.isRequired,
     getObservation: PropTypes.func.isRequired,
     loadRootNode: PropTypes.func.isRequired,
     store: React.PropTypes.object.isRequired
-  }
+  };
 
   componentWillMount() {
     this.props.setLoading();
@@ -41,7 +40,9 @@ export class ViewObservationPage extends React.Component {
         breadcrumb={<Breadcrumb node={this.props.store.rootNode} disabled />}
         content={
           <div>
-            <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.view')}</h4>
+            <h4 style={{ textAlign: 'center' }}>
+              {I18n.t('musit.observation.page.titles.view')}
+            </h4>
             <ObservationPage
               id={this.props.params.id}
               onSaveObservation={() => true} // disable save

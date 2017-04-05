@@ -1,6 +1,11 @@
 import EventsComponent from './EventsComponent';
 import inject from 'react-rxjs/dist/RxInject';
-import eventsStore$, { loadAnalyses$, getCurrentLocation$, setObject$, clear$ } from './eventsStore.js';
+import eventsStore$, {
+  loadAnalyses$,
+  getCurrentLocation$,
+  setObject$,
+  clear$
+} from './eventsStore.js';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import React from 'react';
@@ -13,7 +18,9 @@ const data = {
 
 const commands = { loadAnalyses$, getCurrentLocation$, setObject$, clear$ };
 
-export const onMount = ({ appSession, location: { state }, loadAnalyses, getCurrentLocation, setObject, clear }) => {
+export const onMount = (
+  { appSession, location: { state }, loadAnalyses, getCurrentLocation, setObject, clear }
+) => {
   const museumId = appSession.getMuseumId();
   const token = appSession.getAccessToken();
   const objectId = state.id;
@@ -23,7 +30,4 @@ export const onMount = ({ appSession, location: { state }, loadAnalyses, getCurr
   getCurrentLocation({ museumId, token, objectId });
 };
 
-export default flowRight([
-  inject(data, commands),
-  mount(onMount)
-])(EventsComponent);
+export default flowRight([inject(data, commands), mount(onMount)])(EventsComponent);

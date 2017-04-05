@@ -1,4 +1,9 @@
-import { validateFromTo, validateAlcohol, validatePest, validateDoubleTextArea } from '../observationValidation';
+import {
+  validateFromTo,
+  validateAlcohol,
+  validatePest,
+  validateDoubleTextArea
+} from '../observationValidation';
 
 describe('Validation.validateAlcohol', () => {
   it('should verify that statusValue cannot be null', () => {

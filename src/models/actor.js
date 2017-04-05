@@ -17,8 +17,8 @@ class MusitActor {
    */
   static getActorNames(actorsJson, doneById, registeredById) {
     const actors = [].concat(actorsJson).map(actor => new MusitActor(actor));
-    const doneBy = find(actors, (a) => a.hasActorId(doneById));
-    const registeredBy = find(actors, (a) => a.hasActorId(registeredById));
+    const doneBy = find(actors, a => a.hasActorId(doneById));
+    const registeredBy = find(actors, a => a.hasActorId(registeredById));
     return { doneBy: doneBy && doneBy.fn, registeredBy: registeredBy && registeredBy.fn };
   }
 
@@ -50,26 +50,33 @@ class MusitActor {
   }
 }
 
-MusitActor.getActors = (ajaxPost = simplePost) => (actorIds, token, callback) => {
-  return ajaxPost(`${Config.magasin.urls.api.actor.baseUrl}/details`, actorIds, token, callback)
-    .map(({ response }) => response)
-    .map((actors) => {
-      if (!actors) {
-        return undefined;
-      }
-      return actors.map(actor => new MusitActor(actor));
-    });
-};
+MusitActor.getActors = (ajaxPost = simplePost) =>
+  (actorIds, token, callback) => {
+    return ajaxPost(
+      `${Config.magasin.urls.api.actor.baseUrl}/details`,
+      actorIds,
+      token,
+      callback
+    )
+      .map(({ response }) => response)
+      .map(actors => {
+        if (!actors) {
+          return undefined;
+        }
+        return actors.map(actor => new MusitActor(actor));
+      });
+  };
 
-MusitActor.getActor = (ajaxGet = simpleGet) => ({ actorId, token, callback }) => {
-  return ajaxGet(`${Config.magasin.urls.api.actor.baseUrl}/${actorId}`, token, callback)
-    .map(({ response }) => response)
-    .map((actor) => {
-      if (!actor) {
-        return undefined;
-      }
-      return new MusitActor(actor);
-    });
-};
+MusitActor.getActor = (ajaxGet = simpleGet) =>
+  ({ actorId, token, callback }) => {
+    return ajaxGet(`${Config.magasin.urls.api.actor.baseUrl}/${actorId}`, token, callback)
+      .map(({ response }) => response)
+      .map(actor => {
+        if (!actor) {
+          return undefined;
+        }
+        return new MusitActor(actor);
+      });
+  };
 
 export default MusitActor;

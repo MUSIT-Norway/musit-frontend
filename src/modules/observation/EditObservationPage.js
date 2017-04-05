@@ -11,7 +11,6 @@ import store$, { loadRootNode$ } from './observationStore';
 import Control from '../../models/control';
 
 export class EditObservationPage extends React.Component {
-
   static propTypes = {
     location: PropTypes.object.isRequired,
     addObservation: PropTypes.func.isRequired,
@@ -20,7 +19,7 @@ export class EditObservationPage extends React.Component {
     params: PropTypes.object.isRequired,
     rootNode: React.PropTypes.object,
     appSession: PropTypes.object.isRequired
-  }
+  };
 
   componentWillMount() {
     if (!this.props.store.rootNode) {
@@ -34,32 +33,31 @@ export class EditObservationPage extends React.Component {
 
   getObservationsFromLocationState() {
     return Object.keys(this.props.location.state)
-      .filter((o) => o.endsWith('OK') && this.props.location.state[o] === false)
-      .map((o) => {
+      .filter(o => o.endsWith('OK') && this.props.location.state[o] === false)
+      .map(o => {
         switch (o) {
-        case 'pestOK':
-          return { type: 'pest', data: ObservationPage.createDefaultPestData() };
-        case 'temperatureOK':
-          return { type: 'temperature', data: {} };
-        case 'moldOK':
-          return { type: 'mold', data: {} };
-        case 'hypoxicAirOK':
-          return { type: 'hypoxicAir', data: {} };
-        case 'gasOK':
-          return { type: 'gas', data: {} };
-        case 'lightConditionOK':
-          return { type: 'lightCondition', data: {} };
-        case 'cleaningOK':
-          return { type: 'cleaning', data: {} };
-        case 'relativeHumidityOK':
-          return { type: 'relativeHumidity', data: {} };
-        case 'alcoholOK':
-          return { type: 'alcohol', data: {} };
-        default:
-          throw Error(`Invalid control ${o}`);
+          case 'pestOK':
+            return { type: 'pest', data: ObservationPage.createDefaultPestData() };
+          case 'temperatureOK':
+            return { type: 'temperature', data: {} };
+          case 'moldOK':
+            return { type: 'mold', data: {} };
+          case 'hypoxicAirOK':
+            return { type: 'hypoxicAir', data: {} };
+          case 'gasOK':
+            return { type: 'gas', data: {} };
+          case 'lightConditionOK':
+            return { type: 'lightCondition', data: {} };
+          case 'cleaningOK':
+            return { type: 'cleaning', data: {} };
+          case 'relativeHumidityOK':
+            return { type: 'relativeHumidity', data: {} };
+          case 'alcoholOK':
+            return { type: 'alcohol', data: {} };
+          default:
+            throw Error(`Invalid control ${o}`);
         }
-      }
-      );
+      });
   }
 
   getDoneByFromLocationState() {
@@ -73,7 +71,9 @@ export class EditObservationPage extends React.Component {
         breadcrumb={<Breadcrumb node={this.props.store.rootNode} disabled />}
         content={
           <div>
-            <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.edit')}</h4>
+            <h4 style={{ textAlign: 'center' }}>
+              {I18n.t('musit.observation.page.titles.edit')}
+            </h4>
             <ObservationPage
               id={this.props.params.id}
               observations={this.getObservationsFromLocationState()}
@@ -83,13 +83,25 @@ export class EditObservationPage extends React.Component {
                 const museumId = this.props.appSession.getMuseumId();
                 const token = this.props.appSession.getAccessToken();
                 const controlData = this.props.location.state;
-                this.props.addObservation({ nodeId, museumId, controlData, observations, token, callback: {
-                  onComplete: () => {
-                    hashHistory.goBack();
-                    this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.newControl.saveControlSuccess') });
-                  },
-                  onFailure: (e) => this.props.emitError({ ...e, type: 'network' })
-                }}).toPromise();
+                this.props
+                  .addObservation({
+                    nodeId,
+                    museumId,
+                    controlData,
+                    observations,
+                    token,
+                    callback: {
+                      onComplete: () => {
+                        hashHistory.goBack();
+                        this.props.emitSuccess({
+                          type: 'saveSuccess',
+                          message: I18n.t('musit.newControl.saveControlSuccess')
+                        });
+                      },
+                      onFailure: e => this.props.emitError({ ...e, type: 'network' })
+                    }
+                  })
+                  .toPromise();
               }}
               mode="EDIT"
             />

@@ -11,7 +11,7 @@ describe('ControlView', () => {
     const myDiv = ReactTestUtils.renderIntoDocument(
       <ControlView
         id="1"
-        translate={(key) => key}
+        translate={key => key}
         controlsJson={{
           temperature: {
             ok: false,
@@ -28,7 +28,10 @@ describe('ControlView', () => {
         }}
       />
     );
-    const inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(myDiv, 'button');
+    const inputComponent = ReactTestUtils.scryRenderedDOMComponentsWithTag(
+      myDiv,
+      'button'
+    );
     temperatureButton = inputComponent[0];
     relativeHumidityButton = inputComponent[1];
   });

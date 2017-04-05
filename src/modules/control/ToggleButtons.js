@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { Button, Row, Col } from 'react-bootstrap';
@@ -11,7 +10,7 @@ export default class ToogleButtons extends Component {
     value: PropTypes.bool,
     updatevalueOK: PropTypes.func.isRequired,
     updatevalueNotOK: PropTypes.func.isRequired
-  }
+  };
 
   render() {
     const { label, value } = this.props;
@@ -28,12 +27,12 @@ export default class ToogleButtons extends Component {
         </Row>
         <Row>
           <Col xs={2}>
-            {value != null ?
-              <FontAwesome
-                name={value ? 'check' : 'times'}
-                style={{ padding: '2px', fontSize: 'x-large' }}
-              /> :
-              null}
+            {value != null
+              ? <FontAwesome
+                  name={value ? 'check' : 'times'}
+                  style={{ padding: '2px', fontSize: 'x-large' }}
+                />
+              : null}
           </Col>
           <Col xs={10}>
             <Button
@@ -45,7 +44,9 @@ export default class ToogleButtons extends Component {
               {I18n.t('musit.texts.ok')}
             </Button>
             <Button
-              className={value != null && !value ? 'buttonpaddingtrue' : 'buttonpaddingfalse'}
+              className={
+                value != null && !value ? 'buttonpaddingtrue' : 'buttonpaddingfalse'
+              }
               onClick={this.props.updatevalueNotOK}
             >
               <FontAwesome name="times" />

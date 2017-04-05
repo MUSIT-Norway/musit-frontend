@@ -4,7 +4,6 @@ import { eventsStore$ } from '../eventsStore';
 const diff = require('deep-diff').diff;
 
 describe('eventsStore', () => {
-
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       // console.log(JSON.stringify(actual, null, 2));
@@ -27,11 +26,11 @@ describe('eventsStore', () => {
     };
 
     // mock streams
-    const clearM            = '-1---------';
-    const getCurrentLocM    = '----1------';
-    const setObjectM        = '--1--------';
-    const loadAnalysesM     = '---1-------';
-    const expected          = 'aabcd------';
+    const clearM = '-1---------';
+    const getCurrentLocM = '----1------';
+    const setObjectM = '--1--------';
+    const loadAnalysesM = '---1-------';
+    const expected = 'aabcd------';
 
     const expectedStateMap = {
       a: {},
@@ -51,11 +50,13 @@ describe('eventsStore', () => {
 
     // mock up$ and down$ events
     const clear$ = testScheduler.createHotObservable(clearM);
-    const getCurrentLocation$ = testScheduler.createHotObservable(getCurrentLocM, { 1: currentLocation });
+    const getCurrentLocation$ = testScheduler.createHotObservable(getCurrentLocM, {
+      1: currentLocation
+    });
     const setObject$ = testScheduler.createHotObservable(setObjectM, { 1: object });
     const loadEvents$ = testScheduler.createHotObservable(loadAnalysesM, { 1: [] });
 
-    const state$ = eventsStore$({clear$, getCurrentLocation$, setObject$, loadEvents$});
+    const state$ = eventsStore$({ clear$, getCurrentLocation$, setObject$, loadEvents$ });
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);

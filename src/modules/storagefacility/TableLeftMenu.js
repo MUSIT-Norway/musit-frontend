@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react';
 import { ControlLabel, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -18,7 +17,7 @@ export default class NodeLeftMenuComponent extends Component {
     onClickMoveNode: PropTypes.func.isRequired,
     onClickDelete: PropTypes.func.isRequired,
     showButtons: PropTypes.bool
-  }
+  };
 
   render() {
     const {
@@ -31,7 +30,7 @@ export default class NodeLeftMenuComponent extends Component {
       showButtons
     } = this.props;
 
-    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) =>
+    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) => (
       <div style={{ border: 'none', textAlign: 'center' }}>
         <Button
           bsStyle="link"
@@ -39,36 +38,39 @@ export default class NodeLeftMenuComponent extends Component {
           style={{ color: 'black' }}
           disabled={disabled}
         >
-          {useMusitIcon ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} /> :
-            <FontAwesome name={`${icon}`} style={{ fontSize: '1.5em', padding: '2px' }} />}
+          {useMusitIcon
+            ? <span className={`icon icon-${icon}`} style={{ padding: '2px' }} />
+            : <FontAwesome
+                name={`${icon}`}
+                style={{ fontSize: '1.5em', padding: '2px' }}
+              />}
           <br />
           {I18n.t(`musit.leftMenu.node.${type}`)}
         </Button>
-      </div>;
+      </div>
+    );
 
-    const showCount = (type) => {
+    const showCount = type => {
       const count = this.props.stats && this.props.stats[type];
       return (
         <div style={{ border: 'none', textAlign: 'center' }}>
           {I18n.t(`musit.leftMenu.node.${type}`)}
           <br />
           <ControlLabel>
-            {count === null ? <FontAwesome name='spinner' spin/> : count}
+            {count === null ? <FontAwesome name="spinner" spin /> : count}
           </ControlLabel>
         </div>
       );
     };
 
-    const newButton = () =>
+    const newButton = () => (
       <div style={{ border: 'none', textAlign: 'center' }}>
-        <Button
-          onClick={() => onClickNewNode()}
-          style={{ textAlign: 'left' }}
-        >
+        <Button onClick={() => onClickNewNode()} style={{ textAlign: 'left' }}>
           <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
           {I18n.t('musit.leftMenu.node.newNode')}
         </Button>
-      </div>;
+      </div>
+    );
 
     return (
       <div>
@@ -79,9 +81,17 @@ export default class NodeLeftMenuComponent extends Component {
         {showButtons && showCount('totalObjects')}
         {showButtons && <hr />}
         {showButtons && buttonLink('properties', 'cog', onClickProperties)}
-        {showButtons && buttonLink('controlsobservations', 'musitcontrolobsicon', onClickControlObservations, false, true)}
+        {showButtons &&
+          buttonLink(
+            'controlsobservations',
+            'musitcontrolobsicon',
+            onClickControlObservations,
+            false,
+            true
+          )}
         {showButtons && buttonLink('moveNode', 'truck', onClickMoveNode)}
-        {showButtons && buttonLink('delete','trash-o', onClickDelete, this.isDeleteDisabled())}
+        {showButtons &&
+          buttonLink('delete', 'trash-o', onClickDelete, this.isDeleteDisabled())}
       </div>
     );
   }

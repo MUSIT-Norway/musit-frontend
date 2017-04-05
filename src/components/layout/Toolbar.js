@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { MusitField } from '../formfields';
@@ -16,7 +15,7 @@ export default class Toolbar extends React.Component {
     placeHolderSearch: React.PropTypes.string,
     searchValue: React.PropTypes.string,
     onSearchChanged: React.PropTypes.func
-  }
+  };
 
   render() {
     let optionalSearch;
@@ -32,7 +31,7 @@ export default class Toolbar extends React.Component {
       clickShowRight
     } = this.props;
     if (onSearchChanged) {
-      optionalSearch = 
+      optionalSearch = (
         <div className="searchField">
           <MusitField
             style={{ width: '200px', zIndex: 'inherit' }}
@@ -43,24 +42,28 @@ export default class Toolbar extends React.Component {
             validate="text"
             onChange={onSearchChanged}
           />
-        </div>;
-      
+        </div>
+      );
     } else {
-      optionalSearch = 
+      optionalSearch = (
         <div className="searchField">
           <span style={{ width: '180px', display: 'inline-block' }}>{' '}</span>
-        </div>;
-      
+        </div>
+      );
     }
     return (
       <div className="wrapper">
         {optionalSearch}
         <div className="toolBarButtons">
           <Button active={showLeft} onClick={clickShowLeft}>
-            <FontAwesome name={showLeft ? 'check-square-o' : 'square-o'} />{' '}{labelLeft}
+            <FontAwesome name={showLeft ? 'check-square-o' : 'square-o'} />
+            {' '}
+            {labelLeft}
           </Button>
           <Button active={showRight} onClick={clickShowRight}>
-            <FontAwesome name={showRight ? 'check-square-o' : 'square-o'} />{' '}{labelRight}
+            <FontAwesome name={showRight ? 'check-square-o' : 'square-o'} />
+            {' '}
+            {labelRight}
           </Button>
         </div>
       </div>

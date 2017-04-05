@@ -2,13 +2,12 @@ import type { Phone } from './types';
 
 export const booleanMapper = {
   fromRaw: (s: ?boolean) => s,
-  toRaw: (s: ?any) =>  !!s
+  toRaw: (s: ?any) => !!s
 };
-
 
 export const stringMapper = {
   fromRaw: (s: ?string) => s,
-  toRaw: (s: ?any) =>  s ? '' + s : null
+  toRaw: (s: ?any) => s ? '' + s : null
 };
 
 export const numberMapper = {

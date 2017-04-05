@@ -7,7 +7,7 @@ import assert from 'assert';
 
 describe('Event model', () => {
   it('should work', () => {
-    const get = (url) => {
+    const get = url => {
       if (url.indexOf('analyses') > -1) {
         return Observable.of({
           response: [
@@ -77,50 +77,52 @@ describe('Event model', () => {
       return assert.equal(undefined, difference);
     });
 
-    const loadM             = '-1----------';
-    const expected          = '-a----------';
+    const loadM = '-1----------';
+    const expected = '-a----------';
 
     const expectedStateMap = {
       a: [
         {
-          'id': 1,
-          'type': 'Analysis',
-          'eventDate': '23.03.2017',
-          'registeredBy': 'Some name',
-          'note': 'note'
+          id: 1,
+          type: 'Analysis',
+          eventDate: '23.03.2017',
+          registeredBy: 'Some name',
+          note: 'note'
         },
         {
-          'id': 2,
-          'type': 'Analysis',
-          'eventDate': '23.03.2017',
-          'registeredBy': 'Some name',
-          'note': 'note'
+          id: 2,
+          type: 'Analysis',
+          eventDate: '23.03.2017',
+          registeredBy: 'Some name',
+          note: 'note'
         },
         {
-          'id': 3,
-          'type': 'Analysis',
-          'eventDate': '23.03.2017',
-          'registeredBy': 'Some name',
-          'note': 'note'
+          id: 3,
+          type: 'Analysis',
+          eventDate: '23.03.2017',
+          registeredBy: 'Some name',
+          note: 'note'
         },
         {
-          'registeredDate': '2017-03-23T11:47:03+00:00',
-          'from': {
-            'breadcrumb': []
+          registeredDate: '2017-03-23T11:47:03+00:00',
+          from: {
+            breadcrumb: []
           },
-          'to': {
-            'breadcrumb': []
+          to: {
+            breadcrumb: []
           },
-          'type': 'MoveObject',
-          'eventDate': '23.03.2017',
-          'registeredBy': 'Some name'
+          type: 'MoveObject',
+          eventDate: '23.03.2017',
+          registeredBy: 'Some name'
         }
       ]
     };
 
     const load = testScheduler.createHotObservable(loadM);
 
-    testScheduler.expectObservable(load.flatMap(() => fn(props))).toBe(expected, expectedStateMap);
+    testScheduler
+      .expectObservable(load.flatMap(() => fn(props)))
+      .toBe(expected, expectedStateMap);
     testScheduler.flush();
   });
 });

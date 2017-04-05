@@ -12,7 +12,7 @@ export default class ControlView extends Component {
   static propTypes = {
     id: PropTypes.string.isRequired,
     controlsJson: PropTypes.object
-  }
+  };
 
   static iconMap = {
     alcohol: 'musitalcoholicon',
@@ -24,8 +24,7 @@ export default class ControlView extends Component {
     pest: 'musitpesticon',
     relativeHumidity: 'musitrelhumidityicon',
     temperature: 'musittemperatureicon'
-
-  }
+  };
 
   static typeMap = {
     alcohol: 'controlAlcohol',
@@ -37,7 +36,7 @@ export default class ControlView extends Component {
     pest: 'controlPest',
     relativeHumidity: 'controlRelativeHumidity',
     temperature: 'controlTemperature'
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -79,69 +78,78 @@ export default class ControlView extends Component {
 
   observation(fontName, observationType) {
     return (
-        <Col xs={5} sm={5} md={5} >
-          <span className={`icon icon-${fontName}`} style={{ 'fontSize': 'x-large' }} />
-          {` ${observationType}`}
-        </Col>
+      <Col xs={5} sm={5} md={5}>
+        <span className={`icon icon-${fontName}`} style={{ fontSize: 'x-large' }} />
+        {` ${observationType}`}
+      </Col>
     );
   }
 
   controlOk = (
-      <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="check" style={{ 'fontSize': 'x-large' }} />
-        {`  ${I18n.t('musit.texts.ok')}`}
-      </Col>
-  )
+    <Col xs={5} sm={5} md={5}>
+      <FontAwesome name="check" style={{ fontSize: 'x-large' }} />
+      {`  ${I18n.t('musit.texts.ok')}`}
+    </Col>
+  );
 
   controlNotOk = (
-      <Col xs={5} sm={5} md={5} >
-        <FontAwesome name="close" style={{ 'fontSize': 'x-large' }} />
-        {`  ${I18n.t('musit.texts.notOk')}`}
-      </Col>
-  )
+    <Col xs={5} sm={5} md={5}>
+      <FontAwesome name="close" style={{ fontSize: 'x-large' }} />
+      {`  ${I18n.t('musit.texts.notOk')}`}
+    </Col>
+  );
 
   downButton(observationType, ok) {
     return (
-        <Col xs={1} sm={1} >
-          <Button
-              id={`${this.props.id}_${observationType}_downButton`}
-              onClick={() => this.setState({ [observationType]: { open: !this.state[observationType].open } })}
-              bsStyle="link"
-          >
-            {ok ? null : <FontAwesome name="sort-desc" style={{ 'fontSize': 'x-large' }} />}
-          </Button>
-        </Col>
+      <Col xs={1} sm={1}>
+        <Button
+          id={`${this.props.id}_${observationType}_downButton`}
+          onClick={() =>
+            this.setState({
+              [observationType]: { open: !this.state[observationType].open }
+            })}
+          bsStyle="link"
+        >
+          {ok ? null : <FontAwesome name="sort-desc" style={{ fontSize: 'x-large' }} />}
+        </Button>
+      </Col>
     );
   }
 
   oneTableRow(control, eventType, index) {
     return (
-        <div key={index}>
-          <Row style={{ top: '0', bottom: '0' }} >
-            {this.observation(ControlView.iconMap[eventType],
-                I18n.t(`musit.viewControl.${ControlView.typeMap[eventType]}`))}
-            {control.ok ? this.controlOk : this.controlNotOk}
-            {this.downButton(eventType, control.ok)}
-          </Row>
-          <Row>
-            <Panel collapsible expanded={this.state[eventType].open}>
-              {this.showObservation(control, eventType)}
-            </Panel>
-          </Row>
-        </div>
+      <div key={index}>
+        <Row style={{ top: '0', bottom: '0' }}>
+          {this.observation(
+            ControlView.iconMap[eventType],
+            I18n.t(`musit.viewControl.${ControlView.typeMap[eventType]}`)
+          )}
+          {control.ok ? this.controlOk : this.controlNotOk}
+          {this.downButton(eventType, control.ok)}
+        </Row>
+        <Row>
+          <Panel collapsible expanded={this.state[eventType].open}>
+            {this.showObservation(control, eventType)}
+          </Panel>
+        </Row>
+      </div>
     );
   }
 
   getControls(controls) {
-    const withIndexAndKey = map(keys({...controls}), (type, index) => {
+    const withIndexAndKey = map(keys({ ...controls }), (type, index) => {
       return { index, item: controls[type], type };
     });
-    return reduce(withIndexAndKey, (result, withIndex) => {
-      if (ControlView.typeMap[withIndex.type]) {
-        result.push(this.oneTableRow(withIndex.item, withIndex.type, withIndex.index));
-      }
-      return result;
-    }, []);
+    return reduce(
+      withIndexAndKey,
+      (result, withIndex) => {
+        if (ControlView.typeMap[withIndex.type]) {
+          result.push(this.oneTableRow(withIndex.item, withIndex.type, withIndex.index));
+        }
+        return result;
+      },
+      []
+    );
   }
 
   showObservation(control, controlType) {
@@ -150,8 +158,8 @@ export default class ControlView extends Component {
     if (!ok) {
       const observation = control.observation;
       switch (controlType) {
-      case 'temperature':
-        lv = 
+        case 'temperature':
+          lv = (
             <ObservationRender.RenderFromToNumberComment
               disabled
               type="temperature"
@@ -165,11 +173,12 @@ export default class ControlView extends Component {
                 toWidth: 3,
                 commentWidth: 6
               }}
-            />;
-          
-        break;
-      case 'alcohol':
-        lv = 
+            />
+          );
+
+          break;
+        case 'alcohol':
+          lv = (
             <ObservationRender.RenderAlcohol
               disabled
               valueProps={{
@@ -182,11 +191,12 @@ export default class ControlView extends Component {
                 volumeWidth: 3,
                 commentWidth: 6
               }}
-            />;
-          
-        break;
-      case 'cleaning':
-        lv = 
+            />
+          );
+
+          break;
+        case 'cleaning':
+          lv = (
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="cleaning"
@@ -198,11 +208,12 @@ export default class ControlView extends Component {
                 leftWidth: 6,
                 rightWidth: 6
               }}
-            />;
-          
-        break;
-      case 'gas':
-        lv = 
+            />
+          );
+
+          break;
+        case 'gas':
+          lv = (
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="gas"
@@ -214,11 +225,12 @@ export default class ControlView extends Component {
                 leftWidth: 6,
                 rightWidth: 6
               }}
-            />;
-          
-        break;
-      case 'hypoxicAir':
-        lv = 
+            />
+          );
+
+          break;
+        case 'hypoxicAir':
+          lv = (
             <ObservationRender.RenderFromToNumberComment
               disabled
               type="hypoxicAir"
@@ -232,11 +244,12 @@ export default class ControlView extends Component {
                 toWidth: 3,
                 commentWidth: 6
               }}
-            />;
-          
-        break;
-      case 'lightingCondition':
-        lv = 
+            />
+          );
+
+          break;
+        case 'lightingCondition':
+          lv = (
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="lightCondition"
@@ -248,11 +261,12 @@ export default class ControlView extends Component {
                 leftWidth: 6,
                 rightWidth: 6
               }}
-            />;
-          
-        break;
-      case 'mold':
-        lv = 
+            />
+          );
+
+          break;
+        case 'mold':
+          lv = (
             <ObservationRender.RenderDoubleTextArea
               disabled
               type="mold"
@@ -264,11 +278,12 @@ export default class ControlView extends Component {
                 leftWidth: 6,
                 rightWidth: 6
               }}
-            />;
-          
-        break;
-      case 'pest':
-        lv = 
+            />
+          );
+
+          break;
+        case 'pest':
+          lv = (
             <ObservationRender.RenderPest
               disabled
               canEdit={false}
@@ -290,11 +305,12 @@ export default class ControlView extends Component {
                 commentsLeftWidth: 6,
                 commentsRightWidth: 6
               }}
-            />;
-          
-        break;
-      case 'relativeHumidity':
-        lv = 
+            />
+          );
+
+          break;
+        case 'relativeHumidity':
+          lv = (
             <ObservationRender.RenderFromToNumberComment
               disabled
               type="relativeHumidity"
@@ -308,12 +324,13 @@ export default class ControlView extends Component {
                 toWidth: 3,
                 commentWidth: 6
               }}
-            />;
-          
-        break;
-      default:
-        lv = '';
-        break;
+            />
+          );
+
+          break;
+        default:
+          lv = '';
+          break;
       }
     }
     return lv;

@@ -74,7 +74,7 @@
     "use-isnan": "error",
     "valid-typeof": "error",
     "prefer-const": "error",
-    "indent": ["error", 2],
+    "indent": "off",
     "brace-style": [ 2, "1tbs" ],
     "curly": ["error", "all"],
     "quotes": ["error", "single"]
