@@ -126,6 +126,7 @@ export class ObjectSearchComponent extends React.Component {
                               />
                             </a>
                           </th>
+                          <th>{Config.isDev && 'Se objekt'}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -196,6 +197,21 @@ export class ObjectSearchComponent extends React.Component {
                                           name="shopping-cart"
                                         />}
                                   </a>}
+                              </td>
+                              <td>
+                                <a
+                                  href=""
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    hashHistory.push(
+                                      Config.magasin.urls.client.object.gotoObject(
+                                        data.uuid
+                                      )
+                                    );
+                                  }}
+                                >
+                                  {Config.isDev && 'Vis'}
+                                </a>
                               </td>
                             </tr>
                           );
