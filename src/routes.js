@@ -18,7 +18,7 @@ import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent'
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/analysisAddContainer';
 import AnalysisViewContainer from './modules/analysis/analysisViewContainer';
-import AnalysisEditContainer from './modules/analysis/analysisViewContainer';
+import AnalysisEditContainer from './modules/analysis/analysisEditContainer';
 import SampleFormAddContainer  from './modules/sample/sampleAddContainer';
 import AllEvents from './modules/events/eventsContainer';
 import SampleViewContainer  from './modules/sample/sampleViewContainer';

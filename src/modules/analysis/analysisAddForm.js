@@ -35,7 +35,6 @@ const registeredDate = getStrField('registeredDate', '2017-03-16T14:37:45+00:00'
 const doneBy = getStrField('doneBy', 'Per Hansen');
 const doneDate = getStrField('doneDate', '12.12.2012');
 const eventDate = getStrField('eventDate', '13.12.2012');
-const objectId = getStrField('objectId', '1234456');
 const partOf = getStrField('partOf', '2345');
 const result = getStrField('result', 'result');
 const actor = getStrField('actor', 'Test Name Actor');
@@ -51,6 +50,10 @@ const restrictionsEndDate = getStrField('restrictionsEndDate', '13.12.2012');
 const repealedBy = getStrField('repealedBy', 'repealed By Person Name');
 const note = getStrField('note', 'default value of note');
 const completeAnalysis = getBoolField('completeAnalysis', true);
+
+const objectId = getStrField('objectId', '');
+const museumNo = getStrField('museumNo', '');
+const term = getStrField('term', '');
 
 const caseNumber: Field<number> = {
   name: 'caseNumber',
@@ -69,7 +72,6 @@ export const fieldsArray = [
   doneBy,
   doneDate,
   eventDate,
-  objectId,
   partOf,
   result,
   caseNumber,
@@ -85,7 +87,10 @@ export const fieldsArray = [
   restrictionsEndDate,
   repealedBy,
   note,
-  completeAnalysis
+  completeAnalysis,
+  objectId,
+  museumNo,
+  term
 ];
 
 export default createForm('analysisAddForm.js', fieldsArray);

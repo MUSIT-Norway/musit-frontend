@@ -2,7 +2,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
 import analysisAddForm from './analysisAddForm';
 import AnalysisEditComponent from './AnalysisEditComponent';
-import store$, { getAnalysisTypesForCollection$, loadAnalysis$ } from './analysisStore';
+import store$, { getAnalysisTypesForCollection$} from './analysisStore';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
@@ -17,16 +17,17 @@ const data = {
   form$
 };
 
-const commands = { updateForm$, loadForm$, getAnalysisTypesForCollection$, loadAnalysis$ };
+const commands = { updateForm$, loadForm$, getAnalysisTypesForCollection$ };
 
 const props = {
-  editAnalysisEvent: toPromise(Analysis.editAnalysisEvent())
+  editAnalysisEvent: toPromise(Analysis.editAnalysisEvent()),
+  loadAnalysis: toPromise(Analysis.getAnalysisWithDeatils())
 };
 
-export const onMount = ({ getAnalysisTypesForCollection, loadAnalysis, appSession, params }) => {
+export const onMount = ({ getAnalysisTypesForCollection, loadAnalysis, appSession, params, loadForm }) => {
   getAnalysisTypesForCollection({
     museumId: appSession.getMuseumId(),
-    collectionId: appSession.getCollectionId(),
+    collectionId: appSession.getCollectionId().uuid,
     token: appSession.getAccessToken()
   });
   loadAnalysis({
@@ -34,6 +35,12 @@ export const onMount = ({ getAnalysisTypesForCollection, loadAnalysis, appSessio
     id: params.analysisId,
     collectionId: appSession.getCollectionId(),
     token: appSession.getAccessToken()
+  }).then(analysis => {
+    console.log('Rituvesh', analysis);
+    const dataForForm = Object.keys(analysis)
+      .reduce((obj, attributeName) => ([...obj, {name: attributeName, defaultValue: analysis[attributeName]}]), []);
+    console.log('dataForForm', dataForForm);
+    loadForm(dataForForm);
   });
 };
 

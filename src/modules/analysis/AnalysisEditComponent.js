@@ -14,7 +14,6 @@ import {
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import {SaveCancel} from '../../components/formfields/index';
-const { Table } = require('reactable');
 import { AppSession } from '../app/appSession';
 
 type Field = { name: string, rawValue: ?string };
@@ -25,7 +24,9 @@ type FormData = {
   doneBy: Field,
   doneDate: Field,
   eventDate: Field,
-  objectId: Field,
+  objectId: any,
+  museumNo: any,
+  term: any,
   partOf: Field,
   result: Field,
   caseNumber: Field,
@@ -46,7 +47,7 @@ type FormData = {
 
 type AnalysisType = { id: number, name: string };
 type ObjectData = { uuid: string }
-type Store = { objectsData: ObjectData[], data: { analysisTypes: AnalysisType[] } };
+type Store = { objectsData: ObjectData[], analysisTypes: AnalysisType[] };
 type Update = (update: Field) => void;
 type Props = {
   form: FormData,
@@ -149,17 +150,9 @@ const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession }
     <Form inline>
       <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
       <Col mdOffset={1} md={5}>
-        <Table
-          className="table"
-          columns={[
-            { key: 'museumNumber', label: 'Museumsnr'},
-            { key: 'subNumber', label: 'Unr'},
-            { key: 'term', label: 'Term/artsnavn' }
-          ]}
-          data={store.objectsData}
-          sortable={['museumNumber', 'subNumber', 'term']}
-          noDataText="Ingen objekter"
-        />
+        {form.objectId.defaultValue}<br/>
+        {form.museumNo.defaultValue}<br/>
+        {form.term.defaultValue}<br/>
       </Col>
       <AddButton
         id="2"
@@ -218,7 +211,7 @@ const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession }
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
-              {store.data.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+              {store.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
             </FormControl>
           </Col>
         </FormGroup>
