@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/observable/dom/ajax';
 import { hashHistory } from 'react-router';
 import { emitError } from './errors';
+import { closeModal } from './modal';
 import { setAccessToken$ } from '../modules/app/appSession';
 
 export const onComplete = callback =>
@@ -28,6 +29,7 @@ export const onFailure = callback =>
           hashHistory.push('/');
           emitError({ ...error, type: 'network' });
         }
+        closeModal();
         return Observable.empty();
       default:
         break;

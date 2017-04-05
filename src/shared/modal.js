@@ -2,10 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { I18n } from 'react-i18nify';
 
+let __$dialog__;
+
+export const closeModal = () => {
+  if (__$dialog__ && typeof __$dialog__.close === 'function') {
+    __$dialog__.close();
+  }
+};
+
 export const showConfirm = (message, onYes) => {
+  closeModal();
+
   const title = I18n.t('musit.texts.deleteNode');
   const prompt = `<div>${message}</div>`;
-  const $dialog = $(prompt).dialog({
+  const $dialog = __$dialog__ = $(prompt).dialog({
     autoOpen: false,
     modal: true,
     title: title,
@@ -36,7 +46,9 @@ export const showConfirm = (message, onYes) => {
 };
 
 export const showModal = (title, componentToRender, closeFn) => {
-  const $dialog = $('<div>').dialog({
+  closeModal();
+
+  const $dialog = __$dialog__ = $('<div>').dialog({
     autoOpen: false,
     modal: true,
     title: title,
