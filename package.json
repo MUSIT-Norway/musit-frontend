@@ -110,7 +110,6 @@
   },
   "pre-commit": [
     "precommit-msg",
-    "formatcode",
     "lint",
     "flow"
   ],
