@@ -105,11 +105,12 @@
     "flow": "./node_modules/.bin/flow check --show-all-errors",
     "lint": "./node_modules/.bin/eslint .",
     "lint:fix": "./node_modules/.bin/eslint . --fix",
-    "format" : "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.js\"",
+    "formatcode" : "./node_modules/.bin/prettier --single-quote --trailing-comma none --print-width 90 --write \"{src,__{tests,mocks}__}/**/*.js\"",
     "precommit-msg": "echo 'Pre-commit checks...' && exit 0"
   },
   "pre-commit": [
     "precommit-msg",
+    "formatcode",
     "lint",
     "flow"
   ],
