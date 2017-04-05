@@ -51,12 +51,12 @@ export class KDReport extends Component {
                   <tbody>
                     <tr>
                       <td>{I18n.t('musit.reports.securingCollections.totalArea')}</td>
-                      <td>{data ? formatFloatToString(data.totalArea) : null} m²</td>
+                      <td>{data && formatFloatToString(data.totalArea)} m²</td>
                     </tr>
                     <tr>
                       <td>{I18n.t('musit.reports.securingCollections.perimeter')}</td>
                       <td>
-                        {data ? formatFloatToString(data.perimeterSecurity) : null} m²
+                        {data && formatFloatToString(data.perimeterSecurity)} m²
                       </td>
                     </tr>
                     <tr>
@@ -64,19 +64,19 @@ export class KDReport extends Component {
                         {I18n.t('musit.reports.securingCollections.theftProtection')}
                       </td>
                       <td>
-                        {data ? formatFloatToString(data.theftProtection) : null} m²
+                        {data && formatFloatToString(data.theftProtection)} m²
                       </td>
                     </tr>
                     <tr>
                       <td>
                         {I18n.t('musit.reports.securingCollections.fireProtection')}
                       </td>
-                      <td>{data ? formatFloatToString(data.fireProtection) : null} m²</td>
+                      <td>{data && formatFloatToString(data.fireProtection)} m²</td>
                     </tr>
                     <tr>
                       <td>{I18n.t('musit.reports.securingCollections.waterDamage')}</td>
                       <td>
-                        {data ? formatFloatToString(data.waterDamageAssessment) : null} m²
+                        {data && formatFloatToString(data.waterDamageAssessment)} m²
                       </td>
                     </tr>
                     <tr>
@@ -86,11 +86,7 @@ export class KDReport extends Component {
                         )}
                       </td>
                       <td>
-                        {data
-                          ? formatFloatToString(data.routinesAndContingencyPlan)
-                          : null}
-                        {' '}
-                        m²
+                        {data && formatFloatToString(data.routinesAndContingencyPlan)} m²
                       </td>
                     </tr>
                   </tbody>
