@@ -9,37 +9,25 @@ import sinon from 'sinon';
 
 describe('LoginPage', () => {
   it('should render norwegian text', () => {
-    const wrapper = shallow(
-      <LoginComponent
-        locale={() => 'no'}
-      />
-    );
+    const wrapper = shallow(<LoginComponent locale={() => 'no'} />);
     wrapper.setState({ showModal: true });
     expect(wrapper.find(LoginComponentNo).length).toBe(1);
     expect(wrapper.find(LoginComponentEn).length).toBe(0);
   });
 
   it('should render english text', () => {
-    const wrapper = shallow(
-      <LoginComponent
-        locale={() => 'en'}
-      />
-    );
+    const wrapper = shallow(<LoginComponent locale={() => 'en'} />);
     expect(wrapper.find(LoginComponentEn).length).toBe(1);
     expect(wrapper.find(LoginComponentNo).length).toBe(0);
   });
 
   it('should have norwegian text', () => {
-    const wrapper = shallow(
-      <LoginComponentNo />
-    );
+    const wrapper = shallow(<LoginComponentNo />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it('should have english text', () => {
-    const wrapper = shallow(
-      <LoginComponentEn />
-    );
+    const wrapper = shallow(<LoginComponentEn />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 

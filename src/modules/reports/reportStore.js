@@ -9,14 +9,18 @@ const initialState = {
 
 export const clear$ = createAction('clear$');
 
-export const loadKDReport$  = createAction('loadKDReport$').switchMap(Report.getKDReport());
-
-export const reducer$ = (actions) => Observable.merge(
-  actions.clear$.map(() => () => initialState),
-  actions.loadKDReport$.map((kdreport) => (state) => ({...state, data: { kdreport }, loaded: true}))
+export const loadKDReport$ = createAction('loadKDReport$').switchMap(
+  Report.getKDReport()
 );
 
-export const store$ = (actions$ = { clear$, loadKDReport$ }) =>
+export const reducer$ = actions =>
+  Observable.merge(
+    actions.clear$.map(() => () => initialState),
+    actions.loadKDReport$.map(kdreport =>
+      state => ({ ...state, data: { kdreport }, loaded: true }))
+  );
+
+export const store$ = (actions$ = { clear$, loadKDReport$ }) =>
   createStore('reportStore', reducer$(actions$), Observable.of(initialState));
 
 export default store$();

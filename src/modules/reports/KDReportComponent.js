@@ -20,13 +20,18 @@ export class KDReport extends Component {
     this.loadKDReport();
   }
 
-  loadKDReport(museumId = this.props.appSession.getMuseumId(), token = this.props.appSession.getAccessToken()) {
+  loadKDReport(
+    museumId = this.props.appSession.getMuseumId(),
+    token = this.props.appSession.getAccessToken()
+  ) {
     this.props.clear();
-    this.props.loadKDReport({museumId, token});
+    this.props.loadKDReport({ museumId, token });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id) {
+    if (
+      nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id
+    ) {
       this.loadKDReport(nextProps.appSession.getMuseumId());
     }
   }
@@ -44,30 +49,46 @@ export class KDReport extends Component {
                 </PageHeader>
                 <Table style={{ width: 700 }}>
                   <tbody>
-                  <tr>
-                    <td>{I18n.t('musit.reports.securingCollections.totalArea')}</td>
-                    <td>{data ? formatFloatToString(data.totalArea) : null} m&sup2;</td>
-                  </tr>
-                  <tr>
-                    <td>{I18n.t('musit.reports.securingCollections.perimeter')}</td>
-                    <td>{data ? formatFloatToString(data.perimeterSecurity) : null} m&sup2;</td>
-                  </tr>
-                  <tr>
-                    <td>{I18n.t('musit.reports.securingCollections.theftProtection')}</td>
-                    <td>{data ? formatFloatToString(data.theftProtection) : null} m&sup2;</td>
-                  </tr>
-                  <tr>
-                    <td>{I18n.t('musit.reports.securingCollections.fireProtection')}</td>
-                    <td>{data ? formatFloatToString(data.fireProtection) : null} m&sup2;</td>
-                  </tr>
-                  <tr>
-                    <td>{I18n.t('musit.reports.securingCollections.waterDamage')}</td>
-                    <td>{data ? formatFloatToString(data.waterDamageAssessment) : null} m&sup2;</td>
-                  </tr>
-                  <tr>
-                    <td>{I18n.t('musit.reports.securingCollections.routinesAndContingencyPlan')}</td>
-                    <td>{data ? formatFloatToString(data.routinesAndContingencyPlan) : null} m&sup2;</td>
-                  </tr>
+                    <tr>
+                      <td>{I18n.t('musit.reports.securingCollections.totalArea')}</td>
+                      <td>{data && formatFloatToString(data.totalArea)} m²</td>
+                    </tr>
+                    <tr>
+                      <td>{I18n.t('musit.reports.securingCollections.perimeter')}</td>
+                      <td>
+                        {data && formatFloatToString(data.perimeterSecurity)} m²
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {I18n.t('musit.reports.securingCollections.theftProtection')}
+                      </td>
+                      <td>
+                        {data && formatFloatToString(data.theftProtection)} m²
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {I18n.t('musit.reports.securingCollections.fireProtection')}
+                      </td>
+                      <td>{data && formatFloatToString(data.fireProtection)} m²</td>
+                    </tr>
+                    <tr>
+                      <td>{I18n.t('musit.reports.securingCollections.waterDamage')}</td>
+                      <td>
+                        {data && formatFloatToString(data.waterDamageAssessment)} m²
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        {I18n.t(
+                          'musit.reports.securingCollections.routinesAndContingencyPlan'
+                        )}
+                      </td>
+                      <td>
+                        {data && formatFloatToString(data.routinesAndContingencyPlan)} m²
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
               </Row>
@@ -77,7 +98,6 @@ export class KDReport extends Component {
       </div>
     );
   }
-
 }
 
 const data = {
@@ -90,7 +110,4 @@ const commands = {
   clear$
 };
 
-export default flowRight([
-  inject(data, commands),
-  makeUrlAware
-])(KDReport);
+export default flowRight([inject(data, commands), makeUrlAware])(KDReport);

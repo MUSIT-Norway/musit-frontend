@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { EditObservationPage } from '../EditObservationPage';
+import { EditObservationPage } from '../EditObservationPage';
 import MuseumId from '../../../models/museumId';
 import { AppSession } from '../../app/appSession';
 
@@ -19,10 +19,12 @@ describe('Render edit observation page', () => {
         params={{
           id: '1'
         }}
-        appSession={new AppSession({
-          token: '1234',
-          museumId: new MuseumId(99)
-        })}
+        appSession={
+          new AppSession({
+            token: '1234',
+            museumId: new MuseumId(99)
+          })
+        }
         location={{
           state: {
             doneBy: {

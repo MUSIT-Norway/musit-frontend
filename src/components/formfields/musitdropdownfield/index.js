@@ -1,4 +1,3 @@
-
 import React, { Component, PropTypes } from 'react';
 import Select from 'react-select';
 import validate from '../common/validators';
@@ -20,24 +19,30 @@ export default class MusitDropDownField extends Component {
     items: PropTypes.array.isRequired,
     translateKeyPrefix: PropTypes.string,
     disabled: PropTypes.bool
-  }
+  };
 
   static defaultProps = {
     validate: 'text',
     value: '',
     placeHolder: 'Choose ...'
-  }
+  };
 
   getOptions() {
-    return this.props.items.map((el) => ({
+    return this.props.items.map(el => ({
       value: el,
-      label: this.props.translateKeyPrefix ? I18n.t(this.props.translateKeyPrefix.concat(el)) : el
+      label: this.props.translateKeyPrefix
+        ? I18n.t(this.props.translateKeyPrefix.concat(el))
+        : el
     }));
   }
 
   classNameOnlyWithInput() {
     let lvString = '';
-    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
+    if (
+      this.props.validator
+        ? this.props.validator(this.props)
+        : validate(this.props) === 'error'
+    ) {
       lvString = 'has-error';
     } else {
       lvString = '';
@@ -47,7 +52,11 @@ export default class MusitDropDownField extends Component {
 
   classNameWithSpan() {
     let lvString = ' ';
-    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
+    if (
+      this.props.validator
+        ? this.props.validator(this.props)
+        : validate(this.props) === 'error'
+    ) {
       lvString = 'input-group has-error';
     } else {
       lvString = 'input-group';
@@ -56,36 +65,33 @@ export default class MusitDropDownField extends Component {
   }
 
   render() {
-    const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
-    const lcPlaceholder =
+    const lcAddOnPrefix = this.props.addOnPrefix
+      ? <span className="input-group-addon">{this.props.addOnPrefix}</span>
+      : null;
+    const lcPlaceholder = (
       <Select
         placeholder={this.props.placeHolder}
-        style={this.props.disabled ? { backgroundColor: '#eee' } : undefined }
+        style={this.props.disabled ? { backgroundColor: '#eee' } : undefined}
         disabled={this.props.disabled}
         value={this.props.value}
         options={this.getOptions()}
-        onChange={(el) => this.props.onChange(el.value)}
+        onChange={el => this.props.onChange(el.value)}
         data-toggle="tooltip"
         title={this.props.tooltip}
         clearable={false}
-      />;
+      />
+    );
 
-    const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
+    const lcHelp = this.props.help ? <span className="input-group-addon">?</span> : null;
 
-    return lcAddOnPrefix !== null || lcHelp !== null ? 
-      <div
-        className={this.classNameWithSpan()}
-      >
-        {lcAddOnPrefix}
-        {lcPlaceholder}
-        {lcHelp}
-      </div>
-      : 
-      <div
-        className={this.classNameOnlyWithInput()}
-      >
-        {lcPlaceholder}
-      </div>;
-      
+    return lcAddOnPrefix !== null || lcHelp !== null
+      ? <div className={this.classNameWithSpan()}>
+          {lcAddOnPrefix}
+          {lcPlaceholder}
+          {lcHelp}
+        </div>
+      : <div className={this.classNameOnlyWithInput()}>
+          {lcPlaceholder}
+        </div>;
   }
 }

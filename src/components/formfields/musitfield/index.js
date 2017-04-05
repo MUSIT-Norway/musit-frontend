@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -22,7 +21,6 @@ import React, { Component, PropTypes } from 'react';
 import validate from '../common/validators';
 
 export default class MusitField extends Component {
-
   static propTypes = {
     value: PropTypes.string, // Should be any
     addOnPrefix: PropTypes.string,
@@ -39,15 +37,19 @@ export default class MusitField extends Component {
     precision: PropTypes.number,
     disabled: PropTypes.bool,
     style: PropTypes.object
-  }
+  };
 
   static defaultProps = {
     value: ''
-  }
+  };
 
   classNameWithSpan() {
     let lvString = ' ';
-    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
+    if (
+      this.props.validator
+        ? this.props.validator(this.props)
+        : validate(this.props) === 'error'
+    ) {
       lvString = 'input-group has-error';
     } else {
       lvString = 'input-group';
@@ -57,7 +59,11 @@ export default class MusitField extends Component {
 
   classNameOnlyWithInput() {
     let lvString = '';
-    if (this.props.validator ? this.props.validator(this.props) : validate(this.props) === 'error') {
+    if (
+      this.props.validator
+        ? this.props.validator(this.props)
+        : validate(this.props) === 'error'
+    ) {
       lvString = 'has-error';
     } else {
       lvString = '';
@@ -66,8 +72,10 @@ export default class MusitField extends Component {
   }
 
   render() {
-    const lcAddOnPrefix = this.props.addOnPrefix ? <span className="input-group-addon" >{this.props.addOnPrefix}</span> : null;
-    const lcPlaceholder = 
+    const lcAddOnPrefix = this.props.addOnPrefix
+      ? <span className="input-group-addon">{this.props.addOnPrefix}</span>
+      : null;
+    const lcPlaceholder = (
       <input
         style={this.props.style}
         type="text"
@@ -75,28 +83,23 @@ export default class MusitField extends Component {
         placeholder={this.props.placeHolder}
         value={this.props.value}
         disabled={this.props.disabled}
-        onChange={(event) => this.props.onChange(event.target.value)}
+        onChange={event => this.props.onChange(event.target.value)}
         data-toggle="tooltip"
         title={this.props.tooltip}
         onBlur={this.props.onBlur}
         onFocus={this.props.onFocus}
-      />;
-    const lcHelp = this.props.help ? <span className="input-group-addon" >?</span> : null;
+      />
+    );
+    const lcHelp = this.props.help ? <span className="input-group-addon">?</span> : null;
 
-    return lcAddOnPrefix !== null || lcHelp !== null ? 
-      <div
-        className={this.classNameWithSpan()}
-      >
-        {lcAddOnPrefix}
-        {lcPlaceholder}
-        {lcHelp}
-      </div>
-      : 
-      <div
-        className={this.classNameOnlyWithInput()}
-      >
-       {lcPlaceholder}
-      </div>;
-      
+    return lcAddOnPrefix !== null || lcHelp !== null
+      ? <div className={this.classNameWithSpan()}>
+          {lcAddOnPrefix}
+          {lcPlaceholder}
+          {lcHelp}
+        </div>
+      : <div className={this.classNameOnlyWithInput()}>
+          {lcPlaceholder}
+        </div>;
   }
 }

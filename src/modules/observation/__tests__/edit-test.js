@@ -78,7 +78,7 @@ describe('Render oobservation page in edit mode', () => {
             }
           }
         ]}
-        doneBy={new MusitActor({ dataportenId: '12345', fn: 'Jarl'})}
+        doneBy={new MusitActor({ dataportenId: '12345', fn: 'Jarl' })}
         onSaveObservation={() => true}
         doneDate={'2016-12-23T00:00:00.000Z'}
         mode="EDIT"

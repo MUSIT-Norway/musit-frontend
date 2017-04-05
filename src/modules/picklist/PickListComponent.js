@@ -57,44 +57,52 @@ export class PickListComponent extends React.Component {
   print(nodesToPrint) {
     this.props.showModal(
       I18n.t('musit.template.labelTemplates'),
-      <PrintTemplate
-        appSession={this.props.appSession}
-        marked={nodesToPrint}
-      />
+      <PrintTemplate appSession={this.props.appSession} marked={nodesToPrint} />
     );
   }
 
-  toggleObject({item, on}) {
+  toggleObject({ item, on }) {
     if (item.mainObjectId && item.isMainObject()) {
-      this.props.markMainObject({item, on});
+      this.props.markMainObject({ item, on });
     } else {
-      this.props.markObject({item, on});
+      this.props.markObject({ item, on });
     }
   }
 
   iconRenderer(pick) {
     if (pick.value.name) {
-      return <FontAwesome name="folder"/>;
+      return <FontAwesome name="folder" />;
     }
-    return <span className='icon icon-musitobject'/>;
+    return <span className="icon icon-musitobject" />;
   }
 
   labelRenderer(isNode, pick) {
     return (
       <div>
-        {!isNode ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span> : null}
+        {!isNode
+          ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span>
+          : null}
         {!isNode ? <span style={{ paddingLeft: '1em' }}>{pick.value.subNo}</span> : null}
         <span style={{ paddingLeft: '1em' }}>
-            {pick.value.name ? pick.value.name : pick.value.term}
-          </span>
+          {pick.value.name ? pick.value.name : pick.value.term}
+        </span>
         <div className="labelText">
           <Breadcrumb
             node={pick.path}
             onClickCrumb={node => {
-              if(node.id) {
-                hashHistory.push(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession));
+              if (node.id) {
+                hashHistory.push(
+                  Config.magasin.urls.client.storagefacility.goToNode(
+                    node.id,
+                    this.props.appSession
+                  )
+                );
               } else {
-                hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(this.props.appSession));
+                hashHistory.push(
+                  Config.magasin.urls.client.storagefacility.goToRoot(
+                    this.props.appSession
+                  )
+                );
               }
             }}
             allActive
@@ -109,7 +117,9 @@ export class PickListComponent extends React.Component {
       <span
         className="normalActionNoPadding"
         style={{ fontSize: '0.8em' }}
-        title={I18n.t(`musit.pickList.tooltip.${isNode ? 'selectedNodeCount' : 'selectedObjectCount'}`)}
+        title={I18n.t(
+          `musit.pickList.tooltip.${isNode ? 'selectedNodeCount' : 'selectedObjectCount'}`
+        )}
       >
         {`(${count})`}
       </span>
@@ -126,9 +136,9 @@ export class PickListComponent extends React.Component {
 
   toggle(item, on) {
     if (this.isNodeView()) {
-      this.props.markNode({item, on});
+      this.props.markNode({ item, on });
     } else {
-      this.toggleObject({item, on});
+      this.toggleObject({ item, on });
     }
   }
 
@@ -151,103 +161,123 @@ export class PickListComponent extends React.Component {
                     margin: '0 25px 0 0'
                   }}
                 >
-                  <ScannerButton enabled={this.props.scannerEnabled} onClick={this.props.toggleScanner} />
+                  <ScannerButton
+                    enabled={this.props.scannerEnabled}
+                    onClick={this.props.toggleScanner}
+                  />
                 </div>
               </div>
             </PageHeader>
             <Table responsive striped condensed hover>
               <thead>
-              <tr>
-                <th style={{ width: '2em', textAlign: 'left' }}>
-                  <input
-                    className="normalAction"
-                    type="checkbox"
-                    checked={marked.length === pickList.length && pickList.length !== 0}
-                    onChange={(e) => this.toggle(pickList.map(p => p.value), e.target.checked)}
-                    title={I18n.t('musit.pickList.tooltip.checkBoxMarkAll')}
-                  />
-                </th>
-                <th style={{ verticalAlign: 'bottom', textAlign: 'left' }}>
-                  { isNode ?
+                <tr>
+                  <th style={{ width: '2em', textAlign: 'left' }}>
+                    <input
+                      className="normalAction"
+                      type="checkbox"
+                      checked={marked.length === pickList.length && pickList.length !== 0}
+                      onChange={e =>
+                        this.toggle(pickList.map(p => p.value), e.target.checked)}
+                      title={I18n.t('musit.pickList.tooltip.checkBoxMarkAll')}
+                    />
+                  </th>
+                  <th style={{ verticalAlign: 'bottom', textAlign: 'left' }}>
+                    {isNode
+                      ? <FontAwesome
+                          className="normalActionNoPadding"
+                          style={{ fontSize: '1.5em' }}
+                          name="print"
+                          onClick={() => {
+                            if (marked.length > 0) {
+                              this.print(marked);
+                            }
+                          }}
+                          title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
+                        />
+                      : null}
+                    {isNode ? this.selectedCount(isNode, marked.length) : null}
                     <FontAwesome
-                      className="normalActionNoPadding"
+                      className={isNode ? 'normalAction' : 'normalActionNoPadding'}
+                      name="truck"
                       style={{ fontSize: '1.5em' }}
-                      name="print"
                       onClick={() => {
                         if (marked.length > 0) {
-                          this.print(marked);
+                          this.showMoveNodes(markedValues);
                         }
                       }}
-                      title={I18n.t('musit.pickList.tooltip.printSelectedNodes')}
-                    /> : null
-                  }
-                  { isNode ? this.selectedCount(isNode, marked.length) : null}
-                  <FontAwesome
-                    className={isNode ? 'normalAction' : 'normalActionNoPadding'}
-                    name="truck"
-                    style={{ fontSize: '1.5em' }}
-                    onClick={() => {
-                      if (marked.length > 0) {
-                        this.showMoveNodes(markedValues);
-                      }
-                    }}
-                    title={I18n.t(`musit.pickList.tooltip.${isNode ? 'moveSelectedNodes' : 'moveSelectedObjects'}`)}
-                  />
-                  {this.selectedCount(isNode, marked.length)}
-                  <FontAwesome
-                    className="normalAction"
-                    style={{ fontSize: '1.5em' }}
-                    name="remove"
-                    onClick={() => {
-                      if (marked.length > 0) {
-                        this.remove(markedValues);
-                      }
-                    }}
-                    title={I18n.t(`musit.pickList.tooltip.${isNode ? 'removeSelectedNodesFromList' : 'removeSelectedObjectsFromList'}`)}
-                  />
-                  {this.selectedCount(isNode, marked.length)}
-                </th>
-              </tr>
+                      title={I18n.t(
+                        `musit.pickList.tooltip.${isNode ? 'moveSelectedNodes' : 'moveSelectedObjects'}`
+                      )}
+                    />
+                    {this.selectedCount(isNode, marked.length)}
+                    <FontAwesome
+                      className="normalAction"
+                      style={{ fontSize: '1.5em' }}
+                      name="remove"
+                      onClick={() => {
+                        if (marked.length > 0) {
+                          this.remove(markedValues);
+                        }
+                      }}
+                      title={I18n.t(
+                        `musit.pickList.tooltip.${isNode ? 'removeSelectedNodesFromList' : 'removeSelectedObjectsFromList'}`
+                      )}
+                    />
+                    {this.selectedCount(isNode, marked.length)}
+                  </th>
+                </tr>
               </thead>
               <tbody>
-              {pickList.map((pick, i) => {
-                const item = pick.value;
-                const isItemMarked = pick.marked;
-                const isMainObject = item.isMainObject && (!item.mainObjectId || item.isMainObject());
-                const isChildObject = item.isMainObject && (item.mainObjectId && !item.isMainObject());
-                return (
-                  <tr key={i} className={isChildObject ? 'childObject' : isMainObject && 'mainObject' }>
-                    <td style={{ width: '3em', textAlign: 'left', verticalAlign: 'middle' }}>
-                      <span>
-                        {!item.mainObjectId || isMainObject ?
-                          <input
-                            type="checkbox"
-                            checked={isItemMarked ? 'checked' : ''}
-                            onChange={() => this.toggle(item)}
-                          />
-                          :
-                          <input
-                            type="checkbox"
-                            checked={isItemMarked ? 'checked' : ''}
-                            disabled
-                          />
-                        }
-                      </span>
-                    </td>
-                    <td>
-                      <span className="pickListIcon">
-                        {this.iconRenderer(pick)} {this.labelRenderer(isNode, pick)}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
+                {pickList.map((pick, i) => {
+                  const item = pick.value;
+                  const isItemMarked = pick.marked;
+                  const isMainObject = item.isMainObject &&
+                    (!item.mainObjectId || item.isMainObject());
+                  const isChildObject = item.isMainObject &&
+                    (item.mainObjectId && !item.isMainObject());
+                  return (
+                    <tr
+                      key={i}
+                      className={
+                        isChildObject ? 'childObject' : isMainObject && 'mainObject'
+                      }
+                    >
+                      <td
+                        style={{
+                          width: '3em',
+                          textAlign: 'left',
+                          verticalAlign: 'middle'
+                        }}
+                      >
+                        <span>
+                          {!item.mainObjectId || isMainObject
+                            ? <input
+                                type="checkbox"
+                                checked={isItemMarked ? 'checked' : ''}
+                                onChange={() => this.toggle(item)}
+                              />
+                            : <input
+                                type="checkbox"
+                                checked={isItemMarked ? 'checked' : ''}
+                                disabled
+                              />}
+                        </span>
+                      </td>
+                      <td>
+                        <span className="pickListIcon">
+                          {this.iconRenderer(pick)} {this.labelRenderer(isNode, pick)}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
             <div style={{ textAlign: 'left' }}>
               {marked.length}/{pickList.length} &nbsp;
-              {isNode ? I18n.t('musit.pickList.footer.nodeSelected')
-                : I18n.t('musit.pickList.footer.objectSelected') }
+              {isNode
+                ? I18n.t('musit.pickList.footer.nodeSelected')
+                : I18n.t('musit.pickList.footer.objectSelected')}
             </div>
           </Grid>
         </main>

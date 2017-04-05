@@ -1,7 +1,7 @@
 import { moveItems, nodeCallback, objectCallback } from '../PickListContainer';
-import { AppSession } from '../../app/appSession';
-import MuseumId  from '../../../models/museumId';
-import CollectionId  from '../../../models/collectionId';
+import { AppSession } from '../../app/appSession';
+import MuseumId from '../../../models/museumId';
+import CollectionId from '../../../models/collectionId';
 import sinon from 'sinon';
 
 const appSession = new AppSession({
@@ -18,7 +18,16 @@ describe('nodeCallback', () => {
     const onSuccess = sinon.spy();
     const onFailure = sinon.spy();
     const refreshNode = sinon.spy();
-    const callback = nodeCallback(appSession, 'Hei', 2, 'Ho', [{ id: 1}, { id: 2}], onSuccess, onFailure, refreshNode);
+    const callback = nodeCallback(
+      appSession,
+      'Hei',
+      2,
+      'Ho',
+      [{ id: 1 }, { id: 2 }],
+      onSuccess,
+      onFailure,
+      refreshNode
+    );
     callback.onComplete();
     expect(onSuccess.calledOnce).toBe(true);
     expect(refreshNode.callCount).toBe(2);
@@ -29,7 +38,16 @@ describe('nodeCallback', () => {
     const onSuccess = sinon.spy();
     const onFailure = sinon.spy();
     const refreshNode = sinon.spy();
-    const callback = nodeCallback(appSession, 'Hei', 1, 'Ho', [{ id: 1}], onSuccess, onFailure, refreshNode);
+    const callback = nodeCallback(
+      appSession,
+      'Hei',
+      1,
+      'Ho',
+      [{ id: 1 }],
+      onSuccess,
+      onFailure,
+      refreshNode
+    );
     callback.onComplete();
     expect(onSuccess.calledOnce).toBe(true);
     expect(refreshNode.callCount).toBe(1);
@@ -42,7 +60,16 @@ describe('objectCallback', () => {
     const onSuccess = sinon.spy();
     const onFailure = sinon.spy();
     const refreshObjects = sinon.spy();
-    const callback = objectCallback(appSession, 'Hei', 2, 'Ho', [{ id: 1}, { id: 2}], onSuccess, onFailure, refreshObjects);
+    const callback = objectCallback(
+      appSession,
+      'Hei',
+      2,
+      'Ho',
+      [{ id: 1 }, { id: 2 }],
+      onSuccess,
+      onFailure,
+      refreshObjects
+    );
     callback.onComplete();
     expect(onSuccess.calledOnce).toBe(true);
     expect(refreshObjects.callCount).toBe(1);
@@ -53,7 +80,16 @@ describe('objectCallback', () => {
     const onSuccess = sinon.spy();
     const onFailure = sinon.spy();
     const refreshObject = sinon.spy();
-    const callback = objectCallback(appSession, 'Hei', 1, 'Ho', [{ id: 1}], onSuccess, onFailure, refreshObject);
+    const callback = objectCallback(
+      appSession,
+      'Hei',
+      1,
+      'Ho',
+      [{ id: 1 }],
+      onSuccess,
+      onFailure,
+      refreshObject
+    );
     callback.onComplete();
     expect(onSuccess.calledOnce).toBe(true);
     expect(refreshObject.callCount).toBe(1);
@@ -100,7 +136,11 @@ describe('moveItems', () => {
         name: 'Uffameg'
       }
     ];
-    moveItems(appSession, nodes, false, null, moveObject)(destination, 'Lalala', onSuccess);
+    moveItems(appSession, nodes, false, null, moveObject)(
+      destination,
+      'Lalala',
+      onSuccess
+    );
     expect(toPromise.calledOnce).toBe(true);
   });
 });

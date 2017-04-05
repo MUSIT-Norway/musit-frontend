@@ -1,5 +1,5 @@
 import { onMount } from '../eventsContainer';
-import { AppSession } from '../../app/appSession';
+import { AppSession } from '../../app/appSession';
 import MuseumId from '../../../models/museumId';
 import CollectionId from '../../../models/collectionId';
 import sinon from 'sinon';

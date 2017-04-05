@@ -1,4 +1,9 @@
-import { stringMapper, numberMapper, specialPhoneMapper, booleanMapper } from '../mappers';
+import {
+  stringMapper,
+  numberMapper,
+  specialPhoneMapper,
+  booleanMapper
+} from '../mappers';
 
 describe('mappers', () => {
   describe('stringMapper', () => {

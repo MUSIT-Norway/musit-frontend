@@ -8,7 +8,7 @@ describe('ObservationControlGrid', () => {
     const myDiv = mount(
       <ObservationControlGrid
         id="1"
-        translate={(key) => key}
+        translate={key => key}
         showControl={() => true}
         showObservation={() => true}
         tableData={[

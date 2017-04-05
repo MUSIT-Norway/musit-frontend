@@ -16,7 +16,7 @@
  *  with this program; if not, write to the Free Software Foundation, Inc.,
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-import React, {Component, PropTypes} from 'react';
+import React, { Component, PropTypes } from 'react';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import ModalNodeGrid from './MoveDialogGrid';
 import NodeSuggest from '../../components/suggest/NodeSuggest';
@@ -37,7 +37,6 @@ import Loader from 'react-loader';
 import inject from 'react-rxjs/dist/RxInject';
 
 export class MoveDialogComponent extends Component {
-
   static propTypes = {
     onMove: PropTypes.func.isRequired,
     loadNode: PropTypes.func.isRequired,
@@ -90,52 +89,50 @@ export class MoveDialogComponent extends Component {
   render() {
     const { data, selectedNode, page = 1 } = this.props.moveDialogStore;
 
-    const isSelected = Object.keys({...selectedNode}).length > 0;
+    const isSelected = Object.keys({ ...selectedNode }).length > 0;
 
-    const header =
+    const header = (
       <div style={{ width: '500px', paddingBottom: '10px' }}>
         <NodeSuggest
           appSession={this.props.appSession}
           label="Search"
           id="nodeSearch"
-          onChange={ (v) => v ? this.loadNode(v) : null }
+          onChange={v => v ? this.loadNode(v) : null}
           placeHolder={I18n.t('musit.moveModal.nodeSuggestPlaceholder')}
         />
-      </div>;
+      </div>
+    );
 
-    let body = data.loading ?
-      <div style={{ textAlign: 'center', color: 'grey' }}>
-        <Loader loaded={false} />
-      </div> :
-      <div style={{ textAlign: 'center', color: 'grey' }}>
-        {I18n.t('musit.moveModal.noData')}
-      </div>;
+    let body = data.loading
+      ? <div style={{ textAlign: 'center', color: 'grey' }}>
+          <Loader loaded={false} />
+        </div>
+      : <div style={{ textAlign: 'center', color: 'grey' }}>
+          {I18n.t('musit.moveModal.noData')}
+        </div>;
 
     if (!data.loading && data.totalMatches > 0) {
       body = (
         <div>
-          <ModalNodeGrid
-            tableData={data.matches}
-            onClick={(n) => this.loadNode(n.id)}
-          />
+          <ModalNodeGrid tableData={data.matches} onClick={n => this.loadNode(n.id)} />
           {data.totalMatches > PER_PAGE &&
-          <PagingToolbar
-            numItems={data.totalMatches}
-            currentPage={page}
-            perPage={PER_PAGE}
-            onClick={(currentPage) => this.loadNode(selectedNode && selectedNode.id, currentPage)}
-          />
-          }
+            <PagingToolbar
+              numItems={data.totalMatches}
+              currentPage={page}
+              perPage={PER_PAGE}
+              onClick={currentPage =>
+                this.loadNode(selectedNode && selectedNode.id, currentPage)}
+            />}
         </div>
       );
     }
 
-    const footer =
+    const footer = (
       <div>
         {I18n.t('musit.moveModal.currentDestination')}
         <Breadcrumb
           node={selectedNode}
-          onClickCrumb={(node) => {
+          onClickCrumb={node => {
             return node.id === -1 || !node.id ? this.loadHome() : this.loadNode(node.id);
           }}
         />
@@ -147,7 +144,7 @@ export class MoveDialogComponent extends Component {
               this.props.onMove(
                 selectedNode,
                 selectedNode.name,
-                () =>  {
+                () => {
                   this.props.setLoading(false);
                   this.context.closeModal();
                 },
@@ -164,7 +161,8 @@ export class MoveDialogComponent extends Component {
             label={I18n.t('musit.texts.close')}
           />
         </div>
-      </div>;
+      </div>
+    );
 
     return (
       <Modal

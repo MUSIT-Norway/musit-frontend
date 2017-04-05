@@ -20,17 +20,20 @@ import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
 import queryParser from 'query-string';
 
-const notificationSystem = ReactDOM.render(<NotificationSystem />, document.getElementById('errors'));
-notification$.subscribe((event) => {
-  event = {...event, message: null, body: event.message};
+const notificationSystem = ReactDOM.render(
+  <NotificationSystem />,
+  document.getElementById('errors')
+);
+notification$.subscribe(event => {
+  event = { ...event, message: null, body: event.message };
   if (event.level === 'error') {
-    event = {...event, autoDismiss: 0};
+    event = { ...event, autoDismiss: 0 };
   }
   notificationSystem.addNotification({
     ...event,
     position: 'tc',
     children: (
-      <div style={{margin: '30px'}}>
+      <div style={{ margin: '30px' }}>
         <p>
           {event.body}
         </p>
@@ -42,7 +45,7 @@ notification$.subscribe((event) => {
 const accessToken = queryParser.parse(location.search)['_at'];
 if (accessToken) {
   localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
-  window.location.href='/#/magasin';
+  window.location.href = '/#/magasin';
 } else {
   const dest = document.getElementById('content');
 
@@ -52,10 +55,7 @@ if (accessToken) {
   I18n.setLocale(language);
 
   const appRouter = () => (
-    <Router
-      onUpdate={() => window.scrollTo(0, 0)}
-      history={hashHistory}
-    >
+    <Router onUpdate={() => window.scrollTo(0, 0)} history={hashHistory}>
       {getRoutes()}
     </Router>
   );
@@ -71,10 +71,7 @@ if (accessToken) {
     }
   })(appRouter);
 
-  ReactDOM.render(
-    <SessionProvided />,
-    dest
-  );
+  ReactDOM.render(<SessionProvided />, dest);
 
   if (config.isDev) {
     window.React = React;

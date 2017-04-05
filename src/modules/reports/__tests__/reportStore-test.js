@@ -1,9 +1,8 @@
-import {TestScheduler} from 'rxjs/Rx';
+import { TestScheduler } from 'rxjs/Rx';
 import assert from 'assert';
-import { store$ } from '../reportStore';
+import { store$ } from '../reportStore';
 
 describe('KDReportStore', () => {
-
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       // console.log(JSON.stringify(actual, null, 2));
@@ -14,17 +13,19 @@ describe('KDReportStore', () => {
     // mock streams
 
     const loadKDReportM = '-1-----------';
-    const clearM        = '--x----------';
-    const expected      = 'abc----------';
+    const clearM = '--x----------';
+    const expected = 'abc----------';
 
-    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {1: {
-      totalArea: 4666.3,
-      perimeterSecurity: 34.3,
-      theftProtection: 44.4,
-      fireProtection: 4566.333,
-      waterDamageAssessment: 344.3,
-      routinesAndContingencyPlan: 433.2
-    }});
+    const loadKDReport$ = testScheduler.createHotObservable(loadKDReportM, {
+      1: {
+        totalArea: 4666.3,
+        perimeterSecurity: 34.3,
+        theftProtection: 44.4,
+        fireProtection: 4566.333,
+        waterDamageAssessment: 344.3,
+        routinesAndContingencyPlan: 433.2
+      }
+    });
 
     const clear$ = testScheduler.createHotObservable(clearM);
 
@@ -47,16 +48,14 @@ describe('KDReportStore', () => {
         loaded: false
       },
       a: {
-        'data': {},
-        'loaded': false
+        data: {},
+        loaded: false
       }
     };
 
     // mock up$ and down$ events
 
-
-    const state$ = store$({loadKDReport$, clear$});
-
+    const state$ = store$({ loadKDReport$, clear$ });
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);

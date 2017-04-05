@@ -7,7 +7,6 @@ import ObservationDoubleTextAreaComponent from '../ObservationDoubleTextAreaComp
 import { ControlLabel } from 'react-bootstrap';
 
 describe('ObservationPest', () => {
-
   it('renders observations', () => {
     const wrapper = shallow(
       <ObservationPest
@@ -23,11 +22,7 @@ describe('ObservationPest', () => {
         countWidth={2}
         countPrecision={0}
         countValidate="number"
-        lifeCycleItems={[
-          'Adult',
-          'Puppe',
-          'Whateva'
-        ]}
+        lifeCycleItems={['Adult', 'Puppe', 'Whateva']}
         lifeCycleLabel="LifeCycle label"
         lifeCycleOnChange={() => true}
         lifeCycleOnRemove={() => true}
@@ -64,12 +59,32 @@ describe('ObservationPest', () => {
       />
     );
     expect(wrapper.find(ObservationDoubleTextAreaComponent).length).toEqual(1);
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftValue="left value"]').length).toEqual(1);
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightValue="right value"]').length).toEqual(1);
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftPlaceHolder="Left placeholder"]').length).toEqual(1);
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightPlaceHolder="Right placeholder"]').length).toEqual(1);
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[leftTooltip="Left tooltip"]').length).toEqual(1);
-    expect(wrapper.find('ObservationDoubleTextAreaComponent[rightTooltip="Right tooltip"]').length).toEqual(1);
+    expect(
+      wrapper.find('ObservationDoubleTextAreaComponent[leftValue="left value"]').length
+    ).toEqual(1);
+    expect(
+      wrapper.find('ObservationDoubleTextAreaComponent[rightValue="right value"]').length
+    ).toEqual(1);
+    expect(
+      wrapper.find(
+        'ObservationDoubleTextAreaComponent[leftPlaceHolder="Left placeholder"]'
+      ).length
+    ).toEqual(1);
+    expect(
+      wrapper.find(
+        'ObservationDoubleTextAreaComponent[rightPlaceHolder="Right placeholder"]'
+      ).length
+    ).toEqual(1);
+    expect(
+      wrapper.find(
+        'ObservationDoubleTextAreaComponent[leftTooltip="Left tooltip"]'
+      ).length
+    ).toEqual(1);
+    expect(
+      wrapper.find(
+        'ObservationDoubleTextAreaComponent[rightTooltip="Right tooltip"]'
+      ).length
+    ).toEqual(1);
     expect(wrapper.find(MusitDropDownField).length).toEqual(3);
     expect(wrapper.find('MusitDropDownField[value="Adult"]').length).toEqual(2);
     expect(wrapper.find('MusitDropDownField[value="Puppe"]').length).toEqual(1);

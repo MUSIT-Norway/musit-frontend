@@ -7,7 +7,6 @@ import MusitNode from '../../../models/node';
 const diff = require('deep-diff').diff;
 
 describe('moveDialog', () => {
-
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
       // console.log(JSON.stringify(actual, null, 2));
@@ -20,12 +19,12 @@ describe('moveDialog', () => {
     });
 
     // mock streams
-    const setPageM          = '-----12-----';
-    const setLoadingM       = '--1---------';
-    const clearM            = '-1----------';
-    const loadNodeM         = '---1--------';
-    const loadChildrenM     = '----1-------';
-    const expected          = 'aadbcef-----';
+    const setPageM = '-----12-----';
+    const setLoadingM = '--1---------';
+    const clearM = '-1----------';
+    const loadNodeM = '---1--------';
+    const loadChildrenM = '----1-------';
+    const expected = 'aadbcef-----';
 
     const expectedStateMap = {
       a: initialState,
@@ -40,7 +39,7 @@ describe('moveDialog', () => {
           securityAssessment: {},
           breadcrumb: []
         },
-        data: { 
+        data: {
           ...initialState.data,
           loading: true
         }
@@ -55,12 +54,13 @@ describe('moveDialog', () => {
           environmentAssessment: {},
           securityAssessment: {},
           breadcrumb: []
-        }, data: {
+        },
+        data: {
           matches: [],
           loading: false
         }
       },
-      d: { ...initialState, data: { ...initialState.data, loading: true } },
+      d: { ...initialState, data: { ...initialState.data, loading: true } },
       e: {
         ...initialState,
         page: 1,
@@ -72,7 +72,8 @@ describe('moveDialog', () => {
           environmentAssessment: {},
           securityAssessment: {},
           breadcrumb: []
-        }, data: {
+        },
+        data: {
           matches: [],
           loading: false
         }
@@ -88,7 +89,8 @@ describe('moveDialog', () => {
           environmentAssessment: {},
           securityAssessment: {},
           breadcrumb: []
-        }, data: {
+        },
+        data: {
           matches: [],
           loading: false
         }
@@ -96,30 +98,38 @@ describe('moveDialog', () => {
     };
 
     // mock up$ and down$ events
-    const setLoading$ = testScheduler.createHotObservable(setLoadingM, { 1: true });
+    const setLoading$ = testScheduler.createHotObservable(setLoadingM, { 1: true });
     const setPage$ = testScheduler.createHotObservable(setPageM, { 1: 1, 2: 2 });
     const clear$ = testScheduler.createHotObservable(clearM);
-    const loadNode$ = testScheduler.createHotObservable(loadNodeM, { 1: { id: 1234, token: '1234', museumId: new MuseumId(99)}})
-      .switchMap(MusitNode.getNode(
-        () => Observable.of({
-          response: {
-            id: 1234,
-            name: 'Test',
-            type: 'Room'
-          }
-        })
-      ));
-    const loadChildren$ = testScheduler.createHotObservable(loadChildrenM, { 1: { id: 1234, token: '1234', museumId: new MuseumId(99) }})
-      .switchMap(MusitNode.getNodes(
-        () => Observable.of({
-          response: {
-            matches: [],
-            totalMatches: 0
-          }
-        })
-      ));
+    const loadNode$ = testScheduler
+      .createHotObservable(loadNodeM, {
+        1: { id: 1234, token: '1234', museumId: new MuseumId(99) }
+      })
+      .switchMap(
+        MusitNode.getNode(() =>
+          Observable.of({
+            response: {
+              id: 1234,
+              name: 'Test',
+              type: 'Room'
+            }
+          }))
+      );
+    const loadChildren$ = testScheduler
+      .createHotObservable(loadChildrenM, {
+        1: { id: 1234, token: '1234', museumId: new MuseumId(99) }
+      })
+      .switchMap(
+        MusitNode.getNodes(() =>
+          Observable.of({
+            response: {
+              matches: [],
+              totalMatches: 0
+            }
+          }))
+      );
 
-    const state$ = store$({clear$, loadNode$, loadChildren$, setLoading$, setPage$ });
+    const state$ = store$({ clear$, loadNode$, loadChildren$, setLoading$, setPage$ });
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);

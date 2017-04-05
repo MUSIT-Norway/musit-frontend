@@ -10,7 +10,6 @@ import store$, { loadRootNode$ } from './observationStore';
 import Observation from '../../models/observation';
 
 export class AddObservationPage extends React.Component {
-
   static propTypes = {
     params: PropTypes.object.isRequired,
     addObservation: PropTypes.func.isRequired,
@@ -20,7 +19,7 @@ export class AddObservationPage extends React.Component {
     actor: PropTypes.object,
     rootNode: React.PropTypes.object,
     appSession: PropTypes.object.isRequired
-  }
+  };
 
   componentWillMount() {
     if (!this.props.store.rootNode) {
@@ -39,19 +38,32 @@ export class AddObservationPage extends React.Component {
         breadcrumb={<Breadcrumb node={this.props.store.rootNode} disabled />}
         content={
           <div>
-            <h4 style={{ textAlign: 'center' }}>{I18n.t('musit.observation.page.titles.add')}</h4>
+            <h4 style={{ textAlign: 'center' }}>
+              {I18n.t('musit.observation.page.titles.add')}
+            </h4>
             <ObservationPage
               id={this.props.params.id}
               onSaveObservation={(nodeId, data) => {
                 const museumId = this.props.appSession.getMuseumId();
                 const token = this.props.appSession.getAccessToken();
-                this.props.addObservation({ nodeId, museumId, data, token, callback: {
-                  onComplete: () => {
-                    hashHistory.goBack();
-                    this.props.emitSuccess( { type: 'saveSuccess', message: I18n.t('musit.observation.page.messages.saveSuccess') });
-                  },
-                  onFailure: (e) => this.props.emitError({ ...e, type: 'network' })
-                }}).toPromise();
+                this.props
+                  .addObservation({
+                    nodeId,
+                    museumId,
+                    data,
+                    token,
+                    callback: {
+                      onComplete: () => {
+                        hashHistory.goBack();
+                        this.props.emitSuccess({
+                          type: 'saveSuccess',
+                          message: I18n.t('musit.observation.page.messages.saveSuccess')
+                        });
+                      },
+                      onFailure: e => this.props.emitError({ ...e, type: 'network' })
+                    }
+                  })
+                  .toPromise();
               }}
               mode="ADD"
               doneBy={this.props.appSession.getActor()}

@@ -1,8 +1,8 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import { EventsComponent } from '../EventsComponent';
-import { AppSession } from '../../app/appSession';
+import { EventsComponent } from '../EventsComponent';
+import { AppSession } from '../../app/appSession';
 describe('EventsComponent', () => {
   it('Check it renders when not loaded', () => {
     const myDiv = shallow(

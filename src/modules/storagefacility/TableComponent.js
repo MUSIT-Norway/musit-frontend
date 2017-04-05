@@ -71,7 +71,7 @@ export default class TableComponent extends React.Component {
       callback: {
         onComplete: node => {
           if (node && !new MusitNode(node).isRootNode()) {
-            this.props.loadStats({id, museumId, token});
+            this.props.loadStats({ id, museumId, token });
           }
         }
       }
@@ -93,8 +93,10 @@ export default class TableComponent extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const museumHasChanged = newProps.appSession.getMuseumId() !== this.props.appSession.getMuseumId();
-    const collectionHasChanged = newProps.appSession.getCollectionId() !== this.props.appSession.getCollectionId();
+    const museumHasChanged = newProps.appSession.getMuseumId() !==
+      this.props.appSession.getMuseumId();
+    const collectionHasChanged = newProps.appSession.getCollectionId() !==
+      this.props.appSession.getCollectionId();
     const museumId = newProps.appSession.getMuseumId();
     const collectionId = newProps.appSession.getCollectionId();
     const token = this.props.appSession.getAccessToken();
@@ -103,7 +105,7 @@ export default class TableComponent extends React.Component {
     const idHasChanged = newProps.params.id !== this.props.params.id;
     const stateHasChanged = locationState !== this.props.location.state;
 
-    if (idHasChanged || museumHasChanged || collectionHasChanged || stateHasChanged) {
+    if (idHasChanged || museumHasChanged || collectionHasChanged || stateHasChanged) {
       const currentPage = this.getCurrentPage(locationState);
       this.loadRootNode(nodeId, museumId, token);
       if (newProps.route.showObjects) {
@@ -117,7 +119,9 @@ export default class TableComponent extends React.Component {
   showNodes(node = this.props.tableStore.rootNode) {
     const appSession = this.props.appSession;
     if (node && node.id) {
-      this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(node.id, appSession));
+      this.props.goTo(
+        Config.magasin.urls.client.storagefacility.goToNode(node.id, appSession)
+      );
     } else {
       this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
@@ -126,7 +130,9 @@ export default class TableComponent extends React.Component {
   showObjects(node = this.props.tableStore.rootNode) {
     const appSession = this.props.appSession;
     if (node) {
-      this.props.goTo(Config.magasin.urls.client.storagefacility.goToObjects(node.id, appSession));
+      this.props.goTo(
+        Config.magasin.urls.client.storagefacility.goToObjects(node.id, appSession)
+      );
     } else {
       this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
     }
@@ -168,7 +174,10 @@ export default class TableComponent extends React.Component {
 
   showMoveNodeModal(nodeToMove) {
     const title = I18n.t('musit.moveModal.moveNode', { name: nodeToMove.name });
-    this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />);
+    this.props.showModal(
+      title,
+      <MusitModal appSession={this.props.appSession} onMove={this.moveNode(nodeToMove)} />
+    );
   }
 
   moveNode = (
@@ -180,41 +189,61 @@ export default class TableComponent extends React.Component {
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes,
     loadRootNode = this.loadRootNode
-  ) => (toNode, toName, onSuccess, onFailure = () => true) => {
-    const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
-    if (!errorMessage) {
-      nodeToMove.moveNode({ destination: toNode.id, doneBy: userId, museumId, token, callback: {
-        onComplete: () => {
-          onSuccess();
-          loadRootNode(nodeId, museumId, token);
-          loadNodes(nodeId);
-          this.props.emitSuccess({
-            type: 'movedSuccess',
-            message: I18n.t('musit.moveModal.messages.nodeMoved', {name: nodeToMove.name, destination: toName})
-          });
-        },
-        onFailure: (e) => {
-          onFailure();
-          this.props.emitError({
-            type: 'errorOnMove',
-            error: e,
-            message: I18n.t('musit.moveModal.messages.errorNode', {name: nodeToMove.name, destination: toName})
-          });
-        }
-      }});
-    } else {
-      onFailure();
-      this.props.emitError({
-        type: 'errorOnMove',
-        message: errorMessage
-      });
-    }
-  };
+  ) =>
+    (toNode, toName, onSuccess, onFailure = () => true) => {
+      const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
+      if (!errorMessage) {
+        nodeToMove.moveNode({
+          destination: toNode.id,
+          doneBy: userId,
+          museumId,
+          token,
+          callback: {
+            onComplete: () => {
+              onSuccess();
+              loadRootNode(nodeId, museumId, token);
+              loadNodes(nodeId);
+              this.props.emitSuccess({
+                type: 'movedSuccess',
+                message: I18n.t('musit.moveModal.messages.nodeMoved', {
+                  name: nodeToMove.name,
+                  destination: toName
+                })
+              });
+            },
+            onFailure: e => {
+              onFailure();
+              this.props.emitError({
+                type: 'errorOnMove',
+                error: e,
+                message: I18n.t('musit.moveModal.messages.errorNode', {
+                  name: nodeToMove.name,
+                  destination: toName
+                })
+              });
+            }
+          }
+        });
+      } else {
+        onFailure();
+        this.props.emitError({
+          type: 'errorOnMove',
+          message: errorMessage
+        });
+      }
+    };
 
   showMoveObjectModal(objectToMove) {
     const objStr = objectToMove.getObjectDescription();
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
-    this.props.showModal(title, <MusitModal appSession={this.props.appSession} onMove={this.moveObject(objectToMove)} />, this.props.clearMoveDialog);
+    this.props.showModal(
+      title,
+      <MusitModal
+        appSession={this.props.appSession}
+        onMove={this.moveObject(objectToMove)}
+      />,
+      this.props.clearMoveDialog
+    );
   }
 
   moveObject = (
@@ -225,33 +254,50 @@ export default class TableComponent extends React.Component {
     token = this.props.appSession.getAccessToken(),
     nodeId = this.props.tableStore.rootNode.id,
     loadObjects = this.loadObjects
-  ) => (toNode, toName, onSuccess, onFailure = () => true) => {
-    const description = objectToMove.getObjectDescription();
-    objectToMove.moveObject({ destination: toNode.id, doneBy: userId, museumId, collectionId, token, callback: {
-      onComplete: () => {
-        onSuccess();
-        loadObjects(nodeId);
-        this.props.emitSuccess({
-          type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.objectMoved', {name: description, destination: toName})
-        });
-      },
-      onFailure: (e) => {
-        onFailure();
-        this.props.emitError({
-          type: 'errorOnMove',
-          error: e,
-          message: I18n.t('musit.moveModal.messages.errorObject', {name: description, destination: toName})
-        });
-      }
-    }});
-  };
+  ) =>
+    (toNode, toName, onSuccess, onFailure = () => true) => {
+      const description = objectToMove.getObjectDescription();
+      objectToMove.moveObject({
+        destination: toNode.id,
+        doneBy: userId,
+        museumId,
+        collectionId,
+        token,
+        callback: {
+          onComplete: () => {
+            onSuccess();
+            loadObjects(nodeId);
+            this.props.emitSuccess({
+              type: 'movedSuccess',
+              message: I18n.t('musit.moveModal.messages.objectMoved', {
+                name: description,
+                destination: toName
+              })
+            });
+          },
+          onFailure: e => {
+            onFailure();
+            this.props.emitError({
+              type: 'errorOnMove',
+              error: e,
+              message: I18n.t('musit.moveModal.messages.errorObject', {
+                name: description,
+                destination: toName
+              })
+            });
+          }
+        }
+      });
+    };
 
-  showObjectMoveHistory(
-    objectToShowHistoryFor
-  ) {
+  showObjectMoveHistory(objectToShowHistoryFor) {
     const objStr = objectToShowHistoryFor.getObjectDescription();
-    const componentToRender = <MusitModalHistory appSession={this.props.appSession} objectId={objectToShowHistoryFor.id} />;
+    const componentToRender = (
+      <MusitModalHistory
+        appSession={this.props.appSession}
+        objectId={objectToShowHistoryFor.id}
+      />
+    );
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
     this.props.showModal(title, componentToRender);
   }
@@ -264,25 +310,28 @@ export default class TableComponent extends React.Component {
     showObjects = this.props.route.showObjects,
     searchPattern = this.state.searchPattern
   ) {
-    return <Toolbar
-      showRight={!!showObjects}
-      showLeft={!showObjects}
-      labelRight={I18n.t('musit.grid.button.objects')}
-      labelLeft={I18n.t('musit.grid.button.nodes')}
-      placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
-      searchValue={searchPattern}
-      onSearchChanged={(newPattern) => this.setState({ ...this.state, searchPattern: newPattern })}
-      clickShowRight={() => {
-        this.showObjects();
-        this.loadObjects(nodeId, museumId, collectionId, token);
-        blur();
-      }}
-      clickShowLeft={() => {
-        this.showNodes();
-        this.loadNodes(nodeId, museumId, token);
-        blur();
-      }}
-    />;
+    return (
+      <Toolbar
+        showRight={!!showObjects}
+        showLeft={!showObjects}
+        labelRight={I18n.t('musit.grid.button.objects')}
+        labelLeft={I18n.t('musit.grid.button.nodes')}
+        placeHolderSearch={I18n.t('musit.grid.search.placeHolder')}
+        searchValue={searchPattern}
+        onSearchChanged={newPattern =>
+          this.setState({ ...this.state, searchPattern: newPattern })}
+        clickShowRight={() => {
+          this.showObjects();
+          this.loadObjects(nodeId, museumId, collectionId, token);
+          blur();
+        }}
+        clickShowLeft={() => {
+          this.showNodes();
+          this.loadNodes(nodeId, museumId, token);
+          blur();
+        }}
+      />
+    );
   }
 
   makeLeftMenu(
@@ -299,52 +348,83 @@ export default class TableComponent extends React.Component {
         <NodeLeftMenuComponent
           showNewNode={!!rootNode}
           showButtons={rootNode && !rootNode.isRootNode()}
-          onClickNewNode={() => this.props.goTo(Config.magasin.urls.client.storagefacility.addNode(rootNode.id, this.props.appSession))}
+          onClickNewNode={() =>
+            this.props.goTo(
+              Config.magasin.urls.client.storagefacility.addNode(
+                rootNode.id,
+                this.props.appSession
+              )
+            )}
           stats={stats}
           onClickProperties={() => {
             this.props.goTo({
-              pathname: Config.magasin.urls.client.storagefacility.editNode(rootNode.id, this.props.appSession),
+              pathname: Config.magasin.urls.client.storagefacility.editNode(
+                rootNode.id,
+                this.props.appSession
+              ),
               state: rootNode
             });
           }}
           onClickControlObservations={() =>
-            this.props.goTo(Config.magasin.urls.client.storagefacility.viewControlsObservations(rootNode.id, this.props.appSession))
-          }
+            this.props.goTo(
+              Config.magasin.urls.client.storagefacility.viewControlsObservations(
+                rootNode.id,
+                this.props.appSession
+              )
+            )}
           onClickMoveNode={() => moveNode(rootNode)}
           onClickDelete={() => {
-            const message = I18n.t('musit.leftMenu.node.deleteMessages.askForDeleteConfirmation', {
-              name: rootNode.name
-            });
+            const message = I18n.t(
+              'musit.leftMenu.node.deleteMessages.askForDeleteConfirmation',
+              {
+                name: rootNode.name
+              }
+            );
             confirm(message, () => {
-              deleteNode({ id: rootNode.id, museumId, token, callback: {
-                onComplete: () => {
-                  if (rootNode.isPartOf) {
-                    hashHistory.replace(Config.magasin.urls.client.storagefacility.goToNode(rootNode.isPartOf, this.props.appSession));
-                  }
-                  this.props.emitSuccess({
-                    type: 'deleteSuccess',
-                    message: I18n.t('musit.leftMenu.node.deleteMessages.confirmDelete', {name: rootNode.name})
-                  });
-                },
-                onFailure: (e) => {
-                  if (e.status === 403) {
-                    this.props.emitError({
-                      type: 'deleteError',
-                      message: I18n.t('musit.errorMainMessages.notAllowed')
+              deleteNode({
+                id: rootNode.id,
+                museumId,
+                token,
+                callback: {
+                  onComplete: () => {
+                    if (rootNode.isPartOf) {
+                      hashHistory.replace(
+                        Config.magasin.urls.client.storagefacility.goToNode(
+                          rootNode.isPartOf,
+                          this.props.appSession
+                        )
+                      );
+                    }
+                    this.props.emitSuccess({
+                      type: 'deleteSuccess',
+                      message: I18n.t(
+                        'musit.leftMenu.node.deleteMessages.confirmDelete',
+                        { name: rootNode.name }
+                      )
                     });
-                  } else if (e.status === 400) {
-                    this.props.emitError({
-                      type: 'deleteError',
-                      message: I18n.t('musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild')
-                    });
-                  } else {
-                    this.props.emitError({
-                      type: 'deleteError',
-                      message: e.message
-                    });
+                  },
+                  onFailure: e => {
+                    if (e.status === 403) {
+                      this.props.emitError({
+                        type: 'deleteError',
+                        message: I18n.t('musit.errorMainMessages.notAllowed')
+                      });
+                    } else if (e.status === 400) {
+                      this.props.emitError({
+                        type: 'deleteError',
+                        message: I18n.t(
+                          'musit.leftMenu.node.deleteMessages.errorNotAllowedHadChild'
+                        )
+                      });
+                    } else {
+                      this.props.emitError({
+                        type: 'deleteError',
+                        message: e.message
+                      });
+                    }
                   }
                 }
-              }}).toPromise();
+              }).toPromise();
             });
           }}
         />
@@ -373,19 +453,22 @@ export default class TableComponent extends React.Component {
       return (
         <Loader loaded={!isLoading}>
           <ObjectGrid
-            tableData={matches && matches[0] && matches[0] instanceof MusitObject ?
-              filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
+            tableData={
+              matches && matches[0] && matches[0] instanceof MusitObject
+                ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern)
+                : []
+            }
             showMoveHistory={showHistory}
-            pickObject={(object) =>
+            pickObject={object =>
               this.props.pickObject({
                 object,
                 breadcrumb: rootNode.breadcrumb,
                 museumId,
                 collectionId,
                 token
-              })
-            }
-            isObjectAdded={(object) => this.props.isItemAdded( object , this.props.pickList.objects )}
+              })}
+            isObjectAdded={object =>
+              this.props.isItemAdded(object, this.props.pickList.objects)}
             onMove={moveObject}
           />
           {showPaging &&
@@ -393,45 +476,65 @@ export default class TableComponent extends React.Component {
               numItems={totalMatches}
               currentPage={currentPage}
               perPage={Config.magasin.limit}
-              onClick={(cp) => {
+              onClick={cp => {
                 hashHistory.replace({
-                  pathname: Config.magasin.urls.client.storagefacility.goToObjects(rootNode.id, this.props.appSession),
+                  pathname: Config.magasin.urls.client.storagefacility.goToObjects(
+                    rootNode.id,
+                    this.props.appSession
+                  ),
                   state: {
                     currentPage: cp
                   }
                 });
               }}
-            />
-          }
+            />}
         </Loader>
       );
     }
     return (
       <Loader loaded={!isLoading}>
         <NodeGrid
-          tableData={matches && matches[0] && matches[0] instanceof MusitNode ?
-            filter(matches, ['name'], searchPattern) : []}
-          goToEvents={(node) => this.props.goTo(Config.magasin.urls.client.storagefacility.viewControlsObservations(node.id, this.props.appSession))}
+          tableData={
+            matches && matches[0] && matches[0] instanceof MusitNode
+              ? filter(matches, ['name'], searchPattern)
+              : []
+          }
+          goToEvents={node =>
+            this.props.goTo(
+              Config.magasin.urls.client.storagefacility.viewControlsObservations(
+                node.id,
+                this.props.appSession
+              )
+            )}
           onMove={moveNode}
-          pickNode={(node) => this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb})}
-          onClick={(node) => this.props.goTo(Config.magasin.urls.client.storagefacility.goToNode(node.id, this.props.appSession))}
-          isNodeAdded={(node) => this.props.isItemAdded( node , this.props.pickList.nodes )}
+          pickNode={node =>
+            this.props.pickNode({ node, breadcrumb: rootNode.breadcrumb })}
+          onClick={node =>
+            this.props.goTo(
+              Config.magasin.urls.client.storagefacility.goToNode(
+                node.id,
+                this.props.appSession
+              )
+            )}
+          isNodeAdded={node => this.props.isItemAdded(node, this.props.pickList.nodes)}
         />
         {showPaging &&
           <PagingToolbar
             numItems={totalMatches}
             currentPage={currentPage}
             perPage={Config.magasin.limit}
-            onClick={(cp) => {
+            onClick={cp => {
               hashHistory.replace({
-                pathname: Config.magasin.urls.client.storagefacility.goToNode(rootNode.id, this.props.appSession),
+                pathname: Config.magasin.urls.client.storagefacility.goToNode(
+                  rootNode.id,
+                  this.props.appSession
+                ),
                 state: {
                   currentPage: cp
                 }
               });
             }}
-          />
-        }
+          />}
       </Loader>
     );
   }
@@ -446,14 +549,22 @@ export default class TableComponent extends React.Component {
             margin: '0 25px 0 0'
           }}
         >
-          <ScannerButton enabled={this.props.scannerEnabled} onClick={this.props.toggleScanner} />
+          <ScannerButton
+            enabled={this.props.scannerEnabled}
+            onClick={this.props.toggleScanner}
+          />
         </div>
       </div>
     );
     return (
       <Layout
         title={title}
-        breadcrumb={<Breadcrumb node={this.props.tableStore.rootNode} onClickCrumb={this.showNodes} />}
+        breadcrumb={
+          <Breadcrumb
+            node={this.props.tableStore.rootNode}
+            onClickCrumb={this.showNodes}
+          />
+        }
         toolbar={this.makeToolbar()}
         leftMenu={this.makeLeftMenu()}
         content={this.makeContentGrid()}

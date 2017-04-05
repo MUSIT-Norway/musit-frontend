@@ -1,4 +1,10 @@
-import { isDateBiggerThanToday, parseUTCDate, parseISODate, customSortingStorageNodeType, formatISOString } from '../util';
+import {
+  isDateBiggerThanToday,
+  parseUTCDate,
+  parseISODate,
+  customSortingStorageNodeType,
+  formatISOString
+} from '../util';
 import moment from 'moment';
 import { expect as expectChai } from 'chai';
 
@@ -23,10 +29,13 @@ describe('customSortingStorageNodeType', () => {
     const organisation = customSortingStorageNodeType('Organisation');
     const storageUnit = customSortingStorageNodeType('StorageUnit');
     const room = customSortingStorageNodeType('Room');
-    expectChai(organisation).to.be.below(building).to.be.below(room).to.be.below(storageUnit).to.be.below(unknown);
+    expectChai(organisation).to.be
+      .below(building)
+      .to.be.below(room)
+      .to.be.below(storageUnit)
+      .to.be.below(unknown);
   });
 });
-
 
 describe('isDateBiggerThanToday', () => {
   it('Check Today', () => {
@@ -96,27 +105,25 @@ describe('isDateBiggerThanToday', () => {
   });
 });
 
-
-
 describe('localToISOString', () => {
-
   it('localTOIsoString should always be equal to input date', () => {
     const newDate = new Date();
-    const isoDat= formatISOString(newDate);
-    expectChai(moment(newDate).format('YYYYMMDD')).to.equal(moment(isoDat).format('YYYYMMDD'));
+    const isoDat = formatISOString(newDate);
+    expectChai(moment(newDate).format('YYYYMMDD')).to.equal(
+      moment(isoDat).format('YYYYMMDD')
+    );
   });
 
   it('CheckAroundMidnight', () => {
     const newDate = new Date('2017-02-20T00:00:01');
-    const isoDate= formatISOString(newDate);
-    expectChai(moment(newDate).format('YYYYMMDD')).to.equal(moment(isoDate).format('YYYYMMDD'));
+    const isoDate = formatISOString(newDate);
+    expectChai(moment(newDate).format('YYYYMMDD')).to.equal(
+      moment(isoDate).format('YYYYMMDD')
+    );
   });
-
 });
 
-
 describe('parseUTC and parseLocalDate around midnight', () => {
-
   const str = '2017-01-12T00:01:00.000+01:00';
 
   it('parseUTC shows wrong local date around midnight if local zone is GMT+1', () => {
@@ -140,7 +147,6 @@ describe('parseUTC and parseLocalDate around midnight', () => {
 });
 
 describe('parseISOString and formatISOString are inverse functions', () => {
-
   it('Show inverseness on dates from times right before midnight', () => {
     const isoStr = '1999-12-31T23:59:59.999+01:00';
     const date = new Date(isoStr);
@@ -148,9 +154,10 @@ describe('parseISOString and formatISOString are inverse functions', () => {
     const localDate = moment(date).format(dateStr);
     const dateAfterFormatISOString = moment(formatISOString(date)).format(dateStr);
     const dateAfterParsedISODate = parseISODate(isoStr).format('YYYY-MM-DD');
-    expectChai(localDate).to.equal(dateAfterFormatISOString).and.equal(dateAfterParsedISODate);
+    expectChai(localDate).to
+      .equal(dateAfterFormatISOString)
+      .and.equal(dateAfterParsedISODate);
   });
-
 
   it('Show inverseness on dates from times right after midnight', () => {
     const isoStr = '1999-12-31T00:59:59.999+01:00';
@@ -159,6 +166,8 @@ describe('parseISOString and formatISOString are inverse functions', () => {
     const localDate = moment(date).format(dateStr);
     const dateAfterFormatISOString = moment(formatISOString(date)).format(dateStr);
     const dateAfterParsedISODate = parseISODate(isoStr).format('YYYY-MM-DD');
-    expectChai(localDate).to.equal(dateAfterFormatISOString).and.equal(dateAfterParsedISODate);
+    expectChai(localDate).to
+      .equal(dateAfterFormatISOString)
+      .and.equal(dateAfterParsedISODate);
   });
 });

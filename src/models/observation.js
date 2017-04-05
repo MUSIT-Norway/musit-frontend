@@ -12,36 +12,48 @@ class Observation {
   }
 }
 
-Observation.loadObservations = (ajaxGet = simpleGet) => ({ nodeId, museumId, token, callback }) => {
-  return ajaxGet(`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations`, token, callback)
-    .map(({ response }) => {
+Observation.loadObservations = (ajaxGet = simpleGet) =>
+  ({ nodeId, museumId, token, callback }) => {
+    return ajaxGet(
+      `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations`,
+      token,
+      callback
+    ).map(({ response }) => {
       if (!Array.isArray(response)) {
         return [];
       }
       return response.map(json => new Observation(json));
     });
-};
+  };
 
-Observation.addObservation = (ajaxPost = simplePost) => ({ nodeId, museumId, data, token, callback }) => {
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations`;
-  const dataToPost = mapToBackEnd(data, nodeId);
-  return ajaxPost(url, dataToPost, token, callback);
-};
+Observation.addObservation = (ajaxPost = simplePost) =>
+  ({ nodeId, museumId, data, token, callback }) => {
+    const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations`;
+    const dataToPost = mapToBackEnd(data, nodeId);
+    return ajaxPost(url, dataToPost, token, callback);
+  };
 
-Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({ nodeId, observationId, museumId, token }) => {
-  const url =`${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations/${observationId}`;
-  return ajaxGet(url, token)
-    .flatMap(observation => {
-      const actorIds = uniq([observation.response.doneBy, observation.response.registeredBy]).filter(p => p);
-      return MusitActor.getActors(ajaxPost)(actorIds, token)
-        .map(actorDetails => {
-          return new Observation(mapToFrontEnd({
+Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
+  ({ nodeId, observationId, museumId, token }) => {
+    const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations/${observationId}`;
+    return ajaxGet(url, token).flatMap(observation => {
+      const actorIds = uniq([
+        observation.response.doneBy,
+        observation.response.registeredBy
+      ]).filter(p => p);
+      return MusitActor.getActors(ajaxPost)(actorIds, token).map(actorDetails => {
+        return new Observation(
+          mapToFrontEnd({
             ...observation.response,
-            ...MusitActor.getActorNames(actorDetails, observation.response.doneBy, observation.response.registeredBy)
-          }));
-        });
+            ...MusitActor.getActorNames(
+              actorDetails,
+              observation.response.doneBy,
+              observation.response.registeredBy
+            )
+          })
+        );
+      });
     });
-};
-
+  };
 
 export default Observation;
