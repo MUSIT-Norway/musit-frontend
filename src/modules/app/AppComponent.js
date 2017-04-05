@@ -12,7 +12,6 @@ import LoginComponent from '../login/LoginComponent';
 import { emitError } from '../../shared/errors';
 import Loader from 'react-loader';
 import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
-import { AppSession } from './appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import {
   clearObjects$ as clearObjectPicklist$,
@@ -23,7 +22,7 @@ import Config from '../../config';
 export class AppComponent extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    appSession: PropTypes.instanceOf(AppSession).isRequired,
+    appSession: PropTypes.object.isRequired,
     setMuseumId: PropTypes.func.isRequired,
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
@@ -72,8 +71,13 @@ export class AppComponent extends Component {
     this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
     this.props.clearNodePicklist();
-    const localAppSession = this.props.appSession.copy({ museumId, collectionId });
-    this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(localAppSession));
+    this.props.goTo(
+      Config.magasin.urls.client.storagefacility.goToRoot({
+        ...this.props.appSession,
+        museumId,
+        collectionId
+      })
+    );
   }
 
   handleCollectionId(collectionId) {
@@ -107,11 +111,11 @@ export class AppComponent extends Component {
   }
 
   isSessionLoaded() {
-    return !!this.props.appSession.getBuildNumber();
+    return !!this.props.appSession.buildInfo;
   }
 
   render() {
-    if (!this.props.appSession.getAccessToken()) {
+    if (!this.props.appSession.accessToken) {
       return <LoginComponent />;
     }
 
@@ -203,11 +207,11 @@ export class AppComponent extends Component {
                 </NavItem>
               </LinkContainer>
               <MusitUserAccount
-                actor={this.props.appSession.getActor()}
-                groups={this.props.appSession.getGroups()}
-                token={this.props.appSession.getAccessToken()}
-                selectedMuseumId={this.props.appSession.getMuseumId()}
-                selectedCollectionId={this.props.appSession.getCollectionId()}
+                actor={this.props.appSession.actor}
+                groups={this.props.appSession.groups}
+                token={this.props.appSession.accessToken}
+                selectedMuseumId={this.props.appSession.museumId}
+                selectedCollectionId={this.props.appSession.collectionId}
                 handleLogout={this.handleLogout}
                 handleLanguage={this.handleLanguage}
                 handleMuseumId={this.handleMuseumId}
@@ -223,7 +227,8 @@ export class AppComponent extends Component {
         </div>
 
         <footer className={this.getFooterClass()}>
-          {'Build number: ' + this.props.appSession.getBuildNumber()}
+          {'Build number: ' + this.props.appSession.buildInfo &&
+            this.props.appSession.buildInfo.buildInfoBuildNumber}
         </footer>
       </div>
     );

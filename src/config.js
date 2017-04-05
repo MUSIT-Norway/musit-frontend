@@ -1,10 +1,16 @@
 /* @flow */
-import { AppSession } from './modules/app/appSession';
-import CollectionId from './models/collectionId';
-import MuseumId from './models/museumId';
+
+type AppSession = {
+  museumId: number,
+  collectionId: string,
+  accessToken: string
+};
+
+type MuseumId = number;
+type CollectionId = string;
 
 const clientContextUrl = (appSession: AppSession) =>
-  `/${appSession.getMuseumId().getPath()}/${appSession.getCollectionId().getPath()}`;
+  `/museum/${appSession.museumId}/collections/${appSession.collectionId}`;
 
 export default {
   isDev: process.env.NODE_ENV === 'development',
@@ -78,53 +84,52 @@ export default {
       },
       api: {
         analysisType: {
-          getAllAnalysisTypes: (mid: MuseumId) =>
-            `/api/management/${mid.id}/analyses/types`,
+          getAllAnalysisTypes: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
           getAnalysisTypesForCategory: (mid: MuseumId, categoryId: string) =>
-            `/api/management/${mid.id}/analyses/types/categories/${categoryId}`,
+            `/api/management/${mid}/analyses/types/categories/${categoryId}`,
           getAnalysisTypesForCollection: (mid: MuseumId, musemcollectionId: string) =>
-            `/api/management/${mid.id}/analyses/types/musemcollections/${musemcollectionId}`
+            `/api/management/${mid}/analyses/types/musemcollections/${musemcollectionId}`
         },
         analysis: {
-          saveAnalysisEvent: (mid: MuseumId) => `/api/management/${mid.id}/analyses`,
+          saveAnalysisEvent: (mid: MuseumId) => `/api/management/${mid}/analyses`,
           getAnalysisById: (mid: MuseumId, analysisId: number) =>
-            `/api/management/${mid.id}/analyses/${analysisId}`,
+            `/api/management/${mid}/analyses/${analysisId}`,
           getChildAnalyses: (mid: MuseumId, analysisId: number) =>
-            `/api/management/${mid.id}/analyses/${analysisId}/children`,
+            `/api/management/${mid}/analyses/${analysisId}/children`,
           saveResult: (mid: MuseumId, analysisId: number) =>
-            `/api/management/${mid.id}/analyses/${analysisId}/results`,
+            `/api/management/${mid}/analyses/${analysisId}/results`,
           getAnalysisForObject: (mid: MuseumId, id: number) =>
-            `/api/management/${mid.id}/analyses/objects/${id}`,
+            `/api/management/${mid}/analyses/objects/${id}`,
           analysesForObject: (mid: MuseumId, objectId: number): string =>
-            `/api/management/${mid.id}/analyses/objects/${objectId}`
+            `/api/management/${mid}/analyses/objects/${objectId}`
         },
         samples: {
-          baseUrl: (mid: MuseumId): string => `api/management/${mid.id}/samples`,
+          baseUrl: (mid: MuseumId): string => `api/management/${mid}/samples`,
           samplesForObject: (mid: MuseumId, objectId: number): string =>
-            `api/management/${mid.id}/samples/${objectId}/children`
+            `api/management/${mid}/samples/${objectId}/children`
         },
         storagefacility: {
           searchUrl: (term: string, mid: MuseumId) =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
+            `/api/storagefacility/museum/${mid}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
           scanUrl: (storageNodeId: string, mid: MuseumId) =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes/scan?storageNodeId=${storageNodeId}&`,
+            `/api/storagefacility/museum/${mid}/storagenodes/scan?storageNodeId=${storageNodeId}&`,
           scanOldUrl: (oldBarcode: number, mid: MuseumId) =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes/scan?oldBarcode=${oldBarcode}`,
+            `/api/storagefacility/museum/${mid}/storagenodes/scan?oldBarcode=${oldBarcode}`,
           baseUrl: (mid: MuseumId): string =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes`,
+            `/api/storagefacility/museum/${mid}/storagenodes`,
           currentLocation: (mid: MuseumId, objectId: number): string =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/${objectId}/currentlocation`,
+            `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/currentlocation`,
           currentLocations: (mid: MuseumId): string =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/currentlocations`,
+            `/api/storagefacility/museum/${mid}/storagenodes/objects/currentlocations`,
           moveObject: (mid: MuseumId): string =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes/moveObject`,
+            `/api/storagefacility/museum/${mid}/storagenodes/moveObject`,
           objectLocations: (mid: MuseumId, objectId: number): string =>
-            `/api/storagefacility/${mid.getPath()}/storagenodes/objects/${objectId}/locations`
+            `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/locations`
         },
         thingaggregate: {
-          baseUrl: (mid: MuseumId): string => `/api/thingaggregate/${mid.getPath()}`,
+          baseUrl: (mid: MuseumId): string => `/api/thingaggregate/museum/${mid}`,
           scanOldUrl: (oldBarcode: number, mid: MuseumId, collectionId: CollectionId) =>
-            `/api/thingaggregate/${mid.getPath()}/scan?oldBarcode=${oldBarcode}&${collectionId.getQuery()}`,
+            `/api/thingaggregate/museum/${mid}/scan?oldBarcode=${oldBarcode}&collectionIds=${collectionId}`,
           searchObjectUrl: (
             museumNo: ?string,
             subNo: ?string,
@@ -134,26 +139,26 @@ export default {
             collectionId: CollectionId,
             museumId: MuseumId
           ): string => {
-            const baseUrl = `/api/thingaggregate/${museumId.getPath()}/objects/search`;
+            const baseUrl = `/api/thingaggregate/museum/${museumId}/objects/search`;
             const museumNoQuery = `museumNo=${museumNo || ''}`;
             const subNoQuery = `subNo=${subNo || ''}`;
             const termQuery = `term=${term || ''}`;
             const pageQuery = `page=${page || ''}`;
             const limitQuery = `limit=${perPage || ''}`;
-            return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&${collectionId.getQuery()}`;
+            return `${baseUrl}?${museumNoQuery}&${subNoQuery}&${termQuery}&${pageQuery}&${limitQuery}&collectionIds=${collectionId}`;
           },
           objectDetailsUrl: (
             mid: MuseumId,
             objectId: number,
             collectionId: CollectionId
           ): string =>
-            `api/thingaggregate/${mid.getPath()}/objects/${objectId}?${collectionId.getQuery()}`,
+            `api/thingaggregate/museum/${mid}/objects/${objectId}?collectionIds=${collectionId}`,
           getMainObject: (
             mid: MuseumId,
             objectId: number,
             collectionId: CollectionId
           ): string =>
-            `/api/thingaggregate/${mid.getPath()}/objects/${objectId}/children?${collectionId.getQuery()}`,
+            `/api/thingaggregate/museum/${mid}/objects/${objectId}/children?$collectionIds=${collectionId}`,
           getObjectForCollection: (
             mid: MuseumId,
             nodeId: number,
@@ -161,11 +166,11 @@ export default {
             page: number,
             limit: number
           ): string =>
-            `/api/thingaggregate/${mid.getPath()}/node/${nodeId}/objects?${collectionId.getQuery()}&page=${page}&limit=${limit}`
+            `/api/thingaggregate/museum/${mid}/node/${nodeId}/objects?collectionIds=${collectionId}&page=${page}&limit=${limit}`
         },
         actor: {
           searchUrl: (term: string, mid: MuseumId): string =>
-            `/api/actor/person?${mid.getQuery()}&search=[${encodeURIComponent(term)}]`,
+            `/api/actor/person?museumId=${mid}&search=[${encodeURIComponent(term)}]`,
           baseUrl: '/api/actor/person',
           currentUser: '/api/actor/dataporten/currentUser'
         },

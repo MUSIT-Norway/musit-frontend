@@ -50,6 +50,13 @@ class MusitActor {
   }
 }
 
+type Actor = {
+  dataportenId?: string,
+  applicationId?: string
+};
+
+MusitActor.getActorId = (actor: Actor) => actor.dataportenId || actor.applicationId;
+
 MusitActor.getActors = (ajaxPost = simplePost) =>
   (actorIds, token, callback) => {
     return ajaxPost(

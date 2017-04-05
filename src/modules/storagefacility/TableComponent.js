@@ -80,9 +80,9 @@ export default class TableComponent extends React.Component {
 
   componentWillMount(
     nodeId = this.props.params.id,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken()
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken
   ) {
     this.loadRootNode(nodeId, museumId, token);
     if (this.props.route.showObjects) {
@@ -93,13 +93,13 @@ export default class TableComponent extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const museumHasChanged = newProps.appSession.getMuseumId() !==
-      this.props.appSession.getMuseumId();
-    const collectionHasChanged = newProps.appSession.getCollectionId() !==
-      this.props.appSession.getCollectionId();
-    const museumId = newProps.appSession.getMuseumId();
-    const collectionId = newProps.appSession.getCollectionId();
-    const token = this.props.appSession.getAccessToken();
+    const museumHasChanged = newProps.appSession.museumId !==
+      this.props.appSession.museumId;
+    const collectionHasChanged = newProps.appSession.collectionId !==
+      this.props.appSession.collectionId;
+    const museumId = newProps.appSession.museumId;
+    const collectionId = newProps.appSession.collectionId;
+    const token = this.props.appSession.accessToken;
     const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
@@ -140,8 +140,8 @@ export default class TableComponent extends React.Component {
 
   loadNodes(
     id,
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    token = this.props.appSession.accessToken,
     page
   ) {
     this.props.setLoading();
@@ -155,9 +155,9 @@ export default class TableComponent extends React.Component {
 
   loadObjects(
     id,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
     page
   ) {
     if (id) {
@@ -183,8 +183,8 @@ export default class TableComponent extends React.Component {
   moveNode = (
     nodeToMove,
     userId = this.props.appSession.getActor().getActorId(),
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    token = this.props.appSession.accessToken,
     nodeId = this.props.tableStore.rootNode.id,
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes,
@@ -249,9 +249,9 @@ export default class TableComponent extends React.Component {
   moveObject = (
     objectToMove,
     userId = this.props.appSession.getActor().getActorId(),
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
     nodeId = this.props.tableStore.rootNode.id,
     loadObjects = this.loadObjects
   ) =>
@@ -304,9 +304,9 @@ export default class TableComponent extends React.Component {
 
   makeToolbar(
     nodeId = this.props.params.id,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
     showObjects = this.props.route.showObjects,
     searchPattern = this.state.searchPattern
   ) {
@@ -335,8 +335,8 @@ export default class TableComponent extends React.Component {
   }
 
   makeLeftMenu(
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    token = this.props.appSession.accessToken,
     rootNode = this.props.tableStore.rootNode,
     stats = this.props.tableStore.stats,
     deleteNode = this.props.deleteNode,
@@ -434,9 +434,9 @@ export default class TableComponent extends React.Component {
 
   makeContentGrid(
     searchPattern = this.state.searchPattern,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
     rootNode = this.props.tableStore.rootNode,
     children = this.props.tableStore.children,
     showObjects = this.props.route.showObjects,

@@ -3,7 +3,7 @@ import Config from '../config';
 import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import flatMap from 'lodash/flatMap';
-import type { MovableObject } from '../../types/movableObject';
+import type { MovableObject } from './types/movableObject';
 import MuseumId from './museumId';
 
 class MusitObject {

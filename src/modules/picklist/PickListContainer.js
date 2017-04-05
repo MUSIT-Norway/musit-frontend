@@ -26,8 +26,9 @@ import { I18n } from 'react-i18nify';
 import { PropTypes } from 'react';
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
+import MusitActor from '../../models/actor';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
-import type { MovableObject } from '../../types/movableObject';
+import type { MovableObject } from '../../models/types/movableObject';
 
 export const nodeCallback = (
   appSession,
@@ -44,8 +45,8 @@ export const nodeCallback = (
       items.map(item =>
         refreshNode({
           id: item.id,
-          museumId: appSession.getMuseumId(),
-          token: appSession.getAccessToken()
+          museumId: appSession.museumId,
+          token: appSession.accessToken
         }));
       onSuccess();
       if (toMoveLength === 1) {
@@ -105,8 +106,8 @@ export const objectCallback = (
     onComplete: () => {
       refreshObjects({
         movableObjects: items,
-        museumId: appSession.getMuseumId(),
-        token: appSession.getAccessToken()
+        museumId: appSession.museumId,
+        token: appSession.accessToken
       });
       onSuccess();
       if (toMoveLength === 1) {
@@ -215,9 +216,9 @@ export const moveItems = (
       moveFunction({
         id: idsToMove,
         destination: to.id,
-        doneBy: appSession.getActor().getActorId(),
-        museumId: appSession.getMuseumId(),
-        token: appSession.getAccessToken(),
+        doneBy: MusitActor.getActorId(appSession.actor),
+        museumId: appSession.museumId,
+        token: appSession.accessToken,
         callback
       }).toPromise();
     } else {
@@ -258,9 +259,9 @@ const customProps = {
 
 export const processBarcode = (barCode, props) => {
   const isMoveDialogActive = props.classExistsOnDom('moveDialog');
-  const museumId = props.appSession.getMuseumId();
-  const collectionId = props.appSession.getCollectionId();
-  const token = props.appSession.getAccessToken();
+  const museumId = props.appSession.museumId;
+  const collectionId = props.appSession.collectionId;
+  const token = props.appSession.accessToken;
   const isNodeView = props.isTypeNode(props);
   if (barCode.uuid) {
     if (!isNodeView && !isMoveDialogActive) {
