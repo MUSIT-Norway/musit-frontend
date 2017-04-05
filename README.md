@@ -13,6 +13,8 @@ The University museums of Norway hold in trust regional and global scientific co
 
 MUSIT strives for greater integration between its databases and is an open source initiative cooperating with other projects such as DINA (National History museum of Stockholm - Sweden), and Kotka (National History museum of Helsinki - Finland).
 
+# Contribution
+
 ## Prerequisites
 
 To get started you need to install the following components on your computer:
