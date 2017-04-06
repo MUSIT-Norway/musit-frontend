@@ -227,8 +227,9 @@ export class AppComponent extends Component {
         </div>
 
         <footer className={this.getFooterClass()}>
-          {'Build number: ' + (this.props.appSession.buildInfo &&
-            this.props.appSession.buildInfo.buildInfoBuildNumber)}
+          {'Build number: ' +
+            (this.props.appSession.buildInfo &&
+              this.props.appSession.buildInfo.buildInfoBuildNumber)}
         </footer>
       </div>
     );

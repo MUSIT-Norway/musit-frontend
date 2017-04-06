@@ -20,21 +20,19 @@ describe('AppComponent', () => {
       <AppComponent
         enableAnalysis={true}
         count={{ value: 0 }}
-        appSession={
-          {
-            accessToken: '1234',
-            museumId: 99,
-            collectionId: '00000000-0000-0000-0000-000000000000',
-            buildInfo: {
-              buildInfoBuildNumber: '64'
-            },
-            groups: [],
-            actor: {
-              dataportenId: '1234',
-              fn: 'Jarl'
-            }
+        appSession={{
+          accessToken: '1234',
+          museumId: 99,
+          collectionId: '00000000-0000-0000-0000-000000000000',
+          buildInfo: {
+            buildInfoBuildNumber: '64'
+          },
+          groups: [],
+          actor: {
+            dataportenId: '1234',
+            fn: 'Jarl'
           }
-        }
+        }}
         scanner={{}}
         isScannerActive={sinon.spy()}
         prepareSearch={prepareSearch}

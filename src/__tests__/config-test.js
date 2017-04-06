@@ -128,11 +128,7 @@ describe('Config urls', () => {
       endpoints: [
         {
           name: 'scanOldUrl',
-          actual: urls.api.thingaggregate.scanOldUrl(
-            1234,
-            99,
-            new CollectionId('1234')
-          ),
+          actual: urls.api.thingaggregate.scanOldUrl(1234, 99, new CollectionId('1234')),
           expected: '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
         },
         {
@@ -167,18 +163,12 @@ describe('Config urls', () => {
         },
         {
           name: 'getAnalysisTypesForCategory',
-          actual: urls.api.analysisType.getAnalysisTypesForCategory(
-            99,
-            123
-          ),
+          actual: urls.api.analysisType.getAnalysisTypesForCategory(99, 123),
           expected: '/api/management/99/analyses/types/categories/123'
         },
         {
           name: 'getAnalysisTypesForCollection',
-          actual: urls.api.analysisType.getAnalysisTypesForCollection(
-            99,
-            123
-          ),
+          actual: urls.api.analysisType.getAnalysisTypesForCollection(99, 123),
           expected: '/api/management/99/analyses/types/musemcollections/123'
         },
         {
