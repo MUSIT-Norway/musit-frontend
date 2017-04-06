@@ -4,8 +4,6 @@ import React from 'react';
 import { ObjectSearchComponent } from '../ObjectSearchComponent';
 import { getPath } from '../../../shared/util';
 import MusitObject from '../../../models/object';
-import MuseumId from '../../../models/museumId';
-import CollectionId from '../../../models/collectionId';
 import sinon from 'sinon';
 
 describe('ObjectSearchComponent', () => {
@@ -55,9 +53,9 @@ describe('ObjectSearchComponent', () => {
         searchForObjects={searchForObjects}
         onChangeField={onChangeField}
         appSession={{
-          getAccessToken: () => 'wakka',
-          getMuseumId: () => new MuseumId(99),
-          getCollectionId: () => new CollectionId('ddd')
+          accessToken: 'wakka',
+          museumId: 99,
+          collectionId: 'ddd'
         }}
         objectSearchStore={{
           loaded: true,

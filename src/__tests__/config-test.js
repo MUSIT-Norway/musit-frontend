@@ -1,5 +1,4 @@
 import Config from '../config';
-import CollectionId from '../models/collectionId';
 import routes from '../routes';
 
 describe('routes', () => {
@@ -128,27 +127,17 @@ describe('Config urls', () => {
       endpoints: [
         {
           name: 'scanOldUrl',
-          actual: urls.api.thingaggregate.scanOldUrl(1234, 99, new CollectionId('1234')),
+          actual: urls.api.thingaggregate.scanOldUrl(1234, 99, '1234'),
           expected: '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
         },
         {
           name: 'getMainObject',
-          actual: urls.api.thingaggregate.getMainObject(
-            99,
-            2344,
-            new CollectionId('1234')
-          ),
+          actual: urls.api.thingaggregate.getMainObject(99, 2344, '1234'),
           expected: '/api/thingaggregate/museum/99/objects/2344/children?collectionIds=1234'
         },
         {
           name: 'getObjectForCollection',
-          actual: urls.api.thingaggregate.getObjectForCollection(
-            99,
-            433,
-            new CollectionId('1234'),
-            1,
-            20
-          ),
+          actual: urls.api.thingaggregate.getObjectForCollection(99, 433, '1234', 1, 20),
           expected: '/api/thingaggregate/museum/99/node/433/objects?collectionIds=1234&page=1&limit=20'
         }
       ]

@@ -3,7 +3,6 @@ import assert from 'assert';
 import { store$, initialState } from '../observationStore';
 import MusitNode from '../../../models/node';
 import Observation from '../../../models/observation';
-import MuseumId from '../../../models/museumId';
 const diff = require('deep-diff').diff;
 
 describe('printStore', () => {
@@ -127,7 +126,7 @@ describe('printStore', () => {
       .createHotObservable(loadRootNodeM, {
         1: {
           nodeId: 3,
-          museumId: new MuseumId(99),
+          museumId: 99,
           token: '1234'
         }
       })
@@ -156,7 +155,7 @@ describe('printStore', () => {
         1: {
           nodeId: 3,
           observationId: 41,
-          museumId: new MuseumId(99),
+          museumId: 99,
           token: '1234'
         }
       })

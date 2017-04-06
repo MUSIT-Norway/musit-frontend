@@ -1,7 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { store$, initialState } from '../moveDialogStore';
-import MuseumId from '../../../models/museumId';
 import MusitNode from '../../../models/node';
 
 const diff = require('deep-diff').diff;
@@ -103,7 +102,7 @@ describe('moveDialog', () => {
     const clear$ = testScheduler.createHotObservable(clearM);
     const loadNode$ = testScheduler
       .createHotObservable(loadNodeM, {
-        1: { id: 1234, token: '1234', museumId: new MuseumId(99) }
+        1: { id: 1234, token: '1234', museumId: 99 }
       })
       .switchMap(
         MusitNode.getNode(() =>
@@ -117,7 +116,7 @@ describe('moveDialog', () => {
       );
     const loadChildren$ = testScheduler
       .createHotObservable(loadChildrenM, {
-        1: { id: 1234, token: '1234', museumId: new MuseumId(99) }
+        1: { id: 1234, token: '1234', museumId: 99 }
       })
       .switchMap(
         MusitNode.getNodes(() =>

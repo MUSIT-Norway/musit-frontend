@@ -3,8 +3,6 @@ import assert from 'assert';
 import { store$ } from '../tableStore';
 import MusitNode from '../../../models/node';
 import MusitObject from '../../../models/object';
-import MuseumId from '../../../models/museumId';
-import CollectionId from '../../../models/collectionId';
 
 const diff = require('deep-diff').diff;
 
@@ -146,8 +144,8 @@ describe('tableStore', () => {
     const setLoading$ = testScheduler.createHotObservable(setLoadingM);
     const loadNodes$ = testScheduler
       .createHotObservable(loadNodesM, {
-        1: { id: 1, museumId: new MuseumId(99), token: '1234' },
-        2: { id: 2, museumId: new MuseumId(99), token: '1234' }
+        1: { id: 1, museumId: 99, token: '1234' },
+        2: { id: 2, museumId: 99, token: '1234' }
       })
       .switchMap(
         MusitNode.getNodes(url => {
@@ -176,14 +174,14 @@ describe('tableStore', () => {
       .createHotObservable(loadObjectsM, {
         1: {
           id: 1,
-          museumId: new MuseumId(99),
-          collectionId: new CollectionId('1233'),
+          museumId: 99,
+          collectionId: '1233',
           token: '1234'
         },
         2: {
           id: 2,
-          museumId: new MuseumId(99),
-          collectionId: new CollectionId('1233'),
+          museumId: 99,
+          collectionId: '1233',
           token: '1234'
         }
       })
@@ -212,7 +210,7 @@ describe('tableStore', () => {
       );
     const loadStats$ = testScheduler
       .createHotObservable(loadStatsM, {
-        1: { id: 1, museumId: new MuseumId(99), token: '1234' }
+        1: { id: 1, museumId: 99, token: '1234' }
       })
       .switchMap(
         MusitNode.getStats(() =>
@@ -222,7 +220,7 @@ describe('tableStore', () => {
       );
     const loadRootNode$ = testScheduler
       .createHotObservable(loadRootNodeM, {
-        1: { id: 1, museumId: new MuseumId(99), token: '1234' }
+        1: { id: 1, museumId: 99, token: '1234' }
       })
       .switchMap(
         MusitNode.getNode(() =>

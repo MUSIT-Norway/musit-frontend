@@ -4,16 +4,13 @@ import React from 'react';
 import { ReportsOverview } from '../ReportsOverview';
 import { KDReport } from '../KDReportComponent';
 import sinon from 'sinon';
-import MuseumId from '../../../models/museumId';
-import CollectionId from '../../../models/collectionId';
-import { AppSession } from '../../app/appSession';
 
 describe('Reports overview', () => {
   it('should display correctly', () => {
-    const appSession = new AppSession({
-      museumId: new MuseumId(99),
-      collectionId: new CollectionId('1234')
-    });
+    const appSession = {
+      museumId: 99,
+      collectionId: '1234'
+    };
     const wrapper = shallow(<ReportsOverview appSession={appSession} />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });

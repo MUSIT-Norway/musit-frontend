@@ -1,7 +1,6 @@
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { store$, loadEvents } from '../eventsStore';
-import MuseumId from '../../../models/museumId';
 import Observation from '../../../models/observation';
 import Control from '../../../models/control';
 import MusitNode from '../../../models/node';
@@ -43,7 +42,7 @@ describe('controlsAndObservationsStore', () => {
     const loadRootNode$ = new Subject();
     const loadEvents$ = testScheduler
       .createHotObservable(loadEventsM, {
-        1: { nodeId: 1, museumId: new MuseumId(1), token: '1234' }
+        1: { nodeId: 1, museumId: 1, token: '1234' }
       })
       .switchMap(
         loadEvents({
@@ -152,7 +151,7 @@ describe('controlsAndObservationsStore', () => {
     });
     const loadEvents$ = testScheduler
       .createHotObservable(loadEventsM, {
-        1: { nodeId: 1, museumId: new MuseumId(1), token: '1234' }
+        1: { nodeId: 1, museumId: 1, token: '1234' }
       })
       .switchMap(
         loadEvents({

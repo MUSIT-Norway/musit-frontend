@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import { EventsComponent } from '../EventsComponent';
-import { AppSession } from '../../app/appSession';
+
 describe('EventsComponent', () => {
   it('Check it renders when not loaded', () => {
     const myDiv = shallow(
@@ -19,7 +19,7 @@ describe('EventsComponent', () => {
         params={{
           id: '1'
         }}
-        appSession={new AppSession({})}
+        appSession={{}}
         clearEvents={() => true}
         loadEvents={() => true}
         loadRootNode={() => true}
@@ -41,7 +41,7 @@ describe('EventsComponent', () => {
         params={{
           id: '1'
         }}
-        appSession={new AppSession({})}
+        appSession={{}}
         clearEvents={() => true}
         loadEvents={() => true}
         loadRootNode={() => true}

@@ -2,7 +2,6 @@ import { shallow, mount } from 'enzyme';
 import { shallowToJson, mountToJson } from 'enzyme-to-json';
 import React from 'react';
 import { PickListComponent } from '../PickListComponent';
-import { AppSession } from '../../app/appSession';
 import { expect as e } from 'chai';
 import sinon from 'sinon';
 
@@ -81,7 +80,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={x => x}
         removeNode={onRemoveNode}
         removeObject={onRemoveObject}
-        appSession={new AppSession()}
+        appSession={{}}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -108,7 +107,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={x => x}
         removeNode={x => x}
         removeObject={x => x}
-        appSession={new AppSession()}
+        appSession={{}}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -143,7 +142,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={onToggleMainObject}
         removeNode={onRemoveNode}
         removeObject={onRemoveObject}
-        appSession={new AppSession()}
+        appSession={{}}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
