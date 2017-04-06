@@ -13,7 +13,7 @@ import {
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import {SaveCancel} from '../../components/formfields/index';
+import { SaveCancel } from '../../components/formfields/index';
 import { AppSession } from '../app/appSession';
 
 type Field = { name: string, rawValue: ?string };
@@ -46,7 +46,7 @@ type FormData = {
 };
 
 type AnalysisType = { id: number, name: string };
-type ObjectData = { uuid: string }
+type ObjectData = { uuid: string };
 type Store = { objectsData: ObjectData[], analysisTypes: AnalysisType[] };
 type Update = (update: Field) => void;
 type Props = {
@@ -65,20 +65,20 @@ const labelFormat = (label, md = 1) => (
   </Col>
 );
 
-const FieldGroup = ({id, label, md = 1, ...props}) => (
+const FieldGroup = ({ id, label, md = 1, ...props }) => (
   <div id={id}>
     {labelFormat(label, md)}
     <Col md={2}>
-      <FormControl {... props} />
+      <FormControl {...props} />
     </Col>
   </div>
 );
 
-const AddButton = ({id, label, md, mdOffset = 0, ...props}) => (
+const AddButton = ({ id, label, md, mdOffset = 0, ...props }) => (
   <div id={id}>
     <Col md={md} mdOffset={mdOffset}>
-      <Button {... props}>
-        <FontAwesome name='plus-circle'/>{' '}
+      <Button {...props}>
+        <FontAwesome name="plus-circle" />{' '}
         {label}
       </Button>
     </Col>
@@ -88,44 +88,69 @@ const AddButton = ({id, label, md, mdOffset = 0, ...props}) => (
 const NewLine = () => (
   <Form horizontal>
     <FormGroup />
-    <hr/>
+    <hr />
   </Form>
 );
 
-const getValue = (field) => field.rawValue || '';
+const getValue = field => field.rawValue || '';
 
-export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, store: Store, saveAnalysisEvent: Function) =>
-  () => saveAnalysisEvent({
-    museumId: appSession.getMuseumId(),
-    data: {
-      analysisTypeId: getValue(form.analysisTypeId),
-      eventDate: getValue(form.registeredDate),
-      note: getValue(form.note),
-      objectIds: store.objectsData.map((a) => a.uuid)
-    },
-    token: appSession.getAccessToken()
-  });
+export const saveAnalysisEventLocal = (
+  appSession: AppSession,
+  form: FormData,
+  store: Store,
+  saveAnalysisEvent: Function
+) =>
+  () =>
+    saveAnalysisEvent({
+      museumId: appSession.getMuseumId(),
+      data: {
+        analysisTypeId: getValue(form.analysisTypeId),
+        eventDate: getValue(form.registeredDate),
+        note: getValue(form.note),
+        objectIds: store.objectsData.map(a => a.uuid)
+      },
+      token: appSession.getAccessToken()
+    });
 
 const updateFormField = (field, updateForm) =>
-  (e) => updateForm({
-    name: field.name,
-    rawValue: e.target.value
-  });
+  e =>
+    updateForm({
+      name: field.name,
+      rawValue: e.target.value
+    });
 
-const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => (
+const AnalysisEdit = (
+  { form, updateForm, store, saveAnalysisEvent, appSession }: Props
+) => (
   <div>
-    <br/>
-    <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
+    <br />
+    <PageHeader style={{ paddingLeft: 20 }}>
+      {I18n.t('musit.analysis.registeringAnalysis')}
+    </PageHeader>
     <Col md={12}>
       <strong>HID:</strong>{' '}{getValue(form.id)}
     </Col>
     <Col md={12}>
-      <strong>Registrert:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(form.registeredBy)}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(form.registeredDate)}
+      <strong>Registrert:</strong>
+      {' '}
+      <FontAwesome name="user" />
+      {' '}
+      {getValue(form.registeredBy)}
+      {' '}
+      <FontAwesome name="clock-o" />{' '}{getValue(form.registeredDate)}
     </Col>
     <Col md={12}>
-      <strong>Sist endret:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(form.doneBy)}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(form.doneDate)}{' '}<a href=''>Se endringshistorikk</a>
+      <strong>Sist endret:</strong>
+      {' '}
+      <FontAwesome name="user" />
+      {' '}
+      {getValue(form.doneBy)}
+      {' '}
+      <FontAwesome name="clock-o" />
+      {' '}
+      {getValue(form.doneDate)}
+      {' '}
+      <a href="">Se endringshistorikk</a>
     </Col>
     <NewLine />
     <Form>
@@ -139,27 +164,18 @@ const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession }
         />
       </FormGroup>
       <FormGroup>
-        <AddButton
-          id="1"
-          label="Legg til saksnummer"
-          md={5}
-        />
+        <AddButton id="1" label="Legg til saksnummer" md={5} />
       </FormGroup>
     </Form>
     <NewLine />
     <Form inline>
       <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
       <Col mdOffset={1} md={5}>
-        {form.objectId.defaultValue}<br/>
-        {form.museumNo.defaultValue}<br/>
-        {form.term.defaultValue}<br/>
+        {form.objectId.defaultValue}<br />
+        {form.museumNo.defaultValue}<br />
+        {form.term.defaultValue}<br />
       </Col>
-      <AddButton
-        id="2"
-        label="Legg til objekt"
-        md={11}
-        mdOffset={1}
-      />
+      <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
     </Form>
     <NewLine />
     <Form horizontal style={{ paddingLeft: 20 }}>
@@ -182,11 +198,7 @@ const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession }
             <option value="other">...</option>
           </FormControl>
         </Col>
-        <AddButton
-          id="3"
-          label="Legg til person"
-          md={2}
-        />
+        <AddButton id="3" label="Legg til person" md={2} />
       </FormGroup>
     </Form>
     <NewLine />
@@ -211,7 +223,9 @@ const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession }
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
-              {store.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+              {store.analysisTypes.map(a => (
+                <option key={a.id} value={a.id}>{a.name}</option>
+              ))}
             </FormControl>
           </Col>
         </FormGroup>
@@ -229,11 +243,7 @@ const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession }
           </Col>
         </FormGroup>
         <FormGroup>
-          <FieldGroup
-            id="formControlsText"
-            type="text"
-            label="Ladt opp fil"
-          />
+          <FieldGroup id="formControlsText" type="text" label="Ladt opp fil" />
           <Col md={2}>
             <Button>Bla gjennom</Button>
           </Col>
@@ -261,7 +271,11 @@ const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession }
           </Col>
         </FormGroup>
         <FormGroup>
-          <Panel collapsible expanded style={{border:'none', backgroundColor: '#f5f5f5'}}>
+          <Panel
+            collapsible
+            expanded
+            style={{ border: 'none', backgroundColor: '#f5f5f5' }}
+          >
             <FormGroup>
               <FieldGroup
                 id="navn"
@@ -346,18 +360,19 @@ const AnalysisEdit = ({ form, updateForm, store, saveAnalysisEvent, appSession }
         <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}>{getValue(form.registeredBy)} - {getValue(form.registeredDate)}</Col>
+        <Col mdOffset={1}>
+          {getValue(form.registeredBy)} - {getValue(form.registeredDate)}
+        </Col>
       </FormGroup>
       <FormGroup>
         <Col mdOffset={1}>{getValue(form.doneBy)} - {getValue(form.doneDate)}</Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}><a href=''>Se mer</a></Col>
+        <Col mdOffset={1}><a href="">Se mer</a></Col>
       </FormGroup>
     </Form>
   </div>
 );
-
 
 const FieldShape = {
   name: PropTypes.string.isRequired,

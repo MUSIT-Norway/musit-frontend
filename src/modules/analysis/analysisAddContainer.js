@@ -2,7 +2,10 @@ import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
 import analysisAddForm from './analysisAddForm';
 import AnalysisAddComponent from './AnalysisAddComponent';
-import store$, { loadAnalysisTypes$, getAnalysisTypesForCollection$ } from './analysisStore';
+import store$, {
+  loadAnalysisTypes$,
+  getAnalysisTypesForCollection$
+} from './analysisStore';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
@@ -17,13 +20,20 @@ const data = {
   form$
 };
 
-const commands = { updateForm$, loadForm$, loadAnalysisTypes$, getAnalysisTypesForCollection$ };
+const commands = {
+  updateForm$,
+  loadForm$,
+  loadAnalysisTypes$,
+  getAnalysisTypesForCollection$
+};
 
 const props = {
   saveAnalysisEvent: toPromise(Analysis.saveAnalysisEvent())
 };
 
-export const onMount = ({ loadAnalysisTypes, appSession, getAnalysisTypesForCollection }) => {
+export const onMount = (
+  { loadAnalysisTypes, appSession, getAnalysisTypesForCollection }
+) => {
   loadAnalysisTypes({
     museumId: appSession.getMuseumId(),
     token: appSession.getAccessToken()
@@ -33,11 +43,8 @@ export const onMount = ({ loadAnalysisTypes, appSession, getAnalysisTypesForColl
     collectionId: appSession.getCollectionId().uuid,
     token: appSession.getAccessToken()
   });
-
 };
 
-export default flowRight([
-  inject(data, commands, props),
-  mount(onMount),
-  makeUrlAware
-])(AnalysisAddComponent);
+export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
+  AnalysisAddComponent
+);

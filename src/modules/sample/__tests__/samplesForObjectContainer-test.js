@@ -1,5 +1,5 @@
 import { onMount } from '../samplesForObjectContainer';
-import { AppSession } from '../../app/appSession';
+import { AppSession } from '../../app/appSession';
 import MuseumId from '../../../models/museumId';
 import CollectionId from '../../../models/collectionId';
 import sinon from 'sinon';
@@ -33,7 +33,7 @@ describe('samplesForObjectContainer', () => {
         collectionId: new CollectionId('1234567'),
         accessToken: '1234'
       }),
-      params: {parentId: '12344'},
+      params: { parentId: '12344' },
       sampleStore: data,
       loadSamplesForObject
     };
@@ -42,6 +42,5 @@ describe('samplesForObjectContainer', () => {
     expect(loadSamplesForObject.getCall(0).args[0].token).toBe('1234');
     expect(loadSamplesForObject.getCall(0).args[0].objectId).toBe('12344');
     expect(loadSamplesForObject.getCall(0).args[0].museumId).toEqual(new MuseumId(99));
-
   });
 });

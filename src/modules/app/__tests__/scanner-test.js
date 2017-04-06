@@ -1,9 +1,14 @@
 import React from 'react';
-import wrapWithScanner, { makeStream, charDebouncer$, charReducer$, initialState } from '../scanner';
+import wrapWithScanner, {
+  makeStream,
+  charDebouncer$,
+  charReducer$,
+  initialState
+} from '../scanner';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 import { Observable } from 'rxjs';
-import { AppSession } from '../appSession';
+import { AppSession } from '../appSession';
 import { TestScheduler } from 'rxjs/Rx';
 const diff = require('deep-diff').diff;
 import assert from 'assert';
@@ -11,7 +16,7 @@ import { createStore } from 'react-rxjs/dist/RxStore';
 
 describe('scannerWrapper', () => {
   it('should provide toggleScanner to child component', () => {
-    const Child = (props) => <button onClick={() => props.toggleScanner()}>Child</button>;
+    const Child = props => <button onClick={() => props.toggleScanner()}>Child</button>;
     const processBarcode = sinon.spy();
     const clearScanner = sinon.spy();
     const source$ = Observable.of('1234');
@@ -49,23 +54,27 @@ describe('scanner', () => {
     });
 
     // mock streams
-    const debounceM        = '---1-------';
-    const reducerM         = '111--------';
-    const expected         = '---a-------';
+    const debounceM = '---1-------';
+    const reducerM = '111--------';
+    const expected = '---a-------';
 
     const expectedStateMap = {
       a: { code: '444', uuid: false, number: true }
     };
 
-    const char$ = testScheduler.createHotObservable(reducerM, {1: 52}).map(c => {
+    const char$ = testScheduler.createHotObservable(reducerM, { 1: 52 }).map(c => {
       const event = new Event('keypress');
       event.which = c;
       return event;
     });
-    const reducer$ = charReducer$(char$);
+    const reducer$ = charReducer$(char$);
     const debounceTrigger$ = testScheduler.createHotObservable(debounceM);
-    const debouncer$ = charDebouncer$(debounceTrigger$);
-    const store = createStore('test', Observable.merge(reducer$, debouncer$), Observable.of(initialState));
+    const debouncer$ = charDebouncer$(debounceTrigger$);
+    const store = createStore(
+      'test',
+      Observable.merge(reducer$, debouncer$),
+      Observable.of(initialState)
+    );
     const state$ = makeStream(store);
 
     // assertion

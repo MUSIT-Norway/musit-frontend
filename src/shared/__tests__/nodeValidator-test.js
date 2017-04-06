@@ -1,4 +1,9 @@
-import { checkNodeBranchAndType, checkNodeBranch, checkNodeType, getPathLength } from '../nodeValidator';
+import {
+  checkNodeBranchAndType,
+  checkNodeBranch,
+  checkNodeType,
+  getPathLength
+} from '../nodeValidator';
 
 describe('Test node validation', () => {
   const from_node_11 = {
@@ -219,7 +224,6 @@ describe('Test node validation', () => {
     ]
   };
 
-
   it('checkNodeBranchAndType fail', () => {
     const output = checkNodeBranchAndType(from_node_11, to_node_21);
     expect(output.includes('En node kan ikke flyttes inn i seg selv')).toBe(true);
@@ -257,7 +261,9 @@ describe('Test node validation', () => {
 
   it('checkNodeType fail', () => {
     const output = checkNodeType(from_node_21, to_node_2);
-    expect(output.includes('Kun noder av type Bygg kan flyttes til en node type Organisasjon.')).toBe(true);
+    expect(
+      output.includes('Kun noder av type Bygg kan flyttes til en node type Organisasjon.')
+    ).toBe(true);
   });
 
   it('checkNodeType pass', () => {
@@ -267,7 +273,9 @@ describe('Test node validation', () => {
 
   it('checkNodeType fail for root', () => {
     const output = checkNodeType(from_node_21, to_node_1);
-    expect(output.includes('Kun noder av type Organisasjon kan flyttes til en rotnode.')).toBe(true);
+    expect(
+      output.includes('Kun noder av type Organisasjon kan flyttes til en rotnode.')
+    ).toBe(true);
   });
 
   it('checkNodeType fail for root 2', () => {
@@ -289,6 +297,4 @@ describe('Test node validation', () => {
     const output = getPathLength(to_node_2);
     expect(output).toBe(2);
   });
-
 });
-

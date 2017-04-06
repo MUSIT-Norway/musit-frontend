@@ -5,33 +5,31 @@ import NodeLeftMenuComponent from '../TableLeftMenu';
 import NodeDetails from '../NodeDetails';
 
 describe('NodeLeftMenuComponent', () => {
-
   it('renders properly', () => {
     const wrapper = shallow(
       <NodeLeftMenuComponent
         showNewNode={true}
-        translate={(key) => key}
-        onClickNewNode={(key) => key}
+        translate={key => key}
+        onClickNewNode={key => key}
         stats={{
           numNodes: 11,
           numObjects: 5,
           totalObjects: 78
         }}
         showButtons
-        onClickProperties={(key) => key}
-        onClickControlObservations={(key) => key}
-        onClickObservations={(key) => key}
-        onClickController={(key) => key}
-        onClickMoveNode={(key) => key}
-        onClickDelete={(key) => key}
+        onClickProperties={key => key}
+        onClickControlObservations={key => key}
+        onClickObservations={key => key}
+        onClickController={key => key}
+        onClickMoveNode={key => key}
+        onClickDelete={key => key}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
 
-
-describe ('NodePanel' ,() => {
+describe('NodePanel', () => {
   const wrapper = shallow(
     <NodeDetails
       unit={{
@@ -41,7 +39,7 @@ describe ('NodePanel' ,() => {
         area: '10',
         areaTo: '12',
         height: '3',
-        heightTo:'5',
+        heightTo: '5',
         updatedByName: 'Jarl André Hübenthal',
         updatedDate: '2017-02-19T15:04:31+01:00',
         environmentRequirement: {
@@ -56,7 +54,7 @@ describe ('NodePanel' ,() => {
           comments: 'Hei hei'
         },
         securityAssessment: {
-          perimeter:true,
+          perimeter: true,
           theftProtection: false,
           fireProtection: true,
           waterDamage: true,
@@ -69,20 +67,15 @@ describe ('NodePanel' ,() => {
           preventiveConservation: true
         }
       }}
-      onLagreClick={(k) => k}
+      onLagreClick={k => k}
       loaded={false}
-      updateState={(k) => k}/>
+      updateState={k => k}
+    />
   );
-
 
   it('should render properly ', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-
-  it('check content', () => {
-
-
-  });
-
+  it('check content', () => {});
 });

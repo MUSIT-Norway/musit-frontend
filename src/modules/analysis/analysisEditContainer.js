@@ -2,7 +2,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
 import analysisAddForm from './analysisAddForm';
 import AnalysisEditComponent from './AnalysisEditComponent';
-import store$, { getAnalysisTypesForCollection$} from './analysisStore';
+import store$, { loadAnalysis$, getAnalysisTypesForCollection$ } from './analysisStore';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
@@ -17,35 +17,61 @@ const data = {
   form$
 };
 
-const commands = { updateForm$, loadForm$, getAnalysisTypesForCollection$ };
+const commands = {
+  updateForm$,
+  loadForm$,
+  getAnalysisTypesForCollection$,
+  loadAnalysis$
+};
 
 const props = {
   editAnalysisEvent: toPromise(Analysis.editAnalysisEvent()),
-  loadAnalysis: toPromise(Analysis.getAnalysisWithDeatils())
+  loadAnalysisForForm: toPromise(Analysis.getAnalysisWithDeatils())
 };
 
-export const onMount = ({ getAnalysisTypesForCollection, loadAnalysis, appSession, params, loadForm }) => {
-  getAnalysisTypesForCollection({
-    museumId: appSession.getMuseumId(),
-    collectionId: appSession.getCollectionId().uuid,
-    token: appSession.getAccessToken()
-  });
-  loadAnalysis({
+const callLoadAnalysisForForm = (loadAnalysisForForm, appSession, params, loadForm) =>
+  loadAnalysisForForm({
     museumId: appSession.getMuseumId(),
     id: params.analysisId,
     collectionId: appSession.getCollectionId(),
     token: appSession.getAccessToken()
   }).then(analysis => {
-    console.log('Rituvesh', analysis);
-    const dataForForm = Object.keys(analysis)
-      .reduce((obj, attributeName) => ([...obj, {name: attributeName, defaultValue: analysis[attributeName]}]), []);
-    console.log('dataForForm', dataForForm);
+    console.log(analysis);
+    const dataForForm = Object.keys(analysis).reduce(
+      (obj, attributeName) => [
+        ...obj,
+        { name: attributeName, defaultValue: analysis[attributeName] }
+      ],
+      []
+    );
+    console.log(dataForForm);
     loadForm(dataForForm);
+  });
+
+export const onMount = (
+  {
+    getAnalysisTypesForCollection,
+    loadAnalysisForForm,
+    loadAnalysis,
+    appSession,
+    params,
+    loadForm
+  }
+) => {
+  getAnalysisTypesForCollection({
+    museumId: appSession.getMuseumId(),
+    collectionId: appSession.getCollectionId().uuid,
+    token: appSession.getAccessToken()
+  });
+  callLoadAnalysisForForm(loadAnalysisForForm, appSession, params, loadForm);
+  loadAnalysis({
+    museumId: appSession.getMuseumId(),
+    id: params.analysisId,
+    collectionId: appSession.getCollectionId(),
+    token: appSession.getAccessToken()
   });
 };
 
-export default flowRight([
-  inject(data, commands, props),
-  mount(onMount),
-  makeUrlAware
-])(AnalysisEditComponent);
+export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
+  AnalysisEditComponent
+);

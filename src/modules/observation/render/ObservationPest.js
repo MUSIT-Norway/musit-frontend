@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -28,10 +27,12 @@ export default class ObservationPest extends Component {
   static propTypes = {
     disabled: PropTypes.bool,
     canEdit: PropTypes.bool,
-    observations: PropTypes.arrayOf(PropTypes.shape({
-      count: PropTypes.string,
-      lifeCycle: PropTypes.string
-    })).isRequired,
+    observations: PropTypes.arrayOf(
+      PropTypes.shape({
+        count: PropTypes.string,
+        lifeCycle: PropTypes.string
+      })
+    ).isRequired,
     // Lifecycle
     lifeCycleLabel: PropTypes.string.isRequired,
     lifeCyclePlaceHolder: PropTypes.string.isRequired,
@@ -69,7 +70,7 @@ export default class ObservationPest extends Component {
     // icons:
     removeIconWidth: PropTypes.number.isRequired,
     addIconWidth: PropTypes.number.isRequired
-  }
+  };
 
   static defaultProps = {
     disabled: false,
@@ -79,7 +80,7 @@ export default class ObservationPest extends Component {
     countPrecision: 0,
     commentsLeftValue: '',
     commentsRightValue: ''
-  }
+  };
 
   render() {
     return (
@@ -111,12 +112,15 @@ export default class ObservationPest extends Component {
                   <MusitDropDownField
                     items={this.props.lifeCycleItems}
                     translateKeyPrefix={this.props.lifeCycleItemsTranslateKeyPrefix}
-                    placeHolder={!this.props.disabled ? this.props.lifeCyclePlaceHolder : ''}
+                    placeHolder={
+                      !this.props.disabled ? this.props.lifeCyclePlaceHolder : ''
+                    }
                     tooltip={this.props.lifeCycleTooltip}
                     validate={this.props.lifeCycleValidate}
                     disabled={this.props.disabled}
                     value={observation.lifeCycle}
-                    onChange={(lifeCycleValue) => this.props.lifeCycleOnChange(index, lifeCycleValue)}
+                    onChange={lifeCycleValue =>
+                      this.props.lifeCycleOnChange(index, lifeCycleValue)}
                   />
                 </span>
               </Col>
@@ -132,32 +136,35 @@ export default class ObservationPest extends Component {
                     precision={this.props.countPrecision}
                     disabled={this.props.disabled}
                     value={observation.count}
-                    onChange={(countValue) => this.props.countOnChange(index, countValue)}
+                    onChange={countValue => this.props.countOnChange(index, countValue)}
                     style={{ height: 36 }}
                   />
                 </span>
               </Col>
               <Col xs={1} sm={this.props.removeIconWidth} md={this.props.removeIconWidth}>
                 <ControlLabel>{'\u00A0'}</ControlLabel><br />
-                {!this.props.canEdit ? '' : <a href="" >
-                  <
-                    FontAwesome onClick={(e) => {
-                      this.props.lifeCycleOnRemove(index);
-                      e.preventDefault();
-                    }
-                  }
-                    name="times"
-                  />
-                </a> }
+                {!this.props.canEdit
+                  ? ''
+                  : <a href="">
+                      <FontAwesome
+                        onClick={e => {
+                          this.props.lifeCycleOnRemove(index);
+                          e.preventDefault();
+                        }}
+                        name="times"
+                      />
+                    </a>}
               </Col>
               <Col xs={1} sm={this.props.addIconWidth} md={this.props.addIconWidth}>
                 <span style={{ height: 50 }}>
                   <ControlLabel>{'\u00A0'}</ControlLabel><br />
-                  {!this.props.canEdit ? '' :
-                    <Button onClick={this.props.newButtonOnClick}>
-                      <FontAwesome name="plus-circle" />&nbsp;{this.props.newButtonLabel}
-                    </Button>
-                  }
+                  {!this.props.canEdit
+                    ? ''
+                    : <Button onClick={this.props.newButtonOnClick}>
+                        <FontAwesome name="plus-circle" />
+                        &nbsp;
+                        {this.props.newButtonLabel}
+                      </Button>}
                 </span>
               </Col>
             </Row>

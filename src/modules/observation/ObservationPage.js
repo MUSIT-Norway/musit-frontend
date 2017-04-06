@@ -1,13 +1,27 @@
 import { values } from 'lodash';
 import React, { PropTypes } from 'react';
-import { ControlLabel, Grid, Row, Col, Button, FormGroup, FormControl } from 'react-bootstrap';
+import {
+  ControlLabel,
+  Grid,
+  Row,
+  Col,
+  Button,
+  FormGroup,
+  FormControl
+} from 'react-bootstrap';
 import {
   RenderPest,
   RenderAlcohol,
   RenderDoubleTextArea,
   RenderFromToNumberComment
 } from './render';
-import { containsObjectWithField, parseISODate, DATE_FORMAT_DISPLAY, isDateBiggerThanToday, formatISOString } from '../../shared/util';
+import {
+  containsObjectWithField,
+  parseISODate,
+  DATE_FORMAT_DISPLAY,
+  isDateBiggerThanToday,
+  formatISOString
+} from '../../shared/util';
 import FontAwesome from 'react-fontawesome';
 import { hashHistory } from 'react-router';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
@@ -18,7 +32,6 @@ import { I18n } from 'react-i18nify';
 import { emitError } from '../../shared/errors';
 
 export default class ObservationPage extends React.Component {
-
   static propTypes = {
     id: PropTypes.string.isRequired,
     observations: PropTypes.arrayOf(PropTypes.object),
@@ -30,13 +43,13 @@ export default class ObservationPage extends React.Component {
     mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: React.PropTypes.bool,
     cancelDisabled: React.PropTypes.bool
-  }
+  };
 
   static defaultProps = {
     observations: [],
     saveDisabled: false,
     cancelDisabled: false
-  }
+  };
 
   static createDefaultPestData() {
     return { observations: [{ lifeCycle: '', count: '' }] };
@@ -68,7 +81,12 @@ export default class ObservationPage extends React.Component {
         observations: nextProps.observations
       });
     }
-    if (this.props.mode === 'ADD' && nextProps.doneBy && this.props.doneBy && nextProps.doneBy !== this.props.doneBy) {
+    if (
+      this.props.mode === 'ADD' &&
+      nextProps.doneBy &&
+      this.props.doneBy &&
+      nextProps.doneBy !== this.props.doneBy
+    ) {
       this.setState({
         ...this.state,
         doneBy: nextProps.doneBy
@@ -84,7 +102,10 @@ export default class ObservationPage extends React.Component {
 
   onChangeField(field, value, index) {
     const observations = [...this.state.observations];
-    observations[index] = { ...observations[index], data: { ...observations[index].data, [field]: value } };
+    observations[index] = {
+      ...observations[index],
+      data: { ...observations[index].data, [field]: value }
+    };
     this.setState({ ...this.state, observations });
   }
 
@@ -99,7 +120,9 @@ export default class ObservationPage extends React.Component {
   onRemovePestObservation(pestObservationIndex, pestIndex) {
     const observations = [...this.state.observations];
     const pestObj = observations[pestIndex];
-    pestObj.data.observations = pestObj.data.observations.filter((elm, index) => index !== pestObservationIndex);
+    pestObj.data.observations = pestObj.data.observations.filter(
+      (elm, index) => index !== pestObservationIndex
+    );
     this.setState({ ...this.state, observations });
   }
 
@@ -118,17 +141,20 @@ export default class ObservationPage extends React.Component {
     });
   }
 
-  setDate = (newValue) => {
+  setDate = newValue => {
     if (newValue) {
       if (isDateBiggerThanToday(newValue)) {
-        emitError({ type: 'dateValidationError', message: I18n.t('musit.observation.page.dateValidation') });
+        emitError({
+          type: 'dateValidationError',
+          message: I18n.t('musit.observation.page.dateValidation')
+        });
 
         this.setState({ ...this.state, doneDate: formatISOString(new Date()) });
       } else {
         this.setState({ ...this.state, doneDate: newValue });
       }
     }
-  }
+  };
   typeDefinitions = {
     '': { label: 'typeSelect.labelText' },
     gas: {
@@ -197,7 +223,7 @@ export default class ObservationPage extends React.Component {
       render: this.renderAlcohol,
       validate: validation.validateAlcohol
     }
-  }
+  };
 
   addObservationType(typeToAdd, data = {}) {
     const type = typeToAdd || this.state.selectedType;
@@ -215,13 +241,19 @@ export default class ObservationPage extends React.Component {
 
   removeObservation(index) {
     const observations = this.state.observations;
-    this.setState({ ...this.state, observations: observations.filter((o, i) => i !== index) });
+    this.setState({
+      ...this.state,
+      observations: observations.filter((o, i) => i !== index)
+    });
   }
 
   validateForm(formProps) {
     let errors = {};
 
-    if (typeof formProps.doneBy !== 'object' || (!formProps.doneBy || !formProps.doneBy.getActorId())) {
+    if (
+      typeof formProps.doneBy !== 'object' ||
+      (!formProps.doneBy || !formProps.doneBy.getActorId())
+    ) {
       errors.doneBy = 'musit.observation.page.doneByRequired';
     }
 
@@ -232,7 +264,10 @@ export default class ObservationPage extends React.Component {
     formProps.observations.forEach((observation, index) => {
       const typeDefinition = this.typeDefinitions[observation.type];
       if (typeDefinition.validate) {
-        errors = { ...errors, ...typeDefinition.validate.bind(this)(observation.data, index, observation.type) };
+        errors = {
+          ...errors,
+          ...typeDefinition.validate.bind(this)(observation.data, index, observation.type)
+        };
       }
     });
 
@@ -254,55 +289,63 @@ export default class ObservationPage extends React.Component {
   }
 
   renderAlcohol(id, valueProps, index) {
-    return <RenderAlcohol
-      disabled={this.props.mode === 'VIEW'}
-      valueProps={valueProps}
-      index={index}
-      mode={this.props.mode}
-      onChangeField={this.onChangeField}
-    />;
+    return (
+      <RenderAlcohol
+        disabled={this.props.mode === 'VIEW'}
+        valueProps={valueProps}
+        index={index}
+        mode={this.props.mode}
+        onChangeField={this.onChangeField}
+      />
+    );
   }
 
   renderPest(id, valueProps, index) {
-    return <RenderPest
-      disabled={this.props.mode === 'VIEW'}
-      canEdit={this.props.mode !== 'VIEW'}
-      valueProps={valueProps}
-      index={index}
-      mode={this.props.mode}
-      onChangeField={this.onChangeField}
-      onChangePestObservation={this.onChangePestObservation}
-      onRemovePestObservation={this.onRemovePestObservation}
-      onClickAddObservation={this.onClickAddObservation}
-    />;
+    return (
+      <RenderPest
+        disabled={this.props.mode === 'VIEW'}
+        canEdit={this.props.mode !== 'VIEW'}
+        valueProps={valueProps}
+        index={index}
+        mode={this.props.mode}
+        onChangeField={this.onChangeField}
+        onChangePestObservation={this.onChangePestObservation}
+        onRemovePestObservation={this.onRemovePestObservation}
+        onClickAddObservation={this.onClickAddObservation}
+      />
+    );
   }
 
   renderDoubleTextArea(id, valueProps, index) {
-    return <RenderDoubleTextArea
-      disabled={this.props.mode === 'VIEW'}
-      type={id}
-      valueProps={valueProps}
-      index={index}
-      mode={this.props.mode}
-      onChangeField={this.onChangeField}
-    />;
+    return (
+      <RenderDoubleTextArea
+        disabled={this.props.mode === 'VIEW'}
+        type={id}
+        valueProps={valueProps}
+        index={index}
+        mode={this.props.mode}
+        onChangeField={this.onChangeField}
+      />
+    );
   }
 
   renderFromToNumberComment(id, valueProps, index) {
-    return <RenderFromToNumberComment
-      disabled={this.props.mode === 'VIEW'}
-      type={id}
-      valueProps={valueProps}
-      index={index}
-      mode={this.props.mode}
-      onChangeField={this.onChangeField}
-    />;
+    return (
+      <RenderFromToNumberComment
+        disabled={this.props.mode === 'VIEW'}
+        type={id}
+        valueProps={valueProps}
+        index={index}
+        mode={this.props.mode}
+        onChangeField={this.onChangeField}
+      />
+    );
   }
 
   render() {
     return (
       <form
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.keyCode === 13 && e.target.type !== 'textarea') {
             e.preventDefault();
           }
@@ -315,95 +358,108 @@ export default class ObservationPage extends React.Component {
             <Row>
               <Col xs={12} sm={5}>
                 <ControlLabel>{I18n.t('musit.observation.page.date')}</ControlLabel>
-                {this.props.mode !== 'ADD' ?
-                  <FormControl
-                    componentClass="input"
-                    value={parseISODate(this.state.doneDate).format(DATE_FORMAT_DISPLAY)}
-                    disabled
-                  />
-                 :
-                  <DatePicker
-                    dateFormat={DATE_FORMAT_DISPLAY}
-                    onClear={(newValue) => this.setState({ ...this.state, doneDate: newValue })}
-                    value={this.state.doneDate}
-                    onChange={newValue => this.setDate(newValue)}
-                    disabled={this.props.mode === 'VIEW'}
-                  />
-                }
+                {this.props.mode !== 'ADD'
+                  ? <FormControl
+                      componentClass="input"
+                      value={parseISODate(this.state.doneDate).format(
+                        DATE_FORMAT_DISPLAY
+                      )}
+                      disabled
+                    />
+                  : <DatePicker
+                      dateFormat={DATE_FORMAT_DISPLAY}
+                      onClear={newValue =>
+                        this.setState({ ...this.state, doneDate: newValue })}
+                      value={this.state.doneDate}
+                      onChange={newValue => this.setDate(newValue)}
+                      disabled={this.props.mode === 'VIEW'}
+                    />}
               </Col>
               <Col xs={12} sm={5}>
                 <ControlLabel>{I18n.t('musit.observation.page.doneBy')}</ControlLabel>
-                {this.props.mode !== 'ADD' ?
-                  <FormControl
-                    componentClass="input"
-                    value={this.state.doneBy && this.state.doneBy.fn ? this.state.doneBy.fn : this.state.doneBy || ''}
-                    disabled
-                  />
-                 :
-                  <ActorSuggest
-                    id="doneByField"
-                    value={this.state.doneBy && this.state.doneBy.fn ? this.state.doneBy.fn : this.state.doneBy || ''}
-                    placeHolder="Find actor"
-                    onChange={newValue => {
-                      this.setState({
-                        ...this.state,
-                        doneBy: newValue
-                      });
-                    }}
-                  />
-                }
+                {this.props.mode !== 'ADD'
+                  ? <FormControl
+                      componentClass="input"
+                      value={
+                        this.state.doneBy && this.state.doneBy.fn
+                          ? this.state.doneBy.fn
+                          : this.state.doneBy || ''
+                      }
+                      disabled
+                    />
+                  : <ActorSuggest
+                      id="doneByField"
+                      value={
+                        this.state.doneBy && this.state.doneBy.fn
+                          ? this.state.doneBy.fn
+                          : this.state.doneBy || ''
+                      }
+                      placeHolder="Find actor"
+                      onChange={newValue => {
+                        this.setState({
+                          ...this.state,
+                          doneBy: newValue
+                        });
+                      }}
+                    />}
               </Col>
             </Row>
-            {this.props.mode === 'VIEW' ?
-              <Row>
-                <Col sm={5}>
-                  <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
-                  <FormControl
-                    componentClass="input"
-                    value={parseISODate(this.props.registeredDate).format(DATE_FORMAT_DISPLAY)}
-                    disabled
-                  />
-                </Col>
-                <Col sm={5} >
-                  <ControlLabel>{I18n.t('musit.texts.registeredBy')}</ControlLabel>
-                  <FormControl
-                    componentClass="input"
-                    value={this.props.registeredBy || ''}
-                    disabled
-                  />
-                </Col>
-              </Row>
-            : ''}
-            <h3 />
-            {this.props.mode !== 'ADD' ? '' :
-              <Row>
-                <Col xs={2}>
-                  <FormGroup controlId="formControlsSelect">
+            {this.props.mode === 'VIEW'
+              ? <Row>
+                  <Col sm={5}>
+                    <ControlLabel>{I18n.t('musit.texts.dateRegistered')}</ControlLabel>
                     <FormControl
-                      componentClass="select"
-                      placeholder="select"
-                      onChange={this.onChangeTypeSelect}
-                      value={this.state.selectedType ? this.state.selectedType : ''}
-                    >
-                      {Object.keys(this.typeDefinitions).filter(this.isTypeSelectable).map((type, index) => {
-                        return (
-                          <option key={index} value={type}>
-                            {I18n.t(`musit.observation.page.${this.typeDefinitions[type].label}`)}
-                          </option>
-                        );
-                      })}
-                    </FormControl>
-                  </FormGroup>
-                </Col>
-                <Col xs={4}>
-                  <Button
-                    onClick={() => this.addObservationType()}
-                  >
-                    <FontAwesome name="plus-circle" />&nbsp;{I18n.t('musit.observation.page.newButtonLabel')}
-                  </Button>
-                </Col>
-              </Row>
-            }
+                      componentClass="input"
+                      value={parseISODate(this.props.registeredDate).format(
+                        DATE_FORMAT_DISPLAY
+                      )}
+                      disabled
+                    />
+                  </Col>
+                  <Col sm={5}>
+                    <ControlLabel>{I18n.t('musit.texts.registeredBy')}</ControlLabel>
+                    <FormControl
+                      componentClass="input"
+                      value={this.props.registeredBy || ''}
+                      disabled
+                    />
+                  </Col>
+                </Row>
+              : ''}
+            <h3 />
+            {this.props.mode !== 'ADD'
+              ? ''
+              : <Row>
+                  <Col xs={2}>
+                    <FormGroup controlId="formControlsSelect">
+                      <FormControl
+                        componentClass="select"
+                        placeholder="select"
+                        onChange={this.onChangeTypeSelect}
+                        value={this.state.selectedType ? this.state.selectedType : ''}
+                      >
+                        {Object.keys(this.typeDefinitions)
+                          .filter(this.isTypeSelectable)
+                          .map((type, index) => {
+                            return (
+                              <option key={index} value={type}>
+                                {I18n.t(
+                                  `musit.observation.page.${this.typeDefinitions[type].label}`
+                                )}
+                              </option>
+                            );
+                          })}
+                      </FormControl>
+                    </FormGroup>
+                  </Col>
+                  <Col xs={4}>
+                    <Button onClick={() => this.addObservationType()}>
+                      <FontAwesome name="plus-circle" />
+                      &nbsp;
+                      {I18n.t('musit.observation.page.newButtonLabel')}
+                    </Button>
+                  </Col>
+                </Row>}
             {this.state.observations.map((observation, index) => {
               const typeDefinition = this.typeDefinitions[observation.type];
               return (
@@ -411,17 +467,17 @@ export default class ObservationPage extends React.Component {
                   <h3>
                     {I18n.t(`musit.observation.page.${typeDefinition.label}`)}
                     &nbsp;
-                    {this.props.mode !== 'ADD' ? '' :
-                      <a
-                        href="" onClick={(e) => {
-                          this.removeObservation(index);
-                          e.preventDefault();
-                        }
-                        }
-                      >
-                        <FontAwesome name="times" />
-                      </a>
-                    }
+                    {this.props.mode !== 'ADD'
+                      ? ''
+                      : <a
+                          href=""
+                          onClick={e => {
+                            this.removeObservation(index);
+                            e.preventDefault();
+                          }}
+                        >
+                          <FontAwesome name="times" />
+                        </a>}
                   </h3>
                   {this.renderObservation(observation, index)}
                   <hr />
@@ -431,27 +487,30 @@ export default class ObservationPage extends React.Component {
           </Row>
           <br />
           <Row className="row-centered" style={{ textAlign: 'center' }}>
-            {this.state.errors && values(this.state.errors).map((error, index) => {
-              return <p style={{ color: 'red' }} key={index}>{I18n.t(error)}</p>;
-            })}
+            {this.state.errors &&
+              values(this.state.errors).map((error, index) => {
+                return <p style={{ color: 'red' }} key={index}>{I18n.t(error)}</p>;
+              })}
             <br />
-            {this.props.mode === 'VIEW' ?
-              <Col xs={10}>
-                <Button
-                  onClick={() => {
-                    hashHistory.goBack();
-                  }}
-                >
-                  {I18n.t('musit.texts.close')}
-                </Button>
-              </Col> :
-              <SaveCancel
-                onClickSave={this.handleSubmit}
-                onClickCancel={() => hashHistory.goBack()}
-                saveDisabled={this.props.saveDisabled === true || this.state.observations.length === 0}
-                cancelDisabled={this.props.cancelDisabled}
-              />
-            }
+            {this.props.mode === 'VIEW'
+              ? <Col xs={10}>
+                  <Button
+                    onClick={() => {
+                      hashHistory.goBack();
+                    }}
+                  >
+                    {I18n.t('musit.texts.close')}
+                  </Button>
+                </Col>
+              : <SaveCancel
+                  onClickSave={this.handleSubmit}
+                  onClickCancel={() => hashHistory.goBack()}
+                  saveDisabled={
+                    this.props.saveDisabled === true ||
+                      this.state.observations.length === 0
+                  }
+                  cancelDisabled={this.props.cancelDisabled}
+                />}
           </Row>
         </Grid>
       </form>

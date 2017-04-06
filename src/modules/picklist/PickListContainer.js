@@ -1,6 +1,10 @@
 import { emitError, emitSuccess } from '../../shared/errors';
 import { getPath } from '../../shared/util';
-import { loadChildren$, loadNode$, updateMoveDialog } from '../movedialog/moveDialogStore';
+import {
+  loadChildren$,
+  loadNode$,
+  updateMoveDialog
+} from '../movedialog/moveDialogStore';
 import {
   markNode$,
   markMainObject$,
@@ -42,34 +46,45 @@ export const nodeCallback = (
           id: item.id,
           museumId: appSession.getMuseumId(),
           token: appSession.getAccessToken()
-        })
-      );
+        }));
       onSuccess();
       if (toMoveLength === 1) {
         emitSuccess({
           type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.nodeMoved', { name, destination: toName })
+          message: I18n.t('musit.moveModal.messages.nodeMoved', {
+            name,
+            destination: toName
+          })
         });
       } else {
         emitSuccess({
           type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.nodesMoved', { count: toMoveLength, destination: toName })
+          message: I18n.t('musit.moveModal.messages.nodesMoved', {
+            count: toMoveLength,
+            destination: toName
+          })
         });
       }
     },
-    onFailure: (error) => {
+    onFailure: error => {
       onFailure();
       if (toMoveLength === 1) {
         emitError({
           type: 'errorOnMove',
           error,
-          message: I18n.t('musit.moveModal.messages.errorNode', { name, destination: toName })
+          message: I18n.t('musit.moveModal.messages.errorNode', {
+            name,
+            destination: toName
+          })
         });
       } else {
         emitError({
           type: 'errorOnMove',
           error,
-          message: I18n.t('musit.moveModal.messages.errorNodes', { count: toMoveLength, destination: toName })
+          message: I18n.t('musit.moveModal.messages.errorNodes', {
+            count: toMoveLength,
+            destination: toName
+          })
         });
       }
     }
@@ -97,28 +112,40 @@ export const objectCallback = (
       if (toMoveLength === 1) {
         emitSuccess({
           type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.objectMoved', {name, destination: toName})
+          message: I18n.t('musit.moveModal.messages.objectMoved', {
+            name,
+            destination: toName
+          })
         });
       } else {
         emitSuccess({
           type: 'movedSuccess',
-          message: I18n.t('musit.moveModal.messages.objectsMoved', {count: toMoveLength, destination: toName})
+          message: I18n.t('musit.moveModal.messages.objectsMoved', {
+            count: toMoveLength,
+            destination: toName
+          })
         });
       }
     },
-    onFailure: (error) => {
+    onFailure: error => {
       onFailure();
       if (toMoveLength === 1) {
         emitError({
           type: 'errorOnMove',
           error,
-          message: I18n.t('musit.moveModal.messages.errorObject', {name, destination: toName})
+          message: I18n.t('musit.moveModal.messages.errorObject', {
+            name,
+            destination: toName
+          })
         });
       } else {
         emitError({
           type: 'errorOnMove',
           error,
-          message: I18n.t('musit.moveModal.messages.errorObjects', {count: toMoveLength, destination: toName})
+          message: I18n.t('musit.moveModal.messages.errorObjects', {
+            count: toMoveLength,
+            destination: toName
+          })
         });
       }
     }
@@ -141,16 +168,38 @@ export const moveItems = (
     const name = isNode ? first.name : first.term;
     let callback;
     if (isNode) {
-      callback = nodeCallback(appSession, toName, toMoveLength, name, items, onSuccess, onFailure);
+      callback = nodeCallback(
+        appSession,
+        toName,
+        toMoveLength,
+        name,
+        items,
+        onSuccess,
+        onFailure
+      );
     } else {
-      const movableObject: Array<MovableObject> = items.map(item => ({id: item.id, objectType: item.objectType}));
-      callback = objectCallback(appSession, toName, toMoveLength, name, movableObject, onSuccess, onFailure);
+      const movableObject: Array<MovableObject> = items.map(item => ({
+        id: item.id,
+        objectType: item.objectType
+      }));
+      callback = objectCallback(
+        appSession,
+        toName,
+        toMoveLength,
+        name,
+        movableObject,
+        onSuccess,
+        onFailure
+      );
     }
 
     let error = false;
     if (isNode) {
-      const itemsWithError = items.filter(fromNode => checkNodeBranchAndType(fromNode, to));
-      const errorMessages = itemsWithError.map(fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.name})` );
+      const itemsWithError = items.filter(fromNode =>
+        checkNodeBranchAndType(fromNode, to));
+      const errorMessages = itemsWithError.map(
+        fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.name})`
+      );
       if (errorMessages.length > 0) {
         error = true;
         for (const errorMessage of errorMessages) {
@@ -203,7 +252,7 @@ const customProps = {
   showModal,
   moveNode: MusitNode.moveNode(),
   moveObject: MusitObject.moveObject(),
-  isTypeNode: (props) => 'nodes' === props.route.type,
+  isTypeNode: props => 'nodes' === props.route.type,
   moveItems
 };
 
@@ -215,46 +264,73 @@ export const processBarcode = (barCode, props) => {
   const isNodeView = props.isTypeNode(props);
   if (barCode.uuid) {
     if (!isNodeView && !isMoveDialogActive) {
-      return props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
+      return props.emitError({
+        message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')
+      });
     }
-    props.findNodeByUUID({uuid: barCode.code, museumId, token})
-      .do((response) => {
+    props
+      .findNodeByUUID({ uuid: barCode.code, museumId, token })
+      .do(response => {
         if (!response) {
-          return props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')});
+          return props.emitError({
+            message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
+          });
         }
         if (isMoveDialogActive) {
           props.updateMoveDialog(response.id, museumId, token);
         } else if (isNodeView) {
-          props.addNode({value: response, path: getPath(response)});
+          props.addNode({ value: response, path: getPath(response) });
         }
-      }).toPromise();
+      })
+      .toPromise();
   } else if (barCode.number) {
     const ajaxProps = { barcode: barCode.code, museumId, collectionId, token };
     if (isMoveDialogActive) {
-      props.findNodeByBarcode(ajaxProps).do(response => {
-        if (!response || !response.nodeId) {
-          props.emitError({ message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode') });
-        } else {
-          props.updateMoveDialog(response.id, museumId, token);
-        }
-      }).toPromise();
-    } else {
-      const findByBarcode = isNodeView ? props.findNodeByBarcode : props.findObjectByBarcode;
-      findByBarcode(ajaxProps).do(response => {
-        if (!response) {
-          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-        } else if (!isNodeView && Array.isArray(response)) {
-          if (response.length === 1) {
-            props.addObject({ value: response[0], path: getPath(response[0]) });
+      props
+        .findNodeByBarcode(ajaxProps)
+        .do(response => {
+          if (!response || !response.nodeId) {
+            props.emitError({
+              message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
+            });
           } else {
-            props.emitError({message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')});
+            props.updateMoveDialog(response.id, museumId, token);
           }
-        } else if (isNodeView && !!response.nodeId) {
-          props.addNode({ value: response, path: getPath(response) });
-        } else {
-          props.emitError({message: I18n.t('musit.errorMainMessages.scanner.' + (isNodeView ? 'noMatchingNode' : 'noMatchingObject'))});
-        }
-      }).toPromise();
+        })
+        .toPromise();
+    } else {
+      const findByBarcode = isNodeView
+        ? props.findNodeByBarcode
+        : props.findObjectByBarcode;
+      findByBarcode(ajaxProps)
+        .do(response => {
+          if (!response) {
+            props.emitError({
+              message: I18n.t(
+                'musit.errorMainMessages.scanner.' +
+                  (isNodeView ? 'noMatchingNode' : 'noMatchingObject')
+              )
+            });
+          } else if (!isNodeView && Array.isArray(response)) {
+            if (response.length === 1) {
+              props.addObject({ value: response[0], path: getPath(response[0]) });
+            } else {
+              props.emitError({
+                message: I18n.t('musit.errorMainMessages.scanner.noMatchingObject')
+              });
+            }
+          } else if (isNodeView && !!response.nodeId) {
+            props.addNode({ value: response, path: getPath(response) });
+          } else {
+            props.emitError({
+              message: I18n.t(
+                'musit.errorMainMessages.scanner.' +
+                  (isNodeView ? 'noMatchingNode' : 'noMatchingObject')
+              )
+            });
+          }
+        })
+        .toPromise();
     }
   }
 };

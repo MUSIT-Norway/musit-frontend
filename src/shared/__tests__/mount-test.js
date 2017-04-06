@@ -1,7 +1,7 @@
 import React from 'react';
 import mountComponent from '../mount';
 import sinon from 'sinon';
-import { mount } from 'enzyme';
+import { mount } from 'enzyme';
 
 describe('mount', () => {
   it('should run onMount on componentWillMount', () => {

@@ -33,9 +33,12 @@ export type Update<T> = {
 const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
   const defaultValue = data.defaultValue || field.defaultValue;
   const rawValue = data.rawValue || field.mapper.toRaw(defaultValue);
-  const rawError = field.validator.rawValidator && field.validator.rawValidator(field.name)(rawValue);
+  const rawError = field.validator.rawValidator &&
+    field.validator.rawValidator(field.name)(rawValue);
   const value = field.mapper.fromRaw(rawValue);
-  const valueError = !rawError && field.validator.valueValidator && field.validator.valueValidator(field.name)(value);
+  const valueError = !rawError &&
+    field.validator.valueValidator &&
+    field.validator.valueValidator(field.name)(value);
   const error = rawError || valueError;
   return {
     ...field,
@@ -58,10 +61,13 @@ const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
   return state.slice(0, fieldIndex).concat([updated]).concat(state.slice(fieldIndex + 1));
 };
 
-const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Update<*>[]>) => Observable.merge(
-  loadForm$.map((load: Update<*>[]) => (state: Field<*>[]) => load.reduce(updateForm, state)),
-  updateField$.map((update: Update<*>) => (state: Field<*>[]) => updateForm(state, update))
-);
+const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Update<*>[]>) =>
+  Observable.merge(
+    loadForm$.map((load: Update<*>[]) =>
+      (state: Field<*>[]) => load.reduce(updateForm, state)),
+    updateField$.map((update: Update<*>) =>
+      (state: Field<*>[]) => updateForm(state, update))
+  );
 
 export type FormDetails = {
   updateForm$: Subject<Update<*>>,
@@ -77,17 +83,26 @@ const createForm$ = (
 ): FormDetails => {
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
-  const initialFields = fields.reduce((acc, field) => [...acc, {
-    ...field,
-    rawValue: field.mapper.toRaw(field.defaultValue),
-    validator: field.validator || noValidation,
-    mapper: field.mapper || stringMapper
-  }], []);
+  const initialFields = fields.reduce(
+    (acc, field) => [
+      ...acc,
+      {
+        ...field,
+        rawValue: field.mapper.toRaw(field.defaultValue),
+        validator: field.validator || noValidation,
+        mapper: field.mapper || stringMapper
+      }
+    ],
+    []
+  );
   return {
     updateForm$,
     loadForm$,
-    form$: createStore(name, reducer$(updateForm$, loadForm$), Observable.of(initialFields))
-      .map(form => form.reduce((acc, f) => ({...acc, [f.name]: f}), {}))
+    form$: createStore(
+      name,
+      reducer$(updateForm$, loadForm$),
+      Observable.of(initialFields)
+    ).map(form => form.reduce((acc, f) => ({ ...acc, [f.name]: f }), {}))
   };
 };
 

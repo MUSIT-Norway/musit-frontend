@@ -5,11 +5,11 @@ export default class FeideButton extends React.Component {
   static propTypes = {
     children: React.PropTypes.element,
     navigate: React.PropTypes.func.isRequired
-  }
+  };
 
   static defaultProps = {
-    navigate: (url) => window.location.href = url
-  }
+    navigate: url => window.location.href = url
+  };
 
   render() {
     return (

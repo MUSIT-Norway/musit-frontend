@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 class IFrame extends React.Component {
-
   static propTypes = {
     frameProps: PropTypes.object,
     content: PropTypes.string,
@@ -21,9 +20,7 @@ class IFrame extends React.Component {
   }
 
   render() {
-    return (
-      <iframe {...this.props.frameProps} />
-    );
+    return <iframe {...this.props.frameProps} />;
   }
 
   componentDidMount() {

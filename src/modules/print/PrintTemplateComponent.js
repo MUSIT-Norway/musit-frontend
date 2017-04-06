@@ -50,19 +50,31 @@ export class PrintTemplateComponent extends Component {
     this.props.setTemplateId(templateId);
     this.props.clearRendered();
     if (templateId) {
-      const codeFormat = Config.print.labelConfig.codeFormat[templateId] || PrintTemplateComponent.DEFAULT_CODE;
+      const codeFormat = Config.print.labelConfig.codeFormat[templateId] ||
+        PrintTemplateComponent.DEFAULT_CODE;
       const nodes = this.props.marked.map(markedNode => ({
         uuid: markedNode.value.nodeId,
-        name: this.canSelectPath(templateId) ? PrintTemplateComponent.getDisplayName(markedNode, level) : markedNode.value.name
+        name: this.canSelectPath(templateId)
+          ? PrintTemplateComponent.getDisplayName(markedNode, level)
+          : markedNode.value.name
       }));
-      this.props.renderTemplate({ templateId, codeFormat, nodes, token: this.props.appSession.getAccessToken() });
+      this.props.renderTemplate({
+        templateId,
+        codeFormat,
+        nodes,
+        token: this.props.appSession.getAccessToken()
+      });
     }
   }
 
   static getDisplayName(node, skipCount) {
     const subPath = node.path.slice(skipCount);
-    const pathStr = reduce(subPath, (acc, p) => (acc !== '' ? acc + ' / ' : '') + p.name, '');
-    return (pathStr ? pathStr + ' / ' : '')+ node.value.name;
+    const pathStr = reduce(
+      subPath,
+      (acc, p) => (acc !== '' ? acc + ' / ' : '') + p.name,
+      ''
+    );
+    return (pathStr ? pathStr + ' / ' : '') + node.value.name;
   }
 
   selectLevel(e, level = e.target.value * 1) {
@@ -73,27 +85,26 @@ export class PrintTemplateComponent extends Component {
   render() {
     return (
       <div className="templatePrint">
-        <select
-          className="printTool template"
-          onChange={this.selectTemplate}
-        >
+        <select className="printTool template" onChange={this.selectTemplate}>
           <option>{I18n.t('musit.template.chooseTemplate')}</option>
-          {[].concat(this.props.store.templates).filter(t => t).map((template, i) =>
-            <option key={i} value={template.id}>{template.name}</option>
-          )}
+          {[]
+            .concat(this.props.store.templates)
+            .filter(t => t)
+            .map((template, i) => (
+              <option key={i} value={template.id}>{template.name}</option>
+            ))}
         </select>
         {' '}
         {this.canSelectPath(this.props.store.templateId) &&
-        <select
-          className="printTool level"
-          onChange={this.selectLevel}
-          defaultValue={this.props.store.level}
-        >
-          <option value={-2}>{I18n.t('musit.template.pathWithTwoClosest')}</option>
-          <option value={2}>{I18n.t('musit.template.pathFromBuilding')}</option>
-          <option value={0}>{I18n.t('musit.template.fullPath')}</option>
-        </select>
-        }
+          <select
+            className="printTool level"
+            onChange={this.selectLevel}
+            defaultValue={this.props.store.level}
+          >
+            <option value={-2}>{I18n.t('musit.template.pathWithTwoClosest')}</option>
+            <option value={2}>{I18n.t('musit.template.pathFromBuilding')}</option>
+            <option value={0}>{I18n.t('musit.template.fullPath')}</option>
+          </select>}
         {' '}
         {this.props.store.rendered &&
           <input
@@ -107,11 +118,10 @@ export class PrintTemplateComponent extends Component {
             }}
             type="button"
             value={I18n.t('musit.template.printTemplate')}
-          />
-        }
+          />}
         {this.props.store.rendered &&
           <IFrame
-            ref={(child) => this.previewFrame = child}
+            ref={child => this.previewFrame = child}
             frameProps={{
               width: '100%',
               height: '95%',
@@ -120,8 +130,7 @@ export class PrintTemplateComponent extends Component {
             }}
             content={this.props.store.rendered}
             writeToDocument={this.props.writeToDocument}
-          />
-        }
+          />}
       </div>
     );
   }

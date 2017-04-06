@@ -7,7 +7,7 @@ import store$, {
   setTemplateId$,
   setLevel$
 } from './printStore';
-import { PrintTemplateComponent } from './PrintTemplateComponent';
+import { PrintTemplateComponent } from './PrintTemplateComponent';
 
 const data = {
   store$

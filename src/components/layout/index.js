@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -27,16 +26,18 @@ export default class Layout extends React.Component {
     content: React.PropTypes.object.isRequired,
     breadcrumb: React.PropTypes.element,
     toolbar: React.PropTypes.element
-  }
+  };
 
   static defaultProps = {
-    leftMenu: <div
-      style={{
-        minHeight: 0
-      }}
-    />,
+    leftMenu: (
+      <div
+        style={{
+          minHeight: 0
+        }}
+      />
+    ),
     toolbar: <span />
-  }
+  };
 
   render() {
     return (
@@ -47,10 +48,18 @@ export default class Layout extends React.Component {
               <PageHeader style={{ marginTop: 0 }}>{this.props.title}</PageHeader>
             </Row>
             <Row style={{ paddingBottom: 10 }}>
-              <Col md={6} mdOffset={2} style={{ display: 'inline-block', lineHeight: '30px', verticalAlign: 'center' }}>
+              <Col
+                md={6}
+                mdOffset={2}
+                style={{
+                  display: 'inline-block',
+                  lineHeight: '30px',
+                  verticalAlign: 'center'
+                }}
+              >
                 {this.props.breadcrumb}
               </Col>
-              <Col md={3} mdOffset={0} style={{ marginLeft: '20px'}}>
+              <Col md={3} mdOffset={0} style={{ marginLeft: '20px' }}>
                 {this.props.toolbar}
               </Col>
             </Row>
@@ -59,13 +68,20 @@ export default class Layout extends React.Component {
                 <div className="row content">
                   <div
                     className="col-md-2 sidenav"
-                    style={{ borderTop: '#cdcdcd 1px solid', borderRight: '#cdcdcd 1px solid' }}
+                    style={{
+                      borderTop: '#cdcdcd 1px solid',
+                      borderRight: '#cdcdcd 1px solid'
+                    }}
                   >
                     {this.props.leftMenu}
                   </div>
                   <div
                     className="col-md-10"
-                    style={{ borderTop: '#cdcdcd 1px solid', minHeight: 100, borderLeft: '#cdcdcd 1px solid' }}
+                    style={{
+                      borderTop: '#cdcdcd 1px solid',
+                      minHeight: 100,
+                      borderLeft: '#cdcdcd 1px solid'
+                    }}
                   >
                     {this.props.content}
                   </div>

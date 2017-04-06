@@ -1,7 +1,6 @@
 /* @flow */
 
-export type ObjectType =
-  "collection" | "sample" | "node";
+export type ObjectType = 'collection' | 'sample' | 'node';
 
 export type MoveableObject = {
   id: number,

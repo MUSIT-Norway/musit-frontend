@@ -21,9 +21,9 @@ describe('RenderPest', () => {
     ];
 
     const ValueProps = {
-      observations : observations,
-      identificationValue : 'Identification value.',
-      commentValue : 'Comment value.'
+      observations: observations,
+      identificationValue: 'Identification value.',
+      commentValue: 'Comment value.'
     };
 
     const layoutProps = {
@@ -36,14 +36,14 @@ describe('RenderPest', () => {
     };
 
     wrapper = render(
-        <RenderPest
-          index={1}
-          valueProps={ValueProps}
-          disabled={false}
-          layoutProps={layoutProps}
-          canEdit={false}
-        />
-      );
+      <RenderPest
+        index={1}
+        valueProps={ValueProps}
+        disabled={false}
+        layoutProps={layoutProps}
+        canEdit={false}
+      />
+    );
   });
 
   it('Create two textarea components', () => {

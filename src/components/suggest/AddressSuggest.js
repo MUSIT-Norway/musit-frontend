@@ -1,11 +1,10 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
-import suggest$Fn, { update$, clear$} from './suggestStore';
+import suggest$Fn, { update$, clear$ } from './suggestStore';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
 
 export class AddressSuggest extends React.Component {
-
   static propTypes = {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
@@ -15,13 +14,13 @@ export class AddressSuggest extends React.Component {
     update: React.PropTypes.func,
     disabled: React.PropTypes.bool,
     clear: React.PropTypes.func
-  }
+  };
 
   static defaultProps = {
     id: 'addressField',
     disabled: false,
     value: ''
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -61,32 +60,30 @@ export class AddressSuggest extends React.Component {
     type: 'search',
     onChange: this.onChange.bind(this),
     onBlur: this.props.clear
-  }
+  };
 
   renderAddressSuggestion(suggestion) {
     const suggestionText = `${suggestion.street} ${suggestion.streetNo}, ${suggestion.zip} ${suggestion.place}`;
-    return (
-      <span className={'suggestion-content'}>{suggestionText}</span>
-    );
+    return <span className={'suggestion-content'}>{suggestionText}</span>;
   }
 
   requestSuggestionUpdate(update) {
     if (update.value.length > 2) {
       const token = this.props.appSession.getAccessToken();
-      this.props.update({update, token});
+      this.props.update({ update, token });
     }
   }
 
   render() {
     return (
-       <Autosuggest
+      <Autosuggest
         suggestions={this.props.suggest.data || []}
         disabled={this.props.disabled}
         onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
         getSuggestionValue={this.getAddressSuggestionValue}
         renderSuggestion={this.renderAddressSuggestion}
         inputProps={{ ...this.doneByProps, value: this.state.value }}
-        shouldRenderSuggestions={(v) => v !== 'undefined'}
+        shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={this.onSuggestionSelected}
       />
     );

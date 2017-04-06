@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
-import { ViewObservationPage } from '../ViewObservationPage';
+import { ViewObservationPage } from '../ViewObservationPage';
 import MuseumId from '../../../models/museumId';
 import { AppSession } from '../../app/appSession';
 
@@ -16,9 +16,9 @@ describe('Render view observation page', () => {
           rootNode: null,
           data: {
             doneBy: 'Jarl',
-            doneDate:  '2017-02-08T11:14:25.889Z',
+            doneDate: '2017-02-08T11:14:25.889Z',
             registeredBy: 'Jarl',
-            registeredDate:  '2017-02-08T11:14:25.889Z',
+            registeredDate: '2017-02-08T11:14:25.889Z',
             observations: [
               {
                 type: 'gas',
@@ -95,10 +95,12 @@ describe('Render view observation page', () => {
           id: '1',
           obsId: 45
         }}
-        appSession={new AppSession({
-          token: '1234',
-          museumId: new MuseumId(99)
-        })}
+        appSession={
+          new AppSession({
+            token: '1234',
+            museumId: new MuseumId(99)
+          })
+        }
         getObservation={getObservation}
         loadRootNode={loadRootNode}
         setLoading={setLoading}

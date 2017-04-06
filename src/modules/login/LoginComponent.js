@@ -32,7 +32,9 @@ export class LoginComponent extends React.Component {
   }
 
   render() {
-    const Translated = this.props.locale() === 'no' ? NorwegianTranslation : EnglishTranslation;
+    const Translated = this.props.locale() === 'no'
+      ? NorwegianTranslation
+      : EnglishTranslation;
     return (
       <div>
         <main>
@@ -41,16 +43,15 @@ export class LoginComponent extends React.Component {
               <div className="welcomePanel">
                 <div>
                   {!this.props.user &&
-                  <LoginButton>
-                    <span className="buttonText">
-                      {I18n.t('musit.login')}
-                    </span>
-                  </LoginButton>
-                  }
+                    <LoginButton>
+                      <span className="buttonText">
+                        {I18n.t('musit.login')}
+                      </span>
+                    </LoginButton>}
                   <div className="title">
                     <Translated {...this.props} showModal={this.showModal} />
                   </div>
-                  <Logos style={{ marginTop: 100 }}/>
+                  <Logos style={{ marginTop: 100 }} />
                 </div>
               </div>
             </Row>

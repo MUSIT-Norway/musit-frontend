@@ -2,21 +2,31 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { I18n } from 'react-i18nify';
 
+let __$dialog__;
+
+export const closeModal = () => {
+  if (__$dialog__ && typeof __$dialog__.close === 'function') {
+    __$dialog__.close();
+  }
+};
+
 export const showConfirm = (message, onYes) => {
+  closeModal();
+
   const title = I18n.t('musit.texts.deleteNode');
-  const prompt = `<div>${ message }</div>`;
-  const $dialog = $(prompt).dialog({
+  const prompt = `<div>${message}</div>`;
+  const $dialog = (__$dialog__ = $(prompt).dialog({
     autoOpen: false,
     modal: true,
     title: title,
     autoResize: true,
     resizable: false,
     close: function() {
-      $( this ).remove();
+      $(this).remove();
     }
-  });
+  }));
   $dialog.dialog({
-    buttons : [
+    buttons: [
       {
         text: I18n.t('musit.texts.showConfirm.ok'),
         click: function() {
@@ -35,9 +45,10 @@ export const showConfirm = (message, onYes) => {
   $dialog.dialog('open');
 };
 
-
 export const showModal = (title, componentToRender, closeFn) => {
-  const $dialog = $('<div>').dialog({
+  closeModal();
+
+  const $dialog = (__$dialog__ = $('<div>').dialog({
     autoOpen: false,
     modal: true,
     title: title,
@@ -52,12 +63,12 @@ export const showModal = (title, componentToRender, closeFn) => {
         closeFn();
       }
     }
-  });
+  }));
 
   class ClosableAndProvided extends React.Component {
     static childContextTypes = {
       closeModal: React.PropTypes.func
-    }
+    };
 
     getChildContext() {
       return {
@@ -66,14 +77,16 @@ export const showModal = (title, componentToRender, closeFn) => {
     }
 
     render() {
-      return <div
-        style={{
-          minHeight: 500,
-          minWidth: 700
-        }}
-      >
-        {componentToRender}
-      </div>;
+      return (
+        <div
+          style={{
+            minHeight: 500,
+            minWidth: 700
+          }}
+        >
+          {componentToRender}
+        </div>
+      );
     }
   }
 

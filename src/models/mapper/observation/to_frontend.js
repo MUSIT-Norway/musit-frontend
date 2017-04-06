@@ -1,4 +1,3 @@
-
 /*
  *  MUSIT is a museum database to archive natural and cultural history data.
  *  Copyright (C) 2016  MUSIT Norway, part of www.uio.no (University of Oslo)
@@ -19,14 +18,20 @@
  */
 import { formatFloatToString, Option } from './../../../shared/util';
 
-const wrapAlcoholState = (s) => {
+const wrapAlcoholState = s => {
   switch (s) {
-  case 'Uttørket': return 'Uttørket';
-  case 'nesten uttørket': return 'Nesten uttørket';
-  case 'litt uttørket': return 'Litt uttørket';
-  case 'noe uttørket': return 'Noe uttrørket';
-  case 'tilfredsstillende': return 'Tilfredsstillende';
-  default: return s;
+    case 'Uttørket':
+      return 'Uttørket';
+    case 'nesten uttørket':
+      return 'Nesten uttørket';
+    case 'litt uttørket':
+      return 'Litt uttørket';
+    case 'noe uttørket':
+      return 'Noe uttrørket';
+    case 'tilfredsstillende':
+      return 'Tilfredsstillende';
+    default:
+      return s;
   }
 };
 
@@ -127,7 +132,7 @@ function parsePest(o) {
   retobs.data = {};
   retobs.data.identificationValue = o.identification;
   retobs.data.commentValue = o.note;
-  retobs.data.observations = [].concat(o.lifecycles).map((l) => {
+  retobs.data.observations = [].concat(o.lifecycles).map(l => {
     const obs = {};
     obs.lifeCycle = l.stage;
     obs.count = formatFloatToString(l.quantity);
@@ -145,7 +150,7 @@ function parseAlcohol(o) {
   return retobs;
 }
 
-const wrap = (be) => {
+const wrap = be => {
   const ret = {};
   ret.doneBy = be.doneBy;
   ret.doneDate = be.doneDate;
@@ -169,7 +174,7 @@ const wrap = (be) => {
   return ret;
 };
 
-const toFrontEnd = (be) => {
+const toFrontEnd = be => {
   return wrap(be);
 };
 
