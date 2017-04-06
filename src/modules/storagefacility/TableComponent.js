@@ -195,7 +195,7 @@ export default class TableComponent extends React.Component {
     (toNode, toName, onSuccess, onFailure = () => true) => {
       const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
       if (!errorMessage) {
-        MusitNode.moveNode({
+        MusitNode.moveNode()({
           id: nodeToMove.id,
           destination: toNode.id,
           doneBy: userId,
@@ -261,7 +261,7 @@ export default class TableComponent extends React.Component {
     (toNode, toName, onSuccess, onFailure = () => true) => {
       const description = MusitObject.getObjectDescription(objectToMove);
       MusitObject.moveObjects({
-        id: objectToMove.id,
+        object: objectToMove,
         destination: toNode.id,
         doneBy: userId,
         museumId,
