@@ -35,18 +35,18 @@ const callLoadAnalysisForForm = (loadAnalysisForForm, appSession, params, loadFo
     id: params.analysisId,
     collectionId: appSession.getCollectionId(),
     token: appSession.getAccessToken()
-  }).then(analysis => {
-    console.log(analysis);
-    const dataForForm = Object.keys(analysis).reduce(
-      (obj, attributeName) => [
-        ...obj,
-        { name: attributeName, defaultValue: analysis[attributeName] }
-      ],
-      []
-    );
-    console.log(dataForForm);
-    loadForm(dataForForm);
-  });
+  })
+    .then(analysis => {
+      const dataForForm = Object.keys(analysis).reduce(
+        (obj, attributeName) => [
+          ...obj,
+          { name: attributeName, defaultValue: analysis[attributeName] }
+        ],
+        []
+      );
+      loadForm(dataForForm);
+    })
+    .catch(e => console.log(Error(e)));
 
 export const onMount = (
   {

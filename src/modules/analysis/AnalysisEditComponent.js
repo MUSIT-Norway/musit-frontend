@@ -46,8 +46,6 @@ type FormData = {
   completeAnalysis: Field
 };
 
-
-
 type AnalysisType = { id: number, name: string };
 type ObjectData = { uuid: string };
 type Store = { objectsData: ObjectData[], analysis: any, analysisTypes: AnalysisType[] };
@@ -59,10 +57,7 @@ type Props = {
   appSession: AppSession,
   editAnalysisEvent: Function
 };
-const getTableRow = (
-  museumNo : string,
-  subNo : string,
-  term : string ) => {
+const getTableRow = (museumNo: string, subNo: string, term: string) => {
   return (
     <tr>
       <td>{museumNo}</td>
@@ -71,12 +66,16 @@ const getTableRow = (
     </tr>
   );
 };
-const getObjectsValue = (store : Store) => {
+const getObjectsValue = (store: Store) => {
   if (store.analysis) {
     if (store.analysis.type === 'AnalysisCollection') {
       return store.analysis.events.map(a => getTableRow(a.museumNo, a.subNo, a.term));
     }
-    return getTableRow(store.analysis.museumNo, store.analysis.subNo, store.analysis.term);
+    return getTableRow(
+      store.analysis.museumNo,
+      store.analysis.subNo,
+      store.analysis.term
+    );
   }
   return '';
 };
