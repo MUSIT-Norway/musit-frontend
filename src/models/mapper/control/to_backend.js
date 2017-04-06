@@ -16,8 +16,7 @@ function getDoneDate(observations, state) {
 }
 
 function getDoneBy(observations, state) {
-  const doneBy = observations && observations.doneBy ? observations.doneBy : state.doneBy;
-  return new Actor(doneBy);
+  return observations && observations.doneBy ? observations.doneBy : state.doneBy;
 }
 
 function getObservation(observations, field): Option {

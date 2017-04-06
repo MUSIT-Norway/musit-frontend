@@ -8,7 +8,7 @@ import { I18n } from 'react-i18nify';
 import concat from 'lodash/concat';
 import { Observable } from 'rxjs';
 
-export default class Event {}
+class Event {}
 
 Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
   val =>
@@ -33,7 +33,7 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
         return MusitActor.getActors(ajaxPost)(actorIds, val.token).map(actors => {
           if (Array.isArray(actors)) {
             return events.map(data => {
-              const registeredBy = actors.find(a => a.hasActorId(data.registeredBy));
+              const registeredBy = actors.find(a => MusitActor.hasActorId(a, data.registeredBy));
               return {
                 ...data,
                 registeredBy: registeredBy ? registeredBy.fn : I18n.t('musit.unknown')
@@ -43,3 +43,5 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
           return events;
         });
       });
+
+export default Event;

@@ -1,19 +1,14 @@
-import entries from 'object.entries';
 import Config from '../config';
 import { mapToBackend } from './mapper/control/to_backend';
 import { simplePost, simpleGet } from '../shared/RxAjax';
 import MusitActor from './actor';
 import uniq from 'lodash/uniq';
 
-class Control {
-  constructor(props) {
-    entries(props).forEach(([k, v]) => this[k] = v);
-  }
-}
+class Control {}
 
 Control.loadControls = (ajaxGet = simpleGet) =>
-  ({ nodeId, museumId, token, callback }) => {
-    return ajaxGet(
+  ({ nodeId, museumId, token, callback }) =>
+    ajaxGet(
       `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls`,
       token,
       callback
@@ -23,9 +18,8 @@ Control.loadControls = (ajaxGet = simpleGet) =>
         if (!arr) {
           return [];
         }
-        return arr.map(json => new Control(json));
+        return arr;
       });
-  };
 
 Control.addControl = (ajaxPost = simplePost) =>
   ({ nodeId, controlData, observations, museumId, token, callback }) => {
@@ -47,7 +41,7 @@ Control.getControl = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
       ]).filter(p => p);
       return MusitActor.getActors(ajaxPost)(actorIds, token).map(
         actorDetails =>
-          new Control({
+          ({
             ...control.response,
             ...MusitActor.getActorNames(
               actorDetails,

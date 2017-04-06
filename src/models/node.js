@@ -10,17 +10,6 @@ class MusitNode {}
 MusitNode.isRootNode = (node: { type: string }) =>
   node.type === 'Root' || node.type === 'RootLoan';
 
-MusitNode.moveNode = ({ destination, doneBy, museumId, token, callback }) => {
-  return MusitNode.moveNode()({
-    id: this.id,
-    destination,
-    doneBy,
-    museumId,
-    token,
-    callback
-  }).toPromise();
-};
-
 MusitNode.getNode = (ajaxGet = simpleGet) =>
   ({ id, museumId, token, callback }) => {
     return ajaxGet(

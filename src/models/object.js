@@ -1,59 +1,52 @@
 import { simpleGet, simplePut, simplePost } from '../shared/RxAjax';
 import Config from '../config';
-import entries from 'object.entries';
 import { getPath } from '../shared/util';
 import flatMap from 'lodash/flatMap';
 import type { MovableObject } from './types/movableObject';
 import MuseumId from './museumId';
 
-class MusitObject {
-  constructor(props) {
-    entries(props).forEach(([k, v]) => this[k] = v);
-  }
+class MusitObject {}
 
-  getObjectDescription() {
-    let objStr = this.museumNo ? `${this.museumNo}` : '';
-    objStr = this.subNo ? `${objStr} - ${this.subNo}` : objStr;
-    objStr = this.term ? `${objStr} - ${this.term}` : objStr;
-    return objStr;
-  }
+MusitObject.getObjectDescription = (obj) => {
+  let objStr = obj.museumNo ? `${obj.museumNo}` : '';
+  objStr = obj.subNo ? `${objStr} - ${obj.subNo}` : objStr;
+  objStr = obj.term ? `${objStr} - ${obj.term}` : objStr;
+  return objStr;
+};
 
-  isMainObject() {
-    return this.id === this.mainObjectId;
-  }
+MusitObject.isMainObject = (obj) => obj.id === this.mainObjectId;
 
-  moveObject({ destination, doneBy, museumId, collectionId, token, callback }) {
-    if (this.isMainObject()) {
-      MusitObject.getMainObject()({
-        id: this.id,
-        museumId,
-        collectionId,
-        token,
-        callback: { onFailure: callback.onFailure }
-      })
-        .toPromise()
-        .then(objects =>
-          objects.forEach(obj =>
-            MusitObject.moveObject()({
-              id: obj.id,
-              destination,
-              doneBy,
-              museumId,
-              token,
-              callback: obj.isMainObject() ? callback : null
-            }).toPromise()));
-    } else {
-      MusitObject.moveObject()({
-        id: this.id,
-        destination,
-        doneBy,
-        museumId,
-        token,
-        callback
-      }).toPromise();
-    }
+MusitObject.moveObjects = ({ object, destination, doneBy, museumId, collectionId, token, callback }) => {
+  if (MusitObject.isMainObject(object)) {
+    MusitObject.getMainObject()({
+      id: object.id,
+      museumId,
+      collectionId,
+      token,
+      callback: { onFailure: callback.onFailure }
+    })
+      .toPromise()
+      .then(objects =>
+        objects.forEach(obj =>
+          MusitObject.moveSingleObject()({
+            id: obj.id,
+            destination,
+            doneBy,
+            museumId,
+            token,
+            callback: MusitObject.isMainObject(obj) ? callback : null
+          }).toPromise()));
+  } else {
+    MusitObject.moveSingleObject()({
+      id: object.id,
+      destination,
+      doneBy,
+      museumId,
+      token,
+      callback
+    }).toPromise();
   }
-}
+};
 
 // Object types
 // [
@@ -92,7 +85,7 @@ MusitObject.getMainObject = (ajaxGet = simpleGet) =>
       Config.magasin.urls.api.thingaggregate.getMainObject(museumId, id, collectionId),
       token,
       callback
-    ).map(({ response }) => response && response.map(obj => new MusitObject(obj)));
+    ).map(({ response }) => response);
   };
 
 MusitObject.getObjectDetails = (ajaxGet = simpleGet) =>
@@ -125,7 +118,7 @@ MusitObject.getObjects = (ajaxGet = simpleGet) =>
     });
   };
 
-MusitObject.moveObject = (ajaxPut = simplePut) =>
+MusitObject.moveSingleObject = (ajaxPut = simplePut) =>
   (
     {
       id,
@@ -175,7 +168,7 @@ MusitObject.getLocationHistory = (ajaxGet = simpleGet) =>
 
 MusitObject.pickObject = (pickObject$, ajaxGet = simpleGet) =>
   props => {
-    if (props.object.isMainObject()) {
+    if (MusitObject.isMainObject(props.object)) {
       MusitObject.getMainObject(ajaxGet)({ ...props, id: props.object.id })
         .toPromise()
         .then(objects =>

@@ -158,7 +158,7 @@ export const moveItems = (
   items,
   isNode,
   moveNode = MusitNode.moveNode(),
-  moveObject = MusitObject.moveObject()
+  moveObject = MusitObject.moveSingleObject()
 ) => {
   return (to, toName, onSuccess, onFailure = () => true): void => {
     const moveFunction = isNode ? moveNode : moveObject;
@@ -252,7 +252,7 @@ const customProps = {
   emitSuccess,
   showModal,
   moveNode: MusitNode.moveNode(),
-  moveObject: MusitObject.moveObject(),
+  moveObject: MusitObject.moveSingleObject(),
   isTypeNode: props => 'nodes' === props.route.type,
   moveItems
 };

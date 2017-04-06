@@ -10,6 +10,7 @@ import Toolbar from '../../components/layout/Toolbar';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { blur, filter } from '../../shared/util';
 import MusitNode from '../../models/node';
+import MusitObject from '../../models/object';
 import Actor from '../../models/actor';
 import PagingToolbar from '../../components/PagingToolbar';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
@@ -194,7 +195,8 @@ export default class TableComponent extends React.Component {
     (toNode, toName, onSuccess, onFailure = () => true) => {
       const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
       if (!errorMessage) {
-        nodeToMove.moveNode({
+        MusitNode.moveNode({
+          id: nodeToMove.id,
           destination: toNode.id,
           doneBy: userId,
           museumId,
@@ -224,7 +226,7 @@ export default class TableComponent extends React.Component {
               });
             }
           }
-        });
+        }).toPromise();
       } else {
         onFailure();
         this.props.emitError({
@@ -235,7 +237,7 @@ export default class TableComponent extends React.Component {
     };
 
   showMoveObjectModal(objectToMove) {
-    const objStr = objectToMove.getObjectDescription();
+    const objStr = MusitObject.getObjectDescription(objectToMove);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
     this.props.showModal(
       title,
@@ -257,8 +259,9 @@ export default class TableComponent extends React.Component {
     loadObjects = this.loadObjects
   ) =>
     (toNode, toName, onSuccess, onFailure = () => true) => {
-      const description = objectToMove.getObjectDescription();
-      objectToMove.moveObject({
+      const description = MusitObject.getObjectDescription(objectToMove);
+      MusitObject.moveObjects({
+        id: objectToMove.id,
         destination: toNode.id,
         doneBy: userId,
         museumId,
@@ -292,7 +295,7 @@ export default class TableComponent extends React.Component {
     };
 
   showObjectMoveHistory(objectToShowHistoryFor) {
-    const objStr = objectToShowHistoryFor.getObjectDescription();
+    const objStr = MusitObject.getObjectDescription(objectToShowHistoryFor);
     const componentToRender = (
       <MusitModalHistory
         appSession={this.props.appSession}
