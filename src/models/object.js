@@ -7,16 +7,18 @@ import MuseumId from './museumId';
 
 class MusitObject {}
 
-MusitObject.getObjectDescription = (obj) => {
+MusitObject.getObjectDescription = obj => {
   let objStr = obj.museumNo ? `${obj.museumNo}` : '';
   objStr = obj.subNo ? `${objStr} - ${obj.subNo}` : objStr;
   objStr = obj.term ? `${objStr} - ${obj.term}` : objStr;
   return objStr;
 };
 
-MusitObject.isMainObject = (obj) => obj.id === this.mainObjectId;
+MusitObject.isMainObject = obj => obj.id === this.mainObjectId;
 
-MusitObject.moveObjects = ({ object, destination, doneBy, museumId, collectionId, token, callback }) => {
+MusitObject.moveObjects = (
+  { object, destination, doneBy, museumId, collectionId, token, callback }
+) => {
   if (MusitObject.isMainObject(object)) {
     MusitObject.getMainObject()({
       id: object.id,

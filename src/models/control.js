@@ -39,17 +39,14 @@ Control.getControl = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
         control.response.doneBy,
         control.response.registeredBy
       ]).filter(p => p);
-      return MusitActor.getActors(ajaxPost)(actorIds, token).map(
-        actorDetails =>
-          ({
-            ...control.response,
-            ...MusitActor.getActorNames(
-              actorDetails,
-              control.response.doneBy,
-              control.response.registeredBy
-            )
-          })
-      );
+      return MusitActor.getActors(ajaxPost)(actorIds, token).map(actorDetails => ({
+        ...control.response,
+        ...MusitActor.getActorNames(
+          actorDetails,
+          control.response.doneBy,
+          control.response.registeredBy
+        )
+      }));
     });
   };
 

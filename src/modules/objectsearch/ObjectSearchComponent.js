@@ -128,8 +128,10 @@ export class ObjectSearchComponent extends React.Component {
                       </thead>
                       <tbody>
                         {store.data.matches.map((data, i) => {
-                          const isMainObject = !data.mainObjectId || MusitObject.isMainObject(data);
-                          const isChildObject = data.mainObjectId && !MusitObject.isMainObject(data);
+                          const isMainObject = !data.mainObjectId ||
+                            MusitObject.isMainObject(data);
+                          const isChildObject = data.mainObjectId &&
+                            !MusitObject.isMainObject(data);
                           return (
                             <tr
                               key={i}

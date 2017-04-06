@@ -53,7 +53,8 @@ MusitActor.getActors = (ajaxPost = simplePost) =>
 
 MusitActor.getActor = (ajaxGet = simpleGet) =>
   ({ actorId, token, callback }) =>
-    ajaxGet(`${Config.magasin.urls.api.actor.baseUrl}/${actorId}`, token, callback)
-      .map(({ response }) => response);
+    ajaxGet(`${Config.magasin.urls.api.actor.baseUrl}/${actorId}`, token, callback).map(
+      ({ response }) => response
+    );
 
 export default MusitActor;
