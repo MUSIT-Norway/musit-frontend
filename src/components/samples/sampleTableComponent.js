@@ -3,6 +3,7 @@
 import React from 'react';
 const { Table, Tr, Td } = require('reactable');
 import type { SamplesPropsType } from '../../types/samples';
+import { I18n } from 'react-i18nify';
 
 const SampleTableComponent = ({ samples }: SamplesPropsType) => {
   return (
@@ -19,7 +20,7 @@ const SampleTableComponent = ({ samples }: SamplesPropsType) => {
           { key: 'showInfo', label: 'Vis detaljer' }
         ]}
         sortable={['id', 'date']}
-        noDataText="Ingen prøver funnet på objektet"
+        noDataText={I18n.t('musit.samples.noSamplesForObject')}
       >
         {samples &&
           samples.map((e, i) => (
