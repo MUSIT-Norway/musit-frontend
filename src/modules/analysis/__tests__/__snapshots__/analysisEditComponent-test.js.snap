@@ -105,9 +105,34 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       componentClass="div"
       md={5}
       mdOffset={1}>
-      <br />
-      <br />
-      <br />
+      <Table
+        bordered={false}
+        bsClass="table"
+        condensed={false}
+        hover={false}
+        responsive={true}
+        striped={false}>
+        <thead>
+          <tr>
+            <th>
+              Museumsnr
+            </th>
+            <th>
+              Unr
+            </th>
+            <th>
+              Term/artsnavn
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td />
+            <td />
+            <td />
+          </tr>
+        </tbody>
+      </Table>
     </Col>
     <AddButton
       id="2"

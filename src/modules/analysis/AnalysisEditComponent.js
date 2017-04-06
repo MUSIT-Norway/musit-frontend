@@ -10,6 +10,7 @@ import {
   FormControl,
   Button,
   Well,
+  Table,
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -45,16 +46,39 @@ type FormData = {
   completeAnalysis: Field
 };
 
+
+
 type AnalysisType = { id: number, name: string };
 type ObjectData = { uuid: string };
-type Store = { objectsData: ObjectData[], analysisTypes: AnalysisType[] };
+type Store = { objectsData: ObjectData[], analysis: any, analysisTypes: AnalysisType[] };
 type Update = (update: Field) => void;
 type Props = {
   form: FormData,
   updateForm: Update,
   store: Store,
   appSession: AppSession,
-  saveAnalysisEvent: Function
+  editAnalysisEvent: Function
+};
+const getTableRow = (
+  museumNo : string,
+  subNo : string,
+  term : string ) => {
+  return (
+    <tr>
+      <td>{museumNo}</td>
+      <td>{subNo}</td>
+      <td>{term}</td>
+    </tr>
+  );
+};
+const getObjectsValue = (store : Store) => {
+  if (store.analysis) {
+    if (store.analysis.type === 'AnalysisCollection') {
+      return store.analysis.events.map(a => getTableRow(a.museumNo, a.subNo, a.term));
+    }
+    return getTableRow(store.analysis.museumNo, store.analysis.subNo, store.analysis.term);
+  }
+  return '';
 };
 
 // TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
@@ -94,20 +118,22 @@ const NewLine = () => (
 
 const getValue = field => field.rawValue || '';
 
-export const saveAnalysisEventLocal = (
+export const editAnalysisEventLocal = (
   appSession: AppSession,
   form: FormData,
   store: Store,
-  saveAnalysisEvent: Function
+  editAnalysisEvent: Function
 ) =>
   () =>
-    saveAnalysisEvent({
+    editAnalysisEvent({
       museumId: appSession.getMuseumId(),
       data: {
         analysisTypeId: getValue(form.analysisTypeId),
         eventDate: getValue(form.registeredDate),
         note: getValue(form.note),
-        objectIds: store.objectsData.map(a => a.uuid)
+        objectIds: store.analysis && store.analysis.events
+          ? store.analysis.events.map(a => a.objectId)
+          : store.analysis.objectId
       },
       token: appSession.getAccessToken()
     });
@@ -120,7 +146,7 @@ const updateFormField = (field, updateForm) =>
     });
 
 const AnalysisEdit = (
-  { form, updateForm, store, saveAnalysisEvent, appSession }: Props
+  { form, updateForm, store, editAnalysisEvent, appSession }: Props
 ) => (
   <div>
     <br />
@@ -171,9 +197,18 @@ const AnalysisEdit = (
     <Form inline>
       <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
       <Col mdOffset={1} md={5}>
-        {form.objectId.defaultValue}<br />
-        {form.museumNo.defaultValue}<br />
-        {form.term.defaultValue}<br />
+        <Table responsive>
+          <thead>
+            <tr>
+              <th>Museumsnr</th>
+              <th>Unr</th>
+              <th>Term/artsnavn</th>
+            </tr>
+          </thead>
+          <tbody>
+            {getObjectsValue(store)}
+          </tbody>
+        </Table>
       </Col>
       <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
     </Form>
@@ -352,7 +387,7 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent)}
+      onClickSave={editAnalysisEventLocal(appSession, form, store, editAnalysisEvent)}
     />
     <NewLine />
     <Form horizontal>
@@ -419,7 +454,7 @@ AnalysisEdit.propTypes = {
   }).isRequired,
   updateForm: PropTypes.func.isRequired,
   store: PropTypes.object.isRequired,
-  saveAnalysisEvent: PropTypes.func
+  editAnalysisEvent: PropTypes.func
 };
 
 export default AnalysisEdit;
