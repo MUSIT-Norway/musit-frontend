@@ -54,7 +54,7 @@ export default formProps => {
 
     if (!unit.id) {
       if (
-        new MusitNode(formProps.rootNode).isRootNode() && 'Organisation' !== unit.type
+        MusitNode.isRootNode(formProps.rootNode) && 'Organisation' !== unit.type
       ) {
         errors = {
           ...errors,

@@ -9,7 +9,6 @@ import Layout from '../../components/layout';
 import Toolbar from '../../components/layout/Toolbar';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { blur, filter } from '../../shared/util';
-import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import PagingToolbar from '../../components/PagingToolbar';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
@@ -20,6 +19,7 @@ import ScannerButton from '../../components/scanner/ScannerButton';
 
 export default class TableComponent extends React.Component {
   static propTypes = {
+    appSession: React.PropTypes.object.isRequired,
     tableStore: React.PropTypes.object.isRequired,
     loadNodes: React.PropTypes.func.isRequired,
     loadObjects: React.PropTypes.func.isRequired,
@@ -70,7 +70,7 @@ export default class TableComponent extends React.Component {
       token,
       callback: {
         onComplete: node => {
-          if (node && !new MusitNode(node).isRootNode()) {
+          if (node && !MusitNode.isRootNode(node)) {
             this.props.loadStats({ id, museumId, token });
           }
         }
@@ -347,7 +347,7 @@ export default class TableComponent extends React.Component {
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           showNewNode={!!rootNode}
-          showButtons={rootNode && !rootNode.isRootNode()}
+          showButtons={rootNode && !MusitNode.isRootNode(rootNode)}
           onClickNewNode={() =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.addNode(
@@ -453,11 +453,7 @@ export default class TableComponent extends React.Component {
       return (
         <Loader loaded={!isLoading}>
           <ObjectGrid
-            tableData={
-              matches && matches[0] && matches[0] instanceof MusitObject
-                ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern)
-                : []
-            }
+            tableData={matches ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
             showMoveHistory={showHistory}
             pickObject={object =>
               this.props.pickObject({
@@ -494,11 +490,7 @@ export default class TableComponent extends React.Component {
     return (
       <Loader loaded={!isLoading}>
         <NodeGrid
-          tableData={
-            matches && matches[0] && matches[0] instanceof MusitNode
-              ? filter(matches, ['name'], searchPattern)
-              : []
-          }
+          tableData={matches ? filter(matches, ['name'], searchPattern) : []}
           goToEvents={node =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.viewControlsObservations(

@@ -13,6 +13,7 @@ import Config from '../../config';
 
 export class EventsComponent extends React.Component {
   static propTypes = {
+    appSession: React.PropTypes.object,
     store: React.PropTypes.object,
     params: React.PropTypes.object,
     route: React.PropTypes.object,
