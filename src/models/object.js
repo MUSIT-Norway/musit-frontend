@@ -14,7 +14,7 @@ MusitObject.getObjectDescription = obj => {
   return objStr;
 };
 
-MusitObject.isMainObject = obj => obj.id === this.mainObjectId;
+MusitObject.isMainObject = obj => obj.id === obj.mainObjectId;
 
 MusitObject.moveObjects = (
   { object, destination, doneBy, museumId, collectionId, token, callback }
@@ -110,12 +110,12 @@ MusitObject.getObjects = (ajaxGet = simpleGet) =>
       Config.magasin.limit
     );
     return ajaxGet(url, token, callback).map(({ response }) => {
-      if (!response) {
+      if (!response || !response.matches) {
         return { ...response, matches: [], error: 'no response body' };
       }
       return {
         ...response,
-        matches: response.matches ? response.matches.map(obj => new MusitObject(obj)) : []
+        matches: response.matches
       };
     });
   };
@@ -186,7 +186,7 @@ MusitObject.findByBarcode = (ajaxGet = simpleGet) =>
     ajaxGet(
       Config.magasin.urls.api.thingaggregate.scanOldUrl(barcode, museumId, collectionId),
       token
-    ).map(({ response }) => response && response.map(r => new MusitObject(r)));
+    ).map(({ response }) => response);
 
 MusitObject.searchForObjects = (ajaxGet = simpleGet) =>
   ({ museumNo, subNo, term, perPage, page, museumId, collectionId, token, callback }) => {
@@ -200,12 +200,12 @@ MusitObject.searchForObjects = (ajaxGet = simpleGet) =>
       museumId
     );
     return ajaxGet(url, token, callback).map(({ response }) => response).map(data => {
-      if (!data) {
+      if (!data || !data.matches) {
         return { ...data, matches: [], totalMatches: 0, error: 'no response body' };
       }
       return {
         ...data,
-        matches: data.matches ? data.matches.map(obj => new MusitObject(obj)) : []
+        matches: data.matches.map(m => ({...m, breadcrumb: getPath(m)}))
       };
     });
   };
