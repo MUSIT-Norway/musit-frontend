@@ -42,9 +42,7 @@ const analysisTypes = [
 ];
 
 const store = {
-  data: {
-    analysisTypes: analysisTypes
-  },
+  analysisTypes: analysisTypes,
   objectsData: objectsData
 };
 
