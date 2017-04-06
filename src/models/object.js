@@ -205,7 +205,7 @@ MusitObject.searchForObjects = (ajaxGet = simpleGet) =>
       }
       return {
         ...data,
-        matches: data.matches.map(m => ({...m, breadcrumb: getPath(m)}))
+        matches: data.matches.map(m => ({ ...m, breadcrumb: getPath(m) }))
       };
     });
   };
