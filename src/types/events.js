@@ -1,6 +1,6 @@
 /* @flow */
 
-type T_EventData = {
+type EventData = {
   eventDate: string,
   doneBy: string,
   registeredBy: string,
@@ -9,4 +9,4 @@ type T_EventData = {
   note: string
 };
 
-export type T_Events = T_EventData[];
+export type Events = EventData[];

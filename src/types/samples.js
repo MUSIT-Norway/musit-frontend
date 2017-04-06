@@ -1,6 +1,6 @@
 /* @flow */
 
-type T_SampleData = {
+type SampleData = {
   id: string,
   sampleId: string,
   doneBy: string,
@@ -13,6 +13,6 @@ type T_SampleData = {
   createdDate: string
 };
 
-export type T_Samples = T_SampleData[];
+export type Samples = SampleData[];
 
-export type SamplesPropsType = { samples: T_Samples };
+export type SamplesPropsType = { samples: Samples };

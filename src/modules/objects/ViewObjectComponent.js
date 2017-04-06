@@ -1,14 +1,14 @@
 /* @flow */
 import React from 'react';
 import { Row, Col, Tabs, Tab, PageHeader } from 'react-bootstrap';
-import type { T_ObjectData } from '../../types/object';
-import type { T_Samples } from '../../types/samples';
-import type { T_Events } from '../../types/events';
+import type { ObjectData } from '../../types/object';
+import type { Samples } from '../../types/samples';
+import type { Events } from '../../types/events';
 import EventTableComponent from '../../components/events/eventTableComponent';
 import SampleTableComponent from '../../components/samples/sampleTableComponent';
 
 type ViewObjectComponentProps = {
-  objectStore: { objectData: T_ObjectData, events: T_Events, samples: T_Samples }
+  objectStore: { objectData: ObjectData, events: Events, samples: Samples }
 };
 
 export const ViewObjectComponent = (

@@ -1,10 +1,10 @@
 /* @flow */
 import React from 'react';
 const { Table, Tr, Td } = require('reactable');
-import type { T_Events } from '../../types/events';
+import type { Events } from '../../types/events';
 import { I18n } from 'react-i18nify';
 
-type EventTypeProps = { events: T_Events };
+type EventTypeProps = { events: Events };
 
 export const EventTableComponent = ({ events }: EventTypeProps) => {
   return (
