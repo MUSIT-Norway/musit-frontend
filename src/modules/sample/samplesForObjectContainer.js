@@ -21,9 +21,9 @@ const commands = { loadSamplesForObject$ };
 
 export const onMount = ({ loadSamplesForObject, params, appSession }) => {
   const objectId = params.parentId;
-  const museumId = appSession.state.museumId;
-  const accessToken = appSession.state.accessToken;
-  const collectionId = appSession.state.collectionId;
+  const museumId = appSession.museumId;
+  const accessToken = appSession.accessToken;
+  const collectionId = appSession.collectionId;
   const val = {
     objectId: objectId,
     museumId: museumId,

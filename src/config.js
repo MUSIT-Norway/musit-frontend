@@ -158,7 +158,7 @@ export default {
             objectId: number,
             collectionId: CollectionId
           ): string =>
-            `/api/thingaggregate/museum/${mid}/objects/${objectId}/children?$collectionIds=${collectionId}`,
+            `/api/thingaggregate/museum/${mid}/objects/${objectId}/children?collectionIds=${collectionId}`,
           getObjectForCollection: (
             mid: MuseumId,
             nodeId: number,
