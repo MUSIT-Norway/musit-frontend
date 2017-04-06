@@ -21,8 +21,8 @@ const commands = { loadAnalyses$, getCurrentLocation$, setObject$, clear$ };
 export const onMount = (
   { appSession, location: { state }, loadAnalyses, getCurrentLocation, setObject, clear }
 ) => {
-  const museumId = appSession.getMuseumId();
-  const token = appSession.getAccessToken();
+  const museumId = appSession.museumId;
+  const token = appSession.accessToken;
   const objectId = state.id;
   clear();
   setObject(state);

@@ -49,7 +49,7 @@ export class AppComponent extends Component {
     fetch('/api/auth/rest/logout', {
       method: 'GET',
       headers: new Headers({
-        Authorization: 'Bearer ' + this.props.appSession.getAccessToken()
+        Authorization: 'Bearer ' + this.props.appSession.accessToken
       })
     })
       .then(response => {

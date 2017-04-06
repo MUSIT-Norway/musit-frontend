@@ -10,6 +10,7 @@ import Toolbar from '../../components/layout/Toolbar';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { blur, filter } from '../../shared/util';
 import MusitNode from '../../models/node';
+import Actor from '../../models/actor';
 import PagingToolbar from '../../components/PagingToolbar';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import MusitModal from '../movedialog/MoveDialogComponent';
@@ -182,7 +183,7 @@ export default class TableComponent extends React.Component {
 
   moveNode = (
     nodeToMove,
-    userId = this.props.appSession.getActor().getActorId(),
+    userId = Actor.getActorId(this.props.appSession.actor),
     museumId = this.props.appSession.museumId,
     token = this.props.appSession.accessToken,
     nodeId = this.props.tableStore.rootNode.id,
@@ -248,7 +249,7 @@ export default class TableComponent extends React.Component {
 
   moveObject = (
     objectToMove,
-    userId = this.props.appSession.getActor().getActorId(),
+    userId = Actor.getActorId(this.props.appSession.actor),
     museumId = this.props.appSession.museumId,
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken,
@@ -453,7 +454,9 @@ export default class TableComponent extends React.Component {
       return (
         <Loader loaded={!isLoading}>
           <ObjectGrid
-            tableData={matches ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []}
+            tableData={
+              matches ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []
+            }
             showMoveHistory={showHistory}
             pickObject={object =>
               this.props.pickObject({

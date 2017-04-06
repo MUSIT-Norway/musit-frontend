@@ -53,9 +53,7 @@ export default formProps => {
     }
 
     if (!unit.id) {
-      if (
-        MusitNode.isRootNode(formProps.rootNode) && 'Organisation' !== unit.type
-      ) {
+      if (MusitNode.isRootNode(formProps.rootNode) && 'Organisation' !== unit.type) {
         errors = {
           ...errors,
           type: I18n.t('musit.storageUnits.type.organisationAllowed')

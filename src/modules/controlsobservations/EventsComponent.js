@@ -39,13 +39,13 @@ export class EventsComponent extends React.Component {
     this.props.clearEvents();
     this.props.loadEvents({
       nodeId: this.props.params.id,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken
     });
     this.props.loadRootNode({
       id: this.props.params.id,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken
     });
   }
 

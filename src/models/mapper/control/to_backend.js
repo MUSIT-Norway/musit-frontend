@@ -42,7 +42,7 @@ function getControl(ok, observations, field, parseFn) {
 export const mapToBackend = (state, observations, nodeId) => {
   const r = {};
   r.eventType = 'Control';
-  r.doneBy = getDoneBy(observations, state).getActorId();
+  r.doneBy = Actor.getActorId(getDoneBy(observations, state));
   r.doneDate = getDoneDate(observations, state);
   r.affectedThing = nodeId * 1;
   r.temperature = new Option(state.temperatureOK).map(ok =>

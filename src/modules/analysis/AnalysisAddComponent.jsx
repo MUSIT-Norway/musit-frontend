@@ -94,14 +94,14 @@ const getValue = (field) => field.rawValue || '';
 
 export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, store: Store, saveAnalysisEvent: Function) =>
   () => saveAnalysisEvent({
-    museumId: appSession.getMuseumId(),
+    museumId: appSession.museumId,
     data: {
       analysisTypeId: getValue(form.analysisTypeId),
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
       objectIds: store.objectsData.map((a) => a.uuid)
     },
-    token: appSession.getAccessToken()
+    token: appSession.accessToken
   });
 
 const updateFormField = (field, updateForm) =>

@@ -38,7 +38,7 @@ export class PrintTemplateComponent extends Component {
   componentWillMount() {
     this.props.clearAll();
     this.props.loadTemplates({
-      token: this.props.appSession.getAccessToken()
+      token: this.props.appSession.accessToken
     });
   }
 
@@ -62,7 +62,7 @@ export class PrintTemplateComponent extends Component {
         templateId,
         codeFormat,
         nodes,
-        token: this.props.appSession.getAccessToken()
+        token: this.props.appSession.accessToken
       });
     }
   }

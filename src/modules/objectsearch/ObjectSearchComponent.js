@@ -46,10 +46,8 @@ export class ObjectSearchComponent extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id
-    ) {
-      this.searchForObjects(1, nextProps.appSession.getMuseumId());
+    if (nextProps.appSession.museumId.id !== this.props.appSession.museumId.id) {
+      this.searchForObjects(1, nextProps.appSession.museumId);
     }
   }
 
@@ -113,9 +111,9 @@ export class ObjectSearchComponent extends React.Component {
                                   this.props.pickObject({
                                     object: obj,
                                     breadcrumb: obj.breadcrumb,
-                                    museumId: this.props.appSession.getMuseumId(),
-                                    collectionId: this.props.appSession.getCollectionId(),
-                                    token: this.props.appSession.getAccessToken()
+                                    museumId: this.props.appSession.museumId,
+                                    collectionId: this.props.appSession.collectionId,
+                                    token: this.props.appSession.accessToken
                                   }));
                               }}
                               title={I18n.t('musit.objectsearch.addAllToPickList')}
@@ -176,9 +174,9 @@ export class ObjectSearchComponent extends React.Component {
                                       this.props.pickObject({
                                         object: data,
                                         breadcrumb: data.breadcrumb,
-                                        museumId: this.props.appSession.getMuseumId(),
-                                        collectionId: this.props.appSession.getCollectionId(),
-                                        token: this.props.appSession.getAccessToken()
+                                        museumId: this.props.appSession.museumId,
+                                        collectionId: this.props.appSession.collectionId,
+                                        token: this.props.appSession.accessToken
                                       });
                                     }}
                                     title={I18n.t('musit.objectsearch.addToPickList')}
@@ -235,7 +233,7 @@ export class ObjectSearchComponent extends React.Component {
     );
   }
 
-  searchForObjects(page, museumId = this.props.appSession.getMuseumId()) {
+  searchForObjects(page, museumId = this.props.appSession.museumId) {
     this.setState({ ...this.state, currentPage: page });
     this.props.clearSearch();
     return this.props.searchForObjects({
@@ -245,8 +243,8 @@ export class ObjectSearchComponent extends React.Component {
       perPage: this.state.perPage,
       page,
       museumId,
-      collectionId: this.props.appSession.getCollectionId(),
-      token: this.props.appSession.getAccessToken()
+      collectionId: this.props.appSession.collectionId,
+      token: this.props.appSession.accessToken
     });
   }
 }

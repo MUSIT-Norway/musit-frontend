@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 
 class MusitNode {}
 
-MusitNode.isRootNode = (node: { type: string }) => node.type === 'Root' || node.type === 'RootLoan';
+MusitNode.isRootNode = (node: { type: string }) =>
+  node.type === 'Root' || node.type === 'RootLoan';
 
 MusitNode.moveNode = ({ destination, doneBy, museumId, token, callback }) => {
   return MusitNode.moveNode()({
@@ -48,9 +49,7 @@ MusitNode.addNode = (ajaxPost = simplePost) =>
     const baseUrl = Config.magasin.urls.api.storagefacility.baseUrl(museumId);
     const url = `${baseUrl}${!id ? '/root' : ''}`;
     const dataToPost = mapToBackend(data, id);
-    return ajaxPost(url, dataToPost, token, callback).map(
-      ({ response }) => response
-    );
+    return ajaxPost(url, dataToPost, token, callback).map(({ response }) => response);
   };
 
 MusitNode.editNode = (ajaxPut = simplePut) =>
@@ -58,9 +57,7 @@ MusitNode.editNode = (ajaxPut = simplePut) =>
     const baseUrl = Config.magasin.urls.api.storagefacility.baseUrl(museumId);
     const url = `${baseUrl}/${id}`;
     const dataToPost = mapToBackend(data);
-    return ajaxPut(url, dataToPost, token, callback).map(
-      ({ response }) => response
-    );
+    return ajaxPut(url, dataToPost, token, callback).map(({ response }) => response);
   };
 
 MusitNode.getNodes = (ajaxGet = simpleGet) =>
