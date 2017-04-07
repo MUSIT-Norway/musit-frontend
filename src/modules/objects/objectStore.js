@@ -10,13 +10,10 @@ import type { ObjectProps } from '../../types/object';
 const loadObjectData = () =>
   (val: ObjectProps) =>
     MusitObject.getObjectDetails()(val).flatMap(response => {
-      //const v2 = {...val, id: response.uuid}
       const v = {
+        ...val,
         id: response.uuid,
-        objectId: response.id,
-        token: val.token,
-        museumId: val.museumId,
-        callBack: val.callBack
+        objectId: response.id
       };
       return Observable.forkJoin(
         Observable.of(response),
