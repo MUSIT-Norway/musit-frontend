@@ -35,8 +35,7 @@ describe('PickListComponent for objects', () => {
         value: {
           id: 1,
           name: 'Test21',
-          mainObjectId: 1,
-          isMainObject: () => true
+          mainObjectId: 1
         },
         path: [1]
       },
@@ -45,8 +44,7 @@ describe('PickListComponent for objects', () => {
         value: {
           id: 2,
           name: 'Test2',
-          mainObjectId: 1,
-          isMainObject: () => false
+          mainObjectId: 1
         },
         path: [1, 2]
       },
@@ -54,8 +52,7 @@ describe('PickListComponent for objects', () => {
         marked: false,
         value: {
           id: 3,
-          name: 'Test23',
-          isMainObject: () => true
+          name: 'Test23'
         },
         path: [1, 3]
       }

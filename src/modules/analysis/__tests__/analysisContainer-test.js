@@ -14,6 +14,5 @@ describe('analysisContainer', () => {
     expect(loadAnalysisTypes.calledOnce).toBe(true);
     expect(loadAnalysisTypes.getCall(0).args[0].token).toEqual('1234');
     expect(loadAnalysisTypes.getCall(0).args[0].museumId).toEqual(99);
-    expect(loadAnalysisTypes.getCall(0).args[0].collectionId).toEqual('45555');
   });
 });

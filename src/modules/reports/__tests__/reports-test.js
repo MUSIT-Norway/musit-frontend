@@ -34,7 +34,7 @@ describe('KDReportComponent', () => {
             }
           }
         }}
-        appSession={{ getMuseumId: () => 1, getAccessToken: () => 'xxxx-xxxx-xxxx-xxxx' }}
+        appSession={{ museumId: 1, accessToken: 'xxxx-xxxx-xxxx-xxxx' }}
         loadKDReport={loadKDReport}
         clear={clear}
       />

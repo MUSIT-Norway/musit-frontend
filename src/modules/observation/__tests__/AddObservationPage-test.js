@@ -21,7 +21,7 @@ describe('Render add observation page', () => {
         appSession={{
           accessToken: '1234',
           museumId: 99,
-          actor: new MusitActor({ dataportenId: '12345', fn: 'Jarl' })
+          actor: { dataportenId: '12345', fn: 'Jarl' }
         }}
         emitSuccess={emitSuccess}
         emitError={emitError}

@@ -37,7 +37,7 @@ describe('MoveHistoryComponent', () => {
     expect(clear.callCount).toBe(1);
     expect(loadMoveHistory.callCount).toBe(1);
     expect(loadMoveHistory.getCall(0).args[0].token).toBe('1234-1234-1234');
-    expect(loadMoveHistory.getCall(0).args[0].museumId.id).toBe(99);
+    expect(loadMoveHistory.getCall(0).args[0].museumId).toBe(99);
     expect(loadMoveHistory.getCall(0).args[0].objectId).toBe(1234);
   });
 });
