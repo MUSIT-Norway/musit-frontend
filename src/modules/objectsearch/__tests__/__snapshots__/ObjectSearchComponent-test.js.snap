@@ -145,6 +145,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         } />
                     </a>
                   </th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
@@ -213,8 +214,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -225,7 +230,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -293,8 +307,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -305,7 +323,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -373,8 +400,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -385,7 +416,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -453,8 +493,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -465,7 +509,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -533,8 +586,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -545,7 +602,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -613,8 +679,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -625,7 +695,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -693,8 +772,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -705,7 +788,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -773,8 +865,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -785,7 +881,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -853,8 +958,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -865,7 +974,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -933,8 +1051,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -945,7 +1067,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1013,8 +1144,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1025,7 +1160,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1093,8 +1237,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1105,7 +1253,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1173,8 +1330,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1185,7 +1346,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1253,8 +1423,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1265,7 +1439,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1333,8 +1516,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1345,7 +1532,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1413,8 +1609,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1425,7 +1625,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1493,8 +1702,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1505,7 +1718,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1573,8 +1795,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1585,7 +1811,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1653,8 +1888,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1665,7 +1904,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
                 <tr
@@ -1733,8 +1981,12 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                   </td>
                   <td
                     className="move">
-                    <a
-                      href=""
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
                       onClick={[Function onClick]}
                       title="Legg til plukklisten">
                       <FontAwesome
@@ -1745,7 +1997,16 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             "fontSize": "1.3em"
                           }
                         } />
-                    </a>
+                    </Button>
+                  </td>
+                  <td>
+                    <Button
+                      active={false}
+                      block={false}
+                      bsClass="btn"
+                      bsStyle="link"
+                      disabled={false}
+                      onClick={[Function onClick]} />
                   </td>
                 </tr>
               </tbody>

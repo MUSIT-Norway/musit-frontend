@@ -2,6 +2,8 @@ import React from 'react';
 const { Table, Tr, Td } = require('reactable');
 import { Row, Col } from 'react-bootstrap';
 import Breadcrumb from '../../components/layout/Breadcrumb';
+import { I18n } from 'react-i18nify';
+
 
 export const EventsComponent = ({ eventsStore: { object, data, currentLocation } }) => (
   <div>
@@ -52,7 +54,7 @@ export const EventsComponent = ({ eventsStore: { object, data, currentLocation }
         ]}
         sortable={['type', 'eventDate', 'registeredBy', 'note' ]}
         defaultSort={{ column: 'eventDate', direction: 'desc' }}
-        noDataText="Ingen hendelser funnet på objektet"
+        noDataText={I18n.t('musit.events.noDataForObject')}
       >
         {data.map((event, i) =>
           <Tr key={i}>

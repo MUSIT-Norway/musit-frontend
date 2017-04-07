@@ -84,8 +84,10 @@ const submitSample = (appSession, form, addSample) => {
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
   data['responsible'] = appSession.actor.dataportenId;
-  data['isCollectionObject'] = false;
+  data['isExtracted'] = false;
+  data['parentObjectType']= 'collection';
   data['museumId'] = 99;
+  data['parentObjectId']='12080e3e-2ca2-41b1-9d4a-4d72e292dcd8';
 
   return addSample({museumId, token, data});
 };

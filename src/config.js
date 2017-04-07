@@ -27,6 +27,8 @@ export default {
     urls: {
       client: {
         analysis: {
+          editAnalysis: (appSession: AppSession, analysisId: string) =>
+            `${clientContextUrl(appSession)}/analysis/edit/${analysisId}`,
           addAnalysis: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/analysis/add`,
           addSample: () => '/analysis/sample/add',
@@ -37,6 +39,9 @@ export default {
         magasin: {
           goToMagasin: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin`
+        },
+        object: {
+          gotoObject: (id: string) => `/objects/${id}`
         },
         report: {
           goToReport: (appSession: AppSession) =>

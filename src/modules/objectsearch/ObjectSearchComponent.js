@@ -124,6 +124,7 @@ export class ObjectSearchComponent extends React.Component {
                               />
                             </a>
                           </th>
+                          <th>{Config.isDev && 'Se objekt'}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -169,18 +170,16 @@ export class ObjectSearchComponent extends React.Component {
                               </td>
                               <td className="move">
                                 {isMainObject &&
-                                  <a
-                                    href=""
-                                    onClick={e => {
-                                      e.preventDefault();
+                                  <Button
+                                    bsStyle="link"
+                                    onClick={() =>
                                       this.props.pickObject({
                                         object: data,
                                         breadcrumb: data.breadcrumb,
                                         museumId: this.props.appSession.museumId,
                                         collectionId: this.props.appSession.collectionId,
                                         token: this.props.appSession.accessToken
-                                      });
-                                    }}
+                                      })}
                                     title={I18n.t('musit.objectsearch.addToPickList')}
                                   >
                                     {this.props.isItemAdded(
@@ -195,7 +194,20 @@ export class ObjectSearchComponent extends React.Component {
                                           style={{ fontSize: '1.3em' }}
                                           name="shopping-cart"
                                         />}
-                                  </a>}
+                                  </Button>}
+                              </td>
+                              <td>
+                                <Button
+                                  bsStyle="link"
+                                  onClick={() =>
+                                    hashHistory.push(
+                                      Config.magasin.urls.client.object.gotoObject(
+                                        data.uuid
+                                      )
+                                    )}
+                                >
+                                  {Config.isDev && 'Vis'}
+                                </Button>
                               </td>
                             </tr>
                           );
