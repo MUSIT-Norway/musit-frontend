@@ -73,7 +73,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       <Td
         column="showInfo">
         <a
-          href={undefined}>
+          href="En url">
           Se mer / Rediger
         </a>
       </Td>
@@ -104,7 +104,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       <Td
         column="showInfo">
         <a
-          href={undefined}>
+          href="En url">
           Se mer / Rediger
         </a>
       </Td>
