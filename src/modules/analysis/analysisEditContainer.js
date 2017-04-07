@@ -51,7 +51,7 @@ export const onMount = (
     collectionId: appSession.getCollectionId(),
     token: appSession.getAccessToken()
   })
-    .map(analysis => {
+    .do(analysis => {
       const dataForForm = Object.keys(analysis).reduce(
         (obj, attributeName) => [
           ...obj,
