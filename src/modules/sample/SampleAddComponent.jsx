@@ -215,7 +215,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           <FontAwesome name='clock-o'/> {form.updateDate.value || '11.03.2017' }
         </Col>
         <Col md={2}>
-          <a href=''>Se endringshistorikk</a>
+          <Button bsStyle="link">Se endringshistorikk</Button>
         </Col>
       </Row>
       <br/>

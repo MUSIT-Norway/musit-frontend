@@ -81,7 +81,7 @@ const SampleViewComponent = props => {
           <FontAwesome name="clock-o" /> {form.updateDate.defaultValue || '11.03.2017'}
         </Col>
         <Col md={3}>
-          <a href="">Se endringshistorikk</a>
+          <Button bsStyle="link">Se endringshistorikk</Button>
         </Col>
       </Row>
       <br />
