@@ -3,7 +3,6 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import sinon from 'sinon';
 import ObservationPage from '../ObservationPage';
-import MusitActor from '../../../models/actor';
 
 describe('Render observation page in add mode', () => {
   it('should set default date and have correct date format', () => {

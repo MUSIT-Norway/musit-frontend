@@ -2,7 +2,6 @@ import { shallow } from 'enzyme';
 import { RenderDoubleTextArea, RenderPest } from '../render';
 import React from 'react';
 import ObservationPage from '../ObservationPage';
-import MusitActor from '../../../models/actor';
 
 describe('Render oobservation page in edit mode', () => {
   it('should set default date and have correct date format', () => {

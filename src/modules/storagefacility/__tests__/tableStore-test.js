@@ -9,8 +9,8 @@ const diff = require('deep-diff').diff;
 describe('tableStore', () => {
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
+      console.log(JSON.stringify(actual, null, 2));
+      console.log(JSON.stringify(expected, null, 2));
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
         console.log(difference);
@@ -37,7 +37,7 @@ describe('tableStore', () => {
           data: {
             totalMatches: 1,
             matches: [
-              { name: 'en node 456', nodeId: 'uuid 456', id: 456, breadcrumb: [] }
+              { name: 'en node 456', nodeId: 'uuid 456', id: 456 }
             ]
           }
         },
@@ -50,12 +50,11 @@ describe('tableStore', () => {
           data: {
             totalMatches: 2,
             matches: [
-              { name: 'en node 56', nodeId: 'uuid 56', id: 56, breadcrumb: [] },
+              { name: 'en node 56', nodeId: 'uuid 56', id: 56 },
               {
                 name: 'en node 3',
                 nodeId: 'uuid 3',
-                id: 3,
-                breadcrumb: []
+                id: 3
               }
             ]
           }
@@ -69,12 +68,11 @@ describe('tableStore', () => {
           data: {
             totalMatches: 2,
             matches: [
-              { name: 'en node 56', nodeId: 'uuid 56', id: 56, breadcrumb: [] },
+              { name: 'en node 56', nodeId: 'uuid 56', id: 56 },
               {
                 name: 'en node 3',
                 nodeId: 'uuid 3',
-                id: 3,
-                breadcrumb: []
+                id: 3
               }
             ]
           }

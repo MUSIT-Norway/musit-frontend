@@ -2,7 +2,6 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
 import { AddObservationPage } from '../AddObservationPage';
-import MusitActor from '../../../models/actor';
 
 describe('Render add observation page', () => {
   it('should set default date and have correct date format', () => {
