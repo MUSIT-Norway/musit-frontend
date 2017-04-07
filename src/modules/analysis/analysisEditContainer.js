@@ -50,17 +50,16 @@ export const onMount = (
     id: params.analysisId,
     collectionId: appSession.getCollectionId(),
     token: appSession.getAccessToken()
-  })
-    .then(analysis => {
-      const dataForForm = Object.keys(analysis).reduce(
-        (obj, attributeName) => [
-          ...obj,
-          { name: attributeName, defaultValue: analysis[attributeName] }
-        ],
-        []
-      );
-      loadForm(dataForForm);
-    });
+  }).then(analysis => {
+    const dataForForm = Object.keys(analysis).reduce(
+      (obj, attributeName) => [
+        ...obj,
+        { name: attributeName, defaultValue: analysis[attributeName] }
+      ],
+      []
+    );
+    loadForm(dataForForm);
+  });
 
   loadAnalysis({
     museumId: appSession.getMuseumId(),
