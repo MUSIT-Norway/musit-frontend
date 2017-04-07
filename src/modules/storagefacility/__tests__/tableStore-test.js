@@ -9,8 +9,8 @@ const diff = require('deep-diff').diff;
 describe('tableStore', () => {
   it('testing reducer', () => {
     const testScheduler = new TestScheduler((actual, expected) => {
-      console.log(JSON.stringify(actual, null, 2));
-      console.log(JSON.stringify(expected, null, 2));
+      // console.log(JSON.stringify(actual, null, 2));
+      // console.log(JSON.stringify(expected, null, 2));
       const difference = diff(actual, expected);
       if (typeof difference !== 'undefined') {
         console.log(difference);
@@ -36,9 +36,7 @@ describe('tableStore', () => {
           loading: false,
           data: {
             totalMatches: 1,
-            matches: [
-              { name: 'en node 456', nodeId: 'uuid 456', id: 456 }
-            ]
+            matches: [{ name: 'en node 456', nodeId: 'uuid 456', id: 456 }]
           }
         },
         rootNode: null,

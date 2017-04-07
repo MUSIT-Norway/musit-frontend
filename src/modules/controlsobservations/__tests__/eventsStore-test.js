@@ -1,8 +1,6 @@
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { store$, loadEvents } from '../eventsStore';
-import Observation from '../../../models/observation';
-import Control from '../../../models/control';
 import MusitNode from '../../../models/node';
 const diff = require('deep-diff').diff;
 
@@ -31,8 +29,8 @@ describe('controlsAndObservationsStore', () => {
       },
       c: {
         data: [
-          new Observation({ id: 23444, doneBy: 'Test 2', registeredBy: 'Test 3' }),
-          new Control({ id: 1455, doneBy: 'Test 1', registeredBy: 'Test 4' })
+          { id: 23444, doneBy: 'Test 2', registeredBy: 'Test 3' },
+          { id: 1455, doneBy: 'Test 1', registeredBy: 'Test 4' }
         ],
         loading: false
       }
@@ -127,15 +125,15 @@ describe('controlsAndObservationsStore', () => {
       },
       c: {
         data: [
-          new Observation({ id: 23444, doneBy: undefined, registeredBy: undefined }),
-          new Control({ id: 1455, doneBy: undefined, registeredBy: undefined })
+          { id: 23444, doneBy: undefined, registeredBy: undefined },
+          { id: 1455, doneBy: undefined, registeredBy: undefined }
         ],
         loading: false
       },
       d: {
         data: [
-          new Observation({ id: 23444, doneBy: undefined, registeredBy: undefined }),
-          new Control({ id: 1455, doneBy: undefined, registeredBy: undefined })
+          { id: 23444, doneBy: undefined, registeredBy: undefined },
+          { id: 1455, doneBy: undefined, registeredBy: undefined }
         ],
         loading: false,
         rootNode: new MusitNode({ nodeId: 1, name: 'Test' })

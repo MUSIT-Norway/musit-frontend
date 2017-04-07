@@ -26,17 +26,15 @@ describe('ObjectSearchComponent', () => {
   ];
   const testData = {
     totalMatches: 20,
-    matches: new Array(20).fill(
-      {
-        museumNo: '12345',
-        subNo: '45',
-        term: 'Fuglekasse',
-        id: 1,
-        breadcrumb: getPath({ path, pathNames }),
-        path: path,
-        pathNames: pathNames
-      }
-    )
+    matches: new Array(20).fill({
+      museumNo: '12345',
+      subNo: '45',
+      term: 'Fuglekasse',
+      id: 1,
+      breadcrumb: getPath({ path, pathNames }),
+      path: path,
+      pathNames: pathNames
+    })
   };
 
   it('should display object 1', () => {
