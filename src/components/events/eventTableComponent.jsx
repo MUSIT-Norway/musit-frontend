@@ -36,5 +36,5 @@ export const EventTableComponent = ({ events }: EventTypeProps) => {
     </div>
   );
 };
-
+EventTableComponent.displayName = 'EventTableComponent';
 export default EventTableComponent;
