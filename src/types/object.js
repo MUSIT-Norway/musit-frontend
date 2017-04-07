@@ -14,5 +14,5 @@ export type ObjectProps = {
   museumId: {},
   collectionId: {},
   token: string,
-  callback: any
+  callBack: any
 };

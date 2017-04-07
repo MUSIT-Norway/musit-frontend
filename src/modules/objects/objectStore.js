@@ -1,40 +1,43 @@
+/* @flow */
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';
 import Sample from '../../models/sample';
 import Event from '../../models/event';
 export const initialState = { objectData: {}, events: [], samples: [] };
-import { ObjectProps } from '../../types/object';
+import type { ObjectProps } from '../../types/object';
 
 const loadObjectData = () =>
   (val: ObjectProps) =>
-    MusitObject.getObjectDetails()(val)
-      .map(response => {
-        const v = {
-          id: response.uuid,
-          objectId: response.id,
-          token: val.token,
-          museumId: val.museumId,
-          callBack: val.callBack
-        };
-        return Observable.forkJoin(
-          Observable.of(response),
-          Event.getAnalysesAndMoves()(v),
-          Sample.loadSampleDataForObject()(v)
-        ).map(([o, e, s]) => ({ objectData: o, events: e, samples: s }));
-      })
-      .flatMap(r => r);
+    MusitObject.getObjectDetails()(val).flatMap(response => {
+      //const v2 = {...val, id: response.uuid}
+      const v = {
+        id: response.uuid,
+        objectId: response.id,
+        token: val.token,
+        museumId: val.museumId,
+        callBack: val.callBack
+      };
+      return Observable.forkJoin(
+        Observable.of(response),
+        Event.getAnalysesAndMoves()(v),
+        Sample.loadSampleDataForObject()(v)
+      ).map(([o, e, s]) => ({ objectData: o, events: e, samples: s }));
+    });
 
-export const loadObject$ = createAction('loadObject$').switchMap(loadObjectData());
-export const clear$ = createAction('clear$');
+export const loadObject$: Observable = createAction('loadObject$').switchMap(
+  loadObjectData()
+);
+export const clear$: Observable = createAction('clear$');
 
-const reducer$ = actions =>
+const reducer$ = (actions: { loadObject$: Observable, clear$: Observable }) =>
   Observable.merge(
     actions.clear$.map(() => () => initialState),
     actions.loadObject$.map(data => state => ({ ...state, ...data }))
   );
 
-export const objectStore$ = (actions = { loadObject$, clear$ }) =>
-  createStore('objectStore$', reducer$(actions), Observable.of(initialState));
+export const objectStore$ = (
+  actions: { loadObject$: Observable, clear$: Observable } = { loadObject$, clear$ }
+) => createStore('objectStore$', reducer$(actions), Observable.of(initialState));
 
 export default objectStore$();
