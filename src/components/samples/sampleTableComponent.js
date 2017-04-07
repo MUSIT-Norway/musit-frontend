@@ -31,7 +31,9 @@ const SampleTableComponent = ({ samples }: SamplesPropsType) => {
               <Td column="sampleSubType">{e.sampleSubType}</Td>
               <Td column="status">{e.status}</Td>
               <Td column="hasAnalyse">{e.hasAnalyse}</Td>
-              <Td column="showInfo"><a href={e.details || 'En url'}>Se mer / Rediger</a></Td>
+              <Td column="showInfo">
+                <a href={e.details || 'En url'}>Se mer / Rediger</a>
+              </Td>
             </Tr>
           ))}
       </Table>
