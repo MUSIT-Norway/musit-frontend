@@ -40,16 +40,16 @@ export const onMount = (
   }
 ) => {
   getAnalysisTypesForCollection({
-    museumId: appSession.getMuseumId(),
-    collectionId: appSession.getCollectionId().uuid,
-    token: appSession.getAccessToken()
+    museumId: appSession.museumId,
+    collectionId: appSession.collectionId,
+    token: appSession.accessToken
   });
 
   loadAnalysisForForm({
-    museumId: appSession.getMuseumId(),
+    museumId: appSession.museumId,
     id: params.analysisId,
-    collectionId: appSession.getCollectionId(),
-    token: appSession.getAccessToken()
+    collectionId: appSession.collectionId,
+    token: appSession.accessToken
   })
     .do(analysis => {
       const dataForForm = Object.keys(analysis).reduce(
@@ -64,10 +64,10 @@ export const onMount = (
     .toPromise();
 
   loadAnalysis({
-    museumId: appSession.getMuseumId(),
+    museumId: appSession.museumId,
     id: params.analysisId,
-    collectionId: appSession.getCollectionId(),
-    token: appSession.getAccessToken()
+    collectionId: appSession.collectionId,
+    token: appSession.accessToken
   });
 };
 

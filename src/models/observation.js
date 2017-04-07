@@ -22,7 +22,7 @@ Observation.loadObservations = (ajaxGet = simpleGet) =>
       if (!Array.isArray(response)) {
         return [];
       }
-      return response.map(json => new Observation(json));
+      return response;
     });
   };
 
@@ -42,16 +42,14 @@ Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
         observation.response.registeredBy
       ]).filter(p => p);
       return MusitActor.getActors(ajaxPost)(actorIds, token).map(actorDetails => {
-        return new Observation(
-          mapToFrontEnd({
-            ...observation.response,
-            ...MusitActor.getActorNames(
-              actorDetails,
-              observation.response.doneBy,
-              observation.response.registeredBy
-            )
-          })
-        );
+        return mapToFrontEnd({
+          ...observation.response,
+          ...MusitActor.getActorNames(
+            actorDetails,
+            observation.response.doneBy,
+            observation.response.registeredBy
+          )
+        });
       });
     });
   };
