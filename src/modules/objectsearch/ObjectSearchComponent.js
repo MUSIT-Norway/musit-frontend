@@ -179,8 +179,7 @@ export class ObjectSearchComponent extends React.Component {
                                         museumId: this.props.appSession.getMuseumId(),
                                         collectionId: this.props.appSession.getCollectionId(),
                                         token: this.props.appSession.getAccessToken()
-                                      })
-                                    }
+                                      })}
                                     title={I18n.t('musit.objectsearch.addToPickList')}
                                   >
                                     {this.props.isItemAdded(
