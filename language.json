@@ -95,7 +95,11 @@
       },
       "events": {
         "noData": "No controls or observations",
-        "noDataForObject": "No events found for this object"
+        "noDataForObject": "No events found for this object",
+        "eventTypes" : {
+          "MoveObject": "Move object",
+          "MoveNode": "Move node"
+        }
       },
       "samples": {
         "noSamplesForObject": "No samples found for object"
@@ -762,7 +766,11 @@
       },
       "events": {
         "noData": "Ingen kontroller eller observasjoner",
-        "noDataForObject": "Ingen hendelser funnet på objektet"
+        "noDataForObject": "Ingen hendelser funnet på objektet",
+        "eventTypes": {
+          "MoveObject": "Flytt objekt",
+          "MoveNode": "Flytt node"
+        }
       },
       "samples": {
         "noSamplesForObject": "Ingen prøver funnet på objektet"

@@ -13,7 +13,7 @@ export const EventTableComponent = ({ events }: EventTypeProps) => {
         className="table"
         columns={[
           { key: 'eventDate', label: 'Dato' },
-          { key: 'eventType', label: 'Type hendelse' },
+          { key: 'type', label: 'Type hendelse' },
           { key: 'registeredBy', label: 'Utført av' },
           { key: 'keyData', label: 'Nøkkeldata' },
           { key: 'note', label: 'Kommentar' },
@@ -25,11 +25,11 @@ export const EventTableComponent = ({ events }: EventTypeProps) => {
         {events && events.map((event, i) =>
           <Tr key={i}>
             <Td column="eventDate">{event.eventDate}</Td>
-            <Td column="type">{event.eventType}</Td>
+            <Td column="type">{I18n.t(`musit.events.eventTypes.${event.type}`)}</Td>
             <Td column="registeredBy">{event.registeredBy}</Td>
             <Td column="keyData">{event.keyData}</Td>
             <Td column="note"><span>{event.note}</span></Td>
-            <Td column="id">Les mer</Td>
+            <Td column="id"><a href="some URL" onClick={(e) => e.preventDefault()}>Les mer</a></Td>
           </Tr>
         )}
       </Table>

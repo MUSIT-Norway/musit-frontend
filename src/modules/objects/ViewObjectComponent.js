@@ -25,10 +25,10 @@ export const ViewObjectComponent = (
         </Row>
       </div>
       <Tabs id="objectDetails">
-        <Tab title="Hendelser" eventKey={0} id="1">
+        <Tab title="Hendelser" eventKey={0}>
           <EventTableComponent events={events} />
         </Tab>
-        <Tab title="Prøver" eventKey={1} id="2">
+        <Tab title="Prøver" eventKey={1}>
           <SampleTableComponent samples={samples} />
         </Tab>
       </Tabs>
