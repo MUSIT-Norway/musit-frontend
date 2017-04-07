@@ -16,10 +16,10 @@ describe('analysisStore', () => {
     });
 
     // mock streams
-    const loadAnalysisTypesM = '--1--------';
-    const getAnalysisTypesForCollectionM = '-----------';
-    const loadAnalysisM = '-1---------';
-    const expected = 'abc--------';
+    const loadAnalysisTypesM             = '--1--------';
+    const getAnalysisTypesForCollectionM = '---1-------';
+    const loadAnalysisM                  = '-1---------';
+    const expected                       = 'abcd-------';
 
     const expectedStateMap = {
       a: {

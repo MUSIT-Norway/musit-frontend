@@ -16,7 +16,7 @@ describe('analysisEditContainer', () => {
       collectionId: new CollectdionId('00000000-0000-0000-0000-000000000000'),
       accessToken: '1234'
     });
-    const loadAnalysisForForm = () => Observable.of({ objectId: '123' }).toPromise();
+    const loadAnalysisForForm = () => Observable.of({ objectId: '123' });
     onMount({
       getAnalysisTypesForCollection,
       loadAnalysisForForm,
@@ -26,11 +26,14 @@ describe('analysisEditContainer', () => {
       loadForm
     });
     expect(loadAnalysis.calledOnce).toBe(true);
+    expect(loadForm.calledOnce).toBe(true);
+    expect(loadForm.getCall(0).args[0]).toEqual([
+      { name: 'objectId', defaultValue: '123' }
+    ]);
     expect(loadAnalysis.getCall(0).args[0].token).toEqual('1234');
     expect(loadAnalysis.getCall(0).args[0].museumId).toEqual(new MuseumId(99));
     expect(loadAnalysis.getCall(0).args[0].collectionId).toEqual(
       new CollectdionId('00000000-0000-0000-0000-000000000000')
     );
-    expect(loadForm.calledOnce).toBe(false);
   });
 });
