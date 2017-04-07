@@ -29,25 +29,6 @@ const props = {
   loadAnalysisForForm: toPromise(Analysis.getAnalysisWithDeatils())
 };
 
-const callLoadAnalysisForForm = (loadAnalysisForForm, appSession, params, loadForm) =>
-  loadAnalysisForForm({
-    museumId: appSession.getMuseumId(),
-    id: params.analysisId,
-    collectionId: appSession.getCollectionId(),
-    token: appSession.getAccessToken()
-  })
-    .then(analysis => {
-      const dataForForm = Object.keys(analysis).reduce(
-        (obj, attributeName) => [
-          ...obj,
-          { name: attributeName, defaultValue: analysis[attributeName] }
-        ],
-        []
-      );
-      loadForm(dataForForm);
-    })
-    .catch(e => console.log(Error(e)));
-
 export const onMount = (
   {
     getAnalysisTypesForCollection,
@@ -63,7 +44,24 @@ export const onMount = (
     collectionId: appSession.getCollectionId().uuid,
     token: appSession.getAccessToken()
   });
-  callLoadAnalysisForForm(loadAnalysisForForm, appSession, params, loadForm);
+
+  loadAnalysisForForm({
+    museumId: appSession.getMuseumId(),
+    id: params.analysisId,
+    collectionId: appSession.getCollectionId(),
+    token: appSession.getAccessToken()
+  })
+    .then(analysis => {
+      const dataForForm = Object.keys(analysis).reduce(
+        (obj, attributeName) => [
+          ...obj,
+          { name: attributeName, defaultValue: analysis[attributeName] }
+        ],
+        []
+      );
+      loadForm(dataForForm);
+    });
+
   loadAnalysis({
     museumId: appSession.getMuseumId(),
     id: params.analysisId,
