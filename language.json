@@ -94,7 +94,11 @@
         }
       },
       "events": {
-        "noData": "No controls or observations"
+        "noData": "No controls or observations",
+        "noDataForObject": "No events found for this object"
+      },
+      "samples": {
+        "noSamplesForObject": "No samples found for object"
       },
       "moveModal": {
         "move": "Move",
@@ -187,7 +191,6 @@
         "object": {
           "museumsNumber": "Museum No.",
           "uNumber": "U. No.",
-          "term": "Artefact/Species",
           "iconTooltip": {
             "moveObjectHistory": "Move history",
             "moveObject": "Move object",
@@ -758,7 +761,11 @@
         }
       },
       "events": {
-        "noData": "Ingen kontroller eller observasjoner"
+        "noData": "Ingen kontroller eller observasjoner",
+        "noDataForObject": "Ingen hendelser funnet på objektet"
+      },
+      "samples": {
+        "noSamplesForObject": "Ingen prøver funnet på objektet"
       },
       "moveModal": {
         "move": "Flytt hit",

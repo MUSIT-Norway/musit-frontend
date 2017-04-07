@@ -34,6 +34,9 @@ export default {
           goToMagasin: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin`
         },
+        object: {
+          gotoObject: (id: string) => `/objects/${id}`
+        },
         report: {
           goToReport: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/reports`,
