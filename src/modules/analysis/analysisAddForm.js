@@ -26,39 +26,34 @@ export const getBoolField = (field: string, value: boolean = false): Field<boole
 });
 
 const id = getStrField('id', '123');
-const registeredBy = getStrField('registeredBy', 'Per Hansen');
-const registeredDate = getStrField('registeredDate', '2017-03-16T14:37:45+00:00');
-const doneBy = getStrField('doneBy', 'Per Hansen');
+const analysisTypeId = getStrField('analysisTypeId','b15ee459-38c9-414f-8b54-7c6439b44d3d');
+const doneBy = getStrField('doneBy', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
 const doneDate = getStrField('doneDate', '12.12.2012');
-const eventDate = getStrField('eventDate', '13.12.2012');
-const partOf = getStrField('partOf', '2345');
-const result = getStrField('result', 'result');
-const actor = getStrField('actor', 'Test Name Actor');
-const role = getStrField('role', 'Creator');
-const place = getStrField('place', 'Oslo, Norway');
-const analysisTypeId = getStrField(
-  'analysisTypeId',
-  'b15ee459-38c9-414f-8b54-7c6439b44d3d'
-);
-const externalSource = getStrField('externalSource', 'www.musit.uio.no');
-const comments = getStrField('comments', 'comments');
-const restrictions = getBoolField('restrictions', true);
-const restrictionsFor = getStrField('restrictionsFor', 'Test name');
-const reasonForRestrictions = getStrField(
-  'reasonForRestrictions',
-  'Reason for Restrictions'
-);
-const restrictionsEndDate = getStrField('restrictionsEndDate', '13.12.2012');
-const repealedBy = getStrField('repealedBy', 'repealed By Person Name');
-const note = getStrField('note', 'default value of note');
-const completeAnalysis = getBoolField('completeAnalysis', true);
-
+const registeredBy = getStrField('registeredBy', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
+const registeredDate = getStrField('registeredDate', '2017-03-16T14:37:45+00:00');
+const responsible = getStrField('responsible', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
+const administrator = getStrField('administrator', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
+const completedBy = getStrField('completedBy', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
+const completedDate = getStrField('completedDate', '2017-03-16T14:37:45+00:00');
 const objectId = getStrField('objectId', '');
 const museumNo = getStrField('museumNo', '');
 const term = getStrField('term', '');
 
-const caseNumber: Field<number> = {
-  name: 'caseNumber',
+
+const partOf = getStrField('partOf', '2345');
+const place = getStrField('place', 'Oslo, Norway');
+
+const externalSource = getStrField('externalSource', 'www.musit.uio.no');
+const comments = getStrField('comments', 'comments');
+
+
+
+const result = getStrField('result', 'result');
+const restrictions = getBoolField('restrictions', true);
+const by = getStrField('by', 'Test name');
+const reason = getStrField('reason','Reason for Restrictions');
+const caseNumbers: Field<number> = {
+  name: 'caseNumbers',
   mapper: numberMapper,
   defaultValue: 1234,
   validator: {
@@ -66,31 +61,50 @@ const caseNumber: Field<number> = {
     valueValidator: isNumberInRange(0, 10)
   }
 };
+const expirationDate = getStrField('expirationDate', '13.12.2012');
+const cancelledBy = getStrField('cancelledBy', 'Opphevet av');
+const cancelledReason = getStrField('cancelledReason', 'Årsak til oppheving');
+
+
+const note = getStrField('note', 'default value of note');
+const type = getStrField('partOf', 'Analysis');
+const completeAnalysis = getBoolField('completeAnalysis', true);
+
+
 
 export const fieldsArray = [
   id,
-  registeredBy,
-  registeredDate,
+  analysisTypeId,
   doneBy,
   doneDate,
-  eventDate,
+  registeredBy,
+  registeredDate,
+
+  responsible,
+
+  administrator,
+  completedBy,
+  completedDate,
+  objectId,
+  note,
+  type,
+
   partOf,
   result,
-  caseNumber,
-  actor,
-  role,
   place,
-  analysisTypeId,
+
   externalSource,
   comments,
+
   restrictions,
-  restrictionsFor,
-  reasonForRestrictions,
-  restrictionsEndDate,
-  repealedBy,
-  note,
+  by,
+  expirationDate,
+  reason,
+  caseNumbers,
+  cancelledBy,
+  cancelledReason,
+
   completeAnalysis,
-  objectId,
   museumNo,
   term
 ];
