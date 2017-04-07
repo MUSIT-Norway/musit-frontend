@@ -50,7 +50,7 @@ exports[`ViewObjectComponent should display correctly 1`] = `
       eventKey={0}
       id="1"
       title="Hendelser">
-      <Component
+      <EventTableComponent
         events={
           Array [
             Object {
