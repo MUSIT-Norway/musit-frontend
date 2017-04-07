@@ -1,13 +1,8 @@
 import Config from '../config';
-import entries from 'object.entries';
 import { apiUrl } from '../shared/util';
 import { simpleGet } from '../shared/RxAjax';
 
-class Report {
-  constructor(props) {
-    entries(props).forEach(([k, v]) => this[k] = v);
-  }
-}
+class Report {}
 
 Report.getKDReport = (ajaxGet = simpleGet) =>
   ({ token, museumId }) => {

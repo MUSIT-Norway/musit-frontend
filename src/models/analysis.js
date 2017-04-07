@@ -34,9 +34,7 @@ Analysis.saveAnalysisEvent = (ajaxPost = simplePost) =>
 Analysis.editAnalysisEvent = (ajaxPut = simplePut) =>
   ({ museumId, data, token, callback }) => {
     const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId);
-    return ajaxPut(url, data, token, callback).map(
-      ({ response }) => response && new Analysis(response)
-    );
+    return ajaxPut(url, data, token, callback).map(({ response }) => response);
   };
 
 Analysis.getAnalysesForObject = (ajaxGet = simpleGet) =>

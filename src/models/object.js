@@ -3,7 +3,8 @@ import Config from '../config';
 import { getPath } from '../shared/util';
 import flatMap from 'lodash/flatMap';
 import type { MovableObject } from './types/movableObject';
-import MuseumId from './museumId';
+
+type MuseumId = number;
 
 class MusitObject {}
 

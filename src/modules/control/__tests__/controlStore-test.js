@@ -1,7 +1,6 @@
 import { TestScheduler, Observable, Subject } from 'rxjs/Rx';
 import assert from 'assert';
 import { store$, initialState } from '../controlStore';
-import MusemId from '../../../models/museumId';
 import Control from '../../../models/control';
 
 describe('ControlStore', () => {
@@ -61,7 +60,7 @@ describe('ControlStore', () => {
     // mock up$ and down$ events
     const getControl$ = testScheduler
       .createHotObservable(getControlM, {
-        x: { token: '12344', museumId: new MusemId(1), nodeId: 1, controlId: 2 }
+        x: { token: '12344', museumId: 1, nodeId: 1, controlId: 2 }
       })
       .switchMap(
         Control.getControl(

@@ -1,4 +1,3 @@
-import entries from 'object.entries';
 import Config from '../config';
 import mapToBackEnd from './mapper/observation/to_backend';
 import mapToFrontEnd from './mapper/observation/to_frontend';
@@ -6,11 +5,7 @@ import MusitActor from './actor';
 import uniq from 'lodash/uniq';
 import { simplePost, simpleGet } from '../shared/RxAjax';
 
-class Observation {
-  constructor(props) {
-    entries(props).forEach(([k, v]) => this[k] = v);
-  }
-}
+class Observation {}
 
 Observation.loadObservations = (ajaxGet = simpleGet) =>
   ({ nodeId, museumId, token, callback }) => {
