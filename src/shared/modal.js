@@ -15,7 +15,7 @@ export const showConfirm = (message, onYes) => {
 
   const title = I18n.t('musit.texts.deleteNode');
   const prompt = `<div>${message}</div>`;
-  const $dialog = __$dialog__ = $(prompt).dialog({
+  const $dialog = (__$dialog__ = $(prompt).dialog({
     autoOpen: false,
     modal: true,
     title: title,
@@ -24,7 +24,7 @@ export const showConfirm = (message, onYes) => {
     close: function() {
       $(this).remove();
     }
-  });
+  }));
   $dialog.dialog({
     buttons: [
       {
@@ -48,7 +48,7 @@ export const showConfirm = (message, onYes) => {
 export const showModal = (title, componentToRender, closeFn) => {
   closeModal();
 
-  const $dialog = __$dialog__ = $('<div>').dialog({
+  const $dialog = (__$dialog__ = $('<div>').dialog({
     autoOpen: false,
     modal: true,
     title: title,
@@ -63,7 +63,7 @@ export const showModal = (title, componentToRender, closeFn) => {
         closeFn();
       }
     }
-  });
+  }));
 
   class ClosableAndProvided extends React.Component {
     static childContextTypes = {
