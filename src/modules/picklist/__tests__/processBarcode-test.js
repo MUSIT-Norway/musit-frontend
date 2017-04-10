@@ -1,16 +1,13 @@
 import { processBarcode } from '../PickListContainer';
-import { AppSession } from '../../app/appSession';
 import sinon from 'sinon';
-import MuseumId from '../../../models/museumId';
-import CollectionId from '../../../models/collectionId';
 import { Observable } from 'rxjs';
 
 describe('processBarcode', () => {
-  const appSession = new AppSession({
+  const appSession = {
     accessToken: '1234',
-    museumId: new MuseumId(99),
-    collectionId: new CollectionId('d3982b48-0000-0000-0000-6e38b59d57ed')
-  });
+    museumId: 99,
+    collectionId: 'd3982b48-0000-0000-0000-6e38b59d57ed'
+  };
 
   const barCodeWithUUID = {
     uuid: true,

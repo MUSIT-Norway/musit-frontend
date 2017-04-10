@@ -35,13 +35,13 @@ export const onMount = (
   { loadAnalysisTypes, appSession, getAnalysisTypesForCollection }
 ) => {
   loadAnalysisTypes({
-    museumId: appSession.getMuseumId(),
-    token: appSession.getAccessToken()
+    museumId: appSession.museumId,
+    token: appSession.accessToken
   });
   getAnalysisTypesForCollection({
-    museumId: appSession.getMuseumId(),
-    collectionId: appSession.getCollectionId().uuid,
-    token: appSession.getAccessToken()
+    museumId: appSession.museumId,
+    collectionId: appSession.collectionId,
+    token: appSession.accessToken
   });
 };
 

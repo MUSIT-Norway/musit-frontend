@@ -4,15 +4,14 @@ import React from 'react';
 import sinon from 'sinon';
 import NodeGrid from '../NodeTable';
 import { expect as e } from 'chai';
-import MusitNode from '../../../models/node';
 
 describe('NodeTable', () => {
   const tableData = [
-    new MusitNode({ name: 'NHM', type: 'Organisation', isRootNode: () => true }),
-    new MusitNode({ name: 'KHM', type: 'Organisation', isRootNode: () => true }),
-    new MusitNode({ name: 'Bygg 1', type: 'Building', isRootNode: () => false }),
-    new MusitNode({ name: 'Bygg 2', type: 'Building', isRootNode: () => false }),
-    new MusitNode({ name: 'Rom 1', type: 'Room', isRootNode: () => false })
+    { name: 'NHM', type: 'Root' },
+    { name: 'KHM', type: 'Root' },
+    { name: 'Bygg 1', type: 'Building' },
+    { name: 'Bygg 2', type: 'Building' },
+    { name: 'Rom 1', type: 'Room' }
   ];
 
   const onClick = sinon.spy();

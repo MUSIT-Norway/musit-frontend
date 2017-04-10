@@ -6,56 +6,21 @@ import { getAccessToken } from '../../shared/token';
 import { emitError } from '../../shared/errors';
 import { getDisplayName } from '../../shared/util';
 import { I18n } from 'react-i18nify';
-import MuseumId from '../../models/museumId';
-import CollectionId from '../../models/collectionId';
-import Actor from '../../models/actor';
 import orderBy from 'lodash/orderBy';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import isEqualWith from 'lodash/isEqualWith';
-export class AppSession {
-  constructor(state) {
-    this.state = state;
-  }
-
-  getAccessToken() {
-    return this.state.accessToken;
-  }
-
-  getGroups() {
-    return this.state.groups;
-  }
-
-  getActor() {
-    return this.state.actor;
-  }
-
-  getMuseumId() {
-    return this.state.museumId;
-  }
-
-  getCollectionId() {
-    return this.state.collectionId;
-  }
-
-  getBuildNumber() {
-    return this.state.buildInfo && this.state.buildInfo.buildInfoBuildNumber;
-  }
-
-  /**
-   * Similar to copy on case classes in Scala
-   *
-   * @param props properties that should override properties in appSession state
-   * @returns {AppSession}
-   */
-  copy(props) {
-    return new AppSession({ ...this.state, ...props });
-  }
-}
 
 export const makeUrlAware = Component => {
   class Wrapper extends React.Component {
     static propTypes = {
-      appSession: React.PropTypes.instanceOf(AppSession).isRequired
+      appSession: PropTypes.shape({
+        museumId: PropTypes.number.isRequired,
+        collectionId: PropTypes.string.isRequired
+      }).isRequired,
+      params: PropTypes.shape({
+        museumId: PropTypes.string,
+        collectionIds: PropTypes.string
+      })
     };
 
     static defaultProps = {
@@ -66,12 +31,11 @@ export const makeUrlAware = Component => {
       const paramsDiffFromSession = !isEqualWith(
         newProps.params,
         newProps.appSession,
-        (lhs, rhs) => {
-          return lhs.museumId * 1 === rhs.getMuseumId().id &&
-            lhs.collectionIds === rhs.getCollectionId().uuid;
+        (params, session) => {
+          return params.museumId * 1 === session.museumId &&
+            params.collectionIds === session.collectionId;
         }
       );
-
       if (paramsDiffFromSession) {
         this.props.refreshSession(newProps.params, newProps.appSession);
       }
@@ -128,11 +92,11 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
         }));
       }
       const orderedGroups = orderBy(groups, ['museumId'], ['desc']);
-      const museumId = new MuseumId(orderedGroups[0].museumId);
-      const collectionId = new CollectionId(orderedGroups[0].collections[0].uuid);
+      const museumId = orderedGroups[0].museumId;
+      const collectionId = orderedGroups[0].collections[0].uuid;
       return {
         accessToken,
-        actor: new Actor(currentUserRes.response),
+        actor: currentUserRes.response,
         groups: orderedGroups,
         museumId,
         collectionId,
@@ -151,14 +115,14 @@ export const refreshSession = (
   setCollection = id => setCollectionId$.next(id)
 ) =>
   (params, appSession) => {
-    const museumId = appSession.getMuseumId();
-    const museumIdFromParam = new MuseumId(params.museumId * 1);
-    if (museumIdFromParam.id && museumIdFromParam.id !== museumId.id) {
+    const museumId = appSession.museumId;
+    const museumIdFromParam = params.museumId;
+    if (museumIdFromParam && museumIdFromParam !== museumId) {
       setMuseum(museumIdFromParam);
     }
-    const collectionId = appSession.getCollectionId();
-    const collectionIdFromParam = new CollectionId(params.collectionIds);
-    if (collectionIdFromParam.uuid && collectionIdFromParam.uuid !== collectionId.uuid) {
+    const collectionId = appSession.collectionId;
+    const collectionIdFromParam = params.collectionIds;
+    if (collectionIdFromParam && collectionIdFromParam !== collectionId) {
       setCollection(collectionIdFromParam);
     }
   };
@@ -178,9 +142,6 @@ export const reducer$ = (actions, onError = emitError) =>
 
 const session$ = (
   actions$ = { setMuseumId$, setCollectionId$, setAccessToken$, loadAppSession$ }
-) =>
-  createStore('appSession', reducer$(actions$), Observable.of(initialState)).map(
-    state => new AppSession(state)
-  );
+) => createStore('appSession', reducer$(actions$), Observable.of(initialState));
 
 export default session$();

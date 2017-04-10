@@ -17,6 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import { parseFloatFromString, Option } from './../../../shared/util';
+import Actor from '../../../models/actor';
 
 export function parseRangeObservation(el) {
   const re = {};
@@ -112,7 +113,7 @@ function getData(observations, field) {
 export default (state: any, nodeId: string | number) => {
   const r = {};
   r.eventType = 'Observation';
-  r.doneBy = state.doneBy.getActorId();
+  r.doneBy = Actor.getActorId(state.doneBy);
   r.doneDate = state.doneDate;
   r.affectedThing = nodeId * 1;
   r.temperature = new Option(getData(state.observations, 'temperature')).map(

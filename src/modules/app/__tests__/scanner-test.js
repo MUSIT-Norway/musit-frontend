@@ -8,7 +8,6 @@ import wrapWithScanner, {
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 import { Observable } from 'rxjs';
-import { AppSession } from '../appSession';
 import { TestScheduler } from 'rxjs/Rx';
 const diff = require('deep-diff').diff;
 import assert from 'assert';
@@ -21,7 +20,7 @@ describe('scannerWrapper', () => {
     const clearScanner = sinon.spy();
     const source$ = Observable.of('1234');
     const ScannerWrapped = wrapWithScanner(processBarcode, source$, clearScanner)(Child);
-    const wrapper = mount(<ScannerWrapped appSession={new AppSession({})} />);
+    const wrapper = mount(<ScannerWrapped appSession={{}} />);
     expect(processBarcode.calledOnce).toBe(false);
     expect(wrapper.state('scannerEnabled')).toBe(false);
     wrapper.find('button').simulate('click');

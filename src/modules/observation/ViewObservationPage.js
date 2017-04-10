@@ -20,13 +20,13 @@ export class ViewObservationPage extends React.Component {
     this.props.getObservation({
       nodeId: this.props.params.id,
       observationId: this.props.params.obsId,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken
     });
     this.props.loadRootNode({
       id: this.props.params.id,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken
     });
   }
 

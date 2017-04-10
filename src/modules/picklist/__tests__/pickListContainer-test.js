@@ -1,17 +1,14 @@
 import { moveItems, nodeCallback, objectCallback } from '../PickListContainer';
-import { AppSession } from '../../app/appSession';
-import MuseumId from '../../../models/museumId';
-import CollectionId from '../../../models/collectionId';
 import sinon from 'sinon';
 
-const appSession = new AppSession({
+const appSession = {
   accessToken: '1234',
-  museumId: new MuseumId(99),
-  collectionId: new CollectionId('1234'),
+  museumId: 99,
+  collectionId: '1234',
   actor: {
-    getActorId: () => 1
+    dataportenId: '1234'
   }
-});
+};
 
 describe('nodeCallback', () => {
   it('should refresh multiple nodes', () => {

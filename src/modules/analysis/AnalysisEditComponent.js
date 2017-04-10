@@ -125,7 +125,7 @@ export const editAnalysisEventLocal = (
 ) =>
   () =>
     editAnalysisEvent({
-      museumId: appSession.getMuseumId(),
+      museumId: appSession.museumId,
       data: {
         analysisTypeId: getValue(form.analysisTypeId),
         eventDate: getValue(form.registeredDate),
@@ -134,7 +134,7 @@ export const editAnalysisEventLocal = (
           ? store.analysis.events.map(a => a.objectId)
           : store.analysis.objectId
       },
-      token: appSession.getAccessToken()
+      token: appSession.accessToken
     });
 
 const updateFormField = (field, updateForm) =>

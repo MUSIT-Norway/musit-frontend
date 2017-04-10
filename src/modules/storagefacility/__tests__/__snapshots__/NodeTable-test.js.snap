@@ -36,7 +36,7 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
             <td>
-              Organisasjon
+              Rotnode
             </td>
             <td />
             <td />
@@ -54,7 +54,7 @@ exports[`NodeTable should render properly  1`] = `
               </a>
             </td>
             <td>
-              Organisasjon
+              Rotnode
             </td>
             <td />
             <td />

@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import MusitObject from '../../models/object';
-import { getPath } from '../../shared/util';
 
 export const searchForObjects = MusitObject.searchForObjects;
 
@@ -24,14 +23,7 @@ export const reducer$ = actions =>
     actions.clearSearch$.map(() => () => ({ ...initialState, loading: true })),
     actions.searchForObjects$.map(result =>
       state => {
-        const matches = result.matches
-          ? result.matches.map(data => {
-              return new MusitObject({
-                ...data,
-                breadcrumb: getPath(data)
-              });
-            })
-          : [];
+        const matches = result.matches;
         return {
           ...state,
           loaded: true,

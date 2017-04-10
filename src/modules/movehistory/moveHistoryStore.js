@@ -16,7 +16,7 @@ export const getLocationHistory = (get, post) =>
           return rows;
         }
         return rows.map(data => {
-          const doneBy = actors.find(a => a.hasActorId(data.doneBy));
+          const doneBy = actors.find(a => MusitActor.hasActorId(a, data.doneBy));
           return {
             ...data,
             doneBy: doneBy ? doneBy.fn : I18n.t('musit.unknown')

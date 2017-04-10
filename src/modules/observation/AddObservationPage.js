@@ -25,8 +25,8 @@ export class AddObservationPage extends React.Component {
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
         id: this.props.params.id,
-        museumId: this.props.appSession.getMuseumId(),
-        token: this.props.appSession.getAccessToken()
+        museumId: this.props.appSession.museumId,
+        token: this.props.appSession.accessToken
       });
     }
   }
@@ -44,8 +44,8 @@ export class AddObservationPage extends React.Component {
             <ObservationPage
               id={this.props.params.id}
               onSaveObservation={(nodeId, data) => {
-                const museumId = this.props.appSession.getMuseumId();
-                const token = this.props.appSession.getAccessToken();
+                const museumId = this.props.appSession.museumId;
+                const token = this.props.appSession.accessToken;
                 this.props
                   .addObservation({
                     nodeId,
@@ -66,7 +66,7 @@ export class AddObservationPage extends React.Component {
                   .toPromise();
               }}
               mode="ADD"
-              doneBy={this.props.appSession.getActor()}
+              doneBy={this.props.appSession.actor}
             />
           </div>
         }

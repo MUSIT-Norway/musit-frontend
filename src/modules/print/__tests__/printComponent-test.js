@@ -3,7 +3,6 @@ import { mountToJson } from 'enzyme-to-json';
 import React from 'react';
 import sinon from 'sinon';
 import { PrintTemplateComponent } from '../PrintTemplateComponent';
-import { AppSession } from '../../app/appSession';
 
 describe('PrintTemplateComponent', () => {
   it('should display correctly', () => {
@@ -44,7 +43,7 @@ describe('PrintTemplateComponent', () => {
         setTemplateId={setTemplateId}
         writeToDocument={writeToDocument}
         setLevel={setLevel}
-        appSession={new AppSession({ accessToken: '1234' })}
+        appSession={{ accessToken: '1234' }}
         store={store}
         marked={[
           {

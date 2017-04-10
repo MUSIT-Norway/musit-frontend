@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react';
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import omit from 'lodash/omit';
-import { AppSession } from './appSession';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 
@@ -52,7 +51,7 @@ export const connectToScanner = (
   Component => {
     return class Wrapper extends React.Component {
       static propTypes = {
-        appSession: PropTypes.instanceOf(AppSession).isRequired
+        appSession: PropTypes.object.isRequired
       };
 
       constructor(props) {

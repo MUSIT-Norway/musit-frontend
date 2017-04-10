@@ -6,7 +6,7 @@ import MusitObject from '../../models/object';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
-    tableData: PropTypes.arrayOf(PropTypes.instanceOf(MusitObject)).isRequired,
+    tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
     pickObject: PropTypes.func.isRequired,
     isObjectAdded: PropTypes.func.isRequired,
     showMoveHistory: PropTypes.func.isRequired,
@@ -50,7 +50,7 @@ export default class ObjectGrid extends Component {
               </thead>
               <tbody>
                 {this.props.tableData.map((c, i) => {
-                  const isMainObject = !c.mainObjectId || c.isMainObject();
+                  const isMainObject = !c.mainObjectId || MusitObject.isMainObject(c);
                   const isChildObject = c.mainObjectId && !isMainObject;
                   return (
                     <tr

@@ -42,8 +42,8 @@ export class MoveHistoryComponent extends Component {
     this.props.clear();
     this.props.loadMoveHistory({
       objectId: this.props.objectId,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken
     });
   }
 

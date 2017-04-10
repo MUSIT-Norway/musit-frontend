@@ -1,16 +1,11 @@
 import { simpleGet, simplePost, simplePut } from '../shared/RxAjax';
 import Config from '../config';
-import entries from 'object.entries';
 import orderBy from 'lodash/orderBy';
 import MusitActor from './actor';
 import MusitObject from './object';
 import { Observable } from 'rxjs';
 
-class Analysis {
-  constructor(props) {
-    entries(props).forEach(([k, v]) => this[k] = v);
-  }
-}
+class Analysis {}
 
 Analysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) =>
   ({ museumId, collectionId, token, callback }) => {
@@ -33,17 +28,13 @@ Analysis.getAllAnalysisTypes = (ajaxGet = simpleGet) =>
 Analysis.saveAnalysisEvent = (ajaxPost = simplePost) =>
   ({ museumId, data, token, callback }) => {
     const url = Config.magasin.urls.api.analysis.saveAnalysisEvent(museumId);
-    return ajaxPost(url, data, token, callback).map(
-      ({ response }) => response && new Analysis(response)
-    );
+    return ajaxPost(url, data, token, callback).map(({ response }) => response);
   };
 
 Analysis.editAnalysisEvent = (ajaxPut = simplePut) =>
   ({ museumId, data, token, callback }) => {
     const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId);
-    return ajaxPut(url, data, token, callback).map(
-      ({ response }) => response && new Analysis(response)
-    );
+    return ajaxPut(url, data, token, callback).map(({ response }) => response);
   };
 
 Analysis.getAnalysesForObject = (ajaxGet = simpleGet) =>
@@ -55,7 +46,7 @@ Analysis.getAnalysesForObject = (ajaxGet = simpleGet) =>
 Analysis.getAnalysisById = (ajaxGet = simpleGet) =>
   ({ museumId, id, token, callback }) => {
     const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
-    return ajaxGet(url, token, callback).map(analysis => analysis.response);
+    return ajaxGet(url, token, callback).map(({ response }) => response);
   };
 
 Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) =>
