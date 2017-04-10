@@ -76,14 +76,14 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
 };
 
 const submitSample = (appSession, form, addSample) => {
-  const token = appSession.getAccessToken();
-  const museumId = appSession.getMuseumId();
+  const token = appSession.accessToken;
+  const museumId = appSession.museumId;
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
   const data = myReduce(form);
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
-  data['responsible'] = appSession.getActor().dataportenId;
+  data['responsible'] = appSession.actor.dataportenId;
   data['isExtracted'] = false;
   data['parentObjectType']= 'collection';
   data['museumId'] = 99;
@@ -102,9 +102,11 @@ type FormData = {
 
 type Props = {
   form: FormData, updateForm: Update, addSample: Function, clearForm: Function, appSession: {
-    getMuseumId: Function,
-    getAccessToken: Function,
-    getActor: Function
+    museumId: number,
+    accessToken: string,
+    actor: {
+      dataportenId: string
+    }
   }
 };
 

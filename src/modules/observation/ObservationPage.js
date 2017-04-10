@@ -30,6 +30,7 @@ import ActorSuggest from '../../components/suggest/ActorSuggest';
 import * as validation from './observationValidation';
 import { I18n } from 'react-i18nify';
 import { emitError } from '../../shared/errors';
+import Actor from '../../models/actor';
 
 export default class ObservationPage extends React.Component {
   static propTypes = {
@@ -252,7 +253,7 @@ export default class ObservationPage extends React.Component {
 
     if (
       typeof formProps.doneBy !== 'object' ||
-      (!formProps.doneBy || !formProps.doneBy.getActorId())
+      (!formProps.doneBy || !Actor.getActorId(formProps.doneBy))
     ) {
       errors.doneBy = 'musit.observation.page.doneByRequired';
     }

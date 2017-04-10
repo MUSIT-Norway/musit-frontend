@@ -4,15 +4,14 @@ import React from 'react';
 import sinon from 'sinon';
 import ObjectGrid from '../ObjectTable';
 import { expect as e } from 'chai';
-import MusitObject from '../../../models/object';
 
 describe('ObjectTable', () => {
   const tableData = [
-    new MusitObject({ id: 1, museumNo: 'TRH-V-1-2', subNo: '2', term: 'Carex' }),
-    new MusitObject({ id: 2, museumNo: 'TRH-V-2', subNo: '2', term: 'Pinus sylvestris' }),
-    new MusitObject({ id: 3, museumNo: 'UEM3', term: 'Steinøks' }),
-    new MusitObject({ id: 4, museumNo: 'BG233', subNo: '233', term: 'Flintavslag' }),
-    new MusitObject({ id: 5, museumNo: 'O-L-233', term: 'Cladionia' })
+    { id: 1, museumNo: 'TRH-V-1-2', subNo: '2', term: 'Carex' },
+    { id: 2, museumNo: 'TRH-V-2', subNo: '2', term: 'Pinus sylvestris' },
+    { id: 3, museumNo: 'UEM3', term: 'Steinøks' },
+    { id: 4, museumNo: 'BG233', subNo: '233', term: 'Flintavslag' },
+    { id: 5, museumNo: 'O-L-233', term: 'Cladionia' }
   ];
 
   const pickObject = sinon.spy();

@@ -3,17 +3,14 @@ import React from 'react';
 import SampleEditComponent from '../SampleEditComponent';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import MuseumId from '../../../models/museumId';
-import MusitActor from '../../../models/actor';
-import { AppSession } from '../../app/appSession';
 
 describe('AnalysisSampleFormPageEdit', () => {
   it('should display correctly', () => {
-    const appSession = new AppSession({
+    const appSession = {
       token: '1234',
-      museumId: new MuseumId(99),
-      actor: new MusitActor({ dataportenId: '12345', fn: 'Jarl' })
-    });
+      museumId: 99,
+      actor: { dataportenId: '12345', fn: 'Jarl' }
+    };
     const updateForm = sinon.spy();
     const wrapper = mount(
       <SampleEditComponent

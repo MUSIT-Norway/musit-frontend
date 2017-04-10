@@ -150,16 +150,8 @@ exports[`AppComponent remders 1`] = `
           handleLogout={[Function bound handleLogout]}
           handleMuseumId={[Function bound handleMuseumId]}
           rootNode={undefined}
-          selectedCollectionId={
-            CollectionId {
-              "uuid": "00000000-0000-0000-0000-000000000000"
-            }
-          }
-          selectedMuseumId={
-            MuseumId {
-              "id": 99
-            }
-          }
+          selectedCollectionId="00000000-0000-0000-0000-000000000000"
+          selectedMuseumId={99}
           token="1234" />
       </Nav>
     </NavbarCollapse>

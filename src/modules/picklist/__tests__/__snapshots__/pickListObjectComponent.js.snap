@@ -1,10 +1,6 @@
 exports[`PickListComponent for objects Should mount 1`] = `
 <PickListComponent
-  appSession={
-    AppSession {
-      "state": undefined
-    }
-  }
+  appSession={Object {}}
   classExistsOnDom={[Function classExistsOnDom]}
   emitError={[Function emitError]}
   emitSuccess={[Function emitSuccess]}
@@ -69,9 +65,8 @@ exports[`PickListComponent for objects Should mount 1`] = `
           ],
           "value": Object {
             "id": 1,
-            "isMainObject": [Function isMainObject],
             "mainObjectId": 1,
-            "name": "Test21"
+            "term": "Test21"
           }
         },
         Object {
@@ -82,9 +77,8 @@ exports[`PickListComponent for objects Should mount 1`] = `
           ],
           "value": Object {
             "id": 2,
-            "isMainObject": [Function isMainObject],
             "mainObjectId": 1,
-            "name": "Test2"
+            "term": "Test2"
           }
         },
         Object {
@@ -95,8 +89,7 @@ exports[`PickListComponent for objects Should mount 1`] = `
           ],
           "value": Object {
             "id": 3,
-            "isMainObject": [Function isMainObject],
-            "name": "Test23"
+            "term": "Test23"
           }
         }
       ]
@@ -283,11 +276,8 @@ exports[`PickListComponent for objects Should mount 1`] = `
                     <td>
                       <span
                         className="pickListIcon">
-                        <FontAwesome
-                          name="folder">
-                          <span
-                            className="fa fa-folder" />
-                        </FontAwesome>
+                        <span
+                          className="icon icon-musitobject" />
                         <div>
                           <span
                             style={
@@ -446,11 +436,8 @@ exports[`PickListComponent for objects Should mount 1`] = `
                     <td>
                       <span
                         className="pickListIcon">
-                        <FontAwesome
-                          name="folder">
-                          <span
-                            className="fa fa-folder" />
-                        </FontAwesome>
+                        <span
+                          className="icon icon-musitobject" />
                         <div>
                           <span
                             style={
@@ -656,11 +643,8 @@ exports[`PickListComponent for objects Should mount 1`] = `
                     <td>
                       <span
                         className="pickListIcon">
-                        <FontAwesome
-                          name="folder">
-                          <span
-                            className="fa fa-folder" />
-                        </FontAwesome>
+                        <span
+                          className="icon icon-musitobject" />
                         <div>
                           <span
                             style={
@@ -983,8 +967,8 @@ exports[`PickListComponent for objects should display component (objects) correc
             <td>
               <span
                 className="pickListIcon">
-                <FontAwesome
-                  name="folder" />
+                <span
+                  className="icon icon-musitobject" />
                  
                 <div>
                   <span
@@ -1042,8 +1026,8 @@ exports[`PickListComponent for objects should display component (objects) correc
             <td>
               <span
                 className="pickListIcon">
-                <FontAwesome
-                  name="folder" />
+                <span
+                  className="icon icon-musitobject" />
                  
                 <div>
                   <span
@@ -1102,8 +1086,8 @@ exports[`PickListComponent for objects should display component (objects) correc
             <td>
               <span
                 className="pickListIcon">
-                <FontAwesome
-                  name="folder" />
+                <span
+                  className="icon icon-musitobject" />
                  
                 <div>
                   <span

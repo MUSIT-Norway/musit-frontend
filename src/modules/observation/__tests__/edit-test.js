@@ -2,7 +2,6 @@ import { shallow } from 'enzyme';
 import { RenderDoubleTextArea, RenderPest } from '../render';
 import React from 'react';
 import ObservationPage from '../ObservationPage';
-import MusitActor from '../../../models/actor';
 
 describe('Render oobservation page in edit mode', () => {
   it('should set default date and have correct date format', () => {
@@ -78,7 +77,7 @@ describe('Render oobservation page in edit mode', () => {
             }
           }
         ]}
-        doneBy={new MusitActor({ dataportenId: '12345', fn: 'Jarl' })}
+        doneBy={{ dataportenId: '12345', fn: 'Jarl' }}
         onSaveObservation={() => true}
         doneDate={'2016-12-23T00:00:00.000Z'}
         mode="EDIT"

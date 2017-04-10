@@ -168,7 +168,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -261,7 +261,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -354,7 +354,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -447,7 +447,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -540,7 +540,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -633,7 +633,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -726,7 +726,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -819,7 +819,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -912,7 +912,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1005,7 +1005,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1098,7 +1098,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1191,7 +1191,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1284,7 +1284,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1377,7 +1377,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1470,7 +1470,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1563,7 +1563,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1656,7 +1656,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1749,7 +1749,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1842,7 +1842,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,
@@ -1935,7 +1935,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                     <Breadcrumb
                       allActive={true}
                       node={
-                        MusitObject {
+                        Object {
                           "breadcrumb": Array [
                             Object {
                               "id": 1,

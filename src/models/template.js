@@ -1,17 +1,12 @@
-import entries from 'object.entries';
 import * as ajaxFunctions from '../shared/RxAjax';
 import Config from '../config';
 
-class Template {
-  constructor(props) {
-    entries(props).forEach(([k, v]) => this[k] = v);
-  }
-}
+class Template {}
 
 Template.loadTemplates = (simpleGet = ajaxFunctions.simpleGet) =>
   ({ token }) =>
     simpleGet(Config.magasin.urls.api.barcode.templatesUrl, token).map(
-      ({ response }) => response && response.map(json => new Template(json))
+      ({ response }) => response
     );
 
 Template.renderTemplate = (ajax = ajaxFunctions.ajax) =>

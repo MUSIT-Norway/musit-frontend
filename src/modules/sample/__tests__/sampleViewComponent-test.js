@@ -2,18 +2,14 @@ import { mount } from 'enzyme';
 import React from 'react';
 import SampleViewComponent from '../SampleViewComponent';
 import { expect } from 'chai';
-import MuseumId from '../../../models/museumId';
-import MusitActor from '../../../models/actor';
-import { AppSession } from '../../app/appSession';
 
 describe('AnalysisSampleFormPageView', () => {
   it('should display correctly', () => {
-    const appSession = new AppSession({
+    const appSession = {
       token: '1234',
-      museumId: new MuseumId(99),
-      actor: new MusitActor({ dataportenId: '12345', fn: 'Jarl' })
-    });
-
+      museumId: 99,
+      actor: { dataportenId: '12345', fn: 'Jarl' }
+    };
     const wrapper = mount(
       <SampleViewComponent
         appSession={appSession}
