@@ -3,8 +3,6 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import ModalNodeGrid from '../ModalMoveHistoryGrid';
 import { MoveHistoryComponent } from '../MoveHistoryComponent';
-import { AppSession } from '../../app/appSession';
-import MuseumId from '../../../models/museumId';
 import sinon from 'sinon';
 
 describe('MoveHistoryComponent', () => {
@@ -30,18 +28,16 @@ describe('MoveHistoryComponent', () => {
             }
           ]
         }}
-        appSession={
-          new AppSession({
-            museumId: new MuseumId(99),
-            accessToken: '1234-1234-1234'
-          })
-        }
+        appSession={{
+          museumId: 99,
+          accessToken: '1234-1234-1234'
+        }}
       />
     );
     expect(clear.callCount).toBe(1);
     expect(loadMoveHistory.callCount).toBe(1);
     expect(loadMoveHistory.getCall(0).args[0].token).toBe('1234-1234-1234');
-    expect(loadMoveHistory.getCall(0).args[0].museumId.id).toBe(99);
+    expect(loadMoveHistory.getCall(0).args[0].museumId).toBe(99);
     expect(loadMoveHistory.getCall(0).args[0].objectId).toBe(1234);
   });
 });

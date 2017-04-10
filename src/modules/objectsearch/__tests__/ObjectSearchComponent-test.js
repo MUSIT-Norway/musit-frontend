@@ -3,9 +3,6 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import { ObjectSearchComponent } from '../ObjectSearchComponent';
 import { getPath } from '../../../shared/util';
-import MusitObject from '../../../models/object';
-import MuseumId from '../../../models/museumId';
-import CollectionId from '../../../models/collectionId';
 import sinon from 'sinon';
 
 describe('ObjectSearchComponent', () => {
@@ -29,17 +26,15 @@ describe('ObjectSearchComponent', () => {
   ];
   const testData = {
     totalMatches: 20,
-    matches: Array(20).fill(
-      new MusitObject({
-        museumNo: '12345',
-        subNo: '45',
-        term: 'Fuglekasse',
-        id: 1,
-        breadcrumb: getPath({ path, pathNames }),
-        path: path,
-        pathNames: pathNames
-      })
-    )
+    matches: new Array(20).fill({
+      museumNo: '12345',
+      subNo: '45',
+      term: 'Fuglekasse',
+      id: 1,
+      breadcrumb: getPath({ path, pathNames }),
+      path: path,
+      pathNames: pathNames
+    })
   };
 
   it('should display object 1', () => {
@@ -55,9 +50,9 @@ describe('ObjectSearchComponent', () => {
         searchForObjects={searchForObjects}
         onChangeField={onChangeField}
         appSession={{
-          getAccessToken: () => 'wakka',
-          getMuseumId: () => new MuseumId(99),
-          getCollectionId: () => new CollectionId('ddd')
+          accessToken: 'wakka',
+          museumId: 99,
+          collectionId: 'ddd'
         }}
         objectSearchStore={{
           loaded: true,
@@ -79,8 +74,8 @@ describe('ObjectSearchComponent', () => {
     expect(onChangeField.calledOnce).toBe(false);
     wrapper.find('.SubmitButton').simulate('click', { preventDefault: () => true });
     expect(searchForObjects.getCall(0).args[0].token).toBe('wakka');
-    expect(searchForObjects.getCall(0).args[0].collectionId.uuid).toBe('ddd');
-    expect(searchForObjects.getCall(0).args[0].museumId.id).toBe(99);
+    expect(searchForObjects.getCall(0).args[0].collectionId).toBe('ddd');
+    expect(searchForObjects.getCall(0).args[0].museumId).toBe(99);
     expect(searchForObjects.getCall(0).args[0].page).toBe(1);
     expect(searchForObjects.getCall(0).args[0].museumNo).toBe('kaka');
     expect(searchForObjects.getCall(0).args[0].subNo).toBe('12');

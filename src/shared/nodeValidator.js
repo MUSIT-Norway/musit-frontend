@@ -9,7 +9,7 @@ export const getPathLength = formProps => {
 export const checkNodeType = (from, to) => {
   const matchFromType = from.value ? from.value.type : from.type;
 
-  if (new MusitNode(to).isRootNode() && 'Organisation' !== matchFromType) {
+  if (MusitNode.isRootNode(to) && 'Organisation' !== matchFromType) {
     return I18n.t('musit.storageUnits.type.organisationAllowedToMove');
   }
 

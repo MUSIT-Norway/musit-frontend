@@ -21,18 +21,16 @@ export class KDReport extends Component {
   }
 
   loadKDReport(
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken()
+    museumId = this.props.appSession.museumId,
+    token = this.props.appSession.accessToken
   ) {
     this.props.clear();
     this.props.loadKDReport({ museumId, token });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.appSession.getMuseumId().id !== this.props.appSession.getMuseumId().id
-    ) {
-      this.loadKDReport(nextProps.appSession.getMuseumId());
+    if (nextProps.appSession.museumId.id !== this.props.appSession.museumId.id) {
+      this.loadKDReport(nextProps.appSession.museumId);
     }
   }
 

@@ -6,7 +6,7 @@ import MusitNode from '../../models/node';
 
 export default class NodeGrid extends Component {
   static propTypes = {
-    tableData: PropTypes.arrayOf(PropTypes.instanceOf(MusitNode)).isRequired,
+    tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
     goToEvents: PropTypes.func.isRequired,
     pickNode: PropTypes.func.isRequired,
     isNodeAdded: PropTypes.func.isRequired,
@@ -35,7 +35,7 @@ export default class NodeGrid extends Component {
               </thead>
               <tbody>
                 {this.props.tableData.map((c, i) => {
-                  const isRoot = c.isRootNode();
+                  const isRoot = MusitNode.isRootNode(c);
                   return (
                     <tr key={i}>
                       <td>

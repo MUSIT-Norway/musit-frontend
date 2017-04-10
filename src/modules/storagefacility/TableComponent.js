@@ -9,8 +9,9 @@ import Layout from '../../components/layout';
 import Toolbar from '../../components/layout/Toolbar';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { blur, filter } from '../../shared/util';
-import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
+import MusitObject from '../../models/object';
+import Actor from '../../models/actor';
 import PagingToolbar from '../../components/PagingToolbar';
 import { checkNodeBranchAndType } from '../../shared/nodeValidator';
 import MusitModal from '../movedialog/MoveDialogComponent';
@@ -20,6 +21,7 @@ import ScannerButton from '../../components/scanner/ScannerButton';
 
 export default class TableComponent extends React.Component {
   static propTypes = {
+    appSession: React.PropTypes.object.isRequired,
     tableStore: React.PropTypes.object.isRequired,
     loadNodes: React.PropTypes.func.isRequired,
     loadObjects: React.PropTypes.func.isRequired,
@@ -70,7 +72,7 @@ export default class TableComponent extends React.Component {
       token,
       callback: {
         onComplete: node => {
-          if (node && !new MusitNode(node).isRootNode()) {
+          if (node && !MusitNode.isRootNode(node)) {
             this.props.loadStats({ id, museumId, token });
           }
         }
@@ -80,9 +82,9 @@ export default class TableComponent extends React.Component {
 
   componentWillMount(
     nodeId = this.props.params.id,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken()
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken
   ) {
     this.loadRootNode(nodeId, museumId, token);
     if (this.props.route.showObjects) {
@@ -93,13 +95,13 @@ export default class TableComponent extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const museumHasChanged = newProps.appSession.getMuseumId() !==
-      this.props.appSession.getMuseumId();
-    const collectionHasChanged = newProps.appSession.getCollectionId() !==
-      this.props.appSession.getCollectionId();
-    const museumId = newProps.appSession.getMuseumId();
-    const collectionId = newProps.appSession.getCollectionId();
-    const token = this.props.appSession.getAccessToken();
+    const museumHasChanged = newProps.appSession.museumId !==
+      this.props.appSession.museumId;
+    const collectionHasChanged = newProps.appSession.collectionId !==
+      this.props.appSession.collectionId;
+    const museumId = newProps.appSession.museumId;
+    const collectionId = newProps.appSession.collectionId;
+    const token = this.props.appSession.accessToken;
     const nodeId = museumHasChanged ? null : newProps.params.id;
     const locationState = newProps.location.state;
     const idHasChanged = newProps.params.id !== this.props.params.id;
@@ -140,8 +142,8 @@ export default class TableComponent extends React.Component {
 
   loadNodes(
     id,
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    token = this.props.appSession.accessToken,
     page
   ) {
     this.props.setLoading();
@@ -155,9 +157,9 @@ export default class TableComponent extends React.Component {
 
   loadObjects(
     id,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
     page
   ) {
     if (id) {
@@ -182,9 +184,9 @@ export default class TableComponent extends React.Component {
 
   moveNode = (
     nodeToMove,
-    userId = this.props.appSession.getActor().getActorId(),
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken(),
+    userId = Actor.getActorId(this.props.appSession.actor),
+    museumId = this.props.appSession.museumId,
+    token = this.props.appSession.accessToken,
     nodeId = this.props.tableStore.rootNode.id,
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes,
@@ -193,7 +195,8 @@ export default class TableComponent extends React.Component {
     (toNode, toName, onSuccess, onFailure = () => true) => {
       const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
       if (!errorMessage) {
-        nodeToMove.moveNode({
+        MusitNode.moveNode()({
+          id: nodeToMove.id,
           destination: toNode.id,
           doneBy: userId,
           museumId,
@@ -223,7 +226,7 @@ export default class TableComponent extends React.Component {
               });
             }
           }
-        });
+        }).toPromise();
       } else {
         onFailure();
         this.props.emitError({
@@ -234,7 +237,7 @@ export default class TableComponent extends React.Component {
     };
 
   showMoveObjectModal(objectToMove) {
-    const objStr = objectToMove.getObjectDescription();
+    const objStr = MusitObject.getObjectDescription(objectToMove);
     const title = I18n.t('musit.moveModal.moveObject', { name: objStr });
     this.props.showModal(
       title,
@@ -248,16 +251,17 @@ export default class TableComponent extends React.Component {
 
   moveObject = (
     objectToMove,
-    userId = this.props.appSession.getActor().getActorId(),
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
+    userId = Actor.getActorId(this.props.appSession.actor),
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
     nodeId = this.props.tableStore.rootNode.id,
     loadObjects = this.loadObjects
   ) =>
     (toNode, toName, onSuccess, onFailure = () => true) => {
-      const description = objectToMove.getObjectDescription();
-      objectToMove.moveObject({
+      const description = MusitObject.getObjectDescription(objectToMove);
+      MusitObject.moveObjects({
+        object: objectToMove,
         destination: toNode.id,
         doneBy: userId,
         museumId,
@@ -291,7 +295,7 @@ export default class TableComponent extends React.Component {
     };
 
   showObjectMoveHistory(objectToShowHistoryFor) {
-    const objStr = objectToShowHistoryFor.getObjectDescription();
+    const objStr = MusitObject.getObjectDescription(objectToShowHistoryFor);
     const componentToRender = (
       <MusitModalHistory
         appSession={this.props.appSession}
@@ -304,9 +308,9 @@ export default class TableComponent extends React.Component {
 
   makeToolbar(
     nodeId = this.props.params.id,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
     showObjects = this.props.route.showObjects,
     searchPattern = this.state.searchPattern
   ) {
@@ -335,8 +339,8 @@ export default class TableComponent extends React.Component {
   }
 
   makeLeftMenu(
-    museumId = this.props.appSession.getMuseumId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    token = this.props.appSession.accessToken,
     rootNode = this.props.tableStore.rootNode,
     stats = this.props.tableStore.stats,
     deleteNode = this.props.deleteNode,
@@ -347,7 +351,7 @@ export default class TableComponent extends React.Component {
       <div style={{ paddingTop: 10 }}>
         <NodeLeftMenuComponent
           showNewNode={!!rootNode}
-          showButtons={rootNode && !rootNode.isRootNode()}
+          showButtons={rootNode && !MusitNode.isRootNode(rootNode)}
           onClickNewNode={() =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.addNode(
@@ -434,9 +438,9 @@ export default class TableComponent extends React.Component {
 
   makeContentGrid(
     searchPattern = this.state.searchPattern,
-    museumId = this.props.appSession.getMuseumId(),
-    collectionId = this.props.appSession.getCollectionId(),
-    token = this.props.appSession.getAccessToken(),
+    museumId = this.props.appSession.museumId,
+    collectionId = this.props.appSession.collectionId,
+    token = this.props.appSession.accessToken,
     rootNode = this.props.tableStore.rootNode,
     children = this.props.tableStore.children,
     showObjects = this.props.route.showObjects,
@@ -454,9 +458,7 @@ export default class TableComponent extends React.Component {
         <Loader loaded={!isLoading}>
           <ObjectGrid
             tableData={
-              matches && matches[0] && matches[0] instanceof MusitObject
-                ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern)
-                : []
+              matches ? filter(matches, ['museumNo', 'subNo', 'term'], searchPattern) : []
             }
             showMoveHistory={showHistory}
             pickObject={object =>
@@ -494,11 +496,7 @@ export default class TableComponent extends React.Component {
     return (
       <Loader loaded={!isLoading}>
         <NodeGrid
-          tableData={
-            matches && matches[0] && matches[0] instanceof MusitNode
-              ? filter(matches, ['name'], searchPattern)
-              : []
-          }
+          tableData={matches ? filter(matches, ['name'], searchPattern) : []}
           goToEvents={node =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.viewControlsObservations(

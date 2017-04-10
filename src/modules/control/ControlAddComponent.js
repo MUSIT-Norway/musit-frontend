@@ -62,8 +62,8 @@ export class ControlAddContainer extends React.Component {
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
         id: this.props.params.id,
-        museumId: this.props.appSession.getMuseumId(),
-        token: this.props.appSession.getAccessToken()
+        museumId: this.props.appSession.museumId,
+        token: this.props.appSession.accessToken
       });
     }
   }
@@ -83,7 +83,7 @@ export class ControlAddContainer extends React.Component {
         light: requirement ? requirement.lightingCondition : ' ',
         cleaning: requirement ? requirement.cleaning : ' ',
         doneDate: this.props.doneDate ? this.props.doneDate : formatISOString(new Date()),
-        doneBy: this.props.appSession.getActor()
+        doneBy: this.props.appSession.actor
       });
     }
   }
@@ -143,9 +143,9 @@ export class ControlAddContainer extends React.Component {
       this.props
         .addControl({
           nodeId: this.props.params.id,
-          museumId: this.props.appSession.getMuseumId(),
+          museumId: this.props.appSession.museumId,
           controlData: controlState,
-          token: this.props.appSession.getAccessToken(),
+          token: this.props.appSession.accessToken,
           callback: {
             onComplete: () => {
               hashHistory.goBack();

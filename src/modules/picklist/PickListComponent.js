@@ -5,6 +5,7 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import MusitModal from '../movedialog/MoveDialogComponent';
+import MusitObject from '../../models/object';
 import './PickListComponent.css';
 import Config from '../../config';
 import PrintTemplate from '../print/PrintTemplateContainer';
@@ -62,7 +63,7 @@ export class PickListComponent extends React.Component {
   }
 
   toggleObject({ item, on }) {
-    if (item.mainObjectId && item.isMainObject()) {
+    if (item.mainObjectId && MusitObject.isMainObject(item)) {
       this.props.markMainObject({ item, on });
     } else {
       this.props.markObject({ item, on });
@@ -231,10 +232,10 @@ export class PickListComponent extends React.Component {
                 {pickList.map((pick, i) => {
                   const item = pick.value;
                   const isItemMarked = pick.marked;
-                  const isMainObject = item.isMainObject &&
-                    (!item.mainObjectId || item.isMainObject());
-                  const isChildObject = item.isMainObject &&
-                    (item.mainObjectId && !item.isMainObject());
+                  const isMainObject = item.term &&
+                    (!item.mainObjectId || MusitObject.isMainObject(item));
+                  const isChildObject = item.term &&
+                    (item.mainObjectId && !MusitObject.isMainObject(item));
                   return (
                     <tr
                       key={i}

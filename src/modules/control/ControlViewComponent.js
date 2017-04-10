@@ -42,15 +42,15 @@ export class ControlViewContainer extends React.Component {
       this.props.getControl({
         nodeId: this.props.params.id,
         controlId: this.props.params.controlId,
-        museumId: this.props.appSession.getMuseumId(),
-        token: this.props.appSession.getAccessToken()
+        museumId: this.props.appSession.museumId,
+        token: this.props.appSession.accessToken
       });
     }
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
         id: this.props.params.id,
-        museumId: this.props.appSession.getMuseumId(),
-        token: this.props.appSession.getAccessToken()
+        museumId: this.props.appSession.museumId,
+        token: this.props.appSession.accessToken
       });
     }
   }
