@@ -558,10 +558,14 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         bsClass="col"
         componentClass="div"
         mdOffset={1}>
-        <a
-          href="">
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="link"
+          disabled={false}>
           Se mer
-        </a>
+        </Button>
       </Col>
     </FormGroup>
   </Form>

@@ -114,7 +114,7 @@ exports[`SamplesForObject should display correctly 1`] = `
       <Td
         column="showInfo">
         <a
-          href={undefined}>
+          href="en url">
           Se mer / Rediger
         </a>
       </Td>
@@ -143,7 +143,7 @@ exports[`SamplesForObject should display correctly 1`] = `
       <Td
         column="showInfo">
         <a
-          href={undefined}>
+          href="en url">
           Se mer / Rediger
         </a>
       </Td>
@@ -172,7 +172,7 @@ exports[`SamplesForObject should display correctly 1`] = `
       <Td
         column="showInfo">
         <a
-          href={undefined}>
+          href="en url">
           Se mer / Rediger
         </a>
       </Td>

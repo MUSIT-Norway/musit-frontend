@@ -124,7 +124,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     </Col>
     <Col md={12}>
       <strong>Sist endret:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(form.doneBy)}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(form.doneDate)}{' '}<a href=''>Se endringshistorikk</a>
+      <FontAwesome name='clock-o'/>{' '}{getValue(form.doneDate)}{' '}<Button bsStyle="link">Se endringshistorikk</Button>
     </Col>
     <NewLine />
     <Form>
@@ -359,7 +359,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
         <Col mdOffset={1}>{getValue(form.doneBy)} - {getValue(form.doneDate)}</Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}><a href=''>Se mer</a></Col>
+        <Col mdOffset={1}><Button bsStyle="link">Se mer</Button></Col>
       </FormGroup>
     </Form>
   </div>

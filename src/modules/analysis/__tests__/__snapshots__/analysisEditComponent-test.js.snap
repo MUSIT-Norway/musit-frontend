@@ -56,10 +56,14 @@ exports[`AnalysisEditComponent should render properly 1`] = `
      
     12.12.2012
      
-    <a
-      href="">
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="link"
+      disabled={false}>
       Se endringshistorikk
-    </a>
+    </Button>
   </Col>
   <NewLine />
   <Form
@@ -591,10 +595,14 @@ exports[`AnalysisEditComponent should render properly 1`] = `
         bsClass="col"
         componentClass="div"
         mdOffset={1}>
-        <a
-          href="">
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="link"
+          disabled={false}>
           Se mer
-        </a>
+        </Button>
       </Col>
     </FormGroup>
   </Form>
