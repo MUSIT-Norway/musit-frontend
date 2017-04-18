@@ -1,8 +1,6 @@
 import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { store$, initialState, searchForObjects } from '../objectSearchStore';
-import MusemId from '../../../models/museumId';
-import CollectionId from '../../../models/collectionId';
 
 describe('objectSearchStore', () => {
   it('testing reducer', () => {
@@ -143,8 +141,8 @@ describe('objectSearchStore', () => {
         x: {
           params: {},
           token: '12344',
-          museumId: new MusemId(1),
-          collectionId: new CollectionId('12345')
+          museumId: 1,
+          collectionId: '12345'
         }
       })
       .switchMap(

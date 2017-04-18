@@ -1,10 +1,8 @@
 exports[`PrintTemplateComponent should display correctly 1`] = `
 <PrintTemplateComponent
   appSession={
-    AppSession {
-      "state": Object {
-        "accessToken": "1234"
-      }
+    Object {
+      "accessToken": "1234"
     }
   }
   clearAll={[Function proxy]}

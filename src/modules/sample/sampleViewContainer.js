@@ -27,8 +27,8 @@ export default flowRight([
   inject(data, commands, props),
   mount(({ loadSample, loadForm, params, appSession }) => {
     const sampleId = params.sampleId;
-    const museumId = appSession.state.museumId;
-    const accessToken = appSession.state.accessToken;
+    const museumId = appSession.museumId;
+    const accessToken = appSession.accessToken;
     const val = { id: sampleId, museumId: museumId, token: accessToken };
     loadSample(val).toPromise().then(v => {
       const formData = Object.keys(v).reduce(

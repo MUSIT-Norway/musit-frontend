@@ -22,9 +22,9 @@ const commands: {} = { loadObject$ };
 
 export const onMount = ({ loadObject, params, appSession }: any) => {
   const objectId: string = params.objectId;
-  const museumId: number = appSession.state.museumId;
-  const accessToken: string = appSession.state.accessToken;
-  const collectionId: string = appSession.state.collectionId;
+  const museumId: number = appSession.museumId;
+  const accessToken: string = appSession.accessToken;
+  const collectionId: string = appSession.collectionId;
   const val = {
     id: objectId,
     museumId: museumId,

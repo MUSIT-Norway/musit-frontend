@@ -2,7 +2,6 @@ import { shallow, mount } from 'enzyme';
 import { shallowToJson, mountToJson } from 'enzyme-to-json';
 import React from 'react';
 import { PickListComponent } from '../PickListComponent';
-import { AppSession } from '../../app/appSession';
 import { expect as e } from 'chai';
 import sinon from 'sinon';
 
@@ -35,9 +34,8 @@ describe('PickListComponent for objects', () => {
         marked: true,
         value: {
           id: 1,
-          name: 'Test21',
-          mainObjectId: 1,
-          isMainObject: () => true
+          term: 'Test21',
+          mainObjectId: 1
         },
         path: [1]
       },
@@ -45,9 +43,8 @@ describe('PickListComponent for objects', () => {
         marked: true,
         value: {
           id: 2,
-          name: 'Test2',
-          mainObjectId: 1,
-          isMainObject: () => false
+          term: 'Test2',
+          mainObjectId: 1
         },
         path: [1, 2]
       },
@@ -55,8 +52,7 @@ describe('PickListComponent for objects', () => {
         marked: false,
         value: {
           id: 3,
-          name: 'Test23',
-          isMainObject: () => true
+          term: 'Test23'
         },
         path: [1, 3]
       }
@@ -65,11 +61,8 @@ describe('PickListComponent for objects', () => {
 
   it('Should mount', () => {
     const onToggleNode = sinon.spy();
-
     const onToggleObject = sinon.spy();
-
     const onRemoveObject = sinon.spy();
-
     const onRemoveNode = sinon.spy();
 
     const wrapper = mount(
@@ -81,7 +74,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={x => x}
         removeNode={onRemoveNode}
         removeObject={onRemoveObject}
-        appSession={new AppSession()}
+        appSession={{}}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -108,7 +101,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={x => x}
         removeNode={x => x}
         removeObject={x => x}
-        appSession={new AppSession()}
+        appSession={{}}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -123,15 +116,11 @@ describe('PickListComponent for objects', () => {
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
-  it('Testing functions objects', () => {
+  it('should call removeObject when user clicks remove button', () => {
     const onToggleNode = sinon.spy();
-
     const onToggleObject = sinon.spy();
-
     const onRemoveObject = sinon.spy();
-
     const onRemoveNode = sinon.spy();
-
     const onToggleMainObject = sinon.spy();
 
     const wrapper = mount(
@@ -143,7 +132,7 @@ describe('PickListComponent for objects', () => {
         markMainObject={onToggleMainObject}
         removeNode={onRemoveNode}
         removeObject={onRemoveObject}
-        appSession={new AppSession()}
+        appSession={{}}
         refreshNode={x => x}
         refreshObjects={x => x}
         emitError={x => x}
@@ -169,6 +158,37 @@ describe('PickListComponent for objects', () => {
       .childAt(2);
     removeButton.simulate('click');
     e(onRemoveObject.calledOnce).to.equal(true);
+  });
+
+  it('should call toggleMainObject when user clicks toggle on main object', () => {
+    const onToggleNode = sinon.spy();
+    const onToggleObject = sinon.spy();
+    const onRemoveObject = sinon.spy();
+    const onRemoveNode = sinon.spy();
+    const onToggleMainObject = sinon.spy();
+
+    const wrapper = mount(
+      <PickListComponent
+        route={{ type: 'objects' }}
+        pickList={pickList}
+        markNode={onToggleNode}
+        markObject={onToggleObject}
+        markMainObject={onToggleMainObject}
+        removeNode={onRemoveNode}
+        removeObject={onRemoveObject}
+        appSession={{}}
+        refreshNode={x => x}
+        refreshObjects={x => x}
+        emitError={x => x}
+        emitSuccess={x => x}
+        iconRendrer={x => x}
+        classExistsOnDom={x => x}
+        moveItems={x => x}
+        isTypeNode={() => false}
+        toggleScanner={() => true}
+        scannerEnabled={true}
+      />
+    );
 
     const toggleMainObj = wrapper
       .find('Grid')
@@ -182,6 +202,37 @@ describe('PickListComponent for objects', () => {
       .childAt(0);
     toggleMainObj.simulate('change');
     e(onToggleMainObject.calledOnce).to.equal(true);
+  });
+
+  it('should call toggleObject when user clicks toggle button', () => {
+    const onToggleNode = sinon.spy();
+    const onToggleObject = sinon.spy();
+    const onRemoveObject = sinon.spy();
+    const onRemoveNode = sinon.spy();
+    const onToggleMainObject = sinon.spy();
+
+    const wrapper = mount(
+      <PickListComponent
+        route={{ type: 'objects' }}
+        pickList={pickList}
+        markNode={onToggleNode}
+        markObject={onToggleObject}
+        markMainObject={onToggleMainObject}
+        removeNode={onRemoveNode}
+        removeObject={onRemoveObject}
+        appSession={{}}
+        refreshNode={x => x}
+        refreshObjects={x => x}
+        emitError={x => x}
+        emitSuccess={x => x}
+        iconRendrer={x => x}
+        classExistsOnDom={x => x}
+        moveItems={x => x}
+        isTypeNode={() => false}
+        toggleScanner={() => true}
+        scannerEnabled={true}
+      />
+    );
 
     const toggleObj = wrapper
       .find('Grid')

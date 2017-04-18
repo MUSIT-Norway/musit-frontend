@@ -22,8 +22,8 @@ export class AddStorageUnitContainer extends React.Component {
     this.props.clearNode();
     this.props.loadNode({
       id: this.props.params.id,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken
     });
   }
 
@@ -35,8 +35,8 @@ export class AddStorageUnitContainer extends React.Component {
         unit={this.props.nodeStore.unit}
         onLagreClick={data => {
           const id = this.props.params.id;
-          const museumId = this.props.appSession.getMuseumId();
-          const token = this.props.appSession.getAccessToken();
+          const museumId = this.props.appSession.museumId;
+          const token = this.props.appSession.accessToken;
           this.props
             .addNode({
               id,

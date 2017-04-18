@@ -1,33 +1,14 @@
 import { simpleGet, simpleDel, simplePut, simplePost } from '../shared/RxAjax';
 import Config from '../config';
-import entries from 'object.entries';
-import { getPath } from '../shared/util';
 import { mapToBackend, mapToFrontend } from './mapper/node';
 import MusitActor from './actor';
 import MusitObject from './object';
 import { Observable } from 'rxjs';
 
-class MusitNode {
-  constructor(props) {
-    entries(props).forEach(([k, v]) => this[k] = v);
-    this.breadcrumb = getPath(props);
-  }
+class MusitNode {}
 
-  isRootNode() {
-    return this.type === 'Root' || this.type === 'RootLoan';
-  }
-
-  moveNode({ destination, doneBy, museumId, token, callback }) {
-    return MusitNode.moveNode()({
-      id: this.id,
-      destination,
-      doneBy,
-      museumId,
-      token,
-      callback
-    }).toPromise();
-  }
-}
+MusitNode.isRootNode = (node: { type: string }) =>
+  node.type === 'Root' || node.type === 'RootLoan';
 
 MusitNode.getNode = (ajaxGet = simpleGet) =>
   ({ id, museumId, token, callback }) => {
@@ -35,7 +16,7 @@ MusitNode.getNode = (ajaxGet = simpleGet) =>
       `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${id}`,
       token,
       callback
-    ).map(node => node.response && new MusitNode(mapToFrontend(node.response)));
+    ).map(node => node.response && mapToFrontend(node.response));
   };
 
 MusitNode.getNodeWithUpdatedBy = (ajaxGet = simpleGet) =>
@@ -57,9 +38,7 @@ MusitNode.addNode = (ajaxPost = simplePost) =>
     const baseUrl = Config.magasin.urls.api.storagefacility.baseUrl(museumId);
     const url = `${baseUrl}${!id ? '/root' : ''}`;
     const dataToPost = mapToBackend(data, id);
-    return ajaxPost(url, dataToPost, token, callback).map(
-      ({ response }) => response && new MusitNode(response)
-    );
+    return ajaxPost(url, dataToPost, token, callback).map(({ response }) => response);
   };
 
 MusitNode.editNode = (ajaxPut = simplePut) =>
@@ -67,9 +46,7 @@ MusitNode.editNode = (ajaxPut = simplePut) =>
     const baseUrl = Config.magasin.urls.api.storagefacility.baseUrl(museumId);
     const url = `${baseUrl}/${id}`;
     const dataToPost = mapToBackend(data);
-    return ajaxPut(url, dataToPost, token, callback).map(
-      ({ response }) => response && new MusitNode(response)
-    );
+    return ajaxPut(url, dataToPost, token, callback).map(({ response }) => response);
   };
 
 MusitNode.getNodes = (ajaxGet = simpleGet) =>
@@ -93,7 +70,7 @@ MusitNode.getNodes = (ajaxGet = simpleGet) =>
       }
       return {
         totalMatches: response.totalMatches || response.length,
-        matches: matches.map(o => new MusitNode(o))
+        matches
       };
     });
   };
@@ -133,7 +110,7 @@ MusitNode.findByBarcode = (ajaxGet = simpleGet) =>
     ajaxGet(
       Config.magasin.urls.api.storagefacility.scanOldUrl(barcode, museumId),
       token
-    ).map(({ response }) => response && new MusitNode(response));
+    ).map(({ response }) => response);
 
 MusitNode.findNodeOrObjectByBarcode = (ajaxGet = simpleGet) =>
   ({ barcode, museumId, collectionId, token }) => {
@@ -159,7 +136,7 @@ MusitNode.findByUUID = (ajaxGet = simpleGet) =>
     return ajaxGet(
       Config.magasin.urls.api.storagefacility.scanUrl(uuid, museumId),
       token
-    ).map(({ response }) => response && new MusitNode(response));
+    ).map(({ response }) => response);
   };
 
 export default MusitNode;

@@ -63,9 +63,9 @@ export const processBarcode = (barCode, props) => {
     return;
   }
   const isMoveDialogActive = props.classExistsOnDom('moveDialog');
-  const museumId = props.appSession.getMuseumId();
-  const collectionId = props.appSession.getCollectionId();
-  const token = props.appSession.getAccessToken();
+  const museumId = props.appSession.museumId;
+  const collectionId = props.appSession.collectionId;
+  const token = props.appSession.accessToken;
   if (barCode.uuid) {
     props
       .findNodeByUUID({ uuid: barCode.code, museumId, token })

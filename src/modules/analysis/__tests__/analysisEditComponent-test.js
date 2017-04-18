@@ -4,8 +4,6 @@ import React from 'react';
 import AnalysisEditComponent, { editAnalysisEventLocal } from '../AnalysisEditComponent';
 import { fieldsArray } from '../analysisAddForm';
 import sinon from 'sinon';
-import { AppSession } from '../../app/appSession';
-import MuseumId from '../../../models/museumId';
 
 const objectsData = [
   {
@@ -61,13 +59,13 @@ const form = fieldsArray.reduce(
 describe('AnalysisEditComponent', () => {
   it('editAnalysisEventLocal should call editAnalysisEvent', () => {
     const editAnalysisEvent = sinon.spy();
-    const appSession = new AppSession({
-      museumId: new MuseumId(99),
+    const appSession = {
+      museumId: 99,
       accessToken: '1234'
-    });
+    };
     editAnalysisEventLocal(appSession, form, store, editAnalysisEvent)();
     expect(editAnalysisEvent.callCount).toBe(1);
-    expect(editAnalysisEvent.getCall(0).args[0].museumId).toEqual(new MuseumId(99));
+    expect(editAnalysisEvent.getCall(0).args[0].museumId).toEqual(99);
     expect(editAnalysisEvent.getCall(0).args[0].token).toEqual('1234');
   });
 

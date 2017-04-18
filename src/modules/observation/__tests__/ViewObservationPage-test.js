@@ -2,8 +2,6 @@ import { shallow } from 'enzyme';
 import React from 'react';
 import sinon from 'sinon';
 import { ViewObservationPage } from '../ViewObservationPage';
-import MuseumId from '../../../models/museumId';
-import { AppSession } from '../../app/appSession';
 
 describe('Render view observation page', () => {
   it('should set default date and have correct date format', () => {
@@ -95,12 +93,10 @@ describe('Render view observation page', () => {
           id: '1',
           obsId: 45
         }}
-        appSession={
-          new AppSession({
-            token: '1234',
-            museumId: new MuseumId(99)
-          })
-        }
+        appSession={{
+          accessToken: '1234',
+          museumId: 99
+        }}
         getObservation={getObservation}
         loadRootNode={loadRootNode}
         setLoading={setLoading}

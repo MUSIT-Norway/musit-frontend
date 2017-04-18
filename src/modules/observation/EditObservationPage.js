@@ -25,8 +25,8 @@ export class EditObservationPage extends React.Component {
     if (!this.props.store.rootNode) {
       this.props.loadRootNode({
         id: this.props.params.id,
-        museumId: this.props.appSession.getMuseumId(),
-        token: this.props.appSession.getAccessToken()
+        museumId: this.props.appSession.museumId,
+        token: this.props.appSession.accessToken
       });
     }
   }
@@ -80,8 +80,8 @@ export class EditObservationPage extends React.Component {
               doneDate={this.props.location.state.doneDate}
               doneBy={this.getDoneByFromLocationState()}
               onSaveObservation={(nodeId, observations) => {
-                const museumId = this.props.appSession.getMuseumId();
-                const token = this.props.appSession.getAccessToken();
+                const museumId = this.props.appSession.museumId;
+                const token = this.props.appSession.accessToken;
                 const controlData = this.props.location.state;
                 this.props
                   .addObservation({
