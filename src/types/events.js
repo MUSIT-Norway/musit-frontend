@@ -4,7 +4,7 @@ type EventData = {
   eventDate: string,
   doneBy: string,
   registeredBy: string,
-  type: string,
+  eventType: string,
   keyData: string,
   note: string
 };
