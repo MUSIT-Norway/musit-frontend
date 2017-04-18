@@ -50,6 +50,21 @@ const sampleId: Field<string> = {
   }
 };
 
+const externalId: Field<string> = {
+  name: 'externalId',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const externalIdSource: Field<string> = {
+  name: 'externalIdSource',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
 const createdDate: Field<string> = {
   name: 'createdDate',
   mapper: stringMapper,
@@ -155,18 +170,38 @@ const status: Field<string> = {
   }
 };
 
+const sampleDescription: Field<string> = {
+  name: 'sampleDescription',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+const hasRestMaterial: Field<string> = {
+  name: 'hasRestMaterial',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+
 const fields = [
   note,
   status,
   size,
   sizeUnit,
   container,
+  externalId,
+  externalIdSource,
+  sampleDescription,
   storageMedium,
   sampleSubType,
   sampleType,
   museumId,
   subNo,
   term_species,
+  hasRestMaterial,
   sampleId,
   registeredBy,
   registeredDate,

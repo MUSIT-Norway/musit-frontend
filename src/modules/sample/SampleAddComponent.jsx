@@ -1,35 +1,54 @@
 /* @flow */
 import React, {PropTypes} from 'react';
 import {
+  Well,
   PageHeader,
   Form,
   FormGroup,
   Col,
   Button,
   DropdownButton,
+  Radio,
   FormControl,
   MenuItem,
   ControlLabel,
   Row
 } from 'react-bootstrap';
 import Config from '../../config';
-import FontAwesome from 'react-fontawesome';
 import {hashHistory} from 'react-router';
 
-type Field = {name: string, rawValue: ?string};
+type Field = { name: string, rawValue: ?string };
 type Update = (update: Field) => void;
 
-type FieldInputProps = {field: Field, onChangeInput: Update, inputProps?: {className?: string, style?:{}}};
-const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
+type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: { className?: string, style?: {} } };
+const FieldInput = ({field, onChangeInput, inputProps}: FieldInputProps) => (
   <FormGroup
     controlId={field.name}
     validationState={field.status && !field.status.valid ? 'error' : null}
   >
     <FormControl
       {...inputProps}
-      value={field.rawValue||''}
-      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value })}
+      value={field.rawValue || ''}
+      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
     />
+  </FormGroup>
+);
+
+const CheckBoxInput = ({field, onChangeInput}: FieldInputProps) => (
+  <FormGroup>
+    <Radio
+      inline
+      value={field.rawValue || ''}
+      checked={field.rawValue === '1'}
+      onChange={() =>
+        onChangeInput({name: field.name, rawValue: '1'})}
+    >Ja</Radio>
+    <Radio
+      inline value={field.rawValue || ''}
+      checked={field.rawValue === '0'}
+      onChange={() =>
+        onChangeInput({name: field.name, rawValue: '0'})}
+    >Nei</Radio>
   </FormGroup>
 );
 
@@ -38,10 +57,10 @@ type FieldDropDownProps = {
   title: any,
   onSelectInput: Update,
   selectItems: Array<string>,
-  inputProps?:  {className?: string, style?:{}}
+  inputProps?: { className?: string, style?: {} }
 };
 
-const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : FieldDropDownProps) => (
+const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title}: FieldDropDownProps) => (
   <FormGroup
     controlId={field.name}
     validationState={field.status && !field.status.valid ? 'error' : null}
@@ -56,7 +75,7 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : 
         <MenuItem
           key={i}
           onClick={ (e) => {
-            onSelectInput({name: field.name, rawValue: e.target.text });
+            onSelectInput({name: field.name, rawValue: e.target.text});
           }
           }>{v}
         </MenuItem>) }
@@ -64,7 +83,7 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : 
   </FormGroup>
 );
 
-type FieldReadOnlyProps = {field: Field, label: string, defaultValue: string, inputProps?:  {className?: string, style?:{}}};
+type FieldReadOnlyProps = { field: Field, label: string, defaultValue: string, inputProps?: { className?: string, style?: {} } };
 
 const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyProps) => {
   const value = field.rawValue;
@@ -85,19 +104,19 @@ const submitSample = (appSession, form, addSample) => {
   data['status'] = 2;
   data['responsible'] = appSession.actor.dataportenId;
   data['isExtracted'] = false;
-  data['parentObjectType']= 'collection';
+  data['parentObjectType'] = 'collection';
   data['museumId'] = 99;
-  data['parentObjectId']='12080e3e-2ca2-41b1-9d4a-4d72e292dcd8';
+  data['parentObjectId'] = '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8';
 
   return addSample({museumId, token, data});
 };
 
 type FormData = {
-  note: Field, size: Field, status: Field,
-  container: Field, storageMedium: Field, sampleType: Field,
+  note: Field, size: Field, status: Field, externalId: Field, externalIdSource: Field,
+  container: Field, storageMedium: Field, sampleType: Field, sampleId: Field,
   sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
-  term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field
+  term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field, hasRestMaterial: Field,
+  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field
 };
 
 type Props = {
@@ -110,7 +129,7 @@ type Props = {
   }
 };
 
-const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm} : Props) => {
+const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}: Props) => {
 
   const sampleValues = [
     'Frø',
@@ -119,12 +138,12 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
 
   const sampleSubValues = (v) => {
     switch (v) {
-    case 'Frø':
-      return ['Pollen', 'Korn', 'Erter'];
-    case 'Vev':
-      return ['Thallus', 'Bein', 'Blod', 'Ascus'];
-    default:
-      return [];
+      case 'Frø':
+        return ['Pollen', 'Korn', 'Erter'];
+      case 'Vev':
+        return ['Thallus', 'Bein', 'Blod', 'Ascus'];
+      default:
+        return [];
     }
   };
 
@@ -137,20 +156,20 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
 
   const containerSubTypes = (v) => {
     switch (v) {
-    case 'Kapsel':
-      return ['Etanol', 'Aceton', 'Vann'];
-    case 'Glassplate':
-      return [];
-    case 'Kolbe':
-      return ['Aceton', 'Etanol', 'H2O'];
-    default:
-      return [];
+      case 'Kapsel':
+        return ['Etanol', 'Aceton', 'Vann'];
+      case 'Glassplate':
+        return [];
+      case 'Kolbe':
+        return ['Aceton', 'Etanol', 'H2O'];
+      default:
+        return [];
     }
   };
 
 
   return (
-    <Form style={{ padding: 20 }}>
+    <Form style={{padding: 20}}>
       <PageHeader>
         Registrer prøveuttak
       </PageHeader>
@@ -188,146 +207,195 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           <Button>Vis Objektet</Button>
         </Col>
       </Row>
-      <hr/>
-      <Row>
-        <Col md={2}>
-          <b>PrøveID: </b>66777
-        </Col>
-      </Row>
-      <br/>
-      <Row>
-        <Col md={2}>
-          <ControlLabel>Registrert:</ControlLabel>
-        </Col>
-        <Col md={2}>
-          <FontAwesome name='user'/> {form.registeredBy.value || 'Line A. Sjo' }
-        </Col>
-        <Col md={2}>
-          <FontAwesome name='clock-o'/> {form.registeredDate.value || '11.03.2017' }
-        </Col>
-      </Row>
-      <Row>
-        <Col md={2}>
-          <ControlLabel>Sist endret:</ControlLabel>
-        </Col>
-        <Col md={2}>
-          <FontAwesome className='updateBy' name='user'/> {form.updateBy.value || 'Stein Olsen' }
-        </Col>
-        <Col md={2}>
-          <FontAwesome name='clock-o'/> {form.updateDate.value || '11.03.2017' }
-        </Col>
-        <Col md={2}>
-          <a href=''>Se endringshistorikk</a>
-        </Col>
-      </Row>
-      <br/>
-      <hr/>
-      <Row className='row-centered'>
-        <Col md={2}>
-          <b>Prøvetype</b>
-        </Col>
-        <Col md={2}>
-          <FieldDropDown
-            field={form.sampleType}
-            title={'Velg type'}
-            onSelectInput={updateForm}
-            selectItems={sampleValues}
-            inputProps={{className: 'sampleType'}}
-          />
-        </Col>
-        <Col md={2}>
-          <b>Prøveundertype</b>
-        </Col>
-        <Col md={2}>
-          <FieldDropDown
-            field={form.sampleSubType}
-            title={'Velg type'}
-            onSelectInput={updateForm}
-            selectItems={sampleSubValues(form.sampleType.rawValue)}
-            inputProps={{className: 'sampleSubType'}}
-          />
-        </Col>
-      </Row>
-      <br/>
-      <Row className='row-centered'>
-        <Col md={2}>
-          <b>Status</b>
-        </Col>
-        <Col md={2}>
-          <FieldDropDown
-            field={form.status}
-            title={'Velg type'}
-            onSelectInput={updateForm}
-            selectItems={['Skilt', 'Ugift', 'Separert']}
-            inputProps={{className: 'status'}}
-          />
-        </Col>
-      </Row>
-      <br/>
-      <Row className='row-centered'>
-        <Col md={2}>
-          <ControlLabel>Målevolum/-vekt</ControlLabel>
-        </Col>
-        <Col md={2}>
-          <FieldInput
-            field={form.size}
-            onChangeInput={updateForm}
-            inputProps={{
-              className: 'size'
-            }}
-          />
-        </Col>
-        <Col md={2}>
-          <FieldDropDown
-            field={form.sizeUnit}
-            title={'Velg måleenhet'}
-            onSelectInput={updateForm}
-            selectItems={['gr', 'mm', 'µ']}
-            inputProps={{className: 'sizeUnit'}}
-          />
-        </Col>
-      </Row>
-      <br/>
-      <Row className='row-centered'>
-        <Col md={2}>
-          <ControlLabel>Lagringskontainer</ControlLabel>
-        </Col>
-        <Col md={2}>
-          <FieldDropDown
-            field={form.container}
-            title={form.container.value||'Velg kontainer'}
-            onSelectInput={updateForm}
-            selectItems={containerTypes}
-            inputProps={{className: 'storageContainer'}}
-          />
-        </Col>
-        <Col md={2}>
-          <FieldDropDown
-            field={form.storageMedium}
-            title={'Velg langringsmedium'}
-            onSelectInput={updateForm}
-            selectItems={containerSubTypes(form.container.rawValue)}
-            inputProps={{className: 'storageMedium'}}
-          />
-        </Col>
-      </Row>
-      <br/>
-      <Row className='row-centered'>
-        <Col md={2}>
-          <ControlLabel>{'Note'}</ControlLabel>
-        </Col>
-        <Col md={5}>
-          <FieldInput
-            field={form.note}
-            onChangeInput={updateForm}
-            inputProps={{
-              className: 'note',
-              componentClass: 'textarea',
-              placeholder: form.note.name
-            }}
-          />
-        </Col>
-      </Row>
+      <Well>
+        <Row className='row-centered'>
+          <Col md={3}>
+            <b>Prøvenr</b>
+          </Col>
+          <Col md={2}>
+            <b>UUID</b>
+          </Col>
+        </Row>
+        <br />
+        <br />
+        <Row className='row-centered'>
+          <Col md={1}>
+            <b>PrøveID</b>
+          </Col>
+          <Col md={2}>
+            <FieldInput
+              field={form.sampleId}
+              onChangeInput={updateForm}
+              inputProps={{
+                className: 'sampleId'
+              }}
+            />
+          </Col>
+        </Row>
+        <Row className='row-centered'>
+          <Col md={1}>
+            <b>EksternID</b>
+          </Col>
+          <Col md={2}>
+            <FieldInput
+              field={form.externalId}
+              onChangeInput={updateForm}
+              inputProps={{
+                className: 'externalID'
+              }}
+            />
+          </Col>
+          <Col md={2}>
+            <b>Kilde for ekstern ID</b>
+          </Col>
+          <Col md={3}>
+            <FieldInput
+              field={form.externalIdSource}
+              onChangeInput={updateForm}
+              inputProps={{
+                className: 'externalIdSource'
+              }}
+            />
+          </Col>
+        </Row>
+        <br />
+        <Row className='row-centered'>
+          <Col md={2}>
+            <b>Prøvetype</b>
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.sampleType}
+              title={'Velg type'}
+              onSelectInput={updateForm}
+              selectItems={sampleValues}
+              inputProps={{className: 'sampleType'}}
+            />
+          </Col>
+          <Col md={2}>
+            <b>Prøveundertype</b>
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.sampleSubType}
+              title={'Velg type'}
+              onSelectInput={updateForm}
+              selectItems={sampleSubValues(form.sampleType.rawValue)}
+              inputProps={{className: 'sampleSubType'}}
+            />
+          </Col>
+        </Row>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <b>Beskrivelse av prøve</b>
+          </Col>
+          <Col md={3}>
+            <FieldInput
+              field={form.sampleDescription}
+              onChangeInput={updateForm}
+              inputProps={{
+                className: 'sampleDescription'
+              }}
+            />
+          </Col>
+        </Row>
+        <br/>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <b>Status</b>
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.status}
+              title={'Velg type'}
+              onSelectInput={updateForm}
+              selectItems={['Skilt', 'Ugift', 'Separert']}
+              inputProps={{className: 'status'}}
+            />
+          </Col>
+        </Row>
+        <br/>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <ControlLabel>Målevolum/-vekt</ControlLabel>
+          </Col>
+          <Col md={2}>
+            <FieldInput
+              field={form.size}
+              onChangeInput={updateForm}
+              inputProps={{
+                className: 'size'
+              }}
+            />
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.sizeUnit}
+              title={'Velg måleenhet'}
+              onSelectInput={updateForm}
+              selectItems={['gr', 'mm', 'µ']}
+              inputProps={{className: 'sizeUnit'}}
+            />
+          </Col>
+        </Row>
+        <br/>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <ControlLabel>Lagringskontainer</ControlLabel>
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.container}
+              title={form.container.value || 'Velg kontainer'}
+              onSelectInput={updateForm}
+              selectItems={containerTypes}
+              inputProps={{className: 'storageContainer'}}
+            />
+          </Col>
+        </Row>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <ControlLabel>Lagringsmedium</ControlLabel>
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.storageMedium}
+              title={'Velg langringsmedium'}
+              onSelectInput={updateForm}
+              selectItems={containerSubTypes(form.container.rawValue)}
+              inputProps={{className: 'storageMedium'}}
+            />
+          </Col>
+        </Row>
+        <br/>
+        <Row>
+          <Col md={2}>
+            <b>Har restmateriale</b>
+          </Col>
+          <Col md={3}>
+            <CheckBoxInput
+              field={form.hasRestMaterial}
+              onChangeInput={updateForm}
+            />
+          </Col>
+        </Row>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <ControlLabel>{'Note'}</ControlLabel>
+          </Col>
+          <Col md={5}>
+            <FieldInput
+              field={form.note}
+              onChangeInput={updateForm}
+              inputProps={{
+                className: 'note',
+                componentClass: 'textarea',
+                placeholder: form.note.name
+              }}
+            />
+          </Col>
+        </Row>
+      </Well>
       <Row className='row-centered'>
         <Col md={4}>
           <Button
@@ -385,7 +453,11 @@ SampleAddComponent.propTypes = {
     sizeUnit: PropTypes.shape(FieldShape).isRequired,
     status: PropTypes.shape(FieldShape).isRequired,
     container: PropTypes.shape(FieldShape).isRequired,
-    storageMedium: PropTypes.shape(FieldShape).isRequired
+    storageMedium: PropTypes.shape(FieldShape).isRequired,
+    hasRestMaterial: PropTypes.shape(FieldShape).isRequired,
+    externalId: PropTypes.shape(FieldShape).isRequired,
+    externalIdSource: PropTypes.shape(FieldShape).isRequired,
+    sampleDescription: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
   updateForm: PropTypes.func.isRequired,
   appSession: PropTypes.object.isRequired
