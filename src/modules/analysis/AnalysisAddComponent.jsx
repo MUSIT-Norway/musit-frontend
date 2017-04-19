@@ -19,29 +19,40 @@ import { AppSession } from '../app/appSession';
 
 type Field = { name: string, rawValue: ?string };
 type FormData = {
-  id: Field,
-  registeredBy: Field,
-  registeredDate: Field,
-  doneBy: Field,
-  doneDate: Field,
-  eventDate: Field,
-  objectId: Field,
-  partOf: Field,
-  result: Field,
-  caseNumber: Field,
-  actor: Field,
-  role: Field,
-  place: Field,
-  analysisTypeId: Field,
-  externalSource: Field,
-  comments: Field,
-  restrictions: Field,
-  restrictionsFor: Field,
-  reasonForRestrictions: Field,
-  restrictionsEndDate: Field,
-  repealedBy: Field,
-  note: Field,
-  completeAnalysis: Field
+  id:  Field,
+  analysisTypeId:  Field,
+  doneBy:  Field,
+  doneDate:  Field,
+  registeredBy:  Field,
+  registeredDate:  Field,
+
+  responsible:  Field,
+
+  administrator:  Field,
+  completedBy:  Field,
+  completedDate:  Field,
+  objectId:  Field,
+  note:  Field,
+  type:  Field,
+
+  partOf:  Field,
+  result:  Field,
+  place:  Field,
+
+  externalSource:  Field,
+  comments:  Field,
+
+  restrictions:  Field,
+  by:  Field,
+  expirationDate:  Field,
+  reason:  Field,
+  caseNumbers:  Field,
+  cancelledBy:  Field,
+  cancelledReason:  Field,
+
+  completeAnalysis:  Field,
+  museumNo:  Field,
+  term:  Field
 };
 
 type AnalysisType = { id: number, name: string };
@@ -91,7 +102,7 @@ const NewLine = () => (
   </Form>
 );
 
-const getValue = (field) => field.rawValue || '';
+const getValue = field => field.rawValue || '';
 
 export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, store: Store, saveAnalysisEvent: Function) =>
   () => saveAnalysisEvent({
@@ -133,8 +144,8 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
           id="formControlsText"
           type="text"
           label="saksnummer"
-          value={getValue(form.caseNumber)}
-          onChange={updateFormField(form.caseNumber, updateForm)}
+          value={getValue(form.caseNumbers)}
+          onChange={updateFormField(form.caseNumbers, updateForm)}
         />
       </FormGroup>
       <FormGroup>
@@ -175,12 +186,12 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
       </FormGroup>
       <FormGroup>
         <FieldGroup
-          id="navn"
+          id="responsible"
           type="text"
           label="Navn"
           placeholder="Fornavn Etternavn"
-          value={getValue(form.actor)}
-          onChange={updateFormField(form.actor, updateForm)}
+          value={getValue(form.responsible)}
+          onChange={updateFormField(form.responsible, updateForm)}
         />
         {labelFormat('Rolle', 1)}
         <Col md={1}>
@@ -276,8 +287,8 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
                 type="text"
                 label="Klausulert for"
                 placeholder="Fornavn Etternavn"
-                value={getValue(form.restrictionsFor)}
-                onChange={updateFormField(form.restrictionsFor, updateForm)}
+                value={getValue(form.by)}
+                onChange={updateFormField(form.by, updateForm)}
               />
             </FormGroup>
             <FormGroup>
@@ -286,8 +297,8 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
                 md={1}
                 type="text"
                 label="Årsak til klausulering"
-                value={getValue(form.reasonForRestrictions)}
-                onChange={updateFormField(form.reasonForRestrictions, updateForm)}
+                value={getValue(form.reason)}
+                onChange={updateFormField(form.reason, updateForm)}
               />
             </FormGroup>
             <FormGroup>
@@ -296,7 +307,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
                 md={1}
                 type="text"
                 label="Sluttdato"
-                value={getValue(form.restrictionsEndDate)}
+                value={getValue(form.expirationDate)}
                 readOnly
               />
             </FormGroup>
@@ -307,8 +318,8 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
                 type="text"
                 label="Opphevet av"
                 placeholder="Fornavn Etternavn"
-                value={getValue(form.repealedBy)}
-                onChange={updateFormField(form.repealedBy, updateForm)}
+                value={getValue(form.cancelledBy)}
+                onChange={updateFormField(form.cancelledBy, updateForm)}
               />
             </FormGroup>
           </Panel>
@@ -386,28 +397,41 @@ const FieldShapeBoolean = {
 
 AnalysisAdd.propTypes = {
   form: PropTypes.shape({
+
     id: PropTypes.shape(FieldShape).isRequired,
-    registeredBy: PropTypes.shape(FieldShape).isRequired,
-    registeredDate: PropTypes.shape(FieldShape).isRequired,
+    analysisTypeId: PropTypes.shape(FieldShape).isRequired,
     doneBy: PropTypes.shape(FieldShape).isRequired,
     doneDate: PropTypes.shape(FieldShape).isRequired,
-    eventDate: PropTypes.shape(FieldShape).isRequired,
+    registeredBy: PropTypes.shape(FieldShape).isRequired,
+    registeredDate: PropTypes.shape(FieldShape).isRequired,
+
+    responsible: PropTypes.shape(FieldShape).isRequired,
+
+    administrator: PropTypes.shape(FieldShape).isRequired,
+    completedBy: PropTypes.shape(FieldShape).isRequired,
+    completedDate: PropTypes.shape(FieldShape).isRequired,
     objectId: PropTypes.shape(FieldShape).isRequired,
+    note: PropTypes.shape(FieldShape).isRequired,
+    type: PropTypes.shape(FieldShape).isRequired,
+
     partOf: PropTypes.shape(FieldShape).isRequired,
     result: PropTypes.shape(FieldShape).isRequired,
-    caseNumber: PropTypes.shape(FieldShape).isRequired,
-    actor: PropTypes.shape(FieldShape).isRequired,
-    role: PropTypes.shape(FieldShape).isRequired,
     place: PropTypes.shape(FieldShape).isRequired,
-    analysisTypeId: PropTypes.shape(FieldShape).isRequired,
+
     externalSource: PropTypes.shape(FieldShape).isRequired,
     comments: PropTypes.shape(FieldShape).isRequired,
+
     restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
-    restrictionsFor: PropTypes.shape(FieldShape).isRequired,
-    reasonForRestrictions: PropTypes.shape(FieldShape).isRequired,
-    restrictionsEndDate: PropTypes.shape(FieldShape).isRequired,
-    repealedBy: PropTypes.shape(FieldShape).isRequired,
-    note: PropTypes.shape(FieldShape).isRequired
+    by: PropTypes.shape(FieldShape).isRequired,
+    expirationDate: PropTypes.shape(FieldShape).isRequired,
+    reason: PropTypes.shape(FieldShape).isRequired,
+    caseNumbers: PropTypes.shape(FieldShape).isRequired,
+    cancelledBy: PropTypes.shape(FieldShape).isRequired,
+    cancelledReason: PropTypes.shape(FieldShape).isRequired,
+
+    completeAnalysis: PropTypes.shape(FieldShapeBoolean).isRequired,
+    museumNo: PropTypes.shape(FieldShape).isRequired,
+    term: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
   updateForm: PropTypes.func.isRequired,
   store: PropTypes.object.isRequired,
