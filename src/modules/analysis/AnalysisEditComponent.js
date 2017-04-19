@@ -141,7 +141,15 @@ export const editAnalysisEventLocal = (
         note: getValue(form.note),
         objectIds: store.analysis && store.analysis.events
           ? store.analysis.events.map(a => a.objectId)
-          : store.analysis.objectId
+          : store.analysis.objectId,
+        restrictions : {
+          by: getValue(form.by),
+          expirationDate: getValue(form.expirationDate),
+          reason: getValue(form.reason),
+          caseNumbers: getValue(form.caseNumbers),
+          cancelledBy: getValue(form.cancelledBy),
+          cancelledReason: getValue(form.cancelledReason)
+        }
       },
       token: appSession.accessToken
     });
@@ -314,11 +322,7 @@ const AnalysisEdit = (
           </Col>
         </FormGroup>
         <FormGroup>
-          <Panel
-            collapsible
-            expanded
-            style={{ border: 'none', backgroundColor: '#f5f5f5' }}
-          >
+          <Panel collapsible expanded style={{border:'none', backgroundColor: '#f5f5f5'}}>
             <FormGroup>
               <FieldGroup
                 id="navn"
@@ -342,6 +346,24 @@ const AnalysisEdit = (
             </FormGroup>
             <FormGroup>
               <FieldGroup
+                id="Saksnummer"
+                md={1}
+                type="text"
+                label="Saksnummer"
+                value={getValue(form.caseNumbers)}
+                onChange={updateFormField(form.caseNumbers, updateForm)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <AddButton
+                id="3"
+                label="Legg til flere saksnummer"
+                md={11}
+                mdOffset={1}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
                 id="navn"
                 md={1}
                 type="text"
@@ -359,6 +381,17 @@ const AnalysisEdit = (
                 placeholder="Fornavn Etternavn"
                 value={getValue(form.cancelledBy)}
                 onChange={updateFormField(form.cancelledBy, updateForm)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="navn"
+                md={1}
+                type="text"
+                label="Årsak til oppheving"
+                placeholder=""
+                value={getValue(form.cancelledReason)}
+                onChange={updateFormField(form.cancelledReason, updateForm)}
               />
             </FormGroup>
           </Panel>

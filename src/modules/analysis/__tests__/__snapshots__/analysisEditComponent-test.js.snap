@@ -444,6 +444,24 @@ exports[`AnalysisEditComponent should render properly 1`] = `
           <FormGroup
             bsClass="form-group">
             <FieldGroup
+              id="Saksnummer"
+              label="Saksnummer"
+              md={1}
+              onChange={[Function anonymous]}
+              type="text"
+              value="1234" />
+          </FormGroup>
+          <FormGroup
+            bsClass="form-group">
+            <AddButton
+              id="3"
+              label="Legg til flere saksnummer"
+              md={11}
+              mdOffset={1} />
+          </FormGroup>
+          <FormGroup
+            bsClass="form-group">
+            <FieldGroup
               id="navn"
               label="Sluttdato"
               md={1}
@@ -461,6 +479,17 @@ exports[`AnalysisEditComponent should render properly 1`] = `
               placeholder="Fornavn Etternavn"
               type="text"
               value="Opphevet av" />
+          </FormGroup>
+          <FormGroup
+            bsClass="form-group">
+            <FieldGroup
+              id="navn"
+              label="Årsak til oppheving"
+              md={1}
+              onChange={[Function anonymous]}
+              placeholder=""
+              type="text"
+              value="Årsak til oppheving" />
           </FormGroup>
         </Panel>
       </FormGroup>

@@ -111,7 +111,15 @@ export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, s
       analysisTypeId: getValue(form.analysisTypeId),
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
-      objectIds: store.objectsData.map((a) => a.uuid)
+      objectIds: store.objectsData.map((a) => a.uuid),
+      restrictions : {
+        by: getValue(form.by),
+        expirationDate: getValue(form.expirationDate),
+        reason: getValue(form.reason),
+        caseNumbers: getValue(form.caseNumbers),
+        cancelledBy: getValue(form.cancelledBy),
+        cancelledReason: getValue(form.cancelledReason)
+      }
     },
     token: appSession.accessToken
   });
@@ -303,6 +311,26 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
             </FormGroup>
             <FormGroup>
               <FieldGroup
+                id="Saksnummer"
+                md={1}
+                type="text"
+                label="Saksnummer"
+                value={getValue(form.caseNumbers)}
+                onChange={updateFormField(form.caseNumbers, updateForm)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <AddButton
+                id="3"
+                label="Legg til flere saksnummer"
+                md={11}
+                mdOffset={1}
+              />
+            </FormGroup>
+
+
+            <FormGroup>
+              <FieldGroup
                 id="navn"
                 md={1}
                 type="text"
@@ -320,6 +348,17 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
                 placeholder="Fornavn Etternavn"
                 value={getValue(form.cancelledBy)}
                 onChange={updateFormField(form.cancelledBy, updateForm)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="navn"
+                md={1}
+                type="text"
+                label="Årsak til oppheving"
+                placeholder=""
+                value={getValue(form.cancelledReason)}
+                onChange={updateFormField(form.cancelledReason, updateForm)}
               />
             </FormGroup>
           </Panel>
@@ -412,7 +451,7 @@ AnalysisAdd.propTypes = {
     completedDate: PropTypes.shape(FieldShape).isRequired,
     objectId: PropTypes.shape(FieldShape).isRequired,
     note: PropTypes.shape(FieldShape).isRequired,
-    type: PropTypes.shape(FieldShape).isRequired,
+    type: PropTypes.shape(FieldShape),
 
     partOf: PropTypes.shape(FieldShape).isRequired,
     result: PropTypes.shape(FieldShape).isRequired,
