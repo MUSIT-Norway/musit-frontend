@@ -1,10 +1,9 @@
 import { mapToBackend } from '../to_backend';
-import Actor from '../../../../models/actor';
 
 describe('ControlMapperReducer', () => {
   it('maps to correct backend structure with no observations', () => {
     const state = {
-      doneBy: new Actor({ dataportenId: 'f4e1eba9-8add-4675-9836-db59f7115d7c' }),
+      doneBy: { dataportenId: 'f4e1eba9-8add-4675-9836-db59f7115d7c' },
       doneDate: '2016-10-31T23:00:00.000Z',
       temperatureOK: true,
       hypoxicAirOK: false,

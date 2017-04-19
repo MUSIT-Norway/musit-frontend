@@ -5,8 +5,6 @@ import flatten from 'lodash/flatten';
 import uniqBy from 'lodash/uniqBy';
 import find from 'lodash/find';
 import { I18n } from 'react-i18nify';
-import MuseumId from '../../models/museumId';
-import CollectionId from '../../models/collectionId';
 import orderBy from 'lodash/orderBy';
 
 export default class MusitUserAccount extends Component {
@@ -14,8 +12,8 @@ export default class MusitUserAccount extends Component {
     token: React.PropTypes.string.isRequired,
     actor: React.PropTypes.object.isRequired,
     groups: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    selectedMuseumId: React.PropTypes.instanceOf(MuseumId),
-    selectedCollectionId: React.PropTypes.instanceOf(CollectionId),
+    selectedMuseumId: React.PropTypes.number,
+    selectedCollectionId: React.PropTypes.string,
     handleLogout: React.PropTypes.func.isRequired,
     handleLanguage: React.PropTypes.func.isRequired,
     handleMuseumId: React.PropTypes.func.isRequired,
@@ -24,7 +22,7 @@ export default class MusitUserAccount extends Component {
 
   getCollections(mid, groups) {
     const collections = uniqBy(
-      flatten(groups.filter(g => g.museumId === mid.id).map(g => g.collections)),
+      flatten(groups.filter(g => g.museumId === mid).map(g => g.collections)),
       c => c.uuid
     );
     return orderBy(collections, ['name'], ['asc']);
@@ -94,21 +92,15 @@ export default class MusitUserAccount extends Component {
               </MenuItem>}
             {museumDropDown &&
               groups.map((cc, i) => {
-                const cid = this.getCollections(new MuseumId(cc.museumId), groups)[
-                  0
-                ].uuid;
+                const cid = this.getCollections(cc.museumId, groups)[0].uuid;
                 return (
                   <MenuItem
                     key={i}
                     eventKey={cc.museumId}
-                    onClick={() =>
-                      this.props.handleMuseumId(
-                        new MuseumId(cc.museumId),
-                        new CollectionId(cid)
-                      )}
+                    onClick={() => this.props.handleMuseumId(cc.museumId, cid)}
                   >
                     {menuText(
-                      museumId.id === cc.museumId ? <FontAwesome name="check" /> : '',
+                      museumId === cc.museumId ? <FontAwesome name="check" /> : '',
                       I18n.t(`musit.userProfile.museums.${cc.museumId}`)
                     )}
                   </MenuItem>
@@ -124,10 +116,10 @@ export default class MusitUserAccount extends Component {
                 <MenuItem
                   key={i}
                   eventKey={cc.uuid}
-                  onClick={() => this.props.handleCollectionId(new CollectionId(cc.uuid))}
+                  onClick={() => this.props.handleCollectionId(cc.uuid)}
                 >
                   {menuText(
-                    collectionId.uuid === cc.uuid ? <FontAwesome name="check" /> : '',
+                    collectionId === cc.uuid ? <FontAwesome name="check" /> : '',
                     I18n.t(`musit.userProfile.collections.${cc.uuid}`)
                   )}
                 </MenuItem>

@@ -1,15 +1,10 @@
 import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
-import entries from 'object.entries';
 import object from './object';
 import { Observable } from 'rxjs';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 
-class Sample {
-  constructor(props) {
-    entries(props).forEach(([k, v]) => this[k] = v);
-  }
-}
+class Sample {}
 
 Sample.addSample = (ajaxPost = simplePost) =>
   ({ museumId, token, data, callback }) => {
@@ -21,17 +16,26 @@ Sample.editSample = (ajaxPut = simplePut) =>
   ({ id, museumId, token, data, callback }) => {
     const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
     const url = `${baseUrl}/${id}`;
-    return ajaxPut(url, data, token, callback).map(
-      ({ response }) => response && new Sample(response)
-    );
+    return ajaxPut(url, data, token, callback).map(({ response }) => response);
   };
 
 Sample.loadSample = (ajaxGet = simpleGet) =>
   ({ id, museumId, token, callback }) => {
     const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
     const url = `${baseUrl}/${id}`;
+    return ajaxGet(url, token, callback).map(({ response }) => response);
+  };
+
+Sample.loadSampleDataForObject = (ajaxGet = simpleGet) =>
+  ({ id, museumId, token, callback }) => {
+    const url = Config.magasin.urls.api.samples.samplesForObject(museumId, id);
     return ajaxGet(url, token, callback).map(
-      ({ response }) => response && new Sample(response)
+      ({ response }) =>
+        (response &&
+          response.map(r => ({
+            ...r,
+            createdDate: parseISODate(r.createdDate, DATE_FORMAT_DISPLAY)
+          }))) || []
     );
   };
 

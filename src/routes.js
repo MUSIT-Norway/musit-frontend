@@ -26,6 +26,7 @@ import SampleEditContainer from './modules/sample/sampleEditContainer';
 import SamplesForObjectContainer from './modules/sample/samplesForObjectContainer';
 
 import CenteredLayout from './components/layout/CenteredLayout';
+import ViewObjectContainer from './modules/objects/viewObjectContainer';
 
 export default () => {
   return (
@@ -67,6 +68,7 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route component={CenteredLayout}>
+          <Route path="objects/:objectId" component={ViewObjectContainer} />
           <Route path="analysis/add" component={AnalysisAddContainer} />
           <Route path="analysis/edit/:analysisId" component={AnalysisEditContainer} />
           <Route path="analysis/:analysisId" component={AnalysisViewContainer} />

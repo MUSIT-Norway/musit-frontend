@@ -1,0 +1,103 @@
+exports[`ViewObjectComponent should display correctly 1`] = `
+<div>
+  <PageHeader
+    bsClass="page-header">
+    Objektvisning
+  </PageHeader>
+  <div
+    style={
+      Object {
+        "marginBottom": "40px",
+        "marginTop": "30px"
+      }
+    }>
+    <Row
+      bsClass="row"
+      componentClass="div">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={2}>
+        <b>
+          Museumsnr:
+        </b>
+         
+        O-L-3444
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={1}>
+        <b>
+          Unr:
+        </b>
+         
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={3}>
+        <b>
+          Term/artsnavn:
+        </b>
+         
+      </Col>
+    </Row>
+  </div>
+  <Uncontrolled(Tabs)
+    id="objectDetails">
+    <Tab
+      eventKey={0}
+      id="1"
+      title="Hendelser">
+      <EventTableComponent
+        events={
+          Array [
+            Object {
+              "eventDate": "1999-01-20",
+              "eventType": "Flytting",
+              "id": "1233-111-2222-222",
+              "keyData": "Til magasin nr 3",
+              "note": "Ein kommentar",
+              "registeredBy": "Ole Olsen"
+            },
+            Object {
+              "eventDate": "1999-06-20",
+              "eventType": "Analyse",
+              "id": "1233-111-2122-222",
+              "keyData": "Acid",
+              "note": "Ein kommentar",
+              "registeredBy": "Ole Hansen"
+            }
+          ]
+        } />
+    </Tab>
+    <Tab
+      eventKey={1}
+      id="2"
+      title="Prøver">
+      <SampleTableComponent
+        samples={
+          Array [
+            Object {
+              "createdDate": "1999-01-20",
+              "hasAnalyse": false,
+              "id": "1233-111-2222-222",
+              "sampleSubType": "Muskel",
+              "sampleType": "Vev",
+              "status": 2
+            },
+            Object {
+              "createdDate": "1999-01-29",
+              "hasAnalyse": true,
+              "id": "1233-111-2155-222",
+              "sampleSubType": "Underblad",
+              "sampleType": "Blad",
+              "status": 24
+            }
+          ]
+        } />
+    </Tab>
+  </Uncontrolled(Tabs)>
+</div>
+`;

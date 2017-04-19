@@ -1,6 +1,4 @@
 import Analysis from '../analysis';
-import MuseumId from '../museumId';
-import CollectionId from '../collectionId';
 import { Observable } from 'rxjs';
 import { TestScheduler } from 'rxjs/Rx';
 const diff = require('deep-diff').diff;
@@ -40,8 +38,8 @@ describe('Analysis model', () => {
     const props = {
       token: '1234',
       id: '12345',
-      collectionId: new CollectionId('00000000-0000-0000-0000-000000000000'),
-      museumId: new MuseumId(99)
+      collectionId: '00000000-0000-0000-0000-000000000000',
+      museumId: 99
     };
 
     const testScheduler = new TestScheduler((actual, expected) => {

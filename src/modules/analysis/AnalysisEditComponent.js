@@ -125,7 +125,7 @@ export const editAnalysisEventLocal = (
 ) =>
   () =>
     editAnalysisEvent({
-      museumId: appSession.getMuseumId(),
+      museumId: appSession.museumId,
       data: {
         analysisTypeId: getValue(form.analysisTypeId),
         eventDate: getValue(form.registeredDate),
@@ -134,7 +134,7 @@ export const editAnalysisEventLocal = (
           ? store.analysis.events.map(a => a.objectId)
           : store.analysis.objectId
       },
-      token: appSession.getAccessToken()
+      token: appSession.accessToken
     });
 
 const updateFormField = (field, updateForm) =>
@@ -175,7 +175,7 @@ const AnalysisEdit = (
       {' '}
       {getValue(form.doneDate)}
       {' '}
-      <a href="">Se endringshistorikk</a>
+      <Button bsStyle="link">Se endringshistorikk</Button>
     </Col>
     <NewLine />
     <Form>
@@ -402,7 +402,7 @@ const AnalysisEdit = (
         <Col mdOffset={1}>{getValue(form.doneBy)} - {getValue(form.doneDate)}</Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}><a href="">Se mer</a></Col>
+        <Col mdOffset={1}><Button bsStyle="link">Se mer</Button></Col>
       </FormGroup>
     </Form>
   </div>

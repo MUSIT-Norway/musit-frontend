@@ -1,0 +1,106 @@
+exports[`EventTableComponent should render header, body and footer 1`] = `
+<div>
+  <Table
+    className="table"
+    columns={
+      Array [
+        Object {
+          "key": "eventDate",
+          "label": "Dato"
+        },
+        Object {
+          "key": "eventType",
+          "label": "Type hendelse"
+        },
+        Object {
+          "key": "registeredBy",
+          "label": "Utført av"
+        },
+        Object {
+          "key": "keyData",
+          "label": "Nøkkeldata"
+        },
+        Object {
+          "key": "note",
+          "label": "Kommentar"
+        },
+        Object {
+          "key": "id",
+          "label": ""
+        }
+      ]
+    }
+    defaultSort={false}
+    defaultSortDescending={false}
+    filterBy=""
+    hideFilterInput={false}
+    itemsPerPage={0}
+    noDataText="Ingen hendelser funnet på objektet"
+    sortBy={false}
+    sortable={
+      Array [
+        "eventType",
+        "eventDate",
+        "registeredBy",
+        "note"
+      ]
+    }>
+    <Tr>
+      <Td
+        column="eventDate">
+        1999-01-20
+      </Td>
+      <Td
+        column="type">
+        Flytting
+      </Td>
+      <Td
+        column="registeredBy">
+        Ole Olsen
+      </Td>
+      <Td
+        column="keyData">
+        Til magasin nr 3
+      </Td>
+      <Td
+        column="note">
+        <span>
+          Ein kommentar
+        </span>
+      </Td>
+      <Td
+        column="id">
+        Les mer
+      </Td>
+    </Tr>
+    <Tr>
+      <Td
+        column="eventDate">
+        1999-06-20
+      </Td>
+      <Td
+        column="type">
+        Analyse
+      </Td>
+      <Td
+        column="registeredBy">
+        Ole Hansen
+      </Td>
+      <Td
+        column="keyData">
+        Acid
+      </Td>
+      <Td
+        column="note">
+        <span>
+          Ein kommentar
+        </span>
+      </Td>
+      <Td
+        column="id">
+        Les mer
+      </Td>
+    </Tr>
+  </Table>
+</div>
+`;

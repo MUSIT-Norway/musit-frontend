@@ -76,14 +76,14 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
 };
 
 const submitSample = (id, appSession, form, editSample) => {
-  const token = appSession.getAccessToken();
-  const museumId = appSession.getMuseumId();
+  const token = appSession.accessToken;
+  const museumId = appSession.museumId;
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
   const data = myReduce(form);
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
-  data['responsible'] = appSession.getActor().dataportenId;
+  data['responsible'] = appSession.actor.dataportenId;
   data['isCollectionObject'] = false;
   data['museumId'] = 99;
 
@@ -114,9 +114,11 @@ type Props = {
   updateForm: Update,
   editSample: Function,
   appSession: {
-    getMuseumId: Function,
-    getAccessToken: Function,
-    getActor: Function
+    museumId: number,
+    accessToken: string,
+    actor: {
+      dataportenId: string
+    }
   },
   params: {
     sampleId: string
@@ -230,7 +232,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
           <FontAwesome name='clock-o'/> {form.updateDate.value || '11.03.2017' }
         </Col>
         <Col md={2}>
-          <a href=''>Se endringshistorikk</a>
+          <Button bsStyle="link">Se endringshistorikk</Button>
         </Col>
       </Row>
       <br/>

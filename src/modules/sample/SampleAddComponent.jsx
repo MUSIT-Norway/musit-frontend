@@ -76,16 +76,18 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
 };
 
 const submitSample = (appSession, form, addSample) => {
-  const token = appSession.getAccessToken();
-  const museumId = appSession.getMuseumId();
+  const token = appSession.accessToken;
+  const museumId = appSession.museumId;
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
   const data = myReduce(form);
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
-  data['responsible'] = appSession.getActor().dataportenId;
-  data['isCollectionObject'] = false;
+  data['responsible'] = appSession.actor.dataportenId;
+  data['isExtracted'] = false;
+  data['parentObjectType']= 'collection';
   data['museumId'] = 99;
+  data['parentObjectId']='12080e3e-2ca2-41b1-9d4a-4d72e292dcd8';
 
   return addSample({museumId, token, data});
 };
@@ -100,9 +102,11 @@ type FormData = {
 
 type Props = {
   form: FormData, updateForm: Update, addSample: Function, clearForm: Function, appSession: {
-    getMuseumId: Function,
-    getAccessToken: Function,
-    getActor: Function
+    museumId: number,
+    accessToken: string,
+    actor: {
+      dataportenId: string
+    }
   }
 };
 
@@ -213,7 +217,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           <FontAwesome name='clock-o'/> {form.updateDate.value || '11.03.2017' }
         </Col>
         <Col md={2}>
-          <a href=''>Se endringshistorikk</a>
+          <Button bsStyle="link">Se endringshistorikk</Button>
         </Col>
       </Row>
       <br/>

@@ -1,5 +1,4 @@
 import Event from '../event';
-import MuseumId from '../museumId';
 import { Observable } from 'rxjs';
 import { TestScheduler } from 'rxjs/Rx';
 const diff = require('deep-diff').diff;
@@ -64,7 +63,7 @@ describe('Event model', () => {
       token: '1234',
       id: '12345',
       objectId: 1,
-      museumId: new MuseumId(99)
+      museumId: 99
     };
 
     const testScheduler = new TestScheduler((actual, expected) => {

@@ -1,7 +1,6 @@
 import { TestScheduler, Observable } from 'rxjs/Rx';
 import assert from 'assert';
 import { store$, initialState, getLocationHistory } from '../moveHistoryStore';
-import MuseumId from '../../../models/museumId';
 
 const diff = require('deep-diff').diff;
 
@@ -166,9 +165,9 @@ describe('moveHistory', () => {
     const clear$ = testScheduler.createHotObservable(clearM);
     const loadMoveHistory$ = testScheduler
       .createHotObservable(loadMoveHistoryM, {
-        1: { objectId: 1234, museumId: new MuseumId(99), token: '1234' },
-        2: { objectId: 4566, museumId: new MuseumId(2), token: '1234' },
-        3: { objectId: 999, museumId: new MuseumId(2), token: '1234' }
+        1: { objectId: 1234, museumId: 99, token: '1234' },
+        2: { objectId: 4566, museumId: 2, token: '1234' },
+        3: { objectId: 999, museumId: 2, token: '1234' }
       })
       .switchMap(
         getLocationHistory(

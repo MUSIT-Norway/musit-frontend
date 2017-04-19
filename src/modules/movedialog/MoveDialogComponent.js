@@ -61,8 +61,8 @@ export class MoveDialogComponent extends Component {
     this.props.setLoading(true);
     this.props.loadChildren({
       id: null,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken
     });
   }
 
@@ -72,13 +72,13 @@ export class MoveDialogComponent extends Component {
     this.props.setLoading(true);
     this.props.loadNode({
       id: id,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken()
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken
     });
     this.props.loadChildren({
       id: id,
-      museumId: this.props.appSession.getMuseumId(),
-      token: this.props.appSession.getAccessToken(),
+      museumId: this.props.appSession.museumId,
+      token: this.props.appSession.accessToken,
       page: {
         page: currentPage,
         limit: PER_PAGE
