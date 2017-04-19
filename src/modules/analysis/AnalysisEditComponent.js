@@ -64,7 +64,8 @@ type Props = {
   updateForm: Update,
   store: Store,
   appSession: AppSession,
-  editAnalysisEvent: Function
+  editAnalysisEvent: Function,
+  params: any
 };
 const getTableRow = (museumNo: string, subNo: string, term: string) => {
   return (
@@ -130,10 +131,12 @@ export const editAnalysisEventLocal = (
   appSession: AppSession,
   form: FormData,
   store: Store,
-  editAnalysisEvent: Function
+  editAnalysisEvent: Function,
+  params: any
 ) =>
   () =>
     editAnalysisEvent({
+      id: params.analysisId,
       museumId: appSession.museumId,
       data: {
         analysisTypeId: getValue(form.analysisTypeId),
@@ -142,7 +145,7 @@ export const editAnalysisEventLocal = (
         objectIds: store.analysis && store.analysis.events
           ? store.analysis.events.map(a => a.objectId)
           : store.analysis.objectId,
-        restrictions : {
+        restriction : {
           by: getValue(form.by),
           expirationDate: getValue(form.expirationDate),
           reason: getValue(form.reason),
@@ -162,7 +165,7 @@ const updateFormField = (field, updateForm) =>
     });
 
 const AnalysisEdit = (
-  { form, updateForm, store, editAnalysisEvent, appSession }: Props
+  { params, form, updateForm, store, editAnalysisEvent, appSession }: Props
 ) => (
   <div>
     <br />
@@ -428,7 +431,7 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={editAnalysisEventLocal(appSession, form, store, editAnalysisEvent)}
+      onClickSave={editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, params)}
     />
     <NewLine />
     <Form horizontal>

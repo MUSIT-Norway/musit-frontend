@@ -45,6 +45,9 @@ const store = {
   objectsData: objectsData
 };
 
+const param = {
+  analysisId: 3
+};
 const form = fieldsArray.reduce(
   (acc, n) => ({
     ...acc,
@@ -63,7 +66,7 @@ describe('AnalysisEditComponent', () => {
       museumId: 99,
       accessToken: '1234'
     };
-    editAnalysisEventLocal(appSession, form, store, editAnalysisEvent)();
+    editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, param)();
     expect(editAnalysisEvent.callCount).toBe(1);
     expect(editAnalysisEvent.getCall(0).args[0].museumId).toEqual(99);
     expect(editAnalysisEvent.getCall(0).args[0].token).toEqual('1234');
