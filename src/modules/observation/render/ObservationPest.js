@@ -145,7 +145,7 @@ export default class ObservationPest extends Component {
                 <ControlLabel>{'\u00A0'}</ControlLabel><br />
                 {!this.props.canEdit
                   ? ''
-                  : <a href="">
+                  : <Button bsStyle="link">
                       <FontAwesome
                         onClick={e => {
                           this.props.lifeCycleOnRemove(index);
@@ -153,7 +153,7 @@ export default class ObservationPest extends Component {
                         }}
                         name="times"
                       />
-                    </a>}
+                    </Button>}
               </Col>
               <Col xs={1} sm={this.props.addIconWidth} md={this.props.addIconWidth}>
                 <span style={{ height: 50 }}>

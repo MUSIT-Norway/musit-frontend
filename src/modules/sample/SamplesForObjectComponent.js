@@ -50,7 +50,9 @@ const SamplesForObjectComponent = ({ sampleStore: { museumNo, subNo, term, data 
               <Td column="sampleSubType">{e.sampleSubType}</Td>
               <Td column="status">{e.status}</Td>
               <Td column="hasAnalyse">{e.hasAnalyse}</Td>
-              <Td column="showInfo"><a href={e.details}>Se mer / Rediger</a></Td>
+              <Td column="showInfo">
+                <a href={e.details || 'en url'}>Se mer / Rediger</a>
+              </Td>
             </Tr>
           ))}
       </Table>

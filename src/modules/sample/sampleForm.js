@@ -185,7 +185,6 @@ const hasRestMaterial: Field<string> = {
   }
 };
 
-
 const fields = [
   note,
   status,

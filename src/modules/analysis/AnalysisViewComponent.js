@@ -343,7 +343,7 @@ const AnalysisView = ({ store }: Props) => (
         </Col>
       </FormGroup>
       <FormGroup>
-        <Col mdOffset={1}><a href="">Se mer</a></Col>
+        <Col mdOffset={1}><Button bsStyle="link">Se mer</Button></Col>
       </FormGroup>
     </Form>
   </div>

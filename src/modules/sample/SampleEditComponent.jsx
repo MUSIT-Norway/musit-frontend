@@ -17,19 +17,19 @@ import {
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 
-type Field = {name: string, rawValue: ?string};
+type Field = { name: string, rawValue: ?string };
 type Update = (update: Field) => void;
 
-type FieldInputProps = {field: Field, onChangeInput: Update, inputProps?: {className?: string, style?:{}}};
-const FieldInput = ({field, onChangeInput, inputProps} : FieldInputProps) => (
+type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: { className?: string, style?: {} } };
+const FieldInput = ({field, onChangeInput, inputProps}: FieldInputProps) => (
   <FormGroup
     controlId={field.name}
     validationState={field.status && !field.status.valid ? 'error' : null}
   >
     <FormControl
       {...inputProps}
-      value={field.rawValue||''}
-      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value })}
+      value={field.rawValue || ''}
+      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
     />
   </FormGroup>
 );
@@ -57,10 +57,10 @@ type FieldDropDownProps = {
   title: any,
   onSelectInput: Update,
   selectItems: Array<string>,
-  inputProps?:  {className?: string, style?:{}}
+  inputProps?: { className?: string, style?: {} }
 };
 
-const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : FieldDropDownProps) => (
+const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title}: FieldDropDownProps) => (
   <FormGroup
     controlId={field.name}
     validationState={field.status && !field.status.valid ? 'error' : null}
@@ -75,7 +75,7 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : 
         <MenuItem
           key={i}
           onClick={ (e) => {
-            onSelectInput({name: field.name, rawValue: e.target.text });
+            onSelectInput({name: field.name, rawValue: e.target.text});
           }
           }>{v}
         </MenuItem>) }
@@ -83,7 +83,7 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title} : 
   </FormGroup>
 );
 
-type FieldReadOnlyProps = {field: Field, label: string, defaultValue: string, inputProps?:  {className?: string, style?:{}}};
+type FieldReadOnlyProps = { field: Field, label: string, defaultValue: string, inputProps?: { className?: string, style?: {} } };
 
 const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyProps) => {
   const value = field.rawValue;
@@ -133,7 +133,7 @@ type Props = {
   }
 };
 
-const SampleEditComponent = ({params, form, updateForm, editSample, appSession} : Props) => {
+const SampleEditComponent = ({params, form, updateForm, editSample, appSession}: Props) => {
   const id = params.sampleId;
 
   const sampleValues = [
@@ -143,12 +143,12 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
 
   const sampleSubValues = (v) => {
     switch (v) {
-    case 'Frø':
-      return ['Pollen', 'Korn', 'Erter'];
-    case 'Vev':
-      return ['Thallus', 'Bein', 'Blod', 'Ascus'];
-    default:
-      return [];
+      case 'Frø':
+        return ['Pollen', 'Korn', 'Erter'];
+      case 'Vev':
+        return ['Thallus', 'Bein', 'Blod', 'Ascus'];
+      default:
+        return [];
     }
   };
 
@@ -161,19 +161,19 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
 
   const containerSubTypes = (v) => {
     switch (v) {
-    case 'Kapsel':
-      return ['Etanol', 'Aceton', 'Vann'];
-    case 'Glassplate':
-      return [];
-    case 'Koble':
-      return ['Aceton', 'Etanol', 'H2O'];
-    default:
-      return [];
+      case 'Kapsel':
+        return ['Etanol', 'Aceton', 'Vann'];
+      case 'Glassplate':
+        return [];
+      case 'Koble':
+        return ['Aceton', 'Etanol', 'H2O'];
+      default:
+        return [];
     }
   };
 
   return (
-    <Form style={{ padding: 20 }}>
+    <Form style={{padding: 20}}>
       <PageHeader>
         Endre prøveuttak
       </PageHeader>
@@ -211,7 +211,6 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession} 
           <Button>Vis Objektet</Button>
         </Col>
       </Row>
-
       <Well>
         <Row className='row-centered'>
           <Col md={3}>

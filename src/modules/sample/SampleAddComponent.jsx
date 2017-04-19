@@ -16,6 +16,7 @@ import {
 } from 'react-bootstrap';
 import Config from '../../config';
 import {hashHistory} from 'react-router';
+import PersonRoleDate from '../../components/samples/personRoleDate';
 
 type Field = { name: string, rawValue: ?string };
 type Update = (update: Field) => void;
@@ -76,8 +77,7 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title}: F
           key={i}
           onClick={ (e) => {
             onSelectInput({name: field.name, rawValue: e.target.text});
-          }
-          }>{v}
+          }}>{v}
         </MenuItem>) }
     </DropdownButton>
   </FormGroup>
@@ -131,6 +131,7 @@ type Props = {
 
 const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}: Props) => {
 
+
   const sampleValues = [
     'Frø',
     'Vev'
@@ -153,6 +154,11 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
     'Glassplate',
     'Kolbe'
   ];
+
+  const persons = [{name: 'Stein Olsen', role: 'Analysator', date: '12.12.2010'}];
+  const addPerson = () =>(
+    persons.push({name: '', role: '', date: ''})
+  );
 
   const containerSubTypes = (v) => {
     switch (v) {
@@ -207,6 +213,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           <Button>Vis Objektet</Button>
         </Col>
       </Row>
+      <br/>
       <Well>
         <Row className='row-centered'>
           <Col md={3}>
@@ -395,6 +402,11 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
             />
           </Col>
         </Row>
+        <PersonRoleDate
+          personData={persons}
+          updatePerson={()=>null}
+          addPerson={() => addPerson()}
+        />
       </Well>
       <Row className='row-centered'>
         <Col md={4}>
