@@ -31,7 +31,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     <FontAwesome
       name="user" />
      
-    Per Hansen
+    7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e
      
     <FontAwesome
       name="clock-o" />
@@ -49,7 +49,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     <FontAwesome
       name="user" />
      
-    Per Hansen
+    7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e
      
     <FontAwesome
       name="clock-o" />
@@ -171,12 +171,12 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     <FormGroup
       bsClass="form-group">
       <FieldGroup
-        id="navn"
+        id="responsible"
         label="Navn"
         onChange={[Function anonymous]}
         placeholder="Fornavn Etternavn"
         type="text"
-        value="Test Name Actor" />
+        value="7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e" />
       <Col
         bsClass="col"
         componentClass="div"
@@ -460,7 +460,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
               onChange={[Function anonymous]}
               placeholder="Fornavn Etternavn"
               type="text"
-              value="repealed By Person Name" />
+              value="Opphevet av" />
           </FormGroup>
         </Panel>
       </FormGroup>
@@ -573,7 +573,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
         bsClass="col"
         componentClass="div"
         mdOffset={1}>
-        Per Hansen
+        7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e
          - 
         2017-03-16T14:37:45+00:00
       </Col>
@@ -584,7 +584,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
         bsClass="col"
         componentClass="div"
         mdOffset={1}>
-        Per Hansen
+        7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e
          - 
         12.12.2012
       </Col>
