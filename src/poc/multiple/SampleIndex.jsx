@@ -1,7 +1,7 @@
 import React from 'react';
-import SampleDetails from './SampleDetails';
+import SampleDetails from '../components/SampleDetails';
 import { Button } from 'react-bootstrap';
-import './style.css';
+import '../style.css';
 
 export default ({ history }) => (
   <div>
@@ -20,7 +20,7 @@ export default ({ history }) => (
       <SampleDetails/>
       <Button
         bsStyle="primary"
-        onClick={() => history.push('sample/edit')}
+        onClick={() => history.push('sample/edit/multiple')}
       >
         Generer prøver
       </Button>

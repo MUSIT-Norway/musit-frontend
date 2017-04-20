@@ -1,9 +1,10 @@
 import React from 'react';
-import SampleDetails from './SampleDetails';
+import SampleDetails from '../components/SampleDetails';
+import Dropdown from '../components/Dropdown';
 import { Accordion, Panel, Button } from 'react-bootstrap';
-import downImg from './assets/down.png';
-import upImg from './assets/up.png';
-import './style.css';
+import downImg from '../assets/down.png';
+import upImg from '../assets/up.png';
+import '../style.css';
 
 class SampleEdit extends React.Component {
   constructor(props) {
@@ -32,29 +33,44 @@ const ObjectSamples = ({ active, setActive, indexes }) => (
   <table className="table table-bordered table-striped" id="samples" style={{ backgroundColor: 'white'}}>
     <thead>
       <tr>
+        <th>Prøve ID</th>
         <th>Prøvetype</th>
-        <th>Prøveundertype</th>
         <th>Status</th>
+        <th colSpan={2}>Prøvevolum/-vekt</th>
+        <th>Lagringskontainer</th>
+        <th>Lagringsmedium</th>
         <th width={10}>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
-      <tr onClick={() => setActive(indexes[0])}>
+      <tr>
         <td style={{ paddingLeft: 5 }}>
-          Vev
+          &nbsp;
         </td>
         <td style={{ paddingLeft: 5 }}>
-          Spindelvel
+          <Dropdown />
         </td>
         <td style={{ paddingLeft: 5 }}>
-          N/A
+          <Dropdown />
         </td>
-        <td>
-          <img src={!active[indexes[0]] ? downImg : upImg} width={20} />
+        <td style={{ paddingLeft: 5 }}>
+          <input className="form-control" />
+        </td>
+        <td style={{ paddingLeft: 5 }}>
+          <Dropdown />
+        </td>
+        <td style={{ paddingLeft: 5 }}>
+          <Dropdown />
+        </td>
+        <td style={{ paddingLeft: 5 }}>
+          <Dropdown />
+        </td>
+        <td onClick={() => setActive(indexes[0])}>
+          <img src={!active[indexes[0]] ? downImg : upImg} width={20} role="presentation"  />
         </td>
       </tr>
       <tr id="collapse1" className={'collapse ' + active[indexes[0]] ? 'in' : 'out'} hidden={!active[indexes[0]]}>
-        <td colSpan={3}>
+        <td colSpan={8}>
           <SampleDetails />
         </td>
       </tr>
@@ -86,9 +102,15 @@ const ObjectList = ({ goTo, active, setActive }) => (
       </div>
       <Button
         bsStyle="danger"
-        onClick={() => goTo('sample/index')}
+        onClick={() => goTo('sample/index/multiple')}
       >
         Gå tilbake
+      </Button>
+      {' '}
+      <Button
+        bsStyle="primary"
+      >
+        Lagre prøveuttak
       </Button>
     </div>
   </div>

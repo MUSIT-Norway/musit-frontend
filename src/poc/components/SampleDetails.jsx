@@ -1,37 +1,13 @@
 import React from 'react';
-
-const Dropdown = ({ id }) => (
-  <select className="form-control" id={id}>
-    <option>
-      1
-    </option>
-    <option>
-      2
-    </option>
-    <option>
-      3
-    </option>
-    <option>
-      4
-    </option>
-  </select>
-);
+import Dropdown from './Dropdown';
+import { Button } from 'react-bootstrap';
 
 export default () => (
   <form className="form-horizontal">
     <div className="form-group">
-      <label className="control-label col-sm-2" htmlFor="type">Prøvetype:</label>
-      <div className="col-sm-2">
-        <Dropdown id="type" />
-      </div>
+      <label className="control-label col-sm-2" htmlFor="type">Prøveundertype:</label>
       <div className="col-sm-2">
         <Dropdown id="subtype" />
-      </div>
-    </div>
-    <div className="form-group">
-      <label className="control-label col-sm-2" htmlFor="type">Status:</label>
-      <div className="col-sm-2">
-        <Dropdown id="status" />
       </div>
     </div>
     <div className="form-group">
@@ -82,40 +58,18 @@ export default () => (
           </thead>
           <tbody>
           <tr>
-            <td><input name="name" placeholder="navn" type="text" value=""/></td>
+            <td><input name="name" className="form-control" placeholder="navn" type="text" value=""/></td>
             <td>
-              <div className="dropdown">
-                <button
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  className="btn btn-default dropdown-toggle"
-                  data-toggle="dropdown"
-                  id="dropdownMenu1"
-                  type="button"
-                >
-                  Rolle
-                </button>
-                <ul aria-labelledby="dropdownMenu1" className="dropdown-menu">
-                  <li>
-                    <a href="#">Ansvarlig</a>
-                  </li>
-                  <li>
-                    <a href="#">Totalt uansvarlig</a>
-                  </li>
-                  <li>
-                    <a href="#">Innkjøpsansvarlig</a>
-                  </li>
-                </ul>
-              </div>
+              <Dropdown />
             </td>
             <td>&nbsp;</td>
             <td>
-              <button className="btn btn-default" type="button">Legg til</button>
+              <Button className="btn btn-default" type="button">Legg til</Button>
             </td>
           </tr>
           </tbody>
         </table>
-        <button className="btn btn-default">Legg til flere personer</button>
+        <Button>Legg til flere personer</Button>
       </div>
     </div>
   </form>
