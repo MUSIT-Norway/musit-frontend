@@ -24,13 +24,18 @@ import AllEvents from './modules/events/eventsContainer';
 import SampleViewContainer from './modules/sample/sampleViewContainer';
 import SampleEditContainer from './modules/sample/sampleEditContainer';
 import SamplesForObjectContainer from './modules/sample/samplesForObjectContainer';
-
 import CenteredLayout from './components/layout/CenteredLayout';
 import ViewObjectContainer from './modules/objects/viewObjectContainer';
+import SampleTest from './poc/SampleIndex';
+import SampleEdit from './poc/SampleEdit';
 
 export default () => {
   return (
     <Route>
+      <Route component={CenteredLayout}>
+        <Route path="sample/index" component={SampleTest} />
+        <Route path="sample/edit" component={SampleEdit} />
+      </Route>
       <Route
         path="/(museum/:museumId/)(collections/:collectionIds/)"
         component={AppComponent}
@@ -68,6 +73,7 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route component={CenteredLayout}>
+          <Route path="sample/index" component={SampleTest} />
           <Route path="objects/:objectId" component={ViewObjectContainer} />
           <Route path="analysis/add" component={AnalysisAddContainer} />
           <Route path="analysis/edit/:analysisId" component={AnalysisEditContainer} />
