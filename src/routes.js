@@ -73,7 +73,6 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route component={CenteredLayout}>
-          <Route path="sample/index" component={SampleTest} />
           <Route path="objects/:objectId" component={ViewObjectContainer} />
           <Route path="analysis/add" component={AnalysisAddContainer} />
           <Route path="analysis/edit/:analysisId" component={AnalysisEditContainer} />
