@@ -26,15 +26,19 @@ import SampleEditContainer from './modules/sample/sampleEditContainer';
 import SamplesForObjectContainer from './modules/sample/samplesForObjectContainer';
 import CenteredLayout from './components/layout/CenteredLayout';
 import ViewObjectContainer from './modules/objects/viewObjectContainer';
-import SampleTest from './poc/SampleIndex';
-import SampleEdit from './poc/SampleEdit';
+import SampleIndexMultiple from './poc/multiple/SampleIndex';
+import SampleEditMultiple from './poc/multiple/SampleEdit';
+import SampleIndexSingle from './poc/single/SampleIndex';
+import SampleEditSingle from './poc/single/SampleEdit';
 
 export default () => {
   return (
     <Route>
       <Route component={CenteredLayout}>
-        <Route path="sample/index" component={SampleTest} />
-        <Route path="sample/edit" component={SampleEdit} />
+        <Route path="sample/index/multiple" component={SampleIndexMultiple} />
+        <Route path="sample/edit/multiple" component={SampleEditMultiple} />
+        <Route path="sample/index/single" component={SampleIndexSingle} />
+        <Route path="sample/edit/single" component={SampleEditSingle} />
       </Route>
       <Route
         path="/(museum/:museumId/)(collections/:collectionIds/)"
