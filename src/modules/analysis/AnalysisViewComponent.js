@@ -258,41 +258,60 @@ const AnalysisView = ({ store }: Props) => (
           >
             <FormGroup>
               <FieldGroup
-                id="navn"
+                id="by"
                 md={1}
                 type="text"
                 label="Klausulert for"
                 placeholder="Fornavn Etternavn"
-                value={getValue(store, 'restrictionsFor')}
+                value={getValue(store, 'by')}
               />
             </FormGroup>
             <FormGroup>
               <FieldGroup
-                id="navn"
+                id="reason"
                 md={1}
                 type="text"
                 label="Årsak til klausulering"
-                value={getValue(store, 'reasonForRestrictions')}
+                value={getValue(store, 'reason')}
               />
             </FormGroup>
             <FormGroup>
               <FieldGroup
-                id="navn"
+                id="Saksnummer"
+                md={1}
+                type="text"
+                label="Saksnummer"
+                value={getValue(store, 'caseNumbers')}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="expirationDate"
                 md={1}
                 type="text"
                 label="Sluttdato"
-                value={getValue(store, 'restrictionsEndDate')}
+                value={getValue(store, 'expirationDate')}
                 readOnly
               />
             </FormGroup>
             <FormGroup>
               <FieldGroup
-                id="navn"
+                id="cancelledBy"
                 md={1}
                 type="text"
                 label="Opphevet av"
                 placeholder="Fornavn Etternavn"
-                value={getValue(store, 'repealedBy')}
+                value={getValue(store, 'cancelledBy')}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="cancelledReason"
+                md={1}
+                type="text"
+                label="Årsak til oppheving"
+                placeholder="Årsak til oppheving"
+                value={getValue(store, 'cancelledReason')}
               />
             </FormGroup>
           </Panel>
