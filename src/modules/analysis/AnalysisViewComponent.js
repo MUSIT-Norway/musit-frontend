@@ -1,6 +1,6 @@
 /* @flow */
-import React, { PropTypes } from 'react';
-import { I18n } from 'react-i18nify';
+import React, {PropTypes} from 'react';
+import {I18n} from 'react-i18nify';
 import {
   Radio,
   PageHeader,
@@ -14,31 +14,31 @@ import {
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import { SaveCancel } from '../../components/formfields/index';
+import {SaveCancel} from '../../components/formfields/index';
 import {hashHistory} from 'react-router';
 import Config from '../../config';
-type Props = { store: any };
+type Props = { store: any, appSession: any, params: any };
 
 function LabelFormat(label, md = 1) {
   return <Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>;
 }
-function FieldGroup({ id, label, md = 1, ...props }) {
+function FieldGroup({id, label, md = 1, ...props}) {
   return (
     <div id={id}>
       {LabelFormat(label, md)}
       <Col md={2}>
-        <FormControl {...props} readOnly />
+        <FormControl {...props} readOnly/>
       </Col>
     </div>
   );
 }
 
-function AddButton({ id, label, md, mdOffset = 0, ...props }) {
+function AddButton({id, label, md, mdOffset = 0, ...props}) {
   return (
     <div id={id}>
       <Col md={md} mdOffset={mdOffset}>
         <Button {...props} disabled>
-          <FontAwesome name="plus-circle" />{' '}
+          <FontAwesome name="plus-circle"/>{' '}
           {label}
         </Button>
       </Col>
@@ -103,7 +103,7 @@ const labelFormat = (label, md = 1) => (
   </Col>
 );
 
-const AnalysisView = ({ store, appSession, params }: Props) => (
+const AnalysisView = ({store, appSession, params}: Props) => (
   <div>
     <br />
     <PageHeader style={{ paddingLeft: 20 }}>
@@ -115,20 +115,20 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
     <Col md={12}>
       <strong>Registrert:</strong>
       {' '}
-      <FontAwesome name="user" />
+      <FontAwesome name="user"/>
       {' '}
       {getValue(store, 'registeredByName')}
       {' '}
-      <FontAwesome name="clock-o" />{' '}{getValue(store, 'registeredDate')}
+      <FontAwesome name="clock-o"/>{' '}{getValue(store, 'registeredDate')}
     </Col>
     <Col md={12}>
       <strong>Sist endret:</strong>
       {' '}
-      <FontAwesome name="user" />
+      <FontAwesome name="user"/>
       {' '}
       {getValue(store, 'doneBy')}
       {' '}
-      <FontAwesome name="clock-o" />
+      <FontAwesome name="clock-o"/>
       {' '}
       {getValue(store, 'eventDate')}
       {' '}
@@ -145,7 +145,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
         />
       </FormGroup>
       <FormGroup>
-        <AddButton id="1" label="Legg til saksnummer" md={5} />
+        <AddButton id="1" label="Legg til saksnummer" md={5}/>
       </FormGroup>
     </Form>
     <NewLine />
@@ -154,18 +154,18 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
       <Col mdOffset={1} md={5}>
         <Table responsive>
           <thead>
-            <tr>
-              <th>Museumsnr</th>
-              <th>Unr</th>
-              <th>Term/artsnavn</th>
-            </tr>
+          <tr>
+            <th>Museumsnr</th>
+            <th>Unr</th>
+            <th>Term/artsnavn</th>
+          </tr>
           </thead>
           <tbody>
-            {getObjectsValue(store)}
+          {getObjectsValue(store)}
           </tbody>
         </Table>
       </Col>
-      <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
+      <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1}/>
     </Form>
     <NewLine />
     <Form horizontal style={{ paddingLeft: 20 }}>
@@ -187,7 +187,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
             <option value="other">...</option>
           </FormControl>
         </Col>
-        <AddButton id="3" label="Legg til person" md={2} />
+        <AddButton id="3" label="Legg til person" md={2}/>
       </FormGroup>
     </Form>
     <NewLine />
@@ -225,7 +225,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
           </Col>
         </FormGroup>
         <FormGroup>
-          <FieldGroup id="formControlsText" type="text" label="Ladt opp fil" />
+          <FieldGroup id="formControlsText" type="text" label="Ladt opp fil"/>
           <Col md={2}>
             <Button disabled>Bla gjennom</Button>
           </Col>
@@ -260,41 +260,60 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
           >
             <FormGroup>
               <FieldGroup
-                id="navn"
+                id="by"
                 md={1}
                 type="text"
                 label="Klausulert for"
                 placeholder="Fornavn Etternavn"
-                value={getValue(store, 'restrictionsFor')}
+                value={getValue(store, 'by')}
               />
             </FormGroup>
             <FormGroup>
               <FieldGroup
-                id="navn"
+                id="reason"
                 md={1}
                 type="text"
                 label="Årsak til klausulering"
-                value={getValue(store, 'reasonForRestrictions')}
+                value={getValue(store, 'reason')}
               />
             </FormGroup>
             <FormGroup>
               <FieldGroup
-                id="navn"
+                id="Saksnummer"
+                md={1}
+                type="text"
+                label="Saksnummer"
+                value={getValue(store, 'caseNumbers')}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="expirationDate"
                 md={1}
                 type="text"
                 label="Sluttdato"
-                value={getValue(store, 'restrictionsEndDate')}
+                value={getValue(store, 'expirationDate')}
                 readOnly
               />
             </FormGroup>
             <FormGroup>
               <FieldGroup
-                id="navn"
+                id="cancelledBy"
                 md={1}
                 type="text"
                 label="Opphevet av"
                 placeholder="Fornavn Etternavn"
-                value={getValue(store, 'repealedBy')}
+                value={getValue(store, 'cancelledBy')}
+              />
+            </FormGroup>
+            <FormGroup>
+              <FieldGroup
+                id="cancelledReason"
+                md={1}
+                type="text"
+                label="Årsak til oppheving"
+                placeholder="Årsak til oppheving"
+                value={getValue(store, 'cancelledReason')}
               />
             </FormGroup>
           </Panel>
