@@ -18,7 +18,7 @@ import Config from '../../config';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
 
-type Field = { name: string, rawValue: ?string };
+type Field = { name: string, rawValue?: any }; // TODO use Field type in forms package, and change that Field type instead
 type Update = (update: Field) => void;
 
 type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: { className?: string, style?: {} } };
@@ -174,6 +174,8 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
         return [];
     }
   };
+
+  const personRoles = form.persons.rawValue || [];
 
   return (
     <Form style={{padding: 20}}>
@@ -404,10 +406,19 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           </Col>
         </Row>
         <PersonRoleDate
-          personData={form.persons.rawValue}
-          addPerson={() => updateForm({name: form.persons.name, rawValue: [...(form.persons.rawValue|| []),{name: '', role: '', date:''}]})}
-          updatePerson={(ind, person) => updateForm({name: form.persons.name, rawValue: [...form.persons.rawValue.slice(0,ind),
-            person,form.persons.rawValue.slice(ind+1)]})}
+          personData={personRoles}
+          addPerson={() => updateForm({
+            name: form.persons.name,
+            rawValue: [...personRoles, {name: '', role: '', date: ''}]
+          })}
+          updatePerson={(ind, person) => updateForm({
+            name: form.persons.name,
+            rawValue: [
+              ...personRoles.slice(0, ind),
+              person,
+              personRoles.slice(ind + 1)
+            ]
+          })}
         />
       </Well>
       <Row className='row-centered'>
@@ -443,7 +454,8 @@ const FieldShape = {
   rawValue: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.number
+    PropTypes.number,
+    PropTypes.array
   ]),
   status: PropTypes.shape({
     valid: PropTypes.bool.isRequired,
