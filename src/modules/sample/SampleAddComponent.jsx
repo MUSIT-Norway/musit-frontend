@@ -17,7 +17,7 @@ import {
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
-
+import type {Person} from './sampleForm';
 type Field = { name: string, rawValue?: any }; // TODO use Field type in forms package, and change that Field type instead
 type Update = (update: Field) => void;
 
@@ -39,16 +39,16 @@ const CheckBoxInput = ({field, onChangeInput}: FieldInputProps) => (
   <FormGroup>
     <Radio
       inline
-      value={field.rawValue || ''}
-      checked={field.rawValue === '1'}
+      value={field.rawValue || '1'}
+      checked={field.rawValue === '3'}
       onChange={() =>
-        onChangeInput({name: field.name, rawValue: '1'})}
+        onChangeInput({name: field.name, rawValue: '3'})}
     >Ja</Radio>
     <Radio
-      inline value={field.rawValue || ''}
-      checked={field.rawValue === '0'}
+      inline value={field.rawValue || '1'}
+      checked={field.rawValue === '2'}
       onChange={() =>
-        onChangeInput({name: field.name, rawValue: '0'})}
+        onChangeInput({name: field.name, rawValue: '2'})}
     >Nei</Radio>
   </FormGroup>
 );
@@ -98,7 +98,37 @@ const submitSample = (appSession, form, addSample, persons) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-  const data = {...myReduce(form), persons};
+  const reducePersons = (p) => p.reduce((akk: any, v: Person) => {
+    switch (v.role) {
+      case 'Registrator':
+        return {
+          registeredStamp: {
+            user: v.name,
+            date: v.date
+          }
+        };
+      case
+      'Responsible':
+        return {
+          responsible: v.name
+        };
+      case
+      'Updater':
+        return {
+          updatedStamp: {
+            user: v.name, date: v.date
+          }
+        };
+    }
+  }, {});
+
+  const tmpData = {...myReduce(form), ...reducePersons(persons)};
+  const data = {
+    ...tmpData,
+    externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
+    size: {value: tmpData.size, unit: tmpData.sizeUnit},
+    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType}
+  };
 
 
   data['createdDate'] = '2017-03-19';
@@ -123,7 +153,7 @@ type FormData = {
 type Props = {
   form: FormData,
   updateForm: Update,
-  persons: Array<{name: string, role: string, date: string}> ,
+  persons: Array<{ name: string, role: string, date: string }>,
   addSample: Function,
   addPersonToSample: Function,
   updatePersonForSample: Function,
@@ -216,7 +246,28 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           <Button>Vis Objektet</Button>
         </Col>
       </Row>
+      <hr/>
+      <PersonRoleDate
+        heading={'Personer knyttet til prøveuttaket'}
+        personData={personRoles}
+        addPerson={() => updateForm({
+          name: form.persons.name,
+          rawValue: [...personRoles, {name: '', role: '', date: ''}]
+        })}
+        updatePerson={(ind, person) => updateForm({
+          name: form.persons.name,
+          rawValue: person ? [
+            ...personRoles.slice(0, ind),
+            person,
+            ...personRoles.slice(ind + 1)
+          ] : [
+            ...personRoles.slice(0, ind),
+            ...personRoles.slice(ind + 1)
+          ]
+        })}
+      />
       <br/>
+
       <Well>
         <Row className='row-centered'>
           <Col md={3}>
@@ -384,7 +435,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           </Col>
           <Col md={3}>
             <CheckBoxInput
-              field={form.hasRestMaterial}
+              field={form.residualMaterial}
               onChangeInput={updateForm}
             />
           </Col>
@@ -405,27 +456,12 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
             />
           </Col>
         </Row>
-        <PersonRoleDate
-          personData={personRoles}
-          addPerson={() => updateForm({
-            name: form.persons.name,
-            rawValue: [...personRoles, {name: '', role: '', date: ''}]
-          })}
-          updatePerson={(ind, person) => updateForm({
-            name: form.persons.name,
-            rawValue: [
-              ...personRoles.slice(0, ind),
-              person,
-              ...personRoles.slice(ind + 1)
-            ]
-          })}
-        />
       </Well>
       <Row className='row-centered'>
         <Col md={4}>
           <Button
             onClick={() =>
-              submitSample(appSession, form, addSample)
+              submitSample(appSession, form, addSample, form.persons.rawValue)
                 .then((value) => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(value)))
             }
           >
@@ -480,7 +516,7 @@ SampleAddComponent.propTypes = {
     status: PropTypes.shape(FieldShape).isRequired,
     container: PropTypes.shape(FieldShape).isRequired,
     storageMedium: PropTypes.shape(FieldShape).isRequired,
-    hasRestMaterial: PropTypes.shape(FieldShape).isRequired,
+    residualMaterial: PropTypes.shape(FieldShape).isRequired,
     externalId: PropTypes.shape(FieldShape).isRequired,
     externalIdSource: PropTypes.shape(FieldShape).isRequired,
     sampleDescription: PropTypes.shape(FieldShape).isRequired

@@ -10,13 +10,14 @@ import {
   MenuItem,
   FormGroup
 } from 'react-bootstrap';
-
+import FontAwesome from 'react-fontawesome';
 type personRoleDate = { name?: string, role?: string, date?: string };
 import type { Person } from '../../modules/sample/sampleForm';
 type Props = {
   personData: Array<Person>,
   updatePerson: Function,
-  addPerson: Function
+  addPerson: Function,
+  heading: string
 };
 type FieldDropDownProps = {
   id: string,
@@ -49,24 +50,28 @@ const FieldDropDown = (
   </FormGroup>
 );
 
-export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) => {
+export const PersonRoleDate = ({ personData, updatePerson, addPerson, heading }: Props) => {
   const pArr = personData || [];
   return pArr &&
     <Grid>
       <Row>
-        <b>Personer</b>
+        <h4><b>{heading}</b></h4>
       </Row>
       <Row>
         <Col md={2}>
-          Navn
+          <b>Navn</b>
         </Col>
         <Col md={2}>
-          Rolle
+          <b>Rolle</b>
         </Col>
         <Col md={2}>
-          Dato
+          <b>Dato</b>
+        </Col>
+        <Col md={2}>
+          <b>Slett</b>
         </Col>
       </Row>
+      <br/>
       {pArr.map((v, i) => (
         <Row key={`id_${i}`}>
           <Col md={2}>
@@ -76,7 +81,7 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
             <FieldDropDown
               id={`role_${i}`}
               personRoleItem={v}
-              selectItems={['Analysator', 'Registrator']}
+              selectItems={['Registrator', 'Updater', 'Responsible']}
               index={i}
               onSelectInput={(ind,p) => {
                 console.log('On select input: ',p);
@@ -86,18 +91,18 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
             />
           </Col>
           <Col md={2}>
-            {v.role === 'Analysator' &&
+            {(v.role === 'Registrator' || v.role==='Updater') &&
             <FormControl value={v.date} onChange={(e) => updatePerson(i, {...v, date: e.target.value})}/>
             }
           </Col>
           <Col md={1}>
-            Slett
+            <FontAwesome name={'times'} onClick={() => updatePerson(i)} />
           </Col>
         </Row>
       ))}
       <Row>
         <Col md={6}>
-          <Button onClick={() => addPerson()}>Legg til person</Button>
+          <Button onClick={() => addPerson()}>Legg til flere personer</Button>
         </Col>
       </Row>
     </Grid>;

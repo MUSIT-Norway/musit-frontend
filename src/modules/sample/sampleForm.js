@@ -9,10 +9,26 @@ import {
   isNonEmptyArray
 } from '../../forms/validators';
 
-import { stringMapper, numberMapper, noMapper } from '../../forms/mappers';
+import { stringMapper, numberMapper, noMapper, booleanMapper  } from '../../forms/mappers';
 
 const museumId: Field<string> = {
   name: 'museumId',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const parentObjectId: Field<string> = {
+  name: 'parentObjectId',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const parentObjectType: Field<string> = {
+  name: 'parentObjectType',
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -46,6 +62,14 @@ const responsible: Field<string> = {
 const sampleId: Field<string> = {
   name: 'sampleId',
   mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const isExtracted: Field<boolean> = {
+  name: 'isExtracted',
+  mapper: booleanMapper,
   validator: {
     rawValidator: isRequired
   }
@@ -178,8 +202,18 @@ const sampleDescription: Field<string> = {
     rawValidator: isRequired
   }
 };
-const hasRestMaterial: Field<string> = {
-  name: 'hasRestMaterial',
+
+const residualMaterial: Field<number> = {
+  name: 'residualMaterial',
+  mapper: numberMapper,
+  defaultValue: 1,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const treatment: Field<string> = {
+  name: 'treatment',
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -191,6 +225,8 @@ export type Person = {
   role?: string,
   date?: string
 };
+
+
 
 const persons: Field<Array<Person>> = {
   name: 'persons',
@@ -215,9 +251,13 @@ const fields = [
   museumId,
   subNo,
   term_species,
-  hasRestMaterial,
+  residualMaterial,
+  parentObjectId,
   sampleId,
+  treatment,
+  isExtracted,
   registeredBy,
+  parentObjectType,
   registeredDate,
   responsible,
   updateBy,

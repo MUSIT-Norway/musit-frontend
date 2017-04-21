@@ -16,6 +16,8 @@ import {
 } from 'react-bootstrap';
 import Config from '../../config';
 import {hashHistory} from 'react-router';
+import PersonRoleDate from '../../components/samples/personRoleDate';
+import type {Person} from './sampleForm';
 
 type Field = { name: string, rawValue: ?string };
 type Update = (update: Field) => void;
@@ -38,16 +40,16 @@ const CheckBoxInput = ({field, onChangeInput}: FieldInputProps) => (
   <FormGroup>
     <Radio
       inline
-      value={field.rawValue || ''}
-      checked={field.rawValue === '1'}
+      value={field.rawValue || '1'}
+      checked={field.rawValue === '3'}
       onChange={() =>
-        onChangeInput({name: field.name, rawValue: '1'})}
+        onChangeInput({name: field.name, rawValue: '3'})}
     >Ja</Radio>
     <Radio
-      inline value={field.rawValue || ''}
-      checked={field.rawValue === '0'}
+      inline value={field.rawValue || '1'}
+      checked={field.rawValue === '2'}
       onChange={() =>
-        onChangeInput({name: field.name, rawValue: '0'})}
+        onChangeInput({name: field.name, rawValue: '2'})}
     >Nei</Radio>
   </FormGroup>
 );
@@ -94,11 +96,46 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (id, appSession, form, editSample) => {
+const submitSample = (id, appSession, form, editSample, persons) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-  const data = myReduce(form);
+  const reducePersons = (p) => p && p.reduce((akk: any, v: Person) => {
+    switch (v.role) {
+      case 'Registrator':
+        return {
+          registeredStamp: {
+            user: v.name,
+            date: v.date
+          }
+        };
+      case
+      'Responsible':
+        return {
+          responsible: v.name
+        };
+      case
+      'Updater':
+        return {
+          updatedStamp: {
+            user: v.name, date: v.date
+          }
+        };
+      default:
+        return null;
+    }
+  }, {});
+
+  const tmpData = {...myReduce(form), ...reducePersons(persons)};
+  const data = {
+    ...tmpData,
+    externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
+    size: {value: tmpData.size, unit: tmpData.sizeUnit},
+    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType}
+  };
+
+
+  console.log('Form', form);
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
@@ -112,8 +149,9 @@ type FormData = {
   note: Field, size: Field, status: Field, externalId: Field,
   externalIdSource: Field, container: Field, storageMedium: Field,
   sampleType: Field, sampleId: Field, sampleSubType: Field,
-  sizeUnit: Field, museumId: Field, subNo: Field, term_species: Field,
-  registeredBy: Field, registeredDate: Field, updateBy: Field, hasRestMaterial: Field,
+  persons: Field,
+  isExtracted: Field, sizeUnit: Field, museumId: Field, subNo: Field, term_species: Field,
+  registeredBy: Field, registeredDate: Field, updateBy: Field, residualMaterial: Field,
   updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field
 };
 
@@ -171,6 +209,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
         return [];
     }
   };
+  const personRoles = form.persons.rawValue || [];
 
   return (
     <Form style={{padding: 20}}>
@@ -211,6 +250,27 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           <Button>Vis Objektet</Button>
         </Col>
       </Row>
+      <hr/>
+      <PersonRoleDate
+        heading={'Personer knyttet til prøveuttaket'}
+        personData={personRoles}
+        addPerson={() => updateForm({
+          name: form.persons.name,
+          rawValue: [...personRoles, {name: '', role: '', date: ''}]
+        })}
+        updatePerson={(ind, person) => updateForm({
+          name: form.persons.name,
+          rawValue: person ? [
+            ...personRoles.slice(0, ind),
+            person,
+            ...personRoles.slice(ind + 1)
+          ] : [
+            ...personRoles.slice(0, ind),
+            ...personRoles.slice(ind + 1)
+          ]
+        })}
+      />
+      <br/>
       <Well>
         <Row className='row-centered'>
           <Col md={3}>
@@ -378,7 +438,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           </Col>
           <Col md={3}>
             <CheckBoxInput
-              field={form.hasRestMaterial}
+              field={form.residualMaterial}
               onChangeInput={updateForm}
             />
           </Col>
@@ -404,7 +464,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
         <Col md={4}>
           <Button
             onClick={() =>
-              submitSample(id, appSession, form, editSample)
+              submitSample(id, appSession, form, editSample, form.persons.rawValue)
                 .then(() => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(id)))
             }
           >
