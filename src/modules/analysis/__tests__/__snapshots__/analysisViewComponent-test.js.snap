@@ -392,7 +392,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           <FormGroup
             bsClass="form-group">
             <FieldGroup
-              id="navn"
+              id="by"
               label="Klausulert for"
               md={1}
               placeholder="Fornavn Etternavn"
@@ -402,7 +402,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           <FormGroup
             bsClass="form-group">
             <FieldGroup
-              id="navn"
+              id="reason"
               label="Årsak til klausulering"
               md={1}
               type="text"
@@ -411,7 +411,16 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           <FormGroup
             bsClass="form-group">
             <FieldGroup
-              id="navn"
+              id="Saksnummer"
+              label="Saksnummer"
+              md={1}
+              type="text"
+              value={undefined} />
+          </FormGroup>
+          <FormGroup
+            bsClass="form-group">
+            <FieldGroup
+              id="expirationDate"
               label="Sluttdato"
               md={1}
               readOnly={true}
@@ -421,10 +430,20 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           <FormGroup
             bsClass="form-group">
             <FieldGroup
-              id="navn"
+              id="cancelledBy"
               label="Opphevet av"
               md={1}
               placeholder="Fornavn Etternavn"
+              type="text"
+              value={undefined} />
+          </FormGroup>
+          <FormGroup
+            bsClass="form-group">
+            <FieldGroup
+              id="cancelledReason"
+              label="Årsak til oppheving"
+              md={1}
+              placeholder="Årsak til oppheving"
               type="text"
               value={undefined} />
           </FormGroup>
