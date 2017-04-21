@@ -32,14 +32,14 @@ const FieldDropDown = (
   <FormGroup controlId={id}>
     <DropdownButton
       bsStyle="default"
-      title={personRoleItem.value ? personRoleItem.value : title}
+      title={personRoleItem.role ? personRoleItem.role : title}
       id={id}
     >
       {selectItems.map((v, i) => (
         <MenuItem
           key={i}
-          onClick={e => {
-            onSelectInput(index, { ...personRoleItem, role: e.target.value });
+          onClick={(e) => {
+            onSelectInput(index, { ...personRoleItem, role: e.target.text });
           }}
         >
           {v}
@@ -78,12 +78,17 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
               personRoleItem={v}
               selectItems={['Analysator', 'Registrator']}
               index={i}
-              onSelectInput={() => updatePerson(i, v)}
+              onSelectInput={(ind,p) => {
+                console.log('On select input: ',p);
+                updatePerson(i, p);
+              }}
               title="Velg rolle"
             />
           </Col>
           <Col md={2}>
-            {'12.01.2001'}
+            {v.role === 'Analysator' &&
+            <FormControl value={v.date} onChange={(e) => updatePerson(i, {...v, date: e.target.value})}/>
+            }
           </Col>
           <Col md={1}>
             Slett
