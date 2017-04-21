@@ -1,7 +1,7 @@
 import { mount, shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import AnalysisEditComponent, { editAnalysisEventLocal } from '../AnalysisEditComponent';
+import AnalysisEditComponent from '../AnalysisEditComponent';
 import { fieldsArray } from '../analysisAddForm';
 import sinon from 'sinon';
 
@@ -45,9 +45,6 @@ const store = {
   objectsData: objectsData
 };
 
-const param = {
-  analysisId: 3
-};
 const form = fieldsArray.reduce(
   (acc, n) => ({
     ...acc,
@@ -60,18 +57,6 @@ const form = fieldsArray.reduce(
 );
 
 describe('AnalysisEditComponent', () => {
-  it('editAnalysisEventLocal should call editAnalysisEvent', () => {
-    const editAnalysisEvent = sinon.spy();
-    const appSession = {
-      museumId: 99,
-      accessToken: '1234'
-    };
-    editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, param)();
-    expect(editAnalysisEvent.callCount).toBe(1);
-    expect(editAnalysisEvent.getCall(0).args[0].museumId).toEqual(99);
-    expect(editAnalysisEvent.getCall(0).args[0].token).toEqual('1234');
-  });
-
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
     const wrapper = mount(

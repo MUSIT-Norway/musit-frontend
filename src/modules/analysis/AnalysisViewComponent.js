@@ -83,13 +83,13 @@ const getObjectsValue = store => {
 };
 const getValue = (store, field) => {
   if (store.analysis) {
-    if (
+ /*   if (
       store.analysis.type === 'AnalysisCollection' &&
       field !== 'id' &&
       field !== 'registeredByName'
     ) {
       return store.analysis.events[0][field];
-    }
+    }*/
     return store.analysis[field];
   }
   return '';

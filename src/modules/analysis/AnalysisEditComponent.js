@@ -158,7 +158,7 @@ export const editAnalysisEventLocal = (
         }
       },
       token: appSession.accessToken
-    }).then((analysisId) => hashHistory.push(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
+    }).then(() => hashHistory.push(Config.magasin.urls.client.analysis.viewAnalysis(appSession, params.analysisId)));
 
 const updateFormField = (field, updateForm) =>
   e =>

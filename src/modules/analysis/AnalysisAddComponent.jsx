@@ -114,7 +114,7 @@ export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, s
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
       objectIds: store.objectsData.map((a) => a.uuid),
-      restriction : {
+      result : {
         by: getValue(form.by),
         expirationDate: getValue(form.expirationDate),
         reason: getValue(form.reason),
