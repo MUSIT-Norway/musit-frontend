@@ -2,7 +2,7 @@ import { mount, shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import AnalysisEditComponent, { editAnalysisEventLocal } from '../AnalysisEditComponent';
-import { fieldsArray } from '../analysisAddForm';
+import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
 
 const objectsData = [
