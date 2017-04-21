@@ -14,7 +14,9 @@ import {
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-
+import { SaveCancel } from '../../components/formfields/index';
+import {hashHistory} from 'react-router';
+import Config from '../../config';
 type Props = { store: any };
 
 function LabelFormat(label, md = 1) {
@@ -101,7 +103,7 @@ const labelFormat = (label, md = 1) => (
   </Col>
 );
 
-const AnalysisView = ({ store }: Props) => (
+const AnalysisView = ({ store, appSession, params }: Props) => (
   <div>
     <br />
     <PageHeader style={{ paddingLeft: 20 }}>
@@ -324,9 +326,13 @@ const AnalysisView = ({ store }: Props) => (
       </FormGroup>
     </Form>
     <NewLine />
-    <button>
-      close
-    </button>
+    <SaveCancel
+      onClickSave={(e) => {
+      e.preventDefault();
+      hashHistory.push(Config.magasin.urls.client.analysis.editAnalysis(appSession, params.analysisId));
+      }}
+      saveLabel="Endre"
+    />
     <NewLine />
     <Form horizontal>
       <FormGroup>

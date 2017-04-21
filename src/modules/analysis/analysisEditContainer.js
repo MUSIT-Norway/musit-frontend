@@ -51,7 +51,7 @@ export const onMount = (
     collectionId: appSession.collectionId,
     token: appSession.accessToken
   })
-    .do(analysis => {
+    .then(analysis => {
       const dataForForm = Object.keys(analysis).reduce(
         (obj, attributeName) => [
           ...obj,
@@ -60,8 +60,7 @@ export const onMount = (
         []
       );
       loadForm(dataForForm);
-    })
-    .toPromise();
+    });
 
   loadAnalysis({
     museumId: appSession.museumId,

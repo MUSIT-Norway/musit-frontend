@@ -16,6 +16,9 @@ import {
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import { AppSession } from '../app/appSession';
+import {hashHistory} from 'react-router';
+import Config from '../../config';
+
 
 type Field = { name: string, rawValue: ?string };
 type FormData = {
@@ -135,7 +138,7 @@ export const editAnalysisEventLocal = (
           : store.analysis.objectId
       },
       token: appSession.accessToken
-    });
+    }).then((analysisId) => hashHistory.push(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
 
 const updateFormField = (field, updateForm) =>
   e =>
