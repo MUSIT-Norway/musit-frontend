@@ -5,10 +5,11 @@ import {
   composeValidators,
   isNumber,
   isRequired,
-  isNumberInRange
+  isNumberInRange,
+  isNonEmptyArray
 } from '../../forms/validators';
 
-import { stringMapper, numberMapper } from '../../forms/mappers';
+import { stringMapper, numberMapper, noMapper } from '../../forms/mappers';
 
 const museumId: Field<string> = {
   name: 'museumId',
@@ -185,6 +186,20 @@ const hasRestMaterial: Field<string> = {
   }
 };
 
+export type Person = {
+  name?: string,
+  role?: string,
+  date?: string
+};
+
+const persons: Field<Array<Person>> = {
+  name: 'persons',
+  mapper: noMapper,
+  validator: {
+    rawValidator: isNonEmptyArray
+  }
+};
+
 const fields = [
   note,
   status,
@@ -207,7 +222,8 @@ const fields = [
   responsible,
   updateBy,
   updateDate,
-  createdDate
+  createdDate,
+  persons
 ];
 
 export default createForm('sampleForm.js', fields);

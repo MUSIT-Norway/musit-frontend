@@ -94,11 +94,12 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (appSession, form, addSample) => {
+const submitSample = (appSession, form, addSample, persons) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-  const data = myReduce(form);
+  const data = {...myReduce(form), persons};
+
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
@@ -116,11 +117,19 @@ type FormData = {
   container: Field, storageMedium: Field, sampleType: Field, sampleId: Field,
   sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
   term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field, hasRestMaterial: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field
+  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field, persons: Field
 };
 
 type Props = {
-  form: FormData, updateForm: Update, addSample: Function, clearForm: Function, appSession: {
+  form: FormData,
+  updateForm: Update,
+  persons: Array<{name: string, role: string, date: string}> ,
+  addSample: Function,
+  addPersonToSample: Function,
+  updatePersonForSample: Function,
+  clearForm: Function,
+
+  appSession: {
     museumId: number,
     accessToken: string,
     actor: {
@@ -130,7 +139,6 @@ type Props = {
 };
 
 const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}: Props) => {
-
 
   const sampleValues = [
     'Frø',
@@ -148,17 +156,11 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
     }
   };
 
-
   const containerTypes = [
     'Kapsel',
     'Glassplate',
     'Kolbe'
   ];
-
-  const persons = [{name: 'Stein Olsen', role: 'Analysator', date: '12.12.2010'}];
-  const addPerson = () =>(
-    persons.push({name: '', role: '', date: ''})
-  );
 
   const containerSubTypes = (v) => {
     switch (v) {
@@ -172,7 +174,6 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
         return [];
     }
   };
-
 
   return (
     <Form style={{padding: 20}}>
@@ -403,9 +404,10 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           </Col>
         </Row>
         <PersonRoleDate
-          personData={persons}
-          updatePerson={()=>null}
-          addPerson={() => addPerson()}
+          personData={form.persons.rawValue}
+          addPerson={() => updateForm({name: form.persons.name, rawValue: [...(form.persons.rawValue|| []),{name: '', role: '', date:''}]})}
+          updatePerson={(ind, person) => updateForm({name: form.persons.name, rawValue: [...form.persons.rawValue.slice(0,ind),
+            person,form.persons.rawValue.slice(ind+1)]})}
         />
       </Well>
       <Row className='row-centered'>

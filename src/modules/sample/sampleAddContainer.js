@@ -16,6 +16,8 @@ const data = {
 
 const props = {
   addSample: toPromise(Sample.addSample()),
+  addPersonToSample: toPromise(Sample.addPersonToSample()),
+  updatePersonForSample: toPromise(Sample.updatePersonForSample()),
   emitSuccess,
   emitError
 };

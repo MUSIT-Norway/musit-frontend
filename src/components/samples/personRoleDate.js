@@ -11,9 +11,10 @@ import {
   FormGroup
 } from 'react-bootstrap';
 
-type personRoleDate = { name: string, role: string, date: string };
+type personRoleDate = { name?: string, role?: string, date?: string };
+import type { Person } from '../../modules/sample/sampleForm';
 type Props = {
-  personData: Array<personRoleDate>,
+  personData: Array<Person>,
   updatePerson: Function,
   addPerson: Function
 };
@@ -49,7 +50,8 @@ const FieldDropDown = (
 );
 
 export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) => {
-  return personData &&
+  const pArr = personData || [];
+  return pArr &&
     <Grid>
       <Row>
         <b>Personer</b>
@@ -65,13 +67,10 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
           Dato
         </Col>
       </Row>
-      {personData.map((v, i) => (
+      {pArr.map((v, i) => (
         <Row key={`id_${i}`}>
           <Col md={2}>
-            <FormControl
-              value={v.name}
-              onChange={e => updatePerson(i, { ...v, name: e.target.value })}
-            />
+            <FormControl value={v.name} onChange={() => updatePerson(i, v)} />
           </Col>
           <Col md={2}>
             <FieldDropDown
@@ -79,7 +78,7 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
               personRoleItem={v}
               selectItems={['Analysator', 'Registrator']}
               index={i}
-              onSelectInput={(ind, p) => updatePerson(ind, p)}
+              onSelectInput={ind => updatePerson(ind, v)}
               title="Velg rolle"
             />
           </Col>

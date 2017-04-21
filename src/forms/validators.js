@@ -25,6 +25,16 @@ export const isNumber = (minPrecision = 0, maxPrecision = Number.MAX_SAFE_INTEGE
     (field: string) => field + ' must be a decimal number'
   );
 
+export const isNonEmptyArray = revalidate.createValidator(
+  message =>
+    value => {
+      if (value && value.length && value.length === 0) {
+        return message;
+      }
+    },
+  (field: string) => `${field} is required`
+);
+
 export const isRequired = revalidate.createValidator(
   message =>
     value => {
