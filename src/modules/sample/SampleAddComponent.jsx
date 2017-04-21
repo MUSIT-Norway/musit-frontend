@@ -416,7 +416,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
             rawValue: [
               ...personRoles.slice(0, ind),
               person,
-              personRoles.slice(ind + 1)
+              ...personRoles.slice(ind + 1)
             ]
           })}
         />

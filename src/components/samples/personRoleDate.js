@@ -70,7 +70,7 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
       {pArr.map((v, i) => (
         <Row key={`id_${i}`}>
           <Col md={2}>
-            <FormControl value={v.name} onChange={() => updatePerson(i, v)} />
+            <FormControl value={v.name} onChange={(e) => updatePerson(i, {...v, name: e.target.value})} />
           </Col>
           <Col md={2}>
             <FieldDropDown
@@ -78,7 +78,7 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
               personRoleItem={v}
               selectItems={['Analysator', 'Registrator']}
               index={i}
-              onSelectInput={ind => updatePerson(ind, v)}
+              onSelectInput={() => updatePerson(i, v)}
               title="Velg rolle"
             />
           </Col>
