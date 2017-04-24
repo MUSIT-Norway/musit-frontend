@@ -5,9 +5,15 @@ import isEmpty from 'lodash/isEmpty';
 import { stringMapper } from './mappers';
 import { noValidation } from './validators';
 
+export type One = 1;
+export type Many = 2;
+export type Category = One | Many;
+export type RawValue = string | Array<any>;
+
 export type Field<T> = {
   name: string,
-  rawValue?: ?string,
+  type: Category,
+  rawValue?: ?RawValue,
   defaultValue?: ?T,
   value?: ?T,
   status?: {
@@ -15,11 +21,11 @@ export type Field<T> = {
     error?: any
   },
   mapper: {
-    fromRaw: (s: ?string) => ?T,
+    fromRaw: (s: ?RawValue) => ?T,
     toRaw: (t: ?T) => ?string
   },
   validator: {
-    rawValidator?: (field: string) => (s: ?string) => ?string,
+    rawValidator?: (field: string) => (s: ?RawValue) => ?string,
     valueValidator?: (field: string) => (t: ?T) => ?string
   }
 };
@@ -30,7 +36,7 @@ export type Update<T> = {
   defaultValue?: ?T
 };
 
-const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
+const updateField = <T>(field: Field<T>, data: Update<T>): Field<T> => {
   const defaultValue = data.defaultValue || field.defaultValue;
   const rawValue = data.rawValue || field.mapper.toRaw(defaultValue);
   const rawError = field.validator.rawValidator &&
@@ -52,8 +58,8 @@ const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
   };
 };
 
-const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
-  const fieldIndex: number = state.findIndex((f: Field<*>) => f.name === data.name);
+const updateForm = <T>(state: Field<T>[], data: Update<T>): Field<T>[] => {
+  const fieldIndex: number = state.findIndex((f: Field<T>) => f.name === data.name);
   if (fieldIndex === -1) {
     return state;
   }
@@ -61,12 +67,12 @@ const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
   return state.slice(0, fieldIndex).concat([updated]).concat(state.slice(fieldIndex + 1));
 };
 
-const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Update<*>[]>) =>
+const reducer$ = <T>(updateField$: Subject<Update<T>>, loadForm$: Subject<Update<T>[]>) =>
   Observable.merge(
-    loadForm$.map((load: Update<*>[]) =>
-      (state: Field<*>[]) => load.reduce(updateForm, state)),
+    loadForm$.map((load: Update<T>[]) =>
+      (state: Field<T>[]) => load.reduce(updateForm, state)),
     updateField$.map((update: Update<*>) =>
-      (state: Field<*>[]) => updateForm(state, update))
+      (state: Field<T>[]) => updateForm(state, update))
   );
 
 export type FormDetails = {
@@ -80,7 +86,7 @@ const createForm$ = (
   fields: Field<*>[],
   updateForm$?: Subject<Update<*>>,
   loadForm$?: Subject<Update<*>[]>
-): FormDetails => {
+): FormDetails<*> => {
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
   const initialFields = fields.reduce(
