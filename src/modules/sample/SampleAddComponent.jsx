@@ -14,6 +14,7 @@ import {
   ControlLabel,
   Row
 } from 'react-bootstrap';
+import AppSession from '../app/appSession';
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
@@ -22,6 +23,42 @@ type Field = { name: string, rawValue?: any }; // TODO use Field type in forms p
 type Update = (update: Field) => void;
 
 type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: { className?: string, style?: {} } };
+
+type FormData = {
+  note: Field, size: Field, status: Field, externalId: Field, externalIdSource: Field,
+  container: Field, storageMedium: Field, sampleType: Field, sampleId: Field,
+  sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field, residualMaterial: Field,
+  term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field, hasRestMaterial: Field,
+  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field, persons: Field
+};
+
+type Props = {
+  form: FormData,
+  updateForm: Update,
+  persons: Array<{ name: string, role: string, date: string }>,
+  addSample: Function,
+  addPersonToSample: Function,
+  updatePersonForSample: Function,
+  clearForm: Function,
+
+  appSession: {
+    museumId: number,
+    accessToken: string,
+    actor: {
+      dataportenId: string
+    }
+  }
+};
+
+type FieldDropDownProps = {
+  field: Field,
+  title: any,
+  onSelectInput: Update,
+  selectItems: Array<string>,
+  inputProps?: { className?: string, style?: {} }
+};
+
+
 const FieldInput = ({field, onChangeInput, inputProps}: FieldInputProps) => (
   <FormGroup
     controlId={field.name}
@@ -53,13 +90,6 @@ const CheckBoxInput = ({field, onChangeInput}: FieldInputProps) => (
   </FormGroup>
 );
 
-type FieldDropDownProps = {
-  field: Field,
-  title: any,
-  onSelectInput: Update,
-  selectItems: Array<string>,
-  inputProps?: { className?: string, style?: {} }
-};
 
 const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title}: FieldDropDownProps) => (
   <FormGroup
@@ -94,11 +124,11 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (appSession, form, addSample, persons) => {
+const submitSample = (appSession: AppSession, form: FormData, addSample: Function, persons: any ) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
-  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-  const reducePersons = (p) => p.reduce((akk: any, v: Person) => {
+  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+  const reducePersons = (p: any) => p.rawValue && p.rawValue.reduce((akk: any, v: Person) => {
     switch (v.role) {
       case 'Registrator':
         return {
@@ -142,31 +172,6 @@ const submitSample = (appSession, form, addSample, persons) => {
   return addSample({museumId, token, data});
 };
 
-type FormData = {
-  note: Field, size: Field, status: Field, externalId: Field, externalIdSource: Field,
-  container: Field, storageMedium: Field, sampleType: Field, sampleId: Field,
-  sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field,
-  term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field, hasRestMaterial: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field, persons: Field
-};
-
-type Props = {
-  form: FormData,
-  updateForm: Update,
-  persons: Array<{ name: string, role: string, date: string }>,
-  addSample: Function,
-  addPersonToSample: Function,
-  updatePersonForSample: Function,
-  clearForm: Function,
-
-  appSession: {
-    museumId: number,
-    accessToken: string,
-    actor: {
-      dataportenId: string
-    }
-  }
-};
 
 const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}: Props) => {
 

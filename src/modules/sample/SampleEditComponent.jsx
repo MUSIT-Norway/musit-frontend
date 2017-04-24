@@ -1,4 +1,3 @@
-/* @flow */
 import React, {PropTypes} from 'react';
 import {
   PageHeader,
@@ -17,12 +16,39 @@ import {
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
+import AppSession from '../app/appSession';
 import type {Person} from './sampleForm';
 
 type Field = { name: string, rawValue: ?string };
 type Update = (update: Field) => void;
 
 type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: { className?: string, style?: {} } };
+
+type FormData = {
+  note: Field, size: Field, status: Field, externalId: Field,
+  externalIdSource: Field, container: Field, storageMedium: Field,
+  sampleType: Field, sampleId: Field, sampleSubType: Field,
+  persons: Field,
+  isExtracted: Field, sizeUnit: Field, museumId: Field, subNo: Field, term_species: Field,
+  registeredBy: Field, registeredDate: Field, updateBy: Field, residualMaterial: Field,
+  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field
+};
+
+type Props = {
+  form: FormData,
+  updateForm: Update,
+  editSample: Function,
+  appSession: {
+    museumId: number,
+    accessToken: string,
+    actor: {
+      dataportenId: string
+    }
+  },
+  params: {
+    sampleId: string
+  }
+};
 const FieldInput = ({field, onChangeInput, inputProps}: FieldInputProps) => (
   <FormGroup
     controlId={field.name}
@@ -96,10 +122,10 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (id, appSession, form, editSample, persons) => {
+const submitSample = (id:string, appSession: AppSession, form: FormData, editSample: Function, persons: any) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
-  const myReduce = (frm) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
   const reducePersons = (p) => p && p.reduce((akk: any, v: Person) => {
     switch (v.role) {
       case 'Registrator':
@@ -145,31 +171,7 @@ const submitSample = (id, appSession, form, editSample, persons) => {
 
   return editSample({id, museumId, token, data});
 };
-type FormData = {
-  note: Field, size: Field, status: Field, externalId: Field,
-  externalIdSource: Field, container: Field, storageMedium: Field,
-  sampleType: Field, sampleId: Field, sampleSubType: Field,
-  persons: Field,
-  isExtracted: Field, sizeUnit: Field, museumId: Field, subNo: Field, term_species: Field,
-  registeredBy: Field, registeredDate: Field, updateBy: Field, residualMaterial: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field
-};
 
-type Props = {
-  form: FormData,
-  updateForm: Update,
-  editSample: Function,
-  appSession: {
-    museumId: number,
-    accessToken: string,
-    actor: {
-      dataportenId: string
-    }
-  },
-  params: {
-    sampleId: string
-  }
-};
 
 const SampleEditComponent = ({params, form, updateForm, editSample, appSession}: Props) => {
   const id = params.sampleId;
@@ -209,7 +211,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
         return [];
     }
   };
-  const personRoles = form.persons.rawValue || [];
+  const personRoles: Array<Person> = form.persons.rawValue || [];
 
   return (
     <Form style={{padding: 20}}>

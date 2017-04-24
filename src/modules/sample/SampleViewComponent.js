@@ -18,27 +18,28 @@ const FieldReadOnly = ({ field, label, postFix }) => (
     <FormControl.Static>
       <span className={field.name}>
         <b>{label}</b>
-        {`:  ${field.defaultValue && field.defaultValue}${postFix ? ' ' + postFix.defaultValue : ''}`}
+        {
+          `:  ${field.defaultValue && field.defaultValue}${postFix ? ' ' + postFix.defaultValue : ''}`
+        }
       </span>
     </FormControl.Static>
   </FormGroup>
 );
 
-const FieldReadArray = ({ field , labels }) => (
+const FieldReadArray = ({ field, labels }) => (
   <div>
     <h4>Persons</h4>
     <Row className="row-centered">
-      {labels.map((l) =>(
-        <Col md={2}>{l}</Col>))
-      }
+      {labels.map(l => <Col md={2}>{l}</Col>)}
     </Row>
-    {field && field.rawValue.map((i,p) =>
-    <Row className="row-centered" key={`${i}-person`}>
-      <Col md={2}>{p.name}</Col>
-      <Col md={2}>{p.role}</Col>
-      <Col md={2}>{p.date}</Col>
-    </Row>)
-    }
+    {field &&
+      field.rawValue.map((i, p) => (
+        <Row className="row-centered" key={`${i}-person`}>
+          <Col md={2}>{p.name}</Col>
+          <Col md={2}>{p.role}</Col>
+          <Col md={2}>{p.date}</Col>
+        </Row>
+      ))}
   </div>
 );
 
@@ -140,10 +141,7 @@ const SampleViewComponent = props => {
           <FieldReadOnly label={'Note'} field={form.note} />
         </Col>
       </Row>
-      <FieldReadArray
-        labels={['Navn', 'Rolle', 'Dato']}
-        field={form.persons.rawValue}
-      />
+      <FieldReadArray labels={['Navn', 'Rolle', 'Dato']} field={form.persons.rawValue} />
       <Row className="row-centered">
         <Col md={4}>
           <Button

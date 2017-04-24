@@ -9,7 +9,7 @@ import {
   isNonEmptyArray
 } from '../../forms/validators';
 
-import { stringMapper, numberMapper, noMapper, booleanMapper  } from '../../forms/mappers';
+import { stringMapper, numberMapper, noMapper, booleanMapper } from '../../forms/mappers';
 
 const museumId: Field<string> = {
   name: 'museumId',
@@ -225,8 +225,6 @@ export type Person = {
   role?: string,
   date?: string
 };
-
-
 
 const persons: Field<Array<Person>> = {
   name: 'persons',

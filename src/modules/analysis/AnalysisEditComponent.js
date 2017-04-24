@@ -145,7 +145,7 @@ export const editAnalysisEventLocal = (
         objectIds: store.analysis && store.analysis.events
           ? store.analysis.events.map(a => a.objectId)
           : store.analysis.objectId,
-        restriction : {
+        restriction: {
           by: getValue(form.by),
           expirationDate: getValue(form.expirationDate),
           reason: getValue(form.reason),
@@ -325,7 +325,11 @@ const AnalysisEdit = (
           </Col>
         </FormGroup>
         <FormGroup>
-          <Panel collapsible expanded style={{border:'none', backgroundColor: '#f5f5f5'}}>
+          <Panel
+            collapsible
+            expanded
+            style={{ border: 'none', backgroundColor: '#f5f5f5' }}
+          >
             <FormGroup>
               <FieldGroup
                 id="navn"
@@ -358,12 +362,7 @@ const AnalysisEdit = (
               />
             </FormGroup>
             <FormGroup>
-              <AddButton
-                id="3"
-                label="Legg til flere saksnummer"
-                md={11}
-                mdOffset={1}
-              />
+              <AddButton id="3" label="Legg til flere saksnummer" md={11} mdOffset={1} />
             </FormGroup>
             <FormGroup>
               <FieldGroup
@@ -431,7 +430,13 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, params)}
+      onClickSave={editAnalysisEventLocal(
+        appSession,
+        form,
+        store,
+        editAnalysisEvent,
+        params
+      )}
     />
     <NewLine />
     <Form horizontal>

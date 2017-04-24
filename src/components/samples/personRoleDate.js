@@ -39,7 +39,7 @@ const FieldDropDown = (
       {selectItems.map((v, i) => (
         <MenuItem
           key={i}
-          onClick={(e) => {
+          onClick={e => {
             onSelectInput(index, { ...personRoleItem, role: e.target.text });
           }}
         >
@@ -50,7 +50,9 @@ const FieldDropDown = (
   </FormGroup>
 );
 
-export const PersonRoleDate = ({ personData, updatePerson, addPerson, heading }: Props) => {
+export const PersonRoleDate = (
+  { personData, updatePerson, addPerson, heading }: Props
+) => {
   const pArr = personData || [];
   return pArr &&
     <Grid>
@@ -71,11 +73,14 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson, heading }:
           <b>Slett</b>
         </Col>
       </Row>
-      <br/>
+      <br />
       {pArr.map((v, i) => (
         <Row key={`id_${i}`}>
           <Col md={2}>
-            <FormControl value={v.name} onChange={(e) => updatePerson(i, {...v, name: e.target.value})} />
+            <FormControl
+              value={v.name}
+              onChange={e => updatePerson(i, { ...v, name: e.target.value })}
+            />
           </Col>
           <Col md={2}>
             <FieldDropDown
@@ -83,17 +88,19 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson, heading }:
               personRoleItem={v}
               selectItems={['Registrator', 'Updater', 'Responsible']}
               index={i}
-              onSelectInput={(ind,p) => {
-                console.log('On select input: ',p);
+              onSelectInput={(ind, p) => {
+                console.log('On select input: ', p);
                 updatePerson(i, p);
               }}
               title="Velg rolle"
             />
           </Col>
           <Col md={2}>
-            {(v.role === 'Registrator' || v.role==='Updater') &&
-            <FormControl value={v.date} onChange={(e) => updatePerson(i, {...v, date: e.target.value})}/>
-            }
+            {(v.role === 'Registrator' || v.role === 'Updater') &&
+              <FormControl
+                value={v.date}
+                onChange={e => updatePerson(i, { ...v, date: e.target.value })}
+              />}
           </Col>
           <Col md={1}>
             <FontAwesome name={'times'} onClick={() => updatePerson(i)} />
