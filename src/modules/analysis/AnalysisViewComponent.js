@@ -72,7 +72,11 @@ type Analysis = {
   doneBy: string,
   events: []
 };
-type Store = { objectsData: ObjectData[], analysisTypes: AnalysisType[], analysis: Analysis};
+type Store = {
+  objectsData: ObjectData[],
+  analysisTypes: AnalysisType[],
+  analysis: Analysis
+};
 type Params = {
   analysisId: string
 };

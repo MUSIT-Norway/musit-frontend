@@ -166,9 +166,14 @@ const updateFormField = (field, updateForm) =>
       rawValue: e.target.value
     });
 
-export const goToAnalysis = (fn: Function, appSession: AppSession, goTo: Function  = hashHistory.push) => {
+export const goToAnalysis = (
+  fn: Function,
+  appSession: AppSession,
+  goTo: Function = hashHistory.push
+) => {
   return (analysisId: string) => {
-    return fn(analysisId).then(() => goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
+    return fn(analysisId).then(() =>
+      goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
   };
 };
 
