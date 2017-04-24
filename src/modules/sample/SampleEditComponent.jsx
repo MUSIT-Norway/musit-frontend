@@ -30,7 +30,7 @@ type FormData = {
   sampleType: Field, sampleId: Field, sampleSubType: Field,
   persons: Field,
   isExtracted: Field, sizeUnit: Field, museumId: Field, subNo: Field, term_species: Field,
-  registeredBy: Field, registeredDate: Field, updateBy: Field, residualMaterial: Field,
+  registeredBy: Field, registeredDate: Field, updateBy: Field, leftoverSample: Field,
   updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field
 };
 
@@ -440,7 +440,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           </Col>
           <Col md={3}>
             <CheckBoxInput
-              field={form.residualMaterial}
+              field={form.leftoverSample}
               onChangeInput={updateForm}
             />
           </Col>

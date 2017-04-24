@@ -203,8 +203,8 @@ const sampleDescription: Field<string> = {
   }
 };
 
-const residualMaterial: Field<number> = {
-  name: 'residualMaterial',
+const leftoverSample: Field<number> = {
+  name: 'leftoverSample',
   mapper: numberMapper,
   defaultValue: 1,
   validator: {
@@ -249,7 +249,7 @@ const fields = [
   museumId,
   subNo,
   term_species,
-  residualMaterial,
+  leftoverSample,
   parentObjectId,
   sampleId,
   treatment,

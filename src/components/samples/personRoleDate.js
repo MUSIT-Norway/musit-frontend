@@ -86,7 +86,7 @@ export const PersonRoleDate = (
             <FieldDropDown
               id={`role_${i}`}
               personRoleItem={v}
-              selectItems={['Registrator', 'Updater', 'Responsible']}
+              selectItems={['responsible', 'creator']}
               index={i}
               onSelectInput={(ind, p) => {
                 console.log('On select input: ', p);

@@ -27,7 +27,7 @@ type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: { cla
 type FormData = {
   note: Field, size: Field, status: Field, externalId: Field, externalIdSource: Field,
   container: Field, storageMedium: Field, sampleType: Field, sampleId: Field,
-  sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field, residualMaterial: Field,
+  sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field, leftoverSample: Field,
   term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field, hasRestMaterial: Field,
   updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field, persons: Field
 };
@@ -130,24 +130,15 @@ const submitSample = (appSession: AppSession, form: FormData, addSample: Functio
   const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
   const reducePersons = (p: any) => p.rawValue && p.rawValue.reduce((akk: any, v: Person) => {
     switch (v.role) {
-      case 'Registrator':
+      case 'creator':
         return {
-          registeredStamp: {
-            user: v.name,
-            date: v.date
-          }
+          createdBy:v.name,
+          createdDate: v.date
         };
       case
-      'Responsible':
+      'responsible':
         return {
           responsible: v.name
-        };
-      case
-      'Updater':
-        return {
-          updatedStamp: {
-            user: v.name, date: v.date
-          }
         };
     }
   }, {});
@@ -440,7 +431,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
           </Col>
           <Col md={3}>
             <CheckBoxInput
-              field={form.residualMaterial}
+              field={form.leftoverSample}
               onChangeInput={updateForm}
             />
           </Col>
@@ -521,7 +512,7 @@ SampleAddComponent.propTypes = {
     status: PropTypes.shape(FieldShape).isRequired,
     container: PropTypes.shape(FieldShape).isRequired,
     storageMedium: PropTypes.shape(FieldShape).isRequired,
-    residualMaterial: PropTypes.shape(FieldShape).isRequired,
+    leftoverSample: PropTypes.shape(FieldShape).isRequired,
     externalId: PropTypes.shape(FieldShape).isRequired,
     externalIdSource: PropTypes.shape(FieldShape).isRequired,
     sampleDescription: PropTypes.shape(FieldShape).isRequired
