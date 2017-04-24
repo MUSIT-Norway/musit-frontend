@@ -1,10 +1,13 @@
 import { mount, shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import AnalysisEditComponent from '../AnalysisEditComponent';
+import AnalysisEditComponent, {
+  editAnalysisEventLocal,
+  goToAnalysis
+} from '../AnalysisEditComponent';
 import { fieldsArray } from '../analysisAddForm';
 import sinon from 'sinon';
-
+import { Observable } from 'rxjs';
 const objectsData = [
   {
     museumNumber: '123',
@@ -45,6 +48,10 @@ const store = {
   objectsData: objectsData
 };
 
+const param = {
+  analysisId: 3
+};
+
 const form = fieldsArray.reduce(
   (acc, n) => ({
     ...acc,
@@ -56,7 +63,35 @@ const form = fieldsArray.reduce(
   {}
 );
 
+const appSession = {
+  museumId: 99,
+  accessToken: '1234'
+};
+
 describe('AnalysisEditComponent', () => {
+  it('editAnalysisEventLocal should call editAnalysisEvent', () => {
+    const editAnalysisEvent = sinon.spy();
+    editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, param)(1);
+    expect(editAnalysisEvent.calledOnce).toBe(true);
+    expect(editAnalysisEvent.getCall(0).args[0].museumId).toBe(99);
+    expect(editAnalysisEvent.getCall(0).args[0].token).toBe('1234');
+    expect(editAnalysisEvent.getCall(0).args[0].data.analysisTypeId).toBe(
+      'b15ee459-38c9-414f-8b54-7c6439b44d3d'
+    );
+  });
+
+  it('meh', done => {
+    const fakeGoTo = sinon.spy();
+    const fakeFn = () => Observable.of(null).toPromise();
+    const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
+    const analysisId = 2;
+    fn(analysisId).then(() => {
+      expect(fakeGoTo.calledOnce).toBe(true);
+      expect(fakeGoTo).toMatchSnapshot();
+      done();
+    });
+  });
+
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
     const wrapper = mount(

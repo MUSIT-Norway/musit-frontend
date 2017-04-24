@@ -124,14 +124,21 @@ export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, s
       }
     },
     token: appSession.accessToken
-  })
-    .then((analysisId) => hashHistory.push(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
+  });
+
 
 const updateFormField = (field, updateForm) =>
   (e) => updateForm({
     name: field.name,
     rawValue: e.target.value
   });
+
+
+export const goToAnalysis = (fn: Function, appSession: AppSession, goTo: Function  = hashHistory.push) => {
+  return (analysisId: string) => {
+    return fn(analysisId).then(() => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
+  };
+};
 
 const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => (
   <div>
@@ -398,7 +405,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent)}
+      onClickSave={goToAnalysis(saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent), appSession)}
     />
     <NewLine />
     <Form horizontal>
@@ -417,7 +424,6 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     </Form>
   </div>
 );
-
 
 const FieldShape = {
   name: PropTypes.string.isRequired,

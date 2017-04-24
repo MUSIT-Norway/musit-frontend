@@ -39,7 +39,6 @@ export const onMount = (
     loadForm
   }
 ) => {
-
   getAnalysisTypesForCollection({
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
@@ -56,15 +55,15 @@ export const onMount = (
   loadAnalysis(inputParam);
 
   loadAnalysisForForm(inputParam).then(analysis => {
-      const dataForForm = Object.keys(analysis).reduce(
-        (obj, attributeName) => [
-          ...obj,
-          { name: attributeName, defaultValue: analysis[attributeName] }
-        ],
-        []
-      );
-      loadForm(dataForForm);
-    });
+    const dataForForm = Object.keys(analysis).reduce(
+      (obj, attributeName) => [
+        ...obj,
+        { name: attributeName, defaultValue: analysis[attributeName] }
+      ],
+      []
+    );
+    loadForm(dataForForm);
+  });
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(

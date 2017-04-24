@@ -1,6 +1,6 @@
 /* @flow */
-import React, {PropTypes} from 'react';
-import {I18n} from 'react-i18nify';
+import React, { PropTypes } from 'react';
+import { I18n } from 'react-i18nify';
 import {
   Radio,
   PageHeader,
@@ -14,31 +14,90 @@ import {
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import {SaveCancel} from '../../components/formfields/index';
-import {hashHistory} from 'react-router';
+import { SaveCancel } from '../../components/formfields/index';
+import { hashHistory } from 'react-router';
 import Config from '../../config';
-type Props = { store: any, appSession: any, params: any };
+import { AppSession } from '../app/appSession';
+
+type AnalysisType = { id: number, name: string };
+type ObjectData = { uuid: string };
+type Analysis = {
+  analysisTypeId: string,
+  eventDate: string,
+  id: number,
+  museumNo: string,
+  note: string,
+  objectId: string,
+  partOf: number,
+  registeredBy: string,
+  registeredByName: string,
+  registeredDate: string,
+  subNo: string,
+  term: string,
+  type: string,
+  oneBy: string,
+  doneDate: string,
+  registeredBy: string,
+  registeredDate: string,
+
+  responsible: string,
+
+  administrator: string,
+  completedBy: string,
+  completedDate: string,
+  objectId: string,
+  note: string,
+  type: string,
+
+  partOf: string,
+  result: string,
+  place: string,
+
+  externalSource: string,
+  comments: string,
+
+  restrictions: string,
+  by: string,
+  expirationDate: string,
+  reason: string,
+  caseNumbers: string,
+  cancelledBy: string,
+  cancelledReason: string,
+
+  completeAnalysis: string,
+  museumNo: string,
+  term: string,
+  actor: string,
+  caseNumber: string,
+  doneBy: string,
+  events: []
+};
+type Store = { objectsData: ObjectData[], analysisTypes: AnalysisType[], analysis: Analysis};
+type Params = {
+  analysisId: string
+};
+type Props = { store: Store, appSession: AppSession, params: Params };
 
 function LabelFormat(label, md = 1) {
   return <Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>;
 }
-function FieldGroup({id, label, md = 1, ...props}) {
+function FieldGroup({ id, label, md = 1, ...props }) {
   return (
     <div id={id}>
       {LabelFormat(label, md)}
       <Col md={2}>
-        <FormControl {...props} readOnly/>
+        <FormControl {...props} readOnly />
       </Col>
     </div>
   );
 }
 
-function AddButton({id, label, md, mdOffset = 0, ...props}) {
+function AddButton({ id, label, md, mdOffset = 0, ...props }) {
   return (
     <div id={id}>
       <Col md={md} mdOffset={mdOffset}>
         <Button {...props} disabled>
-          <FontAwesome name="plus-circle"/>{' '}
+          <FontAwesome name="plus-circle" />{' '}
           {label}
         </Button>
       </Col>
@@ -81,19 +140,7 @@ const getObjectsValue = store => {
   }
   return '';
 };
-const getValue = (store, field) => {
-  if (store.analysis) {
- /*   if (
-      store.analysis.type === 'AnalysisCollection' &&
-      field !== 'id' &&
-      field !== 'registeredByName'
-    ) {
-      return store.analysis.events[0][field];
-    }*/
-    return store.analysis[field];
-  }
-  return '';
-};
+const getValue = (store, field) => store.analysis ? store.analysis[field] : '';
 
 // TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
 // TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
@@ -103,7 +150,7 @@ const labelFormat = (label, md = 1) => (
   </Col>
 );
 
-const AnalysisView = ({store, appSession, params}: Props) => (
+const AnalysisView = ({ store, appSession, params }: Props) => (
   <div>
     <br />
     <PageHeader style={{ paddingLeft: 20 }}>
@@ -115,20 +162,20 @@ const AnalysisView = ({store, appSession, params}: Props) => (
     <Col md={12}>
       <strong>Registrert:</strong>
       {' '}
-      <FontAwesome name="user"/>
+      <FontAwesome name="user" />
       {' '}
       {getValue(store, 'registeredByName')}
       {' '}
-      <FontAwesome name="clock-o"/>{' '}{getValue(store, 'registeredDate')}
+      <FontAwesome name="clock-o" />{' '}{getValue(store, 'registeredDate')}
     </Col>
     <Col md={12}>
       <strong>Sist endret:</strong>
       {' '}
-      <FontAwesome name="user"/>
+      <FontAwesome name="user" />
       {' '}
       {getValue(store, 'doneBy')}
       {' '}
-      <FontAwesome name="clock-o"/>
+      <FontAwesome name="clock-o" />
       {' '}
       {getValue(store, 'eventDate')}
       {' '}
@@ -145,7 +192,7 @@ const AnalysisView = ({store, appSession, params}: Props) => (
         />
       </FormGroup>
       <FormGroup>
-        <AddButton id="1" label="Legg til saksnummer" md={5}/>
+        <AddButton id="1" label="Legg til saksnummer" md={5} />
       </FormGroup>
     </Form>
     <NewLine />
@@ -154,18 +201,18 @@ const AnalysisView = ({store, appSession, params}: Props) => (
       <Col mdOffset={1} md={5}>
         <Table responsive>
           <thead>
-          <tr>
-            <th>Museumsnr</th>
-            <th>Unr</th>
-            <th>Term/artsnavn</th>
-          </tr>
+            <tr>
+              <th>Museumsnr</th>
+              <th>Unr</th>
+              <th>Term/artsnavn</th>
+            </tr>
           </thead>
           <tbody>
-          {getObjectsValue(store)}
+            {getObjectsValue(store)}
           </tbody>
         </Table>
       </Col>
-      <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1}/>
+      <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
     </Form>
     <NewLine />
     <Form horizontal style={{ paddingLeft: 20 }}>
@@ -187,7 +234,7 @@ const AnalysisView = ({store, appSession, params}: Props) => (
             <option value="other">...</option>
           </FormControl>
         </Col>
-        <AddButton id="3" label="Legg til person" md={2}/>
+        <AddButton id="3" label="Legg til person" md={2} />
       </FormGroup>
     </Form>
     <NewLine />
@@ -225,7 +272,7 @@ const AnalysisView = ({store, appSession, params}: Props) => (
           </Col>
         </FormGroup>
         <FormGroup>
-          <FieldGroup id="formControlsText" type="text" label="Ladt opp fil"/>
+          <FieldGroup id="formControlsText" type="text" label="Ladt opp fil" />
           <Col md={2}>
             <Button disabled>Bla gjennom</Button>
           </Col>
@@ -346,9 +393,11 @@ const AnalysisView = ({store, appSession, params}: Props) => (
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={(e) => {
-      e.preventDefault();
-      hashHistory.push(Config.magasin.urls.client.analysis.editAnalysis(appSession, params.analysisId));
+      onClickSave={e => {
+        e.preventDefault();
+        hashHistory.push(
+          Config.magasin.urls.client.analysis.editAnalysis(appSession, params.analysisId)
+        );
       }}
       saveLabel="Endre"
     />
