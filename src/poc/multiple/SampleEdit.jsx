@@ -4,7 +4,7 @@ import Dropdown from '../components/Dropdown';
 import { Button } from 'react-bootstrap';
 import downImg from '../assets/down.png';
 import upImg from '../assets/up.png';
-import '../style.css';
+import '../assets/style.css';
 
 class SampleEdit extends React.Component {
   constructor(props) {

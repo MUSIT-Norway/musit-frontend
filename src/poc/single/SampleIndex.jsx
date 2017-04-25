@@ -1,7 +1,7 @@
 import React from 'react';
 import SampleDetails from '../components/SampleDetails';
 import { Button } from 'react-bootstrap';
-import '../style.css';
+import '../assets/style.css';
 
 export default ({ history }) => (
   <div>

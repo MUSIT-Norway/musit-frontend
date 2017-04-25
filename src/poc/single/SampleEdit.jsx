@@ -3,7 +3,7 @@ import SampleDetails from '../components/SampleDetails';
 import { Button } from 'react-bootstrap';
 import downImg from '../assets/down.png';
 import upImg from '../assets/up.png';
-import '../style.css';
+import '../assets/style.css';
 import Dropdown from '../components/Dropdown';
 
 class SampleEdit extends React.Component {
