@@ -67,7 +67,7 @@ const appSession = {
 describe('AnalysisAddComponent', () => {
   it('saveAnalysisEventLocal should call saveAnalysisEvent', () => {
     const saveAnalysisEvent = sinon.spy();
-    saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent)(1);
+    saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent);
     expect(saveAnalysisEvent.calledOnce).toBe(true);
     expect(saveAnalysisEvent.getCall(0).args[0].museumId).toBe(99);
     expect(saveAnalysisEvent.getCall(0).args[0].token).toBe('1234');

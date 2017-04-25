@@ -7,6 +7,7 @@ import AnalysisEditComponent, {
 } from '../AnalysisEditComponent';
 import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
+import { Observable } from 'rxjs';
 const objectsData = [
   {
     museumNumber: '123',
@@ -80,12 +81,13 @@ describe('AnalysisEditComponent', () => {
     );
   });
 
-  it('Call goToAnalysisWhenComplete.', done => {
+  it('Call goToAnalysis.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = new Promise((res) => res('2'));
-    const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
-    fn.then(() => {
+    const analysisId = 2;
+    const fakeFn = () => Observable.of(null).toPromise();
+    const fn = goToAnalysis(fakeFn, appSession, analysisId, fakeGoTo);
+    fn().then(() => {
       expect(url).toBe('/museum/99/collections/1234/analysis/2');
       done();
     });
@@ -94,7 +96,7 @@ describe('AnalysisEditComponent', () => {
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
     const wrapper = mount(
-      <AnalysisEditComponent form={form} updateForm={updateForm} store={store} />
+      <AnalysisEditComponent form={form} updateForm={updateForm} store={store} params={param}/>
     );
     wrapper.find('.note').simulate('change', {
       target: {
@@ -108,7 +110,7 @@ describe('AnalysisEditComponent', () => {
   it('should render properly', () => {
     const updateForm = sinon.spy();
     const wrapper = shallow(
-      <AnalysisEditComponent form={form} updateForm={updateForm} store={store} />
+      <AnalysisEditComponent form={form} updateForm={updateForm} store={store}  params={param}/>
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });

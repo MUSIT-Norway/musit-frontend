@@ -173,15 +173,7 @@ export const goToAnalysis = (
   goTo: Function = hashHistory.push
 ) => {
   return () => {
-    return fn().then(() => {
-      console.log(
-        'Rituvesh',
-        Config.magasin.urls.client.analysis.viewAnalysis(appSession)(analysisId)
-      );
-      return goTo(
-        Config.magasin.urls.client.analysis.viewAnalysis(appSession)(analysisId)
-      );
-    });
+    return fn().then(() => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession)(analysisId)));
   };
 };
 
