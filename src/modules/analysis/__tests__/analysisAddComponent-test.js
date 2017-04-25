@@ -78,7 +78,7 @@ describe('AnalysisAddComponent', () => {
 
   it('Call goToAnalysis.', done => {
     let url;
-    const fakeGoTo = (goToUrl) => url = goToUrl;
+    const fakeGoTo = goToUrl => url = goToUrl;
     const fakeFn = () => Observable.of(null).toPromise();
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
     const analysisId = 2;

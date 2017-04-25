@@ -82,7 +82,7 @@ describe('AnalysisEditComponent', () => {
 
   it('Call goToAnalysis.', done => {
     let url;
-    const fakeGoTo = (goToUrl) => url = goToUrl;
+    const fakeGoTo = goToUrl => url = goToUrl;
     const fakeFn = () => Observable.of(null).toPromise();
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
     const analysisId = 2;
@@ -91,7 +91,6 @@ describe('AnalysisEditComponent', () => {
       done();
     });
   });
-
 
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
