@@ -14,8 +14,73 @@ import {
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import { SaveCancel } from '../../components/formfields/index';
+import { hashHistory } from 'react-router';
+import Config from '../../config';
+import { AppSession } from '../app/appSession';
 
-type Props = { store: any };
+type AnalysisType = { id: number, name: string };
+type ObjectData = { uuid: string };
+type Analysis = {
+  analysisTypeId: string,
+  eventDate: string,
+  id: number,
+  museumNo: string,
+  note: string,
+  objectId: string,
+  partOf: number,
+  registeredBy: string,
+  registeredByName: string,
+  registeredDate: string,
+  subNo: string,
+  term: string,
+  type: string,
+  oneBy: string,
+  doneDate: string,
+  registeredBy: string,
+  registeredDate: string,
+
+  responsible: string,
+
+  administrator: string,
+  completedBy: string,
+  completedDate: string,
+  objectId: string,
+  note: string,
+  type: string,
+
+  partOf: string,
+  result: string,
+  place: string,
+
+  externalSource: string,
+  comments: string,
+
+  restrictions: string,
+  by: string,
+  expirationDate: string,
+  reason: string,
+  caseNumbers: string,
+  cancelledBy: string,
+  cancelledReason: string,
+
+  completeAnalysis: string,
+  museumNo: string,
+  term: string,
+  actor: string,
+  caseNumber: string,
+  doneBy: string,
+  events: []
+};
+type Store = {
+  objectsData: ObjectData[],
+  analysisTypes: AnalysisType[],
+  analysis: Analysis
+};
+type Params = {
+  analysisId: string
+};
+type Props = { store: Store, appSession: AppSession, params: Params };
 
 function LabelFormat(label, md = 1) {
   return <Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>;
@@ -79,19 +144,7 @@ const getObjectsValue = store => {
   }
   return '';
 };
-const getValue = (store, field) => {
-  if (store.analysis) {
-    if (
-      store.analysis.type === 'AnalysisCollection' &&
-      field !== 'id' &&
-      field !== 'registeredByName'
-    ) {
-      return store.analysis.events[0][field];
-    }
-    return store.analysis[field];
-  }
-  return '';
-};
+const getValue = (store, field) => store.analysis ? store.analysis[field] : '';
 
 // TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
 // TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
@@ -101,7 +154,7 @@ const labelFormat = (label, md = 1) => (
   </Col>
 );
 
-const AnalysisView = ({ store }: Props) => (
+const AnalysisView = ({ store, appSession, params }: Props) => (
   <div>
     <br />
     <PageHeader style={{ paddingLeft: 20 }}>
@@ -343,9 +396,15 @@ const AnalysisView = ({ store }: Props) => (
       </FormGroup>
     </Form>
     <NewLine />
-    <button>
-      close
-    </button>
+    <SaveCancel
+      onClickSave={e => {
+        e.preventDefault();
+        hashHistory.push(
+          Config.magasin.urls.client.analysis.editAnalysis(appSession, params.analysisId)
+        );
+      }}
+      saveLabel="Endre"
+    />
     <NewLine />
     <Form horizontal>
       <FormGroup>

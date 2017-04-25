@@ -16,6 +16,8 @@ import FontAwesome from 'react-fontawesome';
 import {SaveCancel} from '../../components/formfields/index';
 const { Table } = require('reactable');
 import { AppSession } from '../app/appSession';
+import {hashHistory} from 'react-router';
+import Config from '../../config';
 
 type Field = { name: string, rawValue: ?string };
 type FormData = {
@@ -112,7 +114,7 @@ export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, s
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
       objectIds: store.objectsData.map((a) => a.uuid),
-      restriction : {
+      result : {
         by: getValue(form.by),
         expirationDate: getValue(form.expirationDate),
         reason: getValue(form.reason),
@@ -124,11 +126,19 @@ export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, s
     token: appSession.accessToken
   });
 
+
 const updateFormField = (field, updateForm) =>
   (e) => updateForm({
     name: field.name,
     rawValue: e.target.value
   });
+
+
+export const goToAnalysis = (fn: Function, appSession: AppSession, goTo: Function  = hashHistory.push) => {
+  return (analysisId: string) => {
+    return fn(analysisId).then(() => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
+  };
+};
 
 const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => (
   <div>
@@ -395,7 +405,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent)}
+      onClickSave={goToAnalysis(saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent), appSession)}
     />
     <NewLine />
     <Form horizontal>
@@ -414,7 +424,6 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     </Form>
   </div>
 );
-
 
 const FieldShape = {
   name: PropTypes.string.isRequired,
