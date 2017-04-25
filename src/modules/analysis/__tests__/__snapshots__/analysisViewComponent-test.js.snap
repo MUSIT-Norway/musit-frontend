@@ -528,9 +528,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     </FormGroup>
   </Form>
   <NewLine />
-  <button>
-    close
-  </button>
+  <SaveCancel
+    onClickSave={[Function onClickSave]}
+    saveLabel="Endre" />
   <NewLine />
   <Form
     bsClass="form"

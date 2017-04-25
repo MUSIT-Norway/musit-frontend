@@ -16,6 +16,8 @@ import {
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import { AppSession } from '../app/appSession';
+import { hashHistory } from 'react-router';
+import Config from '../../config';
 
 type Field = { name: string, rawValue: ?string };
 type FormData = {
@@ -163,6 +165,17 @@ const updateFormField = (field, updateForm) =>
       name: field.name,
       rawValue: e.target.value
     });
+
+export const goToAnalysis = (
+  fn: Function,
+  appSession: AppSession,
+  goTo: Function = hashHistory.push
+) => {
+  return (analysisId: string) => {
+    return fn(analysisId).then(() =>
+      goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
+  };
+};
 
 const AnalysisEdit = (
   { params, form, updateForm, store, editAnalysisEvent, appSession }: Props
