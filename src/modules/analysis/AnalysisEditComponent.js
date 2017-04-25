@@ -16,6 +16,8 @@ import {
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import { AppSession } from '../app/appSession';
+import { hashHistory } from 'react-router';
+import Config from '../../config';
 
 type Field = { name: string, rawValue: ?string };
 type FormData = {
@@ -145,7 +147,7 @@ export const editAnalysisEventLocal = (
         objectIds: store.analysis && store.analysis.events
           ? store.analysis.events.map(a => a.objectId)
           : store.analysis.objectId,
-        restriction : {
+        restriction: {
           by: getValue(form.by),
           expirationDate: getValue(form.expirationDate),
           reason: getValue(form.reason),
@@ -163,6 +165,17 @@ const updateFormField = (field, updateForm) =>
       name: field.name,
       rawValue: e.target.value
     });
+
+export const goToAnalysis = (
+  fn: Function,
+  appSession: AppSession,
+  goTo: Function = hashHistory.push
+) => {
+  return (analysisId: string) => {
+    return fn(analysisId).then(() =>
+      goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
+  };
+};
 
 const AnalysisEdit = (
   { params, form, updateForm, store, editAnalysisEvent, appSession }: Props
@@ -325,7 +338,11 @@ const AnalysisEdit = (
           </Col>
         </FormGroup>
         <FormGroup>
-          <Panel collapsible expanded style={{border:'none', backgroundColor: '#f5f5f5'}}>
+          <Panel
+            collapsible
+            expanded
+            style={{ border: 'none', backgroundColor: '#f5f5f5' }}
+          >
             <FormGroup>
               <FieldGroup
                 id="navn"
@@ -358,12 +375,7 @@ const AnalysisEdit = (
               />
             </FormGroup>
             <FormGroup>
-              <AddButton
-                id="3"
-                label="Legg til flere saksnummer"
-                md={11}
-                mdOffset={1}
-              />
+              <AddButton id="3" label="Legg til flere saksnummer" md={11} mdOffset={1} />
             </FormGroup>
             <FormGroup>
               <FieldGroup
@@ -431,7 +443,13 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, params)}
+      onClickSave={editAnalysisEventLocal(
+        appSession,
+        form,
+        store,
+        editAnalysisEvent,
+        params
+      )}
     />
     <NewLine />
     <Form horizontal>
