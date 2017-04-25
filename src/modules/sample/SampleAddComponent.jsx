@@ -124,26 +124,29 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (appSession: AppSession, form: FormData, addSample: Function, persons: any ) => {
+const submitSample = (appSession: AppSession, form: FormData, addSample: Function) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
-  const reducePersons = (p: any) => p.rawValue && p.rawValue.reduce((akk: any, v: Person) => {
+  const reducePersons = (p: any) => p && p.reduce((akk: any, v: Person) => {
     switch (v.role) {
       case 'creator':
-        return {
+        return {...akk,
           createdBy:v.name,
           createdDate: v.date
         };
       case
       'responsible':
-        return {
+        return {...akk,
           responsible: v.name
         };
     }
   }, {});
 
+  const persons= form.persons.rawValue;
+  console.log('Frm, persons', form, persons);
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
+  console.log('Tempdata', tmpData);
   const data = {
     ...tmpData,
     externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
@@ -152,7 +155,7 @@ const submitSample = (appSession: AppSession, form: FormData, addSample: Functio
   };
 
 
-  data['createdDate'] = '2017-03-19';
+  //data['createdDate'] = '2017-03-19';
   data['status'] = 2;
   data['responsible'] = appSession.actor.dataportenId;
   data['isExtracted'] = false;
@@ -457,7 +460,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
         <Col md={4}>
           <Button
             onClick={() =>
-              submitSample(appSession, form, addSample, form.persons.rawValue)
+              submitSample(appSession, form, addSample)
                 .then((value) => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(value)))
             }
           >

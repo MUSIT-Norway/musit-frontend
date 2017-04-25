@@ -89,9 +89,6 @@ const SampleViewComponent = props => {
         <Col md={2}>
           <FontAwesome name="clock-o"/> {form.updateDate.defaultValue || '11.03.2017'}
         </Col>
-        <Col md={3}>
-          <Button bsStyle="link">Se endringshistorikk</Button>
-        </Col>
       </Row>
       <br />
       <hr />
@@ -118,7 +115,7 @@ const SampleViewComponent = props => {
         </Col>
       </Row>
       <Row className="row-centered">
-        <Col md={3}>
+        <Col md={2}>
           <FieldReadOnly label={'Lagringskontainer'} field={form.container}/>
         </Col>
         <Col md={3}>
