@@ -5,14 +5,10 @@ import isEmpty from 'lodash/isEmpty';
 import { stringMapper } from './mappers';
 import { noValidation } from './validators';
 
-export type One = 1;
-export type Many = 2;
-export type Category = One | Many;
 export type RawValue = string | Array<any>;
 
 export type Field<T> = {
   name: string,
-  type: Category,
   rawValue?: ?RawValue,
   defaultValue?: ?T,
   value?: ?T,

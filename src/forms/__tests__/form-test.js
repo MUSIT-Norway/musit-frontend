@@ -110,7 +110,6 @@ describe('form stream', () => {
 
     const name: Field<string> = {
       name: 'name',
-      type: 1,
       mapper: stringMapper,
       defaultValue: '1',
       validator: validator
