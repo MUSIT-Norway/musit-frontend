@@ -107,7 +107,7 @@ const NewLine = () => (
 const getValue = field => field.rawValue || '';
 
 export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, store: Store, saveAnalysisEvent: Function) =>
-  () => saveAnalysisEvent({
+  saveAnalysisEvent({
     museumId: appSession.museumId,
     data: {
       analysisTypeId: getValue(form.analysisTypeId),
@@ -134,11 +134,8 @@ const updateFormField = (field, updateForm) =>
   });
 
 
-export const goToAnalysis = (fn: Function, appSession: AppSession, goTo: Function  = hashHistory.push) => {
-  return (analysisId: string) => {
-    return fn(analysisId).then(() => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
-  };
-};
+export const goToAnalysisWhenComplete = (idPromise: Promise<any>, appSession: AppSession, goTo: Function  = hashHistory.push) =>
+    idPromise.then(Config.magasin.urls.client.analysis.viewAnalysis(appSession)).then(goTo);
 
 const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => (
   <div>
@@ -178,6 +175,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     <Form inline>
       <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
       <Col mdOffset={1} md={5}>
+
         <Table
           className="table"
           columns={[
@@ -405,7 +403,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={goToAnalysis(saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent), appSession)}
+      onClickSave={() => goToAnalysisWhenComplete(saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent), appSession)}
     />
     <NewLine />
     <Form horizontal>

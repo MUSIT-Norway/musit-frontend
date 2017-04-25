@@ -7,7 +7,6 @@ import AnalysisEditComponent, {
 } from '../AnalysisEditComponent';
 import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
-import { Observable } from 'rxjs';
 const objectsData = [
   {
     museumNumber: '123',
@@ -65,6 +64,7 @@ const form = fieldsArray.reduce(
 
 const appSession = {
   museumId: 99,
+  collectionId: '1234',
   accessToken: '1234'
 };
 
@@ -80,14 +80,13 @@ describe('AnalysisEditComponent', () => {
     );
   });
 
-  it('Call goToAnalysis.', done => {
+  it('Call goToAnalysisWhenComplete.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = () => Observable.of(null).toPromise();
+    const fakeFn = new Promise((res) => res('2'));
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
-    const analysisId = 2;
-    fn(analysisId).then(() => {
-      expect(url).toBe('/museum/99/collections/undefined/analysis/edit/2');
+    fn.then(() => {
+      expect(url).toBe('/museum/99/collections/1234/analysis/2');
       done();
     });
   });

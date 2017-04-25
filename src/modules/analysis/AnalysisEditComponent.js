@@ -169,11 +169,19 @@ const updateFormField = (field, updateForm) =>
 export const goToAnalysis = (
   fn: Function,
   appSession: AppSession,
+  analysisId: string,
   goTo: Function = hashHistory.push
 ) => {
-  return (analysisId: string) => {
-    return fn(analysisId).then(() =>
-      goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
+  return () => {
+    return fn().then(() => {
+      console.log(
+        'Rituvesh',
+        Config.magasin.urls.client.analysis.viewAnalysis(appSession)(analysisId)
+      );
+      return goTo(
+        Config.magasin.urls.client.analysis.viewAnalysis(appSession)(analysisId)
+      );
+    });
   };
 };
 
@@ -443,12 +451,10 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={editAnalysisEventLocal(
+      onClickSave={goToAnalysis(
+        editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, params),
         appSession,
-        form,
-        store,
-        editAnalysisEvent,
-        params
+        params.analysisId
       )}
     />
     <NewLine />
