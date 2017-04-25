@@ -81,15 +81,17 @@ describe('AnalysisEditComponent', () => {
   });
 
   it('Call goToAnalysis.', done => {
-    const fakeGoTo = sinon.spy();
+    let url;
+    const fakeGoTo = (goToUrl) => url = goToUrl;
     const fakeFn = () => Observable.of(null).toPromise();
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
     const analysisId = 2;
     fn(analysisId).then(() => {
-      expect(fakeGoTo.calledOnce).toBe(true);
+      expect(url).toBe('/museum/99/collections/undefined/analysis/edit/2');
       done();
     });
   });
+
 
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
