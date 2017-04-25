@@ -31,6 +31,7 @@ export default SampleEdit;
 
 const ObjectSamples = ({ active, setActive, indexes }) => (
   <table className="table table-bordered table-striped" id="samples" style={{ backgroundColor: 'white'}}>
+    {!active[indexes[0]] &&
     <thead>
       <tr>
         <th>Prøve ID</th>
@@ -42,6 +43,7 @@ const ObjectSamples = ({ active, setActive, indexes }) => (
         <th width={10}>&nbsp;</th>
       </tr>
     </thead>
+    }
     <tbody>
     {!active[indexes[0]] ?
       <tr>
@@ -72,14 +74,13 @@ const ObjectSamples = ({ active, setActive, indexes }) => (
       </tr>
       :
       <tr>
-        <td colSpan={7}>&nbsp;</td>
-        <td onClick={() => setActive(indexes[0])}>
+        <td style={{ textAlign: 'right' }} onClick={() => setActive(indexes[0])}>
           <img src={!active[indexes[0]] ? downImg : upImg} width={20} role="presentation"/>
         </td>
       </tr>
     }
       <tr id="collapse1" className={'collapse ' + active[indexes[0]] ? 'in' : 'out'} hidden={!active[indexes[0]]}>
-        <td colSpan={8}>
+        <td>
           <SampleDetails />
         </td>
       </tr>
