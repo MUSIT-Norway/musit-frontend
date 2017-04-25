@@ -24,6 +24,18 @@ describe('AnalysisSampleFormPageAdd', () => {
             name: 'size',
             rawValue: '1,23'
           },
+          externalId: {
+            name: 'externalId',
+            rawValue: '123'
+          },
+          externalIdSource: {
+            name: 'externalIdSource',
+            rawValue: 'Museum'
+          },
+          sampleDescription: {
+            name: 'sampleDescription',
+            rawValue: 'Av lær'
+          },
           term_species: {
             name: 'term_species',
             rawValue: 'Carex saxatilis'
@@ -72,6 +84,10 @@ describe('AnalysisSampleFormPageAdd', () => {
             name: 'container',
             rawValue: 'Reagensrør'
           },
+          leftoverSample: {
+            name: 'leftoverSample',
+            rawValue: '2'
+          },
           registeredDate: {
             name: 'registeredDate',
             rawValue: '1988-12-31'
@@ -87,6 +103,10 @@ describe('AnalysisSampleFormPageAdd', () => {
           sampleId: {
             name: 'sampleId',
             rawValue: '1233'
+          },
+          persons: {
+            name: 'persons',
+            defaultValue: [{name: 'Arne And', role: 'created', date: '1998-01-2001'}]
           }
         }}
         updateForm={updateForm}

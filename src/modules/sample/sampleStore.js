@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import Sample from '../../models/sample';
 const initialState = { data: [] };
 
-
 export const loadSamplesForObject$ = createAction('loadSamplesForObject$').switchMap(
   Sample.loadSamplesForObject()
 );

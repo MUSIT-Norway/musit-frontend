@@ -96,7 +96,7 @@ export const PersonRoleDate = (
             />
           </Col>
           <Col md={2}>
-            {(v.role === 'creator') &&
+            {v.role === 'creator' &&
               <FormControl
                 value={v.date}
                 onChange={e => updatePerson(i, { ...v, date: e.target.value })}

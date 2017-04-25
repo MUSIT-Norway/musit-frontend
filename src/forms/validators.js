@@ -28,11 +28,11 @@ export const isNumber = (minPrecision = 0, maxPrecision = Number.MAX_SAFE_INTEGE
 export const isNonEmptyArray = revalidate.createValidator(
   message =>
     value => {
-      if (value && value.length && value.length === 0) {
+      if (value && value.length === 0) {
         return message;
       }
     },
-  (field: string) => `${field} is required`
+  (field: string) => `${field} must be a non-empty array`
 );
 
 export const isRequired = revalidate.createValidator(

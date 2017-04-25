@@ -12,14 +12,6 @@ Sample.addSample = (ajaxPost = simplePost) =>
     return ajaxPost(url, data, token, callback).map(({ response }) => response);
   };
 
-Sample.addPersonToSample = data => [...(data || []), { name: '', role: '', date: '' }];
-
-Sample.updatePersonForSample = (data, i, personRoleDate) => [
-  ...(data || []).slice(0, i),
-  personRoleDate,
-  ...(data || []).slice(i + 1)
-];
-
 Sample.editSample = (ajaxPut = simplePut) =>
   ({ id, museumId, token, data, callback }) => {
     const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);

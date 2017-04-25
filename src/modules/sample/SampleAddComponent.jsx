@@ -144,9 +144,7 @@ const submitSample = (appSession: AppSession, form: FormData, addSample: Functio
   }, {});
 
   const persons= form.persons.rawValue;
-  console.log('Frm, persons', form, persons);
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
-  console.log('Tempdata', tmpData);
   const data = {
     ...tmpData,
     externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
