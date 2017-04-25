@@ -79,7 +79,7 @@ describe('AnalysisAddComponent', () => {
   it('Call goToAnalysisWhenComplete.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = new Promise((res) => res('2'));
+    const fakeFn = new Promise(res => res('2'));
     const fn = goToAnalysisWhenComplete(fakeFn, appSession, fakeGoTo);
     fn.then(() => {
       expect(url).toBe('/museum/99/collections/1234/analysis/2');

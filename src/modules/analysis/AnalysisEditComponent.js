@@ -173,7 +173,8 @@ export const goToAnalysis = (
   goTo: Function = hashHistory.push
 ) => {
   return () => {
-    return fn().then(() => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession)(analysisId)));
+    return fn().then(() =>
+      goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession)(analysisId)));
   };
 };
 

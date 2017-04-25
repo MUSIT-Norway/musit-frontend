@@ -1,6 +1,6 @@
 /* @flow */
-import React, { PropTypes } from 'react';
-import { I18n } from 'react-i18nify';
+import React, {PropTypes} from 'react';
+import {I18n} from 'react-i18nify';
 import {
   Radio,
   PageHeader,
@@ -14,8 +14,8 @@ import {
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import {SaveCancel} from '../../components/formfields/index';
-const { Table } = require('reactable');
-import { AppSession } from '../app/appSession';
+const {Table} = require('reactable');
+import {AppSession} from '../app/appSession';
 import {hashHistory} from 'react-router';
 import Config from '../../config';
 
@@ -114,7 +114,7 @@ export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, s
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
       objectIds: store.objectsData.map((a) => a.uuid),
-      result : {
+      result: {
         by: getValue(form.by),
         expirationDate: getValue(form.expirationDate),
         reason: getValue(form.reason),
@@ -134,26 +134,27 @@ const updateFormField = (field, updateForm) =>
   });
 
 
-export const goToAnalysisWhenComplete = (idPromise: Promise<any>, appSession: AppSession, goTo: Function  = hashHistory.push) =>
-    idPromise.then(Config.magasin.urls.client.analysis.viewAnalysis(appSession)).then(goTo);
+export const goToAnalysisWhenComplete = (idPromise: Promise<any>, appSession: AppSession, goTo: Function = hashHistory.push) =>
+  idPromise.then(Config.magasin.urls.client.analysis.viewAnalysis(appSession)).then(goTo);
 
-const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => (
+const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession} : Props) => (
   <div>
     <br/>
     <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
-    <Col md={12}>
-      <strong>HID:</strong>{' '}{getValue(form.id)}
-    </Col>
-    <Col md={12}>
-      <strong>Registrert:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(form.registeredBy)}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(form.registeredDate)}
-    </Col>
-    <Col md={12}>
-      <strong>Sist endret:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(form.doneBy)}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(form.doneDate)}{' '}<Button bsStyle="link">Se endringshistorikk</Button>
-    </Col>
-    <NewLine />
-    <Form>
+    <Form horizontal>
+      <FormGroup>
+        {labelFormat('Type analyse', 1)}
+        <Col md={2}>
+          <FormControl
+            componentClass="select"
+            placeholder="Velg kategori"
+            onChange={updateFormField(form.analysisTypeId, updateForm)}
+          >
+            <option>Velg kategori</option>
+            {store.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+          </FormControl>
+        </Col>
+      </FormGroup>
       <FormGroup>
         <FieldGroup
           id="formControlsText"
@@ -163,6 +164,9 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
           onChange={updateFormField(form.caseNumbers, updateForm)}
         />
       </FormGroup>
+    </Form>
+    < Form>
+
       <FormGroup>
         <AddButton
           id="1"
@@ -236,19 +240,6 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     <NewLine />
     <Well>
       <Form horizontal>
-        <FormGroup>
-          {labelFormat('Type analyse', 1)}
-          <Col md={2}>
-            <FormControl
-              componentClass="select"
-              placeholder="Velg kategori"
-              onChange={updateFormField(form.analysisTypeId, updateForm)}
-            >
-              <option>Velg kategori</option>
-              {store.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
-            </FormControl>
-          </Col>
-        </FormGroup>
         <FormGroup>
           <FieldGroup
             id="formControlsText"

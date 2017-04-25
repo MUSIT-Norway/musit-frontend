@@ -96,7 +96,12 @@ describe('AnalysisEditComponent', () => {
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
     const wrapper = mount(
-      <AnalysisEditComponent form={form} updateForm={updateForm} store={store} params={param}/>
+      <AnalysisEditComponent
+        form={form}
+        updateForm={updateForm}
+        store={store}
+        params={param}
+      />
     );
     wrapper.find('.note').simulate('change', {
       target: {
@@ -110,7 +115,12 @@ describe('AnalysisEditComponent', () => {
   it('should render properly', () => {
     const updateForm = sinon.spy();
     const wrapper = shallow(
-      <AnalysisEditComponent form={form} updateForm={updateForm} store={store}  params={param}/>
+      <AnalysisEditComponent
+        form={form}
+        updateForm={updateForm}
+        store={store}
+        params={param}
+      />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
