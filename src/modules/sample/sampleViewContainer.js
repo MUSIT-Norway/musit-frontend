@@ -32,9 +32,37 @@ export default flowRight([
     const val = { id: sampleId, museumId: museumId, token: accessToken };
     loadSample(val).toPromise().then(v => {
       const formData = Object.keys(v).reduce(
-        (akk, key: string) => [...akk, { name: key, defaultValue: v[key] }],
+        (akk, key: string) => {
+          switch (key) {
+            case 'sampleType': {
+              return [
+                ...akk,
+                { name: 'sampleType', defaultValue: v[key].value },
+                { name: 'subTypeValue', defaultValue: v[key].subTypeValue }
+              ];
+            }
+            case 'externalId': {
+              return [
+                ...akk,
+                { name: 'externalId', defaultValue: v[key].value },
+                { name: 'externalIdSource', defaultValue: v[key].source }
+              ];
+            }
+            case 'size': {
+              return [
+                ...akk,
+                { name: 'size', defaultValue: v[key].value },
+                { name: 'sizeUnit', defaultValue: v[key].unit }
+              ];
+            }
+            default: {
+              return [...akk, { name: key, defaultValue: v[key] }];
+            }
+          }
+        },
         []
       );
+      console.log('Formdata', formData);
       loadForm(formData);
     });
   })

@@ -10,6 +10,11 @@ export const stringMapper = {
   toRaw: (s: ?any) => s ? '' + s : null
 };
 
+export const noMapper = {
+  fromRaw: (s: ?any) => s,
+  toRaw: (s: ?any) => s
+};
+
 export const numberMapper = {
   fromRaw: (s: ?string) => {
     if (!s) {
