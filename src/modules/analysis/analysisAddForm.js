@@ -11,6 +11,7 @@ import { stringMapper, numberMapper, booleanMapper } from '../../forms/mappers';
 
 export const getStrField = (field: string, value: string = ''): Field<string> => ({
   name: field,
+  type: 1,
   mapper: stringMapper,
   defaultValue: value,
   validator: {
@@ -20,6 +21,7 @@ export const getStrField = (field: string, value: string = ''): Field<string> =>
 
 export const getBoolField = (field: string, value: boolean = false): Field<boolean> => ({
   name: field,
+  type: 1,
   defaultValue: value,
   mapper: booleanMapper,
   validator: {}
@@ -57,6 +59,7 @@ const by = getStrField('by', 'Test name');
 const reason = getStrField('reason', 'Reason for Restrictions');
 const caseNumbers: Field<number> = {
   name: 'caseNumbers',
+  type: 1,
   mapper: numberMapper,
   defaultValue: 1234,
   validator: {

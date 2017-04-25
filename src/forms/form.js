@@ -86,7 +86,7 @@ const createForm$ = (
   fields: Field<*>[],
   updateForm$?: Subject<Update<*>>,
   loadForm$?: Subject<Update<*>[]>
-): FormDetails<*> => {
+): FormDetails => {
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');
   const initialFields = fields.reduce(

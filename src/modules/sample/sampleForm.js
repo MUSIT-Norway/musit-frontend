@@ -12,6 +12,7 @@ import { stringMapper, numberMapper } from '../../forms/mappers';
 
 const museumId: Field<string> = {
   name: 'museumId',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -20,6 +21,7 @@ const museumId: Field<string> = {
 
 const subNo: Field<string> = {
   name: 'subNo',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -28,6 +30,7 @@ const subNo: Field<string> = {
 
 const term_species: Field<string> = {
   name: 'term_species',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -36,6 +39,7 @@ const term_species: Field<string> = {
 
 const responsible: Field<string> = {
   name: 'responsible',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -44,6 +48,7 @@ const responsible: Field<string> = {
 
 const sampleId: Field<string> = {
   name: 'sampleId',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -52,6 +57,7 @@ const sampleId: Field<string> = {
 
 const createdDate: Field<string> = {
   name: 'createdDate',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -60,6 +66,7 @@ const createdDate: Field<string> = {
 
 const registeredBy: Field<string> = {
   name: 'registeredBy',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -68,6 +75,7 @@ const registeredBy: Field<string> = {
 
 const registeredDate: Field<string> = {
   name: 'registeredDate',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -76,6 +84,7 @@ const registeredDate: Field<string> = {
 
 const updateBy: Field<string> = {
   name: 'updateBy',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -84,6 +93,7 @@ const updateBy: Field<string> = {
 
 const updateDate: Field<string> = {
   name: 'updateDate',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -92,6 +102,7 @@ const updateDate: Field<string> = {
 
 const container: Field<string> = {
   name: 'container',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -100,6 +111,7 @@ const container: Field<string> = {
 
 const storageMedium: Field<string> = {
   name: 'storageMedium',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -108,6 +120,7 @@ const storageMedium: Field<string> = {
 
 const note: Field<string> = {
   name: 'note',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -116,6 +129,7 @@ const note: Field<string> = {
 
 const size: Field<number> = {
   name: 'size',
+  type: 1,
   mapper: numberMapper,
   validator: {
     rawValidator: composeValidators(isRequired, isNumber(0, 2)),
@@ -125,6 +139,7 @@ const size: Field<number> = {
 
 const sampleType: Field<string> = {
   name: 'sampleType',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -133,6 +148,7 @@ const sampleType: Field<string> = {
 
 const sizeUnit: Field<string> = {
   name: 'sizeUnit',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -141,6 +157,7 @@ const sizeUnit: Field<string> = {
 
 const sampleSubType: Field<string> = {
   name: 'sampleSubType',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -149,6 +166,7 @@ const sampleSubType: Field<string> = {
 
 const status: Field<string> = {
   name: 'status',
+  type: 1,
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
