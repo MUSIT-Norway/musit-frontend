@@ -31,9 +31,7 @@ const props = {
   saveAnalysisEvent: toPromise(Analysis.saveAnalysisEvent())
 };
 
-export const onMount = (
-  { loadAnalysisTypes, appSession, getAnalysisTypesForCollection }
-) => {
+export const onMount = ({ loadAnalysisTypes, appSession, getAnalysisTypesForCollection }) => {
   loadAnalysisTypes({
     museumId: appSession.museumId,
     token: appSession.accessToken
@@ -45,6 +43,8 @@ export const onMount = (
   });
 };
 
-export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  AnalysisAddComponent
-);
+export default flowRight([
+  inject(data, commands, props),
+  mount(onMount),
+  makeUrlAware
+])(AnalysisAddComponent);

@@ -15,60 +15,37 @@ import {
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
-import { AppSession } from '../app/appSession';
+import type { AppSession } from '../../types/appSession';
+import type { FormData, Update } from './types/form';
+import type { Analysis, AnalysisType } from './types/analysis';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
+import Label from './components/Label';
+import FieldGroup from './components/FIeldGroup';
+import AddButton from './components/AddButton';
+import NewLine from './components/NewLine';
 
-type Field = { name: string, rawValue: ?string };
-type FormData = {
-  id: Field,
-  analysisTypeId: Field,
-  doneBy: Field,
-  doneDate: Field,
-  registeredBy: Field,
-  registeredDate: Field,
+type ObjectData = { uuid: string };
 
-  responsible: Field,
-
-  administrator: Field,
-  completedBy: Field,
-  completedDate: Field,
-  objectId: Field,
-  note: Field,
-  type: Field,
-
-  partOf: Field,
-  result: Field,
-  place: Field,
-
-  externalSource: Field,
-  comments: Field,
-
-  restrictions: Field,
-  by: Field,
-  expirationDate: Field,
-  reason: Field,
-  caseNumbers: Field,
-  cancelledBy: Field,
-  cancelledReason: Field,
-
-  completeAnalysis: Field,
-  museumNo: Field,
-  term: Field
+type Store = {
+  objectsData: ObjectData[],
+  analysis: Analysis,
+  analysisTypes: AnalysisType[]
 };
 
-type AnalysisType = { id: number, name: string };
-type ObjectData = { uuid: string };
-type Store = { objectsData: ObjectData[], analysis: any, analysisTypes: AnalysisType[] };
-type Update = (update: Field) => void;
+type Params = {
+  analysisId?: string
+};
+
 type Props = {
   form: FormData,
   updateForm: Update,
   store: Store,
   appSession: AppSession,
   editAnalysisEvent: Function,
-  params: any
+  params: Params
 };
+
 const getTableRow = (museumNo: string, subNo: string, term: string) => {
   return (
     <tr>
@@ -78,6 +55,7 @@ const getTableRow = (museumNo: string, subNo: string, term: string) => {
     </tr>
   );
 };
+
 const getObjectsValue = (store: Store) => {
   if (store.analysis) {
     if (store.analysis.type === 'AnalysisCollection') {
@@ -92,41 +70,6 @@ const getObjectsValue = (store: Store) => {
   return '';
 };
 
-// TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
-// TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
-const labelFormat = (label, md = 1) => (
-  <Col md={md} style={{ textAlign: 'right', padding: '7px' }}>
-    <b>{label}</b>
-  </Col>
-);
-
-const FieldGroup = ({ id, label, md = 1, ...props }) => (
-  <div id={id}>
-    {labelFormat(label, md)}
-    <Col md={2}>
-      <FormControl {...props} />
-    </Col>
-  </div>
-);
-
-const AddButton = ({ id, label, md, mdOffset = 0, ...props }) => (
-  <div id={id}>
-    <Col md={md} mdOffset={mdOffset}>
-      <Button {...props}>
-        <FontAwesome name="plus-circle" />{' '}
-        {label}
-      </Button>
-    </Col>
-  </div>
-);
-
-const NewLine = () => (
-  <Form horizontal>
-    <FormGroup />
-    <hr />
-  </Form>
-);
-
 const getValue = field => field.rawValue || '';
 
 export const editAnalysisEventLocal = (
@@ -134,7 +77,7 @@ export const editAnalysisEventLocal = (
   form: FormData,
   store: Store,
   editAnalysisEvent: Function,
-  params: any
+  params: Params
 ) =>
   () =>
     editAnalysisEvent({
@@ -258,7 +201,7 @@ const AnalysisEdit = (
           value={getValue(form.responsible)}
           onChange={updateFormField(form.responsible, updateForm)}
         />
-        {labelFormat('Rolle', 1)}
+        <Label label="Rolle" md={1} />
         <Col md={1}>
           <FormControl componentClass="select" placeholder="Velg rolle">
             <option value="Velgsted">Velg rolle</option>
@@ -270,7 +213,7 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <FormGroup>
-      {labelFormat('Analysested', 1)}
+      <Label label="Analysested" md={1} />
       <Col md={2}>
         <FormControl componentClass="select" placeholder="Velg sted">
           <option value="Velgsted">Velg sted</option>
@@ -282,7 +225,7 @@ const AnalysisEdit = (
     <Well>
       <Form horizontal>
         <FormGroup>
-          {labelFormat('Type analyse', 1)}
+          <Label label="Type analyse" md={1} />
           <Col md={2}>
             <FormControl
               componentClass="select"
@@ -316,7 +259,7 @@ const AnalysisEdit = (
           </Col>
         </FormGroup>
         <FormGroup>
-          {labelFormat('Kommentar / resultat', 1)}
+          <Label label="Kommentar / resultat" md={1} />
           <Col md={5}>
             <FormControl
               componentClass="textarea"
@@ -327,7 +270,7 @@ const AnalysisEdit = (
           </Col>
         </FormGroup>
         <FormGroup>
-          {labelFormat('Klausulering', 1)}
+          <Label label="Klausulering" md={1} />
           <Col md={5}>
             <Radio checked readOnly inline>
               Ja
@@ -418,7 +361,7 @@ const AnalysisEdit = (
         controlId={form.note.name}
         validationState={form.note.status && !form.note.status.valid ? 'error' : null}
       >
-        {labelFormat('Kommentar til analysen', 1)}
+        <Label label="Kommentar til analysen" md={1} />
         <Col md={5}>
           <FormControl
             className="note"
@@ -430,7 +373,7 @@ const AnalysisEdit = (
         </Col>
       </FormGroup>
       <FormGroup>
-        {labelFormat('Avslutt analyse', 1)}
+        <Label label="Avslutt analyse" md={1} />
         <Col md={5}>
           <Radio inline readOnly>
             Ja

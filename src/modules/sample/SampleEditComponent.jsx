@@ -16,7 +16,7 @@ import {
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
-import AppSession from '../app/appSession';
+import type { AppSession } from '../../types/appSession';
 import type {Person} from './sampleForm';
 
 type Field = { name: string, rawValue: ?string };
@@ -38,13 +38,7 @@ type Props = {
   form: FormData,
   updateForm: Update,
   editSample: Function,
-  appSession: {
-    museumId: number,
-    accessToken: string,
-    actor: {
-      dataportenId: string
-    }
-  },
+  appSession: AppSession,
   params: {
     sampleId: string
   }

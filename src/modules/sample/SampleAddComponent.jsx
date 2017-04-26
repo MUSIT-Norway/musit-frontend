@@ -14,8 +14,8 @@ import {
   ControlLabel,
   Row
 } from 'react-bootstrap';
-import AppSession from '../app/appSession';
 import Config from '../../config';
+import type { AppSession } from '../../types/appSession';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
 import type {Person} from './sampleForm';
@@ -40,14 +40,7 @@ type Props = {
   addPersonToSample: Function,
   updatePersonForSample: Function,
   clearForm: Function,
-
-  appSession: {
-    museumId: number,
-    accessToken: string,
-    actor: {
-      dataportenId: string
-    }
-  }
+  appSession: AppSession
 };
 
 type FieldDropDownProps = {
