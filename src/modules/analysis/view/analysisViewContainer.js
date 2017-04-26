@@ -1,11 +1,11 @@
 import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
 import AnalysisViewComponent from './AnalysisViewComponent';
-import { makeUrlAware } from '../app/appSession';
+import { makeUrlAware } from '../../app/appSession';
 import flowRight from 'lodash/flowRight';
-import mount from '../../shared/mount';
+import mount from '../../../shared/mount';
 
-import store$, { loadAnalysis$, getAnalysisTypesForCollection$ } from './analysisStore';
+import store$, { loadAnalysis$, getAnalysisTypesForCollection$ } from '../analysisStore';
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },

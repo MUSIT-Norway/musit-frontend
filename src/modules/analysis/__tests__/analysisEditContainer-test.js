@@ -1,4 +1,4 @@
-import { onMount } from '../analysisEditContainer';
+import { onMount } from '../edit/analysisEditContainer';
 import sinon from 'sinon';
 import { Observable } from 'rxjs';
 

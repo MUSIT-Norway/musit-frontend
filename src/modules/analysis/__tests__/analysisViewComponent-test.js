@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
-import AnalysisViewComponent from '../AnalysisViewComponent';
+import AnalysisViewComponent from '../view/AnalysisViewComponent';
 
 const objectsData = [
   {

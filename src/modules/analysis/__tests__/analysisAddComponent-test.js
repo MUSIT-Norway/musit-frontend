@@ -4,8 +4,8 @@ import React from 'react';
 import AnalysisAddComponent, {
   saveAnalysisEventLocal,
   goToAnalysis
-} from '../AnalysisAddComponent';
-import { fieldsArray } from '../analysisAddForm';
+} from '../add/AnalysisAddComponent';
+import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
 import { Observable } from 'rxjs';
 

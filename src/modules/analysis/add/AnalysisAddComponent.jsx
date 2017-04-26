@@ -13,16 +13,16 @@ import {
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import {SaveCancel} from '../../components/formfields/index';
+import {SaveCancel} from '../../../components/formfields/index';
 import {hashHistory} from 'react-router';
-import Config from '../../config';
-import type { AppSession } from '../../types/appSession';
-import type { FormData, Update } from './types/form';
-import type { ObjectData } from '../../types/object';
-import Label from './components/Label';
-import FieldGroup from './components/FIeldGroup';
-import AddButton from './components/AddButton';
-import NewLine from './components/NewLine';
+import Config from '../../../config';
+import type { AppSession } from '../../../types/appSession';
+import type { FormData, Update } from '../types/form';
+import type { ObjectData } from '../../../types/object';
+import Label from '../components/Label';
+import FieldGroup from '../components/FIeldGroup';
+import AddButton from '../components/AddButton';
+import NewLine from '../components/NewLine';
 
 const { Table } = require('reactable');
 
@@ -78,7 +78,9 @@ const updateFormField = (field, updateForm) =>
 
 
 export const goToAnalysis = (fn: Promise<string>, appSession: AppSession, goTo: Function  = hashHistory.push) =>
-  fn.then((analysisId: string) => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
+  fn.then((analysisId: string) =>
+    goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId))
+  );
 
 const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, params } : Props) => (
   <div>

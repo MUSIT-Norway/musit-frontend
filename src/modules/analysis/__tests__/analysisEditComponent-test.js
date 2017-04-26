@@ -4,8 +4,8 @@ import React from 'react';
 import AnalysisEditComponent, {
   editAnalysisEventLocal,
   goToAnalysis
-} from '../AnalysisEditComponent';
-import { fieldsArray } from '../analysisAddForm';
+} from '../edit/AnalysisEditComponent';
+import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
 import { Observable } from 'rxjs';
 const objectsData = [

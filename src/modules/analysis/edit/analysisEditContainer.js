@@ -1,13 +1,13 @@
 import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
-import analysisAddForm from './analysisAddForm';
+import analysisAddForm from '../analysisForm';
 import AnalysisEditComponent from './AnalysisEditComponent';
-import store$, { loadAnalysis$, getAnalysisTypesForCollection$ } from './analysisStore';
-import Analysis from '../../models/analysis';
-import { makeUrlAware } from '../app/appSession';
+import store$, { loadAnalysis$, getAnalysisTypesForCollection$ } from '../analysisStore';
+import Analysis from '../../../models/analysis';
+import { makeUrlAware } from '../../app/appSession';
 import flowRight from 'lodash/flowRight';
-import mount from '../../shared/mount';
-import { toPromise } from '../../shared/util';
+import mount from '../../../shared/mount';
+import { toPromise } from '../../../shared/util';
 
 const { form$, updateForm$, loadForm$ } = analysisAddForm;
 

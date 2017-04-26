@@ -14,15 +14,15 @@ import {
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import { SaveCancel } from '../../components/formfields/index';
+import { SaveCancel } from '../../../components/formfields/index';
 import { hashHistory } from 'react-router';
-import Config from '../../config';
-import type { AppSession } from '../../types/appSession';
-import type { Analysis, AnalysisType } from './types/analysis';
-import Label from './components/Label';
-import FieldGroup from './components/FIeldGroup';
-import AddButton from './components/AddButton';
-import NewLine from './components/NewLine';
+import Config from '../../../config';
+import type { AppSession } from '../../../types/appSession';
+import type { Analysis, AnalysisType } from '../types/analysis';
+import Label from '../components/Label';
+import FieldGroup from '../components/FIeldGroup';
+import AddButton from '../components/AddButton';
+import NewLine from '../components/NewLine';
 
 type ObjectData = { uuid: string };
 
