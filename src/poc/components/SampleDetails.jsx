@@ -5,9 +5,27 @@ import { Button } from 'react-bootstrap';
 export default () => (
   <form className="form-horizontal">
     <div className="form-group">
+      <label className="control-label col-sm-2" htmlFor="type">Prøve ID:</label>
+      <div className="col-sm-2">
+        <input name="id" className="form-control" />
+      </div>
+    </div>
+    <div className="form-group">
+      <label className="control-label col-sm-2" htmlFor="type">Prøvetype:</label>
+      <div className="col-sm-2">
+        <Dropdown id="type" />
+      </div>
+    </div>
+    <div className="form-group">
       <label className="control-label col-sm-2" htmlFor="type">Prøveundertype:</label>
       <div className="col-sm-2">
         <Dropdown id="subtype" />
+      </div>
+    </div>
+    <div className="form-group">
+      <label className="control-label col-sm-2" htmlFor="type">Status:</label>
+      <div className="col-sm-2">
+        <Dropdown id="status" />
       </div>
     </div>
     <div className="form-group">

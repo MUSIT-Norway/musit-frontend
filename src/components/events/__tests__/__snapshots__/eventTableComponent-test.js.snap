@@ -9,7 +9,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
           "label": "Dato"
         },
         Object {
-          "key": "eventType",
+          "key": "type",
           "label": "Type hendelse"
         },
         Object {
@@ -39,7 +39,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     sortBy={false}
     sortable={
       Array [
-        "eventType",
+        "type",
         "eventDate",
         "registeredBy",
         "note"
@@ -51,9 +51,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         1999-01-20
       </Td>
       <Td
-        column="type">
-        Flytting
-      </Td>
+        column="type" />
       <Td
         column="registeredBy">
         Ole Olsen
@@ -79,9 +77,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         1999-06-20
       </Td>
       <Td
-        column="type">
-        Analyse
-      </Td>
+        column="type" />
       <Td
         column="registeredBy">
         Ole Hansen

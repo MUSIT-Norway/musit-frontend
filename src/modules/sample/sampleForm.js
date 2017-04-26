@@ -5,13 +5,30 @@ import {
   composeValidators,
   isNumber,
   isRequired,
-  isNumberInRange
+  isNumberInRange,
+  isNonEmptyArray
 } from '../../forms/validators';
 
-import { stringMapper, numberMapper } from '../../forms/mappers';
+import { stringMapper, numberMapper, noMapper, booleanMapper } from '../../forms/mappers';
 
 const museumId: Field<string> = {
   name: 'museumId',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const parentObjectId: Field<string> = {
+  name: 'parentObjectId',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const parentObjectType: Field<string> = {
+  name: 'parentObjectType',
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -50,6 +67,29 @@ const sampleId: Field<string> = {
   }
 };
 
+const isExtracted: Field<boolean> = {
+  name: 'isExtracted',
+  mapper: booleanMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const externalId: Field<string> = {
+  name: 'externalId',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const externalIdSource: Field<string> = {
+  name: 'externalIdSource',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
 const createdDate: Field<string> = {
   name: 'createdDate',
   mapper: stringMapper,
@@ -155,25 +195,73 @@ const status: Field<string> = {
   }
 };
 
+const sampleDescription: Field<string> = {
+  name: 'sampleDescription',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const leftoverSample: Field<number> = {
+  name: 'leftoverSample',
+  mapper: numberMapper,
+  defaultValue: 1,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const treatment: Field<string> = {
+  name: 'treatment',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+export type Person = {
+  name?: string,
+  role?: string,
+  date?: string
+};
+
+const persons: Field<Array<Person>> = {
+  name: 'persons',
+  mapper: noMapper,
+  validator: {
+    rawValidator: isNonEmptyArray
+  }
+};
+
 const fields = [
   note,
   status,
   size,
   sizeUnit,
   container,
+  externalId,
+  externalIdSource,
+  sampleDescription,
   storageMedium,
   sampleSubType,
   sampleType,
   museumId,
   subNo,
   term_species,
+  leftoverSample,
+  parentObjectId,
   sampleId,
+  treatment,
+  isExtracted,
   registeredBy,
+  parentObjectType,
   registeredDate,
   responsible,
   updateBy,
   updateDate,
-  createdDate
+  createdDate,
+  persons
 ];
 
 export default createForm('sampleForm.js', fields);
