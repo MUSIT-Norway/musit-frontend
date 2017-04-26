@@ -8,7 +8,7 @@ export const loadAnalysisTypes$ = createAction('loadAnalysisTypes$').switchMap(
 );
 
 export const loadAnalysis$ = createAction('loadAnalysis$').switchMap(
-  Analysis.getAnalysisWithDeatils()
+  Analysis.getAnalysisWithDetails()
 );
 
 export const getAnalysisTypesForCollection$ = createAction(

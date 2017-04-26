@@ -2,6 +2,8 @@
 
 export type Field = { name: string, rawValue: ?string };
 
+export type ArrayField = { name: string, rawValue: ?Array<*> };
+
 export type Update = (update: Field) => void;
 
 export type FormData = {
@@ -45,5 +47,6 @@ export type FormData = {
 
   actor: Field,
   caseNumber: Field,
-  events: []
+
+  events: ArrayField
 };

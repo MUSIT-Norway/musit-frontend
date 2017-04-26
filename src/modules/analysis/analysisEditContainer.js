@@ -26,14 +26,13 @@ const commands = {
 
 const props = {
   editAnalysisEvent: toPromise(Analysis.editAnalysisEvent()),
-  loadAnalysisForForm: toPromise(Analysis.getAnalysisWithDeatils())
+  loadAnalysisForForm: toPromise(Analysis.getAnalysisWithDetails())
 };
 
 export const onMount = (
   {
     getAnalysisTypesForCollection,
     loadAnalysisForForm,
-    loadAnalysis,
     appSession,
     params,
     loadForm
@@ -47,8 +46,6 @@ export const onMount = (
   };
 
   getAnalysisTypesForCollection(inputParams);
-
-  loadAnalysis(inputParams);
 
   loadAnalysisForForm(inputParams).then(analysis => {
     const dataForForm = Object.keys(analysis).reduce(

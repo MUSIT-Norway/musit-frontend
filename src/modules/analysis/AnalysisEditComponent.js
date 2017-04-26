@@ -46,7 +46,7 @@ type Props = {
   params: Params
 };
 
-const getTableRow = (museumNo: string, subNo: string, term: string) => {
+const getTableRow = (museumNo: ?string, subNo: ?string, term: ?string) => {
   return (
     <tr>
       <td>{museumNo}</td>
@@ -56,18 +56,21 @@ const getTableRow = (museumNo: string, subNo: string, term: string) => {
   );
 };
 
-const getObjectsValue = (store: Store) => {
-  if (store.analysis) {
-    if (store.analysis.type === 'AnalysisCollection') {
-      return store.analysis.events.map(a => getTableRow(a.museumNo, a.subNo, a.term));
-    }
-    return getTableRow(
-      store.analysis.museumNo,
-      store.analysis.subNo,
-      store.analysis.term
-    );
+const getObjectsValue = (form: FormData) => {
+  if (form.type.rawValue === 'AnalysisCollection') {
+    return form.events.rawValue ? form.events.rawValue.map(a =>
+      getTableRow(
+        a.museumNo.rawValue,
+        a.subNo.rawValue,
+        a.term.rawValue
+      )
+    ) : [];
   }
-  return '';
+  return getTableRow(
+    form.museumNo.rawValue,
+    form.subNo.rawValue,
+    form.term.rawValue
+  );
 };
 
 const getValue = field => field.rawValue || '';
@@ -121,7 +124,7 @@ export const goToAnalysis = (
 };
 
 const AnalysisEdit = (
-  { params, form, updateForm, store, editAnalysisEvent, appSession }: Props
+  { params, form, store, updateForm, editAnalysisEvent, appSession }: Props
 ) => (
   <div>
     <br />
@@ -181,7 +184,7 @@ const AnalysisEdit = (
             </tr>
           </thead>
           <tbody>
-            {getObjectsValue(store)}
+            {getObjectsValue(form)}
           </tbody>
         </Table>
       </Col>
@@ -233,9 +236,10 @@ const AnalysisEdit = (
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
-              {store.analysisTypes.map(a => (
-                <option key={a.id} value={a.id}>{a.name}</option>
-              ))}
+              {store.analysisTypes.map(a => {
+                console.log(form.analysisTypeId.rawValue, a.id, form.analysisTypeId.rawValue === a.id);
+                return <option key={a.id} value={a.id} selected={form.analysisTypeId.rawValue === a.id}>{a.name}</option>;
+              })}
             </FormControl>
           </Col>
         </FormGroup>

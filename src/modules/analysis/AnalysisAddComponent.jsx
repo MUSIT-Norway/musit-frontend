@@ -18,6 +18,7 @@ import {hashHistory} from 'react-router';
 import Config from '../../config';
 import type { AppSession } from '../../types/appSession';
 import type { FormData, Update } from './types/form';
+import type { ObjectData } from '../../types/object';
 import Label from './components/Label';
 import FieldGroup from './components/FIeldGroup';
 import AddButton from './components/AddButton';
@@ -25,27 +26,37 @@ import NewLine from './components/NewLine';
 
 const { Table } = require('reactable');
 
-type AnalysisType = { id: number, name: string };
-type ObjectData = { uuid: string }
-type Store = { objectsData: ObjectData[], analysisTypes: AnalysisType[] };
+type Params = {
+  location?: {
+    state?: Array<ObjectData>
+  }
+}
+
+type AnalysisType = { id: number, name: string }
+
+type Store = {
+  analysisTypes: AnalysisType[]
+}
+
 type Props = {
   form: FormData,
   updateForm: Update,
   store: Store,
   appSession: AppSession,
-  saveAnalysisEvent: Function
-};
+  saveAnalysisEvent: Function,
+  params: Params
+}
 
 const getValue = field => field.rawValue || '';
 
-export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, store: Store, saveAnalysisEvent: Function) =>
-  () => saveAnalysisEvent({
+export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, params: Params, saveAnalysisEvent: Function) =>
+  saveAnalysisEvent({
     museumId: appSession.museumId,
     data: {
       analysisTypeId: getValue(form.analysisTypeId),
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
-      objectIds: store.objectsData.map((a) => a.uuid),
+      objectIds: params.location && params.location.state ? params.location.state.map((a) => a.objectUUID) : [],
       result : {
         by: getValue(form.by),
         expirationDate: getValue(form.expirationDate),
@@ -66,13 +77,10 @@ const updateFormField = (field, updateForm) =>
   });
 
 
-export const goToAnalysis = (fn: Function, appSession: AppSession, goTo: Function  = hashHistory.push) => {
-  return (analysisId: string) => {
-    return fn(analysisId).then(() => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
-  };
-};
+export const goToAnalysis = (fn: Promise<string>, appSession: AppSession, goTo: Function  = hashHistory.push) =>
+  fn.then((analysisId: string) => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
 
-const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => (
+const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, params } : Props) => (
   <div>
     <br/>
     <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
@@ -113,11 +121,11 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
         <Table
           className="table"
           columns={[
-            { key: 'museumNumber', label: 'Museumsnr'},
-            { key: 'subNumber', label: 'Unr'},
+            { key: 'museumNo', label: 'Museumsnr'},
+            { key: 'subNo', label: 'Unr'},
             { key: 'term', label: 'Term/artsnavn' }
           ]}
-          data={store.objectsData}
+          data={params.location ? (params.location.state || []) : []}
           sortable={['museumNumber', 'subNumber', 'term']}
           noDataText="Ingen objekter"
         />
@@ -335,7 +343,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={goToAnalysis(saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent), appSession)}
+      onClickSave={() => goToAnalysis(saveAnalysisEventLocal(appSession, form, params, saveAnalysisEvent), appSession)}
     />
     <NewLine />
     <Form horizontal>

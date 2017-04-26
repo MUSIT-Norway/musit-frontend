@@ -2,12 +2,13 @@
 import type { Field } from '../../forms/form';
 import createForm from '../../forms/form';
 import {
+  isNonEmptyArray,
   composeValidators,
   isNumber,
   isRequired,
   isNumberInRange
 } from '../../forms/validators';
-import { stringMapper, numberMapper, booleanMapper } from '../../forms/mappers';
+import { stringMapper, numberMapper, booleanMapper, noMapper } from '../../forms/mappers';
 
 export const getStrField = (field: string, value: string = ''): Field<string> => ({
   name: field,
@@ -23,6 +24,15 @@ export const getBoolField = (field: string, value: boolean = false): Field<boole
   defaultValue: value,
   mapper: booleanMapper,
   validator: {}
+});
+
+export const getArrField = (field: string, value: Array<*> = []): Field<Array<*>> => ({
+  name: field,
+  defaultValue: value,
+  mapper: noMapper,
+  validator: {
+    rawValidator: isNonEmptyArray
+  }
 });
 
 const id = getStrField('id', '123');
@@ -44,6 +54,7 @@ const completedDate = getStrField('completedDate', '2017-03-16T14:37:45+00:00');
 const objectId = getStrField('objectId', '');
 const museumNo = getStrField('museumNo', '');
 const term = getStrField('term', '');
+const subNo = getStrField('subNo', '');
 
 const partOf = getStrField('partOf', '2345');
 const place = getStrField('place', 'Oslo, Norway');
@@ -69,8 +80,10 @@ const cancelledBy = getStrField('cancelledBy', 'Opphevet av');
 const cancelledReason = getStrField('cancelledReason', 'Årsak til oppheving');
 
 const note = getStrField('note', 'default value of note');
-const type = getStrField('partOf', 'Analysis');
+const type = getStrField('type', 'Analysis');
 const completeAnalysis = getBoolField('completeAnalysis', true);
+
+const events = getArrField('events', []);
 
 export const fieldsArray = [
   id,
@@ -106,7 +119,10 @@ export const fieldsArray = [
 
   completeAnalysis,
   museumNo,
-  term
+  subNo,
+  term,
+
+  events
 ];
 
 export default createForm('analysisAddForm.js', fieldsArray);

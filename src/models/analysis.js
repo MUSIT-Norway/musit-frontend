@@ -49,16 +49,17 @@ Analysis.getAnalysisById = (ajaxGet = simpleGet) =>
     return ajaxGet(url, token, callback).map(({ response }) => response);
   };
 
-Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) =>
+Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
   props => {
     return Analysis.getAnalysisById(ajaxGet)(props)
       .flatMap(analysis =>
         MusitActor.getActor(ajaxGet)({
           token: props.token,
           actorId: analysis.registeredBy
-        }).map(actor => actor ? { ...analysis, registeredByName: actor.fn } : analysis))
-      .flatMap(analysis => {
-        if (analysis.type === 'AnalysisCollection') {
+        }).map(actor => actor ? { ...analysis, registeredByName: actor.fn } : analysis)
+      ).flatMap(analysis => {
+        console.log(analysis);
+        if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
           return Observable.forkJoin(
             analysis.events.map(a =>
               MusitObject.getObjectDetails(ajaxGet)({
@@ -66,7 +67,8 @@ Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) =>
                 museumId: props.museumId,
                 collectionId: props.collectionId,
                 token: props.token
-              }))
+              })
+            )
           ).map(arrayOfObjectDetails => {
             const actualValues = arrayOfObjectDetails.filter(a => a);
             if (actualValues.length === 0) {
@@ -78,6 +80,9 @@ Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) =>
             });
             return { ...analysis, events: events };
           });
+        }
+        if (!analysis.objectId) {
+          return Observable.of(analysis);
         }
         return MusitObject.getObjectDetails(ajaxGet)({
           id: analysis.objectId,
