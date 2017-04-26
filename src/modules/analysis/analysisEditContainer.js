@@ -39,22 +39,18 @@ export const onMount = (
     loadForm
   }
 ) => {
-  getAnalysisTypesForCollection({
-    museumId: appSession.museumId,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken
-  });
-
-  const inputParam = {
+  const inputParams = {
     museumId: appSession.museumId,
     id: params.analysisId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken
   };
 
-  loadAnalysis(inputParam);
+  getAnalysisTypesForCollection(inputParams);
 
-  loadAnalysisForForm(inputParam).then(analysis => {
+  loadAnalysis(inputParams);
+
+  loadAnalysisForForm(inputParams).then(analysis => {
     const dataForForm = Object.keys(analysis).reduce(
       (obj, attributeName) => [
         ...obj,

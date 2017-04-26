@@ -32,15 +32,13 @@ const props = {
 };
 
 export const onMount = ({ loadAnalysisTypes, appSession, getAnalysisTypesForCollection }) => {
-  loadAnalysisTypes({
-    museumId: appSession.museumId,
-    token: appSession.accessToken
-  });
-  getAnalysisTypesForCollection({
+  const inputParams = {
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken
-  });
+  };
+  loadAnalysisTypes(inputParams);
+  getAnalysisTypesForCollection(inputParams);
 };
 
 export default flowRight([

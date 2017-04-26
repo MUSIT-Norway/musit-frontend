@@ -16,17 +16,14 @@ const commands = { loadAnalysis$, getAnalysisTypesForCollection$ };
 export const onMount = (
   { getAnalysisTypesForCollection, appSession, loadAnalysis, params }
 ) => {
-  getAnalysisTypesForCollection({
-    museumId: appSession.museumId,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken
-  });
-  loadAnalysis({
+  const inputParams = {
     museumId: appSession.museumId,
     id: params.analysisId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken
-  });
+  };
+  getAnalysisTypesForCollection(inputParams);
+  loadAnalysis(inputParams);
 };
 
 export default flowRight([inject(data, commands), mount(onMount), makeUrlAware])(
