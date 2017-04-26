@@ -22,12 +22,8 @@ describe('analysisEditContainer', () => {
       params,
       loadForm
     });
-    expect(loadAnalysis.calledOnce).toBe(true);
+    expect(getAnalysisTypesForCollection.calledOnce).toBe(true);
     expect(loadForm.calledOnce).toBe(false);
-    expect(loadAnalysis.getCall(0).args[0].token).toEqual('1234');
-    expect(loadAnalysis.getCall(0).args[0].museumId).toEqual(99);
-    expect(loadAnalysis.getCall(0).args[0].collectionId).toEqual(
-      '00000000-0000-0000-0000-000000000000'
-    );
+    expect(loadAnalysis.calledOnce).toBe(false);
   });
 });

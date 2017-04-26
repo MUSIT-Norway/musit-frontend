@@ -33,6 +33,7 @@ export default class ObjectGrid extends Component {
                   </th>
                   <th />
                   <th />
+                  <th />
                   <th>
                     <a
                       className="onPickObjects"
@@ -70,6 +71,20 @@ export default class ObjectGrid extends Component {
                       </td>
                       <td>
                         {c.term}
+                      </td>
+                      <td>
+                        {isMainObject &&
+                        <a
+                          className="onMoveClick"
+                          href=""
+                          onClick={e => {
+                            e.preventDefault();
+                            this.props.onMove(c);
+                          }}
+                          title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
+                        >
+                          <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
+                        </a>}
                       </td>
                       <td>
                         {isMainObject &&

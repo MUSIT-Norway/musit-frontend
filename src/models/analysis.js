@@ -58,7 +58,6 @@ Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
           actorId: analysis.registeredBy
         }).map(actor => actor ? { ...analysis, registeredByName: actor.fn } : analysis)
       ).flatMap(analysis => {
-        console.log(analysis);
         if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
           return Observable.forkJoin(
             analysis.events.map(a =>

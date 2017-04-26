@@ -7,7 +7,6 @@ import AnalysisAddComponent, {
 } from '../add/AnalysisAddComponent';
 import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
-import { Observable } from 'rxjs';
 
 const objectsData = [
   {
@@ -67,7 +66,7 @@ const appSession = {
 describe('AnalysisAddComponent', () => {
   it('saveAnalysisEventLocal should call saveAnalysisEvent', () => {
     const saveAnalysisEvent = sinon.spy();
-    saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent)(1);
+    saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent);
     expect(saveAnalysisEvent.calledOnce).toBe(true);
     expect(saveAnalysisEvent.getCall(0).args[0].museumId).toBe(99);
     expect(saveAnalysisEvent.getCall(0).args[0].token).toBe('1234');
@@ -79,10 +78,9 @@ describe('AnalysisAddComponent', () => {
   it('Call goToAnalysis.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = () => Observable.of(null).toPromise();
+    const fakeFn = new Promise((res) => res(2));
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
-    const analysisId = 2;
-    fn(analysisId).then(() => {
+    fn.then(() => {
       expect(url).toBe('/museum/99/collections/undefined/analysis/2');
       done();
     });
@@ -91,7 +89,7 @@ describe('AnalysisAddComponent', () => {
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
     const wrapper = mount(
-      <AnalysisAddComponent form={form} updateForm={updateForm} store={store} />
+      <AnalysisAddComponent form={form} updateForm={updateForm} store={store} params={{}} />
     );
     wrapper.find('.note').simulate('change', {
       target: {
@@ -105,7 +103,7 @@ describe('AnalysisAddComponent', () => {
   it('should render properly', () => {
     const updateForm = sinon.spy();
     const wrapper = shallow(
-      <AnalysisAddComponent form={form} updateForm={updateForm} store={store} />
+      <AnalysisAddComponent form={form} updateForm={updateForm} store={store} params={{}} />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });

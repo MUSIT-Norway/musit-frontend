@@ -82,7 +82,6 @@ export const editAnalysisEventLocal = (
   editAnalysisEvent: Function,
   params: Params
 ) =>
-  () =>
     editAnalysisEvent({
       id: params.analysisId,
       museumId: appSession.museumId,
@@ -113,15 +112,10 @@ const updateFormField = (field, updateForm) =>
     });
 
 export const goToAnalysis = (
-  fn: Function,
+  fn: Promise<*>,
   appSession: AppSession,
   goTo: Function = hashHistory.push
-) => {
-  return (analysisId: string) => {
-    return fn(analysisId).then(() =>
-      goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
-  };
-};
+) => fn.then((analysisId) => goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
 
 const AnalysisEdit = (
   { params, form, store, updateForm, editAnalysisEvent, appSession }: Props
@@ -389,13 +383,8 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={editAnalysisEventLocal(
-        appSession,
-        form,
-        store,
-        editAnalysisEvent,
-        params
-      )}
+      onClickSave={() =>
+        goToAnalysis(editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, params), appSession)}
     />
     <NewLine />
     <Form horizontal>

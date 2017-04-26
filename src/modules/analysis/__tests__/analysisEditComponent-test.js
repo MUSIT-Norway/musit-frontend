@@ -7,7 +7,7 @@ import AnalysisEditComponent, {
 } from '../edit/AnalysisEditComponent';
 import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
-import { Observable } from 'rxjs';
+
 const objectsData = [
   {
     museumNumber: '123',
@@ -71,7 +71,7 @@ const appSession = {
 describe('AnalysisEditComponent', () => {
   it('editAnalysisEventLocal should call editAnalysisEvent', () => {
     const editAnalysisEvent = sinon.spy();
-    editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, param)(1);
+    editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, param);
     expect(editAnalysisEvent.calledOnce).toBe(true);
     expect(editAnalysisEvent.getCall(0).args[0].museumId).toBe(99);
     expect(editAnalysisEvent.getCall(0).args[0].token).toBe('1234');
@@ -83,10 +83,9 @@ describe('AnalysisEditComponent', () => {
   it('Call goToAnalysis.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = () => Observable.of(null).toPromise();
+    const fakeFn = new Promise((res) => res(2));
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
-    const analysisId = 2;
-    fn(analysisId).then(() => {
+    fn.then(() => {
       expect(url).toBe('/museum/99/collections/undefined/analysis/edit/2');
       done();
     });

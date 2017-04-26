@@ -76,6 +76,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       <FieldGroup
         id="formControlsText"
         label="saksnummer"
+        md={1}
         onChange={[Function anonymous]}
         type="text"
         value="1234" />
@@ -85,7 +86,8 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       <AddButton
         id="1"
         label="Legg til saksnummer"
-        md={5} />
+        md={5}
+        mdOffset={0} />
     </FormGroup>
   </Form>
   <NewLine />
@@ -173,24 +175,14 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       <FieldGroup
         id="responsible"
         label="Navn"
+        md={1}
         onChange={[Function anonymous]}
         placeholder="Fornavn Etternavn"
         type="text"
         value="7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e" />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Rolle
-        </b>
-      </Col>
+      <LabelFormat
+        label="Rolle"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -212,26 +204,16 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       <AddButton
         id="3"
         label="Legg til person"
-        md={2} />
+        md={2}
+        mdOffset={0} />
     </FormGroup>
   </Form>
   <NewLine />
   <FormGroup
     bsClass="form-group">
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={1}
-      style={
-        Object {
-          "padding": "7px",
-          "textAlign": "right"
-        }
-      }>
-      <b>
-        Analysested
-      </b>
-    </Col>
+    <LabelFormat
+      label="Analysested"
+      md={1} />
     <Col
       bsClass="col"
       componentClass="div"
@@ -261,20 +243,9 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       inline={false}>
       <FormGroup
         bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}
-          style={
-            Object {
-              "padding": "7px",
-              "textAlign": "right"
-            }
-          }>
-          <b>
-            Type analyse
-          </b>
-        </Col>
+        <LabelFormat
+          label="Type analyse"
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
@@ -288,10 +259,12 @@ exports[`AnalysisEditComponent should render properly 1`] = `
               Velg kategori
             </option>
             <option
+              selected={false}
               value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
               3D-skanning, laser
             </option>
             <option
+              selected={false}
               value="b39399ab-aabd-4ebc-903b-adcf6876a364">
               3D-skanning, strukturert lys
             </option>
@@ -303,6 +276,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
         <FieldGroup
           id="formControlsText"
           label="Ekstern kilde"
+          md={1}
           onChange={[Function anonymous]}
           placeholder="http://www.lenke.no"
           type="text"
@@ -326,6 +300,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
         <FieldGroup
           id="formControlsText"
           label="Ladt opp fil"
+          md={1}
           type="text" />
         <Col
           bsClass="col"
@@ -343,20 +318,9 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       </FormGroup>
       <FormGroup
         bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}
-          style={
-            Object {
-              "padding": "7px",
-              "textAlign": "right"
-            }
-          }>
-          <b>
-            Kommentar / resultat
-          </b>
-        </Col>
+        <LabelFormat
+          label="Kommentar / resultat"
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
@@ -371,20 +335,9 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       </FormGroup>
       <FormGroup
         bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}
-          style={
-            Object {
-              "padding": "7px",
-              "textAlign": "right"
-            }
-          }>
-          <b>
-            Klausulering
-          </b>
-        </Col>
+        <LabelFormat
+          label="Klausulering"
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
@@ -509,20 +462,9 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       bsClass="form-group"
       controlId="note"
       validationState={null}>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Kommentar til analysen
-        </b>
-      </Col>
+      <LabelFormat
+        label="Kommentar til analysen"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -538,20 +480,9 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     </FormGroup>
     <FormGroup
       bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Avslutt analyse
-        </b>
-      </Col>
+      <LabelFormat
+        label="Avslutt analyse"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -576,7 +507,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
   </Form>
   <NewLine />
   <SaveCancel
-    onClickSave={[Function anonymous]} />
+    onClickSave={[Function onClickSave]} />
   <NewLine />
   <Form
     bsClass="form"

@@ -23,50 +23,10 @@ describe('analysisStore', () => {
 
     const expectedStateMap = {
       a: {
-        objectsData: [
-          {
-            museumNumber: 'MusK58',
-            subNumber: '2',
-            term: 'Mansjettknapp',
-            uuid: 'adea8141-8099-4f67-bff9-ea5090e18335'
-          },
-          {
-            museumNumber: 'MusK58',
-            subNumber: '3',
-            term: 'Spenne',
-            uuid: '798181c9-a6d9-46d7-8d71-b39d4f3e0c96'
-          },
-          {
-            museumNumber: 'MusK58',
-            subNumber: '4',
-            term: 'Briller',
-            uuid: 'e1f5efa5-4c91-4c5d-83a7-280c6d2f0e05'
-          }
-        ],
         analysisTypes: [],
         analysis: []
       },
       b: {
-        objectsData: [
-          {
-            museumNumber: 'MusK58',
-            subNumber: '2',
-            term: 'Mansjettknapp',
-            uuid: 'adea8141-8099-4f67-bff9-ea5090e18335'
-          },
-          {
-            museumNumber: 'MusK58',
-            subNumber: '3',
-            term: 'Spenne',
-            uuid: '798181c9-a6d9-46d7-8d71-b39d4f3e0c96'
-          },
-          {
-            museumNumber: 'MusK58',
-            subNumber: '4',
-            term: 'Briller',
-            uuid: 'e1f5efa5-4c91-4c5d-83a7-280c6d2f0e05'
-          }
-        ],
         analysisTypes: [],
         analysis: {
           analysisTypeId: '8453873d-227c-4205-a231-bf7e04164fab',
@@ -86,26 +46,6 @@ describe('analysisStore', () => {
         loading: false
       },
       c: {
-        objectsData: [
-          {
-            museumNumber: 'MusK58',
-            subNumber: '2',
-            term: 'Mansjettknapp',
-            uuid: 'adea8141-8099-4f67-bff9-ea5090e18335'
-          },
-          {
-            museumNumber: 'MusK58',
-            subNumber: '3',
-            term: 'Spenne',
-            uuid: '798181c9-a6d9-46d7-8d71-b39d4f3e0c96'
-          },
-          {
-            museumNumber: 'MusK58',
-            subNumber: '4',
-            term: 'Briller',
-            uuid: 'e1f5efa5-4c91-4c5d-83a7-280c6d2f0e05'
-          }
-        ],
         analysisTypes: [
           {
             id: 'fabe6462-ea94-43ce-bf7f-724a4191e114',
@@ -141,26 +81,6 @@ describe('analysisStore', () => {
         loading: false
       },
       d: {
-        objectsData: [
-          {
-            museumNumber: 'MusK58',
-            subNumber: '2',
-            term: 'Mansjettknapp',
-            uuid: 'adea8141-8099-4f67-bff9-ea5090e18335'
-          },
-          {
-            museumNumber: 'MusK58',
-            subNumber: '3',
-            term: 'Spenne',
-            uuid: '798181c9-a6d9-46d7-8d71-b39d4f3e0c96'
-          },
-          {
-            museumNumber: 'MusK58',
-            subNumber: '4',
-            term: 'Briller',
-            uuid: 'e1f5efa5-4c91-4c5d-83a7-280c6d2f0e05'
-          }
-        ],
         analysisTypes: [
           {
             id: '55fdf44b-f4dc-45d1-bdb6-ee6e745123a0',

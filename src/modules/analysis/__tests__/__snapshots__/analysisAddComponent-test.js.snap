@@ -75,7 +75,8 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       bsClass="form-group">
       <FieldGroup
         id="formControlsText"
-        label="saksnummer"
+        label="Saksnummer"
+        md={1}
         onChange={[Function anonymous]}
         type="text"
         value="1234" />
@@ -85,7 +86,8 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       <AddButton
         id="1"
         label="Legg til saksnummer"
-        md={5} />
+        md={5}
+        mdOffset={0} />
     </FormGroup>
   </Form>
   <NewLine />
@@ -99,9 +101,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       componentClass="div"
       md={12}>
       <h5>
-        <b>
+        <strong>
           Objekt/prøve
-        </b>
+        </strong>
       </h5>
     </Col>
     <Col
@@ -114,11 +116,11 @@ exports[`AnalysisAddComponent should render properly 1`] = `
         columns={
           Array [
             Object {
-              "key": "museumNumber",
+              "key": "museumNo",
               "label": "Museumsnr"
             },
             Object {
-              "key": "subNumber",
+              "key": "subNo",
               "label": "Unr"
             },
             Object {
@@ -127,28 +129,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
             }
           ]
         }
-        data={
-          Array [
-            Object {
-              "museumNumber": "123",
-              "subNumber": "12345678911",
-              "term": "Spyd",
-              "uuid": "1cbf15cb-8348-4e66-99a4-bc314da57a42"
-            },
-            Object {
-              "museumNumber": "124",
-              "subNumber": "12345678912",
-              "term": "Beltering",
-              "uuid": "2cbf15cb-8348-4e66-99a4-bc314da57a42"
-            },
-            Object {
-              "museumNumber": "125",
-              "subNumber": "12345678913",
-              "term": "Øsekar",
-              "uuid": "3cbf15cb-8348-4e66-99a4-bc314da57a42"
-            }
-          ]
-        }
+        data={Array []}
         defaultSort={false}
         defaultSortDescending={false}
         filterBy=""
@@ -188,9 +169,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
         componentClass="div"
         md={12}>
         <h5>
-          <b>
+          <strong>
             Personer tilknyttet analysen
-          </b>
+          </strong>
         </h5>
       </Col>
     </FormGroup>
@@ -199,24 +180,14 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       <FieldGroup
         id="responsible"
         label="Navn"
+        md={1}
         onChange={[Function anonymous]}
         placeholder="Fornavn Etternavn"
         type="text"
         value="7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e" />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Rolle
-        </b>
-      </Col>
+      <LabelFormat
+        label="Rolle"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -238,26 +209,16 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       <AddButton
         id="3"
         label="Legg til person"
-        md={2} />
+        md={2}
+        mdOffset={0} />
     </FormGroup>
   </Form>
   <NewLine />
   <FormGroup
     bsClass="form-group">
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={1}
-      style={
-        Object {
-          "padding": "7px",
-          "textAlign": "right"
-        }
-      }>
-      <b>
-        Analysested
-      </b>
-    </Col>
+    <LabelFormat
+      label="Analysested"
+      md={1} />
     <Col
       bsClass="col"
       componentClass="div"
@@ -287,20 +248,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       inline={false}>
       <FormGroup
         bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}
-          style={
-            Object {
-              "padding": "7px",
-              "textAlign": "right"
-            }
-          }>
-          <b>
-            Type analyse
-          </b>
-        </Col>
+        <LabelFormat
+          label="Type analyse"
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
@@ -329,6 +279,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
         <FieldGroup
           id="formControlsText"
           label="Ekstern kilde"
+          md={1}
           onChange={[Function anonymous]}
           placeholder="http://www.lenke.no"
           type="text"
@@ -351,7 +302,8 @@ exports[`AnalysisAddComponent should render properly 1`] = `
         bsClass="form-group">
         <FieldGroup
           id="formControlsText"
-          label="Ladt opp fil"
+          label="Last opp fil"
+          md={1}
           type="text" />
         <Col
           bsClass="col"
@@ -369,20 +321,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       </FormGroup>
       <FormGroup
         bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}
-          style={
-            Object {
-              "padding": "7px",
-              "textAlign": "right"
-            }
-          }>
-          <b>
-            Kommentar / resultat
-          </b>
-        </Col>
+        <LabelFormat
+          label="Kommentar / resultat"
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
@@ -397,20 +338,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       </FormGroup>
       <FormGroup
         bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}
-          style={
-            Object {
-              "padding": "7px",
-              "textAlign": "right"
-            }
-          }>
-          <b>
-            Klausulering
-          </b>
-        </Col>
+        <LabelFormat
+          label="Klausulering"
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
@@ -535,20 +465,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       bsClass="form-group"
       controlId="note"
       validationState={null}>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Kommentar til analysen
-        </b>
-      </Col>
+      <LabelFormat
+        label="Kommentar til analysen"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -564,20 +483,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
     </FormGroup>
     <FormGroup
       bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Avslutt analyse
-        </b>
-      </Col>
+      <LabelFormat
+        label="Avslutt analyse"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -602,7 +510,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
   </Form>
   <NewLine />
   <SaveCancel
-    onClickSave={[Function anonymous]} />
+    onClickSave={[Function onClickSave]} />
   <NewLine />
   <Form
     bsClass="form"
@@ -616,9 +524,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
         componentClass="div"
         mdOffset={1}>
         <h5>
-          <b>
+          <strong>
             Endringshistorikk
-          </b>
+          </strong>
         </h5>
       </Col>
     </FormGroup>
