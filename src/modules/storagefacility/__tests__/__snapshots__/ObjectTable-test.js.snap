@@ -49,7 +49,8 @@ exports[`ObjectTable should render properly  1`] = `
         </thead>
         <tbody>
           <tr
-            className="mainObject">
+            className="mainObject"
+            onClick={[Function onClick]}>
             <td
               style={
                 Object {
@@ -126,7 +127,8 @@ exports[`ObjectTable should render properly  1`] = `
             </td>
           </tr>
           <tr
-            className="mainObject">
+            className="mainObject"
+            onClick={[Function onClick]}>
             <td
               style={
                 Object {
@@ -203,7 +205,8 @@ exports[`ObjectTable should render properly  1`] = `
             </td>
           </tr>
           <tr
-            className="mainObject">
+            className="mainObject"
+            onClick={[Function onClick]}>
             <td
               style={
                 Object {
@@ -278,7 +281,8 @@ exports[`ObjectTable should render properly  1`] = `
             </td>
           </tr>
           <tr
-            className="mainObject">
+            className="mainObject"
+            onClick={[Function onClick]}>
             <td
               style={
                 Object {
@@ -355,7 +359,8 @@ exports[`ObjectTable should render properly  1`] = `
             </td>
           </tr>
           <tr
-            className="mainObject">
+            className="mainObject"
+            onClick={[Function onClick]}>
             <td
               style={
                 Object {

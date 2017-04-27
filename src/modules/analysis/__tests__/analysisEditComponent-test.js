@@ -71,7 +71,49 @@ const appSession = {
 describe('AnalysisEditComponent', () => {
   it('editAnalysisEventLocal should call editAnalysisEvent', () => {
     const editAnalysisEvent = sinon.spy();
-    editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, param);
+    const myForm = {
+      analysisTypeId: {
+        name: 'analysisTypeId',
+        rawValue: 'b15ee459-38c9-414f-8b54-7c6439b44d3d'
+      },
+      registeredDate: {
+        name: 'registeredDate',
+        rawValue: null
+      },
+      note: {
+        name: 'note',
+        rawValue: null
+      },
+      by: {
+        name: 'by',
+        rawValue: null
+      },
+      expirationDate: {
+        name: 'expirationDate',
+        rawValue: null
+      },
+      caseNumbers: {
+        name: 'caseNumbers',
+        rawValue: null
+      },
+      cancelledBy: {
+        name: 'cancelledBy',
+        rawValue: null
+      },
+      cancelledReason: {
+        name: 'cancelledReason',
+        rawValue: null
+      },
+      reason: {
+        name: 'reason',
+        rawValue: null
+      },
+      events: {
+        name: 'events',
+        rawValue: []
+      }
+    };
+    editAnalysisEventLocal(appSession, myForm, editAnalysisEvent, param);
     expect(editAnalysisEvent.calledOnce).toBe(true);
     expect(editAnalysisEvent.getCall(0).args[0].museumId).toBe(99);
     expect(editAnalysisEvent.getCall(0).args[0].token).toBe('1234');
@@ -83,7 +125,7 @@ describe('AnalysisEditComponent', () => {
   it('Call goToAnalysis.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = new Promise(res => res(2));
+    const fakeFn = new Promise(res => res({ id: 2 }));
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
     fn.then(() => {
       expect(url).toBe('/museum/99/collections/undefined/analysis/edit/2');
