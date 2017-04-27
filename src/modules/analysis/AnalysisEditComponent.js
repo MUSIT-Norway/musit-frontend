@@ -17,7 +17,6 @@ import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import type { AppSession } from '../../types/appSession';
 import type { FormData, Update } from './types/form';
-import type { Analysis, AnalysisType } from './types/analysis';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
 import Label from './components/Label';
@@ -25,11 +24,12 @@ import FieldGroup from './components/FIeldGroup';
 import AddButton from './components/AddButton';
 import NewLine from './components/NewLine';
 
+type AnalysisType = { id: number, name: string };
+
 type ObjectData = { uuid: string };
 
 type Store = {
   objectsData: ObjectData[],
-  analysis: Analysis,
   analysisTypes: AnalysisType[]
 };
 
@@ -60,9 +60,9 @@ const getObjectsValue = (form: FormData) => {
   if (form.type.rawValue === 'AnalysisCollection') {
     return form.events.rawValue ? form.events.rawValue.map(a =>
       getTableRow(
-        a.museumNo.rawValue,
-        a.subNo.rawValue,
-        a.term.rawValue
+        a.museumNo,
+        a.subNo,
+        a.term
       )
     ) : [];
   }
@@ -78,7 +78,6 @@ const getValue = field => field.rawValue || '';
 export const editAnalysisEventLocal = (
   appSession: AppSession,
   form: FormData,
-  store: Store,
   editAnalysisEvent: Function,
   params: Params
 ) =>
@@ -89,9 +88,9 @@ export const editAnalysisEventLocal = (
         analysisTypeId: getValue(form.analysisTypeId),
         eventDate: getValue(form.registeredDate),
         note: getValue(form.note),
-        objectIds: store.analysis && store.analysis.events
-          ? store.analysis.events.map(a => a.objectId)
-          : store.analysis.objectId,
+        objectIds: form.events.rawValue && form.events.rawValue
+          ? form.events.rawValue.map(a => a.objectId)
+          : form.objectId.rawValue,
         restriction: {
           by: getValue(form.by),
           expirationDate: getValue(form.expirationDate),
@@ -115,7 +114,7 @@ export const goToAnalysis = (
   fn: Promise<*>,
   appSession: AppSession,
   goTo: Function = hashHistory.push
-) => fn.then((analysisId) => goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
+) => fn.then((updated) => goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, updated.id)));
 
 const AnalysisEdit = (
   { params, form, store, updateForm, editAnalysisEvent, appSession }: Props
@@ -133,7 +132,7 @@ const AnalysisEdit = (
       {' '}
       <FontAwesome name="user" />
       {' '}
-      {getValue(form.registeredBy)}
+      {getValue(form.registeredByName)}
       {' '}
       <FontAwesome name="clock-o" />{' '}{getValue(form.registeredDate)}
     </Col>
@@ -384,7 +383,7 @@ const AnalysisEdit = (
     <NewLine />
     <SaveCancel
       onClickSave={() =>
-        goToAnalysis(editAnalysisEventLocal(appSession, form, store, editAnalysisEvent, params), appSession)}
+        goToAnalysis(editAnalysisEventLocal(appSession, form, editAnalysisEvent, params), appSession)}
     />
     <NewLine />
     <Form horizontal>

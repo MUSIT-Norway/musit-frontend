@@ -3,6 +3,7 @@ import { Table, FormGroup } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import MusitObject from '../../models/object';
+import { hashHistory } from 'react-router';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -59,6 +60,7 @@ export default class ObjectGrid extends Component {
                       className={
                         isChildObject ? 'childObject' : isMainObject && 'mainObject'
                       }
+                      onClick={() => hashHistory.push('/objects/' + c.uuid)}
                     >
                       <td style={{ width: '20px' }}>
                         <span className="icon icon-musitobject" />

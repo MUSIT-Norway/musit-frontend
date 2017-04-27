@@ -26,11 +26,9 @@ import NewLine from './components/NewLine';
 
 const { Table } = require('reactable');
 
-type Params = {
-  location?: {
-    state?: Array<ObjectData>
-  }
-}
+type Location = {
+  state?: Array<ObjectData>
+};
 
 type AnalysisType = { id: number, name: string }
 
@@ -44,19 +42,21 @@ type Props = {
   store: Store,
   appSession: AppSession,
   saveAnalysisEvent: Function,
-  params: Params
+  location: Location
 }
 
 const getValue = field => field.rawValue || '';
 
-export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, params: Params, saveAnalysisEvent: Function) =>
+export const saveAnalysisEventLocal = (
+  appSession: AppSession, form: FormData, location?: Location, saveAnalysisEvent: Function
+) =>
   saveAnalysisEvent({
     museumId: appSession.museumId,
     data: {
       analysisTypeId: getValue(form.analysisTypeId),
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
-      objectIds: params.location && params.location.state ? params.location.state.map((a) => a.objectUUID) : [],
+      objectIds: location && location.state ? location.state.map((a) => a.uuid) : [],
       result : {
         by: getValue(form.by),
         expirationDate: getValue(form.expirationDate),
@@ -82,10 +82,10 @@ export const goToAnalysis = (fn: Promise<string>, appSession: AppSession, goTo: 
     goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId))
   );
 
-const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, params } : Props) => (
+const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, location } : Props) => (
   <div>
     <br/>
-    <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
+    <PageHeader style={{paddingLeft: 20}}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
     <Col md={12}>
       <strong>HID:</strong>{' '}{getValue(form.id)}
     </Col>
@@ -123,11 +123,11 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
         <Table
           className="table"
           columns={[
-            { key: 'museumNo', label: 'Museumsnr'},
-            { key: 'subNo', label: 'Unr'},
-            { key: 'term', label: 'Term/artsnavn' }
+            {key: 'museumNo', label: 'Museumsnr'},
+            {key: 'subNo', label: 'Unr'},
+            {key: 'term', label: 'Term/artsnavn'}
           ]}
-          data={params.location ? (params.location.state || []) : []}
+          data={location ? (location.state || []) : []}
           sortable={['museumNumber', 'subNumber', 'term']}
           noDataText="Ingen objekter"
         />
@@ -140,7 +140,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
       />
     </Form>
     <NewLine />
-    <Form horizontal style={{ paddingLeft: 20 }}>
+    <Form horizontal style={{paddingLeft: 20}}>
       <FormGroup>
         <Col md={12}><h5><strong>Personer tilknyttet analysen</strong></h5></Col>
       </FormGroup>
@@ -153,7 +153,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
           value={getValue(form.responsible)}
           onChange={updateFormField(form.responsible, updateForm)}
         />
-        <Label label="Rolle" md={1} />
+        <Label label="Rolle" md={1}/>
         <Col md={1}>
           <FormControl componentClass="select" placeholder="Velg rolle">
             <option value="Velgsted">Velg rolle</option>
@@ -169,7 +169,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
     </Form>
     <NewLine />
     <FormGroup>
-      <Label label="Analysested" md={1} />
+      <Label label="Analysested" md={1}/>
       <Col md={2}>
         <FormControl componentClass="select" placeholder="Velg sted">
           <option value="Velgsted">Velg sted</option>
@@ -181,7 +181,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
     <Well>
       <Form horizontal>
         <FormGroup>
-          <Label label="Type analyse" md={1} />
+          <Label label="Type analyse" md={1}/>
           <Col md={2}>
             <FormControl
               componentClass="select"
@@ -217,7 +217,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
           </Col>
         </FormGroup>
         <FormGroup>
-          <Label label="Kommentar / resultat" md={1} />
+          <Label label="Kommentar / resultat" md={1}/>
           <Col md={5}>
             <FormControl
               componentClass="textarea"
@@ -228,7 +228,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
           </Col>
         </FormGroup>
         <FormGroup>
-          <Label label="Klausulering" md={1} />
+          <Label label="Klausulering" md={1}/>
           <Col md={5}>
             <Radio checked readOnly inline>
               Ja
@@ -239,7 +239,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
           </Col>
         </FormGroup>
         <FormGroup>
-          <Panel collapsible expanded style={{border:'none', backgroundColor: '#f5f5f5'}}>
+          <Panel collapsible expanded style={{border: 'none', backgroundColor: '#f5f5f5'}}>
             <FormGroup>
               <FieldGroup
                 id="navn"
@@ -315,12 +315,12 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
         </FormGroup>
       </Form>
     </Well>
-    <Form horizontal style={{ paddingLeft: 20 }}>
+    <Form horizontal style={{paddingLeft: 20}}>
       <FormGroup
         controlId={form.note.name}
         validationState={form.note.status && !form.note.status.valid ? 'error' : null}
       >
-        <Label label="Kommentar til analysen" md={1} />
+        <Label label="Kommentar til analysen" md={1}/>
         <Col md={5}>
           <FormControl
             className="note"
@@ -332,7 +332,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
         </Col>
       </FormGroup>
       <FormGroup>
-        <Label label="Avslutt analyse" md={1} />
+        <Label label="Avslutt analyse" md={1}/>
         <Col md={5}>
           <Radio inline readOnly>
             Ja
@@ -345,7 +345,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession, p
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={() => goToAnalysis(saveAnalysisEventLocal(appSession, form, params, saveAnalysisEvent), appSession)}
+      onClickSave={() => goToAnalysis(saveAnalysisEventLocal(appSession, form, location, saveAnalysisEvent), appSession)}
     />
     <NewLine />
     <Form horizontal>

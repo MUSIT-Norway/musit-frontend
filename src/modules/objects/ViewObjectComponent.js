@@ -1,18 +1,22 @@
 /* @flow */
 import React from 'react';
-import { Row, Col, Tabs, Tab, PageHeader } from 'react-bootstrap';
+import { Row, Col, Tabs, Tab, PageHeader, Button } from 'react-bootstrap';
 import type { ObjectData } from '../../types/object';
 import type { Samples } from '../../types/samples';
 import type { Events } from '../../types/events';
 import EventTableComponent from '../../components/events/eventTableComponent';
 import SampleTableComponent from '../../components/samples/sampleTableComponent';
+import { hashHistory } from 'react-router';
+import Config from '../../config';
+import type { AppSession } from '../../types/appSession';
 
 type ViewObjectComponentProps = {
-  objectStore: { objectData: ObjectData, events: Events, samples: Samples }
+  objectStore: { objectData: ObjectData, events: Events, samples: Samples },
+  appSession: AppSession
 };
 
 export const ViewObjectComponent = (
-  { objectStore: { objectData, events, samples } }: ViewObjectComponentProps
+  { objectStore: { objectData, events, samples }, appSession }: ViewObjectComponentProps
 ) => {
   return (
     <div>
@@ -24,9 +28,36 @@ export const ViewObjectComponent = (
           <Col md={3}><b>Term/artsnavn:</b>{' '}{objectData && objectData.term}</Col>
         </Row>
       </div>
+      <div style={{ paddingBottom: 10 }}>
+        <Button
+          className="primary"
+          onClick={() => hashHistory.push({
+            pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
+            state: [ objectData ]
+          })}
+        >
+          Ny analyse
+        </Button>
+        <Button
+          className="primary"
+          onClick={() => hashHistory.push('/')}
+        >
+          Ny prøve
+        </Button>
+      </div>
       <Tabs id="objectDetails">
         <Tab title="Hendelser" eventKey={0} id="1">
-          <EventTableComponent events={events} />
+          <EventTableComponent
+            events={events}
+            onClick={(event) => {
+              if (event.type === 'Analysis') {
+                hashHistory.push({
+                  pathname: Config.magasin.urls.client.analysis.viewAnalysis(appSession, event.id),
+                  state: [ objectData ]
+                });
+              }
+            }}
+          />
         </Tab>
         <Tab title="Prøver" eventKey={1} id="2">
           <SampleTableComponent samples={samples} />

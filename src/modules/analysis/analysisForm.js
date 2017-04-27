@@ -10,10 +10,9 @@ import {
 } from '../../forms/validators';
 import { stringMapper, numberMapper, booleanMapper, noMapper } from '../../forms/mappers';
 
-export const getStrField = (field: string, value: string = ''): Field<string> => ({
+export const getStrField = (field: string): Field<string> => ({
   name: field,
   mapper: stringMapper,
-  defaultValue: value,
   validator: {
     rawValidator: isRequired
   }
@@ -35,37 +34,36 @@ export const getArrField = (field: string, value: Array<*> = []): Field<Array<*>
   }
 });
 
-const id = getStrField('id', '123');
-const analysisTypeId = getStrField(
-  'analysisTypeId',
-  'b15ee459-38c9-414f-8b54-7c6439b44d3d'
-);
-const doneBy = getStrField('doneBy', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
-const doneDate = getStrField('doneDate', '12.12.2012');
-const registeredBy = getStrField('registeredBy', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
-const registeredDate = getStrField('registeredDate', '2017-03-16T14:37:45+00:00');
-const responsible = getStrField('responsible', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
-const administrator = getStrField(
-  'administrator',
-  '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e'
-);
-const completedBy = getStrField('completedBy', '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e');
-const completedDate = getStrField('completedDate', '2017-03-16T14:37:45+00:00');
-const objectId = getStrField('objectId', '');
-const museumNo = getStrField('museumNo', '');
-const term = getStrField('term', '');
-const subNo = getStrField('subNo', '');
-
-const partOf = getStrField('partOf', '2345');
-const place = getStrField('place', 'Oslo, Norway');
-
-const externalSource = getStrField('externalSource', 'www.musit.uio.no');
-const comments = getStrField('comments', 'comments');
-
-const result = getStrField('result', 'result');
+const id = getStrField('id');
+const analysisTypeId = getStrField('analysisTypeId');
+const doneBy = getStrField('doneBy');
+const doneDate = getStrField('doneDate');
+const registeredBy = getStrField('registeredBy');
+const registeredByName = getStrField('registeredByName');
+const registeredDate = getStrField('registeredDate');
+const responsible = getStrField('responsible');
+const administrator = getStrField('administrator');
+const completedBy = getStrField('completedBy');
+const completedDate = getStrField('completedDate');
+const objectId = getStrField('objectId');
+const museumNo = getStrField('museumNo');
+const term = getStrField('term');
+const subNo = getStrField('subNo');
+const partOf = getStrField('partOf');
+const place = getStrField('place');
+const externalSource = getStrField('externalSource');
+const comments = getStrField('comments');
+const result = getStrField('result');
 const restrictions = getBoolField('restrictions', true);
-const by = getStrField('by', 'Test name');
-const reason = getStrField('reason', 'Reason for Restrictions');
+const by = getStrField('by');
+const reason = getStrField('reason');
+const expirationDate = getStrField('expirationDate');
+const cancelledBy = getStrField('cancelledBy');
+const cancelledReason = getStrField('cancelledReason');
+const note = getStrField('note');
+const type = getStrField('type');
+const completeAnalysis = getBoolField('completeAnalysis', true);
+const events = getArrField('events', []);
 const caseNumbers: Field<number> = {
   name: 'caseNumbers',
   mapper: numberMapper,
@@ -75,15 +73,6 @@ const caseNumbers: Field<number> = {
     valueValidator: isNumberInRange(0, 10)
   }
 };
-const expirationDate = getStrField('expirationDate', '13.12.2012');
-const cancelledBy = getStrField('cancelledBy', 'Opphevet av');
-const cancelledReason = getStrField('cancelledReason', 'Årsak til oppheving');
-
-const note = getStrField('note', 'default value of note');
-const type = getStrField('type', 'Analysis');
-const completeAnalysis = getBoolField('completeAnalysis', true);
-
-const events = getArrField('events', []);
 
 export const fieldsArray = [
   id,
@@ -91,24 +80,20 @@ export const fieldsArray = [
   doneBy,
   doneDate,
   registeredBy,
+  registeredByName,
   registeredDate,
-
   responsible,
-
   administrator,
   completedBy,
   completedDate,
   objectId,
   note,
   type,
-
   partOf,
   result,
   place,
-
   externalSource,
   comments,
-
   restrictions,
   by,
   expirationDate,
@@ -116,12 +101,10 @@ export const fieldsArray = [
   caseNumbers,
   cancelledBy,
   cancelledReason,
-
   completeAnalysis,
   museumNo,
   subNo,
   term,
-
   events
 ];
 
