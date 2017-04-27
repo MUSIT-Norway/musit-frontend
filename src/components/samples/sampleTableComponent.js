@@ -1,9 +1,9 @@
 /* @flow */
 
 import React from 'react';
-const { Table, Tr, Td } = require('reactable');
-import type { SamplesPropsType } from '../../types/samples';
+import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
+import type { SamplesPropsType } from '../../types/samples';
 
 const SampleTableComponent = ({ samples }: SamplesPropsType) => {
   return (

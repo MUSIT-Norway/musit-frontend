@@ -1,5 +1,5 @@
 import React from 'react';
-const { Table, Tr, Td } = require('reactable');
+import { Table, Tr, Td } from 'reactable';
 import { Row, Col } from 'react-bootstrap';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { I18n } from 'react-i18nify';

@@ -1,8 +1,8 @@
 /* @flow */
 import React from 'react';
-const { Table, Tr, Td } = require('reactable');
-import type { Events } from '../../types/events';
+import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
+import type { Events } from '../../types/events';
 
 type EventTypeProps = { events: Events, onClick: Function };
 

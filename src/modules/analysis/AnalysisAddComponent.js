@@ -23,8 +23,7 @@ import Label from './components/Label';
 import FieldGroup from './components/FIeldGroup';
 import AddButton from './components/AddButton';
 import NewLine from './components/NewLine';
-
-const { Table } = require('reactable');
+import { Table } from 'reactable';
 
 type Location = {
   state?: Array<ObjectData>
