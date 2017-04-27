@@ -7,15 +7,20 @@ import {
   FormGroup,
   FormControl,
   InputGroup,
-  PageHeader,
-  Col
+  PageHeader
 } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Logos from '../../components/logos/Logos';
 import inject from 'react-rxjs/dist/RxInject';
 import FontAwesome from 'react-fontawesome';
+import './index.css';
 
 export const HomePage = () => {
+  const buttonAdd = (t) => {
+    return (<Row className="buttonRow">
+      <Button className="button" >{t} <FontAwesome name="chevron-right" /></Button>
+    </Row>);
+  };
   return (
     <Grid>
       <Row>
@@ -26,27 +31,20 @@ export const HomePage = () => {
           <FormGroup>
             <InputGroup>
               <FormControl type="text" />
-              <InputGroup.Addon><FontAwesome name="search" /></InputGroup.Addon>
+              <InputGroup.Addon><FontAwesome className="buttonIcon" name="search" /></InputGroup.Addon>
             </InputGroup>
           </FormGroup>
         </form>
       </Row>
 
-      <Row>
-        <Col md={6}>
-          <Button bsSize="large">Magasin       &gt;</Button>
-        </Col>
-        <Col md={6}>
-          <Button bsSize="large">Analysis       &gt;</Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={6}>
-          <Button bsSize="large">Repporter       &gt;</Button>
-        </Col>
-      </Row>
+      {buttonAdd('Magasin')}
+      {buttonAdd('Analysis')}
+      {buttonAdd('Repporter')}
+
       <Row style={{ backgroundColor: '#e7e7e7', color: 'black' }}>
-        <Logos />
+        <div className="homePage">
+          <Logos />
+        </div>
       </Row>
     </Grid>
   );
