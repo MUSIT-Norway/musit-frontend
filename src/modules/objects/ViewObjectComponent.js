@@ -39,7 +39,14 @@ export const ViewObjectComponent = (
         >
           Ny analyse
         </Button>
-        <Button className="primary" onClick={() => hashHistory.push('/')}>
+        <Button
+          className="primary"
+          onClick={() =>
+            hashHistory.push({
+              pathname: Config.magasin.urls.client.analysis.addSample(appSession),
+              state: [objectData]
+            })}
+        >
           Ny prøve
         </Button>
       </div>
