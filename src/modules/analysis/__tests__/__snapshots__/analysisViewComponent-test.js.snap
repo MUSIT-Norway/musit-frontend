@@ -5,15 +5,17 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     bsClass="page-header"
     style={
       Object {
-        "paddingLeft": 20
+        "paddingLeft": 20,
       }
-    }>
+    }
+  >
     Registrer analyse
   </PageHeader>
   <Col
     bsClass="col"
     componentClass="div"
-    md={12}>
+    md={12}
+  >
     <strong>
       HID:
     </strong>
@@ -23,35 +25,41 @@ exports[`AnalysisViewComponent should render properly 1`] = `
   <Col
     bsClass="col"
     componentClass="div"
-    md={12}>
+    md={12}
+  >
     <strong>
       Registrert:
     </strong>
      
     <FontAwesome
-      name="user" />
+      name="user"
+    />
      
     Rituvesh Kumar
      
     <FontAwesome
-      name="clock-o" />
+      name="clock-o"
+    />
      
     2017-04-03T10:36:34+00:00
   </Col>
   <Col
     bsClass="col"
     componentClass="div"
-    md={12}>
+    md={12}
+  >
     <strong>
       Sist endret:
     </strong>
      
     <FontAwesome
-      name="user" />
+      name="user"
+    />
      
      
     <FontAwesome
-      name="clock-o" />
+      name="clock-o"
+    />
      
     2017-03-16T14:37:45+00:00
      
@@ -64,23 +72,27 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     bsClass="form"
     componentClass="form"
     horizontal={false}
-    inline={false}>
+    inline={false}
+  >
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <FieldGroup
         id="formControlsText"
         label="saksnummer"
         md={1}
         type="text"
-        value={undefined} />
+      />
     </FormGroup>
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <AddButton
         id="1"
         label="Legg til saksnummer"
         md={5}
-        mdOffset={0} />
+        mdOffset={0}
+      />
     </FormGroup>
   </Form>
   <NewLine />
@@ -88,11 +100,13 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     bsClass="form"
     componentClass="form"
     horizontal={false}
-    inline={true}>
+    inline={true}
+  >
     <Col
       bsClass="col"
       componentClass="div"
-      md={12}>
+      md={12}
+    >
       <h5>
         <strong>
           Objekt/prøve
@@ -103,14 +117,16 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       bsClass="col"
       componentClass="div"
       md={5}
-      mdOffset={1}>
+      mdOffset={1}
+    >
       <Table
         bordered={false}
         bsClass="table"
         condensed={false}
         hover={false}
         responsive={true}
-        striped={false}>
+        striped={false}
+      >
         <thead>
           <tr>
             <th>
@@ -143,7 +159,8 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       id="2"
       label="Legg til objekt"
       md={11}
-      mdOffset={1} />
+      mdOffset={1}
+    />
   </Form>
   <NewLine />
   <Form
@@ -153,15 +170,18 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     inline={false}
     style={
       Object {
-        "paddingLeft": 20
+        "paddingLeft": 20,
       }
-    }>
+    }
+  >
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <Col
         bsClass="col"
         componentClass="div"
-        md={12}>
+        md={12}
+      >
         <h5>
           <strong>
             Personer tilknyttet analysen
@@ -170,32 +190,38 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <FieldGroup
         id="navn"
         label="Navn"
         md={1}
         placeholder="Fornavn Etternavn"
         type="text"
-        value={undefined} />
+      />
       <LabelFormat
         label="Rolle"
-        md={1} />
+        md={1}
+      />
       <Col
         bsClass="col"
         componentClass="div"
-        md={1}>
+        md={1}
+      >
         <FormControl
           bsClass="form-control"
           componentClass="select"
           disabled={true}
-          placeholder="Velg rolle">
+          placeholder="Velg rolle"
+        >
           <option
-            value="Velgsted">
+            value="Velgsted"
+          >
             Velg rolle
           </option>
           <option
-            value="other">
+            value="other"
+          >
             ...
           </option>
         </FormControl>
@@ -204,30 +230,37 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         id="3"
         label="Legg til person"
         md={2}
-        mdOffset={0} />
+        mdOffset={0}
+      />
     </FormGroup>
   </Form>
   <NewLine />
   <FormGroup
-    bsClass="form-group">
+    bsClass="form-group"
+  >
     <LabelFormat
       label="Analysested"
-      md={1} />
+      md={1}
+    />
     <Col
       bsClass="col"
       componentClass="div"
-      md={2}>
+      md={2}
+    >
       <FormControl
         bsClass="form-control"
         componentClass="select"
         disabled={true}
-        placeholder="Velg sted">
+        placeholder="Velg sted"
+      >
         <option
-          value="Velgsted">
+          value="Velgsted"
+        >
           Velg sted
         </option>
         <option
-          value="other">
+          value="other"
+        >
           ...
         </option>
       </FormControl>
@@ -235,110 +268,130 @@ exports[`AnalysisViewComponent should render properly 1`] = `
   </FormGroup>
   <NewLine />
   <Well
-    bsClass="well">
+    bsClass="well"
+  >
     <Form
       bsClass="form"
       componentClass="form"
       horizontal={true}
-      inline={false}>
+      inline={false}
+    >
       <FormGroup
-        bsClass="form-group">
+        bsClass="form-group"
+      >
         <FieldGroup
           id="Type analyse"
           label="Type analyse"
           md={1}
           type="text"
-          value="" />
+          value=""
+        />
       </FormGroup>
       <FormGroup
-        bsClass="form-group">
+        bsClass="form-group"
+      >
         <FieldGroup
           id="formControlsText"
           label="Ekstern kilde"
           md={1}
           placeholder="http://www.lenke.no"
           type="text"
-          value={undefined} />
+        />
         <Col
           bsClass="col"
           componentClass="div"
-          md={2}>
+          md={2}
+        >
           <Button
             active={false}
             block={false}
             bsClass="btn"
             bsStyle="default"
-            disabled={true}>
+            disabled={true}
+          >
             Lagre
           </Button>
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group">
+        bsClass="form-group"
+      >
         <FieldGroup
           id="formControlsText"
           label="Ladt opp fil"
           md={1}
-          type="text" />
+          type="text"
+        />
         <Col
           bsClass="col"
           componentClass="div"
-          md={2}>
+          md={2}
+        >
           <Button
             active={false}
             block={false}
             bsClass="btn"
             bsStyle="default"
-            disabled={true}>
+            disabled={true}
+          >
             Bla gjennom
           </Button>
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group">
+        bsClass="form-group"
+      >
         <LabelFormat
           label="Kommentar / resultat"
-          md={1} />
+          md={1}
+        />
         <Col
           bsClass="col"
           componentClass="div"
-          md={5}>
+          md={5}
+        >
           <FormControl
             bsClass="form-control"
             componentClass="textarea"
             placeholder=""
             readOnly={true}
-            value={undefined} />
+          />
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group">
+        bsClass="form-group"
+      >
         <LabelFormat
           label="Klausulering"
-          md={1} />
+          md={1}
+        />
         <Col
           bsClass="col"
           componentClass="div"
-          md={5}>
+          md={5}
+        >
           <Radio
             bsClass="radio"
             checked={true}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            readOnly={true}
+          >
             Ja
           </Radio>
           <Radio
             bsClass="radio"
             disabled={false}
             inline={true}
-            readOnly={true}>
+            readOnly={true}
+          >
             Nei
           </Radio>
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group">
+        bsClass="form-group"
+      >
         <Panel
           bsClass="panel"
           bsStyle="default"
@@ -348,66 +401,73 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           style={
             Object {
               "backgroundColor": "#f5f5f5",
-              "border": "none"
+              "border": "none",
             }
-          }>
+          }
+        >
           <FormGroup
-            bsClass="form-group">
+            bsClass="form-group"
+          >
             <FieldGroup
               id="by"
               label="Klausulert for"
               md={1}
               placeholder="Fornavn Etternavn"
               type="text"
-              value={undefined} />
+            />
           </FormGroup>
           <FormGroup
-            bsClass="form-group">
+            bsClass="form-group"
+          >
             <FieldGroup
               id="reason"
               label="Årsak til klausulering"
               md={1}
               type="text"
-              value={undefined} />
+            />
           </FormGroup>
           <FormGroup
-            bsClass="form-group">
+            bsClass="form-group"
+          >
             <FieldGroup
               id="Saksnummer"
               label="Saksnummer"
               md={1}
               type="text"
-              value={undefined} />
+            />
           </FormGroup>
           <FormGroup
-            bsClass="form-group">
+            bsClass="form-group"
+          >
             <FieldGroup
               id="expirationDate"
               label="Sluttdato"
               md={1}
               readOnly={true}
               type="text"
-              value={undefined} />
+            />
           </FormGroup>
           <FormGroup
-            bsClass="form-group">
+            bsClass="form-group"
+          >
             <FieldGroup
               id="cancelledBy"
               label="Opphevet av"
               md={1}
               placeholder="Fornavn Etternavn"
               type="text"
-              value={undefined} />
+            />
           </FormGroup>
           <FormGroup
-            bsClass="form-group">
+            bsClass="form-group"
+          >
             <FieldGroup
               id="cancelledReason"
               label="Årsak til oppheving"
               md={1}
               placeholder="Årsak til oppheving"
               type="text"
-              value={undefined} />
+            />
           </FormGroup>
         </Panel>
       </FormGroup>
@@ -420,40 +480,49 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     inline={false}
     style={
       Object {
-        "paddingLeft": 20
+        "paddingLeft": 20,
       }
-    }>
+    }
+  >
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <LabelFormat
         label="Kommentar til analysen"
-        md={1} />
+        md={1}
+      />
       <Col
         bsClass="col"
         componentClass="div"
-        md={5}>
+        md={5}
+      >
         <FormControl
           bsClass="form-control"
           className="note"
           componentClass="textarea"
           readOnly={true}
-          value="fdsfsd sdsa 2" />
+          value="fdsfsd sdsa 2"
+        />
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <LabelFormat
         label="Avslutt analyse"
-        md={1} />
+        md={1}
+      />
       <Col
         bsClass="col"
         componentClass="div"
-        md={5}>
+        md={5}
+      >
         <Radio
           bsClass="radio"
           disabled={false}
           inline={true}
-          readOnly={true}>
+          readOnly={true}
+        >
           Ja
         </Radio>
         <Radio
@@ -461,7 +530,8 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           checked={true}
           disabled={false}
           inline={true}
-          readOnly={true}>
+          readOnly={true}
+        >
           Nei
         </Radio>
       </Col>
@@ -469,20 +539,24 @@ exports[`AnalysisViewComponent should render properly 1`] = `
   </Form>
   <NewLine />
   <SaveCancel
-    onClickSave={[Function onClickSave]}
-    saveLabel="Endre" />
+    onClickSave={[Function]}
+    saveLabel="Endre"
+  />
   <NewLine />
   <Form
     bsClass="form"
     componentClass="form"
     horizontal={true}
-    inline={false}>
+    inline={false}
+  >
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <Col
         bsClass="col"
         componentClass="div"
-        mdOffset={1}>
+        mdOffset={1}
+      >
         <h5>
           <strong>
             Endringshistorikk
@@ -491,38 +565,45 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <Col
         bsClass="col"
         componentClass="div"
-        mdOffset={1}>
+        mdOffset={1}
+      >
         Rituvesh Kumar
          - 
         2017-04-03T10:36:34+00:00
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <Col
         bsClass="col"
         componentClass="div"
-        mdOffset={1}>
+        mdOffset={1}
+      >
          - 
         2017-03-16T14:37:45+00:00
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group">
+      bsClass="form-group"
+    >
       <Col
         bsClass="col"
         componentClass="div"
-        mdOffset={1}>
+        mdOffset={1}
+      >
         <Button
           active={false}
           block={false}
           bsClass="btn"
           bsStyle="link"
-          disabled={false}>
+          disabled={false}
+        >
           Se mer
         </Button>
       </Col>

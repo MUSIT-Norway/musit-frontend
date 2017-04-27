@@ -12,6 +12,7 @@ export type FormData = {
   doneBy:  Field,
   doneDate:  Field,
   registeredBy:  Field,
+  registeredByName:  Field,
   registeredDate:  Field,
 
   responsible:  Field,

@@ -1,4 +1,4 @@
-import { onMount } from '../add/analysisAddContainer';
+import { onMount } from '../AnalysisAddContainer';
 import sinon from 'sinon';
 
 describe('analysisContainer', () => {

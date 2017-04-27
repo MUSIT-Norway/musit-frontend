@@ -1,12 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`analysisAddForm should have working getBoolField method 1`] = `
 Object {
   "defaultValue": false,
   "mapper": Object {
-    "fromRaw": [Function fromRaw],
-    "toRaw": [Function toRaw]
+    "fromRaw": [Function],
+    "toRaw": [Function],
   },
   "name": "someBool",
-  "validator": Object {}
+  "validator": Object {},
 }
 `;
 
@@ -14,12 +16,12 @@ exports[`analysisAddForm should have working getStrField method 1`] = `
 Object {
   "defaultValue": "",
   "mapper": Object {
-    "fromRaw": [Function fromRaw],
-    "toRaw": [Function toRaw]
+    "fromRaw": [Function],
+    "toRaw": [Function],
   },
   "name": "someStr",
   "validator": Object {
-    "rawValidator": [Function validator]
-  }
+    "rawValidator": [Function],
+  },
 }
 `;

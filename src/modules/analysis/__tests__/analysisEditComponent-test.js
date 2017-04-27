@@ -4,7 +4,7 @@ import React from 'react';
 import AnalysisEditComponent, {
   editAnalysisEventLocal,
   goToAnalysis
-} from '../edit/AnalysisEditComponent';
+} from '../AnalysisEditComponent';
 import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
 
