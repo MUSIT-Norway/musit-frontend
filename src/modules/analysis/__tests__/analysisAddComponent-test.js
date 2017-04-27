@@ -104,7 +104,7 @@ describe('AnalysisAddComponent', () => {
         rawValue: null
       }
     };
-    saveAnalysisEventLocal(appSession, myForm, { state: null }, saveAnalysisEvent);
+    saveAnalysisEventLocal(appSession, myForm, { state: null }, saveAnalysisEvent);
     expect(saveAnalysisEvent.calledOnce).toBe(true);
     expect(saveAnalysisEvent.getCall(0).args[0].museumId).toBe(99);
     expect(saveAnalysisEvent.getCall(0).args[0].token).toBe('1234');

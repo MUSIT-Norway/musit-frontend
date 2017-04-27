@@ -4,9 +4,9 @@ import sinon from 'sinon';
 describe('analysisViewContainer', () => {
   it('should have working onMount', () => {
     let callLoadAnalysisArgs = null;
-    const loadAnalysis = (args) => {
+    const loadAnalysis = args => {
       callLoadAnalysisArgs = args;
-      return new Promise((res) => res({}));
+      return new Promise(res => res({}));
     };
     const getAnalysisTypes = sinon.spy();
     const loadForm = sinon.spy();
@@ -18,7 +18,7 @@ describe('analysisViewContainer', () => {
     };
     onMount({ getAnalysisTypes, appSession, loadForm, loadAnalysis, params });
     expect(callLoadAnalysisArgs).toEqual({
-      museumId:99,
+      museumId: 99,
       collectionId: '12345',
       token: '1234'
     });

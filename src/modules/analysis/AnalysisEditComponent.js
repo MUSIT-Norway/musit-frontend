@@ -80,11 +80,13 @@ export const editAnalysisEventLocal = (
       analysisTypeId: getValue(form.analysisTypeId),
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
-      ...(
-        form.type.rawValue === 'Analysis' ?
-          { objectId: form.objectId.rawValue } :
-          { objectIds: form.events.rawValue ? form.events.rawValue.map(a => a.objectId) : []}
-      ),
+      ...(form.type.rawValue === 'Analysis'
+        ? { objectId: form.objectId.rawValue }
+        : {
+            objectIds: form.events.rawValue
+              ? form.events.rawValue.map(a => a.objectId)
+              : []
+          }),
       restriction: {
         by: getValue(form.by),
         expirationDate: getValue(form.expirationDate),
