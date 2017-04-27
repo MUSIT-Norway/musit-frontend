@@ -1,4 +1,4 @@
-import { getBoolField, getStrField } from '../analysisAddForm';
+import { getBoolField, getStrField } from '../analysisForm';
 
 describe('analysisAddForm', () => {
   it('should have working getBoolField method', () => {

@@ -18,7 +18,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       HID:
     </strong>
      
-    2
   </Col>
   <Col
     bsClass="col"
@@ -31,12 +30,10 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     <FontAwesome
       name="user" />
      
-    Rituvesh Kumar
      
     <FontAwesome
       name="clock-o" />
      
-    2017-04-03T10:36:34+00:00
   </Col>
   <Col
     bsClass="col"
@@ -53,7 +50,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     <FontAwesome
       name="clock-o" />
      
-    2017-03-16T14:37:45+00:00
      
     <a>
       Se endringshistorikk
@@ -70,15 +66,17 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       <FieldGroup
         id="formControlsText"
         label="saksnummer"
+        md={1}
         type="text"
-        value={undefined} />
+        value="" />
     </FormGroup>
     <FormGroup
       bsClass="form-group">
       <AddButton
         id="1"
         label="Legg til saksnummer"
-        md={5} />
+        md={5}
+        mdOffset={0} />
     </FormGroup>
   </Form>
   <NewLine />
@@ -92,9 +90,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       componentClass="div"
       md={12}>
       <h5>
-        <b>
+        <strong>
           Objekt/prøve
-        </b>
+        </strong>
       </h5>
     </Col>
     <Col
@@ -124,15 +122,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         </thead>
         <tbody>
           <tr>
-            <td>
-              MusK58
-            </td>
-            <td>
-              2
-            </td>
-            <td>
-              Mansjettknapp
-            </td>
+            <td />
+            <td />
+            <td />
           </tr>
         </tbody>
       </Table>
@@ -161,9 +153,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         componentClass="div"
         md={12}>
         <h5>
-          <b>
+          <strong>
             Personer tilknyttet analysen
-          </b>
+          </strong>
         </h5>
       </Col>
     </FormGroup>
@@ -172,23 +164,13 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       <FieldGroup
         id="navn"
         label="Navn"
+        md={1}
         placeholder="Fornavn Etternavn"
         type="text"
-        value={undefined} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Rolle
-        </b>
-      </Col>
+        value="" />
+      <LabelFormat
+        label="Rolle"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -211,26 +193,16 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       <AddButton
         id="3"
         label="Legg til person"
-        md={2} />
+        md={2}
+        mdOffset={0} />
     </FormGroup>
   </Form>
   <NewLine />
   <FormGroup
     bsClass="form-group">
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={1}
-      style={
-        Object {
-          "padding": "7px",
-          "textAlign": "right"
-        }
-      }>
-      <b>
-        Analysested
-      </b>
-    </Col>
+    <LabelFormat
+      label="Analysested"
+      md={1} />
     <Col
       bsClass="col"
       componentClass="div"
@@ -273,9 +245,10 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <FieldGroup
           id="formControlsText"
           label="Ekstern kilde"
+          md={1}
           placeholder="http://www.lenke.no"
           type="text"
-          value={undefined} />
+          value="" />
         <Col
           bsClass="col"
           componentClass="div"
@@ -295,6 +268,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <FieldGroup
           id="formControlsText"
           label="Ladt opp fil"
+          md={1}
           type="text" />
         <Col
           bsClass="col"
@@ -312,20 +286,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       </FormGroup>
       <FormGroup
         bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}
-          style={
-            Object {
-              "padding": "7px",
-              "textAlign": "right"
-            }
-          }>
-          <b>
-            Kommentar / resultat
-          </b>
-        </Col>
+        <LabelFormat
+          label="Kommentar / resultat"
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
@@ -335,25 +298,14 @@ exports[`AnalysisViewComponent should render properly 1`] = `
             componentClass="textarea"
             placeholder=""
             readOnly={true}
-            value={undefined} />
+            value="" />
         </Col>
       </FormGroup>
       <FormGroup
         bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}
-          style={
-            Object {
-              "padding": "7px",
-              "textAlign": "right"
-            }
-          }>
-          <b>
-            Klausulering
-          </b>
-        </Col>
+        <LabelFormat
+          label="Klausulering"
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
@@ -397,7 +349,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               md={1}
               placeholder="Fornavn Etternavn"
               type="text"
-              value={undefined} />
+              value={null} />
           </FormGroup>
           <FormGroup
             bsClass="form-group">
@@ -406,7 +358,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               label="Årsak til klausulering"
               md={1}
               type="text"
-              value={undefined} />
+              value={null} />
           </FormGroup>
           <FormGroup
             bsClass="form-group">
@@ -415,7 +367,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               label="Saksnummer"
               md={1}
               type="text"
-              value={undefined} />
+              value={null} />
           </FormGroup>
           <FormGroup
             bsClass="form-group">
@@ -425,7 +377,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               md={1}
               readOnly={true}
               type="text"
-              value={undefined} />
+              value={null} />
           </FormGroup>
           <FormGroup
             bsClass="form-group">
@@ -435,7 +387,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               md={1}
               placeholder="Fornavn Etternavn"
               type="text"
-              value={undefined} />
+              value={null} />
           </FormGroup>
           <FormGroup
             bsClass="form-group">
@@ -445,7 +397,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               md={1}
               placeholder="Årsak til oppheving"
               type="text"
-              value={undefined} />
+              value={null} />
           </FormGroup>
         </Panel>
       </FormGroup>
@@ -463,20 +415,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     }>
     <FormGroup
       bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Kommentar til analysen
-        </b>
-      </Col>
+      <LabelFormat
+        label="Kommentar til analysen"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -486,25 +427,14 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="note"
           componentClass="textarea"
           readOnly={true}
-          value="fdsfsd sdsa 2" />
+          value={null} />
       </Col>
     </FormGroup>
     <FormGroup
       bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}
-        style={
-          Object {
-            "padding": "7px",
-            "textAlign": "right"
-          }
-        }>
-        <b>
-          Avslutt analyse
-        </b>
-      </Col>
+      <LabelFormat
+        label="Avslutt analyse"
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
@@ -544,9 +474,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         componentClass="div"
         mdOffset={1}>
         <h5>
-          <b>
+          <strong>
             Endringshistorikk
-          </b>
+          </strong>
         </h5>
       </Col>
     </FormGroup>
@@ -556,9 +486,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         bsClass="col"
         componentClass="div"
         mdOffset={1}>
-        Rituvesh Kumar
          - 
-        2017-04-03T10:36:34+00:00
       </Col>
     </FormGroup>
     <FormGroup
@@ -568,7 +496,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         componentClass="div"
         mdOffset={1}>
          - 
-        2017-03-16T14:37:45+00:00
       </Col>
     </FormGroup>
     <FormGroup

@@ -17,111 +17,31 @@ import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
-import { AppSession } from '../app/appSession';
+import type { AppSession } from '../../types/appSession';
+import type { FormData } from './types/form';
+import Label from './components/Label';
+import FieldGroup from './components/FIeldGroup';
+import AddButton from './components/AddButton';
+import NewLine from './components/NewLine';
 
 type AnalysisType = { id: number, name: string };
+
 type ObjectData = { uuid: string };
-type Analysis = {
-  analysisTypeId: string,
-  eventDate: string,
-  id: number,
-  museumNo: string,
-  note: string,
-  objectId: string,
-  partOf: number,
-  registeredBy: string,
-  registeredByName: string,
-  registeredDate: string,
-  subNo: string,
-  term: string,
-  type: string,
-  oneBy: string,
-  doneDate: string,
-  registeredBy: string,
-  registeredDate: string,
 
-  responsible: string,
-
-  administrator: string,
-  completedBy: string,
-  completedDate: string,
-  objectId: string,
-  note: string,
-  type: string,
-
-  partOf: string,
-  result: string,
-  place: string,
-
-  externalSource: string,
-  comments: string,
-
-  restrictions: string,
-  by: string,
-  expirationDate: string,
-  reason: string,
-  caseNumbers: string,
-  cancelledBy: string,
-  cancelledReason: string,
-
-  completeAnalysis: string,
-  museumNo: string,
-  term: string,
-  actor: string,
-  caseNumber: string,
-  doneBy: string,
-  events: []
-};
 type Store = {
   objectsData: ObjectData[],
-  analysisTypes: AnalysisType[],
-  analysis: Analysis
+  analysisTypes: AnalysisType[]
 };
+
 type Params = {
   analysisId: string
 };
-type Props = { store: Store, appSession: AppSession, params: Params };
 
-function LabelFormat(label, md = 1) {
-  return <Col md={md} style={{ textAlign: 'right', padding: '7px' }}><b>{label}</b></Col>;
-}
-function FieldGroup({ id, label, md = 1, ...props }) {
-  return (
-    <div id={id}>
-      {LabelFormat(label, md)}
-      <Col md={2}>
-        <FormControl {...props} readOnly />
-      </Col>
-    </div>
-  );
-}
+type Props = { form: FormData, store: Store, appSession: AppSession, params: Params };
 
-function AddButton({ id, label, md, mdOffset = 0, ...props }) {
-  return (
-    <div id={id}>
-      <Col md={md} mdOffset={mdOffset}>
-        <Button {...props} disabled>
-          <FontAwesome name="plus-circle" />{' '}
-          {label}
-        </Button>
-      </Col>
-    </div>
-  );
-}
-function NewLine() {
-  return (
-    <Form horizontal>
-      <FormGroup />
-      <hr />
-    </Form>
-  );
-}
-
-const getAnalysisTypeTerm = store => {
-  if (store.analysis && store.analysisTypes) {
-    const foundType = store.analysisTypes.find(
-      a => a.id === store.analysis.analysisTypeId
-    );
+const getAnalysisTypeTerm = (form, store) => {
+  if (form.analysisTypeId && store.analysisTypes) {
+    const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId);
     return foundType ? foundType.name : '';
   }
 };
@@ -135,53 +55,48 @@ const getTableRow = a => {
     </tr>
   );
 };
-const getObjectsValue = store => {
-  if (store.analysis) {
-    if (store.analysis.type === 'AnalysisCollection') {
-      return store.analysis.events.map(a => getTableRow(a));
-    }
-    return getTableRow(store.analysis);
+
+const getObjectsValue = form => {
+  if (form.type.rawValue === 'AnalysisCollection') {
+    return form.events.rawValue ? form.events.rawValue.map(getTableRow) : [];
   }
-  return '';
+  return getTableRow({
+    museumNo: form.museumNo.rawValue,
+    subNo: form.subNo.rawValue,
+    term: form.term.rawValue
+  });
 };
-const getValue = (store, field) => store.analysis ? store.analysis[field] : '';
 
-// TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
-// TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
-const labelFormat = (label, md = 1) => (
-  <Col md={md} style={{ textAlign: 'right', padding: '7px' }}>
-    <b>{label}</b>
-  </Col>
-);
+const getValue = (form, field) => form[field] ? form[field].rawValue : '';
 
-const AnalysisView = ({ store, appSession, params }: Props) => (
+const AnalysisView = ({ form, store, appSession, params }: Props) => (
   <div>
     <br />
     <PageHeader style={{ paddingLeft: 20 }}>
       {I18n.t('musit.analysis.registeringAnalysis')}
     </PageHeader>
     <Col md={12}>
-      <strong>HID:</strong>{' '}{getValue(store, 'id')}
+      <strong>HID:</strong>{' '}{getValue(form, 'id')}
     </Col>
     <Col md={12}>
       <strong>Registrert:</strong>
       {' '}
       <FontAwesome name="user" />
       {' '}
-      {getValue(store, 'registeredByName')}
+      {getValue(form, 'registeredByName')}
       {' '}
-      <FontAwesome name="clock-o" />{' '}{getValue(store, 'registeredDate')}
+      <FontAwesome name="clock-o" />{' '}{getValue(form, 'registeredDate')}
     </Col>
     <Col md={12}>
       <strong>Sist endret:</strong>
       {' '}
       <FontAwesome name="user" />
       {' '}
-      {getValue(store, 'doneBy')}
+      {getValue(form, 'doneBy')}
       {' '}
       <FontAwesome name="clock-o" />
       {' '}
-      {getValue(store, 'eventDate')}
+      {getValue(form, 'eventDate')}
       {' '}
       <a>Se endringshistorikk</a>
     </Col>
@@ -192,7 +107,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
           id="formControlsText"
           type="text"
           label="saksnummer"
-          value={getValue(store, 'caseNumber')}
+          value={getValue(form, 'caseNumber')}
         />
       </FormGroup>
       <FormGroup>
@@ -201,7 +116,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
     </Form>
     <NewLine />
     <Form inline>
-      <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
+      <Col md={12}><h5><strong>Objekt/prøve</strong></h5></Col>
       <Col mdOffset={1} md={5}>
         <Table responsive>
           <thead>
@@ -212,7 +127,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
             </tr>
           </thead>
           <tbody>
-            {getObjectsValue(store)}
+            {getObjectsValue(form)}
           </tbody>
         </Table>
       </Col>
@@ -221,7 +136,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
     <NewLine />
     <Form horizontal style={{ paddingLeft: 20 }}>
       <FormGroup>
-        <Col md={12}><h5><b>Personer tilknyttet analysen</b></h5></Col>
+        <Col md={12}><h5><strong>Personer tilknyttet analysen</strong></h5></Col>
       </FormGroup>
       <FormGroup>
         <FieldGroup
@@ -229,9 +144,9 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
           type="text"
           label="Navn"
           placeholder="Fornavn Etternavn"
-          value={getValue(store, 'actor')}
+          value={getValue(form, 'actor')}
         />
-        {labelFormat('Rolle', 1)}
+        <Label label="Rolle" md={1} />
         <Col md={1}>
           <FormControl disabled componentClass="select" placeholder="Velg rolle">
             <option value="Velgsted">Velg rolle</option>
@@ -243,7 +158,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
     </Form>
     <NewLine />
     <FormGroup>
-      {labelFormat('Analysested', 1)}
+      <Label label="Analysested" md={1} />
       <Col md={2}>
         <FormControl componentClass="select" disabled placeholder="Velg sted">
           <option value="Velgsted">Velg sted</option>
@@ -260,7 +175,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
             md={1}
             type="text"
             label="Type analyse"
-            value={getAnalysisTypeTerm(store)}
+            value={getAnalysisTypeTerm(form, store)}
           />
         </FormGroup>
         <FormGroup>
@@ -269,7 +184,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
             type="text"
             label="Ekstern kilde"
             placeholder="http://www.lenke.no"
-            value={getValue(store, 'externalSource')}
+            value={getValue(form, 'externalSource')}
           />
           <Col md={2}>
             <Button disabled>Lagre</Button>
@@ -282,18 +197,18 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
           </Col>
         </FormGroup>
         <FormGroup>
-          {labelFormat('Kommentar / resultat', 1)}
+          <Label label="Kommentar / resultat" md={1} />
           <Col md={5}>
             <FormControl
               componentClass="textarea"
               placeholder=""
-              value={getValue(store, 'comments')}
+              value={getValue(form, 'comments')}
               readOnly
             />
           </Col>
         </FormGroup>
         <FormGroup>
-          {labelFormat('Klausulering', 1)}
+          <Label label="Klausulering" md={1} />
           <Col md={5}>
             <Radio checked readOnly inline>
               Ja
@@ -316,7 +231,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
                 type="text"
                 label="Klausulert for"
                 placeholder="Fornavn Etternavn"
-                value={getValue(store, 'by')}
+                value={getValue(form, 'by')}
               />
             </FormGroup>
             <FormGroup>
@@ -325,7 +240,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
                 md={1}
                 type="text"
                 label="Årsak til klausulering"
-                value={getValue(store, 'reason')}
+                value={getValue(form, 'reason')}
               />
             </FormGroup>
             <FormGroup>
@@ -334,7 +249,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
                 md={1}
                 type="text"
                 label="Saksnummer"
-                value={getValue(store, 'caseNumbers')}
+                value={getValue(form, 'caseNumbers')}
               />
             </FormGroup>
             <FormGroup>
@@ -343,7 +258,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
                 md={1}
                 type="text"
                 label="Sluttdato"
-                value={getValue(store, 'expirationDate')}
+                value={getValue(form, 'expirationDate')}
                 readOnly
               />
             </FormGroup>
@@ -354,7 +269,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
                 type="text"
                 label="Opphevet av"
                 placeholder="Fornavn Etternavn"
-                value={getValue(store, 'cancelledBy')}
+                value={getValue(form, 'cancelledBy')}
               />
             </FormGroup>
             <FormGroup>
@@ -364,7 +279,7 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
                 type="text"
                 label="Årsak til oppheving"
                 placeholder="Årsak til oppheving"
-                value={getValue(store, 'cancelledReason')}
+                value={getValue(form, 'cancelledReason')}
               />
             </FormGroup>
           </Panel>
@@ -373,18 +288,18 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
     </Well>
     <Form horizontal style={{ paddingLeft: 20 }}>
       <FormGroup>
-        {labelFormat('Kommentar til analysen', 1)}
+        <Label label="Kommentar til analysen" md={1} />
         <Col md={5}>
           <FormControl
             className="note"
             componentClass="textarea"
-            value={getValue(store, 'note')}
+            value={getValue(form, 'note')}
             readOnly
           />
         </Col>
       </FormGroup>
       <FormGroup>
-        {labelFormat('Avslutt analyse', 1)}
+        <Label label="Avslutt analyse" md={1} />
         <Col md={5}>
           <Radio inline readOnly>
             Ja
@@ -408,16 +323,16 @@ const AnalysisView = ({ store, appSession, params }: Props) => (
     <NewLine />
     <Form horizontal>
       <FormGroup>
-        <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
+        <Col mdOffset={1}><h5><strong>Endringshistorikk</strong></h5></Col>
       </FormGroup>
       <FormGroup>
         <Col mdOffset={1}>
-          {getValue(store, 'registeredByName')} - {getValue(store, 'registeredDate')}
+          {getValue(form, 'registeredByName')} - {getValue(form, 'registeredDate')}
         </Col>
       </FormGroup>
       <FormGroup>
         <Col mdOffset={1}>
-          {getValue(store, 'doneBy')} - {getValue(store, 'eventDate')}
+          {getValue(form, 'doneBy')} - {getValue(form, 'eventDate')}
         </Col>
       </FormGroup>
       <FormGroup>

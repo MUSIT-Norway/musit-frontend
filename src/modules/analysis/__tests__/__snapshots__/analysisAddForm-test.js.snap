@@ -12,7 +12,6 @@ Object {
 
 exports[`analysisAddForm should have working getStrField method 1`] = `
 Object {
-  "defaultValue": "",
   "mapper": Object {
     "fromRaw": [Function fromRaw],
     "toRaw": [Function toRaw]

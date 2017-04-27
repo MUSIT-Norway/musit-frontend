@@ -33,7 +33,7 @@ describe('Analysis model', () => {
       });
     };
 
-    const fn = Analysis.getAnalysisWithDeatils(get);
+    const fn = Analysis.getAnalysisWithDetails(get);
 
     const props = {
       token: '1234',

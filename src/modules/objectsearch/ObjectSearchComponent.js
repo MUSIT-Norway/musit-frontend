@@ -206,7 +206,7 @@ export class ObjectSearchComponent extends React.Component {
                                       )
                                     )}
                                 >
-                                  {Config.isDev && 'Vis'}
+                                  Vis
                                 </Button>
                               </td>
                             </tr>

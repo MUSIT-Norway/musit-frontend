@@ -61,7 +61,61 @@ const store = {
 
 describe('AnalysisViewComponent', () => {
   it('should render properly', () => {
-    const wrapper = shallow(<AnalysisViewComponent store={store} />);
+    const myForm = {
+      analysisTypeId: {
+        name: 'analysisTypeId',
+        rawValue: 'b15ee459-38c9-414f-8b54-7c6439b44d3d'
+      },
+      registeredDate: {
+        name: 'registeredDate',
+        rawValue: null
+      },
+      note: {
+        name: 'note',
+        rawValue: null
+      },
+      by: {
+        name: 'by',
+        rawValue: null
+      },
+      expirationDate: {
+        name: 'expirationDate',
+        rawValue: null
+      },
+      caseNumbers: {
+        name: 'caseNumbers',
+        rawValue: null
+      },
+      cancelledBy: {
+        name: 'cancelledBy',
+        rawValue: null
+      },
+      cancelledReason: {
+        name: 'cancelledReason',
+        rawValue: null
+      },
+      reason: {
+        name: 'reason',
+        rawValue: null
+      },
+      type: {
+        name: 'type',
+        rawValue: 'Analysis'
+      },
+      museumNo: {
+        name: 'museumNo',
+        rawValue: null
+      },
+      subNo: {
+        name: 'subNo',
+        rawValue: null
+      },
+      term: {
+        name: 'term',
+        rawValue: null
+      }
+    };
+    const wrapper = shallow(<AnalysisViewComponent form={myForm} store={store} />);
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
