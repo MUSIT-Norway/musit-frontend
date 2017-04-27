@@ -1,5 +1,5 @@
 import React from 'react';
-const { Table, Tr, Td } = require('reactable');
+import { Table, Tr, Td } from 'reactable';
 import { Row, Col, Well } from 'react-bootstrap';
 
 const SamplesForObjectComponent = ({ sampleStore: { museumNo, subNo, term, data } }) => {

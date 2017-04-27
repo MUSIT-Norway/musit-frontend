@@ -1,6 +1,7 @@
 /* @flow */
 
 export type ObjectData = {
+  uuid: string,
   objectId: number,
   objectUUID: string,
   objectType: string,

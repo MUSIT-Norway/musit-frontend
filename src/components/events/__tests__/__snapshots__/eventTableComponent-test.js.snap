@@ -45,7 +45,8 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         "note"
       ]
     }>
-    <Tr>
+    <Tr
+      onClick={[Function onClick]}>
       <Td
         column="eventDate">
         1999-01-20
@@ -71,7 +72,8 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         Les mer
       </Td>
     </Tr>
-    <Tr>
+    <Tr
+      onClick={[Function onClick]}>
       <Td
         column="eventDate">
         1999-06-20

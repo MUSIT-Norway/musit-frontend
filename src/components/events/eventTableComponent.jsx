@@ -1,12 +1,12 @@
 /* @flow */
 import React from 'react';
-const { Table, Tr, Td } = require('reactable');
-import type { Events } from '../../types/events';
+import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
+import type { Events } from '../../types/events';
 
-type EventTypeProps = { events: Events };
+type EventTypeProps = { events: Events, onClick: Function };
 
-export const EventTableComponent = ({ events }: EventTypeProps) => {
+export const EventTableComponent = ({ events, onClick }: EventTypeProps) => {
   return (
     <div>
       <Table
@@ -23,7 +23,7 @@ export const EventTableComponent = ({ events }: EventTypeProps) => {
         noDataText={I18n.t('musit.events.noDataForObject')}
       >
         {events && events.map((event, i) =>
-          <Tr key={i}>
+          <Tr key={i} onClick={() => onClick(event)}>
             <Td column="eventDate">{event.eventDate}</Td>
             <Td column="type">{event.type}</Td>
             <Td column="registeredBy">{event.registeredBy}</Td>

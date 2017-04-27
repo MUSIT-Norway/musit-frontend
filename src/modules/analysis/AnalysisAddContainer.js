@@ -1,11 +1,8 @@
 import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
-import analysisAddForm from './analysisAddForm';
+import analysisAddForm from './analysisForm';
 import AnalysisAddComponent from './AnalysisAddComponent';
-import store$, {
-  loadAnalysisTypes$,
-  getAnalysisTypesForCollection$
-} from './analysisStore';
+import store$, { getAnalysisTypes$ } from './analysisStore';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
@@ -23,27 +20,19 @@ const data = {
 const commands = {
   updateForm$,
   loadForm$,
-  loadAnalysisTypes$,
-  getAnalysisTypesForCollection$
+  getAnalysisTypes$
 };
 
 const props = {
   saveAnalysisEvent: toPromise(Analysis.saveAnalysisEvent())
 };
 
-export const onMount = (
-  { loadAnalysisTypes, appSession, getAnalysisTypesForCollection }
-) => {
-  loadAnalysisTypes({
-    museumId: appSession.museumId,
-    token: appSession.accessToken
-  });
-  getAnalysisTypesForCollection({
+export const onMount = ({ appSession, getAnalysisTypes }) =>
+  getAnalysisTypes({
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken
   });
-};
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
   AnalysisAddComponent

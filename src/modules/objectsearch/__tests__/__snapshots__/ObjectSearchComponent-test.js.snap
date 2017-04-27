@@ -239,7 +239,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -332,7 +334,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -425,7 +429,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -518,7 +524,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -611,7 +619,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -704,7 +714,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -797,7 +809,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -890,7 +904,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -983,7 +999,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1076,7 +1094,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1169,7 +1189,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1262,7 +1284,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1355,7 +1379,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1448,7 +1474,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1541,7 +1569,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1634,7 +1664,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1727,7 +1759,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1820,7 +1854,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -1913,7 +1949,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
                 <tr
@@ -2006,7 +2044,9 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                       bsClass="btn"
                       bsStyle="link"
                       disabled={false}
-                      onClick={[Function onClick]} />
+                      onClick={[Function onClick]}>
+                      Vis
+                    </Button>
                   </td>
                 </tr>
               </tbody>

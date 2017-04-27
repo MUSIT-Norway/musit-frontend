@@ -44,6 +44,33 @@ exports[`ViewObjectComponent should display correctly 1`] = `
       </Col>
     </Row>
   </div>
+  <div
+    style={
+      Object {
+        "paddingBottom": 10
+      }
+    }>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="primary"
+      disabled={false}
+      onClick={[Function onClick]}>
+      Ny analyse
+    </Button>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      className="primary"
+      disabled={false}
+      onClick={[Function onClick]}>
+      Ny prøve
+    </Button>
+  </div>
   <Uncontrolled(Tabs)
     id="objectDetails">
     <Tab
@@ -70,7 +97,8 @@ exports[`ViewObjectComponent should display correctly 1`] = `
               "registeredBy": "Ole Hansen"
             }
           ]
-        } />
+        }
+        onClick={[Function onClick]} />
     </Tab>
     <Tab
       eventKey={1}

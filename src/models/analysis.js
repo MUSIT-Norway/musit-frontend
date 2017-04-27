@@ -1,11 +1,19 @@
 import { simpleGet, simplePost, simplePut } from '../shared/RxAjax';
 import Config from '../config';
-import orderBy from 'lodash/orderBy';
 import MusitActor from './actor';
 import MusitObject from './object';
 import { Observable } from 'rxjs';
 
 class Analysis {}
+
+Analysis.fromJsonToForm = jsonObj =>
+  Object.keys(jsonObj).reduce(
+    (acc, attributeName) => [
+      ...acc,
+      { name: attributeName, defaultValue: jsonObj[attributeName] }
+    ],
+    []
+  );
 
 Analysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) =>
   ({ museumId, collectionId, token, callback }) => {
@@ -14,15 +22,6 @@ Analysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) =>
       collectionId
     );
     return ajaxGet(url, token, callback).map(({ response }) => response);
-  };
-
-Analysis.getAllAnalysisTypes = (ajaxGet = simpleGet) =>
-  ({ museumId, token, callback }) => {
-    return ajaxGet(
-      `${Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId)}`,
-      token,
-      callback
-    ).map(({ response }) => orderBy(response, ['name'], ['asc']));
   };
 
 Analysis.saveAnalysisEvent = (ajaxPost = simplePost) =>
@@ -49,7 +48,7 @@ Analysis.getAnalysisById = (ajaxGet = simpleGet) =>
     return ajaxGet(url, token, callback).map(({ response }) => response);
   };
 
-Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) =>
+Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
   props => {
     return Analysis.getAnalysisById(ajaxGet)(props)
       .flatMap(analysis =>
@@ -58,7 +57,7 @@ Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) =>
           actorId: analysis.registeredBy
         }).map(actor => actor ? { ...analysis, registeredByName: actor.fn } : analysis))
       .flatMap(analysis => {
-        if (analysis.type === 'AnalysisCollection') {
+        if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
           return Observable.forkJoin(
             analysis.events.map(a =>
               MusitObject.getObjectDetails(ajaxGet)({
@@ -78,6 +77,9 @@ Analysis.getAnalysisWithDeatils = (ajaxGet = simpleGet) =>
             });
             return { ...analysis, events: events };
           });
+        }
+        if (!analysis.objectId) {
+          return Observable.of(analysis);
         }
         return MusitObject.getObjectDetails(ajaxGet)({
           id: analysis.objectId,

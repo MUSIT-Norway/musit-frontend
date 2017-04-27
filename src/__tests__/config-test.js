@@ -146,11 +146,6 @@ describe('Config urls', () => {
       service: 'managment',
       endpoints: [
         {
-          name: 'getAllAnalysisTypes',
-          actual: urls.api.analysisType.getAllAnalysisTypes(99),
-          expected: '/api/management/99/analyses/types'
-        },
-        {
           name: 'getAnalysisTypesForCategory',
           actual: urls.api.analysisType.getAnalysisTypesForCategory(99, 123),
           expected: '/api/management/99/analyses/types/categories/123'

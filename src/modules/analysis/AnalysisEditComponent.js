@@ -15,61 +15,38 @@ import {
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
-import { AppSession } from '../app/appSession';
+import type { AppSession } from '../../types/appSession';
+import type { FormData, Update } from './types/form';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
-
-type Field = { name: string, rawValue: ?string };
-type FormData = {
-  id: Field,
-  analysisTypeId: Field,
-  doneBy: Field,
-  doneDate: Field,
-  registeredBy: Field,
-  registeredDate: Field,
-
-  responsible: Field,
-
-  administrator: Field,
-  completedBy: Field,
-  completedDate: Field,
-  objectId: Field,
-  note: Field,
-  type: Field,
-
-  partOf: Field,
-  result: Field,
-  place: Field,
-
-  externalSource: Field,
-  comments: Field,
-
-  restrictions: Field,
-  by: Field,
-  expirationDate: Field,
-  reason: Field,
-  caseNumbers: Field,
-  cancelledBy: Field,
-  cancelledReason: Field,
-
-  completeAnalysis: Field,
-  museumNo: Field,
-  term: Field
-};
+import Label from './components/Label';
+import FieldGroup from './components/FIeldGroup';
+import AddButton from './components/AddButton';
+import NewLine from './components/NewLine';
 
 type AnalysisType = { id: number, name: string };
+
 type ObjectData = { uuid: string };
-type Store = { objectsData: ObjectData[], analysis: any, analysisTypes: AnalysisType[] };
-type Update = (update: Field) => void;
+
+type Store = {
+  objectsData: ObjectData[],
+  analysisTypes: AnalysisType[]
+};
+
+type Params = {
+  analysisId?: string
+};
+
 type Props = {
   form: FormData,
   updateForm: Update,
   store: Store,
   appSession: AppSession,
   editAnalysisEvent: Function,
-  params: any
+  params: Params
 };
-const getTableRow = (museumNo: string, subNo: string, term: string) => {
+
+const getTableRow = (museumNo: ?string, subNo: ?string, term: ?string) => {
   return (
     <tr>
       <td>{museumNo}</td>
@@ -78,86 +55,49 @@ const getTableRow = (museumNo: string, subNo: string, term: string) => {
     </tr>
   );
 };
-const getObjectsValue = (store: Store) => {
-  if (store.analysis) {
-    if (store.analysis.type === 'AnalysisCollection') {
-      return store.analysis.events.map(a => getTableRow(a.museumNo, a.subNo, a.term));
-    }
-    return getTableRow(
-      store.analysis.museumNo,
-      store.analysis.subNo,
-      store.analysis.term
-    );
+
+const getObjectsValue = (form: FormData) => {
+  if (form.type.rawValue === 'AnalysisCollection') {
+    return form.events.rawValue
+      ? form.events.rawValue.map(a => getTableRow(a.museumNo, a.subNo, a.term))
+      : [];
   }
-  return '';
+  return getTableRow(form.museumNo.rawValue, form.subNo.rawValue, form.term.rawValue);
 };
-
-// TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
-// TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
-const labelFormat = (label, md = 1) => (
-  <Col md={md} style={{ textAlign: 'right', padding: '7px' }}>
-    <b>{label}</b>
-  </Col>
-);
-
-const FieldGroup = ({ id, label, md = 1, ...props }) => (
-  <div id={id}>
-    {labelFormat(label, md)}
-    <Col md={2}>
-      <FormControl {...props} />
-    </Col>
-  </div>
-);
-
-const AddButton = ({ id, label, md, mdOffset = 0, ...props }) => (
-  <div id={id}>
-    <Col md={md} mdOffset={mdOffset}>
-      <Button {...props}>
-        <FontAwesome name="plus-circle" />{' '}
-        {label}
-      </Button>
-    </Col>
-  </div>
-);
-
-const NewLine = () => (
-  <Form horizontal>
-    <FormGroup />
-    <hr />
-  </Form>
-);
 
 const getValue = field => field.rawValue || '';
 
 export const editAnalysisEventLocal = (
   appSession: AppSession,
   form: FormData,
-  store: Store,
   editAnalysisEvent: Function,
-  params: any
+  params: Params
 ) =>
-  () =>
-    editAnalysisEvent({
-      id: params.analysisId,
-      museumId: appSession.museumId,
-      data: {
-        analysisTypeId: getValue(form.analysisTypeId),
-        eventDate: getValue(form.registeredDate),
-        note: getValue(form.note),
-        objectIds: store.analysis && store.analysis.events
-          ? store.analysis.events.map(a => a.objectId)
-          : store.analysis.objectId,
-        restriction: {
-          by: getValue(form.by),
-          expirationDate: getValue(form.expirationDate),
-          reason: getValue(form.reason),
-          caseNumbers: getValue(form.caseNumbers),
-          cancelledBy: getValue(form.cancelledBy),
-          cancelledReason: getValue(form.cancelledReason)
-        }
-      },
-      token: appSession.accessToken
-    });
+  editAnalysisEvent({
+    id: params.analysisId,
+    museumId: appSession.museumId,
+    data: {
+      analysisTypeId: getValue(form.analysisTypeId),
+      eventDate: getValue(form.registeredDate),
+      note: getValue(form.note),
+      ...(form.type.rawValue === 'Analysis'
+        ? { objectId: form.objectId.rawValue }
+        : {
+            objectIds: form.events.rawValue
+              ? form.events.rawValue.map(a => a.objectId)
+              : []
+          }),
+      restriction: {
+        by: getValue(form.by),
+        expirationDate: getValue(form.expirationDate),
+        reason: getValue(form.reason),
+        caseNumbers: getValue(form.caseNumbers),
+        cancelledBy: getValue(form.cancelledBy),
+        cancelledReason: getValue(form.cancelledReason)
+      }
+    },
+    token: appSession.accessToken
+  });
 
 const updateFormField = (field, updateForm) =>
   e =>
@@ -167,18 +107,15 @@ const updateFormField = (field, updateForm) =>
     });
 
 export const goToAnalysis = (
-  fn: Function,
+  fn: Promise<*>,
   appSession: AppSession,
   goTo: Function = hashHistory.push
-) => {
-  return (analysisId: string) => {
-    return fn(analysisId).then(() =>
-      goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, analysisId)));
-  };
-};
+) =>
+  fn.then(updated =>
+    goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, updated.id)));
 
 const AnalysisEdit = (
-  { params, form, updateForm, store, editAnalysisEvent, appSession }: Props
+  { params, form, store, updateForm, editAnalysisEvent, appSession }: Props
 ) => (
   <div>
     <br />
@@ -193,7 +130,7 @@ const AnalysisEdit = (
       {' '}
       <FontAwesome name="user" />
       {' '}
-      {getValue(form.registeredBy)}
+      {getValue(form.registeredByName)}
       {' '}
       <FontAwesome name="clock-o" />{' '}{getValue(form.registeredDate)}
     </Col>
@@ -238,7 +175,7 @@ const AnalysisEdit = (
             </tr>
           </thead>
           <tbody>
-            {getObjectsValue(store)}
+            {getObjectsValue(form)}
           </tbody>
         </Table>
       </Col>
@@ -258,7 +195,7 @@ const AnalysisEdit = (
           value={getValue(form.responsible)}
           onChange={updateFormField(form.responsible, updateForm)}
         />
-        {labelFormat('Rolle', 1)}
+        <Label label="Rolle" md={1} />
         <Col md={1}>
           <FormControl componentClass="select" placeholder="Velg rolle">
             <option value="Velgsted">Velg rolle</option>
@@ -270,7 +207,7 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <FormGroup>
-      {labelFormat('Analysested', 1)}
+      <Label label="Analysested" md={1} />
       <Col md={2}>
         <FormControl componentClass="select" placeholder="Velg sted">
           <option value="Velgsted">Velg sted</option>
@@ -282,7 +219,7 @@ const AnalysisEdit = (
     <Well>
       <Form horizontal>
         <FormGroup>
-          {labelFormat('Type analyse', 1)}
+          <Label label="Type analyse" md={1} />
           <Col md={2}>
             <FormControl
               componentClass="select"
@@ -291,7 +228,13 @@ const AnalysisEdit = (
             >
               <option>Velg kategori</option>
               {store.analysisTypes.map(a => (
-                <option key={a.id} value={a.id}>{a.name}</option>
+                <option
+                  key={a.id}
+                  value={a.id}
+                  selected={form.analysisTypeId.rawValue === a.id}
+                >
+                  {a.name}
+                </option>
               ))}
             </FormControl>
           </Col>
@@ -316,7 +259,7 @@ const AnalysisEdit = (
           </Col>
         </FormGroup>
         <FormGroup>
-          {labelFormat('Kommentar / resultat', 1)}
+          <Label label="Kommentar / resultat" md={1} />
           <Col md={5}>
             <FormControl
               componentClass="textarea"
@@ -327,7 +270,7 @@ const AnalysisEdit = (
           </Col>
         </FormGroup>
         <FormGroup>
-          {labelFormat('Klausulering', 1)}
+          <Label label="Klausulering" md={1} />
           <Col md={5}>
             <Radio checked readOnly inline>
               Ja
@@ -418,7 +361,7 @@ const AnalysisEdit = (
         controlId={form.note.name}
         validationState={form.note.status && !form.note.status.valid ? 'error' : null}
       >
-        {labelFormat('Kommentar til analysen', 1)}
+        <Label label="Kommentar til analysen" md={1} />
         <Col md={5}>
           <FormControl
             className="note"
@@ -430,7 +373,7 @@ const AnalysisEdit = (
         </Col>
       </FormGroup>
       <FormGroup>
-        {labelFormat('Avslutt analyse', 1)}
+        <Label label="Avslutt analyse" md={1} />
         <Col md={5}>
           <Radio inline readOnly>
             Ja
@@ -443,13 +386,11 @@ const AnalysisEdit = (
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={editAnalysisEventLocal(
-        appSession,
-        form,
-        store,
-        editAnalysisEvent,
-        params
-      )}
+      onClickSave={() =>
+        goToAnalysis(
+          editAnalysisEventLocal(appSession, form, editAnalysisEvent, params),
+          appSession
+        )}
     />
     <NewLine />
     <Form horizontal>
