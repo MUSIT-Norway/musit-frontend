@@ -228,14 +228,18 @@ export class AppComponent extends Component {
         </div>
 
         <footer
-          style={window.location.href.toLowerCase().includes('/home') ? { height: '200px' } : {}}
+          style={
+            window.location.href.toLowerCase().includes('/home')
+              ? { height: '200px' }
+              : {}
+          }
           className={this.getFooterClass()}
         >
           {'Build number: ' +
             (this.props.appSession.buildInfo &&
               this.props.appSession.buildInfo.buildInfoBuildNumber)}
           {window.location.href.toLowerCase().includes('/home')
-            ? <Logos style={{ textAlign: 'center'}} />
+            ? <Logos style={{ textAlign: 'center' }} />
             : ''}
         </footer>
       </div>
