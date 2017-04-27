@@ -30,6 +30,7 @@ import SampleIndexMultiple from './poc/multiple/SampleIndex';
 import SampleEditMultiple from './poc/multiple/SampleEdit';
 import SampleIndexSingle from './poc/single/SampleIndex';
 import SampleEditSingle from './poc/single/SampleEdit';
+import HomeView from './modules/home/HomePage';
 
 export default () => {
   return (
@@ -102,6 +103,7 @@ export default () => {
         </Route>
         <Route path="search/objects" component={ObjectSearchComponent} />
         <Route path="about" component={AboutView} />
+        <Route path="home" component={HomeView} />
         -- Catch all route
         <Route path="*" component={NotFound} status={404} />
       </Route>

@@ -1,4 +1,10 @@
-import { isNumberInRange, isNumber, isSpecialPhone, isRequired, isNonEmptyArray } from '../validators';
+import {
+  isNumberInRange,
+  isNumber,
+  isSpecialPhone,
+  isRequired,
+  isNonEmptyArray
+} from '../validators';
 
 describe('validators', () => {
   describe('isRequired', () => {
@@ -54,9 +60,6 @@ describe('validators', () => {
     });
   });
 
-
-
-
   describe('isDecimalNumber', () => {
     it('should accept number without decimal points', () => {
       const error = isNumber(0, 3)('test')('4');
@@ -104,7 +107,6 @@ describe('validators', () => {
     });
   });
 
-
   describe('isNonEmptyArray', () => {
     it('should fail on empty array', () => {
       const error = isNonEmptyArray('Feil')([]);
@@ -112,11 +114,8 @@ describe('validators', () => {
     });
 
     it('should not fail on non-empty array', () => {
-      const error = isNonEmptyArray('Array')([1,2,3]);
+      const error = isNonEmptyArray('Array')([1, 2, 3]);
       expect(error).toBe(undefined);
     });
   });
-
-
-
 });
