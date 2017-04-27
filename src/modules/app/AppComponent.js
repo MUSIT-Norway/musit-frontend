@@ -18,6 +18,7 @@ import {
   clearNodes$ as clearNodePicklist$
 } from './pickList';
 import Config from '../../config';
+import Logos from '../../components/logos/Logos';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -226,10 +227,16 @@ export class AppComponent extends Component {
           {this.props.children}
         </div>
 
-        <footer className={this.getFooterClass()}>
+        <footer
+          style={window.location.href.toLowerCase().includes('/home') ? { height: '200px' } : {}}
+          className={this.getFooterClass()}
+        >
           {'Build number: ' +
             (this.props.appSession.buildInfo &&
               this.props.appSession.buildInfo.buildInfoBuildNumber)}
+          {window.location.href.toLowerCase().includes('/home')
+            ? <Logos style={{ textAlign: 'center'}} />
+            : ''}
         </footer>
       </div>
     );

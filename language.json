@@ -224,6 +224,7 @@
         }
       },
       "texts": {
+        "musitBase": "MUSIT base",
         "freetext": "Free text",
         "makeChoice": "Please choose...",
         "datePerformed": "Performed date",
@@ -892,6 +893,7 @@
         }
       },
       "texts": {
+        "musitBase": "MUSITbasen",
         "freetext": "Fritekst",
         "makeChoice": "Vennligst velg...",
         "datePerformed": "Utført dato",
