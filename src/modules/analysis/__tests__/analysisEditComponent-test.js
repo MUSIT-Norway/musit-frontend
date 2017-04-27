@@ -5,7 +5,7 @@ import AnalysisEditComponent, {
   editAnalysisEventLocal,
   goToAnalysis
 } from '../AnalysisEditComponent';
-import { fieldsArray } from '../analysisAddForm';
+import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
 import { Observable } from 'rxjs';
 const objectsData = [
@@ -65,6 +65,7 @@ const form = fieldsArray.reduce(
 
 const appSession = {
   museumId: 99,
+  collectionId: '1234',
   accessToken: '1234'
 };
 
@@ -83,11 +84,11 @@ describe('AnalysisEditComponent', () => {
   it('Call goToAnalysis.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = () => Observable.of(null).toPromise();
-    const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
     const analysisId = 2;
-    fn(analysisId).then(() => {
-      expect(url).toBe('/museum/99/collections/undefined/analysis/edit/2');
+    const fakeFn = () => Observable.of(null).toPromise();
+    const fn = goToAnalysis(fakeFn, appSession, analysisId, fakeGoTo);
+    fn().then(() => {
+      expect(url).toBe('/museum/99/collections/1234/analysis/2');
       done();
     });
   });
@@ -95,7 +96,12 @@ describe('AnalysisEditComponent', () => {
   it('should fire updateForm when input is changing', () => {
     const updateForm = sinon.spy();
     const wrapper = mount(
-      <AnalysisEditComponent form={form} updateForm={updateForm} store={store} />
+      <AnalysisEditComponent
+        form={form}
+        updateForm={updateForm}
+        store={store}
+        params={param}
+      />
     );
     wrapper.find('.note').simulate('change', {
       target: {
@@ -109,7 +115,12 @@ describe('AnalysisEditComponent', () => {
   it('should render properly', () => {
     const updateForm = sinon.spy();
     const wrapper = shallow(
-      <AnalysisEditComponent form={form} updateForm={updateForm} store={store} />
+      <AnalysisEditComponent
+        form={form}
+        updateForm={updateForm}
+        store={store}
+        params={param}
+      />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });

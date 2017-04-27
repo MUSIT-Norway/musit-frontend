@@ -109,4 +109,4 @@ export const fieldsArray = [
   term
 ];
 
-export default createForm('analysisAddForm.js', fieldsArray);
+export default createForm('analysisForm.js', fieldsArray);

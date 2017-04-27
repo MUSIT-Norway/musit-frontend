@@ -3,11 +3,10 @@ import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import AnalysisAddComponent, {
   saveAnalysisEventLocal,
-  goToAnalysis
+  goToAnalysisWhenComplete
 } from '../AnalysisAddComponent';
-import { fieldsArray } from '../analysisAddForm';
+import { fieldsArray } from '../analysisForm';
 import sinon from 'sinon';
-import { Observable } from 'rxjs';
 
 const objectsData = [
   {
@@ -61,13 +60,14 @@ const form = fieldsArray.reduce(
 
 const appSession = {
   museumId: 99,
+  collectionId: '1234',
   accessToken: '1234'
 };
 
 describe('AnalysisAddComponent', () => {
   it('saveAnalysisEventLocal should call saveAnalysisEvent', () => {
     const saveAnalysisEvent = sinon.spy();
-    saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent)(1);
+    saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent);
     expect(saveAnalysisEvent.calledOnce).toBe(true);
     expect(saveAnalysisEvent.getCall(0).args[0].museumId).toBe(99);
     expect(saveAnalysisEvent.getCall(0).args[0].token).toBe('1234');
@@ -76,14 +76,13 @@ describe('AnalysisAddComponent', () => {
     );
   });
 
-  it('Call goToAnalysis.', done => {
+  it('Call goToAnalysisWhenComplete.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = () => Observable.of(null).toPromise();
-    const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
-    const analysisId = 2;
-    fn(analysisId).then(() => {
-      expect(url).toBe('/museum/99/collections/undefined/analysis/2');
+    const fakeFn = new Promise(res => res('2'));
+    const fn = goToAnalysisWhenComplete(fakeFn, appSession, fakeGoTo);
+    fn.then(() => {
+      expect(url).toBe('/museum/99/collections/1234/analysis/2');
       done();
     });
   });

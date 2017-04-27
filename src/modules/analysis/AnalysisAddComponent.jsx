@@ -1,6 +1,6 @@
 /* @flow */
-import React, { PropTypes } from 'react';
-import { I18n } from 'react-i18nify';
+import React, {PropTypes} from 'react';
+import {I18n} from 'react-i18nify';
 import {
   Radio,
   PageHeader,
@@ -14,8 +14,8 @@ import {
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import {SaveCancel} from '../../components/formfields/index';
-const { Table } = require('reactable');
-import { AppSession } from '../app/appSession';
+const {Table} = require('reactable');
+import {AppSession} from '../app/appSession';
 import {hashHistory} from 'react-router';
 import Config from '../../config';
 
@@ -69,7 +69,7 @@ type Props = {
   saveAnalysisEvent: Function
 };
 
-// TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
+// TODO rename and convert to stateless function component e.g. ({ label, md = 1}) (curlies)
 // TODO and call it like this <LabelFormat label="Label" md={2} /> instead of {labelFormat("Hei", 2)}
 const labelFormat = (label, md = 1) => (
   <Col md={md} style={{ textAlign: 'right', padding: '7px' }}>
@@ -107,14 +107,14 @@ const NewLine = () => (
 const getValue = field => field.rawValue || '';
 
 export const saveAnalysisEventLocal = (appSession: AppSession, form: FormData, store: Store, saveAnalysisEvent: Function) =>
-  () => saveAnalysisEvent({
+  saveAnalysisEvent({
     museumId: appSession.museumId,
     data: {
       analysisTypeId: getValue(form.analysisTypeId),
       eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
       objectIds: store.objectsData.map((a) => a.uuid),
-      result : {
+      result: {
         by: getValue(form.by),
         expirationDate: getValue(form.expirationDate),
         reason: getValue(form.reason),
@@ -134,29 +134,27 @@ const updateFormField = (field, updateForm) =>
   });
 
 
-export const goToAnalysis = (fn: Function, appSession: AppSession, goTo: Function  = hashHistory.push) => {
-  return (analysisId: string) => {
-    return fn(analysisId).then(() => goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
-  };
-};
+export const goToAnalysisWhenComplete = (idPromise: Promise<any>, appSession: AppSession, goTo: Function = hashHistory.push) =>
+  idPromise.then(Config.magasin.urls.client.analysis.viewAnalysis(appSession)).then(goTo);
 
-const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } : Props) => (
+const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession} : Props) => (
   <div>
     <br/>
     <PageHeader style={{ paddingLeft: 20 }}>{ I18n.t('musit.analysis.registeringAnalysis') }</PageHeader>
-    <Col md={12}>
-      <strong>HID:</strong>{' '}{getValue(form.id)}
-    </Col>
-    <Col md={12}>
-      <strong>Registrert:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(form.registeredBy)}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(form.registeredDate)}
-    </Col>
-    <Col md={12}>
-      <strong>Sist endret:</strong>{' '}<FontAwesome name='user'/>{' '}{getValue(form.doneBy)}{' '}
-      <FontAwesome name='clock-o'/>{' '}{getValue(form.doneDate)}{' '}<Button bsStyle="link">Se endringshistorikk</Button>
-    </Col>
-    <NewLine />
-    <Form>
+    <Form horizontal>
+      <FormGroup>
+        {labelFormat('Type analyse', 1)}
+        <Col md={2}>
+          <FormControl
+            componentClass="select"
+            placeholder="Velg kategori"
+            onChange={updateFormField(form.analysisTypeId, updateForm)}
+          >
+            <option>Velg kategori</option>
+            {store.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
+          </FormControl>
+        </Col>
+      </FormGroup>
       <FormGroup>
         <FieldGroup
           id="formControlsText"
@@ -166,6 +164,9 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
           onChange={updateFormField(form.caseNumbers, updateForm)}
         />
       </FormGroup>
+    </Form>
+    < Form>
+
       <FormGroup>
         <AddButton
           id="1"
@@ -178,6 +179,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     <Form inline>
       <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
       <Col mdOffset={1} md={5}>
+
         <Table
           className="table"
           columns={[
@@ -238,19 +240,6 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     <NewLine />
     <Well>
       <Form horizontal>
-        <FormGroup>
-          {labelFormat('Type analyse', 1)}
-          <Col md={2}>
-            <FormControl
-              componentClass="select"
-              placeholder="Velg kategori"
-              onChange={updateFormField(form.analysisTypeId, updateForm)}
-            >
-              <option>Velg kategori</option>
-              {store.analysisTypes.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
-            </FormControl>
-          </Col>
-        </FormGroup>
         <FormGroup>
           <FieldGroup
             id="formControlsText"
@@ -405,7 +394,7 @@ const AnalysisAdd = ({ form, updateForm, store, saveAnalysisEvent, appSession } 
     </Form>
     <NewLine />
     <SaveCancel
-      onClickSave={goToAnalysis(saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent), appSession)}
+      onClickSave={() => goToAnalysisWhenComplete(saveAnalysisEventLocal(appSession, form, store, saveAnalysisEvent), appSession)}
     />
     <NewLine />
     <Form horizontal>

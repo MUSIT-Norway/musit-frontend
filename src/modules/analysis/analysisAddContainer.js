@@ -1,6 +1,6 @@
 import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
-import analysisAddForm from './analysisAddForm';
+import analysisForm from './analysisForm';
 import AnalysisAddComponent from './AnalysisAddComponent';
 import store$, {
   loadAnalysisTypes$,
@@ -12,7 +12,7 @@ import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import { toPromise } from '../../shared/util';
 
-const { form$, updateForm$, loadForm$ } = analysisAddForm;
+const { form$, updateForm$, loadForm$ } = analysisForm;
 
 const data = {
   appSession$: { type: React.PropTypes.object.isRequired },
