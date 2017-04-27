@@ -230,7 +230,7 @@ export class AppComponent extends Component {
         <footer
           style={
             window.location.href.toLowerCase().includes('/home')
-              ? { height: '200px' }
+              ? { height: '400px' }
               : {}
           }
           className={this.getFooterClass()}
@@ -239,7 +239,11 @@ export class AppComponent extends Component {
             (this.props.appSession.buildInfo &&
               this.props.appSession.buildInfo.buildInfoBuildNumber)}
           {window.location.href.toLowerCase().includes('/home')
-            ? <Logos style={{ textAlign: 'center' }} />
+            ?
+            <div style={{ textAlign: 'center' }}>
+              {I18n.t('musit.texts.footerText')}
+              <Logos/>
+            </div>
             : ''}
         </footer>
       </div>
