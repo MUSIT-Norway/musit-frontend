@@ -32,7 +32,7 @@ type Location = {
 type AnalysisType = { id: number, name: string };
 
 type Store = {
-  analysisTypes: AnalysisType[]
+  analysisTypes: Array<AnalysisType>
 };
 
 type Props = {
