@@ -65,6 +65,7 @@ const form = fieldsArray.reduce(
 
 const appSession = {
   museumId: 99,
+  collectionId: '456',
   accessToken: '1234'
 };
 
@@ -132,7 +133,7 @@ describe('AnalysisEditComponent', () => {
     const fakeFn = new Promise(res => res({ id: 2 }));
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
     fn.then(() => {
-      expect(url).toBe('/museum/99/collections/undefined/analysis/edit/2');
+      expect(url).toBe('/museum/99/collections/456/analysis/edit/2');
       done();
     });
   });
