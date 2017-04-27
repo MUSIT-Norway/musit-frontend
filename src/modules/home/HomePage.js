@@ -8,20 +8,20 @@ import {
   FormControl,
   InputGroup,
   PageHeader,
-Col
+  Col
 } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Logos from '../../components/logos/Logos';
 import inject from 'react-rxjs/dist/RxInject';
 import FontAwesome from 'react-fontawesome';
 
-export const AboutPage = () => {
+export const HomePage = () => {
   return (
     <Grid>
       <Row>
         <PageHeader>MUSITbasen</PageHeader>
       </Row>
-        <Row>
+      <Row>
         <form>
           <FormGroup>
             <InputGroup>
@@ -31,8 +31,6 @@ export const AboutPage = () => {
           </FormGroup>
         </form>
       </Row>
-
-
 
       <Row>
         <Col md={6}>
@@ -50,8 +48,8 @@ export const AboutPage = () => {
       <Row style={{ backgroundColor: '#e7e7e7', color: 'black' }}>
         <Logos />
       </Row>
-     </Grid>
+    </Grid>
   );
 };
 
-export default inject({}, {}, { getLocale: () => I18n._locale })(AboutPage);
+export default inject({}, {}, { getLocale: () => I18n._locale })(HomePage);
