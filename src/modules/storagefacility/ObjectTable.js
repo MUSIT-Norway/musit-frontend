@@ -76,17 +76,17 @@ export default class ObjectGrid extends Component {
                       </td>
                       <td>
                         {isMainObject &&
-                        <a
-                          className="onMoveClick"
-                          href=""
-                          onClick={e => {
-                            e.preventDefault();
-                            this.props.onMove(c);
-                          }}
-                          title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
-                        >
-                          <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
-                        </a>}
+                          <a
+                            className="onMoveClick"
+                            href=""
+                            onClick={e => {
+                              e.preventDefault();
+                              this.props.onMove(c);
+                            }}
+                            title={I18n.t('musit.grid.object.iconTooltip.moveObject')}
+                          >
+                            <FontAwesome style={{ fontSize: '1.5em' }} name="truck" />
+                          </a>}
                       </td>
                       <td>
                         {isMainObject &&

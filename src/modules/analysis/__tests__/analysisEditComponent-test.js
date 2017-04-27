@@ -83,7 +83,7 @@ describe('AnalysisEditComponent', () => {
   it('Call goToAnalysis.', done => {
     let url;
     const fakeGoTo = goToUrl => url = goToUrl;
-    const fakeFn = new Promise((res) => res(2));
+    const fakeFn = new Promise(res => res(2));
     const fn = goToAnalysis(fakeFn, appSession, fakeGoTo);
     fn.then(() => {
       expect(url).toBe('/museum/99/collections/undefined/analysis/edit/2');

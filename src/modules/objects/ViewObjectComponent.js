@@ -31,17 +31,15 @@ export const ViewObjectComponent = (
       <div style={{ paddingBottom: 10 }}>
         <Button
           className="primary"
-          onClick={() => hashHistory.push({
-            pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
-            state: [ objectData ]
-          })}
+          onClick={() =>
+            hashHistory.push({
+              pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
+              state: [objectData]
+            })}
         >
           Ny analyse
         </Button>
-        <Button
-          className="primary"
-          onClick={() => hashHistory.push('/')}
-        >
+        <Button className="primary" onClick={() => hashHistory.push('/')}>
           Ny prøve
         </Button>
       </div>
@@ -49,11 +47,14 @@ export const ViewObjectComponent = (
         <Tab title="Hendelser" eventKey={0} id="1">
           <EventTableComponent
             events={events}
-            onClick={(event) => {
+            onClick={event => {
               if (event.type === 'Analysis') {
                 hashHistory.push({
-                  pathname: Config.magasin.urls.client.analysis.viewAnalysis(appSession, event.id),
-                  state: [ objectData ]
+                  pathname: Config.magasin.urls.client.analysis.viewAnalysis(
+                    appSession,
+                    event.id
+                  ),
+                  state: [objectData]
                 });
               }
             }}

@@ -107,7 +107,7 @@ describe('AnalysisSampleFormPageEdit', () => {
           },
           persons: {
             name: 'persons',
-            defaultValue: [{name: 'Arne And', role: 'created', date: '1998-01-2001'}]
+            defaultValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
           }
         }}
         updateForm={updateForm}

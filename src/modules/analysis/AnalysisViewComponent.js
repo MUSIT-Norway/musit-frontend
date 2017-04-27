@@ -41,9 +41,7 @@ type Props = { form: FormData, store: Store, appSession: AppSession, params: Par
 
 const getAnalysisTypeTerm = (form, store) => {
   if (form.analysisTypeId && store.analysisTypes) {
-    const foundType = store.analysisTypes.find(
-      a => a.id === form.analysisTypeId
-    );
+    const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId);
     return foundType ? foundType.name : '';
   }
 };

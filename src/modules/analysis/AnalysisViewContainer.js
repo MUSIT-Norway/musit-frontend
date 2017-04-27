@@ -25,7 +25,9 @@ const props = {
   loadAnalysis: toPromise(Analysis.getAnalysisWithDetails())
 };
 
-export const onMount = ({ getAnalysisTypes, appSession, loadForm, loadAnalysis, params }) => {
+export const onMount = (
+  { getAnalysisTypes, appSession, loadForm, loadAnalysis, params }
+) => {
   const inputParams = {
     museumId: appSession.museumId,
     id: params.analysisId,
@@ -36,8 +38,6 @@ export const onMount = ({ getAnalysisTypes, appSession, loadForm, loadAnalysis, 
   loadAnalysis(inputParams).then(analysis => loadForm(Analysis.fromJsonToForm(analysis)));
 };
 
-export default flowRight([
-  inject(data, commands, props),
-  mount(onMount),
-  makeUrlAware
-])(AnalysisViewComponent);
+export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
+  AnalysisViewComponent
+);

@@ -58,19 +58,11 @@ const getTableRow = (museumNo: ?string, subNo: ?string, term: ?string) => {
 
 const getObjectsValue = (form: FormData) => {
   if (form.type.rawValue === 'AnalysisCollection') {
-    return form.events.rawValue ? form.events.rawValue.map(a =>
-      getTableRow(
-        a.museumNo,
-        a.subNo,
-        a.term
-      )
-    ) : [];
+    return form.events.rawValue
+      ? form.events.rawValue.map(a => getTableRow(a.museumNo, a.subNo, a.term))
+      : [];
   }
-  return getTableRow(
-    form.museumNo.rawValue,
-    form.subNo.rawValue,
-    form.term.rawValue
-  );
+  return getTableRow(form.museumNo.rawValue, form.subNo.rawValue, form.term.rawValue);
 };
 
 const getValue = field => field.rawValue || '';
@@ -81,27 +73,27 @@ export const editAnalysisEventLocal = (
   editAnalysisEvent: Function,
   params: Params
 ) =>
-    editAnalysisEvent({
-      id: params.analysisId,
-      museumId: appSession.museumId,
-      data: {
-        analysisTypeId: getValue(form.analysisTypeId),
-        eventDate: getValue(form.registeredDate),
-        note: getValue(form.note),
-        objectIds: form.events.rawValue && form.events.rawValue
-          ? form.events.rawValue.map(a => a.objectId)
-          : form.objectId.rawValue,
-        restriction: {
-          by: getValue(form.by),
-          expirationDate: getValue(form.expirationDate),
-          reason: getValue(form.reason),
-          caseNumbers: getValue(form.caseNumbers),
-          cancelledBy: getValue(form.cancelledBy),
-          cancelledReason: getValue(form.cancelledReason)
-        }
-      },
-      token: appSession.accessToken
-    });
+  editAnalysisEvent({
+    id: params.analysisId,
+    museumId: appSession.museumId,
+    data: {
+      analysisTypeId: getValue(form.analysisTypeId),
+      eventDate: getValue(form.registeredDate),
+      note: getValue(form.note),
+      objectIds: form.events.rawValue && form.events.rawValue
+        ? form.events.rawValue.map(a => a.objectId)
+        : form.objectId.rawValue,
+      restriction: {
+        by: getValue(form.by),
+        expirationDate: getValue(form.expirationDate),
+        reason: getValue(form.reason),
+        caseNumbers: getValue(form.caseNumbers),
+        cancelledBy: getValue(form.cancelledBy),
+        cancelledReason: getValue(form.cancelledReason)
+      }
+    },
+    token: appSession.accessToken
+  });
 
 const updateFormField = (field, updateForm) =>
   e =>
@@ -114,7 +106,9 @@ export const goToAnalysis = (
   fn: Promise<*>,
   appSession: AppSession,
   goTo: Function = hashHistory.push
-) => fn.then((updated) => goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, updated.id)));
+) =>
+  fn.then(updated =>
+    goTo(Config.magasin.urls.client.analysis.editAnalysis(appSession, updated.id)));
 
 const AnalysisEdit = (
   { params, form, store, updateForm, editAnalysisEvent, appSession }: Props
@@ -229,9 +223,15 @@ const AnalysisEdit = (
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
-              {store.analysisTypes.map(a =>
-                <option key={a.id} value={a.id} selected={form.analysisTypeId.rawValue === a.id}>{a.name}</option>
-              )}
+              {store.analysisTypes.map(a => (
+                <option
+                  key={a.id}
+                  value={a.id}
+                  selected={form.analysisTypeId.rawValue === a.id}
+                >
+                  {a.name}
+                </option>
+              ))}
             </FormControl>
           </Col>
         </FormGroup>
@@ -383,7 +383,10 @@ const AnalysisEdit = (
     <NewLine />
     <SaveCancel
       onClickSave={() =>
-        goToAnalysis(editAnalysisEventLocal(appSession, form, editAnalysisEvent, params), appSession)}
+        goToAnalysis(
+          editAnalysisEventLocal(appSession, form, editAnalysisEvent, params),
+          appSession
+        )}
     />
     <NewLine />
     <Form horizontal>

@@ -1,5 +1,3 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
 exports[`AnalysisEditComponent should render properly 1`] = `
 <div>
   <br />
@@ -7,72 +5,58 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     bsClass="page-header"
     style={
       Object {
-        "paddingLeft": 20,
+        "paddingLeft": 20
       }
-    }
-  >
+    }>
     Registrer analyse
   </PageHeader>
   <Col
     bsClass="col"
     componentClass="div"
-    md={12}
-  >
+    md={12}>
     <strong>
       HID:
     </strong>
      
-    123
   </Col>
   <Col
     bsClass="col"
     componentClass="div"
-    md={12}
-  >
+    md={12}>
     <strong>
       Registrert:
     </strong>
      
     <FontAwesome
-      name="user"
-    />
+      name="user" />
      
-    7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e
      
     <FontAwesome
-      name="clock-o"
-    />
+      name="clock-o" />
      
-    2017-03-16T14:37:45+00:00
   </Col>
   <Col
     bsClass="col"
     componentClass="div"
-    md={12}
-  >
+    md={12}>
     <strong>
       Sist endret:
     </strong>
      
     <FontAwesome
-      name="user"
-    />
+      name="user" />
      
-    7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e
      
     <FontAwesome
-      name="clock-o"
-    />
+      name="clock-o" />
      
-    12.12.2012
      
     <Button
       active={false}
       block={false}
       bsClass="btn"
       bsStyle="link"
-      disabled={false}
-    >
+      disabled={false}>
       Se endringshistorikk
     </Button>
   </Col>
@@ -81,29 +65,24 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     bsClass="form"
     componentClass="form"
     horizontal={false}
-    inline={false}
-  >
+    inline={false}>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <FieldGroup
         id="formControlsText"
         label="saksnummer"
         md={1}
-        onChange={[Function]}
+        onChange={[Function anonymous]}
         type="text"
-        value="1234"
-      />
+        value="1234" />
     </FormGroup>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <AddButton
         id="1"
         label="Legg til saksnummer"
         md={5}
-        mdOffset={0}
-      />
+        mdOffset={0} />
     </FormGroup>
   </Form>
   <NewLine />
@@ -111,13 +90,11 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     bsClass="form"
     componentClass="form"
     horizontal={false}
-    inline={true}
-  >
+    inline={true}>
     <Col
       bsClass="col"
       componentClass="div"
-      md={12}
-    >
+      md={12}>
       <h5>
         <b>
           Objekt/prøve
@@ -128,16 +105,14 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       bsClass="col"
       componentClass="div"
       md={5}
-      mdOffset={1}
-    >
+      mdOffset={1}>
       <Table
         bordered={false}
         bsClass="table"
         condensed={false}
         hover={false}
         responsive={true}
-        striped={false}
-      >
+        striped={false}>
         <thead>
           <tr>
             <th>
@@ -164,8 +139,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       id="2"
       label="Legg til objekt"
       md={11}
-      mdOffset={1}
-    />
+      mdOffset={1} />
   </Form>
   <NewLine />
   <Form
@@ -175,18 +149,15 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     inline={false}
     style={
       Object {
-        "paddingLeft": 20,
+        "paddingLeft": 20
       }
-    }
-  >
+    }>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <Col
         bsClass="col"
         componentClass="div"
-        md={12}
-      >
+        md={12}>
         <h5>
           <b>
             Personer tilknyttet analysen
@@ -195,39 +166,32 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <FieldGroup
         id="responsible"
         label="Navn"
         md={1}
-        onChange={[Function]}
+        onChange={[Function anonymous]}
         placeholder="Fornavn Etternavn"
         type="text"
-        value="7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e"
-      />
+        value="" />
       <LabelFormat
         label="Rolle"
-        md={1}
-      />
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
-        md={1}
-      >
+        md={1}>
         <FormControl
           bsClass="form-control"
           componentClass="select"
-          placeholder="Velg rolle"
-        >
+          placeholder="Velg rolle">
           <option
-            value="Velgsted"
-          >
+            value="Velgsted">
             Velg rolle
           </option>
           <option
-            value="other"
-          >
+            value="other">
             ...
           </option>
         </FormControl>
@@ -236,36 +200,29 @@ exports[`AnalysisEditComponent should render properly 1`] = `
         id="3"
         label="Legg til person"
         md={2}
-        mdOffset={0}
-      />
+        mdOffset={0} />
     </FormGroup>
   </Form>
   <NewLine />
   <FormGroup
-    bsClass="form-group"
-  >
+    bsClass="form-group">
     <LabelFormat
       label="Analysested"
-      md={1}
-    />
+      md={1} />
     <Col
       bsClass="col"
       componentClass="div"
-      md={2}
-    >
+      md={2}>
       <FormControl
         bsClass="form-control"
         componentClass="select"
-        placeholder="Velg sted"
-      >
+        placeholder="Velg sted">
         <option
-          value="Velgsted"
-        >
+          value="Velgsted">
           Velg sted
         </option>
         <option
-          value="other"
-        >
+          value="other">
           ...
         </option>
       </FormControl>
@@ -273,158 +230,132 @@ exports[`AnalysisEditComponent should render properly 1`] = `
   </FormGroup>
   <NewLine />
   <Well
-    bsClass="well"
-  >
+    bsClass="well">
     <Form
       bsClass="form"
       componentClass="form"
       horizontal={true}
-      inline={false}
-    >
+      inline={false}>
       <FormGroup
-        bsClass="form-group"
-      >
+        bsClass="form-group">
         <LabelFormat
           label="Type analyse"
-          md={1}
-        />
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
-          md={2}
-        >
+          md={2}>
           <FormControl
             bsClass="form-control"
             componentClass="select"
-            onChange={[Function]}
-            placeholder="Velg kategori"
-          >
+            onChange={[Function anonymous]}
+            placeholder="Velg kategori">
             <option>
               Velg kategori
             </option>
             <option
               selected={false}
-              value="1bbf15cb-8348-4e66-99a4-bc314da57a42"
-            >
+              value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
               3D-skanning, laser
             </option>
             <option
               selected={false}
-              value="b39399ab-aabd-4ebc-903b-adcf6876a364"
-            >
+              value="b39399ab-aabd-4ebc-903b-adcf6876a364">
               3D-skanning, strukturert lys
             </option>
           </FormControl>
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group"
-      >
+        bsClass="form-group">
         <FieldGroup
           id="formControlsText"
           label="Ekstern kilde"
           md={1}
-          onChange={[Function]}
+          onChange={[Function anonymous]}
           placeholder="http://www.lenke.no"
           type="text"
-          value="www.musit.uio.no"
-        />
+          value="" />
         <Col
           bsClass="col"
           componentClass="div"
-          md={2}
-        >
+          md={2}>
           <Button
             active={false}
             block={false}
             bsClass="btn"
             bsStyle="default"
-            disabled={false}
-          >
+            disabled={false}>
             Lagre
           </Button>
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group"
-      >
+        bsClass="form-group">
         <FieldGroup
           id="formControlsText"
           label="Ladt opp fil"
           md={1}
-          type="text"
-        />
+          type="text" />
         <Col
           bsClass="col"
           componentClass="div"
-          md={2}
-        >
+          md={2}>
           <Button
             active={false}
             block={false}
             bsClass="btn"
             bsStyle="default"
-            disabled={false}
-          >
+            disabled={false}>
             Bla gjennom
           </Button>
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group"
-      >
+        bsClass="form-group">
         <LabelFormat
           label="Kommentar / resultat"
-          md={1}
-        />
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
-          md={5}
-        >
+          md={5}>
           <FormControl
             bsClass="form-control"
             componentClass="textarea"
-            onChange={[Function]}
+            onChange={[Function anonymous]}
             placeholder=""
-            value="comments"
-          />
+            value="" />
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group"
-      >
+        bsClass="form-group">
         <LabelFormat
           label="Klausulering"
-          md={1}
-        />
+          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
-          md={5}
-        >
+          md={5}>
           <Radio
             bsClass="radio"
             checked={true}
             disabled={false}
             inline={true}
-            readOnly={true}
-          >
+            readOnly={true}>
             Ja
           </Radio>
           <Radio
             bsClass="radio"
             disabled={false}
             inline={true}
-            readOnly={true}
-          >
+            readOnly={true}>
             Nei
           </Radio>
         </Col>
       </FormGroup>
       <FormGroup
-        bsClass="form-group"
-      >
+        bsClass="form-group">
         <Panel
           bsClass="panel"
           bsStyle="default"
@@ -434,94 +365,79 @@ exports[`AnalysisEditComponent should render properly 1`] = `
           style={
             Object {
               "backgroundColor": "#f5f5f5",
-              "border": "none",
+              "border": "none"
             }
-          }
-        >
+          }>
           <FormGroup
-            bsClass="form-group"
-          >
+            bsClass="form-group">
             <FieldGroup
               id="navn"
               label="Klausulert for"
               md={1}
-              onChange={[Function]}
+              onChange={[Function anonymous]}
               placeholder="Fornavn Etternavn"
               type="text"
-              value="Test name"
-            />
+              value="" />
           </FormGroup>
           <FormGroup
-            bsClass="form-group"
-          >
+            bsClass="form-group">
             <FieldGroup
               id="navn"
               label="Årsak til klausulering"
               md={1}
-              onChange={[Function]}
+              onChange={[Function anonymous]}
               type="text"
-              value="Reason for Restrictions"
-            />
+              value="" />
           </FormGroup>
           <FormGroup
-            bsClass="form-group"
-          >
+            bsClass="form-group">
             <FieldGroup
               id="Saksnummer"
               label="Saksnummer"
               md={1}
-              onChange={[Function]}
+              onChange={[Function anonymous]}
               type="text"
-              value="1234"
-            />
+              value="1234" />
           </FormGroup>
           <FormGroup
-            bsClass="form-group"
-          >
+            bsClass="form-group">
             <AddButton
               id="3"
               label="Legg til flere saksnummer"
               md={11}
-              mdOffset={1}
-            />
+              mdOffset={1} />
           </FormGroup>
           <FormGroup
-            bsClass="form-group"
-          >
+            bsClass="form-group">
             <FieldGroup
               id="navn"
               label="Sluttdato"
               md={1}
               readOnly={true}
               type="text"
-              value="13.12.2012"
-            />
+              value="" />
           </FormGroup>
           <FormGroup
-            bsClass="form-group"
-          >
+            bsClass="form-group">
             <FieldGroup
               id="navn"
               label="Opphevet av"
               md={1}
-              onChange={[Function]}
+              onChange={[Function anonymous]}
               placeholder="Fornavn Etternavn"
               type="text"
-              value="Opphevet av"
-            />
+              value="" />
           </FormGroup>
           <FormGroup
-            bsClass="form-group"
-          >
+            bsClass="form-group">
             <FieldGroup
               id="navn"
               label="Årsak til oppheving"
               md={1}
-              onChange={[Function]}
+              onChange={[Function anonymous]}
               placeholder=""
               type="text"
-              value="Årsak til oppheving"
-            />
+              value="" />
           </FormGroup>
         </Panel>
       </FormGroup>
@@ -534,52 +450,43 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     inline={false}
     style={
       Object {
-        "paddingLeft": 20,
+        "paddingLeft": 20
       }
-    }
-  >
+    }>
     <FormGroup
       bsClass="form-group"
       controlId="note"
-      validationState={null}
-    >
+      validationState={null}>
       <LabelFormat
         label="Kommentar til analysen"
-        md={1}
-      />
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
-        md={5}
-      >
+        md={5}>
         <FormControl
           bsClass="form-control"
           className="note"
           componentClass="textarea"
-          onChange={[Function]}
+          onChange={[Function anonymous]}
           placeholder="note"
-          value="test note"
-        />
+          value="test note" />
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <LabelFormat
         label="Avslutt analyse"
-        md={1}
-      />
+        md={1} />
       <Col
         bsClass="col"
         componentClass="div"
-        md={5}
-      >
+        md={5}>
         <Radio
           bsClass="radio"
           disabled={false}
           inline={true}
-          readOnly={true}
-        >
+          readOnly={true}>
           Ja
         </Radio>
         <Radio
@@ -587,8 +494,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
           checked={true}
           disabled={false}
           inline={true}
-          readOnly={true}
-        >
+          readOnly={true}>
           Nei
         </Radio>
       </Col>
@@ -596,23 +502,19 @@ exports[`AnalysisEditComponent should render properly 1`] = `
   </Form>
   <NewLine />
   <SaveCancel
-    onClickSave={[Function]}
-  />
+    onClickSave={[Function onClickSave]} />
   <NewLine />
   <Form
     bsClass="form"
     componentClass="form"
     horizontal={true}
-    inline={false}
-  >
+    inline={false}>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <Col
         bsClass="col"
         componentClass="div"
-        mdOffset={1}
-      >
+        mdOffset={1}>
         <h5>
           <b>
             Endringshistorikk
@@ -621,46 +523,35 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <Col
         bsClass="col"
         componentClass="div"
-        mdOffset={1}
-      >
-        7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e
+        mdOffset={1}>
          - 
-        2017-03-16T14:37:45+00:00
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <Col
         bsClass="col"
         componentClass="div"
-        mdOffset={1}
-      >
-        7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e
+        mdOffset={1}>
          - 
-        12.12.2012
       </Col>
     </FormGroup>
     <FormGroup
-      bsClass="form-group"
-    >
+      bsClass="form-group">
       <Col
         bsClass="col"
         componentClass="div"
-        mdOffset={1}
-      >
+        mdOffset={1}>
         <Button
           active={false}
           block={false}
           bsClass="btn"
           bsStyle="link"
-          disabled={false}
-        >
+          disabled={false}>
           Se mer
         </Button>
       </Col>

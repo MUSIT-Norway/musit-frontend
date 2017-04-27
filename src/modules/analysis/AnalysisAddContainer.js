@@ -34,8 +34,6 @@ export const onMount = ({ appSession, getAnalysisTypes }) =>
     token: appSession.accessToken
   });
 
-export default flowRight([
-  inject(data, commands, props),
-  mount(onMount),
-  makeUrlAware
-])(AnalysisAddComponent);
+export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
+  AnalysisAddComponent
+);

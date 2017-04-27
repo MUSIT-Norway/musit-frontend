@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 class Analysis {}
 
-Analysis.fromJsonToForm = (jsonObj) =>
+Analysis.fromJsonToForm = jsonObj =>
   Object.keys(jsonObj).reduce(
     (acc, attributeName) => [
       ...acc,
@@ -55,8 +55,8 @@ Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
         MusitActor.getActor(ajaxGet)({
           token: props.token,
           actorId: analysis.registeredBy
-        }).map(actor => actor ? { ...analysis, registeredByName: actor.fn } : analysis)
-      ).flatMap(analysis => {
+        }).map(actor => actor ? { ...analysis, registeredByName: actor.fn } : analysis))
+      .flatMap(analysis => {
         if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
           return Observable.forkJoin(
             analysis.events.map(a =>
@@ -65,8 +65,7 @@ Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
                 museumId: props.museumId,
                 collectionId: props.collectionId,
                 token: props.token
-              })
-            )
+              }))
           ).map(arrayOfObjectDetails => {
             const actualValues = arrayOfObjectDetails.filter(a => a);
             if (actualValues.length === 0) {
