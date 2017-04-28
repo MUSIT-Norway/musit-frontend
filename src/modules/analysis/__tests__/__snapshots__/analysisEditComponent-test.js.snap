@@ -74,7 +74,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
         md={1}
         onChange={[Function anonymous]}
         type="text"
-        value="1234" />
+        value="" />
     </FormGroup>
     <FormGroup
       bsClass="form-group">
@@ -397,7 +397,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
               md={1}
               onChange={[Function anonymous]}
               type="text"
-              value="1234" />
+              value={Array []} />
           </FormGroup>
           <FormGroup
             bsClass="form-group">
@@ -413,7 +413,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
               id="navn"
               label="Sluttdato"
               md={1}
-              readOnly={true}
+              onChange={[Function anonymous]}
               type="text"
               value="" />
           </FormGroup>

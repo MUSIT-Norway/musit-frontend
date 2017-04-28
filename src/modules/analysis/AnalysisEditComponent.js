@@ -88,7 +88,7 @@ export const editAnalysisEventLocal = (
               : []
           }),
       restriction: {
-        by: getValue(form.by),
+        requester: getValue(form.by),
         expirationDate: getValue(form.expirationDate),
         reason: getValue(form.reason),
         caseNumbers: getValue(form.caseNumbers),
@@ -154,8 +154,8 @@ const AnalysisEdit = (
           id="formControlsText"
           type="text"
           label="saksnummer"
-          value={getValue(form.caseNumbers)}
-          onChange={updateFormField(form.caseNumbers, updateForm)}
+          value={getValue(form.caseNumber)}
+          onChange={updateFormField(form.caseNumber, updateForm)}
         />
       </FormGroup>
       <FormGroup>
@@ -327,7 +327,7 @@ const AnalysisEdit = (
                 type="text"
                 label="Sluttdato"
                 value={getValue(form.expirationDate)}
-                readOnly
+                onChange={updateFormField(form.expirationDate, updateForm)}
               />
             </FormGroup>
             <FormGroup>

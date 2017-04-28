@@ -3,12 +3,9 @@ import type { Field } from '../../forms/form';
 import createForm from '../../forms/form';
 import {
   isNonEmptyArray,
-  composeValidators,
-  isNumber,
-  isRequired,
-  isNumberInRange
+  isRequired
 } from '../../forms/validators';
-import { stringMapper, numberMapper, booleanMapper, noMapper } from '../../forms/mappers';
+import { stringMapper, booleanMapper, noMapper } from '../../forms/mappers';
 
 export const getStrField = (field: string): Field<string> => ({
   name: field,
@@ -64,15 +61,8 @@ const note = getStrField('note');
 const type = getStrField('type');
 const completeAnalysis = getBoolField('completeAnalysis', true);
 const events = getArrField('events', []);
-const caseNumbers: Field<number> = {
-  name: 'caseNumbers',
-  mapper: numberMapper,
-  defaultValue: 1234,
-  validator: {
-    rawValidator: composeValidators(isRequired, isNumber(0, 2)),
-    valueValidator: isNumberInRange(0, 10)
-  }
-};
+const caseNumber = getStrField('caseNumber');
+const caseNumbers = getArrField('caseNumbers');
 
 export const fieldsArray = [
   id,
@@ -99,6 +89,7 @@ export const fieldsArray = [
   expirationDate,
   reason,
   caseNumbers,
+  caseNumber,
   cancelledBy,
   cancelledReason,
   completeAnalysis,
