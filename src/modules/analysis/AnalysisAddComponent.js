@@ -24,6 +24,7 @@ import FieldGroup from './components/FIeldGroup';
 import AddButton from './components/AddButton';
 import NewLine from './components/NewLine';
 import { Table } from 'reactable';
+import { isEmpty, isString } from 'lodash';
 
 type Location = {
   state?: Array<ObjectData>
@@ -45,6 +46,7 @@ type Props = {
 };
 
 const getValue = field => field.rawValue || '';
+const getApiValue = field => isString(field.rawValue) && !isEmpty(field.rawValue.trim()) ? field.rawValue : null;
 
 export const saveAnalysisEventLocal = (
   appSession: AppSession,
@@ -55,16 +57,16 @@ export const saveAnalysisEventLocal = (
   saveAnalysisEvent({
     museumId: appSession.museumId,
     data: {
-      analysisTypeId: getValue(form.analysisTypeId),
-      note: getValue(form.note),
-      responsible: getValue(form.responsible),
+      analysisTypeId: getApiValue(form.analysisTypeId),
+      note: getApiValue(form.note),
+      responsible: getApiValue(form.responsible),
       objectIds: location && location.state ? location.state.map(a => a.uuid) : [],
       restriction: {
-        requester: getValue(form.by),
-        expiration: getValue(form.expirationDate),
-        reason: getValue(form.reason)
+        requester: getApiValue(form.by),
+        expiration: getApiValue(form.expirationDate),
+        reason: getApiValue(form.reason)
       },
-      // caseNumbers: getValue(form.caseNumbers),
+      // caseNumbers: getApiValue(form.caseNumbers),
       status: 1
     },
     token: appSession.accessToken
