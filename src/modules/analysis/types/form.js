@@ -30,7 +30,7 @@ export type FormData = {
   by: Field,
   expirationDate: Field,
   reason: Field,
-  caseNumbers: Field,
+  caseNumbers: ArrayField,
   cancelledBy: Field,
   cancelledReason: Field,
   completeAnalysis: Field,
