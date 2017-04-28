@@ -74,7 +74,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
         md={1}
         onChange={[Function anonymous]}
         type="text"
-        value="1234" />
+        value={Array []} />
     </FormGroup>
     <FormGroup
       bsClass="form-group">
@@ -400,7 +400,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               md={1}
               onChange={[Function anonymous]}
               type="text"
-              value="1234" />
+              value={Array []} />
           </FormGroup>
           <FormGroup
             bsClass="form-group">
