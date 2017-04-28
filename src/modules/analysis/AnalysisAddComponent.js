@@ -56,17 +56,16 @@ export const saveAnalysisEventLocal = (
     museumId: appSession.museumId,
     data: {
       analysisTypeId: getValue(form.analysisTypeId),
-      eventDate: getValue(form.registeredDate),
       note: getValue(form.note),
+      responsible: getValue(form.responsible),
       objectIds: location && location.state ? location.state.map(a => a.uuid) : [],
-      result: {
-        by: getValue(form.by),
-        expirationDate: getValue(form.expirationDate),
-        reason: getValue(form.reason),
-        caseNumbers: getValue(form.caseNumbers),
-        cancelledBy: getValue(form.cancelledBy),
-        cancelledReason: getValue(form.cancelledReason)
-      }
+      restriction: {
+        requester: getValue(form.by),
+        expiration: getValue(form.expirationDate),
+        reason: getValue(form.reason)
+      },
+      // caseNumbers: getValue(form.caseNumbers),
+      status: 1
     },
     token: appSession.accessToken
   });
