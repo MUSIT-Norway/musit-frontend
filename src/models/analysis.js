@@ -39,7 +39,12 @@ Analysis.editAnalysisEvent = (ajaxPut = simplePut) =>
 Analysis.getAnalysesForObject = (ajaxGet = simpleGet) =>
   ({ museumId, token, id, callback }) => {
     const url = Config.magasin.urls.api.analysis.analysesForObject(museumId, id);
-    return ajaxGet(url, token, callback).map(({ response }) => response);
+    return ajaxGet(url, token, callback).map(({ response }) => {
+      if (!Array.isArray(response)) {
+        return [];
+      }
+      return response;
+    });
   };
 
 Analysis.getAnalysisById = (ajaxGet = simpleGet) =>
