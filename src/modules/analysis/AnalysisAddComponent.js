@@ -107,9 +107,6 @@ const AnalysisAdd = (
       {I18n.t('musit.analysis.registeringAnalysis')}
     </PageHeader>
     <Col md={12}>
-      <strong>HID:</strong>{' '}{getValue(form.id)}
-    </Col>
-    <Col md={12}>
       <strong>Registrert:</strong>
       {' '}
       <FontAwesome name="user" />
