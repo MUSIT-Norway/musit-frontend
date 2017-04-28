@@ -315,28 +315,6 @@ const AnalysisAdd = (
                  readOnly
                />
              </FormGroup>
-             <FormGroup>
-               <FieldGroup
-                 id="navn"
-                 md={1}
-                 type="text"
-                 label="Opphevet av"
-                 placeholder="Fornavn Etternavn"
-                 value={getValue(form.cancelledBy)}
-                 onChange={updateFormField(form.cancelledBy, updateForm)}
-               />
-             </FormGroup>
-             <FormGroup>
-               <FieldGroup
-                 id="navn"
-                 md={1}
-                 type="text"
-                 label="Årsak til oppheving"
-                 placeholder=""
-                 value={getValue(form.cancelledReason)}
-                 onChange={updateFormField(form.cancelledReason, updateForm)}
-               />
-             </FormGroup>
            </Panel>
          </FormGroup>
         }

@@ -422,28 +422,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               type="text"
               value="" />
           </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Opphevet av"
-              md={1}
-              onChange={[Function anonymous]}
-              placeholder="Fornavn Etternavn"
-              type="text"
-              value="" />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Årsak til oppheving"
-              md={1}
-              onChange={[Function anonymous]}
-              placeholder=""
-              type="text"
-              value="" />
-          </FormGroup>
         </Panel>
       </FormGroup>
     </Form>
