@@ -45,7 +45,8 @@ type Props = {
 };
 
 const getValue = field => field.rawValue || '';
-const getApiValue = field => isString(field.rawValue) && !isEmpty(field.rawValue.trim()) ? field.rawValue : null;
+const getApiValue = field =>
+  isString(field.rawValue) && !isEmpty(field.rawValue.trim()) ? field.rawValue : null;
 
 export const saveAnalysisEventLocal = (
   appSession: AppSession,
@@ -69,10 +70,10 @@ export const saveAnalysisEventLocal = (
     };
   }
   return saveAnalysisEvent({
-     museumId: appSession.museumId,
-     data: data,
-     token: appSession.accessToken
-   });
+    museumId: appSession.museumId,
+    data: data,
+    token: appSession.accessToken
+  });
 };
 
 const updateFormField = (field, updateForm) =>
@@ -223,74 +224,80 @@ const AnalysisAdd = (
           <Label label="Klausulering" md={1} />
           <Col md={5}>
             <Radio
-              name='restrictions'
+              name="restrictions"
               inline
-              onClick={updateFormFieldValue(form.restrictions, updateForm, true)}>
+              onClick={updateFormFieldValue(form.restrictions, updateForm, true)}
+            >
               Ja
             </Radio>
             <Radio
-              name='restrictions'
+              name="restrictions"
               inline
               defaultChecked={!form.restrictions.rawValue}
-              onClick={updateFormFieldValue(form.restrictions, updateForm, false)}>
+              onClick={updateFormFieldValue(form.restrictions, updateForm, false)}
+            >
               Nei
             </Radio>
           </Col>
         </FormGroup>
         {form.restrictions.value &&
-         <FormGroup>
-           <Panel
-             collapsible
-             expanded
-             style={{border: 'none', backgroundColor: '#f5f5f5'}}
-           >
-             <FormGroup>
-               <FieldGroup
-                 id="navn"
-                 md={1}
-                 type="text"
-                 label="Klausulert for"
-                 placeholder="Fornavn Etternavn"
-                 value={getValue(form.by)}
-                 onChange={updateFormField(form.by, updateForm)}
-               />
-             </FormGroup>
-             <FormGroup>
-               <FieldGroup
-                 id="navn"
-                 md={1}
-                 type="text"
-                 label="Årsak til klausulering"
-                 value={getValue(form.reason)}
-                 onChange={updateFormField(form.reason, updateForm)}
-               />
-             </FormGroup>
-             <FormGroup>
-               <FieldGroup
-                 id="Saksnummer"
-                 md={1}
-                 type="text"
-                 label="Saksnummer"
-                 value={getValue(form.caseNumbers)}
-                 onChange={updateFormField(form.caseNumbers, updateForm)}
-               />
-             </FormGroup>
-             <FormGroup>
-               <AddButton id="3" label="Legg til flere saksnummer" md={11} mdOffset={1}/>
-             </FormGroup>
-             <FormGroup>
-               <FieldGroup
-                 id="navn"
-                 md={1}
-                 type="text"
-                 label="Sluttdato"
-                 value={getValue(form.expirationDate)}
-                 readOnly
-               />
-             </FormGroup>
-           </Panel>
-         </FormGroup>
-        }
+          <FormGroup>
+            <Panel
+              collapsible
+              expanded
+              style={{ border: 'none', backgroundColor: '#f5f5f5' }}
+            >
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Klausulert for"
+                  placeholder="Fornavn Etternavn"
+                  value={getValue(form.by)}
+                  onChange={updateFormField(form.by, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Årsak til klausulering"
+                  value={getValue(form.reason)}
+                  onChange={updateFormField(form.reason, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="Saksnummer"
+                  md={1}
+                  type="text"
+                  label="Saksnummer"
+                  value={getValue(form.caseNumbers)}
+                  onChange={updateFormField(form.caseNumbers, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <AddButton
+                  id="3"
+                  label="Legg til flere saksnummer"
+                  md={11}
+                  mdOffset={1}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Sluttdato"
+                  value={getValue(form.expirationDate)}
+                  readOnly
+                />
+              </FormGroup>
+            </Panel>
+          </FormGroup>}
       </Form>
     </Well>
     <Form horizontal style={{ paddingLeft: 20 }}>
