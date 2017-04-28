@@ -342,17 +342,19 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           md={5}>
           <Radio
             bsClass="radio"
-            checked={true}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            name="restrictions"
+            onClick={[Function anonymous]}>
             Ja
           </Radio>
           <Radio
             bsClass="radio"
+            defaultChecked={false}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            name="restrictions"
+            onClick={[Function anonymous]}>
             Nei
           </Radio>
         </Col>

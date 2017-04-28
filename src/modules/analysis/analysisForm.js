@@ -15,6 +15,7 @@ export const getStrField = (field: string): Field<string> => ({
 export const getBoolField = (field: string, value: boolean = false): Field<boolean> => ({
   name: field,
   defaultValue: value,
+  value: value,
   mapper: booleanMapper,
   validator: {}
 });
@@ -48,7 +49,7 @@ const place = getStrField('place');
 const externalSource = getStrField('externalSource');
 const comments = getStrField('comments');
 const result = getStrField('result');
-const restrictions = getBoolField('restrictions', true);
+const restrictions = getBoolField('restrictions', false);
 const by = getStrField('by');
 const reason = getStrField('reason');
 const expirationDate = getStrField('expirationDate');
