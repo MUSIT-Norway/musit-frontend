@@ -17,62 +17,60 @@ type ViewObjectComponentProps = {
 
 export const ViewObjectComponent = (
   { objectStore: { objectData, events, samples }, appSession }: ViewObjectComponentProps
-) => {
-  return (
-    <div>
-      <PageHeader>Objektvisning</PageHeader>
-      <div style={{ marginTop: '30px', marginBottom: '40px' }}>
-        <Row>
-          <Col md={2}><b>Museumsnr:</b>{' '}{objectData && objectData.museumNo}</Col>
-          <Col md={1}><b>Unr:</b>{' '}{objectData && objectData.subNo}</Col>
-          <Col md={3}><b>Term/artsnavn:</b>{' '}{objectData && objectData.term}</Col>
-        </Row>
-      </div>
-      <div style={{ paddingBottom: 10 }}>
-        <Button
-          className="primary"
-          onClick={() =>
-            hashHistory.push({
-              pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
-              state: [objectData]
-            })}
-        >
-          Ny analyse
-        </Button>
-        <Button
-          className="primary"
-          onClick={() =>
-            hashHistory.push({
-              pathname: Config.magasin.urls.client.analysis.addSample(appSession),
-              state: [objectData]
-            })}
-        >
-          Ny prøve
-        </Button>
-      </div>
-      <Tabs id="objectDetails">
-        <Tab title="Hendelser" eventKey={0} id="1">
-          <EventTableComponent
-            events={events}
-            onClick={event => {
-              if (event.type === 'Analysis') {
-                hashHistory.push({
-                  pathname: Config.magasin.urls.client.analysis.viewAnalysis(
-                    appSession,
-                    event.id
-                  ),
-                  state: [objectData]
-                });
-              }
-            }}
-          />
-        </Tab>
-        <Tab title="Prøver" eventKey={1} id="2">
-          <SampleTableComponent samples={samples} />
-        </Tab>
-      </Tabs>
+) => (
+  <div>
+    <PageHeader>Objektvisning</PageHeader>
+    <div style={{ marginTop: '30px', marginBottom: '40px' }}>
+      <Row>
+        <Col md={2}><b>Museumsnr:</b>{' '}{objectData && objectData.museumNo}</Col>
+        <Col md={1}><b>Unr:</b>{' '}{objectData && objectData.subNo}</Col>
+        <Col md={3}><b>Term/artsnavn:</b>{' '}{objectData && objectData.term}</Col>
+      </Row>
     </div>
-  );
-};
+    <div style={{ paddingBottom: 10 }}>
+      <Button
+        className="primary"
+        onClick={() =>
+          hashHistory.push({
+            pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
+            state: [objectData]
+          })}
+      >
+        Ny analyse
+      </Button>
+      <Button
+        className="primary"
+        onClick={() =>
+          hashHistory.push({
+            pathname: Config.magasin.urls.client.analysis.addSample(appSession),
+            state: [objectData]
+          })}
+      >
+        Ny prøve
+      </Button>
+    </div>
+    <Tabs id="objectDetails">
+      <Tab title="Hendelser" eventKey={0} id="1">
+        <EventTableComponent
+          events={events}
+          onClick={event => {
+            if (event.type === 'Analysis') {
+              hashHistory.push({
+                pathname: Config.magasin.urls.client.analysis.viewAnalysis(
+                  appSession,
+                  event.id
+                ),
+                state: [objectData]
+              });
+            }
+          }}
+        />
+      </Tab>
+      <Tab title="Prøver" eventKey={1} id="2">
+        <SampleTableComponent samples={samples} />
+      </Tab>
+    </Tabs>
+  </div>
+);
 
 export default ViewObjectComponent;
