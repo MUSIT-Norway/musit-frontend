@@ -140,7 +140,6 @@ const submitSample = (appSession: AppSession, form: FormData, addSample: Functio
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
   const data = {
     ...tmpData,
-    externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
     size: {value: tmpData.size, unit: tmpData.sizeUnit},
     sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType},
     originatedObjectUuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8'
@@ -154,6 +153,9 @@ const submitSample = (appSession: AppSession, form: FormData, addSample: Functio
   data['parentObjectType'] = 'collection';
   data['museumId'] = 99;
   data['parentObjectId'] = '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8';
+  if (tmpData.externalId) {
+    data['externalId'] = {value: tmpData.externalId, source: tmpData.externalIdSource};
+  }
 
   return addSample({museumId, token, data});
 };
