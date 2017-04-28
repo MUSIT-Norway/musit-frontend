@@ -12,7 +12,6 @@ import {
   Radio,
   Well
 } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
@@ -106,29 +105,6 @@ const AnalysisAdd = (
     <PageHeader style={{ paddingLeft: 20 }}>
       {I18n.t('musit.analysis.registeringAnalysis')}
     </PageHeader>
-    <Col md={12}>
-      <strong>Registrert:</strong>
-      {' '}
-      <FontAwesome name="user" />
-      {' '}
-      {getValue(form.registeredBy)}
-      {' '}
-      <FontAwesome name="clock-o" />{' '}{getValue(form.registeredDate)}
-    </Col>
-    <Col md={12}>
-      <strong>Sist endret:</strong>
-      {' '}
-      <FontAwesome name="user" />
-      {' '}
-      {getValue(form.doneBy)}
-      {' '}
-      <FontAwesome name="clock-o" />
-      {' '}
-      {getValue(form.doneDate)}
-      {' '}
-      <Button bsStyle="link">Se endringshistorikk</Button>
-    </Col>
-    <NewLine />
     <Form>
       <FormGroup>
         <FieldGroup
@@ -353,23 +329,6 @@ const AnalysisAdd = (
           appSession
         )}
     />
-    <NewLine />
-    <Form horizontal>
-      <FormGroup>
-        <Col mdOffset={1}><h5><strong>Endringshistorikk</strong></h5></Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}>
-          {getValue(form.registeredBy)} - {getValue(form.registeredDate)}
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}>{getValue(form.doneBy)} - {getValue(form.doneDate)}</Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}><Button bsStyle="link">Se mer</Button></Col>
-      </FormGroup>
-    </Form>
   </div>
 );
 
