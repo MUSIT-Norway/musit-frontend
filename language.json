@@ -225,6 +225,8 @@
       },
       "texts": {
         "musitBase": "MUSIT base",
+        "abuotMusit": "About MUSIT",
+        "aboutMusitSolutions": "About MUSIT solutions",
         "freetext": "Free text",
         "makeChoice": "Please choose...",
         "datePerformed": "Performed date",
@@ -895,6 +897,8 @@
       },
       "texts": {
         "musitBase": "MUSITbasen",
+        "abuotMusit": "Om MUSIT",
+        "aboutMusitSolutions": "Om MUSITløsningen",
         "freetext": "Fritekst",
         "makeChoice": "Vennligst velg...",
         "datePerformed": "Utført dato",

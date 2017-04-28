@@ -18,7 +18,6 @@ import {
   clearNodes$ as clearNodePicklist$
 } from './pickList';
 import Config from '../../config';
-import Logos from '../../components/logos/Logos';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -129,7 +128,7 @@ export class AppComponent extends Component {
         <Navbar fixedTop style={{ zIndex: 1 }}>
           <Navbar.Header>
             <Navbar.Brand>
-              <IndexLink to={'/about'} activeStyle={{ color: '#33e0ff' }}>
+              <IndexLink to={'/home'} activeStyle={{ color: '#33e0ff' }}>
                 <div className="brand">
                   <img height="40" alt="logo" src={Logo} />
                 </div>
@@ -227,24 +226,10 @@ export class AppComponent extends Component {
           {this.props.children}
         </div>
 
-        <footer
-          style={
-            window.location.href.toLowerCase().includes('/home')
-              ? { height: '400px' }
-              : {}
-          }
-          className={this.getFooterClass()}
-        >
+        <footer className={this.getFooterClass()}>
           {'Build number: ' +
             (this.props.appSession.buildInfo &&
               this.props.appSession.buildInfo.buildInfoBuildNumber)}
-          {window.location.href.toLowerCase().includes('/home')
-            ?
-            <div style={{ textAlign: 'center' }}>
-              {I18n.t('musit.texts.footerText')}
-              <Logos/>
-            </div>
-            : ''}
         </footer>
       </div>
     );
