@@ -17,7 +17,7 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
       MusitObject.getLocationHistory(ajaxGet)(val)
     )
       .map(([analyses, moves]) =>
-        concat(analyses, moves).map(m => ({
+        concat(analyses, moves.map(m => ({ ...m, type: 'MoveObject' }))).map(m => ({
           ...m,
           eventDate: parseISODate(m.eventDate || m.registeredDate).format(
             DATE_FORMAT_DISPLAY
@@ -38,7 +38,6 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
           }
           return events;
         });
-      })
-      .startWith([]);
+      });
 
 export default Event;
