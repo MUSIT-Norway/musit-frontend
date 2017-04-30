@@ -1,10 +1,7 @@
 /* @flow */
 import type { Field } from '../../forms/form';
 import createForm from '../../forms/form';
-import {
-  isNonEmptyArray,
-  isRequired
-} from '../../forms/validators';
+import { isNonEmptyArray, isRequired } from '../../forms/validators';
 import { stringMapper, booleanMapper, noMapper } from '../../forms/mappers';
 
 export const getStrField = (field: string): Field<string> => ({
