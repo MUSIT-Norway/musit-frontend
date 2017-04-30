@@ -69,7 +69,7 @@ const getObjectsValue = form => {
   });
 };
 
-const getValue = (form, field) => form[field] ? form[field].rawValue : '';
+const getValue = (form, field) => form[field] ? (form[field].rawValue || '') : '';
 
 const AnalysisView = ({ form, store, appSession, params }: Props) => (
   <div>
@@ -210,10 +210,10 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <FormGroup>
           <Label label="Klausulering" md={1} />
           <Col md={5}>
-            <Radio checked={form.restrictions.rawValue} readOnly inline>
+            <Radio defaultChecked={form.restrictions.rawValue} readOnly inline>
               Ja
             </Radio>
-            <Radio inline checked={!form.restrictions.rawValue} readOnly>
+            <Radio inline defaultChecked={!form.restrictions.rawValue} readOnly>
               Nei
             </Radio>
           </Col>

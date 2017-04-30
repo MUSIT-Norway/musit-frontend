@@ -228,9 +228,9 @@ const AnalysisEdit = (
         <FormGroup>
           <Label label="Type analyse" md={1} />
           <Col md={2}>
-            <FormControl
-              componentClass="select"
-              placeholder="Velg kategori"
+            <select
+              className="form-control"
+              value={form.analysisTypeId.rawValue}
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
@@ -238,12 +238,11 @@ const AnalysisEdit = (
                 <option
                   key={a.id}
                   value={a.id}
-                  selected={form.analysisTypeId.rawValue === a.id}
                 >
                   {a.name}
                 </option>
               ))}
-            </FormControl>
+            </select>
           </Col>
         </FormGroup>
         <FormGroup>
@@ -283,7 +282,7 @@ const AnalysisEdit = (
               name="finalize"
               checked={!!form.restrictions.rawValue}
               inline
-              onClick={updateFormFieldValue(form.restrictions, updateForm, true)}
+              onChange={updateFormFieldValue(form.restrictions, updateForm, true)}
             >
               Ja
             </Radio>
@@ -291,7 +290,7 @@ const AnalysisEdit = (
               name="finalize"
               inline
               checked={!form.restrictions.rawValue}
-              onClick={updateFormFieldValue(form.restrictions, updateForm, false)}
+              onChange={updateFormFieldValue(form.restrictions, updateForm, false)}
             >
               Nei
             </Radio>
@@ -420,7 +419,7 @@ const AnalysisEdit = (
 
 const FieldShape = {
   name: PropTypes.string.isRequired,
-  rawValue: PropTypes.string,
+  rawValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   status: PropTypes.shape({
     valid: PropTypes.bool,
     error: PropTypes.any

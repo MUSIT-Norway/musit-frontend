@@ -27,7 +27,6 @@ export class AppComponent extends Component {
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
-    enableAnalysis: PropTypes.bool.isRequired,
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
     clearNodePicklist: PropTypes.func.isRequired

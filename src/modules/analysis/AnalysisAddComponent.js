@@ -214,16 +214,15 @@ const AnalysisAdd = (
         <FormGroup>
           <Label label="Type analyse" md={1} />
           <Col md={2}>
-            <FormControl
-              componentClass="select"
-              placeholder="Velg kategori"
+            <select
+              className="form-control"
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
               {store.analysisTypes.map(a => (
                 <option key={a.id} value={a.id}>{a.name}</option>
               ))}
-            </FormControl>
+            </select>
           </Col>
         </FormGroup>
         <FormGroup>
@@ -263,7 +262,7 @@ const AnalysisAdd = (
               name="restrictions"
               inline
               checked={!!form.restrictions.rawValue}
-              onClick={updateFormFieldValue(form.restrictions, updateForm, true)}
+              onChange={updateFormFieldValue(form.restrictions, updateForm, true)}
             >
               Ja
             </Radio>
@@ -271,7 +270,7 @@ const AnalysisAdd = (
               name="restrictions"
               inline
               checked={!form.restrictions.rawValue}
-              onClick={updateFormFieldValue(form.restrictions, updateForm, false)}
+              onChange={updateFormFieldValue(form.restrictions, updateForm, false)}
             >
               Nei
             </Radio>
@@ -378,16 +377,7 @@ const AnalysisAdd = (
 
 const FieldShape = {
   name: PropTypes.string.isRequired,
-  rawValue: PropTypes.string,
-  status: PropTypes.shape({
-    valid: PropTypes.bool,
-    error: PropTypes.any
-  })
-};
-
-const FieldShapeBoolean = {
-  name: PropTypes.string.isRequired,
-  rawValue: PropTypes.bool,
+  rawValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.bool]),
   status: PropTypes.shape({
     valid: PropTypes.bool,
     error: PropTypes.any
@@ -419,7 +409,7 @@ AnalysisAdd.propTypes = {
     externalSource: PropTypes.shape(FieldShape).isRequired,
     comments: PropTypes.shape(FieldShape).isRequired,
 
-    restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
+    restrictions: PropTypes.shape(FieldShape).isRequired,
     requester: PropTypes.shape(FieldShape).isRequired,
     expirationDate: PropTypes.shape(FieldShape).isRequired,
     reason: PropTypes.shape(FieldShape).isRequired,
@@ -427,7 +417,7 @@ AnalysisAdd.propTypes = {
     cancelledBy: PropTypes.shape(FieldShape).isRequired,
     cancelledReason: PropTypes.shape(FieldShape).isRequired,
 
-    completeAnalysis: PropTypes.shape(FieldShapeBoolean).isRequired,
+    completeAnalysis: PropTypes.shape(FieldShape).isRequired,
     museumNo: PropTypes.shape(FieldShape).isRequired,
     term: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
