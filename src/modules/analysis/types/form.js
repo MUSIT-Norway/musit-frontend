@@ -1,6 +1,6 @@
 /* @flow */
 
-import type {Field} from '../../../forms/form'
+import type { Field } from '../../../forms/form';
 
 export type ArrayField = { name: string, rawValue: ?Array<*> };
 

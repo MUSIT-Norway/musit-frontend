@@ -17,7 +17,7 @@ import { hashHistory } from 'react-router';
 import Config from '../../config';
 import type { AppSession } from '../../types/appSession';
 import type { FormData } from './types/form';
-import type { Field } from '../../forms/form'
+import type { Field } from '../../forms/form';
 import type { ObjectData } from '../../types/object';
 import Label from './components/Label';
 import FieldGroup from './components/FIeldGroup';
@@ -50,7 +50,7 @@ type SaveRestriction = {
   reason: string,
   caseNumbers: ?Array<string>,
   cancelledReason: ?string
-}
+};
 
 type SaveAnalysisCollection = {
   analysisTypeId: string,
@@ -66,8 +66,7 @@ type SaveAnalysisCollection = {
   caseNumbers: ?Array<string>,
   reason: ?string,
   status: ?number
-}
-
+};
 
 const getValue = field => field.rawValue || '';
 const getApiValue = field => field.rawValue ? field.rawValue : null;
@@ -79,14 +78,16 @@ export const saveAnalysisEventLocal = (
   saveAnalysisEvent: Function
 ) => {
   const caseNumber = getApiValue(form.caseNumbers);
-  const restriction = () =>  form.restrictions.value ?
-     {
-      requester: getValue(form.by),
-      expirationDate: getValue(form.expirationDate),
-      reason: getValue(form.reason),
-      caseNumbers: null,
-      cancelledReason: null
-  } : null;
+  const restriction = () =>
+    form.restrictions.value
+      ? {
+          requester: getValue(form.by),
+          expirationDate: getValue(form.expirationDate),
+          reason: getValue(form.reason),
+          caseNumbers: null,
+          cancelledReason: null
+        }
+      : null;
 
   const data: SaveAnalysisCollection = {
     analysisTypeId: getValue(form.analysisTypeId),
