@@ -46,7 +46,7 @@ type Props = {
 
 const getValue = field => field.rawValue || '';
 const getApiValue = field =>
-  isString(field.rawValue) && !isEmpty(field.rawValue.trim()) ? field.rawValue : null;
+  field.rawValue && isString(field.rawValue) && !isEmpty(field.rawValue.trim()) ? field.rawValue : null;
 
 export const saveAnalysisEventLocal = (
   appSession: AppSession,
@@ -59,11 +59,11 @@ export const saveAnalysisEventLocal = (
     note: getApiValue(form.note),
     responsible: getApiValue(form.responsible),
     objectIds: location && location.state ? location.state.map(a => a.uuid) : [],
-    // caseNumbers: getApiValue(form.caseNumbers),
+    restrictions: undefined,
     status: 1
   };
   if (form.restrictions.value) {
-    data['restrictions'] = {
+    data.restrictions = {
       requester: getApiValue(form.by),
       expiration: getApiValue(form.expirationDate),
       reason: getApiValue(form.reason)
@@ -83,7 +83,7 @@ const updateFormField = (field, updateForm) =>
       rawValue: e.target.value
     });
 
-const updateFormFieldValue = (field, updateForm, value) =>
+const updateFormFieldValue = (field, updateForm, value: ?any) =>
   () =>
     updateForm({
       name: field.name,
