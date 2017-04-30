@@ -6,7 +6,8 @@ Object {
     "toRaw": [Function toRaw]
   },
   "name": "someBool",
-  "validator": Object {}
+  "validator": Object {},
+  "value": false
 }
 `;
 

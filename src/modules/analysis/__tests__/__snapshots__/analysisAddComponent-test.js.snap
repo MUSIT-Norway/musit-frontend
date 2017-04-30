@@ -10,57 +10,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
     }>
     Registrer analyse
   </PageHeader>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
-      HID:
-    </strong>
-     
-  </Col>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
-      Registrert:
-    </strong>
-     
-    <FontAwesome
-      name="user" />
-     
-     
-    <FontAwesome
-      name="clock-o" />
-     
-  </Col>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
-      Sist endret:
-    </strong>
-     
-    <FontAwesome
-      name="user" />
-     
-     
-    <FontAwesome
-      name="clock-o" />
-     
-     
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="link"
-      disabled={false}>
-      Se endringshistorikk
-    </Button>
-  </Col>
-  <NewLine />
   <Form
     bsClass="form"
     componentClass="form"
@@ -342,17 +291,19 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           md={5}>
           <Radio
             bsClass="radio"
-            checked={true}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            name="restrictions"
+            onClick={[Function anonymous]}>
             Ja
           </Radio>
           <Radio
             bsClass="radio"
+            defaultChecked={false}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            name="restrictions"
+            onClick={[Function anonymous]}>
             Nei
           </Radio>
         </Col>
@@ -420,28 +371,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               type="text"
               value="" />
           </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Opphevet av"
-              md={1}
-              onChange={[Function anonymous]}
-              placeholder="Fornavn Etternavn"
-              type="text"
-              value="" />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Årsak til oppheving"
-              md={1}
-              onChange={[Function anonymous]}
-              placeholder=""
-              type="text"
-              value="" />
-          </FormGroup>
         </Panel>
       </FormGroup>
     </Form>
@@ -506,59 +435,5 @@ exports[`AnalysisAddComponent should render properly 1`] = `
   <NewLine />
   <SaveCancel
     onClickSave={[Function onClickSave]} />
-  <NewLine />
-  <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={true}
-    inline={false}>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-        <h5>
-          <strong>
-            Endringshistorikk
-          </strong>
-        </h5>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-         - 
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-         - 
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="link"
-          disabled={false}>
-          Se mer
-        </Button>
-      </Col>
-    </FormGroup>
-  </Form>
 </div>
 `;
