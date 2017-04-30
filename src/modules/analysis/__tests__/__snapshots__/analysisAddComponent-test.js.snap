@@ -291,6 +291,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           md={5}>
           <Radio
             bsClass="radio"
+            checked={true}
             disabled={false}
             inline={true}
             name="restrictions"
@@ -299,7 +300,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           </Radio>
           <Radio
             bsClass="radio"
-            defaultChecked={false}
+            checked={false}
             disabled={false}
             inline={true}
             name="restrictions"
@@ -367,7 +368,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               id="navn"
               label="Sluttdato"
               md={1}
-              readOnly={true}
+              onChange={[Function anonymous]}
               type="text"
               value="" />
           </FormGroup>

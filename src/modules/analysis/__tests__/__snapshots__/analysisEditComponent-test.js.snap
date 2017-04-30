@@ -50,15 +50,6 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     <FontAwesome
       name="clock-o" />
      
-     
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="link"
-      disabled={false}>
-      Se endringshistorikk
-    </Button>
   </Col>
   <NewLine />
   <Form
@@ -342,7 +333,8 @@ exports[`AnalysisEditComponent should render properly 1`] = `
             checked={false}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            name="finalize"
+            onClick={[Function anonymous]}>
             Ja
           </Radio>
           <Radio
@@ -350,97 +342,11 @@ exports[`AnalysisEditComponent should render properly 1`] = `
             checked={true}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            name="finalize"
+            onClick={[Function anonymous]}>
             Nei
           </Radio>
         </Col>
-      </FormGroup>
-      <FormGroup
-        bsClass="form-group">
-        <Panel
-          bsClass="panel"
-          bsStyle="default"
-          collapsible={true}
-          defaultExpanded={false}
-          expanded={true}
-          style={
-            Object {
-              "backgroundColor": "#f5f5f5",
-              "border": "none"
-            }
-          }>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Klausulert for"
-              md={1}
-              onChange={[Function anonymous]}
-              placeholder="Fornavn Etternavn"
-              type="text"
-              value="" />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Årsak til klausulering"
-              md={1}
-              onChange={[Function anonymous]}
-              type="text"
-              value="" />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="Saksnummer"
-              label="Saksnummer"
-              md={1}
-              onChange={[Function anonymous]}
-              type="text"
-              value={Array []} />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <AddButton
-              id="3"
-              label="Legg til flere saksnummer"
-              md={11}
-              mdOffset={1} />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Sluttdato"
-              md={1}
-              onChange={[Function anonymous]}
-              type="text"
-              value="" />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Opphevet av"
-              md={1}
-              onChange={[Function anonymous]}
-              placeholder="Fornavn Etternavn"
-              type="text"
-              value="" />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Årsak til oppheving"
-              md={1}
-              onChange={[Function anonymous]}
-              placeholder=""
-              type="text"
-              value="" />
-          </FormGroup>
-        </Panel>
       </FormGroup>
     </Form>
   </Well>
@@ -504,59 +410,5 @@ exports[`AnalysisEditComponent should render properly 1`] = `
   <NewLine />
   <SaveCancel
     onClickSave={[Function onClickSave]} />
-  <NewLine />
-  <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={true}
-    inline={false}>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-        <h5>
-          <b>
-            Endringshistorikk
-          </b>
-        </h5>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-         - 
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-         - 
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="link"
-          disabled={false}>
-          Se mer
-        </Button>
-      </Col>
-    </FormGroup>
-  </Form>
 </div>
 `;
