@@ -339,7 +339,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
           md={5}>
           <Radio
             bsClass="radio"
-            checked={true}
+            checked={false}
             disabled={false}
             inline={true}
             readOnly={true}>
@@ -347,6 +347,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
           </Radio>
           <Radio
             bsClass="radio"
+            checked={true}
             disabled={false}
             inline={true}
             readOnly={true}>

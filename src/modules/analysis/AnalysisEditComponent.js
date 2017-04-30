@@ -16,7 +16,7 @@ import {
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import type { AppSession } from '../../types/appSession';
-import type { FormData, Update } from './types/form';
+import type { FormData } from './types/form';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
 import Label from './components/Label';
@@ -39,7 +39,7 @@ type Params = {
 
 type Props = {
   form: FormData,
-  updateForm: Update,
+  updateForm: Function,
   store: Store,
   appSession: AppSession,
   editAnalysisEvent: Function,
@@ -272,10 +272,10 @@ const AnalysisEdit = (
         <FormGroup>
           <Label label="Klausulering" md={1} />
           <Col md={5}>
-            <Radio checked readOnly inline>
+            <Radio checked={form.restrictions.rawValue} readOnly inline>
               Ja
             </Radio>
-            <Radio inline readOnly>
+            <Radio inline checked={!form.restrictions.rawValue} readOnly>
               Nei
             </Radio>
           </Col>
