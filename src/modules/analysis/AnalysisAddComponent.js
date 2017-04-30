@@ -16,14 +16,14 @@ import { SaveCancel } from '../../components/formfields/index';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
 import type { AppSession } from '../../types/appSession';
-import type { FormData, Update } from './types/form';
+import type { FormData } from './types/form';
+import type { Field } from '../../forms/form'
 import type { ObjectData } from '../../types/object';
 import Label from './components/Label';
 import FieldGroup from './components/FIeldGroup';
 import AddButton from './components/AddButton';
 import NewLine from './components/NewLine';
 import { Table } from 'reactable';
-import { isEmpty, isString } from 'lodash';
 
 type Location = {
   state?: Array<ObjectData>
@@ -37,16 +37,40 @@ type Store = {
 
 type Props = {
   form: FormData,
-  updateForm: Update,
+  updateForm: Function,
   store: Store,
   appSession: AppSession,
   saveAnalysisEvent: Function,
   location: Location
 };
 
+type SaveRestriction = {
+  requester: string,
+  expirationDate: string,
+  reason: string,
+  caseNumbers: ?Array<string>,
+  cancelledReason: ?string
+}
+
+type SaveAnalysisCollection = {
+  analysisTypeId: string,
+  doneBy: ?string,
+  doneDate: ?string,
+  note: ?string,
+  responsible: ?string,
+  administrator: ?string,
+  completedBy: ?string,
+  completedDate: ?string,
+  objectIds: Array<string>,
+  restriction: ?SaveRestriction,
+  caseNumbers: ?Array<string>,
+  reason: ?string,
+  status: ?number
+}
+
+
 const getValue = field => field.rawValue || '';
-const getApiValue = field =>
-  isString(field.rawValue) && !isEmpty(field.rawValue.trim()) ? field.rawValue : null;
+const getApiValue = field => field.rawValue ? field.rawValue : null;
 
 export const saveAnalysisEventLocal = (
   appSession: AppSession,
@@ -54,21 +78,32 @@ export const saveAnalysisEventLocal = (
   location?: Location,
   saveAnalysisEvent: Function
 ) => {
-  const data = {
-    analysisTypeId: getApiValue(form.analysisTypeId),
+  const caseNumber = getApiValue(form.caseNumbers);
+  const restriction = () =>  form.restrictions.value ?
+     {
+      requester: getValue(form.by),
+      expirationDate: getValue(form.expirationDate),
+      reason: getValue(form.reason),
+      caseNumbers: null,
+      cancelledReason: null
+  } : null;
+
+  const data: SaveAnalysisCollection = {
+    analysisTypeId: getValue(form.analysisTypeId),
+    doneBy: null,
+    doneDate: null,
     note: getApiValue(form.note),
     responsible: getApiValue(form.responsible),
+    administrator: null,
+    completedBy: null,
+    completedDate: null,
+    restriction: restriction(),
     objectIds: location && location.state ? location.state.map(a => a.uuid) : [],
-    // caseNumbers: getApiValue(form.caseNumbers),
-    status: 1
+    caseNumbers: caseNumber ? [caseNumber] : null,
+    status: 1,
+    reason: null
   };
-  if (form.restrictions.value) {
-    data['restrictions'] = {
-      requester: getApiValue(form.by),
-      expiration: getApiValue(form.expirationDate),
-      reason: getApiValue(form.reason)
-    };
-  }
+
   return saveAnalysisEvent({
     museumId: appSession.museumId,
     data: data,
@@ -76,7 +111,7 @@ export const saveAnalysisEventLocal = (
   });
 };
 
-const updateFormField = (field, updateForm) =>
+const updateFormField = (field: Field<string>, updateForm) =>
   e =>
     updateForm({
       name: field.name,
