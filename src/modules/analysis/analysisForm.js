@@ -48,7 +48,7 @@ const externalSource = getStrField('externalSource');
 const comments = getStrField('comments');
 const result = getStrField('result');
 const restrictions = getBoolField('restrictions');
-const by = getStrField('by');
+const requester = getStrField('requester');
 const reason = getStrField('reason');
 const expirationDate = getStrField('expirationDate');
 const cancelledBy = getStrField('cancelledBy');
@@ -81,7 +81,7 @@ export const fieldsArray = [
   externalSource,
   comments,
   restrictions,
-  by,
+  requester,
   expirationDate,
   reason,
   caseNumbers,

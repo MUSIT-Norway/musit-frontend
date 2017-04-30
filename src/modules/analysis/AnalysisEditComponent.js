@@ -87,14 +87,16 @@ export const editAnalysisEventLocal = (
               ? form.events.rawValue.map(a => a.objectId)
               : []
           }),
-      restriction: {
-        requester: getValue(form.by),
-        expirationDate: getValue(form.expirationDate),
-        reason: getValue(form.reason),
-        caseNumbers: getValue(form.caseNumbers),
-        cancelledBy: getValue(form.cancelledBy),
-        cancelledReason: getValue(form.cancelledReason)
-      }
+      restriction: form.restrictions.rawValue
+        ? {
+            requester: getValue(form.requester),
+            expirationDate: getValue(form.expirationDate),
+            reason: getValue(form.reason),
+            caseNumbers: getValue(form.caseNumbers),
+            cancelledBy: getValue(form.cancelledBy),
+            cancelledReason: getValue(form.cancelledReason)
+          }
+        : null
     },
     token: appSession.accessToken
   });
@@ -104,6 +106,13 @@ const updateFormField = (field, updateForm) =>
     updateForm({
       name: field.name,
       rawValue: e.target.value
+    });
+
+const updateFormFieldValue = (field, updateForm, value) =>
+  () =>
+    updateForm({
+      name: field.name,
+      rawValue: value
     });
 
 export const goToAnalysis = (
@@ -456,7 +465,7 @@ AnalysisEdit.propTypes = {
     comments: PropTypes.shape(FieldShape).isRequired,
 
     restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
-    by: PropTypes.shape(FieldShape).isRequired,
+    requester: PropTypes.shape(FieldShape).isRequired,
     expirationDate: PropTypes.shape(FieldShape).isRequired,
     reason: PropTypes.shape(FieldShape).isRequired,
     caseNumbers: PropTypes.shape(FieldShape).isRequired,

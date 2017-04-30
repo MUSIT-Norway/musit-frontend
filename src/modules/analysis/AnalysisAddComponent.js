@@ -81,7 +81,7 @@ export const saveAnalysisEventLocal = (
   const restriction = () =>
     form.restrictions.value
       ? {
-          requester: getValue(form.by),
+          requester: getValue(form.requester),
           expirationDate: getValue(form.expirationDate),
           reason: getValue(form.reason),
           caseNumbers: null,
@@ -262,6 +262,7 @@ const AnalysisAdd = (
             <Radio
               name="restrictions"
               inline
+              checked={!!form.restrictions.rawValue}
               onClick={updateFormFieldValue(form.restrictions, updateForm, true)}
             >
               Ja
@@ -269,7 +270,7 @@ const AnalysisAdd = (
             <Radio
               name="restrictions"
               inline
-              defaultChecked={!form.restrictions.rawValue}
+              checked={!form.restrictions.rawValue}
               onClick={updateFormFieldValue(form.restrictions, updateForm, false)}
             >
               Nei
@@ -290,8 +291,8 @@ const AnalysisAdd = (
                   type="text"
                   label="Klausulert for"
                   placeholder="Fornavn Etternavn"
-                  value={getValue(form.by)}
-                  onChange={updateFormField(form.by, updateForm)}
+                  value={getValue(form.requester)}
+                  onChange={updateFormField(form.requester, updateForm)}
                 />
               </FormGroup>
               <FormGroup>
@@ -329,7 +330,7 @@ const AnalysisAdd = (
                   type="text"
                   label="Sluttdato"
                   value={getValue(form.expirationDate)}
-                  readOnly
+                  onChange={updateFormField(form.expirationDate, updateForm)}
                 />
               </FormGroup>
             </Panel>
@@ -419,7 +420,7 @@ AnalysisAdd.propTypes = {
     comments: PropTypes.shape(FieldShape).isRequired,
 
     restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
-    by: PropTypes.shape(FieldShape).isRequired,
+    requester: PropTypes.shape(FieldShape).isRequired,
     expirationDate: PropTypes.shape(FieldShape).isRequired,
     reason: PropTypes.shape(FieldShape).isRequired,
     caseNumbers: PropTypes.shape(FieldShape).isRequired,
