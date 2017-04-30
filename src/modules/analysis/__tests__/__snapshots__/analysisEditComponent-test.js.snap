@@ -236,25 +236,22 @@ exports[`AnalysisEditComponent should render properly 1`] = `
           bsClass="col"
           componentClass="div"
           md={2}>
-          <FormControl
-            bsClass="form-control"
-            componentClass="select"
+          <select
+            className="form-control"
             onChange={[Function anonymous]}
-            placeholder="Velg kategori">
+            value="">
             <option>
               Velg kategori
             </option>
             <option
-              selected={false}
               value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
               3D-skanning, laser
             </option>
             <option
-              selected={false}
               value="b39399ab-aabd-4ebc-903b-adcf6876a364">
               3D-skanning, strukturert lys
             </option>
-          </FormControl>
+          </select>
         </Col>
       </FormGroup>
       <FormGroup
@@ -334,7 +331,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
             disabled={false}
             inline={true}
             name="finalize"
-            onClick={[Function anonymous]}>
+            onChange={[Function anonymous]}>
             Ja
           </Radio>
           <Radio
@@ -343,7 +340,7 @@ exports[`AnalysisEditComponent should render properly 1`] = `
             disabled={false}
             inline={true}
             name="finalize"
-            onClick={[Function anonymous]}>
+            onChange={[Function anonymous]}>
             Nei
           </Radio>
         </Col>

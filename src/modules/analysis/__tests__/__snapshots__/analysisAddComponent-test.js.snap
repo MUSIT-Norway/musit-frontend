@@ -199,11 +199,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           bsClass="col"
           componentClass="div"
           md={2}>
-          <FormControl
-            bsClass="form-control"
-            componentClass="select"
-            onChange={[Function anonymous]}
-            placeholder="Velg kategori">
+          <select
+            className="form-control"
+            onChange={[Function anonymous]}>
             <option>
               Velg kategori
             </option>
@@ -215,7 +213,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               value="b39399ab-aabd-4ebc-903b-adcf6876a364">
               3D-skanning, strukturert lys
             </option>
-          </FormControl>
+          </select>
         </Col>
       </FormGroup>
       <FormGroup
@@ -295,7 +293,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
             disabled={false}
             inline={true}
             name="restrictions"
-            onClick={[Function anonymous]}>
+            onChange={[Function anonymous]}>
             Ja
           </Radio>
           <Radio
@@ -304,7 +302,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
             disabled={false}
             inline={true}
             name="restrictions"
-            onClick={[Function anonymous]}>
+            onChange={[Function anonymous]}>
             Nei
           </Radio>
         </Col>

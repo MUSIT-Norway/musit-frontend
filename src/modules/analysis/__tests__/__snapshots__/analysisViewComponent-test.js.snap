@@ -308,7 +308,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           md={5}>
           <Radio
             bsClass="radio"
-            checked={null}
+            defaultChecked={null}
             disabled={false}
             inline={true}
             readOnly={true}>
@@ -316,7 +316,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           </Radio>
           <Radio
             bsClass="radio"
-            checked={true}
+            defaultChecked={true}
             disabled={false}
             inline={true}
             readOnly={true}>
@@ -350,7 +350,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           className="note"
           componentClass="textarea"
           readOnly={true}
-          value={null} />
+          value="" />
       </Col>
     </FormGroup>
     <FormGroup
