@@ -1,13 +1,11 @@
 exports[`analysisAddForm should have working getBoolField method 1`] = `
 Object {
-  "defaultValue": false,
   "mapper": Object {
     "fromRaw": [Function fromRaw],
     "toRaw": [Function toRaw]
   },
   "name": "someBool",
-  "validator": Object {},
-  "value": false
+  "validator": Object {}
 }
 `;
 
