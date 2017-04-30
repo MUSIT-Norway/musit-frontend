@@ -81,7 +81,7 @@ export const saveAnalysisEventLocal = (
   const restriction = () =>
     form.restrictions.value
       ? {
-          requester: getValue(form.by),
+          requester: getValue(form.requester),
           expirationDate: getValue(form.expirationDate),
           reason: getValue(form.reason),
           caseNumbers: null,
@@ -214,16 +214,15 @@ const AnalysisAdd = (
         <FormGroup>
           <Label label="Type analyse" md={1} />
           <Col md={2}>
-            <FormControl
-              componentClass="select"
-              placeholder="Velg kategori"
+            <select
+              className="form-control"
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
               {store.analysisTypes.map(a => (
                 <option key={a.id} value={a.id}>{a.name}</option>
               ))}
-            </FormControl>
+            </select>
           </Col>
         </FormGroup>
         <FormGroup>
@@ -262,15 +261,16 @@ const AnalysisAdd = (
             <Radio
               name="restrictions"
               inline
-              onClick={updateFormFieldValue(form.restrictions, updateForm, true)}
+              checked={!!form.restrictions.rawValue}
+              onChange={updateFormFieldValue(form.restrictions, updateForm, true)}
             >
               Ja
             </Radio>
             <Radio
               name="restrictions"
               inline
-              defaultChecked={!form.restrictions.rawValue}
-              onClick={updateFormFieldValue(form.restrictions, updateForm, false)}
+              checked={!form.restrictions.rawValue}
+              onChange={updateFormFieldValue(form.restrictions, updateForm, false)}
             >
               Nei
             </Radio>
@@ -290,8 +290,8 @@ const AnalysisAdd = (
                   type="text"
                   label="Klausulert for"
                   placeholder="Fornavn Etternavn"
-                  value={getValue(form.by)}
-                  onChange={updateFormField(form.by, updateForm)}
+                  value={getValue(form.requester)}
+                  onChange={updateFormField(form.requester, updateForm)}
                 />
               </FormGroup>
               <FormGroup>
@@ -329,7 +329,7 @@ const AnalysisAdd = (
                   type="text"
                   label="Sluttdato"
                   value={getValue(form.expirationDate)}
-                  readOnly
+                  onChange={updateFormField(form.expirationDate, updateForm)}
                 />
               </FormGroup>
             </Panel>
@@ -377,16 +377,7 @@ const AnalysisAdd = (
 
 const FieldShape = {
   name: PropTypes.string.isRequired,
-  rawValue: PropTypes.string,
-  status: PropTypes.shape({
-    valid: PropTypes.bool,
-    error: PropTypes.any
-  })
-};
-
-const FieldShapeBoolean = {
-  name: PropTypes.string.isRequired,
-  rawValue: PropTypes.bool,
+  rawValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.bool]),
   status: PropTypes.shape({
     valid: PropTypes.bool,
     error: PropTypes.any
@@ -418,15 +409,15 @@ AnalysisAdd.propTypes = {
     externalSource: PropTypes.shape(FieldShape).isRequired,
     comments: PropTypes.shape(FieldShape).isRequired,
 
-    restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
-    by: PropTypes.shape(FieldShape).isRequired,
+    restrictions: PropTypes.shape(FieldShape).isRequired,
+    requester: PropTypes.shape(FieldShape).isRequired,
     expirationDate: PropTypes.shape(FieldShape).isRequired,
     reason: PropTypes.shape(FieldShape).isRequired,
     caseNumbers: PropTypes.shape(FieldShape).isRequired,
     cancelledBy: PropTypes.shape(FieldShape).isRequired,
     cancelledReason: PropTypes.shape(FieldShape).isRequired,
 
-    completeAnalysis: PropTypes.shape(FieldShapeBoolean).isRequired,
+    completeAnalysis: PropTypes.shape(FieldShape).isRequired,
     museumNo: PropTypes.shape(FieldShape).isRequired,
     term: PropTypes.shape(FieldShape).isRequired
   }).isRequired,

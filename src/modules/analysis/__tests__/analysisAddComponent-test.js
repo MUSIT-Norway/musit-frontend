@@ -109,8 +109,7 @@ describe('AnalysisAddComponent', () => {
       },
       restrictions: {
         name: 'restrictions',
-        value: true,
-        rawValue: true
+        rawValue: false
       }
     };
     saveAnalysisEventLocal(appSession, myForm, { state: null }, saveAnalysisEvent);

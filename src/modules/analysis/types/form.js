@@ -25,7 +25,7 @@ export type FormData = {
   externalSource: Field<string>,
   comments: Field<string>,
   restrictions: Field<boolean>,
-  by: Field<string>,
+  requester: Field<string>,
   expirationDate: Field<string>,
   reason: Field<string>,
   caseNumbers: Field<string>, //todo should be an a array
