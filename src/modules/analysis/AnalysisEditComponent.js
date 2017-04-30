@@ -272,10 +272,10 @@ const AnalysisEdit = (
         <FormGroup>
           <Label label="Klausulering" md={1} />
           <Col md={5}>
-            <Radio checked readOnly inline>
+            <Radio checked={form.restrictions.rawValue} readOnly inline>
               Ja
             </Radio>
-            <Radio inline readOnly>
+            <Radio inline checked={!form.restrictions.rawValue} readOnly>
               Nei
             </Radio>
           </Col>

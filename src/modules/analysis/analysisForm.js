@@ -12,10 +12,8 @@ export const getStrField = (field: string): Field<string> => ({
   }
 });
 
-export const getBoolField = (field: string, value: boolean = false): Field<boolean> => ({
+export const getBoolField = (field: string): Field<boolean> => ({
   name: field,
-  defaultValue: value,
-  value: value,
   mapper: booleanMapper,
   validator: {}
 });
@@ -49,7 +47,7 @@ const place = getStrField('place');
 const externalSource = getStrField('externalSource');
 const comments = getStrField('comments');
 const result = getStrField('result');
-const restrictions = getBoolField('restrictions', false);
+const restrictions = getBoolField('restrictions');
 const by = getStrField('by');
 const reason = getStrField('reason');
 const expirationDate = getStrField('expirationDate');
@@ -57,7 +55,7 @@ const cancelledBy = getStrField('cancelledBy');
 const cancelledReason = getStrField('cancelledReason');
 const note = getStrField('note');
 const type = getStrField('type');
-const completeAnalysis = getBoolField('completeAnalysis', true);
+const completeAnalysis = getBoolField('completeAnalysis');
 const events = getArrField('events', []);
 const caseNumber = getStrField('caseNumber');
 const caseNumbers = getArrField('caseNumbers');
