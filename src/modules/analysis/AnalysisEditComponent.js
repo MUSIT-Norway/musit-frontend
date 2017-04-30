@@ -230,7 +230,7 @@ const AnalysisEdit = (
           <Col md={2}>
             <select
               className="form-control"
-              value={form.analysisTypeId.rawValue}
+              value={form.analysisTypeId.rawValue || ''}
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
