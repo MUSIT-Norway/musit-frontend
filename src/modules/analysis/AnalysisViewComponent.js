@@ -41,7 +41,9 @@ type Props = { form: FormData, store: Store, appSession: AppSession, params: Par
 
 const getAnalysisTypeTerm = (form, store) => {
   if (form.analysisTypeId.rawValue && store.analysisTypes) {
-    const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.rawValue);
+    const foundType = store.analysisTypes.find(
+      a => a.id === form.analysisTypeId.rawValue
+    );
     return foundType ? foundType.name : '';
   }
 };
@@ -67,7 +69,7 @@ const getObjectsValue = form => {
   });
 };
 
-const getValue = (form, field) => form[field] ? form[field].rawValue : '';
+const getValue = (form, field) => form[field] ? (form[field].rawValue || '') : '';
 
 const AnalysisView = ({ form, store, appSession, params }: Props) => (
   <div>
@@ -97,8 +99,6 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
       <FontAwesome name="clock-o" />
       {' '}
       {getValue(form, 'eventDate')}
-      {' '}
-      <a>Se endringshistorikk</a>
     </Col>
     <NewLine />
     <Form>
@@ -210,80 +210,81 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <FormGroup>
           <Label label="Klausulering" md={1} />
           <Col md={5}>
-            <Radio checked readOnly inline>
+            <Radio defaultChecked={form.restrictions.rawValue} readOnly inline>
               Ja
             </Radio>
-            <Radio inline readOnly>
+            <Radio inline defaultChecked={!form.restrictions.rawValue} readOnly>
               Nei
             </Radio>
           </Col>
         </FormGroup>
-        <FormGroup>
-          <Panel
-            collapsible
-            expanded
-            style={{ border: 'none', backgroundColor: '#f5f5f5' }}
-          >
-            <FormGroup>
-              <FieldGroup
-                id="by"
-                md={1}
-                type="text"
-                label="Klausulert for"
-                placeholder="Fornavn Etternavn"
-                value={getValue(form, 'by')}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="reason"
-                md={1}
-                type="text"
-                label="Årsak til klausulering"
-                value={getValue(form, 'reason')}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="Saksnummer"
-                md={1}
-                type="text"
-                label="Saksnummer"
-                value={getValue(form, 'caseNumbers')}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="expirationDate"
-                md={1}
-                type="text"
-                label="Sluttdato"
-                value={getValue(form, 'expirationDate')}
-                readOnly
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="cancelledBy"
-                md={1}
-                type="text"
-                label="Opphevet av"
-                placeholder="Fornavn Etternavn"
-                value={getValue(form, 'cancelledBy')}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="cancelledReason"
-                md={1}
-                type="text"
-                label="Årsak til oppheving"
-                placeholder="Årsak til oppheving"
-                value={getValue(form, 'cancelledReason')}
-              />
-            </FormGroup>
-          </Panel>
-        </FormGroup>
+        {form.restrictions.rawValue &&
+          <FormGroup>
+            <Panel
+              collapsible
+              expanded
+              style={{ border: 'none', backgroundColor: '#f5f5f5' }}
+            >
+              <FormGroup>
+                <FieldGroup
+                  id="requester"
+                  md={1}
+                  type="text"
+                  label="Klausulert for"
+                  placeholder="Fornavn Etternavn"
+                  value={getValue(form, 'requester')}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="reason"
+                  md={1}
+                  type="text"
+                  label="Årsak til klausulering"
+                  value={getValue(form, 'reason')}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="Saksnummer"
+                  md={1}
+                  type="text"
+                  label="Saksnummer"
+                  value={getValue(form, 'caseNumbers')}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="expirationDate"
+                  md={1}
+                  type="text"
+                  label="Sluttdato"
+                  value={getValue(form, 'expirationDate')}
+                  readOnly
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="cancelledBy"
+                  md={1}
+                  type="text"
+                  label="Opphevet av"
+                  placeholder="Fornavn Etternavn"
+                  value={getValue(form, 'cancelledBy')}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="cancelledReason"
+                  md={1}
+                  type="text"
+                  label="Årsak til oppheving"
+                  placeholder="Årsak til oppheving"
+                  value={getValue(form, 'cancelledReason')}
+                />
+              </FormGroup>
+            </Panel>
+          </FormGroup>}
       </Form>
     </Well>
     <Form horizontal style={{ paddingLeft: 20 }}>
@@ -320,25 +321,6 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
       }}
       saveLabel="Endre"
     />
-    <NewLine />
-    <Form horizontal>
-      <FormGroup>
-        <Col mdOffset={1}><h5><strong>Endringshistorikk</strong></h5></Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}>
-          {getValue(form, 'registeredByName')} - {getValue(form, 'registeredDate')}
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}>
-          {getValue(form, 'doneBy')} - {getValue(form, 'eventDate')}
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}><Button bsStyle="link">Se mer</Button></Col>
-      </FormGroup>
-    </Form>
   </div>
 );
 

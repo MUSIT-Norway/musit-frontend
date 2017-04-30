@@ -16,7 +16,7 @@ import {
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import type { AppSession } from '../../types/appSession';
-import type { FormData, Update } from './types/form';
+import type { FormData } from './types/form';
 import { hashHistory } from 'react-router';
 import Config from '../../config';
 import Label from './components/Label';
@@ -39,7 +39,7 @@ type Params = {
 
 type Props = {
   form: FormData,
-  updateForm: Update,
+  updateForm: Function,
   store: Store,
   appSession: AppSession,
   editAnalysisEvent: Function,
@@ -87,14 +87,16 @@ export const editAnalysisEventLocal = (
               ? form.events.rawValue.map(a => a.objectId)
               : []
           }),
-      restriction: {
-        requester: getValue(form.by),
-        expirationDate: getValue(form.expirationDate),
-        reason: getValue(form.reason),
-        caseNumbers: getValue(form.caseNumbers),
-        cancelledBy: getValue(form.cancelledBy),
-        cancelledReason: getValue(form.cancelledReason)
-      }
+      restriction: form.restrictions.rawValue
+        ? {
+            requester: getValue(form.requester),
+            expirationDate: getValue(form.expirationDate),
+            reason: getValue(form.reason),
+            caseNumbers: getValue(form.caseNumbers),
+            cancelledBy: getValue(form.cancelledBy),
+            cancelledReason: getValue(form.cancelledReason)
+          }
+        : null
     },
     token: appSession.accessToken
   });
@@ -104,6 +106,13 @@ const updateFormField = (field, updateForm) =>
     updateForm({
       name: field.name,
       rawValue: e.target.value
+    });
+
+const updateFormFieldValue = (field, updateForm, value) =>
+  () =>
+    updateForm({
+      name: field.name,
+      rawValue: value
     });
 
 export const goToAnalysis = (
@@ -144,8 +153,6 @@ const AnalysisEdit = (
       <FontAwesome name="clock-o" />
       {' '}
       {getValue(form.doneDate)}
-      {' '}
-      <Button bsStyle="link">Se endringshistorikk</Button>
     </Col>
     <NewLine />
     <Form>
@@ -221,9 +228,9 @@ const AnalysisEdit = (
         <FormGroup>
           <Label label="Type analyse" md={1} />
           <Col md={2}>
-            <FormControl
-              componentClass="select"
-              placeholder="Velg kategori"
+            <select
+              className="form-control"
+              value={form.analysisTypeId.rawValue || ''}
               onChange={updateFormField(form.analysisTypeId, updateForm)}
             >
               <option>Velg kategori</option>
@@ -231,12 +238,11 @@ const AnalysisEdit = (
                 <option
                   key={a.id}
                   value={a.id}
-                  selected={form.analysisTypeId.rawValue === a.id}
                 >
                   {a.name}
                 </option>
               ))}
-            </FormControl>
+            </select>
           </Col>
         </FormGroup>
         <FormGroup>
@@ -272,88 +278,104 @@ const AnalysisEdit = (
         <FormGroup>
           <Label label="Klausulering" md={1} />
           <Col md={5}>
-            <Radio checked readOnly inline>
+            <Radio
+              name="finalize"
+              checked={!!form.restrictions.rawValue}
+              inline
+              onChange={updateFormFieldValue(form.restrictions, updateForm, true)}
+            >
               Ja
             </Radio>
-            <Radio inline readOnly>
+            <Radio
+              name="finalize"
+              inline
+              checked={!form.restrictions.rawValue}
+              onChange={updateFormFieldValue(form.restrictions, updateForm, false)}
+            >
               Nei
             </Radio>
           </Col>
         </FormGroup>
-        <FormGroup>
-          <Panel
-            collapsible
-            expanded
-            style={{ border: 'none', backgroundColor: '#f5f5f5' }}
-          >
-            <FormGroup>
-              <FieldGroup
-                id="navn"
-                md={1}
-                type="text"
-                label="Klausulert for"
-                placeholder="Fornavn Etternavn"
-                value={getValue(form.by)}
-                onChange={updateFormField(form.by, updateForm)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="navn"
-                md={1}
-                type="text"
-                label="Årsak til klausulering"
-                value={getValue(form.reason)}
-                onChange={updateFormField(form.reason, updateForm)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="Saksnummer"
-                md={1}
-                type="text"
-                label="Saksnummer"
-                value={getValue(form.caseNumbers)}
-                onChange={updateFormField(form.caseNumbers, updateForm)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <AddButton id="3" label="Legg til flere saksnummer" md={11} mdOffset={1} />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="navn"
-                md={1}
-                type="text"
-                label="Sluttdato"
-                value={getValue(form.expirationDate)}
-                onChange={updateFormField(form.expirationDate, updateForm)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="navn"
-                md={1}
-                type="text"
-                label="Opphevet av"
-                placeholder="Fornavn Etternavn"
-                value={getValue(form.cancelledBy)}
-                onChange={updateFormField(form.cancelledBy, updateForm)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="navn"
-                md={1}
-                type="text"
-                label="Årsak til oppheving"
-                placeholder=""
-                value={getValue(form.cancelledReason)}
-                onChange={updateFormField(form.cancelledReason, updateForm)}
-              />
-            </FormGroup>
-          </Panel>
-        </FormGroup>
+        {form.restrictions.rawValue &&
+          <FormGroup>
+            <Panel
+              collapsible
+              expanded
+              style={{ border: 'none', backgroundColor: '#f5f5f5' }}
+            >
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Klausulert for"
+                  placeholder="Fornavn Etternavn"
+                  value={getValue(form.requester)}
+                  onChange={updateFormField(form.requester, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Årsak til klausulering"
+                  value={getValue(form.reason)}
+                  onChange={updateFormField(form.reason, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="Saksnummer"
+                  md={1}
+                  type="text"
+                  label="Saksnummer"
+                  value={getValue(form.caseNumbers)}
+                  onChange={updateFormField(form.caseNumbers, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <AddButton
+                  id="3"
+                  label="Legg til flere saksnummer"
+                  md={11}
+                  mdOffset={1}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Sluttdato"
+                  value={getValue(form.expirationDate)}
+                  onChange={updateFormField(form.expirationDate, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Opphevet av"
+                  placeholder="Fornavn Etternavn"
+                  value={getValue(form.cancelledBy)}
+                  onChange={updateFormField(form.cancelledBy, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Årsak til oppheving"
+                  placeholder=""
+                  value={getValue(form.cancelledReason)}
+                  onChange={updateFormField(form.cancelledReason, updateForm)}
+                />
+              </FormGroup>
+            </Panel>
+          </FormGroup>}
       </Form>
     </Well>
     <Form horizontal style={{ paddingLeft: 20 }}>
@@ -392,29 +414,12 @@ const AnalysisEdit = (
           appSession
         )}
     />
-    <NewLine />
-    <Form horizontal>
-      <FormGroup>
-        <Col mdOffset={1}><h5><b>Endringshistorikk</b></h5></Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}>
-          {getValue(form.registeredBy)} - {getValue(form.registeredDate)}
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}>{getValue(form.doneBy)} - {getValue(form.doneDate)}</Col>
-      </FormGroup>
-      <FormGroup>
-        <Col mdOffset={1}><Button bsStyle="link">Se mer</Button></Col>
-      </FormGroup>
-    </Form>
   </div>
 );
 
 const FieldShape = {
   name: PropTypes.string.isRequired,
-  rawValue: PropTypes.string,
+  rawValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   status: PropTypes.shape({
     valid: PropTypes.bool,
     error: PropTypes.any
@@ -456,7 +461,7 @@ AnalysisEdit.propTypes = {
     comments: PropTypes.shape(FieldShape).isRequired,
 
     restrictions: PropTypes.shape(FieldShapeBoolean).isRequired,
-    by: PropTypes.shape(FieldShape).isRequired,
+    requester: PropTypes.shape(FieldShape).isRequired,
     expirationDate: PropTypes.shape(FieldShape).isRequired,
     reason: PropTypes.shape(FieldShape).isRequired,
     caseNumbers: PropTypes.shape(FieldShape).isRequired,

@@ -102,6 +102,14 @@ describe('AnalysisAddComponent', () => {
       reason: {
         name: 'reason',
         rawValue: null
+      },
+      responsible: {
+        name: 'responsible',
+        rawValue: null
+      },
+      restrictions: {
+        name: 'restrictions',
+        rawValue: false
       }
     };
     saveAnalysisEventLocal(appSession, myForm, { state: null }, saveAnalysisEvent);
@@ -145,6 +153,9 @@ describe('AnalysisAddComponent', () => {
 
   it('should render properly', () => {
     const updateForm = sinon.spy();
+    form.restrictions.value = true;
+    form.restrictions.rawValue = true;
+
     const wrapper = shallow(
       <AnalysisAddComponent
         form={form}

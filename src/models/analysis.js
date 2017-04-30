@@ -3,17 +3,38 @@ import Config from '../config';
 import MusitActor from './actor';
 import MusitObject from './object';
 import { Observable } from 'rxjs';
+import moment from 'moment';
 
 class Analysis {}
 
-Analysis.fromJsonToForm = jsonObj =>
-  Object.keys(jsonObj).reduce(
-    (acc, attributeName) => [
-      ...acc,
-      { name: attributeName, defaultValue: jsonObj[attributeName] }
-    ],
-    []
+Analysis.fromJsonToForm = (
+  json: any
+): Array<{ name: string, defaultValue: string | boolean }> => {
+  // auxiliary method for converting to field
+  const toField = (name, defaultValue) => ({ name, defaultValue });
+  // Convert json to an object of form fields
+  const form = Object.keys(json).reduce(
+    (acc, key) => ({ ...acc, [key]: toField(key, json[key]) }),
+    {}
   );
+  // custom mapping of composite structures from json to form
+  form.caseNumber = toField(
+    'caseNumber',
+    form.caseNumbers ? form.caseNumbers.defaultValue[0] : null
+  );
+  const restriction = form.restriction && form.restriction.defaultValue;
+  form.restrictiona = toField('restrictions', !!restriction);
+  if (restriction) {
+    form.requester = toField('requester', restriction.requester);
+    form.reason = toField('reason', restriction.reason);
+    form.expirationDate = toField(
+      'expirationDate',
+      moment(restriction.expirationDate).format('YYYY-MM-DD')
+    );
+  }
+  // return an array of form fields
+  return Object.keys(form).map(key => form[key]);
+};
 
 Analysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) =>
   ({ museumId, collectionId, token, callback }) => {
@@ -39,7 +60,12 @@ Analysis.editAnalysisEvent = (ajaxPut = simplePut) =>
 Analysis.getAnalysesForObject = (ajaxGet = simpleGet) =>
   ({ museumId, token, id, callback }) => {
     const url = Config.magasin.urls.api.analysis.analysesForObject(museumId, id);
-    return ajaxGet(url, token, callback).map(({ response }) => response);
+    return ajaxGet(url, token, callback).map(({ response }) => {
+      if (!Array.isArray(response)) {
+        return [];
+      }
+      return response;
+    });
   };
 
 Analysis.getAnalysisById = (ajaxGet = simpleGet) =>

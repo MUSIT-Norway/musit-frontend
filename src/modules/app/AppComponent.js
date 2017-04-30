@@ -27,7 +27,6 @@ export class AppComponent extends Component {
     setCollectionId: PropTypes.func.isRequired,
     loadAppSession: PropTypes.func.isRequired,
     pickList: PropTypes.object.isRequired,
-    enableAnalysis: PropTypes.bool.isRequired,
     goTo: PropTypes.func.isRequired,
     clearObjectPicklist: PropTypes.func.isRequired,
     clearNodePicklist: PropTypes.func.isRequired
@@ -144,30 +143,29 @@ export class AppComponent extends Component {
               >
                 <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
               </LinkContainer>
-              {this.props.enableAnalysis &&
-                <NavDropdown
-                  title={I18n.t('musit.analysis.analysis')}
-                  id="analysis-dropdown"
+              <NavDropdown
+                title={I18n.t('musit.analysis.analysis')}
+                id="analysis-dropdown"
+              >
+                <LinkContainer
+                  to={Config.magasin.urls.client.analysis.addAnalysis(
+                    this.props.appSession
+                  )}
                 >
-                  <LinkContainer
-                    to={Config.magasin.urls.client.analysis.addAnalysis(
-                      this.props.appSession
-                    )}
-                  >
-                    <MenuItem>
-                      {I18n.t('musit.analysis.registeringAnalysis')}
-                    </MenuItem>
-                  </LinkContainer>
-                  <LinkContainer
-                    to={Config.magasin.urls.client.analysis.addSample(
-                      this.props.appSession
-                    )}
-                  >
-                    <MenuItem>
-                      {I18n.t('musit.analysis.registeringSample')}
-                    </MenuItem>
-                  </LinkContainer>
-                </NavDropdown>}
+                  <MenuItem>
+                    {I18n.t('musit.analysis.registeringAnalysis')}
+                  </MenuItem>
+                </LinkContainer>
+                <LinkContainer
+                  to={Config.magasin.urls.client.analysis.addSample(
+                    this.props.appSession
+                  )}
+                >
+                  <MenuItem>
+                    {I18n.t('musit.analysis.registeringSample')}
+                  </MenuItem>
+                </LinkContainer>
+              </NavDropdown>
               <LinkContainer
                 to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}
               >
@@ -250,8 +248,7 @@ const commands = {
 };
 
 const props = {
-  goTo: hashHistory.push,
-  enableAnalysis: Config.isDev
+  goTo: hashHistory.push
 };
 
 export default inject(data, commands, props)(AppComponent);
