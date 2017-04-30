@@ -152,9 +152,6 @@ const submitSample = (id:string, appSession: AppSession, form: FormData, editSam
     sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType}
   };
 
-
-  console.log('Form', form);
-
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
   data['responsible'] = appSession.actor.dataportenId;
