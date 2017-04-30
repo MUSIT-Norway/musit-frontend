@@ -1,18 +1,19 @@
 /* @flow */
+import { Moment } from 'moment';
 
 type SampleData = {
   id: string,
   sampleId: string,
   doneBy: string,
   date: string,
-  sampleType: string,
+  sampleType: { value: string, subTypeValue: string },
   sampleSubType: string,
   status: string,
   details: string,
   hasAnalyse: boolean,
-  createdDate: string
+  createdDate: Moment
 };
 
 export type Samples = SampleData[];
 
-export type SamplesPropsType = { samples: Samples };
+export type SamplesPropsType = { samples: Samples, onClick: Function };

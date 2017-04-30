@@ -19,34 +19,38 @@ import type { AppSession } from '../../types/appSession';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
 import type {Person} from './sampleForm';
-type Field = { name: string, rawValue?: any }; // TODO use Field type in forms package, and change that Field type instead
-type Update = (update: Field) => void;
+import type { Field } from '../../forms/form';
 
-type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: { className?: string, style?: {} } };
+type FieldInputProps = { field: Field<*>, onChangeInput: Function, inputProps?: { className?: string, style?: {} } };
+
+type Params = {
+  objectId: string
+}
 
 type FormData = {
-  note: Field, size: Field, status: Field, externalId: Field, externalIdSource: Field,
-  container: Field, storageMedium: Field, sampleType: Field, sampleId: Field,
-  sampleSubType: Field, sizeUnit: Field, museumId: Field, subNo: Field, leftoverSample: Field,
-  term_species: Field, registeredBy: Field, registeredDate: Field, updateBy: Field, hasRestMaterial: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field, persons: Field
+  note: Field<string>, size: Field<string>, status: Field<string>, externalId: Field<string>, externalIdSource: Field<string>,
+  container: Field<string>, storageMedium: Field<string>, sampleType: Field<*>, sampleId: Field<string>,
+  sampleSubType: Field<string>, sizeUnit: Field<string>, museumId: Field<string>, subNo: Field<string>, leftoverSample: Field<string>,
+  term_species: Field<string>, registeredBy: Field<string>, registeredDate: Field<string>, updateBy: Field<string>, hasRestMaterial: Field<string>,
+  updateDate: Field<string>, sampleId: Field<string>, createdDate: Field<*>, sampleDescription: Field<string>, persons: Field<Array<*>>
 };
 
 type Props = {
   form: FormData,
-  updateForm: Update,
+  updateForm: Function,
   persons: Array<{ name: string, role: string, date: string }>,
   addSample: Function,
   addPersonToSample: Function,
   updatePersonForSample: Function,
   clearForm: Function,
-  appSession: AppSession
+  appSession: AppSession,
+  params: Params
 };
 
 type FieldDropDownProps = {
-  field: Field,
+  field: Field<string>,
   title: any,
-  onSelectInput: Update,
+  onSelectInput: Function,
   selectItems: Array<string>,
   inputProps?: { className?: string, style?: {} }
 };
@@ -106,7 +110,7 @@ const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title}: F
   </FormGroup>
 );
 
-type FieldReadOnlyProps = { field: Field, label: string, defaultValue: string, inputProps?: { className?: string, style?: {} } };
+type FieldReadOnlyProps = { field: Field<string>, label: string, defaultValue: string, inputProps?: { className?: string, style?: {} } };
 
 const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyProps) => {
   const value = field.rawValue;
@@ -117,7 +121,7 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (appSession: AppSession, form: FormData, addSample: Function) => {
+const submitSample = (appSession: AppSession, form: FormData, params: Params, addSample: Function) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
@@ -142,26 +146,24 @@ const submitSample = (appSession: AppSession, form: FormData, addSample: Functio
     ...tmpData,
     size: {value: tmpData.size, unit: tmpData.sizeUnit},
     sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType},
-    originatedObjectUuid: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8'
+    originatedObjectUuid: params.objectId
   };
 
-
-  //data['createdDate'] = '2017-03-19';
-  data['status'] = 2;
-  data['responsible'] = appSession.actor.dataportenId;
-  data['isExtracted'] = false;
-  data['parentObjectType'] = 'collection';
-  data['museumId'] = 99;
-  data['parentObjectId'] = '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8';
+  data.status = 2;
+  data.responsible = appSession.actor.dataportenId;
+  data.isExtracted = false;
+  data.parentObjectType = 'collection';
+  data.museumId = appSession.museumId;
+  data.parentObjectId = params.objectId;
   if (tmpData.externalId) {
-    data['externalId'] = {value: tmpData.externalId, source: tmpData.externalIdSource};
+    data.externalId = {value: tmpData.externalId, source: tmpData.externalIdSource};
   }
 
   return addSample({museumId, token, data});
 };
 
 
-const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}: Props) => {
+const SampleAddComponent = ({form, updateForm, addSample, appSession, params, clearForm}: Props) => {
 
   const sampleValues = [
     'Frø',
@@ -198,7 +200,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
     }
   };
 
-  const personRoles = form.persons.rawValue || [];
+  const personRoles: Array<Person> = (form.persons.rawValue: any) || [];
 
   return (
     <Form style={{padding: 20}}>
@@ -454,8 +456,8 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, clearForm}
         <Col md={4}>
           <Button
             onClick={() =>
-              submitSample(appSession, form, addSample)
-                .then((value) => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(value)))
+              submitSample(appSession, form, params, addSample)
+                .then((value) => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(appSession, value)))
             }
           >
             Lagre

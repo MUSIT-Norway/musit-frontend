@@ -1,6 +1,8 @@
 import inject from 'react-rxjs/dist/RxInject';
 import sampleForm from './sampleForm';
 import SampleFormAddComponent from './SampleAddComponent';
+import { makeUrlAware } from '../app/appSession';
+import flowRight from 'lodash/flowRight';
 import Sample from '../../models/sample';
 import React from 'react';
 import { Observable } from 'rxjs';
@@ -22,4 +24,8 @@ const props = {
 
 const commands = { updateForm$, loadForm$ };
 
-export default inject(data, commands, props)(SampleFormAddComponent);
+export default flowRight([
+  inject(data, commands, props),
+  makeUrlAware
+])(SampleFormAddComponent);
+
