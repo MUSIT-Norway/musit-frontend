@@ -7,6 +7,7 @@ import mount from '../../shared/mount';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { toPromise } from '../../shared/util';
 import Sample from '../../models/sample';
+import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 
 const { form$, loadForm$, updateForm$ } = sampleForm;
@@ -66,5 +67,6 @@ export default flowRight([
       );
       loadForm(formData);
     });
-  })
+  }),
+  makeUrlAware
 ])(SampleEditComponent);
