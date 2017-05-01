@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import mount from '../../shared/mount';
 import { emitError, emitSuccess } from '../../shared/errors';
 import Sample from '../../models/sample';
+import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 
 const { form$, loadForm$ } = sampleForm;
@@ -62,8 +63,8 @@ export default flowRight([
         },
         []
       );
-      console.log('Formdata', formData);
       loadForm(formData);
     });
-  })
+  }),
+  makeUrlAware
 ])(SampleViewComponent);

@@ -1,11 +1,10 @@
 /* @flow */
-
 import React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
 import type { SamplesPropsType } from '../../types/samples';
 
-const SampleTableComponent = ({ samples }: SamplesPropsType) => {
+const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
   return (
     <div>
       <Table
@@ -26,13 +25,13 @@ const SampleTableComponent = ({ samples }: SamplesPropsType) => {
           samples.map((e, i) => (
             <Tr key={i}>
               <Td column="id">{e.id}</Td>
-              <Td column="createdDate">{e.createdDate}</Td>
-              <Td column="sampleType">{e.sampleType}</Td>
-              <Td column="sampleSubType">{e.sampleSubType}</Td>
+              <Td column="createdDate">{e.createdDate.format('DD.MM.YYYY')}</Td>
+              <Td column="sampleType">{e.sampleType.value}</Td>
+              <Td column="sampleSubType">{e.sampleType.subTypeValue}</Td>
               <Td column="status">{e.status}</Td>
               <Td column="hasAnalyse">{e.hasAnalyse}</Td>
               <Td column="showInfo">
-                <a href={e.details || 'En url'}>Se mer / Rediger</a>
+                <a onClick={() => onClick(e)}>Se mer / Rediger</a>
               </Td>
             </Tr>
           ))}

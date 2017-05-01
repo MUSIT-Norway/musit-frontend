@@ -18,11 +18,9 @@ import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
 import type { AppSession } from '../../types/appSession';
 import type {Person} from './sampleForm';
+import type { Field } from '../../forms/form';
 
-type Field = { name: string, rawValue: ?string };
-type Update = (update: Field) => void;
-
-type FieldInputProps = { field: Field, onChangeInput: Update, inputProps?: { className?: string, style?: {} } };
+type FieldInputProps = { field: Field, onChangeInput: Function, inputProps?: { className?: string, style?: {} } };
 
 type FormData = {
   note: Field, size: Field, status: Field, externalId: Field,
@@ -36,7 +34,7 @@ type FormData = {
 
 type Props = {
   form: FormData,
-  updateForm: Update,
+  updateForm: Function,
   editSample: Function,
   appSession: AppSession,
   params: {
@@ -77,7 +75,7 @@ const CheckBoxInput = ({field, onChangeInput}: FieldInputProps) => (
 type FieldDropDownProps = {
   field: Field,
   title: any,
-  onSelectInput: Update,
+  onSelectInput: Function,
   selectItems: Array<string>,
   inputProps?: { className?: string, style?: {} }
 };
@@ -153,9 +151,6 @@ const submitSample = (id:string, appSession: AppSession, form: FormData, editSam
     size: {value: tmpData.size, unit: tmpData.sizeUnit},
     sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType}
   };
-
-
-  console.log('Form', form);
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
@@ -461,7 +456,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           <Button
             onClick={() =>
               submitSample(id, appSession, form, editSample, form.persons.rawValue)
-                .then(() => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(id)))
+                .then(() => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(appSession, id)))
             }
           >
             Lagre

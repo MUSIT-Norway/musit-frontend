@@ -137,7 +137,7 @@ const SampleViewComponent = props => {
           <Button
             onClick={() =>
               hashHistory.push(
-                Config.magasin.urls.client.analysis.editSample(props.params.sampleId)
+                Config.magasin.urls.client.analysis.editSample(props.appSession, props.params.sampleId)
               )}
           >
             Endre

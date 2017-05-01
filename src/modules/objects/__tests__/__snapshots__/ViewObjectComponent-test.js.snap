@@ -72,10 +72,10 @@ exports[`ViewObjectComponent should display correctly 1`] = `
     </Button>
   </div>
   <Uncontrolled(Tabs)
-    id="objectDetails">
+    defaultActiveKey={1}
+    id="events">
     <Tab
-      eventKey={0}
-      id="1"
+      eventKey={1}
       title="Hendelser">
       <EventTableComponent
         events={
@@ -101,10 +101,10 @@ exports[`ViewObjectComponent should display correctly 1`] = `
         onClick={[Function onClick]} />
     </Tab>
     <Tab
-      eventKey={1}
-      id="2"
+      eventKey={2}
       title="Prøver">
       <SampleTableComponent
+        onClick={[Function onClick]}
         samples={
           Array [
             Object {
