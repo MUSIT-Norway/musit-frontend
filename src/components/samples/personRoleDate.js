@@ -114,5 +114,4 @@ export const PersonRoleDate = (
       </Row>
     </Grid>;
 };
-
 export default PersonRoleDate;

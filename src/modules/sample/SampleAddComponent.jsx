@@ -15,9 +15,9 @@ import {
   Row
 } from 'react-bootstrap';
 import Config from '../../config';
+import PersonRoleDate from '../../components/samples/personRoleDate';
 import type { AppSession } from '../../types/appSession';
 import {hashHistory} from 'react-router';
-import PersonRoleDate from '../../components/samples/personRoleDate';
 import type {Person} from './sampleForm';
 import type { Field } from '../../forms/form';
 
@@ -44,6 +44,7 @@ type Props = {
   updatePersonForSample: Function,
   clearForm: Function,
   appSession: AppSession,
+  objectStore: { objectData: any, events: any, samples: any},
   params: Params
 };
 
@@ -121,10 +122,11 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (appSession: AppSession, form: FormData, params: Params, addSample: Function) => {
+const submitSample = (appSession: AppSession, form: FormData, objectStore: any, params: Params, addSample: Function) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
-  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) =>
+    ({...akk, [key]: frm[key].value || frm[key].defaultValue}), {});
   const reducePersons = (p: any) => p && p.reduce((akk: any, v: Person) => {
     switch (v.role) {
       case 'creator':
@@ -152,19 +154,20 @@ const submitSample = (appSession: AppSession, form: FormData, params: Params, ad
   data.status = 2;
   data.responsible = appSession.actor.dataportenId;
   data.isExtracted = false;
-  data.parentObjectType = 'collection';
+  data.parentObjectType = objectStore.objectData.objectType;
   data.museumId = appSession.museumId;
   data.parentObjectId = params.objectId;
   if (tmpData.externalId) {
     data.externalId = {value: tmpData.externalId, source: tmpData.externalIdSource};
-  };
-  delete data.externalIdSource;
-
+    if (data.externalIdSource) {
+      delete data.externalIdSource;
+    }
+  }
   return addSample({museumId, token, data});
 };
 
 
-const SampleAddComponent = ({form, updateForm, addSample, appSession, params, clearForm}: Props) => {
+const SampleAddComponent = ({form, objectStore, updateForm, addSample, appSession, params, clearForm}: Props) => {
 
   const sampleValues = [
     'Frø',
@@ -219,7 +222,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
             field={form.museumId}
             inputProps={{className: 'museumId'}}
             label='MusNo:'
-            defaultValue={''}
+            defaultValue={objectStore.objectData.museumNo}
           />
         </Col>
         <Col md={2}>
@@ -227,7 +230,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
             field={form.subNo}
             inputProps={{className: 'subNo'}}
             label='Unr:'
-            defaultValue={''}
+            defaultValue={objectStore.objectData.subNo}
           />
         </Col>
         <Col md={3}>
@@ -235,7 +238,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
             field={form.term_species}
             inputProps={{className: 'term_species'}}
             label='Term/artsnavn:'
-            defaultValue={''}
+            defaultValue={objectStore.objectData.term}
           />
         </Col>
         <Col md={1}>
@@ -433,7 +436,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
             <CheckBoxInput
               field={form.leftoverSample}
               onChangeInput={updateForm}
-              defaultValue={1}
+              defaultValue={'1'}
             />
           </Col>
         </Row>
@@ -458,7 +461,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
         <Col md={4}>
           <Button
             onClick={() =>
-              submitSample(appSession, form, params, addSample)
+              submitSample(appSession, form, objectStore, params, addSample)
                 .then((value) => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(appSession, value)))
             }
           >

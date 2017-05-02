@@ -34,6 +34,7 @@ export default flowRight([
     const accessToken = appSession.accessToken;
     const val = { id: sampleId, museumId: museumId, token: accessToken };
     loadSample(val).then(v => {
+      console.log('Data: ', v);
       const formData = Object.keys(v).reduce(
         (akk, key: string) => {
           switch (key) {
