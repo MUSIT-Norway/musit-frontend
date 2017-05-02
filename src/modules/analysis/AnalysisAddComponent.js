@@ -1,6 +1,6 @@
 /* @flow */
-import React, {PropTypes} from 'react';
-import {I18n} from 'react-i18nify';
+import React, { PropTypes } from 'react';
+import { I18n } from 'react-i18nify';
 import {
   Button,
   Col,
@@ -12,18 +12,18 @@ import {
   Radio,
   Well
 } from 'react-bootstrap';
-import {SaveCancel} from '../../components/formfields/index';
-import {hashHistory} from 'react-router';
+import { SaveCancel } from '../../components/formfields/index';
+import { hashHistory } from 'react-router';
 import Config from '../../config';
-import type {AppSession} from '../../types/appSession';
-import type {FormData} from './types/form';
-import type {Field} from '../../forms/form';
-import type {ObjectData} from '../../types/object';
+import type { AppSession } from '../../types/appSession';
+import type { FormData } from './types/form';
+import type { Field } from '../../forms/form';
+import type { ObjectData } from '../../types/object';
 import Label from './components/Label';
 import FieldGroup from './components/FIeldGroup';
 import AddButton from './components/AddButton';
 import NewLine from './components/NewLine';
-import {Table} from 'reactable';
+import { Table } from 'reactable';
 
 type Location = {
   state?: Array<ObjectData>
@@ -71,20 +71,22 @@ type SaveAnalysisCollection = {
 const getValue = field => field.rawValue || '';
 const getApiValue = field => field.rawValue ? field.rawValue : null;
 
-export const saveAnalysisEventLocal = (appSession: AppSession,
-                                       form: FormData,
-                                       location?: Location,
-                                       saveAnalysisEvent: Function) => {
+export const saveAnalysisEventLocal = (
+  appSession: AppSession,
+  form: FormData,
+  location?: Location,
+  saveAnalysisEvent: Function
+) => {
   const caseNumber = getApiValue(form.caseNumbers);
   const restriction = () =>
     form.restrictions.value
       ? {
-      requester: getValue(form.requester),
-      expirationDate: getValue(form.expirationDate),
-      reason: getValue(form.reason),
-      caseNumbers: null,
-      cancelledReason: null
-    }
+          requester: getValue(form.requester),
+          expirationDate: getValue(form.expirationDate),
+          reason: getValue(form.reason),
+          caseNumbers: null,
+          cancelledReason: null
+        }
       : null;
 
   const data: SaveAnalysisCollection = {
@@ -124,13 +126,17 @@ const updateFormFieldValue = (field, updateForm, value) =>
       rawValue: value
     });
 
-export const goToAnalysis = (fn: Promise<string>,
-                             appSession: AppSession,
-                             goTo: Function = hashHistory.push) =>
+export const goToAnalysis = (
+  fn: Promise<string>,
+  appSession: AppSession,
+  goTo: Function = hashHistory.push
+) =>
   fn.then((analysisId: string) =>
     goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, analysisId)));
 
-const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, location}: Props) => (
+const AnalysisAdd = (
+  { form, updateForm, store, saveAnalysisEvent, appSession, location }: Props
+) => (
   <div>
     <br />
     <PageHeader style={{ paddingLeft: 20 }}>
@@ -138,7 +144,7 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
     </PageHeader>
     <Form horizontal style={{ paddingLeft: 10 }}>
       <FormGroup>
-        <Label label="Type analyse" md={1}/>
+        <Label label="Type analyse" md={1} />
         <Col md={2}>
           <select
             className="form-control"
@@ -163,7 +169,7 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
         </Col>
       </FormGroup>
       <FormGroup>
-        <Label label="Analysested" md={1}/>
+        <Label label="Analysested" md={1} />
         <Col md={2}>
           <FormControl componentClass="select" placeholder="Velg sted">
             <option value="Velgsted">Velg sted</option>
@@ -183,7 +189,7 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
         />
       </FormGroup>
       <FormGroup>
-        <AddButton id="1" label="Legg til saksnummer" md={5}/>
+        <AddButton id="1" label="Legg til saksnummer" md={5} />
       </FormGroup>
     </Form>
     <NewLine />
@@ -194,7 +200,7 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
         controlId={form.note.name}
         validationState={form.note.status && !form.note.status.valid ? 'error' : null}
       >
-        <Label label="Kommentar til analysen" md={1}/>
+        <Label label="Kommentar til analysen" md={1} />
         <Col md={5}>
           <FormControl
             className="note"
@@ -217,14 +223,14 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
           value={getValue(form.responsible)}
           onChange={updateFormField(form.responsible, updateForm)}
         />
-        <Label label="Rolle" md={1}/>
+        <Label label="Rolle" md={1} />
         <Col md={1}>
           <FormControl componentClass="select" placeholder="Velg rolle">
             <option value="Velgsted">Velg rolle</option>
             <option value="other">...</option>
           </FormControl>
         </Col>
-        <AddButton id="3" label="Legg til person" md={2}/>
+        <AddButton id="3" label="Legg til person" md={2} />
       </FormGroup>
     </Form>
     <NewLine />
@@ -240,10 +246,10 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
             <Table
               className="table"
               columns={[
-              { key: 'museumNo', label: 'Museumsnr' },
-              { key: 'subNo', label: 'Unr' },
-              { key: 'term', label: 'Term/artsnavn' }
-            ]}
+                { key: 'museumNo', label: 'Museumsnr' },
+                { key: 'subNo', label: 'Unr' },
+                { key: 'term', label: 'Term/artsnavn' }
+              ]}
               data={location ? location.state || [] : []}
               sortable={['museumNumber', 'subNumber', 'term']}
               noDataText="Ingen objekter"
@@ -251,7 +257,7 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
           </Col>
         </FormGroup>
         <FormGroup>
-          <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1}/>
+          <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
         </FormGroup>
       </Form>
       <NewLine />
@@ -271,13 +277,13 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
           </Col>
         </FormGroup>
         <FormGroup>
-          <FieldGroup id="formControlsText" type="text" label="Last opp fil"/>
+          <FieldGroup id="formControlsText" type="text" label="Last opp fil" />
           <Col md={2}>
             <Button>Bla gjennom</Button>
           </Col>
         </FormGroup>
         <FormGroup>
-          <Label label="Kommentar / resultat" md={1}/>
+          <Label label="Kommentar / resultat" md={1} />
           <Col md={5}>
             <FormControl
               componentClass="textarea"
@@ -288,7 +294,7 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
           </Col>
         </FormGroup>
         <FormGroup>
-          <Label label="Klausulering" md={1}/>
+          <Label label="Klausulering" md={1} />
           <Col md={5}>
             <Radio
               name="restrictions"
@@ -309,63 +315,63 @@ const AnalysisAdd = ({form, updateForm, store, saveAnalysisEvent, appSession, lo
           </Col>
         </FormGroup>
         {form.restrictions.value &&
-        <FormGroup>
-          <Panel
-            collapsible
-            expanded
-            style={{ border: 'none', backgroundColor: '#f5f5f5' }}
-          >
-            <FormGroup>
-              <FieldGroup
-                id="navn"
-                md={1}
-                type="text"
-                label="Klausulert for"
-                placeholder="Fornavn Etternavn"
-                value={getValue(form.requester)}
-                onChange={updateFormField(form.requester, updateForm)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="navn"
-                md={1}
-                type="text"
-                label="Årsak til klausulering"
-                value={getValue(form.reason)}
-                onChange={updateFormField(form.reason, updateForm)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="Saksnummer"
-                md={1}
-                type="text"
-                label="Saksnummer"
-                value={getValue(form.caseNumbers)}
-                onChange={updateFormField(form.caseNumbers, updateForm)}
-              />
-            </FormGroup>
-            <FormGroup>
-              <AddButton
-                id="3"
-                label="Legg til flere saksnummer"
-                md={11}
-                mdOffset={1}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FieldGroup
-                id="navn"
-                md={1}
-                type="text"
-                label="Sluttdato"
-                value={getValue(form.expirationDate)}
-                onChange={updateFormField(form.expirationDate, updateForm)}
-              />
-            </FormGroup>
-          </Panel>
-        </FormGroup>}
+          <FormGroup>
+            <Panel
+              collapsible
+              expanded
+              style={{ border: 'none', backgroundColor: '#f5f5f5' }}
+            >
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Klausulert for"
+                  placeholder="Fornavn Etternavn"
+                  value={getValue(form.requester)}
+                  onChange={updateFormField(form.requester, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Årsak til klausulering"
+                  value={getValue(form.reason)}
+                  onChange={updateFormField(form.reason, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="Saksnummer"
+                  md={1}
+                  type="text"
+                  label="Saksnummer"
+                  value={getValue(form.caseNumbers)}
+                  onChange={updateFormField(form.caseNumbers, updateForm)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <AddButton
+                  id="3"
+                  label="Legg til flere saksnummer"
+                  md={11}
+                  mdOffset={1}
+                />
+              </FormGroup>
+              <FormGroup>
+                <FieldGroup
+                  id="navn"
+                  md={1}
+                  type="text"
+                  label="Sluttdato"
+                  value={getValue(form.expirationDate)}
+                  onChange={updateFormField(form.expirationDate, updateForm)}
+                />
+              </FormGroup>
+            </Panel>
+          </FormGroup>}
       </Form>
     </Well>
     <NewLine />

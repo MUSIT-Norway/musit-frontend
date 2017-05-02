@@ -46,6 +46,51 @@ exports[`AnalysisEditComponent should render properly 1`] = `
   <Form
     bsClass="form"
     componentClass="form"
+    horizontal={true}
+    inline={false}
+    style={
+      Object {
+        "paddingLeft": 10
+      }
+    }>
+    <FormGroup
+      bsClass="form-group">
+      <LabelFormat
+        label="Type analyse"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={11} />
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <LabelFormat
+        label="Analysested"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={2}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="select"
+          placeholder="Velg sted">
+          <option
+            value="Velgsted">
+            Velg sted
+          </option>
+          <option
+            value="other">
+            ...
+          </option>
+        </FormControl>
+      </Col>
+    </FormGroup>
+  </Form>
+  <Form
+    bsClass="form"
+    componentClass="form"
     horizontal={false}
     inline={false}>
     <FormGroup
@@ -71,69 +116,33 @@ exports[`AnalysisEditComponent should render properly 1`] = `
   <Form
     bsClass="form"
     componentClass="form"
-    horizontal={false}
-    inline={true}>
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={12}>
-      <h5>
-        <b>
-          Objekt/prøve
-        </b>
-      </h5>
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={5}
-      mdOffset={1}>
-      <Table
-        bordered={false}
-        bsClass="table"
-        condensed={false}
-        hover={false}
-        responsive={true}
-        striped={false}>
-        <thead>
-          <tr>
-            <th>
-              Museumsnr
-            </th>
-            <th>
-              Unr
-            </th>
-            <th>
-              Term/artsnavn
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td />
-            <td />
-            <td />
-          </tr>
-        </tbody>
-      </Table>
-    </Col>
-    <AddButton
-      id="2"
-      label="Legg til objekt"
-      md={11}
-      mdOffset={1} />
-  </Form>
-  <NewLine />
-  <Form
-    bsClass="form"
-    componentClass="form"
     horizontal={true}
     inline={false}
     style={
       Object {
-        "paddingLeft": 20
+        "paddingLeft": 10
       }
     }>
+    <FormGroup
+      bsClass="form-group"
+      controlId="note"
+      validationState={null}>
+      <LabelFormat
+        label="Kommentar til analysen"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={5}>
+        <FormControl
+          bsClass="form-control"
+          className="note"
+          componentClass="textarea"
+          onChange={[Function anonymous]}
+          placeholder="note"
+          value="test note" />
+      </Col>
+    </FormGroup>
     <FormGroup
       bsClass="form-group">
       <Col
@@ -186,31 +195,6 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     </FormGroup>
   </Form>
   <NewLine />
-  <FormGroup
-    bsClass="form-group">
-    <LabelFormat
-      label="Analysested"
-      md={1} />
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={2}>
-      <FormControl
-        bsClass="form-control"
-        componentClass="select"
-        placeholder="Velg sted">
-        <option
-          value="Velgsted">
-          Velg sted
-        </option>
-        <option
-          value="other">
-          ...
-        </option>
-      </FormControl>
-    </Col>
-  </FormGroup>
-  <NewLine />
   <Well
     bsClass="well">
     <Form
@@ -220,30 +204,61 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       inline={false}>
       <FormGroup
         bsClass="form-group">
-        <LabelFormat
-          label="Type analyse"
-          md={1} />
         <Col
           bsClass="col"
           componentClass="div"
-          md={2}>
-          <select
-            className="form-control"
-            onChange={[Function anonymous]}
-            value="">
-            <option>
-              Velg kategori
-            </option>
-            <option
-              value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
-              3D-skanning, laser
-            </option>
-            <option
-              value="b39399ab-aabd-4ebc-903b-adcf6876a364">
-              3D-skanning, strukturert lys
-            </option>
-          </select>
+          md={1}>
+          <h5>
+            <strong>
+              Objekt/prøve
+            </strong>
+          </h5>
         </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={11}
+          mdOffset={1}>
+          <Table
+            bordered={false}
+            bsClass="table"
+            condensed={false}
+            hover={false}
+            responsive={true}
+            striped={false}>
+            <thead>
+              <tr>
+                <th>
+                  Museumsnr
+                </th>
+                <th>
+                  Unr
+                </th>
+                <th>
+                  Term/artsnavn
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td />
+                <td />
+                <td />
+              </tr>
+            </tbody>
+          </Table>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <AddButton
+          id="2"
+          label="Legg til objekt"
+          md={11}
+          mdOffset={1} />
       </FormGroup>
       <FormGroup
         bsClass="form-group">
@@ -338,64 +353,6 @@ exports[`AnalysisEditComponent should render properly 1`] = `
       </FormGroup>
     </Form>
   </Well>
-  <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={true}
-    inline={false}
-    style={
-      Object {
-        "paddingLeft": 20
-      }
-    }>
-    <FormGroup
-      bsClass="form-group"
-      controlId="note"
-      validationState={null}>
-      <LabelFormat
-        label="Kommentar til analysen"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={5}>
-        <FormControl
-          bsClass="form-control"
-          className="note"
-          componentClass="textarea"
-          onChange={[Function anonymous]}
-          placeholder="note"
-          value="test note" />
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <LabelFormat
-        label="Avslutt analyse"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={5}>
-        <Radio
-          bsClass="radio"
-          disabled={false}
-          inline={true}
-          readOnly={true}>
-          Ja
-        </Radio>
-        <Radio
-          bsClass="radio"
-          checked={true}
-          disabled={false}
-          inline={true}
-          readOnly={true}>
-          Nei
-        </Radio>
-      </Col>
-    </FormGroup>
-  </Form>
-  <NewLine />
   <SaveCancel
     onClickSave={[Function onClickSave]} />
 </div>
