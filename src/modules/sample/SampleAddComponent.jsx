@@ -157,7 +157,8 @@ const submitSample = (appSession: AppSession, form: FormData, params: Params, ad
   data.parentObjectId = params.objectId;
   if (tmpData.externalId) {
     data.externalId = {value: tmpData.externalId, source: tmpData.externalIdSource};
-  }
+  };
+  delete data.externalIdSource;
 
   return addSample({museumId, token, data});
 };
@@ -218,7 +219,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
             field={form.museumId}
             inputProps={{className: 'museumId'}}
             label='MusNo:'
-            defaultValue='1234'
+            defaultValue={''}
           />
         </Col>
         <Col md={2}>
@@ -226,7 +227,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
             field={form.subNo}
             inputProps={{className: 'subNo'}}
             label='Unr:'
-            defaultValue='6789'
+            defaultValue={''}
           />
         </Col>
         <Col md={3}>
@@ -234,7 +235,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
             field={form.term_species}
             inputProps={{className: 'term_species'}}
             label='Term/artsnavn:'
-            defaultValue='Carex saxatilis'
+            defaultValue={''}
           />
         </Col>
         <Col md={1}>
@@ -432,6 +433,7 @@ const SampleAddComponent = ({form, updateForm, addSample, appSession, params, cl
             <CheckBoxInput
               field={form.leftoverSample}
               onChangeInput={updateForm}
+              defaultValue={1}
             />
           </Col>
         </Row>
