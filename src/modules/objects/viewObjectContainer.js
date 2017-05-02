@@ -1,7 +1,11 @@
 /* @flow */
 import ViewObjectComponent from './ViewObjectComponent';
 import inject from 'react-rxjs/dist/RxInject';
-import objectStore$, { loadObject$ } from './objectStore';
+import objectStore$, {
+  loadObject$,
+  loadMoveAndAnalysisEvents$,
+  loadSampleEvents$
+} from './objectStore';
 import React from 'react';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
@@ -18,20 +22,30 @@ const props: {} = {
   emitError
 };
 
-const commands: {} = { loadObject$ };
+const commands: {} = {
+  loadObject$,
+  loadMoveAndAnalysisEvents$,
+  loadSampleEvents$
+};
 
-export const onMount = ({ loadObject, params, appSession }: any) => {
-  const objectId: string = params.objectId;
+export const onMount = (
+  { loadObject, loadMoveAndAnalysisEvents, loadSampleEvents, params, appSession }: any
+) => {
+  const uuid: string = params.objectId;
+  const oldId: string = params.id;
   const museumId: number = appSession.museumId;
   const accessToken: string = appSession.accessToken;
   const collectionId: string = appSession.collectionId;
-  const val = {
-    id: objectId,
+  const ajaxProps = {
+    id: uuid,
+    objectId: oldId,
     museumId: museumId,
     token: accessToken,
     collectionId: collectionId
   };
-  loadObject(val);
+  loadObject(ajaxProps);
+  loadSampleEvents(ajaxProps);
+  loadMoveAndAnalysisEvents(ajaxProps);
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount)])(

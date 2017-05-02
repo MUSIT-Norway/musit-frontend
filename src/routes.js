@@ -20,7 +20,6 @@ import AnalysisAddContainer from './modules/analysis/AnalysisAddContainer';
 import AnalysisViewContainer from './modules/analysis/AnalysisViewContainer';
 import AnalysisEditContainer from './modules/analysis/AnalysisEditContainer';
 import SampleFormAddContainer from './modules/sample/sampleAddContainer';
-import AllEvents from './modules/events/eventsContainer';
 import SampleViewContainer from './modules/sample/sampleViewContainer';
 import SampleEditContainer from './modules/sample/sampleEditContainer';
 import SamplesForObjectContainer from './modules/sample/samplesForObjectContainer';
@@ -78,14 +77,13 @@ export default () => {
           <Route path=":id" component={StorageUnitsTable} />
         </Route>
         <Route component={CenteredLayout}>
-          <Route path="objects/:objectId" component={ViewObjectContainer} />
+          <Route path="objects/:id/:objectId" component={ViewObjectContainer} />
           <Route path="analysis/add" component={AnalysisAddContainer} />
           <Route path="analysis/edit/:analysisId" component={AnalysisEditContainer} />
           <Route path="analysis/:analysisId" component={AnalysisViewContainer} />
-          <Route path="events/:objectId" component={AllEvents} />
-          <Route path="analysis/sample/add" component={SampleFormAddContainer} />
           <Route path="analysis/add" component={AnalysisAddContainer} />
           <Route path="analysis/:analysisId" component={AnalysisViewContainer} />
+          <Route path="analysis/sample/:objectId/add" component={SampleFormAddContainer} />
           <Route path="analysis/sample/:sampleId/edit" component={SampleEditContainer} />
           <Route path="analysis/sample/:sampleId" component={SampleViewContainer} />
           <Route

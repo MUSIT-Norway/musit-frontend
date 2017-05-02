@@ -14,20 +14,15 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
   val =>
     Observable.forkJoin(
       Analysis.getAnalysesForObject(ajaxGet)(val),
-      MusitObject.getLocationHistory(ajaxGet)(val).map(locations =>
-        locations.map(loc => ({
-          ...loc,
-          type: 'MoveObject',
-          eventDate: loc.registeredDate
-        })))
+      MusitObject.getLocationHistory(ajaxGet)(val)
     )
-      .map(([analyses, moves]) => {
-        const events = concat(analyses || [], moves || []);
-        return events.map(m => ({
+      .map(([analyses, moves]) =>
+        concat(analyses, moves.map(m => ({ ...m, type: 'MoveObject' }))).map(m => ({
           ...m,
-          eventDate: parseISODate(m.eventDate).format(DATE_FORMAT_DISPLAY)
-        }));
-      })
+          eventDate: parseISODate(m.eventDate || m.registeredDate).format(
+            DATE_FORMAT_DISPLAY
+          )
+        })))
       .flatMap(events => {
         const actorIds = uniq(events.map(r => r.registeredBy)).filter(r => r);
         return MusitActor.getActors(ajaxPost)(actorIds, val.token).map(actors => {

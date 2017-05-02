@@ -116,6 +116,10 @@ describe('AnalysisEditComponent', () => {
       type: {
         name: 'type',
         rawValue: 'AnalysisCollection' // ??
+      },
+      restrictions: {
+        name: 'restrictions',
+        rawValue: false
       }
     };
     editAnalysisEventLocal(appSession, myForm, editAnalysisEvent, param);

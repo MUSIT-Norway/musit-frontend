@@ -1,10 +1,7 @@
 /* @flow */
 import type { Field } from '../../forms/form';
 import createForm from '../../forms/form';
-import {
-  isNonEmptyArray,
-  isRequired
-} from '../../forms/validators';
+import { isNonEmptyArray, isRequired } from '../../forms/validators';
 import { stringMapper, booleanMapper, noMapper } from '../../forms/mappers';
 
 export const getStrField = (field: string): Field<string> => ({
@@ -15,9 +12,8 @@ export const getStrField = (field: string): Field<string> => ({
   }
 });
 
-export const getBoolField = (field: string, value: boolean = false): Field<boolean> => ({
+export const getBoolField = (field: string): Field<boolean> => ({
   name: field,
-  defaultValue: value,
   mapper: booleanMapper,
   validator: {}
 });
@@ -51,15 +47,15 @@ const place = getStrField('place');
 const externalSource = getStrField('externalSource');
 const comments = getStrField('comments');
 const result = getStrField('result');
-const restrictions = getBoolField('restrictions', true);
-const by = getStrField('by');
+const restrictions = getBoolField('restrictions');
+const requester = getStrField('requester');
 const reason = getStrField('reason');
 const expirationDate = getStrField('expirationDate');
 const cancelledBy = getStrField('cancelledBy');
 const cancelledReason = getStrField('cancelledReason');
 const note = getStrField('note');
 const type = getStrField('type');
-const completeAnalysis = getBoolField('completeAnalysis', true);
+const completeAnalysis = getBoolField('completeAnalysis');
 const events = getArrField('events', []);
 const caseNumber = getStrField('caseNumber');
 const caseNumbers = getArrField('caseNumbers');
@@ -85,7 +81,7 @@ export const fieldsArray = [
   externalSource,
   comments,
   restrictions,
-  by,
+  requester,
   expirationDate,
   reason,
   caseNumbers,

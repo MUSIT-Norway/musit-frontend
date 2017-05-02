@@ -113,6 +113,10 @@ describe('AnalysisViewComponent', () => {
       term: {
         name: 'term',
         rawValue: null
+      },
+      restrictions: {
+        name: 'restrictions',
+        rawValue: null
       }
     };
     const wrapper = shallow(<AnalysisViewComponent form={myForm} store={store} />);

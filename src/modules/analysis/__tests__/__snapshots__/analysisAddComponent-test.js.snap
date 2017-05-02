@@ -10,57 +10,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
     }>
     Registrer analyse
   </PageHeader>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
-      HID:
-    </strong>
-     
-  </Col>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
-      Registrert:
-    </strong>
-     
-    <FontAwesome
-      name="user" />
-     
-     
-    <FontAwesome
-      name="clock-o" />
-     
-  </Col>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
-      Sist endret:
-    </strong>
-     
-    <FontAwesome
-      name="user" />
-     
-     
-    <FontAwesome
-      name="clock-o" />
-     
-     
-    <Button
-      active={false}
-      block={false}
-      bsClass="btn"
-      bsStyle="link"
-      disabled={false}>
-      Se endringshistorikk
-    </Button>
-  </Col>
-  <NewLine />
   <Form
     bsClass="form"
     componentClass="form"
@@ -250,11 +199,9 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           bsClass="col"
           componentClass="div"
           md={2}>
-          <FormControl
-            bsClass="form-control"
-            componentClass="select"
-            onChange={[Function anonymous]}
-            placeholder="Velg kategori">
+          <select
+            className="form-control"
+            onChange={[Function anonymous]}>
             <option>
               Velg kategori
             </option>
@@ -266,7 +213,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               value="b39399ab-aabd-4ebc-903b-adcf6876a364">
               3D-skanning, strukturert lys
             </option>
-          </FormControl>
+          </select>
         </Col>
       </FormGroup>
       <FormGroup
@@ -345,14 +292,17 @@ exports[`AnalysisAddComponent should render properly 1`] = `
             checked={true}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            name="restrictions"
+            onChange={[Function anonymous]}>
             Ja
           </Radio>
           <Radio
             bsClass="radio"
+            checked={false}
             disabled={false}
             inline={true}
-            readOnly={true}>
+            name="restrictions"
+            onChange={[Function anonymous]}>
             Nei
           </Radio>
         </Col>
@@ -416,29 +366,7 @@ exports[`AnalysisAddComponent should render properly 1`] = `
               id="navn"
               label="Sluttdato"
               md={1}
-              readOnly={true}
-              type="text"
-              value="" />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Opphevet av"
-              md={1}
               onChange={[Function anonymous]}
-              placeholder="Fornavn Etternavn"
-              type="text"
-              value="" />
-          </FormGroup>
-          <FormGroup
-            bsClass="form-group">
-            <FieldGroup
-              id="navn"
-              label="Årsak til oppheving"
-              md={1}
-              onChange={[Function anonymous]}
-              placeholder=""
               type="text"
               value="" />
           </FormGroup>
@@ -506,59 +434,5 @@ exports[`AnalysisAddComponent should render properly 1`] = `
   <NewLine />
   <SaveCancel
     onClickSave={[Function onClickSave]} />
-  <NewLine />
-  <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={true}
-    inline={false}>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-        <h5>
-          <strong>
-            Endringshistorikk
-          </strong>
-        </h5>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-         - 
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-         - 
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        mdOffset={1}>
-        <Button
-          active={false}
-          block={false}
-          bsClass="btn"
-          bsStyle="link"
-          disabled={false}>
-          Se mer
-        </Button>
-      </Col>
-    </FormGroup>
-  </Form>
 </div>
 `;

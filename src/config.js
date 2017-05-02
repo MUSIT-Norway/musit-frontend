@@ -33,10 +33,12 @@ export default {
             `${clientContextUrl(appSession)}/analysis/add`,
           viewAnalysis: (appSession: AppSession, analysisId: string) =>
             `${clientContextUrl(appSession)}/analysis/${analysisId}`,
-          addSample: () => '/analysis/sample/add',
-          gotoSample: (sampleId: string) => `/analysis/sample/${sampleId}`,
-          editSample: (sampleId: string) => `/analysis/sample/${sampleId}/edit`,
-          sampleForObject: (sampleId: string) => `/analysis/sample/objects/${sampleId}`
+          addSample: (appSession: AppSession, objectId: string) =>
+            `${clientContextUrl(appSession)}/analysis/sample/${objectId}/add`,
+          gotoSample: (appSession: AppSession, sampleId: string) =>
+            `${clientContextUrl(appSession)}/analysis/sample/${sampleId}`,
+          editSample: (appSession: AppSession, sampleId: string) =>
+            `${clientContextUrl(appSession)}/analysis/sample/${sampleId}/edit`
         },
         magasin: {
           goToMagasin: (appSession: AppSession) =>
