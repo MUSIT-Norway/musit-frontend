@@ -1,3 +1,4 @@
+/* @flow */
 import React from 'react';
 import {
   Grid,
@@ -17,14 +18,19 @@ import Config from '../../config';
 import { hashHistory } from 'react-router';
 import Logos from '../../components/logos/Logos';
 
-const reportURL = (s) => Config.magasin.urls.client.report.goToReport(s);
-const magasinURL = (s) => Config.magasin.urls.client.magasin.goToMagasin(s);
-const analysisURL = (s) => Config.magasin.urls.client.analysis.addAnalysis(s);
+const reportURL = s => Config.magasin.urls.client.report.goToReport(s);
+const magasinURL = s => Config.magasin.urls.client.magasin.goToMagasin(s);
+const analysisURL = s => Config.magasin.urls.client.analysis.addAnalysis(s);
 const aboutURL = '/about';
 const notFoundURL = '/notfound';
 import inject from 'react-rxjs/dist/RxInject';
 import flowRight from 'lodash/flowRight';
 import { makeUrlAware } from '../app/appSession';
+import type { AppSession } from '../../types/appSession';
+
+type Props = {
+  appSession: AppSession
+};
 const goTo = url => hashHistory.push(url);
 
 const buttonAdd = (t, url) => (
@@ -33,7 +39,7 @@ const buttonAdd = (t, url) => (
   </Button>
 );
 
-export const HomePage = (props) => (
+export const HomePage = (props: Props) => (
   <Grid>
     <Row>
       <PageHeader>{I18n.t('musit.texts.musitBase')}</PageHeader>
@@ -93,4 +99,3 @@ const data = {
 };
 
 export default flowRight([inject(data), makeUrlAware])(HomePage);
-

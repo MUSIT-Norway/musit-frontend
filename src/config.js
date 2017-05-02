@@ -26,9 +26,8 @@ export default {
     limit: 25,
     urls: {
       client: {
-        homePage:{
-          goToHomePage: (appSession: AppSession) =>
-            `${clientContextUrl(appSession)}/home`
+        homePage: {
+          goToHomePage: (appSession: AppSession) => `${clientContextUrl(appSession)}/home`
         },
         analysis: {
           editAnalysis: (appSession: AppSession, analysisId: string) =>
