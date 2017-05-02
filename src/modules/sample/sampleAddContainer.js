@@ -24,8 +24,6 @@ const props = {
 
 const commands = { updateForm$, loadForm$ };
 
-export default flowRight([
-  inject(data, commands, props),
-  makeUrlAware
-])(SampleFormAddComponent);
-
+export default flowRight([inject(data, commands, props), makeUrlAware])(
+  SampleFormAddComponent
+);

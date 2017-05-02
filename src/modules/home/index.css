@@ -1,0 +1,27 @@
+.homePage {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    margin-top: 20px;
+}
+
+.homePage > div {
+    padding: 10px 20px;
+}
+
+.button {
+    width: 400px;
+    padding: 10px 20px;
+    height: 100px;
+}
+
+.buttonRow {
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.buttonIcon {
+    text-align: right;
+    align-items: right;
+}

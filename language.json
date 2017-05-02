@@ -224,6 +224,9 @@
         }
       },
       "texts": {
+        "musitBase": "MUSIT base",
+        "abuotMusit": "About MUSIT",
+        "aboutMusitSolutions": "About MUSIT solutions",
         "freetext": "Free text",
         "makeChoice": "Please choose...",
         "datePerformed": "Performed date",
@@ -239,6 +242,7 @@
         "cancelTooltip": "Cancel registration",
         "magazine": "Storage facility",
         "deleteNode": "Delete node",
+        "footerText": "The University museums IT-organisation (MUSIT) is a national collaboration between the University of Bergen, the University of Oslo, University of Stavanger, Norwegian University of Science and Technology in Trondheim , and the University of Tromsø -Norway's Arctic University.",
         "showConfirm": {
           "message": "Are you sure about this?",
           "confirm": "Confirm",
@@ -892,6 +896,9 @@
         }
       },
       "texts": {
+        "musitBase": "MUSITbasen",
+        "abuotMusit": "Om MUSIT",
+        "aboutMusitSolutions": "Om MUSITløsningen",
         "freetext": "Fritekst",
         "makeChoice": "Vennligst velg...",
         "datePerformed": "Utført dato",
@@ -907,6 +914,7 @@
         "cancelTooltip": "Avbryt registreringen",
         "magazine": "Magasin",
         "deleteNode": "Slett node",
+        "footerText": "Universitetsmuseenes IT-organisasjon (MUSIT) er et nasjonalt samarbeidstiltak mellom Universitetet i Bergen, Universitetet i Oslo, Universitetet i Stavanger, Norges teknisk-naturvitenskapelige universitet og UiT Norges arktiske universitet.",
         "showConfirm": {
           "message": "Er du sikker på dette?",
           "confirm": "Bekrefte",

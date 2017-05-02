@@ -69,7 +69,7 @@ const getObjectsValue = form => {
   });
 };
 
-const getValue = (form, field) => form[field] ? (form[field].rawValue || '') : '';
+const getValue = (form, field) => form[field] ? form[field].rawValue || '' : '';
 
 const AnalysisView = ({ form, store, appSession, params }: Props) => (
   <div>
