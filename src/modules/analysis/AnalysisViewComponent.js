@@ -127,7 +127,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
       <FormGroup>
         <Label label="Kommentar til analysen" md={1} />
         <Col md={5}>
-            {getValue(form, 'note')}
+          {getValue(form, 'note')}
         </Col>
       </FormGroup>
       <FormGroup>

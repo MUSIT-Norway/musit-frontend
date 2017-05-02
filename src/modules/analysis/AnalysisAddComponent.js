@@ -24,12 +24,13 @@ import FieldGroup from './components/FIeldGroup';
 import AddButton from './components/AddButton';
 import NewLine from './components/NewLine';
 import { Table } from 'reactable';
+import uniq from 'lodash/uniq';
 
 type Location = {
   state?: Array<ObjectData>
 };
 
-type AnalysisType = { id: number, name: string };
+type AnalysisType = { id: number, name: string, category: string };
 
 type Store = {
   analysisTypes: Array<AnalysisType>
@@ -148,11 +149,11 @@ const AnalysisAdd = (
         <Col md={2}>
           <select
             className="form-control"
-            onChange={updateFormField(form.analysisTypeId, updateForm)}
+            onChange={updateFormField(form.analysisTypeCategory, updateForm)}
           >
             <option>Velg kategori</option>
-            {store.analysisTypes.map(a => (
-              <option key={a.id} value={a.id}>{a.name}</option>
+            {uniq(store.analysisTypes.map(b => b.category)).map(a => (
+              <option key={a} value={a}>{a}</option>
             ))}
           </select>
         </Col>
@@ -162,9 +163,9 @@ const AnalysisAdd = (
             onChange={updateFormField(form.analysisTypeId, updateForm)}
           >
             <option>Velg type</option>
-            {store.analysisTypes.map(a => (
-              <option key={a.id} value={a.id}>{a.name}</option>
-            ))}
+            {store.analysisTypes
+              .filter(b => b.category.toString() === form.analysisTypeCategory.value)
+              .map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
           </select>
         </Col>
       </FormGroup>
@@ -398,6 +399,7 @@ AnalysisAdd.propTypes = {
   form: PropTypes.shape({
     id: PropTypes.shape(FieldShape).isRequired,
     analysisTypeId: PropTypes.shape(FieldShape).isRequired,
+    analysisTypeCategory: PropTypes.shape(FieldShape).isRequired,
     doneBy: PropTypes.shape(FieldShape).isRequired,
     doneDate: PropTypes.shape(FieldShape).isRequired,
     registeredBy: PropTypes.shape(FieldShape).isRequired,

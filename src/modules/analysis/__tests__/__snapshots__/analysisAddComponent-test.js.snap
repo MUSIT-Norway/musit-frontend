@@ -36,12 +36,8 @@ exports[`AnalysisAddComponent should render properly 1`] = `
             Velg kategori
           </option>
           <option
-            value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
-            3D-skanning, laser
-          </option>
-          <option
-            value="b39399ab-aabd-4ebc-903b-adcf6876a364">
-            3D-skanning, strukturert lys
+            value={8}>
+            8
           </option>
         </select>
       </Col>
@@ -54,14 +50,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           onChange={[Function anonymous]}>
           <option>
             Velg type
-          </option>
-          <option
-            value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
-            3D-skanning, laser
-          </option>
-          <option
-            value="b39399ab-aabd-4ebc-903b-adcf6876a364">
-            3D-skanning, strukturert lys
           </option>
         </select>
       </Col>

@@ -117,9 +117,7 @@ const updateFormFieldValue = (field, updateForm, value) =>
 
 const getAnalysisTypeTerm = (form, store) => {
   if (form.analysisTypeId && store.analysisTypes) {
-    const foundType = store.analysisTypes.find(
-      a => a.id === form.analysisTypeId.value
-    );
+    const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.value);
     return foundType ? foundType.name : '';
   }
 };
