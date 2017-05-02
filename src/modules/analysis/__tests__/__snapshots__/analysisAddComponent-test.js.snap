@@ -13,6 +13,67 @@ exports[`AnalysisAddComponent should render properly 1`] = `
   <Form
     bsClass="form"
     componentClass="form"
+    horizontal={true}
+    inline={false}
+    style={
+      Object {
+        "paddingLeft": 10
+      }
+    }>
+    <FormGroup
+      bsClass="form-group">
+      <LabelFormat
+        label="Type analyse"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={2}>
+        <select
+          className="form-control"
+          onChange={[Function anonymous]}>
+          <option>
+            Velg kategori
+          </option>
+          <option
+            value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
+            3D-skanning, laser
+          </option>
+          <option
+            value="b39399ab-aabd-4ebc-903b-adcf6876a364">
+            3D-skanning, strukturert lys
+          </option>
+        </select>
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <LabelFormat
+        label="Analysested"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={2}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="select"
+          placeholder="Velg sted">
+          <option
+            value="Velgsted">
+            Velg sted
+          </option>
+          <option
+            value="other">
+            ...
+          </option>
+        </FormControl>
+      </Col>
+    </FormGroup>
+  </Form>
+  <Form
+    bsClass="form"
+    componentClass="form"
     horizontal={false}
     inline={false}>
     <FormGroup
@@ -31,6 +92,100 @@ exports[`AnalysisAddComponent should render properly 1`] = `
         id="1"
         label="Legg til saksnummer"
         md={5}
+        mdOffset={0} />
+    </FormGroup>
+  </Form>
+  <NewLine />
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    style={
+      Object {
+        "paddingLeft": 10
+      }
+    }>
+    <FormGroup
+      bsClass="form-group"
+      controlId="note"
+      validationState={null}>
+      <LabelFormat
+        label="Kommentar til analysen"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={5}>
+        <FormControl
+          bsClass="form-control"
+          className="note"
+          componentClass="textarea"
+          onChange={[Function anonymous]}
+          placeholder="note"
+          value="test note" />
+      </Col>
+    </FormGroup>
+  </Form>
+  <NewLine />
+  <Form
+    bsClass="form"
+    componentClass="form"
+    horizontal={true}
+    inline={false}
+    style={
+      Object {
+        "paddingLeft": 10
+      }
+    }>
+    <FormGroup
+      bsClass="form-group">
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={12}>
+        <h5>
+          <strong>
+            Personer tilknyttet analysen
+          </strong>
+        </h5>
+      </Col>
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <FieldGroup
+        id="responsible"
+        label="Navn"
+        md={1}
+        onChange={[Function anonymous]}
+        placeholder="Fornavn Etternavn"
+        type="text"
+        value="" />
+      <LabelFormat
+        label="Rolle"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={1}>
+        <FormControl
+          bsClass="form-control"
+          componentClass="select"
+          placeholder="Velg rolle">
+          <option
+            value="Velgsted">
+            Velg rolle
+          </option>
+          <option
+            value="other">
+            ...
+          </option>
+        </FormControl>
+      </Col>
+      <AddButton
+        id="3"
+        label="Legg til person"
+        md={2}
         mdOffset={0} />
     </FormGroup>
   </Form>
@@ -96,93 +251,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       mdOffset={1} />
   </Form>
   <NewLine />
-  <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={true}
-    inline={false}
-    style={
-      Object {
-        "paddingLeft": 20
-      }
-    }>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={12}>
-        <h5>
-          <strong>
-            Personer tilknyttet analysen
-          </strong>
-        </h5>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <FieldGroup
-        id="responsible"
-        label="Navn"
-        md={1}
-        onChange={[Function anonymous]}
-        placeholder="Fornavn Etternavn"
-        type="text"
-        value="" />
-      <LabelFormat
-        label="Rolle"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={1}>
-        <FormControl
-          bsClass="form-control"
-          componentClass="select"
-          placeholder="Velg rolle">
-          <option
-            value="Velgsted">
-            Velg rolle
-          </option>
-          <option
-            value="other">
-            ...
-          </option>
-        </FormControl>
-      </Col>
-      <AddButton
-        id="3"
-        label="Legg til person"
-        md={2}
-        mdOffset={0} />
-    </FormGroup>
-  </Form>
-  <NewLine />
-  <FormGroup
-    bsClass="form-group">
-    <LabelFormat
-      label="Analysested"
-      md={1} />
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={2}>
-      <FormControl
-        bsClass="form-control"
-        componentClass="select"
-        placeholder="Velg sted">
-        <option
-          value="Velgsted">
-          Velg sted
-        </option>
-        <option
-          value="other">
-          ...
-        </option>
-      </FormControl>
-    </Col>
-  </FormGroup>
-  <NewLine />
   <Well
     bsClass="well">
     <Form
@@ -190,32 +258,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       componentClass="form"
       horizontal={true}
       inline={false}>
-      <FormGroup
-        bsClass="form-group">
-        <LabelFormat
-          label="Type analyse"
-          md={1} />
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={2}>
-          <select
-            className="form-control"
-            onChange={[Function anonymous]}>
-            <option>
-              Velg kategori
-            </option>
-            <option
-              value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
-              3D-skanning, laser
-            </option>
-            <option
-              value="b39399ab-aabd-4ebc-903b-adcf6876a364">
-              3D-skanning, strukturert lys
-            </option>
-          </select>
-        </Col>
-      </FormGroup>
       <FormGroup
         bsClass="form-group">
         <FieldGroup
@@ -374,63 +416,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
       </FormGroup>
     </Form>
   </Well>
-  <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={true}
-    inline={false}
-    style={
-      Object {
-        "paddingLeft": 20
-      }
-    }>
-    <FormGroup
-      bsClass="form-group"
-      controlId="note"
-      validationState={null}>
-      <LabelFormat
-        label="Kommentar til analysen"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={5}>
-        <FormControl
-          bsClass="form-control"
-          className="note"
-          componentClass="textarea"
-          onChange={[Function anonymous]}
-          placeholder="note"
-          value="test note" />
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <LabelFormat
-        label="Avslutt analyse"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={5}>
-        <Radio
-          bsClass="radio"
-          disabled={false}
-          inline={true}
-          readOnly={true}>
-          Ja
-        </Radio>
-        <Radio
-          bsClass="radio"
-          checked={true}
-          disabled={false}
-          inline={true}
-          readOnly={true}>
-          Nei
-        </Radio>
-      </Col>
-    </FormGroup>
-  </Form>
   <NewLine />
   <SaveCancel
     onClickSave={[Function onClickSave]} />
