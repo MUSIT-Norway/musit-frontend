@@ -42,7 +42,10 @@ export const ViewObjectComponent = (
         className="primary"
         onClick={() =>
           hashHistory.push({
-            pathname: Config.magasin.urls.client.analysis.addSample(appSession, objectData.uuid),
+            pathname: Config.magasin.urls.client.analysis.addSample(
+              appSession,
+              objectData.uuid
+            ),
             state: [objectData]
           })}
       >
@@ -69,7 +72,7 @@ export const ViewObjectComponent = (
       <Tab title="Prøver" eventKey={2}>
         <SampleTableComponent
           samples={samples}
-          onClick={sample =>  {
+          onClick={sample => {
             hashHistory.push({
               pathname: Config.magasin.urls.client.analysis.gotoSample(
                 appSession,

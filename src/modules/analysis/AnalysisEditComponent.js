@@ -235,10 +235,7 @@ const AnalysisEdit = (
             >
               <option>Velg kategori</option>
               {store.analysisTypes.map(a => (
-                <option
-                  key={a.id}
-                  value={a.id}
-                >
+                <option key={a.id} value={a.id}>
                   {a.name}
                 </option>
               ))}
