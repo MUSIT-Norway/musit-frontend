@@ -15,15 +15,16 @@ import FontAwesome from 'react-fontawesome';
 import './index.css';
 import Config from '../../config';
 import { hashHistory } from 'react-router';
-import appSession$ from './../../modules/app/appSession';
 import Logos from '../../components/logos/Logos';
 
-const reportURL = Config.magasin.urls.client.report.goToReport(appSession$);
-const magasinURL = Config.magasin.urls.client.magasin.goToMagasin(appSession$);
-const analysisURL = Config.magasin.urls.client.analysis.addAnalysis(appSession$);
+const reportURL = (s) => Config.magasin.urls.client.report.goToReport(s);
+const magasinURL = (s) => Config.magasin.urls.client.magasin.goToMagasin(s);
+const analysisURL = (s) => Config.magasin.urls.client.analysis.addAnalysis(s);
 const aboutURL = '/about';
 const notFoundURL = '/notfound';
-
+import inject from 'react-rxjs/dist/RxInject';
+import flowRight from 'lodash/flowRight';
+import { makeUrlAware } from '../app/appSession';
 const goTo = url => hashHistory.push(url);
 
 const buttonAdd = (t, url) => (
@@ -32,7 +33,7 @@ const buttonAdd = (t, url) => (
   </Button>
 );
 
-export const HomePage = () => (
+export const HomePage = (props) => (
   <Grid>
     <Row>
       <PageHeader>{I18n.t('musit.texts.musitBase')}</PageHeader>
@@ -51,16 +52,16 @@ export const HomePage = () => (
     </Row>
     <Row className="buttonRow">
       <Col md={6}>
-        {buttonAdd(I18n.t('musit.texts.magazine'), magasinURL)}
+        {buttonAdd(I18n.t('musit.texts.magazine'), magasinURL(props.appSession))}
       </Col>
       <Col>
-        {buttonAdd(I18n.t('musit.analysis.analysis'), analysisURL)}
+        {buttonAdd(I18n.t('musit.analysis.analysis'), analysisURL(props.appSession))}
       </Col>
     </Row>
 
     <Row className="buttonRow">
       <Col md={6}>
-        {buttonAdd(I18n.t('musit.reports.reports'), reportURL)}
+        {buttonAdd(I18n.t('musit.reports.reports'), reportURL(props.appSession))}
       </Col>
     </Row>
     <Row>
@@ -87,4 +88,9 @@ export const HomePage = () => (
   </Grid>
 );
 
-export default HomePage;
+const data = {
+  appSession$: { type: React.PropTypes.object.isRequired }
+};
+
+export default flowRight([inject(data), makeUrlAware])(HomePage);
+

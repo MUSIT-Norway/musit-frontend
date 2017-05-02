@@ -16,7 +16,7 @@ exports[`AppComponent remders 1`] = `
               "color": "#33e0ff"
             }
           }
-          to="/home">
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/home">
           <div
             className="brand">
             <img
