@@ -15,15 +15,6 @@ exports[`AnalysisEditComponent should render properly 1`] = `
     componentClass="div"
     md={12}>
     <strong>
-      HID:
-    </strong>
-     
-  </Col>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
       Registrert:
     </strong>
      

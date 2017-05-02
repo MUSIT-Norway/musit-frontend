@@ -198,69 +198,78 @@ exports[`AnalysisAddComponent should render properly 1`] = `
     </FormGroup>
   </Form>
   <NewLine />
-  <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={false}
-    inline={true}>
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={12}>
-      <h5>
-        <strong>
-          Objekt/prøve
-        </strong>
-      </h5>
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
-      md={5}
-      mdOffset={1}>
-      <Table
-        className="table"
-        columns={
-          Array [
-            Object {
-              "key": "museumNo",
-              "label": "Museumsnr"
-            },
-            Object {
-              "key": "subNo",
-              "label": "Unr"
-            },
-            Object {
-              "key": "term",
-              "label": "Term/artsnavn"
-            }
-          ]
-        }
-        data={Array []}
-        defaultSort={false}
-        defaultSortDescending={false}
-        filterBy=""
-        hideFilterInput={false}
-        itemsPerPage={0}
-        noDataText="Ingen objekter"
-        sortBy={false}
-        sortable={
-          Array [
-            "museumNumber",
-            "subNumber",
-            "term"
-          ]
-        } />
-    </Col>
-    <AddButton
-      id="2"
-      label="Legg til objekt"
-      md={11}
-      mdOffset={1} />
-  </Form>
-  <NewLine />
   <Well
     bsClass="well">
+    <Form
+      bsClass="form"
+      componentClass="form"
+      horizontal={true}
+      inline={false}>
+      <FormGroup
+        bsClass="form-group">
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={1}>
+          <h5>
+            <strong>
+              Objekt/prøve
+            </strong>
+          </h5>
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <Col
+          bsClass="col"
+          componentClass="div"
+          md={11}
+          mdOffset={1}>
+          <Table
+            className="table"
+            columns={
+              Array [
+                Object {
+                  "key": "museumNo",
+                  "label": "Museumsnr"
+                },
+                Object {
+                  "key": "subNo",
+                  "label": "Unr"
+                },
+                Object {
+                  "key": "term",
+                  "label": "Term/artsnavn"
+                }
+              ]
+            }
+            data={Array []}
+            defaultSort={false}
+            defaultSortDescending={false}
+            filterBy=""
+            hideFilterInput={false}
+            itemsPerPage={0}
+            noDataText="Ingen objekter"
+            sortBy={false}
+            sortable={
+              Array [
+                "museumNumber",
+                "subNumber",
+                "term"
+              ]
+            } />
+        </Col>
+      </FormGroup>
+      <FormGroup
+        bsClass="form-group">
+        <AddButton
+          id="2"
+          label="Legg til objekt"
+          md={11}
+          mdOffset={1} />
+      </FormGroup>
+    </Form>
+    <NewLine />
     <Form
       bsClass="form"
       componentClass="form"
