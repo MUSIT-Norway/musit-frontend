@@ -33,8 +33,6 @@ type Store = {
   analysisTypes: [AnalysisType]
 };
 
-type AnalysisTypeArray = [AnalysisType];
-
 type Params = {
   analysisId?: string
 };
@@ -117,15 +115,15 @@ const updateFormFieldValue = (field, updateForm, value) =>
       rawValue: value
     });
 
-const getAnalysisType = (store: Store, form: Form) => {
-  const r: AnalysisTypeArray = store.analysisTypes && form.analysisTypeId
-    ? store.analysisTypes.filter(a => form.analysisTypeId.value === a.id)
-    : '';
-  if (r.length > 0) {
-    return r[0].name;
+const getAnalysisTypeTerm = (form, store) => {
+  if (form.analysisTypeId && store.analysisTypes) {
+    const foundType = store.analysisTypes.find(
+      a => a.id === form.analysisTypeId.value
+    );
+    return foundType ? foundType.name : '';
   }
-  return '';
 };
+
 export const goToAnalysis = (
   fn: Promise<*>,
   appSession: AppSession,
@@ -167,7 +165,7 @@ const AnalysisEdit = (
       <FormGroup>
         <Label label="Type analyse" md={1} />
         <Col md={11}>
-          {getAnalysisType(store, form)}
+          {getAnalysisTypeTerm(form, store)}
         </Col>
       </FormGroup>
       <FormGroup>
@@ -179,9 +177,7 @@ const AnalysisEdit = (
           </FormControl>
         </Col>
       </FormGroup>
-
     </Form>
-
     <Form>
       <FormGroup>
         <FieldGroup
