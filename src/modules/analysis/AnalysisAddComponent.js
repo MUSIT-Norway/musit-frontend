@@ -156,6 +156,17 @@ const AnalysisAdd = (
             ))}
           </select>
         </Col>
+        <Col md={2}>
+          <select
+            className="form-control"
+            onChange={updateFormField(form.analysisTypeId, updateForm)}
+          >
+            <option>Velg type</option>
+            {store.analysisTypes.map(a => (
+              <option key={a.id} value={a.id}>{a.name}</option>
+            ))}
+          </select>
+        </Col>
       </FormGroup>
       <FormGroup>
         <Label label="Analysested" md={1} />
@@ -200,9 +211,6 @@ const AnalysisAdd = (
         />
       </Col>
     </FormGroup>
-    </Form>
-    <NewLine />
-    <Form horizontal style={{ paddingLeft: 10 }}>
       <FormGroup>
         <Col md={12}><h5><strong>Personer tilknyttet analysen</strong></h5></Col>
       </FormGroup>
