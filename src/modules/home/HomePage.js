@@ -17,16 +17,16 @@ import './index.css';
 import Config from '../../config';
 import { hashHistory } from 'react-router';
 import Logos from '../../components/logos/Logos';
+import inject from 'react-rxjs/dist/RxInject';
+import flowRight from 'lodash/flowRight';
+import { makeUrlAware } from '../app/appSession';
+import type { AppSession } from '../../types/appSession';
 
 const reportURL = Config.magasin.urls.client.report.goToReport;
 const magasinURL = Config.magasin.urls.client.magasin.goToMagasin;
 const analysisURL = Config.magasin.urls.client.analysis.addAnalysis;
 const aboutURL = '/about';
 const notFoundURL = '/notfound';
-import inject from 'react-rxjs/dist/RxInject';
-import flowRight from 'lodash/flowRight';
-import { makeUrlAware } from '../app/appSession';
-import type { AppSession } from '../../types/appSession';
 
 type Props = {
   appSession: AppSession
