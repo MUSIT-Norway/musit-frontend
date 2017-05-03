@@ -30,7 +30,7 @@ type ObjectData = { uuid: string };
 
 type Store = {
   objectsData: ObjectData[],
-  analysisTypes: [AnalysisType]
+  analysisTypes: Array<AnalysisType>
 };
 
 type Params = {
