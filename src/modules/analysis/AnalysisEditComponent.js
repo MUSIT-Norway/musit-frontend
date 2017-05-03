@@ -153,11 +153,11 @@ const AnalysisEdit = (
       {' '}
       <FontAwesome name="user" />
       {' '}
-      {getValue(form.doneBy)}
+      {getValue(form.updatedByName)}
       {' '}
       <FontAwesome name="clock-o" />
       {' '}
-      {getValue(form.doneDate)}
+      {getValue(form.updatedDate)}
     </Col>
     <NewLine />
     <Form horizontal style={{ paddingLeft: 10 }}>

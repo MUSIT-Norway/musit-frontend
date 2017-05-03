@@ -1,15 +1,7 @@
 /* @flow */
 import React, { PropTypes } from 'react';
 import { I18n } from 'react-i18nify';
-import {
-  PageHeader,
-  Form,
-  FormGroup,
-  Col,
-  Well,
-  Table,
-  Panel
-} from 'react-bootstrap';
+import { PageHeader, Form, FormGroup, Col, Well, Table, Panel } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import { hashHistory } from 'react-router';
@@ -98,11 +90,11 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
       {' '}
       <FontAwesome name="user" />
       {' '}
-      {getValue(form, 'doneBy')}
+      {getValue(form, 'updatedByName')}
       {' '}
       <FontAwesome name="clock-o" />
       {' '}
-      {getValue(form, 'eventDate')}
+      {getValue(form, 'updatedDate')}
     </Col>
     <NewLine />
     <Form horizontal style={{ paddingLeft: 10 }}>
@@ -190,7 +182,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <FormGroup>
           <Label label="Klausulering" md={1} />
           <Col md={5}>
-              Nei
+            Nei
           </Col>
         </FormGroup>
         {form.restrictions.rawValue &&

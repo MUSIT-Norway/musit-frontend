@@ -61,6 +61,10 @@ const caseNumber = getStrField('caseNumber');
 const caseNumbers = getArrField('caseNumbers');
 const analysisTypeCategory = getStrField('analysisTypeCategory');
 
+const updatedBy = getStrField('updatedBy');
+const updatedByName = getStrField('updatedByName');
+const updatedDate = getStrField('updatedDate');
+
 export const fieldsArray = [
   id,
   analysisTypeId,
@@ -94,7 +98,10 @@ export const fieldsArray = [
   subNo,
   term,
   events,
-  analysisTypeCategory
+  analysisTypeCategory,
+  updatedBy,
+  updatedByName,
+  updatedDate
 ];
 
 export default createForm('analysisForm.js', fieldsArray);
