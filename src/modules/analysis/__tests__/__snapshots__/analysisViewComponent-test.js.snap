@@ -66,6 +66,26 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     <FormGroup
       bsClass="form-group">
       <LabelFormat
+        label="Formål med analysen"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={3} />
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <LabelFormat
+        label="Status på analysen"
+        md={1} />
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={10} />
+    </FormGroup>
+    <FormGroup
+      bsClass="form-group">
+      <LabelFormat
         label="Analysested"
         md={1} />
       <Col
@@ -84,7 +104,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     <FormGroup
       bsClass="form-group">
       <LabelFormat
-        label="Kommentar til analysen"
+        label="Beskrivelse/ kommentar"
         md={1} />
       <Col
         bsClass="col"
@@ -197,7 +217,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       <FormGroup
         bsClass="form-group">
         <LabelFormat
-          label="Kommentar / resultat"
+          label="Kommentar til resultat"
           md={1} />
         <Col
           bsClass="col"
@@ -213,22 +233,7 @@ exports[`AnalysisViewComponent should render properly 1`] = `
           bsClass="col"
           componentClass="div"
           md={5}>
-          <Radio
-            bsClass="radio"
-            defaultChecked={null}
-            disabled={false}
-            inline={true}
-            readOnly={true}>
-            Ja
-          </Radio>
-          <Radio
-            bsClass="radio"
-            defaultChecked={true}
-            disabled={false}
-            inline={true}
-            readOnly={true}>
-            Nei
-          </Radio>
+          Nei
         </Col>
       </FormGroup>
     </Form>

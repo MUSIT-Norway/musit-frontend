@@ -2,7 +2,6 @@
 import React, { PropTypes } from 'react';
 import { I18n } from 'react-i18nify';
 import {
-  Radio,
   PageHeader,
   Form,
   FormGroup,
@@ -114,6 +113,14 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         </Col>
       </FormGroup>
       <FormGroup>
+        <Label label="Formål med analysen" md={1} />
+        <Col md={3} />
+      </FormGroup>
+      <FormGroup>
+        <Label label="Status på analysen" md={1} />
+        <Col md={10} />
+      </FormGroup>
+      <FormGroup>
         <Label label="Analysested" md={1} />
         <Col md={2} />
       </FormGroup>
@@ -125,7 +132,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         />
       </FormGroup>
       <FormGroup>
-        <Label label="Kommentar til analysen" md={1} />
+        <Label label="Beskrivelse/ kommentar" md={1} />
         <Col md={5}>
           {getValue(form, 'note')}
         </Col>
@@ -175,7 +182,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
           <FieldGroup id="formControlsText" label="Ladt opp fil" />
         </FormGroup>
         <FormGroup>
-          <Label label="Kommentar / resultat" md={1} />
+          <Label label="Kommentar til resultat" md={1} />
           <Col md={5}>
             {getValue(form, 'comments')}
           </Col>
@@ -183,12 +190,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <FormGroup>
           <Label label="Klausulering" md={1} />
           <Col md={5}>
-            <Radio defaultChecked={form.restrictions.rawValue} readOnly inline>
-              Ja
-            </Radio>
-            <Radio inline defaultChecked={!form.restrictions.rawValue} readOnly>
               Nei
-            </Radio>
           </Col>
         </FormGroup>
         {form.restrictions.rawValue &&
