@@ -75,10 +75,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     </FormGroup>
     <FormGroup
       bsClass="form-group">
-      <FieldGroup
+      <showLabelAndValue
         id="formControlsText"
         label="saksnummer"
-        md={1}
         value="" />
     </FormGroup>
     <FormGroup
@@ -106,10 +105,9 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     </FormGroup>
     <FormGroup
       bsClass="form-group">
-      <FieldGroup
+      <showLabelAndValue
         id="navn"
         label="Navn"
-        md={1}
         value="" />
       <LabelFormat
         label="Rolle"
@@ -181,18 +179,16 @@ exports[`AnalysisViewComponent should render properly 1`] = `
       <NewLine />
       <FormGroup
         bsClass="form-group">
-        <FieldGroup
+        <showLabelAndValue
           id="formControlsText"
           label="Ekstern kilde"
-          md={1}
           value="" />
       </FormGroup>
       <FormGroup
         bsClass="form-group">
-        <FieldGroup
+        <showLabelAndValue
           id="formControlsText"
-          label="Ladt opp fil"
-          md={1} />
+          label="Ladt opp fil" />
       </FormGroup>
       <FormGroup
         bsClass="form-group">

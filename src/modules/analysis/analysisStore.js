@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 
 import Analysis from '../../models/analysis';
+import uniq from 'lodash/uniq';
 
 export const getAnalysisTypes$ = createAction('getAnalysisTypes$').switchMap(
   Analysis.getAnalysisTypesForCollection()
@@ -9,7 +10,12 @@ export const getAnalysisTypes$ = createAction('getAnalysisTypes$').switchMap(
 
 export const reducer$ = actions =>
   Observable.merge(
-    actions.getAnalysisTypes$.map(analysisTypes => state => ({ ...state, analysisTypes }))
+    actions.getAnalysisTypes$.map(analysisTypes =>
+      state => ({
+        ...state,
+        analysisTypes,
+        analysisTypesUniqueCategory: uniq(analysisTypes.map(a => a.category))
+      }))
   );
 
 export const store$ = (actions$ = { getAnalysisTypes$ }) =>

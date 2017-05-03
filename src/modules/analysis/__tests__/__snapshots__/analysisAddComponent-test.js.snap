@@ -35,10 +35,6 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           <option>
             Velg kategori
           </option>
-          <option
-            value={8}>
-            8
-          </option>
         </select>
       </Col>
       <Col

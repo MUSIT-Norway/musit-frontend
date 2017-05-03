@@ -24,7 +24,6 @@ import FieldGroup from './components/FIeldGroup';
 import AddButton from './components/AddButton';
 import NewLine from './components/NewLine';
 import { Table } from 'reactable';
-import uniq from 'lodash/uniq';
 
 type Location = {
   state?: Array<ObjectData>
@@ -33,7 +32,8 @@ type Location = {
 type AnalysisType = { id: number, name: string, category: string };
 
 type Store = {
-  analysisTypes: Array<AnalysisType>
+  analysisTypes: Array<AnalysisType>,
+  analysisTypesUniqueCategory: Array<String>
 };
 
 type Props = {
@@ -152,9 +152,10 @@ const AnalysisAdd = (
             onChange={updateFormField(form.analysisTypeCategory, updateForm)}
           >
             <option>Velg kategori</option>
-            {uniq(store.analysisTypes.map(b => b.category)).map(a => (
-              <option key={a} value={a}>{a}</option>
-            ))}
+            {store.analysisTypesUniqueCategory &&
+              store.analysisTypesUniqueCategory.map(a => (
+                <option key={a} value={a}>{a}</option>
+              ))}
           </select>
         </Col>
         <Col md={2}>
