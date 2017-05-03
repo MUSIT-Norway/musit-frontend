@@ -18,9 +18,9 @@ import Config from '../../config';
 import { hashHistory } from 'react-router';
 import Logos from '../../components/logos/Logos';
 
-const reportURL = s => Config.magasin.urls.client.report.goToReport(s);
-const magasinURL = s => Config.magasin.urls.client.magasin.goToMagasin(s);
-const analysisURL = s => Config.magasin.urls.client.analysis.addAnalysis(s);
+const reportURL = Config.magasin.urls.client.report.goToReport;
+const magasinURL = Config.magasin.urls.client.magasin.goToMagasin;
+const analysisURL = Config.magasin.urls.client.analysis.addAnalysis;
 const aboutURL = '/about';
 const notFoundURL = '/notfound';
 import inject from 'react-rxjs/dist/RxInject';
