@@ -1,3 +1,5 @@
-/**
- * Created by rituvesh on 04.05.17.
- */
+/* @flow */
+
+const SampleTypesComponent = () => <div> Sample Types Component</div>;
+
+export default SampleTypesComponent;

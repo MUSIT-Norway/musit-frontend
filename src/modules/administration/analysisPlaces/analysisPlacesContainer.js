@@ -1,3 +1,3 @@
-/**
- * Created by rituvesh on 04.05.17.
- */
+import AnalysisPlacesComponent from './AnalysisPlacesComponent';
+
+export default AnalysisPlacesComponent;

@@ -4,6 +4,7 @@ import MusitActor from './actor';
 import MusitObject from './object';
 import { Observable } from 'rxjs';
 import moment from 'moment';
+import { I18n } from 'react-i18nify';
 
 class Analysis {}
 
@@ -129,6 +130,33 @@ Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
           };
         });
       });
+  };
+
+Analysis.getAnalysisTypes = (ajaxGet = simpleGet) =>
+  ({ museumId, token, callback }) => {
+    const url = Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId);
+    return ajaxGet(url, token, callback).map(r =>  {
+        console.log('show me RItuvesh',r.response);
+        return r.response.map(t => t.collections ?
+          t.collections.map(c => I18n.t(`musit.userProfile.collections.${c}`)) : '') ;
+    }
+      );
+  };
+
+Analysis.getAnalysisTypesWithCollectionDetails = (ajaxGet = simpleGet) =>
+  props => {
+    return Analysis.getAnalysisTypes(ajaxGet)(props).flatMap(analysisTypes => {
+      console.log('RK col', analysisTypes);
+      analysisTypes.map(
+        c => c.collections.map(collection =>
+          collection
+            ? {
+                ...analysisTypes,
+                collectionName: I18n.t(`musit.userProfile.collections.${collection}`)
+              }
+            : analysisTypes
+      ));
+    });
   };
 
 export default Analysis;

@@ -55,7 +55,7 @@ const form = fieldsArray.reduce(
   {}
 );
 
-describe('AnalysisAddComponent', () => {
+describe('AnalysisTypesComponent', () => {
   it('should render properly', () => {
     const updateForm = sinon.spy();
     form.restrictions.value = true;
