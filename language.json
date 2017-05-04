@@ -3,14 +3,19 @@
     "musit": {
       "administration":{
         "administration": "Administration",
+        "titleHeader": "Title",
+        "descriptionHeader": "Description",
         "analysisTypes": {
-          "analysisTypes": "Analysis types"
+          "analysisTypes": "Analysis types",
+          "description": "Analysis types for analysis"
         },
         "sampleTypes": {
-          "sampleTypes": "Sample types"
+          "sampleTypes": "Sample types",
+          "description": "Sample types for sample"
         },
         "analysisPlaces": {
-          "analysisPlaces": "Analysis places"
+          "analysisPlaces": "Analysis places",
+          "description": "Analysis places for analysis"
         }
       },
       "analysis": {
@@ -684,14 +689,19 @@
     "musit": {
       "administration":{
         "administration": "Administrasjon",
+        "titleHeader": "Tittel",
+        "descriptionHeader": "Beskrivelse",
         "analysisTypes": {
-          "analysisTypes": "Analysetyper"
+          "analysisTypes": "Analysetyper",
+          "description": "Analysetyper for analyse"
         },
         "sampleTypes": {
-          "sampleTypes": "Prøvetyper"
+          "sampleTypes": "Prøvetyper",
+          "description": "Prøvetyper for prøve"
         },
         "analysisPlaces": {
-          "analysisPlaces": "Analysesteder"
+          "analysisPlaces": "Analysesteder",
+          "description": "Analysesteder for analyse"
         }
       },
       "analysis": {

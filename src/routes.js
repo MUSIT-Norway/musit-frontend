@@ -30,6 +30,10 @@ import SampleEditMultiple from './poc/multiple/SampleEdit';
 import SampleIndexSingle from './poc/single/SampleIndex';
 import SampleEditSingle from './poc/single/SampleEdit';
 import HomeView from './modules/home/HomePage';
+import Administration from './modules/administration/Administration';
+import AnalysisTypes from './modules/administration/analysisTypes/analysisTypesContainer';
+import AnalysisPlaces from './modules/administration/analysisPlaces/analysisPlacesContainer';
+import SampleTypes from './modules/administration/sampleTypes/sampleTypesContainer';
 
 export default () => {
   return (
@@ -105,6 +109,12 @@ export default () => {
         <Route path="search/objects" component={ObjectSearchComponent} />
         <Route path="about" component={AboutView} />
         <Route path="home" component={HomeView} />
+        <Route path="administration">
+          <IndexRoute component={Administration} />
+          <Route path="analysistypes" component={AnalysisTypes} />
+          <Route path="analysisplaces" component={AnalysisPlaces} />
+          <Route path="sampletypes" component={SampleTypes} />
+        </Route>
         -- Catch all route
         <Route path="*" component={NotFound} status={404} />
       </Route>
