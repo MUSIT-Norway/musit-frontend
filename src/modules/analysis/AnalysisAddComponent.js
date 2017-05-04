@@ -10,6 +10,7 @@ import {
   PageHeader,
   Panel,
   Radio,
+  ButtonGroup,
   Well
 } from 'react-bootstrap';
 import { SaveCancel } from '../../components/formfields/index';
@@ -171,8 +172,28 @@ const AnalysisAdd = (
         </Col>
       </FormGroup>
       <FormGroup>
+        <Label label="Formål med analysen" md={1} />
+        <Col md={3}>
+          <FormControl componentClass="select" placeholder="Velg formål">
+            <option value="Velgsted">Velg sted</option>
+            <option value="other">...</option>
+          </FormControl>
+        </Col>
+      </FormGroup>
+      <FormGroup>
+        <Label label="Status på analysen" md={1} />
+        <Col md={10}>
+          <ButtonGroup>
+            <Button>1. Under forberedelse</Button>
+            <Button>2. Analyse påbegynt</Button>
+            <Button>3a. Analyse ferdig</Button>
+            <Button>3b. Avsluttet uten resultat</Button>
+          </ButtonGroup>
+        </Col>
+      </FormGroup>
+      <FormGroup>
         <Label label="Analysested" md={1} />
-        <Col md={2}>
+        <Col md={3}>
           <FormControl componentClass="select" placeholder="Velg sted">
             <option value="Velgsted">Velg sted</option>
             <option value="other">...</option>
@@ -202,7 +223,7 @@ const AnalysisAdd = (
         controlId={form.note.name}
         validationState={form.note.status && !form.note.status.valid ? 'error' : null}
       >
-        <Label label="Kommentar til analysen" md={1} />
+        <Label label="Beskrivelse/ kommentar" md={1} />
         <Col md={5}>
           <FormControl
             className="note"
@@ -264,7 +285,6 @@ const AnalysisAdd = (
       </Form>
       <NewLine />
       <Form horizontal>
-
         <FormGroup>
           <FieldGroup
             id="formControlsText"
@@ -285,7 +305,7 @@ const AnalysisAdd = (
           </Col>
         </FormGroup>
         <FormGroup>
-          <Label label="Kommentar / resultat" md={1} />
+          <Label label="Kommentar til resultat" md={1} />
           <Col md={5}>
             <FormControl
               componentClass="textarea"

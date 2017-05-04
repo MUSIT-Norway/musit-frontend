@@ -39,5 +39,8 @@ export type FormData = {
   eventDate: Field<string>,
   actor: Field<string>,
   caseNumber: Field<string>,
-  events: ArrayField
+  events: ArrayField,
+  updatedBy: Field<string>,
+  updatedByName: Field<string>,
+  updatedDate: Field<string>
 };

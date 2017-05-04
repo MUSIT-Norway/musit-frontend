@@ -82,6 +82,11 @@ Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
           token: props.token,
           actorId: analysis.registeredBy
         }).map(actor => actor ? { ...analysis, registeredByName: actor.fn } : analysis))
+      .flatMap(analysis =>
+        MusitActor.getActor(ajaxGet)({
+          token: props.token,
+          actorId: analysis.updatedBy
+        }).map(actor => actor ? { ...analysis, updatedByName: actor.fn } : analysis))
       .flatMap(analysis => {
         if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
           return Observable.forkJoin(
