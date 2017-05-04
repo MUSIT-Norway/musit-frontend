@@ -28,11 +28,13 @@ type Params = {
 }
 
 type FormData = {
-  note: Field<string>, size: Field<string>, status: Field<string>, externalId: Field<string>, externalIdSource: Field<string>,
-  container: Field<string>, storageMedium: Field<string>, sampleType: Field<*>, sampleId: Field<string>,
-  sampleSubType: Field<string>, sizeUnit: Field<string>, museumId: Field<string>, subNo: Field<string>, leftoverSample: Field<string>,
-  term_species: Field<string>, registeredBy: Field<string>, registeredDate: Field<string>, updateBy: Field<string>, hasRestMaterial: Field<string>,
-  updateDate: Field<string>, sampleId: Field<string>, createdDate: Field<*>, sampleDescription: Field<string>, persons: Field<Array<*>>
+  note: Field<string>, size: Field<string>, status: Field<string>, externalId: Field<string>,
+  externalIdSource: Field<string>, container: Field<string>, storageMedium: Field<string>,
+  sampleType: Field<*>, sampleId: Field<string>, treatment: Field<string>, subTypeValue: Field<string>,
+  sizeUnit: Field<string>, museumId: Field<string>, subNo: Field<string>, leftoverSample: Field<string>,
+  term_species: Field<string>, registeredBy: Field<string>, registeredDate: Field<string>, updateBy: Field<string>,
+  hasRestMaterial: Field<string>, updateDate: Field<string>, sampleId: Field<string>, createdDate: Field<*>,
+  description: Field<string>, persons: Field<Array<*>>
 };
 
 type Props = {
@@ -147,7 +149,7 @@ const submitSample = (appSession: AppSession, form: FormData, objectData: any, p
   const data = {
     ...tmpData,
     size: {value: tmpData.size, unit: tmpData.sizeUnit},
-    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType},
+    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue},
     originatedObjectUuid: params.objectId
   };
   data.status = 2;
@@ -158,6 +160,9 @@ const submitSample = (appSession: AppSession, form: FormData, objectData: any, p
   data.parentObjectId = params.objectId;
   if (data.size && !data.size.value) {
     delete data.size;
+  }
+  if (data.sampleType && !data.sampleType.value) {
+    delete data.sampleType;
   }
   if (tmpData.externalId) {
     data.externalId = {value: tmpData.externalId, source: tmpData.externalIdSource};
@@ -339,11 +344,11 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
           </Col>
           <Col md={2}>
             <FieldDropDown
-              field={form.sampleSubType}
+              field={form.subTypeValue}
               title={'Velg type'}
               onSelectInput={updateForm}
               selectItems={sampleSubValues(form.sampleType.rawValue)}
-              inputProps={{className: 'sampleSubType'}}
+              inputProps={{className: 'subTypeValue'}}
             />
           </Col>
         </Row>
@@ -353,10 +358,10 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
           </Col>
           <Col md={3}>
             <FieldInput
-              field={form.sampleDescription}
+              field={form.description}
               onChangeInput={updateForm}
               inputProps={{
-                className: 'sampleDescription'
+                className: 'description'
               }}
             />
           </Col>
@@ -426,6 +431,21 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
               onSelectInput={updateForm}
               selectItems={containerSubTypes(form.container.rawValue)}
               inputProps={{className: 'storageMedium'}}
+            />
+          </Col>
+        </Row>
+        <br/>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <b>Behandling</b>
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.treatment}
+              title={'Velg behandling'}
+              onSelectInput={updateForm}
+              selectItems={['Behandlet', 'Ubehandlet', 'Ufint behandlet']}
+              inputProps={{className: 'treatment'}}
             />
           </Col>
         </Row>
@@ -514,7 +534,7 @@ SampleAddComponent.propTypes = {
     updateBy: PropTypes.shape(FieldShape).isRequired,
     updateDate: PropTypes.shape(FieldShape).isRequired,
     sampleType: PropTypes.shape(FieldShape).isRequired,
-    sampleSubType: PropTypes.shape(FieldShape).isRequired,
+    subTypeValue: PropTypes.shape(FieldShape).isRequired,
     size: PropTypes.shape(FieldShape).isRequired,
     sizeUnit: PropTypes.shape(FieldShape).isRequired,
     status: PropTypes.shape(FieldShape).isRequired,
@@ -523,7 +543,7 @@ SampleAddComponent.propTypes = {
     leftoverSample: PropTypes.shape(FieldShape).isRequired,
     externalId: PropTypes.shape(FieldShape).isRequired,
     externalIdSource: PropTypes.shape(FieldShape).isRequired,
-    sampleDescription: PropTypes.shape(FieldShape).isRequired
+    description: PropTypes.shape(FieldShape).isRequired
   }).isRequired,
   updateForm: PropTypes.func.isRequired,
   appSession: PropTypes.object.isRequired

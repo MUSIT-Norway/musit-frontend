@@ -25,11 +25,11 @@ type FieldInputProps = { field: Field, onChangeInput: Function, inputProps?: { c
 type FormData = {
   note: Field, size: Field, status: Field, externalId: Field,
   externalIdSource: Field, container: Field, storageMedium: Field,
-  sampleType: Field, sampleId: Field, sampleSubType: Field,
-  persons: Field,
+  sampleType: Field, sampleId: Field, subTypeValue: Field,
+  persons: Field, treatment: Field,
   isExtracted: Field, sizeUnit: Field, museumId: Field, subNo: Field, term_species: Field,
   registeredBy: Field, registeredDate: Field, updateBy: Field, leftoverSample: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field
+  updateDate: Field, sampleId: Field, createdDate: Field, description: Field
 };
 
 type Props = {
@@ -150,14 +150,28 @@ const submitSample = (id:string, appSession: AppSession, form: FormData, editSam
     ...tmpData,
     externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
     size: {value: tmpData.size, unit: tmpData.sizeUnit},
-    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType}
+    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue}
   };
+
+  if (data.size && !data.size.value) {
+    delete data.size;
+  }
+  if (data.sampleType && !data.sampleType.value) {
+    delete data.sampleType;
+  }
+  if (tmpData.externalId) {
+    data.externalId = {value: tmpData.externalId, source: tmpData.externalIdSource};
+    if (data.externalIdSource) {
+      delete data.externalIdSource;
+    }
+  }
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
   data['responsible'] = appSession.actor.dataportenId;
   data['isCollectionObject'] = false;
   data['museumId'] = 99;
+
 
   return editSample({id, museumId, token, data});
 };
@@ -334,11 +348,11 @@ const SampleEditComponent = ({params, form, updateForm, location, editSample, ap
           </Col>
           <Col md={2}>
             <FieldDropDown
-              field={form.sampleSubType}
+              field={form.subTypeValue}
               title={'Velg type'}
               onSelectInput={updateForm}
               selectItems={sampleSubValues(form.sampleType.rawValue)}
-              inputProps={{className: 'sampleSubType'}}
+              inputProps={{className: 'subTypeValue'}}
             />
           </Col>
         </Row>
@@ -348,10 +362,10 @@ const SampleEditComponent = ({params, form, updateForm, location, editSample, ap
           </Col>
           <Col md={3}>
             <FieldInput
-              field={form.sampleDescription}
+              field={form.description}
               onChangeInput={updateForm}
               inputProps={{
-                className: 'sampleDescription'
+                className: 'description'
               }}
             />
           </Col>
@@ -421,6 +435,21 @@ const SampleEditComponent = ({params, form, updateForm, location, editSample, ap
               onSelectInput={updateForm}
               selectItems={containerSubTypes(form.container.rawValue)}
               inputProps={{className: 'storageMedium'}}
+            />
+          </Col>
+        </Row>
+        <br/>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <b>Behandling</b>
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.treatment}
+              title={'Velg behandling'}
+              onSelectInput={updateForm}
+              selectItems={['Behandlet', 'Ubehandlet', 'Ufint behandlet']}
+              inputProps={{className: 'treatment'}}
             />
           </Col>
         </Row>

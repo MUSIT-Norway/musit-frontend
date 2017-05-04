@@ -15,13 +15,11 @@ import { hashHistory } from 'react-router';
 
 const FieldReadOnly = ({ field, label, postFix }) => (
   <FormGroup>
-    <FormControl.Static>
-      <span className={field.name}>
-        <b>{label && `${label}: `}</b>
-        {
-          `${field.defaultValue || field.rawValue}${postFix ? ' ' + postFix.defaultValue : ''}`
-        }
-      </span>
+    <FormControl.Static className={field.name}>
+      <b>{label && `${label}: `}</b>
+      {
+        `${field.defaultValue || field.rawValue}${(postFix && ' ' + postFix.defaultValue) || ''} `
+      }
     </FormControl.Static>
   </FormGroup>
 );
@@ -101,7 +99,12 @@ const SampleViewComponent = props => {
           <FieldReadOnly label={'Prøvetype'} field={form.sampleType} />
         </Col>
         <Col md={3}>
-          <FieldReadOnly label={'Prøveundertype'} field={form.sampleSubType} />
+          <FieldReadOnly label={'Prøveundertype'} field={form.subTypeValue} />
+        </Col>
+      </Row>
+      <Row className="row-centered">
+        <Col md={2}>
+          <FieldReadOnly label={'Beskrivelse'} field={form.description} />
         </Col>
       </Row>
       <Row className="row-centered">
@@ -110,7 +113,7 @@ const SampleViewComponent = props => {
         </Col>
       </Row>
       <Row className="row-centered">
-        <Col md={3}>
+        <Col md={5}>
           <FieldReadOnly
             label={'Målvolum/-vekt'}
             field={form.size}
@@ -119,11 +122,21 @@ const SampleViewComponent = props => {
         </Col>
       </Row>
       <Row className="row-centered">
-        <Col md={2}>
+        <Col md={3}>
           <FieldReadOnly label={'Lagringskontainer'} field={form.container} />
         </Col>
         <Col md={3}>
           <FieldReadOnly label={'Lagringsmedium'} field={form.storageMedium} />
+        </Col>
+      </Row>
+      <Row className="row-centered">
+        <Col md={3}>
+          <FieldReadOnly label={'Behandling'} field={form.treatment} />
+        </Col>
+      </Row>
+      <Row className="row-centered">
+        <Col md={3}>
+          <FieldReadOnly label={'Har restmateriale'} field={form.leftoverSample} />
         </Col>
       </Row>
       <Row className="row-centered">

@@ -179,8 +179,8 @@ const sizeUnit: Field<string> = {
   }
 };
 
-const sampleSubType: Field<string> = {
-  name: 'sampleSubType',
+const subTypeValue: Field<string> = {
+  name: 'subTypeValue',
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -195,8 +195,16 @@ const status: Field<string> = {
   }
 };
 
-const sampleDescription: Field<string> = {
-  name: 'sampleDescription',
+const description: Field<string> = {
+  name: 'description',
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+};
+
+const originatedObjectUuid: Field<string> = {
+  name: 'originatedObjectUuid',
   mapper: stringMapper,
   validator: {
     rawValidator: isRequired
@@ -242,9 +250,9 @@ const fields = [
   container,
   externalId,
   externalIdSource,
-  sampleDescription,
+  description,
   storageMedium,
-  sampleSubType,
+  subTypeValue,
   sampleType,
   museumId,
   subNo,
@@ -261,6 +269,7 @@ const fields = [
   updateBy,
   updateDate,
   createdDate,
+  originatedObjectUuid,
   persons
 ];
 
