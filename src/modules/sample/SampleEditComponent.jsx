@@ -37,6 +37,7 @@ type Props = {
   updateForm: Function,
   editSample: Function,
   appSession: AppSession,
+  location: {pathname: string, state: Array<any>},
   params: {
     sampleId: string
   }
@@ -162,7 +163,7 @@ const submitSample = (id:string, appSession: AppSession, form: FormData, editSam
 };
 
 
-const SampleEditComponent = ({params, form, updateForm, editSample, appSession}: Props) => {
+const SampleEditComponent = ({params, form, updateForm, location, editSample, appSession}: Props) => {
   const id = params.sampleId;
 
   const sampleValues = [
@@ -201,6 +202,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
     }
   };
   const personRoles: Array<Person> = form.persons.rawValue || [];
+  const objectData = location.state[0];
 
   return (
     <Form style={{padding: 20}}>
@@ -218,7 +220,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
             field={form.museumId}
             inputProps={{className: 'museumId'}}
             label='MusNo:'
-            defaultValue='1234'
+            defaultValue={objectData.museumNo}
           />
         </Col>
         <Col md={2}>
@@ -226,7 +228,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
             field={form.subNo}
             inputProps={{className: 'subNo'}}
             label='Unr:'
-            defaultValue='6789'
+            defaultValue={objectData.subNo}
           />
         </Col>
         <Col md={3}>
@@ -234,7 +236,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
             field={form.term_species}
             inputProps={{className: 'term_species'}}
             label='Term/artsnavn:'
-            defaultValue='Carex saxatilis'
+            defaultValue={objectData.term}
           />
         </Col>
         <Col md={1}>
@@ -456,7 +458,11 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           <Button
             onClick={() =>
               submitSample(id, appSession, form, editSample, form.persons.rawValue)
-                .then(() => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(appSession, id)))
+                .then(() => hashHistory.push(
+                  {
+                  pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, id),
+                    state: [objectData]
+                  }))
             }
           >
             Lagre

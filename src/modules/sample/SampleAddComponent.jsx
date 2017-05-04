@@ -43,8 +43,8 @@ type Props = {
   addPersonToSample: Function,
   updatePersonForSample: Function,
   clearForm: Function,
+  location: { pathname: string, state: Array<any>},
   appSession: AppSession,
-  objectStore: { objectData: any, events: any, samples: any},
   params: Params
 };
 
@@ -122,7 +122,7 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (appSession: AppSession, form: FormData, objectStore: any, params: Params, addSample: Function) => {
+const submitSample = (appSession: AppSession, form: FormData, objectData: any, params: Params, addSample: Function) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) =>
@@ -150,11 +150,10 @@ const submitSample = (appSession: AppSession, form: FormData, objectStore: any, 
     sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType},
     originatedObjectUuid: params.objectId
   };
-
   data.status = 2;
   data.responsible = appSession.actor.dataportenId;
   data.isExtracted = false;
-  data.parentObjectType = objectStore.objectData.objectType;
+  data.parentObjectType = objectData.objectType;
   data.museumId = appSession.museumId;
   data.parentObjectId = params.objectId;
   if (data.size && !data.size.value) {
@@ -170,7 +169,7 @@ const submitSample = (appSession: AppSession, form: FormData, objectStore: any, 
 };
 
 
-const SampleAddComponent = ({form, objectStore, updateForm, addSample, appSession, params, clearForm}: Props) => {
+const SampleAddComponent = ({form, updateForm, addSample, location, appSession, params, clearForm}: Props) => {
 
   const sampleValues = [
     'Frø',
@@ -208,7 +207,7 @@ const SampleAddComponent = ({form, objectStore, updateForm, addSample, appSessio
   };
 
   const personRoles: Array<Person> = (form.persons.rawValue: any) || [];
-
+  const objectData = location.state[0];
   return (
     <Form style={{padding: 20}}>
       <PageHeader>
@@ -225,7 +224,7 @@ const SampleAddComponent = ({form, objectStore, updateForm, addSample, appSessio
             field={form.museumId}
             inputProps={{className: 'museumId'}}
             label='MusNo:'
-            defaultValue={objectStore.objectData.museumNo}
+            defaultValue={objectData.museumNo}
           />
         </Col>
         <Col md={2}>
@@ -233,7 +232,7 @@ const SampleAddComponent = ({form, objectStore, updateForm, addSample, appSessio
             field={form.subNo}
             inputProps={{className: 'subNo'}}
             label='Unr:'
-            defaultValue={objectStore.objectData.subNo}
+            defaultValue={objectData.subNo}
           />
         </Col>
         <Col md={3}>
@@ -241,7 +240,7 @@ const SampleAddComponent = ({form, objectStore, updateForm, addSample, appSessio
             field={form.term_species}
             inputProps={{className: 'term_species'}}
             label='Term/artsnavn:'
-            defaultValue={objectStore.objectData.term}
+            defaultValue={objectData.term}
           />
         </Col>
         <Col md={1}>
@@ -464,8 +463,10 @@ const SampleAddComponent = ({form, objectStore, updateForm, addSample, appSessio
         <Col md={4}>
           <Button
             onClick={() =>
-              submitSample(appSession, form, objectStore, params, addSample)
-                .then((value) => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(appSession, value)))
+              submitSample(appSession, form, location.state[0], params, addSample)
+                .then((value) => hashHistory.push({
+                  pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, value),
+                  state: [objectData]}))
             }
           >
             Lagre

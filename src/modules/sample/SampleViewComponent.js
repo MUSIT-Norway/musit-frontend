@@ -45,6 +45,7 @@ const FieldReadArray = ({ field, labels, heading }) => (
 );
 
 const SampleViewComponent = props => {
+  const objectData = props.location.state[0];
   const form = props.form;
   return (
     <Form style={{ padding: 20 }}>
@@ -58,13 +59,13 @@ const SampleViewComponent = props => {
       </Row>
       <Row className="row-centered">
         <Col md={2}>
-          Musno: <b>{form.museumId.defaultValue || '1234'}</b>
+          Musno: <b>{objectData.museumNo}</b>
         </Col>
         <Col md={2}>
-          Unr: <b>{form.subNo.defaultValue || '4566b'}</b>
+          Unr: <b>{form.subNo.defaultValue || objectData.subNo}</b>
         </Col>
         <Col md={3}>
-          Term/artsnavn: <b>{form.term_species.defaultValue || 'Carex saxatilis'}</b>
+          Term/artsnavn: <b>{form.term_species.defaultValue || objectData.term}</b>
         </Col>
         <Col md={2}>
           <Button>Vis Objektet</Button>
@@ -136,12 +137,13 @@ const SampleViewComponent = props => {
         <Col md={4}>
           <Button
             onClick={() =>
-              hashHistory.push(
-                Config.magasin.urls.client.analysis.editSample(
+              hashHistory.push({
+                pathname: Config.magasin.urls.client.analysis.editSample(
                   props.appSession,
                   props.params.sampleId
-                )
-              )}
+                ),
+                state: [objectData]
+              })}
           >
             Endre
           </Button>
