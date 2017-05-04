@@ -7,6 +7,7 @@ export type ArrayField = { name: string, rawValue: ?Array<*> };
 export type FormData = {
   id: Field<string>,
   analysisTypeId: Field<string>,
+  analysisTypeCategory: Field<string>,
   doneBy: Field<string>,
   doneDate: Field<string>,
   registeredBy: Field<string>,
@@ -38,5 +39,8 @@ export type FormData = {
   eventDate: Field<string>,
   actor: Field<string>,
   caseNumber: Field<string>,
-  events: ArrayField
+  events: ArrayField,
+  updatedBy: Field<string>,
+  updatedByName: Field<string>,
+  updatedDate: Field<string>
 };
