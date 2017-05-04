@@ -54,7 +54,7 @@ const getTableRow = a => {
   );
 };
 
-const showLabelAndValue = ({ id, label, md, value }) => (
+const LabelAndValue = ({ id, label, md, value }) => (
   <div id={id}>
     <Label label={label} md={md} />
     <Col md={2}>
@@ -63,7 +63,7 @@ const showLabelAndValue = ({ id, label, md, value }) => (
   </div>
 );
 
-showLabelAndValue.defaultProps = {
+LabelAndValue.defaultProps = {
   md: 1
 };
 const getObjectsValue = form => {
@@ -118,7 +118,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <Col md={2} />
       </FormGroup>
       <FormGroup>
-        <showLabelAndValue
+        <LabelAndValue
           id="formControlsText"
           label="saksnummer"
           value={getValue(form, 'caseNumber')}
@@ -134,7 +134,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <Col md={12}><h5><strong>Personer tilknyttet analysen</strong></h5></Col>
       </FormGroup>
       <FormGroup>
-        <showLabelAndValue id="navn" label="Navn" value={getValue(form, 'actor')} />
+        <LabelAndValue id="navn" label="Navn" value={getValue(form, 'actor')} />
         <Label label="Rolle" md={1} />
         <Col md={2} />
       </FormGroup>
@@ -165,14 +165,14 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         </FormGroup>
         <NewLine />
         <FormGroup>
-          <showLabelAndValue
+          <LabelAndValue
             id="formControlsText"
             label="Ekstern kilde"
             value={getValue(form, 'externalSource')}
           />
         </FormGroup>
         <FormGroup>
-          <showLabelAndValue id="formControlsText" label="Ladt opp fil" />
+          <LabelAndValue id="formControlsText" label="Ladt opp fil" />
         </FormGroup>
         <FormGroup>
           <Label label="Kommentar / resultat" md={1} />
@@ -199,7 +199,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
               style={{ border: 'none', backgroundColor: '#f5f5f5' }}
             >
               <FormGroup>
-                <showLabelAndValue
+                <LabelAndValue
                   id="requester"
                   md={1}
                   label="Klausulert for"
@@ -207,35 +207,35 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
                 />
               </FormGroup>
               <FormGroup>
-                <showLabelAndValue
+                <LabelAndValue
                   id="reason"
                   label="Årsak til klausulering"
                   value={getValue(form, 'reason')}
                 />
               </FormGroup>
               <FormGroup>
-                <showLabelAndValue
+                <LabelAndValue
                   id="Saksnummer"
                   label="Saksnummer"
                   value={getValue(form, 'caseNumbers')}
                 />
               </FormGroup>
               <FormGroup>
-                <showLabelAndValue
+                <LabelAndValue
                   id="expirationDate"
                   label="Sluttdato"
                   value={getValue(form, 'expirationDate')}
                 />
               </FormGroup>
               <FormGroup>
-                <showLabelAndValue
+                <LabelAndValue
                   id="cancelledBy"
                   label="Opphevet av"
                   value={getValue(form, 'cancelledBy')}
                 />
               </FormGroup>
               <FormGroup>
-                <showLabelAndValue
+                <LabelAndValue
                   id="cancelledReason"
                   label="Årsak til oppheving"
                   value={getValue(form, 'cancelledReason')}
