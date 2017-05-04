@@ -67,8 +67,8 @@ export class NodeSuggest extends React.Component {
 
   requestSuggestionUpdate(update) {
     if (update.value.length > 2) {
-      const museumId = this.props.appSession.getMuseumId();
-      const token = this.props.appSession.getAccessToken();
+      const museumId = this.props.appSession.museumId;
+      const token = this.props.appSession.accessToken;
       this.props.update({ update, museumId, token });
     }
   }
