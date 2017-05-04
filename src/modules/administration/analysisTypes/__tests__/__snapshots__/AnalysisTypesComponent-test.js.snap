@@ -1,0 +1,5 @@
+exports[`AnalysisAddComponent should render properly 1`] = `
+<div>
+   hi
+</div>
+`;

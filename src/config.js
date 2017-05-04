@@ -27,10 +27,14 @@ export default {
     urls: {
       client: {
         administration: {
-          goToAdministration: (appSession: AppSession) => `${clientContextUrl(appSession)}/administration`,
-          goToAnalysisTypes: (appSession: AppSession) => `${clientContextUrl(appSession)}/administration/analysistypes`,
-          goToAnalysisPlaces: (appSession: AppSession) => `${clientContextUrl(appSession)}/administration/analysisplaces`,
-          goToSampleTypes: (appSession: AppSession) => `${clientContextUrl(appSession)}/administration/sampletypes`
+          goToAdministration: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/administration`,
+          goToAnalysisTypes: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/administration/analysistypes`,
+          goToAnalysisPlaces: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/administration/analysisplaces`,
+          goToSampleTypes: (appSession: AppSession) =>
+            `${clientContextUrl(appSession)}/administration/sampletypes`
         },
         homePage: {
           goToHomePage: (appSession: AppSession) => `${clientContextUrl(appSession)}/home`

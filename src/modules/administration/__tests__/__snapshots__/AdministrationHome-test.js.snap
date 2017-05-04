@@ -1,0 +1,84 @@
+exports[`Administration should render Administration 1`] = `
+<div>
+  <main>
+    <Panel
+      bsClass="panel"
+      bsStyle="default"
+      defaultExpanded={false}>
+      <Grid
+        bsClass="container"
+        componentClass="div"
+        fluid={false}>
+        <Row
+          bsClass="row"
+          className="row-centered"
+          componentClass="div">
+          <PageHeader
+            bsClass="page-header">
+            Administrasjon
+          </PageHeader>
+          <Table
+            bordered={false}
+            bsClass="table"
+            condensed={false}
+            hover={false}
+            responsive={false}
+            striped={false}>
+            <thead>
+              <tr>
+                <th>
+                  Tittel
+                </th>
+                <th>
+                  Beskrivelse
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                id={undefined}>
+                <td>
+                  <a
+                    href="/museum/99/collections/45555/administration/analysistypes"
+                    onClick={[Function onClick]}>
+                    Analysetyper
+                  </a>
+                </td>
+                <td>
+                  Analysetyper for analyse
+                </td>
+              </tr>
+              <tr
+                id={undefined}>
+                <td>
+                  <a
+                    href="/museum/99/collections/45555/administration/analysisplaces"
+                    onClick={[Function onClick]}>
+                    Analysesteder
+                  </a>
+                </td>
+                <td>
+                  Analysesteder for analyse
+                </td>
+              </tr>
+              <tr
+                id={undefined}>
+                <td>
+                  <a
+                    href="/museum/99/collections/45555/administration/sampletypes"
+                    onClick={[Function onClick]}>
+                    Prøvetyper
+                  </a>
+                </td>
+                <td>
+                  Prøvetyper for prøve
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Row>
+      </Grid>
+    </Panel>
+  </main>
+</div>
+`;

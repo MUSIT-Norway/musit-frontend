@@ -17,7 +17,8 @@ const administrations = [
     title: 'musit.administration.analysisPlaces.analysisPlaces',
     url: Config.magasin.urls.client.administration.goToAnalysisPlaces,
     description: 'musit.administration.analysisPlaces.description'
-  },{
+  },
+  {
     title: 'musit.administration.sampleTypes.sampleTypes',
     url: Config.magasin.urls.client.administration.goToSampleTypes,
     description: 'musit.administration.sampleTypes.description'
@@ -36,33 +37,33 @@ export const Administration = props => {
               </PageHeader>
               <Table>
                 <thead>
-                <tr>
-                  <th>{I18n.t('musit.administration.titleHeader')}</th>
-                  <th>{I18n.t('musit.administration.descriptionHeader')}</th>
-                </tr>
+                  <tr>
+                    <th>{I18n.t('musit.administration.titleHeader')}</th>
+                    <th>{I18n.t('musit.administration.descriptionHeader')}</th>
+                  </tr>
                 </thead>
                 <tbody>
-                {administrations.map((a, index) => {
-                  const url = a.url(props.appSession);
-                  return (
-                    <tr key={index} id={a.id}>
-                      <td>
-                        <a
-                          href={url}
-                          onClick={e => {
+                  {administrations.map((a, index) => {
+                    const url = a.url(props.appSession);
+                    return (
+                      <tr key={index} id={a.id}>
+                        <td>
+                          <a
+                            href={url}
+                            onClick={e => {
                               e.preventDefault();
-                              hashHistory.push(url(props.appSession));
+                              hashHistory.push(url);
                             }}
-                        >
-                          {I18n.t(a.title)}
-                        </a>
-                      </td>
-                      <td>
-                        {I18n.t(a.description)}
-                      </td>
-                    </tr>
-                  );
-                })}
+                          >
+                            {I18n.t(a.title)}
+                          </a>
+                        </td>
+                        <td>
+                          {I18n.t(a.description)}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
             </Row>
