@@ -32,7 +32,7 @@ const FieldReadArray = ({ field, labels, heading }) => (
     <Row className="row-centered" key="person-head">
       {labels.map((l, ind) => <Col md={2} key={`${ind}${l}`}><b>{l}</b></Col>)}
     </Row>
-    {field &&
+    {field && field.rawValue &&
       field.rawValue.map((i, p) => (
         <Row className="row-centered" key={`${i}-person`}>
           <Col md={2}>{p.name}</Col>
