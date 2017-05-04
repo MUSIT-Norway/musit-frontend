@@ -11,6 +11,7 @@ import {
   Button,
   Well,
   Table,
+  ButtonGroup,
   Panel
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -152,11 +153,11 @@ const AnalysisEdit = (
       {' '}
       <FontAwesome name="user" />
       {' '}
-      {getValue(form.doneBy)}
+      {getValue(form.updatedByName)}
       {' '}
       <FontAwesome name="clock-o" />
       {' '}
-      {getValue(form.doneDate)}
+      {getValue(form.updatedDate)}
     </Col>
     <NewLine />
     <Form horizontal style={{ paddingLeft: 10 }}>
@@ -164,6 +165,26 @@ const AnalysisEdit = (
         <Label label="Type analyse" md={1} />
         <Col md={11}>
           {getAnalysisTypeTerm(form, store)}
+        </Col>
+      </FormGroup>
+      <FormGroup>
+        <Label label="Formål med analysen" md={1} />
+        <Col md={3}>
+          <FormControl componentClass="select" placeholder="Velg formål">
+            <option value="Velgsted">Velg sted</option>
+            <option value="other">...</option>
+          </FormControl>
+        </Col>
+      </FormGroup>
+      <FormGroup>
+        <Label label="Status på analysen" md={1} />
+        <Col md={10}>
+          <ButtonGroup>
+            <Button>1. Under forberedelse</Button>
+            <Button>2. Analyse påbegynt</Button>
+            <Button>3a. Analyse ferdig</Button>
+            <Button>3b. Avsluttet uten resultat</Button>
+          </ButtonGroup>
         </Col>
       </FormGroup>
       <FormGroup>
@@ -196,7 +217,7 @@ const AnalysisEdit = (
         controlId={form.note.name}
         validationState={form.note.status && !form.note.status.valid ? 'error' : null}
       >
-        <Label label="Kommentar til analysen" md={1} />
+        <Label label="Beskrivelse/ kommentar" md={1} />
         <Col md={5}>
           <FormControl
             className="note"
@@ -276,7 +297,7 @@ const AnalysisEdit = (
           </Col>
         </FormGroup>
         <FormGroup>
-          <Label label="Kommentar / resultat" md={1} />
+          <Label label="Kommentar til resultat" md={1} />
           <Col md={5}>
             <FormControl
               componentClass="textarea"

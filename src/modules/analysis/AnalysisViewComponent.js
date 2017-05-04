@@ -1,16 +1,7 @@
 /* @flow */
 import React, { PropTypes } from 'react';
 import { I18n } from 'react-i18nify';
-import {
-  Radio,
-  PageHeader,
-  Form,
-  FormGroup,
-  Col,
-  Well,
-  Table,
-  Panel
-} from 'react-bootstrap';
+import { PageHeader, Form, FormGroup, Col, Well, Table, Panel } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { SaveCancel } from '../../components/formfields/index';
 import { hashHistory } from 'react-router';
@@ -99,11 +90,11 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
       {' '}
       <FontAwesome name="user" />
       {' '}
-      {getValue(form, 'doneBy')}
+      {getValue(form, 'updatedByName')}
       {' '}
       <FontAwesome name="clock-o" />
       {' '}
-      {getValue(form, 'eventDate')}
+      {getValue(form, 'updatedDate')}
     </Col>
     <NewLine />
     <Form horizontal style={{ paddingLeft: 10 }}>
@@ -112,6 +103,14 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <Col md={11}>
           {getAnalysisTypeTerm(form, store)}
         </Col>
+      </FormGroup>
+      <FormGroup>
+        <Label label="Formål med analysen" md={1} />
+        <Col md={3} />
+      </FormGroup>
+      <FormGroup>
+        <Label label="Status på analysen" md={1} />
+        <Col md={10} />
       </FormGroup>
       <FormGroup>
         <Label label="Analysested" md={1} />
@@ -125,7 +124,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         />
       </FormGroup>
       <FormGroup>
-        <Label label="Kommentar til analysen" md={1} />
+        <Label label="Beskrivelse/ kommentar" md={1} />
         <Col md={5}>
           {getValue(form, 'note')}
         </Col>
@@ -175,7 +174,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
           <LabelAndValue id="formControlsText" label="Ladt opp fil" />
         </FormGroup>
         <FormGroup>
-          <Label label="Kommentar / resultat" md={1} />
+          <Label label="Kommentar til resultat" md={1} />
           <Col md={5}>
             {getValue(form, 'comments')}
           </Col>
@@ -183,12 +182,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <FormGroup>
           <Label label="Klausulering" md={1} />
           <Col md={5}>
-            <Radio defaultChecked={form.restrictions.rawValue} readOnly inline>
-              Ja
-            </Radio>
-            <Radio inline defaultChecked={!form.restrictions.rawValue} readOnly>
-              Nei
-            </Radio>
+            Nei
           </Col>
         </FormGroup>
         {form.restrictions.rawValue &&
