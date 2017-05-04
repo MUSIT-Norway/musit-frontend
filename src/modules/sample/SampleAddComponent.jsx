@@ -157,6 +157,9 @@ const submitSample = (appSession: AppSession, form: FormData, objectStore: any, 
   data.parentObjectType = objectStore.objectData.objectType;
   data.museumId = appSession.museumId;
   data.parentObjectId = params.objectId;
+  if (data.size && !data.size.value) {
+    delete data.size;
+  }
   if (tmpData.externalId) {
     data.externalId = {value: tmpData.externalId, source: tmpData.externalIdSource};
     if (data.externalIdSource) {

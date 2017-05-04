@@ -27,7 +27,7 @@ const props = {
 
 const commands = { updateForm$, loadForm$, loadObject$ };
 
-const onMount = ({appSession, params, loadObject}: any) => {
+const onMount = ({ appSession, params, loadObject }: any) => {
   const uuid: string = params.objectId;
   const oldId: string = params.objectId;
   const museumId: number = appSession.museumId;
@@ -41,7 +41,6 @@ const onMount = ({appSession, params, loadObject}: any) => {
     collectionId: collectionId
   };
   loadObject(ajaxProps);
-
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(

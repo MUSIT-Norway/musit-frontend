@@ -23,10 +23,7 @@ Sample.loadSample = (ajaxGet = simpleGet) =>
   ({ id, museumId, token, callback }) => {
     const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
     const url = `${baseUrl}/${id}`;
-    return ajaxGet(url, token, callback)
-      .map(({ response }) => object.getObjectDetails(ajaxGet) ({id: response.parentObjectId, museumId, token, callback })
-      .map(({r}) => ({...response, ...r}).flatMap((x) => x)
-    ));
+    return ajaxGet(url, token, callback).map(({ response }) => response);
   };
 
 Sample.loadSampleDataForObject = (ajaxGet = simpleGet) =>
