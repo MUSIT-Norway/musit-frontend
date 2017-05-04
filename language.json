@@ -1,6 +1,18 @@
 {
   "en": {
     "musit": {
+      "administration":{
+        "administration": "Administration",
+        "analysisTypes": {
+          "analysisTypes": "Analysis types"
+        },
+        "sampleTypes": {
+          "sampleTypes": "Sample types"
+        },
+        "analysisPlaces": {
+          "analysisPlaces": "Analysis places"
+        }
+      },
       "analysis": {
         "analysis": "Analysis",
         "registeringAnalysis": "Registering analysis"
@@ -670,6 +682,18 @@
   },
   "no": {
     "musit": {
+      "administration":{
+        "administration": "Administrasjon",
+        "analysisTypes": {
+          "analysisTypes": "Analysetyper"
+        },
+        "sampleTypes": {
+          "sampleTypes": "Prøvetyper"
+        },
+        "analysisPlaces": {
+          "analysisPlaces": "Analysesteder"
+        }
+      },
       "analysis": {
         "analysis": "Analyse",
         "sample": "Prøveuttak",
