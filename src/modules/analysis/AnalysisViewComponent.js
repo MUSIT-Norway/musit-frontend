@@ -45,7 +45,7 @@ const getTableRow = a => {
   );
 };
 
-const FieldGroup = ({ id, label, md, value }) => (
+const LabelAndValue = ({ id, label, md, value }) => (
   <div id={id}>
     <Label label={label} md={md} />
     <Col md={2}>
@@ -54,7 +54,7 @@ const FieldGroup = ({ id, label, md, value }) => (
   </div>
 );
 
-FieldGroup.defaultProps = {
+LabelAndValue.defaultProps = {
   md: 1
 };
 const getObjectsValue = form => {
@@ -117,7 +117,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <Col md={2} />
       </FormGroup>
       <FormGroup>
-        <FieldGroup
+        <LabelAndValue
           id="formControlsText"
           label="saksnummer"
           value={getValue(form, 'caseNumber')}
@@ -133,7 +133,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         <Col md={12}><h5><strong>Personer tilknyttet analysen</strong></h5></Col>
       </FormGroup>
       <FormGroup>
-        <FieldGroup id="navn" label="Navn" value={getValue(form, 'actor')} />
+        <LabelAndValue id="navn" label="Navn" value={getValue(form, 'actor')} />
         <Label label="Rolle" md={1} />
         <Col md={2} />
       </FormGroup>
@@ -164,14 +164,14 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
         </FormGroup>
         <NewLine />
         <FormGroup>
-          <FieldGroup
+          <LabelAndValue
             id="formControlsText"
             label="Ekstern kilde"
             value={getValue(form, 'externalSource')}
           />
         </FormGroup>
         <FormGroup>
-          <FieldGroup id="formControlsText" label="Ladt opp fil" />
+          <LabelAndValue id="formControlsText" label="Ladt opp fil" />
         </FormGroup>
         <FormGroup>
           <Label label="Kommentar til resultat" md={1} />
@@ -193,7 +193,7 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
               style={{ border: 'none', backgroundColor: '#f5f5f5' }}
             >
               <FormGroup>
-                <FieldGroup
+                <LabelAndValue
                   id="requester"
                   md={1}
                   label="Klausulert for"
@@ -201,35 +201,35 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
                 />
               </FormGroup>
               <FormGroup>
-                <FieldGroup
+                <LabelAndValue
                   id="reason"
                   label="Årsak til klausulering"
                   value={getValue(form, 'reason')}
                 />
               </FormGroup>
               <FormGroup>
-                <FieldGroup
+                <LabelAndValue
                   id="Saksnummer"
                   label="Saksnummer"
                   value={getValue(form, 'caseNumbers')}
                 />
               </FormGroup>
               <FormGroup>
-                <FieldGroup
+                <LabelAndValue
                   id="expirationDate"
                   label="Sluttdato"
                   value={getValue(form, 'expirationDate')}
                 />
               </FormGroup>
               <FormGroup>
-                <FieldGroup
+                <LabelAndValue
                   id="cancelledBy"
                   label="Opphevet av"
                   value={getValue(form, 'cancelledBy')}
                 />
               </FormGroup>
               <FormGroup>
-                <FieldGroup
+                <LabelAndValue
                   id="cancelledReason"
                   label="Årsak til oppheving"
                   value={getValue(form, 'cancelledReason')}

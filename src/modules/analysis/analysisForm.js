@@ -60,7 +60,6 @@ const events = getArrField('events', []);
 const caseNumber = getStrField('caseNumber');
 const caseNumbers = getArrField('caseNumbers');
 const analysisTypeCategory = getStrField('analysisTypeCategory');
-
 const updatedBy = getStrField('updatedBy');
 const updatedByName = getStrField('updatedByName');
 const updatedDate = getStrField('updatedDate');

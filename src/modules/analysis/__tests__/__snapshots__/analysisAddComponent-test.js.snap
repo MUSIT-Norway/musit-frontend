@@ -35,16 +35,12 @@ exports[`AnalysisAddComponent should render properly 1`] = `
           <option>
             Velg kategori
           </option>
-          <option
-            value={8}>
-            8
-          </option>
         </select>
       </Col>
       <Col
         bsClass="col"
         componentClass="div"
-        md={4}>
+        md={2}>
         <select
           className="form-control"
           onChange={[Function anonymous]}>
