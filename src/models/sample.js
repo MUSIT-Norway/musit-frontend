@@ -6,6 +6,36 @@ import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 
 class Sample {}
 
+// To clean up after mapping single field to object for backend
+Sample.prepareForSubmit = tmpData => {
+  if (tmpData.size) {
+    if (!tmpData.size.value) {
+      delete tmpData.size;
+    }
+    if (tmpData.size && !tmpData.size.unit) {
+      delete tmpData.sizeUnit;
+    }
+  }
+  if (tmpData.sampleType) {
+    if (!tmpData.sampleType.value) {
+      delete tmpData.sampleType;
+    }
+    if (tmpData.sampleType && !tmpData.sampleType.subTypeValue) {
+      delete tmpData.subTypeValue;
+    }
+  }
+
+  if (tmpData.externalId) {
+    if (!tmpData.externalId.value) {
+      delete tmpData.externalId;
+    }
+    if (tmpData.externalId && !tmpData.externalId.source) {
+      delete tmpData.externalIdSource;
+    }
+  }
+  return tmpData;
+};
+
 Sample.addSample = (ajaxPost = simplePost) =>
   ({ museumId, token, data, callback }) => {
     const url = Config.magasin.urls.api.samples.baseUrl(museumId);

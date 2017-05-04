@@ -16,6 +16,7 @@ import {
 } from 'react-bootstrap';
 import Config from '../../config';
 import PersonRoleDate from '../../components/samples/personRoleDate';
+import Sample from '../../models/sample';
 import type { AppSession } from '../../types/appSession';
 import {hashHistory} from 'react-router';
 import type {Person} from './sampleForm';
@@ -141,12 +142,13 @@ const submitSample = (appSession: AppSession, form: FormData, objectData: any, p
         return {...akk,
           responsible: v.name
         };
+      default: return {};
     }
   }, {});
 
   const persons = form.persons.rawValue;
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
-  const data = {
+  let data = {
     ...tmpData,
     size: {value: tmpData.size, unit: tmpData.sizeUnit},
     sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue},
@@ -158,18 +160,8 @@ const submitSample = (appSession: AppSession, form: FormData, objectData: any, p
   data.parentObjectType = objectData.objectType;
   data.museumId = appSession.museumId;
   data.parentObjectId = params.objectId;
-  if (data.size && !data.size.value) {
-    delete data.size;
-  }
-  if (data.sampleType && !data.sampleType.value) {
-    delete data.sampleType;
-  }
-  if (tmpData.externalId) {
-    data.externalId = {value: tmpData.externalId, source: tmpData.externalIdSource};
-    if (data.externalIdSource) {
-      delete data.externalIdSource;
-    }
-  }
+
+  data=Sample.prepareForSubmit(data);
   return addSample({museumId, token, data});
 };
 

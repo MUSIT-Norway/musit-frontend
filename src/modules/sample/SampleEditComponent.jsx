@@ -16,9 +16,10 @@ import {
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
-import type { AppSession } from '../../types/appSession';
+import type {AppSession} from '../../types/appSession';
 import type {Person} from './sampleForm';
-import type { Field } from '../../forms/form';
+import type {Field} from '../../forms/form';
+import Sample from '../../models/sample';
 
 type FieldInputProps = { field: Field, onChangeInput: Function, inputProps?: { className?: string, style?: {} } };
 
@@ -37,7 +38,7 @@ type Props = {
   updateForm: Function,
   editSample: Function,
   appSession: AppSession,
-  location: {pathname: string, state: Array<any>},
+  location: { pathname: string, state: Array<any> },
   params: {
     sampleId: string
   }
@@ -115,10 +116,13 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (id:string, appSession: AppSession, form: FormData, editSample: Function, persons: any) => {
+const submitSample = (id: string, appSession: AppSession, form: FormData, editSample: Function, persons: any) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
-  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({
+    ...akk,
+    [key]: frm[key].value
+  }), {});
   const reducePersons = (p) => p && p.reduce((akk: any, v: Person) => {
     switch (v.role) {
       case 'Registrator':
@@ -146,25 +150,14 @@ const submitSample = (id:string, appSession: AppSession, form: FormData, editSam
   }, {});
 
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
-  const data = {
+  let data = {
     ...tmpData,
     externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
     size: {value: tmpData.size, unit: tmpData.sizeUnit},
     sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue}
   };
 
-  if (data.size && !data.size.value) {
-    delete data.size;
-  }
-  if (data.sampleType && !data.sampleType.value) {
-    delete data.sampleType;
-  }
-  if (tmpData.externalId) {
-    data.externalId = {value: tmpData.externalId, source: tmpData.externalIdSource};
-    if (data.externalIdSource) {
-      delete data.externalIdSource;
-    }
-  }
+  data = Sample.prepareForSubmit(data);
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
@@ -489,7 +482,7 @@ const SampleEditComponent = ({params, form, updateForm, location, editSample, ap
               submitSample(id, appSession, form, editSample, form.persons.rawValue)
                 .then(() => hashHistory.push(
                   {
-                  pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, id),
+                    pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, id),
                     state: [objectData]
                   }))
             }
