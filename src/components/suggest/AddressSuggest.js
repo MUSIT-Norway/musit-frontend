@@ -69,7 +69,7 @@ export class AddressSuggest extends React.Component {
 
   requestSuggestionUpdate(update) {
     if (update.value.length > 2) {
-      const token = this.props.appSession.getAccessToken();
+      const token = this.props.appSession.accessToken;
       this.props.update({ update, token });
     }
   }
