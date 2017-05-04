@@ -33,8 +33,8 @@ describe('AnalysisSampleFormPageEdit', () => {
             name: 'externalIdSource',
             rawValue: 'Museum'
           },
-          sampleDescription: {
-            name: 'sampleDescription',
+          description: {
+            name: 'description',
             rawValue: 'Av lær'
           },
           term_species: {
@@ -49,8 +49,8 @@ describe('AnalysisSampleFormPageEdit', () => {
             name: 'sizeUnit',
             rawValue: 'gr'
           },
-          sampleSubType: {
-            name: 'sampleSubType',
+          subTypeValue: {
+            name: 'subTypeValue',
             rawValue: 'Muskel'
           },
           status: {
@@ -105,10 +105,23 @@ describe('AnalysisSampleFormPageEdit', () => {
             name: 'sampleId',
             rawValue: '1233'
           },
+          treatment: {
+            name: 'treatment',
+            rawValue: '1233'
+          },
           persons: {
             name: 'persons',
             defaultValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
           }
+        }}
+        location={{
+          state: [
+            {
+              term: 'Carex saxatilis',
+              museumNo: 'M1234',
+              subNo: 'a'
+            }
+          ]
         }}
         updateForm={updateForm}
       />
