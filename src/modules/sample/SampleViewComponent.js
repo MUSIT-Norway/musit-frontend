@@ -16,10 +16,12 @@ import { hashHistory } from 'react-router';
 const FieldReadOnly = ({ field, label, postFix }) => (
   <FormGroup>
     <FormControl.Static className={field.name}>
-      <b>{label && `${label}: `}</b>
-      {
-        `${field.defaultValue || field.rawValue}${(postFix && ' ' + postFix.defaultValue) || ''} `
-      }
+      <span>
+        <b>{label && `${label}: `}</b>
+        {
+          `${field.defaultValue || field.rawValue}${(postFix && ' ' + postFix.defaultValue) || ''}`
+        }
+      </span>
     </FormControl.Static>
   </FormGroup>
 );
@@ -78,7 +80,7 @@ const SampleViewComponent = props => {
       <br />
       <FieldReadArray
         labels={['Navn', 'Rolle', 'Dato']}
-        field={form.persons.rawValue}
+        field={form.persons}
         heading={'Personer tilknyttet prøveuttaket'}
       />
       <Row>

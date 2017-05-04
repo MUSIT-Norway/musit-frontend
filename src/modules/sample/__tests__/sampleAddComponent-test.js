@@ -32,8 +32,8 @@ describe('AnalysisSampleFormPageAdd', () => {
             name: 'externalIdSource',
             rawValue: 'Museum'
           },
-          sampleDescription: {
-            name: 'sampleDescription',
+          description: {
+            name: 'description',
             rawValue: 'Av lær'
           },
           term_species: {
@@ -48,8 +48,8 @@ describe('AnalysisSampleFormPageAdd', () => {
             name: 'sizeUnit',
             rawValue: 'gr'
           },
-          sampleSubType: {
-            name: 'sampleSubType',
+          subTypeValue: {
+            name: 'subTypeValue',
             rawValue: 'Muskel'
           },
           status: {
@@ -104,12 +104,25 @@ describe('AnalysisSampleFormPageAdd', () => {
             name: 'sampleId',
             rawValue: '1233'
           },
+          treatment: {
+            name: 'treatment',
+            rawValue: '1233'
+          },
           persons: {
             name: 'persons',
-            defaultValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
+            rawValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
           }
         }}
         updateForm={updateForm}
+        location={{
+          state: [
+            {
+              term: 'Carex saxatilis',
+              museumNo: 'M1234',
+              subNo: 'a'
+            }
+          ]
+        }}
       />
     );
     wrapper.find('.note').simulate('change', {
