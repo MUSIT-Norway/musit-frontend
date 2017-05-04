@@ -59,6 +59,7 @@ const completeAnalysis = getBoolField('completeAnalysis');
 const events = getArrField('events', []);
 const caseNumber = getStrField('caseNumber');
 const caseNumbers = getArrField('caseNumbers');
+const analysisTypeCategory = getStrField('analysisTypeCategory');
 
 export const fieldsArray = [
   id,
@@ -92,7 +93,8 @@ export const fieldsArray = [
   museumNo,
   subNo,
   term,
-  events
+  events,
+  analysisTypeCategory
 ];
 
 export default createForm('analysisForm.js', fieldsArray);

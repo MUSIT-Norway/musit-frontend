@@ -30,7 +30,7 @@ type ObjectData = { uuid: string };
 
 type Store = {
   objectsData: ObjectData[],
-  analysisTypes: AnalysisType[]
+  analysisTypes: Array<AnalysisType>
 };
 
 type Params = {
@@ -115,6 +115,13 @@ const updateFormFieldValue = (field, updateForm, value) =>
       rawValue: value
     });
 
+const getAnalysisTypeTerm = (form, store) => {
+  if (form.analysisTypeId && store.analysisTypes) {
+    const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.value);
+    return foundType ? foundType.name : '';
+  }
+};
+
 export const goToAnalysis = (
   fn: Promise<*>,
   appSession: AppSession,
@@ -131,9 +138,6 @@ const AnalysisEdit = (
     <PageHeader style={{ paddingLeft: 20 }}>
       {I18n.t('musit.analysis.registeringAnalysis')}
     </PageHeader>
-    <Col md={12}>
-      <strong>HID:</strong>{' '}{getValue(form.id)}
-    </Col>
     <Col md={12}>
       <strong>Registrert:</strong>
       {' '}
@@ -155,6 +159,23 @@ const AnalysisEdit = (
       {getValue(form.doneDate)}
     </Col>
     <NewLine />
+    <Form horizontal style={{ paddingLeft: 10 }}>
+      <FormGroup>
+        <Label label="Type analyse" md={1} />
+        <Col md={11}>
+          {getAnalysisTypeTerm(form, store)}
+        </Col>
+      </FormGroup>
+      <FormGroup>
+        <Label label="Analysested" md={1} />
+        <Col md={2}>
+          <FormControl componentClass="select" placeholder="Velg sted">
+            <option value="Velgsted">Velg sted</option>
+            <option value="other">...</option>
+          </FormControl>
+        </Col>
+      </FormGroup>
+    </Form>
     <Form>
       <FormGroup>
         <FieldGroup
@@ -170,26 +191,22 @@ const AnalysisEdit = (
       </FormGroup>
     </Form>
     <NewLine />
-    <Form inline>
-      <Col md={12}><h5><b>Objekt/prøve</b></h5></Col>
-      <Col mdOffset={1} md={5}>
-        <Table responsive>
-          <thead>
-            <tr>
-              <th>Museumsnr</th>
-              <th>Unr</th>
-              <th>Term/artsnavn</th>
-            </tr>
-          </thead>
-          <tbody>
-            {getObjectsValue(form)}
-          </tbody>
-        </Table>
-      </Col>
-      <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
-    </Form>
-    <NewLine />
-    <Form horizontal style={{ paddingLeft: 20 }}>
+    <Form horizontal style={{ paddingLeft: 10 }}>
+      <FormGroup
+        controlId={form.note.name}
+        validationState={form.note.status && !form.note.status.valid ? 'error' : null}
+      >
+        <Label label="Kommentar til analysen" md={1} />
+        <Col md={5}>
+          <FormControl
+            className="note"
+            onChange={updateFormField(form.note, updateForm)}
+            componentClass="textarea"
+            placeholder={form.note.name}
+            value={getValue(form.note)}
+          />
+        </Col>
+      </FormGroup>
       <FormGroup>
         <Col md={12}><h5><b>Personer tilknyttet analysen</b></h5></Col>
       </FormGroup>
@@ -213,34 +230,31 @@ const AnalysisEdit = (
       </FormGroup>
     </Form>
     <NewLine />
-    <FormGroup>
-      <Label label="Analysested" md={1} />
-      <Col md={2}>
-        <FormControl componentClass="select" placeholder="Velg sted">
-          <option value="Velgsted">Velg sted</option>
-          <option value="other">...</option>
-        </FormControl>
-      </Col>
-    </FormGroup>
-    <NewLine />
     <Well>
       <Form horizontal>
         <FormGroup>
-          <Label label="Type analyse" md={1} />
-          <Col md={2}>
-            <select
-              className="form-control"
-              value={form.analysisTypeId.rawValue || ''}
-              onChange={updateFormField(form.analysisTypeId, updateForm)}
-            >
-              <option>Velg kategori</option>
-              {store.analysisTypes.map(a => (
-                <option key={a.id} value={a.id}>
-                  {a.name}
-                </option>
-              ))}
-            </select>
+          <Col md={1}>
+            <h5><strong>Objekt/prøve</strong></h5>
           </Col>
+        </FormGroup>
+        <FormGroup>
+          <Col md={11} mdOffset={1}>
+            <Table responsive>
+              <thead>
+                <tr>
+                  <th>Museumsnr</th>
+                  <th>Unr</th>
+                  <th>Term/artsnavn</th>
+                </tr>
+              </thead>
+              <tbody>
+                {getObjectsValue(form)}
+              </tbody>
+            </Table>
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
         </FormGroup>
         <FormGroup>
           <FieldGroup
@@ -375,35 +389,6 @@ const AnalysisEdit = (
           </FormGroup>}
       </Form>
     </Well>
-    <Form horizontal style={{ paddingLeft: 20 }}>
-      <FormGroup
-        controlId={form.note.name}
-        validationState={form.note.status && !form.note.status.valid ? 'error' : null}
-      >
-        <Label label="Kommentar til analysen" md={1} />
-        <Col md={5}>
-          <FormControl
-            className="note"
-            onChange={updateFormField(form.note, updateForm)}
-            componentClass="textarea"
-            placeholder={form.note.name}
-            value={getValue(form.note)}
-          />
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Label label="Avslutt analyse" md={1} />
-        <Col md={5}>
-          <Radio inline readOnly>
-            Ja
-          </Radio>
-          <Radio inline checked readOnly>
-            Nei
-          </Radio>
-        </Col>
-      </FormGroup>
-    </Form>
-    <NewLine />
     <SaveCancel
       onClickSave={() =>
         goToAnalysis(

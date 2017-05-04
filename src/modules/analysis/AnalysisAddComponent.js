@@ -29,10 +29,11 @@ type Location = {
   state?: Array<ObjectData>
 };
 
-type AnalysisType = { id: number, name: string };
+type AnalysisType = { id: number, name: string, category: string };
 
 type Store = {
-  analysisTypes: Array<AnalysisType>
+  analysisTypes: Array<AnalysisType>,
+  analysisTypesUniqueCategory: Array<String>
 };
 
 type Props = {
@@ -142,6 +143,43 @@ const AnalysisAdd = (
     <PageHeader style={{ paddingLeft: 20 }}>
       {I18n.t('musit.analysis.registeringAnalysis')}
     </PageHeader>
+    <Form horizontal style={{ paddingLeft: 10 }}>
+      <FormGroup>
+        <Label label="Type analyse" md={1} />
+        <Col md={2}>
+          <select
+            className="form-control"
+            onChange={updateFormField(form.analysisTypeCategory, updateForm)}
+          >
+            <option>Velg kategori</option>
+            {store.analysisTypesUniqueCategory &&
+              store.analysisTypesUniqueCategory.map(a => (
+                <option key={a} value={a}>{a}</option>
+              ))}
+          </select>
+        </Col>
+        <Col md={2}>
+          <select
+            className="form-control"
+            onChange={updateFormField(form.analysisTypeId, updateForm)}
+          >
+            <option>Velg type</option>
+            {store.analysisTypes
+              .filter(b => b.category.toString() === form.analysisTypeCategory.value)
+              .map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
+          </select>
+        </Col>
+      </FormGroup>
+      <FormGroup>
+        <Label label="Analysested" md={1} />
+        <Col md={2}>
+          <FormControl componentClass="select" placeholder="Velg sted">
+            <option value="Velgsted">Velg sted</option>
+            <option value="other">...</option>
+          </FormControl>
+        </Col>
+      </FormGroup>
+    </Form>
     <Form>
       <FormGroup>
         <FieldGroup
@@ -157,25 +195,24 @@ const AnalysisAdd = (
       </FormGroup>
     </Form>
     <NewLine />
-    <Form inline>
-      <Col md={12}><h5><strong>Objekt/prøve</strong></h5></Col>
-      <Col mdOffset={1} md={5}>
-        <Table
-          className="table"
-          columns={[
-            { key: 'museumNo', label: 'Museumsnr' },
-            { key: 'subNo', label: 'Unr' },
-            { key: 'term', label: 'Term/artsnavn' }
-          ]}
-          data={location ? location.state || [] : []}
-          sortable={['museumNumber', 'subNumber', 'term']}
-          noDataText="Ingen objekter"
-        />
-      </Col>
-      <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
-    </Form>
-    <NewLine />
-    <Form horizontal style={{ paddingLeft: 20 }}>
+
+    <Form horizontal style={{ paddingLeft: 10 }}>
+
+      <FormGroup
+        controlId={form.note.name}
+        validationState={form.note.status && !form.note.status.valid ? 'error' : null}
+      >
+        <Label label="Kommentar til analysen" md={1} />
+        <Col md={5}>
+          <FormControl
+            className="note"
+            onChange={updateFormField(form.note, updateForm)}
+            componentClass="textarea"
+            placeholder={form.note.name}
+            value={getValue(form.note)}
+          />
+        </Col>
+      </FormGroup>
       <FormGroup>
         <Col md={12}><h5><strong>Personer tilknyttet analysen</strong></h5></Col>
       </FormGroup>
@@ -199,32 +236,35 @@ const AnalysisAdd = (
       </FormGroup>
     </Form>
     <NewLine />
-    <FormGroup>
-      <Label label="Analysested" md={1} />
-      <Col md={2}>
-        <FormControl componentClass="select" placeholder="Velg sted">
-          <option value="Velgsted">Velg sted</option>
-          <option value="other">...</option>
-        </FormControl>
-      </Col>
-    </FormGroup>
-    <NewLine />
     <Well>
       <Form horizontal>
         <FormGroup>
-          <Label label="Type analyse" md={1} />
-          <Col md={2}>
-            <select
-              className="form-control"
-              onChange={updateFormField(form.analysisTypeId, updateForm)}
-            >
-              <option>Velg kategori</option>
-              {store.analysisTypes.map(a => (
-                <option key={a.id} value={a.id}>{a.name}</option>
-              ))}
-            </select>
+          <Col md={1}>
+            <h5><strong>Objekt/prøve</strong></h5>
           </Col>
         </FormGroup>
+        <FormGroup>
+          <Col md={11} mdOffset={1}>
+            <Table
+              className="table"
+              columns={[
+                { key: 'museumNo', label: 'Museumsnr' },
+                { key: 'subNo', label: 'Unr' },
+                { key: 'term', label: 'Term/artsnavn' }
+              ]}
+              data={location ? location.state || [] : []}
+              sortable={['museumNumber', 'subNumber', 'term']}
+              noDataText="Ingen objekter"
+            />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <AddButton id="2" label="Legg til objekt" md={11} mdOffset={1} />
+        </FormGroup>
+      </Form>
+      <NewLine />
+      <Form horizontal>
+
         <FormGroup>
           <FieldGroup
             id="formControlsText"
@@ -336,34 +376,6 @@ const AnalysisAdd = (
           </FormGroup>}
       </Form>
     </Well>
-    <Form horizontal style={{ paddingLeft: 20 }}>
-      <FormGroup
-        controlId={form.note.name}
-        validationState={form.note.status && !form.note.status.valid ? 'error' : null}
-      >
-        <Label label="Kommentar til analysen" md={1} />
-        <Col md={5}>
-          <FormControl
-            className="note"
-            onChange={updateFormField(form.note, updateForm)}
-            componentClass="textarea"
-            placeholder={form.note.name}
-            value={getValue(form.note)}
-          />
-        </Col>
-      </FormGroup>
-      <FormGroup>
-        <Label label="Avslutt analyse" md={1} />
-        <Col md={5}>
-          <Radio inline readOnly>
-            Ja
-          </Radio>
-          <Radio inline checked readOnly>
-            Nei
-          </Radio>
-        </Col>
-      </FormGroup>
-    </Form>
     <NewLine />
     <SaveCancel
       onClickSave={() =>
@@ -388,6 +400,7 @@ AnalysisAdd.propTypes = {
   form: PropTypes.shape({
     id: PropTypes.shape(FieldShape).isRequired,
     analysisTypeId: PropTypes.shape(FieldShape).isRequired,
+    analysisTypeCategory: PropTypes.shape(FieldShape).isRequired,
     doneBy: PropTypes.shape(FieldShape).isRequired,
     doneDate: PropTypes.shape(FieldShape).isRequired,
     registeredBy: PropTypes.shape(FieldShape).isRequired,
