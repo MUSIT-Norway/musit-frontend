@@ -131,4 +131,16 @@ Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
       });
   };
 
+Analysis.getAnalysisTypes = (ajaxGet = simpleGet) =>
+  ({ museumId, token, callback }) => {
+    const url = Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId);
+    return ajaxGet(url, token, callback).map(r => r.response);
+  };
+
+Analysis.saveAnalysisType = (ajaxPost = simplePost) =>
+  ({ museumId, data, token, callback }) => {
+    const url = Config.magasin.urls.api.analysis.saveAnalysisType(museumId);
+    return ajaxPost(url, data, token, callback).map(({ response }) => response);
+  };
+
 export default Analysis;

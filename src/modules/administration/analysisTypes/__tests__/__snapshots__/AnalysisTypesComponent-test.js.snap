@@ -1,0 +1,470 @@
+exports[`AnalysisTypesComponent should render properly 1`] = `
+<Form
+  bsClass="form"
+  componentClass="form"
+  horizontal={false}
+  inline={false}
+  style={
+    Object {
+      "padding": "20px"
+    }
+  }>
+  <PageHeader
+    bsClass="page-header">
+    Analysetyper
+  </PageHeader>
+  <FormGroup
+    bsClass="form-group">
+    <Col
+      bsClass="col"
+      componentClass="div"
+      md={2}
+      style={
+        Object {
+          "textAlign": "right"
+        }
+      }>
+      <ControlLabel
+        bsClass="control-label"
+        srOnly={false}>
+        Nytt analysetypenavn
+      </ControlLabel>
+    </Col>
+    <Col
+      bsClass="col"
+      componentClass="div"
+      md={3}>
+      <FormControl
+        bsClass="form-control"
+        componentClass="input"
+        type="text" />
+    </Col>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="default"
+      disabled={false}>
+      Legg til analysetype
+    </Button>
+  </FormGroup>
+  <FormGroup
+    bsClass="form-group">
+    <Table
+      bordered={false}
+      bsClass="table"
+      condensed={false}
+      hover={false}
+      responsive={true}
+      striped={false}>
+      <thead>
+        <tr>
+          <th>
+            Name
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Alger
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Arkeologi
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Entomologi
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Etnografi
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Karplanter
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Lav
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Marine evertebrater
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Mose
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Numismatikk
+          </th>
+          <th
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }>
+            Sopp
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
+          <td>
+            3D-skanning, laser
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="1d8dd4e6-1527-439c-ac86-fc315e0ce852">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="2e4f2455-1b3b-4a04-80a1-ba92715ff613">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="ba3d4d30-810b-4c07-81b3-37751f2196f0">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="88b35138-24b5-4e62-bae4-de80fae7df82">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="7352794d-4973-447b-b84e-2635cafe910a">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="fcb4c598-8b05-4095-ac00-ce66247be38a">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="ef4dc066-b6f8-4155-89f8-7aa9aeeb2dc4">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="d0dd5ad3-c22f-4ea0-8b52-dc5b0e17aa24">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="8bbdf9b3-56d1-479a-9509-2ea82842e8f8">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="23ca0166-5f9e-44c2-ab0d-b4cdd704af07">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td>
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="default"
+              disabled={false}
+              onClick={[Function onClick]}
+              value="1bbf15cb-8348-4e66-99a4-bc314da57a42">
+              <FontAwesome
+                name="pencil-square-o" />
+            </Button>
+          </td>
+        </tr>
+        <tr
+          value="b39399ab-aabd-4ebc-903b-adcf6876a364">
+          <td>
+            3D-skanning, strukturert lys
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="1d8dd4e6-1527-439c-ac86-fc315e0ce852">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="2e4f2455-1b3b-4a04-80a1-ba92715ff613">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="ba3d4d30-810b-4c07-81b3-37751f2196f0">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="88b35138-24b5-4e62-bae4-de80fae7df82">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="7352794d-4973-447b-b84e-2635cafe910a">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="fcb4c598-8b05-4095-ac00-ce66247be38a">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="ef4dc066-b6f8-4155-89f8-7aa9aeeb2dc4">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="d0dd5ad3-c22f-4ea0-8b52-dc5b0e17aa24">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="8bbdf9b3-56d1-479a-9509-2ea82842e8f8">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td
+            style={
+              Object {
+                "textAlign": "center"
+              }
+            }
+            value="23ca0166-5f9e-44c2-ab0d-b4cdd704af07">
+            <Checkbox
+              bsClass="checkbox"
+              checked={1}
+              disabled={false}
+              inline={false}
+              onChange={[Function onChange]} />
+          </td>
+          <td>
+            <Button
+              active={false}
+              block={false}
+              bsClass="btn"
+              bsStyle="default"
+              disabled={false}
+              onClick={[Function onClick]}
+              value="b39399ab-aabd-4ebc-903b-adcf6876a364">
+              <FontAwesome
+                name="pencil-square-o" />
+            </Button>
+          </td>
+        </tr>
+      </tbody>
+    </Table>
+  </FormGroup>
+</Form>
+`;

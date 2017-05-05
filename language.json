@@ -1,6 +1,25 @@
 {
   "en": {
     "musit": {
+      "administration":{
+        "administration": "Administration",
+        "titleHeader": "Title",
+        "descriptionHeader": "Description",
+        "analysisTypes": {
+          "analysisTypes": "Analysis types",
+          "description": "Analysis types for analysis",
+          "newAnalysisTypeName": "New analysis type name",
+          "addAnalysisType": "Add analysis type"
+        },
+        "sampleTypes": {
+          "sampleTypes": "Sample types",
+          "description": "Sample types for sample"
+        },
+        "analysisPlaces": {
+          "analysisPlaces": "Analysis places",
+          "description": "Analysis places for analysis"
+        }
+      },
       "analysis": {
         "analysis": "Analysis",
         "registeringAnalysis": "Registering analysis"
@@ -670,6 +689,25 @@
   },
   "no": {
     "musit": {
+      "administration":{
+        "administration": "Administrasjon",
+        "titleHeader": "Tittel",
+        "descriptionHeader": "Beskrivelse",
+        "analysisTypes": {
+          "analysisTypes": "Analysetyper",
+          "description": "Analysetyper for analyse",
+          "newAnalysisTypeName": "Nytt analysetypenavn",
+          "addAnalysisType": "Legg til analysetype"
+        },
+        "sampleTypes": {
+          "sampleTypes": "Prøvetyper",
+          "description": "Prøvetyper for prøve"
+        },
+        "analysisPlaces": {
+          "analysisPlaces": "Analysesteder",
+          "description": "Analysesteder for analyse"
+        }
+      },
       "analysis": {
         "analysis": "Analyse",
         "sample": "Prøveuttak",

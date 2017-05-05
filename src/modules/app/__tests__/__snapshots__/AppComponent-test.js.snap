@@ -87,6 +87,16 @@ exports[`AppComponent remders 1`] = `
             Rapporter
           </NavItem>
         </LinkContainer>
+        <LinkContainer
+          action="push"
+          onlyActiveOnIndex={false}
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/administration">
+          <NavItem
+            active={false}
+            disabled={false}>
+            Administrasjon
+          </NavItem>
+        </LinkContainer>
       </Nav>
       <Nav
         bsClass="nav"
