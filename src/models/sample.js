@@ -22,7 +22,6 @@ Sample.prepareForSubmit = tmpData => ({
 Sample.addSample = (ajaxPost = simplePost) =>
   ({ museumId, token, data, callback }) => {
     const url = Config.magasin.urls.api.samples.baseUrl(museumId);
-    console.log('Data', data);
     return ajaxPost(url, data, token, callback).map(({ response }) => response);
   };
 
