@@ -148,20 +148,14 @@ const submitSample = (appSession: AppSession, form: FormData, objectData: any, p
 
   const persons = form.persons.rawValue;
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
-  let data = {
-    ...tmpData,
-    size: {value: tmpData.size, unit: tmpData.sizeUnit},
-    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue},
-    originatedObjectUuid: params.objectId
-  };
-  data.status = 2;
-  data.responsible = appSession.actor.dataportenId;
-  data.isExtracted = false;
-  data.parentObjectType = objectData.objectType;
-  data.museumId = appSession.museumId;
-  data.parentObjectId = params.objectId;
 
-  data=Sample.prepareForSubmit(data);
+  tmpData.status = 2;
+  tmpData.responsible = appSession.actor.dataportenId;
+  tmpData.isExtracted = false;
+  tmpData.parentObjectType = objectData.objectType;
+  tmpData.museumId = appSession.museumId;
+  tmpData.parentObjectId = params.objectId;
+  const data = Sample.prepareForSubmit(tmpData);
   return addSample({museumId, token, data});
 };
 
