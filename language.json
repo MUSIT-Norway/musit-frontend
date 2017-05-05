@@ -7,7 +7,9 @@
         "descriptionHeader": "Description",
         "analysisTypes": {
           "analysisTypes": "Analysis types",
-          "description": "Analysis types for analysis"
+          "description": "Analysis types for analysis",
+          "newAnalysisTypeName": "New analysis type name",
+          "addAnalysisType": "Add analysis type"
         },
         "sampleTypes": {
           "sampleTypes": "Sample types",
@@ -693,7 +695,9 @@
         "descriptionHeader": "Beskrivelse",
         "analysisTypes": {
           "analysisTypes": "Analysetyper",
-          "description": "Analysetyper for analyse"
+          "description": "Analysetyper for analyse",
+          "newAnalysisTypeName": "Nytt analysetypenavn",
+          "addAnalysisType": "Legg til analysetype"
         },
         "sampleTypes": {
           "sampleTypes": "Prøvetyper",

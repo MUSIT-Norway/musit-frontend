@@ -1,79 +1,115 @@
 /* @flow */
 import React, { PropTypes } from 'react';
-//import { I18n } from 'react-i18nify';
-/*import {
+import { I18n } from 'react-i18nify';
+import {
   Button,
-  Col,
+  Table,
   Form,
+  Checkbox,
   FormControl,
+  ControlLabel,
   FormGroup,
   PageHeader,
-  Panel,
-  Radio,
-  ButtonGroup,
-  Well
+  Col
 } from 'react-bootstrap';
-import { SaveCancel } from '../../../components/formfields/index';
-import { hashHistory } from 'react-router';
-import Config from '../../../config';
-import type { AppSession } from '../../../types/appSession';
-//import type { FormData } from './types/form';
-import type { Field } from '../../../forms/form';
-//import type { ObjectData } from '../../../types/object';
-import { Table } from 'reactable';*/
+import FontAwesome from 'react-fontawesome';
 
-const AnalysisTypesComponent = () => <div> hi</div>;
+type AnalysisType = { id: number, name: string, collections: Array<string> };
 
-const FieldShape = {
-  name: PropTypes.string.isRequired,
-  rawValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.bool]),
-  status: PropTypes.shape({
-    valid: PropTypes.bool,
-    error: PropTypes.any
-  })
+type Store = {
+  analysisTypes: Array<AnalysisType>
+};
+type Props = {
+  store: Store
+};
+const collections = [
+  '1d8dd4e6-1527-439c-ac86-fc315e0ce852',
+  '2e4f2455-1b3b-4a04-80a1-ba92715ff613',
+  'ba3d4d30-810b-4c07-81b3-37751f2196f0',
+  '88b35138-24b5-4e62-bae4-de80fae7df82',
+  '7352794d-4973-447b-b84e-2635cafe910a',
+  'fcb4c598-8b05-4095-ac00-ce66247be38a',
+  'ef4dc066-b6f8-4155-89f8-7aa9aeeb2dc4',
+  'd0dd5ad3-c22f-4ea0-8b52-dc5b0e17aa24',
+  '8bbdf9b3-56d1-479a-9509-2ea82842e8f8',
+  '23ca0166-5f9e-44c2-ab0d-b4cdd704af07'
+];
+
+const getCollectionName = n => I18n.t(`musit.userProfile.collections.${n}`);
+
+const onChangeCheckbox = v => {
+  console.log(v);
 };
 
+const CheckBoxShow = (v, c) => (
+  <td key={c} value={c} style={{ textAlign: 'center' }}>
+    <Checkbox checked={v} onChange={() => onChangeCheckbox(c)} />
+  </td>
+);
+
+const doEdit = v => {
+  console.log(v);
+};
+
+const getTableRow = r => {
+  return (
+    <tr value={r.id} key={r.id}>
+      <td>{r.name}</td>
+      {collections.map(
+        c => r.collections.includes(c) ? CheckBoxShow(1, c) : CheckBoxShow(0, c)
+      )}
+      <td>
+        <Button value={r.id} onClick={() => doEdit(r.id)}>
+          <FontAwesome name="pencil-square-o" />
+        </Button>
+      </td>
+    </tr>
+  );
+};
+
+const getObjectsValue = (store: Store) => {
+  return store.analysisTypes ? store.analysisTypes.map(r => getTableRow(r)) : [];
+};
+
+const AnalysisTypesComponent = (props: Props) => (
+  <Form style={{ padding: '20px' }}>
+    <PageHeader>
+      {I18n.t('musit.administration.analysisTypes.analysisTypes')}
+    </PageHeader>
+    <FormGroup>
+      <Col md={2} style={{ textAlign: 'right' }}>
+        <ControlLabel>
+          {I18n.t('musit.administration.analysisTypes.newAnalysisTypeName')}
+        </ControlLabel>
+      </Col>
+      <Col md={3}>
+        <FormControl type="text" />
+      </Col>
+      <Button>
+        {I18n.t('musit.administration.analysisTypes.addAnalysisType')}
+      </Button>
+    </FormGroup>
+    <FormGroup>
+      <Table responsive>
+        <thead>
+          <tr>
+            <th>Name</th>
+            {collections.map(c => (
+              <th style={{ textAlign: 'center' }}>{getCollectionName(c)}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {getObjectsValue(props.store)}
+        </tbody>
+      </Table>
+    </FormGroup>
+  </Form>
+);
+
 AnalysisTypesComponent.propTypes = {
-  form: PropTypes.shape({
-    id: PropTypes.shape(FieldShape).isRequired,
-    analysisTypeId: PropTypes.shape(FieldShape).isRequired,
-    analysisTypeCategory: PropTypes.shape(FieldShape).isRequired,
-    doneBy: PropTypes.shape(FieldShape).isRequired,
-    doneDate: PropTypes.shape(FieldShape).isRequired,
-    registeredBy: PropTypes.shape(FieldShape).isRequired,
-    registeredDate: PropTypes.shape(FieldShape).isRequired,
-
-    responsible: PropTypes.shape(FieldShape).isRequired,
-
-    administrator: PropTypes.shape(FieldShape).isRequired,
-    completedBy: PropTypes.shape(FieldShape).isRequired,
-    completedDate: PropTypes.shape(FieldShape).isRequired,
-    objectId: PropTypes.shape(FieldShape).isRequired,
-    note: PropTypes.shape(FieldShape).isRequired,
-    type: PropTypes.shape(FieldShape),
-
-    partOf: PropTypes.shape(FieldShape).isRequired,
-    result: PropTypes.shape(FieldShape).isRequired,
-    place: PropTypes.shape(FieldShape).isRequired,
-
-    externalSource: PropTypes.shape(FieldShape).isRequired,
-    comments: PropTypes.shape(FieldShape).isRequired,
-
-    restrictions: PropTypes.shape(FieldShape).isRequired,
-    requester: PropTypes.shape(FieldShape).isRequired,
-    expirationDate: PropTypes.shape(FieldShape).isRequired,
-    reason: PropTypes.shape(FieldShape).isRequired,
-    caseNumbers: PropTypes.shape(FieldShape).isRequired,
-    cancelledBy: PropTypes.shape(FieldShape).isRequired,
-    cancelledReason: PropTypes.shape(FieldShape).isRequired,
-
-    completeAnalysis: PropTypes.shape(FieldShape).isRequired,
-    museumNo: PropTypes.shape(FieldShape).isRequired,
-    term: PropTypes.shape(FieldShape).isRequired
-  }).isRequired,
-  updateForm: PropTypes.func.isRequired,
   store: PropTypes.object.isRequired,
-  saveAnalysisEvent: PropTypes.func
+  saveAnalysisType: PropTypes.func
 };
 
 export default AnalysisTypesComponent;

@@ -24,24 +24,14 @@ const commands = {
 };
 
 const props = {
-  saveAnalysisEvent: toPromise(Analysis.saveAnalysisEvent()),
-  getAnalysisTypesWithCollectionDetails: toPromise(
-    Analysis.getAnalysisTypes()
-  )
+  saveAnalysisType: toPromise(Analysis.saveAnalysisEvent())
 };
 
-export const onMount = (
-  { appSession, getAnalysisTypes, getAnalysisTypesWithCollectionDetails }
-) => {
+export const onMount = ({ appSession, getAnalysisTypes }) => {
   getAnalysisTypes({
     museumId: appSession.museumId,
-    collectionId: appSession.collectionId,
     token: appSession.accessToken
   });
-  getAnalysisTypesWithCollectionDetails({
-    museumId: appSession.museumId,
-    token: appSession.accessToken
-  }).then(a => console.log('Rituvesh', a));
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
