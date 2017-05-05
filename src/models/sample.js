@@ -7,34 +7,17 @@ import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 class Sample {}
 
 // To clean up after mapping single field to object for backend
-Sample.prepareForSubmit = tmpData => {
-  if (tmpData.size) {
-    if (!tmpData.size.value) {
-      delete tmpData.size;
-    }
-    if (tmpData.size && !tmpData.size.unit) {
-      delete tmpData.sizeUnit;
-    }
-  }
-  if (tmpData.sampleType) {
-    if (!tmpData.sampleType.value) {
-      delete tmpData.sampleType;
-    }
-    if (tmpData.sampleType && !tmpData.sampleType.subTypeValue) {
-      delete tmpData.subTypeValue;
-    }
-  }
-
-  if (tmpData.externalId) {
-    if (!tmpData.externalId.value) {
-      delete tmpData.externalId;
-    }
-    if (tmpData.externalId && !tmpData.externalId.source) {
-      delete tmpData.externalIdSource;
-    }
-  }
-  return tmpData;
-};
+Sample.prepareForSubmit = tmpData => ({
+  ...tmpData,
+  originatedObjectUuid: tmpData.parentObjectId,
+  size: tmpData.size ? { value: tmpData.size, unit: tmpData.sizeUnit } : null,
+  sampleType: tmpData.sampleType
+    ? { value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue }
+    : null,
+  externalId: tmpData.externalId
+    ? { value: tmpData.externalId, source: tmpData.externalIdSource }
+    : null
+});
 
 Sample.addSample = (ajaxPost = simplePost) =>
   ({ museumId, token, data, callback }) => {
