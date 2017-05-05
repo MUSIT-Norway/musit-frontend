@@ -1,0 +1,45 @@
+######################################################################
+# GitLab CI build script for the MUSIT frontend project              #
+######################################################################
+image: $MUSIT_DOCKER_REGISTRY/musit/docker-node
+
+cache:
+  paths:
+  - node_modules/
+
+variables:
+  DOCKER_DRIVER: overlay
+
+services:
+  - docker:dind
+
+before_script:
+  - echo "Running build $CI_BUILD_ID"
+  - mkdir $HOME/.docker
+  - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
+  - apt-get update -qq && apt-get install -qy libelf1
+  - docker info
+  # Ensure that we are building the client from the correct Docker image.
+  - sed -e "s/FROM node/FROM $MUSIT_DOCKER_REGISTRY\/library\/node/g" Dockerfile > Dockerfile.tmp && mv Dockerfile.tmp Dockerfile
+
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  script:
+    - echo "Running frontend tests..."
+    - npm install
+    - npm run lint
+    - npm run flow
+    - npm test -- --coverage --collectCoverageFrom='src/**/*.{js,jsx}'
+    - npm run codacy
+
+build:
+  stage: build
+  script:
+    - docker build -t $MUSIT_DOCKER_REGISTRY/musit/webpack:utv .
+    - docker push $MUSIT_DOCKER_REGISTRY/musit/webpack:utv
+  only:
+    - master
