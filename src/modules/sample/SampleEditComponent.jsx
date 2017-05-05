@@ -16,20 +16,21 @@ import {
 import Config from '../../config';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
-import type { AppSession } from '../../types/appSession';
+import type {AppSession} from '../../types/appSession';
 import type {Person} from './sampleForm';
-import type { Field } from '../../forms/form';
+import type {Field} from '../../forms/form';
+import Sample from '../../models/sample';
 
 type FieldInputProps = { field: Field, onChangeInput: Function, inputProps?: { className?: string, style?: {} } };
 
 type FormData = {
   note: Field, size: Field, status: Field, externalId: Field,
   externalIdSource: Field, container: Field, storageMedium: Field,
-  sampleType: Field, sampleId: Field, sampleSubType: Field,
-  persons: Field,
+  sampleType: Field, sampleId: Field, subTypeValue: Field,
+  persons: Field, treatment: Field,
   isExtracted: Field, sizeUnit: Field, museumId: Field, subNo: Field, term_species: Field,
   registeredBy: Field, registeredDate: Field, updateBy: Field, leftoverSample: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field, sampleDescription: Field
+  updateDate: Field, sampleId: Field, createdDate: Field, description: Field
 };
 
 type Props = {
@@ -37,6 +38,7 @@ type Props = {
   updateForm: Function,
   editSample: Function,
   appSession: AppSession,
+  location: { pathname: string, state: Array<any> },
   params: {
     sampleId: string
   }
@@ -114,10 +116,13 @@ const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   );
 };
 
-const submitSample = (id:string, appSession: AppSession, form: FormData, editSample: Function, persons: any) => {
+const submitSample = (id: string, appSession: AppSession, form: FormData, editSample: Function, persons: any) => {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
-  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({...akk, [key]: frm[key].value}), {});
+  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) => ({
+    ...akk,
+    [key]: frm[key].value
+  }), {});
   const reducePersons = (p) => p && p.reduce((akk: any, v: Person) => {
     switch (v.role) {
       case 'Registrator':
@@ -145,12 +150,14 @@ const submitSample = (id:string, appSession: AppSession, form: FormData, editSam
   }, {});
 
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
-  const data = {
+  let data = {
     ...tmpData,
     externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
     size: {value: tmpData.size, unit: tmpData.sizeUnit},
-    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.sampleSubType}
+    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue}
   };
+
+  data = Sample.prepareForSubmit(data);
 
   data['createdDate'] = '2017-03-19';
   data['status'] = 2;
@@ -158,11 +165,12 @@ const submitSample = (id:string, appSession: AppSession, form: FormData, editSam
   data['isCollectionObject'] = false;
   data['museumId'] = 99;
 
+
   return editSample({id, museumId, token, data});
 };
 
 
-const SampleEditComponent = ({params, form, updateForm, editSample, appSession}: Props) => {
+const SampleEditComponent = ({params, form, updateForm, location, editSample, appSession}: Props) => {
   const id = params.sampleId;
 
   const sampleValues = [
@@ -201,6 +209,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
     }
   };
   const personRoles: Array<Person> = form.persons.rawValue || [];
+  const objectData = location.state[0];
 
   return (
     <Form style={{padding: 20}}>
@@ -218,7 +227,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
             field={form.museumId}
             inputProps={{className: 'museumId'}}
             label='MusNo:'
-            defaultValue='1234'
+            defaultValue={objectData.museumNo}
           />
         </Col>
         <Col md={2}>
@@ -226,7 +235,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
             field={form.subNo}
             inputProps={{className: 'subNo'}}
             label='Unr:'
-            defaultValue='6789'
+            defaultValue={objectData.subNo}
           />
         </Col>
         <Col md={3}>
@@ -234,7 +243,7 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
             field={form.term_species}
             inputProps={{className: 'term_species'}}
             label='Term/artsnavn:'
-            defaultValue='Carex saxatilis'
+            defaultValue={objectData.term}
           />
         </Col>
         <Col md={1}>
@@ -332,11 +341,11 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           </Col>
           <Col md={2}>
             <FieldDropDown
-              field={form.sampleSubType}
+              field={form.subTypeValue}
               title={'Velg type'}
               onSelectInput={updateForm}
               selectItems={sampleSubValues(form.sampleType.rawValue)}
-              inputProps={{className: 'sampleSubType'}}
+              inputProps={{className: 'subTypeValue'}}
             />
           </Col>
         </Row>
@@ -346,10 +355,10 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           </Col>
           <Col md={3}>
             <FieldInput
-              field={form.sampleDescription}
+              field={form.description}
               onChangeInput={updateForm}
               inputProps={{
-                className: 'sampleDescription'
+                className: 'description'
               }}
             />
           </Col>
@@ -423,6 +432,21 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           </Col>
         </Row>
         <br/>
+        <Row className='row-centered'>
+          <Col md={2}>
+            <b>Behandling</b>
+          </Col>
+          <Col md={2}>
+            <FieldDropDown
+              field={form.treatment}
+              title={'Velg behandling'}
+              onSelectInput={updateForm}
+              selectItems={['Behandlet', 'Ubehandlet', 'Ufint behandlet']}
+              inputProps={{className: 'treatment'}}
+            />
+          </Col>
+        </Row>
+        <br/>
         <Row>
           <Col md={2}>
             <b>Har restmateriale</b>
@@ -456,7 +480,11 @@ const SampleEditComponent = ({params, form, updateForm, editSample, appSession}:
           <Button
             onClick={() =>
               submitSample(id, appSession, form, editSample, form.persons.rawValue)
-                .then(() => hashHistory.push(Config.magasin.urls.client.analysis.gotoSample(appSession, id)))
+                .then(() => hashHistory.push(
+                  {
+                    pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, id),
+                    state: [objectData]
+                  }))
             }
           >
             Lagre

@@ -89,7 +89,6 @@ export const PersonRoleDate = (
               selectItems={['responsible', 'creator']}
               index={i}
               onSelectInput={(ind, p) => {
-                console.log('On select input: ', p);
                 updatePerson(i, p);
               }}
               title="Velg rolle"
@@ -114,5 +113,4 @@ export const PersonRoleDate = (
       </Row>
     </Grid>;
 };
-
 export default PersonRoleDate;

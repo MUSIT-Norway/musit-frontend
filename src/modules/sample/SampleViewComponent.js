@@ -15,8 +15,8 @@ import { hashHistory } from 'react-router';
 
 const FieldReadOnly = ({ field, label, postFix }) => (
   <FormGroup>
-    <FormControl.Static>
-      <span className={field.name}>
+    <FormControl.Static className={field.name}>
+      <span>
         <b>{label && `${label}: `}</b>
         {
           `${field.defaultValue || field.rawValue}${postFix ? ' ' + postFix.defaultValue : ''}`
@@ -33,6 +33,7 @@ const FieldReadArray = ({ field, labels, heading }) => (
       {labels.map((l, ind) => <Col md={2} key={`${ind}${l}`}><b>{l}</b></Col>)}
     </Row>
     {field &&
+      field.rawValue &&
       field.rawValue.map((i, p) => (
         <Row className="row-centered" key={`${i}-person`}>
           <Col md={2}>{p.name}</Col>
@@ -45,6 +46,7 @@ const FieldReadArray = ({ field, labels, heading }) => (
 );
 
 const SampleViewComponent = props => {
+  const objectData = props.location.state[0];
   const form = props.form;
   return (
     <Form style={{ padding: 20 }}>
@@ -58,13 +60,13 @@ const SampleViewComponent = props => {
       </Row>
       <Row className="row-centered">
         <Col md={2}>
-          Musno: <b>{form.museumId.defaultValue || '1234'}</b>
+          Musno: <b>{objectData.museumNo}</b>
         </Col>
         <Col md={2}>
-          Unr: <b>{form.subNo.defaultValue || '4566b'}</b>
+          Unr: <b>{form.subNo.defaultValue || objectData.subNo}</b>
         </Col>
         <Col md={3}>
-          Term/artsnavn: <b>{form.term_species.defaultValue || 'Carex saxatilis'}</b>
+          Term/artsnavn: <b>{form.term_species.defaultValue || objectData.term}</b>
         </Col>
         <Col md={2}>
           <Button>Vis Objektet</Button>
@@ -79,7 +81,7 @@ const SampleViewComponent = props => {
       <br />
       <FieldReadArray
         labels={['Navn', 'Rolle', 'Dato']}
-        field={form.persons.rawValue}
+        field={form.persons}
         heading={'Personer tilknyttet prøveuttaket'}
       />
       <Row>
@@ -100,7 +102,12 @@ const SampleViewComponent = props => {
           <FieldReadOnly label={'Prøvetype'} field={form.sampleType} />
         </Col>
         <Col md={3}>
-          <FieldReadOnly label={'Prøveundertype'} field={form.sampleSubType} />
+          <FieldReadOnly label={'Prøveundertype'} field={form.subTypeValue} />
+        </Col>
+      </Row>
+      <Row className="row-centered">
+        <Col md={2}>
+          <FieldReadOnly label={'Beskrivelse'} field={form.description} />
         </Col>
       </Row>
       <Row className="row-centered">
@@ -109,7 +116,7 @@ const SampleViewComponent = props => {
         </Col>
       </Row>
       <Row className="row-centered">
-        <Col md={3}>
+        <Col md={5}>
           <FieldReadOnly
             label={'Målvolum/-vekt'}
             field={form.size}
@@ -118,11 +125,21 @@ const SampleViewComponent = props => {
         </Col>
       </Row>
       <Row className="row-centered">
-        <Col md={2}>
+        <Col md={3}>
           <FieldReadOnly label={'Lagringskontainer'} field={form.container} />
         </Col>
         <Col md={3}>
           <FieldReadOnly label={'Lagringsmedium'} field={form.storageMedium} />
+        </Col>
+      </Row>
+      <Row className="row-centered">
+        <Col md={3}>
+          <FieldReadOnly label={'Behandling'} field={form.treatment} />
+        </Col>
+      </Row>
+      <Row className="row-centered">
+        <Col md={3}>
+          <FieldReadOnly label={'Har restmateriale'} field={form.leftoverSample} />
         </Col>
       </Row>
       <Row className="row-centered">
@@ -136,12 +153,13 @@ const SampleViewComponent = props => {
         <Col md={4}>
           <Button
             onClick={() =>
-              hashHistory.push(
-                Config.magasin.urls.client.analysis.editSample(
+              hashHistory.push({
+                pathname: Config.magasin.urls.client.analysis.editSample(
                   props.appSession,
                   props.params.sampleId
-                )
-              )}
+                ),
+                state: [objectData]
+              })}
           >
             Endre
           </Button>

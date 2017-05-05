@@ -42,8 +42,8 @@ export class ActorSuggest extends React.Component {
 
   requestSuggestionUpdate(update) {
     if (update.value.length > 2) {
-      const museumId = this.props.appSession.getMuseumId();
-      const token = this.props.appSession.getAccessToken();
+      const museumId = this.props.appSession.museumId;
+      const token = this.props.appSession.accessToken;
       this.props.update({ update, museumId, token });
     }
   }
@@ -72,7 +72,10 @@ export class ActorSuggest extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: React.PropTypes.shape({
+    museumId: React.PropTypes.number.isRequired,
+    accessToken: React.PropTypes.string.isRequired
+  }).isRequired },
   suggest$: suggest$Fn('actorSuggest', Config.magasin.urls.api.actor.searchUrl)
 };
 
