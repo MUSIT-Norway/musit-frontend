@@ -17,99 +17,99 @@ describe('AnalysisSampleFormPageView', () => {
         form={{
           note: {
             name: 'note',
-            rawValue: 'Heisann'
+            defaultValue: 'Heisann'
           },
           size: {
             name: 'size',
-            rawValue: '1,23'
+            defaultValue: '1,23'
           },
           externalId: {
             name: 'externalId',
-            rawValue: '123'
+            defaultValue: '123'
           },
           externalIdSource: {
             name: 'externalIdSource',
-            rawValue: 'Museum'
+            defaultValue: 'Museum'
           },
           description: {
             name: 'description',
-            rawValue: 'Av lær'
+            defaultValue: 'Av lær'
           },
           term_species: {
             name: 'term_species',
-            rawValue: 'Carex saxatilis'
+            defaultValue: 'Carex saxatilis'
           },
           sampleType: {
             name: 'sampleType',
-            rawValue: 'Vev'
+            defaultValue: 'Vev'
           },
           sizeUnit: {
             name: 'sizeUnit',
-            rawValue: 'gr'
+            defaultValue: 'gr'
           },
           subTypeValue: {
             name: 'subTypeValue',
-            rawValue: 'Muskel'
+            defaultValue: 'Muskel'
           },
           status: {
             name: 'status',
-            rawValue: 'Nyskilt'
+            defaultValue: 'Nyskilt'
           },
           storageMedium: {
             name: 'storageMedium',
-            rawValue: 'Etanol'
+            defaultValue: 'Etanol'
           },
           createdBy: {
             name: 'createdBy',
-            rawValue: '1111-2222-1111-1111'
+            defaultValue: '1111-2222-1111-1111'
           },
           leftoverSample: {
             name: 'leftoverSample',
-            rawValue: '2'
+            defaultValue: '2'
           },
           responsible: {
             name: 'responsible',
-            rawValue: '1221-3222-3303-3333'
+            defaultValue: '1221-3222-3303-3333'
           },
           museumId: {
             name: 'museumId',
-            rawValue: '1233'
+            defaultValue: '1233'
           },
           subNo: {
             name: 'subNo',
-            rawValue: '322222'
+            defaultValue: '322222'
           },
           registeredBy: {
             name: 'registeredBy',
-            rawValue: '1233'
+            defaultValue: '1233'
           },
           container: {
             name: 'container',
-            rawValue: 'Reagensrør'
+            defaultValue: 'Reagensrør'
           },
           registeredDate: {
             name: 'registeredDate',
-            rawValue: '1988-12-31'
+            defaultValue: '1988-12-31'
           },
           updateBy: {
             name: 'updateBy',
-            rawValue: 'Arne And'
+            defaultValue: 'Arne And'
           },
           updateDate: {
             name: 'updateDate',
-            rawValue: '1998-03-12'
+            defaultValue: '1998-03-12'
           },
           sampleId: {
             name: 'sampleId',
-            rawValue: '1233'
+            defaultValue: '1233'
           },
           treatment: {
             name: 'treatment',
-            rawValue: '1233'
+            defaultValue: '1233'
           },
           persons: {
             name: 'persons',
-            rawValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
+            defaultValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
           }
         }}
         location={{

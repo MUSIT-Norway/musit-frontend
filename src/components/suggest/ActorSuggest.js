@@ -72,10 +72,12 @@ export class ActorSuggest extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.shape({
-    museumId: React.PropTypes.number.isRequired,
-    accessToken: React.PropTypes.string.isRequired
-  }).isRequired },
+  appSession$: {
+    type: React.PropTypes.shape({
+      museumId: React.PropTypes.number.isRequired,
+      accessToken: React.PropTypes.string.isRequired
+    }).isRequired
+  },
   suggest$: suggest$Fn('actorSuggest', Config.magasin.urls.api.actor.searchUrl)
 };
 

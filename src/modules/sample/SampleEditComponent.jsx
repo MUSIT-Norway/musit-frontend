@@ -150,21 +150,14 @@ const submitSample = (id: string, appSession: AppSession, form: FormData, editSa
   }, {});
 
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
-  let data = {
-    ...tmpData,
-    externalId: {value: tmpData.externalId, source: tmpData.externalIdSource},
-    size: {value: tmpData.size, unit: tmpData.sizeUnit},
-    sampleType: {value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue}
-  };
 
-  data = Sample.prepareForSubmit(data);
+  tmpData.createdDate = '2017-03-19';
+  tmpData.status = 2;
+  tmpData.responsible = appSession.actor.dataportenId;
+  tmpData.isCollectionObject = false;
+  tmpData.museumId = 99;
 
-  data['createdDate'] = '2017-03-19';
-  data['status'] = 2;
-  data['responsible'] = appSession.actor.dataportenId;
-  data['isCollectionObject'] = false;
-  data['museumId'] = 99;
-
+  const data = Sample.prepareForSubmit(tmpData);
 
   return editSample({id, museumId, token, data});
 };
@@ -413,7 +406,7 @@ const SampleEditComponent = ({params, form, updateForm, location, editSample, ap
               title={form.container.value || 'Velg kontainer'}
               onSelectInput={updateForm}
               selectItems={containerTypes}
-              inputProps={{className: 'storageContainer'}}
+              inputProps={{className: 'container'}}
             />
           </Col>
         </Row>
