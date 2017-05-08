@@ -3,9 +3,13 @@
 ######################################################################
 image: $MUSIT_DOCKER_REGISTRY/musit/docker-node
 
-cache:
-  paths:
-  - node_modules/
+# -----
+# Need to temporarily disable caches until we figure out how to properly do a
+# cleanup of docker containers and images on the runner agent host machines.
+# -----
+# cache:
+#   paths:
+#   - node_modules/
 
 variables:
   DOCKER_DRIVER: overlay
@@ -42,4 +46,4 @@ build:
     - docker build -t $MUSIT_DOCKER_REGISTRY/musit/webpack:utv .
     - docker push $MUSIT_DOCKER_REGISTRY/musit/webpack:utv
   only:
-    - master
+    - master@MUSIT-Norway/musit-frontend
