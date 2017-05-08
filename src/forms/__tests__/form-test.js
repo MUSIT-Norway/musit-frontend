@@ -6,13 +6,13 @@ import { TestScheduler, Subject } from 'rxjs/Rx';
 import assert from 'assert';
 import createForm from '../form';
 import { stringMapper } from '../mappers';
-import type { Field } from '../form';
+import type { Field, RawValue } from '../form';
 import type { Update } from '../form';
 const diff = require('deep-diff').diff;
 
 const minLength = (length: number) =>
   (field: string) =>
-    (value: ?string) => {
+    (value: ?RawValue) => {
       const valid = value && value.length >= length;
       if (!valid) {
         return field + ' is not valid';
