@@ -1,21 +1,13 @@
-import { TestScheduler, Observable } from 'rxjs/Rx';
-import assert from 'assert';
+import { Observable } from 'rxjs/Rx';
 import { store$, initialState } from '../observationStore';
 import MusitNode from '../../../models/node';
 import Observation from '../../../models/observation';
-const diff = require('deep-diff').diff;
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('printStore', () => {
   /*eslint-disable */
   it('testing reducer', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(JSON.stringify(difference, null, 2));
-      }
-      return assert.equal(undefined, difference);
-    });
-
+    const testScheduler = new MusitTestScheduler();
     // mock streams
     const setLoadingM = '-1------------';
     const getObservationM = '--1-----------';
@@ -95,22 +87,32 @@ describe('printStore', () => {
           isPartOf: 1,
           path: ',1,3,',
           pathNames: [
-            { nodeId: 1, name: 'Utviklingsmuseet' },
-            { nodeId: 3, name: 'Utviklingsmuseet Org' }
+            {
+              nodeId: 1,
+              nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
+              name: 'Utviklingsmuseet'
+            },
+            {
+              nodeId: 3,
+              nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
+              name: 'Utviklingsmuseet Org'
+            }
           ],
           updatedBy: 'd63ab290-2fab-42d2-9b57-2475dfbd0b3c',
           updatedDate: '2015-12-31T23:00:00+00:00',
           type: 'Organisation',
           breadcrumb: [
             {
-              id: 1,
+              id: '0615c304-e7ec-46ad-aebc-399884181eaf',
+              nodeId: '0615c304-e7ec-46ad-aebc-399884181eaf',
               name: 'Utviklingsmuseet',
-              url: '/magasin/1'
+              url: '/magasin/0615c304-e7ec-46ad-aebc-399884181eaf'
             },
             {
-              id: 3,
+              id: '403cebde-082c-4002-8f78-16ad178a054a',
+              nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
               name: 'Utviklingsmuseet Org',
-              url: '/magasin/3'
+              url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
             }
           ],
           environmentRequirement: {},
@@ -140,8 +142,16 @@ describe('printStore', () => {
               isPartOf: 1,
               path: ',1,3,',
               pathNames: [
-                { nodeId: 1, name: 'Utviklingsmuseet' },
-                { nodeId: 3, name: 'Utviklingsmuseet Org' }
+                {
+                  nodeId: 1,
+                  nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                  name: 'Utviklingsmuseet'
+                },
+                {
+                  nodeId: 3,
+                  nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
+                  name: 'Utviklingsmuseet Org'
+                }
               ],
               updatedBy: 'd63ab290-2fab-42d2-9b57-2475dfbd0b3c',
               updatedDate: '2015-12-31T23:00:00+00:00',

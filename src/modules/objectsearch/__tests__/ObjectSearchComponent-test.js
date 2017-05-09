@@ -10,16 +10,19 @@ describe('ObjectSearchComponent', () => {
   const pathNames = [
     {
       nodeId: 1,
+      nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
       name: 'Root',
       type: 'Organization'
     },
     {
       nodeId: 2,
+      nodeUuid: 'ae3a3752-f8f7-4ab1-84b2-f088324f1a6f',
       name: 'Musit',
       type: 'Building'
     },
     {
       nodeId: 3,
+      nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
       name: 'Kontoret',
       type: 'Room'
     }

@@ -1,23 +1,15 @@
 /* eslint-disable */
-import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
-import assert from 'assert';
+import { Subject, Observable } from 'rxjs/Rx';
 import { store$, isItemAdded } from '../pickList';
 const diff = require('deep-diff').diff;
 import MusitObject from '../../../models/object';
 import isEqual from 'lodash/isEqual';
 
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
+
 describe('pickList', () => {
   it('testing and clear', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
-
+    const testScheduler = new MusitTestScheduler();
     // mock streams
     const toggleNode = '---------------11--------';
     const refreshNode = '-----------------1-------';
@@ -69,7 +61,14 @@ describe('pickList', () => {
           {
             marked: false,
             value: { id: 2 },
-            path: [{ id: 1, name: 'Test', url: '/magasin/1' }]
+            path: [
+              {
+                id: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                nodeId: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                name: 'Test',
+                url: '/magasin/0615c304-e7ec-46ad-aebc-399884181eaf'
+              }
+            ]
           }
         ]
       },
@@ -83,7 +82,14 @@ describe('pickList', () => {
           {
             marked: false,
             value: { id: 1 },
-            path: [{ id: 3, name: 'test', url: '/magasin/3' }]
+            path: [
+              {
+                id: '403cebde-082c-4002-8f78-16ad178a054a',
+                nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
+                name: 'test',
+                url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
+              }
+            ]
           }
         ],
         nodes: [{ marked: false, value: { id: 1 }, path: [] }]
@@ -93,7 +99,14 @@ describe('pickList', () => {
           {
             marked: false,
             value: { id: 1 },
-            path: [{ id: 3, name: 'test', url: '/magasin/3' }]
+            path: [
+              {
+                id: '403cebde-082c-4002-8f78-16ad178a054a',
+                nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
+                name: 'test',
+                url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
+              }
+            ]
           },
           { marked: false, value: { id: 2 }, path: [] }
         ],
@@ -104,12 +117,26 @@ describe('pickList', () => {
           {
             marked: false,
             value: { id: 1 },
-            path: [{ id: 6, name: 'Code from Jarl', url: '/magasin/6' }]
+            path: [
+              {
+                id: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
+                nodeId: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
+                name: 'Code from Jarl',
+                url: '/magasin/acd4daec-4401-4edd-8e33-a22fd04fd023'
+              }
+            ]
           },
           {
             marked: false,
             value: { id: 2 },
-            path: [{ id: 6, name: 'Code from Jarl', url: '/magasin/6' }]
+            path: [
+              {
+                id: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
+                nodeId: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
+                name: 'Code from Jarl',
+                url: '/magasin/acd4daec-4401-4edd-8e33-a22fd04fd023'
+              }
+            ]
           }
         ],
         nodes: [{ marked: false, value: { id: 1 }, path: [] }]
@@ -124,7 +151,13 @@ describe('pickList', () => {
       1: { id: 2, name: 'Tull' }
     });
     const refreshNode$ = testScheduler.createHotObservable(refreshNode, {
-      1: { id: 2, path: ',1,2,', pathNames: [{ nodeId: 1, name: 'Test' }] }
+      1: {
+        id: 2,
+        path: ',1,2,',
+        pathNames: [
+          { nodeId: 1, nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf', name: 'Test' }
+        ]
+      }
     });
     const clearNodes$ = testScheduler.createHotObservable(clearNodes);
     const addNode$ = testScheduler.createHotObservable(addNode, {
@@ -159,7 +192,13 @@ describe('pickList', () => {
                   node: {
                     id: 1456,
                     path: ',3,',
-                    pathNames: [{ nodeId: 3, name: 'test' }]
+                    pathNames: [
+                      {
+                        nodeId: 3,
+                        nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
+                        name: 'test'
+                      }
+                    ]
                   },
                   objectIds: [1]
                 }
@@ -172,7 +211,13 @@ describe('pickList', () => {
                   node: {
                     id: 14578,
                     path: ',6,',
-                    pathNames: [{ nodeId: 6, name: 'Code from Jarl' }]
+                    pathNames: [
+                      {
+                        nodeId: 6,
+                        nodeUuid: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
+                        name: 'Code from Jarl'
+                      }
+                    ]
                   },
                   objectIds: [1]
                 },
@@ -180,7 +225,13 @@ describe('pickList', () => {
                   node: {
                     id: 14579,
                     path: ',6,',
-                    pathNames: [{ nodeId: 6, name: 'Code from Jarl' }]
+                    pathNames: [
+                      {
+                        nodeId: 6,
+                        nodeUuid: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
+                        name: 'Code from Jarl'
+                      }
+                    ]
                   },
                   objectIds: [2]
                 }

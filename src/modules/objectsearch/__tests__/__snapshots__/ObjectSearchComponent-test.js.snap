@@ -171,19 +171,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -193,16 +196,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -266,19 +272,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -288,16 +297,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -361,19 +373,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -383,16 +398,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -456,19 +474,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -478,16 +499,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -551,19 +575,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -573,16 +600,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -646,19 +676,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -668,16 +701,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -741,19 +777,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -763,16 +802,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -836,19 +878,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -858,16 +903,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -931,19 +979,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -953,16 +1004,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1026,19 +1080,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1048,16 +1105,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1121,19 +1181,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1143,16 +1206,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1216,19 +1282,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1238,16 +1307,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1311,19 +1383,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1333,16 +1408,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1406,19 +1484,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1428,16 +1509,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1501,19 +1585,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1523,16 +1610,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1596,19 +1686,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1618,16 +1711,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1691,19 +1787,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1713,16 +1812,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1786,19 +1888,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1808,16 +1913,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1881,19 +1989,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1903,16 +2014,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],
@@ -1976,19 +2090,22 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                         Object {
                           "breadcrumb": Array [
                             Object {
-                              "id": 1,
+                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "name": "Root",
-                              "url": "/magasin/1"
+                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
                             },
                             Object {
-                              "id": 2,
+                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "name": "Musit",
-                              "url": "/magasin/2"
+                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
                             },
                             Object {
-                              "id": 3,
+                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
                               "name": "Kontoret",
-                              "url": "/magasin/3"
+                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                             }
                           ],
                           "id": 1,
@@ -1998,16 +2115,19 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
                             Object {
                               "name": "Root",
                               "nodeId": 1,
+                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
                               "type": "Organization"
                             },
                             Object {
                               "name": "Musit",
                               "nodeId": 2,
+                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
                               "type": "Building"
                             },
                             Object {
                               "name": "Kontoret",
                               "nodeId": 3,
+                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
                               "type": "Room"
                             }
                           ],

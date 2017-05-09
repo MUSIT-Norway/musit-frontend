@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { Table, FormGroup } from 'react-bootstrap';
+import { FormGroup, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import MusitObject from '../../models/object';
 import { hashHistory } from 'react-router';
+import Config from '../../config';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
@@ -60,7 +61,8 @@ export default class ObjectGrid extends Component {
                       className={
                         isChildObject ? 'childObject' : isMainObject && 'mainObject'
                       }
-                      onClick={() => hashHistory.push('/objects/' + c.id + '/' + c.uuid)}
+                      onClick={() =>
+                        hashHistory.push(Config.magasin.urls.client.object(c.uuid))}
                     >
                       <td style={{ width: '20px' }}>
                         <span className="icon icon-musitobject" />

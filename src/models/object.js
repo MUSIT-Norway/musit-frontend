@@ -172,7 +172,7 @@ MusitObject.getLocationHistory = (ajaxGet = simpleGet) =>
 MusitObject.pickObject = (pickObject$, ajaxGet = simpleGet) =>
   props => {
     if (MusitObject.isMainObject(props.object)) {
-      MusitObject.getMainObject(ajaxGet)({ ...props, id: props.object.id })
+      MusitObject.getMainObject(ajaxGet)({ ...props, id: props.object.nodeId })
         .toPromise()
         .then(objects =>
           objects.forEach(obj =>

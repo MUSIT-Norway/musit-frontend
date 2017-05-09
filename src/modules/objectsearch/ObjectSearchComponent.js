@@ -151,10 +151,10 @@ export class ObjectSearchComponent extends React.Component {
                                     node={data}
                                     allActive
                                     onClickCrumb={node => {
-                                      if (node.id) {
+                                      if (node.nodeId) {
                                         hashHistory.push(
                                           Config.magasin.urls.client.storagefacility.goToNode(
-                                            node.id,
+                                            node.nodeId,
                                             this.props.appSession
                                           )
                                         );

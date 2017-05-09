@@ -2,8 +2,8 @@
 
 export type ObjectType = 'collection' | 'sample' | 'node';
 
-export type MoveableObject = {
-  id: number,
+export type MovableObject = {
+  id: string,
   objectType: ObjectType
 };
 

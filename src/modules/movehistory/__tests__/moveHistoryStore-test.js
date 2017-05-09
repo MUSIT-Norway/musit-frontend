@@ -1,19 +1,10 @@
-import { TestScheduler, Observable } from 'rxjs/Rx';
-import assert from 'assert';
+import { Observable } from 'rxjs/Rx';
 import { store$, initialState, getLocationHistory } from '../moveHistoryStore';
-
-const diff = require('deep-diff').diff;
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('moveHistory', () => {
   it('testing reducer', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
-
+    const testScheduler = new MusitTestScheduler();
     // mock streams
     const clearM = '---1-------';
     const loadMoveHistoryM = '-12-3------';
@@ -33,14 +24,16 @@ describe('moveHistory', () => {
               pathNames: [
                 {
                   nodeId: 1,
+                  nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
                   name: 'Utviklingsmuseet'
                 }
               ],
               breadcrumb: [
                 {
-                  id: 1,
+                  id: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                  nodeId: '0615c304-e7ec-46ad-aebc-399884181eaf',
                   name: 'Utviklingsmuseet',
-                  url: '/magasin/1'
+                  url: '/magasin/0615c304-e7ec-46ad-aebc-399884181eaf'
                 }
               ]
             },
@@ -49,41 +42,49 @@ describe('moveHistory', () => {
               pathNames: [
                 {
                   nodeId: 1,
+                  nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
                   name: 'Utviklingsmuseet'
                 },
                 {
                   nodeId: 3,
+                  nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
                   name: 'Utviklingsmuseet Org'
                 },
                 {
                   nodeId: 4,
+                  nodeUuid: '2f339757-3dfe-4608-b5e5-3b28ea8a5a62',
                   name: 'Forskningens hus'
                 },
                 {
                   nodeId: 7,
+                  nodeUuid: 'cd265440-bde5-40fe-b433-286baf2c0e15',
                   name: 'Forskningsværelset'
                 }
               ],
               breadcrumb: [
                 {
-                  id: 1,
+                  id: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                  nodeId: '0615c304-e7ec-46ad-aebc-399884181eaf',
                   name: 'Utviklingsmuseet',
-                  url: '/magasin/1'
+                  url: '/magasin/0615c304-e7ec-46ad-aebc-399884181eaf'
                 },
                 {
-                  id: 3,
+                  id: '403cebde-082c-4002-8f78-16ad178a054a',
+                  nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
                   name: 'Utviklingsmuseet Org',
-                  url: '/magasin/3'
+                  url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
                 },
                 {
-                  id: 4,
+                  id: '2f339757-3dfe-4608-b5e5-3b28ea8a5a62',
+                  nodeId: '2f339757-3dfe-4608-b5e5-3b28ea8a5a62',
                   name: 'Forskningens hus',
-                  url: '/magasin/4'
+                  url: '/magasin/2f339757-3dfe-4608-b5e5-3b28ea8a5a62'
                 },
                 {
-                  id: 7,
+                  id: 'cd265440-bde5-40fe-b433-286baf2c0e15',
+                  nodeId: 'cd265440-bde5-40fe-b433-286baf2c0e15',
                   name: 'Forskningsværelset',
-                  url: '/magasin/7'
+                  url: '/magasin/cd265440-bde5-40fe-b433-286baf2c0e15'
                 }
               ]
             }
@@ -102,14 +103,16 @@ describe('moveHistory', () => {
               pathNames: [
                 {
                   nodeId: 1,
+                  nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
                   name: 'Utviklingsmuseet'
                 }
               ],
               breadcrumb: [
                 {
-                  id: 1,
+                  id: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                  nodeId: '0615c304-e7ec-46ad-aebc-399884181eaf',
                   name: 'Utviklingsmuseet',
-                  url: '/magasin/1'
+                  url: '/magasin/0615c304-e7ec-46ad-aebc-399884181eaf'
                 }
               ]
             },
@@ -118,41 +121,49 @@ describe('moveHistory', () => {
               pathNames: [
                 {
                   nodeId: 1,
+                  nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
                   name: 'Utviklingsmuseet'
                 },
                 {
                   nodeId: 3,
+                  nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
                   name: 'Utviklingsmuseet Org'
                 },
                 {
                   nodeId: 4,
+                  nodeUuid: '2f339757-3dfe-4608-b5e5-3b28ea8a5a62',
                   name: 'Forskningens hus'
                 },
                 {
                   nodeId: 7,
+                  nodeUuid: 'cd265440-bde5-40fe-b433-286baf2c0e15',
                   name: 'Forskningsværelset'
                 }
               ],
               breadcrumb: [
                 {
-                  id: 1,
+                  id: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                  nodeId: '0615c304-e7ec-46ad-aebc-399884181eaf',
                   name: 'Utviklingsmuseet',
-                  url: '/magasin/1'
+                  url: '/magasin/0615c304-e7ec-46ad-aebc-399884181eaf'
                 },
                 {
-                  id: 3,
+                  id: '403cebde-082c-4002-8f78-16ad178a054a',
+                  nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
                   name: 'Utviklingsmuseet Org',
-                  url: '/magasin/3'
+                  url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
                 },
                 {
-                  id: 4,
+                  id: '2f339757-3dfe-4608-b5e5-3b28ea8a5a62',
+                  nodeId: '2f339757-3dfe-4608-b5e5-3b28ea8a5a62',
                   name: 'Forskningens hus',
-                  url: '/magasin/4'
+                  url: '/magasin/2f339757-3dfe-4608-b5e5-3b28ea8a5a62'
                 },
                 {
-                  id: 7,
+                  id: 'cd265440-bde5-40fe-b433-286baf2c0e15',
+                  nodeId: 'cd265440-bde5-40fe-b433-286baf2c0e15',
                   name: 'Forskningsværelset',
-                  url: '/magasin/7'
+                  url: '/magasin/cd265440-bde5-40fe-b433-286baf2c0e15'
                 }
               ]
             }
@@ -187,18 +198,37 @@ describe('moveHistory', () => {
                     doneDate: '2017-02-13T14:34:51+00:00',
                     from: {
                       path: ',1,',
-                      pathNames: [{ nodeId: 1, name: 'Utviklingsmuseet' }]
+                      pathNames: [
+                        {
+                          nodeId: 1,
+                          nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                          name: 'Utviklingsmuseet'
+                        }
+                      ]
                     },
                     to: {
                       path: ',1,3,4,7,',
                       pathNames: [
-                        { nodeId: 1, name: 'Utviklingsmuseet' },
+                        {
+                          nodeId: 1,
+                          nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                          name: 'Utviklingsmuseet'
+                        },
                         {
                           nodeId: 3,
+                          nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
                           name: 'Utviklingsmuseet Org'
                         },
-                        { nodeId: 4, name: 'Forskningens hus' },
-                        { nodeId: 7, name: 'Forskningsværelset' }
+                        {
+                          nodeId: 4,
+                          nodeUuid: '2f339757-3dfe-4608-b5e5-3b28ea8a5a62',
+                          name: 'Forskningens hus'
+                        },
+                        {
+                          nodeId: 7,
+                          nodeUuid: 'cd265440-bde5-40fe-b433-286baf2c0e15',
+                          name: 'Forskningsværelset'
+                        }
                       ]
                     }
                   }
@@ -215,18 +245,37 @@ describe('moveHistory', () => {
                     doneDate: '2017-02-13T14:34:51+00:00',
                     from: {
                       path: ',1,',
-                      pathNames: [{ nodeId: 1, name: 'Utviklingsmuseet' }]
+                      pathNames: [
+                        {
+                          nodeId: 1,
+                          nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                          name: 'Utviklingsmuseet'
+                        }
+                      ]
                     },
                     to: {
                       path: ',1,3,4,7,',
                       pathNames: [
-                        { nodeId: 1, name: 'Utviklingsmuseet' },
+                        {
+                          nodeId: 1,
+                          nodeUuid: '0615c304-e7ec-46ad-aebc-399884181eaf',
+                          name: 'Utviklingsmuseet'
+                        },
                         {
                           nodeId: 3,
+                          nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
                           name: 'Utviklingsmuseet Org'
                         },
-                        { nodeId: 4, name: 'Forskningens hus' },
-                        { nodeId: 7, name: 'Forskningsværelset' }
+                        {
+                          nodeId: 4,
+                          nodeUuid: '2f339757-3dfe-4608-b5e5-3b28ea8a5a62',
+                          name: 'Forskningens hus'
+                        },
+                        {
+                          nodeId: 7,
+                          nodeUuid: 'cd265440-bde5-40fe-b433-286baf2c0e15',
+                          name: 'Forskningsværelset'
+                        }
                       ]
                     }
                   }

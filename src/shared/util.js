@@ -125,21 +125,24 @@ export const getPath = (node: any) => {
   const pathNames = node.pathNames || [
     {
       nodeId: node.id,
+      nodeUuid: node.nodeId,
       name: node.name
     }
   ];
-  return nodeIds.map(nodeId => {
-    let pathMatch = pathNames.find(e => e.nodeId === nodeId);
+  return nodeIds.map(nodeIntId => {
+    let pathMatch = pathNames.find(e => e.nodeId === nodeIntId);
     if (!pathMatch) {
       pathMatch = {
-        nodeId: node.id,
+        nodeId: node.nodeId,
+        nodeUuid: node.nodeId,
         name: node.name
       };
     }
     return {
-      id: pathMatch.nodeId,
+      id: pathMatch.nodeUuid,
+      nodeId: pathMatch.nodeUuid,
       name: pathMatch.name,
-      url: '/magasin/' + pathMatch.nodeId
+      url: '/magasin/' + pathMatch.nodeUuid
     };
   });
 };

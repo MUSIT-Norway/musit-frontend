@@ -1,17 +1,16 @@
 import React from 'react';
 import wrapWithScanner, {
-  makeStream,
   charDebouncer$,
   charReducer$,
-  initialState
+  initialState,
+  makeStream
 } from '../scanner';
 import sinon from 'sinon';
 import { mount } from 'enzyme';
 import { Observable } from 'rxjs';
-import { TestScheduler } from 'rxjs/Rx';
-const diff = require('deep-diff').diff;
-import assert from 'assert';
 import { createStore } from 'react-rxjs/dist/RxStore';
+
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('scannerWrapper', () => {
   it('should provide toggleScanner to child component', () => {
@@ -42,16 +41,7 @@ describe('scannerWrapper', () => {
 
 describe('scanner', () => {
   it('should increase buffer', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
-
+    const testScheduler = new MusitTestScheduler();
     // mock streams
     const debounceM = '---1-------';
     const reducerM = '111--------';

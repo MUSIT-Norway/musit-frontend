@@ -1,4 +1,4 @@
-import { simpleGet, simpleDel, simplePut, simplePost } from '../shared/RxAjax';
+import { simpleDel, simpleGet, simplePost, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import { mapToBackend, mapToFrontend } from './mapper/node';
 import MusitActor from './actor';
@@ -13,7 +13,7 @@ MusitNode.isRootNode = (node: { type: string }) =>
 MusitNode.getNode = (ajaxGet = simpleGet) =>
   ({ id, museumId, token, callback }) => {
     return ajaxGet(
-      `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${id}`,
+      Config.magasin.urls.api.storagefacility.nodeUrl(museumId, id),
       token,
       callback
     ).map(node => node.response && mapToFrontend(node.response));
@@ -35,31 +35,34 @@ MusitNode.getNodeWithUpdatedBy = (ajaxGet = simpleGet) =>
 
 MusitNode.addNode = (ajaxPost = simplePost) =>
   ({ id, museumId, token, data, callback }) => {
-    const baseUrl = Config.magasin.urls.api.storagefacility.baseUrl(museumId);
-    const url = `${baseUrl}${!id ? '/root' : ''}`;
+    const url = id
+      ? Config.magasin.urls.api.storagefacility.nodeUrl(museumId, id)
+      : Config.magasin.urls.api.storagefacility.rootNodeUrl(museumId);
     const dataToPost = mapToBackend(data, id);
     return ajaxPost(url, dataToPost, token, callback).map(({ response }) => response);
   };
 
 MusitNode.editNode = (ajaxPut = simplePut) =>
   ({ id, museumId, token, data, callback }) => {
-    const baseUrl = Config.magasin.urls.api.storagefacility.baseUrl(museumId);
-    const url = `${baseUrl}/${id}`;
     const dataToPost = mapToBackend(data);
-    return ajaxPut(url, dataToPost, token, callback).map(({ response }) => response);
+    return ajaxPut(
+      Config.magasin.urls.api.storagefacility.nodeUrl(museumId, id),
+      dataToPost,
+      token,
+      callback
+    ).map(({ response }) => response);
   };
 
 MusitNode.getNodes = (ajaxGet = simpleGet) =>
   ({ id, page, museumId, token, callback }) => {
-    const baseUrl = Config.magasin.urls.api.storagefacility.baseUrl(museumId);
-    let url;
-    if (id) {
-      const pageNum = page && page.page ? page.page : page || 1;
-      const limit = page && page.limit ? page.limit : Config.magasin.limit;
-      url = `${baseUrl}/${id}/children?page=${pageNum}&limit=${limit}`;
-    } else {
-      url = `${baseUrl}/root`;
-    }
+    const url = id
+      ? Config.magasin.urls.api.storagefacility.childrenNodesUrl(
+          museumId,
+          id,
+          page && page.page,
+          page && page.limit
+        )
+      : Config.magasin.urls.api.storagefacility.rootNodeUrl(museumId);
     return ajaxGet(url, token, callback).map(({ response }) => {
       if (!response) {
         return { totalMatches: 0, matches: [], error: 'no response body' };
@@ -77,23 +80,27 @@ MusitNode.getNodes = (ajaxGet = simpleGet) =>
 
 MusitNode.getStats = (ajaxGet = simpleGet) =>
   ({ id, museumId, token, callback }) => {
-    const baseUrl = Config.magasin.urls.api.thingaggregate.baseUrl(museumId);
-    return ajaxGet(`${baseUrl}/storagenodes/${id}/stats`, token, callback).map(
-      ({ response }) => response
-    );
+    return ajaxGet(
+      Config.magasin.urls.api.thingaggregate.nodeStatsUrl(museumId, id),
+      token,
+      callback
+    ).map(({ response }) => response);
   };
 
 MusitNode.deleteNode = (ajaxDel = simpleDel) =>
   ({ id, museumId, token, callback }) => {
-    const baseUrl = Config.magasin.urls.api.storagefacility.baseUrl(museumId);
-    return ajaxDel(`${baseUrl}/${id}`, token, callback);
+    return ajaxDel(
+      Config.magasin.urls.api.storagefacility.nodeUrl(museumId, id),
+      token,
+      callback
+    );
   };
 
 MusitNode.moveNode = (ajaxPut = simplePut) =>
   ({ id, destination, doneBy, museumId, token, callback }) => {
     const data = { doneBy, destination, items: [].concat(id) };
     return ajaxPut(
-      `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/moveNode`,
+      Config.magasin.urls.api.storagefacility.moveNodeUrl(museumId),
       data,
       token,
       callback

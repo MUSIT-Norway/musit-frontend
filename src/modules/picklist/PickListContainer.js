@@ -44,7 +44,7 @@ export const nodeCallback = (
     onComplete: () => {
       items.map(item =>
         refreshNode({
-          id: item.id,
+          id: item.uuid,
           museumId: appSession.museumId,
           token: appSession.accessToken
         }));
@@ -162,7 +162,7 @@ export const moveItems = (
 ) => {
   return (to, toName, onSuccess, onFailure = () => true): void => {
     const moveFunction = isNode ? moveNode : moveObject;
-    const idsToMove = items.map(itemToMove => itemToMove.id);
+    const idsToMove = items.map(itemToMove => itemToMove.uuid);
 
     const toMoveLength = idsToMove.length;
     const first = items[0];
@@ -180,7 +180,7 @@ export const moveItems = (
       );
     } else {
       const movableObject: Array<MovableObject> = items.map(item => ({
-        id: item.id,
+        id: item.uuid,
         objectType: item.objectType
       }));
       callback = objectCallback(
@@ -215,7 +215,7 @@ export const moveItems = (
     if (!error) {
       moveFunction({
         id: idsToMove,
-        destination: to.id,
+        destination: to.nodeId,
         doneBy: MusitActor.getActorId(appSession.actor),
         museumId: appSession.museumId,
         token: appSession.accessToken,
@@ -278,7 +278,7 @@ export const processBarcode = (barCode, props) => {
           });
         }
         if (isMoveDialogActive) {
-          props.updateMoveDialog(response.id, museumId, token);
+          props.updateMoveDialog(response.nodeId, museumId, token);
         } else if (isNodeView) {
           props.addNode({ value: response, path: getPath(response) });
         }
@@ -295,7 +295,7 @@ export const processBarcode = (barCode, props) => {
               message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
             });
           } else {
-            props.updateMoveDialog(response.id, museumId, token);
+            props.updateMoveDialog(response.nodeId, museumId, token);
           }
         })
         .toPromise();

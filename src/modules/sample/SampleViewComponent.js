@@ -18,9 +18,7 @@ const FieldReadOnly = ({ field, label, postFix }) => (
     <FormControl.Static className={field.name}>
       <span>
         <b>{label && `${label}: `}</b>
-        {
-          `${field.defaultValue}${postFix ? ' ' + postFix.defaultValue : ''}`
-        }
+        {`${field.defaultValue}${postFix ? ' ' + postFix.defaultValue : ''}`}
       </span>
     </FormControl.Static>
   </FormGroup>
@@ -33,14 +31,14 @@ const FieldReadArray = ({ field, labels, heading }) => (
       {labels.map((l, ind) => <Col md={2} key={`${ind}${l}`}><b>{l}</b></Col>)}
     </Row>
     {field &&
-    field.rawValue &&
-    field.rawValue.map((i, p) => (
-      <Row className="row-centered" key={`${i}-person`}>
-        <Col md={2}>{p.name}</Col>
-        <Col md={2}>{p.role}</Col>
-        <Col md={2}>{p.date}</Col>
-      </Row>
-    ))}
+      field.rawValue &&
+      field.rawValue.map((i, p) => (
+        <Row className="row-centered" key={`${i}-person`}>
+          <Col md={2}>{p.name}</Col>
+          <Col md={2}>{p.role}</Col>
+          <Col md={2}>{p.date}</Col>
+        </Row>
+      ))}
     <hr />
   </div>
 );

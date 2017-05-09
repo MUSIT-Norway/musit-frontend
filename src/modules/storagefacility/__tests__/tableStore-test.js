@@ -1,22 +1,12 @@
-import { TestScheduler, Observable } from 'rxjs/Rx';
-import assert from 'assert';
+import { Observable } from 'rxjs/Rx';
 import { store$ } from '../tableStore';
 import MusitNode from '../../../models/node';
 import MusitObject from '../../../models/object';
-
-const diff = require('deep-diff').diff;
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('tableStore', () => {
   it('testing reducer', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
+    const testScheduler = new MusitTestScheduler();
 
     // mock streams
     const loadRootNodeM = '---------------1';

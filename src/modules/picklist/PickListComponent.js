@@ -91,10 +91,10 @@ export class PickListComponent extends React.Component {
           <Breadcrumb
             node={pick.path}
             onClickCrumb={node => {
-              if (node.id) {
+              if (node.nodeId) {
                 hashHistory.push(
                   Config.magasin.urls.client.storagefacility.goToNode(
-                    node.id,
+                    node.nodeId,
                     this.props.appSession
                   )
                 );

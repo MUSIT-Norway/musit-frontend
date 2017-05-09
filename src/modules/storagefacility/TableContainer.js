@@ -75,11 +75,11 @@ export const processBarcode = (barCode, props) => {
             message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
           });
         } else if (isMoveDialogActive) {
-          props.updateMoveDialog(response.id, museumId, token);
+          props.updateMoveDialog(response.nodeId, museumId, token);
         } else {
           props.goTo(
             Config.magasin.urls.client.storagefacility.goToNode(
-              response.id,
+              response.nodeId,
               props.appSession
             )
           );
@@ -97,7 +97,7 @@ export const processBarcode = (barCode, props) => {
               message: I18n.t('musit.errorMainMessages.scanner.noMatchingNode')
             });
           } else {
-            props.updateMoveDialog(response.id, museumId, token);
+            props.updateMoveDialog(response.nodeId, museumId, token);
           }
         })
         .toPromise();
@@ -127,7 +127,7 @@ export const processBarcode = (barCode, props) => {
           } else if (response && response.nodeId) {
             props.goTo(
               Config.magasin.urls.client.storagefacility.goToNode(
-                response.id,
+                response.nodeId,
                 props.appSession
               )
             );

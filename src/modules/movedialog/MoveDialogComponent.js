@@ -114,14 +114,17 @@ export class MoveDialogComponent extends Component {
     if (!data.loading && data.totalMatches > 0) {
       body = (
         <div>
-          <ModalNodeGrid tableData={data.matches} onClick={n => this.loadNode(n.id)} />
+          <ModalNodeGrid
+            tableData={data.matches}
+            onClick={n => this.loadNode(n.nodeId)}
+          />
           {data.totalMatches > PER_PAGE &&
             <PagingToolbar
               numItems={data.totalMatches}
               currentPage={page}
               perPage={PER_PAGE}
               onClick={currentPage =>
-                this.loadNode(selectedNode && selectedNode.id, currentPage)}
+                this.loadNode(selectedNode && selectedNode.nodeId, currentPage)}
             />}
         </div>
       );
@@ -133,7 +136,9 @@ export class MoveDialogComponent extends Component {
         <Breadcrumb
           node={selectedNode}
           onClickCrumb={node => {
-            return node.id === -1 || !node.id ? this.loadHome() : this.loadNode(node.id);
+            return node.nodeId === -1 || !node.nodeId
+              ? this.loadHome()
+              : this.loadNode(node.nodeId);
           }}
         />
         <div style={{ paddingTop: '10px' }}>

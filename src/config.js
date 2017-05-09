@@ -1,13 +1,12 @@
 /* @flow */
 
+import type { MuseumId, CollectionId, NodeId } from 'types/ids';
+
 type AppSession = {
   museumId: number,
   collectionId: string,
   accessToken: string
 };
-
-type MuseumId = number;
-type CollectionId = string;
 
 const clientContextUrl = (appSession: AppSession) =>
   `/museum/${appSession.museumId}/collections/${appSession.collectionId}`;
@@ -88,7 +87,7 @@ export default {
             `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/${observationId}`,
           addControl: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/control/add`,
-          viewControl: (nodeId: number, controlId: number, appSession: AppSession) =>
+          viewControl: (nodeId: string, controlId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/control/${controlId}`,
           viewControlsObservations: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/controlsobservations`
@@ -129,12 +128,25 @@ export default {
             `/api/storagefacility/museum/${mid}/storagenodes/scan?oldBarcode=${oldBarcode}`,
           baseUrl: (mid: MuseumId): string =>
             `/api/storagefacility/museum/${mid}/storagenodes`,
+          rootNodeUrl: (mid: MuseumId): string =>
+            `/api/storagefacility/museum/${mid}/storagenodes/root`,
+          nodeUrl: (mid: MuseumId, uuid: string): string =>
+            `/api/storagefacility/museum/${mid}/storagenodes/${uuid}`,
+          childrenNodesUrl: (
+            mid: MuseumId,
+            uuid: string,
+            pageNum: ?number,
+            limit: ?number
+          ): string =>
+            `/api/storagefacility/museum/${mid}/storagenodes/${uuid}/children?page=${pageNum || 1}&limit=${limit || 25}`,
           currentLocation: (mid: MuseumId, objectId: number): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/currentlocation`,
           currentLocations: (mid: MuseumId): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/currentlocations`,
           moveObject: (mid: MuseumId): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/moveObject`,
+          moveNodeUrl: (mid: MuseumId): string =>
+            `/api/storagefacility/museum/${mid}/storagenodes/moveNode`,
           objectLocations: (mid: MuseumId, objectId: number): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/locations`
         },
@@ -142,6 +154,8 @@ export default {
           baseUrl: (mid: MuseumId): string => `/api/thingaggregate/museum/${mid}`,
           scanOldUrl: (oldBarcode: number, mid: MuseumId, collectionId: CollectionId) =>
             `/api/thingaggregate/museum/${mid}/scan?oldBarcode=${oldBarcode}&collectionIds=${collectionId}`,
+          nodeStatsUrl: (mid: MuseumId, uuid: string): string =>
+            `/api/thingaggregate/museum/${mid}/storagenodes/${uuid}/stats`,
           searchObjectUrl: (
             museumNo: ?string,
             subNo: ?string,
@@ -161,19 +175,19 @@ export default {
           },
           objectDetailsUrl: (
             mid: MuseumId,
-            objectId: number,
+            objectId: NodeId,
             collectionId: CollectionId
           ): string =>
             `api/thingaggregate/museum/${mid}/objects/${objectId}?collectionIds=${collectionId}`,
           getMainObject: (
             mid: MuseumId,
-            objectId: number,
+            objectId: NodeId,
             collectionId: CollectionId
           ): string =>
             `/api/thingaggregate/museum/${mid}/objects/${objectId}/children?collectionIds=${collectionId}`,
           getObjectForCollection: (
             mid: MuseumId,
-            nodeId: number,
+            nodeId: NodeId,
             collectionId: CollectionId,
             page: number,
             limit: number

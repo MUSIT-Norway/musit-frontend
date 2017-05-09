@@ -142,9 +142,9 @@ export class EventsComponent extends React.Component {
 
   showNodes(node) {
     const appSession = this.props.appSession;
-    if (node && node.id) {
+    if (node && node.nodeId) {
       hashHistory.push(
-        Config.magasin.urls.client.storagefacility.goToNode(node.id, appSession)
+        Config.magasin.urls.client.storagefacility.goToNode(node.nodeId, appSession)
       );
     } else {
       hashHistory.push(Config.magasin.urls.client.storagefacility.goToRoot(appSession));

@@ -1,19 +1,12 @@
-import { TestScheduler, Subject, Observable } from 'rxjs/Rx';
-import assert from 'assert';
+import { Subject, Observable } from 'rxjs/Rx';
 import { store$, loadEvents } from '../eventsStore';
 import MusitNode from '../../../models/node';
-const diff = require('deep-diff').diff;
+
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('controlsAndObservationsStore', () => {
   it('testing reducer with actors', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
-
+    const testScheduler = new MusitTestScheduler();
     // mock streams
     const clearEventsM = '-1--------------';
     const loadEventsM = '--1-------------';
@@ -101,14 +94,7 @@ describe('controlsAndObservationsStore', () => {
   });
 
   it('testing reducer with no actor hits', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
-
+    const testScheduler = new MusitTestScheduler();
     // mock streams
     const loadRootNodeM = '---1------------';
     const clearEventsM = '-1--------------';

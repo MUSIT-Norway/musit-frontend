@@ -31,14 +31,13 @@ const commands: {} = {
 export const onMount = (
   { loadObject, loadMoveAndAnalysisEvents, loadSampleEvents, params, appSession }: any
 ) => {
-  const uuid: string = params.objectId;
-  const oldId: string = params.id;
+  const uuid: string = params.id;
   const museumId: number = appSession.museumId;
   const accessToken: string = appSession.accessToken;
   const collectionId: string = appSession.collectionId;
   const ajaxProps = {
     id: uuid,
-    objectId: oldId,
+    objectId: uuid,
     museumId: museumId,
     token: accessToken,
     collectionId: collectionId

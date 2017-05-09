@@ -1,16 +1,11 @@
-import { TestScheduler, Observable, Subject } from 'rxjs/Rx';
-import assert from 'assert';
-import { store$, initialState } from '../controlStore';
+import { Observable, Subject } from 'rxjs/Rx';
+import { initialState, store$ } from '../controlStore';
 import Control from '../../../models/control';
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('ControlStore', () => {
   it('testing reducer', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      return assert.deepEqual(actual, expected);
-    });
-
+    const testScheduler = new MusitTestScheduler();
     // mock streams
     const getControlM = '-x-------------';
     const expected = 'ab-------------';

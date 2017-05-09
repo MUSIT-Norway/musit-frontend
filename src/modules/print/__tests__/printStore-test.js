@@ -1,21 +1,12 @@
-import { TestScheduler, Observable } from 'rxjs/Rx';
-import assert from 'assert';
+import { Observable } from 'rxjs/Rx';
 import { store$ } from '../printStore';
 import Template from '../../../models/template';
-const diff = require('deep-diff').diff;
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('printStore', () => {
   /*eslint-disable */
   it('testing reducer', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
+    const testScheduler = new MusitTestScheduler();
 
     // mock streams
     const setTemplateIdM = '--------------';

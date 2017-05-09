@@ -61,19 +61,19 @@ export default class TableComponent extends React.Component {
     return state && state.currentPage;
   }
 
-  loadRootNode(id, museumId, token) {
+  loadRootNode(nodeId, museumId, token) {
     this.props.clearRootNode();
-    if (!id) {
+    if (!nodeId) {
       return;
     }
     this.props.loadRootNode({
-      id,
+      id: nodeId,
       museumId,
       token,
       callback: {
         onComplete: node => {
           if (node && !MusitNode.isRootNode(node)) {
-            this.props.loadStats({ id, museumId, token });
+            this.props.loadStats({ id: nodeId, museumId, token });
           }
         }
       }
@@ -120,9 +120,9 @@ export default class TableComponent extends React.Component {
 
   showNodes(node = this.props.tableStore.rootNode) {
     const appSession = this.props.appSession;
-    if (node && node.id) {
+    if (node && node.nodeId) {
       this.props.goTo(
-        Config.magasin.urls.client.storagefacility.goToNode(node.id, appSession)
+        Config.magasin.urls.client.storagefacility.goToNode(node.nodeId, appSession)
       );
     } else {
       this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
@@ -131,9 +131,9 @@ export default class TableComponent extends React.Component {
 
   showObjects(node = this.props.tableStore.rootNode) {
     const appSession = this.props.appSession;
-    if (node) {
+    if (node && node.nodeId) {
       this.props.goTo(
-        Config.magasin.urls.client.storagefacility.goToObjects(node.id, appSession)
+        Config.magasin.urls.client.storagefacility.goToObjects(node.nodeId, appSession)
       );
     } else {
       this.props.goTo(Config.magasin.urls.client.storagefacility.goToRoot(appSession));
@@ -187,7 +187,7 @@ export default class TableComponent extends React.Component {
     userId = Actor.getActorId(this.props.appSession.actor),
     museumId = this.props.appSession.museumId,
     token = this.props.appSession.accessToken,
-    nodeId = this.props.tableStore.rootNode.id,
+    nodeId = this.props.tableStore.rootNode.nodeId,
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes,
     loadRootNode = this.loadRootNode
@@ -196,8 +196,8 @@ export default class TableComponent extends React.Component {
       const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
       if (!errorMessage) {
         MusitNode.moveNode()({
-          id: nodeToMove.id,
-          destination: toNode.id,
+          id: nodeToMove.nodeId,
+          destination: toNode.nodeId,
           doneBy: userId,
           museumId,
           token,
@@ -255,14 +255,14 @@ export default class TableComponent extends React.Component {
     museumId = this.props.appSession.museumId,
     collectionId = this.props.appSession.collectionId,
     token = this.props.appSession.accessToken,
-    nodeId = this.props.tableStore.rootNode.id,
+    nodeId = this.props.tableStore.rootNode.nodeId,
     loadObjects = this.loadObjects
   ) =>
     (toNode, toName, onSuccess, onFailure = () => true) => {
       const description = MusitObject.getObjectDescription(objectToMove);
       MusitObject.moveObjects({
         object: objectToMove,
-        destination: toNode.id,
+        destination: toNode.nodeId,
         doneBy: userId,
         museumId,
         collectionId,
@@ -299,7 +299,7 @@ export default class TableComponent extends React.Component {
     const componentToRender = (
       <MusitModalHistory
         appSession={this.props.appSession}
-        objectId={objectToShowHistoryFor.id}
+        objectId={objectToShowHistoryFor.nodeId}
       />
     );
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
@@ -355,7 +355,7 @@ export default class TableComponent extends React.Component {
           onClickNewNode={() =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.addNode(
-                rootNode.id,
+                rootNode.nodeId,
                 this.props.appSession
               )
             )}
@@ -363,7 +363,7 @@ export default class TableComponent extends React.Component {
           onClickProperties={() => {
             this.props.goTo({
               pathname: Config.magasin.urls.client.storagefacility.editNode(
-                rootNode.id,
+                rootNode.nodeId,
                 this.props.appSession
               ),
               state: rootNode
@@ -372,7 +372,7 @@ export default class TableComponent extends React.Component {
           onClickControlObservations={() =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.viewControlsObservations(
-                rootNode.id,
+                rootNode.nodeId,
                 this.props.appSession
               )
             )}
@@ -386,7 +386,7 @@ export default class TableComponent extends React.Component {
             );
             confirm(message, () => {
               deleteNode({
-                id: rootNode.id,
+                id: rootNode.nodeId,
                 museumId,
                 token,
                 callback: {
@@ -481,7 +481,7 @@ export default class TableComponent extends React.Component {
               onClick={cp => {
                 hashHistory.replace({
                   pathname: Config.magasin.urls.client.storagefacility.goToObjects(
-                    rootNode.id,
+                    rootNode.nodeId,
                     this.props.appSession
                   ),
                   state: {
@@ -500,7 +500,7 @@ export default class TableComponent extends React.Component {
           goToEvents={node =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.viewControlsObservations(
-                node.id,
+                node.nodeId,
                 this.props.appSession
               )
             )}
@@ -510,7 +510,7 @@ export default class TableComponent extends React.Component {
           onClick={node =>
             this.props.goTo(
               Config.magasin.urls.client.storagefacility.goToNode(
-                node.id,
+                node.nodeId,
                 this.props.appSession
               )
             )}
@@ -524,7 +524,7 @@ export default class TableComponent extends React.Component {
             onClick={cp => {
               hashHistory.replace({
                 pathname: Config.magasin.urls.client.storagefacility.goToNode(
-                  rootNode.id,
+                  rootNode.nodeId,
                   this.props.appSession
                 ),
                 state: {

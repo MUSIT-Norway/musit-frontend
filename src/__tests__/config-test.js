@@ -75,6 +75,37 @@ describe('Config urls', () => {
           expected: '/api/storagefacility/museum/99/storagenodes/scan?oldBarcode=1234'
         },
         {
+          name: 'rootNodeUrl',
+          actual: urls.api.storagefacility.rootNodeUrl(99),
+          expected: '/api/storagefacility/museum/99/storagenodes/root'
+        },
+        {
+          name: 'nodeUrl',
+          actual: urls.api.storagefacility.nodeUrl(
+            99,
+            'ac08361b-3f13-4cde-9428-4ba2776316bd'
+          ),
+          expected: '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd'
+        },
+        {
+          name: 'childrenNodesUrl_with_page_and_limit',
+          actual: urls.api.storagefacility.childrenNodesUrl(
+            99,
+            'ac08361b-3f13-4cde-9428-4ba2776316bd',
+            4,
+            10
+          ),
+          expected: '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/children?page=4&limit=10'
+        },
+        {
+          name: 'childrenNodesUrl_without_page_and_limit',
+          actual: urls.api.storagefacility.childrenNodesUrl(
+            99,
+            'ac08361b-3f13-4cde-9428-4ba2776316bd'
+          ),
+          expected: '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/children?page=1&limit=25'
+        },
+        {
           name: 'currentLocation',
           actual: urls.api.storagefacility.currentLocation(99, 123),
           expected: '/api/storagefacility/museum/99/storagenodes/objects/123/currentlocation'
@@ -83,6 +114,11 @@ describe('Config urls', () => {
           name: 'currentLocations',
           actual: urls.api.storagefacility.currentLocations(99),
           expected: '/api/storagefacility/museum/99/storagenodes/objects/currentlocations'
+        },
+        {
+          name: 'moveNodeUrl',
+          actual: urls.api.storagefacility.moveNodeUrl(99),
+          expected: '/api/storagefacility/museum/99/storagenodes/moveNode'
         },
         {
           name: 'objectLocations',
@@ -139,6 +175,14 @@ describe('Config urls', () => {
           name: 'getObjectForCollection',
           actual: urls.api.thingaggregate.getObjectForCollection(99, 433, '1234', 1, 20),
           expected: '/api/thingaggregate/museum/99/node/433/objects?collectionIds=1234&page=1&limit=20'
+        },
+        {
+          name: 'nodeStatsUrl',
+          actual: urls.api.thingaggregate.nodeStatsUrl(
+            99,
+            'ac08361b-3f13-4cde-9428-4ba2776316bd'
+          ),
+          expected: '/api/thingaggregate/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/stats'
         }
       ]
     },

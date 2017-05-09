@@ -1,22 +1,12 @@
-import { TestScheduler, Observable } from 'rxjs/Rx';
-import assert from 'assert';
-import { store$, initialState } from '../moveDialogStore';
+import { Observable } from 'rxjs/Rx';
+import { initialState, store$ } from '../moveDialogStore';
 import MusitNode from '../../../models/node';
 
-const diff = require('deep-diff').diff;
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('moveDialog', () => {
   it('testing reducer', () => {
-    const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(difference);
-      }
-      return assert.equal(undefined, difference);
-    });
-
+    const testScheduler = new MusitTestScheduler();
     // mock streams
     const setPageM = '-----12-----';
     const setLoadingM = '--1---------';

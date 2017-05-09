@@ -1,11 +1,10 @@
 import Event from '../event';
 import { Observable } from 'rxjs';
-import { TestScheduler } from 'rxjs/Rx';
-const diff = require('deep-diff').diff;
-import assert from 'assert';
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
 describe('Event model', () => {
   it('should work', () => {
+    const testScheduler = new MusitTestScheduler();
     const get = url => {
       if (url.indexOf('analyses') > -1) {
         return Observable.of({
@@ -65,16 +64,6 @@ describe('Event model', () => {
       objectId: 1,
       museumId: 99
     };
-
-    const testScheduler = new TestScheduler((actual, expected) => {
-      // console.log(JSON.stringify(actual, null, 2));
-      // console.log(JSON.stringify(expected, null, 2));
-      const difference = diff(actual, expected);
-      if (typeof difference !== 'undefined') {
-        console.log(JSON.stringify(difference, null, 2));
-      }
-      return assert.equal(undefined, difference);
-    });
 
     const loadM = '-1----------';
     const expected = '-a----------';
