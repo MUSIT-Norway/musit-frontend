@@ -10,10 +10,9 @@ describe('Analysis model', () => {
   it('should work', () => {
     const testScheduler = new MusitTestScheduler();
 
-    const post = () =>
-      Observable.of({
-        response: []
-      });
+    const post = () => Observable.of({
+      response: []
+    });
 
     const get = url => {
       if (url.indexOf('analyses') > -1) {
@@ -42,7 +41,7 @@ describe('Analysis model', () => {
       });
     };
 
-    const fn = Analysis.getAnalysisWithDetails(get, post);
+    const ajaxFunc = Analysis.getAnalysisWithDetails(get, post);
 
     const props = {
       token: '1234',
@@ -77,7 +76,7 @@ describe('Analysis model', () => {
     const load = testScheduler.createHotObservable(loadM);
 
     testScheduler
-      .expectObservable(load.flatMap(() => fn(props)))
+      .expectObservable(load.flatMap(() => ajaxFunc(props)))
       .toBe(expected, expectedStateMap);
     testScheduler.flush();
   });
