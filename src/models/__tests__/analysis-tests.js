@@ -10,9 +10,10 @@ describe('Analysis model', () => {
   it('should work', () => {
     const testScheduler = new MusitTestScheduler();
 
-    const post = () => Observable.of({
-      response: []
-    });
+    const post = () =>
+      Observable.of({
+        response: []
+      });
 
     const get = url => {
       if (url.indexOf('analyses') > -1) {

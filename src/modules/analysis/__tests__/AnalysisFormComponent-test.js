@@ -1,6 +1,10 @@
 // @flow
 import React from 'react';
-import AnalysisFormComponent, { updateFormField, updateBooleanField, getAnalysisTypeTerm } from '../AnalysisFormComponent';
+import AnalysisFormComponent, {
+  updateFormField,
+  updateBooleanField,
+  getAnalysisTypeTerm
+} from '../AnalysisFormComponent';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from '../../../forms/form';
 import type { FormData } from '../types/form';
@@ -13,12 +17,12 @@ declare var it: any;
 declare var expect: any;
 
 const identity = (i: any): any => i;
-const promise = (i: any): any => new Promise((res) => res(i));
+const promise = (i: any): any => new Promise(res => res(i));
 
 describe('AnalysisFormComponent', () => {
   describe('getAnalysisTypeTerm', () => {
     it('should return empty string if not found', () => {
-      const analysis = {id: 1, analysisTypeId: '11134', events: []};
+      const analysis = { id: 1, analysisTypeId: '11134', events: [] };
       const analysisTypes = [
         {
           id: '19934',
@@ -36,7 +40,7 @@ describe('AnalysisFormComponent', () => {
           category: '5'
         }
       ];
-      const store = {analysis, analysisTypes};
+      const store = { analysis, analysisTypes };
       const term = getAnalysisTypeTerm(store);
       expect(term).toBe('');
     });
@@ -46,9 +50,9 @@ describe('AnalysisFormComponent', () => {
       const term = getAnalysisTypeTerm(store);
       expect(term).toBe('');
     });
-    
+
     it('should match analysisTypeId with matching analysisType name', () => {
-      const analysis = {id: 1, analysisTypeId: '12234', events: []};
+      const analysis = { id: 1, analysisTypeId: '12234', events: [] };
       const analysisTypes = [
         {
           id: '19934',
@@ -66,7 +70,7 @@ describe('AnalysisFormComponent', () => {
           category: '5'
         }
       ];
-      const store = {analysis, analysisTypes};
+      const store = { analysis, analysisTypes };
       const term = getAnalysisTypeTerm(store);
       expect(term).toBe('Tjokkimokki 1');
     });
@@ -75,7 +79,7 @@ describe('AnalysisFormComponent', () => {
   describe('updateFormField', () => {
     it('should updateForm with non empty input value', () => {
       const updateForm = sinon.spy();
-      updateFormField('someFieldName', updateForm)({target: {value: 'Test'}});
+      updateFormField('someFieldName', updateForm)({ target: { value: 'Test' } });
       expect(updateForm.calledOnce).toBe(true);
       expect(updateForm.getCall(0).args[0].name).toEqual('someFieldName');
       expect(updateForm.getCall(0).args[0].rawValue).toEqual('Test');
@@ -83,7 +87,7 @@ describe('AnalysisFormComponent', () => {
 
     it('should updateForm with empty input value', () => {
       const updateForm = sinon.spy();
-      updateFormField('someFieldName', updateForm)({target: {value: ''}});
+      updateFormField('someFieldName', updateForm)({ target: { value: '' } });
       expect(updateForm.calledOnce).toBe(true);
       expect(updateForm.getCall(0).args[0].name).toEqual('someFieldName');
       expect(updateForm.getCall(0).args[0].rawValue).toEqual('');
@@ -117,13 +121,16 @@ describe('AnalysisFormComponent', () => {
         fn: 'Test'
       }
     };
-    const form: FormData = (fieldsArray.reduce((acc, field: Field<any>) => ({
-      ...acc,
-      [field.name]: {
-        ...field,
-        rawValue: field.mapper.toRaw(field.defaultValue)
-      }
-    }), {}): any);
+    const form: FormData = (fieldsArray.reduce(
+      (acc, field: Field<any>) => ({
+        ...acc,
+        [field.name]: {
+          ...field,
+          rawValue: field.mapper.toRaw(field.defaultValue)
+        }
+      }),
+      {}
+    ): any);
     const store = {
       analysis: {
         id: 1234,
@@ -158,18 +165,18 @@ describe('AnalysisFormComponent', () => {
       analysisTypes: [],
       analysisTypeCategorie: []
     };
-    const location = {
-
-    };
-    const wrapper = shallow(<AnalysisFormComponent
-      appSession={appSession}
-      form={form}
-      updateForm={identity}
-      submitForm={identity}
-      saveAnalysisEvent={promise}
-      store={store}
-      location={location}
-    />);
+    const location = {};
+    const wrapper = shallow(
+      <AnalysisFormComponent
+        appSession={appSession}
+        form={form}
+        updateForm={identity}
+        submitForm={identity}
+        saveAnalysisEvent={promise}
+        store={store}
+        location={location}
+      />
+    );
 
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });

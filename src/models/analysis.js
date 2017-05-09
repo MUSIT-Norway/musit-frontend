@@ -92,7 +92,10 @@ class MusitAnalysis {
   ) => Observable;
 }
 
-const toField = (name: string, defaultValue: ?string | boolean): FormValue => ({ name, defaultValue });
+const toField = (name: string, defaultValue: ?string | boolean): FormValue => ({
+  name,
+  defaultValue
+});
 
 MusitAnalysis.fromJsonToForm = (json, formDef) => {
   const formValues = formDef.reduce(

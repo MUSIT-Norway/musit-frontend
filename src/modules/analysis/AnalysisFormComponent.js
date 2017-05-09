@@ -2,17 +2,17 @@
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import { hashHistory } from 'react-router';
-import Config from '../../config';
-import type { AppSession } from '../../types/appSession';
+import Config from 'config';
+import type { AppSession } from 'types/appSession';
+import type { ObjectData } from 'types/object';
 import type { FormData } from './types/form';
-import type { ObjectData } from '../../types/object';
 import AddButton from './components/AddButton';
 import { Table } from 'reactable';
 
 type Location = { state?: Array<ObjectData> };
 
 type AnalysisType = { id: string, name: string, category: string };
-type Analysis = { id: number, analysisTypeId: string, events: Array<ObjectData> }
+type Analysis = { id: number, analysisTypeId: string, events: Array<ObjectData> };
 
 type Store = {
   analysis?: Analysis,
@@ -435,7 +435,12 @@ AnalysisForm.defaultProps = {
         data: data,
         token: appSession.accessToken
       }).then((analysis: number | Analysis) => {
-        goTo(Config.magasin.urls.client.analysis.viewAnalysis(appSession, (typeof analysis === 'number') ? analysis : analysis.id));
+        goTo(
+          Config.magasin.urls.client.analysis.viewAnalysis(
+            appSession,
+            typeof analysis === 'number' ? analysis : analysis.id
+          )
+        );
       });
     }
 };
