@@ -26,7 +26,10 @@ export const loadEvents = ({ simpleGet, simplePost }) =>
       const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(
         p => p
       );
-      return MusitActor.getActors(simplePost)(actorIds, props.token).map(actors =>
+      return MusitActor.getActors(simplePost)({
+        actorIds,
+        token: props.token
+      }).map(actors =>
         events.map(data => ({
           ...data,
           ...MusitActor.getActorNames(actors || [], data.doneBy, data.registeredBy)

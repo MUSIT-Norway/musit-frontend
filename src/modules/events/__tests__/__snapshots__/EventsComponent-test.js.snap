@@ -103,6 +103,10 @@ exports[`EventsComponent should render a table of events 1`] = `
     columns={
       Array [
         Object {
+          "key": "id",
+          "label": "ID"
+        },
+        Object {
           "key": "eventDate",
           "label": "Dato"
         },
@@ -146,6 +150,8 @@ exports[`EventsComponent should render a table of events 1`] = `
     }>
     <Tr>
       <Td
+        column="id" />
+      <Td
         column="eventDate">
         dato 1
       </Td>
@@ -170,6 +176,8 @@ exports[`EventsComponent should render a table of events 1`] = `
     </Tr>
     <Tr>
       <Td
+        column="id" />
+      <Td
         column="eventDate">
         dato 2
       </Td>
@@ -193,6 +201,8 @@ exports[`EventsComponent should render a table of events 1`] = `
       </Td>
     </Tr>
     <Tr>
+      <Td
+        column="id" />
       <Td
         column="eventDate">
         dato 3

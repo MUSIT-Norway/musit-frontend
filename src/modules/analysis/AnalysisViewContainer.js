@@ -7,7 +7,7 @@ import mount from '../../shared/mount';
 import store$, { getAnalysisTypes$ } from './analysisStore';
 import Analysis from '../../models/analysis';
 import { toPromise } from '../../shared/util';
-import analysisForm from './analysisForm';
+import analysisForm, { fieldsArray } from './analysisForm';
 const { form$, loadForm$ } = analysisForm;
 
 const data = {
@@ -35,7 +35,8 @@ export const onMount = (
     token: appSession.accessToken
   };
   getAnalysisTypes(inputParams);
-  loadAnalysis(inputParams).then(analysis => loadForm(Analysis.fromJsonToForm(analysis)));
+  loadAnalysis(inputParams).then(analysis =>
+    loadForm(Analysis.fromJsonToForm(analysis, fieldsArray)));
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(

@@ -1,6 +1,9 @@
 /* @flow */
 
 export type ObjectData = {
+  id: number,
+  nodeId: string,
+  mainObjectId: number,
   uuid: string,
   objectId: number,
   objectUUID: string,

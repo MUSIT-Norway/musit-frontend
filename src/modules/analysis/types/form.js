@@ -1,5 +1,4 @@
 /* @flow */
-
 import type { Field } from '../../../forms/form';
 
 export type ArrayField = { name: string, rawValue: ?Array<*> };
@@ -42,5 +41,6 @@ export type FormData = {
   events: ArrayField,
   updatedBy: Field<string>,
   updatedByName: Field<string>,
-  updatedDate: Field<string>
+  updatedDate: Field<string>,
+  status: Field<number>
 };

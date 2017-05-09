@@ -1,3 +1,4 @@
+/* @flow */
 import { simpleGet, simplePost } from '../shared/RxAjax';
 import Analysis from './analysis';
 import MusitObject from './object';
@@ -7,14 +8,25 @@ import uniq from 'lodash/uniq';
 import { I18n } from 'react-i18nify';
 import concat from 'lodash/concat';
 import { Observable } from 'rxjs';
+import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
 
-class Event {}
+class Event {
+  static getAnalysesAndMoves: (ajaxGet: AjaxGet, ajaxPost: AjaxPost) => (
+    props: {
+      id: number, // FIXME the same as objectId
+      objectId: number, // FIXME The same as id
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+}
 
 Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
-  val =>
+  props =>
     Observable.forkJoin(
-      Analysis.getAnalysesForObject(ajaxGet)(val),
-      MusitObject.getLocationHistory(ajaxGet)(val)
+      Analysis.getAnalysesForObject(ajaxGet)(props),
+      MusitObject.getLocationHistory(ajaxGet)(props)
     )
       .map(([analyses, moves]) =>
         concat(analyses, moves.map(m => ({ ...m, type: 'MoveObject' }))).map(m => ({
@@ -25,7 +37,10 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
         })))
       .flatMap(events => {
         const actorIds = uniq(events.map(r => r.registeredBy)).filter(r => r);
-        return MusitActor.getActors(ajaxPost)(actorIds, val.token).map(actors => {
+        return MusitActor.getActors(ajaxPost)({
+          actorIds,
+          token: props.token
+        }).map(actors => {
           if (Array.isArray(actors)) {
             return events.map(data => {
               const registeredBy = actors.find(a =>

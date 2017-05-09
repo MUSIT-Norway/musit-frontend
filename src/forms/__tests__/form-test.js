@@ -1,17 +1,17 @@
 /* @flow */
+import { Subject } from 'rxjs/Rx';
+import createForm from '../form';
+import { stringMapper } from '../mappers';
+import type { Field, RawValue, Update } from '../form';
+import MusitTestScheduler from 'testutils/MusitTestScheduler';
+
 declare var describe: any;
 declare var it: any;
 
-import { Subject } from 'rxjs/Rx';
-import type { Field, Update } from '../form';
-import createForm from '../form';
-import { stringMapper } from '../mappers';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
-
 const minLength = (length: number) =>
   (field: string) =>
-    (value: ?string) => {
-      const valid = value && value.length >= length;
+    (value: ?RawValue) => {
+      const valid = typeof value === 'string' && value.length >= length;
       if (!valid) {
         return field + ' is not valid';
       }

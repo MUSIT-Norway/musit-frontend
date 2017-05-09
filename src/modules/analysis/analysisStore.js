@@ -1,24 +1,37 @@
-import { Observable } from 'rxjs';
+// @flow
+import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
-
-import Analysis from '../../models/analysis';
+import MusitAnalysis from '../../models/analysis';
 import uniq from 'lodash/uniq';
 
 export const getAnalysisTypes$ = createAction('getAnalysisTypes$').switchMap(
-  Analysis.getAnalysisTypesForCollection()
+  MusitAnalysis.getAnalysisTypesForCollection()
 );
 
-export const reducer$ = actions =>
+export const getAnalysis$ = createAction('getAnalysis$').switchMap(props =>
+  MusitAnalysis.getAnalysisWithDetails()(props).do(props.onComplete));
+
+type Actions = {
+  getAnalysis$: Subject,
+  getAnalysisTypes$: Subject
+};
+
+export const reducer$ = (actions: Actions) =>
   Observable.merge(
+    actions.getAnalysis$.map(analysis =>
+      state => ({
+        ...state,
+        analysis
+      })),
     actions.getAnalysisTypes$.map(analysisTypes =>
       state => ({
         ...state,
         analysisTypes,
-        analysisTypesUniqueCategory: uniq(analysisTypes.map(a => a.category))
+        analysisTypeCategories: uniq(analysisTypes.map(a => a.category))
       }))
   );
 
-export const store$ = (actions$ = { getAnalysisTypes$ }) =>
+export const store$ = (actions$: Actions = { getAnalysisTypes$, getAnalysis$ }) =>
   createStore('analysisStore', reducer$(actions$), Observable.of({ analysisTypes: [] }));
 
 export default store$();

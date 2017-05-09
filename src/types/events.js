@@ -1,6 +1,7 @@
 /* @flow */
 
 type EventData = {
+  id: number,
   eventDate: string,
   doneBy: string,
   registeredBy: string,

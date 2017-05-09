@@ -46,6 +46,7 @@ export const EventsComponent = ({ eventsStore: { object, data, currentLocation }
       <Table
         className="table"
         columns={[
+          { key: 'id', label: 'ID'},
           { key: 'eventDate', label: 'Dato'},
           { key: 'type', label: 'Type hendelse'},
           { key: 'registeredBy', label: 'Utført av' },
@@ -58,6 +59,7 @@ export const EventsComponent = ({ eventsStore: { object, data, currentLocation }
       >
         {data.map((event, i) =>
           <Tr key={i}>
+            <Td column="id">{event.id}</Td>
             <Td column="eventDate">{event.eventDate}</Td>
             <Td column="type">{event.type}</Td>
             <Td column="registeredBy">{event.registeredBy}</Td>

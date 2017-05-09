@@ -3,10 +3,10 @@ import React from 'react';
 import moment from 'moment';
 import { Observable } from 'rxjs';
 
-export const toPromise = (fn: (val: {}) => Observable) =>
-  (val: {}) => fn(val).toPromise();
+export const toPromise = (fn: (val: any) => Observable) =>
+  (val: any) => fn(val).toPromise();
 
-export const flatten = (arr: []) => {
+export const flatten = (arr: Array<*>) => {
   const obj = {};
 
   for (let i = 0; i < arr.length; i++) {
@@ -18,7 +18,7 @@ export const flatten = (arr: []) => {
   return obj;
 };
 
-export const filter = (arr: any[], fields: string[], pattern: string) => {
+export const filter = (arr: Array<*>, fields: Array<string>, pattern: string) => {
   const contains = (s: any, p: string) => {
     return (s || '').toString().toLowerCase().indexOf(p.toLowerCase()) !== -1;
   };
@@ -42,7 +42,7 @@ export const blur = () => {
 };
 
 export const containsObjectWithField = (
-  arr: any[],
+  arr: Array<*>,
   field: string,
   value: string
 ): boolean => arr.filter(e => e[field] === value).length > 0;

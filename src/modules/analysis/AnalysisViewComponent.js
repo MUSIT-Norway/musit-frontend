@@ -35,9 +35,9 @@ const getAnalysisTypeTerm = (form, store) => {
   }
 };
 
-const getTableRow = a => {
+const getTableRow = (a, i) => {
   return (
-    <tr>
+    <tr key={i}>
       <td>{a.museumNo}</td>
       <td>{a.subNo}</td>
       <td>{a.term}</td>
@@ -57,6 +57,7 @@ const LabelAndValue = ({ id, label, md, value }) => (
 LabelAndValue.defaultProps = {
   md: 1
 };
+
 const getObjectsValue = form => {
   if (form.type.rawValue === 'AnalysisCollection') {
     return form.events.rawValue ? form.events.rawValue.map(getTableRow) : [];

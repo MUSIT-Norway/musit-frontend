@@ -33,7 +33,7 @@ export default {
             `${clientContextUrl(appSession)}/analysis/edit/${analysisId}`,
           addAnalysis: (appSession: AppSession) =>
             `${clientContextUrl(appSession)}/analysis/add`,
-          viewAnalysis: (appSession: AppSession, analysisId: string) =>
+          viewAnalysis: (appSession: AppSession, analysisId: number) =>
             `${clientContextUrl(appSession)}/analysis/${analysisId}`,
           addSample: (appSession: AppSession, objectId: string) =>
             `${clientContextUrl(appSession)}/analysis/sample/${objectId}/add`,

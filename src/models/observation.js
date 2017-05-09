@@ -1,11 +1,40 @@
+/* @flow */
 import Config from '../config';
 import mapToBackEnd from './mapper/observation/to_backend';
 import mapToFrontEnd from './mapper/observation/to_frontend';
 import MusitActor from './actor';
 import uniq from 'lodash/uniq';
 import { simplePost, simpleGet } from '../shared/RxAjax';
+import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
+import { Observable } from 'rxjs';
 
-class Observation {}
+class Observation {
+  static loadObservations: (ajaxGet: AjaxGet) => (
+    props: {
+      nodeId: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static addObservation: (ajaxPost: AjaxPost) => (
+    props: {
+      nodeId: number,
+      museumId: number,
+      data: mixed,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static getObservation: (ajaxGet: AjaxGet, ajaxPost: AjaxPost) => (
+    props: {
+      nodeId: number,
+      observationId: number,
+      museumId: number,
+      token: string
+    }
+  ) => Observable;
+}
 
 Observation.loadObservations = (ajaxGet = simpleGet) =>
   ({ nodeId, museumId, token, callback }) => {
@@ -36,7 +65,7 @@ Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
         observation.response.doneBy,
         observation.response.registeredBy
       ]).filter(p => p);
-      return MusitActor.getActors(ajaxPost)(actorIds, token).map(actorDetails => {
+      return MusitActor.getActors(ajaxPost)({ actorIds, token }).map(actorDetails => {
         return mapToFrontEnd({
           ...observation.response,
           ...MusitActor.getActorNames(

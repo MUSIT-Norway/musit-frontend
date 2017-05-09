@@ -5,6 +5,10 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     columns={
       Array [
         Object {
+          "key": "id",
+          "label": "ID"
+        },
+        Object {
           "key": "eventDate",
           "label": "Dato"
         },
@@ -23,10 +27,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         Object {
           "key": "note",
           "label": "Kommentar"
-        },
-        Object {
-          "key": "id",
-          "label": ""
         }
       ]
     }
@@ -39,6 +39,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     sortBy={false}
     sortable={
       Array [
+        "id",
         "type",
         "eventDate",
         "registeredBy",
@@ -47,6 +48,10 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     }>
     <Tr
       onClick={[Function onClick]}>
+      <Td
+        column="id">
+        1233-111-2222-222
+      </Td>
       <Td
         column="eventDate">
         1999-01-20
@@ -67,13 +72,13 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
           Ein kommentar
         </span>
       </Td>
-      <Td
-        column="id">
-        Les mer
-      </Td>
     </Tr>
     <Tr
       onClick={[Function onClick]}>
+      <Td
+        column="id">
+        1233-111-2122-222
+      </Td>
       <Td
         column="eventDate">
         1999-06-20
@@ -93,10 +98,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         <span>
           Ein kommentar
         </span>
-      </Td>
-      <Td
-        column="id">
-        Les mer
       </Td>
     </Tr>
   </Table>

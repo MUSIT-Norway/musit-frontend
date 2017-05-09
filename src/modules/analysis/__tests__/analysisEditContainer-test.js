@@ -6,7 +6,7 @@ describe('analysisEditContainer', () => {
   it('should have working onMount', () => {
     const getAnalysisTypes = sinon.spy();
     let callLoadAnalysisArgs = null;
-    const loadAnalysis = args => {
+    const getAnalysis = args => {
       callLoadAnalysisArgs = args;
       return new Promise(res => res({}));
     };
@@ -21,17 +21,17 @@ describe('analysisEditContainer', () => {
     onMount({
       getAnalysisTypes,
       loadAnalysisForForm,
-      loadAnalysis,
+      getAnalysis,
       appSession,
       params,
       loadForm
     });
     expect(getAnalysisTypes.calledOnce).toBe(true);
     expect(loadForm.calledOnce).toBe(false);
-    expect(callLoadAnalysisArgs).toEqual({
-      museumId: 99,
-      collectionId: '00000000-0000-0000-0000-000000000000',
-      token: '1234'
-    });
+    expect(callLoadAnalysisArgs.museumId).toEqual(99);
+    expect(callLoadAnalysisArgs.collectionId).toEqual(
+      '00000000-0000-0000-0000-000000000000'
+    );
+    expect(callLoadAnalysisArgs.token).toEqual('1234');
   });
 });

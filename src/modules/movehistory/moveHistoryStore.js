@@ -11,7 +11,7 @@ export const getLocationHistory = (get, post) =>
   val =>
     MusitObject.getLocationHistory(get, post)(val).flatMap(rows => {
       const actorIds = uniq(rows.map(r => r.doneBy)).filter(r => r);
-      return MusitActor.getActors(post)(actorIds, val.token).map(actors => {
+      return MusitActor.getActors(post)({ actorIds, token: val.token }).map(actors => {
         if (!Array.isArray(actors)) {
           return rows;
         }

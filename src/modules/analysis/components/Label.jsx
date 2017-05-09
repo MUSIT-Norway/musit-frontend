@@ -1,7 +1,7 @@
 /* @flow */
 
 import React from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, ControlLabel } from 'react-bootstrap';
 
 type Props = {
   label: string,
@@ -9,8 +9,8 @@ type Props = {
 }
 
 const LabelFormat = ({ label, md }: Props) => (
-  <Col md={md} style={{ textAlign: 'right', padding: '7px' }}>
-    <strong>{label}</strong>
+  <Col md={md}>
+    <ControlLabel>{label}</ControlLabel>
   </Col>
 );
 

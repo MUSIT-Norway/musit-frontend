@@ -1,31 +1,10 @@
 /* @flow */
-import type { Field } from '../../forms/form';
-import createForm from '../../forms/form';
-import { isNonEmptyArray, isRequired } from '../../forms/validators';
-import { stringMapper, booleanMapper, noMapper } from '../../forms/mappers';
-
-export const getStrField = (field: string): Field<string> => ({
-  name: field,
-  mapper: stringMapper,
-  validator: {
-    rawValidator: isRequired
-  }
-});
-
-export const getBoolField = (field: string): Field<boolean> => ({
-  name: field,
-  mapper: booleanMapper,
-  validator: {}
-});
-
-export const getArrField = (field: string, value: Array<*> = []): Field<Array<*>> => ({
-  name: field,
-  defaultValue: value,
-  mapper: noMapper,
-  validator: {
-    rawValidator: isNonEmptyArray
-  }
-});
+import createForm, {
+  getStrField,
+  getArrField,
+  getBoolField,
+  getNumberField
+} from '../../forms/form';
 
 const id = getStrField('id');
 const analysisTypeId = getStrField('analysisTypeId');
@@ -47,7 +26,7 @@ const place = getStrField('place');
 const externalSource = getStrField('externalSource');
 const comments = getStrField('comments');
 const result = getStrField('result');
-const restrictions = getBoolField('restrictions');
+const restrictions = getBoolField('restrictions', false);
 const requester = getStrField('requester');
 const reason = getStrField('reason');
 const expirationDate = getStrField('expirationDate');
@@ -63,6 +42,7 @@ const analysisTypeCategory = getStrField('analysisTypeCategory');
 const updatedBy = getStrField('updatedBy');
 const updatedByName = getStrField('updatedByName');
 const updatedDate = getStrField('updatedDate');
+const status = getNumberField('status', 1, 1, 4, 0);
 
 export const fieldsArray = [
   id,
@@ -100,7 +80,8 @@ export const fieldsArray = [
   analysisTypeCategory,
   updatedBy,
   updatedByName,
-  updatedDate
+  updatedDate,
+  status
 ];
 
 export default createForm('analysisForm.js', fieldsArray);

@@ -1,12 +1,126 @@
+/* @flow */
 import { simpleGet, simplePut, simplePost } from '../shared/RxAjax';
 import Config from '../config';
 import { getPath } from '../shared/util';
 import flatMap from 'lodash/flatMap';
 import type { MovableObject } from './types/movableObject';
-
+import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
+import type { ObjectData } from '../types/object';
+import { Observable, Subject } from 'rxjs';
+import type { Breadcrumb } from './types/breadcrumb';
 type MuseumId = number;
 
-class MusitObject {}
+class MusitObject {
+  static getObjectDescription: (object: ObjectData) => string;
+  static isMainObject: (object: ObjectData) => boolean;
+  static getObjectDetails: (ajaxGet: AjaxGet) => (
+    props: {
+      id: number,
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static moveObjects: (
+    props: {
+      object: ObjectData,
+      destination: number,
+      doneBy: string,
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback: Callback
+    },
+    ajaxGet: AjaxGet,
+    ajaxPut: AjaxPut
+  ) => Observable;
+  static getObjectLocations: (ajaxPost: AjaxPost) => (
+    props: {
+      movableObjects: Array<MovableObject>,
+      museumId: MuseumId,
+      token: string,
+      callback: ?any
+    }
+  ) => Observable;
+  static getObjectLocation: (ajaxGet: AjaxGet) => (
+    props: {
+      objectId: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static getMainObject: (ajaxGet: AjaxGet) => (
+    props: {
+      id: string,
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static pickObject: (pickObject$: Subject, ajaxGet: AjaxGet) => (
+    props: {
+      object: ObjectData,
+      breadcrumb: Array<Breadcrumb>,
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static getObjects: (ajaxGet: AjaxGet) => (
+    props: {
+      id: number,
+      page: number,
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static moveSingleObject: (ajaxPut: AjaxPut) => (
+    props: {
+      id: number,
+      destination: number,
+      doneBy: string,
+      objectType?: 'collection' | 'sample',
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static getLocationHistory: (ajaxGet: AjaxGet) => (
+    props: {
+      objectId: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static findByBarcode: (ajaxGet: AjaxGet) => (
+    props: {
+      barcode: number,
+      museumId: number,
+      collectionId: string,
+      token: string
+    }
+  ) => Observable;
+  static searchForObjects: (ajaxGet: AjaxGet) => (
+    props: {
+      museumNo: string,
+      subNo: string,
+      term: string,
+      perPage: number,
+      page: number,
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+}
 
 MusitObject.getObjectDescription = obj => {
   let objStr = obj.museumNo ? `${obj.museumNo}` : '';
@@ -18,11 +132,13 @@ MusitObject.getObjectDescription = obj => {
 MusitObject.isMainObject = obj => obj.id === obj.mainObjectId;
 
 MusitObject.moveObjects = (
-  { object, destination, doneBy, museumId, collectionId, token, callback }
+  { object, destination, doneBy, museumId, collectionId, token, callback },
+  ajaxGet = simpleGet,
+  ajaxPut = simplePut
 ) => {
   if (MusitObject.isMainObject(object)) {
-    MusitObject.getMainObject()({
-      id: object.id,
+    MusitObject.getMainObject(ajaxGet)({
+      id: object.nodeId,
       museumId,
       collectionId,
       token,
@@ -31,7 +147,7 @@ MusitObject.moveObjects = (
       .toPromise()
       .then(objects =>
         objects.forEach(obj =>
-          MusitObject.moveSingleObject()({
+          MusitObject.moveSingleObject(ajaxPut)({
             id: obj.id,
             destination,
             doneBy,
@@ -40,7 +156,7 @@ MusitObject.moveObjects = (
             callback: MusitObject.isMainObject(obj) ? callback : null
           }).toPromise()));
   } else {
-    MusitObject.moveSingleObject()({
+    MusitObject.moveSingleObject(ajaxPut)({
       id: object.id,
       destination,
       doneBy,
@@ -51,26 +167,13 @@ MusitObject.moveObjects = (
   }
 };
 
-// Object types
-// [
-MusitObject.COLLECTION_OBJECT = 'collection';
-MusitObject.SAMPLE_OBJECT = 'sample';
-// ]
-
 MusitObject.getObjectLocations = (ajaxPost = simplePost) =>
-  (
-    obs: {
-      movableObjects: Array<MovableObject>,
-      museumId: MuseumId,
-      token: string,
-      callback: ?any
-    }
-  ) =>
+  ({ movableObjects, museumId, token, callback }) =>
     ajaxPost(
-      Config.magasin.urls.api.storagefacility.currentLocations(obs.museumId),
-      obs.movableObjects,
-      obs.token,
-      obs.callback
+      Config.magasin.urls.api.storagefacility.currentLocations(museumId),
+      movableObjects,
+      token,
+      callback
     ).map(({ response }) =>
       flatMap(response, ls => ls.objectIds.map(objectId => ({ objectId, ...ls.node }))));
 
@@ -122,18 +225,11 @@ MusitObject.getObjects = (ajaxGet = simpleGet) =>
   };
 
 MusitObject.moveSingleObject = (ajaxPut = simplePut) =>
-  (
-    {
-      id,
-      destination,
-      doneBy,
-      objectType = MusitObject.COLLECTION_OBJECT,
-      museumId,
-      token,
-      callback
-    }
-  ) => {
-    const items = [].concat(id).map(objectId => ({ id: objectId, objectType }));
+  ({ id, destination, doneBy, objectType, museumId, token, callback }) => {
+    const items = [].concat(id).map(objectId => ({
+      id: objectId,
+      objectType: objectType || 'collection'
+    }));
     const data = { doneBy, destination, items };
     return ajaxPut(
       Config.magasin.urls.api.storagefacility.moveObject(museumId),

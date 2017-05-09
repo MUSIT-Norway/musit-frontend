@@ -1,10 +1,53 @@
+/* @flow */
 import Config from '../config';
 import { mapToBackend } from './mapper/control/to_backend';
 import { simplePost, simpleGet } from '../shared/RxAjax';
 import MusitActor from './actor';
 import uniq from 'lodash/uniq';
+import type { Callback, AjaxGet, AjaxPost } from './types/ajax';
+import { Observable } from 'rxjs';
 
-class Control {}
+type ControlType = {
+  id: number,
+  registeredBy: string
+  // TODO fill in more fields here
+};
+
+type ObservationType = {
+  id: number,
+  registeredBy: string
+  // TODO fill in more fields here
+};
+
+class Control {
+  static loadControls: (ajaxGet: AjaxGet) => (
+    props: {
+      nodeId: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static addControl: (ajaxPost: AjaxPost) => (
+    props: {
+      nodeId: number,
+      controlData: ControlType,
+      observations?: ?ObservationType,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static getControl: (ajaxGet: AjaxGet, ajaxPost: AjaxPost) => (
+    props: {
+      nodeId: number,
+      controlId: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+}
 
 Control.loadControls = (ajaxGet = simpleGet) =>
   ({ nodeId, museumId, token, callback }) =>
@@ -39,7 +82,7 @@ Control.getControl = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
         control.response.doneBy,
         control.response.registeredBy
       ]).filter(p => p);
-      return MusitActor.getActors(ajaxPost)(actorIds, token).map(actorDetails => ({
+      return MusitActor.getActors(ajaxPost)({ actorIds, token }).map(actorDetails => ({
         ...control.response,
         ...MusitActor.getActorNames(
           actorDetails,

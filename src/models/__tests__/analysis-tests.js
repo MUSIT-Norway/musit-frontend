@@ -1,10 +1,20 @@
+// @flow
 import Analysis from '../analysis';
 import { Observable } from 'rxjs';
 import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
+declare var describe: any;
+declare var it: any;
+
 describe('Analysis model', () => {
   it('should work', () => {
     const testScheduler = new MusitTestScheduler();
+
+    const post = () =>
+      Observable.of({
+        response: []
+      });
+
     const get = url => {
       if (url.indexOf('analyses') > -1) {
         return Observable.of({
@@ -32,11 +42,11 @@ describe('Analysis model', () => {
       });
     };
 
-    const fn = Analysis.getAnalysisWithDetails(get);
+    const fn = Analysis.getAnalysisWithDetails(get, post);
 
     const props = {
       token: '1234',
-      id: '12345',
+      id: 12345,
       collectionId: '00000000-0000-0000-0000-000000000000',
       museumId: 99
     };

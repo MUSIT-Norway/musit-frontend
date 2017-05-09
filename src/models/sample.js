@@ -1,10 +1,66 @@
+/* @flow */
 import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import object from './object';
 import { Observable } from 'rxjs';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
+import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 
-class Sample {}
+class Sample {
+  static addSample: (ajaxPost: AjaxPost) => (
+    props: {
+      museumId: number,
+      token: string,
+      data: mixed,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static editSample: (ajaxPut: AjaxPut) => (
+    props: {
+      id: number,
+      museumId: number,
+      token: string,
+      data: mixed,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static loadSample: (ajaxGet: AjaxGet) => (
+    props: {
+      id: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static loadSampleDataForObject: (ajaxGet: AjaxGet) => (
+    props: {
+      id: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static loadSamplesForObject: (ajaxGet: AjaxGet) => (
+    props: {
+      objectId: number,
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+  static prepareForSubmit: (
+    tmpData: {
+      size?: { value: number, unit: string },
+      parentObjectId: number,
+      sizeUnit: mixed,
+      subTypeValue: mixed,
+      sampleType: { value: string, subTypeValue: string },
+      externalId: { value: string, source: string },
+      externalIdSource: mixed
+    }
+  ) => mixed;
+}
 
 // To clean up after mapping single field to object for backend
 Sample.prepareForSubmit = tmpData => ({
@@ -62,7 +118,7 @@ Sample.loadSamplesForObject = (ajaxGet = simpleGet) =>
       collectionId
     });
     const sampleRes = ajaxGet(url, token, callback).map(e => e.response);
-    const r = Observable.forkJoin(sampleRes, objResp).map(([samples, obj]) => {
+    return Observable.forkJoin(sampleRes, objResp).map(([samples, obj]) => {
       return {
         ...obj,
         data: samples.map(a => ({
@@ -71,7 +127,6 @@ Sample.loadSamplesForObject = (ajaxGet = simpleGet) =>
         }))
       };
     });
-    return r;
   };
 
 export default Sample;

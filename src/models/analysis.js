@@ -1,42 +1,124 @@
+/* @flow */
 import { simpleGet, simplePost, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import MusitActor from './actor';
 import MusitObject from './object';
 import { Observable } from 'rxjs';
 import moment from 'moment';
+import type { Field } from '../forms/form';
+import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 
-class Analysis {}
+export type Restriction = {
+  requester?: ?string,
+  reason?: ?string,
+  expirationDate?: ?string
+};
 
-Analysis.fromJsonToForm = (
-  json: any
-): Array<{ name: string, defaultValue: string | boolean }> => {
-  // auxiliary method for converting to field
-  const toField = (name, defaultValue) => ({ name, defaultValue });
-  // Convert json to an object of form fields
-  const form = Object.keys(json).reduce(
-    (acc, key) => ({ ...acc, [key]: toField(key, json[key]) }),
+export type Analysis = {
+  id: string,
+  registeredBy: string,
+  caseNumbers?: ?Array<string>,
+  restriction?: ?Restriction
+  // TODO TBD
+};
+
+export type AnalysisType = {
+  id: string
+  // TODO TBD
+};
+
+type FormValue = {
+  name: string,
+  defaultValue: ?string | boolean
+};
+
+class MusitAnalysis {
+  static fromJsonToForm: (json: Analysis, fields: Array<Field<*>>) => Array<FormValue>;
+
+  static getAnalysisTypesForCollection: (ajaxGet: AjaxGet) => (
+    props: {
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+
+  static saveAnalysisEvent: (ajaxPost: AjaxPost) => (
+    props: {
+      museumId: number,
+      data: AnalysisType,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+
+  static editAnalysisEvent: (ajaxPut: AjaxPut) => (
+    props: {
+      id: number,
+      museumId: number,
+      data: Analysis,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+
+  static getAnalysesForObject: (ajaxGet: AjaxGet) => (
+    props: {
+      id: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+
+  static getAnalysisById: (ajaxGet: AjaxGet) => (
+    props: {
+      id: number,
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+
+  static getAnalysisWithDetails: (ajaxGet: AjaxGet, ajaxPost: AjaxPost) => (
+    props: {
+      id: number,
+      museumId: number,
+      collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+}
+
+const toField = (name: string, defaultValue: ?string | boolean): FormValue => ({ name, defaultValue });
+
+MusitAnalysis.fromJsonToForm = (json, formDef) => {
+  const formValues = formDef.reduce(
+    (acc, field) => ({
+      ...acc,
+      [field.name]: toField(field.name, json[field.name])
+    }),
     {}
   );
-  // custom mapping of composite structures from json to form
-  form.caseNumber = toField(
-    'caseNumber',
-    form.caseNumbers ? form.caseNumbers.defaultValue[0] : null
-  );
-  const restriction = form.restriction && form.restriction.defaultValue;
-  form.restrictiona = toField('restrictions', !!restriction);
+
+  formValues.caseNumber = toField('caseNumber', json.caseNumbers && json.caseNumbers[0]);
+  const restriction = json.restriction;
+  formValues.restrictiona = toField('restrictions', !!restriction);
   if (restriction) {
-    form.requester = toField('requester', restriction.requester);
-    form.reason = toField('reason', restriction.reason);
-    form.expirationDate = toField(
+    formValues.requester = toField('requester', restriction.requester);
+    formValues.reason = toField('reason', restriction.reason);
+    formValues.expirationDate = toField(
       'expirationDate',
       moment(restriction.expirationDate).format('YYYY-MM-DD')
     );
   }
-  // return an array of form fields
-  return Object.keys(form).map(key => form[key]);
+
+  return Object.keys(formValues).map(key => formValues[key]);
 };
 
-Analysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) =>
+MusitAnalysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) =>
   ({ museumId, collectionId, token, callback }) => {
     const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(
       museumId,
@@ -45,19 +127,19 @@ Analysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) =>
     return ajaxGet(url, token, callback).map(({ response }) => response);
   };
 
-Analysis.saveAnalysisEvent = (ajaxPost = simplePost) =>
+MusitAnalysis.saveAnalysisEvent = (ajaxPost = simplePost) =>
   ({ museumId, data, token, callback }) => {
     const url = Config.magasin.urls.api.analysis.saveAnalysisEvent(museumId);
     return ajaxPost(url, data, token, callback).map(({ response }) => response);
   };
 
-Analysis.editAnalysisEvent = (ajaxPut = simplePut) =>
+MusitAnalysis.editAnalysisEvent = (ajaxPut = simplePut) =>
   ({ id, museumId, data, token, callback }) => {
     const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
     return ajaxPut(url, data, token, callback).map(({ response }) => response);
   };
 
-Analysis.getAnalysesForObject = (ajaxGet = simpleGet) =>
+MusitAnalysis.getAnalysesForObject = (ajaxGet = simpleGet) =>
   ({ museumId, token, id, callback }) => {
     const url = Config.magasin.urls.api.analysis.analysesForObject(museumId, id);
     return ajaxGet(url, token, callback).map(({ response }) => {
@@ -68,25 +150,35 @@ Analysis.getAnalysesForObject = (ajaxGet = simpleGet) =>
     });
   };
 
-Analysis.getAnalysisById = (ajaxGet = simpleGet) =>
+MusitAnalysis.getAnalysisById = (ajaxGet = simpleGet) =>
   ({ museumId, id, token, callback }) => {
     const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
     return ajaxGet(url, token, callback).map(({ response }) => response);
   };
 
-Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
-  props => {
-    return Analysis.getAnalysisById(ajaxGet)(props)
+MusitAnalysis.getAnalysisWithDetails = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
+  props =>
+    MusitAnalysis.getAnalysisById(ajaxGet)(props)
       .flatMap(analysis =>
-        MusitActor.getActor(ajaxGet)({
-          token: props.token,
-          actorId: analysis.registeredBy
-        }).map(actor => actor ? { ...analysis, registeredByName: actor.fn } : analysis))
-      .flatMap(analysis =>
-        MusitActor.getActor(ajaxGet)({
-          token: props.token,
-          actorId: analysis.updatedBy
-        }).map(actor => actor ? { ...analysis, updatedByName: actor.fn } : analysis))
+        MusitActor.getActors(ajaxPost)({
+          actorIds: [analysis.registeredBy, analysis.updatedBy].filter(p => p),
+          token: props.token
+        }).map(actors => {
+          if (actors) {
+            const actorNames = MusitActor.getMultipleActorNames(actors, [
+              {
+                id: analysis.updatedBy,
+                fieldName: 'updatedByName'
+              },
+              {
+                id: analysis.registeredBy,
+                fieldName: 'registeredByName'
+              }
+            ]);
+            return { ...analysis, ...actorNames };
+          }
+          return analysis;
+        }))
       .flatMap(analysis => {
         if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
           return Observable.forkJoin(
@@ -104,7 +196,9 @@ Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
             }
             const events = analysis.events.map(e => {
               const od = arrayOfObjectDetails.find(objD => objD.uuid === e.objectId);
-              return od ? { ...e, ...od } : e;
+              return od
+                ? { ...e, term: od.term, museumNo: od.museumNo, subNo: od.subNo }
+                : e;
             });
             return { ...analysis, events: events };
           });
@@ -129,6 +223,5 @@ Analysis.getAnalysisWithDetails = (ajaxGet = simpleGet) =>
           };
         });
       });
-  };
 
-export default Analysis;
+export default MusitAnalysis;

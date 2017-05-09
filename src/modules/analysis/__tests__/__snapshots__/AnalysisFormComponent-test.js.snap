@@ -1,0 +1,403 @@
+exports[`AnalysisFormComponent should render objects from events 1`] = `
+<div>
+  <div
+    className="page-header">
+    <h1>
+      Registrer analyse
+    </h1>
+  </div>
+  <form
+    className="form-horizontal">
+    <div
+      className="form-group">
+      <label
+        className="control-label col-sm-2"
+        htmlFor="type">
+        Type analyse:
+      </label>
+      <div>
+        <div
+          className="col-sm-5">
+          <select
+            className="form-control"
+            id="type"
+            onChange={[Function anonymous]}
+            value="">
+            <option
+              value="">
+              Velg kategori
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-sm-2"
+        htmlFor="purpose">
+        Formål med analysen:
+      </label>
+      <div
+        className="col-sm-10">
+        <select
+          className="form-control"
+          id="purpose">
+          <option>
+            Velg formål (ikke implementert på backend)
+          </option>
+          <option
+            value="other">
+            ...
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-sm-2"
+        htmlFor="status">
+        Status på analysen:
+      </label>
+      <div
+        className="col-sm-10">
+        <div
+          className="btn-group"
+          id="status">
+          <select
+            className="form-control"
+            id="status"
+            onChange={[Function anonymous]}
+            value="1">
+            <option
+              value="">
+              Velg formål
+            </option>
+            <option
+              value="1">
+              1. Under forberedelse
+            </option>
+            <option
+              value="2">
+              2. Analyse påbegynt
+            </option>
+            <option
+              value="3">
+              3. Analyse ferdig
+            </option>
+            <option
+              value="4">
+              4. Avsluttet uten resultat
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-sm-2"
+        htmlFor="location">
+        Analysested:
+      </label>
+      <div
+        className="col-sm-10">
+        <select
+          className="form-control"
+          id="location">
+          <option>
+            Velg sted (ikke implementert på backend)
+          </option>
+          <option
+            value="other">
+            ...
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-sm-2"
+        htmlFor="casenumber">
+        Saksnummer:
+      </label>
+      <div
+        className="col-sm-5">
+        <input
+          className="form-control"
+          id="casenumber"
+          onChange={[Function anonymous]}
+          type="text"
+          value="" />
+      </div>
+      <AddButton
+        id="1"
+        label="Legg til saksnummer"
+        md={5}
+        mdOffset={0} />
+    </div>
+    <hr />
+    <div
+      className="form-group">
+      <label
+        className="control-label col-sm-2"
+        htmlFor="note">
+        Kommentar:
+      </label>
+      <div
+        className="col-sm-10">
+        <textarea
+          className="form-control"
+          id="note"
+          onChange={[Function anonymous]}
+          rows={5}
+          value="" />
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label">
+        Personer tilknyttet analysen:
+      </label>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-sm-2"
+        htmlFor="responsible-name1">
+        Navn:
+      </label>
+      <div
+        className="col-sm-2">
+        <input
+          className="form-control"
+          id="responsible-name1"
+          type="text" />
+      </div>
+      <label
+        className="control-label col-sm-1"
+        htmlFor="responsible-role1">
+        Rolle:
+      </label>
+      <div
+        className="col-sm-2">
+        <select
+          className="form-control"
+          id="responsible-role1">
+          <option>
+            Velg rolle
+          </option>
+          <option
+            value="other">
+            ...
+          </option>
+        </select>
+      </div>
+      <AddButton
+        id="3"
+        label="Legg til person"
+        md={2}
+        mdOffset={0} />
+    </div>
+    <hr />
+    <div
+      className="well">
+      <div
+        className="form-group">
+        <label
+          className="control-label col-sm-2"
+          htmlFor="objects">
+          Objekter:
+        </label>
+        <div
+          className="col-sm-10">
+          <Table
+            className="table"
+            columns={
+              Array [
+                Object {
+                  "key": "museumNo",
+                  "label": "Museumsnr"
+                },
+                Object {
+                  "key": "subNo",
+                  "label": "Unr"
+                },
+                Object {
+                  "key": "term",
+                  "label": "Term/artsnavn"
+                }
+              ]
+            }
+            data={
+              Array [
+                Object {
+                  "id": 1,
+                  "mainObjectId": 1,
+                  "museumNo": "museumNO",
+                  "nodeId": "1234",
+                  "objectId": 1,
+                  "objectType": "collection",
+                  "objectUUID": "sdffsdsfsf",
+                  "subNo": "subNO",
+                  "term": "saks 1",
+                  "uuid": "ddlkjlkjfsdf"
+                },
+                Object {
+                  "id": 2,
+                  "mainObjectId": 1,
+                  "museumNo": "museumNO",
+                  "nodeId": "1234",
+                  "objectId": 2,
+                  "objectType": "collection",
+                  "objectUUID": "sdffsdsfsf",
+                  "subNo": "subNO",
+                  "term": "saks 2",
+                  "uuid": "ddlkjlkjfsdf"
+                }
+              ]
+            }
+            defaultSort={false}
+            defaultSortDescending={false}
+            filterBy=""
+            hideFilterInput={false}
+            id="objects"
+            itemsPerPage={0}
+            noDataText="Ingen objekter"
+            sortBy={false}
+            sortable={
+              Array [
+                "museumNumber",
+                "subNumber",
+                "term"
+              ]
+            } />
+        </div>
+        <AddButton
+          id="2"
+          label="Legg til objekt"
+          md={11}
+          mdOffset={2} />
+      </div>
+      <hr />
+      <div
+        className="form-group">
+        <label
+          className="control-label col-sm-2"
+          htmlFor="externalSource">
+          Ekstern kilde:
+        </label>
+        <div
+          className="col-sm-5">
+          <input
+            className="form-control"
+            id="externalSource"
+            onChange={[Function anonymous]}
+            value="" />
+        </div>
+        <div
+          className="col-sm-2">
+          <button
+            className="btn btn-default">
+            Lagre
+          </button>
+        </div>
+      </div>
+      <div
+        className="form-group">
+        <label
+          className="control-label col-sm-2"
+          htmlFor="file">
+          Last opp fil:
+        </label>
+        <div
+          className="col-sm-5">
+          <input
+            className="form-control"
+            id="file" />
+        </div>
+        <div
+          className="col-sm-2">
+          <button
+            className="btn btn-default">
+            Bla gjennom
+          </button>
+        </div>
+      </div>
+      <div
+        className="form-group">
+        <label
+          className="control-label col-sm-2"
+          htmlFor="resultNote">
+          Kommentar til resultat:
+        </label>
+        <div
+          className="col-sm-10">
+          <textarea
+            className="form-control"
+            id="resultNote"
+            onChange={[Function anonymous]}
+            rows={5}
+            value="" />
+        </div>
+      </div>
+      <div
+        className="form-group">
+        <label
+          className="control-label col-sm-2"
+          htmlFor="isRestricted">
+          Klausulering:
+        </label>
+        <div
+          className="col-sm-10">
+          <div
+            className="btn-group"
+            data-toggle="buttons">
+            <label
+              className="btn btn-default ">
+              <input
+                name="options"
+                onChange={[Function anonymous]}
+                type="radio" />
+               
+              Ja
+            </label>
+            <label
+              className="btn btn-default active">
+              <input
+                name="options"
+                onChange={[Function anonymous]}
+                type="radio" />
+               
+              Nei
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <button
+      className="btn btn-primary"
+      onClick={
+        Object {
+          "accessToken": "45667",
+          "actor": Object {
+            "fn": "Test"
+          },
+          "collectionId": "1234",
+          "museumId": 99
+        }
+      }>
+      Lagre
+    </button>
+     
+    <button
+      className="btn btn-default">
+      Avbryt
+    </button>
+  </form>
+</div>
+`;

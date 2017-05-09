@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs';
+// @flow
+import { Observable, Subject } from 'rxjs';
 import MusitObject from '../../models/object';
 import MusitNode from '../../models/node';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
@@ -12,7 +13,16 @@ export const loadObjects$ = createAction('loadObjects$').switchMap(
 export const loadStats$ = createAction('loadStats$').switchMap(MusitNode.getStats());
 export const loadRootNode$ = createAction('loadRootNode$').switchMap(MusitNode.getNode());
 
-export const reducer$ = actions =>
+type Actions = {
+  clearRootNode$: Subject,
+  loadStats$: Subject,
+  loadRootNode$: Subject,
+  setLoading$: Subject,
+  loadNodes$: Subject,
+  loadObjects$: Subject
+};
+
+export const reducer$ = (actions: Actions) =>
   Observable.merge(
     actions.clearRootNode$.map(() =>
       state => ({ ...state, rootNode: null, stats: null })),
@@ -27,7 +37,7 @@ export const reducer$ = actions =>
   );
 
 export const store$ = (
-  actions$ = {
+  actions$: Actions = {
     clearRootNode$,
     setLoading$,
     loadStats$,

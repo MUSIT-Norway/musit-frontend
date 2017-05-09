@@ -2,24 +2,33 @@
 import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import isEmpty from 'lodash/isEmpty';
-import { stringMapper } from './mappers';
-import { noValidation } from './validators';
+import { stringMapper, noMapper, booleanMapper, numberMapper } from './mappers';
+import {
+  noValidation,
+  isRequired,
+  isNonEmptyArray,
+  isNumberInRange,
+  isNumber,
+  composeValidators
+} from './validators';
+
+export type RawValue = string | number | Array<*>;
 
 export type Field<T> = {
   name: string,
-  rawValue?: ?string,
-  defaultValue?: ?T,
+  rawValue?: ?RawValue,
+  defaultValue: ?T,
   value?: ?T,
   status?: {
     valid: boolean,
     error?: any
   },
   mapper: {
-    fromRaw: (s: ?string) => ?T,
-    toRaw: (t: ?T) => ?string
+    fromRaw: (s: ?RawValue) => ?T,
+    toRaw: (t: ?T) => ?RawValue
   },
   validator: {
-    rawValidator?: (field: string) => (s: ?string) => ?string,
+    rawValidator?: (field: string) => (s: ?RawValue) => ?string,
     valueValidator?: (field: string) => (t: ?T) => ?string
   }
 };
@@ -52,6 +61,56 @@ const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
   };
 };
 
+export const getStrField = (
+  field: string,
+  defaultValue?: ?string = null
+): Field<string> => ({
+  name: field,
+  defaultValue: defaultValue,
+  mapper: stringMapper,
+  validator: {
+    rawValidator: isRequired
+  }
+});
+
+export const getBoolField = (
+  field: string,
+  defaultValue?: ?boolean = null
+): Field<boolean> => ({
+  name: field,
+  defaultValue: defaultValue,
+  mapper: booleanMapper,
+  validator: {}
+});
+
+export const getArrField = (
+  field: string,
+  defaultValue?: Array<*> = []
+): Field<Array<*>> => ({
+  name: field,
+  defaultValue: defaultValue,
+  mapper: noMapper,
+  validator: {
+    rawValidator: isNonEmptyArray
+  }
+});
+
+export const getNumberField = (
+  field: string,
+  defaultValue?: ?number = null,
+  rangeFrom?: ?number = 0,
+  rangeTo?: ?number = Number.MAX_VALUE,
+  decimalPrecision?: ?number = 2
+): Field<number> => ({
+  name: field,
+  defaultValue: defaultValue,
+  mapper: numberMapper,
+  validator: {
+    rawValidator: composeValidators(isRequired, isNumber(0, decimalPrecision)),
+    valueValidator: isNumberInRange(rangeFrom, rangeTo)
+  }
+});
+
 const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
   const fieldIndex: number = state.findIndex((f: Field<*>) => f.name === data.name);
   if (fieldIndex === -1) {
@@ -77,9 +136,9 @@ export type FormDetails = {
 
 const createForm$ = (
   name: string,
-  fields: Field<*>[],
+  fields: Array<Field<*>>,
   updateForm$?: Subject<Update<*>>,
-  loadForm$?: Subject<Update<*>[]>
+  loadForm$?: Subject<Array<Update<*>>>
 ): FormDetails => {
   updateForm$ = updateForm$ || createAction(name + ': updateForm$');
   loadForm$ = loadForm$ || createAction(name + ': loadForm$');

@@ -1,22 +1,35 @@
-import * as ajaxFunctions from '../shared/RxAjax';
+/* @flow */
+import { simpleGet, ajax } from '../shared/RxAjax';
 import Config from '../config';
+import type { AjaxGet } from './types/ajax';
+import { Observable } from 'rxjs';
 
-class Template {}
+class Template {
+  static loadTemplates: (ajaxGet: AjaxGet) => (props: { token: string }) => Observable;
+  static renderTemplate: (ajaxFn: Function) => (
+    props: {
+      templateId: number,
+      codeFormat: number,
+      nodes: Array<{ uuid: string, name: string }>,
+      token: string
+    }
+  ) => Observable;
+}
 
-Template.loadTemplates = (simpleGet = ajaxFunctions.simpleGet) =>
+Template.loadTemplates = (ajaxGet = simpleGet) =>
   ({ token }) =>
-    simpleGet(Config.magasin.urls.api.barcode.templatesUrl, token).map(
+    ajaxGet(Config.magasin.urls.api.barcode.templatesUrl, token).map(
       ({ response }) => response
     );
 
-Template.renderTemplate = (ajax = ajaxFunctions.ajax) =>
+Template.renderTemplate = (ajaxFn = ajax) =>
   ({ templateId, codeFormat, nodes, token }) => {
     const data = nodes.map(node => ({
       uuid: node.uuid,
       data: [{ field: 'name', value: node.name }]
     }));
     const url = Config.magasin.urls.api.barcode.templateRenderUrl(templateId, codeFormat);
-    return ajax(
+    return ajaxFn(
       url,
       'POST',
       data,

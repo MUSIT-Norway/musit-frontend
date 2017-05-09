@@ -1,8 +1,8 @@
 import inject from 'react-rxjs/dist/RxInject';
 import React from 'react';
-import analysisForm from './analysisForm';
-import AnalysisEditComponent from './AnalysisEditComponent';
-import store$, { getAnalysisTypes$ } from './analysisStore';
+import analysisForm, { fieldsArray } from './analysisForm';
+import AnalysiFormComponent from './AnalysisFormComponent';
+import store$, { getAnalysisTypes$, getAnalysis$ } from './analysisStore';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
@@ -20,16 +20,16 @@ const data = {
 const commands = {
   updateForm$,
   loadForm$,
-  getAnalysisTypes$
+  getAnalysisTypes$,
+  getAnalysis$
 };
 
 const props = {
-  editAnalysisEvent: toPromise(Analysis.editAnalysisEvent()),
-  loadAnalysis: toPromise(Analysis.getAnalysisWithDetails())
+  saveAnalysisEvent: toPromise(Analysis.editAnalysisEvent())
 };
 
 export const onMount = (
-  { getAnalysisTypes, loadAnalysis, appSession, params, loadForm }
+  { getAnalysisTypes, getAnalysis, appSession, params, loadForm }
 ) => {
   const inputParams = {
     museumId: appSession.museumId,
@@ -38,9 +38,12 @@ export const onMount = (
     token: appSession.accessToken
   };
   getAnalysisTypes(inputParams);
-  loadAnalysis(inputParams).then(analysis => loadForm(Analysis.fromJsonToForm(analysis)));
+  getAnalysis({
+    ...inputParams,
+    onComplete: analysis => loadForm(Analysis.fromJsonToForm(analysis, fieldsArray))
+  });
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  AnalysisEditComponent
+  AnalysiFormComponent
 );
