@@ -1,10 +1,8 @@
 /* @flow */
 import type { Field } from '../../../forms/form';
 
-export type ArrayField = { name: string, rawValue: ?Array<*> };
-
 export type FormData = {
-  id: Field<string>,
+  id: Field<number>,
   analysisTypeId: Field<string>,
   analysisTypeCategory: Field<string>,
   doneBy: Field<string>,
@@ -28,7 +26,7 @@ export type FormData = {
   requester: Field<string>,
   expirationDate: Field<string>,
   reason: Field<string>,
-  caseNumbers: Field<string>, //todo should be an a array
+  caseNumbers: Field<Array<string>>,
   cancelledBy: Field<string>,
   cancelledReason: Field<string>,
   completeAnalysis: Field<string>,
@@ -38,7 +36,7 @@ export type FormData = {
   eventDate: Field<string>,
   actor: Field<string>,
   caseNumber: Field<string>,
-  events: ArrayField,
+  events: Field<Array<*>>,
   updatedBy: Field<string>,
   updatedByName: Field<string>,
   updatedDate: Field<string>,

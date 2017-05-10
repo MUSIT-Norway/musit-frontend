@@ -11,13 +11,13 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <div
       className="form-group">
       <label
-        className="control-label col-sm-2"
+        className="control-label col-md-2"
         htmlFor="type">
         Type analyse:
       </label>
       <div>
         <div
-          className="col-sm-5">
+          className="col-md-5">
           <select
             className="form-control"
             id="type"
@@ -34,84 +34,36 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <div
       className="form-group">
       <label
-        className="control-label col-sm-2"
-        htmlFor="purpose">
-        Formål med analysen:
-      </label>
-      <div
-        className="col-sm-10">
-        <select
-          className="form-control"
-          id="purpose">
-          <option>
-            Velg formål (ikke implementert på backend)
-          </option>
-          <option
-            value="other">
-            ...
-          </option>
-        </select>
-      </div>
-    </div>
-    <div
-      className="form-group">
-      <label
-        className="control-label col-sm-2"
+        className="control-label col-md-2"
         htmlFor="status">
         Status på analysen:
       </label>
       <div
-        className="col-sm-10">
-        <div
-          className="btn-group"
-          id="status">
-          <select
-            className="form-control"
-            id="status"
-            onChange={[Function anonymous]}
-            value="1">
-            <option
-              value="">
-              Velg formål
-            </option>
-            <option
-              value="1">
-              1. Under forberedelse
-            </option>
-            <option
-              value="2">
-              2. Analyse påbegynt
-            </option>
-            <option
-              value="3">
-              3. Analyse ferdig
-            </option>
-            <option
-              value="4">
-              4. Avsluttet uten resultat
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div
-      className="form-group">
-      <label
-        className="control-label col-sm-2"
-        htmlFor="location">
-        Analysested:
-      </label>
-      <div
-        className="col-sm-10">
+        className="col-md-10">
         <select
           className="form-control"
-          id="location">
-          <option>
-            Velg sted (ikke implementert på backend)
+          id="status"
+          onChange={[Function anonymous]}
+          value="1">
+          <option
+            value="">
+            Velg formål
           </option>
           <option
-            value="other">
-            ...
+            value="1">
+            1. Under forberedelse
+          </option>
+          <option
+            value="2">
+            2. Analyse påbegynt
+          </option>
+          <option
+            value="3">
+            3. Analyse ferdig
+          </option>
+          <option
+            value="4">
+            4. Avsluttet uten resultat
           </option>
         </select>
       </div>
@@ -119,12 +71,12 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <div
       className="form-group">
       <label
-        className="control-label col-sm-2"
+        className="control-label col-md-2"
         htmlFor="casenumber">
         Saksnummer:
       </label>
       <div
-        className="col-sm-5">
+        className="col-md-5">
         <input
           className="form-control"
           id="casenumber"
@@ -142,12 +94,12 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <div
       className="form-group">
       <label
-        className="control-label col-sm-2"
+        className="control-label col-md-2"
         htmlFor="note">
         Kommentar:
       </label>
       <div
-        className="col-sm-10">
+        className="col-md-10">
         <textarea
           className="form-control"
           id="note"
@@ -166,24 +118,24 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <div
       className="form-group">
       <label
-        className="control-label col-sm-2"
+        className="control-label col-md-2"
         htmlFor="responsible-name1">
         Navn:
       </label>
       <div
-        className="col-sm-2">
+        className="col-md-2">
         <input
           className="form-control"
           id="responsible-name1"
           type="text" />
       </div>
       <label
-        className="control-label col-sm-1"
+        className="control-label col-md-1"
         htmlFor="responsible-role1">
         Rolle:
       </label>
       <div
-        className="col-sm-2">
+        className="col-md-2">
         <select
           className="form-control"
           id="responsible-role1">
@@ -208,12 +160,12 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       <div
         className="form-group">
         <label
-          className="control-label col-sm-2"
+          className="control-label col-md-2"
           htmlFor="objects">
           Objekter:
         </label>
         <div
-          className="col-sm-10">
+          className="col-md-10">
           <Table
             className="table"
             columns={
@@ -286,12 +238,12 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       <div
         className="form-group">
         <label
-          className="control-label col-sm-2"
+          className="control-label col-md-2"
           htmlFor="externalSource">
           Ekstern kilde:
         </label>
         <div
-          className="col-sm-5">
+          className="col-md-5">
           <input
             className="form-control"
             id="externalSource"
@@ -299,7 +251,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             value="" />
         </div>
         <div
-          className="col-sm-2">
+          className="col-md-2">
           <button
             className="btn btn-default">
             Lagre
@@ -309,18 +261,18 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       <div
         className="form-group">
         <label
-          className="control-label col-sm-2"
+          className="control-label col-md-2"
           htmlFor="file">
           Last opp fil:
         </label>
         <div
-          className="col-sm-5">
+          className="col-md-5">
           <input
             className="form-control"
             id="file" />
         </div>
         <div
-          className="col-sm-2">
+          className="col-md-2">
           <button
             className="btn btn-default">
             Bla gjennom
@@ -330,12 +282,12 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       <div
         className="form-group">
         <label
-          className="control-label col-sm-2"
+          className="control-label col-md-2"
           htmlFor="resultNote">
           Kommentar til resultat:
         </label>
         <div
-          className="col-sm-10">
+          className="col-md-10">
           <textarea
             className="form-control"
             id="resultNote"
@@ -347,12 +299,12 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       <div
         className="form-group">
         <label
-          className="control-label col-sm-2"
+          className="control-label col-md-2"
           htmlFor="isRestricted">
           Klausulering:
         </label>
         <div
-          className="col-sm-10">
+          className="col-md-10">
           <div
             className="btn-group"
             data-toggle="buttons">
@@ -381,21 +333,13 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <hr />
     <button
       className="btn btn-primary"
-      onClick={
-        Object {
-          "accessToken": "45667",
-          "actor": Object {
-            "fn": "Test"
-          },
-          "collectionId": "1234",
-          "museumId": 99
-        }
-      }>
+      onClick={[Function anonymous]}>
       Lagre
     </button>
      
     <button
-      className="btn btn-default">
+      className="btn btn-default"
+      onClick={[Function onClick]}>
       Avbryt
     </button>
   </form>

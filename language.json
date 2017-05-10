@@ -3,7 +3,9 @@
     "musit": {
       "analysis": {
         "analysis": "Analysis",
-        "registeringAnalysis": "Registering analysis"
+        "registeringAnalysis": "Registering analysis",
+        "editAnalysis": "Edit analysis",
+        "viewAnalysis": "Analysis details"
       },
       "unknown": "Unknown",
       "language": "Language",
@@ -674,6 +676,8 @@
         "analysis": "Analyse",
         "sample": "Prøveuttak",
         "registeringAnalysis": "Registrer analyse",
+        "editAnalysis": "Endre analyse",
+        "viewAnalysis": "Analyse detaljer",
         "registeringSample": "Registrer prøveuttak"
       },
       "unknown": "Ukjent",

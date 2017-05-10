@@ -24,7 +24,7 @@ const commands = {
 };
 
 const props = {
-  saveAnalysisEvent: toPromise(Analysis.saveAnalysisEvent())
+  saveAnalysis: toPromise(Analysis.saveAnalysisEvent())
 };
 
 export const onMount = ({ appSession, getAnalysisTypes }) =>

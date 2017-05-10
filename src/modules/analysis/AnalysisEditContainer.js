@@ -25,7 +25,7 @@ const commands = {
 };
 
 const props = {
-  saveAnalysisEvent: toPromise(Analysis.editAnalysisEvent())
+  saveAnalysis: toPromise(Analysis.editAnalysisEvent())
 };
 
 export const onMount = (

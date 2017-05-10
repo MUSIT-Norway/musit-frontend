@@ -1,246 +1,676 @@
 exports[`AnalysisViewComponent should render properly 1`] = `
 <div>
-  <br />
-  <PageHeader
-    bsClass="page-header"
-    style={
-      Object {
-        "paddingLeft": 20
-      }
-    }>
-    Registrer analyse
-  </PageHeader>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
-      Registrert:
-    </strong>
-     
-    <FontAwesome
-      name="user" />
-     
-     
-    <FontAwesome
-      name="clock-o" />
-     
-  </Col>
-  <Col
-    bsClass="col"
-    componentClass="div"
-    md={12}>
-    <strong>
-      Sist endret:
-    </strong>
-     
-    <FontAwesome
-      name="user" />
-     
-     
-    <FontAwesome
-      name="clock-o" />
-     
-  </Col>
-  <NewLine />
-  <Form
-    bsClass="form"
-    componentClass="form"
-    horizontal={true}
-    inline={false}
-    style={
-      Object {
-        "paddingLeft": 10
-      }
-    }>
-    <FormGroup
-      bsClass="form-group">
-      <LabelFormat
-        label="Type analyse"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={11} />
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <LabelFormat
-        label="Formål med analysen"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={3} />
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <LabelFormat
-        label="Status på analysen"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={10} />
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <LabelFormat
-        label="Analysested"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={2} />
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <LabelAndValue
-        id="formControlsText"
-        label="saksnummer"
-        md={1}
-        value="" />
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <LabelFormat
-        label="Beskrivelse/ kommentar"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={5} />
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={12}>
-        <h5>
-          <strong>
-            Personer tilknyttet analysen
-          </strong>
-        </h5>
-      </Col>
-    </FormGroup>
-    <FormGroup
-      bsClass="form-group">
-      <LabelAndValue
-        id="navn"
-        label="Navn"
-        md={1}
-        value="" />
-      <LabelFormat
-        label="Rolle"
-        md={1} />
-      <Col
-        bsClass="col"
-        componentClass="div"
-        md={2} />
-    </FormGroup>
-  </Form>
-  <NewLine />
-  <Well
-    bsClass="well">
-    <Form
-      bsClass="form"
-      componentClass="form"
-      horizontal={true}
-      inline={false}>
-      <FormGroup
-        bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={1}>
-          <h5>
-            <strong>
-              Objekt/prøve
-            </strong>
-          </h5>
-        </Col>
-      </FormGroup>
-      <FormGroup
-        bsClass="form-group">
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={11}
-          mdOffset={1}>
+  <div
+    className="page-header">
+    <h1>
+      Analyse detaljer
+    </h1>
+  </div>
+  <form
+    className="form-horizontal">
+    <MetaInformation
+      form={
+        Object {
+          "administrator": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "administrator",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "analysisTypeCategory": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "analysisTypeCategory",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "analysisTypeId": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "analysisTypeId",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "cancelledBy": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "cancelledBy",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "cancelledReason": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "cancelledReason",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "caseNumber": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "caseNumber",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "caseNumbers": Object {
+            "defaultValue": Array [],
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "caseNumbers",
+            "rawValue": Array [],
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "comments": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "comments",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "completeAnalysis": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "completeAnalysis",
+            "rawValue": false,
+            "validator": Object {}
+          },
+          "completedBy": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "completedBy",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "completedDate": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "completedDate",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "doneBy": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "doneBy",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "doneDate": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "doneDate",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "events": Object {
+            "defaultValue": Array [],
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "events",
+            "rawValue": Array [],
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "expirationDate": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "expirationDate",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "externalSource": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "externalSource",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "id": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "id",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function configurableValidators],
+              "valueValidator": [Function validator]
+            }
+          },
+          "museumNo": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "museumNo",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "note": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "note",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "objectId": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "objectId",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "partOf": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "partOf",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "place": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "place",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "reason": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "reason",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "registeredBy": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "registeredBy",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "registeredByName": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "registeredByName",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "registeredDate": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "registeredDate",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "requester": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "requester",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "responsible": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "responsible",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "restrictions": Object {
+            "defaultValue": false,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "restrictions",
+            "rawValue": false,
+            "validator": Object {}
+          },
+          "result": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "result",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "status": Object {
+            "defaultValue": 1,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "status",
+            "rawValue": "1",
+            "validator": Object {
+              "rawValidator": [Function configurableValidators],
+              "valueValidator": [Function validator]
+            }
+          },
+          "subNo": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "subNo",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "term": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "term",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "type": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "type",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "updatedBy": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "updatedBy",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "updatedByName": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "updatedByName",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "updatedDate": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "updatedDate",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          }
+        }
+      } />
+    <hr />
+    <div
+      className="form-group">
+      <label
+        className="control-label col-md-2"
+        htmlFor="type">
+        Type analyse:
+      </label>
+      <div
+        className="col-md-10">
+        <p
+          className="form-control-static"
+          id="type" />
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-md-2"
+        htmlFor="status">
+        Status på analysen:
+      </label>
+      <div
+        className="col-md-5">
+        <p
+          className="form-control-static"
+          id="status" />
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-md-2"
+        htmlFor="caseNumber">
+        Saksnummer:
+      </label>
+      <div
+        className="col-md-10">
+        <p
+          className="form-control-static"
+          id="caseNumber" />
+      </div>
+    </div>
+    <hr />
+    <div
+      className="form-group">
+      <label
+        className="control-label col-md-2"
+        htmlFor="note">
+        Beskrivelse/ kommentar:
+      </label>
+      <div
+        className="col-md-10">
+        <p
+          className="form-control-static"
+          id="note" />
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label">
+        Personer tilknyttet analysen:
+      </label>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-md-2"
+        htmlFor="responsible-name1">
+        Navn:
+      </label>
+      <div
+        className="col-md-2">
+        <p
+          className="form-control-static"
+          id="responsible-name1">
+          n/a
+        </p>
+      </div>
+      <label
+        className="control-label col-md-1"
+        htmlFor="responsible-role1">
+        Rolle:
+      </label>
+      <div
+        className="col-md-2">
+        <p
+          className="form-control-static"
+          id="responsible-role1">
+          n/a
+        </p>
+      </div>
+    </div>
+    <hr />
+    <div
+      className="well">
+      <div
+        className="form-group">
+        <label
+          className="control-label col-md-2"
+          htmlFor="objects">
+          Objekter:
+        </label>
+        <div
+          className="col-md-10">
           <Table
-            bordered={false}
-            bsClass="table"
-            condensed={false}
-            hover={false}
-            responsive={true}
-            striped={false}>
-            <thead>
-              <tr>
-                <th>
-                  Museumsnr
-                </th>
-                <th>
-                  Unr
-                </th>
-                <th>
-                  Term/artsnavn
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td />
-                <td />
-                <td />
-              </tr>
-            </tbody>
-          </Table>
-        </Col>
-      </FormGroup>
-      <NewLine />
-      <FormGroup
-        bsClass="form-group">
-        <LabelAndValue
-          id="formControlsText"
-          label="Ekstern kilde"
-          md={1}
-          value="" />
-      </FormGroup>
-      <FormGroup
-        bsClass="form-group">
-        <LabelAndValue
-          id="formControlsText"
-          label="Ladt opp fil"
-          md={1} />
-      </FormGroup>
-      <FormGroup
-        bsClass="form-group">
-        <LabelFormat
-          label="Kommentar til resultat"
-          md={1} />
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={5} />
-      </FormGroup>
-      <FormGroup
-        bsClass="form-group">
-        <LabelFormat
-          label="Klausulering"
-          md={1} />
-        <Col
-          bsClass="col"
-          componentClass="div"
-          md={5}>
-          Nei
-        </Col>
-      </FormGroup>
-    </Form>
-  </Well>
-  <NewLine />
-  <SaveCancel
-    onClickSave={[Function onClickSave]}
-    saveLabel="Endre" />
+            className="table"
+            columns={
+              Array [
+                Object {
+                  "key": "museumNo",
+                  "label": "Museumsnr"
+                },
+                Object {
+                  "key": "subNo",
+                  "label": "Unr"
+                },
+                Object {
+                  "key": "term",
+                  "label": "Term/artsnavn"
+                }
+              ]
+            }
+            data={
+              Array [
+                Object {
+                  "museumNo": undefined,
+                  "subNo": undefined,
+                  "term": undefined
+                }
+              ]
+            }
+            defaultSort={false}
+            defaultSortDescending={false}
+            filterBy=""
+            hideFilterInput={false}
+            id="objects"
+            itemsPerPage={0}
+            noDataText="Ingen objekter"
+            sortBy={false}
+            sortable={
+              Array [
+                "museumNumber",
+                "subNumber",
+                "term"
+              ]
+            } />
+        </div>
+      </div>
+      <hr />
+      <div
+        className="form-group">
+        <label
+          className="control-label col-md-2"
+          htmlFor="externalSource">
+          Ekstern kilde:
+        </label>
+        <div
+          className="col-md-10">
+          <p
+            className="form-control-static"
+            id="externalSource" />
+        </div>
+      </div>
+      <div
+        className="form-group">
+        <label
+          className="control-label col-md-2"
+          htmlFor="externalFile">
+          Vedlegg:
+        </label>
+        <div
+          className="col-md-10">
+          <p
+            className="form-control-static"
+            id="externalFile">
+             
+          </p>
+        </div>
+      </div>
+      <div
+        className="form-group">
+        <label
+          className="control-label col-md-2"
+          htmlFor="comments">
+          Kommentar til resultat:
+        </label>
+        <div
+          className="col-md-10">
+          <p
+            className="form-control-static"
+            id="comments" />
+        </div>
+      </div>
+      <div
+        className="form-group">
+        <label
+          className="control-label col-md-2"
+          htmlFor="restrictions">
+          Klausulering:
+        </label>
+        <div
+          className="col-md-10">
+          <p
+            className="form-control-static"
+            id="restrictions">
+            Nei
+          </p>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <SaveCancel
+      onClickSave={[Function onClickSave]}
+      saveLabel="Endre" />
+  </form>
 </div>
 `;

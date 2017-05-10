@@ -3,14 +3,16 @@ import React from 'react';
 import AnalysisFormComponent, {
   updateFormField,
   updateBooleanField,
-  getAnalysisTypeTerm
+  getAnalysisTypeTerm,
+  submitForm
 } from '../AnalysisFormComponent';
 import { fieldsArray } from '../analysisForm';
-import type { Field } from '../../../forms/form';
+import type { Field } from 'forms/form';
 import type { FormData } from '../types/form';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
+import StatefulPromise from 'testutils/StatefulPromise';
 
 declare var describe: any;
 declare var it: any;
@@ -19,7 +21,66 @@ declare var expect: any;
 const identity = (i: any): any => i;
 const promise = (i: any): any => new Promise(res => res(i));
 
+const appSession = {
+  museumId: 99,
+  collectionId: '1234',
+  accessToken: '45667',
+  actor: {
+    fn: 'Test'
+  }
+};
+
+const form: FormData = (fieldsArray.reduce(
+  (acc, field: Field<any>) => ({
+    ...acc,
+    [field.name]: {
+      ...field,
+      rawValue: field.mapper.toRaw(field.defaultValue)
+    }
+  }),
+  {}
+): any);
+
+const location = {};
+
 describe('AnalysisFormComponent', () => {
+  describe('submitForm', () => {
+    it('should add restriction if restriction is set', done => {
+      const goTo = sinon.spy();
+      const formWithRestrictions: FormData = {
+        ...form,
+        id: { ...form.id, value: 45 },
+        restrictions: { ...form.restrictions, value: true },
+        requester: { ...form.requester, value: 'Test mann' },
+        reason: { ...form.reason, value: 'No reason' },
+        expirationDate: { ...form.expirationDate, value: '2017-01-01' }
+      };
+      const promiseHelper = new StatefulPromise();
+      submitForm(
+        appSession,
+        formWithRestrictions,
+        location,
+        promiseHelper.createPromise(),
+        goTo
+      )({
+        preventDefault: identity
+      }).then(() => {
+        expect(goTo.calledOnce).toEqual(true);
+        expect(goTo.getCall(0).args[0]).toEqual(
+          '/museum/99/collections/1234/analysis/45'
+        );
+        expect(promiseHelper.value.id).toEqual(45);
+        expect(promiseHelper.value.token).toEqual('45667');
+        expect(promiseHelper.value.museumId).toEqual(99);
+        expect(promiseHelper.value.data.restriction).not.toBe(null);
+        expect(promiseHelper.value.data.restriction.requester).toBe('Test mann');
+        expect(promiseHelper.value.data.restriction.reason).toBe('No reason');
+        expect(promiseHelper.value.data.restriction.expirationDate).toBe('2017-01-01');
+        done();
+      });
+    });
+  });
+
   describe('getAnalysisTypeTerm', () => {
     it('should return empty string if not found', () => {
       const analysis = { id: 1, analysisTypeId: '11134', events: [] };
@@ -113,24 +174,6 @@ describe('AnalysisFormComponent', () => {
   });
 
   it('should render objects from events', () => {
-    const appSession = {
-      museumId: 99,
-      collectionId: '1234',
-      accessToken: '45667',
-      actor: {
-        fn: 'Test'
-      }
-    };
-    const form: FormData = (fieldsArray.reduce(
-      (acc, field: Field<any>) => ({
-        ...acc,
-        [field.name]: {
-          ...field,
-          rawValue: field.mapper.toRaw(field.defaultValue)
-        }
-      }),
-      {}
-    ): any);
     const store = {
       analysis: {
         id: 1234,
@@ -165,14 +208,16 @@ describe('AnalysisFormComponent', () => {
       analysisTypes: [],
       analysisTypeCategorie: []
     };
-    const location = {};
+
     const wrapper = shallow(
       <AnalysisFormComponent
         appSession={appSession}
         form={form}
         updateForm={identity}
         submitForm={identity}
-        saveAnalysisEvent={promise}
+        goBack={identity}
+        goTo={identity}
+        saveAnalysis={promise}
         store={store}
         location={location}
       />

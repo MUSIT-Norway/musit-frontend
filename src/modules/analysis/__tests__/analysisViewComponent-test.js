@@ -1,7 +1,15 @@
+// @flow
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import AnalysisViewComponent from '../AnalysisViewComponent';
+import { fieldsArray } from '../analysisForm';
+import type { Field } from 'forms/form';
+import type { FormData } from '../types/form';
+
+declare var describe: any;
+declare var it: any;
+declare var expect: any;
 
 const objectsData = [
   {
@@ -27,12 +35,12 @@ const objectsData = [
 const analysisTypes = [
   {
     category: 8,
-    id: '1bbf15cb-8348-4e66-99a4-bc314da57a42',
+    id: 1,
     name: '3D-skanning, laser'
   },
   {
     category: 8,
-    id: 'b39399ab-aabd-4ebc-903b-adcf6876a364',
+    id: 2,
     name: '3D-skanning, strukturert lys'
   }
 ];
@@ -59,67 +67,36 @@ const store = {
   analysis: analysis
 };
 
+const appSession = {
+  museumId: 99,
+  collectionId: '1234',
+  accessToken: '45667',
+  actor: {
+    fn: 'Test'
+  }
+};
+
+const form: FormData = (fieldsArray.reduce(
+  (acc, field: Field<any>) => ({
+    ...acc,
+    [field.name]: {
+      ...field,
+      rawValue: field.mapper.toRaw(field.defaultValue)
+    }
+  }),
+  {}
+): any);
+
 describe('AnalysisViewComponent', () => {
   it('should render properly', () => {
-    const myForm = {
-      analysisTypeId: {
-        name: 'analysisTypeId',
-        rawValue: 'b15ee459-38c9-414f-8b54-7c6439b44d3d'
-      },
-      registeredDate: {
-        name: 'registeredDate',
-        rawValue: null
-      },
-      note: {
-        name: 'note',
-        rawValue: null
-      },
-      by: {
-        name: 'by',
-        rawValue: null
-      },
-      expirationDate: {
-        name: 'expirationDate',
-        rawValue: null
-      },
-      caseNumbers: {
-        name: 'caseNumbers',
-        rawValue: null
-      },
-      cancelledBy: {
-        name: 'cancelledBy',
-        rawValue: null
-      },
-      cancelledReason: {
-        name: 'cancelledReason',
-        rawValue: null
-      },
-      reason: {
-        name: 'reason',
-        rawValue: null
-      },
-      type: {
-        name: 'type',
-        rawValue: 'Analysis'
-      },
-      museumNo: {
-        name: 'museumNo',
-        rawValue: null
-      },
-      subNo: {
-        name: 'subNo',
-        rawValue: null
-      },
-      term: {
-        name: 'term',
-        rawValue: null
-      },
-      restrictions: {
-        name: 'restrictions',
-        rawValue: null
-      }
-    };
-    const wrapper = shallow(<AnalysisViewComponent form={myForm} store={store} />);
+    const wrapper = shallow(
+      <AnalysisViewComponent
+        form={form}
+        params={{ analysisId: '45' }}
+        appSession={appSession}
+        store={store}
+      />
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

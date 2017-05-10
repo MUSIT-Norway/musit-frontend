@@ -6,7 +6,7 @@ import createForm, {
   getNumberField
 } from '../../forms/form';
 
-const id = getStrField('id');
+const id = getNumberField('id');
 const analysisTypeId = getStrField('analysisTypeId');
 const doneBy = getStrField('doneBy');
 const doneDate = getStrField('doneDate');
