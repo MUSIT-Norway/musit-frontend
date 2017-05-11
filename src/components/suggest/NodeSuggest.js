@@ -45,7 +45,7 @@ export class NodeSuggest extends React.Component {
     if (event.keyCode === 13) {
       event.preventDefault();
     }
-    this.props.onChange(suggestion.id);
+    this.props.onChange(suggestion.nodeId);
   }
 
   getNodeSuggestionValue(suggestion) {
