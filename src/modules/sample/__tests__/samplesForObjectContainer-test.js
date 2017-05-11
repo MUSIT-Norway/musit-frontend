@@ -7,13 +7,13 @@ describe('samplesForObjectContainer', () => {
     const data = {
       data: [
         {
-          createdDate: '1992-01-01',
+          doneDate: '1992-01-01',
           sampleType: 'Vev',
           sampleSubType: 'Blod',
           status: 1
         },
         {
-          createdDate: '1956-01-01',
+          doneDate: '1956-01-01',
           sampleType: 'Tekstil',
           sampleSubType: 'Ull',
           status: 2

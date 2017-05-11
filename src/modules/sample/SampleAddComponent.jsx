@@ -34,7 +34,7 @@ type FormData = {
   sampleType: Field<*>, sampleId: Field<string>, treatment: Field<string>, subTypeValue: Field<string>,
   sizeUnit: Field<string>, museumId: Field<string>, subNo: Field<string>, leftoverSample: Field<string>,
   term_species: Field<string>, registeredBy: Field<string>, registeredDate: Field<string>, updateBy: Field<string>,
-  hasRestMaterial: Field<string>, updateDate: Field<string>, sampleId: Field<string>, createdDate: Field<*>,
+  hasRestMaterial: Field<string>, updateDate: Field<string>, sampleId: Field<string>, doneDate: Field<*>,
   description: Field<string>, persons: Field<Array<*>>
 };
 
@@ -135,7 +135,7 @@ const submitSample = (appSession: AppSession, form: FormData, objectData: any, p
       case 'creator':
         return {...akk,
           createdBy:v.name,
-          createdDate: v.date
+          doneDate: v.date
         };
       case
       'responsible':

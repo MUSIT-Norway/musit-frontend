@@ -30,7 +30,7 @@ type FormData = {
   persons: Field, treatment: Field,
   isExtracted: Field, sizeUnit: Field, museumId: Field, subNo: Field, term_species: Field,
   registeredBy: Field, registeredDate: Field, updateBy: Field, leftoverSample: Field,
-  updateDate: Field, sampleId: Field, createdDate: Field, description: Field
+  updateDate: Field, sampleId: Field, doneDate: Field, description: Field
 };
 
 type Props = {
@@ -151,7 +151,7 @@ const submitSample = (id: string, appSession: AppSession, form: FormData, editSa
 
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
-  tmpData.createdDate = '2017-03-19';
+  tmpData.doneDate = '2017-03-19';
   tmpData.status = 2;
   tmpData.responsible = appSession.actor.dataportenId;
   tmpData.isCollectionObject = false;

@@ -33,7 +33,7 @@ describe('ViewObjectComponent', () => {
           ],
           samples: [
             {
-              createdDate: '1999-01-20',
+              doneDate: '1999-01-20',
               sampleType: 'Vev',
               sampleSubType: 'Muskel',
               status: 2,
@@ -41,7 +41,7 @@ describe('ViewObjectComponent', () => {
               id: '1233-111-2222-222'
             },
             {
-              createdDate: '1999-01-29',
+              doneDate: '1999-01-29',
               sampleType: 'Blad',
               sampleSubType: 'Underblad',
               status: 24,

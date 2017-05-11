@@ -103,7 +103,7 @@ Sample.loadSampleDataForObject = (ajaxGet = simpleGet) =>
         (response &&
           response.map(r => ({
             ...r,
-            createdDate: parseISODate(r.createdDate, DATE_FORMAT_DISPLAY)
+            doneDate: parseISODate(r.doneDate, DATE_FORMAT_DISPLAY)
           }))) || []
     );
   };
@@ -123,7 +123,7 @@ Sample.loadSamplesForObject = (ajaxGet = simpleGet) =>
         ...obj,
         data: samples.map(a => ({
           ...a,
-          createdDate: parseISODate(a.createdDate, DATE_FORMAT_DISPLAY)
+          doneDate: parseISODate(a.doneDate, DATE_FORMAT_DISPLAY)
         }))
       };
     });

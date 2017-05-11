@@ -52,8 +52,8 @@ exports[`SamplesForObject should display correctly 1`] = `
           "label": "Sample ID"
         },
         Object {
-          "key": "createdDate",
-          "label": "Dato"
+          "key": "doneDate",
+          "label": "Utført Dato"
         },
         Object {
           "key": "sampleType",
@@ -87,14 +87,14 @@ exports[`SamplesForObject should display correctly 1`] = `
     sortable={
       Array [
         "id",
-        "date"
+        "doneDate"
       ]
     }>
     <Tr>
       <Td
         column="id" />
       <Td
-        column="createdDate">
+        column="doneDate">
         1991-11-11
       </Td>
       <Td
@@ -123,7 +123,7 @@ exports[`SamplesForObject should display correctly 1`] = `
       <Td
         column="id" />
       <Td
-        column="createdDate">
+        column="doneDate">
         1991-11-12
       </Td>
       <Td
@@ -152,7 +152,7 @@ exports[`SamplesForObject should display correctly 1`] = `
       <Td
         column="id" />
       <Td
-        column="createdDate">
+        column="doneDate">
         2011-11-11
       </Td>
       <Td

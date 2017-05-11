@@ -9,7 +9,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
           "label": "Sample ID"
         },
         Object {
-          "key": "createdDate",
+          "key": "doneDate",
           "label": "Dato"
         },
         Object {
@@ -53,7 +53,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         1233-111-2222-222
       </Td>
       <Td
-        column="createdDate">
+        column="doneDate">
         20.01.1999
       </Td>
       <Td
@@ -84,7 +84,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         1233-111-2155-222
       </Td>
       <Td
-        column="createdDate">
+        column="doneDate">
         29.01.1999
       </Td>
       <Td

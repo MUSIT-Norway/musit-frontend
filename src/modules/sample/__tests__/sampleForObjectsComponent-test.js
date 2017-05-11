@@ -14,19 +14,19 @@ describe('SamplesForObject', () => {
           sampleType: 'Frø',
           sampleSubType: 'Rogn',
           status: 2,
-          createdDate: '1991-11-11'
+          doneDate: '1991-11-11'
         },
         {
           sampleType: 'Vev',
           sampleSubType: 'Blod',
           status: 1,
-          createdDate: '1991-11-12'
+          doneDate: '1991-11-12'
         },
         {
           sampleType: 'Tekstil',
           sampleSubType: 'Bomull',
           status: 2,
-          createdDate: '2011-11-11'
+          doneDate: '2011-11-11'
         }
       ]
     };

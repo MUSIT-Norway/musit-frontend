@@ -31,21 +31,21 @@ const SamplesForObjectComponent = ({ sampleStore: { museumNo, subNo, term, data 
         className="table"
         columns={[
           { key: 'id', label: 'Sample ID' },
-          { key: 'createdDate', label: 'Dato' },
+          { key: 'doneDate', label: 'Utført Dato' },
           { key: 'sampleType', label: 'Prøvetype' },
           { key: 'sampleSubType', label: 'Prøveundertype' },
           { key: 'status', label: 'Status' },
           { key: 'hasAnalyse', label: 'Analyse' },
           { key: 'showInfo', label: 'Vis detaljer' }
         ]}
-        sortable={['id', 'date']}
+        sortable={['id', 'doneDate']}
         noDataText="Ingen prøver funnet på objektet"
       >
         {data &&
           data.map((e, i) => (
             <Tr key={i}>
               <Td column="id">{e.id}</Td>
-              <Td column="createdDate">{e.createdDate}</Td>
+              <Td column="doneDate">{e.doneDate}</Td>
               <Td column="sampleType">{e.sampleType}</Td>
               <Td column="sampleSubType">{e.sampleSubType}</Td>
               <Td column="status">{e.status}</Td>

@@ -25,7 +25,7 @@ const sampleId = getStrField('sampleId');
 const isExtracted = getBoolField('isExtracted', false);
 const externalId = getStrField('externalId');
 const externalIdSource = getStrField('externalIdSource');
-const createdDate = getStrField('createdDate');
+const doneDate = getStrField('doneDate');
 const registeredBy = getStrField('registeredBy');
 const registeredDate = getStrField('registeredDate');
 const updateBy = getStrField('updatedBy');
@@ -77,7 +77,7 @@ const fields = [
   responsible,
   updateBy,
   updateDate,
-  createdDate,
+  doneDate,
   originatedObjectUuid,
   persons
 ];

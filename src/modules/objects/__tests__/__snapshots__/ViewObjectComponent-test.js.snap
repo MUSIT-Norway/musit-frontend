@@ -108,7 +108,7 @@ exports[`ViewObjectComponent should display correctly 1`] = `
         samples={
           Array [
             Object {
-              "createdDate": "1999-01-20",
+              "doneDate": "1999-01-20",
               "hasAnalyse": false,
               "id": "1233-111-2222-222",
               "sampleSubType": "Muskel",
@@ -116,7 +116,7 @@ exports[`ViewObjectComponent should display correctly 1`] = `
               "status": 2
             },
             Object {
-              "createdDate": "1999-01-29",
+              "doneDate": "1999-01-29",
               "hasAnalyse": true,
               "id": "1233-111-2155-222",
               "sampleSubType": "Underblad",

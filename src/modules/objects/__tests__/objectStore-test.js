@@ -95,7 +95,7 @@ describe('objectStore', () => {
         museumId: 99,
         status: 2,
         responsible: '50cef0e2-e171-4bab-984f-a8c2af10081a',
-        createdDate: '2017-03-19T00:00:00.000Z',
+        doneDate: '2017-03-19T00:00:00.000Z',
         sampleType: 'Vev',
         sampleSubType: 'Bein',
         size: 123,
