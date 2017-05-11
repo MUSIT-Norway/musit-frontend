@@ -82,7 +82,7 @@ class MusitObject {
   ) => Observable;
   static moveSingleObject: (ajaxPut: AjaxPut) => (
     props: {
-      id: number,
+      id: string,
       destination: number,
       doneBy: string,
       objectType?: 'collection' | 'sample',
@@ -157,7 +157,7 @@ MusitObject.moveObjects = (
           }).toPromise()));
   } else {
     MusitObject.moveSingleObject(ajaxPut)({
-      id: object.id,
+      id: object.uuid,
       destination,
       doneBy,
       museumId,
