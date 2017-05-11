@@ -1,7 +1,6 @@
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import Config from '../../config';
-import Actor from '../../models/actor';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
 import inject from 'react-rxjs/dist/RxInject';
 
@@ -64,7 +63,7 @@ export class ActorSuggest extends React.Component {
           if (event.keyCode === 13) {
             event.preventDefault();
           }
-          this.props.onChange(new Actor(suggestion));
+          this.props.onChange(suggestion);
         }}
       />
     );
