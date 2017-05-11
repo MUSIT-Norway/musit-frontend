@@ -26,19 +26,11 @@ const collections = [
 
 const getCollectionName = n => I18n.t(`musit.userProfile.collections.${n}`);
 
-const onChangeCheckbox = v => {
-  console.log(v);
-};
-
 const CheckBoxShow = (v, c) => (
   <td key={c} value={c} style={{ textAlign: 'center' }}>
-    <input type="checkbox" value="" checked={v} onChange={() => onChangeCheckbox(c)} />
+    <input type="checkbox" value="" checked={v} />
   </td>
 );
-
-const doEdit = v => {
-  console.log(v);
-};
 
 const getTableRow = r => {
   return (
@@ -48,12 +40,7 @@ const getTableRow = r => {
         c => r.collections.includes(c) ? CheckBoxShow(1, c) : CheckBoxShow(0, c)
       )}
       <td>
-        <button
-          type="button"
-          className="btn btn-default"
-          value={r.id}
-          onClick={() => doEdit(r.id)}
-        >
+        <button type="button" className="btn btn-default" value={r.id}>
           <FontAwesome name="pencil-square-o" />
         </button>
       </td>

@@ -62,7 +62,9 @@ export default class ObjectGrid extends Component {
                         isChildObject ? 'childObject' : isMainObject && 'mainObject'
                       }
                       onClick={() =>
-                        hashHistory.push(Config.magasin.urls.client.object.gotoObject(c.uuid))}
+                        hashHistory.push(
+                          Config.magasin.urls.client.object.gotoObject(c.uuid)
+                        )}
                     >
                       <td style={{ width: '20px' }}>
                         <span className="icon icon-musitobject" />
