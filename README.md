@@ -1,10 +1,9 @@
+[![build status](https://gitlab.com/MUSIT-Norway/musit-frontend/badges/master/build.svg)](https://gitlab.com/MUSIT-Norway/musit-frontend/commits/master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7dcf1d67924b4190bccb2611d0b70478)](https://www.codacy.com/app/MUSIT-Norway/musit-frontend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MUSIT-Norway/musit-frontend&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/7dcf1d67924b4190bccb2611d0b70478)](https://www.codacy.com/app/MUSIT-Norway/musit-frontend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MUSIT-Norway/musit-frontend&amp;utm_campaign=Badge_Coverage)
+
 # MUSIT 
 Norwegian university museums IT organization (MUSIT); cultural history and natural history database with store integration.
-
-Code status for master branch:
-* [![Run Status](https://api.shippable.com/projects/57b2f9eb2a033c0f00ba04e2/badge?branch=master)](https://app.shippable.com/projects/57b2f9eb2a033c0f00ba04e2)
-* [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7dcf1d67924b4190bccb2611d0b70478)](https://www.codacy.com/app/MUSIT-Norway/musit-frontend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MUSIT-Norway/musit-frontend&amp;utm_campaign=Badge_Grade)
-* [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/7dcf1d67924b4190bccb2611d0b70478)](https://www.codacy.com/app/MUSIT-Norway/musit-frontend?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=MUSIT-Norway/musit-frontend&amp;utm_campaign=Badge_Coverage)
 
 Status badges is retrieved directly from the services monitoring the code.
 
