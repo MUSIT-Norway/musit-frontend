@@ -1,20 +1,25 @@
 /* @flow */
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import { SaveCancel } from '../../components/formfields/index';
-import { hashHistory } from 'react-router';
-import Config from '../../config';
 import type { AppSession } from '../../types/appSession';
 import type { FormData } from './types/form';
 import type { Store } from './types/store';
 import { Table } from 'reactable';
 import MetaInformation from './components/MetaInformation';
+import Config from 'config';
 
 type Params = { analysisId: string };
 
-type Props = { form: FormData, store: Store, appSession: AppSession, params: Params };
+type Props = {
+  form: FormData,
+  store: Store,
+  appSession: AppSession,
+  params: Params,
+  goToUrl: (string) => void,
+  goBack: () => void
+};
 
-const AnalysisView = ({ form, store, appSession, params }: Props) => (
+const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
   <div>
     <div className="page-header">
       <h1>
@@ -22,7 +27,17 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
       </h1>
     </div>
     <form className="form-horizontal">
-      <MetaInformation form={form} />
+      <MetaInformation
+        form={form}
+        onClickEdit={() => {
+          goToUrl(
+            Config.magasin.urls.client.analysis.editAnalysis(
+              appSession,
+              params.analysisId
+            )
+          );
+        }}
+      />
       <hr />
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="type">Type analyse:</label>
@@ -212,19 +227,6 @@ const AnalysisView = ({ form, store, appSession, params }: Props) => (
             </div>
           </div>}
       </div>
-      <hr />
-      <SaveCancel
-        onClickSave={e => {
-          e.preventDefault();
-          hashHistory.push(
-            Config.magasin.urls.client.analysis.editAnalysis(
-              appSession,
-              params.analysisId
-            )
-          );
-        }}
-        saveLabel="Endre"
-      />
     </form>
   </div>
 );

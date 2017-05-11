@@ -95,6 +95,8 @@ describe('AnalysisViewComponent', () => {
         params={{ analysisId: '45' }}
         appSession={appSession}
         store={store}
+        goToUrl={() => {}}
+        goBack={() => {}}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

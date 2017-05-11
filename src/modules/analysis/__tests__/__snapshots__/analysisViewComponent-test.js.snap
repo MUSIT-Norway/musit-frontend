@@ -454,7 +454,8 @@ exports[`AnalysisViewComponent should render properly 1`] = `
             }
           }
         }
-      } />
+      }
+      onClickEdit={[Function onClickEdit]} />
     <hr />
     <div
       className="form-group">
@@ -667,10 +668,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         </div>
       </div>
     </div>
-    <hr />
-    <SaveCancel
-      onClickSave={[Function onClickSave]}
-      saveLabel="Endre" />
   </form>
 </div>
 `;

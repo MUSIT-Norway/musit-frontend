@@ -3,11 +3,13 @@ import React from 'react';
 import AnalysisViewComponent from './AnalysisViewComponent';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
-import mount from '../../shared/mount';
+import mount from 'shared/mount';
 import store$, { getAnalysisTypes$ } from './analysisStore';
-import Analysis from '../../models/analysis';
-import { toPromise } from '../../shared/util';
+import Analysis from 'models/analysis';
+import { toPromise } from 'shared/util';
 import analysisForm, { fieldsArray } from './analysisForm';
+import { hashHistory } from 'react-router';
+
 const { form$, loadForm$ } = analysisForm;
 
 const data = {
@@ -22,7 +24,9 @@ const commands = {
 };
 
 const props = {
-  loadAnalysis: toPromise(Analysis.getAnalysisWithDetails())
+  loadAnalysis: toPromise(Analysis.getAnalysisWithDetails()),
+  goToUrl: hashHistory.push,
+  goBack: hashHistory.goBack
 };
 
 export const onMount = (

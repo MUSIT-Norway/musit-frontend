@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import { hashHistory } from 'react-router';
 import Config from 'config';
 import type { AppSession } from 'types/appSession';
 import type { ObjectData } from 'types/object';
@@ -24,27 +23,20 @@ type Props = {
   appSession: AppSession,
   saveAnalysis: SaveAnalysisFn,
   location: Location,
-  goTo: (string) => void,
+  goToUrl: (string) => void,
   goBack: () => void
 };
 
 const AnalysisForm = (
-  {
-    form,
-    updateForm,
-    store,
-    saveAnalysis,
-    appSession,
-    location,
-    goTo = hashHistory.push,
-    goBack = hashHistory.goBack
-  }: Props
+  { form, updateForm, store, saveAnalysis, appSession, location, goToUrl, goBack }: Props
 ) => {
   return (
     <div>
       <div className="page-header">
         <h1>
-          {form.id.value ? I18n.t('musit.analysis.editAnalysis') : I18n.t('musit.analysis.registeringAnalysis')}
+          {form.id.value
+            ? I18n.t('musit.analysis.editAnalysis')
+            : I18n.t('musit.analysis.registeringAnalysis')}
         </h1>
       </div>
       <form className="form-horizontal">
@@ -337,7 +329,7 @@ const AnalysisForm = (
         <hr />
         <button
           className="btn btn-primary"
-          onClick={submitForm(appSession, form, location, saveAnalysis, goTo)}
+          onClick={submitForm(appSession, form, location, saveAnalysis, goToUrl)}
         >
           Lagre
         </button>
@@ -389,7 +381,7 @@ export function submitForm(
   form: FormData,
   location?: Location,
   saveAnalysisEvent: SaveAnalysisFn,
-  goTo: (string) => void
+  goToUrl: (string) => void
 ) {
   return (e: { preventDefault: Function }) => {
     e.preventDefault();
@@ -430,7 +422,7 @@ export function submitForm(
         appSession,
         typeof analysis === 'number' ? analysis : analysis.id
       );
-      goTo(url);
+      goToUrl(url);
     });
   };
 }

@@ -8,6 +8,7 @@ import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
 import { toPromise } from '../../shared/util';
+import { hashHistory } from 'react-router';
 
 const { form$, updateForm$, loadForm$ } = analysisAddForm;
 
@@ -24,7 +25,9 @@ const commands = {
 };
 
 const props = {
-  saveAnalysis: toPromise(Analysis.saveAnalysisEvent())
+  saveAnalysis: toPromise(Analysis.saveAnalysisEvent()),
+  goToUrl: hashHistory.push,
+  goBack: hashHistory.goBack
 };
 
 export const onMount = ({ appSession, getAnalysisTypes }) =>
