@@ -14,7 +14,7 @@ import Reports from './modules/reports/ReportsOverview';
 import ControlViewContainer from './modules/control/ControlViewComponent';
 import ControlAddContainer from './modules/control/ControlAddComponent';
 import EventsContainer from './modules/controlsobservations/EventsComponent';
-import ObjectSearchComponent from './modules/objectsearch/ObjectSearchComponent';
+import ObjectSearchContainer from './modules/objectsearch/ObjectSearchContainer';
 import AppComponent from './modules/app/AppComponent';
 import AnalysisAddContainer from './modules/analysis/AnalysisAddContainer';
 import AnalysisViewContainer from './modules/analysis/AnalysisViewContainer';
@@ -113,7 +113,7 @@ export default () => {
           <IndexRoute component={Reports} />
           <Route path="kdreport" component={KDReportComponent} />
         </Route>
-        <Route path="search/objects" component={ObjectSearchComponent} />
+        <Route path="search/objects" component={ObjectSearchContainer} />
         <Route path="about" component={AboutView} />
         <Route path="home" component={HomeView} />
 

@@ -17,7 +17,7 @@ describe('ObjectTable', () => {
   const pickObject = sinon.spy();
   const showMoveHistory = sinon.spy();
   const onMove = sinon.spy();
-  const dummyArg = { preventDefault: () => null };
+  const dummyArg = { preventDefault: () => null, stopPropagation: () => null };
   const wrapper = shallow(
     <ObjectGrid
       tableData={tableData}

@@ -39,6 +39,7 @@ class Breadcrumb extends React.Component {
       evt => {
         evt.preventDefault();
         this.props.onClickCrumb(node);
+        evt.stopPropagation();
       };
 
     let path = [];

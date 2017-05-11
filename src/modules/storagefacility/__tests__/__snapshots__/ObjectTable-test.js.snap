@@ -29,7 +29,6 @@ exports[`ObjectTable should render properly  1`] = `
             </th>
             <th />
             <th />
-            <th />
             <th>
               <a
                 className="onPickObjects"
@@ -68,21 +67,6 @@ exports[`ObjectTable should render properly  1`] = `
             </td>
             <td>
               Carex
-            </td>
-            <td>
-              <a
-                className="onMoveClick"
-                href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
-                <FontAwesome
-                  name="truck"
-                  style={
-                    Object {
-                      "fontSize": "1.5em"
-                    }
-                  } />
-              </a>
             </td>
             <td>
               <a
@@ -149,21 +133,6 @@ exports[`ObjectTable should render properly  1`] = `
             </td>
             <td>
               <a
-                className="onMoveClick"
-                href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
-                <FontAwesome
-                  name="truck"
-                  style={
-                    Object {
-                      "fontSize": "1.5em"
-                    }
-                  } />
-              </a>
-            </td>
-            <td>
-              <a
                 className="onShowMoveHistory"
                 href=""
                 onClick={[Function onClick]}
@@ -222,21 +191,6 @@ exports[`ObjectTable should render properly  1`] = `
             <td />
             <td>
               Steinøks
-            </td>
-            <td>
-              <a
-                className="onMoveClick"
-                href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
-                <FontAwesome
-                  name="truck"
-                  style={
-                    Object {
-                      "fontSize": "1.5em"
-                    }
-                  } />
-              </a>
             </td>
             <td>
               <a
@@ -303,21 +257,6 @@ exports[`ObjectTable should render properly  1`] = `
             </td>
             <td>
               <a
-                className="onMoveClick"
-                href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
-                <FontAwesome
-                  name="truck"
-                  style={
-                    Object {
-                      "fontSize": "1.5em"
-                    }
-                  } />
-              </a>
-            </td>
-            <td>
-              <a
                 className="onShowMoveHistory"
                 href=""
                 onClick={[Function onClick]}
@@ -376,21 +315,6 @@ exports[`ObjectTable should render properly  1`] = `
             <td />
             <td>
               Cladionia
-            </td>
-            <td>
-              <a
-                className="onMoveClick"
-                href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
-                <FontAwesome
-                  name="truck"
-                  style={
-                    Object {
-                      "fontSize": "1.5em"
-                    }
-                  } />
-              </a>
             </td>
             <td>
               <a

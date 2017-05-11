@@ -13,21 +13,9 @@ import {
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import PagingToolbar from '../../components/PagingToolbar';
-import { hashHistory } from 'react-router';
 import Loader from 'react-loader';
-import { Observable } from 'rxjs';
-import MusitObject from '../../models/object';
-import inject from 'react-rxjs/dist/RxInject';
-import objectSearchStore$, {
-  clearSearch$,
-  searchForObjects$,
-  onChangeField$
-} from './objectSearchStore';
-import { addObject$ } from '../app/pickList';
-import { isItemAdded } from '../app/pickList';
 import Config from '../../config';
-import flowRight from 'lodash/flowRight';
-import { makeUrlAware } from '../app/appSession';
+import MusitObject from '../../models/object';
 
 export class ObjectSearchComponent extends React.Component {
   static propTypes = {
@@ -95,14 +83,14 @@ export class ObjectSearchComponent extends React.Component {
                       perPage={this.state.perPage}
                       onClick={page => this.searchForObjects(page)}
                     />
-                    <Table>
+                    <Table responsive hover condensed>
                       <thead>
                         <tr>
                           <th>{I18n.t('musit.objectsearch.museumNo.label')}</th>
                           <th>{I18n.t('musit.objectsearch.subNo.label')}</th>
                           <th>{I18n.t('musit.objectsearch.term.label')}</th>
                           <th>{I18n.t('musit.objectsearch.location.label')}</th>
-                          <th>
+                          <th style={{ textAlign: 'center' }}>
                             <a
                               href=""
                               onClick={e => {
@@ -124,7 +112,6 @@ export class ObjectSearchComponent extends React.Component {
                               />
                             </a>
                           </th>
-                          <th>{Config.isDev && 'Se objekt'}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -141,6 +128,10 @@ export class ObjectSearchComponent extends React.Component {
                                   ? 'childObject'
                                   : isMainObject && 'mainObject'
                               }
+                              onClick={() =>
+                                this.props.goTo(
+                                  Config.magasin.urls.client.object.gotoObject(data.uuid)
+                                )}
                             >
                               <td className="museumNo">{data.museumNo}</td>
                               <td className="subNo">{data.subNo}</td>
@@ -152,14 +143,14 @@ export class ObjectSearchComponent extends React.Component {
                                     allActive
                                     onClickCrumb={node => {
                                       if (node.nodeId) {
-                                        hashHistory.push(
+                                        this.props.goTo(
                                           Config.magasin.urls.client.storagefacility.goToNode(
                                             node.nodeId,
                                             this.props.appSession
                                           )
                                         );
                                       } else {
-                                        hashHistory.push(
+                                        this.props.goTo(
                                           Config.magasin.urls.client.storagefacility.goToRoot(
                                             this.props.appSession
                                           )
@@ -168,18 +159,20 @@ export class ObjectSearchComponent extends React.Component {
                                     }}
                                   />}
                               </td>
-                              <td className="move">
+                              <td style={{ textAlign: 'center' }}>
                                 {isMainObject &&
                                   <Button
                                     bsStyle="link"
-                                    onClick={() =>
+                                    onClick={e => {
                                       this.props.pickObject({
                                         object: data,
                                         breadcrumb: data.breadcrumb,
                                         museumId: this.props.appSession.museumId,
                                         collectionId: this.props.appSession.collectionId,
                                         token: this.props.appSession.accessToken
-                                      })}
+                                      });
+                                      e.stopPropagation();
+                                    }}
                                     title={I18n.t('musit.objectsearch.addToPickList')}
                                   >
                                     {this.props.isItemAdded(
@@ -195,19 +188,6 @@ export class ObjectSearchComponent extends React.Component {
                                           name="shopping-cart"
                                         />}
                                   </Button>}
-                              </td>
-                              <td>
-                                <Button
-                                  bsStyle="link"
-                                  onClick={() =>
-                                    hashHistory.push(
-                                      Config.magasin.urls.client.object.gotoObject(
-                                        data.uuid
-                                      )
-                                    )}
-                                >
-                                  Vis
-                                </Button>
                               </td>
                             </tr>
                           );
@@ -263,23 +243,4 @@ export class ObjectSearchComponent extends React.Component {
   }
 }
 
-const data = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  pickList$: { type: React.PropTypes.object.isRequired },
-  objectSearchStore$
-};
-
-const commands = {
-  clearSearch$,
-  searchForObjects$,
-  onChangeField$
-};
-
-const props = {
-  pickObject: MusitObject.pickObject(addObject$),
-  isItemAdded
-};
-
-export default flowRight([inject(data, commands, props), makeUrlAware])(
-  ObjectSearchComponent
-);
+export default ObjectSearchComponent;
