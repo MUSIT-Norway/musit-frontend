@@ -61,7 +61,9 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
         <label className="control-label col-md-2" htmlFor="caseNumber">Saksnummer:</label>
         <div className="col-md-10">
           <p className="form-control-static" id="caseNumber">
-            {form.caseNumber.value}
+            {form.caseNumbers.value &&
+              Array.isArray(form.caseNumbers.value) &&
+              form.caseNumbers.value.join(', ')}
           </p>
         </div>
       </div>
@@ -171,7 +173,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="requester">
-                  {form.note.value || ''}
+                  {form.restrictions_requester.value || ''}
                 </p>
               </div>
             </div>
@@ -181,7 +183,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="reason">
-                  {form.reason.value || ''}
+                  {form.restrictions_reason.value || ''}
                 </p>
               </div>
             </div>
@@ -191,7 +193,10 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="caseNumbers">
-                  {form.caseNumbers.value || ''}
+                  {form.restrictions_caseNumbers.value &&
+                    Array.isArray(form.restrictions_caseNumbers.value)
+                    ? form.restrictions_caseNumbers.value.join(', ')
+                    : ''}
                 </p>
               </div>
             </div>
@@ -201,17 +206,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="expirationDate">
-                  {form.expirationDate.value || ''}
-                </p>
-              </div>
-            </div>
-            <div className="form-group">
-              <label className="control-label col-md-2" htmlFor="cancelledBy">
-                Opphevet av:
-              </label>
-              <div className="col-md-10">
-                <p className="form-control-static" id="cancelledBy">
-                  {form.cancelledBy.value || ''}
+                  {form.restrictions_expirationDate.value || ''}
                 </p>
               </div>
             </div>
@@ -221,7 +216,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
               </label>
               <div className="col-md-10">
                 <p className="form-control-static" id="cancelledReason">
-                  {form.cancelledReason.value || ''}
+                  {form.restrictions_cancelledReason.value || ''}
                 </p>
               </div>
             </div>

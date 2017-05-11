@@ -51,31 +51,32 @@ describe('AnalysisFormComponent', () => {
         ...form,
         id: { ...form.id, value: 45 },
         restrictions: { ...form.restrictions, value: true },
-        requester: { ...form.requester, value: 'Test mann' },
-        reason: { ...form.reason, value: 'No reason' },
-        expirationDate: { ...form.expirationDate, value: '2017-01-01' }
+        restrictions_requester: { ...form.restrictions_requester, value: 'Test mann' },
+        restrictions_reason: { ...form.restrictions_reason, value: 'No reason' },
+        restrictions_expirationDate: {
+          ...form.restrictions_expirationDate,
+          value: '2017-01-01'
+        }
       };
-      const promiseHelper = new StatefulPromise();
+      const promise1 = new StatefulPromise();
+      const promise2 = new StatefulPromise();
       submitForm(
         appSession,
         formWithRestrictions,
         location,
-        promiseHelper.createPromise(),
+        promise1.createPromise(),
+        promise2.createPromise(),
         goTo
       )({
         preventDefault: identity
       }).then(() => {
-        expect(goTo.calledOnce).toEqual(true);
-        expect(goTo.getCall(0).args[0]).toEqual(
-          '/museum/99/collections/1234/analysis/45'
-        );
-        expect(promiseHelper.value.id).toEqual(45);
-        expect(promiseHelper.value.token).toEqual('45667');
-        expect(promiseHelper.value.museumId).toEqual(99);
-        expect(promiseHelper.value.data.restriction).not.toBe(null);
-        expect(promiseHelper.value.data.restriction.requester).toBe('Test mann');
-        expect(promiseHelper.value.data.restriction.reason).toBe('No reason');
-        expect(promiseHelper.value.data.restriction.expirationDate).toBe('2017-01-01');
+        expect(promise1.value.id).toEqual(45);
+        expect(promise1.value.token).toEqual('45667');
+        expect(promise1.value.museumId).toEqual(99);
+        expect(promise1.value.data.restriction).not.toBe(null);
+        expect(promise1.value.data.restriction.requester).toBe('Test mann');
+        expect(promise1.value.data.restriction.reason).toBe('No reason');
+        expect(promise1.value.data.restriction.expirationDate).toBe('2017-01-01');
         done();
       });
     });
@@ -218,6 +219,7 @@ describe('AnalysisFormComponent', () => {
         goBack={identity}
         goToUrl={identity}
         saveAnalysis={promise}
+        saveResult={promise}
         store={store}
         location={location}
       />

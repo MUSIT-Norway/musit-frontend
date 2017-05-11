@@ -27,6 +27,7 @@ const commands = {
 
 const props = {
   saveAnalysis: toPromise(Analysis.editAnalysisEvent()),
+  saveResult: toPromise(Analysis.addResult()),
   goToUrl: hashHistory.push,
   goBack: hashHistory.goBack
 };

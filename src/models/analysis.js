@@ -11,15 +11,22 @@ import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 export type Restriction = {
   requester?: ?string,
   reason?: ?string,
-  expirationDate?: ?string
+  expirationDate?: ?string,
+  cancelledReason?: string,
+  caseNumbers?: Array<string>
+};
+
+export type Result = {
+  extRef?: Array<string>,
+  comment?: ?string
 };
 
 export type Analysis = {
   id: string,
   registeredBy: string,
   caseNumbers?: ?Array<string>,
-  restriction?: ?Restriction
-  // TODO TBD
+  restriction?: ?Restriction,
+  result?: Result
 };
 
 export type AnalysisType = {
@@ -29,7 +36,7 @@ export type AnalysisType = {
 
 type FormValue = {
   name: string,
-  defaultValue: ?string | boolean
+  defaultValue: ?string | boolean | Array<any>
 };
 
 class MusitAnalysis {
@@ -107,9 +114,24 @@ class MusitAnalysis {
       callback?: ?Callback
     }
   ) => Observable;
+
+  static addResult: (ajaxPost: AjaxPost) => (
+    props: {
+      analysisId: number,
+      museumId: number,
+      token: string,
+      result: {
+        extRef?: ?Array<string>,
+        comment?: ?string
+      }
+    }
+  ) => Observable;
 }
 
-const toField = (name: string, defaultValue: ?string | boolean): FormValue => ({
+const toField = (
+  name: string,
+  defaultValue: ?string | boolean | Array<any>
+): FormValue => ({
   name,
   defaultValue
 });
@@ -123,16 +145,32 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
     {}
   );
 
-  formValues.caseNumber = toField('caseNumber', json.caseNumbers && json.caseNumbers[0]);
   const restriction = json.restriction;
-  formValues.restrictiona = toField('restrictions', !!restriction);
+  formValues.restrictions = toField('restrictions', !!restriction);
   if (restriction) {
-    formValues.requester = toField('requester', restriction.requester);
-    formValues.reason = toField('reason', restriction.reason);
-    formValues.expirationDate = toField(
-      'expirationDate',
+    formValues.restrictions_requester = toField(
+      'restrictions_requester',
+      restriction.requester
+    );
+    formValues.restrictions_reason = toField('restrictions_reason', restriction.reason);
+    formValues.restrictions_caseNumbers = toField(
+      'restrictions_caseNumbers',
+      restriction.caseNumbers
+    );
+    formValues.restrictions_cancelledReason = toField(
+      'restrictions_cancelledReason',
+      restriction.cancelledReason
+    );
+    formValues.restrictions_expirationDate = toField(
+      'restrictions_expirationDate',
       moment(restriction.expirationDate).format('YYYY-MM-DD')
     );
+  }
+
+  const result = json.result;
+  if (result) {
+    formValues.comments = toField('comments', result.comment);
+    formValues.externalSource = toField('externalSource', result.extRef);
   }
 
   return Object.keys(formValues).map(key => formValues[key]);
@@ -255,5 +293,13 @@ MusitAnalysis.saveAnalysisType = (ajaxPost = simplePost) =>
     const url = Config.magasin.urls.api.analysis.saveAnalysisType(museumId);
     return ajaxPost(url, data, token, callback).map(({ response }) => response);
   };
+
+MusitAnalysis.addResult = (ajaxPost = simplePost) =>
+  ({ analysisId, museumId, token, result }) =>
+    ajaxPost(
+      Config.magasin.urls.api.analysis.resultsUrl(museumId, analysisId),
+      result,
+      token
+    );
 
 export default MusitAnalysis;

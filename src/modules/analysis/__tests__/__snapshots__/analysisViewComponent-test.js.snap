@@ -47,42 +47,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               "rawValidator": [Function validator]
             }
           },
-          "cancelledBy": Object {
-            "defaultValue": null,
-            "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
-            },
-            "name": "cancelledBy",
-            "rawValue": null,
-            "validator": Object {
-              "rawValidator": [Function validator]
-            }
-          },
-          "cancelledReason": Object {
-            "defaultValue": null,
-            "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
-            },
-            "name": "cancelledReason",
-            "rawValue": null,
-            "validator": Object {
-              "rawValidator": [Function validator]
-            }
-          },
-          "caseNumber": Object {
-            "defaultValue": null,
-            "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
-            },
-            "name": "caseNumber",
-            "rawValue": null,
-            "validator": Object {
-              "rawValidator": [Function validator]
-            }
-          },
           "caseNumbers": Object {
             "defaultValue": Array [],
             "mapper": Object {
@@ -177,18 +141,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               "rawValidator": [Function validator]
             }
           },
-          "expirationDate": Object {
-            "defaultValue": null,
-            "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
-            },
-            "name": "expirationDate",
-            "rawValue": null,
-            "validator": Object {
-              "rawValidator": [Function validator]
-            }
-          },
           "externalSource": Object {
             "defaultValue": null,
             "mapper": Object {
@@ -274,18 +226,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               "rawValidator": [Function validator]
             }
           },
-          "reason": Object {
-            "defaultValue": null,
-            "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
-            },
-            "name": "reason",
-            "rawValue": null,
-            "validator": Object {
-              "rawValidator": [Function validator]
-            }
-          },
           "registeredBy": Object {
             "defaultValue": null,
             "mapper": Object {
@@ -322,18 +262,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               "rawValidator": [Function validator]
             }
           },
-          "requester": Object {
-            "defaultValue": null,
-            "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
-            },
-            "name": "requester",
-            "rawValue": null,
-            "validator": Object {
-              "rawValidator": [Function validator]
-            }
-          },
           "responsible": Object {
             "defaultValue": null,
             "mapper": Object {
@@ -355,6 +283,66 @@ exports[`AnalysisViewComponent should render properly 1`] = `
             "name": "restrictions",
             "rawValue": false,
             "validator": Object {}
+          },
+          "restrictions_cancelledReason": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "restrictions_cancelledReason",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "restrictions_caseNumbers": Object {
+            "defaultValue": Array [],
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "restrictions_caseNumbers",
+            "rawValue": Array [],
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "restrictions_expirationDate": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "restrictions_expirationDate",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "restrictions_reason": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "restrictions_reason",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
+          "restrictions_requester": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "restrictions_requester",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
           },
           "result": Object {
             "defaultValue": null,

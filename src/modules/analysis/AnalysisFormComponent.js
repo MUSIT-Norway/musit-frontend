@@ -22,13 +22,24 @@ type Props = {
   store: Store,
   appSession: AppSession,
   saveAnalysis: SaveAnalysisFn,
+  saveResult: Function,
   location: Location,
   goToUrl: (string) => void,
   goBack: () => void
 };
 
 const AnalysisForm = (
-  { form, updateForm, store, saveAnalysis, appSession, location, goToUrl, goBack }: Props
+  {
+    form,
+    updateForm,
+    store,
+    saveAnalysis,
+    saveResult,
+    appSession,
+    location,
+    goToUrl,
+    goBack
+  }: Props
 ) => {
   return (
     <div>
@@ -115,8 +126,12 @@ const AnalysisForm = (
               type="text"
               className="form-control"
               id="casenumber"
-              value={form.caseNumber.rawValue || ''}
-              onChange={updateFormField(form.caseNumber.name, updateForm)}
+              value={
+                (Array.isArray(form.caseNumbers.rawValue) &&
+                  form.caseNumbers.rawValue.join(', ')) ||
+                  ''
+              }
+              onChange={updateArrayField(form.caseNumbers.name, updateForm)}
             />
           </div>
           <AddButton id="1" label="Legg til saksnummer" md={5} />
@@ -273,8 +288,11 @@ const AnalysisForm = (
                     className="form-control"
                     id="restrictedBy"
                     placeholder="Fornavn Etternavn"
-                    value={form.requester.rawValue || ''}
-                    onChange={updateFormField(form.requester.name, updateForm)}
+                    value={form.restrictions_requester.rawValue || ''}
+                    onChange={updateFormField(
+                      form.restrictions_requester.name,
+                      updateForm
+                    )}
                   />
                 </div>
               </div>
@@ -286,8 +304,8 @@ const AnalysisForm = (
                   <input
                     className="form-control"
                     id="restrictionCause"
-                    value={form.reason.rawValue || ''}
-                    onChange={updateFormField(form.reason.name, updateForm)}
+                    value={form.restrictions_reason.rawValue || ''}
+                    onChange={updateFormField(form.restrictions_reason.name, updateForm)}
                   />
                 </div>
               </div>
@@ -302,8 +320,15 @@ const AnalysisForm = (
                   <input
                     className="form-control"
                     id="restrictionCaseNumbers"
-                    value={form.caseNumber.rawValue || ''}
-                    onChange={updateFormField(form.caseNumber.name, updateForm)}
+                    value={
+                      (Array.isArray(form.restrictions_caseNumbers.rawValue) &&
+                        form.restrictions_caseNumbers.rawValue.join(', ')) ||
+                        ''
+                    }
+                    onChange={updateArrayField(
+                      form.restrictions_caseNumbers.name,
+                      updateForm
+                    )}
                   />
                 </div>
                 <AddButton id="3" label="Legg til flere saksnummer" md={2} />
@@ -319,8 +344,30 @@ const AnalysisForm = (
                   <input
                     className="form-control"
                     id="restrictionExpirationEndDate"
-                    value={form.expirationDate.rawValue || ''}
-                    onChange={updateFormField(form.expirationDate.name, updateForm)}
+                    value={form.restrictions_expirationDate.rawValue || ''}
+                    onChange={updateFormField(
+                      form.restrictions_expirationDate.name,
+                      updateForm
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label
+                  className="control-label col-md-2"
+                  htmlFor="restrictionCancellationCause"
+                >
+                  Årsak til kansellering:
+                </label>
+                <div className="col-md-10">
+                  <input
+                    className="form-control"
+                    id="restrictionCancellationCause"
+                    value={form.restrictions_cancelledReason.rawValue || ''}
+                    onChange={updateFormField(
+                      form.restrictions_cancelledReason.name,
+                      updateForm
+                    )}
                   />
                 </div>
               </div>
@@ -329,7 +376,14 @@ const AnalysisForm = (
         <hr />
         <button
           className="btn btn-primary"
-          onClick={submitForm(appSession, form, location, saveAnalysis, goToUrl)}
+          onClick={submitForm(
+            appSession,
+            form,
+            location,
+            saveAnalysis,
+            saveResult,
+            goToUrl
+          )}
         >
           Lagre
         </button>
@@ -353,6 +407,14 @@ export function updateFormField(field: string, updateForm: Function) {
     updateForm({
       name: field,
       rawValue: e.target.value
+    });
+}
+
+export function updateArrayField(field: string, updateForm: Function) {
+  return (e: { target: { value: string } }) =>
+    updateForm({
+      name: field,
+      rawValue: e.target.value.split(',').map(v => v.trim())
     });
 }
 
@@ -381,19 +443,26 @@ export function submitForm(
   form: FormData,
   location?: Location,
   saveAnalysisEvent: SaveAnalysisFn,
+  saveResult: Function,
   goToUrl: (string) => void
 ) {
   return (e: { preventDefault: Function }) => {
     e.preventDefault();
     const restriction = form.restrictions.value
       ? {
-          requester: form.requester.value,
-          expirationDate: form.expirationDate.value,
-          reason: form.reason.value,
-          caseNumbers: null, //form.caseNumbers.value,
-          cancelledReason: null //form.reason.value
+          requester: form.restrictions_requester.value,
+          expirationDate: form.restrictions_expirationDate.value,
+          reason: form.restrictions_reason.value,
+          caseNumbers: form.restrictions_caseNumbers.value,
+          cancelledReason: form.restrictions_cancelledReason.value
         }
       : null;
+
+    const result = {
+      extRef: form.externalSource.value ? [form.externalSource.value] : null,
+      comment: form.comments.value,
+      type: 'GenericResult'
+    };
 
     const data = {
       analysisTypeId: form.analysisTypeId.value,
@@ -404,11 +473,12 @@ export function submitForm(
       administrator: null,
       completedBy: null,
       completedDate: null,
-      restriction: restriction,
+      restriction,
       objectIds: location && location.state ? location.state.map(a => a.uuid) : [],
-      caseNumbers: form.caseNumber.value ? [form.caseNumber.value] : null,
+      caseNumbers: form.caseNumbers.value,
       status: form.status.value,
       reason: null,
+      result,
       type: 'AnalysisCollection'
     };
 
@@ -418,11 +488,19 @@ export function submitForm(
       data: data,
       token: appSession.accessToken
     }).then((analysis: number | { id: number }) => {
+      const analysisId = typeof analysis === 'number' ? analysis : analysis.id;
       const url = Config.magasin.urls.client.analysis.viewAnalysis(
         appSession,
-        typeof analysis === 'number' ? analysis : analysis.id
+        analysisId
       );
-      goToUrl(url);
+      return saveResult({
+        token: appSession.accessToken,
+        museumId: appSession.museumId,
+        result,
+        analysisId
+      }).then(() => {
+        goToUrl(url);
+      });
     });
   };
 }

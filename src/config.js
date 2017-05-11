@@ -112,6 +112,8 @@ export default {
             `/api/management/${mid}/analyses/types/musemcollections/${musemcollectionId}`
         },
         analysis: {
+          resultsUrl: (mid: MuseumId, analysisId: number) =>
+            `/api/management/${mid}/analyses/${analysisId}/results`,
           saveAnalysisEvent: (mid: MuseumId) => `/api/management/${mid}/analyses`,
           getAnalysisById: (mid: MuseumId, analysisId: number) =>
             `/api/management/${mid}/analyses/${analysisId}`,
