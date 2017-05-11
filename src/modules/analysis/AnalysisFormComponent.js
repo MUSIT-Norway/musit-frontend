@@ -99,6 +99,25 @@ const AnalysisForm = (
               </div>}
         </div>
         <div className="form-group">
+          <label className="control-label col-md-2" htmlFor="reason">
+            Formål med analysen:
+          </label>
+          <div className="col-md-10">
+            <select
+              id="reason"
+              className="form-control"
+              value={form.reason.rawValue || ''}
+              onChange={updateFormField(form.reason.name, updateForm)}
+            >
+              <option value="">Velg formål</option>
+              <option>Ingen forhold</option>
+              <option>To forhold</option>
+              <option>Tre forhold</option>
+              <option>Fire forhold</option>
+            </select>
+          </div>
+        </div>
+        <div className="form-group">
           <label className="control-label col-md-2" htmlFor="status">
             Status på analysen:
           </label>
@@ -477,7 +496,7 @@ export function submitForm(
       objectIds: location && location.state ? location.state.map(a => a.uuid) : [],
       caseNumbers: form.caseNumbers.value,
       status: form.status.value,
-      reason: null,
+      reason: form.reason.value,
       result,
       type: 'AnalysisCollection'
     };

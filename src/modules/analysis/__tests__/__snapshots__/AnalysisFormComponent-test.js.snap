@@ -35,6 +35,39 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       className="form-group">
       <label
         className="control-label col-md-2"
+        htmlFor="reason">
+        Formål med analysen:
+      </label>
+      <div
+        className="col-md-10">
+        <select
+          className="form-control"
+          id="reason"
+          onChange={[Function anonymous]}
+          value="">
+          <option
+            value="">
+            Velg formål
+          </option>
+          <option>
+            Ingen forhold
+          </option>
+          <option>
+            To forhold
+          </option>
+          <option>
+            Tre forhold
+          </option>
+          <option>
+            Fire forhold
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-md-2"
         htmlFor="status">
         Status på analysen:
       </label>

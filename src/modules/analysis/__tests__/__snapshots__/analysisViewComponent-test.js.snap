@@ -226,6 +226,18 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               "rawValidator": [Function validator]
             }
           },
+          "reason": Object {
+            "defaultValue": null,
+            "mapper": Object {
+              "fromRaw": [Function fromRaw],
+              "toRaw": [Function toRaw]
+            },
+            "name": "reason",
+            "rawValue": null,
+            "validator": Object {
+              "rawValidator": [Function validator]
+            }
+          },
           "registeredBy": Object {
             "defaultValue": null,
             "mapper": Object {
@@ -457,6 +469,20 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         <p
           className="form-control-static"
           id="type" />
+      </div>
+    </div>
+    <div
+      className="form-group">
+      <label
+        className="control-label col-md-2"
+        htmlFor="reason">
+        Formål med analysen:
+      </label>
+      <div
+        className="col-md-10">
+        <p
+          className="form-control-static"
+          id="reason" />
       </div>
     </div>
     <div

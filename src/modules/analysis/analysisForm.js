@@ -25,6 +25,7 @@ export const fieldsArray = [
   getStrField('partOf'),
   getStrField('result'),
   getStrField('place'),
+  getStrField('reason'),
   getStrField('externalSource'),
   getStrField('comments'),
   getBoolField('restrictions', false),

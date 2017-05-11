@@ -48,6 +48,16 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
         </div>
       </div>
       <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="reason">
+          Formål med analysen:
+        </label>
+        <div className="col-md-10">
+          <p className="form-control-static" id="reason">
+            {form.reason.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
         <label className="control-label col-md-2" htmlFor="status">
           Status på analysen:
         </label>
