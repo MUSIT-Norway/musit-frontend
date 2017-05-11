@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { Subject } from 'rxjs/Rx';
 import createForm from '../form';
 import { stringMapper } from '../mappers';

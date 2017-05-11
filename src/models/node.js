@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { simpleGet, simpleDel, simplePut, simplePost } from '../shared/RxAjax';
 import Config from '../config';
 import { mapToBackend, mapToFrontend } from './mapper/node';

@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';

@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import type { Field } from '../../../forms/form';
 
 export type FormData = {

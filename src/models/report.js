@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import Config from '../config';
 import { apiUrl } from '../shared/util';
 import { simpleGet } from '../shared/RxAjax';

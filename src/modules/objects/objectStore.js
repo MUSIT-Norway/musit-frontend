@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import { Observable } from 'rxjs';
 import MusitObject from '../../models/object';

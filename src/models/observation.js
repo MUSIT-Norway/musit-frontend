@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import Config from '../config';
 import mapToBackEnd from './mapper/observation/to_backend';
 import mapToFrontEnd from './mapper/observation/to_frontend';

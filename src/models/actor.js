@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import find from 'lodash/find';
 import Config from '../config';
 import { simpleGet, simplePost } from '../shared/RxAjax';

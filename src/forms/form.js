@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { Observable, Subject } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import isEmpty from 'lodash/isEmpty';

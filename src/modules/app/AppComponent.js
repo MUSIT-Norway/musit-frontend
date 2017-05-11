@@ -171,6 +171,13 @@ export class AppComponent extends Component {
               >
                 <NavItem>{I18n.t('musit.reports.reports')}</NavItem>
               </LinkContainer>
+              <LinkContainer
+                to={Config.magasin.urls.client.administration.goToAdministration(
+                  this.props.appSession
+                )}
+              >
+                <NavItem>{I18n.t('musit.administration.administration')}</NavItem>
+              </LinkContainer>
             </Nav>
             <Nav pullRight>
               <LinkContainer

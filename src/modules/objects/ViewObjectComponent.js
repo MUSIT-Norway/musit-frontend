@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import React from 'react';
 import { Row, Col, Tabs, Tab, PageHeader, Button } from 'react-bootstrap';
 import type { ObjectData } from '../../types/object';

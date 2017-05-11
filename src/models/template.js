@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { simpleGet, ajax } from '../shared/RxAjax';
 import Config from '../config';
 import type { AjaxGet } from './types/ajax';

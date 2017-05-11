@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import createForm, {
   getStrField,
   getArrField,

@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { simpleGet, simplePost, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import MusitActor from './actor';
@@ -86,6 +86,23 @@ class MusitAnalysis {
       id: number,
       museumId: number,
       collectionId: string,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+
+  static getAnalysisTypes: (ajaxGet: AjaxGet) => (
+    props: {
+      museumId: number,
+      token: string,
+      callback?: ?Callback
+    }
+  ) => Observable;
+
+  static saveAnalysisType: (ajaxPost: AjaxPost) => (
+    props: {
+      museumId: number,
+      data: AnalysisType,
       token: string,
       callback?: ?Callback
     }
@@ -226,5 +243,17 @@ MusitAnalysis.getAnalysisWithDetails = (ajaxGet = simpleGet, ajaxPost = simplePo
           };
         });
       });
+
+MusitAnalysis.getAnalysisTypes = (ajaxGet = simpleGet) =>
+  ({ museumId, token, callback }) => {
+    const url = Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId);
+    return ajaxGet(url, token, callback).map(r => r.response);
+  };
+
+MusitAnalysis.saveAnalysisType = (ajaxPost = simplePost) =>
+  ({ museumId, data, token, callback }) => {
+    const url = Config.magasin.urls.api.analysis.saveAnalysisType(museumId);
+    return ajaxPost(url, data, token, callback).map(({ response }) => response);
+  };
 
 export default MusitAnalysis;

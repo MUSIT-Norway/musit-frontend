@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
 import type { AppSession } from '../../types/appSession';

@@ -1,0 +1,61 @@
+exports[`Administration should render Administration 1`] = `
+<div>
+  <div
+    className="page-header">
+    <h1>
+      Administrasjon
+    </h1>
+  </div>
+  <table
+    className="table">
+    <thead>
+      <tr>
+        <th>
+          Tittel
+        </th>
+        <th>
+          Beskrivelse
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <a
+            href="/museum/99/collections/45555/administration/analysistypes"
+            onClick={[Function onClick]}>
+            Analysetyper
+          </a>
+        </td>
+        <td>
+          Analysetyper for analyse
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            href="/museum/99/collections/45555/administration/analysisplaces"
+            onClick={[Function onClick]}>
+            Analysesteder
+          </a>
+        </td>
+        <td>
+          Analysesteder for analyse
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <a
+            href="/museum/99/collections/45555/administration/sampletypes"
+            onClick={[Function onClick]}>
+            Prøvetyper
+          </a>
+        </td>
+        <td>
+          Prøvetyper for prøve
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

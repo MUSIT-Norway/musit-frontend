@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { simpleGet, simplePost } from '../shared/RxAjax';
 import Analysis from './analysis';
 import MusitObject from './object';

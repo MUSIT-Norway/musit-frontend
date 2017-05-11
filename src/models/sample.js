@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import object from './object';

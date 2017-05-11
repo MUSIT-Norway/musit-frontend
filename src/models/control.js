@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import Config from '../config';
 import { mapToBackend } from './mapper/control/to_backend';
 import { simplePost, simpleGet } from '../shared/RxAjax';

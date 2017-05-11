@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import ViewObjectComponent from './ViewObjectComponent';
 import inject from 'react-rxjs/dist/RxInject';
 import objectStore$, {

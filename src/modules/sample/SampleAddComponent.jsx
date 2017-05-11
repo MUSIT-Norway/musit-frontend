@@ -1,4 +1,4 @@
-/* @flow */
+// @flow
 import React, {PropTypes} from 'react';
 import {
   Well,
