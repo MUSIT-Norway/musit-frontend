@@ -1,6 +1,5 @@
 import { Subject, Observable } from 'rxjs/Rx';
 import { store$, loadEvents } from '../eventsStore';
-import MusitNode from '../../../models/node';
 
 import MusitTestScheduler from 'testutils/MusitTestScheduler';
 
@@ -122,16 +121,16 @@ describe('controlsAndObservationsStore', () => {
           { id: 1455, doneBy: undefined, registeredBy: undefined }
         ],
         loading: false,
-        rootNode: new MusitNode({ nodeId: 1, name: 'Test' })
+        rootNode: { nodeId: 1, name: 'Test' }
       }
     };
 
     const clearEvents$ = testScheduler.createHotObservable(clearEventsM);
     const loadRootNode$ = testScheduler.createHotObservable(loadRootNodeM, {
-      1: new MusitNode({
+      1: {
         nodeId: 1,
         name: 'Test'
-      })
+      }
     });
     const loadEvents$ = testScheduler
       .createHotObservable(loadEventsM, {
