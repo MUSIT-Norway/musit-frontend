@@ -28,17 +28,17 @@ const externalIdSource = getStrField('externalIdSource');
 const doneDate = getStrField('doneDate');
 const registeredBy = getStrField('registeredBy');
 const registeredDate = getStrField('registeredDate');
-const updateBy = getStrField('updatedBy');
-const updateDate = getStrField('updatedDate');
+const updatedBy = getStrField('updatedBy');
+const updatedDate = getStrField('updatedDate');
 const container = getStrField('container');
 const storageMedium = getStrField('storageMedium');
 const note = getStrField('note');
 const size = getNumberField('size');
 const sizeUnit = getStrField('sizeUnit');
 const sampleType = getStrField('sampleType');
-const subTypeValue = getStrField('sampleSubType');
+const subTypeValue = getStrField('subTypeValue');
 const status = getStrField('status');
-const description = getStrField('sampleDescription');
+const description = getStrField('description');
 const treatment = getStrField('treatment');
 const persons = getArrField('persons');
 const originatedObjectUuid = getArrField('originatedObjectUuid');
@@ -75,8 +75,8 @@ const fields = [
   parentObjectType,
   registeredDate,
   responsible,
-  updateBy,
-  updateDate,
+  updatedBy,
+  updatedDate,
   doneDate,
   originatedObjectUuid,
   persons

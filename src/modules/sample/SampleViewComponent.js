@@ -87,10 +87,10 @@ const SampleViewComponent = props => {
           <ControlLabel>Sist endret:</ControlLabel>
         </Col>
         <Col md={4}>
-          <FontAwesome name="user" /> {form.updateBy.defaultValue || 'Stein Olsen'}
+          <FontAwesome name="user" /> {form.updatedBy.defaultValue || 'Stein Olsen'}
         </Col>
         <Col md={2}>
-          <FontAwesome name="clock-o" /> {form.updateDate.defaultValue || '11.03.2017'}
+          <FontAwesome name="clock-o" /> {form.updatedDate.defaultValue || '11.03.2017'}
         </Col>
       </Row>
       <br />

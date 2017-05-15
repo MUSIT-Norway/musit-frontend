@@ -91,12 +91,12 @@ describe('AnalysisSampleFormPageView', () => {
             name: 'registeredDate',
             defaultValue: '1988-12-31'
           },
-          updateBy: {
-            name: 'updateBy',
+          updatedBy: {
+            name: 'updatedBy',
             defaultValue: 'Arne And'
           },
-          updateDate: {
-            name: 'updateDate',
+          updatedDate: {
+            name: 'updatedDate',
             defaultValue: '1998-03-12'
           },
           sampleId: {

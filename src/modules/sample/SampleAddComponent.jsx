@@ -1,5 +1,5 @@
 // @flow
-import React, {PropTypes} from 'react';
+import React from 'react';
 import {
   Well,
   PageHeader,
@@ -14,32 +14,21 @@ import {
   ControlLabel,
   Row
 } from 'react-bootstrap';
-import Config from '../../config';
-import PersonRoleDate from '../../components/samples/personRoleDate';
-import Sample from '../../models/sample';
-import type { AppSession } from '../../types/appSession';
+import Config from 'config';
+import PersonRoleDate from 'components/samples/personRoleDate';
+import Sample from 'models/sample';
+import type { AppSession } from 'types/appSession';
 import {hashHistory} from 'react-router';
 import type {Person} from './sampleForm';
-import type { Field } from '../../forms/form';
-
-type FieldInputProps = { field: Field<*>, onChangeInput: Function, inputProps?: { className?: string, style?: {} } };
+import type { Field } from 'forms/form';
+import type { FormDetails } from './types/form';
 
 type Params = {
   objectId: string
 }
 
-type FormData = {
-  note: Field<string>, size: Field<string>, status: Field<string>, externalId: Field<string>,
-  externalIdSource: Field<string>, container: Field<string>, storageMedium: Field<string>,
-  sampleType: Field<*>, sampleId: Field<string>, treatment: Field<string>, subTypeValue: Field<string>,
-  sizeUnit: Field<string>, museumId: Field<string>, subNo: Field<string>, leftoverSample: Field<string>,
-  term_species: Field<string>, registeredBy: Field<string>, registeredDate: Field<string>, updateBy: Field<string>,
-  hasRestMaterial: Field<string>, updateDate: Field<string>, sampleId: Field<string>, doneDate: Field<*>,
-  description: Field<string>, persons: Field<Array<*>>
-};
-
 type Props = {
-  form: FormData,
+  form: FormDetails,
   updateForm: Function,
   persons: Array<{ name: string, role: string, date: string }>,
   addSample: Function,
@@ -50,115 +39,6 @@ type Props = {
   appSession: AppSession,
   params: Params
 };
-
-type FieldDropDownProps = {
-  field: Field<string>,
-  title: any,
-  onSelectInput: Function,
-  selectItems: Array<string>,
-  inputProps?: { className?: string, style?: {} }
-};
-
-
-const FieldInput = ({field, onChangeInput, inputProps}: FieldInputProps) => (
-  <FormGroup
-    controlId={field.name}
-    validationState={field.status && !field.status.valid ? 'error' : null}
-  >
-    <FormControl
-      {...inputProps}
-      value={field.rawValue || ''}
-      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
-    />
-  </FormGroup>
-);
-
-const CheckBoxInput = ({field, onChangeInput}: FieldInputProps) => (
-  <FormGroup>
-    <Radio
-      inline
-      value={field.rawValue || '1'}
-      checked={field.rawValue === '3'}
-      onChange={() =>
-        onChangeInput({name: field.name, rawValue: '3'})}
-    >Ja</Radio>
-    <Radio
-      inline value={field.rawValue || '1'}
-      checked={field.rawValue === '2'}
-      onChange={() =>
-        onChangeInput({name: field.name, rawValue: '2'})}
-    >Nei</Radio>
-  </FormGroup>
-);
-
-
-const FieldDropDown = ({field, onSelectInput, selectItems, inputProps, title}: FieldDropDownProps) => (
-  <FormGroup
-    controlId={field.name}
-    validationState={field.status && !field.status.valid ? 'error' : null}
-  >
-    <DropdownButton
-      {...inputProps}
-      bsStyle="default"
-      title={field.value ? field.value : title}
-      id={field.name}
-    >
-      { selectItems.map((v, i) =>
-        <MenuItem
-          key={i}
-          onClick={ (e) => {
-            onSelectInput({name: field.name, rawValue: e.target.text});
-          }}>{v}
-        </MenuItem>) }
-    </DropdownButton>
-  </FormGroup>
-);
-
-type FieldReadOnlyProps = { field: Field<string>, label: string, defaultValue: string, inputProps?: { className?: string, style?: {} } };
-
-const FieldReadOnly = ({field, label, defaultValue, inputProps}: FieldReadOnlyProps) => {
-  const value = field.rawValue;
-  return (
-    <span { ...inputProps}>
-      {label} <b> {value || defaultValue}</b>
-    </span>
-  );
-};
-
-const submitSample = (appSession: AppSession, form: FormData, objectData: any, params: Params, addSample: Function) => {
-  const token = appSession.accessToken;
-  const museumId = appSession.museumId;
-  const myReduce = (frm: FormData) => Object.keys(frm).reduce((akk: any, key: string) =>
-    ({...akk, [key]: frm[key].value || frm[key].defaultValue}), {});
-  const reducePersons = (p: any) => p && p.reduce((akk: any, v: Person) => {
-    switch (v.role) {
-      case 'creator':
-        return {...akk,
-          createdBy:v.name,
-          doneDate: v.date
-        };
-      case
-      'responsible':
-        return {...akk,
-          responsible: v.name
-        };
-      default: return {};
-    }
-  }, {});
-
-  const persons = form.persons.rawValue;
-  const tmpData = {...myReduce(form), ...reducePersons(persons)};
-
-  tmpData.status = 2;
-  tmpData.responsible = appSession.actor.dataportenId;
-  tmpData.isExtracted = false;
-  tmpData.parentObjectType = objectData.objectType;
-  tmpData.museumId = appSession.museumId;
-  tmpData.parentObjectId = params.objectId;
-  const data = Sample.prepareForSubmit(tmpData);
-  return addSample({museumId, token, data});
-};
-
 
 const SampleAddComponent = ({form, updateForm, addSample, location, appSession, params, clearForm}: Props) => {
 
@@ -402,7 +282,6 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
               title={form.container.value || 'Velg kontainer'}
               onSelectInput={updateForm}
               selectItems={containerTypes}
-              inputProps={{className: 'container'}}
             />
           </Col>
         </Row>
@@ -495,44 +374,138 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
   );
 };
 
-const FieldShape = {
-  name: PropTypes.string.isRequired,
-  rawValue: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.array
-  ]),
-  status: PropTypes.shape({
-    valid: PropTypes.bool.isRequired,
-    error: PropTypes.any
-  })
+type FieldInputProps = {
+  field: Field<*>,
+  onChangeInput: Function,
+  inputProps?: {
+    className?: string,
+    style?: {}
+  }
 };
 
-SampleAddComponent.propTypes = {
-  form: PropTypes.shape({
-    note: PropTypes.shape(FieldShape).isRequired,
-    museumId: PropTypes.shape(FieldShape).isRequired,
-    subNo: PropTypes.shape(FieldShape).isRequired,
-    term_species: PropTypes.shape(FieldShape).isRequired,
-    registeredBy: PropTypes.shape(FieldShape).isRequired,
-    registeredDate: PropTypes.shape(FieldShape).isRequired,
-    updateBy: PropTypes.shape(FieldShape).isRequired,
-    updateDate: PropTypes.shape(FieldShape).isRequired,
-    sampleType: PropTypes.shape(FieldShape).isRequired,
-    subTypeValue: PropTypes.shape(FieldShape).isRequired,
-    size: PropTypes.shape(FieldShape).isRequired,
-    sizeUnit: PropTypes.shape(FieldShape).isRequired,
-    status: PropTypes.shape(FieldShape).isRequired,
-    container: PropTypes.shape(FieldShape).isRequired,
-    storageMedium: PropTypes.shape(FieldShape).isRequired,
-    leftoverSample: PropTypes.shape(FieldShape).isRequired,
-    externalId: PropTypes.shape(FieldShape).isRequired,
-    externalIdSource: PropTypes.shape(FieldShape).isRequired,
-    description: PropTypes.shape(FieldShape).isRequired
-  }).isRequired,
-  updateForm: PropTypes.func.isRequired,
-  appSession: PropTypes.object.isRequired
+function FieldInput({field, onChangeInput, inputProps}: FieldInputProps) {
+  return (
+    <FormGroup
+      controlId={field.name}
+      validationState={field.status && !field.status.valid ? 'error' : null}
+    >
+      <FormControl
+        {...inputProps}
+        value={field.rawValue || ''}
+        onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
+      />
+    </FormGroup>
+  );
+}
+
+function CheckBoxInput({field, onChangeInput}: FieldInputProps) {
+  return (
+    <FormGroup>
+      <Radio
+        inline
+        value={field.rawValue || '1'}
+        checked={field.rawValue === '3'}
+        onChange={() =>
+          onChangeInput({name: field.name, rawValue: '3'})}
+      >Ja</Radio>
+      <Radio
+        inline value={field.rawValue || '1'}
+        checked={field.rawValue === '2'}
+        onChange={() =>
+          onChangeInput({name: field.name, rawValue: '2'})}
+      >Nei</Radio>
+    </FormGroup>
+  );
+}
+
+type FieldDropDownProps = {
+  field: Field<string>,
+  title: any,
+  onSelectInput: Function,
+  selectItems: Array<string>,
+  inputProps?: { className?: string, style?: {} }
 };
+
+function FieldDropDown({field, onSelectInput, selectItems, inputProps, title}: FieldDropDownProps) {
+  return (
+    <FormGroup
+      controlId={field.name}
+      validationState={field.status && !field.status.valid ? 'error' : null}
+    >
+      <DropdownButton
+        {...inputProps}
+        bsStyle="default"
+        title={field.value ? field.value : title}
+        id={field.name}
+      >
+        { selectItems.map((v, i) =>
+          <MenuItem
+            key={i}
+            onClick={ (e) => {
+              onSelectInput({name: field.name, rawValue: e.target.text});
+            }}>{v}
+          </MenuItem>) }
+      </DropdownButton>
+    </FormGroup>
+  );
+}
+
+type FieldReadOnlyProps = {
+  field: Field<string>,
+  label: string,
+  defaultValue: string,
+  inputProps?: {
+    className?: string,
+    style?: {}
+  }
+};
+
+function FieldReadOnly({field, label, defaultValue, inputProps}: FieldReadOnlyProps){
+  const value = field.rawValue;
+  return (
+    <span { ...inputProps}>
+      {label} <b> {value || defaultValue}</b>
+    </span>
+  );
+}
+
+function submitSample(appSession: AppSession, form: FormDetails, objectData: any, params: Params, addSample: Function) {
+  const token = appSession.accessToken;
+  const museumId = appSession.museumId;
+  const myReduce = (frm: FormDetails) => Object.keys(frm).reduce((akk: any, key: string) =>
+    ({...akk, [key]: frm[key].value || frm[key].defaultValue}), {});
+  const reducePersons = (p: any) => p && p.reduce((akk: any, v: Person) => {
+    switch (v.role) {
+      case 'creator':
+        return {...akk,
+          createdBy: v.name,
+          doneDate: v.date
+        };
+      case 'responsible':
+        return {...akk,
+          responsible: {
+            type: 'ActorByName',
+            value: v.name
+          }
+        };
+      default: return {};
+    }
+  }, {});
+
+  const persons = form.persons.rawValue;
+  const tmpData = {...myReduce(form), ...reducePersons(persons)};
+
+  tmpData.status = 2;
+  tmpData.responsible = {
+    type: 'ActorById',
+    value: appSession.actor.dataportenId
+  };
+  tmpData.isExtracted = false;
+  tmpData.parentObjectType = objectData.objectType;
+  tmpData.museumId = appSession.museumId;
+  tmpData.parentObjectId = params.objectId;
+  const data = Sample.prepareForSubmit(tmpData);
+  return addSample({museumId, token, data});
+}
 
 export default SampleAddComponent;
