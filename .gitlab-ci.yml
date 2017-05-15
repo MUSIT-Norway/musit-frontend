@@ -29,6 +29,7 @@ before_script:
 stages:
   - test
   - build
+  - cleanup
 
 test:
   stage: test
@@ -50,5 +51,13 @@ build:
   script:
     - docker build -t $MUSIT_DOCKER_REGISTRY/musit/webpack:utv .
     - docker push $MUSIT_DOCKER_REGISTRY/musit/webpack:utv
+  only:
+    - master@MUSIT-Norway/musit-frontend
+
+cleanup:
+  stage: cleanup
+  script:
+    - docker rm -v $(docker ps -a -q --filter=status=exited --filter=status=dead)
+    - docker rmi $(docker images --filter "dangling=true" | grep "webpack")
   only:
     - master@MUSIT-Norway/musit-frontend
