@@ -61,3 +61,4 @@ cleanup:
     - docker rmi $(docker images --filter "dangling=true" | grep "webpack")
   only:
     - master@MUSIT-Norway/musit-frontend
+  allow_failure: true
