@@ -75,7 +75,7 @@ describe('ObjectSearchComponent', () => {
     expect(clear.calledOnce).toBe(false);
     expect(searchForObjects.calledOnce).toBe(false);
     expect(onChangeField.calledOnce).toBe(false);
-    wrapper.find('.SubmitButton').simulate('click', { preventDefault: () => true });
+    wrapper.find('.btn-default').simulate('click', { preventDefault: () => true });
     expect(searchForObjects.getCall(0).args[0].token).toBe('wakka');
     expect(searchForObjects.getCall(0).args[0].collectionId).toBe('ddd');
     expect(searchForObjects.getCall(0).args[0].museumId).toBe(99);

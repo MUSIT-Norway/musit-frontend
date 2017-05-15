@@ -1,2069 +1,1948 @@
 exports[`ObjectSearchComponent should display object 1 1`] = `
 <div
+  className="container"
   style={
     Object {
       "paddingTop": 20
     }
   }>
-  <main>
-    <Grid
-      bsClass="container"
-      componentClass="div"
-      fluid={false}>
-      <div>
-        <h1>
-          Objektsøk
-        </h1>
-        <Form
-          bsClass="form"
-          componentClass="form"
-          horizontal={false}
-          inline={true}>
-          <FormGroup
-            bsClass="form-group"
-            controlId="museumNo">
-            <ControlLabel
-              bsClass="control-label"
-              srOnly={false}>
+  <h1>
+    Objektsøk
+  </h1>
+  <form
+    className="form-inline">
+    <div
+      className="form-group"
+      controlId="museumNo">
+      <label
+        class="control-label">
+        Museumnr.
+      </label>
+       
+      <input
+        className="form-control"
+        onChange={[Function onChange]}
+        placeholder=" "
+        style={Object {}}
+        type="text" />
+    </div>
+     
+    <div
+      className="form-group"
+      controlId="subNo">
+      <label
+        class="control-label">
+        Unr.
+      </label>
+       
+      <input
+        className="form-control"
+        onChange={[Function onChange]}
+        placeholder=" "
+        style={Object {}}
+        type="text" />
+    </div>
+     
+    <div
+      className="form-group"
+      controlId="term">
+      <label
+        class="control-label">
+        Term/Artsnavn
+      </label>
+       
+      <input
+        className="form-control"
+        onChange={[Function onChange]}
+        placeholder=" "
+        style={
+          Object {
+            "width": "440px"
+          }
+        }
+        type="text" />
+    </div>
+     
+    <button
+      className="btn btn-default"
+      onClick={[Function onClick]}
+      type="submit">
+      <FontAwesome
+        name="search"
+        style={
+          Object {
+            "fontSize": "1.3em"
+          }
+        } />
+    </button>
+  </form>
+  <br />
+  <h4>
+    Søket ga 20 treff:
+  </h4>
+  <Loader
+    component="div"
+    loaded={true}
+    loadedClassName="loadedContent"
+    parentClassName="loader">
+    <div>
+      <PagingToolbar
+        currentPage={1}
+        numItems={20}
+        onClick={[Function onClick]}
+        perPage={50} />
+      <div
+        style={
+          Object {
+            "clear": "both"
+          }
+        } />
+      <table
+        className="table table-hover">
+        <thead>
+          <tr>
+            <th>
               Museumnr.
-            </ControlLabel>
-             
-            <FormControl
-              bsClass="form-control"
-              componentClass="input"
-              onChange={[Function onChange]}
-              placeholder=" "
-              style={Object {}}
-              type="text" />
-          </FormGroup>
-           
-          <FormGroup
-            bsClass="form-group"
-            controlId="subNo">
-            <ControlLabel
-              bsClass="control-label"
-              srOnly={false}>
+            </th>
+            <th>
               Unr.
-            </ControlLabel>
-             
-            <FormControl
-              bsClass="form-control"
-              componentClass="input"
-              onChange={[Function onChange]}
-              placeholder=" "
-              style={Object {}}
-              type="text" />
-          </FormGroup>
-           
-          <FormGroup
-            bsClass="form-group"
-            controlId="term">
-            <ControlLabel
-              bsClass="control-label"
-              srOnly={false}>
+            </th>
+            <th>
               Term/Artsnavn
-            </ControlLabel>
-             
-            <FormControl
-              bsClass="form-control"
-              componentClass="input"
-              onChange={[Function onChange]}
-              placeholder=" "
+            </th>
+            <th>
+              Plassering
+            </th>
+            <th
               style={
                 Object {
-                  "width": "440px"
+                  "textAlign": "right"
                 }
-              }
-              type="text" />
-          </FormGroup>
-           
-          <Button
-            active={false}
-            block={false}
-            bsClass="btn"
-            bsStyle="default"
-            className="SubmitButton"
-            disabled={false}
-            onClick={[Function onClick]}
-            type="submit">
-            <FontAwesome
-              name="search"
+              }>
+              <a
+                href=""
+                onClick={[Function onClick]}
+                title="Legg til alle i plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
               style={
                 Object {
-                  "fontSize": "1.3em"
+                  "textAlign": "right"
                 }
-              } />
-          </Button>
-        </Form>
-        <br />
-        <h4>
-          Søket ga 20 treff:
-        </h4>
-        <Loader
-          component="div"
-          loaded={true}
-          loadedClassName="loadedContent"
-          parentClassName="loader">
-          <div>
-            <PagingToolbar
-              currentPage={1}
-              numItems={20}
-              onClick={[Function onClick]}
-              perPage={50} />
-            <Table
-              bordered={false}
-              bsClass="table"
-              condensed={true}
-              hover={true}
-              responsive={true}
-              striped={false}>
-              <thead>
-                <tr>
-                  <th>
-                    Museumnr.
-                  </th>
-                  <th>
-                    Unr.
-                  </th>
-                  <th>
-                    Term/Artsnavn
-                  </th>
-                  <th>
-                    Plassering
-                  </th>
-                  <th
-                    style={
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <a
-                      href=""
-                      onClick={[Function onClick]}
-                      title="Legg til alle i plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </a>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
                       Object {
-                        "textAlign": "center"
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                       }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
                       Object {
-                        "textAlign": "center"
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
                       }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
                       Object {
-                        "textAlign": "center"
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                       }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
                       Object {
-                        "textAlign": "center"
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
                       }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
                       Object {
-                        "textAlign": "center"
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                       }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
                       Object {
-                        "textAlign": "center"
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
                       }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
                       Object {
-                        "textAlign": "center"
-                      }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-                <tr
-                  className="mainObject"
-                  onClick={[Function onClick]}>
-                  <td
-                    className="museumNo">
-                    12345
-                  </td>
-                  <td
-                    className="subNo">
-                    45
-                  </td>
-                  <td
-                    className="term">
-                    Fuglekasse
-                  </td>
-                  <td
-                    className="path">
-                    <Breadcrumb
-                      allActive={true}
-                      node={
-                        Object {
-                          "breadcrumb": Array [
-                            Object {
-                              "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "name": "Root",
-                              "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
-                            },
-                            Object {
-                              "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "name": "Musit",
-                              "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
-                            },
-                            Object {
-                              "id": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "name": "Kontoret",
-                              "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
-                            }
-                          ],
-                          "id": 1,
-                          "museumNo": "12345",
-                          "path": ",1,2,3,",
-                          "pathNames": Array [
-                            Object {
-                              "name": "Root",
-                              "nodeId": 1,
-                              "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
-                              "type": "Organization"
-                            },
-                            Object {
-                              "name": "Musit",
-                              "nodeId": 2,
-                              "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
-                              "type": "Building"
-                            },
-                            Object {
-                              "name": "Kontoret",
-                              "nodeId": 3,
-                              "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
-                              "type": "Room"
-                            }
-                          ],
-                          "subNo": "45",
-                          "term": "Fuglekasse"
-                        }
-                      }
-                      onClickCrumb={[Function onClickCrumb]} />
-                  </td>
-                  <td
-                    style={
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
                       Object {
-                        "textAlign": "center"
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
                       }
-                    }>
-                    <Button
-                      active={false}
-                      block={false}
-                      bsClass="btn"
-                      bsStyle="link"
-                      disabled={false}
-                      onClick={[Function onClick]}
-                      title="Legg til plukklisten">
-                      <FontAwesome
-                        name="shopping-cart"
-                        style={
-                          Object {
-                            "color": "Gray",
-                            "fontSize": "1.3em"
-                          }
-                        } />
-                    </Button>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-            <PagingToolbar
-              currentPage={1}
-              numItems={20}
-              onClick={[Function onClick]}
-              perPage={50} />
-          </div>
-        </Loader>
-      </div>
-    </Grid>
-  </main>
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+          <tr
+            className="mainObject"
+            onClick={[Function onClick]}>
+            <td
+              className="museumNo">
+              12345
+            </td>
+            <td
+              className="subNo">
+              45
+            </td>
+            <td
+              className="term">
+              Fuglekasse
+            </td>
+            <td
+              className="path">
+              <Breadcrumb
+                allActive={true}
+                node={
+                  Object {
+                    "breadcrumb": Array [
+                      Object {
+                        "id": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "name": "Root",
+                        "nodeId": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "url": "/magasin/0615c304-e7ec-46ad-aebc-399884181eaf"
+                      },
+                      Object {
+                        "id": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "name": "Musit",
+                        "nodeId": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "url": "/magasin/ae3a3752-f8f7-4ab1-84b2-f088324f1a6f"
+                      },
+                      Object {
+                        "id": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "name": "Kontoret",
+                        "nodeId": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "url": "/magasin/403cebde-082c-4002-8f78-16ad178a054a"
+                      }
+                    ],
+                    "id": 1,
+                    "museumNo": "12345",
+                    "path": ",1,2,3,",
+                    "pathNames": Array [
+                      Object {
+                        "name": "Root",
+                        "nodeId": 1,
+                        "nodeUuid": "0615c304-e7ec-46ad-aebc-399884181eaf",
+                        "type": "Organization"
+                      },
+                      Object {
+                        "name": "Musit",
+                        "nodeId": 2,
+                        "nodeUuid": "ae3a3752-f8f7-4ab1-84b2-f088324f1a6f",
+                        "type": "Building"
+                      },
+                      Object {
+                        "name": "Kontoret",
+                        "nodeId": 3,
+                        "nodeUuid": "403cebde-082c-4002-8f78-16ad178a054a",
+                        "type": "Room"
+                      }
+                    ],
+                    "subNo": "45",
+                    "term": "Fuglekasse"
+                  }
+                }
+                onClickCrumb={[Function onClickCrumb]} />
+            </td>
+            <td
+              style={
+                Object {
+                  "textAlign": "right"
+                }
+              }>
+              <a
+                onClick={[Function onClick]}
+                title="Legg til plukklisten">
+                <FontAwesome
+                  name="shopping-cart"
+                  style={
+                    Object {
+                      "color": "Gray",
+                      "fontSize": "1.3em"
+                    }
+                  } />
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <PagingToolbar
+        currentPage={1}
+        numItems={20}
+        onClick={[Function onClick]}
+        perPage={50} />
+    </div>
+  </Loader>
 </div>
 `;
