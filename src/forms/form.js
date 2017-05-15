@@ -145,12 +145,15 @@ const createForm$ = (
   const initialFields = fields.reduce(
     (acc, field) => [
       ...acc,
-      {
-        ...field,
-        rawValue: field.mapper.toRaw(field.defaultValue),
-        validator: field.validator || noValidation,
-        mapper: field.mapper || stringMapper
-      }
+      updateField(
+        {
+          ...field,
+          rawValue: field.mapper.toRaw(field.defaultValue),
+          validator: field.validator || noValidation,
+          mapper: field.mapper || stringMapper
+        },
+        { name: field.name, rawValue: (field.rawValue: any) }
+      )
     ],
     []
   );

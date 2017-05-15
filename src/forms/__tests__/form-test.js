@@ -39,7 +39,12 @@ describe('form stream', () => {
           rawValue: '1',
           defaultValue: '1',
           validator: validator,
-          mapper: stringMapper
+          mapper: stringMapper,
+          status: {
+            valid: false,
+            error: 'name is not valid'
+          },
+          value: '1'
         }
       },
       b: {
