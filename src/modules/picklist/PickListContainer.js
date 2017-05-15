@@ -44,7 +44,7 @@ export const nodeCallback = (
     onComplete: () => {
       items.map(item =>
         refreshNode({
-          id: item.uuid,
+          id: item.nodeId,
           museumId: appSession.museumId,
           token: appSession.accessToken
         }));
@@ -162,7 +162,9 @@ export const moveItems = (
 ) => {
   return (to, toName, onSuccess, onFailure = () => true): void => {
     const moveFunction = isNode ? moveNode : moveObject;
-    const idsToMove = items.map(itemToMove => itemToMove.uuid);
+    const idsToMove = items.map(
+      itemToMove => isNode ? itemToMove.nodeId : itemToMove.uuid
+    );
 
     const toMoveLength = idsToMove.length;
     const first = items[0];
