@@ -299,7 +299,7 @@ export default class TableComponent extends React.Component {
     const componentToRender = (
       <MusitModalHistory
         appSession={this.props.appSession}
-        objectId={objectToShowHistoryFor.nodeId}
+        objectId={objectToShowHistoryFor.uuid}
       />
     );
     const title = `${I18n.t('musit.moveHistory.title')} ${objStr}`;
