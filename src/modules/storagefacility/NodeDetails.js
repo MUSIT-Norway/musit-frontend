@@ -518,7 +518,7 @@ export default class NodeDetails extends Component {
                           <br />
                           {this.props.loaded &&
                             <SaveCancel
-                              saveDisabled={this.props.loading}
+                              saveDisabled={this.props.loading || !this.props.rootNode}
                               onClickSave={this.handleSubmit}
                               onClickCancel={() => hashHistory.goBack()}
                             />}

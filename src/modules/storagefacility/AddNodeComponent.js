@@ -34,7 +34,9 @@ export class AddStorageUnitContainer extends React.Component {
         rootNode={this.props.nodeStore.rootNode}
         unit={this.props.nodeStore.unit}
         onLagreClick={data => {
-          const id = this.props.params.id;
+          const id = this.props.nodeStore.rootNode
+            ? this.props.nodeStore.rootNode.id
+            : null;
           const museumId = this.props.appSession.museumId;
           const token = this.props.appSession.accessToken;
           this.props

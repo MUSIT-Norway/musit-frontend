@@ -142,7 +142,7 @@ MusitNode.getNodeWithUpdatedBy = (ajaxGet = simpleGet) =>
 MusitNode.addNode = (ajaxPost = simplePost) =>
   ({ id, museumId, token, data, callback }) => {
     const url = id
-      ? Config.magasin.urls.api.storagefacility.nodeUrl(museumId, id)
+      ? Config.magasin.urls.api.storagefacility.baseUrl(museumId)
       : Config.magasin.urls.api.storagefacility.rootNodeUrl(museumId);
     const dataToPost = mapToBackend(data, id);
     return ajaxPost(url, dataToPost, token, callback).map(({ response }) => response);
