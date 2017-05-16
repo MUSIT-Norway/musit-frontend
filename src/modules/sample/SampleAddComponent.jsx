@@ -1,19 +1,5 @@
 // @flow
 import React from 'react';
-import {
-  Well,
-  PageHeader,
-  Form,
-  FormGroup,
-  Col,
-  Button,
-  DropdownButton,
-  Radio,
-  FormControl,
-  MenuItem,
-  ControlLabel,
-  Row
-} from 'react-bootstrap';
 import Config from 'config';
 import PersonRoleDate from 'components/samples/personRoleDate';
 import Sample from 'models/sample';
@@ -80,47 +66,44 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
   const personRoles: Array<Person> = (form.persons.rawValue: any) || [];
   const objectData = location.state[0];
   return (
-    <Form style={{padding: 20}}>
-      <PageHeader>
-        Registrer prøveuttak
-      </PageHeader>
-      <Row className='row-centered'>
-        <Col md={12}>
-          <b>Avledet fra objekt</b>
-        </Col>
-      </Row>
-      <Row className='row-centered'>
-        <Col md={2}>
+    <form style={{padding: 20}} className="form-horizontal">
+      <div className="page-header">
+        <h1>
+          Registrer prøveuttak
+        </h1>
+      </div>
+      <h4>
+        Avledet fra objekt
+      </h4>
+      <div className='form-group'>
+        <div className="col-md-2">
           <FieldReadOnly
             field={form.museumId}
             inputProps={{className: 'museumId'}}
             label='MusNo:'
             defaultValue={objectData.museumNo}
           />
-        </Col>
-        <Col md={2}>
+        </div>
+        <div className="col-md-2">
           <FieldReadOnly
             field={form.subNo}
             inputProps={{className: 'subNo'}}
             label='Unr:'
             defaultValue={objectData.subNo}
           />
-        </Col>
-        <Col md={3}>
+        </div>
+        <div className="col-md-2">
           <FieldReadOnly
             field={form.term_species}
             inputProps={{className: 'term_species'}}
             label='Term/artsnavn:'
             defaultValue={objectData.term}
           />
-        </Col>
-        <Col md={1}>
-          <Button>Vis Objektet</Button>
-        </Col>
-      </Row>
+        </div>
+      </div>
       <hr/>
+      <h4>Personer knyttet til prøveuttaket</h4>
       <PersonRoleDate
-        heading={'Personer knyttet til prøveuttaket'}
         personData={personRoles}
         addPerson={() => updateForm({
           name: form.persons.name,
@@ -139,238 +122,178 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
         })}
       />
       <br/>
-
-      <Well>
-        <Row className='row-centered'>
-          <Col md={3}>
-            <b>Prøvenr</b>
-          </Col>
-          <Col md={2}>
-            <b>UUID</b>
-          </Col>
-        </Row>
-        <br />
-        <br />
-        <Row className='row-centered'>
-          <Col md={1}>
-            <b>PrøveID</b>
-          </Col>
-          <Col md={2}>
-            <FieldInput
-              field={form.sampleId}
-              onChangeInput={updateForm}
-              inputProps={{
-                className: 'sampleId'
-              }}
-            />
-          </Col>
-        </Row>
-        <Row className='row-centered'>
-          <Col md={1}>
-            <b>EksternID</b>
-          </Col>
-          <Col md={2}>
-            <FieldInput
-              field={form.externalId}
-              onChangeInput={updateForm}
-              inputProps={{
-                className: 'externalID'
-              }}
-            />
-          </Col>
-          <Col md={2}>
-            <b>Kilde for ekstern ID</b>
-          </Col>
-          <Col md={3}>
-            <FieldInput
-              field={form.externalIdSource}
-              onChangeInput={updateForm}
-              inputProps={{
-                className: 'externalIdSource'
-              }}
-            />
-          </Col>
-        </Row>
-        <br />
-        <Row className='row-centered'>
-          <Col md={2}>
-            <b>Prøvetype</b>
-          </Col>
-          <Col md={2}>
+      <div className="well">
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.sampleId.name}>
+            PrøveID
+          </label>
+          <div className="col-md-3">
+            <FieldInput field={form.sampleId} onChangeInput={updateForm} />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="control-label col-md-2" htmlFor={form.externalId.name}>
+            EksternID
+          </label>
+          <div className="col-md-3">
+            <FieldInput field={form.externalId} onChangeInput={updateForm} />
+          </div>
+          <label className="control-label col-md-2" htmlFor={form.externalIdSource.name}>
+            Kilde for ekstern ID
+          </label>
+          <div className="col-md-3">
+            <FieldInput field={form.externalIdSource} onChangeInput={updateForm} s/>
+          </div>
+        </div>
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.sampleType.name}>
+            Prøvetype
+          </label>
+          <div className="col-md-3">
             <FieldDropDown
               field={form.sampleType}
               title={'Velg type'}
               onSelectInput={updateForm}
               selectItems={sampleValues}
-              inputProps={{className: 'sampleType'}}
             />
-          </Col>
-          <Col md={2}>
-            <b>Prøveundertype</b>
-          </Col>
-          <Col md={2}>
+          </div>
+          <label className="control-label col-md-2" htmlFor={form.subTypeValue.name}>
+            Prøveundertype
+          </label>
+          <div className="col-md-2">
             <FieldDropDown
               field={form.subTypeValue}
               title={'Velg type'}
               onSelectInput={updateForm}
               selectItems={sampleSubValues(form.sampleType.rawValue)}
-              inputProps={{className: 'subTypeValue'}}
             />
-          </Col>
-        </Row>
-        <Row className='row-centered'>
-          <Col md={2}>
-            <b>Beskrivelse av prøve</b>
-          </Col>
-          <Col md={3}>
-            <FieldInput
-              field={form.description}
-              onChangeInput={updateForm}
-              inputProps={{
-                className: 'description'
-              }}
-            />
-          </Col>
-        </Row>
-        <br/>
-        <Row className='row-centered'>
-          <Col md={2}>
-            <b>Status</b>
-          </Col>
-          <Col md={2}>
+          </div>
+        </div>
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.description.name}>
+            Beskrivelse av prøve
+          </label>
+          <div className="col-md-3">
+            <FieldInput field={form.description} onChangeInput={updateForm} />
+          </div>
+        </div>
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.status.name}>
+            Status
+          </label>
+          <div className="col-md-3">
             <FieldDropDown
               field={form.status}
               title={'Velg type'}
               onSelectInput={updateForm}
               selectItems={['Skilt', 'Ugift', 'Separert']}
-              inputProps={{className: 'status'}}
             />
-          </Col>
-        </Row>
-        <br/>
-        <Row className='row-centered'>
-          <Col md={2}>
-            <ControlLabel>Målevolum/-vekt</ControlLabel>
-          </Col>
-          <Col md={2}>
-            <FieldInput
-              field={form.size}
-              onChangeInput={updateForm}
-              inputProps={{
-                className: 'size'
-              }}
-            />
-          </Col>
-          <Col md={2}>
+          </div>
+        </div>
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.size.name}>
+            Målevolum/-vekt
+          </label>
+          <div className="col-md-3">
+            <FieldInput field={form.size} onChangeInput={updateForm} inputProps={{ className: 'size' }} />
+          </div>
+          <div className="col-md-2">
             <FieldDropDown
               field={form.sizeUnit}
               title={'Velg måleenhet'}
               onSelectInput={updateForm}
               selectItems={['gr', 'mm', 'µ']}
-              inputProps={{className: 'sizeUnit'}}
             />
-          </Col>
-        </Row>
-        <br/>
-        <Row className='row-centered'>
-          <Col md={2}>
-            <ControlLabel>Lagringskontainer</ControlLabel>
-          </Col>
-          <Col md={2}>
+          </div>
+        </div>
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.container.name}>
+            Lagringskontainer
+          </label>
+          <div className="col-md-3">
             <FieldDropDown
               field={form.container}
-              title={form.container.value || 'Velg kontainer'}
+              title={'Velg kontainer'}
               onSelectInput={updateForm}
               selectItems={containerTypes}
             />
-          </Col>
-        </Row>
-        <Row className='row-centered'>
-          <Col md={2}>
-            <ControlLabel>Lagringsmedium</ControlLabel>
-          </Col>
-          <Col md={2}>
+          </div>
+        </div>
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.storageMedium.name}>
+            Lagringsmedium
+          </label>
+          <div className="col-md-3">
             <FieldDropDown
               field={form.storageMedium}
               title={'Velg langringsmedium'}
               onSelectInput={updateForm}
               selectItems={containerSubTypes(form.container.rawValue)}
-              inputProps={{className: 'storageMedium'}}
             />
-          </Col>
-        </Row>
-        <br/>
-        <Row className='row-centered'>
-          <Col md={2}>
-            <b>Behandling</b>
-          </Col>
-          <Col md={2}>
+          </div>
+        </div>
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.treatment.name}>
+            Behandling
+          </label>
+          <div className="col-md-3">
             <FieldDropDown
               field={form.treatment}
               title={'Velg behandling'}
               onSelectInput={updateForm}
               selectItems={['Behandlet', 'Ubehandlet', 'Ufint behandlet']}
-              inputProps={{className: 'treatment'}}
             />
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col md={2}>
-            <b>Har restmateriale</b>
-          </Col>
-          <Col md={3}>
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="control-label col-md-2" htmlFor={form.leftoverSample.name}>
+            Har restmateriale
+          </label>
+          <div className="col-md-3">
             <CheckBoxInput
               field={form.leftoverSample}
               onChangeInput={updateForm}
               defaultValue={'1'}
             />
-          </Col>
-        </Row>
-        <Row className='row-centered'>
-          <Col md={2}>
-            <ControlLabel>{'Note'}</ControlLabel>
-          </Col>
-          <Col md={5}>
-            <FieldInput
+          </div>
+        </div>
+        <div className='form-group'>
+          <label className="control-label col-md-2" htmlFor={form.note.name}>
+            Note
+          </label>
+          <div className="col-md-5">
+            <FieldTextArea
               field={form.note}
               onChangeInput={updateForm}
-              inputProps={{
-                className: 'note',
-                componentClass: 'textarea',
-                placeholder: form.note.name
-              }}
+              inputProps={{ rows: 5, className: 'note' }}
             />
-          </Col>
-        </Row>
-      </Well>
-      <Row className='row-centered'>
-        <Col md={4}>
-          <Button
-            onClick={() =>
-              submitSample(appSession, form, location.state[0], params, addSample)
-                .then((value) => hashHistory.push({
-                  pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, value),
-                  state: [objectData]}))
-            }
-          >
-            Lagre
-          </Button>
-        </Col>
-        <Col md={4}>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              clearForm();
-              hashHistory.refresh();
-            }}
-          >
-            Avbryt
-          </a>
-        </Col>
-      </Row>
-    </Form>
+          </div>
+        </div>
+      </div>
+      <button
+        className="btn btn-default"
+        onClick={(e) => {
+          e.preventDefault();
+          submitSample(appSession, form, location.state[0], params, addSample)
+            .then((value) => hashHistory.push({
+              pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, value),
+              state: [objectData]}));
+        }}
+      >
+        Lagre
+      </button>
+      &nbsp;&nbsp;
+      <a
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          clearForm();
+          hashHistory.refresh();
+        }}
+      >
+        Avbryt
+      </a>
+    </form>
   );
 };
 
@@ -385,36 +308,58 @@ type FieldInputProps = {
 
 function FieldInput({field, onChangeInput, inputProps}: FieldInputProps) {
   return (
-    <FormGroup
-      controlId={field.name}
-      validationState={field.status && !field.status.valid ? 'error' : null}
-    >
-      <FormControl
-        {...inputProps}
-        value={field.rawValue || ''}
-        onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
-      />
-    </FormGroup>
+    <input
+      {...inputProps}
+      className={`form-control ${inputProps ? inputProps.className || '' : ''}`}
+      id={field.name}
+      value={field.rawValue || ''}
+      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
+    />
+  );
+}
+
+type FieldTextAreaProps = {
+  field: Field<*>,
+  onChangeInput: Function,
+  inputProps?: {
+    className?: string,
+    style?: {},
+    rows?: number
+  }
+};
+
+function FieldTextArea({field, onChangeInput, inputProps}: FieldTextAreaProps) {
+  return (
+    <textarea
+      {...inputProps}
+      className={`form-control ${inputProps ? inputProps.className || '' : ''}`}
+      id={field.name}
+      value={field.rawValue || ''}
+      onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
+    />
   );
 }
 
 function CheckBoxInput({field, onChangeInput}: FieldInputProps) {
   return (
-    <FormGroup>
-      <Radio
-        inline
-        value={field.rawValue || '1'}
-        checked={field.rawValue === '3'}
-        onChange={() =>
-          onChangeInput({name: field.name, rawValue: '3'})}
-      >Ja</Radio>
-      <Radio
-        inline value={field.rawValue || '1'}
-        checked={field.rawValue === '2'}
-        onChange={() =>
-          onChangeInput({name: field.name, rawValue: '2'})}
-      >Nei</Radio>
-    </FormGroup>
+    <div className="btn-group" data-toggle="buttons">
+      <label className={`btn btn-default${field.rawValue === '3' ? ' active' : ''}`}>
+        <input
+          type="radio"
+          value={'3'}
+          checked={field.rawValue === '3'}
+          onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
+        />  Ja
+      </label>
+      <label className={`btn btn-default${field.rawValue === '2' ? ' active' : ''}`}>
+        <input
+          type="radio"
+          value={'2'}
+          checked={field.rawValue === '2'}
+          onChange={(e) => onChangeInput({name: field.name, rawValue: e.target.value})}
+        /> Nei
+      </label>
+    </div>
   );
 }
 
@@ -428,25 +373,25 @@ type FieldDropDownProps = {
 
 function FieldDropDown({field, onSelectInput, selectItems, inputProps, title}: FieldDropDownProps) {
   return (
-    <FormGroup
-      controlId={field.name}
-      validationState={field.status && !field.status.valid ? 'error' : null}
+    <select
+      {...inputProps}
+      className="form-control"
+      value={field.value || ''}
+      id={field.name}
+      onChange={(e) => onSelectInput({name: field.name, rawValue: e.target.text})}
     >
-      <DropdownButton
-        {...inputProps}
-        bsStyle="default"
-        title={field.value ? field.value : title}
-        id={field.name}
-      >
-        { selectItems.map((v, i) =>
-          <MenuItem
-            key={i}
-            onClick={ (e) => {
-              onSelectInput({name: field.name, rawValue: e.target.text});
-            }}>{v}
-          </MenuItem>) }
-      </DropdownButton>
-    </FormGroup>
+      <option>{title}</option>
+      {selectItems.map((v, i) =>
+        <option
+          key={i}
+          onClick={ (e) => {
+            onSelectInput({name: field.name, rawValue: e.target.text});
+          }}
+        >
+          {v}
+        </option>
+      )}
+    </select>
   );
 }
 
@@ -464,7 +409,7 @@ function FieldReadOnly({field, label, defaultValue, inputProps}: FieldReadOnlyPr
   const value = field.rawValue;
   return (
     <span { ...inputProps}>
-      {label} <b> {value || defaultValue}</b>
+      {label} <strong> {value || defaultValue}</strong>
     </span>
   );
 }

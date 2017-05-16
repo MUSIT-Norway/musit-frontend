@@ -40,7 +40,7 @@ const subTypeValue = getStrField('subTypeValue');
 const status = getStrField('status');
 const description = getStrField('description');
 const treatment = getStrField('treatment');
-const persons = getArrField('persons');
+const persons = getArrField('persons', [{ name: '', role: 'creator' }]);
 const originatedObjectUuid = getArrField('originatedObjectUuid');
 const leftoverSample: Field<number> = {
   name: 'leftoverSample',

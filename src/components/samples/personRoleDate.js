@@ -11,22 +11,23 @@ import {
   FormGroup
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-type personRoleDate = { name?: string, role?: string, date?: string };
-import type { Person } from '../../modules/sample/sampleForm';
+import type { Person } from 'modules/sample/sampleForm';
+
 type Props = {
   personData: Array<Person>,
   updatePerson: Function,
-  addPerson: Function,
-  heading: string
+  addPerson: Function
 };
+
 type FieldDropDownProps = {
   id: string,
   index: number,
-  personRoleItem: personRoleDate,
+  personRoleItem: Person,
   onSelectInput: Function,
   selectItems: Array<string>,
   title: string
 };
+
 const FieldDropDown = (
   { id, index, personRoleItem, onSelectInput, selectItems, title }: FieldDropDownProps
 ) => (
@@ -50,15 +51,10 @@ const FieldDropDown = (
   </FormGroup>
 );
 
-export const PersonRoleDate = (
-  { personData, updatePerson, addPerson, heading }: Props
-) => {
+export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) => {
   const pArr = personData || [];
   return pArr &&
     <Grid>
-      <Row>
-        <h4><b>{heading}</b></h4>
-      </Row>
       <Row>
         <Col md={2}>
           <b>Navn</b>
