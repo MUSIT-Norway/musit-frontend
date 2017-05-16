@@ -15,7 +15,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
       className="form-group"
       controlId="museumNo">
       <label
-        class="control-label">
+        className="control-label">
         Museumnr.
       </label>
        
@@ -31,7 +31,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
       className="form-group"
       controlId="subNo">
       <label
-        class="control-label">
+        className="control-label">
         Unr.
       </label>
        
@@ -47,7 +47,7 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
       className="form-group"
       controlId="term">
       <label
-        class="control-label">
+        className="control-label">
         Term/Artsnavn
       </label>
        

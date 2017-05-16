@@ -328,8 +328,7 @@ exports[`NodePanel should render properly  1`] = `
                             </span>
                           </label>
                           <div
-                            class="col-sm-4"
-                            is="null">
+                            className="col-sm-4">
                             <function MusitDropDownField() {_classCallCheck(this, MusitDropDownField);return _possibleConstructorReturn(this, (MusitDropDownField.__proto__ || Object.getPrototypeOf(MusitDropDownField)).apply(this, arguments));}
                               disabled={true}
                               id="type"
@@ -402,8 +401,7 @@ exports[`NodePanel should render properly  1`] = `
                             </span>
                           </label>
                           <div
-                            class="col-sm-8"
-                            is="null">
+                            className="col-sm-8">
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="name"
                               maximumLength={100}
@@ -451,8 +449,7 @@ exports[`NodePanel should render properly  1`] = `
                             Adresse
                           </label>
                           <div
-                            class="col-sm-8"
-                            is="null">
+                            className="col-sm-8">
                             <function (initialProps) {
                                   return _react2.default.createElement(Injected, initialProps);
                                 }
@@ -507,8 +504,7 @@ exports[`NodePanel should render properly  1`] = `
                             Areal
                           </label>
                           <div
-                            class="col-sm-4"
-                            is="null">
+                            className="col-sm-4">
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="area"
                               onChange={[Function onChange]}
@@ -519,8 +515,7 @@ exports[`NodePanel should render properly  1`] = `
                               value="10" />
                           </div>
                           <div
-                            class="col-sm-4"
-                            is="null">
+                            className="col-sm-4">
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="areaTo"
                               onChange={[Function onChange]}
@@ -562,8 +557,7 @@ exports[`NodePanel should render properly  1`] = `
                             Høyde
                           </label>
                           <div
-                            class="col-sm-4"
-                            is="null">
+                            className="col-sm-4">
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="height"
                               onChange={[Function onChange]}
@@ -574,8 +568,7 @@ exports[`NodePanel should render properly  1`] = `
                               value="3" />
                           </div>
                           <div
-                            class="col-sm-4"
-                            is="null">
+                            className="col-sm-4">
                             <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                               id="heightTo"
                               onChange={[Function onChange]}
@@ -668,8 +661,7 @@ exports[`NodePanel should render properly  1`] = `
                               Temperatur
                             </label>
                             <div
-                              class="col-sm-4"
-                              is="null">
+                              className="col-sm-4">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="temperature"
                                 onChange={[Function onChange]}
@@ -680,8 +672,7 @@ exports[`NodePanel should render properly  1`] = `
                                 value="12" />
                             </div>
                             <div
-                              class="col-sm-4"
-                              is="null">
+                              className="col-sm-4">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="temperatureTolerance"
                                 onChange={[Function onChange]}
@@ -723,8 +714,7 @@ exports[`NodePanel should render properly  1`] = `
                               Rel. luftfuktighet
                             </label>
                             <div
-                              class="col-sm-4"
-                              is="null">
+                              className="col-sm-4">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="relativeHumidity"
                                 onChange={[Function onChange]}
@@ -735,8 +725,7 @@ exports[`NodePanel should render properly  1`] = `
                                 value="67" />
                             </div>
                             <div
-                              class="col-sm-4"
-                              is="null">
+                              className="col-sm-4">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="relativeHumidityTolerance"
                                 onChange={[Function onChange]}
@@ -789,8 +778,7 @@ exports[`NodePanel should render properly  1`] = `
                               Inertluft
                             </label>
                             <div
-                              class="col-sm-4"
-                              is="null">
+                              className="col-sm-4">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="hypoxicAir"
                                 onChange={[Function onChange]}
@@ -801,8 +789,7 @@ exports[`NodePanel should render properly  1`] = `
                                 value="23" />
                             </div>
                             <div
-                              class="col-sm-4"
-                              is="null">
+                              className="col-sm-4">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="hypoxicAirTolerance"
                                 onChange={[Function onChange]}
@@ -847,8 +834,7 @@ exports[`NodePanel should render properly  1`] = `
                               Renhold
                             </label>
                             <div
-                              class="col-sm-8"
-                              is="null">
+                              className="col-sm-8">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="cleaning"
                                 maximumLength={100}
@@ -906,8 +892,7 @@ exports[`NodePanel should render properly  1`] = `
                               Lysforhold
                             </label>
                             <div
-                              class="col-sm-8"
-                              is="null">
+                              className="col-sm-8">
                               <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
                                 id="lightingCondition"
                                 maximumLength={100}
@@ -964,8 +949,7 @@ exports[`NodePanel should render properly  1`] = `
                               Kommentar
                             </label>
                             <div
-                              class="col-sm-8"
-                              is="null">
+                              className="col-sm-8">
                               <function MusitTextArea() {_classCallCheck(this, MusitTextArea);return _possibleConstructorReturn(this, (MusitTextArea.__proto__ || Object.getPrototypeOf(MusitTextArea)).apply(this, arguments));}
                                 id="comments"
                                 maximumLength={250}

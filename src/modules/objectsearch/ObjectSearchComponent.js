@@ -191,7 +191,9 @@ export class ObjectSearchComponent extends React.Component {
   renderParam(id, style) {
     return (
       <div className="form-group" controlId={id}>
-        <label class="control-label">{I18n.t(`musit.objectsearch.${id}.label`)}</label>
+        <label className="control-label">
+          {I18n.t(`musit.objectsearch.${id}.label`)}
+        </label>
         {' '}
         <input
           className="form-control"

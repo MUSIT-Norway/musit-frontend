@@ -78,7 +78,7 @@ export default class NodeDetails extends Component {
         <label className="col-sm-3 control-label" htmlFor={field}>
           {this.translateEnvReqField(`${field}.labelText`)}
         </label>
-        <div class="col-sm-8" is="null">
+        <div className="col-sm-8">
           <Field
             id={field}
             tooltip={this.translateEnvReqField(`${field}.tooltip`)}
@@ -98,7 +98,7 @@ export default class NodeDetails extends Component {
         <label className="col-sm-3 control-label" htmlFor={field}>
           {this.translateEnvReqField(`${field}.labelText`)}
         </label>
-        <div class="col-sm-8" is="null">
+        <div className="col-sm-8">
           <TextArea
             id={field}
             numberOfRows={4}
@@ -221,7 +221,7 @@ export default class NodeDetails extends Component {
                                   {I18n.t('musit.storageUnits.type.labelText')}
                                   {<span style={{ color: 'red' }}>*</span>}
                                 </label>
-                                <div class="col-sm-4" is="null">
+                                <div className="col-sm-4">
                                   <MusitDropDownField
                                     id="type"
                                     validate="text"
@@ -259,7 +259,7 @@ export default class NodeDetails extends Component {
                                   {I18n.t('musit.storageUnits.name.labelText')}
                                   {<span style={{ color: 'red' }}>*</span>}
                                 </label>
-                                <div class="col-sm-8" is="null">
+                                <div className="col-sm-8">
                                   <Field
                                     id="name"
                                     tooltip={I18n.t('musit.storageUnits.name.tooltip')}
@@ -291,7 +291,7 @@ export default class NodeDetails extends Component {
                                   >
                                     {I18n.t('musit.storageUnits.address.labelText')}
                                   </label>
-                                  <div class="col-sm-8" is="null">
+                                  <div className="col-sm-8">
                                     <AddressSuggest
                                       id="addressField"
                                       value={this.props.unit.address}
@@ -319,14 +319,14 @@ export default class NodeDetails extends Component {
                                 >
                                   {I18n.t('musit.storageUnits.area.labelText')}
                                 </label>
-                                <div class="col-sm-4" is="null">
+                                <div className="col-sm-4">
                                   {this.renderStorageUnitNumberField(
                                     'area',
                                     this.props.unit,
                                     3
                                   )}
                                 </div>
-                                <div class="col-sm-4" is="null">
+                                <div className="col-sm-4">
                                   {this.renderStorageUnitNumberField(
                                     'areaTo',
                                     this.props.unit,
@@ -345,14 +345,14 @@ export default class NodeDetails extends Component {
                                 >
                                   {I18n.t('musit.storageUnits.height.labelText')}
                                 </label>
-                                <div class="col-sm-4" is="null">
+                                <div className="col-sm-4">
                                   {this.renderStorageUnitNumberField(
                                     'height',
                                     this.props.unit,
                                     3
                                   )}
                                 </div>
-                                <div class="col-sm-4" is="null">
+                                <div className="col-sm-4">
                                   {this.renderStorageUnitNumberField(
                                     'heightTo',
                                     this.props.unit,
@@ -381,14 +381,14 @@ export default class NodeDetails extends Component {
                                   >
                                     {this.translateEnvReqField('temperature.labelText')}
                                   </label>
-                                  <div class="col-sm-4" is="null">
+                                  <div className="col-sm-4">
                                     {this.renderEnvReqNumberField(
                                       'temperature',
                                       this.props.unit,
                                       3
                                     )}
                                   </div>
-                                  <div class="col-sm-4" is="null">
+                                  <div className="col-sm-4">
                                     {this.renderEnvReqNumberField(
                                       'temperatureTolerance',
                                       this.props.unit,
@@ -409,14 +409,14 @@ export default class NodeDetails extends Component {
                                       'relativeHumidity.labelText'
                                     )}
                                   </label>
-                                  <div class="col-sm-4" is="null">
+                                  <div className="col-sm-4">
                                     {this.renderEnvReqNumberField(
                                       'relativeHumidity',
                                       this.props.unit,
                                       3
                                     )}
                                   </div>
-                                  <div class="col-sm-4" is="null">
+                                  <div className="col-sm-4">
                                     {this.renderEnvReqNumberField(
                                       'relativeHumidityTolerance',
                                       this.props.unit,
@@ -437,14 +437,14 @@ export default class NodeDetails extends Component {
                                   >
                                     {this.translateEnvReqField('hypoxicAir.labelText')}
                                   </label>
-                                  <div class="col-sm-4" is="null">
+                                  <div className="col-sm-4">
                                     {this.renderEnvReqNumberField(
                                       'hypoxicAir',
                                       this.props.unit,
                                       3
                                     )}
                                   </div>
-                                  <div class="col-sm-4" is="null">
+                                  <div className="col-sm-4">
                                     {this.renderEnvReqNumberField(
                                       'hypoxicAirTolerance',
                                       this.props.unit,
