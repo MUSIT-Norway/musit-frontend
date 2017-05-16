@@ -1,8 +1,9 @@
 import type { ObjectData } from 'types/object';
 
 export type AnalysisType = {
-  id: string,
-  name: string,
+  id: number,
+  noName: string,
+  enName: string,
   category: string
 };
 

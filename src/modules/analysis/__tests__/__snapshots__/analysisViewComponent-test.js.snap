@@ -44,7 +44,8 @@ exports[`AnalysisViewComponent should render properly 1`] = `
             "name": "analysisTypeId",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
+              "rawValidator": [Function configurableValidators],
+              "valueValidator": [Function validator]
             }
           },
           "caseNumbers": Object {

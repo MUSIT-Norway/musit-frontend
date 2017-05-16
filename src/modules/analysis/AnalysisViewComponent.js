@@ -256,11 +256,12 @@ function getStatusText(status?: ?number): string {
 
 function getAnalysisTypeTerm(form, store) {
   if (form.analysisTypeId.rawValue && store.analysisTypes) {
-    const foundType = store.analysisTypes.find(
-      a => a.id === form.analysisTypeId.rawValue
-    );
-    return foundType ? foundType.name : '';
+    const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.value);
+    if (foundType) {
+      return I18n._locale === 'en' ? foundType.enName : foundType.noName;
+    }
   }
+  return '';
 }
 
 export default AnalysisView;

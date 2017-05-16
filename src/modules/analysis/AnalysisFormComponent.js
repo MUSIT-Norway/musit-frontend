@@ -88,7 +88,11 @@ const AnalysisForm = (
                           .filter(
                             b => b.category.toString() === form.analysisTypeCategory.value
                           )
-                          .map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
+                          .map(a => (
+                            <option key={a.id} value={a.id}>
+                              {I18n._locale === 'en' ? a.enName : a.noName}
+                            </option>
+                          ))}
                     </select>
                   </div>}
               </div>
