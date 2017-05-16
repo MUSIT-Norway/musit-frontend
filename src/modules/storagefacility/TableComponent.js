@@ -394,7 +394,9 @@ export default class TableComponent extends React.Component {
                     if (rootNode.isPartOf) {
                       hashHistory.replace(
                         Config.magasin.urls.client.storagefacility.goToNode(
-                          rootNode.isPartOf,
+                          rootNode.pathNames.filter(
+                            path => path.nodeId === rootNode.isPartOf
+                          )[0].nodeUuid,
                           this.props.appSession
                         )
                       );
