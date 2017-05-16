@@ -72,7 +72,10 @@ Sample.prepareForSubmit = tmpData => ({
     : null,
   externalId: tmpData.externalId
     ? { value: tmpData.externalId, source: tmpData.externalIdSource }
-    : null
+    : null,
+  externalIdSource:null,
+  sizeUnit: null,
+  subTypeValue: null
 });
 
 Sample.addSample = (ajaxPost = simplePost) =>
