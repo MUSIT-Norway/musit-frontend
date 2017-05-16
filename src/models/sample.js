@@ -73,7 +73,7 @@ Sample.prepareForSubmit = tmpData => ({
   externalId: tmpData.externalId
     ? { value: tmpData.externalId, source: tmpData.externalIdSource }
     : null,
-  externalIdSource:null,
+  externalIdSource: null,
   sizeUnit: null,
   subTypeValue: null
 });
