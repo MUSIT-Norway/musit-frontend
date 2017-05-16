@@ -61,10 +61,10 @@ const SampleViewComponent = props => {
           Musno: <b>{objectData.museumNo}</b>
         </Col>
         <Col md={2}>
-          Unr: <b>{form.subNo.defaultValue || objectData.subNo}</b>
+          Unr: <b>{objectData.subNo}</b>
         </Col>
         <Col md={3}>
-          Term/artsnavn: <b>{form.term_species.defaultValue || objectData.term}</b>
+          Term/artsnavn: <b>{objectData.term}</b>
         </Col>
         <Col md={2}>
           <Button>Vis Objektet</Button>

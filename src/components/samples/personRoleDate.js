@@ -11,7 +11,12 @@ import {
   FormGroup
 } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import type { Person } from 'modules/sample/sampleForm';
+
+export type Person = {
+  name?: string,
+  role?: string,
+  date?: string
+};
 
 type Props = {
   personData: Array<Person>,

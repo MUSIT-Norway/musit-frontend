@@ -18,99 +18,171 @@ describe('AnalysisSampleFormPageAdd', () => {
         form={{
           note: {
             name: 'note',
-            rawValue: 'Heisann'
+            rawValue: 'Heisann',
+            status: {
+              valid: true
+            }
           },
           size: {
             name: 'size',
-            rawValue: '1,23'
+            rawValue: '1,23',
+            status: {
+              valid: true
+            }
           },
           externalId: {
             name: 'externalId',
-            rawValue: '123'
+            rawValue: '123',
+            status: {
+              valid: true
+            }
           },
           externalIdSource: {
             name: 'externalIdSource',
-            rawValue: 'Museum'
+            rawValue: 'Museum',
+            status: {
+              valid: true
+            }
           },
           description: {
             name: 'description',
-            rawValue: 'Av lær'
+            rawValue: 'Av lær',
+            status: {
+              valid: true
+            }
           },
           term_species: {
             name: 'term_species',
-            rawValue: 'Carex saxatilis'
+            rawValue: 'Carex saxatilis',
+            status: {
+              valid: true
+            }
           },
           sampleType: {
             name: 'sampleType',
-            rawValue: 'Vev'
+            rawValue: 'Vev',
+            status: {
+              valid: true
+            }
           },
           sizeUnit: {
             name: 'sizeUnit',
-            rawValue: 'gr'
+            rawValue: 'gr',
+            status: {
+              valid: true
+            }
           },
           subTypeValue: {
             name: 'subTypeValue',
-            rawValue: 'Muskel'
+            rawValue: 'Muskel',
+            status: {
+              valid: true
+            }
           },
           status: {
             name: 'status',
-            rawValue: 'Nyskilt'
+            rawValue: 'Nyskilt',
+            status: {
+              valid: true
+            }
           },
           storageMedium: {
             name: 'storageMedium',
-            rawValue: 'Etanol'
+            rawValue: 'Etanol',
+            status: {
+              valid: true
+            }
           },
           createdBy: {
             name: 'createdBy',
-            rawValue: '1111-2222-1111-1111'
+            rawValue: '1111-2222-1111-1111',
+            status: {
+              valid: true
+            }
           },
           responsible: {
             name: 'responsible',
-            rawValue: '1221-3222-3303-3333'
+            rawValue: '1221-3222-3303-3333',
+            status: {
+              valid: true
+            }
           },
           museumId: {
             name: 'museumId',
-            rawValue: '1233'
+            rawValue: '1233',
+            status: {
+              valid: true
+            }
           },
           subNo: {
             name: 'subNo',
-            rawValue: '322222'
+            rawValue: '322222',
+            status: {
+              valid: true
+            }
           },
           registeredBy: {
             name: 'registeredBy',
-            rawValue: '1233'
+            rawValue: '1233',
+            status: {
+              valid: true
+            }
           },
           container: {
             name: 'container',
-            rawValue: 'Reagensrør'
+            rawValue: 'Reagensrør',
+            status: {
+              valid: true
+            }
           },
           leftoverSample: {
             name: 'leftoverSample',
-            rawValue: '2'
+            rawValue: '2',
+            status: {
+              valid: true
+            }
           },
           registeredDate: {
             name: 'registeredDate',
-            rawValue: '1988-12-31'
+            rawValue: '1988-12-31',
+            status: {
+              valid: true
+            }
           },
           updateBy: {
             name: 'updateBy',
-            rawValue: 'Arne And'
+            rawValue: 'Arne And',
+            status: {
+              valid: true
+            }
           },
           updateDate: {
             name: 'updateDate',
-            rawValue: '1998-03-12'
+            rawValue: '1998-03-12',
+            status: {
+              valid: true
+            }
           },
           sampleId: {
             name: 'sampleId',
-            rawValue: '1233'
+            rawValue: '1233',
+            status: {
+              valid: true
+            }
           },
           treatment: {
             name: 'treatment',
-            rawValue: '1233'
+            rawValue: '1233',
+            status: {
+              valid: true
+            }
           },
           persons: {
             name: 'persons',
-            rawValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
+            rawValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }],
+            status: {
+              valid: true
+            }
           }
         }}
         updateForm={updateForm}

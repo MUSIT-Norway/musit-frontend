@@ -17,7 +17,7 @@ import Config from '../../config';
 import {hashHistory} from 'react-router';
 import PersonRoleDate from '../../components/samples/personRoleDate';
 import type {AppSession} from '../../types/appSession';
-import type {Person} from './sampleForm';
+import type {Person} from './sampleAddForm';
 import type {Field} from '../../forms/form';
 import Sample from '../../models/sample';
 

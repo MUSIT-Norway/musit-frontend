@@ -1,5 +1,5 @@
 import inject from 'react-rxjs/dist/RxInject';
-import sampleForm from './sampleForm';
+import sampleForm from './sampleAddForm';
 import SampleEditComponent from './SampleEditComponent';
 import React from 'react';
 import { Observable } from 'rxjs';
