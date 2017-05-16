@@ -1,16 +1,8 @@
 // @flow
 import React from 'react';
-import {
-  Grid,
-  Row,
-  Col,
-  Button,
-  FormControl,
-  DropdownButton,
-  MenuItem,
-  FormGroup
-} from 'react-bootstrap';
+import { Grid, Row, Col, Button, FormControl } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
+import DropdownButton from 'components/DropdownButton';
 
 export type Person = {
   name?: string,
@@ -24,54 +16,22 @@ type Props = {
   fieldName: string
 };
 
-type FieldDropDownProps = {
-  id: string,
-  index: number,
-  personRoleItem: Person,
-  onSelectInput: Function,
-  selectItems: Array<string>,
-  title: string
-};
-
-const FieldDropDown = (
-  { id, index, personRoleItem, onSelectInput, selectItems, title }: FieldDropDownProps
-) => (
-  <FormGroup controlId={id}>
-    <DropdownButton
-      bsStyle="default"
-      title={personRoleItem.role ? personRoleItem.role : title}
-      id={id}
-    >
-      {selectItems.map((v, i) => (
-        <MenuItem
-          key={i}
-          onClick={e => {
-            onSelectInput(index, { ...personRoleItem, role: e.target.text });
-          }}
-        >
-          {v}
-        </MenuItem>
-      ))}
-    </DropdownButton>
-  </FormGroup>
-);
-
 export const PersonRoleDate = ({ personData, updateForm, fieldName }: Props) => {
   const pArr = personData || [];
   return pArr &&
     <Grid>
       <Row>
         <Col md={2}>
-          <b>Navn</b>
+          <strong>Navn</strong>
         </Col>
         <Col md={2}>
-          <b>Rolle</b>
+          <strong>Rolle</strong>
         </Col>
         <Col md={2}>
-          <b>Dato</b>
+          <strong>Dato</strong>
         </Col>
         <Col md={2}>
-          <b>Slett</b>
+          <strong>Slett</strong>
         </Col>
       </Row>
       <br />
@@ -88,14 +48,16 @@ export const PersonRoleDate = ({ personData, updateForm, fieldName }: Props) => 
             />
           </Col>
           <Col md={2}>
-            <FieldDropDown
+            <DropdownButton
               id={`role_${i}`}
-              personRoleItem={v}
-              selectItems={['responsible', 'creator']}
+              items={['responsible', 'creator']}
               index={i}
-              onSelectInput={(ind, p) =>
-                updateForm({ name: fieldName, rawValue: updatePerson(i, p, personData) })}
-              title="Velg rolle"
+              onChange={role =>
+                updateForm({
+                  name: fieldName,
+                  rawValue: updateRole(i, role, personData)
+                })}
+              title={v.role ? v.role : 'Velg rolle'}
             />
           </Col>
           <Col md={2}>
@@ -105,7 +67,7 @@ export const PersonRoleDate = ({ personData, updateForm, fieldName }: Props) => 
                 onChange={e =>
                   updateForm({
                     name: fieldName,
-                    rawValue: updatePerson(i, { ...v, date: e.target.value }, personData)
+                    rawValue: updateDate(i, e.target.value, personData)
                   })}
               />}
           </Col>
@@ -145,8 +107,16 @@ function deletePerson(i: number, persons: Array<Person>): Array<Person> {
   return [...persons.slice(0, i), ...persons.slice(i + 1)];
 }
 
-function updatePerson(i, p: Person, persons: Array<Person>) {
-  return [...persons.slice(0, i), p, ...persons.slice(i + 1)];
+function updateRole(i, role: string, persons: Array<Person>) {
+  return updatePerson(i, { ...persons[i], role }, persons);
+}
+
+function updateDate(i, date: string, persons: Array<Person>) {
+  return updatePerson(i, { ...persons[i], date }, persons);
+}
+
+function updatePerson(i, person: Person, persons: Array<Person>) {
+  return [...persons.slice(0, i), person, ...persons.slice(i + 1)];
 }
 
 export default PersonRoleDate;
