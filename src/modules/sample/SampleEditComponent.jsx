@@ -247,21 +247,8 @@ const SampleEditComponent = ({params, form, updateForm, location, editSample, ap
       <PersonRoleDate
         heading={'Personer knyttet til prøveuttaket'}
         personData={personRoles}
-        addPerson={() => updateForm({
-          name: form.persons.name,
-          rawValue: [...personRoles, {name: '', role: '', date: ''}]
-        })}
-        updatePerson={(ind, person) => updateForm({
-          name: form.persons.name,
-          rawValue: person ? [
-            ...personRoles.slice(0, ind),
-            person,
-            ...personRoles.slice(ind + 1)
-          ] : [
-            ...personRoles.slice(0, ind),
-            ...personRoles.slice(ind + 1)
-          ]
-        })}
+        updateForm={updateForm}
+        fieldName={form.persons.name}
       />
       <br/>
       <Well>

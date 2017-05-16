@@ -105,21 +105,8 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
       <h4>Personer knyttet til prøveuttaket</h4>
       <PersonRoleDate
         personData={personRoles}
-        addPerson={() => updateForm({
-          name: form.persons.name,
-          rawValue: [...personRoles, {name: '', role: '', date: ''}]
-        })}
-        updatePerson={(ind, person) => updateForm({
-          name: form.persons.name,
-          rawValue: person ? [
-            ...personRoles.slice(0, ind),
-            person,
-            ...personRoles.slice(ind + 1)
-          ] : [
-            ...personRoles.slice(0, ind),
-            ...personRoles.slice(ind + 1)
-          ]
-        })}
+        updateForm={updateForm}
+        fieldName={form.persons.name}
       />
       <br/>
       <div className="well">

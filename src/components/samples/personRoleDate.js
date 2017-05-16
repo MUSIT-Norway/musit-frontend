@@ -15,8 +15,8 @@ import type { Person } from 'modules/sample/sampleForm';
 
 type Props = {
   personData: Array<Person>,
-  updatePerson: Function,
-  addPerson: Function
+  updateForm: Function,
+  fieldName: string
 };
 
 type FieldDropDownProps = {
@@ -51,7 +51,7 @@ const FieldDropDown = (
   </FormGroup>
 );
 
-export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) => {
+export const PersonRoleDate = ({ personData, updateForm, fieldName }: Props) => {
   const pArr = personData || [];
   return pArr &&
     <Grid>
@@ -75,7 +75,11 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
           <Col md={2}>
             <FormControl
               value={v.name}
-              onChange={e => updatePerson(i, { ...v, name: e.target.value })}
+              onChange={e =>
+                updateForm({
+                  name: fieldName,
+                  rawValue: updatePerson(i, { ...v, name: e.target.value }, personData)
+                })}
             />
           </Col>
           <Col md={2}>
@@ -84,9 +88,8 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
               personRoleItem={v}
               selectItems={['responsible', 'creator']}
               index={i}
-              onSelectInput={(ind, p) => {
-                updatePerson(i, p);
-              }}
+              onSelectInput={(ind, p) =>
+                updateForm({ name: fieldName, rawValue: updatePerson(i, p, personData) })}
               title="Velg rolle"
             />
           </Col>
@@ -94,19 +97,51 @@ export const PersonRoleDate = ({ personData, updatePerson, addPerson }: Props) =
             {v.role === 'creator' &&
               <FormControl
                 value={v.date}
-                onChange={e => updatePerson(i, { ...v, date: e.target.value })}
+                onChange={e =>
+                  updateForm({
+                    name: fieldName,
+                    rawValue: updatePerson(i, { ...v, date: e.target.value }, personData)
+                  })}
               />}
           </Col>
           <Col md={1}>
-            <FontAwesome name={'times'} onClick={() => updatePerson(i)} />
+            <FontAwesome
+              name={'times'}
+              onClick={() =>
+                updateForm({
+                  name: fieldName,
+                  rawValue: deletePerson(i, personData)
+                })}
+            />
           </Col>
         </Row>
       ))}
       <Row>
         <Col md={6}>
-          <Button onClick={() => addPerson()}>Legg til flere personer</Button>
+          <Button
+            onClick={() =>
+              updateForm({
+                name: fieldName,
+                rawValue: addPerson(personData)
+              })}
+          >
+            Legg til flere personer
+          </Button>
         </Col>
       </Row>
     </Grid>;
 };
+
+function addPerson(persons: Array<Person>): Array<Person> {
+  return [...persons, {}];
+}
+
+function deletePerson(i: number, persons: Array<Person>): Array<Person> {
+  return [...persons.slice(0, i), ...persons.slice(i + 1)];
+}
+
+function updatePerson(i, p: Person, persons: Array<Person>) {
+  return [...persons.slice(0, i), p, ...persons.slice(i + 1)];
+}
+
 export default PersonRoleDate;
