@@ -84,12 +84,9 @@ class Sample {
 
 // To clean up after mapping single field to object for backend
 Sample.prepareForSubmit = tmpData => ({
-  ...omit(tmpData, ['externalIdSource', 'subTypeValue', 'sizeUnit']),
+  ...omit(tmpData, ['externalIdSource', 'subTypeValue', 'sizeUnit', 'sampleType']),
   originatedObjectUuid: tmpData.originatedObjectUuid || tmpData.parentObjectId,
   size: tmpData.size ? { value: tmpData.size, unit: tmpData.sizeUnit } : null,
-  sampleType: tmpData.sampleType
-    ? { value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue }
-    : null,
   externalId: tmpData.externalId
     ? { value: tmpData.externalId, source: tmpData.externalIdSource }
     : null

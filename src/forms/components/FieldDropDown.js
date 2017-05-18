@@ -5,8 +5,8 @@ import type { Field } from 'forms/form';
 type FieldDropDownProps = {
   field: Field<string>,
   defaultOption?: string,
-  valueKey?: string,
-  displayKey?: string,
+  valueFn?: Function,
+  displayFn?: Function,
   title: string,
   onChange: Function,
   selectItems: Array<*>,
@@ -33,8 +33,8 @@ export default function FieldDropDown(props: FieldDropDownProps) {
         >
           {props.defaultOption && <option>{props.defaultOption}</option>}
           {props.selectItems.map((v, i) => (
-            <option key={i} value={props.valueKey ? v[props.valueKey] : v}>
-              {props.displayKey ? v[props.displayKey] : v}
+            <option key={i} value={props.valueFn ? props.valueFn(v) : v}>
+              {props.displayFn ? props.displayFn(v) : v}
             </option>
           ))}
         </select>
