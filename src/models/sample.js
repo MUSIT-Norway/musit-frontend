@@ -5,9 +5,10 @@ import object from './object';
 import { Observable } from 'rxjs';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
+import uniqBy from 'lodash/uniqBy';
 
 class Sample {
-  static addSample: (ajaxPost: AjaxPost) => (
+  static addSample: (AjaxPost) => (
     props: {
       museumId: number,
       token: string,
@@ -15,7 +16,7 @@ class Sample {
       callback?: ?Callback
     }
   ) => Observable;
-  static editSample: (ajaxPut: AjaxPut) => (
+  static editSample: (AjaxPut) => (
     props: {
       id: number,
       museumId: number,
@@ -24,7 +25,7 @@ class Sample {
       callback?: ?Callback
     }
   ) => Observable;
-  static loadSample: (ajaxGet: AjaxGet) => (
+  static loadSample: (AjaxGet) => (
     props: {
       id: number,
       museumId: number,
@@ -32,7 +33,7 @@ class Sample {
       callback?: ?Callback
     }
   ) => Observable;
-  static loadSampleDataForObject: (ajaxGet: AjaxGet) => (
+  static loadSampleDataForObject: (AjaxGet) => (
     props: {
       id: number,
       museumId: number,
@@ -40,7 +41,7 @@ class Sample {
       callback?: ?Callback
     }
   ) => Observable;
-  static loadSamplesForObject: (ajaxGet: AjaxGet) => (
+  static loadSamplesForObject: (AjaxGet) => (
     props: {
       objectId: number,
       museumId: number,
@@ -60,12 +61,30 @@ class Sample {
       externalIdSource: mixed
     }
   ) => mixed;
+  static loadSampleTypes: (AjaxGet) => (
+    props: {
+      token: string
+    }
+  ) => Observable = (ajaxGet = simpleGet) =>
+    ({ token }) => {
+      const url = Config.magasin.urls.api.samples.sampleTypes;
+      return ajaxGet(url, token).map(({ response }) =>
+        uniqBy(response, 'enSampleType').reduce(
+          (acc, sampleType) => ({
+            ...acc,
+            [sampleType.enSampleType]: response.filter(
+              v => v.enSampleType === sampleType.enSampleType
+            )
+          }),
+          {}
+        ));
+    };
 }
 
 // To clean up after mapping single field to object for backend
 Sample.prepareForSubmit = tmpData => ({
   ...tmpData,
-  originatedObjectUuid: tmpData.parentObjectId,
+  originatedObjectUuid: tmpData.originatedObjectUuid || tmpData.parentObjectId,
   size: tmpData.size ? { value: tmpData.size, unit: tmpData.sizeUnit } : null,
   sampleType: tmpData.sampleType
     ? { value: tmpData.sampleType, subTypeValue: tmpData.subTypeValue }

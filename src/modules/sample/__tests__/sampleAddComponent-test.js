@@ -1,6 +1,6 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import SampleAddComponent from '../SampleAddComponent';
+import SampleAddComponent from '../SampleFormComponent';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
@@ -15,6 +15,15 @@ describe('AnalysisSampleFormPageAdd', () => {
     const wrapper = mount(
       <SampleAddComponent
         appSession={appSession}
+        store={{
+          sampleTypes: {
+            Vev: [
+              {
+                enSampleSubType: 'Woot'
+              }
+            ]
+          }
+        }}
         form={{
           note: {
             name: 'note',

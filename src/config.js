@@ -129,6 +129,7 @@ export default {
         },
         samples: {
           baseUrl: (mid: MuseumId): string => `api/management/${mid}/samples`,
+          sampleTypes: 'api/management/sampletypes',
           samplesForObject: (mid: MuseumId, objectId: number): string =>
             `api/management/${mid}/samples/${objectId}/children`
         },

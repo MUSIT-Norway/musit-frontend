@@ -1,36 +1,40 @@
+// @flow
 import React from 'react';
 import type { Field } from 'forms/form';
 
 type FieldDropDownProps = {
   field: Field<string>,
   defaultOption?: string,
-  title: any,
+  valueKey?: string,
+  displayKey?: string,
+  title: string,
   onChange: Function,
-  selectItems: Array<string>,
+  selectItems: Array<*>,
   inputProps?: { className?: string, style?: {} }
 };
 
-export default function FieldDropDown(
-  { field, onChange, defaultOption, selectItems, inputProps, title }: FieldDropDownProps
-) {
+export default function FieldDropDown(props: FieldDropDownProps) {
   return (
     <div>
-      {title !== '' &&
-        <label className="control-label col-md-2" htmlFor={field.name}>
-          {title}
+      {props.title !== '' &&
+        <label className="control-label col-md-2" htmlFor={props.field.name}>
+          {props.title}
         </label>}
       <div className="col-md-3">
         <select
-          {...inputProps}
-          className={`form-control ${inputProps ? inputProps.className || '' : ''}`}
-          value={field.value || ''}
-          id={field.name}
-          onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
+          {...props.inputProps}
+          className={
+            `form-control ${props.inputProps ? props.inputProps.className || '' : ''}`
+          }
+          value={props.field.value || ''}
+          id={props.field.name}
+          onChange={e =>
+            props.onChange({ name: props.field.name, rawValue: e.target.value })}
         >
-          {defaultOption && <option>{defaultOption}</option>}
-          {selectItems.map((v, i) => (
-            <option key={i} value={v}>
-              {v}
+          {props.defaultOption && <option>{props.defaultOption}</option>}
+          {props.selectItems.map((v, i) => (
+            <option key={i} value={props.valueKey ? v[props.valueKey] : v}>
+              {props.displayKey ? v[props.displayKey] : v}
             </option>
           ))}
         </select>

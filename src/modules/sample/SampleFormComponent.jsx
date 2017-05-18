@@ -3,6 +3,7 @@ import React  from 'react';
 import Config from 'config';
 import PersonRoleDate from 'components/samples/personRoleDate';
 import Sample from 'models/sample';
+import type { ObjectData } from 'types/object';
 import type { AppSession } from 'types/appSession';
 import {hashHistory} from 'react-router';
 import type { Person } from 'components/samples/personRoleDate';
@@ -14,11 +15,13 @@ import FieldInput from 'forms/components/FieldInput';
 import FieldTextArea from 'forms/components/FieldTextArea';
 
 type Params = {
-  objectId: string
+  objectId: string,
+  sampleId?: string
 }
 
 type Props = {
   form: FormDetails,
+  store: { sampleTypes?: any },
   updateForm: Function,
   persons: Array<{ name: string, role: string, date: string }>,
   addSample: Function,
@@ -30,49 +33,33 @@ type Props = {
   params: Params
 };
 
-const SampleAddComponent = ({form, updateForm, addSample, location, appSession, params, clearForm}: Props) => {
+const containerTypes = [
+  'Kapsel',
+  'Glassplate',
+  'Kolbe'
+];
 
-  const sampleValues = [
-    'Frø',
-    'Vev'
-  ];
+const containerSubTypes = (v) => {
+  switch (v) {
+    case 'Kapsel':
+      return ['Etanol', 'Aceton', 'Vann'];
+    case 'Glassplate':
+      return [];
+    case 'Kolbe':
+      return ['Aceton', 'Etanol', 'H2O'];
+    default:
+      return [];
+  }
+};
 
-  const sampleSubValues = (v) => {
-    switch (v) {
-      case 'Frø':
-        return ['Pollen', 'Korn', 'Erter'];
-      case 'Vev':
-        return ['Thallus', 'Bein', 'Blod', 'Ascus'];
-      default:
-        return [];
-    }
-  };
-
-  const containerTypes = [
-    'Kapsel',
-    'Glassplate',
-    'Kolbe'
-  ];
-
-  const containerSubTypes = (v) => {
-    switch (v) {
-      case 'Kapsel':
-        return ['Etanol', 'Aceton', 'Vann'];
-      case 'Glassplate':
-        return [];
-      case 'Kolbe':
-        return ['Aceton', 'Etanol', 'H2O'];
-      default:
-        return [];
-    }
-  };
-
-  const personRoles: Array<Person> = (form.persons.rawValue: any) || [];
-  const objectData = location.state[0];
-  const isValid = Object.keys(form).reduce((acc, k) => {
+function isFormValid(form) {
+  return Object.keys(form).reduce((acc, k) => {
     const field = form[k];
     return acc && field.status.valid;
   }, true);
+}
+
+export default function SampleAddComponent({form, store, updateForm, addSample, location, appSession, params, clearForm}: Props) {
   return (
     <form style={{padding: 20}} className="form-horizontal">
       <div className="page-header">
@@ -84,20 +71,20 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
         Avledet fra objekt
       </h4>
       <div className='form-group'>
+      <span className="col-md-2">
+        <strong>MusNo:</strong> {location.state[0].museumNo}
+      </span>
         <span className="col-md-2">
-          <strong>MusNo:</strong> {objectData.museumNo}
-        </span>
+        <strong>Unr:</strong> {location.state[0].subNo}
+      </span>
         <span className="col-md-2">
-          <strong>Unr:</strong> {objectData.subNo}
-        </span>
-        <span className="col-md-2">
-          <strong>Term/artsnavn:</strong> {objectData.term}
-        </span>
+        <strong>Term/artsnavn:</strong> {location.state[0].term}
+      </span>
       </div>
       <hr/>
       <h4>Personer knyttet til prøveuttaket</h4>
       <PersonRoleDate
-        personData={personRoles}
+        personData={(form.persons.rawValue: any)}
         updateForm={updateForm}
         fieldName={form.persons.name}
       />
@@ -122,21 +109,25 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
             onChange={updateForm}
           />
         </ValidatedFormGroup>
-        <ValidatedFormGroup fields={[form.subTypeValue, form.subTypeValue]}>
+        <ValidatedFormGroup fields={[form.sampleType, form.subTypeValue]}>
           <FieldDropDown
             field={form.sampleType}
             title="Prøvetype:"
             defaultOption="Velg type"
             onChange={updateForm}
-            selectItems={sampleValues}
+            selectItems={store.sampleTypes ? Object.keys(store.sampleTypes) : []}
           />
+          {form.sampleType.rawValue && form.sampleType.rawValue.trim().length > 0 &&
           <FieldDropDown
             field={form.subTypeValue}
             title="Prøveundertype:"
             defaultOption="Velg undertype"
+            valueKey="sampleTypeId"
+            displayKey="enSampleSubType"
             onChange={updateForm}
-            selectItems={sampleSubValues(form.sampleType.rawValue)}
+            selectItems={store.sampleTypes ? store.sampleTypes[form.sampleType.rawValue] : []}
           />
+          }
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.description]}>
           <FieldInput
@@ -200,6 +191,8 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
           <FieldCheckBox
             field={form.leftoverSample}
             title="Har restmateriale:"
+            yesValue={3}
+            noValue={2}
             onChange={updateForm}
             defaultValue="1"
           />
@@ -207,7 +200,7 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
         <ValidatedFormGroup fields={[form.note]}>
           <FieldTextArea
             field={form.note}
-            title="Note"
+            title="Kommentar:"
             onChangeInput={updateForm}
             inputProps={{ rows: 5, className: 'note' }}
           />
@@ -215,20 +208,23 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
       </div>
       <button
         className="btn btn-primary"
-        disabled={!isValid}
+        disabled={!isFormValid(form)}
         onClick={(e) => {
           e.preventDefault();
           submitSample(appSession, form, location.state[0], params, addSample)
-            .then((value) => hashHistory.push({
-              pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, value),
-              state: [objectData]}));
+            .then((value) =>
+              hashHistory.push({
+                pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, value.objectId || value),
+                state: [location.state[0]]
+              })
+            );
         }}
       >
         Lagre
       </button>
-      &nbsp;&nbsp;
       <a
         href="#"
+        style={{ marginLeft: 20 }}
         onClick={(e) => {
           e.preventDefault();
           clearForm();
@@ -239,9 +235,9 @@ const SampleAddComponent = ({form, updateForm, addSample, location, appSession, 
       </a>
     </form>
   );
-};
+}
 
-function submitSample(appSession: AppSession, form: FormDetails, objectData: any, params: Params, addSample: Function) {
+function submitSample(appSession: AppSession, form: FormDetails, objectData: ObjectData, params: Params, addSample: Function) {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const myReduce = (frm: FormDetails) => Object.keys(frm).reduce((akk: any, key: string) =>
@@ -268,6 +264,7 @@ function submitSample(appSession: AppSession, form: FormDetails, objectData: any
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
   tmpData.status = 2;
+  tmpData.sampleTypeId = form.subTypeValue.value;
   tmpData.responsible = {
     type: 'ActorById',
     value: appSession.actor.dataportenId
@@ -277,7 +274,5 @@ function submitSample(appSession: AppSession, form: FormDetails, objectData: any
   tmpData.museumId = appSession.museumId;
   tmpData.parentObjectId = params.objectId;
   const data = Sample.prepareForSubmit(tmpData);
-  return addSample({museumId, token, data});
+  return addSample({id: params.sampleId, museumId, token, data});
 }
-
-export default SampleAddComponent;

@@ -1,9 +1,12 @@
+// @flow
 import React from 'react';
 import type { Field } from 'forms/form';
 
 type FieldInputProps = {
   field: Field<*>,
   title: string,
+  yesValue: any,
+  noValue: any,
   onChange: Function,
   inputProps?: {
     className?: string,
@@ -11,7 +14,9 @@ type FieldInputProps = {
   }
 };
 
-export default function CheckBoxInput({ field, title, onChange }: FieldInputProps) {
+export default function CheckBoxInput(
+  { field, yesValue = true, noValue = false, title, onChange }: FieldInputProps
+) {
   return (
     <div>
       {title !== '' &&
@@ -23,8 +28,8 @@ export default function CheckBoxInput({ field, title, onChange }: FieldInputProp
           <label className={`btn btn-default${field.rawValue === '3' ? ' active' : ''}`}>
             <input
               type="radio"
-              value={'3'}
-              checked={field.rawValue === '3'}
+              value={yesValue}
+              checked={field.rawValue === yesValue}
               onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
             />
             {' '}
@@ -33,8 +38,8 @@ export default function CheckBoxInput({ field, title, onChange }: FieldInputProp
           <label className={`btn btn-default${field.rawValue === '2' ? ' active' : ''}`}>
             <input
               type="radio"
-              value={'2'}
-              checked={field.rawValue === '2'}
+              value={noValue}
+              checked={field.rawValue === noValue}
               onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
             />
             {' '}

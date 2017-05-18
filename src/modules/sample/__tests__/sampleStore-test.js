@@ -8,6 +8,7 @@ describe('eventsStore', () => {
     // mock streams
     const clearM = '-1---------';
     const loadSampleStoreM = '--1--------';
+    const loadSampleTypesM = '-----------';
     const expected = 'aab--------';
 
     const expectedStateMap = {
@@ -37,6 +38,7 @@ describe('eventsStore', () => {
 
     // mock up$ and down$ events
     const clear$ = testScheduler.createHotObservable(clearM);
+    const loadSampleTypes$ = testScheduler.createHotObservable(loadSampleTypesM);
     const loadSamplesForObject$ = testScheduler.createHotObservable(loadSampleStoreM, {
       1: {
         data: [
@@ -59,7 +61,7 @@ describe('eventsStore', () => {
       }
     });
 
-    const state$ = sampleStore$({ clear$, loadSamplesForObject$ });
+    const state$ = sampleStore$({ clear$, loadSamplesForObject$, loadSampleTypes$ });
 
     // assertion
     testScheduler.expectObservable(state$).toBe(expected, expectedStateMap);

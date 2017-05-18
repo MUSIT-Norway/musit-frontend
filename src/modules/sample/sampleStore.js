@@ -6,15 +6,21 @@ const initialState = { data: [] };
 export const loadSamplesForObject$ = createAction('loadSamplesForObject$').switchMap(
   Sample.loadSamplesForObject()
 );
+
+export const loadSampleTypes$ = createAction('loadSampleTypes$').switchMap(props =>
+  Sample.loadSampleTypes()(props).do(props.onComplete).do(console.log));
+
 export const clear$ = createAction('clear$');
 
 const reducer$ = actions =>
   Observable.merge(
+    actions.loadSampleTypes$.map(sampleTypes => state => ({ ...state, sampleTypes })),
     actions.clear$.map(() => () => initialState),
     actions.loadSamplesForObject$.map(data => state => ({ ...state, ...data }))
   );
 
-export const sampleStore$ = (actions = { loadSamplesForObject$, clear$ }) =>
-  createStore('sampleStore$', reducer$(actions), Observable.of(initialState));
+export const sampleStore$ = (
+  actions = { loadSamplesForObject$, loadSampleTypes$, clear$ }
+) => createStore('sampleStore$', reducer$(actions), Observable.of(initialState));
 
 export default sampleStore$();

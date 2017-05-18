@@ -1,4 +1,5 @@
-import React from 'react';
+// @flow
+import React, { Children } from 'react';
 import type { Field } from 'forms/form';
 
 type VFGProps = {
@@ -8,17 +9,14 @@ type VFGProps = {
 };
 
 export default function ValidatedFormGroup({ fields, field, children }: VFGProps) {
-  if (fields && fields.length > 0 && field) {
-    throw new Error('Either fill in `fields` or `field`, not both');
+  if (!(fields && fields.length > 0) && !field) {
+    throw new Error('No fields supplied. Fruitless. Exiting.');
   }
-  const isInvalid = fields
-    ? fields.reduce(
-        (acc, f) => f.status && !f.status.valid /* && f.value !== f.defaultValue*/,
-        false
-      )
-    : false;
+  const isValid = fields
+    ? fields.reduce((acc, f) => acc && !(f.status && !f.status.valid), true)
+    : field && field.status && field.status.valid;
   return (
-    <div className={`form-group ${isInvalid ? 'has-error' : ''}`}>
+    <div className={`form-group${!isValid ? ' has-error' : ''}`}>
       {children}
     </div>
   );
