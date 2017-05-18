@@ -51,6 +51,7 @@ class Sample {
       callback?: ?Callback
     }
   ) => Observable;
+
   static prepareForSubmit: (
     tmpData: {
       size?: { value: number, unit: string },
@@ -75,6 +76,63 @@ class Sample {
             ...acc,
             [sampleType.enSampleType]: response.filter(
               v => v.enSampleType === sampleType.enSampleType
+            )
+          }),
+          {}
+        ));
+    };
+
+  static loadTreatments: (AjaxGet) => (
+    props: {
+      token: string
+    }
+  ) => Observable = (ajaxGet = simpleGet) =>
+    ({ token }) => {
+      const url = Config.magasin.urls.api.samples.treatments;
+      return ajaxGet(url, token).map(({ response }) =>
+        uniqBy(response, 'enTreatment').reduce(
+          (acc, treatment) => ({
+            ...acc,
+            [treatment.enTreatment]: response.filter(
+              v => v.enTreatment === treatment.enTreatment
+            )
+          }),
+          {}
+        ));
+    };
+
+  static loadStorageContainer: (AjaxGet) => (
+    props: {
+      token: string
+    }
+  ) => Observable = (ajaxGet = simpleGet) =>
+    ({ token }) => {
+      const url = Config.magasin.urls.api.samples.storagecontainer;
+      return ajaxGet(url, token).map(({ response }) =>
+        uniqBy(response, 'enStorageContainer').reduce(
+          (acc, storageContainer) => ({
+            ...acc,
+            [storageContainer.enStorageContainer]: response.filter(
+              v => v.enStorageContainer === storageContainer.enStorageContainer
+            )
+          }),
+          {}
+        ));
+    };
+
+  static loadStorageMediums: (AjaxGet) => (
+    props: {
+      token: string
+    }
+  ) => Observable = (ajaxGet = simpleGet) =>
+    ({ token }) => {
+      const url = Config.magasin.urls.api.samples.storagemediums;
+      return ajaxGet(url, token).map(({ response }) =>
+        uniqBy(response, 'enStorageMedium').reduce(
+          (acc, storagemediums) => ({
+            ...acc,
+            [storagemediums.enStorageMedium]: response.filter(
+              v => v.enStorageMedium === storagemediums.enStorageMedium
             )
           }),
           {}

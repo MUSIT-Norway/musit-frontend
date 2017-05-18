@@ -10,17 +10,44 @@ export const loadSamplesForObject$ = createAction('loadSamplesForObject$').switc
 export const loadSampleTypes$ = createAction('loadSampleTypes$').switchMap(props =>
   Sample.loadSampleTypes()(props).do(props.onComplete).do(console.log));
 
+export const loadStorageContainer$ = createAction(
+  'loadStorageContainer$'
+).switchMap(props =>
+  Sample.loadStorageContainer()(props).do(props.onComplete).do(console.log));
+
+export const loadTreatments$ = createAction('loadTreatments$').switchMap(props =>
+  Sample.loadTreatments()(props).do(props.onComplete).do(console.log));
+
+export const loadStorageMediums$ = createAction('loadStorageMediums$').switchMap(props =>
+  Sample.loadStorageMediums()(props).do(props.onComplete).do(console.log));
+
+export const loadPredefinedTypes$ = createAction(
+  'loadPredefinedTypes$'
+).switchMap(props =>
+  Observable.forkJoin([
+    Sample.loadStorageContainer()(props),
+    Sample.loadStorageMediums()(props),
+    Sample.loadTreatments()(props)
+  ]).do(console.log));
+
 export const clear$ = createAction('clear$');
 
 const reducer$ = actions =>
   Observable.merge(
     actions.loadSampleTypes$.map(sampleTypes => state => ({ ...state, sampleTypes })),
     actions.clear$.map(() => () => initialState),
+    actions.loadPredefinedTypes$.map(([storageContainers, storageMediums, treatments]) =>
+      state => ({ ...state, storageContainers, storageMediums, treatments })),
     actions.loadSamplesForObject$.map(data => state => ({ ...state, ...data }))
   );
 
 export const sampleStore$ = (
-  actions = { loadSamplesForObject$, loadSampleTypes$, clear$ }
+  actions = {
+    loadSamplesForObject$,
+    loadSampleTypes$,
+    loadPredefinedTypes$,
+    clear$
+  }
 ) => createStore('sampleStore$', reducer$(actions), Observable.of(initialState));
 
 export default sampleStore$();
