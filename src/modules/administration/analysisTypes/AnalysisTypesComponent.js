@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { I18n } from 'react-i18nify';
 import FontAwesome from 'react-fontawesome';
 
-type AnalysisType = { id: number, name: string, collections: Array<string> };
+export type AnalysisType = { id: number, name: string, collections: Array<string> };
 
 type Store = {
   analysisTypes: Array<AnalysisType>

@@ -3,11 +3,12 @@ import React  from 'react';
 import Config from 'config';
 import PersonRoleDate from 'components/samples/personRoleDate';
 import Sample from 'models/sample';
-import type { ObjectData } from 'types/object';
-import type { AppSession } from 'types/appSession';
+
+import type {ObjectData} from 'types/object';
+import type {AppSession} from 'types/appSession';
 import {hashHistory} from 'react-router';
-import type { Person } from 'components/samples/personRoleDate';
-import type { FormDetails } from './types/form';
+import type {Person} from 'components/samples/personRoleDate';
+import type {FormDetails} from './types/form';
 import ValidatedFormGroup from 'forms/components/ValidatedFormGroup';
 import FieldCheckBox from 'forms/components/FieldCheckBox';
 import FieldDropDown from 'forms/components/FieldDropDown';
@@ -21,14 +22,14 @@ type Params = {
 
 type Props = {
   form: FormDetails,
-  store: { sampleTypes?: any },
+  store: { sampleTypes?: any },
   updateForm: Function,
   persons: Array<{ name: string, role: string, date: string }>,
   addSample: Function,
   addPersonToSample: Function,
   updatePersonForSample: Function,
   clearForm: Function,
-  location: { pathname: string, state: Array<any>},
+  location: { pathname: string, state: Array<any> },
   appSession: AppSession,
   params: Params
 };
@@ -150,7 +151,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             field={form.size}
             title="Målevolum/-vekt"
             onChange={updateForm}
-            inputProps={{ className: 'size' }}
+            inputProps={{className: 'size'}}
           />
           <FieldDropDown
             field={form.sizeUnit}
@@ -202,7 +203,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             field={form.note}
             title="Kommentar:"
             onChangeInput={updateForm}
-            inputProps={{ rows: 5, className: 'note' }}
+            inputProps={{rows: 5, className: 'note'}}
           />
         </ValidatedFormGroup>
       </div>
@@ -224,7 +225,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
       </button>
       <a
         href="#"
-        style={{ marginLeft: 20 }}
+        style={{marginLeft: 20}}
         onClick={(e) => {
           e.preventDefault();
           clearForm();
@@ -245,18 +246,23 @@ function submitSample(appSession: AppSession, form: FormDetails, objectData: Obj
   const reducePersons = (p: any) => p && p.reduce((akk: any, v: Person) => {
     switch (v.role) {
       case 'creator':
-        return {...akk,
-          createdBy: v.name,
-          doneDate: v.date
-        };
-      case 'responsible':
-        return {...akk,
-          responsible: {
-            type: 'ActorByName',
-            value: v.name
+        return {
+          ...akk,
+          doneByStamp: {
+            user: v.uuid,
+            date: v.date
           }
         };
-      default: return {};
+      case 'responsible':
+        return {
+          ...akk,
+          responsible: {
+            type: 'ActorById',
+            value: v.uuid
+          }
+        };
+      default:
+        return {};
     }
   }, {});
 

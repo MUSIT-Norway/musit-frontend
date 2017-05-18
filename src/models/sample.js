@@ -5,6 +5,7 @@ import object from './object';
 import { Observable } from 'rxjs';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
+import { omit } from 'lodash';
 import uniqBy from 'lodash/uniqBy';
 
 class Sample {
@@ -83,7 +84,7 @@ class Sample {
 
 // To clean up after mapping single field to object for backend
 Sample.prepareForSubmit = tmpData => ({
-  ...tmpData,
+  ...omit(tmpData, ['externalIdSource', 'subTypeValue', 'sizeUnit']),
   originatedObjectUuid: tmpData.originatedObjectUuid || tmpData.parentObjectId,
   size: tmpData.size ? { value: tmpData.size, unit: tmpData.sizeUnit } : null,
   sampleType: tmpData.sampleType
@@ -91,10 +92,7 @@ Sample.prepareForSubmit = tmpData => ({
     : null,
   externalId: tmpData.externalId
     ? { value: tmpData.externalId, source: tmpData.externalIdSource }
-    : null,
-  externalIdSource: null,
-  sizeUnit: null,
-  subTypeValue: null
+    : null
 });
 
 Sample.addSample = (ajaxPost = simplePost) =>

@@ -1,11 +1,15 @@
 // @flow
 import React from 'react';
-import { Grid, Row, Col, Button, FormControl } from 'react-bootstrap';
+import ActorSuggest from '../../components/suggest/ActorSuggest';
+import { Grid, Row, Col, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import DropdownButton from 'components/DropdownButton';
+import DatePicker from '../DatePicker';
+import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 
 export type Person = {
   name?: string,
+  uuid?: string,
   role?: string,
   date?: string
 };
@@ -38,13 +42,21 @@ export const PersonRoleDate = ({ personData, updateForm, fieldName }: Props) => 
       {pArr.map((v, i) => (
         <Row key={`id_${i}`}>
           <Col md={2}>
-            <FormControl
+            <ActorSuggest
+              key={`id_${i}`}
+              id={`id_${i}`}
               value={v.name}
-              onChange={e =>
+              placeHolder="Find actor"
+              onChange={newValue => {
                 updateForm({
                   name: fieldName,
-                  rawValue: updatePerson(i, { ...v, name: e.target.value }, personData)
-                })}
+                  rawValue: updatePerson(
+                    i,
+                    { ...v, name: newValue.fn, uuid: newValue.dataportenId },
+                    personData
+                  )
+                });
+              }}
             />
           </Col>
           <Col md={2}>
@@ -62,13 +74,20 @@ export const PersonRoleDate = ({ personData, updateForm, fieldName }: Props) => 
           </Col>
           <Col md={2}>
             {v.role === 'creator' &&
-              <FormControl
+              <DatePicker
+                dateFormat={DATE_FORMAT_DISPLAY}
                 value={v.date}
-                onChange={e =>
+                onClear={newValue =>
                   updateForm({
                     name: fieldName,
-                    rawValue: updateDate(i, e.target.value, personData)
+                    rawValue: updateDate(i, newValue, personData)
                   })}
+                onChange={newValue => {
+                  updateForm({
+                    name: fieldName,
+                    rawValue: updateDate(i, newValue, personData)
+                  });
+                }}
               />}
           </Col>
           <Col md={1}>
