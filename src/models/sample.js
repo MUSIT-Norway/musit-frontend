@@ -117,9 +117,9 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
           token: token,
           actorIds: [
             sampleJson.responsible.value,
-            sampleJson.updatedStamp.user,
-            sampleJson.registeredStamp.user
-          ]
+            sampleJson.registeredStamp.user,
+            sampleJson.updatedStamp && sampleJson.updatedStamp.user
+          ].filter(uuid => !!uuid)
         }).map(actors => {
           if (!actors || actors.length === 0) {
             return sampleJson;
@@ -136,7 +136,9 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
             },
             updatedStamp: {
               ...sampleJson.updatedStamp,
-              name: getActorName(actors, sampleJson.updatedStamp.user)
+              name: sampleJson.updatedStamp
+                ? getActorName(actors, sampleJson.updatedStamp.user)
+                : null
             }
           };
         });
