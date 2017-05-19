@@ -2,7 +2,6 @@
 import { simpleGet, simplePut, simplePost } from '../shared/RxAjax';
 import Config from '../config';
 import { getPath } from '../shared/util';
-import flatMap from 'lodash/flatMap';
 import type { MovableObject } from './types/movableObject';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import type { ObjectData } from '../types/object';
@@ -175,7 +174,7 @@ MusitObject.getObjectLocations = (ajaxPost = simplePost) =>
       token,
       callback
     ).map(({ response }) =>
-      flatMap(response, ls => ls.objectIds.map(objectId => ({ objectId, ...ls.node }))));
+      movableObjects.map(o => ({ objectId: o.id, ...response[0].node })));
 
 MusitObject.getObjectLocation = (ajaxGet = simpleGet) =>
   ({ objectId, museumId, token, callback }) =>

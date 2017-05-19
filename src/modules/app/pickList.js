@@ -105,7 +105,7 @@ const refreshItem = (oneOrMany, items = []) => {
 
 const refreshObjects = (state, itemLocations) => {
   return state.objects.map(obj => {
-    const objFromServer = itemLocations.find(iloc => iloc.objectId === obj.value.id);
+    const objFromServer = itemLocations.find(iloc => iloc.objectId === obj.value.uuid);
     if (!objFromServer) {
       return obj;
     }

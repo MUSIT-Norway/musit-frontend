@@ -18,7 +18,7 @@ describe('pickList', () => {
     const removeNode = '------------------1------';
     const addNode = '----1-------121----------';
     const clearObjects = '----------x--------------';
-    const addObject = '---1---------------1--2--';
+    const addObject = '---1---------------3--2--';
     const refreshObjects = '---------------------1--2';
     const expected = 'a--de---fng-hijkjlop-rs-u';
 
@@ -74,14 +74,14 @@ describe('pickList', () => {
       },
       o: { objects: [], nodes: [{ marked: false, value: { id: 1 }, path: [] }] },
       p: {
-        objects: [{ marked: false, value: { id: 1 }, path: [] }],
+        objects: [{ marked: false, value: { id: 3, uuid: 3 }, path: [] }],
         nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
       r: {
         objects: [
           {
             marked: false,
-            value: { id: 1 },
+            value: { id: 3, uuid: 3 },
             path: [
               {
                 id: '403cebde-082c-4002-8f78-16ad178a054a',
@@ -98,7 +98,7 @@ describe('pickList', () => {
         objects: [
           {
             marked: false,
-            value: { id: 1 },
+            value: { id: 3, uuid: 3 },
             path: [
               {
                 id: '403cebde-082c-4002-8f78-16ad178a054a',
@@ -108,7 +108,7 @@ describe('pickList', () => {
               }
             ]
           },
-          { marked: false, value: { id: 2 }, path: [] }
+          { marked: false, value: { id: 2, uuid: 2 }, path: [] }
         ],
         nodes: [{ marked: false, value: { id: 1 }, path: [] }]
       },
@@ -116,25 +116,25 @@ describe('pickList', () => {
         objects: [
           {
             marked: false,
-            value: { id: 1 },
+            value: { id: 3, uuid: 3 },
             path: [
               {
-                id: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
-                nodeId: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
-                name: 'Code from Jarl',
-                url: '/magasin/acd4daec-4401-4edd-8e33-a22fd04fd023'
+                id: '403cebde-082c-4002-8f78-16ad178a054a',
+                nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
+                name: 'test',
+                url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
               }
             ]
           },
           {
             marked: false,
-            value: { id: 2 },
+            value: { id: 2, uuid: 2 },
             path: [
               {
-                id: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
-                nodeId: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
-                name: 'Code from Jarl',
-                url: '/magasin/acd4daec-4401-4edd-8e33-a22fd04fd023'
+                id: '403cebde-082c-4002-8f78-16ad178a054a',
+                nodeId: '403cebde-082c-4002-8f78-16ad178a054a',
+                name: 'test',
+                url: '/magasin/403cebde-082c-4002-8f78-16ad178a054a'
               }
             ]
           }
@@ -174,18 +174,38 @@ describe('pickList', () => {
     const clearObjects$ = testScheduler.createHotObservable(clearObjects);
     const addObject$ = testScheduler.createHotObservable(addObject, {
       1: { value: { id: 1 }, path: [] },
-      2: { value: { id: 2 }, path: [] }
+      2: { value: { id: 2, uuid: 2 }, path: [] },
+      3: { value: { id: 3, uuid: 3 }, path: [] }
     });
     const toggleObject$ = new Subject();
 
     const refreshObjects$ = testScheduler
       .createHotObservable(refreshObjects, {
-        1: { movableObjects: [1], museumId: 99, token: '1224' },
-        2: { movableObjects: [1, 2], museumId: 99, token: '1224' }
+        1: { movableObjects: [{ id: 3 }], museumId: 99, token: '1224' },
+        2: { movableObjects: [{ id: 3 }, { id: 2 }], museumId: 99, token: '1224' }
       })
       .switchMap(
         MusitObject.getObjectLocations((url, data) => {
-          if (isEqual(data, [1]))
+          if (isEqual(data, [{ id: 3 }]))
+            return Observable.of({
+              response: [
+                {
+                  node: {
+                    id: 1456,
+                    path: ',3,',
+                    pathNames: [
+                      {
+                        nodeId: 3,
+                        nodeUuid: '403cebde-082c-4002-8f78-16ad178a054a',
+                        name: 'test'
+                      }
+                    ],
+                    objectId: 3
+                  }
+                }
+              ]
+            });
+          if (isEqual(data, [{ id: 3 }, { id: 2 }]))
             return Observable.of({
               response: [
                 {
@@ -199,41 +219,7 @@ describe('pickList', () => {
                         name: 'test'
                       }
                     ]
-                  },
-                  objectIds: [1]
-                }
-              ]
-            });
-          if (isEqual(data, [1, 2]))
-            return Observable.of({
-              response: [
-                {
-                  node: {
-                    id: 14578,
-                    path: ',6,',
-                    pathNames: [
-                      {
-                        nodeId: 6,
-                        nodeUuid: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
-                        name: 'Code from Jarl'
-                      }
-                    ]
-                  },
-                  objectIds: [1]
-                },
-                {
-                  node: {
-                    id: 14579,
-                    path: ',6,',
-                    pathNames: [
-                      {
-                        nodeId: 6,
-                        nodeUuid: 'acd4daec-4401-4edd-8e33-a22fd04fd023',
-                        name: 'Code from Jarl'
-                      }
-                    ]
-                  },
-                  objectIds: [2]
+                  }
                 }
               ]
             });
