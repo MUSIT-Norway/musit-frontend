@@ -7,6 +7,7 @@ import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import { omit } from 'lodash';
 import uniqBy from 'lodash/uniqBy';
+import MusitActor from 'models/actor';
 
 class Sample {
   static addSample: (AjaxPost) => (
@@ -105,12 +106,50 @@ Sample.editSample = (ajaxPut = simplePut) =>
     return ajaxPut(url, data, token, callback).map(({ response }) => response);
   };
 
-Sample.loadSample = (ajaxGet = simpleGet) =>
+Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
   ({ id, museumId, token, callback }) => {
     const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
     const url = `${baseUrl}/${id}`;
-    return ajaxGet(url, token, callback).map(({ response }) => response);
+    return ajaxGet(url, token, callback)
+      .map(({ response }) => response)
+      .flatMap(sampleJson => {
+        return MusitActor.getActors(ajaxPost)({
+          token: token,
+          actorIds: [
+            sampleJson.responsible.value,
+            sampleJson.updatedStamp.user,
+            sampleJson.registeredStamp.user
+          ]
+        }).map(actors => {
+          if (!actors || actors.length === 0) {
+            return sampleJson;
+          }
+          return {
+            ...sampleJson,
+            responsible: {
+              ...sampleJson.responsible,
+              name: getActorName(actors, sampleJson.responsible.value)
+            },
+            registeredStamp: {
+              ...sampleJson.registeredStamp,
+              name: getActorName(actors, sampleJson.registeredStamp.user)
+            },
+            updatedStamp: {
+              ...sampleJson.updatedStamp,
+              name: getActorName(actors, sampleJson.updatedStamp.user)
+            }
+          };
+        });
+      });
   };
+
+function getActorName(actors, actorId) {
+  const actor = actors.find(a => MusitActor.hasActorId(a, actorId));
+  if (actor) {
+    return actor.fn;
+  }
+  return null;
+}
 
 Sample.loadSampleDataForObject = (ajaxGet = simpleGet) =>
   ({ id, museumId, token, callback }) => {
