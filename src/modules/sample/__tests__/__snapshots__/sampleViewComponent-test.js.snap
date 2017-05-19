@@ -167,9 +167,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     <div
       className="col-md-2">
       <p
-        className="form-control-static">
-        Nyskilt
-      </p>
+        className="form-control-static" />
     </div>
   </div>
   <div

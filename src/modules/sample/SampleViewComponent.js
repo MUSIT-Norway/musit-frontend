@@ -1,6 +1,7 @@
 import React from 'react';
 import Config from '../../config';
 import { hashHistory } from 'react-router';
+import Sample from '../../models/sample';
 
 export default function SampleViewComponent(props) {
   const objectData = props.location.state[0];
@@ -92,7 +93,7 @@ export default function SampleViewComponent(props) {
         <label className="control-label col-md-2">Status:</label>
         <div className="col-md-2">
           <p className="form-control-static">
-            {form.status.value}
+            {getStatusValue(form.status.value)}
           </p>
         </div>
       </div>
@@ -165,4 +166,12 @@ export default function SampleViewComponent(props) {
       </a>
     </form>
   );
+}
+
+function getStatusValue(v) {
+  if (v) {
+    const statuses = Sample.getSampleStatuses();
+    const s = statuses.find(e => e.id === v);
+    return s && s.noStatus;
+  }
 }
