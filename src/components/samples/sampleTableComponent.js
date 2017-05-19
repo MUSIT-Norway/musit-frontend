@@ -26,8 +26,8 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
             <Tr key={i}>
               <Td column="id">{e.id}</Td>
               <Td column="doneDate">{e.doneDate.format('DD.MM.YYYY')}</Td>
-              <Td column="sampleType">{e.sampleType.value}</Td>
-              <Td column="sampleSubType">{e.sampleType.subTypeValue}</Td>
+              <Td column="sampleType">{e.sampleTypeId}</Td>
+              <Td column="sampleSubType">{' '}</Td>
               <Td column="status">{e.status}</Td>
               <Td column="hasAnalyse">{e.hasAnalyse}</Td>
               <Td column="showInfo">

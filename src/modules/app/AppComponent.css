@@ -32,6 +32,12 @@ nav.fa {
   color: lightgray;
 }
 
+.version a {
+  font-size: smaller;
+  text-decoration: none;
+  color: lightgray !important;
+}
+
 .backgroundUTV {
   height: 50px;
   background-color: #ff6666;

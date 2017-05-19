@@ -1,7 +1,7 @@
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
 import React from 'react';
 import SampleViewComponent from '../SampleViewComponent';
-import { expect } from 'chai';
 
 describe('AnalysisSampleFormPageView', () => {
   it('should display correctly', () => {
@@ -10,106 +10,106 @@ describe('AnalysisSampleFormPageView', () => {
       museumId: 99,
       actor: { dataportenId: '12345', fn: 'Jarl' }
     };
-    const wrapper = mount(
+    const wrapper = shallow(
       <SampleViewComponent
         appSession={appSession}
         params={{ sampleId: '0000-1111-2222-3333' }}
         form={{
           note: {
             name: 'note',
-            defaultValue: 'Heisann'
+            value: 'Heisann'
           },
           size: {
             name: 'size',
-            defaultValue: '1,23'
+            value: '1,23'
           },
           externalId: {
             name: 'externalId',
-            defaultValue: '123'
+            value: '123'
           },
           externalIdSource: {
             name: 'externalIdSource',
-            defaultValue: 'Museum'
+            value: 'Museum'
           },
           description: {
             name: 'description',
-            defaultValue: 'Av lær'
+            value: 'Av lær'
           },
           term_species: {
             name: 'term_species',
-            defaultValue: 'Carex saxatilis'
+            value: 'Carex saxatilis'
           },
           sampleType: {
             name: 'sampleType',
-            defaultValue: 'Vev'
+            value: 'Vev'
           },
           sizeUnit: {
             name: 'sizeUnit',
-            defaultValue: 'gr'
+            value: 'gr'
           },
           subTypeValue: {
             name: 'subTypeValue',
-            defaultValue: 'Muskel'
+            value: 'Muskel'
           },
           status: {
             name: 'status',
-            defaultValue: 'Nyskilt'
+            value: 'Nyskilt'
           },
           storageMedium: {
             name: 'storageMedium',
-            defaultValue: 'Etanol'
+            value: 'Etanol'
           },
           createdBy: {
             name: 'createdBy',
-            defaultValue: '1111-2222-1111-1111'
+            value: '1111-2222-1111-1111'
           },
           leftoverSample: {
             name: 'leftoverSample',
-            defaultValue: '2'
+            value: '2'
           },
           responsible: {
             name: 'responsible',
-            defaultValue: '1221-3222-3303-3333'
+            value: '1221-3222-3303-3333'
           },
           museumId: {
             name: 'museumId',
-            defaultValue: '1233'
+            value: '1233'
           },
           subNo: {
             name: 'subNo',
-            defaultValue: '322222'
+            value: '322222'
           },
           registeredBy: {
             name: 'registeredBy',
-            defaultValue: '1233'
+            value: '1233'
           },
           container: {
             name: 'container',
-            defaultValue: 'Reagensrør'
+            value: 'Reagensrør'
           },
           registeredDate: {
             name: 'registeredDate',
-            defaultValue: '1988-12-31'
+            value: '1988-12-31'
           },
           updatedBy: {
             name: 'updatedBy',
-            defaultValue: 'Arne And'
+            value: 'Arne And'
           },
           updatedDate: {
             name: 'updatedDate',
-            defaultValue: '1998-03-12'
+            value: '1998-03-12'
           },
           sampleId: {
             name: 'sampleId',
-            defaultValue: '1233'
+            value: '1233'
           },
           treatment: {
             name: 'treatment',
-            defaultValue: '1233'
+            value: '1233'
           },
           persons: {
             name: 'persons',
-            defaultValue: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
+            value: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
           }
         }}
         location={{
@@ -124,10 +124,6 @@ describe('AnalysisSampleFormPageView', () => {
       />
     );
 
-    expect(wrapper.find('.container').find('span').text()).to.equal(
-      'Lagringskontainer: Reagensrør'
-    );
-
-    expect(wrapper.find('.note').find('span').text()).to.equal('Note: Heisann');
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

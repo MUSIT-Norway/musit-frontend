@@ -1,9 +1,9 @@
 import { I18n } from 'react-i18nify';
 import 'react-select/dist/react-select.css';
 import React, { Component, PropTypes } from 'react';
-import { IndexLink, hashHistory } from 'react-router';
+import { hashHistory, IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
+import { MenuItem, Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import MusitUserAccount from './UserAccount';
 import './AppComponent.css';
@@ -11,13 +11,14 @@ import Logo from './musitLogo.png';
 import LoginComponent from '../login/LoginComponent';
 import { emitError } from '../../shared/errors';
 import Loader from 'react-loader';
-import { loadAppSession$, setMuseumId$, setCollectionId$ } from '../app/appSession';
+import { loadAppSession$, setCollectionId$, setMuseumId$ } from '../app/appSession';
 import inject from 'react-rxjs/dist/RxInject';
 import {
-  clearObjects$ as clearObjectPicklist$,
-  clearNodes$ as clearNodePicklist$
+  clearNodes$ as clearNodePicklist$,
+  clearObjects$ as clearObjectPicklist$
 } from './pickList';
 import Config from '../../config';
+import { backendVersion, frontendVersion, VersionInfo } from '../../build';
 
 export class AppComponent extends Component {
   static propTypes = {
@@ -111,6 +112,13 @@ export class AppComponent extends Component {
 
   isSessionLoaded() {
     return !!this.props.appSession.buildInfo;
+  }
+
+  buildVersionLink(versionInfo: VersionInfo) {
+    if (versionInfo.url) {
+      return <a target="_blank" href={versionInfo.url}>{versionInfo.sha}</a>;
+    }
+    return versionInfo.sha;
   }
 
   render() {
@@ -232,9 +240,10 @@ export class AppComponent extends Component {
         </div>
 
         <footer className={this.getFooterClass()}>
-          {'Build number: ' +
-            (this.props.appSession.buildInfo &&
-              this.props.appSession.buildInfo.buildInfoBuildNumber)}
+          {'Backend build: '}
+          {this.buildVersionLink(backendVersion(this.props.appSession.buildInfo))}
+          {' - Client build: '}
+          {this.buildVersionLink(frontendVersion())}
         </footer>
       </div>
     );

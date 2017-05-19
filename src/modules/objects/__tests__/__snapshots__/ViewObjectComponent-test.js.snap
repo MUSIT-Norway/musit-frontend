@@ -111,16 +111,14 @@ exports[`ViewObjectComponent should display correctly 1`] = `
               "doneDate": "1999-01-20",
               "hasAnalyse": false,
               "id": "1233-111-2222-222",
-              "sampleSubType": "Muskel",
-              "sampleType": "Vev",
+              "sampleTypeId": 1,
               "status": 2
             },
             Object {
               "doneDate": "1999-01-29",
               "hasAnalyse": true,
               "id": "1233-111-2155-222",
-              "sampleSubType": "Underblad",
-              "sampleType": "Blad",
+              "sampleTypeId": 2,
               "status": 24
             }
           ]

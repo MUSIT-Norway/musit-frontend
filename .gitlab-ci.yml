@@ -49,6 +49,7 @@ test:
 build:
   stage: build
   script:
+    - sed -i "" 's/LOCAL_DEVELOPMENT/'$CI_COMMIT_SHA'/g' src/build.js
     - docker build -t $MUSIT_DOCKER_REGISTRY/musit/webpack:utv .
     - docker push $MUSIT_DOCKER_REGISTRY/musit/webpack:utv
   only:

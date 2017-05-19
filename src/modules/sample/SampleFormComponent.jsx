@@ -3,9 +3,8 @@ import React  from 'react';
 import Config from 'config';
 import PersonRoleDate from 'components/samples/personRoleDate';
 import Sample from 'models/sample';
-
-import type {ObjectData} from 'types/object';
-import type {AppSession} from 'types/appSession';
+import type { ObjectData } from 'types/object';
+import type { AppSession } from 'types/appSession';
 import {hashHistory} from 'react-router';
 import type {Person} from 'components/samples/personRoleDate';
 import type {FormDetails} from './types/form';
@@ -14,11 +13,14 @@ import FieldCheckBox from 'forms/components/FieldCheckBox';
 import FieldDropDown from 'forms/components/FieldDropDown';
 import FieldInput from 'forms/components/FieldInput';
 import FieldTextArea from 'forms/components/FieldTextArea';
+import flatten from 'lodash/flatten';
 
 type Params = {
   objectId: string,
   sampleId?: string
 }
+
+type Store = { sampleTypes?: any }
 
 type Props = {
   form: FormDetails,
@@ -111,9 +113,9 @@ function isFormValid(form) {
   }, true);
 }
 
-export default function SampleAddComponent({form, store, updateForm, addSample, location, appSession, params, clearForm}: Props) {
+export default function SampleFormComponent({form, store, updateForm, addSample, location, appSession, params, clearForm}: Props) {
   return (
-    <form style={{padding: 20}} className="form-horizontal">
+    <form className="form-horizontal">
       <div className="page-header">
         <h1>
           Registrer prøveuttak
@@ -123,19 +125,20 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
         Avledet fra objekt
       </h4>
       <div className='form-group'>
-      <span className="col-md-2">
-        <strong>MusNo:</strong> {location.state[0].museumNo}
-      </span>
         <span className="col-md-2">
-        <strong>Unr:</strong> {location.state[0].subNo}
-      </span>
+          <strong>MusNo:</strong> {location.state[0].museumNo}
+        </span>
         <span className="col-md-2">
-        <strong>Term/artsnavn:</strong> {location.state[0].term}
-      </span>
+          <strong>Unr:</strong> {location.state[0].subNo}
+        </span>
+        <span className="col-md-2">
+          <strong>Term/artsnavn:</strong> {location.state[0].term}
+        </span>
       </div>
       <hr/>
       <h4>Personer knyttet til prøveuttaket</h4>
       <PersonRoleDate
+        appSession={appSession}
         personData={(form.persons.rawValue: any)}
         updateForm={updateForm}
         fieldName={form.persons.name}
@@ -166,19 +169,22 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             field={form.sampleType}
             title="Prøvetype:"
             defaultOption="Velg type"
-            onChange={updateForm}
+            onChange={(obj) => {
+              updateForm({ name: form.subTypeValue.name, rawValue: '' });
+              updateForm(obj);
+            }}
             selectItems={store.sampleTypes ? Object.keys(store.sampleTypes) : []}
           />
           {form.sampleType.rawValue && form.sampleType.rawValue.trim().length > 0 &&
-          <FieldDropDown
-            field={form.subTypeValue}
-            title="Prøveundertype:"
-            defaultOption="Velg undertype"
-            valueKey="sampleTypeId"
-            displayKey="enSampleSubType"
-            onChange={updateForm}
-            selectItems={store.sampleTypes ? store.sampleTypes[form.sampleType.rawValue] : []}
-          />
+            <FieldDropDown
+              field={form.subTypeValue}
+              title="Prøveundertype:"
+              defaultOption="Velg undertype"
+              valueFn={sampleTypeDisplayName }
+              displayFn={sampleTypeDisplayName}
+              onChange={updateForm}
+              selectItems={store.sampleTypes ? store.sampleTypes[form.sampleType.rawValue] : []}
+            />
           }
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.description]}>
@@ -193,10 +199,11 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             field={form.status}
             title="Status:"
             defaultOption="Velg status"
-            valueKey="statusId"
-            displayKey="noStatus"
+            valueFn={(v) => v.statusId}
+            displayFn={(v) => v.noStatus }
             onChange={updateForm}
-            selectItems={sampleStatuses.map(s => s.noStatus !== null ? { noStatus: s.noStatus, statusId:s.id } : null).filter(s => s!== null )}
+            selectItems={sampleStatuses.map(s => s.noStatus !== null ?
+              { noStatus: s.noStatus, statusId:s.id, key: s.id } : null).filter(s => s!== null )}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.size, form.sizeUnit]}>
@@ -265,7 +272,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
         disabled={!isFormValid(form)}
         onClick={(e) => {
           e.preventDefault();
-          submitSample(appSession, form, location.state[0], params, addSample)
+          submitSample(appSession, store, form, location.state[0], params, addSample)
             .then((value) =>
               hashHistory.push({
                 pathname: Config.magasin.urls.client.analysis.gotoSample(appSession, value.objectId || value),
@@ -278,7 +285,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
       </button>
       <a
         href="#"
-        style={{marginLeft: 20}}
+        style={{ marginLeft: 20 }}
         onClick={(e) => {
           e.preventDefault();
           clearForm();
@@ -291,7 +298,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
   );
 }
 
-function submitSample(appSession: AppSession, form: FormDetails, objectData: ObjectData, params: Params, addSample: Function) {
+function submitSample(appSession: AppSession, store: Store, form: FormDetails, objectData: ObjectData, params: Params, addSample: Function) {
   const token = appSession.accessToken;
   const museumId = appSession.museumId;
   const myReduce = (frm: FormDetails) => Object.keys(frm).reduce((akk: any, key: string) =>
@@ -323,15 +330,28 @@ function submitSample(appSession: AppSession, form: FormDetails, objectData: Obj
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
   tmpData.status*=1;
-  tmpData.sampleTypeId = form.subTypeValue.value;
   tmpData.responsible = {
     type: 'ActorById',
     value: appSession.actor.dataportenId
   };
+
+  tmpData.sampleTypeId = store.sampleTypes ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value) : null;
+
   tmpData.isExtracted = false;
   tmpData.parentObjectType = objectData.objectType;
   tmpData.museumId = appSession.museumId;
   tmpData.parentObjectId = params.objectId;
   const data = Sample.prepareForSubmit(tmpData);
   return addSample({id: params.sampleId, museumId, token, data});
+}
+
+function getSampleTypeId(sampleTypes, selectSubType) {
+  return flatten(Object.values(sampleTypes)).find(subType => {
+    const subTypeName = sampleTypeDisplayName(subType);
+    return subTypeName === selectSubType;
+  }).sampleTypeId;
+}
+
+function sampleTypeDisplayName(v) {
+  return v.enSampleSubType || v.enSampleType;
 }

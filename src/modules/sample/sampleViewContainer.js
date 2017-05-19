@@ -10,6 +10,7 @@ import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 import store$, { loadSampleTypes$ } from './sampleStore';
 import flatten from 'lodash/flatten';
+import { toPromise } from 'shared/util';
 
 const { form$, loadForm$ } = sampleForm;
 
@@ -20,69 +21,81 @@ const data = {
 };
 
 const props = {
-  loadSample: Sample.loadSample(),
+  loadSample: toPromise(Sample.loadSample()),
   emitSuccess,
   emitError
 };
 
 const commands = { loadForm$, loadSampleTypes$ };
 
-export default flowRight([
-  inject(data, commands, props),
-  mount(({ loadSample, loadSampleTypes, loadForm, params, appSession }) => {
-    const sampleId = params.sampleId;
-    const museumId = appSession.museumId;
-    const accessToken = appSession.accessToken;
-    const val = { id: sampleId, museumId: museumId, token: accessToken };
-    loadSampleTypes({
-      token: accessToken,
-      onComplete: types => {
-        loadSample(val).toPromise().then(v => {
-          const sampleType = flatten(Object.values(types)).find(
-            subType => v.sampleTypeId === subType.sampleTypeId
-          );
-          const formData = Object.keys(v).reduce(
-            (akk, key: string) => {
-              switch (key) {
-                case 'sampleType': {
-                  return [
-                    ...akk,
-                    { name: 'sampleType', defaultValue: v[key].value },
-                    { name: 'subTypeValue', defaultValue: v[key].subTypeValue }
-                  ];
-                }
-                case 'externalId': {
-                  return [
-                    ...akk,
-                    { name: 'externalId', defaultValue: v[key].value },
-                    { name: 'externalIdSource', defaultValue: v[key].source }
-                  ];
-                }
-                case 'size': {
-                  return [
-                    ...akk,
-                    { name: 'size', defaultValue: v[key].value },
-                    { name: 'sizeUnit', defaultValue: v[key].unit }
-                  ];
-                }
-                case 'sampleTypeId': {
-                  return [
-                    ...akk,
-                    { name: 'sampleType', defaultValue: sampleType.enSampleType },
-                    { name: 'subTypeValue', defaultValue: sampleType.enSampleSubType }
-                  ];
-                }
-                default: {
-                  return [...akk, { name: key, defaultValue: v[key] }];
-                }
+export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
+  SampleViewComponent
+);
+
+export function onMount({ loadSample, loadSampleTypes, loadForm, params, appSession }) {
+  const sampleId = params.sampleId;
+  const museumId = appSession.museumId;
+  const accessToken = appSession.accessToken;
+  const val = { id: sampleId, museumId: museumId, token: accessToken };
+  loadSampleTypes({
+    token: accessToken,
+    onComplete: types => {
+      loadSample(val).then(v => {
+        const sampleType = flatten(Object.values(types)).find(
+          subType => v.sampleTypeId === subType.sampleTypeId
+        );
+        const formData = Object.keys(v).reduce(
+          (akk, key: string) => {
+            switch (key) {
+              case 'responsible': {
+                return [
+                  ...akk,
+                  {
+                    name: 'persons',
+                    defaultValue: [{ name: v[key].value, role: 'responsible' }]
+                  }
+                ];
               }
-            },
-            []
-          );
-          loadForm(formData);
-        });
-      }
-    });
-  }),
-  makeUrlAware
-])(SampleViewComponent);
+              case 'sampleType': {
+                return [
+                  ...akk,
+                  { name: 'sampleType', defaultValue: v[key].value },
+                  { name: 'subTypeValue', defaultValue: v[key].subTypeValue }
+                ];
+              }
+              case 'externalId': {
+                return [
+                  ...akk,
+                  { name: 'externalId', defaultValue: v[key].value },
+                  { name: 'externalIdSource', defaultValue: v[key].source }
+                ];
+              }
+              case 'size': {
+                return [
+                  ...akk,
+                  { name: 'size', defaultValue: v[key].value },
+                  { name: 'sizeUnit', defaultValue: v[key].unit }
+                ];
+              }
+              case 'sampleTypeId': {
+                return [
+                  ...akk,
+                  { name: 'sampleType', defaultValue: sampleType.enSampleType },
+                  {
+                    name: 'subTypeValue',
+                    defaultValue: sampleType.enSampleSubType || sampleType.enSampleType
+                  }
+                ];
+              }
+              default: {
+                return [...akk, { name: key, defaultValue: v[key] }];
+              }
+            }
+          },
+          []
+        );
+        loadForm(formData);
+      });
+    }
+  });
+}
