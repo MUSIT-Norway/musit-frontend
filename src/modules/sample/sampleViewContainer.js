@@ -52,7 +52,9 @@ export function onMount({ loadSample, loadSampleTypes, loadForm, params, appSess
                   ...akk,
                   {
                     name: 'persons',
-                    defaultValue: [{ name: v[key].value, role: 'responsible' }]
+                    defaultValue: [
+                      { name: v[key].name, uuid: v[key].value, role: 'responsible' }
+                    ]
                   }
                 ];
               }

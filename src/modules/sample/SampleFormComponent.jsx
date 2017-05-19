@@ -139,7 +139,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
       <h4>Personer knyttet til prøveuttaket</h4>
       <PersonRoleDate
         appSession={appSession}
-        personData={(form.persons.rawValue: any)}
+        personData={form.persons.rawValue}
         updateForm={updateForm}
         fieldName={form.persons.name}
       />
