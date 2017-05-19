@@ -37,74 +37,6 @@ type Props = {
 };
 
 
-const sizeUnits = [
-  'µg', 'mg', 'g', 'hg', 'µl', 'ml', 'cl', 'dl', 'l', 'cm3'
-];
-
-const sampleStatuses = [
-    {
-      id: 1,
-      noStatus: 'Ok',
-      enStatus: 'Intact'
-    }
-    ,
-    {
-      id: 2,
-      noStatus: 'Kassert',
-      enStatus: 'Destroyed'
-    }
-    ,
-    {
-      id: 3,
-      noStatus: 'Kontaminert',
-      enStatus: 'Contaminated'
-    }
-    ,
-    {
-      id: 4,
-      noStatus: 'Preparert',
-      enStatus: 'Prepared'
-    }
-    ,
-    {
-      id: 5,
-      noStatus: 'Kassert',
-      enStatus: 'Discarded'
-    }
-    ,
-    {
-      id: 6,
-      noStatus: 'Uttørket',
-      enStatus: 'Dehydrated'
-    }
-    ,
-    {
-      id: 7,
-      noStatus: 'Oppbrukt',
-      enStatus: 'Consumed'
-    }
-    ,
-    {
-      id: 8,
-      noStatus: null,
-      enStatus: 'Dessicated'
-    }
-    ,
-    {
-      id: 9,
-      noStatus: null,
-      enStatus: 'Degraded'
-    }
-    ,
-    {
-      id: 10,
-      noStatus: null,
-      enStatus: 'Mounted'
-    }
-
-  ]
-;
-
 
 function isFormValid(form) {
   return Object.keys(form).reduce((acc, k) => {
@@ -202,7 +134,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             valueFn={(v) => v.statusId}
             displayFn={(v) => v.noStatus }
             onChange={updateForm}
-            selectItems={sampleStatuses.map(s => s.noStatus !== null ?
+            selectItems={Sample.getSampleStatuses().map(s => s.noStatus !== null ?
               { noStatus: s.noStatus, statusId:s.id, key: s.id } : null).filter(s => s!== null )}
           />
         </ValidatedFormGroup>
@@ -218,7 +150,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title=""
             defaultOption="Velg enhet"
             onChange={updateForm}
-            selectItems={sizeUnits}
+            selectItems={Sample.getSampleSizeUnits()}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.container]}>
