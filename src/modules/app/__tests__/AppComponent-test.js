@@ -25,7 +25,7 @@ describe('AppComponent', () => {
           museumId: 99,
           collectionId: '00000000-0000-0000-0000-000000000000',
           buildInfo: {
-            buildInfoBuildNumber: '64'
+            commitSha: '813e993f1d1bdaa7b60daa66d75e1957de4c6e2b'
           },
           groups: [],
           actor: {
