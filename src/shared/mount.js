@@ -4,8 +4,8 @@ import React from 'react';
 type Props = any;
 
 const mount = (
-  onMount: (props: Props) => void = () => false,
-  onProps: (props: Props) => void = () => false
+  onMount: (props: Props) => void = () => undefined,
+  onProps: (props: Props) => void = () => undefined
 ) =>
   (Component: any) => {
     class MountWrapper extends React.Component {
@@ -15,7 +15,7 @@ const mount = (
         onMount(this.props);
       }
 
-      componentWillReceiveProps(props) {
+      componentWillReceiveProps(props: Props) {
         onProps(props);
       }
 

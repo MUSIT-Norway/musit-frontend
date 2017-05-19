@@ -9,6 +9,8 @@ import { omit } from 'lodash';
 import uniqBy from 'lodash/uniqBy';
 import MusitActor from 'models/actor';
 
+export type SampleStatus = {id: number, noStatus:string|null, enStatus:string|null};
+
 class Sample {
   static addSample: (AjaxPost) => (
     props: {
@@ -112,6 +114,9 @@ class Sample {
       const url = Config.magasin.urls.api.samples.storagemediums;
       return ajaxGet(url, token).map(({ response }) => response);
     };
+
+  static getSampleStatuses: () => Array<SampleStatus>;
+  static getSampleSizeUnits: () => Array<string>;
 }
 
 // To clean up after mapping single field to object for backend
