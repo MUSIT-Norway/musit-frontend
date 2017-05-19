@@ -10,17 +10,6 @@ export const loadSamplesForObject$ = createAction('loadSamplesForObject$').switc
 export const loadSampleTypes$ = createAction('loadSampleTypes$').switchMap(props =>
   Sample.loadSampleTypes()(props).do(props.onComplete).do(console.log));
 
-export const loadStorageContainer$ = createAction(
-  'loadStorageContainer$'
-).switchMap(props =>
-  Sample.loadStorageContainer()(props).do(props.onComplete).do(console.log));
-
-export const loadTreatments$ = createAction('loadTreatments$').switchMap(props =>
-  Sample.loadTreatments()(props).do(props.onComplete).do(console.log));
-
-export const loadStorageMediums$ = createAction('loadStorageMediums$').switchMap(props =>
-  Sample.loadStorageMediums()(props).do(props.onComplete).do(console.log));
-
 export const loadPredefinedTypes$ = createAction(
   'loadPredefinedTypes$'
 ).switchMap(props =>

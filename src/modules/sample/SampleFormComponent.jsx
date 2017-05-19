@@ -22,7 +22,7 @@ type Params = {
 
 type Props = {
   form: FormDetails,
-  store: { sampleTypes?: any },
+  store: { sampleTypes?: any, storageContainers?: any, storageMediums?: any, treatments?: any },
   updateForm: Function,
   persons: Array<{ name: string, role: string, date: string }>,
   addSample: Function,
@@ -34,24 +34,75 @@ type Props = {
   params: Params
 };
 
-const containerTypes = [
-  'Kapsel',
-  'Glassplate',
-  'Kolbe'
+
+const sizeUnits = [
+  'µg', 'mg', 'g', 'hg', 'µl', 'ml', 'cl', 'dl', 'l', 'cm3'
 ];
 
-const containerSubTypes = (v) => {
-  switch (v) {
-    case 'Kapsel':
-      return ['Etanol', 'Aceton', 'Vann'];
-    case 'Glassplate':
-      return [];
-    case 'Kolbe':
-      return ['Aceton', 'Etanol', 'H2O'];
-    default:
-      return [];
-  }
-};
+const sampleStatuses = [
+    {
+      id: 1,
+      noStatus: 'Ok',
+      enStatus: 'Intact'
+    }
+    ,
+    {
+      id: 2,
+      noStatus: 'Kassert',
+      enStatus: 'Destroyed'
+    }
+    ,
+    {
+      id: 3,
+      noStatus: 'Kontaminert',
+      enStatus: 'Contaminated'
+    }
+    ,
+    {
+      id: 4,
+      noStatus: 'Preparert',
+      enStatus: 'Prepared'
+    }
+    ,
+    {
+      id: 5,
+      noStatus: 'Kassert',
+      enStatus: 'Discarded'
+    }
+    ,
+    {
+      id: 6,
+      noStatus: 'Uttørket',
+      enStatus: 'Dehydrated'
+    }
+    ,
+    {
+      id: 7,
+      noStatus: 'Oppbrukt',
+      enStatus: 'Consumed'
+    }
+    ,
+    {
+      id: 8,
+      noStatus: null,
+      enStatus: 'Dessicated'
+    }
+    ,
+    {
+      id: 9,
+      noStatus: null,
+      enStatus: 'Degraded'
+    }
+    ,
+    {
+      id: 10,
+      noStatus: null,
+      enStatus: 'Mounted'
+    }
+
+  ]
+;
+
 
 function isFormValid(form) {
   return Object.keys(form).reduce((acc, k) => {
@@ -142,8 +193,10 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             field={form.status}
             title="Status:"
             defaultOption="Velg status"
+            valueKey="statusId"
+            displayKey="noStatus"
             onChange={updateForm}
-            selectItems={['Skilt', 'Ugift', 'Separert']}
+            selectItems={sampleStatuses.map(s => s.noStatus !== null ? { noStatus: s.noStatus, statusId:s.id } : null).filter(s => s!== null )}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.size, form.sizeUnit]}>
@@ -158,7 +211,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             title=""
             defaultOption="Velg enhet"
             onChange={updateForm}
-            selectItems={['gr', 'mm', 'µ']}
+            selectItems={sizeUnits}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.container]}>
@@ -167,7 +220,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             title="Lagringskontainer"
             defaultOption="Velg kontainer"
             onChange={updateForm}
-            selectItems={containerTypes}
+            selectItems={store.storageContainers ? store.storageContainers.map(c => c.noStorageContainer) : []}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.storageMedium]}>
@@ -176,7 +229,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             title="Lagringsmedium"
             defaultOption="Velg medium"
             onChange={updateForm}
-            selectItems={containerSubTypes(form.container.rawValue)}
+            selectItems={store.storageMediums ? store.storageMediums.map(m => m.noStorageMedium) : []}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.treatment]}>
@@ -185,7 +238,7 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
             title="Behandling:"
             defaultOption="Velg behandling"
             onChange={updateForm}
-            selectItems={['Behandlet', 'Ubehandlet', 'Ufint behandlet']}
+            selectItems={store.treatments ? store.treatments.map(t => t.noTreatment) : []}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.leftoverSample]}>
@@ -269,7 +322,7 @@ function submitSample(appSession: AppSession, form: FormDetails, objectData: Obj
   const persons = form.persons.rawValue;
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
-  tmpData.status = 2;
+  tmpData.status*=1;
   tmpData.sampleTypeId = form.subTypeValue.value;
   tmpData.responsible = {
     type: 'ActorById',

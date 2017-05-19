@@ -89,16 +89,7 @@ class Sample {
   ) => Observable = (ajaxGet = simpleGet) =>
     ({ token }) => {
       const url = Config.magasin.urls.api.samples.treatments;
-      return ajaxGet(url, token).map(({ response }) =>
-        uniqBy(response, 'enTreatment').reduce(
-          (acc, treatment) => ({
-            ...acc,
-            [treatment.enTreatment]: response.filter(
-              v => v.enTreatment === treatment.enTreatment
-            )
-          }),
-          {}
-        ));
+      return ajaxGet(url, token).map(({ response }) => response);
     };
 
   static loadStorageContainer: (AjaxGet) => (
@@ -108,16 +99,7 @@ class Sample {
   ) => Observable = (ajaxGet = simpleGet) =>
     ({ token }) => {
       const url = Config.magasin.urls.api.samples.storagecontainer;
-      return ajaxGet(url, token).map(({ response }) =>
-        uniqBy(response, 'enStorageContainer').reduce(
-          (acc, storageContainer) => ({
-            ...acc,
-            [storageContainer.enStorageContainer]: response.filter(
-              v => v.enStorageContainer === storageContainer.enStorageContainer
-            )
-          }),
-          {}
-        ));
+      return ajaxGet(url, token).map(({ response }) => response);
     };
 
   static loadStorageMediums: (AjaxGet) => (
@@ -127,16 +109,7 @@ class Sample {
   ) => Observable = (ajaxGet = simpleGet) =>
     ({ token }) => {
       const url = Config.magasin.urls.api.samples.storagemediums;
-      return ajaxGet(url, token).map(({ response }) =>
-        uniqBy(response, 'enStorageMedium').reduce(
-          (acc, storagemediums) => ({
-            ...acc,
-            [storagemediums.enStorageMedium]: response.filter(
-              v => v.enStorageMedium === storagemediums.enStorageMedium
-            )
-          }),
-          {}
-        ));
+      return ajaxGet(url, token).map(({ response }) => response);
     };
 }
 

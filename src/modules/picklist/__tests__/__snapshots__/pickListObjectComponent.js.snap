@@ -1,4 +1,4 @@
-exports[`PickListComponent for objects Should mount 1`] = `
+exports[`PickListComponent for objects Should lifeCycle 1`] = `
 <PickListComponent
   appSession={Object {}}
   classExistsOnDom={[Function classExistsOnDom]}
