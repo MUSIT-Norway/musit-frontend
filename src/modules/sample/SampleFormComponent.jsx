@@ -62,9 +62,9 @@ function isFormValid(form) {
   }, true);
 }
 
-export default function SampleAddComponent({form, store, updateForm, addSample, location, appSession, params, clearForm}: Props) {
+export default function SampleFormComponent({form, store, updateForm, addSample, location, appSession, params, clearForm}: Props) {
   return (
-    <form style={{padding: 20}} className="form-horizontal">
+    <form className="form-horizontal">
       <div className="page-header">
         <h1>
           Registrer prøveuttak
@@ -74,19 +74,20 @@ export default function SampleAddComponent({form, store, updateForm, addSample, 
         Avledet fra objekt
       </h4>
       <div className='form-group'>
-      <span className="col-md-2">
-        <strong>MusNo:</strong> {location.state[0].museumNo}
-      </span>
         <span className="col-md-2">
-        <strong>Unr:</strong> {location.state[0].subNo}
-      </span>
+          <strong>MusNo:</strong> {location.state[0].museumNo}
+        </span>
         <span className="col-md-2">
-        <strong>Term/artsnavn:</strong> {location.state[0].term}
-      </span>
+          <strong>Unr:</strong> {location.state[0].subNo}
+        </span>
+        <span className="col-md-2">
+          <strong>Term/artsnavn:</strong> {location.state[0].term}
+        </span>
       </div>
       <hr/>
       <h4>Personer knyttet til prøveuttaket</h4>
       <PersonRoleDate
+        appSession={appSession}
         personData={(form.persons.rawValue: any)}
         updateForm={updateForm}
         fieldName={form.persons.name}
@@ -275,21 +276,20 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
   tmpData.status = 2;
-  tmpData.sampleTypeId = store.sampleTypes ? flatten(Object.values(store.sampleTypes)).find(subType => {
-    const selectedSubTypeName = form.subTypeValue.value;
-    const subTypeName = sampleTypeDisplayName(subType);
-    return subTypeName === selectedSubTypeName;
-  }).sampleTypeId : null;
-  tmpData.responsible = {
-    type: 'ActorById',
-    value: appSession.actor.dataportenId
-  };
+  tmpData.sampleTypeId = store.sampleTypes ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value) : null;
   tmpData.isExtracted = false;
   tmpData.parentObjectType = objectData.objectType;
   tmpData.museumId = appSession.museumId;
   tmpData.parentObjectId = params.objectId;
   const data = Sample.prepareForSubmit(tmpData);
   return addSample({id: params.sampleId, museumId, token, data});
+}
+
+function getSampleTypeId(sampleTypes, selectSubType) {
+  return flatten(Object.values(sampleTypes)).find(subType => {
+    const subTypeName = sampleTypeDisplayName(subType);
+    return subTypeName === selectSubType;
+  }).sampleTypeId;
 }
 
 function sampleTypeDisplayName(v) {

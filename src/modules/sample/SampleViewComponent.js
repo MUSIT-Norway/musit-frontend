@@ -1,175 +1,168 @@
 import React from 'react';
-import {
-  Form,
-  PageHeader,
-  FormControl,
-  FormGroup,
-  Col,
-  Row,
-  Button,
-  ControlLabel
-} from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
 import Config from '../../config';
 import { hashHistory } from 'react-router';
 
-const FieldReadOnly = ({ field, label, postFix }) => (
-  <FormGroup>
-    <FormControl.Static className={field.name}>
-      <span>
-        <b>{label && `${label}: `}</b>
-        {`${field.defaultValue}${postFix ? ' ' + postFix.defaultValue : ''}`}
-      </span>
-    </FormControl.Static>
-  </FormGroup>
-);
-
-const FieldReadArray = ({ field, labels, heading }) => (
-  <div>
-    <h4>{heading}</h4>
-    <Row className="row-centered" key="person-head">
-      {labels.map((l, ind) => <Col md={2} key={`${ind}${l}`}><b>{l}</b></Col>)}
-    </Row>
-    {field &&
-      field.rawValue &&
-      field.rawValue.map((i, p) => (
-        <Row className="row-centered" key={`${i}-person`}>
-          <Col md={2}>{p.name}</Col>
-          <Col md={2}>{p.role}</Col>
-          <Col md={2}>{p.date}</Col>
-        </Row>
-      ))}
-    <hr />
-  </div>
-);
-
-const SampleViewComponent = props => {
+export default function SampleViewComponent(props) {
   const objectData = props.location.state[0];
   const form = props.form;
   return (
-    <Form style={{ padding: 20 }}>
-      <PageHeader>
-        Prøveuttak
-      </PageHeader>
-      <Row className="row-centered">
-        <Col md={12}>
-          <b>Avledet fra objekt</b>
-        </Col>
-      </Row>
-      <Row className="row-centered">
-        <Col md={2}>
-          Musno: <b>{objectData.museumNo}</b>
-        </Col>
-        <Col md={2}>
-          Unr: <b>{objectData.subNo}</b>
-        </Col>
-        <Col md={3}>
-          Term/artsnavn: <b>{objectData.term}</b>
-        </Col>
-        <Col md={2}>
-          <Button>Vis Objektet</Button>
-        </Col>
-      </Row>
+    <form className="form-horizontal">
+      <div className="page-header">
+        <h1>
+          Prøveuttak
+        </h1>
+      </div>
+      <h4>
+        Avledet fra objekt
+      </h4>
+      <div className="form-group">
+        <span className="col-md-2">
+          <strong>MusNo:</strong> {objectData.museumNo}
+        </span>
+        <span className="col-md-2">
+          <strong>Unr:</strong> {objectData.subNo}
+        </span>
+        <span className="col-md-2">
+          <strong>Term/artsnavn:</strong> {objectData.term}
+        </span>
+      </div>
       <hr />
-      <Row>
-        <Col md={2}>
-          <b>PrøveID: </b>66777
-        </Col>
-      </Row>
-      <br />
-      <FieldReadArray
-        labels={['Navn', 'Rolle', 'Dato']}
-        field={form.persons}
-        heading={'Personer tilknyttet prøveuttaket'}
-      />
-      <Row>
-        <Col md={2}>
-          <ControlLabel>Sist endret:</ControlLabel>
-        </Col>
-        <Col md={4}>
-          <FontAwesome name="user" /> {form.updatedBy.defaultValue || 'Stein Olsen'}
-        </Col>
-        <Col md={2}>
-          <FontAwesome name="clock-o" /> {form.updatedDate.defaultValue || '11.03.2017'}
-        </Col>
-      </Row>
-      <br />
+      <h4>Personer tilknyttet prøveuttaket</h4>
+      <div>
+        <div className="row">
+          <div className="col-md-4"><strong>Navn</strong></div>
+          <div className="col-md-2"><strong>Rolle</strong></div>
+          <div className="col-md-2"><strong>Dato</strong></div>
+        </div>
+        {form.persons.value &&
+          form.persons.value.map((p, i) => (
+            <div className="row" key={i}>
+              <div className="col-md-4">{p.name}</div>
+              <div className="col-md-2">{p.role}</div>
+              <div className="col-md-2">{p.date}</div>
+            </div>
+          ))}
+      </div>
       <hr />
-      <Row className="row-centered">
-        <Col md={2}>
-          <FieldReadOnly label={'Prøvetype'} field={form.sampleType} />
-        </Col>
-        <Col md={3}>
-          <FieldReadOnly label={'Prøveundertype'} field={form.subTypeValue} />
-        </Col>
-      </Row>
-      <Row className="row-centered">
-        <Col md={2}>
-          <FieldReadOnly label={'Beskrivelse'} field={form.description} />
-        </Col>
-      </Row>
-      <Row className="row-centered">
-        <Col md={2}>
-          <FieldReadOnly label={'Status'} field={form.status} />
-        </Col>
-      </Row>
-      <Row className="row-centered">
-        <Col md={5}>
-          <FieldReadOnly
-            label={'Målvolum/-vekt'}
-            field={form.size}
-            postFix={form.sizeUnit}
-          />
-        </Col>
-      </Row>
-      <Row className="row-centered">
-        <Col md={3}>
-          <FieldReadOnly label={'Lagringskontainer'} field={form.container} />
-        </Col>
-        <Col md={3}>
-          <FieldReadOnly label={'Lagringsmedium'} field={form.storageMedium} />
-        </Col>
-      </Row>
-      <Row className="row-centered">
-        <Col md={3}>
-          <FieldReadOnly label={'Behandling'} field={form.treatment} />
-        </Col>
-      </Row>
-      <Row className="row-centered">
-        <Col md={3}>
-          <FieldReadOnly label={'Har restmateriale'} field={form.leftoverSample} />
-        </Col>
-      </Row>
-      <Row className="row-centered">
-        <Col md={3}>
-          <FieldReadOnly label={'Note'} field={form.note} />
-        </Col>
-      </Row>
-      <br />
+      <div className="form-group">
+        <label className="control-label col-md-2">PrøveID:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.sampleId.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">EksternID:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.externalId.value}
+          </p>
+        </div>
+        <label className="control-label col-md-2">Kilde for ekstern ID:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.externalIdSource.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Prøvetype:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.sampleType.value}
+          </p>
+        </div>
+        <label className="control-label col-md-2">Prøveundertype:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.subTypeValue.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Beskrivelse av prøve:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.description.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Status:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.status.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Målvolum/-vekt:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.size.value}{' '}{form.sizeUnit.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Lagringskontainer:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.container.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Lagringsmedium:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.storageMedium.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Behandling:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.treatment.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Har restmateriale:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.leftoverSample.value}
+          </p>
+        </div>
+      </div>
+      <div className="form-group">
+        <label className="control-label col-md-2">Beskrivelse:</label>
+        <div className="col-md-2">
+          <p className="form-control-static">
+            {form.note.value}
+          </p>
+        </div>
+      </div>
       <hr />
-      <Row className="row-centered">
-        <Col md={4}>
-          <Button
-            onClick={() =>
-              hashHistory.push({
-                pathname: Config.magasin.urls.client.analysis.editSample(
-                  props.appSession,
-                  props.params.sampleId
-                ),
-                state: [objectData]
-              })}
-          >
-            Endre
-          </Button>
-        </Col>
-        <Col md={4}>
-          <a onClick={e => e.preventDefault()}>
-            Avbryt
-          </a>
-        </Col>
-      </Row>
-    </Form>
+      <button
+        className="btn btn-primary"
+        onClick={e => {
+          e.preventDefault();
+          hashHistory.push({
+            pathname: Config.magasin.urls.client.analysis.editSample(
+              props.appSession,
+              props.params.sampleId
+            ),
+            state: [objectData]
+          });
+        }}
+      >
+        Endre
+      </button>
+      <a style={{ marginLeft: 20 }} onClick={e => e.preventDefault()}>
+        Avbryt
+      </a>
+    </form>
   );
-};
-
-export default SampleViewComponent;
+}

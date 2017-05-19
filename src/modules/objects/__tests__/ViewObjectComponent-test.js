@@ -34,16 +34,14 @@ describe('ViewObjectComponent', () => {
           samples: [
             {
               doneDate: '1999-01-20',
-              sampleType: 'Vev',
-              sampleSubType: 'Muskel',
+              sampleTypeId: 1,
               status: 2,
               hasAnalyse: false,
               id: '1233-111-2222-222'
             },
             {
               doneDate: '1999-01-29',
-              sampleType: 'Blad',
-              sampleSubType: 'Underblad',
+              sampleTypeId: 2,
               status: 24,
               hasAnalyse: true,
               id: '1233-111-2155-222'

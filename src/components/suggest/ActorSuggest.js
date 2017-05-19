@@ -4,7 +4,7 @@ import Config from '../../config';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
 import inject from 'react-rxjs/dist/RxInject';
 
-export class ActorSuggest extends React.Component {
+export class ActorSuggestComponent extends React.Component {
   static propTypes = {
     id: React.PropTypes.string.isRequired,
     value: React.PropTypes.string,
@@ -70,6 +70,8 @@ export class ActorSuggest extends React.Component {
   }
 }
 
+const suggest$ = suggest$Fn('actorSuggest', Config.magasin.urls.api.actor.searchUrl);
+
 const data = {
   appSession$: {
     type: React.PropTypes.shape({
@@ -77,9 +79,11 @@ const data = {
       accessToken: React.PropTypes.string.isRequired
     }).isRequired
   },
-  suggest$: suggest$Fn('actorSuggest', Config.magasin.urls.api.actor.searchUrl)
+  suggest$
 };
 
 const commands = { update$, clear$ };
 
-export default inject(data, commands)(ActorSuggest);
+export const ActorSuggest = inject({ suggest$ }, commands)(ActorSuggestComponent);
+
+export default inject(data, commands)(ActorSuggestComponent);

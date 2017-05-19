@@ -6,7 +6,7 @@ type SampleData = {
   sampleId: string,
   doneBy: string,
   date: string,
-  sampleType: { value: string, subTypeValue: string },
+  sampleTypeId: number,
   sampleSubType: string,
   status: string,
   details: string,

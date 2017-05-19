@@ -1,6 +1,7 @@
 // @flow
 import createForm, { getStrField, getArrField, getNumberField } from '../../forms/form';
 
+const objectId = getStrField('objectId');
 const updatedBy = getStrField('updatedBy');
 const updatedDate = getStrField('updatedDate');
 const sampleId = getStrField('sampleId');
@@ -16,10 +17,11 @@ const subTypeValue = getStrField('subTypeValue');
 const status = getStrField('status');
 const description = getStrField('description');
 const treatment = getStrField('treatment');
-const persons = getArrField('persons', [{ name: '', role: 'creator' }]);
+const persons = getArrField('persons', []);
 const leftoverSample = getNumberField('leftoverSample');
 
 const fields = [
+  objectId,
   note,
   status,
   size,

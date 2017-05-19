@@ -1,0 +1,277 @@
+exports[`AnalysisSampleFormPageView should display correctly 1`] = `
+<form
+  className="form-horizontal">
+  <div
+    className="page-header">
+    <h1>
+      Prøveuttak
+    </h1>
+  </div>
+  <h4>
+    Avledet fra objekt
+  </h4>
+  <div
+    className="form-group">
+    <span
+      className="col-md-2">
+      <strong>
+        MusNo:
+      </strong>
+       
+      M1234
+    </span>
+    <span
+      className="col-md-2">
+      <strong>
+        Unr:
+      </strong>
+       
+      a
+    </span>
+    <span
+      className="col-md-2">
+      <strong>
+        Term/artsnavn:
+      </strong>
+       
+      Carex saxatilis
+    </span>
+  </div>
+  <hr />
+  <h4>
+    Personer tilknyttet prøveuttaket
+  </h4>
+  <div>
+    <div
+      className="row">
+      <div
+        className="col-md-4">
+        <strong>
+          Navn
+        </strong>
+      </div>
+      <div
+        className="col-md-2">
+        <strong>
+          Rolle
+        </strong>
+      </div>
+      <div
+        className="col-md-2">
+        <strong>
+          Dato
+        </strong>
+      </div>
+    </div>
+    <div
+      className="row">
+      <div
+        className="col-md-4">
+        Arne And
+      </div>
+      <div
+        className="col-md-2">
+        created
+      </div>
+      <div
+        className="col-md-2">
+        1998-01-2001
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      PrøveID:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        1233
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      EksternID:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        123
+      </p>
+    </div>
+    <label
+      className="control-label col-md-2">
+      Kilde for ekstern ID:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        Museum
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Prøvetype:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        Vev
+      </p>
+    </div>
+    <label
+      className="control-label col-md-2">
+      Prøveundertype:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        Muskel
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Beskrivelse av prøve:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        Av lær
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Status:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        Nyskilt
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Målvolum/-vekt:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        1,23
+         
+        gr
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Lagringskontainer:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        Reagensrør
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Lagringsmedium:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        Etanol
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Behandling:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        1233
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Har restmateriale:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        2
+      </p>
+    </div>
+  </div>
+  <div
+    className="form-group">
+    <label
+      className="control-label col-md-2">
+      Beskrivelse:
+    </label>
+    <div
+      className="col-md-2">
+      <p
+        className="form-control-static">
+        Heisann
+      </p>
+    </div>
+  </div>
+  <hr />
+  <button
+    className="btn btn-primary"
+    onClick={[Function onClick]}>
+    Endre
+  </button>
+  <a
+    onClick={[Function onClick]}
+    style={
+      Object {
+        "marginLeft": 20
+      }
+    }>
+    Avbryt
+  </a>
+</form>
+`;

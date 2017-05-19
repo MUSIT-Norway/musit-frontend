@@ -11,14 +11,14 @@ describe('EventTableComponent', () => {
         samples={[
           {
             doneDate: moment('1999-01-20', 'YYYY-MM-DD'),
-            sampleType: { value: 'Vev', subTypeValue: 'Muskel' },
+            sampleTypeId: 1,
             status: 2,
             hasAnalyse: false,
             id: '1233-111-2222-222'
           },
           {
             doneDate: moment('1999-01-29', 'YYYY-MM-DD'),
-            sampleType: { value: 'Blad', subTypeValue: 'Underblad' },
+            sampleTypeId: 1,
             status: 24,
             hasAnalyse: true,
             id: '1233-111-2155-222'

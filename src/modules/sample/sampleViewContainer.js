@@ -47,6 +47,15 @@ export function onMount({ loadSample, loadSampleTypes, loadForm, params, appSess
         const formData = Object.keys(v).reduce(
           (akk, key: string) => {
             switch (key) {
+              case 'responsible': {
+                return [
+                  ...akk,
+                  {
+                    name: 'persons',
+                    defaultValue: [{ name: v[key].value, role: 'responsible' }]
+                  }
+                ];
+              }
               case 'sampleType': {
                 return [
                   ...akk,

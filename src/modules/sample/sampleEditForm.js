@@ -14,7 +14,7 @@ const subTypeValue = getStrField('subTypeValue');
 const status = getStrField('status');
 const description = getStrField('description');
 const treatment = getStrField('treatment');
-const persons = getArrField('persons', [{ name: '', role: 'creator' }]);
+const persons = getArrField('persons', []);
 const leftoverSample = getNumberField('leftoverSample');
 const originatedObjectUuid = getStrField('originatedObjectUuid');
 

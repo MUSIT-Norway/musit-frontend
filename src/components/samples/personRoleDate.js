@@ -1,11 +1,12 @@
 // @flow
 import React from 'react';
-import ActorSuggest from '../../components/suggest/ActorSuggest';
+import { ActorSuggest } from 'components/suggest/ActorSuggest';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import DropdownButton from 'components/DropdownButton';
 import DatePicker from '../DatePicker';
-import { DATE_FORMAT_DISPLAY } from '../../shared/util';
+import { DATE_FORMAT_DISPLAY } from 'shared/util';
+import type { AppSession } from 'types/appSession';
 
 export type Person = {
   name?: string,
@@ -17,10 +18,13 @@ export type Person = {
 type Props = {
   personData: Array<Person>,
   updateForm: Function,
-  fieldName: string
+  fieldName: string,
+  appSession: AppSession
 };
 
-export const PersonRoleDate = ({ personData, updateForm, fieldName }: Props) => {
+export const PersonRoleDate = (
+  { personData, appSession, updateForm, fieldName }: Props
+) => {
   const pArr = personData || [];
   return pArr &&
     <Grid>
@@ -43,6 +47,7 @@ export const PersonRoleDate = ({ personData, updateForm, fieldName }: Props) => 
         <Row key={`id_${i}`}>
           <Col md={2}>
             <ActorSuggest
+              appSession={appSession}
               key={`id_${i}`}
               id={`id_${i}`}
               value={v.name}
