@@ -20,11 +20,16 @@ type Params = {
   sampleId?: string
 }
 
-type Store = { sampleTypes?: any }
+type Store = {
+  sampleTypes?: any,
+  storageContainers?: any,
+  storageMediums?: any,
+  treatments?: any
+}
 
 type Props = {
   form: FormDetails,
-  store: { sampleTypes?: any, storageContainers?: any, storageMediums?: any, treatments?: any },
+  store: Store,
   updateForm: Function,
   persons: Array<{ name: string, role: string, date: string }>,
   addSample: Function,
@@ -112,7 +117,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
               field={form.subTypeValue}
               title="Prøveundertype:"
               defaultOption="Velg undertype"
-              valueFn={sampleTypeDisplayName }
+              valueFn={sampleTypeDisplayName}
               displayFn={sampleTypeDisplayName}
               onChange={updateForm}
               selectItems={store.sampleTypes ? store.sampleTypes[form.sampleType.rawValue] : []}
@@ -132,7 +137,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title="Status:"
             defaultOption="Velg status"
             valueFn={(v) => v.statusId}
-            displayFn={(v) => v.noStatus }
+            displayFn={(v) => v.noStatus}
             onChange={updateForm}
             selectItems={Sample.getSampleStatuses().map(s => s.noStatus !== null ?
               { noStatus: s.noStatus, statusId:s.id, key: s.id } : null).filter(s => s!== null )}
