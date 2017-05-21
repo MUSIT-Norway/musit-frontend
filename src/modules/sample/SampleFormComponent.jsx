@@ -41,8 +41,6 @@ type Props = {
   params: Params
 };
 
-
-
 function isFormValid(form) {
   return Object.keys(form).reduce((acc, k) => {
     const field = form[k];
@@ -266,14 +264,7 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
   const persons = form.persons.rawValue;
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
-  tmpData.status*=1;
-  tmpData.responsible = {
-    type: 'ActorById',
-    value: appSession.actor.dataportenId
-  };
-
   tmpData.sampleTypeId = store.sampleTypes ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value) : null;
-
   tmpData.isExtracted = false;
   tmpData.parentObjectType = objectData.objectType;
   tmpData.museumId = appSession.museumId;
