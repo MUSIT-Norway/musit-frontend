@@ -9,7 +9,11 @@ import { omit } from 'lodash';
 import uniqBy from 'lodash/uniqBy';
 import MusitActor from 'models/actor';
 
-export type SampleStatus = {id: number, noStatus:string|null, enStatus:string|null};
+export type SampleStatus = {
+  id: number,
+  noStatus: ?string,
+  enStatus: ?string
+};
 
 class Sample {
   static addSample: (AjaxPost) => (
