@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { PageHeader, Grid, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import Breadcrumb from '../../components/layout/Breadcrumb';

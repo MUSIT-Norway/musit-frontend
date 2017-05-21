@@ -1,5 +1,6 @@
 import { MenuItem, Dropdown, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 import flatten from 'lodash/flatten';
 import uniqBy from 'lodash/uniqBy';
@@ -9,15 +10,15 @@ import orderBy from 'lodash/orderBy';
 
 export default class MusitUserAccount extends Component {
   static propTypes = {
-    token: React.PropTypes.string.isRequired,
-    actor: React.PropTypes.object.isRequired,
-    groups: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    selectedMuseumId: React.PropTypes.number,
-    selectedCollectionId: React.PropTypes.string,
-    handleLogout: React.PropTypes.func.isRequired,
-    handleLanguage: React.PropTypes.func.isRequired,
-    handleMuseumId: React.PropTypes.func.isRequired,
-    handleCollectionId: React.PropTypes.func.isRequired
+    token: PropTypes.string.isRequired,
+    actor: PropTypes.object.isRequired,
+    groups: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedMuseumId: PropTypes.number,
+    selectedCollectionId: PropTypes.string,
+    handleLogout: PropTypes.func.isRequired,
+    handleLanguage: PropTypes.func.isRequired,
+    handleMuseumId: PropTypes.func.isRequired,
+    handleCollectionId: PropTypes.func.isRequired
   };
 
   getCollections(mid, groups) {

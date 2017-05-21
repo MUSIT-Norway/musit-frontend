@@ -6,14 +6,14 @@ import objectStore$, {
   loadMoveAndAnalysisEvents$,
   loadSampleEvents$
 } from './objectStore';
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
 import { emitError, emitSuccess } from '../../shared/errors';
 import mount from '../../shared/mount';
 
 const data: {} = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
+  appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   objectStore$
 };
 

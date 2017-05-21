@@ -16,7 +16,7 @@ export default class ObservationControlGrid extends Component {
         id: PropTypes.number.isRequired,
         eventType: PropTypes.string.isRequired,
         doneDate: PropTypes.string.isRequired,
-        doneBy: PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
+        doneBy: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
         registeredDate: PropTypes.string.isRequired,
         registeredBy: PropTypes.string.isRequired
       })

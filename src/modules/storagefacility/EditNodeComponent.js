@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import StorageUnitContainer from './NodeDetails';
 import inject from 'react-rxjs/dist/RxInject';
 import { emitError, emitSuccess } from '../../shared/errors';
@@ -70,7 +71,7 @@ export class EditStorageUnitContainer extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   nodeStore$
 };
 

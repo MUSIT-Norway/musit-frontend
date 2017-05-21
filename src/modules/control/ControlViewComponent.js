@@ -17,6 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { hashHistory } from 'react-router';
 import { Grid, Row, Col, ControlLabel, Button } from 'react-bootstrap';
 import ControlView from './ControlViewForm';
@@ -31,10 +32,10 @@ import Loader from 'react-loader';
 
 export class ControlViewContainer extends React.Component {
   static propTypes = {
-    controls: React.PropTypes.object,
-    getControl: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object,
-    rootNode: React.PropTypes.object
+    controls: PropTypes.object,
+    getControl: PropTypes.func.isRequired,
+    params: PropTypes.object,
+    rootNode: PropTypes.object
   };
 
   componentWillMount() {
@@ -141,7 +142,7 @@ export class ControlViewContainer extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   store$
 };
 

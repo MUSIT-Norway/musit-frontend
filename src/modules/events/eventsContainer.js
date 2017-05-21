@@ -8,11 +8,11 @@ import eventsStore$, {
 } from './eventsStore.js';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 
 const data = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
+  appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   eventsStore$
 };
 

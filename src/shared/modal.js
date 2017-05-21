@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { I18n } from 'react-i18nify';
 
@@ -67,7 +68,7 @@ export const showModal = (title, componentToRender, closeFn) => {
 
   class ClosableAndProvided extends React.Component {
     static childContextTypes = {
-      closeModal: React.PropTypes.func
+      closeModal: PropTypes.func
     };
 
     getChildContext() {

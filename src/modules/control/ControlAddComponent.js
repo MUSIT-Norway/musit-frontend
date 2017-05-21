@@ -17,6 +17,7 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Row, Col, FormControl } from 'react-bootstrap';
 import PairedToogleButtons from './ToggleButtons';
 import DatePicker from '../../components/DatePicker';
@@ -42,11 +43,11 @@ import Config from '../../config';
 
 export class ControlAddContainer extends React.Component {
   static propTypes = {
-    addControl: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object,
-    appSession: React.PropTypes.object,
-    envReqData: React.PropTypes.object,
-    rootNode: React.PropTypes.object
+    addControl: PropTypes.func.isRequired,
+    params: PropTypes.object,
+    appSession: PropTypes.object,
+    envReqData: PropTypes.object,
+    rootNode: PropTypes.object
   };
 
   constructor(props) {
@@ -375,7 +376,7 @@ export class ControlAddContainer extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   store$
 };
 

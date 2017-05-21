@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { MusitField } from '../formfields';
 import FontAwesome from 'react-fontawesome';
@@ -6,15 +7,15 @@ import './Toolbar.css';
 
 export default class Toolbar extends React.Component {
   static propTypes = {
-    showLeft: React.PropTypes.bool.isRequired,
-    showRight: React.PropTypes.bool.isRequired,
-    clickShowLeft: React.PropTypes.func.isRequired,
-    clickShowRight: React.PropTypes.func.isRequired,
-    labelLeft: React.PropTypes.string.isRequired,
-    labelRight: React.PropTypes.string.isRequired,
-    placeHolderSearch: React.PropTypes.string,
-    searchValue: React.PropTypes.string,
-    onSearchChanged: React.PropTypes.func
+    showLeft: PropTypes.bool.isRequired,
+    showRight: PropTypes.bool.isRequired,
+    clickShowLeft: PropTypes.func.isRequired,
+    clickShowRight: PropTypes.func.isRequired,
+    labelLeft: PropTypes.string.isRequired,
+    labelRight: PropTypes.string.isRequired,
+    placeHolderSearch: PropTypes.string,
+    searchValue: PropTypes.string,
+    onSearchChanged: PropTypes.func
   };
 
   render() {

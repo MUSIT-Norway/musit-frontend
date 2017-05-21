@@ -1,7 +1,7 @@
 import inject from 'react-rxjs/dist/RxInject';
 import sampleForm from './sampleViewForm';
 import SampleViewComponent from './SampleViewComponent';
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import mount from '../../shared/mount';
 import { emitError, emitSuccess } from '../../shared/errors';
@@ -15,7 +15,7 @@ import { toPromise } from 'shared/util';
 const { form$, loadForm$ } = sampleForm;
 
 const data = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
+  appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   form$,
   store$
 };

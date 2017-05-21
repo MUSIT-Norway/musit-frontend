@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import Loader from 'react-loader';
@@ -21,26 +22,26 @@ import ScannerButton from '../../components/scanner/ScannerButton';
 
 export default class TableComponent extends React.Component {
   static propTypes = {
-    appSession: React.PropTypes.object.isRequired,
-    tableStore: React.PropTypes.object.isRequired,
-    loadNodes: React.PropTypes.func.isRequired,
-    loadObjects: React.PropTypes.func.isRequired,
-    loadStats: React.PropTypes.func.isRequired,
-    loadRootNode: React.PropTypes.func.isRequired,
-    deleteNode: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object.isRequired,
-    pickObject: React.PropTypes.func.isRequired,
-    pickNode: React.PropTypes.func.isRequired,
-    setLoading: React.PropTypes.func.isRequired,
-    clearRootNode: React.PropTypes.func.isRequired,
-    emitError: React.PropTypes.func.isRequired,
-    emitSuccess: React.PropTypes.func.isRequired,
-    refreshSession: React.PropTypes.func.isRequired,
-    pickList: React.PropTypes.object.isRequired,
-    isItemAdded: React.PropTypes.func.isRequired,
-    toggleScanner: React.PropTypes.func.isRequired,
-    scannerEnabled: React.PropTypes.bool.isRequired,
-    goTo: React.PropTypes.func.isRequired
+    appSession: PropTypes.object.isRequired,
+    tableStore: PropTypes.object.isRequired,
+    loadNodes: PropTypes.func.isRequired,
+    loadObjects: PropTypes.func.isRequired,
+    loadStats: PropTypes.func.isRequired,
+    loadRootNode: PropTypes.func.isRequired,
+    deleteNode: PropTypes.func.isRequired,
+    params: PropTypes.object.isRequired,
+    pickObject: PropTypes.func.isRequired,
+    pickNode: PropTypes.func.isRequired,
+    setLoading: PropTypes.func.isRequired,
+    clearRootNode: PropTypes.func.isRequired,
+    emitError: PropTypes.func.isRequired,
+    emitSuccess: PropTypes.func.isRequired,
+    refreshSession: PropTypes.func.isRequired,
+    pickList: PropTypes.object.isRequired,
+    isItemAdded: PropTypes.func.isRequired,
+    toggleScanner: PropTypes.func.isRequired,
+    scannerEnabled: PropTypes.bool.isRequired,
+    goTo: PropTypes.func.isRequired
   };
 
   constructor(props) {
