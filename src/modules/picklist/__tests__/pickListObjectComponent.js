@@ -59,7 +59,7 @@ describe('PickListComponent for objects', () => {
     ]
   };
 
-  it('Should lifeCycle', () => {
+  it('Should mount', () => {
     const onToggleNode = sinon.spy();
     const onToggleObject = sinon.spy();
     const onRemoveObject = sinon.spy();

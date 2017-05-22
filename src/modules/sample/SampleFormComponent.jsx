@@ -131,11 +131,10 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             field={form.status}
             title="Status:"
             defaultOption="Velg status"
-            valueFn={(v) => v.statusId}
+            valueFn={(v) => v.id}
             displayFn={(v) => v.noStatus }
             onChange={updateForm}
-            selectItems={Sample.getSampleStatuses().map(s => s.noStatus !== null ?
-              { noStatus: s.noStatus, statusId:s.id, key: s.id } : null).filter(s => s!== null )}
+            selectItems={Sample.getSampleStatuses().filter(s => s!== null )}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.size, form.sizeUnit]}>
