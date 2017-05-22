@@ -33,7 +33,7 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
         ...m,
         eventDate: parseISODate(m.eventDate || m.registeredDate).format(
           DATE_FORMAT_DISPLAY
-          )
+        )
       }))
     )
     .flatMap(events => {
@@ -45,7 +45,8 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
         if (Array.isArray(actors)) {
           return events.map(data => {
             const registeredBy = actors.find(a =>
-              MusitActor.hasActorId(a, data.registeredBy));
+              MusitActor.hasActorId(a, data.registeredBy)
+            );
             const doneBy = actors.find(a => MusitActor.hasActorId(a, data.doneBy));
             return {
               ...data,
