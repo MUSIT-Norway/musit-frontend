@@ -216,12 +216,12 @@ Sample.loadSamplesForObject = (ajaxGet = simpleGet) =>
 Sample.getSampleStatuses = () => [
   {
     id: 1,
-    noStatus: 'Ok',
+    noStatus: 'Intakt',
     enStatus: 'Intact'
   },
   {
     id: 2,
-    noStatus: 'Kassert',
+    noStatus: 'Ødelagt',
     enStatus: 'Destroyed'
   },
   {
@@ -251,17 +251,17 @@ Sample.getSampleStatuses = () => [
   },
   {
     id: 8,
-    noStatus: null,
+    noStatus: 'Uttørket',
     enStatus: 'Dessicated'
   },
   {
     id: 9,
-    noStatus: null,
+    noStatus: 'Degradert',
     enStatus: 'Degraded'
   },
   {
     id: 10,
-    noStatus: null,
+    noStatus: 'Montert',
     enStatus: 'Mounted'
   }
 ];
