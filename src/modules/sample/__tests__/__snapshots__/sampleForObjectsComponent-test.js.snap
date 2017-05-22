@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`SamplesForObject should display correctly 1`] = `
 <div>
   <h1>
@@ -5,7 +7,8 @@ exports[`SamplesForObject should display correctly 1`] = `
   </h1>
   <br />
   <Well
-    bsClass="well">
+    bsClass="well"
+  >
     <b>
       Objektinfo
     </b>
@@ -13,11 +16,13 @@ exports[`SamplesForObject should display correctly 1`] = `
     <br />
     <Row
       bsClass="row"
-      componentClass="div">
+      componentClass="div"
+    >
       <Col
         bsClass="col"
         componentClass="div"
-        md={2}>
+        md={2}
+      >
         <b>
           MusNo:
         </b>
@@ -25,7 +30,8 @@ exports[`SamplesForObject should display correctly 1`] = `
       <Col
         bsClass="col"
         componentClass="div"
-        md={2}>
+        md={2}
+      >
         <b>
           SubNo: 
         </b>
@@ -34,7 +40,8 @@ exports[`SamplesForObject should display correctly 1`] = `
       <Col
         bsClass="col"
         componentClass="div"
-        md={3}>
+        md={3}
+      >
         <b>
           Term/Species: 
         </b>
@@ -49,32 +56,32 @@ exports[`SamplesForObject should display correctly 1`] = `
       Array [
         Object {
           "key": "id",
-          "label": "Sample ID"
+          "label": "Sample ID",
         },
         Object {
           "key": "doneDate",
-          "label": "Utført Dato"
+          "label": "Utført Dato",
         },
         Object {
           "key": "sampleType",
-          "label": "Prøvetype"
+          "label": "Prøvetype",
         },
         Object {
           "key": "sampleSubType",
-          "label": "Prøveundertype"
+          "label": "Prøveundertype",
         },
         Object {
           "key": "status",
-          "label": "Status"
+          "label": "Status",
         },
         Object {
           "key": "hasAnalyse",
-          "label": "Analyse"
+          "label": "Analyse",
         },
         Object {
           "key": "showInfo",
-          "label": "Vis detaljer"
-        }
+          "label": "Vis detaljer",
+        },
       ]
     }
     defaultSort={false}
@@ -87,92 +94,117 @@ exports[`SamplesForObject should display correctly 1`] = `
     sortable={
       Array [
         "id",
-        "doneDate"
+        "doneDate",
       ]
-    }>
+    }
+  >
     <Tr>
       <Td
-        column="id" />
+        column="id"
+      />
       <Td
-        column="doneDate">
+        column="doneDate"
+      >
         1991-11-11
       </Td>
       <Td
-        column="sampleType">
+        column="sampleType"
+      >
         Frø
       </Td>
       <Td
-        column="sampleSubType">
+        column="sampleSubType"
+      >
         Rogn
       </Td>
       <Td
-        column="status">
+        column="status"
+      >
         2
       </Td>
       <Td
-        column="hasAnalyse" />
+        column="hasAnalyse"
+      />
       <Td
-        column="showInfo">
+        column="showInfo"
+      >
         <a
-          href="en url">
+          href="en url"
+        >
           Se mer / Rediger
         </a>
       </Td>
     </Tr>
     <Tr>
       <Td
-        column="id" />
+        column="id"
+      />
       <Td
-        column="doneDate">
+        column="doneDate"
+      >
         1991-11-12
       </Td>
       <Td
-        column="sampleType">
+        column="sampleType"
+      >
         Vev
       </Td>
       <Td
-        column="sampleSubType">
+        column="sampleSubType"
+      >
         Blod
       </Td>
       <Td
-        column="status">
+        column="status"
+      >
         1
       </Td>
       <Td
-        column="hasAnalyse" />
+        column="hasAnalyse"
+      />
       <Td
-        column="showInfo">
+        column="showInfo"
+      >
         <a
-          href="en url">
+          href="en url"
+        >
           Se mer / Rediger
         </a>
       </Td>
     </Tr>
     <Tr>
       <Td
-        column="id" />
+        column="id"
+      />
       <Td
-        column="doneDate">
+        column="doneDate"
+      >
         2011-11-11
       </Td>
       <Td
-        column="sampleType">
+        column="sampleType"
+      >
         Tekstil
       </Td>
       <Td
-        column="sampleSubType">
+        column="sampleSubType"
+      >
         Bomull
       </Td>
       <Td
-        column="status">
+        column="status"
+      >
         2
       </Td>
       <Td
-        column="hasAnalyse" />
+        column="hasAnalyse"
+      />
       <Td
-        column="showInfo">
+        column="showInfo"
+      >
         <a
-          href="en url">
+          href="en url"
+        >
           Se mer / Rediger
         </a>
       </Td>

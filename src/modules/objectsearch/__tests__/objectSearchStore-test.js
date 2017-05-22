@@ -1,6 +1,6 @@
 import { Observable, Subject } from 'rxjs/Rx';
 import { initialState, searchForObjects, store$ } from '../objectSearchStore';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('objectSearchStore', () => {
   it('testing reducer', () => {

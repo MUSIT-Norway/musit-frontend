@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/Rx';
 import createForm from '../form';
 import { stringMapper } from '../mappers';
 import type { Field, RawValue, Update } from '../form';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
 declare var describe: any;
 declare var it: any;

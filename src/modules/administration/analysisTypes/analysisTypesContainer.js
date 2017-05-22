@@ -1,15 +1,15 @@
 // @flow
 import inject from 'react-rxjs/dist/RxInject';
-import React from 'react';
+import PropTypes from 'prop-types';
 import analysisTypesForm from './analysisTypesForm';
 import AnalysisTypesComponent from './AnalysisTypesComponent';
 import store$, { getAnalysisTypes$ } from './analysisTypesStore';
-import Analysis from 'models/analysis';
+import Analysis from '../../../models/analysis';
 import { makeUrlAware } from '../../app/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../../shared/mount';
 import { toPromise } from '../../../shared/util';
-import type { AppSession } from 'types/appSession';
+import type { AppSession } from '../../../types/appSession';
 
 const { form$, updateForm$, loadForm$ } = analysisTypesForm;
 
@@ -18,7 +18,7 @@ type Props = {
   getAnalysisTypes: Function
 };
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   store$,
   form$
 };

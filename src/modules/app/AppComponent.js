@@ -1,6 +1,7 @@
 import { I18n } from 'react-i18nify';
 import 'react-select/dist/react-select.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { hashHistory, IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { MenuItem, Nav, Navbar, NavDropdown, NavItem } from 'react-bootstrap';

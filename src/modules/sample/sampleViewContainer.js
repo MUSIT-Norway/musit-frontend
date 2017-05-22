@@ -10,7 +10,7 @@ import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 import store$, { loadSampleTypes$ } from './sampleStore';
 import flatten from 'lodash/flatten';
-import { toPromise } from 'shared/util';
+import { toPromise } from '../../shared/util';
 
 const { form$, loadForm$ } = sampleForm;
 

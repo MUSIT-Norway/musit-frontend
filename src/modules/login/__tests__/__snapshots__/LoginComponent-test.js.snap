@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`LoginPage should have a working login button 1`] = `
 <Button
   active={false}
@@ -7,12 +9,13 @@ exports[`LoginPage should have a working login button 1`] = `
   className="loginButton"
   disabled={false}
   height="20"
-  onClick={[Function onClick]}
+  onClick={[Function]}
   style={
     Object {
-      "marginTop": "1em"
+      "marginTop": "1em",
     }
-  }>
+  }
+>
   <span>
     Click Me
   </span>
@@ -33,7 +36,7 @@ exports[`LoginPage should have english text 1`] = `
     <a
       className="moreInfo"
       href="/moreinfo"
-      onClick={undefined}>
+    >
       Use of personal information in MUSITbasen
     </a>
   </p>
@@ -54,7 +57,7 @@ exports[`LoginPage should have norwegian text 1`] = `
     <a
       className="moreInfo"
       href="/moreinfo"
-      onClick={undefined}>
+    >
       Bruk av personopplysninger i MUSITbasen
     </a>
   </p>

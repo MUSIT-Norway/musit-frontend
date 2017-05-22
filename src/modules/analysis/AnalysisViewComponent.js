@@ -6,7 +6,7 @@ import type { FormData } from './types/form';
 import type { Store } from './types/store';
 import { Table } from 'reactable';
 import MetaInformation from './components/MetaInformation';
-import Config from 'config';
+import Config from '../../config';
 
 type Params = { analysisId: string };
 

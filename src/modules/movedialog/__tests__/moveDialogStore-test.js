@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 import { initialState, store$ } from '../moveDialogStore';
 import MusitNode from '../../../models/node';
 
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('moveDialog', () => {
   it('testing reducer', () => {

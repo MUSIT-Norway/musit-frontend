@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`EventTableComponent should render header, body and footer 1`] = `
 <div>
   <Table
@@ -6,28 +8,28 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       Array [
         Object {
           "key": "id",
-          "label": "ID"
+          "label": "ID",
         },
         Object {
           "key": "eventDate",
-          "label": "Dato"
+          "label": "Dato",
         },
         Object {
           "key": "type",
-          "label": "Type hendelse"
+          "label": "Type hendelse",
         },
         Object {
           "key": "registeredBy",
-          "label": "Utført av"
+          "label": "Utført av",
         },
         Object {
           "key": "keyData",
-          "label": "Nøkkeldata"
+          "label": "Nøkkeldata",
         },
         Object {
           "key": "note",
-          "label": "Kommentar"
-        }
+          "label": "Kommentar",
+        },
       ]
     }
     defaultSort={false}
@@ -43,58 +45,73 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         "type",
         "eventDate",
         "registeredBy",
-        "note"
+        "note",
       ]
-    }>
+    }
+  >
     <Tr
-      onClick={[Function onClick]}>
+      onClick={[Function]}
+    >
       <Td
-        column="id">
+        column="id"
+      >
         1233-111-2222-222
       </Td>
       <Td
-        column="eventDate">
+        column="eventDate"
+      >
         1999-01-20
       </Td>
       <Td
-        column="type" />
+        column="type"
+      />
       <Td
-        column="registeredBy">
+        column="registeredBy"
+      >
         Ole Olsen
       </Td>
       <Td
-        column="keyData">
+        column="keyData"
+      >
         Til magasin nr 3
       </Td>
       <Td
-        column="note">
+        column="note"
+      >
         <span>
           Ein kommentar
         </span>
       </Td>
     </Tr>
     <Tr
-      onClick={[Function onClick]}>
+      onClick={[Function]}
+    >
       <Td
-        column="id">
+        column="id"
+      >
         1233-111-2122-222
       </Td>
       <Td
-        column="eventDate">
+        column="eventDate"
+      >
         1999-06-20
       </Td>
       <Td
-        column="type" />
+        column="type"
+      />
       <Td
-        column="registeredBy">
+        column="registeredBy"
+      >
         Ole Hansen
       </Td>
       <Td
-        column="keyData">
+        column="keyData"
+      >
         Acid
       </Td>
       <Td
-        column="note">
+        column="note"
+      >
         <span>
           Ein kommentar
         </span>

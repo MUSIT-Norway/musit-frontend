@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 import { store$ } from '../tableStore';
 import MusitNode from '../../../models/node';
 import MusitObject from '../../../models/object';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('tableStore', () => {
   it('testing reducer', () => {

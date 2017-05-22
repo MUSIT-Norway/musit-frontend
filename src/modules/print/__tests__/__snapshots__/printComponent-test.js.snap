@@ -1,13 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`PrintTemplateComponent should display correctly 1`] = `
 <PrintTemplateComponent
   appSession={
     Object {
-      "accessToken": "1234"
+      "accessToken": "1234",
     }
   }
-  clearAll={[Function proxy]}
-  clearRendered={[Function proxy]}
-  loadTemplates={[Function proxy]}
+  clearAll={[Function]}
+  clearRendered={[Function]}
+  loadTemplates={[Function]}
   marked={
     Array [
       Object {
@@ -15,64 +17,64 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
           Object {
             "id": 1,
             "name": "Utviklingsmuseet",
-            "url": "/magasin/1"
+            "url": "/magasin/1",
           },
           Object {
             "id": 3,
             "name": "Utviklingsmuseet Org",
-            "url": "/magasin/3"
+            "url": "/magasin/3",
           },
           Object {
             "id": 4,
             "name": "Forskningens hus",
-            "url": "/magasin/4"
+            "url": "/magasin/4",
           },
           Object {
             "id": 7,
             "name": "Forskningsværelset",
-            "url": "/magasin/7"
+            "url": "/magasin/7",
           },
           Object {
             "id": 61,
             "name": "kkk",
-            "url": "/magasin/61"
-          }
+            "url": "/magasin/61",
+          },
         ],
         "value": Object {
           "name": "Test 1",
-          "nodeId": 1
-        }
+          "nodeId": 1,
+        },
       },
       Object {
         "path": Array [
           Object {
             "id": 1,
             "name": "Utviklingsmuseet",
-            "url": "/magasin/1"
+            "url": "/magasin/1",
           },
           Object {
             "id": 3,
             "name": "Utviklingsmuseet Org",
-            "url": "/magasin/3"
-          }
+            "url": "/magasin/3",
+          },
         ],
         "value": Object {
           "name": "Test 2",
-          "nodeId": 2
-        }
+          "nodeId": 2,
+        },
       },
       Object {
         "path": Array [],
         "value": Object {
           "name": "Test 3",
-          "nodeId": 25
-        }
-      }
+          "nodeId": 25,
+        },
+      },
     ]
   }
-  renderTemplate={[Function proxy]}
-  setLevel={[Function proxy]}
-  setTemplateId={[Function proxy]}
+  renderTemplate={[Function]}
+  setLevel={[Function]}
+  setTemplateId={[Function]}
   store={
     Object {
       "rendered": "<html>Some html</html>",
@@ -84,7 +86,7 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
           "labelHeight": 37,
           "labelWidth": 70,
           "name": "Label-1 70mm x 37mm",
-          "rowsPerPage": 8
+          "rowsPerPage": 8,
         },
         Object {
           "colsPerPage": 2,
@@ -92,52 +94,63 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
           "labelHeight": 74,
           "labelWidth": 105,
           "name": "Label-2 105mm x 74mm",
-          "rowsPerPage": 4
-        }
-      ]
+          "rowsPerPage": 4,
+        },
+      ],
     }
   }
   templates={Array []}
-  writeToDocument={[Function proxy]}>
+  writeToDocument={[Function]}
+>
   <div
-    className="templatePrint">
+    className="templatePrint"
+  >
     <select
       className="printTool template"
-      onChange={[Function bound selectTemplate]}>
+      onChange={[Function]}
+    >
       <option>
         Velg etikettmal
       </option>
       <option
-        value={1}>
+        value={1}
+      >
         Label-1 70mm x 37mm
       </option>
       <option
-        value={4}>
+        value={4}
+      >
         Label-2 105mm x 74mm
       </option>
     </select>
+     
     <select
       className="printTool level"
-      defaultValue={undefined}
-      onChange={[Function bound selectLevel]}>
+      onChange={[Function]}
+    >
       <option
-        value={-2}>
+        value={-2}
+      >
         Sti: to nærmeste nivåer
       </option>
       <option
-        value={2}>
+        value={2}
+      >
         Sti fra bygg
       </option>
       <option
-        value={0}>
+        value={0}
+      >
         Hel sti
       </option>
     </select>
+     
     <input
       className="printTool"
-      onClick={[Function onClick]}
+      onClick={[Function]}
       type="button"
-      value="Skriv ut" />
+      value="Skriv ut"
+    />
     <IFrame
       content="<html>Some html</html>"
       frameProps={
@@ -145,15 +158,18 @@ exports[`PrintTemplateComponent should display correctly 1`] = `
           "frameBorder": 0,
           "height": "95%",
           "scrolling": "yes",
-          "width": "100%"
+          "width": "100%",
         }
       }
-      writeToDocument={[Function proxy]}>
+      writeToDocument={[Function]}
+    >
       <iframe
         frameBorder={0}
         height="95%"
         scrolling="yes"
-        width="100%" />
+        title="anonymous"
+        width="100%"
+      />
     </IFrame>
   </div>
 </PrintTemplateComponent>

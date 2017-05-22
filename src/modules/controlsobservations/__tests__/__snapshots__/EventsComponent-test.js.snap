@@ -1,10 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`EventsComponent Check it renders when not loaded 1`] = `
 <Layout
   breadcrumb={
-    <function Breadcrumb() {_classCallCheck(this, Breadcrumb);return _possibleConstructorReturn(this, (Breadcrumb.__proto__ || Object.getPrototypeOf(Breadcrumb)).apply(this, arguments));}
+    <Breadcrumb
       allActive={true}
-      node={undefined}
-      onClickCrumb={[Function onClickCrumb]} />
+      onClickCrumb={[Function]}
+    />
   }
   content={
     <span>
@@ -15,46 +17,51 @@ exports[`EventsComponent Check it renders when not loaded 1`] = `
     <div
       style={
         Object {
-          "paddingTop": 10
+          "paddingTop": 10,
         }
-      }>
-      <function ObservationControlComponent() {_classCallCheck(this, ObservationControlComponent);return _possibleConstructorReturn(this, (ObservationControlComponent.__proto__ || Object.getPrototypeOf(ObservationControlComponent)).apply(this, arguments));}
+      }
+    >
+      <ObservationControlComponent
         id="1"
-        onClickNewControl={[Function onClickNewControl]}
-        onClickNewObservation={[Function onClickNewObservation]}
+        onClickNewControl={[Function]}
+        onClickNewObservation={[Function]}
         selectControl={true}
-        selectObservation={true} />
+        selectObservation={true}
+      />
     </div>
   }
   title="Magasin"
   toolbar={
-    <function Toolbar() {_classCallCheck(this, Toolbar);return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));}
-      clickShowLeft={[Function clickShowLeft]}
-      clickShowRight={[Function clickShowRight]}
+    <Toolbar
+      clickShowLeft={[Function]}
+      clickShowRight={[Function]}
       labelLeft="Observasjoner"
       labelRight="Kontroller"
       placeHolderSearch="Filtrer i listen"
       showLeft={true}
-      showRight={true} />
-  } />
+      showRight={true}
+    />
+  }
+/>
 `;
 
 exports[`EventsComponent Check it renders. 1`] = `
 <Layout
   breadcrumb={
-    <function Breadcrumb() {_classCallCheck(this, Breadcrumb);return _possibleConstructorReturn(this, (Breadcrumb.__proto__ || Object.getPrototypeOf(Breadcrumb)).apply(this, arguments));}
+    <Breadcrumb
       allActive={true}
-      node={undefined}
-      onClickCrumb={[Function onClickCrumb]} />
+      onClickCrumb={[Function]}
+    />
   }
   content={
     <div
       style={
         Object {
           "color": "grey",
-          "textAlign": "center"
+          "textAlign": "center",
         }
-      }>
+      }
+    >
       Ingen kontroller eller observasjoner
     </div>
   }
@@ -62,26 +69,30 @@ exports[`EventsComponent Check it renders. 1`] = `
     <div
       style={
         Object {
-          "paddingTop": 10
+          "paddingTop": 10,
         }
-      }>
-      <function ObservationControlComponent() {_classCallCheck(this, ObservationControlComponent);return _possibleConstructorReturn(this, (ObservationControlComponent.__proto__ || Object.getPrototypeOf(ObservationControlComponent)).apply(this, arguments));}
+      }
+    >
+      <ObservationControlComponent
         id="1"
-        onClickNewControl={[Function onClickNewControl]}
-        onClickNewObservation={[Function onClickNewObservation]}
+        onClickNewControl={[Function]}
+        onClickNewObservation={[Function]}
         selectControl={true}
-        selectObservation={true} />
+        selectObservation={true}
+      />
     </div>
   }
   title="Magasin"
   toolbar={
-    <function Toolbar() {_classCallCheck(this, Toolbar);return _possibleConstructorReturn(this, (Toolbar.__proto__ || Object.getPrototypeOf(Toolbar)).apply(this, arguments));}
-      clickShowLeft={[Function clickShowLeft]}
-      clickShowRight={[Function clickShowRight]}
+    <Toolbar
+      clickShowLeft={[Function]}
+      clickShowRight={[Function]}
       labelLeft="Observasjoner"
       labelRight="Kontroller"
       placeHolderSearch="Filtrer i listen"
       showLeft={true}
-      showRight={true} />
-  } />
+      showRight={true}
+    />
+  }
+/>
 `;

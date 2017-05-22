@@ -17,7 +17,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import './MoveHistoryComponent.css';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import ModalMoveHistoryGrid from './ModalMoveHistoryGrid';
 import Modal from '../../components/modal/MusitModal';
 import CancelButton from '../../components/buttons/cancel';

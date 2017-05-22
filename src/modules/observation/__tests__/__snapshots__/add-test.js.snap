@@ -1,123 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Render observation page in add mode should set default date and have correct date format 1`] = `
 <form
-  onKeyDown={[Function onKeyDown]}
-  onSubmit={[Function bound handleSubmit]}>
+  onKeyDown={[Function]}
+  onSubmit={[Function]}
+>
   <Grid
     bsClass="container"
     componentClass="div"
-    fluid={false}>
+    fluid={false}
+  >
     <Row
       bsClass="row"
-      componentClass="div">
-      <h3 />
+      componentClass="div"
+    >
       <Row
         bsClass="row"
-        componentClass="div">
+        componentClass="div"
+      >
         <Col
           bsClass="col"
           componentClass="div"
           sm={5}
-          xs={12}>
+          xs={12}
+        >
           <ControlLabel
             bsClass="control-label"
-            srOnly={false}>
+            srOnly={false}
+          >
             Utført dato
           </ControlLabel>
           <MusitDatePicker
             dateFormat="DD.MM.YYYY"
             disabled={false}
-            onChange={[Function onChange]}
-            onClear={[Function onClear]}
-            value="2017-02-08T11:14:25.889Z" />
+            onChange={[Function]}
+            onClear={[Function]}
+            value="2017-02-08T11:14:25.889Z"
+          />
         </Col>
         <Col
           bsClass="col"
           componentClass="div"
           sm={5}
-          xs={12}>
+          xs={12}
+        >
           <ControlLabel
             bsClass="control-label"
-            srOnly={false}>
+            srOnly={false}
+          >
             Utført av
           </ControlLabel>
           <Component
             id="doneByField"
-            onChange={[Function onChange]}
+            onChange={[Function]}
             placeHolder="Find actor"
-            value="Jarl" />
+            value="Jarl"
+          />
         </Col>
       </Row>
-      <h3 />
       <Row
         bsClass="row"
-        componentClass="div">
+        componentClass="div"
+      >
         <Col
           bsClass="col"
           componentClass="div"
-          xs={2}>
+          xs={2}
+        >
           <FormGroup
             bsClass="form-group"
-            controlId="formControlsSelect">
+            controlId="formControlsSelect"
+          >
             <FormControl
               bsClass="form-control"
               componentClass="select"
-              onChange={[Function bound onChangeTypeSelect]}
+              onChange={[Function]}
               placeholder="select"
-              value="">
+              value=""
+            >
               <option
-                value="">
+                value=""
+              >
                 Velg type
               </option>
               <option
-                value="gas">
+                value="gas"
+              >
                 Gass
               </option>
               <option
-                value="lightCondition">
+                value="lightCondition"
+              >
                 Lysforhold
               </option>
               <option
-                value="cleaning">
+                value="cleaning"
+              >
                 Renhold
               </option>
               <option
-                value="pest">
+                value="pest"
+              >
                 Skadedyr
               </option>
               <option
-                value="mold">
+                value="mold"
+              >
                 Mugg
               </option>
               <option
-                value="skallsikring">
+                value="skallsikring"
+              >
                 Skallsikring
               </option>
               <option
-                value="tyverisikring">
+                value="tyverisikring"
+              >
                 Tyverisikring
               </option>
               <option
-                value="brannsikring">
+                value="brannsikring"
+              >
                 Brannsikring
               </option>
               <option
-                value="vannskaderisiko">
+                value="vannskaderisiko"
+              >
                 Vannskaderisiko
               </option>
               <option
-                value="relativeHumidity">
+                value="relativeHumidity"
+              >
                 Relativ luftfuktighet
               </option>
               <option
-                value="hypoxicAir">
+                value="hypoxicAir"
+              >
                 Inertluft
               </option>
               <option
-                value="temperature">
+                value="temperature"
+              >
                 Temperatur
               </option>
               <option
-                value="alcohol">
+                value="alcohol"
+              >
                 Sprit
               </option>
             </FormControl>
@@ -126,16 +154,19 @@ exports[`Render observation page in add mode should set default date and have co
         <Col
           bsClass="col"
           componentClass="div"
-          xs={4}>
+          xs={4}
+        >
           <Button
             active={false}
             block={false}
             bsClass="btn"
             bsStyle="default"
             disabled={false}
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             <FontAwesome
-              name="plus-circle" />
+              name="plus-circle"
+            />
              
             Legg til ny
           </Button>
@@ -149,15 +180,17 @@ exports[`Render observation page in add mode should set default date and have co
       componentClass="div"
       style={
         Object {
-          "textAlign": "center"
+          "textAlign": "center",
         }
-      }>
+      }
+    >
       <br />
       <SaveCancel
         cancelDisabled={false}
-        onClickCancel={[Function onClickCancel]}
-        onClickSave={[Function bound handleSubmit]}
-        saveDisabled={true} />
+        onClickCancel={[Function]}
+        onClickSave={[Function]}
+        saveDisabled={true}
+      />
     </Row>
   </Grid>
 </form>

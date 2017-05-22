@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`EventsComponent should render a table of events 1`] = `
 <div>
   <h1>
@@ -6,11 +8,13 @@ exports[`EventsComponent should render a table of events 1`] = `
   <hr />
   <Row
     bsClass="row"
-    componentClass="div">
+    componentClass="div"
+  >
     <Col
       bsClass="col"
       componentClass="div"
-      sm={2}>
+      sm={2}
+    >
       <b>
         Museumsnr:
       </b>
@@ -18,17 +22,20 @@ exports[`EventsComponent should render a table of events 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
-      sm={10}>
+      sm={10}
+    >
       MUSK123
     </Col>
   </Row>
   <Row
     bsClass="row"
-    componentClass="div">
+    componentClass="div"
+  >
     <Col
       bsClass="col"
       componentClass="div"
-      sm={2}>
+      sm={2}
+    >
       <b>
         Unr:
       </b>
@@ -36,17 +43,20 @@ exports[`EventsComponent should render a table of events 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
-      sm={10}>
+      sm={10}
+    >
       PIKACHU 1
     </Col>
   </Row>
   <Row
     bsClass="row"
-    componentClass="div">
+    componentClass="div"
+  >
     <Col
       bsClass="col"
       componentClass="div"
-      sm={2}>
+      sm={2}
+    >
       <b>
         Term/Artsnavn:
       </b>
@@ -54,17 +64,20 @@ exports[`EventsComponent should render a table of events 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
-      sm={10}>
+      sm={10}
+    >
       Fugl 1
     </Col>
   </Row>
   <Row
     bsClass="row"
-    componentClass="div">
+    componentClass="div"
+  >
     <Col
       bsClass="col"
       componentClass="div"
-      sm={2}>
+      sm={2}
+    >
       <b>
         Plassering:
       </b>
@@ -72,29 +85,31 @@ exports[`EventsComponent should render a table of events 1`] = `
     <Col
       bsClass="col"
       componentClass="div"
-      sm={10}>
+      sm={10}
+    >
       <Breadcrumb
         disabled={true}
         node={
           Array [
             Object {
               "name": "Museum",
-              "url": "/magasin/1"
+              "url": "/magasin/1",
             },
             Object {
               "name": "Org",
-              "url": "/magasin/2"
+              "url": "/magasin/2",
             },
             Object {
               "name": "Bygg",
-              "url": "/magasin/3"
+              "url": "/magasin/3",
             },
             Object {
               "name": "Rom",
-              "url": "/magasin/4"
-            }
+              "url": "/magasin/4",
+            },
           ]
-        } />
+        }
+      />
     </Col>
   </Row>
   <br />
@@ -104,34 +119,34 @@ exports[`EventsComponent should render a table of events 1`] = `
       Array [
         Object {
           "key": "id",
-          "label": "ID"
+          "label": "ID",
         },
         Object {
           "key": "eventDate",
-          "label": "Dato"
+          "label": "Dato",
         },
         Object {
           "key": "type",
-          "label": "Type hendelse"
+          "label": "Type hendelse",
         },
         Object {
           "key": "registeredBy",
-          "label": "Utført av"
+          "label": "Utført av",
         },
         Object {
           "key": "note",
-          "label": "Kommentar"
+          "label": "Kommentar",
         },
         Object {
           "key": "id",
-          "label": ""
-        }
+          "label": "",
+        },
       ]
     }
     defaultSort={
       Object {
         "column": "eventDate",
-        "direction": "desc"
+        "direction": "desc",
       }
     }
     defaultSortDescending={false}
@@ -145,84 +160,103 @@ exports[`EventsComponent should render a table of events 1`] = `
         "type",
         "eventDate",
         "registeredBy",
-        "note"
+        "note",
       ]
-    }>
+    }
+  >
     <Tr>
       <Td
-        column="id" />
+        column="id"
+      />
       <Td
-        column="eventDate">
+        column="eventDate"
+      >
         dato 1
       </Td>
       <Td
-        column="type">
+        column="type"
+      >
         MoveObject
       </Td>
       <Td
-        column="registeredBy">
+        column="registeredBy"
+      >
         Santa 1
       </Td>
       <Td
-        column="note">
+        column="note"
+      >
         <span>
           Some note 1
         </span>
       </Td>
       <Td
-        column="id">
+        column="id"
+      >
         Les mer
       </Td>
     </Tr>
     <Tr>
       <Td
-        column="id" />
+        column="id"
+      />
       <Td
-        column="eventDate">
+        column="eventDate"
+      >
         dato 2
       </Td>
       <Td
-        column="type">
+        column="type"
+      >
         MoveObject
       </Td>
       <Td
-        column="registeredBy">
+        column="registeredBy"
+      >
         Santa 2
       </Td>
       <Td
-        column="note">
+        column="note"
+      >
         <span>
           Some note 2
         </span>
       </Td>
       <Td
-        column="id">
+        column="id"
+      >
         Les mer
       </Td>
     </Tr>
     <Tr>
       <Td
-        column="id" />
+        column="id"
+      />
       <Td
-        column="eventDate">
+        column="eventDate"
+      >
         dato 3
       </Td>
       <Td
-        column="type">
+        column="type"
+      >
         Analyse
       </Td>
       <Td
-        column="registeredBy">
+        column="registeredBy"
+      >
         Santa 3
       </Td>
       <Td
-        column="note">
+        column="note"
+      >
         <span>
           Some note 3
         </span>
       </Td>
       <Td
-        column="id">
+        column="id"
+      >
         Les mer
       </Td>
     </Tr>

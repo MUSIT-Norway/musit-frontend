@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Rx';
 import { store$, initialState, getLocationHistory } from '../moveHistoryStore';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('moveHistory', () => {
   it('testing reducer', () => {

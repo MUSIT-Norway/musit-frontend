@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import Config from 'config';
+import Config from '../../config';
 import type { AppSession } from 'types/appSession';
 import type { ObjectData } from 'types/object';
 import type { FormData } from './types/form';

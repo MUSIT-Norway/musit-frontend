@@ -1,7 +1,7 @@
 import { Subject, Observable } from 'rxjs/Rx';
 import { store$, loadEvents } from '../eventsStore';
 
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('controlsAndObservationsStore', () => {
   it('testing reducer with actors', () => {

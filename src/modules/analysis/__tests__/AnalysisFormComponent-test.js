@@ -12,7 +12,7 @@ import type { FormData } from '../types/form';
 import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
-import StatefulPromise from 'testutils/StatefulPromise';
+import StatefulPromise from '../../../testutils/StatefulPromise';
 
 declare var describe: any;
 declare var it: any;

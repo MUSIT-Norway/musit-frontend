@@ -1,28 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`StorageUnitsContainer_Breadcrumb_test Breadcrumb first element should have name "Museum":  1`] = `
 <div>
   <OverlayTrigger
     defaultOverlayShown={false}
     overlay={
-      <function Popover() {
-          (0, _classCallCheck3['default'])(this, Popover);
-          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-        }
+      <Popover
         bsClass="popover"
         id="breadcrumb tooltip"
-        placement="right">
+        placement="right"
+      >
         Magasin
-      </function Popover() {
-          (0, _classCallCheck3['default'])(this, Popover);
-          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-        }>
+      </Popover>
     }
     placement="top"
     trigger={
       Array [
         "hover",
-        "focus"
+        "focus",
       ]
-    }>
+    }
+  >
     <span>
       <span>
         <FontAwesome
@@ -30,9 +28,10 @@ exports[`StorageUnitsContainer_Breadcrumb_test Breadcrumb first element should h
           style={
             Object {
               "fontSize": "1.5em",
-              "padding": "1px"
+              "padding": "1px",
             }
-          } />
+          }
+        />
          
       </span>
     </span>

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 import { store$, initialState } from '../observationStore';
 import MusitNode from '../../../models/node';
 import Observation from '../../../models/observation';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('printStore', () => {
   /*eslint-disable */

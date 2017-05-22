@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Router, hashHistory } from 'react-router';
 import getRoutes from './routes';
 import config from './config';
-import LanguageJson from '../language.json';
+import LanguageJson from './language.json';
 import { I18n } from 'react-i18nify';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -43,7 +43,7 @@ notification$.subscribe(event => {
   });
 });
 
-const accessToken = queryParser.parse(location.search)['_at'];
+const accessToken = queryParser.parse(window.location.search)['_at'];
 if (accessToken) {
   localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
   window.location.href = '/#/home';

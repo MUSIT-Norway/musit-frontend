@@ -1,12 +1,12 @@
 // @flow
 import React from 'react';
-import { ActorSuggest } from 'components/suggest/ActorSuggest';
+import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import DropdownButton from 'components/DropdownButton';
+import DropdownButton from '../../components/DropdownButton';
 import DatePicker from '../DatePicker';
-import { DATE_FORMAT_DISPLAY } from 'shared/util';
-import type { AppSession } from 'types/appSession';
+import { DATE_FORMAT_DISPLAY } from '../../shared/util';
+import type { AppSession } from '../../types/appSession';
 
 export type Person = {
   name?: string,

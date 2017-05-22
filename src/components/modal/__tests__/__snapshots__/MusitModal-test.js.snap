@@ -1,21 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`MusitModal should render header, body and footer 1`] = `
 <div
   className="musit-modal"
-  style={Object {}}>
+  style={Object {}}
+>
   <div
-    className="musit-modal-header">
+    className="musit-modal-header"
+  >
     <span>
       A header
     </span>
   </div>
   <div
-    className="musit-modal-body">
+    className="musit-modal-body"
+  >
     <div>
       Some really cool body
     </div>
   </div>
   <div
-    className="musit-modal-footer">
+    className="musit-modal-footer"
+  >
     <span>
       A footer
     </span>

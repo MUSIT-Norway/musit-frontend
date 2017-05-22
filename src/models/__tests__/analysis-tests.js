@@ -1,7 +1,7 @@
 // @flow
 import Analysis from '../analysis';
 import { Observable } from 'rxjs';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
 declare var describe: any;
 declare var it: any;

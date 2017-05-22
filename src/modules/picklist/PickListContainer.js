@@ -23,7 +23,7 @@ import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 import { PickListComponent } from './PickListComponent';
 import { I18n } from 'react-i18nify';
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import MusitNode from '../../models/node';
 import MusitObject from '../../models/object';
 import MusitActor from '../../models/actor';

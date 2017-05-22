@@ -17,7 +17,8 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { MusitField, MusitTextArea } from '../../../components/formfields';
 import { Row, ControlLabel, Col } from 'react-bootstrap';
 

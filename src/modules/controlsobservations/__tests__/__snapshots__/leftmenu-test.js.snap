@@ -1,13 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`LeftMenu Check the new observation button is created. 1`] = `
 <div>
   <Row
     bsClass="row"
-    componentClass="div">
+    componentClass="div"
+  >
     <Col
       bsClass="col"
       componentClass="div"
       sm={12}
-      xs={6}>
+      xs={6}
+    >
       <Button
         active={false}
         block={false}
@@ -15,20 +19,22 @@ exports[`LeftMenu Check the new observation button is created. 1`] = `
         bsStyle="default"
         disabled={false}
         id="1_newObservation"
-        onClick={[Function onClick]}
+        onClick={[Function]}
         style={
           Object {
             "textAlign": "left",
-            "width": "100%"
+            "width": "100%",
           }
-        }>
+        }
+      >
         <FontAwesome
           name="plus-circle"
           style={
             Object {
-              "padding": "2px"
+              "padding": "2px",
             }
-          } />
+          }
+        />
         Ny observasjon
       </Button>
     </Col>
@@ -36,7 +42,8 @@ exports[`LeftMenu Check the new observation button is created. 1`] = `
       bsClass="col"
       componentClass="div"
       sm={12}
-      xs={6}>
+      xs={6}
+    >
       <Button
         active={false}
         block={false}
@@ -44,20 +51,22 @@ exports[`LeftMenu Check the new observation button is created. 1`] = `
         bsStyle="default"
         disabled={false}
         id="1_newControl"
-        onClick={[Function onClick]}
+        onClick={[Function]}
         style={
           Object {
             "textAlign": "left",
-            "width": "100%"
+            "width": "100%",
           }
-        }>
+        }
+      >
         <FontAwesome
           name="plus-circle"
           style={
             Object {
-              "padding": "2px"
+              "padding": "2px",
             }
-          } />
+          }
+        />
         Ny kontroll
       </Button>
     </Col>

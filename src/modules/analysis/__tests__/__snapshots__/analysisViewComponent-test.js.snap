@@ -1,598 +1,636 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`AnalysisViewComponent should render properly 1`] = `
 <div>
   <div
-    className="page-header">
+    className="page-header"
+  >
     <h1>
       Analyse detaljer
     </h1>
   </div>
   <form
-    className="form-horizontal">
+    className="form-horizontal"
+  >
     <MetaInformation
       form={
         Object {
           "administrator": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "administrator",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "analysisTypeCategory": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "analysisTypeCategory",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "analysisTypeId": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "analysisTypeId",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function configurableValidators],
-              "valueValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+              "valueValidator": [Function],
+            },
           },
           "caseNumbers": Object {
             "defaultValue": Array [],
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "caseNumbers",
             "rawValue": Array [],
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "comments": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "comments",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "completeAnalysis": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "completeAnalysis",
             "rawValue": false,
-            "validator": Object {}
+            "validator": Object {},
           },
           "completedBy": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "completedBy",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "completedDate": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "completedDate",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "doneBy": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "doneBy",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "doneDate": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "doneDate",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "events": Object {
             "defaultValue": Array [],
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "events",
             "rawValue": Array [],
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "externalSource": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "externalSource",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "id": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "id",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function configurableValidators],
-              "valueValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+              "valueValidator": [Function],
+            },
           },
           "museumNo": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "museumNo",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "note": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "note",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "objectId": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "objectId",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "partOf": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "partOf",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "place": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "place",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "reason": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "reason",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "registeredBy": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "registeredBy",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "registeredByName": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "registeredByName",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "registeredDate": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "registeredDate",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "responsible": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "responsible",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "restrictions": Object {
             "defaultValue": false,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "restrictions",
             "rawValue": false,
-            "validator": Object {}
+            "validator": Object {},
           },
           "restrictions_cancelledReason": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "restrictions_cancelledReason",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "restrictions_caseNumbers": Object {
             "defaultValue": Array [],
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "restrictions_caseNumbers",
             "rawValue": Array [],
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "restrictions_expirationDate": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "restrictions_expirationDate",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "restrictions_reason": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "restrictions_reason",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "restrictions_requester": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "restrictions_requester",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "result": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "result",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "status": Object {
             "defaultValue": 1,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "status",
             "rawValue": "1",
             "validator": Object {
-              "rawValidator": [Function configurableValidators],
-              "valueValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+              "valueValidator": [Function],
+            },
           },
           "subNo": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "subNo",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "term": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "term",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "type": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "type",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "updatedBy": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "updatedBy",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "updatedByName": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "updatedByName",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
+              "rawValidator": [Function],
+            },
           },
           "updatedDate": Object {
             "defaultValue": null,
             "mapper": Object {
-              "fromRaw": [Function fromRaw],
-              "toRaw": [Function toRaw]
+              "fromRaw": [Function],
+              "toRaw": [Function],
             },
             "name": "updatedDate",
             "rawValue": null,
             "validator": Object {
-              "rawValidator": [Function validator]
-            }
-          }
+              "rawValidator": [Function],
+            },
+          },
         }
       }
-      onClickEdit={[Function onClickEdit]} />
+      onClickEdit={[Function]}
+    />
     <hr />
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="type">
+        htmlFor="type"
+      >
         Type analyse:
       </label>
       <div
-        className="col-md-10">
+        className="col-md-10"
+      >
         <p
           className="form-control-static"
-          id="type" />
+          id="type"
+        />
       </div>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="reason">
+        htmlFor="reason"
+      >
         Formål med analysen:
       </label>
       <div
-        className="col-md-10">
+        className="col-md-10"
+      >
         <p
           className="form-control-static"
-          id="reason" />
+          id="reason"
+        />
       </div>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="status">
+        htmlFor="status"
+      >
         Status på analysen:
       </label>
       <div
-        className="col-md-5">
+        className="col-md-5"
+      >
         <p
           className="form-control-static"
-          id="status" />
+          id="status"
+        />
       </div>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="caseNumber">
+        htmlFor="caseNumber"
+      >
         Saksnummer:
       </label>
       <div
-        className="col-md-10">
+        className="col-md-10"
+      >
         <p
           className="form-control-static"
-          id="caseNumber" />
+          id="caseNumber"
+        />
       </div>
     </div>
     <hr />
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="note">
+        htmlFor="note"
+      >
         Beskrivelse/ kommentar:
       </label>
       <div
-        className="col-md-10">
+        className="col-md-10"
+      >
         <p
           className="form-control-static"
-          id="note" />
+          id="note"
+        />
       </div>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
-        className="control-label">
+        className="control-label"
+      >
         Personer tilknyttet analysen:
       </label>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="responsible-name1">
+        htmlFor="responsible-name1"
+      >
         Navn:
       </label>
       <div
-        className="col-md-2">
+        className="col-md-2"
+      >
         <p
           className="form-control-static"
-          id="responsible-name1">
+          id="responsible-name1"
+        >
           n/a
         </p>
       </div>
       <label
         className="control-label col-md-1"
-        htmlFor="responsible-role1">
+        htmlFor="responsible-role1"
+      >
         Rolle:
       </label>
       <div
-        className="col-md-2">
+        className="col-md-2"
+      >
         <p
           className="form-control-static"
-          id="responsible-role1">
+          id="responsible-role1"
+        >
           n/a
         </p>
       </div>
     </div>
     <hr />
     <div
-      className="well">
+      className="well"
+    >
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="objects">
+          htmlFor="objects"
+        >
           Objekter:
         </label>
         <div
-          className="col-md-10">
+          className="col-md-10"
+        >
           <Table
             className="table"
             columns={
               Array [
                 Object {
                   "key": "museumNo",
-                  "label": "Museumsnr"
+                  "label": "Museumsnr",
                 },
                 Object {
                   "key": "subNo",
-                  "label": "Unr"
+                  "label": "Unr",
                 },
                 Object {
                   "key": "term",
-                  "label": "Term/artsnavn"
-                }
+                  "label": "Term/artsnavn",
+                },
               ]
             }
             data={
@@ -600,8 +638,8 @@ exports[`AnalysisViewComponent should render properly 1`] = `
                 Object {
                   "museumNo": undefined,
                   "subNo": undefined,
-                  "term": undefined
-                }
+                  "term": undefined,
+                },
               ]
             }
             defaultSort={false}
@@ -616,68 +654,85 @@ exports[`AnalysisViewComponent should render properly 1`] = `
               Array [
                 "museumNumber",
                 "subNumber",
-                "term"
+                "term",
               ]
-            } />
+            }
+          />
         </div>
       </div>
       <hr />
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="externalSource">
+          htmlFor="externalSource"
+        >
           Ekstern kilde:
         </label>
         <div
-          className="col-md-10">
+          className="col-md-10"
+        >
           <p
             className="form-control-static"
-            id="externalSource" />
+            id="externalSource"
+          />
         </div>
       </div>
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="externalFile">
+          htmlFor="externalFile"
+        >
           Vedlegg:
         </label>
         <div
-          className="col-md-10">
+          className="col-md-10"
+        >
           <p
             className="form-control-static"
-            id="externalFile">
+            id="externalFile"
+          >
              
           </p>
         </div>
       </div>
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="comments">
+          htmlFor="comments"
+        >
           Kommentar til resultat:
         </label>
         <div
-          className="col-md-10">
+          className="col-md-10"
+        >
           <p
             className="form-control-static"
-            id="comments" />
+            id="comments"
+          />
         </div>
       </div>
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="restrictions">
+          htmlFor="restrictions"
+        >
           Klausulering:
         </label>
         <div
-          className="col-md-10">
+          className="col-md-10"
+        >
           <p
             className="form-control-static"
-            id="restrictions">
+            id="restrictions"
+          >
             Nei
           </p>
         </div>

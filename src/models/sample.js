@@ -7,7 +7,7 @@ import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import { omit } from 'lodash';
 import uniqBy from 'lodash/uniqBy';
-import MusitActor from 'models/actor';
+import MusitActor from '../models/actor';
 
 class Sample {
   static addSample: (AjaxPost) => (
