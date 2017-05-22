@@ -13,8 +13,12 @@ export const reducer$ = actions =>
   Observable.merge(
     actions.loadRootNode$.map(rootNode => state => ({ ...state, rootNode })),
     actions.getObservation$.map(data => state => ({ ...state, data, loading: false })),
-    actions.setLoading$.map(() =>
-      state => ({ ...state, data: {}, rootNode: null, loading: true }))
+    actions.setLoading$.map(() => state => ({
+      ...state,
+      data: {},
+      rootNode: null,
+      loading: true
+    }))
   );
 
 export const initialState = { data: {}, rootNode: null };

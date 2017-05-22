@@ -22,11 +22,15 @@ type Props = {
   appSession: AppSession
 };
 
-export const PersonRoleDate = (
-  { personData, appSession, updateForm, fieldName }: Props
-) => {
+export const PersonRoleDate = ({
+  personData,
+  appSession,
+  updateForm,
+  fieldName
+}: Props) => {
   const pArr = personData || [];
-  return pArr &&
+  return (
+    pArr &&
     <Grid>
       <Row>
         <Col md={2}>
@@ -120,7 +124,8 @@ export const PersonRoleDate = (
           </Button>
         </Col>
       </Row>
-    </Grid>;
+    </Grid>
+  );
 };
 
 function addPerson(persons: Array<Person>): Array<Person> {

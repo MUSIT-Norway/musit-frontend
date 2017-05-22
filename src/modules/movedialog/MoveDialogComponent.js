@@ -98,7 +98,7 @@ export class MoveDialogComponent extends Component {
           appSession={this.props.appSession}
           label="Search"
           id="nodeSearch"
-          onChange={v => v ? this.loadNode(v) : null}
+          onChange={v => (v ? this.loadNode(v) : null)}
           placeHolder={I18n.t('musit.moveModal.nodeSuggestPlaceholder')}
         />
       </div>

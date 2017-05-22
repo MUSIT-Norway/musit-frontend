@@ -202,7 +202,8 @@ describe('tableStore', () => {
         MusitNode.getStats(() =>
           Observable.of({
             response: { numNodes: 1, numObjects: 4, totalObjects: 9 }
-          }))
+          })
+        )
       );
     const loadRootNode$ = testScheduler
       .createHotObservable(loadRootNodeM, {
@@ -212,7 +213,8 @@ describe('tableStore', () => {
         MusitNode.getNode(() =>
           Observable.of({
             response: { name: 'en rootNode 457', nodeId: 'uuid 457', id: 457 }
-          }))
+          })
+        )
       );
 
     const state$ = store$({

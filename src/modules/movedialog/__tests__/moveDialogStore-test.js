@@ -102,7 +102,8 @@ describe('moveDialog', () => {
               name: 'Test',
               type: 'Room'
             }
-          }))
+          })
+        )
       );
     const loadChildren$ = testScheduler
       .createHotObservable(loadChildrenM, {
@@ -115,7 +116,8 @@ describe('moveDialog', () => {
               matches: [],
               totalMatches: 0
             }
-          }))
+          })
+        )
       );
 
     const state$ = store$({ clear$, loadNode$, loadChildren$, setLoading$, setPage$ });

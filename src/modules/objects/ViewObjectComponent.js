@@ -15,9 +15,10 @@ type ViewObjectComponentProps = {
   appSession: AppSession
 };
 
-export const ViewObjectComponent = (
-  { objectStore: { objectData, events, samples }, appSession }: ViewObjectComponentProps
-) => (
+export const ViewObjectComponent = ({
+  objectStore: { objectData, events, samples },
+  appSession
+}: ViewObjectComponentProps) => (
   <div>
     <PageHeader>Objektvisning</PageHeader>
     <div style={{ marginTop: '30px', marginBottom: '40px' }}>

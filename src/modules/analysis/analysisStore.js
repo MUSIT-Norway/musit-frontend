@@ -9,7 +9,8 @@ export const getAnalysisTypes$ = createAction('getAnalysisTypes$').switchMap(
 );
 
 export const getAnalysis$ = createAction('getAnalysis$').switchMap(props =>
-  MusitAnalysis.getAnalysisWithDetails()(props).do(props.onComplete));
+  MusitAnalysis.getAnalysisWithDetails()(props).do(props.onComplete)
+);
 
 type Actions = {
   getAnalysis$: Subject,
@@ -18,17 +19,15 @@ type Actions = {
 
 export const reducer$ = (actions: Actions) =>
   Observable.merge(
-    actions.getAnalysis$.map(analysis =>
-      state => ({
-        ...state,
-        analysis
-      })),
-    actions.getAnalysisTypes$.map(analysisTypes =>
-      state => ({
-        ...state,
-        analysisTypes,
-        analysisTypeCategories: uniq(analysisTypes.map(a => a.category))
-      }))
+    actions.getAnalysis$.map(analysis => state => ({
+      ...state,
+      analysis
+    })),
+    actions.getAnalysisTypes$.map(analysisTypes => state => ({
+      ...state,
+      analysisTypes,
+      analysisTypeCategories: uniq(analysisTypes.map(a => a.category))
+    }))
   );
 
 export const store$ = (actions$: Actions = { getAnalysisTypes$, getAnalysis$ }) =>

@@ -13,9 +13,12 @@ type FieldTextAreaProps = {
   }
 };
 
-export default function FieldTextArea(
-  { field, title, onChangeInput, inputProps }: FieldTextAreaProps
-) {
+export default function FieldTextArea({
+  field,
+  title,
+  onChangeInput,
+  inputProps
+}: FieldTextAreaProps) {
   return (
     <div>
       {title !== '' &&

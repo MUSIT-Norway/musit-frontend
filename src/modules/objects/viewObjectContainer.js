@@ -28,9 +28,13 @@ const commands: {} = {
   loadSampleEvents$
 };
 
-export const onMount = (
-  { loadObject, loadMoveAndAnalysisEvents, loadSampleEvents, params, appSession }: any
-) => {
+export const onMount = ({
+  loadObject,
+  loadMoveAndAnalysisEvents,
+  loadSampleEvents,
+  params,
+  appSession
+}: any) => {
   const uuid: string = params.id;
   const museumId: number = appSession.museumId;
   const accessToken: string = appSession.accessToken;

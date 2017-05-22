@@ -14,11 +14,13 @@ const tooltip = (tipText, child) => (
 );
 
 const CrumbItem = props => {
-  const name = props.displayName ||
+  const name =
+    props.displayName ||
     (props.name && props.name.length > 20 + 2
       ? props.name.substring(0, 20) + '..'
       : props.name);
-  const icon = props.icon &&
+  const icon =
+    props.icon &&
     <FontAwesome name={props.icon} style={{ ...props.style, padding: '1px' }} />;
   const item = (
     <span>
@@ -35,16 +37,17 @@ const crumbLimit: number = 3;
 
 class Breadcrumb extends React.Component {
   render() {
-    const clickCrumb = node =>
-      evt => {
-        evt.preventDefault();
-        this.props.onClickCrumb(node);
-        evt.stopPropagation();
-      };
+    const clickCrumb = node => evt => {
+      evt.preventDefault();
+      this.props.onClickCrumb(node);
+      evt.stopPropagation();
+    };
 
     let path = [];
     if (
-      this.props.node && this.props.node.breadcrumb && this.props.node.breadcrumb.length
+      this.props.node &&
+      this.props.node.breadcrumb &&
+      this.props.node.breadcrumb.length
     ) {
       path = this.props.node.breadcrumb;
     } else if (this.props.node && this.props.node.length) {

@@ -15,7 +15,7 @@ type Props = {
   store: Store,
   appSession: AppSession,
   params: Params,
-  goToUrl: (string) => void,
+  goToUrl: string => void,
   goBack: () => void
 };
 

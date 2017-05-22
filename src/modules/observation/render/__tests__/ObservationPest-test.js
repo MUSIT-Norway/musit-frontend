@@ -76,14 +76,12 @@ describe('ObservationPest', () => {
       ).length
     ).toEqual(1);
     expect(
-      wrapper.find(
-        'ObservationDoubleTextAreaComponent[leftTooltip="Left tooltip"]'
-      ).length
+      wrapper.find('ObservationDoubleTextAreaComponent[leftTooltip="Left tooltip"]')
+        .length
     ).toEqual(1);
     expect(
-      wrapper.find(
-        'ObservationDoubleTextAreaComponent[rightTooltip="Right tooltip"]'
-      ).length
+      wrapper.find('ObservationDoubleTextAreaComponent[rightTooltip="Right tooltip"]')
+        .length
     ).toEqual(1);
     expect(wrapper.find(MusitDropDownField).length).toEqual(3);
     expect(wrapper.find('MusitDropDownField[value="Adult"]').length).toEqual(2);

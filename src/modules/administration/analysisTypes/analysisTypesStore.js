@@ -13,11 +13,10 @@ type Actions = {
 
 export const reducer$ = (actions: Actions) =>
   Observable.merge(
-    actions.getAnalysisTypes$.map(analysisTypes =>
-      state => ({
-        ...state,
-        analysisTypes
-      }))
+    actions.getAnalysisTypes$.map(analysisTypes => state => ({
+      ...state,
+      analysisTypes
+    }))
   );
 
 export const store$ = (actions$: Actions = { getAnalysisTypes$ }) =>

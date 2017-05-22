@@ -42,10 +42,11 @@ export type Update<T> = {
 const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
   const defaultValue = data.defaultValue || field.defaultValue;
   const rawValue = data.rawValue || field.mapper.toRaw(defaultValue);
-  const rawError = field.validator.rawValidator &&
-    field.validator.rawValidator(field.name)(rawValue);
+  const rawError =
+    field.validator.rawValidator && field.validator.rawValidator(field.name)(rawValue);
   const value = field.mapper.fromRaw(rawValue);
-  const valueError = !rawError &&
+  const valueError =
+    !rawError &&
     field.validator.valueValidator &&
     field.validator.valueValidator(field.name)(value);
   const error = rawError || valueError;
@@ -122,10 +123,10 @@ const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
 
 const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Update<*>[]>) =>
   Observable.merge(
-    loadForm$.map((load: Update<*>[]) =>
-      (state: Field<*>[]) => load.reduce(updateForm, state)),
-    updateField$.map((update: Update<*>) =>
-      (state: Field<*>[]) => updateForm(state, update))
+    loadForm$.map((load: Update<*>[]) => (state: Field<*>[]) =>
+      load.reduce(updateForm, state)),
+    updateField$.map((update: Update<*>) => (state: Field<*>[]) =>
+      updateForm(state, update))
   );
 
 export type FormDetails = {

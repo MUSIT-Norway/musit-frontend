@@ -14,7 +14,9 @@ export const checkNodeType = (from, to) => {
   }
 
   if (
-    2 === getPathLength(to) && to.type === 'Organisation' && 'Building' !== matchFromType
+    2 === getPathLength(to) &&
+    to.type === 'Organisation' &&
+    'Building' !== matchFromType
   ) {
     return I18n.t('musit.storageUnits.type.buildingAllowedToMove');
   }

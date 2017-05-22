@@ -108,9 +108,10 @@ export class ControlAddContainer extends React.Component {
   }
 
   oneStateIsNotOK() {
-    return Object.keys(this.state).filter(
-      k => k.endsWith('OK') && this.state[k] === false
-    ).length > 0;
+    return (
+      Object.keys(this.state).filter(k => k.endsWith('OK') && this.state[k] === false)
+        .length > 0
+    );
   }
 
   onClickSave() {

@@ -44,58 +44,55 @@ export function onMount({ loadSample, loadSampleTypes, loadForm, params, appSess
         const sampleType = flatten(Object.values(types)).find(
           subType => v.sampleTypeId === subType.sampleTypeId
         );
-        const formData = Object.keys(v).reduce(
-          (akk, key: string) => {
-            switch (key) {
-              case 'responsible': {
-                return [
-                  ...akk,
-                  {
-                    name: 'persons',
-                    defaultValue: [
-                      { name: v[key].name, uuid: v[key].value, role: 'responsible' }
-                    ]
-                  }
-                ];
-              }
-              case 'sampleType': {
-                return [
-                  ...akk,
-                  { name: 'sampleType', defaultValue: v[key].value },
-                  { name: 'subTypeValue', defaultValue: v[key].subTypeValue }
-                ];
-              }
-              case 'externalId': {
-                return [
-                  ...akk,
-                  { name: 'externalId', defaultValue: v[key].value },
-                  { name: 'externalIdSource', defaultValue: v[key].source }
-                ];
-              }
-              case 'size': {
-                return [
-                  ...akk,
-                  { name: 'size', defaultValue: v[key].value },
-                  { name: 'sizeUnit', defaultValue: v[key].unit }
-                ];
-              }
-              case 'sampleTypeId': {
-                return [
-                  ...akk,
-                  { name: 'sampleType', defaultValue: sampleType.enSampleType },
-                  {
-                    name: 'subTypeValue',
-                    defaultValue: sampleType.enSampleSubType || sampleType.enSampleType
-                  }
-                ];
-              }
-              default: {
-                return [...akk, { name: key, defaultValue: v[key] }];
-              }
+        const formData = Object.keys(v).reduce((akk, key: string) => {
+          switch (key) {
+            case 'responsible': {
+              return [
+                ...akk,
+                {
+                  name: 'persons',
+                  defaultValue: [
+                    { name: v[key].name, uuid: v[key].value, role: 'responsible' }
+                  ]
+                }
+              ];
             }
-          },
-          []
-        );
+            case 'sampleType': {
+              return [
+                ...akk,
+                { name: 'sampleType', defaultValue: v[key].value },
+                { name: 'subTypeValue', defaultValue: v[key].subTypeValue }
+              ];
+            }
+            case 'externalId': {
+              return [
+                ...akk,
+                { name: 'externalId', defaultValue: v[key].value },
+                { name: 'externalIdSource', defaultValue: v[key].source }
+              ];
+            }
+            case 'size': {
+              return [
+                ...akk,
+                { name: 'size', defaultValue: v[key].value },
+                { name: 'sizeUnit', defaultValue: v[key].unit }
+              ];
+            }
+            case 'sampleTypeId': {
+              return [
+                ...akk,
+                { name: 'sampleType', defaultValue: sampleType.enSampleType },
+                {
+                  name: 'subTypeValue',
+                  defaultValue: sampleType.enSampleSubType || sampleType.enSampleType
+                }
+              ];
+            }
+            default: {
+              return [...akk, { name: key, defaultValue: v[key] }];
+            }
+          }
+        }, []);
         loadForm(formData);
       });
     }

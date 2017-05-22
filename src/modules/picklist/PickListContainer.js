@@ -47,7 +47,8 @@ export const nodeCallback = (
           id: item.nodeId,
           museumId: appSession.museumId,
           token: appSession.accessToken
-        }));
+        })
+      );
       onSuccess();
       if (toMoveLength === 1) {
         emitSuccess({
@@ -163,7 +164,7 @@ export const moveItems = (
   return (to, toName, onSuccess, onFailure = () => true): void => {
     const moveFunction = isNode ? moveNode : moveObject;
     const idsToMove = items.map(
-      itemToMove => isNode ? itemToMove.nodeId : itemToMove.uuid
+      itemToMove => (isNode ? itemToMove.nodeId : itemToMove.uuid)
     );
 
     const toMoveLength = idsToMove.length;
@@ -199,7 +200,8 @@ export const moveItems = (
     let error = false;
     if (isNode) {
       const itemsWithError = items.filter(fromNode =>
-        checkNodeBranchAndType(fromNode, to));
+        checkNodeBranchAndType(fromNode, to)
+      );
       const errorMessages = itemsWithError.map(
         fromNode => `${checkNodeBranchAndType(fromNode, to)} (${fromNode.name})`
       );

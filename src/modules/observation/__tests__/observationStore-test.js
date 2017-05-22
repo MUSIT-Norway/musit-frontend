@@ -157,7 +157,8 @@ describe('printStore', () => {
               updatedDate: '2015-12-31T23:00:00+00:00',
               type: 'Organisation'
             }
-          }))
+          })
+        )
       );
     const setLoading$ = testScheduler.createHotObservable(setLoadingM);
     const getObservation$ = testScheduler

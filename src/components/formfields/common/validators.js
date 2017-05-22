@@ -12,7 +12,8 @@ export const validateNumber = (
   precision = 3
 ) => {
   /* eslint-disable prefer-template */
-  const expression = '^(-?\\d{' +
+  const expression =
+    '^(-?\\d{' +
     minimumLength +
     ',' +
     maximumLength +

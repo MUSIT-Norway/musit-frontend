@@ -131,9 +131,7 @@ export default class ObservationControlGrid extends Component {
                     }}
                   >
                     <td
-                      id={
-                        `${controlOrObservation.id}_${controlOrObservation.doneDate}_type`
-                      }
+                      id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_type`}
                     >
                       {controlOrObservation.eventType.toLowerCase() === 'control'
                         ? <div
@@ -151,41 +149,31 @@ export default class ObservationControlGrid extends Component {
                         : ''}
                     </td>
                     <td
-                      id={
-                        `${controlOrObservation.id}_${controlOrObservation.doneDate}_date`
-                      }
+                      id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_date`}
                     >
                       {parseISODate(controlOrObservation.doneDate).format(
                         DATE_FORMAT_DISPLAY
                       )}
                     </td>
                     <td
-                      id={
-                        `${controlOrObservation.id}_${controlOrObservation.doneDate}_types`
-                      }
+                      id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_types`}
                     >
                       {icons}
                     </td>
                     <td
-                      id={
-                        `${controlOrObservation.id}_${controlOrObservation.doneDate}_doneBy`
-                      }
+                      id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_doneBy`}
                     >
                       {controlOrObservation.doneBy}
                     </td>
                     <td
-                      id={
-                        `${controlOrObservation.id}_${controlOrObservation.doneDate}_registeredDate`
-                      }
+                      id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_registeredDate`}
                     >
                       {parseISODate(controlOrObservation.registeredDate).format(
                         DATE_FORMAT_DISPLAY
                       )}
                     </td>
                     <td
-                      id={
-                        `${controlOrObservation.id}_${controlOrObservation.doneDate}_registeredBy`
-                      }
+                      id={`${controlOrObservation.id}_${controlOrObservation.doneDate}_registeredBy`}
                     >
                       {controlOrObservation.registeredBy}
                     </td>

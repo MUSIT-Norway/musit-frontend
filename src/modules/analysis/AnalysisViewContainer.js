@@ -29,9 +29,13 @@ const props = {
   goBack: hashHistory.goBack
 };
 
-export const onMount = (
-  { getAnalysisTypes, appSession, loadForm, loadAnalysis, params }
-) => {
+export const onMount = ({
+  getAnalysisTypes,
+  appSession,
+  loadForm,
+  loadAnalysis,
+  params
+}) => {
   const inputParams = {
     museumId: appSession.museumId,
     id: params.analysisId,
@@ -40,7 +44,8 @@ export const onMount = (
   };
   getAnalysisTypes(inputParams);
   loadAnalysis(inputParams).then(analysis =>
-    loadForm(Analysis.fromJsonToForm(analysis, fieldsArray)));
+    loadForm(Analysis.fromJsonToForm(analysis, fieldsArray))
+  );
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(

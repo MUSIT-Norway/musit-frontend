@@ -91,13 +91,15 @@ export const validateAlcohol = (formProps, index, type) => {
   }
 
   if (
-    formProps.volumeValue && validateNumber(formProps.volumeValue, 0, 10, 3) === 'error'
+    formProps.volumeValue &&
+    validateNumber(formProps.volumeValue, 0, 10, 3) === 'error'
   ) {
     errors[`${type}.volumeValue`] = typeFieldIncorrect(type, 'volumeValue');
   }
 
   if (
-    formProps.commentValue && validateString(formProps.commentValue, 1, 250) === 'error'
+    formProps.commentValue &&
+    validateString(formProps.commentValue, 1, 250) === 'error'
   ) {
     errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentValue');
   }
@@ -119,7 +121,8 @@ export const validateFromTo = (formProps, index, type) => {
   }
 
   if (
-    formProps.commentValue && validateString(formProps.commentValue, 1, 250) === 'error'
+    formProps.commentValue &&
+    validateString(formProps.commentValue, 1, 250) === 'error'
   ) {
     errors[`${type}.commentValue`] = typeFieldIncorrect(type, 'commentsValue');
   }

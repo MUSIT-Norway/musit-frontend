@@ -51,7 +51,8 @@ export class PrintTemplateComponent extends Component {
     this.props.setTemplateId(templateId);
     this.props.clearRendered();
     if (templateId) {
-      const codeFormat = Config.print.labelConfig.codeFormat[templateId] ||
+      const codeFormat =
+        Config.print.labelConfig.codeFormat[templateId] ||
         PrintTemplateComponent.DEFAULT_CODE;
       const nodes = this.props.marked.map(markedNode => ({
         uuid: markedNode.value.nodeId,
@@ -122,7 +123,7 @@ export class PrintTemplateComponent extends Component {
           />}
         {this.props.store.rendered &&
           <IFrame
-            ref={child => this.previewFrame = child}
+            ref={child => (this.previewFrame = child)}
             frameProps={{
               width: '100%',
               height: '95%',

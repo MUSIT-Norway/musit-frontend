@@ -9,7 +9,7 @@ export default class FeideButton extends React.Component {
   };
 
   static defaultProps = {
-    navigate: url => window.location.href = url
+    navigate: url => (window.location.href = url)
   };
 
   render() {

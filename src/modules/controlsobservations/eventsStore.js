@@ -10,32 +10,32 @@ import flatten from 'lodash/flatten';
 import concat from 'lodash/concat';
 import * as ajax from '../../shared/RxAjax';
 
-export const loadEvents = ({ simpleGet, simplePost }) =>
-  props => {
-    const controls$ = Control.loadControls(simpleGet)(props);
-    const observations$ = Observation.loadObservations(simpleGet)(props);
-    return Observable.forkJoin(controls$, observations$).flatMap(([
-      controls,
-      observations
-    ]) => {
-      const events = orderBy(
-        concat(controls, observations),
-        ['doneDate', 'id'],
-        ['desc', 'desc']
-      );
-      const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(
-        p => p
-      );
-      return MusitActor.getActors(simplePost)({
-        actorIds,
-        token: props.token
-      }).map(actors =>
-        events.map(data => ({
-          ...data,
-          ...MusitActor.getActorNames(actors || [], data.doneBy, data.registeredBy)
-        })));
-    });
-  };
+export const loadEvents = ({ simpleGet, simplePost }) => props => {
+  const controls$ = Control.loadControls(simpleGet)(props);
+  const observations$ = Observation.loadObservations(simpleGet)(props);
+  return Observable.forkJoin(
+    controls$,
+    observations$
+  ).flatMap(([controls, observations]) => {
+    const events = orderBy(
+      concat(controls, observations),
+      ['doneDate', 'id'],
+      ['desc', 'desc']
+    );
+    const actorIds = uniq(flatten(events.map(r => [r.doneBy, r.registeredBy]))).filter(
+      p => p
+    );
+    return MusitActor.getActors(simplePost)({
+      actorIds,
+      token: props.token
+    }).map(actors =>
+      events.map(data => ({
+        ...data,
+        ...MusitActor.getActorNames(actors || [], data.doneBy, data.registeredBy)
+      }))
+    );
+  });
+};
 
 export const clearEvents$ = createAction('clearEvents$');
 export const loadEvents$ = createAction('loadEvents$').switchMap(loadEvents(ajax));
