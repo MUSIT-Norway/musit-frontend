@@ -5,46 +5,44 @@ import { emitError } from './errors';
 import { closeModal } from './modal';
 import { setAccessToken$ } from '../modules/app/appSession';
 
-export const onComplete = callback =>
-  response => {
-    if (callback && callback.onComplete) {
-      callback.onComplete(response);
-    }
-  };
+export const onComplete = callback => response => {
+  if (callback && callback.onComplete) {
+    callback.onComplete(response);
+  }
+};
 
 const shouldLog = function() {
   return process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test';
 };
 
-export const onFailure = callback =>
-  error => {
-    switch (error.status) {
-      case 401:
-        if (shouldLog()) {
-          console.error('Unauthorized', error); // eslint-disable-line no-console
-        }
-        if (localStorage.getItem('accessToken')) {
-          localStorage.removeItem('accessToken');
-          setAccessToken$.next(null);
-          hashHistory.push('/');
-          emitError({ ...error, type: 'network' });
-        }
-        closeModal();
-        return Observable.empty();
-      default:
-        break;
-    }
+export const onFailure = callback => error => {
+  switch (error.status) {
+    case 401:
+      if (shouldLog()) {
+        console.error('Unauthorized', error); // eslint-disable-line no-console
+      }
+      if (localStorage.getItem('accessToken')) {
+        localStorage.removeItem('accessToken');
+        setAccessToken$.next(null);
+        hashHistory.push('/');
+        emitError({ ...error, type: 'network' });
+      }
+      closeModal();
+      return Observable.empty();
+    default:
+      break;
+  }
 
-    if (callback && callback.onFailure) {
-      callback.onFailure(error);
-    }
+  if (callback && callback.onFailure) {
+    callback.onFailure(error);
+  }
 
-    if (shouldLog()) {
-      console.error(error); // eslint-disable-line no-console
-    }
+  if (shouldLog()) {
+    console.error(error); // eslint-disable-line no-console
+  }
 
-    return Observable.of({ error });
-  };
+  return Observable.of({ error });
+};
 
 export const ajax = (url, method, body, token, headers, responseType = 'json') =>
   Observable.ajax({

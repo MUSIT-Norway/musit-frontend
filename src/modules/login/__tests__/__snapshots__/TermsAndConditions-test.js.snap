@@ -1,38 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`TermsAndConditions should have english text 1`] = `
 <Modal
   animation={true}
   autoFocus={true}
   backdrop={true}
   bsClass="modal"
-  dialogComponentClass={[Function ModalDialog]}
+  dialogComponentClass={[Function]}
   enforceFocus={true}
   keyboard={true}
   manager={
     ModalManager {
+      "add": [Function],
       "containers": Array [],
       "data": Array [],
       "handleContainerOverflow": true,
       "hideSiblingNodes": true,
-      "modals": Array []
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
     }
   }
-  onHide={[Function noop]}
-  renderBackdrop={[Function renderBackdrop]}
+  onHide={[Function]}
+  renderBackdrop={[Function]}
   restoreFocus={true}
-  show={false}>
+  show={false}
+>
   <ModalHeader
-    aria-label="Close"
     bsClass="modal-header"
-    closeButton={true}>
+    closeButton={true}
+    closeLabel="Close"
+  >
     <ModalTitle
       bsClass="modal-title"
-      componentClass="h4">
+      componentClass="h4"
+    >
       Use of personal information in MUSITbasen
     </ModalTitle>
   </ModalHeader>
   <ModalBody
     bsClass="modal-body"
-    componentClass="div">
+    componentClass="div"
+  >
     <p>
       MUSITbasen uses Dataporten to authenticate users at login.
     </p>
@@ -51,14 +60,15 @@ exports[`TermsAndConditions should have english text 1`] = `
   </ModalBody>
   <ModalFooter
     bsClass="modal-footer"
-    componentClass="div">
+    componentClass="div"
+  >
     <Button
       active={false}
       block={false}
       bsClass="btn"
       bsStyle="default"
       disabled={false}
-      onClick={undefined}>
+    >
       Close
     </Button>
   </ModalFooter>
@@ -71,35 +81,42 @@ exports[`TermsAndConditions should have norwegian text 1`] = `
   autoFocus={true}
   backdrop={true}
   bsClass="modal"
-  dialogComponentClass={[Function ModalDialog]}
+  dialogComponentClass={[Function]}
   enforceFocus={true}
   keyboard={true}
   manager={
     ModalManager {
+      "add": [Function],
       "containers": Array [],
       "data": Array [],
       "handleContainerOverflow": true,
       "hideSiblingNodes": true,
-      "modals": Array []
+      "isTopModal": [Function],
+      "modals": Array [],
+      "remove": [Function],
     }
   }
-  onHide={[Function noop]}
-  renderBackdrop={[Function renderBackdrop]}
+  onHide={[Function]}
+  renderBackdrop={[Function]}
   restoreFocus={true}
-  show={false}>
+  show={false}
+>
   <ModalHeader
-    aria-label="Close"
     bsClass="modal-header"
-    closeButton={true}>
+    closeButton={true}
+    closeLabel="Close"
+  >
     <ModalTitle
       bsClass="modal-title"
-      componentClass="h4">
+      componentClass="h4"
+    >
       Bruk av personopplysninger i MUSITbasen
     </ModalTitle>
   </ModalHeader>
   <ModalBody
     bsClass="modal-body"
-    componentClass="div">
+    componentClass="div"
+  >
     <p>
       MUSITbasen benytter Dataporten til autentisering av brukere ved pålogging.
     </p>
@@ -118,14 +135,15 @@ exports[`TermsAndConditions should have norwegian text 1`] = `
   </ModalBody>
   <ModalFooter
     bsClass="modal-footer"
-    componentClass="div">
+    componentClass="div"
+  >
     <Button
       active={false}
       block={false}
       bsClass="btn"
       bsStyle="default"
       disabled={false}
-      onClick={undefined}>
+    >
       Lukk
     </Button>
   </ModalFooter>

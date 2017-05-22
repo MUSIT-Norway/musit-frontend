@@ -96,10 +96,10 @@ export default class TableComponent extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const museumHasChanged = newProps.appSession.museumId !==
-      this.props.appSession.museumId;
-    const collectionHasChanged = newProps.appSession.collectionId !==
-      this.props.appSession.collectionId;
+    const museumHasChanged =
+      newProps.appSession.museumId !== this.props.appSession.museumId;
+    const collectionHasChanged =
+      newProps.appSession.collectionId !== this.props.appSession.collectionId;
     const museumId = newProps.appSession.museumId;
     const collectionId = newProps.appSession.collectionId;
     const token = this.props.appSession.accessToken;
@@ -192,50 +192,49 @@ export default class TableComponent extends React.Component {
     moveNode = this.props.moveNode,
     loadNodes = this.loadNodes,
     loadRootNode = this.loadRootNode
-  ) =>
-    (toNode, toName, onSuccess, onFailure = () => true) => {
-      const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
-      if (!errorMessage) {
-        MusitNode.moveNode()({
-          id: nodeToMove.nodeId,
-          destination: toNode.nodeId,
-          doneBy: userId,
-          museumId,
-          token,
-          callback: {
-            onComplete: () => {
-              onSuccess();
-              loadRootNode(nodeId, museumId, token);
-              loadNodes(nodeId);
-              this.props.emitSuccess({
-                type: 'movedSuccess',
-                message: I18n.t('musit.moveModal.messages.nodeMoved', {
-                  name: nodeToMove.name,
-                  destination: toName
-                })
-              });
-            },
-            onFailure: e => {
-              onFailure();
-              this.props.emitError({
-                type: 'errorOnMove',
-                error: e,
-                message: I18n.t('musit.moveModal.messages.errorNode', {
-                  name: nodeToMove.name,
-                  destination: toName
-                })
-              });
-            }
+  ) => (toNode, toName, onSuccess, onFailure = () => true) => {
+    const errorMessage = checkNodeBranchAndType(nodeToMove, toNode);
+    if (!errorMessage) {
+      MusitNode.moveNode()({
+        id: nodeToMove.nodeId,
+        destination: toNode.nodeId,
+        doneBy: userId,
+        museumId,
+        token,
+        callback: {
+          onComplete: () => {
+            onSuccess();
+            loadRootNode(nodeId, museumId, token);
+            loadNodes(nodeId);
+            this.props.emitSuccess({
+              type: 'movedSuccess',
+              message: I18n.t('musit.moveModal.messages.nodeMoved', {
+                name: nodeToMove.name,
+                destination: toName
+              })
+            });
+          },
+          onFailure: e => {
+            onFailure();
+            this.props.emitError({
+              type: 'errorOnMove',
+              error: e,
+              message: I18n.t('musit.moveModal.messages.errorNode', {
+                name: nodeToMove.name,
+                destination: toName
+              })
+            });
           }
-        }).toPromise();
-      } else {
-        onFailure();
-        this.props.emitError({
-          type: 'errorOnMove',
-          message: errorMessage
-        });
-      }
-    };
+        }
+      }).toPromise();
+    } else {
+      onFailure();
+      this.props.emitError({
+        type: 'errorOnMove',
+        message: errorMessage
+      });
+    }
+  };
 
   showMoveObjectModal(objectToMove) {
     const objStr = MusitObject.getObjectDescription(objectToMove);
@@ -258,42 +257,41 @@ export default class TableComponent extends React.Component {
     token = this.props.appSession.accessToken,
     nodeId = this.props.tableStore.rootNode.nodeId,
     loadObjects = this.loadObjects
-  ) =>
-    (toNode, toName, onSuccess, onFailure = () => true) => {
-      const description = MusitObject.getObjectDescription(objectToMove);
-      MusitObject.moveObjects({
-        object: objectToMove,
-        destination: toNode.nodeId,
-        doneBy: userId,
-        museumId,
-        collectionId,
-        token,
-        callback: {
-          onComplete: () => {
-            onSuccess();
-            loadObjects(nodeId);
-            this.props.emitSuccess({
-              type: 'movedSuccess',
-              message: I18n.t('musit.moveModal.messages.objectMoved', {
-                name: description,
-                destination: toName
-              })
-            });
-          },
-          onFailure: e => {
-            onFailure();
-            this.props.emitError({
-              type: 'errorOnMove',
-              error: e,
-              message: I18n.t('musit.moveModal.messages.errorObject', {
-                name: description,
-                destination: toName
-              })
-            });
-          }
+  ) => (toNode, toName, onSuccess, onFailure = () => true) => {
+    const description = MusitObject.getObjectDescription(objectToMove);
+    MusitObject.moveObjects({
+      object: objectToMove,
+      destination: toNode.nodeId,
+      doneBy: userId,
+      museumId,
+      collectionId,
+      token,
+      callback: {
+        onComplete: () => {
+          onSuccess();
+          loadObjects(nodeId);
+          this.props.emitSuccess({
+            type: 'movedSuccess',
+            message: I18n.t('musit.moveModal.messages.objectMoved', {
+              name: description,
+              destination: toName
+            })
+          });
+        },
+        onFailure: e => {
+          onFailure();
+          this.props.emitError({
+            type: 'errorOnMove',
+            error: e,
+            message: I18n.t('musit.moveModal.messages.errorObject', {
+              name: description,
+              destination: toName
+            })
+          });
         }
-      });
-    };
+      }
+    });
+  };
 
   showObjectMoveHistory(objectToShowHistoryFor) {
     const objStr = MusitObject.getObjectDescription(objectToShowHistoryFor);

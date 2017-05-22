@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Panel, FormGroup, Button, Col, Row } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import * as ObservationRender from '../observation/render';

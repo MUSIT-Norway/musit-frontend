@@ -21,27 +21,25 @@ export const onChangeField$ = createAction('onChangeField$');
 export const reducer$ = actions =>
   Observable.merge(
     actions.clearSearch$.map(() => () => ({ ...initialState, loading: true })),
-    actions.searchForObjects$.map(result =>
-      state => {
-        const matches = result.matches;
-        return {
-          ...state,
-          loaded: true,
-          loading: false,
-          data: {
-            totalMatches: result.totalMatches ? result.totalMatches : 0,
-            matches
-          }
-        };
-      }),
-    actions.onChangeField$.map(({ field, value }) =>
-      state => ({
+    actions.searchForObjects$.map(result => state => {
+      const matches = result.matches;
+      return {
         ...state,
-        params: {
-          ...state.params,
-          [field]: value
+        loaded: true,
+        loading: false,
+        data: {
+          totalMatches: result.totalMatches ? result.totalMatches : 0,
+          matches
         }
-      }))
+      };
+    }),
+    actions.onChangeField$.map(({ field, value }) => state => ({
+      ...state,
+      params: {
+        ...state.params,
+        [field]: value
+      }
+    }))
   );
 
 export const store$ = (actions$ = { clearSearch$, searchForObjects$, onChangeField$ }) =>

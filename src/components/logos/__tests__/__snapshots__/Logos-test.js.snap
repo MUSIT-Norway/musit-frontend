@@ -1,46 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Logos should match snapshot 1`] = `
 <div
   className="logos"
-  style={undefined}>
+>
   <img
     alt="logo"
-    src="test-file-stub"
+    src="UiS_nor_color_rgb.png"
     style={
       Object {
-        "height": "60px"
+        "height": "60px",
       }
-    } />
+    }
+  />
   <img
     alt="logo"
-    src="test-file-stub"
+    src="UiO_SAMARB_rgb_gjennomsiktig.png"
     style={
       Object {
-        "height": "60px"
+        "height": "60px",
       }
-    } />
+    }
+  />
   <img
     alt="logo"
-    src="test-file-stub"
+    src="UiT_samarbeidslogo_bokmal_300ppi.png"
     style={
       Object {
-        "height": "60px"
+        "height": "60px",
       }
-    } />
+    }
+  />
   <img
     alt="logo"
-    src="test-file-stub"
+    src="UiBmerke_grayscale.png"
     style={
       Object {
-        "height": "60px"
+        "height": "60px",
       }
-    } />
+    }
+  />
   <img
     alt="logo"
-    src="test-file-stub"
+    src="ntnu_u-slagord.png"
     style={
       Object {
-        "height": "60px"
+        "height": "60px",
       }
-    } />
+    }
+  />
 </div>
 `;

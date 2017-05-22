@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`EventTableComponent should render header, body and footer 1`] = `
 <div>
   <Table
@@ -6,28 +8,28 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       Array [
         Object {
           "key": "doneDate",
-          "label": "Dato"
+          "label": "Dato",
         },
         Object {
           "key": "sampleType",
-          "label": "Prøvetype"
+          "label": "Prøvetype",
         },
         Object {
           "key": "sampleSubType",
-          "label": "Prøveundertype"
+          "label": "Prøveundertype",
         },
         Object {
           "key": "status",
-          "label": "Status"
+          "label": "Status",
         },
         Object {
           "key": "hasAnalyse",
-          "label": "Analyse"
+          "label": "Analyse",
         },
         Object {
           "key": "showInfo",
-          "label": "Vis detaljer"
-        }
+          "label": "Vis detaljer",
+        },
       ]
     }
     defaultSort={false}
@@ -40,59 +42,74 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     sortable={
       Array [
         "id",
-        "date"
+        "date",
       ]
-    }>
+    }
+  >
     <Tr>
       <Td
-        column="doneDate">
+        column="doneDate"
+      >
         20.01.1999
       </Td>
       <Td
-        column="sampleType">
+        column="sampleType"
+      >
         1
       </Td>
       <Td
-        column="sampleSubType">
+        column="sampleSubType"
+      >
          
       </Td>
       <Td
-        column="status">
+        column="status"
+      >
         2
       </Td>
       <Td
-        column="hasAnalyse" />
+        column="hasAnalyse"
+      />
       <Td
-        column="showInfo">
+        column="showInfo"
+      >
         <a
-          onClick={[Function onClick]}>
+          onClick={[Function]}
+        >
           Se mer / Rediger
         </a>
       </Td>
     </Tr>
     <Tr>
       <Td
-        column="doneDate">
+        column="doneDate"
+      >
         29.01.1999
       </Td>
       <Td
-        column="sampleType">
+        column="sampleType"
+      >
         1
       </Td>
       <Td
-        column="sampleSubType">
+        column="sampleSubType"
+      >
          
       </Td>
       <Td
-        column="status">
+        column="status"
+      >
         24
       </Td>
       <Td
-        column="hasAnalyse" />
+        column="hasAnalyse"
+      />
       <Td
-        column="showInfo">
+        column="showInfo"
+      >
         <a
-          onClick={[Function onClick]}>
+          onClick={[Function]}
+        >
           Se mer / Rediger
         </a>
       </Td>

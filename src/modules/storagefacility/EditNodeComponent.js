@@ -20,7 +20,8 @@ export class EditStorageUnitContainer extends React.Component {
   };
 
   componentWillMount() {
-    const id = (this.props.location.state && this.props.location.state.uuid) ||
+    const id =
+      (this.props.location.state && this.props.location.state.uuid) ||
       this.props.params.id;
     const museumId = this.props.appSession.museumId;
     const token = this.props.appSession.accessToken;

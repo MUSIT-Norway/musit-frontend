@@ -16,8 +16,11 @@ export const loadKDReport$ = createAction('loadKDReport$').switchMap(
 export const reducer$ = actions =>
   Observable.merge(
     actions.clear$.map(() => () => initialState),
-    actions.loadKDReport$.map(kdreport =>
-      state => ({ ...state, data: { kdreport }, loaded: true }))
+    actions.loadKDReport$.map(kdreport => state => ({
+      ...state,
+      data: { kdreport },
+      loaded: true
+    }))
   );
 
 export const store$ = (actions$ = { clear$, loadKDReport$ }) =>

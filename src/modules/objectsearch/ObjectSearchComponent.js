@@ -92,7 +92,8 @@ export class ObjectSearchComponent extends React.Component {
                               museumId: this.props.appSession.museumId,
                               collectionId: this.props.appSession.collectionId,
                               token: this.props.appSession.accessToken
-                            }));
+                            })
+                          );
                         }}
                         title={I18n.t('musit.objectsearch.addAllToPickList')}
                       >
@@ -103,10 +104,10 @@ export class ObjectSearchComponent extends React.Component {
                 </thead>
                 <tbody>
                   {store.data.matches.map((data, i) => {
-                    const isMainObject = !data.mainObjectId ||
-                      MusitObject.isMainObject(data);
-                    const isChildObject = data.mainObjectId &&
-                      !MusitObject.isMainObject(data);
+                    const isMainObject =
+                      !data.mainObjectId || MusitObject.isMainObject(data);
+                    const isChildObject =
+                      data.mainObjectId && !MusitObject.isMainObject(data);
                     return (
                       <tr
                         key={i}
@@ -202,7 +203,7 @@ export class ObjectSearchComponent extends React.Component {
           type="text"
           placeholder={I18n.t(`musit.objectsearch.${id}.placeHolder`)}
           onChange={e => this.props.onChangeField(id, e.target.value)}
-          ref={field => this[id] = ReactDOM.findDOMNode(field)}
+          ref={field => (this[id] = ReactDOM.findDOMNode(field))}
         />
       </div>
     );

@@ -14,7 +14,7 @@ export default class StatefulPromise {
 
   createPromise() {
     return (value: any) =>
-      new Promise((resolve: (any) => void) => {
+      new Promise((resolve: any => void) => {
         this.value = value;
         resolve(value);
       });

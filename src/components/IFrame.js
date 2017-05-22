@@ -21,7 +21,7 @@ class IFrame extends React.Component {
   }
 
   render() {
-    return <iframe {...this.props.frameProps} />;
+    return <iframe title="anonymous" {...this.props.frameProps} />;
   }
 
   componentDidMount() {

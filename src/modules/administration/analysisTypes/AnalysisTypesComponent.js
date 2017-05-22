@@ -1,5 +1,6 @@
 // @flow
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { I18n } from 'react-i18nify';
 import FontAwesome from 'react-fontawesome';
 
@@ -44,7 +45,7 @@ const getTableRow = (row, index) => {
     <tr value={row.id} key={index}>
       <td>{row.noName}</td>
       {collections.map(
-        c => row.collections.includes(c) ? CheckBoxShow(1, c) : CheckBoxShow(0, c)
+        c => (row.collections.includes(c) ? CheckBoxShow(1, c) : CheckBoxShow(0, c))
       )}
       <td>
         <button type="button" className="btn btn-default" value={row.id}>

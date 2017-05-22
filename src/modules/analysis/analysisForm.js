@@ -44,7 +44,7 @@ export const fieldsArray = [
   getStrField('updatedBy'),
   getStrField('updatedByName'),
   getStrField('updatedDate'),
-  getNumberField('status', 1, 1, 4, 0)
+  getNumberField('status', 1, true, 1, 4, 0)
 ];
 
 export default createForm('analysisForm.js', fieldsArray);

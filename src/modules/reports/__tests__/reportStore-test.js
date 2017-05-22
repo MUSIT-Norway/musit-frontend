@@ -1,5 +1,5 @@
 import { store$ } from '../reportStore';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('KDReportStore', () => {
   it('testing reducer', () => {

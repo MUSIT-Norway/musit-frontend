@@ -3,19 +3,17 @@ import { Subject } from 'rxjs/Rx';
 import createForm from '../form';
 import { stringMapper } from '../mappers';
 import type { Field, RawValue, Update } from '../form';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
 declare var describe: any;
 declare var it: any;
 
-const minLength = (length: number) =>
-  (field: string) =>
-    (value: ?RawValue) => {
-      const valid = typeof value === 'string' && value.length >= length;
-      if (!valid) {
-        return field + ' is not valid';
-      }
-    };
+const minLength = (length: number) => (field: string) => (value: ?RawValue) => {
+  const valid = typeof value === 'string' && value.length >= length;
+  if (!valid) {
+    return field + ' is not valid';
+  }
+};
 
 const minimumThreeChars = minLength(3);
 

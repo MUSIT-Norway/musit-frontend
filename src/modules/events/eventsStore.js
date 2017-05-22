@@ -18,8 +18,10 @@ const reducer$ = actions =>
   Observable.merge(
     actions.clear$.map(() => () => initialState),
     actions.loadEvents$.map(data => state => ({ ...state, data })),
-    actions.getCurrentLocation$.map(currentLocation =>
-      state => ({ ...state, currentLocation })),
+    actions.getCurrentLocation$.map(currentLocation => state => ({
+      ...state,
+      currentLocation
+    })),
     actions.setObject$.map(object => state => ({ ...state, object }))
   );
 

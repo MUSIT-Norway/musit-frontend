@@ -16,13 +16,12 @@ export const charReducer$ = source$ =>
     .map((c: String) => state => ({ ...state, buffer: state.buffer + c }));
 
 export const charDebouncer$ = source$ =>
-  source$.map(() =>
-    state => {
-      const buffer = state.buffer;
-      const number = /^\d+$/.test(buffer);
-      const uuid = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(buffer);
-      return { ...state, buffer: '', code: buffer, uuid, number };
-    });
+  source$.map(() => state => {
+    const buffer = state.buffer;
+    const number = /^\d+$/.test(buffer);
+    const uuid = /^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$/i.test(buffer);
+    return { ...state, buffer: '', code: buffer, uuid, number };
+  });
 
 const clearScanner$ = createAction('clearScanner$').map(() => () => initialState);
 const reducer$ = charReducer$(Observable.fromEvent(window.document, 'keypress'));
@@ -48,60 +47,59 @@ export const connectToScanner = (
   findObjectByBarcode = MusitObject.findByBarcode(),
   findNodeOrObjectByBarcode = MusitNode.findNodeOrObjectByBarcode(),
   classExistsOnDom = className => document.getElementsByClassName(className).length > 0
-) =>
-  Component => {
-    return class Wrapper extends React.Component {
-      static propTypes = {
-        appSession: PropTypes.object.isRequired
-      };
-
-      constructor(props) {
-        super(props);
-        this.state = { scannerEnabled: false };
-        this.toggleScanner = this.toggleScanner.bind(this);
-      }
-
-      enableScanner() {
-        this.disableScanner();
-        this.subscription = source$.subscribe(barCode => {
-          clearSource();
-          processBarcode(barCode, {
-            ...this.props,
-            findNodeByUUID,
-            findNodeByBarcode,
-            findObjectByBarcode,
-            findNodeOrObjectByBarcode,
-            classExistsOnDom
-          });
-        });
-      }
-
-      disableScanner() {
-        if (this.subscription) {
-          this.subscription.unsubscribe();
-          this.subscription = null;
-        }
-      }
-
-      toggleScanner(scannerEnabled = !this.state.scannerEnabled) {
-        this.setState({ ...this.state, scannerEnabled });
-        if (scannerEnabled) {
-          this.enableScanner();
-        } else {
-          this.disableScanner();
-        }
-      }
-
-      componentWillUnmount() {
-        this.disableScanner();
-      }
-
-      render() {
-        return (
-          <Component {...this.props} {...this.state} toggleScanner={this.toggleScanner} />
-        );
-      }
+) => Component => {
+  return class Wrapper extends React.Component {
+    static propTypes = {
+      appSession: PropTypes.object.isRequired
     };
+
+    constructor(props) {
+      super(props);
+      this.state = { scannerEnabled: false };
+      this.toggleScanner = this.toggleScanner.bind(this);
+    }
+
+    enableScanner() {
+      this.disableScanner();
+      this.subscription = source$.subscribe(barCode => {
+        clearSource();
+        processBarcode(barCode, {
+          ...this.props,
+          findNodeByUUID,
+          findNodeByBarcode,
+          findObjectByBarcode,
+          findNodeOrObjectByBarcode,
+          classExistsOnDom
+        });
+      });
+    }
+
+    disableScanner() {
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+        this.subscription = null;
+      }
+    }
+
+    toggleScanner(scannerEnabled = !this.state.scannerEnabled) {
+      this.setState({ ...this.state, scannerEnabled });
+      if (scannerEnabled) {
+        this.enableScanner();
+      } else {
+        this.disableScanner();
+      }
+    }
+
+    componentWillUnmount() {
+      this.disableScanner();
+    }
+
+    render() {
+      return (
+        <Component {...this.props} {...this.state} toggleScanner={this.toggleScanner} />
+      );
+    }
   };
+};
 
 export default connectToScanner;

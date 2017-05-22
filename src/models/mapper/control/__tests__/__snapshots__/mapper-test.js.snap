@@ -1,57 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`ControlMapperReducer maps to correct backend structure with no observations 1`] = `
 Object {
   "affectedThing": 54,
   "alcohol": Object {
     "observation": undefined,
-    "ok": true
+    "ok": true,
   },
   "cleaning": Object {
     "observation": undefined,
-    "ok": true
+    "ok": true,
   },
   "doneBy": "f4e1eba9-8add-4675-9836-db59f7115d7c",
   "doneDate": "2016-10-31T23:00:00.000Z",
   "eventType": "Control",
   "gas": Object {
     "observation": undefined,
-    "ok": true
+    "ok": true,
   },
   "hypoxicAir": Object {
     "observation": Object {
       "note": undefined,
       "range": Object {
         "from": undefined,
-        "to": undefined
-      }
+        "to": undefined,
+      },
     },
-    "ok": false
+    "ok": false,
   },
   "lightingCondition": Object {
     "observation": Object {
       "lightingCondition": "Some light",
-      "note": undefined
+      "note": undefined,
     },
-    "ok": false
+    "ok": false,
   },
   "mold": Object {
     "observation": undefined,
-    "ok": true
+    "ok": true,
   },
   "pest": Object {
     "observation": Object {
       "identification": undefined,
       "lifecycles": Array [],
-      "note": undefined
+      "note": undefined,
     },
-    "ok": false
+    "ok": false,
   },
   "relativeHumidity": Object {
     "observation": undefined,
-    "ok": true
+    "ok": true,
   },
   "temperature": Object {
     "observation": undefined,
-    "ok": true
-  }
+    "ok": true,
+  },
 }
 `;

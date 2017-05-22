@@ -1,13 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Administration should render Administration 1`] = `
 <div>
   <div
-    className="page-header">
+    className="page-header"
+  >
     <h1>
       Administrasjon
     </h1>
   </div>
   <table
-    className="table">
+    className="table"
+  >
     <thead>
       <tr>
         <th>
@@ -23,7 +27,8 @@ exports[`Administration should render Administration 1`] = `
         <td>
           <a
             href="/museum/99/collections/45555/administration/analysistypes"
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             Analysetyper
           </a>
         </td>
@@ -35,7 +40,8 @@ exports[`Administration should render Administration 1`] = `
         <td>
           <a
             href="/museum/99/collections/45555/administration/analysisplaces"
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             Analysesteder
           </a>
         </td>
@@ -47,7 +53,8 @@ exports[`Administration should render Administration 1`] = `
         <td>
           <a
             href="/museum/99/collections/45555/administration/sampletypes"
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             Prøvetyper
           </a>
         </td>

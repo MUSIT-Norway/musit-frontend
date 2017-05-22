@@ -356,7 +356,6 @@ export default class ObservationPage extends React.Component {
       >
         <Grid>
           <Row>
-            <h3 />
             <Row>
               <Col xs={12} sm={5}>
                 <ControlLabel>{I18n.t('musit.observation.page.date')}</ControlLabel>
@@ -428,7 +427,6 @@ export default class ObservationPage extends React.Component {
                   </Col>
                 </Row>
               : ''}
-            <h3 />
             {this.props.mode !== 'ADD'
               ? ''
               : <Row>

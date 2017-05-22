@@ -33,8 +33,10 @@ export const makeUrlAware = Component => {
         newProps.params,
         newProps.appSession,
         (params, session) => {
-          return params.museumId * 1 === session.museumId &&
-            params.collectionIds === session.collectionId;
+          return (
+            params.museumId * 1 === session.museumId &&
+            params.collectionIds === session.collectionId
+          );
         }
       );
       if (paramsDiffFromSession) {
@@ -103,7 +105,8 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
         collectionId,
         buildInfo: buildInfoRes.response
       };
-    }));
+    })
+  );
 };
 
 export const loadAppSession$ = createAction('loadAppSession$').switchMap(loadAppSession);
@@ -114,19 +117,18 @@ export const setAccessToken$ = createAction('setAccessToken$');
 export const refreshSession = (
   setMuseum = id => setMuseumId$.next(id),
   setCollection = id => setCollectionId$.next(id)
-) =>
-  (params, appSession) => {
-    const museumId = appSession.museumId;
-    const museumIdFromParam = params.museumId;
-    if (museumIdFromParam && museumIdFromParam !== museumId) {
-      setMuseum(museumIdFromParam);
-    }
-    const collectionId = appSession.collectionId;
-    const collectionIdFromParam = params.collectionIds;
-    if (collectionIdFromParam && collectionIdFromParam !== collectionId) {
-      setCollection(collectionIdFromParam);
-    }
-  };
+) => (params, appSession) => {
+  const museumId = appSession.museumId;
+  const museumIdFromParam = params.museumId;
+  if (museumIdFromParam && museumIdFromParam !== museumId) {
+    setMuseum(museumIdFromParam);
+  }
+  const collectionId = appSession.collectionId;
+  const collectionIdFromParam = params.collectionIds;
+  if (collectionIdFromParam && collectionIdFromParam !== collectionId) {
+    setCollection(collectionIdFromParam);
+  }
+};
 
 export const reducer$ = (actions, onError = emitError) =>
   Observable.merge(

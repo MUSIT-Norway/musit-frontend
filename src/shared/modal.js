@@ -16,14 +16,14 @@ export const showConfirm = (message, onYes) => {
 
   const title = I18n.t('musit.texts.deleteNode');
   const prompt = `<div>${message}</div>`;
-  const $dialog = (__$dialog__ = $(prompt).dialog({
+  const $dialog = (__$dialog__ = global.$(prompt).dialog({
     autoOpen: false,
     modal: true,
     title: title,
     autoResize: true,
     resizable: false,
     close: function() {
-      $(this).remove();
+      global.$(this).remove();
     }
   }));
   $dialog.dialog({
@@ -32,13 +32,13 @@ export const showConfirm = (message, onYes) => {
         text: I18n.t('musit.texts.showConfirm.ok'),
         click: function() {
           onYes();
-          $(this).dialog('close');
+          global.$(this).dialog('close');
         }
       },
       {
         text: I18n.t('musit.texts.showConfirm.cancel'),
         click: function() {
-          $(this).dialog('close');
+          global.$(this).dialog('close');
         }
       }
     ]
@@ -49,7 +49,7 @@ export const showConfirm = (message, onYes) => {
 export const showModal = (title, componentToRender, closeFn) => {
   closeModal();
 
-  const $dialog = (__$dialog__ = $('<div>').dialog({
+  const $dialog = (__$dialog__ = global.$('<div>').dialog({
     autoOpen: false,
     modal: true,
     title: title,
@@ -59,7 +59,7 @@ export const showModal = (title, componentToRender, closeFn) => {
     width: 'auto',
     close: function() {
       ReactDOM.unmountComponentAtNode(this);
-      $(this).remove();
+      global.$(this).remove();
       if (typeof closeFn === 'function') {
         closeFn();
       }

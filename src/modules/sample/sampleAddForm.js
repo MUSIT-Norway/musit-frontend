@@ -15,7 +15,7 @@ const status = getNumberField('status');
 const description = getStrField('description');
 const treatment = getStrField('treatment');
 const persons = getArrField('persons', [{ name: '', role: 'creator', date: '' }]);
-const leftoverSample = getNumberField('leftoverSample');
+const leftoverSample = getNumberField('leftoverSample', 1, false);
 
 const fields = [
   note,

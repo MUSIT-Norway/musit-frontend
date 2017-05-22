@@ -23,9 +23,7 @@ export default function FieldDropDown(props: FieldDropDownProps) {
       <div className="col-md-3">
         <select
           {...props.inputProps}
-          className={
-            `form-control ${props.inputProps ? props.inputProps.className || '' : ''}`
-          }
+          className={`form-control ${props.inputProps ? props.inputProps.className || '' : ''}`}
           value={props.field.value || ''}
           id={props.field.name}
           onChange={e =>

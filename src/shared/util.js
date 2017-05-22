@@ -3,8 +3,8 @@ import React from 'react';
 import moment from 'moment';
 import { Observable } from 'rxjs';
 
-export const toPromise = (fn: (val: any) => Observable) =>
-  (val: any) => fn(val).toPromise();
+export const toPromise = (fn: (val: any) => Observable) => (val: any) =>
+  fn(val).toPromise();
 
 export const flatten = (arr: Array<*>) => {
   const obj = {};

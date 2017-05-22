@@ -1,7 +1,7 @@
 import { Observable, Subject } from 'rxjs/Rx';
 import { initialState, store$ } from '../controlStore';
 import Control from '../../../models/control';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('ControlStore', () => {
   it('testing reducer', () => {

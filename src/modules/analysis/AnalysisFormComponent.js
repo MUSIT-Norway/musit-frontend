@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { I18n } from 'react-i18nify';
-import Config from 'config';
+import Config from '../../config';
 import type { AppSession } from 'types/appSession';
 import type { ObjectData } from 'types/object';
 import type { FormData } from './types/form';
@@ -12,9 +12,11 @@ import MetaInformation from './components/MetaInformation';
 
 type Location = { state?: Array<ObjectData> };
 
-type SaveAnalysisFn = (
-  props: { museumId: number, data: mixed, token: string }
-) => Promise<*>;
+type SaveAnalysisFn = (props: {
+  museumId: number,
+  data: mixed,
+  token: string
+}) => Promise<*>;
 
 type Props = {
   form: FormData,
@@ -24,23 +26,21 @@ type Props = {
   saveAnalysis: SaveAnalysisFn,
   saveResult: Function,
   location: Location,
-  goToUrl: (string) => void,
+  goToUrl: string => void,
   goBack: () => void
 };
 
-const AnalysisForm = (
-  {
-    form,
-    updateForm,
-    store,
-    saveAnalysis,
-    saveResult,
-    appSession,
-    location,
-    goToUrl,
-    goBack
-  }: Props
-) => {
+const AnalysisForm = ({
+  form,
+  updateForm,
+  store,
+  saveAnalysis,
+  saveResult,
+  appSession,
+  location,
+  goToUrl,
+  goBack
+}: Props) => {
   return (
     <div>
       <div className="page-header">
@@ -282,9 +282,7 @@ const AnalysisForm = (
                   Ja
                 </label>
                 <label
-                  className={
-                    `btn btn-default ${!form.restrictions.value ? 'active' : ''}`
-                  }
+                  className={`btn btn-default ${!form.restrictions.value ? 'active' : ''}`}
                 >
                   <input
                     type="radio"
@@ -442,12 +440,11 @@ export function updateArrayField(field: string, updateForm: Function) {
 }
 
 export function updateBooleanField(b: boolean) {
-  return (field: string, updateForm: Function) =>
-    () =>
-      updateForm({
-        name: field,
-        rawValue: b
-      });
+  return (field: string, updateForm: Function) => () =>
+    updateForm({
+      name: field,
+      rawValue: b
+    });
 }
 
 export function getAnalysisTypeTerm(store: Store) {
@@ -467,7 +464,7 @@ export function submitForm(
   location?: Location,
   saveAnalysisEvent: SaveAnalysisFn,
   saveResult: Function,
-  goToUrl: (string) => void
+  goToUrl: string => void
 ) {
   return (e: { preventDefault: Function }) => {
     e.preventDefault();

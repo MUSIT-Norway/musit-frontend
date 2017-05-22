@@ -1,5 +1,5 @@
 import { sampleStore$ } from '../sampleStore';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('eventsStore', () => {
   it('testing reducer', () => {

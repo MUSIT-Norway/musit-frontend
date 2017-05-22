@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { Router, hashHistory } from 'react-router';
 import getRoutes from './routes';
 import config from './config';
-import LanguageJson from '../language.json';
+import LanguageJson from './language.json';
 import { I18n } from 'react-i18nify';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -20,6 +20,7 @@ import provide from 'react-rxjs/dist/RxProvide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
 import queryParser from 'query-string';
+import registerServiceWorker from './registerServiceWorker';
 
 const notificationSystem = ReactDOM.render(
   <NotificationSystem />,
@@ -43,7 +44,7 @@ notification$.subscribe(event => {
   });
 });
 
-const accessToken = queryParser.parse(location.search)['_at'];
+const accessToken = queryParser.parse(window.location.search)['_at'];
 if (accessToken) {
   localStorage.setItem('accessToken', JSON.stringify({ accessToken }));
   window.location.href = '/#/home';
@@ -77,4 +78,6 @@ if (accessToken) {
   if (config.isDev) {
     window.React = React;
   }
+
+  registerServiceWorker();
 }

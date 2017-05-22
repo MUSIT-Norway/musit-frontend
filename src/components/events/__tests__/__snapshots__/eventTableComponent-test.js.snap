@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`EventTableComponent should render header, body and footer 1`] = `
 <div>
   <Table
@@ -6,28 +8,28 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       Array [
         Object {
           "key": "doneDate",
-          "label": "Utført dato"
+          "label": "Utført dato",
         },
         Object {
           "key": "type",
-          "label": "Type hendelse"
+          "label": "Type hendelse",
         },
         Object {
           "key": "doneBy",
-          "label": "Utført av"
+          "label": "Utført av",
         },
         Object {
           "key": "keyData",
-          "label": "Nøkkeldata"
+          "label": "Nøkkeldata",
         },
         Object {
           "key": "caseNumber",
-          "label": "Saksnummer"
+          "label": "Saksnummer",
         },
         Object {
           "key": "note",
-          "label": "Kommentar"
-        }
+          "label": "Kommentar",
+        },
       ]
     }
     defaultSort={false}
@@ -43,46 +45,61 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         "type",
         "eventDate",
         "registeredBy",
-        "note"
+        "note",
       ]
-    }>
+    }
+  >
     <Tr
-      onClick={[Function onClick]}>
+      onClick={[Function]}
+    >
       <Td
-        column="doneDate" />
+        column="doneDate"
+      />
       <Td
-        column="type" />
+        column="type"
+      />
       <Td
-        column="doneBy">
+        column="doneBy"
+      >
         Ole Olsen
       </Td>
       <Td
-        column="keyData" />
+        column="keyData"
+      />
       <Td
-        column="caseNumber" />
+        column="caseNumber"
+      />
       <Td
-        column="note">
+        column="note"
+      >
         <span>
           Ein kommentar
         </span>
       </Td>
     </Tr>
     <Tr
-      onClick={[Function onClick]}>
+      onClick={[Function]}
+    >
       <Td
-        column="doneDate" />
+        column="doneDate"
+      />
       <Td
-        column="type" />
+        column="type"
+      />
       <Td
-        column="doneBy">
+        column="doneBy"
+      >
         Ole Hansen
       </Td>
       <Td
-        column="keyData" />
+        column="keyData"
+      />
       <Td
-        column="caseNumber" />
+        column="caseNumber"
+      />
       <Td
-        column="note">
+        column="note"
+      >
         <span>
           Ein kommentar
         </span>

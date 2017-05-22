@@ -41,11 +41,15 @@ export const updateMoveDialog = (nodeId, museumId, token) => {
 export const reducer$ = actions =>
   Observable.merge(
     actions.clear$.map(() => () => initialState),
-    actions.setLoading$.map(loading =>
-      state => ({ ...state, data: { ...state.data, loading } })),
+    actions.setLoading$.map(loading => state => ({
+      ...state,
+      data: { ...state.data, loading }
+    })),
     actions.loadNode$.map(node => state => ({ ...state, selectedNode: node })),
-    actions.loadChildren$.map(data =>
-      state => ({ ...state, data: { ...data, loading: false } })),
+    actions.loadChildren$.map(data => state => ({
+      ...state,
+      data: { ...data, loading: false }
+    })),
     actions.setPage$.map(page => state => ({ ...state, page }))
   );
 

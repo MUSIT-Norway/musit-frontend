@@ -1,18 +1,18 @@
 // @flow
 import React  from 'react';
-import Config from 'config';
-import PersonRoleDate from 'components/samples/personRoleDate';
-import Sample from 'models/sample';
-import type { ObjectData } from 'types/object';
-import type { AppSession } from 'types/appSession';
+import Config from '../../config';
+import PersonRoleDate from '../../components/samples/personRoleDate';
+import Sample from '../../models/sample';
+import type { ObjectData } from '../../types/object';
+import type { AppSession } from '../../types/appSession';
 import {hashHistory} from 'react-router';
-import type {Person} from 'components/samples/personRoleDate';
+import type {Person} from '../../components/samples/personRoleDate';
 import type {FormDetails} from './types/form';
-import ValidatedFormGroup from 'forms/components/ValidatedFormGroup';
-import FieldCheckBox from 'forms/components/FieldCheckBox';
-import FieldDropDown from 'forms/components/FieldDropDown';
-import FieldInput from 'forms/components/FieldInput';
-import FieldTextArea from 'forms/components/FieldTextArea';
+import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
+import FieldCheckBox from '../../forms/components/FieldCheckBox';
+import FieldDropDown from '../../forms/components/FieldDropDown';
+import FieldInput from '../../forms/components/FieldInput';
+import FieldTextArea from '../../forms/components/FieldTextArea';
 import flatten from 'lodash/flatten';
 
 type Params = {
@@ -41,6 +41,9 @@ type Props = {
 function isFormValid(form) {
   return Object.keys(form).reduce((acc, k) => {
     const field = form[k];
+    if (!field.status.valid) {
+      console.log('Not valid: ',field);
+    }
     return acc && field.status.valid;
   }, true);
 }
@@ -215,7 +218,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         Lagre
       </button>
       <a
-        href="#"
+        href="/"
         style={{ marginLeft: 20 }}
         onClick={(e) => {
           e.preventDefault();

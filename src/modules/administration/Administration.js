@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import PropTypes from 'prop-types';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
 import inject from 'react-rxjs/dist/RxInject';
@@ -72,7 +73,7 @@ export const Administration = (props: Props) => {
 };
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: PropTypes.object.isRequired }
 };
 
 export default flowRight([inject(data), makeUrlAware])(Administration);
