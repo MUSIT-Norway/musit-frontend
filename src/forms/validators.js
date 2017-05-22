@@ -38,26 +38,11 @@ export const isNonEmptyArray = revalidate.createValidator(
 export const isRequired = revalidate.createValidator(
   message =>
     value => {
-      if (value == null || (typeof value === 'string' && value.trim() === '')) {
+      if (!value || (typeof value === 'string' && value.trim() === '')) {
         return message;
       }
     },
   (field: string) => `${field} is required`
-);
-
-export const isSpecialPhone = revalidate.createValidator(
-  message =>
-    value => {
-      if (value) {
-        const parts = value.split('-');
-        if (
-          parts.length !== 2 || !(/^\d{2}$/.test(parts[0]) && /^\d{2}$/.test(parts[1]))
-        ) {
-          return message;
-        }
-      }
-    },
-  (field: string) => `${field} is not a phone`
 );
 
 export const noValidation = {

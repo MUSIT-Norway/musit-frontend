@@ -1,10 +1,4 @@
-import {
-  isNumberInRange,
-  isNumber,
-  isSpecialPhone,
-  isRequired,
-  isNonEmptyArray
-} from '../validators';
+import { isNumberInRange, isNumber, isRequired, isNonEmptyArray } from '../validators';
 
 describe('validators', () => {
   describe('isRequired', () => {
@@ -30,33 +24,6 @@ describe('validators', () => {
     it('should accept number within range with from below zero', () => {
       const error = isNumberInRange(-1000, 3)('test')(-30);
       expect(error).toBe(undefined);
-    });
-  });
-
-  describe('isPhone', () => {
-    it('should accept string with two numbers separated by -', () => {
-      const error = isSpecialPhone('test')('34-34');
-      expect(error).toBe(undefined);
-    });
-
-    it('should reject string with two numbers separated by - when first number is not two digits', () => {
-      const error = isSpecialPhone('test')('344-34');
-      expect(error).toBe('test is not a phone');
-    });
-
-    it('should accept string with two numbers separated by - when second number is not two digits', () => {
-      const error = isSpecialPhone('test')('34-345');
-      expect(error).toBe('test is not a phone');
-    });
-
-    it('should reject string with .', () => {
-      const error = isSpecialPhone('test')('34.34');
-      expect(error).toBe('test is not a phone');
-    });
-
-    it('should reject string with only digits', () => {
-      const error = isSpecialPhone('test')('3434');
-      expect(error).toBe('test is not a phone');
     });
   });
 
