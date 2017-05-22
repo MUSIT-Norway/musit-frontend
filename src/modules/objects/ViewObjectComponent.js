@@ -17,13 +17,11 @@ type ViewObjectComponentProps = {
   analysisTypes: AnalysisTypes
 };
 
-export const ViewObjectComponent = (
-  {
-    objectStore: { objectData, events, samples },
-    appSession,
-    analysisTypes
-  }: ViewObjectComponentProps
-) => (
+export const ViewObjectComponent = ({
+  objectStore: { objectData, events, samples },
+  appSession,
+  analysisTypes
+}: ViewObjectComponentProps) => (
   <div>
     <PageHeader>Objektvisning</PageHeader>
     <div style={{ marginTop: '30px', marginBottom: '40px' }}>

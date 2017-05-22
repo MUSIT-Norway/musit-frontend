@@ -43,12 +43,16 @@ class MusitActor {
     actors: Array<Actor>,
     fields: Array<ActorField>
   ) => ActorMetaData;
-  static getActors: (ajaxPost: AjaxPost) => (
-    props: { actorIds: Array<string>, token: string, callback?: Callback }
-  ) => Observable<Array<Actor>>;
-  static getActor: (ajaxGet: AjaxGet) => (
-    props: { actorId: string, token: string, callback?: Callback }
-  ) => Observable;
+  static getActors: (
+    ajaxPost: AjaxPost
+  ) => (props: {
+    actorIds: Array<string>,
+    token: string,
+    callback?: Callback
+  }) => Observable<Array<Actor>>;
+  static getActor: (
+    ajaxGet: AjaxGet
+  ) => (props: { actorId: string, token: string, callback?: Callback }) => Observable;
 }
 
 /**
@@ -93,31 +97,26 @@ MusitActor.getMultipleActorNames = (
   actorFields: Array<ActorField>
 ) => {
   const actors = [].concat(actorsJson);
-  return actorFields.reduce(
-    (acc, next: { id: string, fieldName: ActorFieldName }) => {
-      const actor = find(actors, a => MusitActor.hasActorId(a, next.id));
-      if (!actor) {
-        return acc;
-      }
-      return { ...acc, [next.fieldName]: actor.fn };
-    },
-    {}
-  );
+  return actorFields.reduce((acc, next: { id: string, fieldName: ActorFieldName }) => {
+    const actor = find(actors, a => MusitActor.hasActorId(a, next.id));
+    if (!actor) {
+      return acc;
+    }
+    return { ...acc, [next.fieldName]: actor.fn };
+  }, {});
 };
 
-MusitActor.getActors = (ajaxPost = simplePost) =>
-  ({ actorIds, token, callback }) =>
-    ajaxPost(
-      `${Config.magasin.urls.api.actor.baseUrl}/details`,
-      actorIds,
-      token,
-      callback
-    ).map(({ response }) => response);
+MusitActor.getActors = (ajaxPost = simplePost) => ({ actorIds, token, callback }) =>
+  ajaxPost(
+    `${Config.magasin.urls.api.actor.baseUrl}/details`,
+    actorIds,
+    token,
+    callback
+  ).map(({ response }) => response);
 
-MusitActor.getActor = (ajaxGet = simpleGet) =>
-  ({ actorId, token, callback }) =>
-    ajaxGet(`${Config.magasin.urls.api.actor.baseUrl}/${actorId}`, token, callback).map(
-      ({ response }) => response
-    );
+MusitActor.getActor = (ajaxGet = simpleGet) => ({ actorId, token, callback }) =>
+  ajaxGet(`${Config.magasin.urls.api.actor.baseUrl}/${actorId}`, token, callback).map(
+    ({ response }) => response
+  );
 
 export default MusitActor;

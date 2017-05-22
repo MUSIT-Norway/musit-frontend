@@ -233,10 +233,10 @@ export class PickListComponent extends React.Component {
                 {pickList.map((pick, i) => {
                   const item = pick.value;
                   const isItemMarked = pick.marked;
-                  const isMainObject = item.term &&
-                    (!item.mainObjectId || MusitObject.isMainObject(item));
-                  const isChildObject = item.term &&
-                    (item.mainObjectId && !MusitObject.isMainObject(item));
+                  const isMainObject =
+                    item.term && (!item.mainObjectId || MusitObject.isMainObject(item));
+                  const isChildObject =
+                    item.term && (item.mainObjectId && !MusitObject.isMainObject(item));
                   return (
                     <tr
                       key={i}

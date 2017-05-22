@@ -1,30 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`AnalysisFormComponent should render objects from events 1`] = `
 <div>
   <div
-    className="page-header">
+    className="page-header"
+  >
     <h1>
       Registrer analyse
     </h1>
   </div>
   <form
-    className="form-horizontal">
+    className="form-horizontal"
+  >
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="type">
+        htmlFor="type"
+      >
         Type analyse:
       </label>
       <div>
         <div
-          className="col-md-5">
+          className="col-md-5"
+        >
           <select
             className="form-control"
             id="type"
-            onChange={[Function anonymous]}
-            value="">
+            onChange={[Function]}
+            value=""
+          >
             <option
-              value="">
+              value=""
+            >
               Velg kategori
             </option>
           </select>
@@ -32,21 +41,26 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       </div>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="reason">
+        htmlFor="reason"
+      >
         Formål med analysen:
       </label>
       <div
-        className="col-md-10">
+        className="col-md-10"
+      >
         <select
           className="form-control"
           id="reason"
-          onChange={[Function anonymous]}
-          value="">
+          onChange={[Function]}
+          value=""
+        >
           <option
-            value="">
+            value=""
+          >
             Velg formål
           </option>
           <option>
@@ -65,118 +79,146 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
       </div>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="status">
+        htmlFor="status"
+      >
         Status på analysen:
       </label>
       <div
-        className="col-md-10">
+        className="col-md-10"
+      >
         <select
           className="form-control"
           id="status"
-          onChange={[Function anonymous]}
-          value="1">
+          onChange={[Function]}
+          value="1"
+        >
           <option
-            value="">
+            value=""
+          >
             Velg formål
           </option>
           <option
-            value="1">
+            value="1"
+          >
             1. Under forberedelse
           </option>
           <option
-            value="2">
+            value="2"
+          >
             2. Analyse påbegynt
           </option>
           <option
-            value="3">
+            value="3"
+          >
             3. Analyse ferdig
           </option>
           <option
-            value="4">
+            value="4"
+          >
             4. Avsluttet uten resultat
           </option>
         </select>
       </div>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="casenumber">
+        htmlFor="casenumber"
+      >
         Saksnummer:
       </label>
       <div
-        className="col-md-5">
+        className="col-md-5"
+      >
         <input
           className="form-control"
           id="casenumber"
-          onChange={[Function anonymous]}
+          onChange={[Function]}
           type="text"
-          value="" />
+          value=""
+        />
       </div>
       <AddButton
         id="1"
         label="Legg til saksnummer"
         md={5}
-        mdOffset={0} />
+        mdOffset={0}
+      />
     </div>
     <hr />
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="note">
+        htmlFor="note"
+      >
         Kommentar:
       </label>
       <div
-        className="col-md-10">
+        className="col-md-10"
+      >
         <textarea
           className="form-control"
           id="note"
-          onChange={[Function anonymous]}
+          onChange={[Function]}
           rows={5}
-          value="" />
+          value=""
+        />
       </div>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
-        className="control-label">
+        className="control-label"
+      >
         Personer tilknyttet analysen:
       </label>
     </div>
     <div
-      className="form-group">
+      className="form-group"
+    >
       <label
         className="control-label col-md-2"
-        htmlFor="responsible-name1">
+        htmlFor="responsible-name1"
+      >
         Navn:
       </label>
       <div
-        className="col-md-2">
+        className="col-md-2"
+      >
         <input
           className="form-control"
           id="responsible-name1"
-          type="text" />
+          type="text"
+        />
       </div>
       <label
         className="control-label col-md-1"
-        htmlFor="responsible-role1">
+        htmlFor="responsible-role1"
+      >
         Rolle:
       </label>
       <div
-        className="col-md-2">
+        className="col-md-2"
+      >
         <select
           className="form-control"
-          id="responsible-role1">
+          id="responsible-role1"
+        >
           <option>
             Velg rolle
           </option>
           <option
-            value="other">
+            value="other"
+          >
             ...
           </option>
         </select>
@@ -185,36 +227,41 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         id="3"
         label="Legg til person"
         md={2}
-        mdOffset={0} />
+        mdOffset={0}
+      />
     </div>
     <hr />
     <div
-      className="well">
+      className="well"
+    >
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="objects">
+          htmlFor="objects"
+        >
           Objekter:
         </label>
         <div
-          className="col-md-10">
+          className="col-md-10"
+        >
           <Table
             className="table"
             columns={
               Array [
                 Object {
                   "key": "museumNo",
-                  "label": "Museumsnr"
+                  "label": "Museumsnr",
                 },
                 Object {
                   "key": "subNo",
-                  "label": "Unr"
+                  "label": "Unr",
                 },
                 Object {
                   "key": "term",
-                  "label": "Term/artsnavn"
-                }
+                  "label": "Term/artsnavn",
+                },
               ]
             }
             data={
@@ -229,7 +276,7 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                   "objectUUID": "sdffsdsfsf",
                   "subNo": "subNO",
                   "term": "saks 1",
-                  "uuid": "ddlkjlkjfsdf"
+                  "uuid": "ddlkjlkjfsdf",
                 },
                 Object {
                   "id": 2,
@@ -241,8 +288,8 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
                   "objectUUID": "sdffsdsfsf",
                   "subNo": "subNO",
                   "term": "saks 2",
-                  "uuid": "ddlkjlkjfsdf"
-                }
+                  "uuid": "ddlkjlkjfsdf",
+                },
               ]
             }
             defaultSort={false}
@@ -257,105 +304,131 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
               Array [
                 "museumNumber",
                 "subNumber",
-                "term"
+                "term",
               ]
-            } />
+            }
+          />
         </div>
         <AddButton
           id="2"
           label="Legg til objekt"
           md={11}
-          mdOffset={2} />
+          mdOffset={2}
+        />
       </div>
       <hr />
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="externalSource">
+          htmlFor="externalSource"
+        >
           Ekstern kilde:
         </label>
         <div
-          className="col-md-5">
+          className="col-md-5"
+        >
           <input
             className="form-control"
             id="externalSource"
-            onChange={[Function anonymous]}
-            value="" />
+            onChange={[Function]}
+            value=""
+          />
         </div>
         <div
-          className="col-md-2">
+          className="col-md-2"
+        >
           <button
-            className="btn btn-default">
+            className="btn btn-default"
+          >
             Lagre
           </button>
         </div>
       </div>
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="file">
+          htmlFor="file"
+        >
           Last opp fil:
         </label>
         <div
-          className="col-md-5">
+          className="col-md-5"
+        >
           <input
             className="form-control"
-            id="file" />
+            id="file"
+          />
         </div>
         <div
-          className="col-md-2">
+          className="col-md-2"
+        >
           <button
-            className="btn btn-default">
+            className="btn btn-default"
+          >
             Bla gjennom
           </button>
         </div>
       </div>
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="resultNote">
+          htmlFor="resultNote"
+        >
           Kommentar til resultat:
         </label>
         <div
-          className="col-md-10">
+          className="col-md-10"
+        >
           <textarea
             className="form-control"
             id="resultNote"
-            onChange={[Function anonymous]}
+            onChange={[Function]}
             rows={5}
-            value="" />
+            value=""
+          />
         </div>
       </div>
       <div
-        className="form-group">
+        className="form-group"
+      >
         <label
           className="control-label col-md-2"
-          htmlFor="isRestricted">
+          htmlFor="isRestricted"
+        >
           Klausulering:
         </label>
         <div
-          className="col-md-10">
+          className="col-md-10"
+        >
           <div
             className="btn-group"
-            data-toggle="buttons">
+            data-toggle="buttons"
+          >
             <label
-              className="btn btn-default ">
+              className="btn btn-default "
+            >
               <input
                 name="options"
-                onChange={[Function anonymous]}
-                type="radio" />
+                onChange={[Function]}
+                type="radio"
+              />
                
               Ja
             </label>
             <label
-              className="btn btn-default active">
+              className="btn btn-default active"
+            >
               <input
                 name="options"
-                onChange={[Function anonymous]}
-                type="radio" />
+                onChange={[Function]}
+                type="radio"
+              />
                
               Nei
             </label>
@@ -366,13 +439,15 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
     <hr />
     <button
       className="btn btn-primary"
-      onClick={[Function anonymous]}>
+      onClick={[Function]}
+    >
       Lagre
     </button>
      
     <button
       className="btn btn-default"
-      onClick={[Function onClick]}>
+      onClick={[Function]}
+    >
       Avbryt
     </button>
   </form>

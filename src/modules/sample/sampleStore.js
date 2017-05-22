@@ -8,7 +8,8 @@ export const loadSamplesForObject$ = createAction('loadSamplesForObject$').switc
 );
 
 export const loadSampleTypes$ = createAction('loadSampleTypes$').switchMap(props =>
-  Sample.loadSampleTypes()(props).do(props.onComplete));
+  Sample.loadSampleTypes()(props).do(props.onComplete)
+);
 
 export const clear$ = createAction('clear$');
 

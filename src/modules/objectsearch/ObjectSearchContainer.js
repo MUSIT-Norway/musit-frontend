@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import inject from 'react-rxjs/dist/RxInject';
 import objectSearchStore$, {
@@ -15,8 +15,8 @@ import ObjectSearchComponent from './ObjectSearchComponent';
 import MusitObject from '../../models/object';
 
 const data = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
-  pickList$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
+  pickList$: { type: PropTypes.object.isRequired },
   objectSearchStore$
 };
 

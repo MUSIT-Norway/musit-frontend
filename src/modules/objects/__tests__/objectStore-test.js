@@ -1,5 +1,5 @@
 import { store$, initialState } from '../objectStore';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('objectStore', () => {
   it('testing reducer', () => {

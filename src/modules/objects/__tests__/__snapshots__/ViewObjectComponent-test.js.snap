@@ -1,23 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`ViewObjectComponent should display correctly 1`] = `
 <div>
   <PageHeader
-    bsClass="page-header">
+    bsClass="page-header"
+  >
     Objektvisning
   </PageHeader>
   <div
     style={
       Object {
         "marginBottom": "40px",
-        "marginTop": "30px"
+        "marginTop": "30px",
       }
-    }>
+    }
+  >
     <Row
       bsClass="row"
-      componentClass="div">
+      componentClass="div"
+    >
       <Col
         bsClass="col"
         componentClass="div"
-        md={2}>
+        md={2}
+      >
         <b>
           Museumsnr:
         </b>
@@ -27,7 +33,8 @@ exports[`ViewObjectComponent should display correctly 1`] = `
       <Col
         bsClass="col"
         componentClass="div"
-        md={1}>
+        md={1}
+      >
         <b>
           Unr:
         </b>
@@ -36,7 +43,8 @@ exports[`ViewObjectComponent should display correctly 1`] = `
       <Col
         bsClass="col"
         componentClass="div"
-        md={3}>
+        md={3}
+      >
         <b>
           Term/artsnavn:
         </b>
@@ -47,9 +55,10 @@ exports[`ViewObjectComponent should display correctly 1`] = `
   <div
     style={
       Object {
-        "paddingBottom": 10
+        "paddingBottom": 10,
       }
-    }>
+    }
+  >
     <Button
       active={false}
       block={false}
@@ -57,7 +66,8 @@ exports[`ViewObjectComponent should display correctly 1`] = `
       bsStyle="default"
       className="primary"
       disabled={false}
-      onClick={[Function onClick]}>
+      onClick={[Function]}
+    >
       Ny analyse
     </Button>
     <Button
@@ -67,18 +77,20 @@ exports[`ViewObjectComponent should display correctly 1`] = `
       bsStyle="default"
       className="primary"
       disabled={false}
-      onClick={[Function onClick]}>
+      onClick={[Function]}
+    >
       Ny prøve
     </Button>
   </div>
   <Uncontrolled(Tabs)
     defaultActiveKey={1}
-    id="events">
+    id="events"
+  >
     <Tab
       eventKey={1}
-      title="Hendelser">
+      title="Hendelser"
+    >
       <EventTableComponent
-        analysisTypes={undefined}
         events={
           Array [
             Object {
@@ -87,7 +99,7 @@ exports[`ViewObjectComponent should display correctly 1`] = `
               "id": "1233-111-2222-222",
               "keyData": "Til magasin nr 3",
               "note": "Ein kommentar",
-              "registeredBy": "Ole Olsen"
+              "registeredBy": "Ole Olsen",
             },
             Object {
               "eventDate": "1999-06-20",
@@ -95,17 +107,19 @@ exports[`ViewObjectComponent should display correctly 1`] = `
               "id": "1233-111-2122-222",
               "keyData": "Acid",
               "note": "Ein kommentar",
-              "registeredBy": "Ole Hansen"
-            }
+              "registeredBy": "Ole Hansen",
+            },
           ]
         }
-        onClick={[Function onClick]} />
+        onClick={[Function]}
+      />
     </Tab>
     <Tab
       eventKey={2}
-      title="Prøver">
+      title="Prøver"
+    >
       <SampleTableComponent
-        onClick={[Function onClick]}
+        onClick={[Function]}
         samples={
           Array [
             Object {
@@ -113,17 +127,18 @@ exports[`ViewObjectComponent should display correctly 1`] = `
               "hasAnalyse": false,
               "id": "1233-111-2222-222",
               "sampleTypeId": 1,
-              "status": 2
+              "status": 2,
             },
             Object {
               "doneDate": "1999-01-29",
               "hasAnalyse": true,
               "id": "1233-111-2155-222",
               "sampleTypeId": 2,
-              "status": 24
-            }
+              "status": 24,
+            },
           ]
-        } />
+        }
+      />
     </Tab>
   </Uncontrolled(Tabs)>
 </div>

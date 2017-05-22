@@ -14,9 +14,13 @@ type FieldInputProps = {
   }
 };
 
-export default function CheckBoxInput(
-  { field, yesValue = true, noValue = false, title, onChange }: FieldInputProps
-) {
+export default function CheckBoxInput({
+  field,
+  yesValue = true,
+  noValue = false,
+  title,
+  onChange
+}: FieldInputProps) {
   return (
     <div>
       {title !== '' &&

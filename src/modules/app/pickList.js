@@ -49,7 +49,7 @@ const toggleMarked = ({ item, on }, items = []) => {
 
 const toggleMainObject = ({ item, on }, items = []) => {
   const mainObjectId = item.mainObjectId;
-  const toggle = node => typeof on !== 'undefined' ? on : !node.marked;
+  const toggle = node => (typeof on !== 'undefined' ? on : !node.marked);
   return items.map(node => ({
     ...node,
     marked: mainObjectId === node.value.mainObjectId ? toggle(node) : node.marked
@@ -118,29 +118,51 @@ const refreshObjects = (state, itemLocations) => {
 
 export const reducer$ = actions =>
   Observable.empty().merge(
-    actions.markObject$.map(item =>
-      state => ({ ...state, objects: toggleMarked(item, state.objects) })),
-    actions.markMainObject$.map(item =>
-      state => ({ ...state, objects: toggleMainObject(item, state.objects) })),
-    actions.removeObject$.map(item =>
-      state => ({ ...state, objects: removeItem(item, state.objects) })),
-    actions.addObject$.map(item =>
-      state => ({ ...state, objects: addItem(item, state.objects) })),
-    actions.toggleObject$.map(item =>
-      state => ({ ...state, objects: addItem(item, state.objects, true) })),
-    actions.refreshObjects$.map(itemLocations =>
-      state => ({ ...state, objects: refreshObjects(state, itemLocations) })),
+    actions.markObject$.map(item => state => ({
+      ...state,
+      objects: toggleMarked(item, state.objects)
+    })),
+    actions.markMainObject$.map(item => state => ({
+      ...state,
+      objects: toggleMainObject(item, state.objects)
+    })),
+    actions.removeObject$.map(item => state => ({
+      ...state,
+      objects: removeItem(item, state.objects)
+    })),
+    actions.addObject$.map(item => state => ({
+      ...state,
+      objects: addItem(item, state.objects)
+    })),
+    actions.toggleObject$.map(item => state => ({
+      ...state,
+      objects: addItem(item, state.objects, true)
+    })),
+    actions.refreshObjects$.map(itemLocations => state => ({
+      ...state,
+      objects: refreshObjects(state, itemLocations)
+    })),
     actions.clearObjects$.map(() => state => ({ ...state, objects: [] })),
-    actions.markNode$.map(item =>
-      state => ({ ...state, nodes: toggleMarked(item, state.nodes) })),
-    actions.removeNode$.map(item =>
-      state => ({ ...state, nodes: removeItem(item, state.nodes) })),
-    actions.addNode$.map(item =>
-      state => ({ ...state, nodes: addItem(item, state.nodes) })),
-    actions.toggleNode$.map(item =>
-      state => ({ ...state, nodes: addItem(item, state.nodes, true) })),
-    actions.refreshNode$.map(item =>
-      state => ({ ...state, nodes: refreshItem(item, state.nodes) })),
+    actions.markNode$.map(item => state => ({
+      ...state,
+      nodes: toggleMarked(item, state.nodes)
+    })),
+    actions.removeNode$.map(item => state => ({
+      ...state,
+      nodes: removeItem(item, state.nodes)
+    })),
+    actions.addNode$.map(item => state => ({
+      ...state,
+      nodes: addItem(item, state.nodes)
+    })),
+    actions.toggleNode$.map(item => state => ({
+      ...state,
+      nodes: addItem(item, state.nodes, true)
+    })),
+    actions.refreshNode$.map(item => state => ({
+      ...state,
+      nodes: refreshItem(item, state.nodes)
+    })),
     actions.clearNodes$.map(() => state => ({ ...state, nodes: [] }))
   );
 

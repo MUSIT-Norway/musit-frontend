@@ -239,5 +239,6 @@ describe('Config urls', () => {
           expect(t.actual).toEqual(t.expected);
         });
       });
-    }));
+    })
+  );
 });

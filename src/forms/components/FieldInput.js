@@ -12,9 +12,12 @@ type FieldInputProps = {
   }
 };
 
-export default function FieldInput(
-  { field, title, onChange, inputProps }: FieldInputProps
-) {
+export default function FieldInput({
+  field,
+  title,
+  onChange,
+  inputProps
+}: FieldInputProps) {
   return (
     <div>
       {title !== '' &&

@@ -1,7 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`ObjectTable should render properly  1`] = `
 <div>
   <FormGroup
-    bsClass="form-group">
+    bsClass="form-group"
+  >
     <div>
       <Table
         bordered={false}
@@ -9,15 +12,17 @@ exports[`ObjectTable should render properly  1`] = `
         condensed={true}
         hover={true}
         responsive={true}
-        striped={false}>
+        striped={false}
+      >
         <thead>
           <tr>
             <th
               style={
                 Object {
-                  "width": "20px"
+                  "width": "20px",
                 }
-              } />
+              }
+            />
             <th>
               Museumsnr.
             </th>
@@ -33,15 +38,17 @@ exports[`ObjectTable should render properly  1`] = `
               <a
                 className="onPickObjects"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til alle i plukklisten">
+                onClick={[Function]}
+                title="Legg til alle i plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </th>
           </tr>
@@ -49,15 +56,18 @@ exports[`ObjectTable should render properly  1`] = `
         <tbody>
           <tr
             className="mainObject"
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             <td
               style={
                 Object {
-                  "width": "20px"
+                  "width": "20px",
                 }
-              }>
+              }
+            >
               <span
-                className="icon icon-musitobject" />
+                className="icon icon-musitobject"
+              />
             </td>
             <td>
               TRH-V-1-2
@@ -72,55 +82,64 @@ exports[`ObjectTable should render properly  1`] = `
               <a
                 className="onShowMoveHistory"
                 href=""
-                onClick={[Function onClick]}
-                title="Flyttehistorikk">
+                onClick={[Function]}
+                title="Flyttehistorikk"
+              >
                 <span
-                  className="icon icon-musitmovehistoryicon" />
+                  className="icon icon-musitmovehistoryicon"
+                />
               </a>
             </td>
             <td>
               <a
                 className="onMoveClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
+                onClick={[Function]}
+                title="Flytt objektet"
+              >
                 <FontAwesome
                   name="truck"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
             <td>
               <a
                 className="onPickObject"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                onClick={[Function]}
+                title="Legg til plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
                       "color": "Gray",
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
           </tr>
           <tr
             className="mainObject"
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             <td
               style={
                 Object {
-                  "width": "20px"
+                  "width": "20px",
                 }
-              }>
+              }
+            >
               <span
-                className="icon icon-musitobject" />
+                className="icon icon-musitobject"
+              />
             </td>
             <td>
               TRH-V-2
@@ -135,55 +154,64 @@ exports[`ObjectTable should render properly  1`] = `
               <a
                 className="onShowMoveHistory"
                 href=""
-                onClick={[Function onClick]}
-                title="Flyttehistorikk">
+                onClick={[Function]}
+                title="Flyttehistorikk"
+              >
                 <span
-                  className="icon icon-musitmovehistoryicon" />
+                  className="icon icon-musitmovehistoryicon"
+                />
               </a>
             </td>
             <td>
               <a
                 className="onMoveClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
+                onClick={[Function]}
+                title="Flytt objektet"
+              >
                 <FontAwesome
                   name="truck"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
             <td>
               <a
                 className="onPickObject"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                onClick={[Function]}
+                title="Legg til plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
                       "color": "Gray",
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
           </tr>
           <tr
             className="mainObject"
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             <td
               style={
                 Object {
-                  "width": "20px"
+                  "width": "20px",
                 }
-              }>
+              }
+            >
               <span
-                className="icon icon-musitobject" />
+                className="icon icon-musitobject"
+              />
             </td>
             <td>
               UEM3
@@ -196,55 +224,64 @@ exports[`ObjectTable should render properly  1`] = `
               <a
                 className="onShowMoveHistory"
                 href=""
-                onClick={[Function onClick]}
-                title="Flyttehistorikk">
+                onClick={[Function]}
+                title="Flyttehistorikk"
+              >
                 <span
-                  className="icon icon-musitmovehistoryicon" />
+                  className="icon icon-musitmovehistoryicon"
+                />
               </a>
             </td>
             <td>
               <a
                 className="onMoveClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
+                onClick={[Function]}
+                title="Flytt objektet"
+              >
                 <FontAwesome
                   name="truck"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
             <td>
               <a
                 className="onPickObject"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                onClick={[Function]}
+                title="Legg til plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
                       "color": "Gray",
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
           </tr>
           <tr
             className="mainObject"
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             <td
               style={
                 Object {
-                  "width": "20px"
+                  "width": "20px",
                 }
-              }>
+              }
+            >
               <span
-                className="icon icon-musitobject" />
+                className="icon icon-musitobject"
+              />
             </td>
             <td>
               BG233
@@ -259,55 +296,64 @@ exports[`ObjectTable should render properly  1`] = `
               <a
                 className="onShowMoveHistory"
                 href=""
-                onClick={[Function onClick]}
-                title="Flyttehistorikk">
+                onClick={[Function]}
+                title="Flyttehistorikk"
+              >
                 <span
-                  className="icon icon-musitmovehistoryicon" />
+                  className="icon icon-musitmovehistoryicon"
+                />
               </a>
             </td>
             <td>
               <a
                 className="onMoveClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
+                onClick={[Function]}
+                title="Flytt objektet"
+              >
                 <FontAwesome
                   name="truck"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
             <td>
               <a
                 className="onPickObject"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                onClick={[Function]}
+                title="Legg til plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
                       "color": "Gray",
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
           </tr>
           <tr
             className="mainObject"
-            onClick={[Function onClick]}>
+            onClick={[Function]}
+          >
             <td
               style={
                 Object {
-                  "width": "20px"
+                  "width": "20px",
                 }
-              }>
+              }
+            >
               <span
-                className="icon icon-musitobject" />
+                className="icon icon-musitobject"
+              />
             </td>
             <td>
               O-L-233
@@ -320,41 +366,47 @@ exports[`ObjectTable should render properly  1`] = `
               <a
                 className="onShowMoveHistory"
                 href=""
-                onClick={[Function onClick]}
-                title="Flyttehistorikk">
+                onClick={[Function]}
+                title="Flyttehistorikk"
+              >
                 <span
-                  className="icon icon-musitmovehistoryicon" />
+                  className="icon icon-musitmovehistoryicon"
+                />
               </a>
             </td>
             <td>
               <a
                 className="onMoveClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Flytt objektet">
+                onClick={[Function]}
+                title="Flytt objektet"
+              >
                 <FontAwesome
                   name="truck"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
             <td>
               <a
                 className="onPickObject"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                onClick={[Function]}
+                title="Legg til plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
                       "color": "Gray",
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
           </tr>

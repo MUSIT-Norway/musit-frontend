@@ -1,8 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
 <ObservationControlGrid
   id="1"
-  showControl={[Function showControl]}
-  showObservation={[Function showObservation]}
+  showControl={[Function]}
+  showObservation={[Function]}
   tableData={
     Array [
       Object {
@@ -11,10 +13,10 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
         "eventType": "control",
         "id": 1,
         "lightingCondition": Object {
-          "ok": true
+          "ok": true,
         },
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
+        "registeredDate": "2017-01-04T09:42:57+00:00",
       },
       Object {
         "doneBy": undefined,
@@ -24,19 +26,19 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
         "registeredBy": "Blabla...",
         "registeredDate": "2017-01-04T09:42:57+00:00",
         "temperature": Object {
-          "ok": true
-        }
+          "ok": true,
+        },
       },
       Object {
         "doneBy": "Blablabla...",
         "doneDate": "2017-01-01T09:42:52+00:00",
         "eventType": "control",
         "hypoxicAir": Object {
-          "ok": true
+          "ok": true,
         },
         "id": 1,
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
+        "registeredDate": "2017-01-04T09:42:57+00:00",
       },
       Object {
         "doneBy": "Blablabla...",
@@ -46,19 +48,19 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
         "registeredBy": "Blabla...",
         "registeredDate": "2017-01-04T09:42:57+00:00",
         "relativeHumidity": Object {
-          "ok": true
-        }
+          "ok": true,
+        },
       },
       Object {
         "cleaning": Object {
-          "ok": true
+          "ok": true,
         },
         "doneBy": "Blablabla...",
         "doneDate": "2017-01-01T09:42:52+00:00",
         "eventType": "control",
         "id": 1,
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
+        "registeredDate": "2017-01-04T09:42:57+00:00",
       },
       Object {
         "doneBy": "Blablabla...",
@@ -66,32 +68,32 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
         "eventType": "control",
         "id": 1,
         "mold": Object {
-          "ok": true
+          "ok": true,
         },
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
+        "registeredDate": "2017-01-04T09:42:57+00:00",
       },
       Object {
         "alcohol": Object {
-          "ok": true
+          "ok": true,
         },
         "doneBy": "Blablabla...",
         "doneDate": "2017-01-01T09:42:52+00:00",
         "eventType": "control",
         "id": 1,
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
+        "registeredDate": "2017-01-04T09:42:57+00:00",
       },
       Object {
         "doneBy": "Blablabla...",
         "doneDate": "2017-01-01T09:42:52+00:00",
         "eventType": "control",
         "gas": Object {
-          "ok": true
+          "ok": true,
         },
         "id": 1,
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
+        "registeredDate": "2017-01-04T09:42:57+00:00",
       },
       Object {
         "doneBy": "Blablabla...",
@@ -101,19 +103,19 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
         "registeredBy": "Blabla...",
         "registeredDate": "2017-01-04T09:42:57+00:00",
         "waterDamageAssessment": Object {
-          "ok": true
-        }
+          "ok": true,
+        },
       },
       Object {
         "doneBy": "Blablabla...",
         "doneDate": "2017-01-01T09:42:52+00:00",
         "eventType": "control",
         "fireProtection": Object {
-          "ok": true
+          "ok": true,
         },
         "id": 1,
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
+        "registeredDate": "2017-01-04T09:42:57+00:00",
       },
       Object {
         "doneBy": "Blablabla...",
@@ -123,8 +125,8 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
         "registeredBy": "Blabla...",
         "registeredDate": "2017-01-04T09:42:57+00:00",
         "theftProtection": Object {
-          "ok": true
-        }
+          "ok": true,
+        },
       },
       Object {
         "doneBy": "Blablabla...",
@@ -132,10 +134,10 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
         "eventType": "control",
         "id": 1,
         "perimeterSecurity": Object {
-          "ok": true
+          "ok": true,
         },
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
+        "registeredDate": "2017-01-04T09:42:57+00:00",
       },
       Object {
         "doneBy": "Blablabla...",
@@ -143,18 +145,21 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
         "eventType": "control",
         "id": 1,
         "pest": Object {
-          "ok": true
+          "ok": true,
         },
         "registeredBy": "Blabla...",
-        "registeredDate": "2017-01-04T09:42:57+00:00"
-      }
+        "registeredDate": "2017-01-04T09:42:57+00:00",
+      },
     ]
   }
-  translate={[Function translate]}>
+  translate={[Function]}
+>
   <FormGroup
-    bsClass="form-group">
+    bsClass="form-group"
+  >
     <div
-      className="form-group">
+      className="form-group"
+    >
       <div>
         <Table
           bordered={false}
@@ -162,11 +167,14 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
           condensed={true}
           hover={true}
           responsive={true}
-          striped={false}>
+          striped={false}
+        >
           <div
-            className="table-responsive">
+            className="table-responsive"
+          >
             <table
-              className="table table-condensed table-hover">
+              className="table table-condensed table-hover"
+            >
               <thead>
                 <tr>
                   <th />
@@ -190,558 +198,675 @@ exports[`ObservationControlGrid Check the 1st row Date value 1`] = `
               <tbody>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitlightingcondicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Lysforhold" />
+                      title="Lysforhold"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musittemperatureicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Temperatur" />
+                      title="Temperatur"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy" />
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  />
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musithypoxicairicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Inertluft" />
+                      title="Inertluft"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitrelhumidityicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Relativ luftfuktighet" />
+                      title="Relativ luftfuktighet"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitcleaningicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Renhold" />
+                      title="Renhold"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitmoldicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Mugg" />
+                      title="Mugg"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitalcoholicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Sprit" />
+                      title="Sprit"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitgasicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Gass" />
+                      title="Gass"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitwaterdamageicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Vannskaderisiko" />
+                      title="Vannskaderisiko"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitfireprotectionicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Brannsikring" />
+                      title="Brannsikring"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musittheftprotectionicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Tyverisikring" />
+                      title="Tyverisikring"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitperimetersecurityicon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Skallsikring" />
+                      title="Skallsikring"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>
                 <tr
                   id="1_2017-01-01T09:42:52+00:00"
-                  onClick={[Function onClick]}
+                  onClick={[Function]}
                   style={
                     Object {
-                      "cursor": "pointer"
+                      "cursor": "pointer",
                     }
-                  }>
+                  }
+                >
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_type">
+                    id="1_2017-01-01T09:42:52+00:00_type"
+                  >
                     <div
                       className="icon icon-musitcontrolicon"
-                      title="Kontroll" />
+                      title="Kontroll"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_date">
+                    id="1_2017-01-01T09:42:52+00:00_date"
+                  >
                     01.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_types">
+                    id="1_2017-01-01T09:42:52+00:00_types"
+                  >
                     <span
                       className="icon icon-musitpesticon"
                       style={
                         Object {
                           "color": "darkgray",
-                          "padding": "2px"
+                          "padding": "2px",
                         }
                       }
-                      title="Skadedyr" />
+                      title="Skadedyr"
+                    />
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_doneBy">
+                    id="1_2017-01-01T09:42:52+00:00_doneBy"
+                  >
                     Blablabla...
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredDate">
+                    id="1_2017-01-01T09:42:52+00:00_registeredDate"
+                  >
                     04.01.2017
                   </td>
                   <td
-                    id="1_2017-01-01T09:42:52+00:00_registeredBy">
+                    id="1_2017-01-01T09:42:52+00:00_registeredBy"
+                  >
                     Blabla...
                   </td>
                 </tr>

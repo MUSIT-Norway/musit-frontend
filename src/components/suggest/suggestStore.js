@@ -15,7 +15,8 @@ export default (name, urlFn) =>
         .switchMap(({ update: { value }, token, museumId }) =>
           simpleGet(urlFn(value, museumId), token)
             .map(({ response }) => response)
-            .catch(() => []))
+            .catch(() => [])
+        )
         .map(suggestions => state => ({ ...state, data: suggestions }))
     )
   );

@@ -24,16 +24,25 @@ type Actions = {
 
 export const reducer$ = (actions: Actions) =>
   Observable.merge(
-    actions.clearRootNode$.map(() =>
-      state => ({ ...state, rootNode: null, stats: null })),
+    actions.clearRootNode$.map(() => state => ({
+      ...state,
+      rootNode: null,
+      stats: null
+    })),
     actions.loadStats$.map(stats => state => ({ ...state, stats })),
     actions.loadRootNode$.map(rootNode => state => ({ ...state, rootNode })),
-    actions.setLoading$.map(() =>
-      state => ({ ...state, children: { data: null, loading: true } })),
-    actions.loadNodes$.map(data =>
-      state => ({ ...state, children: { data, loading: false } })),
-    actions.loadObjects$.map(data =>
-      state => ({ ...state, children: { data, loading: false } }))
+    actions.setLoading$.map(() => state => ({
+      ...state,
+      children: { data: null, loading: true }
+    })),
+    actions.loadNodes$.map(data => state => ({
+      ...state,
+      children: { data, loading: false }
+    })),
+    actions.loadObjects$.map(data => state => ({
+      ...state,
+      children: { data, loading: false }
+    }))
   );
 
 export const store$ = (

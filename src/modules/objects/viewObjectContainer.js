@@ -31,16 +31,14 @@ const commands: {} = {
   getAnalysisTypes$
 };
 
-export const onMount = (
-  {
-    loadObject,
-    loadMoveAndAnalysisEvents,
-    loadSampleEvents,
-    params,
-    appSession,
-    getAnalysisTypes
-  }: any
-) => {
+export const onMount = ({
+  loadObject,
+  loadMoveAndAnalysisEvents,
+  loadSampleEvents,
+  params,
+  appSession,
+  getAnalysisTypes
+}: any) => {
   const uuid: string = params.id;
   const museumId: number = appSession.museumId;
   const accessToken: string = appSession.accessToken;

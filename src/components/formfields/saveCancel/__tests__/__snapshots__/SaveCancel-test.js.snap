@@ -1,7 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`SaveCancel snapshot should match snapshot 1`] = `
 <Row
   bsClass="row"
-  componentClass="div">
+  componentClass="div"
+>
   <Col
     bsClass="col"
     componentClass="div"
@@ -11,10 +14,11 @@ exports[`SaveCancel snapshot should match snapshot 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
     }
-    xs={6}>
+    xs={6}
+  >
     <Button
       active={false}
       block={false}
@@ -23,7 +27,8 @@ exports[`SaveCancel snapshot should match snapshot 1`] = `
       className="submitButton"
       disabled={false}
       id="Save_2"
-      onClick={[Function proxy]}>
+      onClick={[Function]}
+    >
       Hii
     </Button>
   </Col>
@@ -35,10 +40,11 @@ exports[`SaveCancel snapshot should match snapshot 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
     }
-    xs={6}>
+    xs={6}
+  >
     <Button
       active={false}
       block={false}
@@ -47,7 +53,7 @@ exports[`SaveCancel snapshot should match snapshot 1`] = `
       className="cancelButton"
       disabled={true}
       id="Cancel_2"
-      onClick={undefined}>
+    >
       Avbryt
     </Button>
   </Col>

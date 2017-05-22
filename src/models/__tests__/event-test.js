@@ -1,6 +1,6 @@
 import Event from '../event';
 import { Observable } from 'rxjs';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../testutils/MusitTestScheduler';
 
 describe('Event model', () => {
   it('should work', () => {

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ControlLabel, Button } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';

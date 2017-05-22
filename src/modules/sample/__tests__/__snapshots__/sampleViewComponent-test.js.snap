@@ -1,8 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`AnalysisSampleFormPageView should display correctly 1`] = `
 <form
-  className="form-horizontal">
+  className="form-horizontal"
+>
   <div
-    className="page-header">
+    className="page-header"
+  >
     <h1>
       Prøveuttak
     </h1>
@@ -11,9 +15,11 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     Avledet fra objekt
   </h4>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <span
-      className="col-md-2">
+      className="col-md-2"
+    >
       <strong>
         MusNo:
       </strong>
@@ -21,7 +27,8 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       M1234
     </span>
     <span
-      className="col-md-2">
+      className="col-md-2"
+    >
       <strong>
         Unr:
       </strong>
@@ -29,7 +36,8 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       a
     </span>
     <span
-      className="col-md-2">
+      className="col-md-2"
+    >
       <strong>
         Term/artsnavn:
       </strong>
@@ -43,145 +51,183 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
   </h4>
   <div>
     <div
-      className="row">
+      className="row"
+    >
       <div
-        className="col-md-4">
+        className="col-md-4"
+      >
         <strong>
           Navn
         </strong>
       </div>
       <div
-        className="col-md-2">
+        className="col-md-2"
+      >
         <strong>
           Rolle
         </strong>
       </div>
       <div
-        className="col-md-2">
+        className="col-md-2"
+      >
         <strong>
           Dato
         </strong>
       </div>
     </div>
     <div
-      className="row">
+      className="row"
+    >
       <div
-        className="col-md-4">
+        className="col-md-4"
+      >
         Arne And
       </div>
       <div
-        className="col-md-2">
+        className="col-md-2"
+      >
         created
       </div>
       <div
-        className="col-md-2">
+        className="col-md-2"
+      >
         1998-01-2001
       </div>
     </div>
   </div>
   <hr />
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       PrøveID:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         1233
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       EksternID:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         123
       </p>
     </div>
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Kilde for ekstern ID:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         Museum
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Prøvetype:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         Vev
       </p>
     </div>
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Prøveundertype:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         Muskel
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Beskrivelse av prøve:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         Av lær
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Status:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         Nyskilt
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Målvolum/-vekt:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         1,23
          
         gr
@@ -189,71 +235,91 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Lagringskontainer:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         Reagensrør
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Lagringsmedium:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         Etanol
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Behandling:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         1233
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Har restmateriale:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         2
       </p>
     </div>
   </div>
   <div
-    className="form-group">
+    className="form-group"
+  >
     <label
-      className="control-label col-md-2">
+      className="control-label col-md-2"
+    >
       Beskrivelse:
     </label>
     <div
-      className="col-md-2">
+      className="col-md-2"
+    >
       <p
-        className="form-control-static">
+        className="form-control-static"
+      >
         Heisann
       </p>
     </div>
@@ -261,16 +327,18 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
   <hr />
   <button
     className="btn btn-primary"
-    onClick={[Function onClick]}>
+    onClick={[Function]}
+  >
     Endre
   </button>
   <a
-    onClick={[Function onClick]}
+    onClick={[Function]}
     style={
       Object {
-        "marginLeft": 20
+        "marginLeft": 20,
       }
-    }>
+    }
+  >
     Avbryt
   </a>
 </form>

@@ -1,6 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`MoveHistory should match snapshot 1`] = `
 <FormGroup
-  bsClass="form-group">
+  bsClass="form-group"
+>
   <div>
     <Table
       bordered={false}
@@ -8,7 +11,8 @@ exports[`MoveHistory should match snapshot 1`] = `
       condensed={true}
       hover={true}
       responsive={true}
-      striped={false}>
+      striped={false}
+    >
       <thead>
         <tr>
           <th>
@@ -29,9 +33,10 @@ exports[`MoveHistory should match snapshot 1`] = `
         style={
           Object {
             "fontSize": "12px",
-            "padding": "10px"
+            "padding": "10px",
           }
-        }>
+        }
+      >
         <tr>
           <td>
              20.01.2017

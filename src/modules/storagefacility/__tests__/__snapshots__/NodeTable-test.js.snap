@@ -1,7 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`NodeTable should render properly  1`] = `
 <div>
   <FormGroup
-    bsClass="form-group">
+    bsClass="form-group"
+  >
     <div>
       <Table
         bordered={false}
@@ -9,7 +12,8 @@ exports[`NodeTable should render properly  1`] = `
         condensed={true}
         hover={true}
         responsive={true}
-        striped={false}>
+        striped={false}
+      >
         <thead>
           <tr>
             <th>
@@ -29,9 +33,11 @@ exports[`NodeTable should render properly  1`] = `
               <a
                 className="onClickName"
                 href=""
-                onClick={[Function onClick]}>
+                onClick={[Function]}
+              >
                 <FontAwesome
-                  name="folder" />
+                  name="folder"
+                />
                  NHM
               </a>
             </td>
@@ -47,9 +53,11 @@ exports[`NodeTable should render properly  1`] = `
               <a
                 className="onClickName"
                 href=""
-                onClick={[Function onClick]}>
+                onClick={[Function]}
+              >
                 <FontAwesome
-                  name="folder" />
+                  name="folder"
+                />
                  KHM
               </a>
             </td>
@@ -65,9 +73,11 @@ exports[`NodeTable should render properly  1`] = `
               <a
                 className="onClickName"
                 href=""
-                onClick={[Function onClick]}>
+                onClick={[Function]}
+              >
                 <FontAwesome
-                  name="folder" />
+                  name="folder"
+                />
                  Bygg 1
               </a>
             </td>
@@ -78,41 +88,47 @@ exports[`NodeTable should render properly  1`] = `
               <a
                 className="goToEventClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Observasjoner og kontroller">
+                onClick={[Function]}
+                title="Observasjoner og kontroller"
+              >
                 <span
-                  className="icon icon-musitcontrolobsicon" />
+                  className="icon icon-musitcontrolobsicon"
+                />
               </a>
             </td>
             <td>
               <a
                 className="onMoveClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Flytt noden">
+                onClick={[Function]}
+                title="Flytt noden"
+              >
                 <FontAwesome
                   name="truck"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
             <td>
               <a
                 className="onPickClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                onClick={[Function]}
+                title="Legg til plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
                       "color": "Gray",
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
           </tr>
@@ -121,9 +137,11 @@ exports[`NodeTable should render properly  1`] = `
               <a
                 className="onClickName"
                 href=""
-                onClick={[Function onClick]}>
+                onClick={[Function]}
+              >
                 <FontAwesome
-                  name="folder" />
+                  name="folder"
+                />
                  Bygg 2
               </a>
             </td>
@@ -134,41 +152,47 @@ exports[`NodeTable should render properly  1`] = `
               <a
                 className="goToEventClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Observasjoner og kontroller">
+                onClick={[Function]}
+                title="Observasjoner og kontroller"
+              >
                 <span
-                  className="icon icon-musitcontrolobsicon" />
+                  className="icon icon-musitcontrolobsicon"
+                />
               </a>
             </td>
             <td>
               <a
                 className="onMoveClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Flytt noden">
+                onClick={[Function]}
+                title="Flytt noden"
+              >
                 <FontAwesome
                   name="truck"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
             <td>
               <a
                 className="onPickClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                onClick={[Function]}
+                title="Legg til plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
                       "color": "Gray",
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
           </tr>
@@ -177,9 +201,11 @@ exports[`NodeTable should render properly  1`] = `
               <a
                 className="onClickName"
                 href=""
-                onClick={[Function onClick]}>
+                onClick={[Function]}
+              >
                 <FontAwesome
-                  name="folder" />
+                  name="folder"
+                />
                  Rom 1
               </a>
             </td>
@@ -190,41 +216,47 @@ exports[`NodeTable should render properly  1`] = `
               <a
                 className="goToEventClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Observasjoner og kontroller">
+                onClick={[Function]}
+                title="Observasjoner og kontroller"
+              >
                 <span
-                  className="icon icon-musitcontrolobsicon" />
+                  className="icon icon-musitcontrolobsicon"
+                />
               </a>
             </td>
             <td>
               <a
                 className="onMoveClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Flytt noden">
+                onClick={[Function]}
+                title="Flytt noden"
+              >
                 <FontAwesome
                   name="truck"
                   style={
                     Object {
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
             <td>
               <a
                 className="onPickClick"
                 href=""
-                onClick={[Function onClick]}
-                title="Legg til plukklisten">
+                onClick={[Function]}
+                title="Legg til plukklisten"
+              >
                 <FontAwesome
                   name="shopping-cart"
                   style={
                     Object {
                       "color": "Gray",
-                      "fontSize": "1.5em"
+                      "fontSize": "1.5em",
                     }
-                  } />
+                  }
+                />
               </a>
             </td>
           </tr>

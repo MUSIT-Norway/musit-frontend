@@ -1,20 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`KDReportComponent should display correctly 1`] = `
 <div>
   <main>
     <Panel
       bsClass="panel"
       bsStyle="default"
-      defaultExpanded={false}>
+      defaultExpanded={false}
+    >
       <Grid
         bsClass="container"
         componentClass="div"
-        fluid={false}>
+        fluid={false}
+      >
         <Row
           bsClass="row"
           className="row-centered"
-          componentClass="div">
+          componentClass="div"
+        >
           <PageHeader
-            bsClass="page-header">
+            bsClass="page-header"
+          >
             Rapport - Sikring av samlinger
           </PageHeader>
           <Table
@@ -26,9 +32,10 @@ exports[`KDReportComponent should display correctly 1`] = `
             striped={false}
             style={
               Object {
-                "width": 700
+                "width": 700,
               }
-            }>
+            }
+          >
             <tbody>
               <tr>
                 <td>
@@ -99,17 +106,21 @@ exports[`Reports overview should display correctly 1`] = `
     <Panel
       bsClass="panel"
       bsStyle="default"
-      defaultExpanded={false}>
+      defaultExpanded={false}
+    >
       <Grid
         bsClass="container"
         componentClass="div"
-        fluid={false}>
+        fluid={false}
+      >
         <Row
           bsClass="row"
           className="row-centered"
-          componentClass="div">
+          componentClass="div"
+        >
           <PageHeader
-            bsClass="page-header">
+            bsClass="page-header"
+          >
             Rapporter
           </PageHeader>
           <Table
@@ -118,7 +129,8 @@ exports[`Reports overview should display correctly 1`] = `
             condensed={false}
             hover={false}
             responsive={false}
-            striped={false}>
+            striped={false}
+          >
             <thead>
               <tr>
                 <th>
@@ -130,12 +142,12 @@ exports[`Reports overview should display correctly 1`] = `
               </tr>
             </thead>
             <tbody>
-              <tr
-                id={undefined}>
+              <tr>
                 <td>
                   <a
                     href="/museum/99/collections/1234/reports/kdreport"
-                    onClick={[Function onClick]}>
+                    onClick={[Function]}
+                  >
                     Sikring av samlinger
                   </a>
                 </td>

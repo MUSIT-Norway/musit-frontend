@@ -1,5 +1,5 @@
 import { store$ } from '../nodeStore';
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 describe('nodeStore', () => {
   it('testing reducer', () => {
     const testScheduler = new MusitTestScheduler();

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Rx';
 import { initialState, store$ } from '../moveDialogStore';
 import MusitNode from '../../../models/node';
 
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('moveDialog', () => {
   it('testing reducer', () => {
@@ -102,7 +102,8 @@ describe('moveDialog', () => {
               name: 'Test',
               type: 'Room'
             }
-          }))
+          })
+        )
       );
     const loadChildren$ = testScheduler
       .createHotObservable(loadChildrenM, {
@@ -115,7 +116,8 @@ describe('moveDialog', () => {
               matches: [],
               totalMatches: 0
             }
-          }))
+          })
+        )
       );
 
     const state$ = store$({ clear$, loadNode$, loadChildren$, setLoading$, setPage$ });

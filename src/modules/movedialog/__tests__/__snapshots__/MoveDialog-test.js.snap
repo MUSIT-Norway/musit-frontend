@@ -1,6 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`ModalNodeGrid should match snapshot 1`] = `
 <FormGroup
-  bsClass="form-group">
+  bsClass="form-group"
+>
   <div>
     <Table
       bordered={false}
@@ -9,56 +12,72 @@ exports[`ModalNodeGrid should match snapshot 1`] = `
       condensed={false}
       hover={true}
       responsive={true}
-      striped={false}>
+      striped={false}
+    >
       <tbody>
         <tr
-          id="0">
+          id="0"
+        >
           <td
-            id="0_Eske">
+            id="0_Eske"
+          >
             <a
               href=""
-              onClick={[Function onClick]}>
+              onClick={[Function]}
+            >
               <FontAwesome
-                name="folder" />
+                name="folder"
+              />
                Eske
             </a>
           </td>
           <td
-            id="0_StorageUnit">
+            id="0_StorageUnit"
+          >
             Lagringsenhet
           </td>
         </tr>
         <tr
-          id="1">
+          id="1"
+        >
           <td
-            id="1_Box">
+            id="1_Box"
+          >
             <a
               href=""
-              onClick={[Function onClick]}>
+              onClick={[Function]}
+            >
               <FontAwesome
-                name="folder" />
+                name="folder"
+              />
                Box
             </a>
           </td>
           <td
-            id="1_StorageUnit">
+            id="1_StorageUnit"
+          >
             Lagringsenhet
           </td>
         </tr>
         <tr
-          id="2">
+          id="2"
+        >
           <td
-            id="2_Room">
+            id="2_Room"
+          >
             <a
               href=""
-              onClick={[Function onClick]}>
+              onClick={[Function]}
+            >
               <FontAwesome
-                name="folder" />
+                name="folder"
+              />
                Room
             </a>
           </td>
           <td
-            id="2_Room">
+            id="2_Room"
+          >
             Rom
           </td>
         </tr>

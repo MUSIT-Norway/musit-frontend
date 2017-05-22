@@ -28,8 +28,10 @@ export const reducer$ = (actions: Actions) =>
   Observable.merge(
     actions.loadNode$.map(rootNode => state => ({ ...state, rootNode, loaded: true })),
     actions.clearNode$.map(() => () => initialState),
-    actions.updateState$.map(unit =>
-      state => ({ ...state, unit: { ...initialState.unit, ...unit } }))
+    actions.updateState$.map(unit => state => ({
+      ...state,
+      unit: { ...initialState.unit, ...unit }
+    }))
   );
 
 export const store$ = (actions$: Actions = { clearNode$, updateState$, loadNode$ }) =>

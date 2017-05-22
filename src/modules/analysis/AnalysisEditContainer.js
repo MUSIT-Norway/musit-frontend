@@ -32,9 +32,13 @@ const props = {
   goBack: hashHistory.goBack
 };
 
-export const onMount = (
-  { getAnalysisTypes, getAnalysis, appSession, params, loadForm }
-) => {
+export const onMount = ({
+  getAnalysisTypes,
+  getAnalysis,
+  appSession,
+  params,
+  loadForm
+}) => {
   const inputParams = {
     museumId: appSession.museumId,
     id: params.analysisId,

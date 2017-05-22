@@ -5,7 +5,7 @@ const diff = require('deep-diff').diff;
 import MusitObject from '../../../models/object';
 import isEqual from 'lodash/isEqual';
 
-import MusitTestScheduler from 'testutils/MusitTestScheduler';
+import MusitTestScheduler from '../../../testutils/MusitTestScheduler';
 
 describe('pickList', () => {
   it('testing and clear', () => {

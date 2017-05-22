@@ -1,31 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`NodeLeftMenuComponent renders properly 1`] = `
 <div>
   <div
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
-    }>
+    }
+  >
     <Button
       active={false}
       block={false}
       bsClass="btn"
       bsStyle="default"
       disabled={false}
-      onClick={[Function onClick]}
+      onClick={[Function]}
       style={
         Object {
-          "textAlign": "left"
+          "textAlign": "left",
         }
-      }>
+      }
+    >
       <FontAwesome
         name="plus-circle"
         style={
           Object {
-            "padding": "2px"
+            "padding": "2px",
           }
-        } />
+        }
+      />
       Ny node
     </Button>
   </div>
@@ -34,14 +39,16 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
-    }>
+    }
+  >
     Antall undernoder:
     <br />
     <ControlLabel
       bsClass="control-label"
-      srOnly={false}>
+      srOnly={false}
+    >
       11
     </ControlLabel>
   </div>
@@ -49,14 +56,16 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
-    }>
+    }
+  >
     Objekter på node:
     <br />
     <ControlLabel
       bsClass="control-label"
-      srOnly={false}>
+      srOnly={false}
+    >
       5
     </ControlLabel>
   </div>
@@ -64,14 +73,16 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
-    }>
+    }
+  >
     Totalt ant. objekter:
     <br />
     <ControlLabel
       bsClass="control-label"
-      srOnly={false}>
+      srOnly={false}
+    >
       78
     </ControlLabel>
   </div>
@@ -80,29 +91,32 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
-    }>
+    }
+  >
     <Button
       active={false}
       block={false}
       bsClass="btn"
       bsStyle="link"
       disabled={false}
-      onClick={[Function onClick]}
+      onClick={[Function]}
       style={
         Object {
-          "color": "black"
+          "color": "black",
         }
-      }>
+      }
+    >
       <FontAwesome
         name="cog"
         style={
           Object {
             "fontSize": "1.5em",
-            "padding": "2px"
+            "padding": "2px",
           }
-        } />
+        }
+      />
       <br />
       Egenskaper
     </Button>
@@ -111,28 +125,31 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
-    }>
+    }
+  >
     <Button
       active={false}
       block={false}
       bsClass="btn"
       bsStyle="link"
       disabled={false}
-      onClick={[Function onClick]}
+      onClick={[Function]}
       style={
         Object {
-          "color": "black"
+          "color": "black",
         }
-      }>
+      }
+    >
       <span
         className="icon icon-musitcontrolobsicon"
         style={
           Object {
-            "padding": "2px"
+            "padding": "2px",
           }
-        } />
+        }
+      />
       <br />
       Kontr./Observ.
     </Button>
@@ -141,29 +158,32 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
-    }>
+    }
+  >
     <Button
       active={false}
       block={false}
       bsClass="btn"
       bsStyle="link"
       disabled={false}
-      onClick={[Function onClick]}
+      onClick={[Function]}
       style={
         Object {
-          "color": "black"
+          "color": "black",
         }
-      }>
+      }
+    >
       <FontAwesome
         name="truck"
         style={
           Object {
             "fontSize": "1.5em",
-            "padding": "2px"
+            "padding": "2px",
           }
-        } />
+        }
+      />
       <br />
       Flytt node
     </Button>
@@ -172,29 +192,32 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
     style={
       Object {
         "border": "none",
-        "textAlign": "center"
+        "textAlign": "center",
       }
-    }>
+    }
+  >
     <Button
       active={false}
       block={false}
       bsClass="btn"
       bsStyle="link"
       disabled={true}
-      onClick={[Function onClick]}
+      onClick={[Function]}
       style={
         Object {
-          "color": "black"
+          "color": "black",
         }
-      }>
+      }
+    >
       <FontAwesome
         name="trash-o"
         style={
           Object {
             "fontSize": "1.5em",
-            "padding": "2px"
+            "padding": "2px",
           }
-        } />
+        }
+      />
       <br />
       Slett
     </Button>
@@ -205,131 +228,88 @@ exports[`NodeLeftMenuComponent renders properly 1`] = `
 exports[`NodePanel should render properly  1`] = `
 <Layout
   breadcrumb={
-    <function Breadcrumb() {_classCallCheck(this, Breadcrumb);return _possibleConstructorReturn(this, (Breadcrumb.__proto__ || Object.getPrototypeOf(Breadcrumb)).apply(this, arguments));}
+    <Breadcrumb
       disabled={true}
-      node={undefined} />
+    />
   }
   content={
-    <function (props, context, updater) {
-          // This constructor gets overridden by mocks. The argument is used
-          // by mocks to assert on what gets mounted.
-    
-          if (process.env.NODE_ENV !== 'production') {
-            process.env.NODE_ENV !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory') : void 0;
-          }
-    
-          // Wire up auto-binding
-          if (this.__reactAutoBindPairs.length) {
-            bindAutoBindMethods(this);
-          }
-    
-          this.props = props;
-          this.context = context;
-          this.refs = emptyObject;
-          this.updater = updater || ReactNoopUpdateQueue;
-    
-          this.state = null;
-    
-          // ReactClasses doesn't have constructors. Instead, they use the
-          // getInitialState and componentWillMount methods for initialization.
-    
-          var initialState = this.getInitialState ? this.getInitialState() : null;
-          if (process.env.NODE_ENV !== 'production') {
-            // We allow auto-mocks to proceed as if they're returning null.
-            if (initialState === undefined && this.getInitialState._isMockFunction) {
-              // This is probably bad practice. Consider warning here and
-              // deprecating this convenience.
-              initialState = null;
-            }
-          }
-          !(typeof initialState === 'object' && !Array.isArray(initialState)) ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s.getInitialState(): must return an object or null', Constructor.displayName || 'ReactCompositeComponent') : _prodInvariant('82', Constructor.displayName || 'ReactCompositeComponent') : void 0;
-    
-          this.state = initialState;
-        }
+    <Component
       component="div"
       loaded={false}
       loadedClassName="loadedContent"
-      parentClassName="loader">
-      <function Grid() {
-          (0, _classCallCheck3['default'])(this, Grid);
-          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-        }
+      parentClassName="loader"
+    >
+      <Grid
         bsClass="container"
         componentClass="div"
-        fluid={false}>
-        <function Row() {
-            (0, _classCallCheck3['default'])(this, Row);
-            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-          }
+        fluid={false}
+      >
+        <Row
           bsClass="row"
-          componentClass="div">
-          <function Col() {
-              (0, _classCallCheck3['default'])(this, Col);
-              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-            }
+          componentClass="div"
+        >
+          <Col
             bsClass="col"
             componentClass="div"
-            md={9}>
+            md={9}
+          >
             <form
-              onKeyDown={[Function onKeyDown]}
-              onSubmit={[Function onSubmit]}>
+              onKeyDown={[Function]}
+              onSubmit={[Function]}
+            >
               <div>
                 <h4
                   style={
                     Object {
-                      "textAlign": "center"
+                      "textAlign": "center",
                     }
-                  }>
-                  
+                  }
+                >
                   Egenskaper
                 </h4>
-                <function Grid() {
-                    (0, _classCallCheck3['default'])(this, Grid);
-                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                  }
+                <Grid
                   bsClass="container"
                   componentClass="div"
-                  fluid={false}>
-                  <function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }
+                  fluid={false}
+                >
+                  <Row
                     bsClass="row"
                     className="row-centered"
-                    componentClass="div">
-                    <function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                    componentClass="div"
+                  >
+                    <Col
                       bsClass="col"
                       componentClass="div"
-                      md={5}>
-                      <function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      md={5}
+                    >
+                      <Form
                         bsClass="form"
                         componentClass="form"
                         horizontal={true}
-                        inline={false}>
+                        inline={false}
+                      >
                         <div
-                          className="form-group">
+                          className="form-group"
+                        >
                           <label
                             className="col-sm-3 control-label"
-                            htmlFor="storageUnitType">
+                            htmlFor="storageUnitType"
+                          >
                             Type
                             <span
                               style={
                                 Object {
-                                  "color": "red"
+                                  "color": "red",
                                 }
-                              }>
+                              }
+                            >
                               *
                             </span>
                           </label>
                           <div
-                            className="col-sm-4">
-                            <function MusitDropDownField() {_classCallCheck(this, MusitDropDownField);return _possibleConstructorReturn(this, (MusitDropDownField.__proto__ || Object.getPrototypeOf(MusitDropDownField)).apply(this, arguments));}
+                            className="col-sm-4"
+                          >
+                            <MusitDropDownField
                               disabled={true}
                               id="type"
                               items={
@@ -337,688 +317,538 @@ exports[`NodePanel should render properly  1`] = `
                                   "StorageUnit",
                                   "Room",
                                   "Building",
-                                  "Organisation"
+                                  "Organisation",
                                 ]
                               }
                               maximumLength={100}
-                              onChange={[Function onChange]}
+                              onChange={[Function]}
                               placeHolder="Vennligst velg..."
                               tooltip="Nodens type"
                               translateKeyPrefix="musit.storageUnits.type.items."
                               validate="text"
-                              value="Organisation" />
+                              value="Organisation"
+                            />
                           </div>
                         </div>
-                      </function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                  </function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }>
-                  <function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }
+                      </Form>
+                    </Col>
+                  </Row>
+                  <Row
                     bsClass="row"
-                    componentClass="div">
-                    <function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                    componentClass="div"
+                  >
+                    <Col
                       bsClass="col"
                       componentClass="div"
-                      md={5}>
-                      <function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      md={5}
+                    >
+                      <Form
                         bsClass="form"
                         componentClass="form"
                         horizontal={true}
-                        inline={false}>
-                        <function FormGroup() {
-                            (0, _classCallCheck3['default'])(this, FormGroup);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }
-                          bsClass="form-group">
+                        inline={false}
+                      >
+                        <FormGroup
+                          bsClass="form-group"
+                        >
                           <label
                             className="col-sm-3 control-label"
-                            htmlFor="name">
+                            htmlFor="name"
+                          >
                             Navn
                             <span
                               style={
                                 Object {
-                                  "color": "red"
+                                  "color": "red",
                                 }
-                              }>
+                              }
+                            >
                               *
                             </span>
                           </label>
                           <div
-                            className="col-sm-8">
-                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                            className="col-sm-8"
+                          >
+                            <MusitField
                               id="name"
                               maximumLength={100}
-                              onChange={[Function onChange]}
+                              onChange={[Function]}
                               placeHolder="Fritekst"
                               tooltip="Navn på noden"
                               validate="text"
-                              value="NHM" />
+                              value="NHM"
+                            />
                           </div>
-                        </function FormGroup() {
-                            (0, _classCallCheck3['default'])(this, FormGroup);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }>
-                      </function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                    <function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                        </FormGroup>
+                      </Form>
+                    </Col>
+                    <Col
                       bsClass="col"
                       componentClass="div"
-                      md={5}>
-                      <function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      md={5}
+                    >
+                      <Form
                         bsClass="form"
                         componentClass="form"
                         horizontal={true}
-                        inline={false}>
-                        <function FormGroup() {
-                            (0, _classCallCheck3['default'])(this, FormGroup);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }
-                          bsClass="form-group">
+                        inline={false}
+                      >
+                        <FormGroup
+                          bsClass="form-group"
+                        >
                           <label
                             className="col-sm-3 control-label"
-                            htmlFor="address">
+                            htmlFor="address"
+                          >
                             Adresse
                           </label>
                           <div
-                            className="col-sm-8">
-                            <function (initialProps) {
-                                  return _react2.default.createElement(Injected, initialProps);
-                                }
+                            className="col-sm-8"
+                          >
+                            <Component
                               id="addressField"
-                              onChange={[Function onChange]}
+                              onChange={[Function]}
                               placeHolder="Find address"
-                              value="Sars gate 11" />
+                              value="Sars gate 11"
+                            />
                           </div>
-                        </function FormGroup() {
-                            (0, _classCallCheck3['default'])(this, FormGroup);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }>
-                      </function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                  </function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }>
-                  <function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }
+                        </FormGroup>
+                      </Form>
+                    </Col>
+                  </Row>
+                  <Row
                     bsClass="row"
                     className="row-centered"
-                    componentClass="div">
-                    <function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                    componentClass="div"
+                  >
+                    <Col
                       bsClass="col"
                       componentClass="div"
-                      md={5}>
-                      <function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      md={5}
+                    >
+                      <Form
                         bsClass="form"
                         componentClass="form"
                         horizontal={true}
-                        inline={false}>
+                        inline={false}
+                      >
                         <div
-                          className="form-group">
+                          className="form-group"
+                        >
                           <label
                             className="col-sm-3 control-label"
-                            htmlFor="comments2">
+                            htmlFor="comments2"
+                          >
                             Areal
                           </label>
                           <div
-                            className="col-sm-4">
-                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                            className="col-sm-4"
+                          >
+                            <MusitField
                               id="area"
-                              onChange={[Function onChange]}
+                              onChange={[Function]}
                               placeHolder="fra"
                               precision={3}
                               tooltip="Nodens areal i m²"
                               validate="number"
-                              value="10" />
+                              value="10"
+                            />
                           </div>
                           <div
-                            className="col-sm-4">
-                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                            className="col-sm-4"
+                          >
+                            <MusitField
                               id="areaTo"
-                              onChange={[Function onChange]}
+                              onChange={[Function]}
                               placeHolder="til"
                               precision={3}
                               tooltip="Nodens areal i m²"
                               validate="number"
-                              value="12" />
+                              value="12"
+                            />
                           </div>
                         </div>
-                      </function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                    <function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                      </Form>
+                    </Col>
+                    <Col
                       bsClass="col"
                       componentClass="div"
-                      md={5}>
-                      <function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      md={5}
+                    >
+                      <Form
                         bsClass="form"
                         componentClass="form"
                         horizontal={true}
-                        inline={false}>
+                        inline={false}
+                      >
                         <div
-                          className="form-group">
+                          className="form-group"
+                        >
                           <label
                             className="col-sm-3 control-label"
-                            htmlFor="controlId">
+                            htmlFor="controlId"
+                          >
                             Høyde
                           </label>
                           <div
-                            className="col-sm-4">
-                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                            className="col-sm-4"
+                          >
+                            <MusitField
                               id="height"
-                              onChange={[Function onChange]}
+                              onChange={[Function]}
                               placeHolder="fra"
                               precision={3}
                               tooltip="Nodens høyde i m"
                               validate="number"
-                              value="3" />
+                              value="3"
+                            />
                           </div>
                           <div
-                            className="col-sm-4">
-                            <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                            className="col-sm-4"
+                          >
+                            <MusitField
                               id="heightTo"
-                              onChange={[Function onChange]}
+                              onChange={[Function]}
                               placeHolder="til"
                               precision={3}
                               tooltip="Nodens høyde i m"
                               validate="number"
-                              value="5" />
+                              value="5"
+                            />
                           </div>
                         </div>
-                      </function Form() {
-                          (0, _classCallCheck3['default'])(this, Form);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                  </function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }>
-                </function Grid() {
-                    (0, _classCallCheck3['default'])(this, Grid);
-                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                  }>
-                <function Row() {
-                    (0, _classCallCheck3['default'])(this, Row);
-                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                  }
+                      </Form>
+                    </Col>
+                  </Row>
+                </Grid>
+                <Row
                   bsClass="row"
-                  componentClass="div">
-                  <function Col() {
-                      (0, _classCallCheck3['default'])(this, Col);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }
+                  componentClass="div"
+                >
+                  <Col
                     bsClass="col"
                     componentClass="div"
                     style={
                       Object {
-                        "textAlign": "center"
+                        "textAlign": "center",
                       }
-                    }>
+                    }
+                  >
                     <h4>
                       Miljødata
                     </h4>
-                  </function Col() {
-                      (0, _classCallCheck3['default'])(this, Col);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }>
-                </function Row() {
-                    (0, _classCallCheck3['default'])(this, Row);
-                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                  }>
+                  </Col>
+                </Row>
                 <div>
-                  <function Grid() {
-                      (0, _classCallCheck3['default'])(this, Grid);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }
+                  <Grid
                     bsClass="container"
                     componentClass="div"
-                    fluid={false}>
-                    <function Row() {
-                        (0, _classCallCheck3['default'])(this, Row);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                    fluid={false}
+                  >
+                    <Row
                       bsClass="row"
                       className="row-centered"
-                      componentClass="div">
-                      <function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      componentClass="div"
+                    >
+                      <Col
                         bsClass="col"
                         componentClass="div"
-                        md={5}>
-                        <function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }
+                        md={5}
+                      >
+                        <Form
                           bsClass="form"
                           componentClass="form"
                           horizontal={true}
-                          inline={false}>
+                          inline={false}
+                        >
                           <div
-                            className="form-group">
+                            className="form-group"
+                          >
                             <label
                               className="col-sm-3 control-label"
-                              htmlFor="comments2">
+                              htmlFor="comments2"
+                            >
                               Temperatur
                             </label>
                             <div
-                              className="col-sm-4">
-                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              className="col-sm-4"
+                            >
+                              <MusitField
                                 id="temperature"
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 placeHolder="°C"
                                 precision={3}
                                 tooltip="Krav til temperatur i °C"
                                 validate="number"
-                                value="12" />
+                                value="12"
+                              />
                             </div>
                             <div
-                              className="col-sm-4">
-                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              className="col-sm-4"
+                            >
+                              <MusitField
                                 id="temperatureTolerance"
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 placeHolder="°C"
                                 precision={0}
                                 tooltip="Toleranse"
                                 validate="number"
-                                value="3" />
+                                value="3"
+                              />
                             </div>
                           </div>
-                        </function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }>
-                      </function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                      <function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                        </Form>
+                      </Col>
+                      <Col
                         bsClass="col"
                         componentClass="div"
-                        md={5}>
-                        <function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }
+                        md={5}
+                      >
+                        <Form
                           bsClass="form"
                           componentClass="form"
                           horizontal={true}
-                          inline={false}>
+                          inline={false}
+                        >
                           <div
-                            className="form-group">
+                            className="form-group"
+                          >
                             <label
                               className="col-sm-3 control-label"
-                              htmlFor="comments2">
+                              htmlFor="comments2"
+                            >
                               Rel. luftfuktighet
                             </label>
                             <div
-                              className="col-sm-4">
-                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              className="col-sm-4"
+                            >
+                              <MusitField
                                 id="relativeHumidity"
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 placeHolder="%"
                                 precision={3}
                                 tooltip="Krav til relativ luftfuktighet i %"
                                 validate="number"
-                                value="67" />
+                                value="67"
+                              />
                             </div>
                             <div
-                              className="col-sm-4">
-                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              className="col-sm-4"
+                            >
+                              <MusitField
                                 id="relativeHumidityTolerance"
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 placeHolder="%"
                                 precision={0}
                                 tooltip="Toleranse"
                                 validate="number"
-                                value="2" />
+                                value="2"
+                              />
                             </div>
                           </div>
-                        </function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }>
-                      </function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Row() {
-                        (0, _classCallCheck3['default'])(this, Row);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                    <function Row() {
-                        (0, _classCallCheck3['default'])(this, Row);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                        </Form>
+                      </Col>
+                    </Row>
+                    <Row
                       bsClass="row"
                       className="row-centered"
-                      componentClass="div">
-                      <function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      componentClass="div"
+                    >
+                      <Col
                         bsClass="col"
                         componentClass="div"
-                        md={5}>
-                        <function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }
+                        md={5}
+                      >
+                        <Form
                           bsClass="form"
                           componentClass="form"
                           horizontal={true}
-                          inline={false}>
+                          inline={false}
+                        >
                           <div
-                            className="form-group">
+                            className="form-group"
+                          >
                             <label
                               className="col-sm-3 control-label"
-                              htmlFor="comments2">
+                              htmlFor="comments2"
+                            >
                               Inertluft
                             </label>
                             <div
-                              className="col-sm-4">
-                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              className="col-sm-4"
+                            >
+                              <MusitField
                                 id="hypoxicAir"
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 placeHolder="% O₂"
                                 precision={3}
                                 tooltip="Krav til inertluft i % O₂"
                                 validate="number"
-                                value="23" />
+                                value="23"
+                              />
                             </div>
                             <div
-                              className="col-sm-4">
-                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              className="col-sm-4"
+                            >
+                              <MusitField
                                 id="hypoxicAirTolerance"
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 placeHolder="% O₂"
                                 precision={0}
                                 tooltip="Toleranse"
                                 validate="number"
-                                value="2" />
+                                value="2"
+                              />
                             </div>
                           </div>
-                        </function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }>
-                      </function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                      <function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                        </Form>
+                      </Col>
+                      <Col
                         bsClass="col"
                         componentClass="div"
-                        md={5}>
-                        <function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }
+                        md={5}
+                      >
+                        <Form
                           bsClass="form"
                           componentClass="form"
                           horizontal={true}
-                          inline={false}>
-                          <function FormGroup() {
-                              (0, _classCallCheck3['default'])(this, FormGroup);
-                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                            }
-                            bsClass="form-group">
+                          inline={false}
+                        >
+                          <FormGroup
+                            bsClass="form-group"
+                          >
                             <label
                               className="col-sm-3 control-label"
-                              htmlFor="cleaning">
+                              htmlFor="cleaning"
+                            >
                               Renhold
                             </label>
                             <div
-                              className="col-sm-8">
-                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              className="col-sm-8"
+                            >
+                              <MusitField
                                 id="cleaning"
                                 maximumLength={100}
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 tooltip="Krav til renhold"
                                 validate="text"
-                                value="Urent" />
+                                value="Urent"
+                              />
                             </div>
-                          </function FormGroup() {
-                              (0, _classCallCheck3['default'])(this, FormGroup);
-                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                            }>
-                        </function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }>
-                      </function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Row() {
-                        (0, _classCallCheck3['default'])(this, Row);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                    <function Row() {
-                        (0, _classCallCheck3['default'])(this, Row);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                          </FormGroup>
+                        </Form>
+                      </Col>
+                    </Row>
+                    <Row
                       bsClass="row"
                       className="row-centered"
-                      componentClass="div">
-                      <function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      componentClass="div"
+                    >
+                      <Col
                         bsClass="col"
                         componentClass="div"
-                        md={5}>
-                        <function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }
+                        md={5}
+                      >
+                        <Form
                           bsClass="form"
                           componentClass="form"
                           horizontal={true}
-                          inline={false}>
-                          <function FormGroup() {
-                              (0, _classCallCheck3['default'])(this, FormGroup);
-                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                            }
-                            bsClass="form-group">
+                          inline={false}
+                        >
+                          <FormGroup
+                            bsClass="form-group"
+                          >
                             <label
                               className="col-sm-3 control-label"
-                              htmlFor="lightingCondition">
+                              htmlFor="lightingCondition"
+                            >
                               Lysforhold
                             </label>
                             <div
-                              className="col-sm-8">
-                              <function MusitField() {_classCallCheck(this, MusitField);return _possibleConstructorReturn(this, (MusitField.__proto__ || Object.getPrototypeOf(MusitField)).apply(this, arguments));}
+                              className="col-sm-8"
+                            >
+                              <MusitField
                                 id="lightingCondition"
                                 maximumLength={100}
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 tooltip="Krav til lysforhold"
                                 validate="text"
-                                value="For mørkt" />
+                                value="For mørkt"
+                              />
                             </div>
-                          </function FormGroup() {
-                              (0, _classCallCheck3['default'])(this, FormGroup);
-                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                            }>
-                        </function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }>
-                      </function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Row() {
-                        (0, _classCallCheck3['default'])(this, Row);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                    <function Row() {
-                        (0, _classCallCheck3['default'])(this, Row);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                          </FormGroup>
+                        </Form>
+                      </Col>
+                    </Row>
+                    <Row
                       bsClass="row"
-                      componentClass="div">
-                      <function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }
+                      componentClass="div"
+                    >
+                      <Col
                         bsClass="col"
                         componentClass="div"
-                        md={5}>
-                        <function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }
+                        md={5}
+                      >
+                        <Form
                           bsClass="form"
                           componentClass="form"
                           horizontal={true}
-                          inline={false}>
-                          <function FormGroup() {
-                              (0, _classCallCheck3['default'])(this, FormGroup);
-                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                            }
-                            bsClass="form-group">
+                          inline={false}
+                        >
+                          <FormGroup
+                            bsClass="form-group"
+                          >
                             <label
                               className="col-sm-3 control-label"
-                              htmlFor="comments">
+                              htmlFor="comments"
+                            >
                               Kommentar
                             </label>
                             <div
-                              className="col-sm-8">
-                              <function MusitTextArea() {_classCallCheck(this, MusitTextArea);return _possibleConstructorReturn(this, (MusitTextArea.__proto__ || Object.getPrototypeOf(MusitTextArea)).apply(this, arguments));}
+                              className="col-sm-8"
+                            >
+                              <MusitTextArea
                                 id="comments"
                                 maximumLength={250}
                                 numberOfRows={4}
-                                onChange={[Function onChange]}
+                                onChange={[Function]}
                                 tooltip="Kommentar"
                                 validate="text"
-                                value="Hei hei" />
+                                value="Hei hei"
+                              />
                             </div>
-                          </function FormGroup() {
-                              (0, _classCallCheck3['default'])(this, FormGroup);
-                              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                            }>
-                        </function Form() {
-                            (0, _classCallCheck3['default'])(this, Form);
-                            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                          }>
-                      </function Col() {
-                          (0, _classCallCheck3['default'])(this, Col);
-                          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                        }>
-                    </function Row() {
-                        (0, _classCallCheck3['default'])(this, Row);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                  </function Grid() {
-                      (0, _classCallCheck3['default'])(this, Grid);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }>
+                          </FormGroup>
+                        </Form>
+                      </Col>
+                    </Row>
+                  </Grid>
                 </div>
-                <function Grid() {
-                    (0, _classCallCheck3['default'])(this, Grid);
-                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                  }
+                <Grid
                   bsClass="container"
                   componentClass="div"
-                  fluid={false}>
-                  <function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }
+                  fluid={false}
+                >
+                  <Row
                     bsClass="row"
-                    componentClass="div">
+                    componentClass="div"
+                  >
                     <br />
                     <br />
-                  </function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }>
-                  <function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }
+                  </Row>
+                  <Row
                     bsClass="row"
-                    componentClass="div">
-                    <function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                    componentClass="div"
+                  >
+                    <Col
                       bsClass="col"
                       componentClass="div"
-                      sm={8} />
-                    <function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }
+                      sm={8}
+                    />
+                    <Col
                       bsClass="col"
                       componentClass="div"
-                      sm={4}>
+                      sm={4}
+                    >
                       <span>
                         <b>
                           Sist endret av: 
@@ -1031,77 +861,26 @@ exports[`NodePanel should render properly  1`] = `
                         </b>
                         19.02.2017
                       </span>
-                    </function Col() {
-                        (0, _classCallCheck3['default'])(this, Col);
-                        return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                      }>
-                  </function Row() {
-                      (0, _classCallCheck3['default'])(this, Row);
-                      return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                    }>
-                </function Grid() {
-                    (0, _classCallCheck3['default'])(this, Grid);
-                    return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-                  }>
+                    </Col>
+                  </Row>
+                </Grid>
               </div>
             </form>
-          </function Col() {
-              (0, _classCallCheck3['default'])(this, Col);
-              return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-            }>
-        </function Row() {
-            (0, _classCallCheck3['default'])(this, Row);
-            return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-          }>
-      </function Grid() {
-          (0, _classCallCheck3['default'])(this, Grid);
-          return (0, _possibleConstructorReturn3['default'])(this, _React$Component.apply(this, arguments));
-        }>
-    </function (props, context, updater) {
-          // This constructor gets overridden by mocks. The argument is used
-          // by mocks to assert on what gets mounted.
-    
-          if (process.env.NODE_ENV !== 'production') {
-            process.env.NODE_ENV !== 'production' ? warning(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory') : void 0;
-          }
-    
-          // Wire up auto-binding
-          if (this.__reactAutoBindPairs.length) {
-            bindAutoBindMethods(this);
-          }
-    
-          this.props = props;
-          this.context = context;
-          this.refs = emptyObject;
-          this.updater = updater || ReactNoopUpdateQueue;
-    
-          this.state = null;
-    
-          // ReactClasses doesn't have constructors. Instead, they use the
-          // getInitialState and componentWillMount methods for initialization.
-    
-          var initialState = this.getInitialState ? this.getInitialState() : null;
-          if (process.env.NODE_ENV !== 'production') {
-            // We allow auto-mocks to proceed as if they're returning null.
-            if (initialState === undefined && this.getInitialState._isMockFunction) {
-              // This is probably bad practice. Consider warning here and
-              // deprecating this convenience.
-              initialState = null;
-            }
-          }
-          !(typeof initialState === 'object' && !Array.isArray(initialState)) ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s.getInitialState(): must return an object or null', Constructor.displayName || 'ReactCompositeComponent') : _prodInvariant('82', Constructor.displayName || 'ReactCompositeComponent') : void 0;
-    
-          this.state = initialState;
-        }>
+          </Col>
+        </Row>
+      </Grid>
+    </Component>
   }
   leftMenu={
     <div
       style={
         Object {
-          "minHeight": 0
+          "minHeight": 0,
         }
-      } />
+      }
+    />
   }
   title="Magasin"
-  toolbar={<span />} />
+  toolbar={<span />}
+/>
 `;
