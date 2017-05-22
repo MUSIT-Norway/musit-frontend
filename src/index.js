@@ -20,6 +20,7 @@ import provide from 'react-rxjs/dist/RxProvide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
 import queryParser from 'query-string';
+import registerServiceWorker from './registerServiceWorker';
 
 const notificationSystem = ReactDOM.render(
   <NotificationSystem />,
@@ -77,4 +78,6 @@ if (accessToken) {
   if (config.isDev) {
     window.React = React;
   }
+
+  registerServiceWorker();
 }
