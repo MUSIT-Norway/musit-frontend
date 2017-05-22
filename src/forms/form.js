@@ -64,13 +64,14 @@ const updateField = (field: Field<*>, data: Update<*>): Field<*> => {
 
 export const getStrField = (
   field: string,
-  defaultValue?: ?string = null
+  defaultValue?: ?string = null,
+  required?: boolean = true
 ): Field<string> => ({
   name: field,
   defaultValue: defaultValue,
   mapper: stringMapper,
   validator: {
-    rawValidator: isRequired
+    rawValidator: required ? isRequired : undefined
   }
 });
 
@@ -86,19 +87,21 @@ export const getBoolField = (
 
 export const getArrField = (
   field: string,
-  defaultValue?: Array<*> = []
+  defaultValue?: Array<*> = [],
+  required?: boolean = true
 ): Field<Array<*>> => ({
   name: field,
   defaultValue: defaultValue,
   mapper: noMapper,
   validator: {
-    rawValidator: isNonEmptyArray
+    rawValidator: required ? isNonEmptyArray : undefined
   }
 });
 
 export const getNumberField = (
   field: string,
   defaultValue?: ?number = null,
+  required?: boolean = true,
   rangeFrom?: ?number = 0,
   rangeTo?: ?number = Number.MAX_VALUE,
   decimalPrecision?: ?number = 2
@@ -107,7 +110,9 @@ export const getNumberField = (
   defaultValue: defaultValue,
   mapper: numberMapper,
   validator: {
-    rawValidator: composeValidators(isRequired, isNumber(0, decimalPrecision)),
+    rawValidator: required
+      ? composeValidators(isRequired, isNumber(0, decimalPrecision))
+      : isNumber(0, decimalPrecision),
     valueValidator: isNumberInRange(rangeFrom, rangeTo)
   }
 });
@@ -135,6 +140,27 @@ export type FormDetails = {
   form$: Observable<Field<*>[]>
 };
 
+/**
+ * This methods generates an object containing the form observable and update/load subjects.
+ * Its used like this:
+ * form.js:
+ * {
+ *   const fields = [ getNumberField('id'), getStrField('name') ];
+ *   export default createForm$('personForm', fields);
+ * }
+ * page.js:
+ * {
+ *   import personForm from './form.js';
+ *   const { form$, updateForm$, loadForm$ } = personForm;
+ *   ....
+ *   export default inject({ form$ }, { updateForm$, loadForm$ })(Page);
+ * }
+ * @param name The name of the form, should be some what unique
+ * @param fields The array of fields that should back this form
+ * @param updateForm$ The custom update subject, can be left undefined (will be auto generated if undefined)
+ * @param loadForm$ The custom load subject, can be left undefined (will be auto generated if undefined)
+ * @returns {{updateForm$: Subject.<Update.<*>>, loadForm$: Subject.<Array.<Update.<*>>>, form$}}
+ */
 const createForm$ = (
   name: string,
   fields: Array<Field<*>>,
