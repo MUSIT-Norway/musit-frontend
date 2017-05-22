@@ -1,6 +1,12 @@
 {
-  "name": "musit-frontend",
-  "version": "0.1.0",
+  "name": "MUSIT-Frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/MUSIT-Norway/musit-frontend.git"
+  },
   "private": true,
   "dependencies": {
     "bootstrap": "3.3.7",
