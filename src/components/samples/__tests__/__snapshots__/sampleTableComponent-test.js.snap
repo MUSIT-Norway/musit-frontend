@@ -7,10 +7,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     columns={
       Array [
         Object {
-          "key": "id",
-          "label": "Sample ID",
-        },
-        Object {
           "key": "doneDate",
           "label": "Dato",
         },
@@ -52,11 +48,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
   >
     <Tr>
       <Td
-        column="id"
-      >
-        1233-111-2222-222
-      </Td>
-      <Td
         column="doneDate"
       >
         20.01.1999
@@ -90,11 +81,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       </Td>
     </Tr>
     <Tr>
-      <Td
-        column="id"
-      >
-        1233-111-2155-222
-      </Td>
       <Td
         column="doneDate"
       >

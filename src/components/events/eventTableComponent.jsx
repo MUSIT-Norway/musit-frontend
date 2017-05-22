@@ -3,20 +3,39 @@ import React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
 import type { Events } from '../../types/events';
+import type { AnalysisTypes } from '../../types/analysisTypes';
 
-type EventTypeProps = { events: Events, onClick: Function };
+type EventTypeProps = { events: Events, onClick: Function, analysisTypes: AnalysisTypes };
 
-export const EventTableComponent = ({ events, onClick }: EventTypeProps) => {
+const toPathStr = pathArr => pathArr.map(o => o.name).join('  /  ');
+
+function getKeyData(e: Object, a: Object){
+  if (e.type) {
+    if((e.type === 'AnalysisCollection' ||e.type === 'Analysis' )&& a.analysisTypes) {
+      const analysisType: AnalysisTypes = a.analysisTypes.find(f => f.id && f.id === e.analysisTypeId);
+      return localStorage.getItem('language') === 'en' ? analysisType.enName : analysisType.noName ;
+    }
+    if(e.type === 'MoveObject') {
+      return toPathStr(e.to.breadcrumb);
+    }
+    if(e.type === 'Sample') {
+      return e.sampleTypeId;
+    }
+  }
+  return '';
+}
+
+export const EventTableComponent = ({ events, onClick, analysisTypes }: EventTypeProps) => {
   return (
     <div>
       <Table
         className="table"
         columns={[
-          { key: 'id', label: 'ID' },
-          { key: 'eventDate', label: 'Dato' },
+          { key: 'doneDate', label: 'Utført dato' },
           { key: 'type', label: 'Type hendelse' },
-          { key: 'registeredBy', label: 'Utført av' },
+          { key: 'doneBy', label: 'Utført av' },
           { key: 'keyData', label: 'Nøkkeldata' },
+          { key: 'caseNumber', label: 'Saksnummer' },
           { key: 'note', label: 'Kommentar' }
         ]}
         sortable={['id', 'type', 'eventDate', 'registeredBy', 'note' ]}
@@ -24,11 +43,11 @@ export const EventTableComponent = ({ events, onClick }: EventTypeProps) => {
       >
         {events && events.map((event, i) =>
           <Tr key={i} onClick={() => onClick(event)}>
-            <Td column="id">{event.id || ''}</Td>
-            <Td column="eventDate">{event.eventDate}</Td>
-            <Td column="type">{event.type}</Td>
-            <Td column="registeredBy">{event.registeredBy}</Td>
-            <Td column="keyData">{event.keyData}</Td>
+            <Td column="doneDate">{event.type && event.type === 'MoveObject' ? event.doneDate : event.registeredDate }</Td>
+            <Td column="type">{event.type ? I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`) : ''}</Td>
+            <Td column="doneBy">{event.type && event.type === 'MoveObject' ? event.doneBy : event.registeredBy }</Td>
+            <Td column="keyData">{getKeyData(event, analysisTypes)}</Td>
+            <Td column="caseNumber">{event.caseNumbers ? event.caseNumbers.join('; '): ''}</Td>
             <Td column="note"><span>{event.note}</span></Td>
           </Tr>
         )}

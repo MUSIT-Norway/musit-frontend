@@ -33,7 +33,7 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
         ...m,
         eventDate: parseISODate(m.eventDate || m.registeredDate).format(
           DATE_FORMAT_DISPLAY
-        )
+          )
       }))
     )
     .flatMap(events => {
@@ -45,11 +45,18 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
         if (Array.isArray(actors)) {
           return events.map(data => {
             const registeredBy = actors.find(a =>
-              MusitActor.hasActorId(a, data.registeredBy)
-            );
+              MusitActor.hasActorId(a, data.registeredBy));
+            const doneBy = actors.find(a => MusitActor.hasActorId(a, data.doneBy));
             return {
               ...data,
-              registeredBy: registeredBy ? registeredBy.fn : I18n.t('musit.unknown')
+              registeredBy: registeredBy ? registeredBy.fn : I18n.t('musit.unknown'),
+              doneBy: doneBy ? doneBy.fn : I18n.t('musit.unknown'),
+              doneDate: data.doneDate
+                ? parseISODate(data.doneDate).format(DATE_FORMAT_DISPLAY)
+                : I18n.t('musit.unknown'),
+              registeredDate: data.registeredDate
+                ? parseISODate(data.registeredDate).format(DATE_FORMAT_DISPLAY)
+                : I18n.t('musit.unknown')
             };
           });
         }

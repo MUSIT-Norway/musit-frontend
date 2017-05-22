@@ -7,24 +7,24 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     columns={
       Array [
         Object {
-          "key": "id",
-          "label": "ID",
-        },
-        Object {
-          "key": "eventDate",
-          "label": "Dato",
+          "key": "doneDate",
+          "label": "Utført dato",
         },
         Object {
           "key": "type",
           "label": "Type hendelse",
         },
         Object {
-          "key": "registeredBy",
+          "key": "doneBy",
           "label": "Utført av",
         },
         Object {
           "key": "keyData",
           "label": "Nøkkeldata",
+        },
+        Object {
+          "key": "caseNumber",
+          "label": "Saksnummer",
         },
         Object {
           "key": "note",
@@ -53,28 +53,22 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       onClick={[Function]}
     >
       <Td
-        column="id"
-      >
-        1233-111-2222-222
-      </Td>
-      <Td
-        column="eventDate"
-      >
-        1999-01-20
-      </Td>
+        column="doneDate"
+      />
       <Td
         column="type"
       />
       <Td
-        column="registeredBy"
+        column="doneBy"
       >
         Ole Olsen
       </Td>
       <Td
         column="keyData"
-      >
-        Til magasin nr 3
-      </Td>
+      />
+      <Td
+        column="caseNumber"
+      />
       <Td
         column="note"
       >
@@ -87,28 +81,22 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       onClick={[Function]}
     >
       <Td
-        column="id"
-      >
-        1233-111-2122-222
-      </Td>
-      <Td
-        column="eventDate"
-      >
-        1999-06-20
-      </Td>
+        column="doneDate"
+      />
       <Td
         column="type"
       />
       <Td
-        column="registeredBy"
+        column="doneBy"
       >
         Ole Hansen
       </Td>
       <Td
         column="keyData"
-      >
-        Acid
-      </Td>
+      />
+      <Td
+        column="caseNumber"
+      />
       <Td
         column="note"
       >

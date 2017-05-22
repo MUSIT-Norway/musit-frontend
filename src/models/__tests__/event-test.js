@@ -75,24 +75,33 @@ describe('Event model', () => {
           type: 'Analysis',
           eventDate: '23.03.2017',
           registeredBy: 'Some name',
-          note: 'note'
+          note: 'note',
+          doneBy: 'Ukjent',
+          doneDate: 'Ukjent',
+          registeredDate: 'Ukjent'
         },
         {
           id: 2,
           type: 'Analysis',
           eventDate: '23.03.2017',
           registeredBy: 'Some name',
-          note: 'note'
+          note: 'note',
+          doneBy: 'Ukjent',
+          doneDate: 'Ukjent',
+          registeredDate: 'Ukjent'
         },
         {
           id: 3,
           type: 'Analysis',
           eventDate: '23.03.2017',
           registeredBy: 'Some name',
-          note: 'note'
+          note: 'note',
+          doneBy: 'Ukjent',
+          doneDate: 'Ukjent',
+          registeredDate: 'Ukjent'
         },
         {
-          registeredDate: '2017-03-23T11:47:03+00:00',
+          registeredDate: '23.03.2017',
           from: {
             breadcrumb: []
           },
@@ -101,7 +110,9 @@ describe('Event model', () => {
           },
           type: 'MoveObject',
           eventDate: '23.03.2017',
-          registeredBy: 'Some name'
+          registeredBy: 'Some name',
+          doneBy: 'Ukjent',
+          doneDate: 'Ukjent'
         }
       ]
     };

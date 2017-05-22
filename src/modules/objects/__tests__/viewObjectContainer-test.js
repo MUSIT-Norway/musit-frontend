@@ -7,6 +7,7 @@ describe('ViewObjectContainer-test', () => {
     const loadSampleEvents = sinon.spy();
     const loadMoveAndAnalysisEvents = sinon.spy();
     const params = sinon.spy();
+    const getAnalysisTypes = sinon.spy();
     const appSession = {
       museumId: 99,
       collectionId: '1234455',
@@ -17,8 +18,10 @@ describe('ViewObjectContainer-test', () => {
       loadObject,
       loadSampleEvents,
       loadMoveAndAnalysisEvents,
-      params
+      params,
+      getAnalysisTypes
     });
+    expect(getAnalysisTypes.calledOnce).toBe(true);
     expect(loadObject.calledOnce).toBe(true);
     expect(loadObject.getCall(0).args[0].token).toEqual('1234');
     expect(loadObject.getCall(0).args[0].museumId).toEqual(99);
