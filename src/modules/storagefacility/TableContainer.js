@@ -13,7 +13,7 @@ import connectToScanner from '../app/scanner';
 import flowRight from 'lodash/flowRight';
 import { emitError, emitSuccess } from '../../shared/errors';
 import TableComponent from './TableComponent';
-import React from 'react';
+import PropTypes from 'prop-types';
 import { hashHistory } from 'react-router';
 import { I18n } from 'react-i18nify';
 import MusitObject from '../../models/object';
@@ -29,9 +29,9 @@ import tableStore$, {
 } from './tableStore';
 
 const data = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
+  appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   tableStore$,
-  pickList$: { type: React.PropTypes.object.isRequired }
+  pickList$: { type: PropTypes.object.isRequired }
 };
 
 const commands = {

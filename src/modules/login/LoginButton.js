@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 
 export default class FeideButton extends React.Component {
   static propTypes = {
-    children: React.PropTypes.element,
-    navigate: React.PropTypes.func.isRequired
+    children: PropTypes.element,
+    navigate: PropTypes.func.isRequired
   };
 
   static defaultProps = {

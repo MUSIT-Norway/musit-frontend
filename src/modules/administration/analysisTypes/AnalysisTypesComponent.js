@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { I18n } from 'react-i18nify';
 import FontAwesome from 'react-fontawesome';
 
-export type AnalysisType = { id: number, name: string, collections: Array<string> };
+export type AnalysisType = { id: number, noName: string, collections: Array<string> };
 
 type Store = {
   analysisTypes: Array<AnalysisType>
@@ -32,15 +32,22 @@ const CheckBoxShow = (v, c) => (
   </td>
 );
 
-const getTableRow = r => {
+/**
+ * TODO: must use localized version of name. Now using norwegian always.
+ *
+ * @param row
+ * @param index
+ * @returns {XML}
+ */
+const getTableRow = (row, index) => {
   return (
-    <tr value={r.id} key={r.id}>
-      <td>{r.name}</td>
+    <tr value={row.id} key={index}>
+      <td>{row.noName}</td>
       {collections.map(
-        c => r.collections.includes(c) ? CheckBoxShow(1, c) : CheckBoxShow(0, c)
+        c => row.collections.includes(c) ? CheckBoxShow(1, c) : CheckBoxShow(0, c)
       )}
       <td>
-        <button type="button" className="btn btn-default" value={r.id}>
+        <button type="button" className="btn btn-default" value={row.id}>
           <FontAwesome name="pencil-square-o" />
         </button>
       </td>
@@ -49,7 +56,9 @@ const getTableRow = r => {
 };
 
 const getObjectsValue = (store: Store) => {
-  return store.analysisTypes ? store.analysisTypes.map(r => getTableRow(r)) : [];
+  return store.analysisTypes
+    ? store.analysisTypes.map((row, index) => getTableRow(row, index))
+    : [];
 };
 
 const AnalysisTypesComponent = (props: Props) => (
@@ -75,8 +84,8 @@ const AnalysisTypesComponent = (props: Props) => (
       <thead>
         <tr>
           <th>Name</th>
-          {collections.map(c => (
-            <th style={{ textAlign: 'center' }}>{getCollectionName(c)}</th>
+          {collections.map((c, i) => (
+            <th style={{ textAlign: 'center' }} key={i}>{getCollectionName(c)}</th>
           ))}
         </tr>
       </thead>

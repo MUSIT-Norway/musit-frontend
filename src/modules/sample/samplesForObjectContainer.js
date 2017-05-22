@@ -1,6 +1,6 @@
 import inject from 'react-rxjs/dist/RxInject';
 import SamplesForObjectComponent from './SamplesForObjectComponent';
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import mount from '../../shared/mount';
 import { emitError, emitSuccess } from '../../shared/errors';
@@ -8,7 +8,7 @@ import flowRight from 'lodash/flowRight';
 import sampleStore$, { loadSamplesForObject$ } from './sampleStore';
 
 const data = {
-  appSession$: { type: React.PropTypes.instanceOf(Observable).isRequired },
+  appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   sampleStore$
 };
 

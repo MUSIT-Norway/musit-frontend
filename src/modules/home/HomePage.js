@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Grid,
   Row,
@@ -95,7 +96,7 @@ export const HomePage = (props: Props) => (
 );
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: PropTypes.object.isRequired }
 };
 
 export default flowRight([inject(data), makeUrlAware])(HomePage);

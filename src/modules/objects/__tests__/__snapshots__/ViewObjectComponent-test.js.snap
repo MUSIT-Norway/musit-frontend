@@ -78,6 +78,7 @@ exports[`ViewObjectComponent should display correctly 1`] = `
       eventKey={1}
       title="Hendelser">
       <EventTableComponent
+        analysisTypes={undefined}
         events={
           Array [
             Object {

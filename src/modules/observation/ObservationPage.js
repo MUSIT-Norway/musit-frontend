@@ -1,5 +1,6 @@
 import { values } from 'lodash';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   ControlLabel,
   Grid,
@@ -41,9 +42,9 @@ export default class ObservationPage extends React.Component {
     registeredDate: PropTypes.string,
     registeredBy: PropTypes.string,
     onSaveObservation: PropTypes.func.isRequired,
-    mode: React.PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
-    saveDisabled: React.PropTypes.bool,
-    cancelDisabled: React.PropTypes.bool
+    mode: PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
+    saveDisabled: PropTypes.bool,
+    cancelDisabled: PropTypes.bool
   };
 
   static defaultProps = {

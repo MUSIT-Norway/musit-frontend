@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { I18n } from 'react-i18nify';
 import FontAwesome from 'react-fontawesome';
@@ -10,7 +11,7 @@ import MusitObject from '../../models/object';
 
 export class ObjectSearchComponent extends React.Component {
   static propTypes = {
-    objectSearchStore: React.PropTypes.object.isRequired
+    objectSearchStore: PropTypes.object.isRequired
   };
 
   constructor(props) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Table, PageHeader, Panel, Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import Config from '../../config';
@@ -65,7 +66,7 @@ export const ReportsOverview = props => {
 };
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired }
+  appSession$: { type: PropTypes.object.isRequired }
 };
 
 export default flowRight([inject(data), makeUrlAware])(ReportsOverview);

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import { createStore, createAction } from 'react-rxjs/dist/RxStore';
 import omit from 'lodash/omit';

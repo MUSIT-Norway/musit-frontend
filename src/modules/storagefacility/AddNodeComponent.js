@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import StorageUnitContainer from './NodeDetails';
 import inject from 'react-rxjs/dist/RxInject';
 import nodeStore$, { clearNode$, loadNode$, updateState$ } from './nodeStore';
@@ -9,7 +10,7 @@ import MusitNode from '../../models/node';
 
 export class AddStorageUnitContainer extends React.Component {
   static propTypes = {
-    nodeStore: React.PropTypes.object.isRequired,
+    nodeStore: PropTypes.object.isRequired,
     params: PropTypes.object,
     updateState: PropTypes.func.isRequired,
     addNode: PropTypes.func.isRequired,
@@ -68,7 +69,7 @@ export class AddStorageUnitContainer extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   nodeStore$
 };
 

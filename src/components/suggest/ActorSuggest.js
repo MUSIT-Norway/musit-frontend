@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import Config from '../../config';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
@@ -6,15 +7,15 @@ import inject from 'react-rxjs/dist/RxInject';
 
 export class ActorSuggestComponent extends React.Component {
   static propTypes = {
-    id: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string,
-    placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.object,
-    onChange: React.PropTypes.func.isRequired,
-    update: React.PropTypes.func,
-    disabled: React.PropTypes.bool,
-    clear: React.PropTypes.func,
-    appSession: React.PropTypes.object.isRequired
+    id: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    placeHolder: PropTypes.string,
+    suggest: PropTypes.object,
+    onChange: PropTypes.func.isRequired,
+    update: PropTypes.func,
+    disabled: PropTypes.bool,
+    clear: PropTypes.func,
+    appSession: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -74,9 +75,9 @@ const suggest$ = suggest$Fn('actorSuggest', Config.magasin.urls.api.actor.search
 
 const data = {
   appSession$: {
-    type: React.PropTypes.shape({
-      museumId: React.PropTypes.number.isRequired,
-      accessToken: React.PropTypes.string.isRequired
+    type: PropTypes.shape({
+      museumId: PropTypes.number.isRequired,
+      accessToken: PropTypes.string.isRequired
     }).isRequired
   },
   suggest$

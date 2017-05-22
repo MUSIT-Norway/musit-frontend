@@ -1,5 +1,6 @@
 import { values } from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { hashHistory } from 'react-router';
 import { Grid, Row, Col, Checkbox, ControlLabel, Form, FormGroup } from 'react-bootstrap';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
@@ -21,10 +22,10 @@ export default class NodeDetails extends Component {
     unit: PropTypes.object.isRequired,
     params: PropTypes.object,
     onLagreClick: PropTypes.func.isRequired,
-    isAdd: React.PropTypes.bool,
-    path: React.PropTypes.arrayOf(React.PropTypes.object),
-    loaded: React.PropTypes.bool.isRequired,
-    updateState: React.PropTypes.func.isRequired
+    isAdd: PropTypes.bool,
+    path: PropTypes.arrayOf(PropTypes.object),
+    loaded: PropTypes.bool.isRequired,
+    updateState: PropTypes.func.isRequired
   };
 
   constructor(props) {

@@ -1,5 +1,6 @@
 import './LoginComponent.css';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Row } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 import NorwegianTranslation from './LoginComponent_no.html.jsx';
@@ -11,7 +12,7 @@ import inject from 'react-rxjs/dist/RxInject';
 
 export class LoginComponent extends React.Component {
   static propTypes = {
-    user: React.PropTypes.object
+    user: PropTypes.object
   };
 
   constructor(props) {

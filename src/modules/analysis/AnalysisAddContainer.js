@@ -1,5 +1,5 @@
 import inject from 'react-rxjs/dist/RxInject';
-import React from 'react';
+import PropTypes from 'prop-types';
 import analysisAddForm from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
 import store$, { getAnalysisTypes$ } from './analysisStore';
@@ -13,7 +13,7 @@ import { hashHistory } from 'react-router';
 const { form$, updateForm$, loadForm$ } = analysisAddForm;
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   store$,
   form$
 };

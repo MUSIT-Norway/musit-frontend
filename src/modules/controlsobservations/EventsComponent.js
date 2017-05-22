@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import EventsGrid from './EventsGrid';
 import EventsLeftMenu from './EventsLeftMenu';
 import Layout from '../../components/layout';
@@ -13,14 +14,14 @@ import Config from '../../config';
 
 export class EventsComponent extends React.Component {
   static propTypes = {
-    appSession: React.PropTypes.object,
-    store: React.PropTypes.object,
-    params: React.PropTypes.object,
-    route: React.PropTypes.object,
-    loadEvents: React.PropTypes.func.isRequired,
-    loadRootNode: React.PropTypes.func.isRequired,
-    clearEvents: React.PropTypes.func.isRequired,
-    loader: React.PropTypes.element.isRequired
+    appSession: PropTypes.object,
+    store: PropTypes.object,
+    params: PropTypes.object,
+    route: PropTypes.object,
+    loadEvents: PropTypes.func.isRequired,
+    loadRootNode: PropTypes.func.isRequired,
+    clearEvents: PropTypes.func.isRequired,
+    loader: PropTypes.element.isRequired
   };
 
   constructor(props) {
@@ -171,7 +172,7 @@ export class EventsComponent extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   store$
 };
 

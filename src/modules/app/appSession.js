@@ -7,7 +7,8 @@ import { emitError } from '../../shared/errors';
 import { getDisplayName } from '../../shared/util';
 import { I18n } from 'react-i18nify';
 import orderBy from 'lodash/orderBy';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import isEqualWith from 'lodash/isEqualWith';
 
 export const makeUrlAware = Component => {

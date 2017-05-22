@@ -4,6 +4,7 @@ import { Row, Col, Tabs, Tab, PageHeader, Button } from 'react-bootstrap';
 import type { ObjectData } from '../../types/object';
 import type { Samples } from '../../types/samples';
 import type { Events } from '../../types/events';
+import type { AnalysisTypes } from '../../types/analysisTypes';
 import EventTableComponent from '../../components/events/eventTableComponent';
 import SampleTableComponent from '../../components/samples/sampleTableComponent';
 import { hashHistory } from 'react-router';
@@ -12,11 +13,16 @@ import type { AppSession } from '../../types/appSession';
 
 type ViewObjectComponentProps = {
   objectStore: { objectData: ObjectData, events: Events, samples: Samples },
-  appSession: AppSession
+  appSession: AppSession,
+  analysisTypes: AnalysisTypes
 };
 
 export const ViewObjectComponent = (
-  { objectStore: { objectData, events, samples }, appSession }: ViewObjectComponentProps
+  {
+    objectStore: { objectData, events, samples },
+    appSession,
+    analysisTypes
+  }: ViewObjectComponentProps
 ) => (
   <div>
     <PageHeader>Objektvisning</PageHeader>
@@ -56,8 +62,9 @@ export const ViewObjectComponent = (
       <Tab title="Hendelser" eventKey={1}>
         <EventTableComponent
           events={events}
+          analysisTypes={analysisTypes}
           onClick={event => {
-            if (event.type === 'Analysis') {
+            if (event.type === 'Analysis' || event.type === 'AnalysisCollection') {
               hashHistory.push({
                 pathname: Config.magasin.urls.client.analysis.viewAnalysis(
                   appSession,

@@ -17,15 +17,16 @@
  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Row, Col, PageHeader } from 'react-bootstrap';
 
 export default class Layout extends React.Component {
   static propTypes = {
-    title: React.PropTypes.any.isRequired,
-    leftMenu: React.PropTypes.object,
-    content: React.PropTypes.object.isRequired,
-    breadcrumb: React.PropTypes.element,
-    toolbar: React.PropTypes.element
+    title: PropTypes.any.isRequired,
+    leftMenu: PropTypes.object,
+    content: PropTypes.object.isRequired,
+    breadcrumb: PropTypes.element,
+    toolbar: PropTypes.element
   };
 
   static defaultProps = {

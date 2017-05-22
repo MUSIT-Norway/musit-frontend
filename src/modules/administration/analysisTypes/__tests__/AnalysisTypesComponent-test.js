@@ -12,7 +12,7 @@ const analysisTypes = [
   {
     category: 8,
     id: 1,
-    name: '3D-skanning, laser',
+    noName: '3D-skanning, laser',
     collections: [
       '1d8dd4e6-1527-439c-ac86-fc315e0ce852',
       '2e4f2455-1b3b-4a04-80a1-ba92715ff613',
@@ -29,7 +29,7 @@ const analysisTypes = [
   {
     category: 8,
     id: 2,
-    name: '3D-skanning, strukturert lys',
+    noName: '3D-skanning, strukturert lys',
     collections: [
       '1d8dd4e6-1527-439c-ac86-fc315e0ce852',
       '2e4f2455-1b3b-4a04-80a1-ba92715ff613',

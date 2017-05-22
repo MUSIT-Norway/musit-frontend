@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 import suggest$Fn, { update$, clear$ } from './suggestStore';
 import Config from '../../config';
@@ -6,14 +7,14 @@ import inject from 'react-rxjs/dist/RxInject';
 
 export class AddressSuggest extends React.Component {
   static propTypes = {
-    id: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string,
-    placeHolder: React.PropTypes.string,
-    suggest: React.PropTypes.object,
-    onChange: React.PropTypes.func.isRequired,
-    update: React.PropTypes.func,
-    disabled: React.PropTypes.bool,
-    clear: React.PropTypes.func
+    id: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    placeHolder: PropTypes.string,
+    suggest: PropTypes.object,
+    onChange: PropTypes.func.isRequired,
+    update: PropTypes.func,
+    disabled: PropTypes.bool,
+    clear: PropTypes.func
   };
 
   static defaultProps = {
@@ -91,7 +92,7 @@ export class AddressSuggest extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   suggest$: suggest$Fn('addressSuggest', Config.magasin.urls.api.geolocation.searchUrl)
 };
 

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ObservationPage from './ObservationPage';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
@@ -17,7 +18,7 @@ export class AddObservationPage extends React.Component {
     emitError: PropTypes.func.isRequired,
     emitSuccess: PropTypes.func.isRequired,
     actor: PropTypes.object,
-    rootNode: React.PropTypes.object,
+    rootNode: PropTypes.object,
     appSession: PropTypes.object.isRequired
   };
 
@@ -76,7 +77,7 @@ export class AddObservationPage extends React.Component {
 }
 
 const data = {
-  appSession$: { type: React.PropTypes.object.isRequired },
+  appSession$: { type: PropTypes.object.isRequired },
   store$
 };
 
