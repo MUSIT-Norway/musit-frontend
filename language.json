@@ -1,6 +1,15 @@
 {
   "en": {
     "musit": {
+      "objects":{
+        "objectsView": {
+          "eventTypes": {
+            "AnalysisCollection": "Analysis",
+            "Analysis": "Analysis",
+            "MoveObject": "Relocating"
+          }
+        }
+      },
       "administration":{
         "administration": "Administration",
         "titleHeader": "Title",
@@ -691,6 +700,15 @@
   },
   "no": {
     "musit": {
+      "objects":{
+        "objectsView": {
+          "eventTypes": {
+            "AnalysisCollection": "Analyse",
+            "Analysis": "Analyse",
+            "MoveObject": "Flytting"
+          }
+        }
+      },
       "administration":{
         "administration": "Administrasjon",
         "titleHeader": "Tittel",

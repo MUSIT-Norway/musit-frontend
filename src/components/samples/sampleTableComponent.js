@@ -10,7 +10,6 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
       <Table
         className="table"
         columns={[
-          { key: 'id', label: 'Sample ID' },
           { key: 'doneDate', label: 'Dato' },
           { key: 'sampleType', label: 'Prøvetype' },
           { key: 'sampleSubType', label: 'Prøveundertype' },
@@ -24,7 +23,6 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
         {samples &&
           samples.map((e, i) => (
             <Tr key={i}>
-              <Td column="id">{e.id}</Td>
               <Td column="doneDate">{e.doneDate.format('DD.MM.YYYY')}</Td>
               <Td column="sampleType">{e.sampleTypeId}</Td>
               <Td column="sampleSubType">{' '}</Td>
