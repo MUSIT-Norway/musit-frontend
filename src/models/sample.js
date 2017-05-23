@@ -9,7 +9,11 @@ import { omit } from 'lodash';
 import uniqBy from 'lodash/uniqBy';
 import MusitActor from '../models/actor';
 
-export type SampleStatus = {id: number, noStatus:string|null, enStatus:string|null};
+export type SampleStatus = {
+  id: number,
+  noStatus: ?string,
+  enStatus: ?string
+};
 
 class Sample {
   static addSample: (AjaxPost) => (
@@ -151,7 +155,12 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
       .flatMap(sampleJson => {
         return MusitActor.getActors(ajaxPost)({
           token: token,
-          actorIds: [sampleJson.responsible.value, sampleJson.registeredStamp.user]
+
+          actorIds: [
+            sampleJson.responsible.value,
+            sampleJson.registeredStamp.user,
+            sampleJson.updatedStamp && sampleJson.updatedStamp.user
+          ].filter(uuid => !!uuid)
         }).map(actors => {
           if (!actors || actors.length === 0) {
             return sampleJson;
@@ -165,6 +174,13 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
             registeredStamp: {
               ...sampleJson.registeredStamp,
               name: getActorName(actors, sampleJson.registeredStamp.user)
+
+            },
+            updatedStamp: {
+              ...sampleJson.updatedStamp,
+              name: sampleJson.updatedStamp
+                ? getActorName(actors, sampleJson.updatedStamp.user)
+                : null
             }
           };
         });

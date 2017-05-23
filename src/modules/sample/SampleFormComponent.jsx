@@ -20,11 +20,16 @@ type Params = {
   sampleId?: string
 }
 
-type Store = { sampleTypes?: any }
+type Store = {
+  sampleTypes?: any,
+  storageContainers?: any,
+  storageMediums?: any,
+  treatments?: any
+}
 
 type Props = {
   form: FormDetails,
-  store: { sampleTypes?: any, storageContainers?: any, storageMediums?: any, treatments?: any },
+  store: Store,
   updateForm: Function,
   persons: Array<{ name: string, role: string, date: string }>,
   addSample: Function,
@@ -35,8 +40,6 @@ type Props = {
   appSession: AppSession,
   params: Params
 };
-
-
 
 function isFormValid(form) {
   return Object.keys(form).reduce((acc, k) => {
@@ -115,7 +118,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
               field={form.subTypeValue}
               title="Prøveundertype:"
               defaultOption="Velg undertype"
-              valueFn={sampleTypeDisplayName }
+              valueFn={sampleTypeDisplayName}
               displayFn={sampleTypeDisplayName}
               onChange={updateForm}
               selectItems={store.sampleTypes ? store.sampleTypes[form.sampleType.rawValue] : []}
@@ -134,8 +137,9 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             field={form.status}
             title="Status:"
             defaultOption="Velg status"
-            valueFn={(v) => v.id}
-            displayFn={(v) => v.noStatus }
+
+            valueFn={(v) => v.statusId}
+            displayFn={(v) => v.noStatus}
             onChange={updateForm}
             selectItems={Sample.getSampleStatuses().filter(s => s!== null )}
           />
@@ -263,14 +267,7 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
   const persons = form.persons.rawValue;
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
-  tmpData.status*=1;
-  tmpData.responsible = {
-    type: 'ActorById',
-    value: appSession.actor.dataportenId
-  };
-
   tmpData.sampleTypeId = store.sampleTypes ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value) : null;
-
   tmpData.isExtracted = false;
   tmpData.parentObjectType = objectData.objectType;
   tmpData.museumId = appSession.museumId;
