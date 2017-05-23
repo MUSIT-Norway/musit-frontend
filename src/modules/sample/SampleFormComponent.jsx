@@ -75,7 +75,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
       </h4>
       <div className='form-group'>
         <span className="col-md-2">
-          <strong>MusNo:</strong> {location.state[0].museumNo}
+          <strong>Museumsnr:</strong> {location.state[0].museumNo}
         </span>
         <span className="col-md-2">
           <strong>Unr:</strong> {location.state[0].subNo}
@@ -155,7 +155,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.size, form.sizeUnit]}>
           <FieldInput
             field={form.size}
-            title="Målevolum/-vekt"
+            title="Prøvevolum/-vekt:"
             onChange={updateForm}
             inputProps={{className: 'size'}}
           />
@@ -170,7 +170,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.container]}>
           <FieldDropDown
             field={form.container}
-            title="Lagringskontainer"
+            title="Lagringskontainer:"
             defaultOption="Velg kontainer"
             onChange={updateForm}
             selectItems={containerTypes}
@@ -179,7 +179,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.storageMedium]}>
           <FieldDropDown
             field={form.storageMedium}
-            title="Lagringsmedium"
+            title="Lagringsmedium:"
             defaultOption="Velg medium"
             onChange={updateForm}
             selectItems={containerSubTypes(form.container.rawValue)}

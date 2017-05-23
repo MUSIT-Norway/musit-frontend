@@ -302,7 +302,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <p
         className="form-control-static"
       >
-        2
+        Nei
       </p>
     </div>
   </div>
