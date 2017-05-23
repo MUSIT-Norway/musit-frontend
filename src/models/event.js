@@ -1,6 +1,7 @@
 // @flow
 import { simpleGet, simplePost } from '../shared/RxAjax';
 import Analysis from './analysis';
+import Sample from './sample';
 import MusitObject from './object';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import MusitActor from './actor';
@@ -63,6 +64,27 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
         }
         return events;
       });
-    });
+    })
+/*    .flatMap(events => {
+      console.log('Rituvesh', events);
+      const a =(event) => Sample.loadSample(ajaxGet)({
+        id: event.sampleObjectId,
+        museumId: props.museumId,
+        token: props.token
+      }).map(response => response);
+
+      events.map(e => {
+        if (e.type === 'SampleCreated') {
+          console.log('Rituvesh', e);
+          const b = a(e);
+          console.log(b);
+          return {...events, sampleType: b};
+        }
+        return e;
+      })
+
+    return events;}
+    )*/
+;
 
 export default Event;
