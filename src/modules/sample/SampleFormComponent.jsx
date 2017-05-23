@@ -277,7 +277,7 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
 
   tmpData.status = 2;
   tmpData.sampleTypeId = store.sampleTypes ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value) : null;
-  tmpData.isExtracted = false;
+  tmpData.isExtracted = true;
   tmpData.parentObjectType = objectData.objectType;
   tmpData.museumId = appSession.museumId;
   tmpData.parentObjectId = params.objectId;

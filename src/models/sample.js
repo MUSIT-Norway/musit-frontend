@@ -10,32 +10,32 @@ import uniqBy from 'lodash/uniqBy';
 import MusitActor from '../models/actor';
 
 class Sample {
-  static addSample: AjaxPost => (props: {
+  static addSample: (ajaxPost: AjaxPost) => (props: {
     museumId: number,
     token: string,
     data: mixed,
     callback?: ?Callback
   }) => Observable;
-  static editSample: AjaxPut => (props: {
+  static editSample: (ajaxPut: AjaxPut) => (props: {
     id: number,
     museumId: number,
     token: string,
     data: mixed,
     callback?: ?Callback
   }) => Observable;
-  static loadSample: AjaxGet => (props: {
+  static loadSample: (ajaxGet: AjaxGet) => (props: {
     id: number,
     museumId: number,
     token: string,
     callback?: ?Callback
   }) => Observable;
-  static loadSampleDataForObject: AjaxGet => (props: {
+  static loadSampleDataForObject: (ajaxGet: AjaxGet) => (props: {
     id: number,
     museumId: number,
     token: string,
     callback?: ?Callback
   }) => Observable;
-  static loadSamplesForObject: AjaxGet => (props: {
+  static loadSamplesForObject: (ajaxGet: AjaxGet) => (props: {
     objectId: number,
     museumId: number,
     collectionId: string,
@@ -51,7 +51,7 @@ class Sample {
     externalId: { value: string, source: string },
     externalIdSource: mixed
   }) => mixed;
-  static loadSampleTypes: AjaxGet => (props: {
+  static loadSampleTypes: (ajaxGet: AjaxGet) => (props: {
     token: string
   }) => Observable = (ajaxGet = simpleGet) => ({ token }) => {
     const url = Config.magasin.urls.api.samples.sampleTypes;
@@ -122,7 +122,9 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
           ...sampleJson,
           responsible: {
             ...sampleJson.responsible,
-            name: getActorName(actors, sampleJson.responsible.value)
+            name: sampleJson.responsible
+              ? getActorName(actors, sampleJson.responsible.value)
+              : null
           },
           registeredStamp: {
             ...sampleJson.registeredStamp,
