@@ -34,6 +34,12 @@ export type AnalysisType = {
   // TODO TBD
 };
 
+export type Purpose = {
+  id: string,
+  noPurpose: string,
+  enPurpose: string
+};
+
 type FormValue = {
   name: string,
   defaultValue: ?string | boolean | Array<any>
@@ -103,6 +109,13 @@ class MusitAnalysis {
     ajaxGet: AjaxGet
   ) => (props: {
     museumId: number,
+    token: string,
+    callback?: ?Callback
+  }) => Observable;
+
+  static getPurposes: (
+    ajaxGet: AjaxGet
+  ) => (props: {
     token: string,
     callback?: ?Callback
   }) => Observable;
@@ -337,6 +350,11 @@ MusitAnalysis.addResult = (ajaxPost = simplePost) => ({
     Config.magasin.urls.api.analysis.resultsUrl(museumId, analysisId),
     result,
     token
+  );
+
+MusitAnalysis.getPurposes = (ajaxGet = simpleGet) => ({ token, callBack }) =>
+  ajaxGet(Config.magasin.url.api.analysis.getPurposes, token, callBack).map(
+    ({ response }) => response
   );
 
 export default MusitAnalysis;
