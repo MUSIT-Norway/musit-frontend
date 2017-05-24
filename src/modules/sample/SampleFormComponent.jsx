@@ -20,7 +20,12 @@ type Params = {
   sampleId?: string
 }
 
-type Store = { sampleTypes?: any }
+type Store = {
+  sampleTypes?: any,
+  storageContainers?: any,
+  storageMediums?: any,
+  treatments?: any
+}
 
 type Props = {
   form: FormDetails,
@@ -34,25 +39,6 @@ type Props = {
   location: { pathname: string, state: Array<any> },
   appSession: AppSession,
   params: Params
-};
-
-const containerTypes = [
-  'Kapsel',
-  'Glassplate',
-  'Kolbe'
-];
-
-const containerSubTypes = (v) => {
-  switch (v) {
-    case 'Kapsel':
-      return ['Etanol', 'Aceton', 'Vann'];
-    case 'Glassplate':
-      return [];
-    case 'Kolbe':
-      return ['Aceton', 'Etanol', 'H2O'];
-    default:
-      return [];
-  }
 };
 
 function isFormValid(form) {
@@ -148,8 +134,10 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             field={form.status}
             title="Status:"
             defaultOption="Velg status"
+            valueFn={(v) => v.id}
+            displayFn={(v) => v.noStatus}
             onChange={updateForm}
-            selectItems={['Skilt', 'Ugift', 'Separert']}
+            selectItems={Sample.sampleStatuses}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.size, form.sizeUnit]}>
@@ -164,7 +152,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title=""
             defaultOption="Velg enhet"
             onChange={updateForm}
-            selectItems={['gr', 'mm', 'µ']}
+            selectItems={Sample.sampleSizeUnits}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.container]}>
@@ -173,7 +161,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title="Lagringskontainer:"
             defaultOption="Velg kontainer"
             onChange={updateForm}
-            selectItems={containerTypes}
+            selectItems={store.storageContainers ? store.storageContainers.map(c => c.noStorageContainer) : []}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.storageMedium]}>
@@ -182,7 +170,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title="Lagringsmedium:"
             defaultOption="Velg medium"
             onChange={updateForm}
-            selectItems={containerSubTypes(form.container.rawValue)}
+            selectItems={store.storageMediums ? store.storageMediums.map(m => m.noStorageMedium) : []}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.treatment]}>
@@ -191,7 +179,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title="Behandling:"
             defaultOption="Velg behandling"
             onChange={updateForm}
-            selectItems={['Behandlet', 'Ubehandlet', 'Ufint behandlet']}
+            selectItems={store.treatments ? store.treatments.map(t => t.noTreatment) : []}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.leftoverSample]}>
@@ -275,14 +263,13 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
   const persons = form.persons.rawValue;
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
-  tmpData.status = 2;
   tmpData.sampleTypeId = store.sampleTypes ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value) : null;
   tmpData.isExtracted = true;
   tmpData.parentObjectType = objectData.objectType;
   tmpData.museumId = appSession.museumId;
-  tmpData.parentObjectId = params.objectId;
+  tmpData.parentObjectId = params.objectId; // if we are adding a new sample, we have objectId in url params
   const data = Sample.prepareForSubmit(tmpData);
-  return addSample({id: params.sampleId, museumId, token, data});
+  return addSample({id: params.sampleId, museumId, token, data}); // if we are editing, we have sampleId in url params
 }
 
 function getSampleTypeId(sampleTypes, selectSubType) {

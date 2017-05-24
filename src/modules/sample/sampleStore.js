@@ -7,21 +7,25 @@ export const loadSamplesForObject$ = createAction('loadSamplesForObject$').switc
   Sample.loadSamplesForObject()
 );
 
-export const loadSampleTypes$ = createAction('loadSampleTypes$').switchMap(props =>
-  Sample.loadSampleTypes()(props).do(props.onComplete)
+export const loadPredefinedTypes$ = createAction('loadPredefinedTypes$').switchMap(
+  Sample.loadPredefinedTypes()
 );
 
 export const clear$ = createAction('clear$');
 
 const reducer$ = actions =>
   Observable.merge(
-    actions.loadSampleTypes$.map(sampleTypes => state => ({ ...state, sampleTypes })),
     actions.clear$.map(() => () => initialState),
+    actions.loadPredefinedTypes$.map(types => state => ({ ...state, ...types })),
     actions.loadSamplesForObject$.map(data => state => ({ ...state, ...data }))
   );
 
 export const sampleStore$ = (
-  actions = { loadSamplesForObject$, loadSampleTypes$, clear$ }
+  actions = {
+    loadSamplesForObject$,
+    loadPredefinedTypes$,
+    clear$
+  }
 ) => createStore('sampleStore$', reducer$(actions), Observable.of(initialState));
 
 export default sampleStore$();

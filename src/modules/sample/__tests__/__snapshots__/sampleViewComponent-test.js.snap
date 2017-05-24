@@ -209,9 +209,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     >
       <p
         className="form-control-static"
-      >
-        Nyskilt
-      </p>
+      />
     </div>
   </div>
   <div

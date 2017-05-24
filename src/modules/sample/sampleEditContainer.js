@@ -1,15 +1,16 @@
+//@flow
 import inject from 'react-rxjs/dist/RxInject';
 import sampleForm from './sampleEditForm';
 import SampleFormComponent from './SampleFormComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
-import mount from '../../shared/mount';
+import lifeCycle from '../../shared/mount';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { toPromise } from '../../shared/util';
 import Sample from '../../models/sample';
 import { makeUrlAware } from '../../modules/app/appSession';
 import flowRight from 'lodash/flowRight';
-import store$, { loadSampleTypes$ } from './sampleStore';
+import store$, { loadPredefinedTypes$ } from './sampleStore';
 import { onMount } from './sampleViewContainer';
 
 const { form$, loadForm$, updateForm$ } = sampleForm;
@@ -20,7 +21,7 @@ const data = {
   store$
 };
 
-const commands = { loadForm$, updateForm$, loadSampleTypes$ };
+const commands = { loadForm$, updateForm$, loadPredefinedTypes$ };
 
 const props = {
   loadSample: toPromise(Sample.loadSample()),
@@ -29,6 +30,8 @@ const props = {
   emitError
 };
 
-export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  SampleFormComponent
-);
+export default flowRight([
+  inject(data, commands, props),
+  lifeCycle(onMount),
+  makeUrlAware
+])(SampleFormComponent);

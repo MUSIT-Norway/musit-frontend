@@ -11,7 +11,7 @@ const size = getNumberField('size');
 const sizeUnit = getStrField('sizeUnit');
 const sampleType = getStrField('sampleType');
 const subTypeValue = getStrField('subTypeValue');
-const status = getStrField('status');
+const status = getNumberField('status');
 const description = getStrField('description');
 const treatment = getStrField('treatment');
 const persons = getArrField('persons', []);
@@ -37,4 +37,4 @@ const fields = [
   originatedObjectUuid
 ];
 
-export default createForm('sampleAddForm.js', fields);
+export default createForm('sampleEditForm.js', fields);

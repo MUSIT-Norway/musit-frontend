@@ -9,6 +9,12 @@ import { omit } from 'lodash';
 import uniqBy from 'lodash/uniqBy';
 import MusitActor from '../models/actor';
 
+export type SampleStatus = {
+  id: number,
+  noStatus: ?string,
+  enStatus: ?string
+};
+
 class Sample {
   static addSample: (
     ajaxPost: AjaxPost
@@ -65,21 +71,77 @@ class Sample {
     ajaxGet: AjaxGet
   ) => (props: {
     token: string
-  }) => Observable = (ajaxGet = simpleGet) => ({ token }) => {
-    const url = Config.magasin.urls.api.samples.sampleTypes;
-    return ajaxGet(url, token).map(({ response }) =>
-      uniqBy(response, 'enSampleType').reduce(
-        (acc, sampleType) => ({
-          ...acc,
-          [sampleType.enSampleType]: response.filter(
-            v => v.enSampleType === sampleType.enSampleType
-          )
-        }),
-        {}
-      )
-    );
-  };
+  }) => Observable;
+  static loadTreatments: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string
+  }) => Observable;
+  static loadStorageContainer: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string
+  }) => Observable;
+  static loadStorageMediums: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string
+  }) => Observable;
+  static loadPredefinedTypes: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string,
+    onComplete: (predefinedTypes: mixed) => void
+  }) => Observable;
+  static sampleStatuses: Array<SampleStatus>;
+  static sampleSizeUnits: Array<string>;
 }
+
+Sample.loadPredefinedTypes = (ajaxGet = simpleGet) => props => {
+  return Observable.forkJoin([
+    Sample.loadStorageContainer(ajaxGet)(props),
+    Sample.loadStorageMediums(ajaxGet)(props),
+    Sample.loadTreatments(ajaxGet)(props),
+    Sample.loadSampleTypes(ajaxGet)(props)
+  ])
+    .map(([storageContainers, storageMediums, treatments, sampleTypes]) => ({
+      storageContainers,
+      storageMediums,
+      treatments,
+      sampleTypes
+    }))
+    .do(props.onComplete);
+};
+
+Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.sampleTypes;
+  return ajaxGet(url, token).map(({ response }) =>
+    uniqBy(response, 'enSampleType').reduce(
+      (acc, sampleType) => ({
+        ...acc,
+        [sampleType.enSampleType]: response.filter(
+          v => v.enSampleType === sampleType.enSampleType
+        )
+      }),
+      {}
+    )
+  );
+};
+
+Sample.loadTreatments = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.treatments;
+  return ajaxGet(url, token).map(({ response }) => response);
+};
+
+Sample.loadStorageContainer = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.storagecontainer;
+  return ajaxGet(url, token).map(({ response }) => response);
+};
+
+Sample.loadStorageMediums = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.storagemediums;
+  return ajaxGet(url, token).map(({ response }) => response);
+};
 
 // To clean up after mapping single field to object for backend
 Sample.prepareForSubmit = tmpData => ({
@@ -122,7 +184,7 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
       return MusitActor.getActors(ajaxPost)({
         token: token,
         actorIds: [
-          sampleJson.responsible.value,
+          sampleJson.responsible && sampleJson.responsible.value,
           sampleJson.registeredStamp.user,
           sampleJson.updatedStamp && sampleJson.updatedStamp.user
         ].filter(uuid => !!uuid)
@@ -203,5 +265,60 @@ Sample.loadSamplesForObject = (ajaxGet = simpleGet) => ({
     };
   });
 };
+
+Sample.sampleStatuses = [
+  {
+    id: 1,
+    noStatus: 'Intakt',
+    enStatus: 'Intact'
+  },
+  {
+    id: 2,
+    noStatus: 'Ødelagt',
+    enStatus: 'Destroyed'
+  },
+  {
+    id: 3,
+    noStatus: 'Kontaminert',
+    enStatus: 'Contaminated'
+  },
+  {
+    id: 4,
+    noStatus: 'Preparert',
+    enStatus: 'Prepared'
+  },
+  {
+    id: 5,
+    noStatus: 'Kassert',
+    enStatus: 'Discarded'
+  },
+  {
+    id: 6,
+    noStatus: 'Uttørket',
+    enStatus: 'Dehydrated'
+  },
+  {
+    id: 7,
+    noStatus: 'Oppbrukt',
+    enStatus: 'Consumed'
+  },
+  {
+    id: 8,
+    noStatus: 'Uttørket',
+    enStatus: 'Dessicated'
+  },
+  {
+    id: 9,
+    noStatus: 'Degradert',
+    enStatus: 'Degraded'
+  },
+  {
+    id: 10,
+    noStatus: 'Montert',
+    enStatus: 'Mounted'
+  }
+];
+
+Sample.sampleSizeUnits = ['µg', 'mg', 'g', 'hg', 'µl', 'ml', 'cl', 'dl', 'l', 'cm3'];
 
 export default Sample;

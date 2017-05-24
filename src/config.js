@@ -131,7 +131,10 @@ export default {
           baseUrl: (mid: MuseumId): string => `api/management/${mid}/samples`,
           sampleTypes: 'api/management/sampletypes',
           samplesForObject: (mid: MuseumId, objectId: number): string =>
-            `api/management/${mid}/samples/${objectId}/children`
+            `api/management/${mid}/samples/${objectId}/children`,
+          treatments: 'api/management/treatments',
+          storagecontainer: 'api/management/storagecontainer',
+          storagemediums: 'api/management/storagemediums'
         },
         storagefacility: {
           searchUrl: (term: string, mid: MuseumId) =>
