@@ -8,7 +8,7 @@ import { emitError, emitSuccess } from '../../shared/errors';
 import Sample from '../../models/sample';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
-import store$, { loadSampleTypes$ } from './sampleStore';
+import store$, { loadPredefinedTypes$ } from './sampleStore';
 import flatten from 'lodash/flatten';
 import { toPromise } from '../../shared/util';
 
@@ -26,22 +26,28 @@ const props = {
   emitError
 };
 
-const commands = { loadForm$, loadSampleTypes$ };
+const commands = { loadForm$, loadPredefinedTypes$ };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
   SampleViewComponent
 );
 
-export function onMount({ loadSample, loadSampleTypes, loadForm, params, appSession }) {
+export function onMount({
+  loadSample,
+  loadPredefinedTypes,
+  loadForm,
+  params,
+  appSession
+}) {
   const sampleId = params.sampleId;
   const museumId = appSession.museumId;
   const accessToken = appSession.accessToken;
   const val = { id: sampleId, museumId: museumId, token: accessToken };
-  loadSampleTypes({
+  loadPredefinedTypes({
     token: accessToken,
-    onComplete: types => {
+    onComplete: ({ sampleTypes }) => {
       loadSample(val).then(v => {
-        const sampleType = flatten(Object.values(types)).find(
+        const sampleType = flatten(Object.values(sampleTypes)).find(
           subType => v.sampleTypeId === subType.sampleTypeId
         );
         const formData = Object.keys(v).reduce((akk, key: string) => {

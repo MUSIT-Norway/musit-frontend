@@ -44,9 +44,6 @@ type Props = {
 function isFormValid(form) {
   return Object.keys(form).reduce((acc, k) => {
     const field = form[k];
-    if (!field.status.valid) {
-      console.log('Not valid: ',field);
-    }
     return acc && field.status.valid;
   }, true);
 }
@@ -64,7 +61,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
       </h4>
       <div className='form-group'>
         <span className="col-md-2">
-          <strong>MusNo:</strong> {location.state[0].museumNo}
+          <strong>Museumsnr:</strong> {location.state[0].museumNo}
         </span>
         <span className="col-md-2">
           <strong>Unr:</strong> {location.state[0].subNo}
@@ -137,17 +134,16 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             field={form.status}
             title="Status:"
             defaultOption="Velg status"
-
-            valueFn={(v) => v.statusId}
+            valueFn={(v) => v.id}
             displayFn={(v) => v.noStatus}
             onChange={updateForm}
-            selectItems={Sample.getSampleStatuses().filter(s => s!== null )}
+            selectItems={Sample.sampleStatuses}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.size, form.sizeUnit]}>
           <FieldInput
             field={form.size}
-            title="Målevolum/-vekt"
+            title="Prøvevolum/-vekt:"
             onChange={updateForm}
             inputProps={{className: 'size'}}
           />
@@ -156,13 +152,13 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title=""
             defaultOption="Velg enhet"
             onChange={updateForm}
-            selectItems={Sample.getSampleSizeUnits()}
+            selectItems={Sample.sampleSizeUnits}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.container]}>
           <FieldDropDown
             field={form.container}
-            title="Lagringskontainer"
+            title="Lagringskontainer:"
             defaultOption="Velg kontainer"
             onChange={updateForm}
             selectItems={store.storageContainers ? store.storageContainers.map(c => c.noStorageContainer) : []}
@@ -171,7 +167,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         <ValidatedFormGroup fields={[form.storageMedium]}>
           <FieldDropDown
             field={form.storageMedium}
-            title="Lagringsmedium"
+            title="Lagringsmedium:"
             defaultOption="Velg medium"
             onChange={updateForm}
             selectItems={store.storageMediums ? store.storageMediums.map(m => m.noStorageMedium) : []}
@@ -268,12 +264,12 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
   const tmpData = {...myReduce(form), ...reducePersons(persons)};
 
   tmpData.sampleTypeId = store.sampleTypes ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value) : null;
-  tmpData.isExtracted = false;
+  tmpData.isExtracted = true;
   tmpData.parentObjectType = objectData.objectType;
   tmpData.museumId = appSession.museumId;
-  tmpData.parentObjectId = params.objectId;
+  tmpData.parentObjectId = params.objectId; // if we are adding a new sample, we have objectId in url params
   const data = Sample.prepareForSubmit(tmpData);
-  return addSample({id: params.sampleId, museumId, token, data});
+  return addSample({id: params.sampleId, museumId, token, data}); // if we are editing, we have sampleId in url params
 }
 
 function getSampleTypeId(sampleTypes, selectSubType) {

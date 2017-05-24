@@ -54,7 +54,7 @@ export const PersonRoleDate = ({
               appSession={appSession}
               key={`id_${i}`}
               id={`id_${i}`}
-              value={v.name}
+              value={v.name || ''}
               placeHolder="Find actor"
               onChange={newValue => {
                 updateForm({

@@ -16,6 +16,7 @@ const description = getStrField('description');
 const treatment = getStrField('treatment');
 const persons = getArrField('persons', []);
 const leftoverSample = getNumberField('leftoverSample');
+const originatedObjectUuid = getStrField('originatedObjectUuid');
 
 const fields = [
   note,
@@ -32,7 +33,8 @@ const fields = [
   leftoverSample,
   sampleId,
   treatment,
-  persons
+  persons,
+  originatedObjectUuid
 ];
 
 export default createForm('sampleEditForm.js', fields);

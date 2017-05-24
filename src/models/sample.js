@@ -16,112 +16,132 @@ export type SampleStatus = {
 };
 
 class Sample {
-  static addSample: (AjaxPost) => (
-    props: {
-      museumId: number,
-      token: string,
-      data: mixed,
-      callback?: ?Callback
-    }
-  ) => Observable;
-  static editSample: (AjaxPut) => (
-    props: {
-      id: number,
-      museumId: number,
-      token: string,
-      data: mixed,
-      callback?: ?Callback
-    }
-  ) => Observable;
-  static loadSample: (AjaxGet) => (
-    props: {
-      id: number,
-      museumId: number,
-      token: string,
-      callback?: ?Callback
-    }
-  ) => Observable;
-  static loadSampleDataForObject: (AjaxGet) => (
-    props: {
-      id: number,
-      museumId: number,
-      token: string,
-      callback?: ?Callback
-    }
-  ) => Observable;
-  static loadSamplesForObject: (AjaxGet) => (
-    props: {
-      objectId: number,
-      museumId: number,
-      collectionId: string,
-      token: string,
-      callback?: ?Callback
-    }
-  ) => Observable;
-
-  static prepareForSubmit: (
-    tmpData: {
-      size?: { value: number, unit: string },
-      parentObjectId: number,
-      sizeUnit: mixed,
-      subTypeValue: mixed,
-      sampleType: { value: string, subTypeValue: string },
-      externalId: { value: string, source: string },
-      externalIdSource: mixed
-    }
-  ) => mixed;
-  static loadSampleTypes: (AjaxGet) => (
-    props: {
-      token: string
-    }
-  ) => Observable = (ajaxGet = simpleGet) =>
-    ({ token }) => {
-      const url = Config.magasin.urls.api.samples.sampleTypes;
-      return ajaxGet(url, token).map(({ response }) =>
-        uniqBy(response, 'enSampleType').reduce(
-          (acc, sampleType) => ({
-            ...acc,
-            [sampleType.enSampleType]: response.filter(
-              v => v.enSampleType === sampleType.enSampleType
-            )
-          }),
-          {}
-        ));
-    };
-
-  static loadTreatments: (AjaxGet) => (
-    props: {
-      token: string
-    }
-  ) => Observable = (ajaxGet = simpleGet) =>
-    ({ token }) => {
-      const url = Config.magasin.urls.api.samples.treatments;
-      return ajaxGet(url, token).map(({ response }) => response);
-    };
-
-  static loadStorageContainer: (AjaxGet) => (
-    props: {
-      token: string
-    }
-  ) => Observable = (ajaxGet = simpleGet) =>
-    ({ token }) => {
-      const url = Config.magasin.urls.api.samples.storagecontainer;
-      return ajaxGet(url, token).map(({ response }) => response);
-    };
-
-  static loadStorageMediums: (AjaxGet) => (
-    props: {
-      token: string
-    }
-  ) => Observable = (ajaxGet = simpleGet) =>
-    ({ token }) => {
-      const url = Config.magasin.urls.api.samples.storagemediums;
-      return ajaxGet(url, token).map(({ response }) => response);
-    };
-
-  static getSampleStatuses: () => Array<SampleStatus>;
-  static getSampleSizeUnits: () => Array<string>;
+  static addSample: (
+    ajaxPost: AjaxPost
+  ) => (props: {
+    museumId: number,
+    token: string,
+    data: mixed,
+    callback?: ?Callback
+  }) => Observable;
+  static editSample: (
+    ajaxPut: AjaxPut
+  ) => (props: {
+    id: number,
+    museumId: number,
+    token: string,
+    data: mixed,
+    callback?: ?Callback
+  }) => Observable;
+  static loadSample: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    id: number,
+    museumId: number,
+    token: string,
+    callback?: ?Callback
+  }) => Observable;
+  static loadSampleDataForObject: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    id: number,
+    museumId: number,
+    token: string,
+    callback?: ?Callback
+  }) => Observable;
+  static loadSamplesForObject: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    objectId: number,
+    museumId: number,
+    collectionId: string,
+    token: string,
+    callback?: ?Callback
+  }) => Observable;
+  static prepareForSubmit: (tmpData: {
+    size?: { value: number, unit: string },
+    parentObjectId: number,
+    sizeUnit: mixed,
+    subTypeValue: mixed,
+    sampleType: { value: string, subTypeValue: string },
+    externalId: { value: string, source: string },
+    externalIdSource: mixed
+  }) => mixed;
+  static loadSampleTypes: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string
+  }) => Observable;
+  static loadTreatments: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string
+  }) => Observable;
+  static loadStorageContainer: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string
+  }) => Observable;
+  static loadStorageMediums: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string
+  }) => Observable;
+  static loadPredefinedTypes: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string,
+    onComplete: (predefinedTypes: mixed) => void
+  }) => Observable;
+  static sampleStatuses: Array<SampleStatus>;
+  static sampleSizeUnits: Array<string>;
 }
+
+Sample.loadPredefinedTypes = (ajaxGet = simpleGet) => props => {
+  return Observable.forkJoin([
+    Sample.loadStorageContainer(ajaxGet)(props),
+    Sample.loadStorageMediums(ajaxGet)(props),
+    Sample.loadTreatments(ajaxGet)(props),
+    Sample.loadSampleTypes(ajaxGet)(props)
+  ])
+    .map(([storageContainers, storageMediums, treatments, sampleTypes]) => ({
+      storageContainers,
+      storageMediums,
+      treatments,
+      sampleTypes
+    }))
+    .do(props.onComplete);
+};
+
+Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.sampleTypes;
+  return ajaxGet(url, token).map(({ response }) =>
+    uniqBy(response, 'enSampleType').reduce(
+      (acc, sampleType) => ({
+        ...acc,
+        [sampleType.enSampleType]: response.filter(
+          v => v.enSampleType === sampleType.enSampleType
+        )
+      }),
+      {}
+    )
+  );
+};
+
+Sample.loadTreatments = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.treatments;
+  return ajaxGet(url, token).map(({ response }) => response);
+};
+
+Sample.loadStorageContainer = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.storagecontainer;
+  return ajaxGet(url, token).map(({ response }) => response);
+};
+
+Sample.loadStorageMediums = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.storagemediums;
+  return ajaxGet(url, token).map(({ response }) => response);
+};
 
 // To clean up after mapping single field to object for backend
 Sample.prepareForSubmit = tmpData => ({
@@ -133,59 +153,67 @@ Sample.prepareForSubmit = tmpData => ({
     : null
 });
 
-Sample.addSample = (ajaxPost = simplePost) =>
-  ({ museumId, token, data, callback }) => {
-    const url = Config.magasin.urls.api.samples.baseUrl(museumId);
-    return ajaxPost(url, data, token, callback).map(({ response }) => response);
-  };
+Sample.addSample = (ajaxPost = simplePost) => ({ museumId, token, data, callback }) => {
+  const url = Config.magasin.urls.api.samples.baseUrl(museumId);
+  return ajaxPost(url, data, token, callback).map(({ response }) => response);
+};
 
-Sample.editSample = (ajaxPut = simplePut) =>
-  ({ id, museumId, token, data, callback }) => {
-    const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
-    const url = `${baseUrl}/${id}`;
-    return ajaxPut(url, data, token, callback).map(({ response }) => response);
-  };
+Sample.editSample = (ajaxPut = simplePut) => ({
+  id,
+  museumId,
+  token,
+  data,
+  callback
+}) => {
+  const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
+  const url = `${baseUrl}/${id}`;
+  return ajaxPut(url, data, token, callback).map(({ response }) => response);
+};
 
-Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) =>
-  ({ id, museumId, token, callback }) => {
-    const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
-    const url = `${baseUrl}/${id}`;
-    return ajaxGet(url, token, callback)
-      .map(({ response }) => response)
-      .flatMap(sampleJson => {
-        return MusitActor.getActors(ajaxPost)({
-          token: token,
-
-          actorIds: [
-            sampleJson.responsible.value,
-            sampleJson.registeredStamp.user,
-            sampleJson.updatedStamp && sampleJson.updatedStamp.user
-          ].filter(uuid => !!uuid)
-        }).map(actors => {
-          if (!actors || actors.length === 0) {
-            return sampleJson;
+Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
+  id,
+  museumId,
+  token,
+  callback
+}) => {
+  const baseUrl = Config.magasin.urls.api.samples.baseUrl(museumId);
+  const url = `${baseUrl}/${id}`;
+  return ajaxGet(url, token, callback)
+    .map(({ response }) => response)
+    .flatMap(sampleJson => {
+      return MusitActor.getActors(ajaxPost)({
+        token: token,
+        actorIds: [
+          sampleJson.responsible && sampleJson.responsible.value,
+          sampleJson.registeredStamp.user,
+          sampleJson.updatedStamp && sampleJson.updatedStamp.user
+        ].filter(uuid => !!uuid)
+      }).map(actors => {
+        if (!actors || actors.length === 0) {
+          return sampleJson;
+        }
+        return {
+          ...sampleJson,
+          responsible: {
+            ...sampleJson.responsible,
+            name: sampleJson.responsible
+              ? getActorName(actors, sampleJson.responsible.value)
+              : null
+          },
+          registeredStamp: {
+            ...sampleJson.registeredStamp,
+            name: getActorName(actors, sampleJson.registeredStamp.user)
+          },
+          updatedStamp: {
+            ...sampleJson.updatedStamp,
+            name: sampleJson.updatedStamp
+              ? getActorName(actors, sampleJson.updatedStamp.user)
+              : null
           }
-          return {
-            ...sampleJson,
-            responsible: {
-              ...sampleJson.responsible,
-              name: getActorName(actors, sampleJson.responsible.value)
-            },
-            registeredStamp: {
-              ...sampleJson.registeredStamp,
-              name: getActorName(actors, sampleJson.registeredStamp.user)
-
-            },
-            updatedStamp: {
-              ...sampleJson.updatedStamp,
-              name: sampleJson.updatedStamp
-                ? getActorName(actors, sampleJson.updatedStamp.user)
-                : null
-            }
-          };
-        });
+        };
       });
-  };
+    });
+};
 
 function getActorName(actors, actorId) {
   const actor = actors.find(a => MusitActor.hasActorId(a, actorId));
@@ -195,41 +223,50 @@ function getActorName(actors, actorId) {
   return null;
 }
 
-Sample.loadSampleDataForObject = (ajaxGet = simpleGet) =>
-  ({ id, museumId, token, callback }) => {
-    const url = Config.magasin.urls.api.samples.samplesForObject(museumId, id);
-    return ajaxGet(url, token, callback).map(
-      ({ response }) =>
-        (response &&
-          response.map(r => ({
-            ...r,
-            doneDate: parseISODate(r.doneDate, DATE_FORMAT_DISPLAY)
-          }))) || []
-    );
-  };
+Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({
+  id,
+  museumId,
+  token,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.samples.samplesForObject(museumId, id);
+  return ajaxGet(url, token, callback).map(
+    ({ response }) =>
+      (response &&
+        response.map(r => ({
+          ...r,
+          doneDate: parseISODate(r.doneDate, DATE_FORMAT_DISPLAY)
+        }))) || []
+  );
+};
 
-Sample.loadSamplesForObject = (ajaxGet = simpleGet) =>
-  ({ objectId, museumId, token, collectionId, callback }) => {
-    const url = Config.magasin.urls.api.samples.samplesForObject(museumId, objectId);
-    const objResp = object.getObjectDetails(ajaxGet)({
-      id: objectId,
-      museumId,
-      token,
-      collectionId
-    });
-    const sampleRes = ajaxGet(url, token, callback).map(e => e.response);
-    return Observable.forkJoin(sampleRes, objResp).map(([samples, obj]) => {
-      return {
-        ...obj,
-        data: samples.map(a => ({
-          ...a,
-          doneDate: parseISODate(a.doneDate, DATE_FORMAT_DISPLAY)
-        }))
-      };
-    });
-  };
+Sample.loadSamplesForObject = (ajaxGet = simpleGet) => ({
+  objectId,
+  museumId,
+  token,
+  collectionId,
+  callback
+}) => {
+  const url = Config.magasin.urls.api.samples.samplesForObject(museumId, objectId);
+  const objResp = object.getObjectDetails(ajaxGet)({
+    id: objectId,
+    museumId,
+    token,
+    collectionId
+  });
+  const sampleRes = ajaxGet(url, token, callback).map(e => e.response);
+  return Observable.forkJoin(sampleRes, objResp).map(([samples, obj]) => {
+    return {
+      ...obj,
+      data: samples.map(a => ({
+        ...a,
+        doneDate: parseISODate(a.doneDate, DATE_FORMAT_DISPLAY)
+      }))
+    };
+  });
+};
 
-Sample.getSampleStatuses = () => [
+Sample.sampleStatuses = [
   {
     id: 1,
     noStatus: 'Intakt',
@@ -282,17 +319,6 @@ Sample.getSampleStatuses = () => [
   }
 ];
 
-Sample.getSampleSizeUnits = () => [
-  'µg',
-  'mg',
-  'g',
-  'hg',
-  'µl',
-  'ml',
-  'cl',
-  'dl',
-  'l',
-  'cm3'
-];
+Sample.sampleSizeUnits = ['µg', 'mg', 'g', 'hg', 'µl', 'ml', 'cl', 'dl', 'l', 'cm3'];
 
 export default Sample;

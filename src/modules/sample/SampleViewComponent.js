@@ -133,7 +133,9 @@ export default function SampleViewComponent(props) {
         <label className="control-label col-md-2">Har restmateriale:</label>
         <div className="col-md-2">
           <p className="form-control-static">
-            {form.leftoverSample.value}
+            {(form.leftoverSample.value === 3 && 'Ja') ||
+              (form.leftoverSample.value === 2 && 'Nei') ||
+              ''}
           </p>
         </div>
       </div>
@@ -170,7 +172,7 @@ export default function SampleViewComponent(props) {
 
 function getStatusValue(v) {
   if (v) {
-    const statuses = Sample.getSampleStatuses();
+    const statuses = Sample.sampleStatuses;
     const s = statuses.find(e => e.id === v);
     return s && s.noStatus;
   }

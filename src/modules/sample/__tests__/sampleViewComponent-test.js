@@ -65,7 +65,7 @@ describe('AnalysisSampleFormPageView', () => {
           },
           leftoverSample: {
             name: 'leftoverSample',
-            value: '2'
+            value: 2
           },
           responsible: {
             name: 'responsible',

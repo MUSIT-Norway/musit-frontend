@@ -27,7 +27,7 @@
     "react-loader": "^2.4.2",
     "react-notification-system": "^0.2.14",
     "react-router": "^2.8.1",
-    "react-router-bootstrap": "^0.23.1",
+    "react-router-bootstrap": "0.23.1",
     "react-router-dom": "^4.1.1",
     "react-rxjs": "MUSIT-Norway/react-rxjs.git#v1.1.4",
     "react-select": "^1.0.0-rc.4",
