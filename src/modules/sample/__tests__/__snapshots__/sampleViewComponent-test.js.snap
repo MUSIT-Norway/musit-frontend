@@ -208,7 +208,8 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       className="col-md-2"
     >
       <p
-        className="form-control-static" />
+        className="form-control-static"
+      />
     </div>
   </div>
   <div
