@@ -65,26 +65,19 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
         return events;
       });
     })
-/*    .flatMap(events => {
-      console.log('Rituvesh', events);
-      const a =(event) => Sample.loadSample(ajaxGet)({
-        id: event.sampleObjectId,
-        museumId: props.museumId,
-        token: props.token
-      }).map(response => response);
-
-      events.map(e => {
-        if (e.type === 'SampleCreated') {
-          console.log('Rituvesh', e);
-          const b = a(e);
-          console.log(b);
-          return {...events, sampleType: b};
-        }
-        return e;
-      })
-
-    return events;}
-    )*/
-;
+    .flatMap(events => {
+      return Observable.forkJoin(
+        events.map(e => {
+          if (e.type === 'SampleCreated') {
+            return Sample.loadSample(ajaxGet)({
+              id: e.sampleObjectId,
+              museumId: props.museumId,
+              token: props.token
+            }).map(r => ({ ...e, sampleTypeId: r.sampleTypeId }));
+          }
+          return Observable.of(e);
+        })
+      );
+    });
 
 export default Event;

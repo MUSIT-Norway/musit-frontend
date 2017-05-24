@@ -28,6 +28,7 @@ function getKeyData(e: Object, a: Object){
 export const EventTableComponent = ({ events, onClick, analysisTypes }: EventTypeProps) => {
   return (
     <div>
+      {console.log(events)}
       <Table
         className="table"
         columns={[
