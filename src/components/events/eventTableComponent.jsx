@@ -18,8 +18,8 @@ function getKeyData(e: Object, a: Object){
     if(e.type === 'MoveObject') {
       return toPathStr(e.to.breadcrumb);
     }
-    if(e.type === 'Sample') {
-      return e.sampleTypeId;
+    if(e.type === 'SampleCreated' && e.sample) {
+      return localStorage.getItem('language') === 'en' ? e.sample.enSampleType : e.sample.noSampleType;
     }
   }
   return '';
@@ -28,7 +28,6 @@ function getKeyData(e: Object, a: Object){
 export const EventTableComponent = ({ events, onClick, analysisTypes }: EventTypeProps) => {
   return (
     <div>
-      {console.log(events)}
       <Table
         className="table"
         columns={[
