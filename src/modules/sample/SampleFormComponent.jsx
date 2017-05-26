@@ -14,6 +14,8 @@ import FieldDropDown from '../../forms/components/FieldDropDown';
 import FieldInput from '../../forms/components/FieldInput';
 import FieldTextArea from '../../forms/components/FieldTextArea';
 import flatten from 'lodash/flatten';
+import MetaInformation from '../../components/metainfo';
+import moment from 'moment';
 
 type Params = {
   objectId: string,
@@ -56,6 +58,16 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
           Registrer prøveuttak
         </h1>
       </div>
+      {form.registeredByName && form.registeredByName.value &&
+      <div>
+        <MetaInformation
+          updatedBy={form.updatedByName.value}
+          updatedDate={form.updatedDate.value}
+          registeredBy={form.registeredByName.value}
+          registeredDate={form.registeredDate.value}
+        />
+        <hr />
+      </div>}
       <h4>
         Avledet fra objekt
       </h4>
@@ -244,16 +256,13 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
           ...akk,
           doneByStamp: {
             user: v.uuid,
-            date: v.date
+            date: moment(v.date).format('YYYY-MM-DD')
           }
         };
       case 'responsible':
         return {
           ...akk,
-          responsible: {
-            type: 'ActorById',
-            value: v.uuid
-          }
+          responsible: v.uuid
         };
       default:
         return {};
@@ -265,11 +274,10 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
 
   tmpData.sampleTypeId = store.sampleTypes ? getSampleTypeId(store.sampleTypes, form.subTypeValue.value) : null;
   tmpData.isExtracted = true;
-  tmpData.parentObjectType = objectData.objectType;
+  tmpData.parentObject = { objectType: objectData.objectType, objectId: params.objectId };
   tmpData.museumId = appSession.museumId;
-  tmpData.parentObjectId = params.objectId; // if we are adding a new sample, we have objectId in url params
   const data = Sample.prepareForSubmit(tmpData);
-  return addSample({id: params.sampleId, museumId, token, data}); // if we are editing, we have sampleId in url params
+  return addSample({id: params.sampleId, museumId, token, data});
 }
 
 function getSampleTypeId(sampleTypes, selectSubType) {

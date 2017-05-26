@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import { omit } from 'lodash';
+import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
 import MusitActor from '../models/actor';
 
@@ -60,7 +61,7 @@ class Sample {
   }) => Observable;
   static prepareForSubmit: (tmpData: {
     size?: { value: number, unit: string },
-    parentObjectId: number,
+    parentObject: { objectId: number, objectType: string },
     sizeUnit: mixed,
     subTypeValue: mixed,
     sampleType: { value: string, subTypeValue: string },
@@ -160,8 +161,19 @@ Sample.loadStorageMediums = (ajaxGet = simpleGet) => ({ token }) => {
 
 // To clean up after mapping single field to object for backend
 Sample.prepareForSubmit = tmpData => ({
-  ...omit(tmpData, ['externalIdSource', 'subTypeValue', 'sizeUnit', 'sampleType']),
-  originatedObjectUuid: tmpData.originatedObjectUuid || tmpData.parentObjectId,
+  ...omit(tmpData, [
+    'externalIdSource',
+    'subTypeValue',
+    'sizeUnit',
+    'sampleType',
+    'updatedBy',
+    'updatedByName',
+    'updatedDate',
+    'registeredBy',
+    'registeredByName',
+    'registeredDate'
+  ]),
+  originatedObjectUuid: tmpData.originatedObjectUuid || tmpData.parentObject.objectId,
   size: tmpData.size ? { value: tmpData.size, unit: tmpData.sizeUnit } : null,
   externalId: tmpData.externalId
     ? { value: tmpData.externalId, source: tmpData.externalIdSource }
@@ -198,21 +210,30 @@ Sample.loadSample = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
     .flatMap(sampleJson => {
       return MusitActor.getActors(ajaxPost)({
         token: token,
-        actorIds: [
-          sampleJson.responsible && sampleJson.responsible.value,
-          sampleJson.registeredStamp.user,
-          sampleJson.updatedStamp && sampleJson.updatedStamp.user
-        ].filter(uuid => !!uuid)
+        actorIds: uniq(
+          [
+            sampleJson.responsible && sampleJson.responsible,
+            sampleJson.registeredStamp.user,
+            sampleJson.updatedStamp && sampleJson.updatedStamp.user,
+            sampleJson.doneByStamp && sampleJson.doneByStamp.user
+          ].filter(uuid => !!uuid)
+        )
       }).map(actors => {
         if (!actors || actors.length === 0) {
           return sampleJson;
         }
         return {
           ...sampleJson,
+          doneByStamp: {
+            ...sampleJson.doneByStamp,
+            name: sampleJson.doneByStamp
+              ? getActorName(actors, sampleJson.doneByStamp.user)
+              : null
+          },
           responsible: {
-            ...sampleJson.responsible,
+            user: sampleJson.responsible,
             name: sampleJson.responsible
-              ? getActorName(actors, sampleJson.responsible.value)
+              ? getActorName(actors, sampleJson.responsible)
               : null
           },
           registeredStamp: {

@@ -114,21 +114,21 @@ describe('AnalysisFormComponent', () => {
     });
 
     it('should match analysisTypeId with matching analysisType name', () => {
-      const analysis = { id: 1, analysisTypeId: '12234', events: [] };
+      const analysis = { id: 1, analysisTypeId: 12234, events: [] };
       const analysisTypes = [
         {
-          id: '19934',
-          name: 'Tjokkimokki 2',
+          id: 19934,
+          noName: 'Tjokkimokki 2',
           category: '5'
         },
         {
-          id: '18834',
-          name: 'Tjokkimokki 3',
+          id: 18834,
+          noName: 'Tjokkimokki 3',
           category: '5'
         },
         {
-          id: '12234',
-          name: 'Tjokkimokki 1',
+          id: 12234,
+          noName: 'Tjokkimokki 1',
           category: '5'
         }
       ];

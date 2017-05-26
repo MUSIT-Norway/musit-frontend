@@ -5,7 +5,7 @@ import type { AppSession } from '../../types/appSession';
 import type { FormData } from './types/form';
 import type { Store } from './types/store';
 import { Table } from 'reactable';
-import MetaInformation from './components/MetaInformation';
+import MetaInformation from '../../components/metainfo';
 import Config from '../../config';
 
 type Params = { analysisId: string };
@@ -15,7 +15,7 @@ type Props = {
   store: Store,
   appSession: AppSession,
   params: Params,
-  goToUrl: string => void,
+  goToUrl: (s: string) => void,
   goBack: () => void
 };
 
@@ -28,7 +28,10 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
     </div>
     <form className="form-horizontal">
       <MetaInformation
-        form={form}
+        updatedBy={form.updatedByName.value}
+        updatedDate={form.updatedDate.value}
+        registeredBy={form.registeredByName.value}
+        registeredDate={form.registeredDate.value}
         onClickEdit={() => {
           goToUrl(
             Config.magasin.urls.client.analysis.editAnalysis(

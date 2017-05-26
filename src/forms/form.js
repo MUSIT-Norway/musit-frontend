@@ -112,7 +112,7 @@ export const getNumberField = (
   validator: {
     rawValidator: required
       ? composeValidators(isRequired, isNumber(0, decimalPrecision))
-      : isNumber(0, decimalPrecision),
+      : undefined,
     valueValidator: isNumberInRange(rangeFrom, rangeTo)
   }
 });
