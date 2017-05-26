@@ -113,6 +113,14 @@ class MusitAnalysis {
     callback?: ?Callback
   }) => Observable;
 
+  static getAnalysisCategories: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    museumId: number,
+    token: string,
+    callback?: ?Callback
+  }) => Observable;
+
   static getPurposes: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -139,6 +147,14 @@ class MusitAnalysis {
       extRef?: ?Array<string>,
       comment?: ?string
     }
+  }) => Observable;
+
+  static loadPredefinedTypes: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    museumId: number,
+    token: string,
+    onComplete: (predefinedTypes: mixed) => void
   }) => Observable;
 }
 
@@ -212,6 +228,7 @@ MusitAnalysis.saveAnalysisEvent = (ajaxPost = simplePost) => ({
   const url = Config.magasin.urls.api.analysis.saveAnalysisEvent(museumId);
   return ajaxPost(url, data, token, callback).map(({ response }) => response);
 };
+
 
 MusitAnalysis.editAnalysisEvent = (ajaxPut = simplePut) => ({
   id,
@@ -353,8 +370,28 @@ MusitAnalysis.addResult = (ajaxPost = simplePost) => ({
   );
 
 MusitAnalysis.getPurposes = (ajaxGet = simpleGet) => ({ token, callBack }) =>
-  ajaxGet(Config.magasin.url.api.analysis.getPurposes, token, callBack).map(
+  ajaxGet(Config.magasin.urls.api.analysis.getPurposes, token, callBack).map(
     ({ response }) => response
   );
+
+
+MusitAnalysis.getAnalysisCategories = (ajaxGet = simpleGet) => ({ museumId, token }) =>
+  ajaxGet(Config.magasin.urls.api.analysisType.getAnalysisCategories(museumId),token).map(
+    ({ response }) => response
+  );
+
+MusitAnalysis.loadPredefinedTypes = (ajaxGet = simpleGet) => props => {
+  return Observable.forkJoin([
+    MusitAnalysis.getAnalysisCategories(ajaxGet)(props),
+    MusitAnalysis.getPurposes(ajaxGet)(props),
+    MusitAnalysis.getAnalysisTypes(ajaxGet)(props)
+  ])
+    .map(([categories, purposes, analysisTypes]) => ({
+      categories,
+      purposes,
+      analysisTypes
+    }))
+    .do(props.onComplete);
+};
 
 export default MusitAnalysis;
