@@ -78,7 +78,6 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
           return Observable.of(e);
         })
       );
-    })
- ;
+    });
 
 export default Event;
