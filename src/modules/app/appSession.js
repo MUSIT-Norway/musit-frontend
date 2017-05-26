@@ -103,7 +103,8 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
         groups: orderedGroups,
         museumId,
         collectionId,
-        buildInfo: buildInfoRes.response
+        buildInfo: buildInfoRes.response,
+        language: localStorage.getItem('language')
       };
     })
   );

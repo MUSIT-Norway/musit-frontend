@@ -75,7 +75,8 @@ class Sample {
   static loadAllSampleTypes: (
     ajaxGet: AjaxGet
   ) => (props: {
-    token: string
+    token: string,
+    language: string
   }) => Observable;
   static loadTreatments: (
     ajaxGet: AjaxGet
@@ -132,9 +133,14 @@ Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
     )
   );
 };
-Sample.loadAllSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
+Sample.loadAllSampleTypes = (ajaxGet = simpleGet) => ({ token, language }) => {
   const url = Config.magasin.urls.api.samples.sampleTypes;
-  return ajaxGet(url, token).map(({ response }) => response);
+  return ajaxGet(url, token).map(({ response }) =>
+    response.map(r => ({
+      ...r,
+      sampleType: language === 'en' ? r.enSampleType : r.noSampleType
+    }))
+  );
 };
 
 Sample.loadTreatments = (ajaxGet = simpleGet) => ({ token }) => {

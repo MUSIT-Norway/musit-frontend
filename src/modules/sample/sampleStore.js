@@ -11,20 +11,26 @@ export const loadPredefinedTypes$ = createAction('loadPredefinedTypes$').switchM
   Sample.loadPredefinedTypes()
 );
 
+export const getSampleTypes$ = createAction('getSampleTypes$').switchMap(
+  Sample.loadAllSampleTypes()
+);
+
 export const clear$ = createAction('clear$');
 
 const reducer$ = actions =>
   Observable.merge(
     actions.clear$.map(() => () => initialState),
     actions.loadPredefinedTypes$.map(types => state => ({ ...state, ...types })),
-    actions.loadSamplesForObject$.map(data => state => ({ ...state, ...data }))
+    actions.loadSamplesForObject$.map(data => state => ({ ...state, ...data })),
+    actions.getSampleTypes$.map(sampleTypes => state => ({ ...state, sampleTypes }))
   );
 
 export const sampleStore$ = (
   actions = {
     loadSamplesForObject$,
     loadPredefinedTypes$,
-    clear$
+    clear$,
+    getSampleTypes$
   }
 ) => createStore('sampleStore$', reducer$(actions), Observable.of(initialState));
 

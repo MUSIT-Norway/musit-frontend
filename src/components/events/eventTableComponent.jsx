@@ -4,28 +4,31 @@ import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
 import type { Events } from '../../types/events';
 import type { AnalysisTypes } from '../../types/analysisTypes';
+import type { SampleTypes } from '../../types/sampleTypes';
 
-type EventTypeProps = { events: Events, onClick: Function, analysisTypes: AnalysisTypes };
+
+type EventTypeProps = { events: Events, onClick: Function, analysisTypes: AnalysisTypes, sampleTypes: SampleTypes };
 
 const toPathStr = pathArr => pathArr.map(o => o.name).join('  /  ');
 
-function getKeyData(e: Object, a: Object){
+function getKeyData(e: Object, a: Object, s:Object){
   if (e.type) {
     if((e.type === 'AnalysisCollection' ||e.type === 'Analysis' )&& a.analysisTypes) {
       const analysisType: AnalysisTypes = a.analysisTypes.find(f => f.id && f.id === e.analysisTypeId);
-      return localStorage.getItem('language') === 'en' ? analysisType.enName : analysisType.noName ;
+      return analysisType.name ;
     }
     if(e.type === 'MoveObject') {
       return toPathStr(e.to.breadcrumb);
     }
-    if(e.type === 'SampleCreated' && e.sample) {
-      return localStorage.getItem('language') === 'en' ? e.sample.enSampleType : e.sample.noSampleType;
+    if(e.type === 'SampleCreated' && e.sampleTypeId && s.sampleTypes) {
+      const sampleType: SampleTypes = s.sampleTypes.find(f => f.sampleTypeId && f.sampleTypeId === e.sampleTypeId);
+      return sampleType.sampleType;
     }
   }
   return '';
 }
 
-export const EventTableComponent = ({ events, onClick, analysisTypes }: EventTypeProps) => {
+export const EventTableComponent = ({ events, onClick, analysisTypes, sampleTypes }: EventTypeProps) => {
   return (
     <div>
       <Table
@@ -46,7 +49,7 @@ export const EventTableComponent = ({ events, onClick, analysisTypes }: EventTyp
             <Td column="doneDate">{event.type && event.type === 'MoveObject' ? event.doneDate : event.registeredDate }</Td>
             <Td column="type">{event.type ? I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`) : ''}</Td>
             <Td column="doneBy">{event.type && event.type === 'MoveObject' ? event.doneBy : event.registeredBy }</Td>
-            <Td column="keyData">{getKeyData(event, analysisTypes)}</Td>
+            <Td column="keyData">{getKeyData(event, analysisTypes, sampleTypes)}</Td>
             <Td column="caseNumber">{event.caseNumbers ? event.caseNumbers.join('; '): ''}</Td>
             <Td column="note"><span>{event.note}</span></Td>
           </Tr>

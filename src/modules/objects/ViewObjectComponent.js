@@ -5,6 +5,7 @@ import type { ObjectData } from '../../types/object';
 import type { Samples } from '../../types/samples';
 import type { Events } from '../../types/events';
 import type { AnalysisTypes } from '../../types/analysisTypes';
+import type { SampleTypes } from '../../types/sampleTypes';
 import EventTableComponent from '../../components/events/eventTableComponent';
 import SampleTableComponent from '../../components/samples/sampleTableComponent';
 import { hashHistory } from 'react-router';
@@ -14,13 +15,15 @@ import type { AppSession } from '../../types/appSession';
 type ViewObjectComponentProps = {
   objectStore: { objectData: ObjectData, events: Events, samples: Samples },
   appSession: AppSession,
-  analysisTypes: AnalysisTypes
+  analysisTypes: AnalysisTypes,
+  sampleTypes: SampleTypes
 };
 
 export const ViewObjectComponent = ({
   objectStore: { objectData, events, samples },
   appSession,
-  analysisTypes
+  analysisTypes,
+  sampleTypes
 }: ViewObjectComponentProps) => (
   <div>
     <PageHeader>Objektvisning</PageHeader>
@@ -61,6 +64,7 @@ export const ViewObjectComponent = ({
         <EventTableComponent
           events={events}
           analysisTypes={analysisTypes}
+          sampleTypes={sampleTypes}
           onClick={event => {
             if (event.type === 'Analysis' || event.type === 'AnalysisCollection') {
               hashHistory.push({

@@ -90,7 +90,7 @@ const AnalysisForm = ({
                           )
                           .map(a => (
                             <option key={a.id} value={a.id}>
-                              {I18n._locale === 'en' ? a.enName : a.noName}
+                              {a.name}
                             </option>
                           ))}
                     </select>

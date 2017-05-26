@@ -48,6 +48,7 @@ class MusitAnalysis {
     museumId: number,
     collectionId: string,
     token: string,
+    language: string,
     callback?: ?Callback
   }) => Observable;
 
@@ -181,13 +182,16 @@ MusitAnalysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
+  language,
   callback
 }) => {
   const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(
     museumId,
     collectionId
   );
-  return ajaxGet(url, token, callback).map(({ response }) => response);
+  return ajaxGet(url, token, callback).map(({ response }) =>
+    response.map(r => ({ ...r, name: language === 'en' ? r.enName : r.noName }))
+  );
 };
 
 MusitAnalysis.saveAnalysisEvent = (ajaxPost = simplePost) => ({
