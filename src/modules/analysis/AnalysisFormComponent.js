@@ -68,13 +68,14 @@ const AnalysisForm = ({
                     onChange={updateFormField(form.analysisTypeCategory.name, updateForm)}
                   >
                     <option value="">Velg kategori</option>
-                    {store.analysisTypeCategories &&
-                      store.analysisTypeCategories.map(a => (
-                        <option key={a} value={a}>{a}</option>
+                    {store.categories &&
+                      Object.keys(store.categories).map(k => (
+                        <option key={k} value={k}>{store.categories[k]}</option>
                       ))}
                   </select>
                 </div>
                 {form.analysisTypeCategory.rawValue &&
+                  form.analysisTypeCategory.rawValue !== '0' &&
                   <div className="col-md-5">
                     <select
                       id="subType"
@@ -114,10 +115,12 @@ const AnalysisForm = ({
               onChange={updateFormField(form.reason.name, updateForm)}
             >
               <option value="">Velg formål</option>
-              <option>Ingen forhold</option>
-              <option>To forhold</option>
-              <option>Tre forhold</option>
-              <option>Fire forhold</option>
+              {store.purposes &&
+                store.purposes.map(a => (
+                  <option key={a.id} value={a.id}>
+                    {I18n._locale === 'en' ? a.enPurpose : a.noPurpose}
+                  </option>
+                ))}
             </select>
           </div>
         </div>

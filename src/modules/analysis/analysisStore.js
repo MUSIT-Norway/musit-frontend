@@ -12,9 +12,9 @@ export const getAnalysis$ = createAction('getAnalysis$').switchMap(props =>
   MusitAnalysis.getAnalysisWithDetails()(props).do(props.onComplete)
 );
 
-export const loadPredefinedTypes$ = createAction('loadPredefinedTypes$').switchMap(props=>
-  MusitAnalysis.loadPredefinedTypes()(props)
-);
+export const loadPredefinedTypes$ = createAction(
+  'loadPredefinedTypes$'
+).switchMap(props => MusitAnalysis.loadPredefinedTypes()(props));
 
 type Actions = {
   getAnalysis$: Subject,
@@ -33,13 +33,21 @@ export const reducer$ = (actions: Actions) =>
       analysisTypes,
       analysisTypeCategories: uniq(analysisTypes.map(a => a.category))
     })),
-    actions.loadPredefinedTypes$.map(predefTypes => state => ({
+    actions.loadPredefinedTypes$.map(predefinedTypes => state => ({
       ...state,
-      predefTypes
+      categories: predefinedTypes.categories,
+      purposes: predefinedTypes.purposes,
+      analysisTypes: predefinedTypes.analysisTypes
     }))
   );
 
-export const store$ = (actions$: Actions = { getAnalysisTypes$, getAnalysis$, loadPredefinedTypes$ }) =>
-  createStore('analysisStore', reducer$(actions$), Observable.of({ analysisTypes: [] }));
+export const store$ = (
+  actions$: Actions = { getAnalysisTypes$, getAnalysis$, loadPredefinedTypes$ }
+) =>
+  createStore(
+    'analysisStore',
+    reducer$(actions$),
+    Observable.of({ analysisTypes: [], purposes: [], categories: {} })
+  );
 
 export default store$();

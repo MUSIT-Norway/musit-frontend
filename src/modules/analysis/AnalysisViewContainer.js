@@ -4,7 +4,7 @@ import AnalysisViewComponent from './AnalysisViewComponent';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
 import mount from '../../shared/mount';
-import store$, { getAnalysisTypes$ } from './analysisStore';
+import store$, { loadPredefinedTypes$ } from './analysisStore';
 import Analysis from '../../models/analysis';
 import { toPromise } from '../../shared/util';
 import analysisForm, { fieldsArray } from './analysisForm';
@@ -20,7 +20,7 @@ const data = {
 
 const commands = {
   loadForm$,
-  getAnalysisTypes$
+  loadPredefinedTypes$
 };
 
 const props = {
@@ -30,7 +30,7 @@ const props = {
 };
 
 export const onMount = ({
-  getAnalysisTypes,
+  loadPredefinedTypes,
   appSession,
   loadForm,
   loadAnalysis,
@@ -42,10 +42,13 @@ export const onMount = ({
     collectionId: appSession.collectionId,
     token: appSession.accessToken
   };
-  getAnalysisTypes(inputParams);
-  loadAnalysis(inputParams).then(analysis =>
-    loadForm(Analysis.fromJsonToForm(analysis, fieldsArray))
-  );
+  loadPredefinedTypes({
+    ...inputParams,
+    onComplete: () =>
+      loadAnalysis(inputParams).then(analysis =>
+        loadForm(Analysis.fromJsonToForm(analysis, fieldsArray))
+      )
+  });
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(

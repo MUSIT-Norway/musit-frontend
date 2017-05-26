@@ -53,7 +53,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="reason">
-            {form.reason.value}
+            {getAnalysisPurpose(form, store)}
           </p>
         </div>
       </div>
@@ -259,6 +259,17 @@ function getAnalysisTypeTerm(form, store) {
     const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.value);
     if (foundType) {
       return I18n._locale === 'en' ? foundType.enName : foundType.noName;
+    }
+  }
+  return '';
+}
+
+function getAnalysisPurpose(form, store) {
+  if (form.reason.rawValue && store.purposes) {
+    console.log('Reason; ',form.reason, store.purposes);
+    const foundType = store.purposes.find(a => `${a.id}` === form.reason.rawValue);
+    if (foundType) {
+      return I18n._locale === 'en' ? foundType.enPurpose : foundType.noPurpose;
     }
   }
   return '';
