@@ -269,7 +269,6 @@ function getAnalysisTypeTerm(form, store) {
 
 function getAnalysisPurpose(form, store) {
   if (form.reason.rawValue && store.purposes) {
-    console.log('Reason; ',form.reason, store.purposes);
     const foundType = store.purposes.find(a => `${a.id}` === form.reason.rawValue);
     if (foundType) {
       return I18n._locale === 'en' ? foundType.enPurpose : foundType.noPurpose;

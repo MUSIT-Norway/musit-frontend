@@ -1,7 +1,7 @@
 import inject from 'react-rxjs/dist/RxInject';
 import analysisForm, { fieldsArray } from './analysisForm';
 import AnalysiFormComponent from './AnalysisFormComponent';
-import store$, { getAnalysisTypes$, loadPredefinedTypes$ } from './analysisStore';
+import store$, { getAnalysisTypes$, getAnalysis$, loadPredefinedTypes$ } from './analysisStore';
 import PropTypes from 'prop-types';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
@@ -22,6 +22,7 @@ const commands = {
   updateForm$,
   loadForm$,
   getAnalysisTypes$,
+  getAnalysis$,
   loadPredefinedTypes$
 };
 
