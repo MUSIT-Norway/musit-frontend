@@ -1,7 +1,9 @@
 import React from 'react';
 import Config from '../../config';
 import { hashHistory } from 'react-router';
+import MetaInformation from '../../components/metainfo';
 import Sample from '../../models/sample';
+import moment from 'moment';
 
 export default function SampleViewComponent(props) {
   const objectData = props.location.state[0];
@@ -12,6 +14,15 @@ export default function SampleViewComponent(props) {
         <h1>
           Prøveuttak
         </h1>
+      </div>
+      <div>
+        <MetaInformation
+          updatedBy={form.updatedByName.value}
+          updatedDate={form.updatedDate.value}
+          registeredBy={form.registeredByName.value}
+          registeredDate={form.registeredDate.value}
+        />
+        <hr />
       </div>
       <h4>
         Avledet fra objekt
@@ -40,7 +51,9 @@ export default function SampleViewComponent(props) {
             <div className="row" key={i}>
               <div className="col-md-4">{p.name}</div>
               <div className="col-md-2">{p.role}</div>
-              <div className="col-md-2">{p.date}</div>
+              <div className="col-md-2">
+                {p.date ? moment(p.date).format('DD.MM.YYYY') : null}
+              </div>
             </div>
           ))}
       </div>

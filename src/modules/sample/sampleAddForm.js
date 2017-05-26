@@ -1,20 +1,20 @@
 // @flow
 import createForm, { getStrField, getArrField, getNumberField } from '../../forms/form';
 
-const sampleId = getStrField('sampleId');
-const externalId = getStrField('externalId');
-const externalIdSource = getStrField('externalIdSource');
-const container = getStrField('container');
-const storageMedium = getStrField('storageMedium');
-const note = getStrField('note');
-const size = getNumberField('size');
-const sizeUnit = getStrField('sizeUnit');
-const sampleType = getStrField('sampleType');
+const sampleId = getStrField('sampleId', null, false);
+const externalId = getStrField('externalId', null, false);
+const externalIdSource = getStrField('externalIdSource', null, false);
+const container = getStrField('container', null, false);
+const storageMedium = getStrField('storageMedium', null, false);
+const note = getStrField('note', null, false);
+const size = getNumberField('size', null, false);
+const sizeUnit = getStrField('sizeUnit', null, false);
+const sampleType = getStrField('sampleType', null, false);
 const subTypeValue = getStrField('subTypeValue');
 const status = getNumberField('status');
-const description = getStrField('description');
-const treatment = getStrField('treatment');
-const persons = getArrField('persons', [{ name: '', role: 'creator', date: '' }]);
+const description = getStrField('description', null, false);
+const treatment = getStrField('treatment', null, false);
+const persons = getArrField('persons', [{ name: '', role: 'creator', date: '' }], false);
 const leftoverSample = getNumberField('leftoverSample', 1, false);
 
 const fields = [
