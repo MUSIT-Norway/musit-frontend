@@ -79,7 +79,7 @@ describe('AnalysisSampleFormPageView', () => {
             name: 'subNo',
             value: '322222'
           },
-          registeredBy: {
+          registeredByName: {
             name: 'registeredBy',
             value: '1233'
           },
@@ -91,7 +91,7 @@ describe('AnalysisSampleFormPageView', () => {
             name: 'registeredDate',
             value: '1988-12-31'
           },
-          updatedBy: {
+          updatedByName: {
             name: 'updatedBy',
             value: 'Arne And'
           },
@@ -109,7 +109,7 @@ describe('AnalysisSampleFormPageView', () => {
           },
           persons: {
             name: 'persons',
-            value: [{ name: 'Arne And', role: 'created', date: '1998-01-2001' }]
+            value: [{ name: 'Arne And', role: 'creator', date: 1495756800000 }]
           }
         }}
         location={{

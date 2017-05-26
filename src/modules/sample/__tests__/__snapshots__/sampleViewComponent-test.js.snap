@@ -11,6 +11,15 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       Prøveuttak
     </h1>
   </div>
+  <div>
+    <MetaInformation
+      registeredBy="1233"
+      registeredDate="1988-12-31"
+      updatedBy="Arne And"
+      updatedDate="1998-03-12"
+    />
+    <hr />
+  </div>
   <h4>
     Avledet fra objekt
   </h4>
@@ -86,12 +95,12 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <div
         className="col-md-2"
       >
-        created
+        creator
       </div>
       <div
         className="col-md-2"
       >
-        1998-01-2001
+        26.05.2017
       </div>
     </div>
   </div>
