@@ -27,6 +27,14 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
           "label": "Analyse",
         },
         Object {
+          "key": "sampleNum",
+          "label": "Prøvenr",
+        },
+        Object {
+          "key": "storageMedium",
+          "label": "Lagringsmedium",
+        },
+        Object {
           "key": "showInfo",
           "label": "Vis detaljer",
         },
@@ -71,6 +79,12 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         column="hasAnalyse"
       />
       <Td
+        column="sampleNum"
+      />
+      <Td
+        column="storageMedium"
+      />
+      <Td
         column="showInfo"
       >
         <a
@@ -103,6 +117,12 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       </Td>
       <Td
         column="hasAnalyse"
+      />
+      <Td
+        column="sampleNum"
+      />
+      <Td
+        column="storageMedium"
       />
       <Td
         column="showInfo"

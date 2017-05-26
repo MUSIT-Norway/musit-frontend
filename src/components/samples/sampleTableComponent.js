@@ -7,6 +7,7 @@ import type { SamplesPropsType } from '../../types/samples';
 const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
   return (
     <div>
+      {console.log('Rituvesh', samples)}
       <Table
         className="table"
         columns={[
@@ -15,6 +16,8 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
           { key: 'sampleSubType', label: 'Prøveundertype' },
           { key: 'status', label: 'Status' },
           { key: 'hasAnalyse', label: 'Analyse' },
+          { key: 'sampleNum', label: 'Prøvenr' },
+          { key: 'storageMedium', label: 'Lagringsmedium' },
           { key: 'showInfo', label: 'Vis detaljer' }
         ]}
         sortable={['id', 'date']}
@@ -28,6 +31,8 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
               <Td column="sampleSubType">{' '}</Td>
               <Td column="status">{e.status}</Td>
               <Td column="hasAnalyse">{e.hasAnalyse}</Td>
+              <Td column="sampleNum">{e.sampleNum}</Td>
+              <Td column="storageMedium">{e.storageMedium}</Td>
               <Td column="showInfo">
                 <a onClick={() => onClick(e)}>Se mer / Rediger</a>
               </Td>
