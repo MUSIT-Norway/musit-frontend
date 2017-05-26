@@ -7,8 +7,6 @@ WORKDIR "/usr/src/app"
 
 ADD src src
 ADD public public
-ADD config config
-ADD scripts scripts
 ADD *.json ./
 RUN npm install -g pushstate-server
 RUN npm install
