@@ -43,7 +43,7 @@ export const EventTableComponent = ({ events, onClick, analysisTypes, sampleType
   return (
     <div>
       <Table
-        className="table"
+        className="table table-hover table-inverse table-responsive"
         columns={[
           { key: 'doneDate', label: 'Utført dato' },
           { key: 'type', label: 'Type hendelse' },

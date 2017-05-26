@@ -3,7 +3,7 @@
 exports[`EventTableComponent should render header, body and footer 1`] = `
 <div>
   <Table
-    className="table"
+    className="table table-hover table-inverse table-responsive"
     columns={
       Array [
         Object {
@@ -34,10 +34,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
           "key": "storageMedium",
           "label": "Lagringsmedium",
         },
-        Object {
-          "key": "showInfo",
-          "label": "Vis detaljer",
-        },
       ]
     }
     defaultSort={false}
@@ -54,7 +50,9 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       ]
     }
   >
-    <Tr>
+    <Tr
+      onClick={[Function]}
+    >
       <Td
         column="doneDate"
       >
@@ -84,17 +82,10 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       <Td
         column="storageMedium"
       />
-      <Td
-        column="showInfo"
-      >
-        <a
-          onClick={[Function]}
-        >
-          Se mer / Rediger
-        </a>
-      </Td>
     </Tr>
-    <Tr>
+    <Tr
+      onClick={[Function]}
+    >
       <Td
         column="doneDate"
       >
@@ -124,15 +115,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       <Td
         column="storageMedium"
       />
-      <Td
-        column="showInfo"
-      >
-        <a
-          onClick={[Function]}
-        >
-          Se mer / Rediger
-        </a>
-      </Td>
     </Tr>
   </Table>
 </div>

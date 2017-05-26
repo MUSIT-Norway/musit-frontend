@@ -7,9 +7,8 @@ import type { SamplesPropsType } from '../../types/samples';
 const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
   return (
     <div>
-      {console.log('Rituvesh', samples)}
       <Table
-        className="table"
+        className="table table-hover table-inverse table-responsive"
         columns={[
           { key: 'doneDate', label: 'Dato' },
           { key: 'sampleType', label: 'Prøvetype' },
@@ -17,15 +16,14 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
           { key: 'status', label: 'Status' },
           { key: 'hasAnalyse', label: 'Analyse' },
           { key: 'sampleNum', label: 'Prøvenr' },
-          { key: 'storageMedium', label: 'Lagringsmedium' },
-          { key: 'showInfo', label: 'Vis detaljer' }
+          { key: 'storageMedium', label: 'Lagringsmedium' }
         ]}
         sortable={['id', 'date']}
         noDataText={I18n.t('musit.samples.noSamplesForObject')}
       >
         {samples &&
           samples.map((e, i) => (
-            <Tr key={i}>
+            <Tr key={i} onClick={() => onClick(e)}>
               <Td column="doneDate">{e.doneDate.format('DD.MM.YYYY')}</Td>
               <Td column="sampleType">{e.sampleTypeId}</Td>
               <Td column="sampleSubType">{' '}</Td>
@@ -33,9 +31,6 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
               <Td column="hasAnalyse">{e.hasAnalyse}</Td>
               <Td column="sampleNum">{e.sampleNum}</Td>
               <Td column="storageMedium">{e.storageMedium}</Td>
-              <Td column="showInfo">
-                <a onClick={() => onClick(e)}>Se mer / Rediger</a>
-              </Td>
             </Tr>
           ))}
       </Table>
