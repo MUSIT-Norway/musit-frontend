@@ -2,8 +2,6 @@
 import createForm, { getStrField, getArrField, getNumberField } from '../../forms/form';
 
 const objectId = getStrField('objectId');
-const updatedBy = getStrField('updatedBy');
-const updatedDate = getStrField('updatedDate');
 const sampleId = getStrField('sampleId');
 const externalId = getStrField('externalId');
 const externalIdSource = getStrField('externalIdSource');
@@ -19,6 +17,13 @@ const description = getStrField('description');
 const treatment = getStrField('treatment');
 const persons = getArrField('persons', []);
 const leftoverSample = getNumberField('leftoverSample');
+const sampleNum = getNumberField('sampleNum');
+const updatedBy = getStrField('updatedBy', null, false);
+const updatedByName = getStrField('updatedByName', null, false);
+const updatedDate = getNumberField('updatedDate', null, false);
+const registeredBy = getStrField('registeredBy', null, false);
+const registeredByName = getStrField('registeredByName', null, false);
+const registeredDate = getNumberField('registeredDate', null, false);
 
 const fields = [
   objectId,
@@ -38,7 +43,12 @@ const fields = [
   treatment,
   persons,
   updatedBy,
-  updatedDate
+  updatedByName,
+  updatedDate,
+  registeredBy,
+  registeredByName,
+  registeredDate,
+  sampleNum
 ];
 
-export default createForm('sampleAddForm.js', fields);
+export default createForm('sampleViewForm.js', fields);

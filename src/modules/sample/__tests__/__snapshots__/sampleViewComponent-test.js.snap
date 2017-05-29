@@ -8,26 +8,42 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     className="page-header"
   >
     <h1>
-      Prøveuttak
+      Prøve
     </h1>
+  </div>
+  <div>
+    <MetaInformation
+      onClickEdit={[Function]}
+      registeredBy="1233"
+      registeredDate="1988-12-31"
+      updatedBy="Arne And"
+      updatedDate="1998-03-12"
+    />
+    <hr />
   </div>
   <h4>
     Avledet fra objekt
   </h4>
-  <div
-    className="form-group"
-  >
+  <div>
     <span
-      className="col-md-2"
+      style={
+        Object {
+          "marginRight": 20,
+        }
+      }
     >
       <strong>
-        MusNo:
+        Museumnr:
       </strong>
        
       M1234
     </span>
     <span
-      className="col-md-2"
+      style={
+        Object {
+          "marginRight": 20,
+        }
+      }
     >
       <strong>
         Unr:
@@ -35,9 +51,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
        
       a
     </span>
-    <span
-      className="col-md-2"
-    >
+    <span>
       <strong>
         Term/artsnavn:
       </strong>
@@ -86,16 +100,34 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       <div
         className="col-md-2"
       >
-        created
+        creator
       </div>
       <div
         className="col-md-2"
       >
-        1998-01-2001
+        26.05.2017
       </div>
     </div>
   </div>
   <hr />
+  <div
+    className="form-group"
+  >
+    <label
+      className="control-label col-md-2"
+    >
+      Prøvenr:
+    </label>
+    <div
+      className="col-md-2"
+    >
+      <p
+        className="form-control-static"
+      >
+        2
+      </p>
+    </div>
+  </div>
   <div
     className="form-group"
   >
@@ -163,19 +195,21 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
         Vev
       </p>
     </div>
-    <label
-      className="control-label col-md-2"
-    >
-      Prøveundertype:
-    </label>
-    <div
-      className="col-md-2"
-    >
-      <p
-        className="form-control-static"
+    <div>
+      <label
+        className="control-label col-md-2"
       >
-        Muskel
-      </p>
+        Prøveundertype:
+      </label>
+      <div
+        className="col-md-2"
+      >
+        <p
+          className="form-control-static"
+        >
+          Muskel
+        </p>
+      </div>
     </div>
   </div>
   <div
@@ -187,7 +221,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       Beskrivelse av prøve:
     </label>
     <div
-      className="col-md-2"
+      className="col-md-10"
     >
       <p
         className="form-control-static"
@@ -218,7 +252,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     <label
       className="control-label col-md-2"
     >
-      Målvolum/-vekt:
+      Prøvevolum/-vekt:
     </label>
     <div
       className="col-md-2"
@@ -310,7 +344,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     <label
       className="control-label col-md-2"
     >
-      Beskrivelse:
+      Kommentar:
     </label>
     <div
       className="col-md-2"
@@ -324,12 +358,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
   </div>
   <hr />
   <button
-    className="btn btn-primary"
-    onClick={[Function]}
-  >
-    Endre
-  </button>
-  <a
+    className="btn-link"
     onClick={[Function]}
     style={
       Object {
@@ -338,6 +367,6 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
     }
   >
     Avbryt
-  </a>
+  </button>
 </form>
 `;

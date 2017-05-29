@@ -1,6 +1,7 @@
 // @flow
 import { simpleGet, simplePost } from '../shared/RxAjax';
 import Analysis from './analysis';
+import Sample from './sample';
 import MusitObject from './object';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import MusitActor from './actor';
@@ -63,6 +64,20 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
         }
         return events;
       });
+    })
+    .flatMap(events => {
+      return Observable.forkJoin(
+        events.map(e => {
+          if (e.type === 'SampleCreated') {
+            return Sample.loadSample(ajaxGet)({
+              id: e.sampleObjectId,
+              museumId: props.museumId,
+              token: props.token
+            }).map(r => ({ ...e, sampleTypeId: r.sampleTypeId }));
+          }
+          return Observable.of(e);
+        })
+      );
     });
 
 export default Event;

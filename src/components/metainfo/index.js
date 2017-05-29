@@ -1,29 +1,40 @@
 // @flow
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
-import type { FormData } from '../types/form';
+import moment from 'moment';
 
 type Props = {
-  form: FormData,
-  onClickEdit?: () => void
+  onClickEdit?: () => void,
+  updatedBy?: ?string,
+  updatedDate?: ?number | ?string,
+  registeredBy: ?string,
+  registeredDate: ?number | ?string
 };
 
-export default function MetaInformation({ form, onClickEdit }: Props) {
+const DateFormat = 'DD.MM.YYYY HH:mm';
+
+export default function MetaInformation({
+  updatedBy,
+  updatedDate,
+  registeredBy,
+  registeredDate,
+  onClickEdit
+}: Props) {
   return (
     <div>
       <div className="form-group">
         <label className="control-label col-sm-2" htmlFor="registeredBy">
-          Registrert av:
+          Registrert:
         </label>
         <div className="col-sm-6">
           <p className="form-control-static" id="registeredBy">
             <FontAwesome name="user" />
             {' '}
-            {form.registeredByName.value}
+            {registeredBy}
             {' '}
             <FontAwesome name="clock-o" />
             {' '}
-            {form.registeredDate.value}
+            {registeredDate && moment(registeredDate).format(DateFormat)}
           </p>
         </div>
         {onClickEdit &&
@@ -31,7 +42,7 @@ export default function MetaInformation({ form, onClickEdit }: Props) {
             Endre
           </button>}
       </div>
-      {form.updatedBy.value &&
+      {updatedBy &&
         <div className="form-group">
           <label className="control-label col-sm-2" htmlFor="updatedBy">
             Sist endret:
@@ -40,11 +51,11 @@ export default function MetaInformation({ form, onClickEdit }: Props) {
             <p className="form-control-static" id="updatedBy">
               <FontAwesome name="user" />
               {' '}
-              {form.updatedByName.value}
+              {updatedBy}
               {' '}
               <FontAwesome name="clock-o" />
               {' '}
-              {form.updatedDate.value}
+              {updatedDate && moment(updatedDate).format(DateFormat)}
             </p>
           </div>
         </div>}

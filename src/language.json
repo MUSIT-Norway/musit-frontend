@@ -6,7 +6,8 @@
           "eventTypes": {
             "AnalysisCollection": "Analysis",
             "Analysis": "Analysis",
-            "MoveObject": "Relocating"
+            "MoveObject": "Relocating",
+            "SampleCreated": "Sample"
           }
         }
       },
@@ -705,7 +706,8 @@
           "eventTypes": {
             "AnalysisCollection": "Analyse",
             "Analysis": "Analyse",
-            "MoveObject": "Flytting"
+            "MoveObject": "Flytting",
+            "SampleCreated": "Prøveuttak"
           }
         }
       },

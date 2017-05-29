@@ -13,6 +13,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import sinon from 'sinon';
 import StatefulPromise from '../../../testutils/StatefulPromise';
+import { appSession } from './../../../testutils/sampleDataForTest';
 
 declare var describe: any;
 declare var it: any;
@@ -20,15 +21,6 @@ declare var expect: any;
 
 const identity = (i: any): any => i;
 const promise = (i: any): any => new Promise(res => res(i));
-
-const appSession = {
-  museumId: 99,
-  collectionId: '1234',
-  accessToken: '45667',
-  actor: {
-    fn: 'Test'
-  }
-};
 
 const form: FormData = (fieldsArray.reduce(
   (acc, field: Field<any>) => ({
@@ -103,37 +95,37 @@ describe('AnalysisFormComponent', () => {
         }
       ];
       const store = { analysis, analysisTypes };
-      const term = getAnalysisTypeTerm(store);
+      const term = getAnalysisTypeTerm(store, appSession);
       expect(term).toBe('');
     });
 
     it('should return empty string if called prematurely', () => {
       const store = {};
-      const term = getAnalysisTypeTerm(store);
+      const term = getAnalysisTypeTerm(store, appSession);
       expect(term).toBe('');
     });
 
     it('should match analysisTypeId with matching analysisType name', () => {
-      const analysis = { id: 1, analysisTypeId: '12234', events: [] };
+      const analysis = { id: 1, analysisTypeId: 12234, events: [] };
       const analysisTypes = [
         {
-          id: '19934',
-          name: 'Tjokkimokki 2',
+          id: 19934,
+          noName: 'Tjokkimokki 2',
           category: '5'
         },
         {
-          id: '18834',
-          name: 'Tjokkimokki 3',
+          id: 18834,
+          noName: 'Tjokkimokki 3',
           category: '5'
         },
         {
-          id: '12234',
-          name: 'Tjokkimokki 1',
+          id: 12234,
+          noName: 'Tjokkimokki 1',
           category: '5'
         }
       ];
       const store = { analysis, analysisTypes };
-      const term = getAnalysisTypeTerm(store);
+      const term = getAnalysisTypeTerm(store, appSession);
       expect(term).toBe('Tjokkimokki 1');
     });
   });

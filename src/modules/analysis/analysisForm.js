@@ -11,9 +11,9 @@ export const fieldsArray = [
   getNumberField('analysisTypeId'),
   getStrField('doneBy'),
   getStrField('doneDate'),
-  getStrField('registeredBy'),
-  getStrField('registeredByName'),
-  getStrField('registeredDate'),
+  getStrField('registeredBy', null, false),
+  getStrField('registeredByName', null, false),
+  getNumberField('registeredDate', null, false),
   getStrField('responsible'),
   getStrField('responsible'),
   getStrField('administrator'),
@@ -41,9 +41,9 @@ export const fieldsArray = [
   getStrField('term'),
   getArrField('events', []),
   getStrField('analysisTypeCategory'),
-  getStrField('updatedBy'),
-  getStrField('updatedByName'),
-  getStrField('updatedDate'),
+  getStrField('updatedBy', null, false),
+  getStrField('updatedByName', null, false),
+  getNumberField('updatedDate', null, false),
   getNumberField('status', 1, true, 1, 4, 0)
 ];
 

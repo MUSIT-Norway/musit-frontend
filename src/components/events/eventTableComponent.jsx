@@ -2,30 +2,44 @@
 import React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
-import type { Events } from '../../types/events';
-import type { AnalysisTypes } from '../../types/analysisTypes';
+import type { Event, Events } from '../../types/events';
 
-type EventTypeProps = { events: Events, onClick: Function, analysisTypes: AnalysisTypes };
+import type { AnalysisTypesObject, AnalysisTypes, AnalysisType } from '../../types/analysisTypes';
+import type { SampleTypesObject, SampleTypes, SampleType } from '../../types/sampleTypes';
+import type { AppSession } from '../../types/appSession';
+
+type EventTypeProps = {
+  events: Events,
+  onClick: Function,
+  analysisTypes: AnalysisTypesObject,
+  sampleTypes: SampleTypesObject,
+  appSession: AppSession
+};
 
 const toPathStr = pathArr => pathArr.map(o => o.name).join('  /  ');
 
-function getKeyData(e: Object, a: Object){
-  if (e.type) {
-    if((e.type === 'AnalysisCollection' ||e.type === 'Analysis' )&& a.analysisTypes) {
-      const analysisType: AnalysisTypes = a.analysisTypes.find(f => f.id && f.id === e.analysisTypeId);
-      return localStorage.getItem('language') === 'en' ? analysisType.enName : analysisType.noName ;
+function getKeyData(event: Event, analysisTypes: AnalysisTypes, sampleTypes: SampleTypes, appSession: AppSession){
+  if (event.type) {
+    if((event.type === 'AnalysisCollection' ||event.type === 'Analysis' )&& analysisTypes) {
+      const analysisTypeFound: ?AnalysisType = analysisTypes.find(f => f.id && f.id === event.analysisTypeId);
+      if (analysisTypeFound) {
+        return appSession.language.isEn ? analysisTypeFound.enName : analysisTypeFound.noName;
+      }
     }
-    if(e.type === 'MoveObject') {
-      return toPathStr(e.to.breadcrumb);
+    if(event.type === 'MoveObject') {
+      return toPathStr(event.to.breadcrumb);
     }
-    if(e.type === 'Sample') {
-      return e.sampleTypeId;
+    if(event.type === 'SampleCreated' && event.sampleTypeId && sampleTypes) {
+      const sampleTypeFound: ?SampleType = sampleTypes.find(f => f.sampleTypeId && f.sampleTypeId === event.sampleTypeId);
+      if (sampleTypeFound) {
+        return appSession.language.isEn ? sampleTypeFound.enSampleType : sampleTypeFound.noSampleType;
+      }
     }
   }
   return '';
 }
 
-export const EventTableComponent = ({ events, onClick, analysisTypes }: EventTypeProps) => {
+export const EventTableComponent = ({ events, onClick, analysisTypes, sampleTypes, appSession }: EventTypeProps) => {
   return (
     <div>
       <Table
@@ -46,7 +60,7 @@ export const EventTableComponent = ({ events, onClick, analysisTypes }: EventTyp
             <Td column="doneDate">{event.type && event.type === 'MoveObject' ? event.doneDate : event.registeredDate }</Td>
             <Td column="type">{event.type ? I18n.t(`musit.objects.objectsView.eventTypes.${event.type}`) : ''}</Td>
             <Td column="doneBy">{event.type && event.type === 'MoveObject' ? event.doneBy : event.registeredBy }</Td>
-            <Td column="keyData">{getKeyData(event, analysisTypes)}</Td>
+            <Td column="keyData">{getKeyData(event, analysisTypes.analysisTypes, sampleTypes.sampleTypes, appSession)}</Td>
             <Td column="caseNumber">{event.caseNumbers ? event.caseNumbers.join('; '): ''}</Td>
             <Td column="note"><span>{event.note}</span></Td>
           </Tr>

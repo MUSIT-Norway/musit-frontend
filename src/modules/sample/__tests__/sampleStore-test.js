@@ -10,6 +10,7 @@ describe('eventsStore', () => {
     const loadSampleStoreM = '--1--------';
     const loadSampleTypesM = '-----------';
     const loadPredefinedTypesM = '-----------';
+    const getSampleTypesM = '-----------';
     const expected = 'aab--------';
 
     const expectedStateMap = {
@@ -62,12 +63,23 @@ describe('eventsStore', () => {
         term: 'Carex'
       }
     });
+    const getSampleTypes$ = testScheduler.createHotObservable(getSampleTypesM, {
+      1: {
+        sampleTypes: [
+          {
+            sampleType: 'Vev',
+            sampleSubType: 'Blod'
+          }
+        ]
+      }
+    });
 
     const state$ = sampleStore$({
       clear$,
       loadSamplesForObject$,
       loadPredefinedTypes$,
-      loadSampleTypes$
+      loadSampleTypes$,
+      getSampleTypes$
     });
 
     // assertion

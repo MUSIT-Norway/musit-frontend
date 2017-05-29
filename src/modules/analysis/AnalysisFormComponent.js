@@ -6,9 +6,9 @@ import type { AppSession } from 'types/appSession';
 import type { ObjectData } from 'types/object';
 import type { FormData } from './types/form';
 import type { Store } from './types/store';
-import AddButton from './components/AddButton';
+import AddButton from '../../components/AddButton';
 import { Table } from 'reactable';
-import MetaInformation from './components/MetaInformation';
+import MetaInformation from '../../components/metainfo';
 
 type Location = { state?: Array<ObjectData> };
 
@@ -26,7 +26,7 @@ type Props = {
   saveAnalysis: SaveAnalysisFn,
   saveResult: Function,
   location: Location,
-  goToUrl: string => void,
+  goToUrl: (s: string) => void,
   goBack: () => void
 };
 
@@ -53,7 +53,12 @@ const AnalysisForm = ({
       <form className="form-horizontal">
         {form.id.value &&
           <div>
-            <MetaInformation form={form} />
+            <MetaInformation
+              updatedBy={form.updatedByName.value}
+              updatedDate={form.updatedDate.value}
+              registeredBy={form.registeredByName.value}
+              registeredDate={form.registeredDate.value}
+            />
             <hr />
           </div>}
         <div className="form-group">
@@ -90,7 +95,7 @@ const AnalysisForm = ({
                           )
                           .map(a => (
                             <option key={a.id} value={a.id}>
-                              {I18n._locale === 'en' ? a.enName : a.noName}
+                              {appSession.language.isEn ? a.enName : a.noName}
                             </option>
                           ))}
                     </select>
@@ -98,7 +103,7 @@ const AnalysisForm = ({
               </div>
             : <div className="col-md-5">
                 <p className="form-control-static">
-                  {getAnalysisTypeTerm(store)}
+                  {getAnalysisTypeTerm(store, appSession)}
                 </p>
               </div>}
         </div>
@@ -157,7 +162,9 @@ const AnalysisForm = ({
               onChange={updateArrayField(form.caseNumbers.name, updateForm)}
             />
           </div>
-          <AddButton id="1" label="Legg til saksnummer" md={5} />
+          <div className="cpl-md-5">
+            <AddButton label="Legg til saksnummer" />
+          </div>
         </div>
         <hr />
         <div className="form-group">
@@ -191,7 +198,9 @@ const AnalysisForm = ({
               <option value="other">...</option>
             </select>
           </div>
-          <AddButton id="3" label="Legg til person" md={2} />
+          <div className="col-md-2">
+            <AddButton label="Legg til person" />
+          </div>
         </div>
         <hr />
         <div className="well">
@@ -217,7 +226,9 @@ const AnalysisForm = ({
                 noDataText="Ingen objekter"
               />
             </div>
-            <AddButton id="2" label="Legg til objekt" md={11} mdOffset={2} />
+            <div className="col-md-11 col-md-offset-2">
+              <AddButton label="Legg til object" />
+            </div>
           </div>
           <hr />
           <div className="form-group">
@@ -352,7 +363,9 @@ const AnalysisForm = ({
                     )}
                   />
                 </div>
-                <AddButton id="3" label="Legg til flere saksnummer" md={2} />
+                <div className="col-md-2">
+                  <AddButton label="Legg til flere saksnummer" />
+                </div>
               </div>
               <div className="form-group">
                 <label
@@ -447,13 +460,13 @@ export function updateBooleanField(b: boolean) {
     });
 }
 
-export function getAnalysisTypeTerm(store: Store) {
+export function getAnalysisTypeTerm(store: Store, appSession: AppSession) {
   if (store.analysis && store.analysis.analysisTypeId && store.analysisTypes) {
     const analysisTypeId = store.analysis.analysisTypeId;
-    const foundType = store.analysisTypes.find(
-      type => type.id.indexOf(`${analysisTypeId}`) === 0
-    );
-    return foundType ? foundType.name : '';
+    const foundType = store.analysisTypes.find(type => type.id === analysisTypeId);
+    if (foundType) {
+      return appSession.language.isEn ? foundType.enName : foundType.noName;
+    }
   }
   return '';
 }
@@ -464,7 +477,7 @@ export function submitForm(
   location?: Location,
   saveAnalysisEvent: SaveAnalysisFn,
   saveResult: Function,
-  goToUrl: string => void
+  goToUrl: (s: string) => void
 ) {
   return (e: { preventDefault: Function }) => {
     e.preventDefault();

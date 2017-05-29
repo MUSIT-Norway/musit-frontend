@@ -11,6 +11,7 @@ import flowRight from 'lodash/flowRight';
 import store$, { loadPredefinedTypes$ } from './sampleStore';
 import flatten from 'lodash/flatten';
 import { toPromise } from '../../shared/util';
+import moment from 'moment';
 
 const { form$, loadForm$ } = sampleForm;
 
@@ -32,6 +33,26 @@ export default flowRight([inject(data, commands, props), mount(onMount), makeUrl
   SampleViewComponent
 );
 
+function getPersonsFromResponse(response) {
+  let persons = [];
+  if (response.doneByStamp && response.doneByStamp.user) {
+    persons.push({
+      name: response.doneByStamp.name,
+      uuid: response.doneByStamp.user,
+      role: 'creator',
+      date: moment(response.doneByStamp.date).format()
+    });
+  }
+  if (response.responsible && response.responsible.user) {
+    persons.push({
+      name: response.responsible.name,
+      uuid: response.responsible.user,
+      role: 'responsible'
+    });
+  }
+  return persons;
+}
+
 export function onMount({
   loadSample,
   loadPredefinedTypes,
@@ -46,60 +67,64 @@ export function onMount({
   loadPredefinedTypes({
     token: accessToken,
     onComplete: ({ sampleTypes }) => {
-      loadSample(val).then(v => {
+      loadSample(val).then(sample => {
         const sampleType = flatten(Object.values(sampleTypes)).find(
-          subType => v.sampleTypeId === subType.sampleTypeId
+          subType => sample.sampleTypeId === subType.sampleTypeId
         );
-        const formData = Object.keys(v).reduce((akk, key: string) => {
-          switch (key) {
-            case 'responsible': {
-              return [
-                ...akk,
-                {
-                  name: 'persons',
-                  defaultValue: [
-                    { name: v[key].name, uuid: v[key].value, role: 'responsible' }
-                  ]
-                }
-              ];
-            }
-            case 'sampleType': {
-              return [
-                ...akk,
-                { name: 'sampleType', defaultValue: v[key].value },
-                { name: 'subTypeValue', defaultValue: v[key].subTypeValue }
-              ];
-            }
-            case 'externalId': {
-              return [
-                ...akk,
-                { name: 'externalId', defaultValue: v[key].value },
-                { name: 'externalIdSource', defaultValue: v[key].source }
-              ];
-            }
-            case 'size': {
-              return [
-                ...akk,
-                { name: 'size', defaultValue: v[key].value },
-                { name: 'sizeUnit', defaultValue: v[key].unit }
-              ];
-            }
-            case 'sampleTypeId': {
-              return [
-                ...akk,
-                { name: 'sampleType', defaultValue: sampleType.enSampleType },
-                {
-                  name: 'subTypeValue',
-                  defaultValue: sampleType.enSampleSubType || sampleType.enSampleType
-                }
-              ];
-            }
-            default: {
-              return [...akk, { name: key, defaultValue: v[key] }];
-            }
+        const formData = {};
+        formData.persons = {
+          name: 'persons',
+          defaultValue: getPersonsFromResponse(sample)
+        };
+        formData.updatedByName = {
+          name: 'updatedByName',
+          defaultValue: sample.updatedStamp ? sample.updatedStamp.name : null
+        };
+        formData.updatedDate = {
+          name: 'updatedDate',
+          defaultValue: sample.updatedStamp ? sample.updatedStamp.date : null
+        };
+        formData.registeredByName = {
+          name: 'registeredByName',
+          defaultValue: sample.registeredStamp.name
+        };
+        formData.registeredDate = {
+          name: 'registeredDate',
+          defaultValue: sample.registeredStamp.date
+        };
+        formData.sampleType = {
+          name: 'sampleType',
+          defaultValue: sampleType ? sampleType.enSampleType : sample.sampleType.value
+        };
+        formData.subTypeValue = {
+          name: 'subTypeValue',
+          defaultValue: sampleType
+            ? sampleType.enSampleSubType || sampleType.enSampleType
+            : sample.sampleType.subTypeValue
+        };
+        formData.externalId = {
+          name: 'externalId',
+          defaultValue: sample.externalId ? sample.externalId.value : null
+        };
+        formData.externalIdSource = {
+          name: 'externalIdSource',
+          defaultValue: sample.externalId ? sample.externalId.source : null
+        };
+        formData.size = {
+          name: 'size',
+          defaultValue: sample.size ? sample.size.value : null
+        };
+        formData.sizeUnit = {
+          name: 'sizeUnit',
+          defaultValue: sample.size ? sample.size.unit : null
+        };
+        const data = Object.keys(sample).reduce((akk, key: string) => {
+          if (akk[key]) {
+            return akk;
           }
-        }, []);
-        loadForm(formData);
+          return { ...akk, [key]: { name: key, defaultValue: sample[key] } };
+        }, formData);
+        loadForm(Object.values(data));
       });
     }
   });

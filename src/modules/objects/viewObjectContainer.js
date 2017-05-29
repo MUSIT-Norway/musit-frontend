@@ -7,6 +7,7 @@ import objectStore$, {
   loadSampleEvents$
 } from './objectStore';
 import store$, { getAnalysisTypes$ } from '../analysis/analysisStore';
+import sampleStore$, { getSampleTypes$ } from '../sample/sampleStore';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
@@ -16,7 +17,8 @@ import mount from '../../shared/mount';
 const data: {} = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   objectStore$,
-  analysisTypes: store$
+  analysisTypes: store$,
+  sampleTypes: sampleStore$
 };
 
 const props: {} = {
@@ -28,7 +30,8 @@ const commands: {} = {
   loadObject$,
   loadMoveAndAnalysisEvents$,
   loadSampleEvents$,
-  getAnalysisTypes$
+  getAnalysisTypes$,
+  getSampleTypes$
 };
 
 export const onMount = ({
@@ -37,7 +40,8 @@ export const onMount = ({
   loadSampleEvents,
   params,
   appSession,
-  getAnalysisTypes
+  getAnalysisTypes,
+  getSampleTypes
 }: any) => {
   const uuid: string = params.id;
   const museumId: number = appSession.museumId;
@@ -54,6 +58,7 @@ export const onMount = ({
   loadSampleEvents(ajaxProps);
   loadMoveAndAnalysisEvents(ajaxProps);
   getAnalysisTypes(ajaxProps);
+  getSampleTypes(ajaxProps);
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount)])(
