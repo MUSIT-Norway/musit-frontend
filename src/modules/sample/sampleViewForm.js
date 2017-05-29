@@ -17,6 +17,7 @@ const description = getStrField('description');
 const treatment = getStrField('treatment');
 const persons = getArrField('persons', []);
 const leftoverSample = getNumberField('leftoverSample');
+const sampleNum = getNumberField('sampleNum');
 const updatedBy = getStrField('updatedBy', null, false);
 const updatedByName = getStrField('updatedByName', null, false);
 const updatedDate = getNumberField('updatedDate', null, false);
@@ -46,7 +47,8 @@ const fields = [
   updatedDate,
   registeredBy,
   registeredByName,
-  registeredDate
+  registeredDate,
+  sampleNum
 ];
 
 export default createForm('sampleViewForm.js', fields);

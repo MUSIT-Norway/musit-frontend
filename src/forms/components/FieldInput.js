@@ -9,29 +9,37 @@ type FieldInputProps = {
   inputProps?: {
     className?: string,
     style?: {}
-  }
+  },
+  readOnly?: boolean,
+  labelWidth?: number,
+  controlWidth?: number
 };
 
 export default function FieldInput({
   field,
   title,
   onChange,
-  inputProps
+  inputProps,
+  readOnly = false,
+  labelWidth = 2,
+  controlWidth = 3
 }: FieldInputProps) {
   return (
     <div>
       {title !== '' &&
-        <label className="control-label col-md-2" htmlFor={field.name}>
+        <label className={`control-label col-md-${labelWidth}`} htmlFor={field.name}>
           {title}
         </label>}
-      <div className="col-md-3">
-        <input
-          {...inputProps}
-          className={`form-control ${inputProps ? inputProps.className || '' : ''}`}
-          id={field.name}
-          value={field.rawValue || ''}
-          onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
-        />
+      <div className={`col-md-${controlWidth}`}>
+        {readOnly
+          ? <p className="form-control-static">{field.rawValue}</p>
+          : <input
+              {...inputProps}
+              className={`form-control ${inputProps ? inputProps.className || '' : ''}`}
+              id={field.name}
+              value={field.rawValue || ''}
+              onChange={e => onChange({ name: field.name, rawValue: e.target.value })}
+            />}
       </div>
     </div>
   );

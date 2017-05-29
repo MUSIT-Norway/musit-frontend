@@ -166,7 +166,8 @@ Sample.prepareForSubmit = tmpData => ({
     'updatedDate',
     'registeredBy',
     'registeredByName',
-    'registeredDate'
+    'registeredDate',
+    'persons'
   ]),
   originatedObjectUuid: tmpData.originatedObjectUuid || tmpData.parentObject.objectId,
   size: tmpData.size ? { value: tmpData.size, unit: tmpData.sizeUnit } : null,

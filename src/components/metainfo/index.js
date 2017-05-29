@@ -24,7 +24,7 @@ export default function MetaInformation({
     <div>
       <div className="form-group">
         <label className="control-label col-sm-2" htmlFor="registeredBy">
-          Registrert av:
+          Registrert:
         </label>
         <div className="col-sm-6">
           <p className="form-control-static" id="registeredBy">

@@ -23,6 +23,10 @@ describe('AnalysisSampleFormPageView', () => {
             name: 'size',
             value: '1,23'
           },
+          sampleNum: {
+            name: 'sampleNum',
+            value: 2
+          },
           externalId: {
             name: 'externalId',
             value: '123'

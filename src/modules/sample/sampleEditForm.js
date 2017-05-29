@@ -23,6 +23,7 @@ const updatedDate = getNumberField('updatedDate', null, false);
 const registeredBy = getStrField('registeredBy', null, false);
 const registeredByName = getStrField('registeredByName', null, false);
 const registeredDate = getNumberField('registeredDate', null, false);
+const sampleNum = getNumberField('sampleNum');
 
 const fields = [
   note,
@@ -46,7 +47,8 @@ const fields = [
   updatedDate,
   registeredBy,
   registeredByName,
-  registeredDate
+  registeredDate,
+  sampleNum
 ];
 
 export default createForm('sampleEditForm.js', fields);
