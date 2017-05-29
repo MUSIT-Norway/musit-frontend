@@ -30,24 +30,39 @@ type Props = {
   goBack: () => void
 };
 
-
 const analysisPlaces = [
-  {orgId: 355,
-  fullName: 'Canadian Centre for DNA Barcoding' },
-  {orgId: 356,
-    fullName: 'Macrogen Europe' },
-  {orgId: 357,
-    fullName: 'Poznan radiocarbon laboratory' },
-  {orgId: 358,
-    fullName: 'Beta Analytic Limited' },
-  {orgId: 359,
-    fullName: 'Chrono Centre' },
-  {orgId: 360,
-    fullName: 'Vitenskapsmuseet: Nasjonallaboratoriene for datering' },
-  {orgId: 361,
-    fullName: 'Norwegian geological Survey' },
-  {orgId: 362,
-    fullName: 'Museum of Archaeology/UiS' }
+  {
+    orgId: 355,
+    fullName: 'Canadian Centre for DNA Barcoding'
+  },
+  {
+    orgId: 356,
+    fullName: 'Macrogen Europe'
+  },
+  {
+    orgId: 357,
+    fullName: 'Poznan radiocarbon laboratory'
+  },
+  {
+    orgId: 358,
+    fullName: 'Beta Analytic Limited'
+  },
+  {
+    orgId: 359,
+    fullName: 'Chrono Centre'
+  },
+  {
+    orgId: 360,
+    fullName: 'Vitenskapsmuseet: Nasjonallaboratoriene for datering'
+  },
+  {
+    orgId: 361,
+    fullName: 'Norwegian geological Survey'
+  },
+  {
+    orgId: 362,
+    fullName: 'Museum of Archaeology/UiS'
+  }
 ];
 
 const AnalysisForm = ({
@@ -189,8 +204,6 @@ const AnalysisForm = ({
             </select>
           </div>
         </div>
-
-
 
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="casenumber">
@@ -566,7 +579,6 @@ export function submitForm(
       data: data,
       token: appSession.accessToken
     }).then((analysis: number | { id: number }) => {
-      console.log('Analysis',analysis);
       const analysisId = typeof analysis === 'number' ? analysis : analysis.id;
       const url = Config.magasin.urls.client.analysis.viewAnalysis(
         appSession,

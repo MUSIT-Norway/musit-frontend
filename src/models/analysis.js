@@ -255,8 +255,6 @@ MusitAnalysis.getAnalysesForObject = (ajaxGet = simpleGet) => ({
   });
 };
 
-
-
 MusitAnalysis.getAnalysisById = (ajaxGet = simpleGet) => ({
   museumId,
   id,

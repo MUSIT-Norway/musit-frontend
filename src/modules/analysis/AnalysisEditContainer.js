@@ -1,7 +1,11 @@
 import inject from 'react-rxjs/dist/RxInject';
 import analysisForm, { fieldsArray } from './analysisForm';
-import AnalysiFormComponent from './AnalysisFormComponent';
-import store$, { getAnalysisTypes$, getAnalysis$, loadPredefinedTypes$ } from './analysisStore';
+import AnalysisFormComponent from './AnalysisFormComponent';
+import store$, {
+  getAnalysisTypes$,
+  getAnalysis$,
+  loadPredefinedTypes$
+} from './analysisStore';
 import PropTypes from 'prop-types';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
@@ -57,5 +61,5 @@ export const onMount = ({
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  AnalysiFormComponent
+  AnalysisFormComponent
 );
