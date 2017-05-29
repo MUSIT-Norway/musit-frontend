@@ -14,7 +14,7 @@ const subTypeValue = getStrField('subTypeValue');
 const status = getNumberField('status');
 const description = getStrField('description', null, false);
 const treatment = getStrField('treatment', null, false);
-const persons = getArrField('persons', [{ name: '', role: 'creator', date: '' }], false);
+const persons = getArrField('persons', [], false);
 const leftoverSample = getNumberField('leftoverSample', 1, false);
 
 const fields = [

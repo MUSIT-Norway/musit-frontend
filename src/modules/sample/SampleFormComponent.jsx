@@ -55,7 +55,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
     <form className="form-horizontal">
       <div className="page-header">
         <h1>
-          Registrer prøveuttak
+          Registrer prøve
         </h1>
       </div>
       {form.registeredByName && form.registeredByName.value &&
@@ -71,14 +71,14 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
       <h4>
         Avledet fra objekt
       </h4>
-      <div className='form-group'>
-        <span className="col-md-2">
-          <strong>Museumsnr:</strong> {location.state[0].museumNo}
+      <div>
+        <span style={{ marginRight: 20 }}>
+          <strong>Museumnr:</strong> {location.state[0].museumNo}
         </span>
-        <span className="col-md-2">
+        <span style={{ marginRight: 20 }}>
           <strong>Unr:</strong> {location.state[0].subNo}
         </span>
-        <span className="col-md-2">
+        <span>
           <strong>Term/artsnavn:</strong> {location.state[0].term}
         </span>
       </div>
@@ -92,6 +92,14 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
       />
       <br/>
       <div className="well">
+        <ValidatedFormGroup fields={[form.sampleNum]}>
+          <FieldInput
+            field={form.sampleNum}
+            title="Prøvenr:"
+            onChange={updateForm}
+            readOnly={true}
+          />
+        </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.sampleId]}>
           <FieldInput
             field={form.sampleId}
@@ -117,12 +125,16 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title="Prøvetype:"
             defaultOption="Velg type"
             onChange={(obj) => {
-              updateForm({ name: form.subTypeValue.name, rawValue: '' });
+              if (store.sampleTypes && store.sampleTypes[obj.rawValue] && store.sampleTypes[obj.rawValue].length === 1) {
+                updateForm({ name: form.subTypeValue.name, rawValue: sampleTypeDisplayName(store.sampleTypes[obj.rawValue][0])});
+              } else {
+                updateForm({name: form.subTypeValue.name, rawValue: ''});
+              }
               updateForm(obj);
             }}
             selectItems={store.sampleTypes ? Object.keys(store.sampleTypes) : []}
           />
-          {form.sampleType.rawValue && form.sampleType.rawValue.trim().length > 0 &&
+          {form.sampleType.rawValue && form.sampleType.rawValue.trim().length > 0 && store.sampleTypes && store.sampleTypes[form.sampleType.rawValue].length > 1 &&
             <FieldDropDown
               field={form.subTypeValue}
               title="Prøveundertype:"
@@ -135,10 +147,12 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
           }
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.description]}>
-          <FieldInput
+          <FieldTextArea
             field={form.description}
             title="Beskrivelse av prøve:"
-            onChange={updateForm}
+            onChangeInput={updateForm}
+            inputProps={{rows: 5}}
+            controlWidth={10}
           />
         </ValidatedFormGroup>
         <ValidatedFormGroup fields={[form.status]}>
@@ -210,6 +224,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             title="Kommentar:"
             onChangeInput={updateForm}
             inputProps={{rows: 5, className: 'note'}}
+            controlWidth={10}
           />
         </ValidatedFormGroup>
       </div>
@@ -281,10 +296,11 @@ function submitSample(appSession: AppSession, store: Store, form: FormDetails, o
 }
 
 function getSampleTypeId(sampleTypes, selectSubType) {
-  return flatten(Object.values(sampleTypes)).find(subType => {
+  const sampleType = flatten(Object.values(sampleTypes)).find(subType => {
     const subTypeName = sampleTypeDisplayName(subType);
     return subTypeName === selectSubType;
-  }).sampleTypeId;
+  });
+  return sampleType.sampleTypeId;
 }
 
 function sampleTypeDisplayName(v) {

@@ -42,9 +42,7 @@ export const PersonRoleDate = ({
         <Col md={2}>
           <strong>Dato</strong>
         </Col>
-        <Col md={2}>
-          <strong>Slett</strong>
-        </Col>
+        <Col md={2} />
       </Row>
       <br />
       {pArr.map((v, i) => (
