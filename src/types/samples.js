@@ -11,7 +11,9 @@ type SampleData = {
   status: string,
   details: string,
   hasAnalyse: boolean,
-  doneDate: Moment
+  doneDate: Moment,
+  storageMedium: string,
+  sampleNum: number
 };
 
 export type Samples = SampleData[];
