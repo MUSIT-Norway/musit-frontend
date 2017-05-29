@@ -182,16 +182,13 @@ MusitAnalysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
-  language,
   callback
 }) => {
   const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(
     museumId,
     collectionId
   );
-  return ajaxGet(url, token, callback).map(({ response }) =>
-    response.map(r => ({ ...r, name: language === 'en' ? r.enName : r.noName }))
-  );
+  return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
 MusitAnalysis.saveAnalysisEvent = (ajaxPost = simplePost) => ({

@@ -134,14 +134,9 @@ Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
     )
   );
 };
-Sample.loadAllSampleTypes = (ajaxGet = simpleGet) => ({ token, language }) => {
+Sample.loadAllSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
   const url = Config.magasin.urls.api.samples.sampleTypes;
-  return ajaxGet(url, token).map(({ response }) =>
-    response.map(r => ({
-      ...r,
-      sampleType: language === 'en' ? r.enSampleType : r.noSampleType
-    }))
-  );
+  return ajaxGet(url, token).map(({ response }) => response);
 };
 
 Sample.loadTreatments = (ajaxGet = simpleGet) => ({ token }) => {

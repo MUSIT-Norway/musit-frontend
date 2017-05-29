@@ -47,14 +47,12 @@ export const onMount = ({
   const museumId: number = appSession.museumId;
   const accessToken: string = appSession.accessToken;
   const collectionId: string = appSession.collectionId;
-  const language: string = appSession.language;
   const ajaxProps = {
     id: uuid,
     objectId: uuid,
     museumId: museumId,
     token: accessToken,
-    collectionId: collectionId,
-    language: language
+    collectionId: collectionId
   };
   loadObject(ajaxProps);
   loadSampleEvents(ajaxProps);

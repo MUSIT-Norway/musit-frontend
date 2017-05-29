@@ -6,6 +6,7 @@ import AnalysisViewComponent from '../AnalysisViewComponent';
 import { fieldsArray } from '../analysisForm';
 import type { Field } from 'forms/form';
 import type { FormData } from '../types/form';
+import { appSession } from './../../../testutils/sampleDataForTest';
 
 declare var describe: any;
 declare var it: any;
@@ -65,15 +66,6 @@ const store = {
   analysisTypes: analysisTypes,
   objectsData: objectsData,
   analysis: analysis
-};
-
-const appSession = {
-  museumId: 99,
-  collectionId: '1234',
-  accessToken: '45667',
-  actor: {
-    fn: 'Test'
-  }
 };
 
 const form: FormData = (fieldsArray.reduce(

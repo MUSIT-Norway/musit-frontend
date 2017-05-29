@@ -10,6 +10,7 @@ import orderBy from 'lodash/orderBy';
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqualWith from 'lodash/isEqualWith';
+import { getLanguage } from './../../shared/language';
 
 export const makeUrlAware = Component => {
   class Wrapper extends React.Component {
@@ -104,7 +105,10 @@ const loadAppSession = (ajaxGet = simpleGet, accessToken) => {
         museumId,
         collectionId,
         buildInfo: buildInfoRes.response,
-        language: localStorage.getItem('language')
+        language: {
+          isEn: getLanguage() === 'en',
+          isNo: getLanguage() === 'no'
+        }
       };
     })
   );

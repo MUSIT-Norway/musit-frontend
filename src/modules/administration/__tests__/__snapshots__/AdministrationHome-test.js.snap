@@ -26,7 +26,7 @@ exports[`Administration should render Administration 1`] = `
       <tr>
         <td>
           <a
-            href="/museum/99/collections/45555/administration/analysistypes"
+            href="/museum/99/collections/1234/administration/analysistypes"
             onClick={[Function]}
           >
             Analysetyper
@@ -39,7 +39,7 @@ exports[`Administration should render Administration 1`] = `
       <tr>
         <td>
           <a
-            href="/museum/99/collections/45555/administration/analysisplaces"
+            href="/museum/99/collections/1234/administration/analysisplaces"
             onClick={[Function]}
           >
             Analysesteder
@@ -52,7 +52,7 @@ exports[`Administration should render Administration 1`] = `
       <tr>
         <td>
           <a
-            href="/museum/99/collections/45555/administration/sampletypes"
+            href="/museum/99/collections/1234/administration/sampletypes"
             onClick={[Function]}
           >
             Prøvetyper

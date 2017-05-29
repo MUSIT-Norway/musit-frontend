@@ -65,6 +65,7 @@ export const ViewObjectComponent = ({
           events={events}
           analysisTypes={analysisTypes}
           sampleTypes={sampleTypes}
+          appSession={appSession}
           onClick={event => {
             if (event.type === 'Analysis' || event.type === 'AnalysisCollection') {
               hashHistory.push({

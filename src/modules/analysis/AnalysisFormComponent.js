@@ -95,7 +95,7 @@ const AnalysisForm = ({
                           )
                           .map(a => (
                             <option key={a.id} value={a.id}>
-                              {a.name}
+                              {appSession.language.isEn ? a.enName : a.noName}
                             </option>
                           ))}
                     </select>
@@ -103,7 +103,7 @@ const AnalysisForm = ({
               </div>
             : <div className="col-md-5">
                 <p className="form-control-static">
-                  {getAnalysisTypeTerm(store)}
+                  {getAnalysisTypeTerm(store, appSession)}
                 </p>
               </div>}
         </div>
@@ -460,11 +460,13 @@ export function updateBooleanField(b: boolean) {
     });
 }
 
-export function getAnalysisTypeTerm(store: Store) {
+export function getAnalysisTypeTerm(store: Store, appSession: AppSession) {
   if (store.analysis && store.analysis.analysisTypeId && store.analysisTypes) {
     const analysisTypeId = store.analysis.analysisTypeId;
     const foundType = store.analysisTypes.find(type => type.id === analysisTypeId);
-    return foundType ? foundType.noName : '';
+    if (foundType) {
+      return appSession.language.isEn ? foundType.enName : foundType.noName;
+    }
   }
   return '';
 }
