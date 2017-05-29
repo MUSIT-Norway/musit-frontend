@@ -298,9 +298,11 @@ Sample.loadSamplesForObject = (ajaxGet = simpleGet) => ({
   });
 };
 
+export const STATUS_INTACT_ID = 1;
+
 Sample.sampleStatuses = [
   {
-    id: 1,
+    id: STATUS_INTACT_ID,
     noStatus: 'Intakt',
     enStatus: 'Intact'
   },

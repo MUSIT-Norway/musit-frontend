@@ -1,13 +1,29 @@
+// @flow
 import React from 'react';
 import Config from '../../config';
 import { hashHistory } from 'react-router';
 import MetaInformation from '../../components/metainfo';
 import Sample from '../../models/sample';
 import moment from 'moment';
+import type { AppSession } from '../../types/appSession';
+import type { FormDetails } from './types/form';
+import type { ObjectData } from '../../types/object';
+import ReadOnlySampleType from './components/ReadOnlySampleType';
 
-export default function SampleViewComponent(props) {
-  const objectData = props.location.state[0];
-  const form = props.form;
+type Props = {
+  form: FormDetails,
+  appSession: AppSession,
+  location: { state: Array<ObjectData> },
+  params: { sampleId: string }
+};
+
+export default function SampleViewComponent({
+  form,
+  appSession,
+  location: { state },
+  params: { sampleId }
+}: Props) {
+  const objectData = state[0];
   return (
     <form className="form-horizontal">
       <div className="page-header">
@@ -25,8 +41,8 @@ export default function SampleViewComponent(props) {
             e.preventDefault();
             hashHistory.push({
               pathname: Config.magasin.urls.client.analysis.editSample(
-                props.appSession,
-                props.params.sampleId
+                appSession,
+                sampleId
               ),
               state: [objectData]
             });
@@ -86,7 +102,7 @@ export default function SampleViewComponent(props) {
       </div>
       <div className="form-group">
         <label className="control-label col-md-2">EksternID:</label>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <p className="form-control-static">
             {form.externalId.value}
           </p>
@@ -98,26 +114,10 @@ export default function SampleViewComponent(props) {
           </p>
         </div>
       </div>
-      <div className="form-group">
-        <label className="control-label col-md-2">Prøvetype:</label>
-        <div className="col-md-2">
-          <p className="form-control-static">
-            {form.sampleType.value}
-          </p>
-        </div>
-        {form.sampleType.value !== form.subTypeValue.value &&
-          <div>
-            <label className="control-label col-md-2">Prøveundertype:</label>
-            <div className="col-md-2">
-              <p className="form-control-static">
-                {form.subTypeValue.value}
-              </p>
-            </div>
-          </div>}
-      </div>
+      <ReadOnlySampleType sampleType={form.sampleType} subTypeValue={form.subTypeValue} />
       <div className="form-group">
         <label className="control-label col-md-2">Beskrivelse av prøve:</label>
-        <div className="col-md-10">
+        <div className="col-md-8">
           <p className="form-control-static">
             {form.description.value}
           </p>
@@ -175,7 +175,7 @@ export default function SampleViewComponent(props) {
       </div>
       <div className="form-group">
         <label className="control-label col-md-2">Kommentar:</label>
-        <div className="col-md-2">
+        <div className="col-md-8">
           <p className="form-control-static">
             {form.note.value}
           </p>

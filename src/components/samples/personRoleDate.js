@@ -7,6 +7,8 @@ import DropdownButton from '../../components/DropdownButton';
 import DatePicker from '../DatePicker';
 import { DATE_FORMAT_DISPLAY } from '../../shared/util';
 import type { AppSession } from '../../types/appSession';
+import MusitActor from '../../models/actor';
+import moment from 'moment';
 
 export type Person = {
   name?: string,
@@ -59,7 +61,11 @@ export const PersonRoleDate = ({
                   name: fieldName,
                   rawValue: updatePerson(
                     i,
-                    { ...v, name: newValue.fn, uuid: newValue.dataportenId },
+                    {
+                      ...v,
+                      name: newValue.fn,
+                      uuid: MusitActor.getActorId(newValue) || undefined
+                    },
                     personData
                   )
                 });
@@ -127,7 +133,7 @@ export const PersonRoleDate = ({
 };
 
 function addPerson(persons: Array<Person>): Array<Person> {
-  return [...persons, {}];
+  return [...persons, { date: moment().format() }];
 }
 
 function deletePerson(i: number, persons: Array<Person>): Array<Person> {

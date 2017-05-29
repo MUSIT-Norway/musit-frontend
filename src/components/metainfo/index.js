@@ -4,7 +4,7 @@ import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 
 type Props = {
-  onClickEdit?: () => void,
+  onClickEdit?: (e: { preventDefault: Function }) => void,
   updatedBy?: ?string,
   updatedDate?: ?number | ?string,
   registeredBy: ?string,
