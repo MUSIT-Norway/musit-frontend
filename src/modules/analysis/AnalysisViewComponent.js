@@ -71,6 +71,17 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
         </div>
       </div>
       <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="status">
+          Sted for analysen:
+        </label>
+        <div className="col-md-5">
+          <p className="form-control-static" id="status">
+            {getPlaceText(form.place.value)}
+          </p>
+        </div>
+      </div>
+
+      <div className="form-group">
         <label className="control-label col-md-2" htmlFor="caseNumber">Saksnummer:</label>
         <div className="col-md-10">
           <p className="form-control-static" id="caseNumber">
@@ -254,6 +265,32 @@ function getStatusText(status?: ?number): string {
       return '4. Avsluttet uten resultat';
     default:
       return 'N/A: ' + status;
+  }
+}
+
+function getPlaceText(actorId?: ?number): string {
+  if (!actorId) {
+    return '';
+  }
+  switch (actorId) {
+    case 355:
+      return 'Canadian Centre for DNA Barcoding';
+    case 356:
+      return 'Macrogen Europe';
+    case 357:
+      return 'Poznan radiocarbon laboratory';
+    case 358:
+      return 'Beta Analytic Limited';
+    case 359:
+      return 'Chrono Centre';
+    case 360:
+      return 'Vitenskapsmuseet: Nasjonallaboratoriene for datering';
+    case 361:
+      return 'Norwegian geological Survey';
+    case 362:
+      return 'Museum of Archaeology/UiS';
+    default:
+      return 'N/A: ' + actorId;
   }
 }
 

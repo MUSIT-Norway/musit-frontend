@@ -30,6 +30,26 @@ type Props = {
   goBack: () => void
 };
 
+
+const analysisPlaces = [
+  {orgId: 355,
+  fullName: 'Canadian Centre for DNA Barcoding' },
+  {orgId: 356,
+    fullName: 'Macrogen Europe' },
+  {orgId: 357,
+    fullName: 'Poznan radiocarbon laboratory' },
+  {orgId: 358,
+    fullName: 'Beta Analytic Limited' },
+  {orgId: 359,
+    fullName: 'Chrono Centre' },
+  {orgId: 360,
+    fullName: 'Vitenskapsmuseet: Nasjonallaboratoriene for datering' },
+  {orgId: 361,
+    fullName: 'Norwegian geological Survey' },
+  {orgId: 362,
+    fullName: 'Museum of Archaeology/UiS' }
+];
+
 const AnalysisForm = ({
   form,
   updateForm,
@@ -148,6 +168,30 @@ const AnalysisForm = ({
             </select>
           </div>
         </div>
+
+        <div className="form-group">
+          <label className="control-label col-md-2" htmlFor="place">
+            Sted for analysen:
+          </label>
+          <div className="col-md-10">
+            <select
+              id="place"
+              className="form-control"
+              value={form.place.rawValue || ''}
+              onChange={updateFormField(form.place.name, updateForm)}
+            >
+              <option value="">Velg analysested</option>
+              {analysisPlaces.map(a => (
+                <option key={a.orgId} value={a.orgId}>
+                  {a.fullName}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+
+
         <div className="form-group">
           <label className="control-label col-md-2" htmlFor="casenumber">
             Saksnummer:
@@ -522,6 +566,7 @@ export function submitForm(
       data: data,
       token: appSession.accessToken
     }).then((analysis: number | { id: number }) => {
+      console.log('Analysis',analysis);
       const analysisId = typeof analysis === 'number' ? analysis : analysis.id;
       const url = Config.magasin.urls.client.analysis.viewAnalysis(
         appSession,
