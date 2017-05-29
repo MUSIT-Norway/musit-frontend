@@ -48,7 +48,6 @@ class MusitAnalysis {
     museumId: number,
     collectionId: string,
     token: string,
-    language: string,
     callback?: ?Callback
   }) => Observable;
 
