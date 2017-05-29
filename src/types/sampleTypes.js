@@ -1,5 +1,5 @@
 // @flow
-type SampleTypeData = {
+export type SampleType = {
   enSampleSubType: string,
   enSampleType: string,
   noSampleSubType: string,
@@ -8,4 +8,8 @@ type SampleTypeData = {
   sampleTypeId: number
 };
 
-export type SampleTypes = SampleTypeData;
+export type SampleTypes = SampleType[];
+
+export type SampleTypesObject = {
+  sampleTypes: SampleTypes
+};

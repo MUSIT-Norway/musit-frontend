@@ -4,8 +4,8 @@ import { Row, Col, Tabs, Tab, PageHeader, Button } from 'react-bootstrap';
 import type { ObjectData } from '../../types/object';
 import type { Samples } from '../../types/samples';
 import type { Events } from '../../types/events';
-import type { AnalysisTypes } from '../../types/analysisTypes';
-import type { SampleTypes } from '../../types/sampleTypes';
+import type { AnalysisTypesObject } from '../../types/analysisTypes';
+import type { SampleTypesObject } from '../../types/sampleTypes';
 import EventTableComponent from '../../components/events/eventTableComponent';
 import SampleTableComponent from '../../components/samples/sampleTableComponent';
 import { hashHistory } from 'react-router';
@@ -15,8 +15,8 @@ import type { AppSession } from '../../types/appSession';
 type ViewObjectComponentProps = {
   objectStore: { objectData: ObjectData, events: Events, samples: Samples },
   appSession: AppSession,
-  analysisTypes: AnalysisTypes,
-  sampleTypes: SampleTypes
+  analysisTypes: AnalysisTypesObject,
+  sampleTypes: SampleTypesObject
 };
 
 export const ViewObjectComponent = ({
