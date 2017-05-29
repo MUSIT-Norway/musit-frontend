@@ -42,9 +42,6 @@ function getKeyData(event: Event, analysisTypes: AnalysisTypes, sampleTypes: Sam
 export const EventTableComponent = ({ events, onClick, analysisTypes, sampleTypes, appSession }: EventTypeProps) => {
   return (
     <div>
-      {console.log('RKS1', { events, onClick, analysisTypes, sampleTypes, appSession } )};
-      {console.log('RKS2', sampleTypes )};
-
       <Table
         className="table"
         columns={[
