@@ -268,7 +268,7 @@ function getStatusText(status?: ?number): string {
   }
 }
 
-function getPlaceText(actorId?: ?number): string {
+function getPlaceText(actorId?: ?string): string {
   if (!actorId) {
     return '';
   }
