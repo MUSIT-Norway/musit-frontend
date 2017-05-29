@@ -2,6 +2,8 @@
 
 exports[`EventTableComponent should render header, body and footer 1`] = `
 <div>
+  ;
+  ;
   <Table
     className="table"
     columns={

@@ -25,7 +25,9 @@ describe('EventTableComponent', () => {
             id: '1233-111-2122-222'
           }
         ]}
-      />
+       analysisTypes={[]}
+       sampleTypes={[]}
+    />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
