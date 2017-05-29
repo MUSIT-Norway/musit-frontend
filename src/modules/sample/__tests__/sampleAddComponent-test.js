@@ -39,13 +39,6 @@ describe('AnalysisSampleFormPageAdd', () => {
               valid: true
             }
           },
-          sampleNum: {
-            name: 'sampleNum',
-            rawValue: 2,
-            status: {
-              valid: true
-            }
-          },
           externalId: {
             name: 'externalId',
             rawValue: '123',

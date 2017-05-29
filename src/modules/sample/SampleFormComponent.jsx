@@ -92,6 +92,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
       />
       <br/>
       <div className="well">
+        {form.sampleNum ?
         <ValidatedFormGroup fields={[form.sampleNum]}>
           <FieldInput
             field={form.sampleNum}
@@ -99,7 +100,7 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
             onChange={updateForm}
             readOnly={true}
           />
-        </ValidatedFormGroup>
+        </ValidatedFormGroup> : ''}
         <ValidatedFormGroup fields={[form.sampleId]}>
           <FieldInput
             field={form.sampleId}
