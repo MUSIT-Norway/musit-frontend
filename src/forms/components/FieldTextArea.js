@@ -10,22 +10,26 @@ type FieldTextAreaProps = {
     className?: string,
     style?: {},
     rows?: number
-  }
+  },
+  labelWidth?: number,
+  controlWidth?: number
 };
 
 export default function FieldTextArea({
   field,
   title,
   onChangeInput,
-  inputProps
+  inputProps,
+  labelWidth = 2,
+  controlWidth = 3
 }: FieldTextAreaProps) {
   return (
     <div>
       {title !== '' &&
-        <label className="control-label col-md-2" htmlFor={field.name}>
+        <label className={`control-label col-md-${labelWidth}`} htmlFor={field.name}>
           {title}
         </label>}
-      <div className="col-md-3">
+      <div className={`col-md-${controlWidth}`}>
         <textarea
           {...inputProps}
           className={`form-control ${inputProps ? inputProps.className || '' : ''}`}

@@ -35,7 +35,7 @@ export default flowRight([inject(data, commands, props), mount(onMount), makeUrl
 
 function getPersonsFromResponse(response) {
   let persons = [];
-  if (response.doneByStamp) {
+  if (response.doneByStamp && response.doneByStamp.user) {
     persons.push({
       name: response.doneByStamp.name,
       uuid: response.doneByStamp.user,
@@ -43,7 +43,7 @@ function getPersonsFromResponse(response) {
       date: moment(response.doneByStamp.date).format()
     });
   }
-  if (response.responsible) {
+  if (response.responsible && response.responsible.user) {
     persons.push({
       name: response.responsible.name,
       uuid: response.responsible.user,
