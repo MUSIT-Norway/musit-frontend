@@ -379,11 +379,15 @@ MusitAnalysis.getAnalysisCategories = (ajaxGet = simpleGet) => ({ museumId, toke
     token
   ).map(({ response }) => response);
 
-MusitAnalysis.loadPredefinedTypes = (ajaxGet = simpleGet) => ({museumId, token, onComplete}) => {
+MusitAnalysis.loadPredefinedTypes = (ajaxGet = simpleGet) => ({
+  museumId,
+  token,
+  onComplete
+}) => {
   return Observable.forkJoin([
-    MusitAnalysis.getAnalysisCategories(ajaxGet)({museumId, token}),
-    MusitAnalysis.getPurposes(ajaxGet)({museumId, token}),
-    MusitAnalysis.getAnalysisTypes(ajaxGet)({museumId, token})
+    MusitAnalysis.getAnalysisCategories(ajaxGet)({ museumId, token }),
+    MusitAnalysis.getPurposes(ajaxGet)({ museumId, token }),
+    MusitAnalysis.getAnalysisTypes(ajaxGet)({ museumId, token })
   ])
     .map(([categories, purposes, analysisTypes]) => ({
       categories: categories.reduce((a, c) => Object.assign(a, { [c.id]: c.name }), {}),

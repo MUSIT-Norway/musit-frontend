@@ -25,6 +25,5 @@ describe('analysisEditContainer', () => {
     });
     expect(loadPredefinedTypes.calledOnce).toBe(true);
     expect(loadForm.calledOnce).toBe(false);
-
   });
 });

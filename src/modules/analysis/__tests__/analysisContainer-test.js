@@ -9,7 +9,7 @@ describe('analysisContainer', () => {
       collectionId: '45555',
       accessToken: '1234'
     };
-    onMount({ loadPredefinedTypes,  appSession });
+    onMount({ loadPredefinedTypes, appSession });
     expect(loadPredefinedTypes.calledOnce).toBe(true);
     expect(loadPredefinedTypes.getCall(0).args[0].token).toEqual('1234');
     expect(loadPredefinedTypes.getCall(0).args[0].museumId).toEqual(99);
