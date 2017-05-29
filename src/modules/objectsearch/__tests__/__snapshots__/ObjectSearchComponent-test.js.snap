@@ -17,10 +17,10 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
   >
     <div
       className="form-group"
-      controlId="museumNo"
     >
       <label
         className="control-label"
+        htmlFor="museumNo"
       >
         Museumnr.
       </label>
@@ -36,10 +36,10 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
      
     <div
       className="form-group"
-      controlId="subNo"
     >
       <label
         className="control-label"
+        htmlFor="subNo"
       >
         Unr.
       </label>
@@ -55,10 +55,10 @@ exports[`ObjectSearchComponent should display object 1 1`] = `
      
     <div
       className="form-group"
-      controlId="term"
     >
       <label
         className="control-label"
+        htmlFor="term"
       >
         Term/Artsnavn
       </label>
