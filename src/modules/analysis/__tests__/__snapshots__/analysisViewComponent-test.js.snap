@@ -75,6 +75,24 @@ exports[`AnalysisViewComponent should render properly 1`] = `
     >
       <label
         className="control-label col-md-2"
+        htmlFor="status"
+      >
+        Sted for analysen:
+      </label>
+      <div
+        className="col-md-5"
+      >
+        <p
+          className="form-control-static"
+          id="status"
+        />
+      </div>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="control-label col-md-2"
         htmlFor="caseNumber"
       >
         Saksnummer:

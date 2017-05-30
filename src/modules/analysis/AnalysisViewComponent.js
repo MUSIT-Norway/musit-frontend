@@ -56,7 +56,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="reason">
-            {form.reason.value}
+            {getAnalysisPurpose(form, store)}
           </p>
         </div>
       </div>
@@ -70,6 +70,17 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
           </p>
         </div>
       </div>
+      <div className="form-group">
+        <label className="control-label col-md-2" htmlFor="status">
+          Sted for analysen:
+        </label>
+        <div className="col-md-5">
+          <p className="form-control-static" id="status">
+            {getPlaceText(form.place.value)}
+          </p>
+        </div>
+      </div>
+
       <div className="form-group">
         <label className="control-label col-md-2" htmlFor="caseNumber">Saksnummer:</label>
         <div className="col-md-10">
@@ -257,11 +268,47 @@ function getStatusText(status?: ?number): string {
   }
 }
 
+function getPlaceText(actorId?: ?string): string {
+  if (!actorId) {
+    return '';
+  }
+  switch (actorId) {
+    case 355:
+      return 'Canadian Centre for DNA Barcoding';
+    case 356:
+      return 'Macrogen Europe';
+    case 357:
+      return 'Poznan radiocarbon laboratory';
+    case 358:
+      return 'Beta Analytic Limited';
+    case 359:
+      return 'Chrono Centre';
+    case 360:
+      return 'Vitenskapsmuseet: Nasjonallaboratoriene for datering';
+    case 361:
+      return 'Norwegian geological Survey';
+    case 362:
+      return 'Museum of Archaeology/UiS';
+    default:
+      return 'N/A: ' + actorId;
+  }
+}
+
 function getAnalysisTypeTerm(form, store) {
   if (form.analysisTypeId.rawValue && store.analysisTypes) {
     const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.value);
     if (foundType) {
-      return I18n._locale === 'en' ? foundType.enName : foundType.noName;
+      return store.appSession.isEn ? foundType.enName : foundType.noName;
+    }
+  }
+  return '';
+}
+
+function getAnalysisPurpose(form, store) {
+  if (form.reason.rawValue && store.purposes) {
+    const foundType = store.purposes.find(a => `${a.id}` === form.reason.rawValue);
+    if (foundType) {
+      return store.appSession.isEn ? foundType.enPurpose : foundType.noPurpose;
     }
   }
   return '';

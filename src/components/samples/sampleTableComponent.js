@@ -10,7 +10,7 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
       <Table
         className="table table-hover table-inverse table-responsive"
         columns={[
-          { key: 'registeredDate', label: 'Dato' },
+          { key: 'doneDate', label: 'Dato' },
           { key: 'sampleType', label: 'Prøvetype' },
           { key: 'sampleSubType', label: 'Prøveundertype' },
           { key: 'status', label: 'Status' },
@@ -24,7 +24,7 @@ const SampleTableComponent = ({ samples, onClick }: SamplesPropsType) => {
         {samples &&
           samples.map((e, i) => (
             <Tr key={i} onClick={() => onClick(e)}>
-              <Td column="registeredDate">{e.registeredDate}</Td>s
+              <Td column="doneDate">{e.doneDate.format('DD.MM.YYYY')}</Td>
               <Td column="sampleType">{e.sampleTypeId}</Td>
               <Td column="sampleSubType">{' '}</Td>
               <Td column="status">{e.status}</Td>

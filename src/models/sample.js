@@ -9,7 +9,6 @@ import { omit } from 'lodash';
 import uniq from 'lodash/uniq';
 import uniqBy from 'lodash/uniqBy';
 import MusitActor from '../models/actor';
-import moment from 'moment';
 
 export type SampleStatus = {
   id: number,
@@ -268,10 +267,7 @@ Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({
       (response &&
         response.map(r => ({
           ...r,
-          doneDate: r.doneDate
-            ? moment(r.registeredStamp.date).format(DATE_FORMAT_DISPLAY)
-            : null,
-          registeredDate: moment(r.registeredStamp.date).format(DATE_FORMAT_DISPLAY)
+          doneDate: parseISODate(r.doneDate, DATE_FORMAT_DISPLAY)
         }))) || []
   );
 };

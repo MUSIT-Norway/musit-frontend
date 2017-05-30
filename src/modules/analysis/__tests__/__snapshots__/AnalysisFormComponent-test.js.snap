@@ -63,18 +63,6 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           >
             Velg formål
           </option>
-          <option>
-            Ingen forhold
-          </option>
-          <option>
-            To forhold
-          </option>
-          <option>
-            Tre forhold
-          </option>
-          <option>
-            Fire forhold
-          </option>
         </select>
       </div>
     </div>
@@ -120,6 +108,72 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
             value="4"
           >
             4. Avsluttet uten resultat
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className="control-label col-md-2"
+        htmlFor="place"
+      >
+        Sted for analysen:
+      </label>
+      <div
+        className="col-md-10"
+      >
+        <select
+          className="form-control"
+          id="place"
+          onChange={[Function]}
+          value=""
+        >
+          <option
+            value=""
+          >
+            Velg analysested
+          </option>
+          <option
+            value={355}
+          >
+            Canadian Centre for DNA Barcoding
+          </option>
+          <option
+            value={356}
+          >
+            Macrogen Europe
+          </option>
+          <option
+            value={357}
+          >
+            Poznan radiocarbon laboratory
+          </option>
+          <option
+            value={358}
+          >
+            Beta Analytic Limited
+          </option>
+          <option
+            value={359}
+          >
+            Chrono Centre
+          </option>
+          <option
+            value={360}
+          >
+            Vitenskapsmuseet: Nasjonallaboratoriene for datering
+          </option>
+          <option
+            value={361}
+          >
+            Norwegian geological Survey
+          </option>
+          <option
+            value={362}
+          >
+            Museum of Archaeology/UiS
           </option>
         </select>
       </div>

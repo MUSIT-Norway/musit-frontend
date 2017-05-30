@@ -1,7 +1,11 @@
 import inject from 'react-rxjs/dist/RxInject';
 import analysisForm, { fieldsArray } from './analysisForm';
-import AnalysiFormComponent from './AnalysisFormComponent';
-import store$, { getAnalysisTypes$, getAnalysis$ } from './analysisStore';
+import AnalysisFormComponent from './AnalysisFormComponent';
+import store$, {
+  getAnalysisTypes$,
+  getAnalysis$,
+  loadPredefinedTypes$
+} from './analysisStore';
 import PropTypes from 'prop-types';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
@@ -22,7 +26,8 @@ const commands = {
   updateForm$,
   loadForm$,
   getAnalysisTypes$,
-  getAnalysis$
+  getAnalysis$,
+  loadPredefinedTypes$
 };
 
 const props = {
@@ -33,7 +38,7 @@ const props = {
 };
 
 export const onMount = ({
-  getAnalysisTypes,
+  loadPredefinedTypes,
   getAnalysis,
   appSession,
   params,
@@ -45,13 +50,16 @@ export const onMount = ({
     collectionId: appSession.collectionId,
     token: appSession.accessToken
   };
-  getAnalysisTypes(inputParams);
-  getAnalysis({
+  loadPredefinedTypes({
     ...inputParams,
-    onComplete: analysis => loadForm(Analysis.fromJsonToForm(analysis, fieldsArray))
+    onComplete: () =>
+      getAnalysis({
+        ...inputParams,
+        onComplete: analysis => loadForm(Analysis.fromJsonToForm(analysis, fieldsArray))
+      })
   });
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
-  AnalysiFormComponent
+  AnalysisFormComponent
 );
