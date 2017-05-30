@@ -20,6 +20,7 @@ import provide from 'react-rxjs/dist/RxProvide';
 import NotificationSystem from 'react-notification-system';
 import notification$ from './shared/errors';
 import queryParser from 'query-string';
+import { loadLanguage } from './shared/language';
 
 const notificationSystem = ReactDOM.render(
   <NotificationSystem />,
@@ -51,9 +52,7 @@ if (accessToken) {
   const dest = document.getElementById('content');
 
   I18n.loadTranslations(LanguageJson);
-  const language = localStorage.getItem('language') || 'no';
-  localStorage.setItem('language', language);
-  I18n.setLocale(language);
+  loadLanguage();
 
   const appRouter = () => (
     <Router onUpdate={() => window.scrollTo(0, 0)} history={hashHistory}>

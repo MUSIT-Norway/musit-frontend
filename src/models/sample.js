@@ -73,6 +73,12 @@ class Sample {
   ) => (props: {
     token: string
   }) => Observable;
+  static loadAllSampleTypes: (
+    ajaxGet: AjaxGet
+  ) => (props: {
+    token: string,
+    language: string
+  }) => Observable;
   static loadTreatments: (
     ajaxGet: AjaxGet
   ) => (props: {
@@ -127,6 +133,10 @@ Sample.loadSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
       {}
     )
   );
+};
+Sample.loadAllSampleTypes = (ajaxGet = simpleGet) => ({ token }) => {
+  const url = Config.magasin.urls.api.samples.sampleTypes;
+  return ajaxGet(url, token).map(({ response }) => response);
 };
 
 Sample.loadTreatments = (ajaxGet = simpleGet) => ({ token }) => {
@@ -288,9 +298,11 @@ Sample.loadSamplesForObject = (ajaxGet = simpleGet) => ({
   });
 };
 
+export const STATUS_INTACT_ID = 1;
+
 Sample.sampleStatuses = [
   {
-    id: 1,
+    id: STATUS_INTACT_ID,
     noStatus: 'Intakt',
     enStatus: 'Intact'
   },

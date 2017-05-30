@@ -1,10 +1,15 @@
 // @flow
 
-type AnalysisTypeData = {
+export type AnalysisType = {
   id: number,
   noName: string,
   enName: string,
-  category: string
+  category: string,
+  name: string
 };
+export type AnalysisTypes = AnalysisType[];
 
-export type AnalysisTypes = AnalysisTypeData;
+export type AnalysisTypesObject = {
+  analysisTypes: AnalysisTypes,
+  analysisTypeCategories: []
+};

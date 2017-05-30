@@ -35,7 +35,8 @@ export const onMount = ({ appSession, loadPredefinedTypes }) =>
   loadPredefinedTypes({
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
-    token: appSession.accessToken
+    token: appSession.accessToken,
+    language: appSession.language
   });
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(

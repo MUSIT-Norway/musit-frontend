@@ -155,7 +155,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       EksternID:
     </label>
     <div
-      className="col-md-2"
+      className="col-md-3"
     >
       <p
         className="form-control-static"
@@ -178,40 +178,20 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       </p>
     </div>
   </div>
-  <div
-    className="form-group"
-  >
-    <label
-      className="control-label col-md-2"
-    >
-      Prøvetype:
-    </label>
-    <div
-      className="col-md-2"
-    >
-      <p
-        className="form-control-static"
-      >
-        Vev
-      </p>
-    </div>
-    <div>
-      <label
-        className="control-label col-md-2"
-      >
-        Prøveundertype:
-      </label>
-      <div
-        className="col-md-2"
-      >
-        <p
-          className="form-control-static"
-        >
-          Muskel
-        </p>
-      </div>
-    </div>
-  </div>
+  <ReadOnlySampleType
+    sampleType={
+      Object {
+        "name": "sampleType",
+        "value": "Vev",
+      }
+    }
+    subTypeValue={
+      Object {
+        "name": "subTypeValue",
+        "value": "Muskel",
+      }
+    }
+  />
   <div
     className="form-group"
   >
@@ -221,7 +201,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       Beskrivelse av prøve:
     </label>
     <div
-      className="col-md-10"
+      className="col-md-8"
     >
       <p
         className="form-control-static"
@@ -347,7 +327,7 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       Kommentar:
     </label>
     <div
-      className="col-md-2"
+      className="col-md-8"
     >
       <p
         className="form-control-static"

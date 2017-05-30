@@ -298,7 +298,7 @@ function getAnalysisTypeTerm(form, store) {
   if (form.analysisTypeId.rawValue && store.analysisTypes) {
     const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.value);
     if (foundType) {
-      return I18n._locale === 'en' ? foundType.enName : foundType.noName;
+      return store.appSession.isEn ? foundType.enName : foundType.noName;
     }
   }
   return '';
@@ -308,7 +308,7 @@ function getAnalysisPurpose(form, store) {
   if (form.reason.rawValue && store.purposes) {
     const foundType = store.purposes.find(a => `${a.id}` === form.reason.rawValue);
     if (foundType) {
-      return I18n._locale === 'en' ? foundType.enPurpose : foundType.noPurpose;
+      return store.appSession.isEn ? foundType.enPurpose : foundType.noPurpose;
     }
   }
   return '';

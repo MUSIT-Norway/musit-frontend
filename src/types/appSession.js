@@ -6,5 +6,9 @@ export type AppSession = {
   museumId: number,
   collectionId: string,
   accessToken: string,
-  actor: Actor
+  actor: Actor,
+  language: {
+    isEn: boolean,
+    isNo: boolean
+  }
 };
