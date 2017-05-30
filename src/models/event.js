@@ -38,7 +38,9 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
       }))
     )
     .flatMap(events => {
-      const actorIds = uniq(events.map(r => r.registeredBy)).filter(r => r);
+      const registeredByIds = events.map(r => r.registeredBy).filter(r => r);
+      const doneByIds = events.map(r => r.doneBy).filter(r => r);
+      const actorIds = uniq(registeredByIds.concat(doneByIds));
       return MusitActor.getActors(ajaxPost)({
         actorIds,
         token: props.token
