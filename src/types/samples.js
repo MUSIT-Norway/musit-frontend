@@ -1,5 +1,4 @@
 // @flow
-import { Moment } from 'moment';
 
 type SampleData = {
   id: string,
@@ -11,7 +10,8 @@ type SampleData = {
   status: string,
   details: string,
   hasAnalyse: boolean,
-  doneDate: Moment,
+  doneDate?: string,
+  registeredDate: string,
   storageMedium: string,
   sampleNum: number
 };

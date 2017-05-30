@@ -7,7 +7,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     columns={
       Array [
         Object {
-          "key": "doneDate",
+          "key": "registeredDate",
           "label": "Dato",
         },
         Object {
@@ -54,10 +54,11 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       onClick={[Function]}
     >
       <Td
-        column="doneDate"
+        column="registeredDate"
       >
         20.01.1999
       </Td>
+      s
       <Td
         column="sampleType"
       >
@@ -87,10 +88,11 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       onClick={[Function]}
     >
       <Td
-        column="doneDate"
+        column="registeredDate"
       >
         29.01.1999
       </Td>
+      s
       <Td
         column="sampleType"
       >
