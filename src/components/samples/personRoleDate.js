@@ -21,14 +21,16 @@ type Props = {
   personData: Array<Person>,
   updateForm: Function,
   fieldName: string,
-  appSession: AppSession
+  appSession: AppSession,
+  roles?: ?Array<String>
 };
 
 export const PersonRoleDate = ({
   personData,
   appSession,
   updateForm,
-  fieldName
+  fieldName,
+  roles
 }: Props) => {
   const pArr = personData || [];
   return (
@@ -75,7 +77,7 @@ export const PersonRoleDate = ({
           <Col md={2}>
             <DropdownButton
               id={`role_${i}`}
-              items={['responsible', 'creator']}
+              items={roles || ['responsible', 'creator']}
               index={i}
               onChange={role =>
                 updateForm({
