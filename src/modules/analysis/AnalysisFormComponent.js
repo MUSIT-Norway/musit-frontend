@@ -6,11 +6,8 @@ import type { AppSession } from 'types/appSession';
 import type { ObjectData } from 'types/object';
 import type { FormData } from './types/form';
 import type { Store } from './types/store';
-import type { Person } from '../../components/samples/personRoleDate';
-import type { Purpose } from '../../models/analysis';
 import AddButton from '../../components/AddButton';
 import { Table } from 'reactable';
-import PersonRoleDate from '../../components/samples/personRoleDate';
 import MetaInformation from '../../components/metainfo';
 
 type Location = { state?: Array<ObjectData> };
@@ -32,9 +29,6 @@ type Props = {
   goToUrl: (s: string) => void,
   goBack: () => void
 };
-
-const personRoleDates: Array<Person> = [
-];
 
 const analysisPlaces = [
   {
@@ -162,7 +156,7 @@ const AnalysisForm = ({
             >
               <option value="">Velg formål</option>
               {store.purposes &&
-                store.purposes.map((a: Purpose) => (
+                store.purposes.map(a => (
                   <option key={a.id} value={a.id}>
                     {appSession.isEn ? a.enPurpose : a.noPurpose}
                   </option>
@@ -248,13 +242,26 @@ const AnalysisForm = ({
         <div className="form-group">
           <label className="control-label">Personer tilknyttet analysen:</label>
         </div>
-        <PersonRoleDate
-          personData={form.personRoleDates.rawValue}
-          updateForm={updateForm}
-          fieldName="personRoleDates"
-          appSession={appSession}
-          roles={['doneBy', 'responsible']}
-        />
+        <div className="form-group">
+          <label className="control-label col-md-2" htmlFor="responsible-name1">
+            Navn:
+          </label>
+          <div className="col-md-2">
+            <input type="text" className="form-control" id="responsible-name1" />
+          </div>
+          <label className="control-label col-md-1" htmlFor="responsible-role1">
+            Rolle:
+          </label>
+          <div className="col-md-2">
+            <select id="responsible-role1" className="form-control">
+              <option>Velg rolle</option>
+              <option value="other">...</option>
+            </select>
+          </div>
+          <div className="col-md-2">
+            <AddButton label="Legg til person" />
+          </div>
+        </div>
         <hr />
         <div className="well">
           <div className="form-group">
@@ -549,16 +556,13 @@ export function submitForm(
       comment: form.comments.value,
       type: 'GenericResult'
     };
-    const doneBy = form.personRoleDates && form.personRoleDates.value && form.personRoleDate.value.find(p =>p.role==='doneBy');
-    const responsible = form.personRoleDates && form.personRoleDates.value && form.personRoleDate.value.find(p =>p.role==='responsible');
-
 
     const data = {
       analysisTypeId: form.analysisTypeId.value,
-      doneBy: doneBy && doneBy.uuid,
-      doneDate: doneBy && doneBy.date,
+      doneBy: null,
+      doneDate: null,
       note: form.note.value,
-      responsible: responsible && responsible.uuid,
+      responsible: form.responsible.value,
       administrator: null,
       completedBy: null,
       completedDate: null,
