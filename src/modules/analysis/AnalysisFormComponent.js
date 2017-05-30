@@ -131,7 +131,7 @@ const AnalysisForm = ({
                           )
                           .map(a => (
                             <option key={a.id} value={a.id}>
-                              {I18n._locale === 'en' ? a.enName : a.noName}
+                              {appSession.language === 'en' ? a.enName : a.noName}
                             </option>
                           ))}
                     </select>
