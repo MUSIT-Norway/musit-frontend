@@ -6,6 +6,8 @@ import MusitObject from './object';
 import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
 import MusitActor from './actor';
 import uniq from 'lodash/uniq';
+import flatMap from 'lodash/flatMap';
+
 import { I18n } from 'react-i18nify';
 import concat from 'lodash/concat';
 import { Observable } from 'rxjs';
@@ -38,9 +40,14 @@ Event.getAnalysesAndMoves = (ajaxGet = simpleGet, ajaxPost = simplePost) => prop
       }))
     )
     .flatMap(events => {
-      const registeredByIds = events.map(r => r.registeredBy).filter(r => r);
-      const doneByIds = events.map(r => r.doneBy).filter(r => r);
-      const actorIds = uniq(registeredByIds.concat(doneByIds));
+      //TODO extract it to utils
+      const getActors = n => {
+        if (!n.doneBy && !n.registeredBy) return [];
+        if (!n.doneBy) return [n.registeredBy];
+        if (!n.registeredBy) return [n.doneBy];
+        return [n.doneBy, n.registeredBy];
+      };
+      const actorIds = uniq(flatMap(events, getActors));
       return MusitActor.getActors(ajaxPost)({
         actorIds,
         token: props.token
