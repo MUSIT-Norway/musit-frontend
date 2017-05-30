@@ -2,7 +2,7 @@ import inject from 'react-rxjs/dist/RxInject';
 import PropTypes from 'prop-types';
 import analysisAddForm from './analysisForm';
 import AnalysisFormComponent from './AnalysisFormComponent';
-import store$, { getAnalysisTypes$ } from './analysisStore';
+import store$, { loadPredefinedTypes$ } from './analysisStore';
 import Analysis from '../../models/analysis';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
@@ -21,7 +21,7 @@ const data = {
 const commands = {
   updateForm$,
   loadForm$,
-  getAnalysisTypes$
+  loadPredefinedTypes$
 };
 
 const props = {
@@ -31,8 +31,8 @@ const props = {
   goBack: hashHistory.goBack
 };
 
-export const onMount = ({ appSession, getAnalysisTypes }) =>
-  getAnalysisTypes({
+export const onMount = ({ appSession, loadPredefinedTypes }) =>
+  loadPredefinedTypes({
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken,

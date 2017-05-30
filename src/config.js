@@ -106,6 +106,8 @@ export default {
       api: {
         analysisType: {
           getAllAnalysisTypes: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
+          getAnalysisCategories: (mid: MuseumId) =>
+            `/api/management/${mid}/analyses/categories`,
           getAnalysisTypesForCategory: (mid: MuseumId, categoryId: string) =>
             `/api/management/${mid}/analyses/types/categories/${categoryId}`,
           getAnalysisTypesForCollection: (mid: MuseumId, musemcollectionId: string) =>
@@ -125,7 +127,8 @@ export default {
             `/api/management/${mid}/analyses/objects/${id}`,
           analysesForObject: (mid: MuseumId, objectId: number): string =>
             `/api/management/${mid}/analyses/objects/${objectId}`,
-          saveAnalysisType: (mid: MuseumId) => `/api/management/${mid}/analyses/types`
+          saveAnalysisType: (mid: MuseumId) => `/api/management/${mid}/analyses/types`,
+          getPurposes: 'api/management/purposes'
         },
         samples: {
           baseUrl: (mid: MuseumId): string => `api/management/${mid}/samples`,

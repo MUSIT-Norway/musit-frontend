@@ -7,7 +7,7 @@ import createForm, {
 } from '../../forms/form';
 
 export const fieldsArray = [
-  getNumberField('id'),
+  getStrField('id'),
   getNumberField('analysisTypeId'),
   getStrField('doneBy'),
   getStrField('doneDate'),
