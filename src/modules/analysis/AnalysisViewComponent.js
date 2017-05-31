@@ -46,7 +46,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
         <label className="control-label col-md-2" htmlFor="type">Type analyse:</label>
         <div className="col-md-10">
           <p className="form-control-static" id="type">
-            {getAnalysisTypeTerm(form, store)}
+            {getAnalysisTypeTerm(form, store, appSession)}
           </p>
         </div>
       </div>
@@ -56,7 +56,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
         </label>
         <div className="col-md-10">
           <p className="form-control-static" id="reason">
-            {getAnalysisPurpose(form, store)}
+            {getAnalysisPurpose(form, store, appSession)}
           </p>
         </div>
       </div>
@@ -294,21 +294,21 @@ function getPlaceText(actorId?: ?string): string {
   }
 }
 
-function getAnalysisTypeTerm(form, store) {
+function getAnalysisTypeTerm(form, store, appSession) {
   if (form.analysisTypeId.rawValue && store.analysisTypes) {
     const foundType = store.analysisTypes.find(a => a.id === form.analysisTypeId.value);
     if (foundType) {
-      return store.appSession.isEn ? foundType.enName : foundType.noName;
+      return appSession.isEn ? foundType.enName : foundType.noName;
     }
   }
   return '';
 }
 
-function getAnalysisPurpose(form, store) {
+function getAnalysisPurpose(form, store, appSession) {
   if (form.reason.rawValue && store.purposes) {
     const foundType = store.purposes.find(a => `${a.id}` === form.reason.rawValue);
     if (foundType) {
-      return store.appSession.isEn ? foundType.enPurpose : foundType.noPurpose;
+      return appSession.isEn ? foundType.enPurpose : foundType.noPurpose;
     }
   }
   return '';
