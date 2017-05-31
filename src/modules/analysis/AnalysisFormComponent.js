@@ -542,9 +542,13 @@ export function submitForm(
       comment: form.comments.value,
       type: 'GenericResult'
     };
-    const doneBy = form.persons ? form.persons.rawValue.find(p => p.role==='doneBy') : undefined;
-    const responsible =form.persons ? form.persons.rawValue.find(p => p.role==='responsible') : undefined;
-    console.log('Form: ',form);
+    const doneBy = form.persons
+      ? form.persons.rawValue.find(p => p.role === 'doneBy')
+      : undefined;
+    const responsible = form.persons
+      ? form.persons.rawValue.find(p => p.role === 'responsible')
+      : undefined;
+    console.log('Form: ', form);
 
     const data = {
       analysisTypeId: form.analysisTypeId.value,

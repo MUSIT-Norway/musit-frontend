@@ -43,7 +43,9 @@ export const PersonRoleDate = ({
   roles,
   showDateForRole
 }: Props) => {
-  const pArr: Array<Person> = (personData && personData.length > 0) ? personData : defaultPersons;
+  const pArr: Array<Person> = personData && personData.length > 0
+    ? personData
+    : defaultPersons;
   return (
     pArr &&
     <Grid>
