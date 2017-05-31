@@ -103,7 +103,6 @@ const SampleTableComponent = ({
 }: Props) => {
   return (
     <div>
-      {console.log('RKS', sampleStatus)}
       <Table
         className="table table-hover table-inverse table-responsive"
         columns={[
