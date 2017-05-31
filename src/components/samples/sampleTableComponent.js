@@ -54,12 +54,12 @@ const SampleTableComponent = ({
       <Table
         className="table table-hover table-inverse table-responsive"
         columns={[
-          { key: 'doneDate', label: 'Dato' },
+          { key: 'sampleNum', label: 'Prøvenr' },
+          { key: 'registeredDate', label: 'Dato' },
           { key: 'sampleType', label: 'Prøvetype' },
           { key: 'sampleSubType', label: 'Prøveundertype' },
           { key: 'status', label: 'Status' },
           { key: 'hasAnalyse', label: 'Analyse' },
-          { key: 'sampleNum', label: 'Prøvenr' },
           { key: 'storageMedium', label: 'Lagringsmedium' },
           {
             key: 'add',
@@ -85,12 +85,12 @@ const SampleTableComponent = ({
         {samples &&
           samples.map((s, i) => (
             <Tr key={i} onClick={() => onClick(s)}>
-              <Td column="doneDate">{s.doneDate.format('DD.MM.YYYY')}</Td>
+              <Td column="sampleNum">{s.sampleNum}</Td>
+              <Td column="registeredDate">{s.registeredDate}</Td>
               <Td column="sampleType">{s.sampleTypeId}</Td>
               <Td column="sampleSubType">{' '}</Td>
               <Td column="status">{s.status}</Td>
               <Td column="hasAnalyse">{s.hasAnalyse}</Td>
-              <Td column="sampleNum">{s.sampleNum}</Td>
               <Td column="storageMedium">{s.storageMedium}</Td>
               <Td column="add">
                 <a

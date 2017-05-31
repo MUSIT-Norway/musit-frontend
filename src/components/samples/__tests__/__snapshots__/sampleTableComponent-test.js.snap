@@ -7,7 +7,11 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
     columns={
       Array [
         Object {
-          "key": "doneDate",
+          "key": "sampleNum",
+          "label": "Prøvenr",
+        },
+        Object {
+          "key": "registeredDate",
           "label": "Dato",
         },
         Object {
@@ -25,10 +29,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
         Object {
           "key": "hasAnalyse",
           "label": "Analyse",
-        },
-        Object {
-          "key": "sampleNum",
-          "label": "Prøvenr",
         },
         Object {
           "key": "storageMedium",
@@ -71,7 +71,10 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       onClick={[Function]}
     >
       <Td
-        column="doneDate"
+        column="sampleNum"
+      />
+      <Td
+        column="registeredDate"
       >
         20.01.1999
       </Td>
@@ -92,9 +95,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       </Td>
       <Td
         column="hasAnalyse"
-      />
-      <Td
-        column="sampleNum"
       />
       <Td
         column="storageMedium"
@@ -122,7 +122,10 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       onClick={[Function]}
     >
       <Td
-        column="doneDate"
+        column="sampleNum"
+      />
+      <Td
+        column="registeredDate"
       >
         29.01.1999
       </Td>
@@ -143,9 +146,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       </Td>
       <Td
         column="hasAnalyse"
-      />
-      <Td
-        column="sampleNum"
       />
       <Td
         column="storageMedium"
