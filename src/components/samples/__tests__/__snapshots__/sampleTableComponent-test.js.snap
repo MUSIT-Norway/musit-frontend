@@ -80,14 +80,10 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       </Td>
       <Td
         column="sampleType"
-      >
-        1
-      </Td>
+      />
       <Td
         column="sampleSubType"
-      >
-         
-      </Td>
+      />
       <Td
         column="status"
       >
@@ -131,14 +127,10 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       </Td>
       <Td
         column="sampleType"
-      >
-        1
-      </Td>
+      />
       <Td
         column="sampleSubType"
-      >
-         
-      </Td>
+      />
       <Td
         column="status"
       >

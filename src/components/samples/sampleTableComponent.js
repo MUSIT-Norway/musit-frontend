@@ -3,6 +3,7 @@ import React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
 import type { Samples, SampleData } from '../../types/samples';
+import type { SampleTypesObject, SampleType } from '../../types/sampleTypes';
 import FontAwesome from 'react-fontawesome';
 import type { AppSession } from '../../types/appSession';
 import type { ObjectData } from '../../types/object';
@@ -14,7 +15,8 @@ type Props = {
   isItemAdded: Function,
   pickList: Object,
   appSession: AppSession,
-  objectData: ObjectData
+  objectData: ObjectData,
+  sampleTypes: SampleTypesObject
 };
 
 const pickObjectParams = (
@@ -40,6 +42,31 @@ const pickObjectParams = (
     token: appSession.accessToken
   };
 };
+
+const getSampleTypeAndSubType = (
+  sampleTypes: SampleTypesObject,
+  sampleTypesId: number,
+  appSession: AppSession,
+  subType: boolean = false
+) => {
+  if (sampleTypes && sampleTypes.sampleTypes && sampleTypesId) {
+    const sampleTypeFound: ?SampleType = sampleTypes.sampleTypes.find(
+      f => f.sampleTypeId === sampleTypesId
+    );
+    if (sampleTypeFound) {
+      if (subType) {
+        return appSession.language.isEn
+          ? sampleTypeFound.enSampleSubType
+          : sampleTypeFound.noSampleSubType;
+      }
+      return appSession.language.isEn
+        ? sampleTypeFound.enSampleType
+        : sampleTypeFound.noSampleType;
+    }
+  }
+  return '';
+};
+
 const SampleTableComponent = ({
   samples,
   onClick,
@@ -47,7 +74,8 @@ const SampleTableComponent = ({
   isItemAdded,
   pickList,
   appSession,
-  objectData
+  objectData,
+  sampleTypes
 }: Props) => {
   return (
     <div>
@@ -87,8 +115,12 @@ const SampleTableComponent = ({
             <Tr key={i} onClick={() => onClick(s)}>
               <Td column="sampleNum">{s.sampleNum}</Td>
               <Td column="registeredDate">{s.registeredDate}</Td>
-              <Td column="sampleType">{s.sampleTypeId}</Td>
-              <Td column="sampleSubType">{' '}</Td>
+              <Td column="sampleType">
+                {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession)}
+              </Td>
+              <Td column="sampleSubType">
+                {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession, true)}
+              </Td>
               <Td column="status">{s.status}</Td>
               <Td column="hasAnalyse">{s.hasAnalyse}</Td>
               <Td column="storageMedium">{s.storageMedium}</Td>

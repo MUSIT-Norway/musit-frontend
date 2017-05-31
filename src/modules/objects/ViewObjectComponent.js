@@ -102,6 +102,7 @@ export const ViewObjectComponent = ({
           pickList={pickList}
           appSession={appSession}
           objectData={objectData}
+          sampleTypes={sampleTypes}
         />
       </Tab>
     </Tabs>
