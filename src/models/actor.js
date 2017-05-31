@@ -24,6 +24,9 @@ type ActorFieldName =
   | 'updatedByName'
   | 'registeredBy'
   | 'registeredByName'
+  | 'doneByName'
+  | 'responsible'
+  | 'responsibleName'
   | 'doneBy';
 
 type ActorField = {

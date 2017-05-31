@@ -24,6 +24,11 @@ export type Result = {
 export type Analysis = {
   id: string,
   registeredBy: string,
+  doneBy?: ?string,
+  doneDate?: ?string,
+  doneByName?: ?string,
+  responsible?: ?string,
+  responsibleName?: ?string,
   caseNumbers?: ?Array<string>,
   restriction?: ?Restriction,
   result?: Result
@@ -141,7 +146,6 @@ const toField = (name: string,
 });
 
 MusitAnalysis.fromJsonToForm = (json, formDef) => {
-  console.log('AnalyseJson',json);
   const formValues = formDef.reduce(
     (acc, field) => ({
       ...acc,
