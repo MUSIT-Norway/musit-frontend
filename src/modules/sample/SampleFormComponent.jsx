@@ -91,6 +91,8 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         personData={form.persons.rawValue}
         updateForm={updateForm}
         fieldName={form.persons.name}
+        roles={['responsible', 'creator']}
+        showDateForRole= {(roleName: string) => roleName !== 'responsible'}
       />
       <br/>
       <div className="well">

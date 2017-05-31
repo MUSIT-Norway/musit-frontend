@@ -6,6 +6,7 @@ import type { AppSession } from 'types/appSession';
 import type { ObjectData } from 'types/object';
 import type { FormData } from './types/form';
 import type { Store } from './types/store';
+import PersonRoleDate from '../../components/samples/personRoleDate';
 import AddButton from '../../components/AddButton';
 import { Table } from 'reactable';
 import MetaInformation from '../../components/metainfo';
@@ -242,26 +243,14 @@ const AnalysisForm = ({
         <div className="form-group">
           <label className="control-label">Personer tilknyttet analysen:</label>
         </div>
-        <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="responsible-name1">
-            Navn:
-          </label>
-          <div className="col-md-2">
-            <input type="text" className="form-control" id="responsible-name1" />
-          </div>
-          <label className="control-label col-md-1" htmlFor="responsible-role1">
-            Rolle:
-          </label>
-          <div className="col-md-2">
-            <select id="responsible-role1" className="form-control">
-              <option>Velg rolle</option>
-              <option value="other">...</option>
-            </select>
-          </div>
-          <div className="col-md-2">
-            <AddButton label="Legg til person" />
-          </div>
-        </div>
+        <PersonRoleDate
+          appSession={appSession}
+          personData={form.personRoleDates.rawValue}
+          updateForm={updateForm}
+          fieldName={form.personRoleDates.name}
+          roles={['responsible', 'doneBy']}
+          showDateForRole= {(roleName: string) => roleName !== 'responsible'}
+        />
         <hr />
         <div className="well">
           <div className="form-group">

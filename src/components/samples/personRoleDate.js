@@ -21,14 +21,19 @@ type Props = {
   personData: Array<Person>,
   updateForm: Function,
   fieldName: string,
-  appSession: AppSession
+  appSession: AppSession,
+  roles?: ?Array<string>,
+  showDateForRole?: ?Function
+
 };
 
 export const PersonRoleDate = ({
   personData,
   appSession,
   updateForm,
-  fieldName
+  fieldName,
+  roles,
+  showDateForRole
 }: Props) => {
   const pArr = personData || [];
   return (
@@ -41,9 +46,10 @@ export const PersonRoleDate = ({
         <Col md={2}>
           <strong>Rolle</strong>
         </Col>
+        {showDateForRole &&
         <Col md={2}>
           <strong>Dato</strong>
-        </Col>
+        </Col>}
         <Col md={2} />
       </Row>
       <br />
@@ -75,7 +81,7 @@ export const PersonRoleDate = ({
           <Col md={2}>
             <DropdownButton
               id={`role_${i}`}
-              items={['responsible', 'creator']}
+              items={roles || ['responsible', 'creator']}
               index={i}
               onChange={role =>
                 updateForm({
@@ -85,8 +91,9 @@ export const PersonRoleDate = ({
               title={v.role ? v.role : 'Velg rolle'}
             />
           </Col>
+          {showDateForRole &&
           <Col md={2}>
-            {v.role === 'creator' &&
+            {showDateForRole(v.role) &&
               <DatePicker
                 dateFormat={DATE_FORMAT_DISPLAY}
                 value={v.date}
@@ -102,7 +109,7 @@ export const PersonRoleDate = ({
                   });
                 }}
               />}
-          </Col>
+          </Col>}
           <Col md={1}>
             <FontAwesome
               name={'times'}
