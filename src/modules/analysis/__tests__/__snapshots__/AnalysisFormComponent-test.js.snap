@@ -198,13 +198,6 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
           value=""
         />
       </div>
-      <div
-        className="cpl-md-5"
-      >
-        <AddButton
-          label="Legg til saksnummer"
-        />
-      </div>
     </div>
     <hr />
     <div
@@ -237,55 +230,31 @@ exports[`AnalysisFormComponent should render objects from events 1`] = `
         Personer tilknyttet analysen:
       </label>
     </div>
-    <div
-      className="form-group"
-    >
-      <label
-        className="control-label col-md-2"
-        htmlFor="responsible-name1"
-      >
-        Navn:
-      </label>
-      <div
-        className="col-md-2"
-      >
-        <input
-          className="form-control"
-          id="responsible-name1"
-          type="text"
-        />
-      </div>
-      <label
-        className="control-label col-md-1"
-        htmlFor="responsible-role1"
-      >
-        Rolle:
-      </label>
-      <div
-        className="col-md-2"
-      >
-        <select
-          className="form-control"
-          id="responsible-role1"
-        >
-          <option>
-            Velg rolle
-          </option>
-          <option
-            value="other"
-          >
-            ...
-          </option>
-        </select>
-      </div>
-      <div
-        className="col-md-2"
-      >
-        <AddButton
-          label="Legg til person"
-        />
-      </div>
-    </div>
+    <Component
+      appSession={
+        Object {
+          "accessToken": "45667",
+          "actor": Object {
+            "fn": "Test",
+          },
+          "collectionId": "1234",
+          "language": Object {
+            "isEn": false,
+            "isNo": true,
+          },
+          "museumId": 99,
+        }
+      }
+      fieldName="persons"
+      roles={
+        Array [
+          "responsible",
+          "doneBy",
+        ]
+      }
+      showDateForRole={[Function]}
+      updateForm={[Function]}
+    />
     <hr />
     <div
       className="well"
