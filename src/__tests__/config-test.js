@@ -197,7 +197,7 @@ describe('Config urls', () => {
         {
           name: 'getAnalysisTypesForCollection',
           actual: urls.api.analysisType.getAnalysisTypesForCollection(99, 123),
-          expected: '/api/management/99/analyses/types/musemcollections/123'
+          expected: '/api/management/99/analyses/types?collectionIds=123'
         },
         {
           name: 'saveAnalysisEvent',
