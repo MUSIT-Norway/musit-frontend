@@ -223,9 +223,6 @@ const AnalysisForm = ({
               onChange={updateArrayField(form.caseNumbers.name, updateForm)}
             />
           </div>
-          <div className="cpl-md-5">
-            <AddButton label="Legg til saksnummer" />
-          </div>
         </div>
         <hr />
         <div className="form-group">

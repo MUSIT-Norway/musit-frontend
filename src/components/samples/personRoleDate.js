@@ -17,6 +17,15 @@ export type Person = {
   date?: string
 };
 
+const defaultPerson: Person = {
+  name: '',
+  uuid: '',
+  role: '',
+  date: moment().format()
+};
+
+const defaultPersons: Array<Person> = [defaultPerson];
+
 type Props = {
   personData: Array<Person>,
   updateForm: Function,
@@ -34,7 +43,7 @@ export const PersonRoleDate = ({
   roles,
   showDateForRole
 }: Props) => {
-  const pArr = personData || [];
+  const pArr: Array<Person> = (personData && personData.length > 0) ? personData : defaultPersons;
   return (
     pArr &&
     <Grid>
