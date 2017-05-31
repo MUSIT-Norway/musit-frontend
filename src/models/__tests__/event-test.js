@@ -28,7 +28,16 @@ describe('Event model', () => {
               type: 'Analysis',
               eventDate: '2017-03-23T11:47:03+00:00',
               registeredBy: '1234',
-              note: 'note'
+              note: 'note',
+              doneBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e'
+            },
+            {
+              doneBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+              doneDate: '2017-05-30T12:09:34+00:00',
+              id: 'aba6a67c-f742-4a44-b13e-0415ec1abb2a',
+              objectType: 'collection',
+              registeredBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+              registeredDate: '2017-05-30T12:09:34+00:00'
             }
           ]
         });
@@ -38,6 +47,7 @@ describe('Event model', () => {
           {
             registeredBy: '1234',
             registeredDate: '2017-03-23T11:47:03+00:00',
+            doneBy: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
             from: {},
             to: {}
           }
@@ -51,6 +61,10 @@ describe('Event model', () => {
           {
             dataportenId: '1234',
             fn: 'Some name'
+          },
+          {
+            dataportenId: '7dcc7e82-a18c-4e2e-9d83-2b25c132fc3e',
+            fn: 'Rituvesh Kumar'
           }
         ]
       });
@@ -96,9 +110,18 @@ describe('Event model', () => {
           eventDate: '23.03.2017',
           registeredBy: 'Some name',
           note: 'note',
-          doneBy: 'Ukjent',
+          doneBy: 'Rituvesh Kumar',
           doneDate: 'Ukjent',
           registeredDate: 'Ukjent'
+        },
+        {
+          doneBy: 'Rituvesh Kumar',
+          doneDate: '30.05.2017',
+          eventDate: '30.05.2017',
+          id: 'aba6a67c-f742-4a44-b13e-0415ec1abb2a',
+          objectType: 'collection',
+          registeredBy: 'Rituvesh Kumar',
+          registeredDate: '30.05.2017'
         },
         {
           registeredDate: '23.03.2017',
@@ -111,7 +134,7 @@ describe('Event model', () => {
           type: 'MoveObject',
           eventDate: '23.03.2017',
           registeredBy: 'Some name',
-          doneBy: 'Ukjent',
+          doneBy: 'Rituvesh Kumar',
           doneDate: 'Ukjent'
         }
       ]
