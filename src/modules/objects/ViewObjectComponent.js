@@ -16,14 +16,20 @@ type ViewObjectComponentProps = {
   objectStore: { objectData: ObjectData, events: Events, samples: Samples },
   appSession: AppSession,
   analysisTypes: AnalysisTypesObject,
-  sampleTypes: SampleTypesObject
+  sampleTypes: SampleTypesObject,
+  pickObject: Function,
+  isItemAdded: Function,
+  pickList: Object
 };
 
 export const ViewObjectComponent = ({
   objectStore: { objectData, events, samples },
   appSession,
   analysisTypes,
-  sampleTypes
+  sampleTypes,
+  pickObject,
+  isItemAdded,
+  pickList
 }: ViewObjectComponentProps) => (
   <div>
     <PageHeader>Objektvisning</PageHeader>
@@ -91,6 +97,10 @@ export const ViewObjectComponent = ({
               state: [objectData]
             });
           }}
+          pickObject={pickObject}
+          isItemAdded={isItemAdded}
+          pickList={pickList}
+          appSession={appSession}
         />
       </Tab>
     </Tabs>

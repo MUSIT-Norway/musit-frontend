@@ -13,17 +13,25 @@ import { Observable } from 'rxjs';
 import flowRight from 'lodash/flowRight';
 import { emitError, emitSuccess } from '../../shared/errors';
 import mount from '../../shared/mount';
+import { addObject$ } from '../app/pickList';
+import { isItemAdded } from '../app/pickList';
+import { hashHistory } from 'react-router';
+import MusitObject from '../../models/object';
 
 const data: {} = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
   objectStore$,
   analysisTypes: store$,
-  sampleTypes: sampleStore$
+  sampleTypes: sampleStore$,
+  pickList$: { type: PropTypes.object.isRequired }
 };
 
 const props: {} = {
   emitSuccess,
-  emitError
+  emitError,
+  pickObject: MusitObject.pickObject(addObject$),
+  isItemAdded,
+  goTo: hashHistory.push
 };
 
 const commands: {} = {

@@ -1,7 +1,7 @@
 // @flow
 import { Moment } from 'moment';
 
-type SampleData = {
+export type SampleData = {
   id: string,
   sampleId: string,
   doneBy: string,
@@ -13,7 +13,10 @@ type SampleData = {
   hasAnalyse: boolean,
   doneDate: Moment,
   storageMedium: string,
-  sampleNum: number
+  sampleNum: number,
+  breadcrumb: [],
+  objectId: string,
+  note: string
 };
 
 export type Samples = SampleData[];

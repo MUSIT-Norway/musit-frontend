@@ -24,6 +24,11 @@ describe('EventTableComponent', () => {
             id: '1233-111-2155-222'
           }
         ]}
+        onClick={a => a}
+        pickObject={a => a}
+        isItemAdded={a => a}
+        pickList={[]}
+        appSession={[]}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

@@ -34,6 +34,23 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
           "key": "storageMedium",
           "label": "Lagringsmedium",
         },
+        Object {
+          "key": "add",
+          "label": <a
+            href=""
+            onClick={[Function]}
+            title="Legg til alle i plukklisten"
+      >
+            <FontAwesome
+                  name="shopping-cart"
+                  style={
+                        Object {
+                              "fontSize": "1.3em",
+                            }
+                  }
+            />
+      </a>,
+        },
       ]
     }
     defaultSort={false}
@@ -82,6 +99,24 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       <Td
         column="storageMedium"
       />
+      <Td
+        column="add"
+      >
+        <a
+          onClick={[Function]}
+          title="Legg til plukklisten"
+        >
+          <FontAwesome
+            name="shopping-cart"
+            style={
+              Object {
+                "color": "Gray",
+                "fontSize": "1.3em",
+              }
+            }
+          />
+        </a>
+      </Td>
     </Tr>
     <Tr
       onClick={[Function]}
@@ -115,6 +150,24 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       <Td
         column="storageMedium"
       />
+      <Td
+        column="add"
+      >
+        <a
+          onClick={[Function]}
+          title="Legg til plukklisten"
+        >
+          <FontAwesome
+            name="shopping-cart"
+            style={
+              Object {
+                "color": "Gray",
+                "fontSize": "1.3em",
+              }
+            }
+          />
+        </a>
+      </Td>
     </Tr>
   </Table>
 </div>
