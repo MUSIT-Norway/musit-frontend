@@ -29,6 +29,7 @@ describe('EventTableComponent', () => {
         isItemAdded={a => a}
         pickList={[]}
         appSession={[]}
+        objectData={[]}
       />
     );
     expect(shallowToJson(wrapper)).toMatchSnapshot();

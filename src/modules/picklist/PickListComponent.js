@@ -75,6 +75,9 @@ export class PickListComponent extends React.Component {
     if (pick.value.name) {
       return <FontAwesome name="folder" />;
     }
+    if (pick.value.type) {
+      return <FontAwesome name="heart-o" />;
+    }
     return <span className="icon icon-musitobject" />;
   }
 

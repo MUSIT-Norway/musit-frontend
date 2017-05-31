@@ -5,6 +5,7 @@ import { I18n } from 'react-i18nify';
 import type { Samples, SampleData } from '../../types/samples';
 import FontAwesome from 'react-fontawesome';
 import type { AppSession } from '../../types/appSession';
+import type { ObjectData } from '../../types/object';
 
 type Props = {
   samples: Samples,
@@ -12,20 +13,25 @@ type Props = {
   pickObject: Function,
   isItemAdded: Function,
   pickList: Object,
-  appSession: AppSession
+  appSession: AppSession,
+  objectData: ObjectData
 };
 
-const pickObjectParams = (s: SampleData, appSession: AppSession) => {
+const pickObjectParams = (
+  s: SampleData,
+  appSession: AppSession,
+  objectData: ObjectData
+) => {
   return {
     object: {
       ...s,
       uuid: s.objectId,
       collection: appSession.collectionId,
       id: s.objectId,
-      museumNo: s.sampleNum,
+      museumNo: objectData.museumNo,
       objectType: s.sampleTypeId,
-      subNo: s.sampleTypeId,
-      term: s.note,
+      subNo: objectData.subNo,
+      term: objectData.term,
       type: 'sample'
     },
     breadcrumb: s.breadcrumb ? s.breadcrumb : {},
@@ -40,7 +46,8 @@ const SampleTableComponent = ({
   pickObject,
   isItemAdded,
   pickList,
-  appSession
+  appSession,
+  objectData
 }: Props) => {
   return (
     <div>
@@ -61,7 +68,9 @@ const SampleTableComponent = ({
                 href=""
                 onClick={e => {
                   e.preventDefault();
-                  samples.map(obj => pickObject(pickObjectParams(obj, appSession)));
+                  samples.map(obj =>
+                    pickObject(pickObjectParams(obj, appSession, objectData))
+                  );
                 }}
                 title={I18n.t('musit.objectsearch.addAllToPickList')}
               >
@@ -86,12 +95,12 @@ const SampleTableComponent = ({
               <Td column="add">
                 <a
                   onClick={e => {
-                    pickObject(pickObjectParams(s, appSession));
+                    pickObject(pickObjectParams(s, appSession, objectData));
                     e.stopPropagation();
                   }}
                   title={I18n.t('musit.objectsearch.addToPickList')}
                 >
-                  {isItemAdded({...s, id: s.objectId,}, pickList.objects)
+                  {isItemAdded({ ...s, id: s.objectId }, pickList.objects)
                     ? <FontAwesome
                         style={{ fontSize: '1.3em', color: 'Gray' }}
                         name="shopping-cart"

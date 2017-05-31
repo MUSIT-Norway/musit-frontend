@@ -101,6 +101,7 @@ export const ViewObjectComponent = ({
           isItemAdded={isItemAdded}
           pickList={pickList}
           appSession={appSession}
+          objectData={objectData}
         />
       </Tab>
     </Tabs>

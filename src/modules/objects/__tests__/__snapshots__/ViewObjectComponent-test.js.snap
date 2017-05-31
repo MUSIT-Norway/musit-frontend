@@ -119,6 +119,13 @@ exports[`ViewObjectComponent should display correctly 1`] = `
       title="Prøver"
     >
       <SampleTableComponent
+        objectData={
+          Object {
+            "museumNo": "O-L-3444",
+            "objectType": "Collection",
+            "uuid": "22233-4443-222-333",
+          }
+        }
         onClick={[Function]}
         samples={
           Array [
