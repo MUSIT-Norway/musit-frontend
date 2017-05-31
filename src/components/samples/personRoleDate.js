@@ -23,8 +23,7 @@ type Props = {
   fieldName: string,
   appSession: AppSession,
   roles?: ?Array<string>,
-  showDateForRole?: ?Function
-
+  showDateForRole?: Function
 };
 
 export const PersonRoleDate = ({
@@ -47,9 +46,9 @@ export const PersonRoleDate = ({
           <strong>Rolle</strong>
         </Col>
         {showDateForRole &&
-        <Col md={2}>
-          <strong>Dato</strong>
-        </Col>}
+          <Col md={2}>
+            <strong>Dato</strong>
+          </Col>}
         <Col md={2} />
       </Row>
       <br />
@@ -81,7 +80,7 @@ export const PersonRoleDate = ({
           <Col md={2}>
             <DropdownButton
               id={`role_${i}`}
-              items={roles || ['responsible', 'creator']}
+              items={roles}
               index={i}
               onChange={role =>
                 updateForm({
@@ -92,24 +91,24 @@ export const PersonRoleDate = ({
             />
           </Col>
           {showDateForRole &&
-          <Col md={2}>
-            {showDateForRole(v.role) &&
-              <DatePicker
-                dateFormat={DATE_FORMAT_DISPLAY}
-                value={v.date}
-                onClear={newValue =>
-                  updateForm({
-                    name: fieldName,
-                    rawValue: updateDate(i, newValue, personData)
-                  })}
-                onChange={newValue => {
-                  updateForm({
-                    name: fieldName,
-                    rawValue: updateDate(i, newValue, personData)
-                  });
-                }}
-              />}
-          </Col>}
+            <Col md={2}>
+              {showDateForRole(v.role) &&
+                <DatePicker
+                  dateFormat={DATE_FORMAT_DISPLAY}
+                  value={v.date}
+                  onClear={newValue =>
+                    updateForm({
+                      name: fieldName,
+                      rawValue: updateDate(i, newValue, personData)
+                    })}
+                  onChange={newValue => {
+                    updateForm({
+                      name: fieldName,
+                      rawValue: updateDate(i, newValue, personData)
+                    });
+                  }}
+                />}
+            </Col>}
           <Col md={1}>
             <FontAwesome
               name={'times'}

@@ -1,12 +1,12 @@
 // @flow
-import { simpleGet, simplePost, simplePut } from '../shared/RxAjax';
+import {simpleGet, simplePost, simplePut} from '../shared/RxAjax';
 import Config from '../config';
 import MusitActor from './actor';
 import MusitObject from './object';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import moment from 'moment';
-import type { Field } from '../forms/form';
-import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
+import type {Field} from '../forms/form';
+import type {Callback, AjaxGet, AjaxPost, AjaxPut} from './types/ajax';
 
 export type Restriction = {
   requester?: ?string,
@@ -48,27 +48,21 @@ type FormValue = {
 class MusitAnalysis {
   static fromJsonToForm: (json: Analysis, fields: Array<Field<*>>) => Array<FormValue>;
 
-  static getAnalysisTypesForCollection: (
-    ajaxGet: AjaxGet
-  ) => (props: {
+  static getAnalysisTypesForCollection: (ajaxGet: AjaxGet) => (props: {
     museumId: number,
     collectionId: string,
     token: string,
     callBack?: ?Callback
   }) => Observable;
 
-  static saveAnalysisEvent: (
-    ajaxPost: AjaxPost
-  ) => (props: {
+  static saveAnalysisEvent: (ajaxPost: AjaxPost) => (props: {
     museumId: number,
     data: AnalysisType,
     token: string,
     callBack?: ?Callback
   }) => Observable;
 
-  static editAnalysisEvent: (
-    ajaxPut: AjaxPut
-  ) => (props: {
+  static editAnalysisEvent: (ajaxPut: AjaxPut) => (props: {
     id: number,
     museumId: number,
     data: Analysis,
@@ -76,28 +70,22 @@ class MusitAnalysis {
     callBack?: ?Callback
   }) => Observable;
 
-  static getAnalysesForObject: (
-    ajaxGet: AjaxGet
-  ) => (props: {
+  static getAnalysesForObject: (ajaxGet: AjaxGet) => (props: {
     id: number,
     museumId: number,
     token: string,
     callBack?: ?Callback
   }) => Observable;
 
-  static getAnalysisById: (
-    ajaxGet: AjaxGet
-  ) => (props: {
+  static getAnalysisById: (ajaxGet: AjaxGet) => (props: {
     id: number,
     museumId: number,
     token: string,
     callBack?: ?Callback
   }) => Observable;
 
-  static getAnalysisWithDetails: (
-    ajaxGet: AjaxGet,
-    ajaxPost: AjaxPost
-  ) => (props: {
+  static getAnalysisWithDetails: (ajaxGet: AjaxGet,
+                                  ajaxPost: AjaxPost) => (props: {
     id: number,
     museumId: number,
     collectionId: string,
@@ -105,41 +93,31 @@ class MusitAnalysis {
     callBack?: ?Callback
   }) => Observable;
 
-  static getAnalysisTypes: (
-    ajaxGet: AjaxGet
-  ) => (props: {
+  static getAnalysisTypes: (ajaxGet: AjaxGet) => (props: {
     museumId: number,
     token: string,
     callBack?: ?Callback
   }) => Observable;
 
-  static getAnalysisCategories: (
-    ajaxGet: AjaxGet
-  ) => (props: {
+  static getAnalysisCategories: (ajaxGet: AjaxGet) => (props: {
     museumId: number,
     token: string,
     callBack?: ?Callback
   }) => Observable;
 
-  static getPurposes: (
-    ajaxGet: AjaxGet
-  ) => (props: {
+  static getPurposes: (ajaxGet: AjaxGet) => (props: {
     token: string,
     callBack?: ?Callback
   }) => Observable;
 
-  static saveAnalysisType: (
-    ajaxPost: AjaxPost
-  ) => (props: {
+  static saveAnalysisType: (ajaxPost: AjaxPost) => (props: {
     museumId: number,
     data: AnalysisType,
     token: string,
     callBack?: ?Callback
   }) => Observable;
 
-  static addResult: (
-    ajaxPost: AjaxPost
-  ) => (props: {
+  static addResult: (ajaxPost: AjaxPost) => (props: {
     analysisId: number,
     museumId: number,
     token: string,
@@ -149,24 +127,21 @@ class MusitAnalysis {
     }
   }) => Observable;
 
-  static loadPredefinedTypes: (
-    ajaxGet: AjaxGet
-  ) => (props: {
+  static loadPredefinedTypes: (ajaxGet: AjaxGet) => (props: {
     museumId: number,
     token: string,
     onComplete: (predefinedTypes: mixed) => void
   }) => Observable;
 }
 
-const toField = (
-  name: string,
-  defaultValue: ?string | boolean | Array<any>
-): FormValue => ({
+const toField = (name: string,
+                 defaultValue: ?string | boolean | Array<any>): FormValue => ({
   name,
   defaultValue
 });
 
 MusitAnalysis.fromJsonToForm = (json, formDef) => {
+  console.log('AnalyseJson',json);
   const formValues = formDef.reduce(
     (acc, field) => ({
       ...acc,
@@ -174,6 +149,27 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
     }),
     {}
   );
+
+  let persons = [];
+  if (formValues.doneBy) {
+    persons=persons.concat([{
+      name: json.doneByName,
+      uuid: json.doneBy,
+      role: 'doneBy',
+      date: json.doneDate
+    }]);
+  }
+
+  if (formValues.responsible) {
+    persons=persons.concat([{
+      name: json.responsibleName,
+      uuid: json.responsible,
+      role: 'responsible',
+      date: null
+    }]);
+  }
+  formValues.persons = toField('persons', persons);
+
 
   const restriction = json.restriction;
   formValues.restrictions = toField('restrictions', !!restriction);
@@ -207,47 +203,47 @@ MusitAnalysis.fromJsonToForm = (json, formDef) => {
 };
 
 MusitAnalysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) => ({
-  museumId,
-  collectionId,
-  token,
-  callBack
-}) => {
+                                                                          museumId,
+                                                                          collectionId,
+                                                                          token,
+                                                                          callBack
+                                                                        }) => {
   const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(
     museumId,
     collectionId
   );
-  return ajaxGet(url, token, callBack).map(({ response }) => response);
+  return ajaxGet(url, token, callBack).map(({response}) => response);
 };
 
 MusitAnalysis.saveAnalysisEvent = (ajaxPost = simplePost) => ({
-  museumId,
-  data,
-  token,
-  callBack
-}) => {
+                                                                museumId,
+                                                                data,
+                                                                token,
+                                                                callBack
+                                                              }) => {
   const url = Config.magasin.urls.api.analysis.saveAnalysisEvent(museumId);
-  return ajaxPost(url, data, token, callBack).map(({ response }) => response);
+  return ajaxPost(url, data, token, callBack).map(({response}) => response);
 };
 
 MusitAnalysis.editAnalysisEvent = (ajaxPut = simplePut) => ({
-  id,
-  museumId,
-  data,
-  token,
-  callBack
-}) => {
+                                                              id,
+                                                              museumId,
+                                                              data,
+                                                              token,
+                                                              callBack
+                                                            }) => {
   const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
-  return ajaxPut(url, data, token, callBack).map(({ response }) => response);
+  return ajaxPut(url, data, token, callBack).map(({response}) => response);
 };
 
 MusitAnalysis.getAnalysesForObject = (ajaxGet = simpleGet) => ({
-  museumId,
-  token,
-  id,
-  callBack
-}) => {
+                                                                 museumId,
+                                                                 token,
+                                                                 id,
+                                                                 callBack
+                                                               }) => {
   const url = Config.magasin.urls.api.analysis.analysesForObject(museumId, id);
-  return ajaxGet(url, token, callBack).map(({ response }) => {
+  return ajaxGet(url, token, callBack).map(({response}) => {
     if (!Array.isArray(response)) {
       return [];
     }
@@ -256,23 +252,21 @@ MusitAnalysis.getAnalysesForObject = (ajaxGet = simpleGet) => ({
 };
 
 MusitAnalysis.getAnalysisById = (ajaxGet = simpleGet) => ({
-  museumId,
-  id,
-  token,
-  callBack
-}) => {
+                                                            museumId,
+                                                            id,
+                                                            token,
+                                                            callBack
+                                                          }) => {
   const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
-  return ajaxGet(url, token, callBack).map(({ response }) => response);
+  return ajaxGet(url, token, callBack).map(({response}) => response);
 };
 
-MusitAnalysis.getAnalysisWithDetails = (
-  ajaxGet = simpleGet,
-  ajaxPost = simplePost
-) => props =>
+MusitAnalysis.getAnalysisWithDetails = (ajaxGet = simpleGet,
+                                        ajaxPost = simplePost) => props =>
   MusitAnalysis.getAnalysisById(ajaxGet)(props)
     .flatMap(analysis =>
       MusitActor.getActors(ajaxPost)({
-        actorIds: [analysis.registeredBy, analysis.updatedBy].filter(p => p),
+        actorIds: [analysis.registeredBy, analysis.updatedBy, analysis.doneBy, analysis.responsible].filter(p => p),
         token: props.token
       }).map(actors => {
         if (actors) {
@@ -284,9 +278,17 @@ MusitAnalysis.getAnalysisWithDetails = (
             {
               id: analysis.registeredBy,
               fieldName: 'registeredByName'
+            },
+            {
+              id: analysis.doneBy,
+              fieldName: 'doneByName'
+            },
+            {
+              id: analysis.responsible,
+              fieldName: 'responsibleName'
             }
           ]);
-          return { ...analysis, ...actorNames };
+          return {...analysis, ...actorNames};
         }
         return analysis;
       })
@@ -310,10 +312,10 @@ MusitAnalysis.getAnalysisWithDetails = (
           const events = analysis.events.map(e => {
             const od = arrayOfObjectDetails.find(objD => objD.uuid === e.objectId);
             return od
-              ? { ...e, term: od.term, museumNo: od.museumNo, subNo: od.subNo }
+              ? {...e, term: od.term, museumNo: od.museumNo, subNo: od.subNo}
               : e;
           });
-          return { ...analysis, events: events };
+          return {...analysis, events: events};
         });
       }
       if (!analysis.objectId) {
@@ -338,59 +340,59 @@ MusitAnalysis.getAnalysisWithDetails = (
     });
 
 MusitAnalysis.getAnalysisTypes = (ajaxGet = simpleGet) => ({
-  museumId,
-  token,
-  callBack
-}) => {
+                                                             museumId,
+                                                             token,
+                                                             callBack
+                                                           }) => {
   const url = Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId);
   return ajaxGet(url, token, callBack).map(r => r.response);
 };
 
 MusitAnalysis.saveAnalysisType = (ajaxPost = simplePost) => ({
-  museumId,
-  data,
-  token,
-  callBack
-}) => {
+                                                               museumId,
+                                                               data,
+                                                               token,
+                                                               callBack
+                                                             }) => {
   const url = Config.magasin.urls.api.analysis.saveAnalysisType(museumId);
-  return ajaxPost(url, data, token, callBack).map(({ response }) => response);
+  return ajaxPost(url, data, token, callBack).map(({response}) => response);
 };
 
 MusitAnalysis.addResult = (ajaxPost = simplePost) => ({
-  analysisId,
-  museumId,
-  token,
-  result
-}) =>
+                                                        analysisId,
+                                                        museumId,
+                                                        token,
+                                                        result
+                                                      }) =>
   ajaxPost(
     Config.magasin.urls.api.analysis.resultsUrl(museumId, analysisId),
     result,
     token
   );
 
-MusitAnalysis.getPurposes = (ajaxGet = simpleGet) => ({ token, callBack }) =>
+MusitAnalysis.getPurposes = (ajaxGet = simpleGet) => ({token, callBack}) =>
   ajaxGet(Config.magasin.urls.api.analysis.getPurposes, token, callBack).map(
-    ({ response }) => response
+    ({response}) => response
   );
 
-MusitAnalysis.getAnalysisCategories = (ajaxGet = simpleGet) => ({ museumId, token }) =>
+MusitAnalysis.getAnalysisCategories = (ajaxGet = simpleGet) => ({museumId, token}) =>
   ajaxGet(
     Config.magasin.urls.api.analysisType.getAnalysisCategories(museumId),
     token
-  ).map(({ response }) => response);
+  ).map(({response}) => response);
 
 MusitAnalysis.loadPredefinedTypes = (ajaxGet = simpleGet) => ({
-  museumId,
-  token,
-  onComplete
-}) => {
+                                                                museumId,
+                                                                token,
+                                                                onComplete
+                                                              }) => {
   return Observable.forkJoin([
-    MusitAnalysis.getAnalysisCategories(ajaxGet)({ museumId, token }),
-    MusitAnalysis.getPurposes(ajaxGet)({ museumId, token }),
-    MusitAnalysis.getAnalysisTypes(ajaxGet)({ museumId, token })
+    MusitAnalysis.getAnalysisCategories(ajaxGet)({museumId, token}),
+    MusitAnalysis.getPurposes(ajaxGet)({museumId, token}),
+    MusitAnalysis.getAnalysisTypes(ajaxGet)({museumId, token})
   ])
     .map(([categories, purposes, analysisTypes]) => ({
-      categories: categories.reduce((a, c) => Object.assign(a, { [c.id]: c.name }), {}),
+      categories: categories.reduce((a, c) => Object.assign(a, {[c.id]: c.name}), {}),
       purposes,
       analysisTypes
     }))

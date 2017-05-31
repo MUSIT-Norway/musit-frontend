@@ -245,11 +245,11 @@ const AnalysisForm = ({
         </div>
         <PersonRoleDate
           appSession={appSession}
-          personData={form.personRoleDates.rawValue}
+          personData={form.persons.value}
           updateForm={updateForm}
-          fieldName={form.personRoleDates.name}
+          fieldName={form.persons.name}
           roles={['responsible', 'doneBy']}
-          showDateForRole= {(roleName: string) => roleName !== 'responsible'}
+          showDateForRole={(roleName: string) => roleName !== 'responsible'}
         />
         <hr />
         <div className="well">
@@ -545,13 +545,16 @@ export function submitForm(
       comment: form.comments.value,
       type: 'GenericResult'
     };
+    const doneBy = form.persons ? form.persons.rawValue.find(p => p.role==='doneBy') : undefined;
+    const responsible =form.persons ? form.persons.rawValue.find(p => p.role==='responsible') : undefined;
+    console.log('Form: ',form);
 
     const data = {
       analysisTypeId: form.analysisTypeId.value,
-      doneBy: null,
-      doneDate: null,
+      doneBy: doneBy && doneBy.uuid,
+      doneDate: doneBy && doneBy.date,
       note: form.note.value,
-      responsible: form.responsible.value,
+      responsible: responsible && responsible.uuid,
       administrator: null,
       completedBy: null,
       completedDate: null,

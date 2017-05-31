@@ -11,7 +11,7 @@ export const fieldsArray = [
   getNumberField('analysisTypeId'),
   getStrField('doneBy'),
   getStrField('doneDate'),
-  getArrField('personRoleDates'),
+  getArrField('persons'),
   getStrField('registeredBy', null, false),
   getStrField('registeredByName', null, false),
   getNumberField('registeredDate', null, false),
