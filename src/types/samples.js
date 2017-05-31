@@ -17,9 +17,18 @@ export type SampleData = {
   sampleNum: number,
   breadcrumb: [],
   objectId: string,
-  note: string
+  note: string,
+  status: number
 };
 
 export type Samples = SampleData[];
 
 export type SamplesPropsType = { samples: Samples, onClick: Function };
+
+export type SampleStatusData = {
+  id: number,
+  noStatus: ?string,
+  enStatus: ?string
+};
+
+export type SampleStatus = SampleStatusData[];

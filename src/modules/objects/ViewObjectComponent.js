@@ -2,7 +2,7 @@
 import React from 'react';
 import { Row, Col, Tabs, Tab, PageHeader, Button } from 'react-bootstrap';
 import type { ObjectData } from '../../types/object';
-import type { Samples } from '../../types/samples';
+import type { Samples, SampleStatus } from '../../types/samples';
 import type { Events } from '../../types/events';
 import type { AnalysisTypesObject } from '../../types/analysisTypes';
 import type { SampleTypesObject } from '../../types/sampleTypes';
@@ -19,7 +19,8 @@ type ViewObjectComponentProps = {
   sampleTypes: SampleTypesObject,
   pickObject: Function,
   isItemAdded: Function,
-  pickList: Object
+  pickList: Object,
+  sampleStatus: SampleStatus
 };
 
 export const ViewObjectComponent = ({
@@ -29,7 +30,8 @@ export const ViewObjectComponent = ({
   sampleTypes,
   pickObject,
   isItemAdded,
-  pickList
+  pickList,
+  sampleStatus
 }: ViewObjectComponentProps) => (
   <div>
     <PageHeader>Objektvisning</PageHeader>
@@ -103,6 +105,7 @@ export const ViewObjectComponent = ({
           appSession={appSession}
           objectData={objectData}
           sampleTypes={sampleTypes}
+          sampleStatus={sampleStatus}
         />
       </Tab>
     </Tabs>

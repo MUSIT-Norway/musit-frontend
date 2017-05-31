@@ -86,9 +86,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       />
       <Td
         column="status"
-      >
-        2
-      </Td>
+      />
       <Td
         column="hasAnalyse"
       />
@@ -133,9 +131,7 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       />
       <Td
         column="status"
-      >
-        24
-      </Td>
+      />
       <Td
         column="hasAnalyse"
       />

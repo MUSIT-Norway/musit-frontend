@@ -17,6 +17,7 @@ import { addObject$ } from '../app/pickList';
 import { isItemAdded } from '../app/pickList';
 import { hashHistory } from 'react-router';
 import MusitObject from '../../models/object';
+import sample from '../../models/sample';
 
 const data: {} = {
   appSession$: { type: PropTypes.instanceOf(Observable).isRequired },
@@ -31,7 +32,8 @@ const props: {} = {
   emitError,
   pickObject: MusitObject.pickObject(addObject$),
   isItemAdded,
-  goTo: hashHistory.push
+  goTo: hashHistory.push,
+  sampleStatus: sample.sampleStatuses
 };
 
 const commands: {} = {

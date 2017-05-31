@@ -2,7 +2,12 @@
 import React from 'react';
 import { Table, Tr, Td } from 'reactable';
 import { I18n } from 'react-i18nify';
-import type { Samples, SampleData } from '../../types/samples';
+import type {
+  Samples,
+  SampleData,
+  SampleStatus,
+  SampleStatusData
+} from '../../types/samples';
 import type { SampleTypesObject, SampleType } from '../../types/sampleTypes';
 import FontAwesome from 'react-fontawesome';
 import type { AppSession } from '../../types/appSession';
@@ -16,7 +21,8 @@ type Props = {
   pickList: Object,
   appSession: AppSession,
   objectData: ObjectData,
-  sampleTypes: SampleTypesObject
+  sampleTypes: SampleTypesObject,
+  sampleStatus: SampleStatus
 };
 
 const pickObjectParams = (
@@ -66,6 +72,23 @@ const getSampleTypeAndSubType = (
   }
   return '';
 };
+const getSampleStatus = (
+  sampleStatus: SampleStatus,
+  statusId: number,
+  appSession: AppSession
+) => {
+  if (sampleStatus && statusId) {
+    const sampleStatusFound: ?SampleStatusData = sampleStatus.find(
+      f => f.id === statusId
+    );
+    if (sampleStatusFound) {
+      return appSession.language.isEn
+        ? sampleStatusFound.enStatus
+        : sampleStatusFound.noStatus;
+    }
+  }
+  return '';
+};
 
 const SampleTableComponent = ({
   samples,
@@ -75,10 +98,12 @@ const SampleTableComponent = ({
   pickList,
   appSession,
   objectData,
-  sampleTypes
+  sampleTypes,
+  sampleStatus
 }: Props) => {
   return (
     <div>
+      {console.log('RKS', sampleStatus)}
       <Table
         className="table table-hover table-inverse table-responsive"
         columns={[
@@ -121,7 +146,9 @@ const SampleTableComponent = ({
               <Td column="sampleSubType">
                 {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession, true)}
               </Td>
-              <Td column="status">{s.status}</Td>
+              <Td column="status">
+                {getSampleStatus(sampleStatus, s.status, appSession)}
+              </Td>
               <Td column="hasAnalyse">{s.hasAnalyse}</Td>
               <Td column="storageMedium">{s.storageMedium}</Td>
               <Td column="add">
