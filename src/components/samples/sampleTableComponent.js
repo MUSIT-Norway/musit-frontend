@@ -49,7 +49,7 @@ const pickObjectParams = (
   };
 };
 
-const getSampleTypeAndSubType = (
+const getSampleType = (
   sampleTypes: SampleTypesObject,
   sampleTypesId: number,
   appSession: AppSession,
@@ -71,6 +71,18 @@ const getSampleTypeAndSubType = (
     }
   }
   return '';
+};
+const getSampleSubType = (
+  sampleTypes: SampleTypesObject,
+  sampleTypesId: number,
+  appSession: AppSession
+) => {
+  return getSampleType(
+    sampleTypes ,
+    sampleTypesId,
+    appSession,
+    false
+  );
 };
 const getSampleStatus = (
   sampleStatus: SampleStatus,
@@ -140,10 +152,10 @@ const SampleTableComponent = ({
               <Td column="sampleNum">{s.sampleNum || ''}</Td>
               <Td column="registeredDate">{s.registeredDate || ''}</Td>
               <Td column="sampleType">
-                {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession)  || ''}
+                {getSampleType(sampleTypes, s.sampleTypeId, appSession) || ''}
               </Td>
               <Td column="sampleSubType">
-                {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession, true) || ''}
+                {getSampleSubType(sampleTypes, s.sampleTypeId, appSession) || ''}
               </Td>
               <Td column="status">
                 {getSampleStatus(sampleStatus, s.status, appSession) || ''}
