@@ -106,30 +106,31 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
       <div className="form-group">
         <label className="control-label">Personer tilknyttet analysen:</label>
       </div>
-      { form.persons.value && form.persons.value.map((p, i) => (
-        <div key={`persons_${i}`} className="form-group">
-          <label className="control-label col-md-2" htmlFor="responsible-name1">
-            Navn:
-          </label>
-          <div className="col-md-2">
-            <p className="form-control-static" id="responsible-name1">{p.name}</p>
+      {form.persons.value &&
+        form.persons.value.map((p, i) => (
+          <div key={`persons_${i}`} className="form-group">
+            <label className="control-label col-md-2" htmlFor="responsible-name1">
+              Navn:
+            </label>
+            <div className="col-md-2">
+              <p className="form-control-static" id="responsible-name1">{p.name}</p>
+            </div>
+            <label className="control-label col-md-1" htmlFor="responsible-role1">
+              Rolle:
+            </label>
+            <div className="col-md-2">
+              <p className="form-control-static" id="responsible-role1">{p.role}</p>
+            </div>
+            <label className="control-label col-md-1" htmlFor="responsible-role1">
+              Dato:
+            </label>
+            <div className="col-md-2">
+              <p className="form-control-static" id="responsible-date">
+                {p.date && moment(p.date).format('DD.MM.YYYY')}
+              </p>
+            </div>
           </div>
-          <label className="control-label col-md-1" htmlFor="responsible-role1">
-            Rolle:
-          </label>
-          <div className="col-md-2">
-            <p className="form-control-static" id="responsible-role1">{p.role}</p>
-          </div>
-          <label className="control-label col-md-1" htmlFor="responsible-role1">
-            Dato:
-          </label>
-          <div className="col-md-2">
-            <p className="form-control-static" id="responsible-date">
-              {p.date && moment(p.date).format('DD.MM.YYYY')}
-            </p>
-          </div>
-        </div>
-      ))}
+        ))}
       <hr />
       <div className="well">
         <div className="form-group">
