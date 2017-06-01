@@ -9,40 +9,34 @@ import type { Field } from '../forms/form';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 
 export type Restriction = {
-  requester?: ?string,
-  reason?: ?string,
-  expirationDate?: ?string,
+  requester?: string,
+  reason?: string,
+  expirationDate?: string,
   cancelledReason?: string,
   caseNumbers?: Array<string>
 };
 
 export type Result = {
   extRef?: Array<string>,
-  comment?: ?string
+  comment?: string
 };
 
 export type Analysis = {
   id: string,
   registeredBy: string,
-  doneBy?: ?string,
-  doneDate?: ?string,
-  doneByName?: ?string,
-  responsible?: ?string,
-  responsibleName?: ?string,
-  caseNumbers?: ?Array<string>,
-  restriction?: ?Restriction,
+  doneBy?: string,
+  doneDate?: string,
+  doneByName?: string,
+  responsible?: string,
+  responsibleName?: string,
+  caseNumbers?: Array<string>,
+  restriction?: Restriction,
   result?: Result
 };
 
 export type AnalysisType = {
   id: string
   // TODO TBD
-};
-
-export type Purpose = {
-  id: string,
-  noPurpose: string,
-  enPurpose: string
 };
 
 type FormValue = {
