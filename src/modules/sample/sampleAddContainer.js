@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { emitError, emitSuccess } from '../../shared/errors';
 import { toPromise } from '../../shared/util';
 import mount from '../../shared/mount';
-import store$, { loadPredefinedTypes$ } from './sampleStore';
+import store$, { getPredefinedTypes$ } from './sampleStore';
 
 const { form$, updateForm$, loadForm$ } = sampleForm;
 
@@ -28,13 +28,13 @@ const props = {
 const commands = {
   updateForm$,
   loadForm$,
-  loadPredefinedTypes$
+  getPredefinedTypes$
 };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
   SampleFormAddComponent
 );
 
-function onMount({ appSession, loadPredefinedTypes }) {
-  loadPredefinedTypes({ token: appSession.accessToken });
+export function onMount({ appSession, getPredefinedTypes }) {
+  getPredefinedTypes({ token: appSession.accessToken });
 }

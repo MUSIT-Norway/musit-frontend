@@ -470,6 +470,10 @@ export default class TableComponent extends React.Component {
                 collectionId,
                 token
               })}
+            goToObject={uuid =>
+              hashHistory.push(
+                Config.magasin.urls.client.object.gotoObject(this.props.appSession, uuid)
+              )}
             isObjectAdded={object =>
               this.props.isItemAdded(object, this.props.pickList.objects)}
             onMove={moveObject}

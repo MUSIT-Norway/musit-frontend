@@ -116,7 +116,10 @@ export class ObjectSearchComponent extends React.Component {
                         }
                         onClick={() =>
                           this.props.goTo(
-                            Config.magasin.urls.client.object.gotoObject(data.uuid)
+                            Config.magasin.urls.client.object.gotoObject(
+                              this.props.appSession,
+                              data.uuid
+                            )
                           )}
                       >
                         <td className="museumNo">{data.museumNo}</td>

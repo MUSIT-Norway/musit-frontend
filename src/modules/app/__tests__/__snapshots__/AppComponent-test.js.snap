@@ -58,39 +58,32 @@ exports[`AppComponent remders 1`] = `
             Magasin
           </NavItem>
         </LinkContainer>
-        <NavDropdown
-          id="analysis-dropdown"
-          title="Analyse"
+        <LinkContainer
+          action="push"
+          onClick={[Function]}
+          onlyActiveOnIndex={false}
+          to="/museum/99/collections/00000000-0000-0000-0000-000000000000/analysis"
         >
-          <LinkContainer
-            action="push"
-            onlyActiveOnIndex={false}
-            to="/museum/99/collections/00000000-0000-0000-0000-000000000000/analysis/add"
+          <NavDropdown
+            id="analysis-dropdown"
+            title="Analyse"
           >
-            <MenuItem
-              bsClass="dropdown"
-              disabled={false}
-              divider={false}
-              header={false}
+            <LinkContainer
+              action="push"
+              onlyActiveOnIndex={false}
+              to="/museum/99/collections/00000000-0000-0000-0000-000000000000/analysis/add"
             >
-              Registrer analyse
-            </MenuItem>
-          </LinkContainer>
-          <LinkContainer
-            action="push"
-            onlyActiveOnIndex={false}
-            to="/museum/99/collections/00000000-0000-0000-0000-000000000000/analysis/sample/undefined/add"
-          >
-            <MenuItem
-              bsClass="dropdown"
-              disabled={false}
-              divider={false}
-              header={false}
-            >
-              Registrer prøveuttak
-            </MenuItem>
-          </LinkContainer>
-        </NavDropdown>
+              <MenuItem
+                bsClass="dropdown"
+                disabled={false}
+                divider={false}
+                header={false}
+              >
+                Registrer analyse
+              </MenuItem>
+            </LinkContainer>
+          </NavDropdown>
+        </LinkContainer>
         <LinkContainer
           action="push"
           onlyActiveOnIndex={false}
