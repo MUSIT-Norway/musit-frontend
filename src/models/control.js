@@ -26,7 +26,7 @@ class Control {
     nodeId: number,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static addControl: (
     ajaxPost: AjaxPost
@@ -36,7 +36,7 @@ class Control {
     observations?: ?ObservationType,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static getControl: (
     ajaxGet: AjaxGet,
@@ -46,7 +46,7 @@ class Control {
     controlId: number,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
 }
 

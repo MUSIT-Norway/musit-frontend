@@ -17,20 +17,35 @@ export type Person = {
   date?: string
 };
 
+const defaultPerson: Person = {
+  name: '',
+  uuid: '',
+  role: '',
+  date: moment().format()
+};
+
+const defaultPersons: Array<Person> = [defaultPerson];
+
 type Props = {
   personData: Array<Person>,
   updateForm: Function,
   fieldName: string,
-  appSession: AppSession
+  appSession: AppSession,
+  roles?: Array<string>,
+  showDateForRole?: Function
 };
 
 export const PersonRoleDate = ({
   personData,
   appSession,
   updateForm,
-  fieldName
+  fieldName,
+  roles,
+  showDateForRole
 }: Props) => {
-  const pArr = personData || [];
+  const pArr: Array<Person> = personData && personData.length > 0
+    ? personData
+    : defaultPersons;
   return (
     pArr &&
     <Grid>
@@ -41,9 +56,10 @@ export const PersonRoleDate = ({
         <Col md={2}>
           <strong>Rolle</strong>
         </Col>
-        <Col md={2}>
-          <strong>Dato</strong>
-        </Col>
+        {showDateForRole &&
+          <Col md={2}>
+            <strong>Dato</strong>
+          </Col>}
         <Col md={2} />
       </Row>
       <br />
@@ -75,7 +91,7 @@ export const PersonRoleDate = ({
           <Col md={2}>
             <DropdownButton
               id={`role_${i}`}
-              items={['responsible', 'creator']}
+              items={roles}
               index={i}
               onChange={role =>
                 updateForm({
@@ -85,24 +101,25 @@ export const PersonRoleDate = ({
               title={v.role ? v.role : 'Velg rolle'}
             />
           </Col>
-          <Col md={2}>
-            {v.role === 'creator' &&
-              <DatePicker
-                dateFormat={DATE_FORMAT_DISPLAY}
-                value={v.date}
-                onClear={newValue =>
-                  updateForm({
-                    name: fieldName,
-                    rawValue: updateDate(i, newValue, personData)
-                  })}
-                onChange={newValue => {
-                  updateForm({
-                    name: fieldName,
-                    rawValue: updateDate(i, newValue, personData)
-                  });
-                }}
-              />}
-          </Col>
+          {showDateForRole &&
+            <Col md={2}>
+              {showDateForRole(v.role) &&
+                <DatePicker
+                  dateFormat={DATE_FORMAT_DISPLAY}
+                  value={v.date}
+                  onClear={newValue =>
+                    updateForm({
+                      name: fieldName,
+                      rawValue: updateDate(i, newValue, personData)
+                    })}
+                  onChange={newValue => {
+                    updateForm({
+                      name: fieldName,
+                      rawValue: updateDate(i, newValue, personData)
+                    });
+                  }}
+                />}
+            </Col>}
           <Col md={1}>
             <FontAwesome
               name={'times'}

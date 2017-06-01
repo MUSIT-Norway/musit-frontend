@@ -85,7 +85,7 @@ export class AppComponent extends Component {
     this.props.setCollectionId(collectionId);
     this.props.clearObjectPicklist();
     const nodeId = this.props.params.id;
-    const localAppSession = this.props.appSession.copy({ collectionId });
+    const localAppSession = { ...this.props.appSession, collectionId };
     if (nodeId) {
       this.props.goTo(
         Config.magasin.urls.client.storagefacility.goToNode(nodeId, localAppSession)
@@ -152,29 +152,25 @@ export class AppComponent extends Component {
               >
                 <NavItem>{I18n.t('musit.texts.magazine')}</NavItem>
               </LinkContainer>
-              <NavDropdown
-                title={I18n.t('musit.analysis.analysis')}
-                id="analysis-dropdown"
+              <LinkContainer
+                to={Config.magasin.urls.client.analysis.baseUrl(this.props.appSession)}
+                onClick={e => e.preventDefault()}
               >
-                <LinkContainer
-                  to={Config.magasin.urls.client.analysis.addAnalysis(
-                    this.props.appSession
-                  )}
+                <NavDropdown
+                  title={I18n.t('musit.analysis.analysis')}
+                  id="analysis-dropdown"
                 >
-                  <MenuItem>
-                    {I18n.t('musit.analysis.registeringAnalysis')}
-                  </MenuItem>
-                </LinkContainer>
-                <LinkContainer
-                  to={Config.magasin.urls.client.analysis.addSample(
-                    this.props.appSession
-                  )}
-                >
-                  <MenuItem>
-                    {I18n.t('musit.analysis.registeringSample')}
-                  </MenuItem>
-                </LinkContainer>
-              </NavDropdown>
+                  <LinkContainer
+                    to={Config.magasin.urls.client.analysis.addAnalysis(
+                      this.props.appSession
+                    )}
+                  >
+                    <MenuItem>
+                      {I18n.t('musit.analysis.registeringAnalysis')}
+                    </MenuItem>
+                  </LinkContainer>
+                </NavDropdown>
+              </LinkContainer>
               <LinkContainer
                 to={Config.magasin.urls.client.report.goToReport(this.props.appSession)}
               >

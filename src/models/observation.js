@@ -15,7 +15,7 @@ class Observation {
     nodeId: number,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static addObservation: (
     ajaxPost: AjaxPost
@@ -24,7 +24,7 @@ class Observation {
     museumId: number,
     data: mixed,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static getObservation: (
     ajaxGet: AjaxGet,

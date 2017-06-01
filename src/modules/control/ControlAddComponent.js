@@ -30,7 +30,7 @@ import {
   isDateBiggerThanToday,
   formatISOString
 } from '../../shared/util';
-import ActorSuggest from '../../components/suggest/ActorSuggest';
+import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 import Layout from '../../components/layout';
 import Breadcrumb from '../../components/layout/Breadcrumb';
 import { emitError, emitSuccess } from '../../shared/errors';
@@ -308,6 +308,7 @@ export class ControlAddContainer extends React.Component {
                   <Row>
                     <Col xs={9}>
                       <ActorSuggest
+                        appSession={this.props.appSession}
                         id="doneByField"
                         value={this.state.doneBy ? this.state.doneBy.fn : ''}
                         placeHolder="Find actor"

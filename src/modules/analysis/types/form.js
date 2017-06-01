@@ -1,5 +1,5 @@
-// @flow
 import type { Field } from '../../../forms/form';
+import type { Person } from '../../../components/samples/personRoleDate';
 
 export type FormData = {
   id: Field<number>,
@@ -12,6 +12,7 @@ export type FormData = {
   registeredDate: Field<string>,
   responsible: Field<string>,
   administrator: Field<string>,
+  persons: Field<Array<Person>>,
   completedBy: Field<string>,
   completedDate: Field<string>,
   objectId: Field<string>,

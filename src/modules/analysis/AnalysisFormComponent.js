@@ -6,6 +6,7 @@ import type { AppSession } from 'types/appSession';
 import type { ObjectData } from 'types/object';
 import type { FormData } from './types/form';
 import type { Store } from './types/store';
+import PersonRoleDate from '../../components/samples/personRoleDate';
 import AddButton from '../../components/AddButton';
 import { Table } from 'reactable';
 import MetaInformation from '../../components/metainfo';
@@ -222,9 +223,6 @@ const AnalysisForm = ({
               onChange={updateArrayField(form.caseNumbers.name, updateForm)}
             />
           </div>
-          <div className="cpl-md-5">
-            <AddButton label="Legg til saksnummer" />
-          </div>
         </div>
         <hr />
         <div className="form-group">
@@ -242,26 +240,14 @@ const AnalysisForm = ({
         <div className="form-group">
           <label className="control-label">Personer tilknyttet analysen:</label>
         </div>
-        <div className="form-group">
-          <label className="control-label col-md-2" htmlFor="responsible-name1">
-            Navn:
-          </label>
-          <div className="col-md-2">
-            <input type="text" className="form-control" id="responsible-name1" />
-          </div>
-          <label className="control-label col-md-1" htmlFor="responsible-role1">
-            Rolle:
-          </label>
-          <div className="col-md-2">
-            <select id="responsible-role1" className="form-control">
-              <option>Velg rolle</option>
-              <option value="other">...</option>
-            </select>
-          </div>
-          <div className="col-md-2">
-            <AddButton label="Legg til person" />
-          </div>
-        </div>
+        <PersonRoleDate
+          appSession={appSession}
+          personData={form.persons.value}
+          updateForm={updateForm}
+          fieldName={form.persons.name}
+          roles={['responsible', 'doneBy']}
+          showDateForRole={(roleName: string) => roleName !== 'responsible'}
+        />
         <hr />
         <div className="well">
           <div className="form-group">
@@ -556,13 +542,19 @@ export function submitForm(
       comment: form.comments.value,
       type: 'GenericResult'
     };
+    const doneBy = form.persons
+      ? form.persons.rawValue.find(p => p.role === 'doneBy')
+      : undefined;
+    const responsible = form.persons
+      ? form.persons.rawValue.find(p => p.role === 'responsible')
+      : undefined;
 
     const data = {
       analysisTypeId: form.analysisTypeId.value,
-      doneBy: null,
-      doneDate: null,
+      doneBy: doneBy && doneBy.uuid,
+      doneDate: doneBy && doneBy.date,
       note: form.note.value,
-      responsible: form.responsible.value,
+      responsible: responsible && responsible.uuid,
       administrator: null,
       completedBy: null,
       completedDate: null,

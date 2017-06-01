@@ -23,7 +23,7 @@ class MusitNode {
     id: string,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static getNodeWithUpdatedBy: (
     ajaxGet: AjaxGet
@@ -31,7 +31,7 @@ class MusitNode {
     id: string,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static addNode: (
     ajaxPost: AjaxPost
@@ -40,7 +40,7 @@ class MusitNode {
     museumId: number,
     token: string,
     data: mixed,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static editNode: (
     ajaxPut: AjaxPut
@@ -49,7 +49,7 @@ class MusitNode {
     museumId: number,
     token: string,
     data: mixed,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static getNodes: (
     ajaxGet: AjaxGet
@@ -58,7 +58,7 @@ class MusitNode {
     page?: Paging,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static getStats: (
     ajaxGet: AjaxGet
@@ -66,7 +66,7 @@ class MusitNode {
     id: string,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static deleteNode: (
     ajaxDel: AjaxDel
@@ -74,7 +74,7 @@ class MusitNode {
     id: string,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static moveNode: (
     ajaxPut: AjaxPut
@@ -84,7 +84,7 @@ class MusitNode {
     doneBy: string,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static pickNode: (
     pickNode$: Subject

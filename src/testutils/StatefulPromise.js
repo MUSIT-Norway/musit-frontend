@@ -10,13 +10,15 @@
  *   });
  */
 export default class StatefulPromise {
-  value: any;
+  params: any;
+  data: ?any;
 
-  createPromise() {
-    return (value: any) =>
-      new Promise((resolve: any => void) => {
-        this.value = value;
-        resolve(value);
+  createPromise(data: ?any) {
+    return (params: any) =>
+      new Promise((resolve: (v: any) => void) => {
+        this.params = params;
+        this.data = data;
+        resolve(data || params);
       });
   }
 }

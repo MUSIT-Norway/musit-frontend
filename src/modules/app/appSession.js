@@ -29,7 +29,15 @@ export const makeUrlAware = Component => {
       refreshSession: refreshSession()
     };
 
+    componentWillMount() {
+      this.diffPropsAndRefresh(this.props);
+    }
+
     componentWillReceiveProps(newProps) {
+      this.diffPropsAndRefresh(newProps);
+    }
+
+    diffPropsAndRefresh(newProps) {
       const paramsDiffFromSession = !isEqualWith(
         newProps.params,
         newProps.appSession,
@@ -124,7 +132,7 @@ export const refreshSession = (
   setCollection = id => setCollectionId$.next(id)
 ) => (params, appSession) => {
   const museumId = appSession.museumId;
-  const museumIdFromParam = params.museumId;
+  const museumIdFromParam = parseInt(params.museumId, 10);
   if (museumIdFromParam && museumIdFromParam !== museumId) {
     setMuseum(museumIdFromParam);
   }

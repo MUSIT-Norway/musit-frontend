@@ -5,9 +5,9 @@ import PersonRoleDate from '../../components/samples/personRoleDate';
 import Sample from '../../models/sample';
 import type { ObjectData } from '../../types/object';
 import type { AppSession } from '../../types/appSession';
-import {hashHistory} from 'react-router';
-import type {Person} from '../../components/samples/personRoleDate';
-import type {FormDetails} from './types/form';
+import { hashHistory } from 'react-router';
+import type { Person } from '../../components/samples/personRoleDate';
+import type { FormDetails } from './types/form';
 import ValidatedFormGroup from '../../forms/components/ValidatedFormGroup';
 import FieldCheckBox from '../../forms/components/FieldCheckBox';
 import FieldDropDown from '../../forms/components/FieldDropDown';
@@ -91,6 +91,8 @@ export default function SampleFormComponent({form, store, updateForm, addSample,
         personData={form.persons.rawValue}
         updateForm={updateForm}
         fieldName={form.persons.name}
+        roles={['responsible', 'creator']}
+        showDateForRole= {(roleName: string) => roleName !== 'responsible'}
       />
       <br/>
       <div className="well">
