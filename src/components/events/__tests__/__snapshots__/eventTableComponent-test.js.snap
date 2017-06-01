@@ -26,10 +26,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
           "key": "caseNumber",
           "label": "Saksnummer",
         },
-        Object {
-          "key": "note",
-          "label": "Kommentar",
-        },
       ]
     }
     defaultSort={false}
@@ -69,13 +65,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       <Td
         column="caseNumber"
       />
-      <Td
-        column="note"
-      >
-        <span>
-          Ein kommentar
-        </span>
-      </Td>
     </Tr>
     <Tr
       onClick={[Function]}
@@ -97,13 +86,6 @@ exports[`EventTableComponent should render header, body and footer 1`] = `
       <Td
         column="caseNumber"
       />
-      <Td
-        column="note"
-      >
-        <span>
-          Ein kommentar
-        </span>
-      </Td>
     </Tr>
   </Table>
 </div>

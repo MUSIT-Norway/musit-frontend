@@ -19,7 +19,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
   static moveObjects: (
     props: {
@@ -29,7 +29,7 @@ class MusitObject {
       museumId: number,
       collectionId: string,
       token: string,
-      callBack: Callback
+      callback: Callback
     },
     ajaxGet: AjaxGet,
     ajaxPut: AjaxPut
@@ -40,7 +40,7 @@ class MusitObject {
     movableObjects: Array<MovableObject>,
     museumId: MuseumId,
     token: string,
-    callBack: ?any
+    callback: ?any
   }) => Observable;
   static getObjectLocation: (
     ajaxGet: AjaxGet
@@ -48,7 +48,7 @@ class MusitObject {
     objectId: number,
     museumId: number,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
   static getMainObject: (
     ajaxGet: AjaxGet
@@ -57,7 +57,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
   static pickObject: (
     pickObject$: Subject,
@@ -68,7 +68,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
   static getObjects: (
     ajaxGet: AjaxGet
@@ -78,7 +78,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
   static moveSingleObject: (
     ajaxPut: AjaxPut
@@ -89,7 +89,7 @@ class MusitObject {
     objectType?: 'collection' | 'sample',
     museumId: number,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
   static getLocationHistory: (
     ajaxGet: AjaxGet
@@ -97,7 +97,7 @@ class MusitObject {
     objectId: number,
     museumId: number,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
   static findByBarcode: (
     ajaxGet: AjaxGet
@@ -118,7 +118,7 @@ class MusitObject {
     museumId: number,
     collectionId: string,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 }
 
@@ -132,7 +132,7 @@ MusitObject.getObjectDescription = obj => {
 MusitObject.isMainObject = obj => obj.id === obj.mainObjectId;
 
 MusitObject.moveObjects = (
-  { object, destination, doneBy, museumId, collectionId, token, callBack },
+  { object, destination, doneBy, museumId, collectionId, token, callback },
   ajaxGet = simpleGet,
   ajaxPut = simplePut
 ) => {
@@ -142,7 +142,7 @@ MusitObject.moveObjects = (
       museumId,
       collectionId,
       token,
-      callBack: { onFailure: callBack.onFailure }
+      callback: { onFailure: callback.onFailure }
     })
       .toPromise()
       .then(objects =>
@@ -153,7 +153,7 @@ MusitObject.moveObjects = (
             doneBy,
             museumId,
             token,
-            callBack: MusitObject.isMainObject(obj) ? callBack : null
+            callback: MusitObject.isMainObject(obj) ? callback : null
           }).toPromise()
         )
       );
@@ -164,7 +164,7 @@ MusitObject.moveObjects = (
       doneBy,
       museumId,
       token,
-      callBack
+      callback
     }).toPromise();
   }
 };
@@ -173,13 +173,13 @@ MusitObject.getObjectLocations = (ajaxPost = simplePost) => ({
   movableObjects,
   museumId,
   token,
-  callBack
+  callback
 }) =>
   ajaxPost(
     Config.magasin.urls.api.storagefacility.currentLocations(museumId),
     movableObjects,
     token,
-    callBack
+    callback
   ).map(({ response }) =>
     movableObjects.map(o => ({ objectId: o.id, ...response[0].node }))
   );
@@ -188,12 +188,12 @@ MusitObject.getObjectLocation = (ajaxGet = simpleGet) => ({
   objectId,
   museumId,
   token,
-  callBack
+  callback
 }) =>
   ajaxGet(
     Config.magasin.urls.api.storagefacility.currentLocation(museumId, objectId),
     token,
-    callBack
+    callback
   ).map(({ response }) => ({ ...response, breadcrumb: getPath(response) }));
 
 MusitObject.getMainObject = (ajaxGet = simpleGet) => ({
@@ -201,12 +201,12 @@ MusitObject.getMainObject = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
-  callBack
+  callback
 }) => {
   return ajaxGet(
     Config.magasin.urls.api.thingaggregate.getMainObject(museumId, id, collectionId),
     token,
-    callBack
+    callback
   ).map(({ response }) => response);
 };
 
@@ -215,14 +215,14 @@ MusitObject.getObjectDetails = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.thingaggregate.objectDetailsUrl(
     museumId,
     id,
     collectionId
   );
-  return ajaxGet(url, token, callBack).map(({ response }) => response);
+  return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
 MusitObject.getObjects = (ajaxGet = simpleGet) => ({
@@ -231,7 +231,7 @@ MusitObject.getObjects = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.thingaggregate.getObjectForCollection(
     museumId,
@@ -240,7 +240,7 @@ MusitObject.getObjects = (ajaxGet = simpleGet) => ({
     page || 1,
     Config.magasin.limit
   );
-  return ajaxGet(url, token, callBack).map(({ response }) => {
+  return ajaxGet(url, token, callback).map(({ response }) => {
     if (!response || !response.matches) {
       return { ...response, matches: [], error: 'no response body' };
     }
@@ -258,7 +258,7 @@ MusitObject.moveSingleObject = (ajaxPut = simplePut) => ({
   objectType,
   museumId,
   token,
-  callBack
+  callback
 }) => {
   const items = [].concat(id).map(objectId => ({
     id: objectId,
@@ -269,7 +269,7 @@ MusitObject.moveSingleObject = (ajaxPut = simplePut) => ({
     Config.magasin.urls.api.storagefacility.moveObject(museumId),
     data,
     token,
-    callBack
+    callback
   );
 };
 
@@ -277,12 +277,12 @@ MusitObject.getLocationHistory = (ajaxGet = simpleGet) => ({
   objectId,
   museumId,
   token,
-  callBack
+  callback
 }) => {
   return ajaxGet(
     Config.magasin.urls.api.storagefacility.objectLocations(museumId, objectId),
     token,
-    callBack
+    callback
   ).map(({ response }) => {
     if (!Array.isArray(response)) {
       return [];
@@ -335,7 +335,7 @@ MusitObject.searchForObjects = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.thingaggregate.searchObjectUrl(
     museumNo,
@@ -346,7 +346,7 @@ MusitObject.searchForObjects = (ajaxGet = simpleGet) => ({
     collectionId,
     museumId
   );
-  return ajaxGet(url, token, callBack).map(({ response }) => response).map(data => {
+  return ajaxGet(url, token, callback).map(({ response }) => response).map(data => {
     if (!data || !data.matches) {
       return { ...data, matches: [], totalMatches: 0, error: 'no response body' };
     }

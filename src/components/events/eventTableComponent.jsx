@@ -16,7 +16,11 @@ type EventTypeProps = {
   appSession: AppSession
 };
 
-const toPathStr = pathArr => pathArr.map(o => o.name).join('  /  ');
+//TODO move it to utils
+function toPathStr (pathArr, crumb = 0){ return  pathArr.slice(crumb).map(o => o.name).join('  /  ')};
+function getPathDotsAndToolTip(pathArr) { return pathArr.length >2 ?
+  <div title={toPathStr(pathArr)} data-toggle="popover" data-trigger="hover">{`.../${toPathStr(pathArr, -3)}`}</div>
+  : toPathStr(pathArr)};
 
 function getKeyData(event: Event, analysisTypes: AnalysisTypes, sampleTypes: SampleTypes, appSession: AppSession){
   if (event.type) {
@@ -27,7 +31,7 @@ function getKeyData(event: Event, analysisTypes: AnalysisTypes, sampleTypes: Sam
       }
     }
     if(event.type === 'MoveObject') {
-      return toPathStr(event.to.breadcrumb);
+      return getPathDotsAndToolTip(event.to.breadcrumb);
     }
     if(event.type === 'SampleCreated' && event.sampleTypeId && sampleTypes) {
       const sampleTypeFound: ?SampleType = sampleTypes.find(f => f.sampleTypeId && f.sampleTypeId === event.sampleTypeId);
@@ -49,8 +53,7 @@ export const EventTableComponent = ({ events, onClick, analysisTypes, sampleType
           { key: 'type', label: 'Type hendelse' },
           { key: 'doneBy', label: 'Utført av' },
           { key: 'keyData', label: 'Nøkkeldata' },
-          { key: 'caseNumber', label: 'Saksnummer' },
-          { key: 'note', label: 'Kommentar' }
+          { key: 'caseNumber', label: 'Saksnummer' }
         ]}
         sortable={['id', 'type', 'eventDate', 'registeredBy', 'note' ]}
         noDataText={I18n.t('musit.events.noDataForObject')}
@@ -62,7 +65,6 @@ export const EventTableComponent = ({ events, onClick, analysisTypes, sampleType
             <Td column="doneBy">{event.type && event.type === 'MoveObject' ? event.doneBy : event.registeredBy }</Td>
             <Td column="keyData">{getKeyData(event, analysisTypes.analysisTypes, sampleTypes.sampleTypes, appSession)}</Td>
             <Td column="caseNumber">{event.caseNumbers ? event.caseNumbers.join('; '): ''}</Td>
-            <Td column="note"><span>{event.note}</span></Td>
           </Tr>
         )}
       </Table>

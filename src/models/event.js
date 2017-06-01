@@ -22,7 +22,7 @@ class Event {
     objectId: number, // FIXME The same as id
     museumId: number,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 }
 

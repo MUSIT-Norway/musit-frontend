@@ -39,6 +39,7 @@ export default {
           goToHomePage: (appSession: AppSession) => `${clientContextUrl(appSession)}/home`
         },
         analysis: {
+          baseUrl: (appSession: AppSession) => `${clientContextUrl(appSession)}/analysis`,
           editAnalysis: (appSession: AppSession, analysisId: string) =>
             `${clientContextUrl(appSession)}/analysis/edit/${analysisId}`,
           addAnalysis: (appSession: AppSession) =>
@@ -57,7 +58,8 @@ export default {
             `${clientContextUrl(appSession)}/magasin`
         },
         object: {
-          gotoObject: (id: string) => `/objects/${id}`
+          gotoObject: (appSession: AppSession, id: string) =>
+            `${clientContextUrl(appSession)}/objects/${id}`
         },
         report: {
           goToReport: (appSession: AppSession) =>

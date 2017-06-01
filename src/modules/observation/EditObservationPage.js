@@ -75,6 +75,7 @@ export class EditObservationPage extends React.Component {
               {I18n.t('musit.observation.page.titles.edit')}
             </h4>
             <ObservationPage
+              appSession={this.props.appSession}
               id={this.props.params.id}
               observations={this.getObservationsFromLocationState()}
               doneDate={this.props.location.state.doneDate}

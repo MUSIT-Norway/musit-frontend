@@ -1,9 +1,8 @@
 // @flow
 import { simplePost, simpleGet, simplePut } from '../shared/RxAjax';
 import Config from '../config';
-import object from './object';
 import { Observable } from 'rxjs';
-import { parseISODate, DATE_FORMAT_DISPLAY } from '../shared/util';
+import { DATE_FORMAT_DISPLAY } from '../shared/util';
 import type { Callback, AjaxGet, AjaxPost, AjaxPut } from './types/ajax';
 import { omit } from 'lodash';
 import uniq from 'lodash/uniq';
@@ -24,7 +23,7 @@ class Sample {
     museumId: number,
     token: string,
     data: mixed,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static editSample: (
     ajaxPut: AjaxPut
@@ -33,7 +32,7 @@ class Sample {
     museumId: number,
     token: string,
     data: mixed,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static loadSample: (
     ajaxGet: AjaxGet
@@ -41,7 +40,7 @@ class Sample {
     id: number,
     museumId: number,
     token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static loadSampleDataForObject: (
     ajaxGet: AjaxGet
@@ -49,16 +48,7 @@ class Sample {
     id: number,
     museumId: number,
     token: string,
-    callback?: ?Callback
-  }) => Observable;
-  static loadSamplesForObject: (
-    ajaxGet: AjaxGet
-  ) => (props: {
-    objectId: number,
-    museumId: number,
-    collectionId: string,
-    token: string,
-    callback?: ?Callback
+    callback?: Callback
   }) => Observable;
   static prepareForSubmit: (tmpData: {
     size?: { value: number, unit: string },
@@ -274,32 +264,6 @@ Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({
           registeredDate: moment(r.registeredStamp.date).format(DATE_FORMAT_DISPLAY)
         }))) || []
   );
-};
-
-Sample.loadSamplesForObject = (ajaxGet = simpleGet) => ({
-  objectId,
-  museumId,
-  token,
-  collectionId,
-  callback
-}) => {
-  const url = Config.magasin.urls.api.samples.samplesForObject(museumId, objectId);
-  const objResp = object.getObjectDetails(ajaxGet)({
-    id: objectId,
-    museumId,
-    token,
-    collectionId
-  });
-  const sampleRes = ajaxGet(url, token, callback).map(e => e.response);
-  return Observable.forkJoin(sampleRes, objResp).map(([samples, obj]) => {
-    return {
-      ...obj,
-      data: samples.map(a => ({
-        ...a,
-        doneDate: parseISODate(a.doneDate, DATE_FORMAT_DISPLAY)
-      }))
-    };
-  });
 };
 
 export const STATUS_INTACT_ID = 1;

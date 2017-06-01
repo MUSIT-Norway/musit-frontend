@@ -43,6 +43,7 @@ export class AddObservationPage extends React.Component {
               {I18n.t('musit.observation.page.titles.add')}
             </h4>
             <ObservationPage
+              appSession={this.props.appSession}
               id={this.props.params.id}
               onSaveObservation={(nodeId, data) => {
                 const museumId = this.props.appSession.museumId;

@@ -10,7 +10,7 @@ import { toPromise } from '../../shared/util';
 import Sample from '../../models/sample';
 import { makeUrlAware } from '../../modules/app/appSession';
 import flowRight from 'lodash/flowRight';
-import store$, { loadPredefinedTypes$ } from './sampleStore';
+import store$, { getPredefinedTypes$ } from './sampleStore';
 import { onMount } from './sampleViewContainer';
 
 const { form$, loadForm$, updateForm$ } = sampleForm;
@@ -21,10 +21,10 @@ const data = {
   store$
 };
 
-const commands = { loadForm$, updateForm$, loadPredefinedTypes$ };
+const commands = { loadForm$, updateForm$, getPredefinedTypes$ };
 
 const props = {
-  loadSample: toPromise(Sample.loadSample()),
+  getSample: toPromise(Sample.loadSample()),
   addSample: toPromise(Sample.editSample()),
   emitSuccess,
   emitError
