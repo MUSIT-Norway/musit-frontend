@@ -77,12 +77,7 @@ const getSampleSubType = (
   sampleTypesId: number,
   appSession: AppSession
 ) => {
-  return getSampleType(
-    sampleTypes ,
-    sampleTypesId,
-    appSession,
-    false
-  );
+  return getSampleType(sampleTypes, sampleTypesId, appSession, false);
 };
 const getSampleStatus = (
   sampleStatus: SampleStatus,
