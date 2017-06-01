@@ -42,7 +42,7 @@ const pickObjectParams = (
       term: objectData.term,
       type: 'sample'
     },
-    breadcrumb: s.breadcrumb ? s.breadcrumb : {},
+    breadcrumb: s.breadcrumb ? s.breadcrumb : [],
     museumId: appSession.museumId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken
@@ -137,19 +137,19 @@ const SampleTableComponent = ({
         {samples &&
           samples.map((s, i) => (
             <Tr key={i} onClick={() => onClick(s)}>
-              <Td column="sampleNum">{s.sampleNum}</Td>
-              <Td column="registeredDate">{s.registeredDate}</Td>
+              <Td column="sampleNum">{s.sampleNum || ''}</Td>
+              <Td column="registeredDate">{s.registeredDate || ''}</Td>
               <Td column="sampleType">
-                {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession)}
+                {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession)  || ''}
               </Td>
               <Td column="sampleSubType">
-                {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession, true)}
+                {getSampleTypeAndSubType(sampleTypes, s.sampleTypeId, appSession, true) || ''}
               </Td>
               <Td column="status">
-                {getSampleStatus(sampleStatus, s.status, appSession)}
+                {getSampleStatus(sampleStatus, s.status, appSession) || ''}
               </Td>
-              <Td column="hasAnalyse">{s.hasAnalyse}</Td>
-              <Td column="storageMedium">{s.storageMedium}</Td>
+              <Td column="hasAnalyse">{s.hasAnalyse || ''}</Td>
+              <Td column="storageMedium">{s.storageMedium || ''}</Td>
               <Td column="add">
                 <a
                   onClick={e => {
