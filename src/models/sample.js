@@ -12,8 +12,8 @@ import moment from 'moment';
 
 export type SampleStatus = {
   id: number,
-  noStatus: ?string,
-  enStatus: ?string
+  noStatus?: string,
+  enStatus?: string
 };
 
 class Sample {
