@@ -62,13 +62,13 @@ describe('AnalysisFormComponent', () => {
       )({
         preventDefault: identity
       }).then(() => {
-        expect(promise1.value.id).toEqual(45);
-        expect(promise1.value.token).toEqual('45667');
-        expect(promise1.value.museumId).toEqual(99);
-        expect(promise1.value.data.restriction).not.toBe(null);
-        expect(promise1.value.data.restriction.requester).toBe('Test mann');
-        expect(promise1.value.data.restriction.reason).toBe('No reason');
-        expect(promise1.value.data.restriction.expirationDate).toBe('2017-01-01');
+        expect(promise1.params.id).toEqual(45);
+        expect(promise1.params.token).toEqual('45667');
+        expect(promise1.params.museumId).toEqual(99);
+        expect(promise1.params.data.restriction).not.toBe(null);
+        expect(promise1.params.data.restriction.requester).toBe('Test mann');
+        expect(promise1.params.data.restriction.reason).toBe('No reason');
+        expect(promise1.params.data.restriction.expirationDate).toBe('2017-01-01');
         done();
       });
     });

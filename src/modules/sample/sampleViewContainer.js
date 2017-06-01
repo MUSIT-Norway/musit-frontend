@@ -8,7 +8,7 @@ import { emitError, emitSuccess } from '../../shared/errors';
 import Sample from '../../models/sample';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
-import store$, { loadPredefinedTypes$ } from './sampleStore';
+import store$, { getPredefinedTypes$ } from './sampleStore';
 import flatten from 'lodash/flatten';
 import { toPromise } from '../../shared/util';
 import moment from 'moment';
@@ -22,18 +22,18 @@ const data = {
 };
 
 const props = {
-  loadSample: toPromise(Sample.loadSample()),
+  getSample: toPromise(Sample.loadSample()),
   emitSuccess,
   emitError
 };
 
-const commands = { loadForm$, loadPredefinedTypes$ };
+const commands = { loadForm$, getPredefinedTypes$ };
 
 export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
   SampleViewComponent
 );
 
-function getPersonsFromResponse(response) {
+export function getPersonsFromResponse(response) {
   let persons = [];
   if (response.doneByStamp && response.doneByStamp.user) {
     persons.push({
@@ -53,79 +53,85 @@ function getPersonsFromResponse(response) {
   return persons;
 }
 
-export function onMount({
-  loadSample,
-  loadPredefinedTypes,
-  loadForm,
-  params,
-  appSession
-}) {
-  const sampleId = params.sampleId;
-  const museumId = appSession.museumId;
-  const accessToken = appSession.accessToken;
-  const val = { id: sampleId, museumId: museumId, token: accessToken };
-  loadPredefinedTypes({
-    token: accessToken,
-    onComplete: ({ sampleTypes }) => {
-      loadSample(val).then(sample => {
-        const sampleType = flatten(Object.values(sampleTypes)).find(
-          subType => sample.sampleTypeId === subType.sampleTypeId
-        );
-        const formData = {};
-        formData.persons = {
-          name: 'persons',
-          defaultValue: getPersonsFromResponse(sample)
-        };
-        formData.updatedByName = {
-          name: 'updatedByName',
-          defaultValue: sample.updatedStamp ? sample.updatedStamp.name : null
-        };
-        formData.updatedDate = {
-          name: 'updatedDate',
-          defaultValue: sample.updatedStamp ? sample.updatedStamp.date : null
-        };
-        formData.registeredByName = {
-          name: 'registeredByName',
-          defaultValue: sample.registeredStamp.name
-        };
-        formData.registeredDate = {
-          name: 'registeredDate',
-          defaultValue: sample.registeredStamp.date
-        };
-        formData.sampleType = {
-          name: 'sampleType',
-          defaultValue: sampleType ? sampleType.enSampleType : sample.sampleType.value
-        };
-        formData.subTypeValue = {
-          name: 'subTypeValue',
-          defaultValue: sampleType
-            ? sampleType.enSampleSubType || sampleType.enSampleType
-            : sample.sampleType.subTypeValue
-        };
-        formData.externalId = {
-          name: 'externalId',
-          defaultValue: sample.externalId ? sample.externalId.value : null
-        };
-        formData.externalIdSource = {
-          name: 'externalIdSource',
-          defaultValue: sample.externalId ? sample.externalId.source : null
-        };
-        formData.size = {
-          name: 'size',
-          defaultValue: sample.size ? sample.size.value : null
-        };
-        formData.sizeUnit = {
-          name: 'sizeUnit',
-          defaultValue: sample.size ? sample.size.unit : null
-        };
-        const data = Object.keys(sample).reduce((akk, key: string) => {
-          if (akk[key]) {
-            return akk;
-          }
-          return { ...akk, [key]: { name: key, defaultValue: sample[key] } };
-        }, formData);
-        loadForm(Object.values(data));
+export function convertSample(sampleTypes) {
+  return sample => {
+    const sampleType = flatten(Object.values(sampleTypes)).find(
+      subType => sample.sampleTypeId === subType.sampleTypeId
+    );
+    const formData = {};
+    formData.persons = {
+      name: 'persons',
+      defaultValue: getPersonsFromResponse(sample)
+    };
+    formData.updatedByName = {
+      name: 'updatedByName',
+      defaultValue: sample.updatedStamp ? sample.updatedStamp.name : null
+    };
+    formData.updatedDate = {
+      name: 'updatedDate',
+      defaultValue: sample.updatedStamp ? sample.updatedStamp.date : null
+    };
+    formData.registeredByName = {
+      name: 'registeredByName',
+      defaultValue: sample.registeredStamp.name
+    };
+    formData.registeredDate = {
+      name: 'registeredDate',
+      defaultValue: sample.registeredStamp.date
+    };
+    formData.sampleType = {
+      name: 'sampleType',
+      defaultValue: sampleType ? sampleType.enSampleType : null
+    };
+    formData.subTypeValue = {
+      name: 'subTypeValue',
+      defaultValue: sampleType
+        ? sampleType.enSampleSubType || sampleType.enSampleType
+        : null
+    };
+    formData.externalId = {
+      name: 'externalId',
+      defaultValue: sample.externalId ? sample.externalId.value : null
+    };
+    formData.externalIdSource = {
+      name: 'externalIdSource',
+      defaultValue: sample.externalId ? sample.externalId.source : null
+    };
+    formData.size = {
+      name: 'size',
+      defaultValue: sample.size ? sample.size.value : null
+    };
+    formData.sizeUnit = {
+      name: 'sizeUnit',
+      defaultValue: sample.size ? sample.size.unit : null
+    };
+    const data = Object.keys(sample).reduce((akk, key: string) => {
+      if (akk[key]) {
+        return akk;
+      }
+      return { ...akk, [key]: { name: key, defaultValue: sample[key] } };
+    }, formData);
+    return Object.values(data);
+  };
+}
+
+export function loadSample(id, museumId, token, getSample, loadForm) {
+  return ({ sampleTypes }) => {
+    return getSample({ id, museumId, token })
+      .then(convertSample(sampleTypes))
+      .then(res => {
+        loadForm(res);
+        return res; // simulate do operator in rxjs for a promise
       });
-    }
+  };
+}
+
+export function onMount({ getSample, getPredefinedTypes, loadForm, params, appSession }) {
+  const id = params.sampleId;
+  const museumId = appSession.museumId;
+  const token = appSession.accessToken;
+  getPredefinedTypes({
+    token: appSession.accessToken,
+    onComplete: loadSample(id, museumId, token, getSample, loadForm)
   });
 }

@@ -2,8 +2,7 @@ import 'es6-shim';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import { Router, hashHistory } from 'react-router';
-import getRoutes from './routes';
+import MusitRoutes from './routes';
 import config from './config';
 import LanguageJson from './language.json';
 import { I18n } from 'react-i18nify';
@@ -54,12 +53,6 @@ if (accessToken) {
   I18n.loadTranslations(LanguageJson);
   loadLanguage();
 
-  const appRouter = () => (
-    <Router onUpdate={() => window.scrollTo(0, 0)} history={hashHistory}>
-      {getRoutes()}
-    </Router>
-  );
-
   const SessionProvided = provide({
     appSession$: {
       type: PropTypes.object,
@@ -69,7 +62,7 @@ if (accessToken) {
       type: PropTypes.object,
       value: pickList$
     }
-  })(appRouter);
+  })(MusitRoutes);
 
   ReactDOM.render(<SessionProvided />, dest);
 

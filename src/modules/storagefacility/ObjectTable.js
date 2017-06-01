@@ -4,13 +4,12 @@ import { FormGroup, Table } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import { I18n } from 'react-i18nify';
 import MusitObject from '../../models/object';
-import { hashHistory } from 'react-router';
-import Config from '../../config';
 
 export default class ObjectGrid extends Component {
   static propTypes = {
     tableData: PropTypes.arrayOf(PropTypes.object).isRequired,
     pickObject: PropTypes.func.isRequired,
+    goToObject: PropTypes.func.isRequired,
     isObjectAdded: PropTypes.func.isRequired,
     showMoveHistory: PropTypes.func.isRequired,
     onMove: PropTypes.func.isRequired
@@ -61,10 +60,7 @@ export default class ObjectGrid extends Component {
                       className={
                         isChildObject ? 'childObject' : isMainObject && 'mainObject'
                       }
-                      onClick={() =>
-                        hashHistory.push(
-                          Config.magasin.urls.client.object.gotoObject(c.uuid)
-                        )}
+                      onClick={() => this.props.goToObject(c.uuid)}
                     >
                       <td style={{ width: '20px' }}>
                         <span className="icon icon-musitobject" />

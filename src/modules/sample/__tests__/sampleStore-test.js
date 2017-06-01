@@ -7,78 +7,44 @@ describe('eventsStore', () => {
 
     // mock streams
     const clearM = '-1---------';
-    const loadSampleStoreM = '--1--------';
-    const loadSampleTypesM = '-----------';
-    const loadPredefinedTypesM = '-----------';
-    const getSampleTypesM = '-----------';
-    const expected = 'aab--------';
+    const loadPredefinedTypesM = '---1-----';
+    const getSampleTypesM = '--1---------';
+    const expected = 'aabc-------';
 
     const expectedStateMap = {
       a: {
         data: []
       },
       b: {
-        data: [
-          {
-            doneDate: '1992-01-01',
-            sampleType: 'Vev',
-            sampleSubType: 'Blod',
-            status: 1
-          },
-          {
-            doneDate: '1956-01-01',
-            sampleType: 'Tekstil',
-            sampleSubType: 'Ull',
-            status: 2
-          }
-        ],
-        museumNo: 'MUS-1',
-        subNo: 'AAA',
-        term: 'Carex'
+        data: [],
+        sampleTypes: ['dummySampleTypes']
+      },
+      c: {
+        data: [],
+        storageContainers: [],
+        storageMediums: [],
+        treatments: [],
+        sampleTypes: []
       }
     };
 
     // mock up$ and down$ events
     const clear$ = testScheduler.createHotObservable(clearM);
-    const loadSampleTypes$ = testScheduler.createHotObservable(loadSampleTypesM);
-    const loadPredefinedTypes$ = testScheduler.createHotObservable(loadPredefinedTypesM);
-    const loadSamplesForObject$ = testScheduler.createHotObservable(loadSampleStoreM, {
+    const getPredefinedTypes$ = testScheduler.createHotObservable(loadPredefinedTypesM, {
       1: {
-        data: [
-          {
-            doneDate: '1992-01-01',
-            sampleType: 'Vev',
-            sampleSubType: 'Blod',
-            status: 1
-          },
-          {
-            doneDate: '1956-01-01',
-            sampleType: 'Tekstil',
-            sampleSubType: 'Ull',
-            status: 2
-          }
-        ],
-        museumNo: 'MUS-1',
-        subNo: 'AAA',
-        term: 'Carex'
+        storageContainers: [],
+        storageMediums: [],
+        treatments: [],
+        sampleTypes: []
       }
     });
     const getSampleTypes$ = testScheduler.createHotObservable(getSampleTypesM, {
-      1: {
-        sampleTypes: [
-          {
-            sampleType: 'Vev',
-            sampleSubType: 'Blod'
-          }
-        ]
-      }
+      1: ['dummySampleTypes']
     });
 
     const state$ = sampleStore$({
       clear$,
-      loadSamplesForObject$,
-      loadPredefinedTypes$,
-      loadSampleTypes$,
+      getPredefinedTypes$,
       getSampleTypes$
     });
 

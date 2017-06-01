@@ -27,7 +27,7 @@ import FontAwesome from 'react-fontawesome';
 import { hashHistory } from 'react-router';
 import SaveCancel from '../../components/formfields/saveCancel/SaveCancel';
 import DatePicker from '../../components/DatePicker';
-import ActorSuggest from '../../components/suggest/ActorSuggest';
+import { ActorSuggest } from '../../components/suggest/ActorSuggest';
 import * as validation from './observationValidation';
 import { I18n } from 'react-i18nify';
 import { emitError } from '../../shared/errors';
@@ -44,7 +44,8 @@ export default class ObservationPage extends React.Component {
     onSaveObservation: PropTypes.func.isRequired,
     mode: PropTypes.oneOf(['ADD', 'VIEW', 'EDIT']).isRequired,
     saveDisabled: PropTypes.bool,
-    cancelDisabled: PropTypes.bool
+    cancelDisabled: PropTypes.bool,
+    appSession: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -389,6 +390,7 @@ export default class ObservationPage extends React.Component {
                       disabled
                     />
                   : <ActorSuggest
+                      appSession={this.props.appSession}
                       id="doneByField"
                       value={
                         this.state.doneBy && this.state.doneBy.fn

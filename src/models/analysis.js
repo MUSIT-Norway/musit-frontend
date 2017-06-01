@@ -54,7 +54,7 @@ class MusitAnalysis {
     museumId: number,
     collectionId: string,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static saveAnalysisEvent: (
@@ -63,7 +63,7 @@ class MusitAnalysis {
     museumId: number,
     data: AnalysisType,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static editAnalysisEvent: (
@@ -73,7 +73,7 @@ class MusitAnalysis {
     museumId: number,
     data: Analysis,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static getAnalysesForObject: (
@@ -82,7 +82,7 @@ class MusitAnalysis {
     id: number,
     museumId: number,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static getAnalysisById: (
@@ -91,7 +91,7 @@ class MusitAnalysis {
     id: number,
     museumId: number,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static getAnalysisWithDetails: (
@@ -102,7 +102,7 @@ class MusitAnalysis {
     museumId: number,
     collectionId: string,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static getAnalysisTypes: (
@@ -110,7 +110,7 @@ class MusitAnalysis {
   ) => (props: {
     museumId: number,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static getAnalysisCategories: (
@@ -118,14 +118,14 @@ class MusitAnalysis {
   ) => (props: {
     museumId: number,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static getPurposes: (
     ajaxGet: AjaxGet
   ) => (props: {
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static saveAnalysisType: (
@@ -134,7 +134,7 @@ class MusitAnalysis {
     museumId: number,
     data: AnalysisType,
     token: string,
-    callBack?: ?Callback
+    callback?: Callback
   }) => Observable;
 
   static addResult: (
@@ -210,23 +210,23 @@ MusitAnalysis.getAnalysisTypesForCollection = (ajaxGet = simpleGet) => ({
   museumId,
   collectionId,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.analysisType.getAnalysisTypesForCollection(
     museumId,
     collectionId
   );
-  return ajaxGet(url, token, callBack).map(({ response }) => response);
+  return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
 MusitAnalysis.saveAnalysisEvent = (ajaxPost = simplePost) => ({
   museumId,
   data,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.analysis.saveAnalysisEvent(museumId);
-  return ajaxPost(url, data, token, callBack).map(({ response }) => response);
+  return ajaxPost(url, data, token, callback).map(({ response }) => response);
 };
 
 MusitAnalysis.editAnalysisEvent = (ajaxPut = simplePut) => ({
@@ -234,20 +234,20 @@ MusitAnalysis.editAnalysisEvent = (ajaxPut = simplePut) => ({
   museumId,
   data,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
-  return ajaxPut(url, data, token, callBack).map(({ response }) => response);
+  return ajaxPut(url, data, token, callback).map(({ response }) => response);
 };
 
 MusitAnalysis.getAnalysesForObject = (ajaxGet = simpleGet) => ({
   museumId,
   token,
   id,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.analysis.analysesForObject(museumId, id);
-  return ajaxGet(url, token, callBack).map(({ response }) => {
+  return ajaxGet(url, token, callback).map(({ response }) => {
     if (!Array.isArray(response)) {
       return [];
     }
@@ -259,10 +259,10 @@ MusitAnalysis.getAnalysisById = (ajaxGet = simpleGet) => ({
   museumId,
   id,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.analysis.getAnalysisById(museumId, id);
-  return ajaxGet(url, token, callBack).map(({ response }) => response);
+  return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
 MusitAnalysis.getAnalysisWithDetails = (
@@ -340,20 +340,20 @@ MusitAnalysis.getAnalysisWithDetails = (
 MusitAnalysis.getAnalysisTypes = (ajaxGet = simpleGet) => ({
   museumId,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.analysisType.getAllAnalysisTypes(museumId);
-  return ajaxGet(url, token, callBack).map(r => r.response);
+  return ajaxGet(url, token, callback).map(r => r.response);
 };
 
 MusitAnalysis.saveAnalysisType = (ajaxPost = simplePost) => ({
   museumId,
   data,
   token,
-  callBack
+  callback
 }) => {
   const url = Config.magasin.urls.api.analysis.saveAnalysisType(museumId);
-  return ajaxPost(url, data, token, callBack).map(({ response }) => response);
+  return ajaxPost(url, data, token, callback).map(({ response }) => response);
 };
 
 MusitAnalysis.addResult = (ajaxPost = simplePost) => ({
@@ -368,8 +368,8 @@ MusitAnalysis.addResult = (ajaxPost = simplePost) => ({
     token
   );
 
-MusitAnalysis.getPurposes = (ajaxGet = simpleGet) => ({ token, callBack }) =>
-  ajaxGet(Config.magasin.urls.api.analysis.getPurposes, token, callBack).map(
+MusitAnalysis.getPurposes = (ajaxGet = simpleGet) => ({ token, callback }) =>
+  ajaxGet(Config.magasin.urls.api.analysis.getPurposes, token, callback).map(
     ({ response }) => response
   );
 

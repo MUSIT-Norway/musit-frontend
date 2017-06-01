@@ -45,6 +45,7 @@ export class ViewObservationPage extends React.Component {
               {I18n.t('musit.observation.page.titles.view')}
             </h4>
             <ObservationPage
+              appSession={this.props.appSession}
               id={this.props.params.id}
               onSaveObservation={() => true} // disable save
               observations={this.props.store.data.observations}
