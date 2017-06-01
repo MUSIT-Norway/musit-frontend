@@ -31,7 +31,7 @@ type Props = {
   updateForm: Function,
   fieldName: string,
   appSession: AppSession,
-  roles?: ?Array<string>,
+  roles?: Array<string>,
   showDateForRole?: Function
 };
 
