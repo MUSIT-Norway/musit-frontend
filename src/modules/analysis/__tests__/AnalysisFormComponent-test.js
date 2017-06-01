@@ -48,17 +48,6 @@ describe('AnalysisFormComponent', () => {
         restrictions_expirationDate: {
           ...form.restrictions_expirationDate,
           value: '2017-01-01'
-        },
-        persons: {
-          ...form.persons,
-          value: [
-            {
-              name: 'Stein Olsen',
-              uuid: '0000-000233-000030-0000',
-              role: 'doneBy',
-              date: '1999-01-01'
-            }
-          ]
         }
       };
       const promise1 = new StatefulPromise();

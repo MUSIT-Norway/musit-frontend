@@ -134,42 +134,6 @@ exports[`AnalysisViewComponent should render properly 1`] = `
         Personer tilknyttet analysen:
       </label>
     </div>
-    <div
-      className="form-group"
-    >
-      <label
-        className="control-label col-md-2"
-        htmlFor="responsible-name1"
-      >
-        Navn:
-      </label>
-      <div
-        className="col-md-2"
-      >
-        <p
-          className="form-control-static"
-          id="responsible-name1"
-        >
-          n/a
-        </p>
-      </div>
-      <label
-        className="control-label col-md-1"
-        htmlFor="responsible-role1"
-      >
-        Rolle:
-      </label>
-      <div
-        className="col-md-2"
-      >
-        <p
-          className="form-control-static"
-          id="responsible-role1"
-        >
-          n/a
-        </p>
-      </div>
-    </div>
     <hr />
     <div
       className="well"

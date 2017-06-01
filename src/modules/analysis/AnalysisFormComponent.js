@@ -548,7 +548,6 @@ export function submitForm(
     const responsible = form.persons
       ? form.persons.rawValue.find(p => p.role === 'responsible')
       : undefined;
-    console.log('Form: ', form);
 
     const data = {
       analysisTypeId: form.analysisTypeId.value,

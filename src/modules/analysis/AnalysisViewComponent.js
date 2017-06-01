@@ -106,7 +106,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
       <div className="form-group">
         <label className="control-label">Personer tilknyttet analysen:</label>
       </div>
-      {form.persons.value.map((p, i) => (
+      { form.persons.value && form.persons.value.map((p, i) => (
         <div key={`persons_${i}`} className="form-group">
           <label className="control-label col-md-2" htmlFor="responsible-name1">
             Navn:
