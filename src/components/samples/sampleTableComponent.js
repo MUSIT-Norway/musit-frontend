@@ -73,7 +73,7 @@ const pickObjectParams = (
       subNo: objectData.subNo,
       term: objectData.term,
       sampleType: getSampleType(sampleTypes, s.sampleTypeId, appSession),
-      sampleSubType: getSampleSubType(sampleTypes, s.sampleTypeId, appSession) || ''
+      sampleSubType: getSampleSubType(sampleTypes, s.sampleTypeId, appSession)
     },
     breadcrumb: s.breadcrumb ? s.breadcrumb : [],
     museumId: appSession.museumId,
