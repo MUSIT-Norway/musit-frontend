@@ -86,7 +86,7 @@ class MusitObject {
     id: string,
     destination: number,
     doneBy: string,
-    objectType?: 'collection' | 'sample',
+    objectType?: Array<{objectType: 'collection' | 'sample', id: string}>,
     museumId: number,
     token: string,
     callback?: Callback
@@ -260,10 +260,11 @@ MusitObject.moveSingleObject = (ajaxPut = simplePut) => ({
   token,
   callback
 }) => {
-  const items = [].concat(id).map(objectId => ({
+  let items = [].concat(id).map(objectId => ({
     id: objectId,
-    objectType: objectType || 'collection'
+    objectType: objectType
   }));
+  items = objectType ? objectType : items;
   const data = { doneBy, destination, items };
   return ajaxPut(
     Config.magasin.urls.api.storagefacility.moveObject(museumId),
