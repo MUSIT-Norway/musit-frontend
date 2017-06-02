@@ -166,6 +166,7 @@ export const moveItems = (
     const idsToMove = items.map(
       itemToMove => (isNode ? itemToMove.nodeId : itemToMove.uuid)
     );
+    const objectType = !isNode ? items[0].objectType : null;
 
     const toMoveLength = idsToMove.length;
     const first = items[0];
@@ -219,6 +220,7 @@ export const moveItems = (
     if (!error) {
       moveFunction({
         id: idsToMove,
+        objectType: objectType,
         destination: to.nodeId,
         doneBy: MusitActor.getActorId(appSession.actor),
         museumId: appSession.museumId,

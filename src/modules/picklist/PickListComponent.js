@@ -75,8 +75,8 @@ export class PickListComponent extends React.Component {
     if (pick.value.name) {
       return <FontAwesome name="folder" />;
     }
-    if (pick.value.type) {
-      return <FontAwesome name="heart-o" />;
+    if (pick.value.objectType === 'sample') {
+      return <FontAwesome name="flask" />;
     }
     return <span className="icon icon-musitobject" />;
   }
@@ -84,6 +84,11 @@ export class PickListComponent extends React.Component {
   labelRenderer(isNode, pick) {
     return (
       <div>
+        {!isNode && pick.value.sampleNum
+          ? <span
+              style={{ paddingLeft: '1em' }}
+            >{`${pick.value.sampleId} ${pick.value.sampleType}/${pick.value.sampleSubType}`}</span>
+          : null}
         {!isNode
           ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span>
           : null}

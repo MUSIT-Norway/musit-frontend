@@ -25,30 +25,6 @@ type Props = {
   sampleStatus: SampleStatus
 };
 
-const pickObjectParams = (
-  s: SampleData,
-  appSession: AppSession,
-  objectData: ObjectData
-) => {
-  return {
-    object: {
-      ...s,
-      uuid: s.objectId,
-      collection: appSession.collectionId,
-      id: s.objectId,
-      museumNo: objectData.museumNo,
-      objectType: s.sampleTypeId,
-      subNo: objectData.subNo,
-      term: objectData.term,
-      type: 'sample'
-    },
-    breadcrumb: s.breadcrumb ? s.breadcrumb : [],
-    museumId: appSession.museumId,
-    collectionId: appSession.collectionId,
-    token: appSession.accessToken
-  };
-};
-
 const getSampleType = (
   sampleTypes: SampleTypesObject,
   sampleTypesId: number,
@@ -77,7 +53,33 @@ const getSampleSubType = (
   sampleTypesId: number,
   appSession: AppSession
 ) => {
-  return getSampleType(sampleTypes, sampleTypesId, appSession, false);
+  return getSampleType(sampleTypes, sampleTypesId, appSession, true);
+};
+
+const pickObjectParams = (
+  s: SampleData,
+  appSession: AppSession,
+  objectData: ObjectData,
+  sampleTypes: SampleTypesObject
+) => {
+  return {
+    object: {
+      ...s,
+      uuid: s.objectId,
+      collection: appSession.collectionId,
+      id: s.objectId,
+      museumNo: objectData.museumNo,
+      objectType: 'sample',
+      subNo: objectData.subNo,
+      term: objectData.term,
+      sampleType: getSampleType(sampleTypes, s.sampleTypeId, appSession),
+      sampleSubType: getSampleSubType(sampleTypes, s.sampleTypeId, appSession) || ''
+    },
+    breadcrumb: s.breadcrumb ? s.breadcrumb : [],
+    museumId: appSession.museumId,
+    collectionId: appSession.collectionId,
+    token: appSession.accessToken
+  };
 };
 const getSampleStatus = (
   sampleStatus: SampleStatus,
@@ -128,7 +130,7 @@ const SampleTableComponent = ({
                 onClick={e => {
                   e.preventDefault();
                   samples.map(obj =>
-                    pickObject(pickObjectParams(obj, appSession, objectData))
+                    pickObject(pickObjectParams(obj, appSession, objectData, sampleTypes))
                   );
                 }}
                 title={I18n.t('musit.objectsearch.addAllToPickList')}
@@ -160,7 +162,7 @@ const SampleTableComponent = ({
               <Td column="add">
                 <a
                   onClick={e => {
-                    pickObject(pickObjectParams(s, appSession, objectData));
+                    pickObject(pickObjectParams(s, appSession, objectData, sampleTypes));
                     e.stopPropagation();
                   }}
                   title={I18n.t('musit.objectsearch.addToPickList')}
