@@ -12,6 +12,11 @@ describe('AnalysisSampleFormPageView', () => {
     };
     const wrapper = shallow(
       <SampleViewComponent
+        clickCreateAnalysis={() => () => null}
+        clickEditSample={() => () => null}
+        store={{
+          sample: {}
+        }}
         appSession={appSession}
         params={{ sampleId: '0000-1111-2222-3333' }}
         form={{

@@ -6,8 +6,8 @@ import Sample from '../../models/sample';
 import Event from '../../models/event';
 export const initialState = { objectData: {}, events: [], samples: [] };
 
-export const loadObject$: Observable = createAction('loadObject$').switchMap(
-  MusitObject.getObjectDetails()
+export const loadObject$: Observable = createAction('loadObject$').switchMap(params =>
+  MusitObject.getObjectDetails()(params).map(({ response }) => response)
 );
 
 export const loadSampleEvents$: Observable = createAction('loadSampleEvents$').switchMap(

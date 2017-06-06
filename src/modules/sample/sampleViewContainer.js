@@ -1,17 +1,17 @@
 import inject from 'react-rxjs/dist/RxInject';
 import sampleForm from './sampleViewForm';
 import SampleViewComponent from './SampleViewComponent';
+import type { ClickEvents } from './SampleViewComponent';
 import PropTypes from 'prop-types';
 import { Observable } from 'rxjs';
 import mount from '../../shared/mount';
-import { emitError, emitSuccess } from '../../shared/errors';
-import Sample from '../../models/sample';
 import { makeUrlAware } from '../app/appSession';
 import flowRight from 'lodash/flowRight';
-import store$, { getPredefinedTypes$ } from './sampleStore';
+import store$, { getPredefinedTypes$, getSample$ } from './sampleStore';
 import flatten from 'lodash/flatten';
-import { toPromise } from '../../shared/util';
 import moment from 'moment';
+import { hashHistory } from 'react-router';
+import Config from '../../config';
 
 const { form$, loadForm$ } = sampleForm;
 
@@ -21,17 +21,38 @@ const data = {
   store$
 };
 
-const props = {
-  getSample: toPromise(Sample.loadSample()),
-  emitSuccess,
-  emitError
-};
+const clicks: ClickEvents = { clickEditSample, clickCreateAnalysis };
 
-const commands = { loadForm$, getPredefinedTypes$ };
+const commands = { getSample$, loadForm$, getPredefinedTypes$ };
 
-export default flowRight([inject(data, commands, props), mount(onMount), makeUrlAware])(
+export default flowRight([inject(data, commands, clicks), mount(onMount), makeUrlAware])(
   SampleViewComponent
 );
+
+export function clickEditSample(
+  appSession,
+  sampleId,
+  objectData,
+  goTo = hashHistory.push
+) {
+  return e => {
+    e.preventDefault();
+    goTo({
+      pathname: Config.magasin.urls.client.analysis.editSample(appSession, sampleId),
+      state: [objectData]
+    });
+  };
+}
+
+export function clickCreateAnalysis(appSession, objectData, goTo = hashHistory.push) {
+  return e => {
+    e.preventDefault();
+    goTo({
+      pathname: Config.magasin.urls.client.analysis.addAnalysis(appSession),
+      state: [objectData]
+    });
+  };
+}
 
 export function getPersonsFromResponse(response) {
   let persons = [];
@@ -53,77 +74,74 @@ export function getPersonsFromResponse(response) {
   return persons;
 }
 
-export function convertSample(sampleTypes) {
-  return sample => {
-    const sampleType = flatten(Object.values(sampleTypes)).find(
-      subType => sample.sampleTypeId === subType.sampleTypeId
-    );
-    const formData = {};
-    formData.persons = {
-      name: 'persons',
-      defaultValue: getPersonsFromResponse(sample)
-    };
-    formData.updatedByName = {
-      name: 'updatedByName',
-      defaultValue: sample.updatedStamp ? sample.updatedStamp.name : null
-    };
-    formData.updatedDate = {
-      name: 'updatedDate',
-      defaultValue: sample.updatedStamp ? sample.updatedStamp.date : null
-    };
-    formData.registeredByName = {
-      name: 'registeredByName',
-      defaultValue: sample.registeredStamp.name
-    };
-    formData.registeredDate = {
-      name: 'registeredDate',
-      defaultValue: sample.registeredStamp.date
-    };
-    formData.sampleType = {
-      name: 'sampleType',
-      defaultValue: sampleType ? sampleType.enSampleType : null
-    };
-    formData.subTypeValue = {
-      name: 'subTypeValue',
-      defaultValue: sampleType
-        ? sampleType.enSampleSubType || sampleType.enSampleType
-        : null
-    };
-    formData.externalId = {
-      name: 'externalId',
-      defaultValue: sample.externalId ? sample.externalId.value : null
-    };
-    formData.externalIdSource = {
-      name: 'externalIdSource',
-      defaultValue: sample.externalId ? sample.externalId.source : null
-    };
-    formData.size = {
-      name: 'size',
-      defaultValue: sample.size ? sample.size.value : null
-    };
-    formData.sizeUnit = {
-      name: 'sizeUnit',
-      defaultValue: sample.size ? sample.size.unit : null
-    };
-    const data = Object.keys(sample).reduce((akk, key: string) => {
-      if (akk[key]) {
-        return akk;
-      }
-      return { ...akk, [key]: { name: key, defaultValue: sample[key] } };
-    }, formData);
-    return Object.values(data);
+export function convertSample(sample, sampleTypes) {
+  const sampleType = flatten(Object.values(sampleTypes)).find(
+    subType => sample.sampleTypeId === subType.sampleTypeId
+  );
+  const formData = {};
+  formData.persons = {
+    name: 'persons',
+    defaultValue: getPersonsFromResponse(sample)
   };
+  formData.updatedByName = {
+    name: 'updatedByName',
+    defaultValue: sample.updatedStamp ? sample.updatedStamp.name : null
+  };
+  formData.updatedDate = {
+    name: 'updatedDate',
+    defaultValue: sample.updatedStamp ? sample.updatedStamp.date : null
+  };
+  formData.registeredByName = {
+    name: 'registeredByName',
+    defaultValue: sample.registeredStamp.name
+  };
+  formData.registeredDate = {
+    name: 'registeredDate',
+    defaultValue: sample.registeredStamp.date
+  };
+  formData.sampleType = {
+    name: 'sampleType',
+    defaultValue: sampleType ? sampleType.enSampleType : null
+  };
+  formData.subTypeValue = {
+    name: 'subTypeValue',
+    defaultValue: sampleType
+      ? sampleType.enSampleSubType || sampleType.enSampleType
+      : null
+  };
+  formData.externalId = {
+    name: 'externalId',
+    defaultValue: sample.externalId ? sample.externalId.value : null
+  };
+  formData.externalIdSource = {
+    name: 'externalIdSource',
+    defaultValue: sample.externalId ? sample.externalId.source : null
+  };
+  formData.size = {
+    name: 'size',
+    defaultValue: sample.size ? sample.size.value : null
+  };
+  formData.sizeUnit = {
+    name: 'sizeUnit',
+    defaultValue: sample.size ? sample.size.unit : null
+  };
+  const data = Object.keys(sample).reduce((akk, key: string) => {
+    if (akk[key]) {
+      return akk;
+    }
+    return { ...akk, [key]: { name: key, defaultValue: sample[key] } };
+  }, formData);
+  return Object.values(data);
 }
 
 export function loadSample(id, museumId, token, getSample, loadForm) {
-  return ({ sampleTypes }) => {
-    return getSample({ id, museumId, token })
-      .then(convertSample(sampleTypes))
-      .then(res => {
-        loadForm(res);
-        return res; // simulate do operator in rxjs for a promise
-      });
-  };
+  return ({ sampleTypes }) =>
+    getSample({
+      id,
+      museumId,
+      token,
+      onComplete: sample => loadForm(convertSample(sample, sampleTypes))
+    });
 }
 
 export function onMount({ getSample, getPredefinedTypes, loadForm, params, appSession }) {
