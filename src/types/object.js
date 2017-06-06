@@ -20,3 +20,5 @@ export type ObjectProps = {
   token: string,
   callBack: any
 };
+
+export type objectTypeAndId = Array<{ objectType: 'collection' | 'sample', id: string }>;
