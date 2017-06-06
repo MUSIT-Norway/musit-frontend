@@ -446,8 +446,7 @@ export default class ObservationPage extends React.Component {
                             return (
                               <option key={index} value={type}>
                                 {I18n.t(
-                                  `musit.observation.page.${this.typeDefinitions[type]
-                                    .label}`
+                                  `musit.observation.page.${this.typeDefinitions[type].label}`
                                 )}
                               </option>
                             );
@@ -510,7 +509,7 @@ export default class ObservationPage extends React.Component {
                   onClickCancel={() => hashHistory.goBack()}
                   saveDisabled={
                     this.props.saveDisabled === true ||
-                    this.state.observations.length === 0
+                      this.state.observations.length === 0
                   }
                   cancelDisabled={this.props.cancelDisabled}
                 />}

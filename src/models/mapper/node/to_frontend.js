@@ -28,8 +28,8 @@ export const toFrontend = data => {
       ? {
           cleaning: data.environmentRequirement.cleaning,
           lightingCondition: data.environmentRequirement.lightingCondition,
-          comments:
-            data.environmentRequirement.comment || data.environmentRequirement.comments,
+          comments: data.environmentRequirement.comment ||
+            data.environmentRequirement.comments,
           ...mapRequirement(data.environmentRequirement, 'temperature'),
           ...mapRequirement(data.environmentRequirement, 'hypoxicAir'),
           ...mapRequirement(data.environmentRequirement, 'relativeHumidity')

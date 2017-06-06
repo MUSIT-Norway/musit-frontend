@@ -31,7 +31,8 @@ import SampleEditSingle from './poc/single/SampleEdit';
 import HomeView from './modules/home/HomePage';
 import Administration from './modules/administration/Administration';
 import AnalysisTypes from './modules/administration/analysisTypes/analysisTypesContainer';
-import AnalysisPlaces from './modules/administration/analysisPlaces/analysisPlacesContainer';
+import AnalysisPlaces
+  from './modules/administration/analysisPlaces/analysisPlacesContainer';
 import SampleTypes from './modules/administration/sampleTypes/sampleTypesContainer';
 
 export default () => {

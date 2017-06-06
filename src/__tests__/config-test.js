@@ -62,14 +62,12 @@ describe('Config urls', () => {
         {
           name: 'searchUrl',
           actual: urls.api.storagefacility.searchUrl('Øne', 99),
-          expected:
-            '/api/storagefacility/museum/99/storagenodes/search?searchStr=%C3%98ne&'
+          expected: '/api/storagefacility/museum/99/storagenodes/search?searchStr=%C3%98ne&'
         },
         {
           name: 'scanUrl',
           actual: urls.api.storagefacility.scanUrl('0000-0000', 99),
-          expected:
-            '/api/storagefacility/museum/99/storagenodes/scan?storageNodeId=0000-0000&'
+          expected: '/api/storagefacility/museum/99/storagenodes/scan?storageNodeId=0000-0000&'
         },
         {
           name: 'scanOldUrl',
@@ -87,8 +85,7 @@ describe('Config urls', () => {
             99,
             'ac08361b-3f13-4cde-9428-4ba2776316bd'
           ),
-          expected:
-            '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd'
+          expected: '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd'
         },
         {
           name: 'childrenNodesUrl_with_page_and_limit',
@@ -98,8 +95,7 @@ describe('Config urls', () => {
             4,
             10
           ),
-          expected:
-            '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/children?page=4&limit=10'
+          expected: '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/children?page=4&limit=10'
         },
         {
           name: 'childrenNodesUrl_without_page_and_limit',
@@ -107,14 +103,12 @@ describe('Config urls', () => {
             99,
             'ac08361b-3f13-4cde-9428-4ba2776316bd'
           ),
-          expected:
-            '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/children?page=1&limit=25'
+          expected: '/api/storagefacility/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/children?page=1&limit=25'
         },
         {
           name: 'currentLocation',
           actual: urls.api.storagefacility.currentLocation(99, 123),
-          expected:
-            '/api/storagefacility/museum/99/storagenodes/objects/123/currentlocation'
+          expected: '/api/storagefacility/museum/99/storagenodes/objects/123/currentlocation'
         },
         {
           name: 'currentLocations',
@@ -170,20 +164,17 @@ describe('Config urls', () => {
         {
           name: 'scanOldUrl',
           actual: urls.api.thingaggregate.scanOldUrl(1234, 99, '1234'),
-          expected:
-            '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
+          expected: '/api/thingaggregate/museum/99/scan?oldBarcode=1234&collectionIds=1234'
         },
         {
           name: 'getMainObject',
           actual: urls.api.thingaggregate.getMainObject(99, 2344, '1234'),
-          expected:
-            '/api/thingaggregate/museum/99/objects/2344/children?collectionIds=1234'
+          expected: '/api/thingaggregate/museum/99/objects/2344/children?collectionIds=1234'
         },
         {
           name: 'getObjectForCollection',
           actual: urls.api.thingaggregate.getObjectForCollection(99, 433, '1234', 1, 20),
-          expected:
-            '/api/thingaggregate/museum/99/node/433/objects?collectionIds=1234&page=1&limit=20'
+          expected: '/api/thingaggregate/museum/99/node/433/objects?collectionIds=1234&page=1&limit=20'
         },
         {
           name: 'nodeStatsUrl',
@@ -191,8 +182,7 @@ describe('Config urls', () => {
             99,
             'ac08361b-3f13-4cde-9428-4ba2776316bd'
           ),
-          expected:
-            '/api/thingaggregate/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/stats'
+          expected: '/api/thingaggregate/museum/99/storagenodes/ac08361b-3f13-4cde-9428-4ba2776316bd/stats'
         }
       ]
     },

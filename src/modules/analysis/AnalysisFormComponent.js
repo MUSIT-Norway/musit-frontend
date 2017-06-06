@@ -110,9 +110,9 @@ const AnalysisForm = ({
                   >
                     <option value="">Velg kategori</option>
                     {store.categories &&
-                      Object.keys(store.categories).map(k =>
+                      Object.keys(store.categories).map(k => (
                         <option key={k} value={k}>{store.categories[k]}</option>
-                      )}
+                      ))}
                   </select>
                 </div>
                 {form.analysisTypeCategory.rawValue &&
@@ -130,11 +130,11 @@ const AnalysisForm = ({
                           .filter(
                             b => b.category.toString() === form.analysisTypeCategory.value
                           )
-                          .map(a =>
+                          .map(a => (
                             <option key={a.id} value={a.id}>
                               {appSession.language.isEn ? a.enName : a.noName}
                             </option>
-                          )}
+                          ))}
                     </select>
                   </div>}
               </div>
@@ -157,11 +157,11 @@ const AnalysisForm = ({
             >
               <option value="">Velg formål</option>
               {store.purposes &&
-                store.purposes.map(a =>
+                store.purposes.map(a => (
                   <option key={a.id} value={a.id}>
                     {appSession.isEn ? a.enPurpose : a.noPurpose}
                   </option>
-                )}
+                ))}
             </select>
           </div>
         </div>
@@ -197,11 +197,11 @@ const AnalysisForm = ({
               onChange={updateFormField(form.place.name, updateForm)}
             >
               <option value="">Velg analysested</option>
-              {analysisPlaces.map(a =>
+              {analysisPlaces.map(a => (
                 <option key={a.orgId} value={a.orgId}>
                   {a.fullName}
                 </option>
-              )}
+              ))}
             </select>
           </div>
         </div>
@@ -218,7 +218,7 @@ const AnalysisForm = ({
               value={
                 (Array.isArray(form.caseNumbers.rawValue) &&
                   form.caseNumbers.rawValue.join(', ')) ||
-                ''
+                  ''
               }
               onChange={updateArrayField(form.caseNumbers.name, updateForm)}
             />
@@ -339,9 +339,7 @@ const AnalysisForm = ({
                   Ja
                 </label>
                 <label
-                  className={`btn btn-default ${!form.restrictions.value
-                    ? 'active'
-                    : ''}`}
+                  className={`btn btn-default ${!form.restrictions.value ? 'active' : ''}`}
                 >
                   <input
                     type="radio"
@@ -403,7 +401,7 @@ const AnalysisForm = ({
                     value={
                       (Array.isArray(form.restrictions_caseNumbers.rawValue) &&
                         form.restrictions_caseNumbers.rawValue.join(', ')) ||
-                      ''
+                        ''
                     }
                     onChange={updateArrayField(
                       form.restrictions_caseNumbers.name,

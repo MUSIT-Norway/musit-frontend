@@ -6,11 +6,12 @@ import Logo4 from './assets/UiBmerke_grayscale.png';
 import Logo5 from './assets/ntnu_u-slagord.png';
 import './Logos.css';
 
-export default props =>
+export default props => (
   <div className="logos" style={props.style}>
     <img style={{ height: '60px' }} alt="logo" src={Logo1} />
     <img style={{ height: '60px' }} alt="logo" src={Logo2} />
     <img style={{ height: '60px' }} alt="logo" src={Logo3} />
     <img style={{ height: '60px' }} alt="logo" src={Logo4} />
     <img style={{ height: '60px' }} alt="logo" src={Logo5} />
-  </div>;
+  </div>
+);

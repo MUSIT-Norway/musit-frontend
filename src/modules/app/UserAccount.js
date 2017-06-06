@@ -57,11 +57,12 @@ export default class MusitUserAccount extends Component {
         </strong>
       </Tooltip>
     );
-    const menuText = (t1, t2) =>
+    const menuText = (t1, t2) => (
       <Row>
         <Col md={1}>{t1}</Col>
         <Col md={1}>{t2}</Col>
-      </Row>;
+      </Row>
+    );
     const groups = this.props.groups;
     const museumId = this.props.selectedMuseumId;
     const collectionId = this.props.selectedCollectionId;
@@ -112,7 +113,7 @@ export default class MusitUserAccount extends Component {
                 {I18n.t('musit.userProfile.collection')}
               </MenuItem>}
             {collectionDropdown &&
-              collections.map((cc, i) =>
+              collections.map((cc, i) => (
                 <MenuItem
                   key={i}
                   eventKey={cc.uuid}
@@ -123,7 +124,7 @@ export default class MusitUserAccount extends Component {
                     I18n.t(`musit.userProfile.collections.${cc.uuid}`)
                   )}
                 </MenuItem>
-              )}
+              ))}
             {collectionDropdown && <MenuItem divider />}
             <MenuItem header>{I18n.t('musit.language')}</MenuItem>
             <MenuItem eventKey={5} onSelect={() => this.props.handleLanguage('no')}>

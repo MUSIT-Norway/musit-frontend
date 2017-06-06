@@ -92,9 +92,9 @@ export class PrintTemplateComponent extends Component {
           {[]
             .concat(this.props.store.templates)
             .filter(t => t)
-            .map((template, i) =>
+            .map((template, i) => (
               <option key={i} value={template.id}>{template.name}</option>
-            )}
+            ))}
         </select>
         {' '}
         {this.canSelectPath(this.props.store.templateId) &&

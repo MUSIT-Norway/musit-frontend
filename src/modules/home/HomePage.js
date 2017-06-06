@@ -34,12 +34,13 @@ type Props = {
 };
 const goTo = url => hashHistory.push(url);
 
-const buttonAdd = (t, url) =>
+const buttonAdd = (t, url) => (
   <Button style={{ fontSize: '3.2em' }} className="button" onClick={() => goTo(url)}>
     {t} <FontAwesome name="chevron-right" />
-  </Button>;
+  </Button>
+);
 
-export const HomePage = (props: Props) =>
+export const HomePage = (props: Props) => (
   <Grid>
     <Row>
       <PageHeader>{I18n.t('musit.texts.musitBase')}</PageHeader>
@@ -91,7 +92,8 @@ export const HomePage = (props: Props) =>
         <Logos />
       </div>
     </Row>
-  </Grid>;
+  </Grid>
+);
 
 const data = {
   appSession$: { type: PropTypes.object.isRequired }

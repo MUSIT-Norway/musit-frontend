@@ -62,9 +62,7 @@ Observation.addObservation = (ajaxPost = simplePost) => ({
   token,
   callback
 }) => {
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(
-    museumId
-  )}/${nodeId}/observations`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations`;
   const dataToPost = mapToBackEnd(data, nodeId);
   return ajaxPost(url, dataToPost, token, callback);
 };
@@ -75,9 +73,7 @@ Observation.getObservation = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
   museumId,
   token
 }) => {
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(
-    museumId
-  )}/${nodeId}/observations/${observationId}`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/observations/${observationId}`;
   return ajaxGet(url, token).flatMap(observation => {
     const actorIds = uniq([
       observation.response.doneBy,

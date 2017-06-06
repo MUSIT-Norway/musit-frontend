@@ -12,11 +12,11 @@ export default function({ id, onChange, items, title }: FieldDropDownProps) {
   return (
     <FormGroup controlId={id}>
       <DropdownButton bsStyle="default" title={title} id={id}>
-        {items.map((v, i) =>
+        {items.map((v, i) => (
           <MenuItem key={i} onClick={e => onChange(e.target.text)}>
             {v}
           </MenuItem>
-        )}
+        ))}
       </DropdownButton>
     </FormGroup>
   );

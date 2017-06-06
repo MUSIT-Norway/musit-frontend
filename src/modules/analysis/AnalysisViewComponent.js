@@ -20,7 +20,7 @@ type Props = {
   goBack: () => void
 };
 
-const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) =>
+const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) => (
   <div>
     <div className="page-header">
       <h1>
@@ -107,7 +107,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) =>
         <label className="control-label">Personer tilknyttet analysen:</label>
       </div>
       {form.persons.value &&
-        form.persons.value.map((p, i) =>
+        form.persons.value.map((p, i) => (
           <div key={`persons_${i}`} className="form-group">
             <label className="control-label col-md-2" htmlFor="responsible-name1">
               Navn:
@@ -130,7 +130,7 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) =>
               </p>
             </div>
           </div>
-        )}
+        ))}
       <hr />
       <div className="well">
         <div className="form-group">
@@ -259,7 +259,8 @@ const AnalysisView = ({ form, store, appSession, params, goToUrl }: Props) =>
           </div>}
       </div>
     </form>
-  </div>;
+  </div>
+);
 
 function getStatusText(status?: ?number): string {
   if (!status) {

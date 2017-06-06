@@ -85,10 +85,9 @@ export class PickListComponent extends React.Component {
     return (
       <div>
         {!isNode && pick.value.sampleNum
-          ? <span style={{ paddingLeft: '1em' }}>{`${pick.value.sampleId} ${pick.value
-              .sampleType}${pick.value.sampleSubType
-              ? `/${pick.value.sampleSubType}`
-              : ''}`}</span>
+          ? <span
+              style={{ paddingLeft: '1em' }}
+            >{`${pick.value.sampleId} ${pick.value.sampleType}${pick.value.sampleSubType ? `/${pick.value.sampleSubType}` : ''}`}</span>
           : null}
         {!isNode
           ? <span style={{ paddingLeft: '1em' }}>{pick.value.museumNo}</span>
@@ -217,9 +216,7 @@ export class PickListComponent extends React.Component {
                         }
                       }}
                       title={I18n.t(
-                        `musit.pickList.tooltip.${isNode
-                          ? 'moveSelectedNodes'
-                          : 'moveSelectedObjects'}`
+                        `musit.pickList.tooltip.${isNode ? 'moveSelectedNodes' : 'moveSelectedObjects'}`
                       )}
                     />
                     {this.selectedCount(isNode, marked.length)}
@@ -233,9 +230,7 @@ export class PickListComponent extends React.Component {
                         }
                       }}
                       title={I18n.t(
-                        `musit.pickList.tooltip.${isNode
-                          ? 'removeSelectedNodesFromList'
-                          : 'removeSelectedObjectsFromList'}`
+                        `musit.pickList.tooltip.${isNode ? 'removeSelectedNodesFromList' : 'removeSelectedObjectsFromList'}`
                       )}
                     />
                     {this.selectedCount(isNode, marked.length)}

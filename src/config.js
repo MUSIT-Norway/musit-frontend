@@ -96,9 +96,7 @@ export default {
             observationId: number,
             appSession: AppSession
           ) =>
-            `${clientContextUrl(
-              appSession
-            )}/magasin/${nodeId}/observation/${observationId}`,
+            `${clientContextUrl(appSession)}/magasin/${nodeId}/observation/${observationId}`,
           addControl: (nodeId: number, appSession: AppSession) =>
             `${clientContextUrl(appSession)}/magasin/${nodeId}/control/add`,
           viewControl: (nodeId: string, controlId: number, appSession: AppSession) =>
@@ -145,9 +143,7 @@ export default {
         },
         storagefacility: {
           searchUrl: (term: string, mid: MuseumId) =>
-            `/api/storagefacility/museum/${mid}/storagenodes/search?searchStr=${encodeURIComponent(
-              term
-            )}&`,
+            `/api/storagefacility/museum/${mid}/storagenodes/search?searchStr=${encodeURIComponent(term)}&`,
           scanUrl: (storageNodeId: string, mid: MuseumId) =>
             `/api/storagefacility/museum/${mid}/storagenodes/scan?storageNodeId=${storageNodeId}&`,
           scanOldUrl: (oldBarcode: number, mid: MuseumId) =>
@@ -164,8 +160,7 @@ export default {
             pageNum: ?number,
             limit: ?number
           ): string =>
-            `/api/storagefacility/museum/${mid}/storagenodes/${uuid}/children?page=${pageNum ||
-              1}&limit=${limit || 25}`,
+            `/api/storagefacility/museum/${mid}/storagenodes/${uuid}/children?page=${pageNum || 1}&limit=${limit || 25}`,
           currentLocation: (mid: MuseumId, objectId: number): string =>
             `/api/storagefacility/museum/${mid}/storagenodes/objects/${objectId}/currentlocation`,
           currentLocations: (mid: MuseumId): string =>

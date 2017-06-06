@@ -32,7 +32,7 @@ export const ViewObjectComponent = ({
   isItemAdded,
   pickList,
   sampleStatus
-}: ViewObjectComponentProps) =>
+}: ViewObjectComponentProps) => (
   <div>
     <PageHeader>Objektvisning</PageHeader>
     <div style={{ marginTop: '30px', marginBottom: '40px' }}>
@@ -109,6 +109,7 @@ export const ViewObjectComponent = ({
         />
       </Tab>
     </Tabs>
-  </div>;
+  </div>
+);
 
 export default ViewObjectComponent;
