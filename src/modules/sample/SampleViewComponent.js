@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
-import Config from '../../config';
 import { hashHistory } from 'react-router';
 import MetaInformation from '../../components/metainfo';
 import Sample from '../../models/sample';
+import type { SampleData } from '../../types/samples';
 import moment from 'moment';
 import type { AppSession } from '../../types/appSession';
 import type { FormDetails } from './types/form';
@@ -14,15 +14,31 @@ type Props = {
   form: FormDetails,
   appSession: AppSession,
   location: { state: Array<ObjectData> },
-  params: { sampleId: string }
+  params: { sampleId: string },
+  store: { sample: SampleData }
+};
+
+export type ClickEvents = {
+  clickEditSample: (
+    appSession: AppSession,
+    sampleId: string,
+    object: ObjectData
+  ) => (e: { preventDefault: Function }) => void,
+  clickCreateAnalysis: (
+    appSession: AppSession,
+    object: mixed
+  ) => (e: { preventDefault: Function }) => void
 };
 
 export default function SampleViewComponent({
   form,
+  store,
   appSession,
   location: { state },
-  params: { sampleId }
-}: Props) {
+  params: { sampleId },
+  clickCreateAnalysis,
+  clickEditSample
+}: Props & ClickEvents) {
   const objectData = state[0];
   return (
     <form className="form-horizontal">
@@ -31,22 +47,26 @@ export default function SampleViewComponent({
           Prøve
         </h1>
       </div>
+      <div className="pull-right">
+        <button
+          className="btn-info"
+          onClick={clickCreateAnalysis(appSession, { ...objectData, ...store.sample })}
+        >
+          Opprett analyse
+        </button>
+        <button
+          className="btn-info"
+          onClick={clickEditSample(appSession, sampleId, objectData)}
+        >
+          Endre prøve
+        </button>
+      </div>
       <div>
         <MetaInformation
           updatedBy={form.updatedByName.value}
           updatedDate={form.updatedDate.value}
           registeredBy={form.registeredByName.value}
           registeredDate={form.registeredDate.value}
-          onClickEdit={e => {
-            e.preventDefault();
-            hashHistory.push({
-              pathname: Config.magasin.urls.client.analysis.editSample(
-                appSession,
-                sampleId
-              ),
-              state: [objectData]
-            });
-          }}
         />
         <hr />
       </div>

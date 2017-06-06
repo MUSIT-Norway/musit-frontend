@@ -11,9 +11,24 @@ exports[`AnalysisSampleFormPageView should display correctly 1`] = `
       Prøve
     </h1>
   </div>
+  <div
+    className="pull-right"
+  >
+    <button
+      className="btn-info"
+      onClick={[Function]}
+    >
+      Opprett analyse
+    </button>
+    <button
+      className="btn-info"
+      onClick={[Function]}
+    >
+      Endre prøve
+    </button>
+  </div>
   <div>
     <MetaInformation
-      onClickEdit={[Function]}
       registeredBy="1233"
       registeredDate="1988-12-31"
       updatedBy="Arne And"

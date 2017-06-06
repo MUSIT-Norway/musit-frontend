@@ -3,6 +3,7 @@ import { simpleGet, simplePost, simplePut } from '../shared/RxAjax';
 import Config from '../config';
 import MusitActor from './actor';
 import MusitObject from './object';
+import Sample from './sample';
 import { Observable } from 'rxjs';
 import moment from 'moment';
 import type { Field } from '../forms/form';
@@ -288,6 +289,67 @@ MusitAnalysis.getAnalysisById = (ajaxGet = simpleGet) => ({
   return ajaxGet(url, token, callback).map(({ response }) => response);
 };
 
+function getEventObjectDetails(props, ajaxGet) {
+  return event => {
+    const params = {
+      id: event.objectId,
+      museumId: props.museumId,
+      collectionId: props.collectionId,
+      token: props.token
+    };
+    return MusitObject.getObjectDetails(ajaxGet)(
+      params
+    ).flatMap(({ error, response }) => {
+      if (error) {
+        return Sample.loadSample(ajaxGet)(params).flatMap(sample => {
+          return MusitObject.getObjectDetails(ajaxGet)({
+            ...params,
+            id: sample.originatedObjectUuid
+          }).map(({ response }) => ({ ...sample, ...response }));
+        });
+      }
+      return Observable.of(response);
+    });
+  };
+}
+
+function zipObjectInfoWithEvents(analysis) {
+  return arrayOfObjectDetails => {
+    const actualValues = arrayOfObjectDetails.filter(a => a);
+    if (actualValues.length === 0) {
+      return analysis;
+    }
+    const events = analysis.events.map(e => {
+      const od = arrayOfObjectDetails.find(objD => {
+        return objD.objectId === e.objectId || objD.uuid === e.objectId;
+      });
+      return od ? { ...e, term: od.term, museumNo: od.museumNo, subNo: od.subNo } : e;
+    });
+    return { ...analysis, events: events };
+  };
+}
+
+function getActorNames(actors, analysis) {
+  return MusitActor.getMultipleActorNames(actors, [
+    {
+      id: analysis.updatedBy,
+      fieldName: 'updatedByName'
+    },
+    {
+      id: analysis.registeredBy,
+      fieldName: 'registeredByName'
+    },
+    {
+      id: analysis.doneBy,
+      fieldName: 'doneByName'
+    },
+    {
+      id: analysis.responsible,
+      fieldName: 'responsibleName'
+    }
+  ]);
+}
+
 MusitAnalysis.getAnalysisWithDetails = (
   ajaxGet = simpleGet,
   ajaxPost = simplePost
@@ -304,25 +366,7 @@ MusitAnalysis.getAnalysisWithDetails = (
         token: props.token
       }).map(actors => {
         if (actors) {
-          const actorNames = MusitActor.getMultipleActorNames(actors, [
-            {
-              id: analysis.updatedBy,
-              fieldName: 'updatedByName'
-            },
-            {
-              id: analysis.registeredBy,
-              fieldName: 'registeredByName'
-            },
-            {
-              id: analysis.doneBy,
-              fieldName: 'doneByName'
-            },
-            {
-              id: analysis.responsible,
-              fieldName: 'responsibleName'
-            }
-          ]);
-          return { ...analysis, ...actorNames };
+          return { ...analysis, ...getActorNames(actors, analysis) };
         }
         return analysis;
       })
@@ -330,27 +374,8 @@ MusitAnalysis.getAnalysisWithDetails = (
     .flatMap(analysis => {
       if (analysis.type === 'AnalysisCollection' && analysis.events.length > 0) {
         return Observable.forkJoin(
-          analysis.events.map(a =>
-            MusitObject.getObjectDetails(ajaxGet)({
-              id: a.objectId,
-              museumId: props.museumId,
-              collectionId: props.collectionId,
-              token: props.token
-            })
-          )
-        ).map(arrayOfObjectDetails => {
-          const actualValues = arrayOfObjectDetails.filter(a => a);
-          if (actualValues.length === 0) {
-            return analysis;
-          }
-          const events = analysis.events.map(e => {
-            const od = arrayOfObjectDetails.find(objD => objD.uuid === e.objectId);
-            return od
-              ? { ...e, term: od.term, museumNo: od.museumNo, subNo: od.subNo }
-              : e;
-          });
-          return { ...analysis, events: events };
-        });
+          analysis.events.map(getEventObjectDetails(props, ajaxGet))
+        ).map(zipObjectInfoWithEvents(analysis));
       }
       if (!analysis.objectId) {
         return Observable.of(analysis);
@@ -360,15 +385,15 @@ MusitAnalysis.getAnalysisWithDetails = (
         museumId: props.museumId,
         collectionId: props.collectionId,
         token: props.token
-      }).map(object => {
-        if (!object) {
+      }).map(({ response }) => {
+        if (!response) {
           return analysis;
         }
         return {
           ...analysis,
-          museumNo: object.museumNo,
-          subNo: object.subNo,
-          term: object.term
+          museumNo: response.museumNo,
+          subNo: response.subNo,
+          term: response.term
         };
       });
     });

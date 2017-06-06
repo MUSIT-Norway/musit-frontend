@@ -222,7 +222,7 @@ MusitObject.getObjectDetails = (ajaxGet = simpleGet) => ({
     id,
     collectionId
   );
-  return ajaxGet(url, token, callback).map(({ response }) => response);
+  return ajaxGet(url, token, callback);
 };
 
 MusitObject.getObjects = (ajaxGet = simpleGet) => ({

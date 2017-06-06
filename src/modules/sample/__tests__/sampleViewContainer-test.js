@@ -1,10 +1,11 @@
 import {
   getPersonsFromResponse,
   convertSample,
+  onMount,
   loadSample,
-  onMount
+  clickCreateAnalysis,
+  clickEditSample
 } from '../sampleViewContainer';
-import StatefulPromise from '../../../testutils/StatefulPromise';
 import sinon from 'sinon';
 import { appSession } from '../../../testutils/sampleDataForTest';
 
@@ -77,7 +78,7 @@ describe('SampleViewContainer', () => {
 
   describe('convertSample', () => {
     it('should tolerate wrong sampleTypeId in response', () => {
-      const sampleTypes = { test: { sampleTypeId: 1 } };
+      const sampleTypes = { sampleTypes: { test: { sampleTypeId: 1 } } };
       const sample = {
         sampleTypeId: 99999,
         registeredStamp: {
@@ -85,11 +86,11 @@ describe('SampleViewContainer', () => {
           name: 'Test name'
         }
       };
-      const flattenedSample = convertSample(sampleTypes)(sample);
+      const flattenedSample = convertSample(sample, sampleTypes);
       expect(flattenedSample).not.toBe(null);
     });
     it('should tolerate limited to no fields in response', () => {
-      const sampleTypes = { test: { sampleTypeId: 1 } };
+      const sampleTypes = { sampleTypes: { test: { sampleTypeId: 1 } } };
       const sample = {
         sampleTypeId: 1,
         registeredStamp: {
@@ -97,13 +98,74 @@ describe('SampleViewContainer', () => {
           name: 'Test name'
         }
       };
-      const flattenedSample = convertSample(sampleTypes)(sample);
+      const flattenedSample = convertSample(sample, sampleTypes);
       expect(flattenedSample).not.toBe(null);
     });
     it('should flatten fields in response', () => {
-      const sampleTypes = { test: { sampleTypeId: 2, enSampleType: 'DNA Sumtin' } };
-      const flattenedSample = convertSample(sampleTypes)(sample);
+      const sampleTypes = {
+        sampleTypes: { test: { sampleTypeId: 2, enSampleType: 'DNA Sumtin' } }
+      };
+      const flattenedSample = convertSample(sample, sampleTypes);
       expect(flattenedSample).not.toBe(null);
+    });
+  });
+
+  describe('clickCreateAnalysis', () => {
+    it('should call goTo', () => {
+      const sampleId = 3;
+      const objectData = {};
+      const goTo = sinon.spy();
+      const preventDefault = sinon.spy();
+      const event = {
+        preventDefault
+      };
+      clickCreateAnalysis(appSession, objectData, goTo)(event);
+      expect(preventDefault.calledOnce).toBe(true);
+      expect(goTo.calledOnce).toBe(true);
+      expect(goTo.getCall(0).args[0].pathname).toEqual(
+        '/museum/99/collections/1234/analysis/add'
+      );
+      expect(goTo.getCall(0).args[0].state).toEqual([objectData]);
+    });
+  });
+
+  describe('clickEditSample', () => {
+    it('should call goTo', () => {
+      const sampleId = 3;
+      const objectData = {};
+      const goTo = sinon.spy();
+      const preventDefault = sinon.spy();
+      const event = {
+        preventDefault
+      };
+      clickEditSample(appSession, sampleId, objectData, goTo)(event);
+      expect(preventDefault.calledOnce).toBe(true);
+      expect(goTo.calledOnce).toBe(true);
+      expect(goTo.getCall(0).args[0].pathname).toEqual(
+        '/museum/99/collections/1234/analysis/sample/3/edit'
+      );
+      expect(goTo.getCall(0).args[0].state).toEqual([objectData]);
+    });
+  });
+
+  describe('loadSample', () => {
+    it('should call getSample', () => {
+      const id = 3;
+      const museumId = 99;
+      const token = '1234';
+      const getSample = sinon.spy();
+      const loadForm = sinon.spy();
+      const sampleTypes = {
+        sampleTypes: { test: { sampleTypeId: 2, enSampleType: 'DNA Sumtin' } }
+      };
+      loadSample(id, museumId, token, getSample, loadForm)(sampleTypes);
+      expect(getSample.calledOnce).toBe(true);
+      expect(getSample.getCall(0).args[0].id).toEqual(id);
+      expect(getSample.getCall(0).args[0].museumId).toEqual(museumId);
+      expect(getSample.getCall(0).args[0].token).toEqual(token);
+      getSample.getCall(0).args[0].onComplete(sample);
+      expect(loadForm.calledOnce).toBe(true);
+      expect(loadForm.getCall(0).args[0]).not.toBe(null);
     });
   });
 
@@ -118,113 +180,6 @@ describe('SampleViewContainer', () => {
       onMount({ params, getSample, loadForm, getPredefinedTypes, appSession });
       expect(getPredefinedTypes.calledOnce).toBe(true);
       expect(getPredefinedTypes.getCall(0).args[0].token).toEqual(appSession.accessToken);
-    });
-  });
-
-  describe('loadSample', () => {
-    it('should load a converted sample into form', done => {
-      const loadForm = sinon.spy();
-      const promise = new StatefulPromise();
-      const getSample = promise.createPromise(sample);
-      const id = 2;
-      const museumId = 99;
-      const token = 'f7144d5d-732f-487c-b2ef-e895ab5cf163';
-      const expectedFormData = [
-        { defaultValue: [], name: 'persons' },
-        {
-          defaultValue: 'Test user',
-          name: 'updatedByName'
-        },
-        { defaultValue: 1496233429479, name: 'updatedDate' },
-        {
-          defaultValue: 'Test user',
-          name: 'registeredByName'
-        },
-        { defaultValue: 1496217151121, name: 'registeredDate' },
-        {
-          defaultValue: 'DNA Sumtin',
-          name: 'sampleType'
-        },
-        { defaultValue: 'DNA Sumtin', name: 'subTypeValue' },
-        {
-          defaultValue: 'ddff',
-          name: 'externalId'
-        },
-        { defaultValue: 'ddddd', name: 'externalIdSource' },
-        {
-          defaultValue: 1,
-          name: 'size'
-        },
-        { defaultValue: 'mg', name: 'sizeUnit' },
-        {
-          defaultValue: '1279433c-72cd-41b1-bd01-10f0392ed071',
-          name: 'objectId'
-        },
-        {
-          defaultValue: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-          name: 'originatedObjectUuid'
-        },
-        {
-          defaultValue: {
-            objectId: '12080e3e-2ca2-41b1-9d4a-4d72e292dcd8',
-            objectType: 'collection'
-          },
-          name: 'parentObject'
-        },
-        { defaultValue: true, name: 'isExtracted' },
-        { defaultValue: 99, name: 'museumId' },
-        {
-          defaultValue: 1,
-          name: 'status'
-        },
-        { defaultValue: 1, name: 'sampleNum' },
-        {
-          defaultValue: 'ssdfsdfdfsdf',
-          name: 'sampleId'
-        },
-        { defaultValue: 2, name: 'sampleTypeId' },
-        {
-          defaultValue: 'Eppendorfrør',
-          name: 'container'
-        },
-        { defaultValue: 'Destillert vann', name: 'storageMedium' },
-        {
-          defaultValue: 'DNAdvance Beckman Coulter',
-          name: 'treatment'
-        },
-        { defaultValue: 2, name: 'leftoverSample' },
-        {
-          defaultValue: 'sfsfdsdfsdff',
-          name: 'description'
-        },
-        { defaultValue: 'ddddd', name: 'note' },
-        {
-          defaultValue: {
-            date: 1496217151121,
-            name: 'Test user',
-            user: 'f7144d5d-732f-487c-b2ef-e895ab5cf163'
-          },
-          name: 'registeredStamp'
-        },
-        {
-          defaultValue: {
-            date: 1496233429479,
-            name: 'Test user',
-            user: 'f7144d5d-732f-487c-b2ef-e895ab5cf163'
-          },
-          name: 'updatedStamp'
-        },
-        { defaultValue: false, name: 'isDeleted' }
-      ];
-      loadSample(id, museumId, token, getSample, loadForm)({
-        sampleTypes: { test: { sampleTypeId: 2, enSampleType: 'DNA Sumtin' } }
-      }).then(data => {
-        expect(promise.params).toEqual({ id, museumId, token });
-        expect(data).toEqual(expectedFormData);
-        expect(loadForm.calledOnce).toBe(true);
-        expect(loadForm.getCall(0).args[0]).toEqual(expectedFormData);
-        done();
-      });
     });
   });
 });

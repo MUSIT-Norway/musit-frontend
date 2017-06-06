@@ -37,8 +37,8 @@ export const onMount = ({
   params
 }) => {
   const inputParams = {
-    museumId: appSession.museumId,
     id: params.analysisId,
+    museumId: appSession.museumId,
     collectionId: appSession.collectionId,
     token: appSession.accessToken
   };
