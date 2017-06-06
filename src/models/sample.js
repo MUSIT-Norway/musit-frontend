@@ -262,7 +262,8 @@ Sample.loadSampleDataForObject = (ajaxGet = simpleGet) => ({
             ? moment(r.doneByStamp.date).format(DATE_FORMAT_DISPLAY)
             : null,
           registeredDate: moment(r.registeredStamp.date).format(DATE_FORMAT_DISPLAY)
-        }))) || []
+        }))) ||
+      []
   );
 };
 

@@ -129,9 +129,11 @@ const updateForm = (state: Field<*>[], data: Update<*>): Field<*>[] => {
 const reducer$ = (updateField$: Subject<Update<*>>, loadForm$: Subject<Update<*>[]>) =>
   Observable.merge(
     loadForm$.map((load: Update<*>[]) => (state: Field<*>[]) =>
-      load.reduce(updateForm, state)),
+      load.reduce(updateForm, state)
+    ),
     updateField$.map((update: Update<*>) => (state: Field<*>[]) =>
-      updateForm(state, update))
+      updateForm(state, update)
+    )
   );
 
 export type FormDetails = {

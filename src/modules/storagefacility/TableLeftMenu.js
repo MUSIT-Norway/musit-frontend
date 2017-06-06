@@ -31,7 +31,7 @@ export default class NodeLeftMenuComponent extends Component {
       showButtons
     } = this.props;
 
-    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) => (
+    const buttonLink = (type, icon, eventType, disabled, useMusitIcon) =>
       <div style={{ border: 'none', textAlign: 'center' }}>
         <Button
           bsStyle="link"
@@ -48,8 +48,7 @@ export default class NodeLeftMenuComponent extends Component {
           <br />
           {I18n.t(`musit.leftMenu.node.${type}`)}
         </Button>
-      </div>
-    );
+      </div>;
 
     const showCount = type => {
       const count = this.props.stats && this.props.stats[type];
@@ -64,14 +63,13 @@ export default class NodeLeftMenuComponent extends Component {
       );
     };
 
-    const newButton = () => (
+    const newButton = () =>
       <div style={{ border: 'none', textAlign: 'center' }}>
         <Button onClick={() => onClickNewNode()} style={{ textAlign: 'left' }}>
           <FontAwesome name="plus-circle" style={{ padding: '2px' }} />
           {I18n.t('musit.leftMenu.node.newNode')}
         </Button>
-      </div>
-    );
+      </div>;
 
     return (
       <div>

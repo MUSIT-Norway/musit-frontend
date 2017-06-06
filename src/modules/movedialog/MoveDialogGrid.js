@@ -17,7 +17,7 @@ export default class ModalNodeGrid extends Component {
         <div>
           <Table responsive hover className="modalNodeGrid">
             <tbody>
-              {this.props.tableData.map((c, i) => (
+              {this.props.tableData.map((c, i) =>
                 <tr key={i} id={`${i}`}>
                   <td id={`${i}_${c.name}`}>
                     <a
@@ -35,7 +35,7 @@ export default class ModalNodeGrid extends Component {
                     {I18n.t(`musit.grid.node.nodeTypeItems.${c.type}`)}
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </Table>
         </div>

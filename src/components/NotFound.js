@@ -18,11 +18,10 @@
  */
 import React from 'react';
 
-const NotFound = () => (
+const NotFound = () =>
   <div className="container">
     <h1>Not found! 404!</h1>
     <p>The route you are looking for does not exist!</p>
-  </div>
-);
+  </div>;
 
 export default NotFound;

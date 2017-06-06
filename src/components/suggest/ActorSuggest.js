@@ -55,9 +55,8 @@ export class ActorSuggestComponent extends React.Component {
         disabled={this.props.disabled}
         onSuggestionsUpdateRequested={this.requestSuggestionUpdate}
         getSuggestionValue={suggestion => suggestion.fn}
-        renderSuggestion={suggestion => (
-          <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>
-        )}
+        renderSuggestion={suggestion =>
+          <span className={'suggestion-content'}>{`${suggestion.fn}`}</span>}
         inputProps={{ ...this.doneByProps, value: this.state.value }}
         shouldRenderSuggestions={v => v !== 'undefined'}
         onSuggestionSelected={(event, { suggestion }) => {

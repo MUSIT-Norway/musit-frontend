@@ -73,7 +73,9 @@ Control.addControl = (ajaxPost = simplePost) => ({
   callback
 }) => {
   const data = mapToBackend(controlData, observations, nodeId);
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(
+    museumId
+  )}/${nodeId}/controls`;
   return ajaxPost(url, data, token, callback);
 };
 
@@ -84,7 +86,9 @@ Control.getControl = (ajaxGet = simpleGet, ajaxPost = simplePost) => ({
   token,
   callback
 }) => {
-  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(museumId)}/${nodeId}/controls/${controlId}`;
+  const url = `${Config.magasin.urls.api.storagefacility.baseUrl(
+    museumId
+  )}/${nodeId}/controls/${controlId}`;
   return ajaxGet(url, token, callback).flatMap(control => {
     if (!control.response) {
       return { error: 'no response body' };

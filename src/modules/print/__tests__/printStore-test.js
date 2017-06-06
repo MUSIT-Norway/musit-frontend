@@ -65,7 +65,8 @@ describe('printStore', () => {
             rowsPerPage: 4
           }
         ],
-        rendered: '<!DOCTYPE html> <html lang="en"> <head> <link rel="stylesheet" href="/service_barcode/assets/css/portrait.css"> <link rel="stylesheet" href="/service_barcode/assets/css/label1.css"> </head> <body> <div class="labelsContainer"> <div class="label"> <div class="top"> <div class="codeImage"> <img width="90px" height="90px" src="/service_barcode/barcode/d3982b48-56c7-4d27-bc81-6e38b59d57ed?codeFormat=1" /> </div> <div class="name">Utviklingsmuseet Org</div> </div> <div class="uuid">d3982b48-56c7-4d27-bc81-6e38b59d57ed</div> </div> </div> </body> </html>'
+        rendered:
+          '<!DOCTYPE html> <html lang="en"> <head> <link rel="stylesheet" href="/service_barcode/assets/css/portrait.css"> <link rel="stylesheet" href="/service_barcode/assets/css/label1.css"> </head> <body> <div class="labelsContainer"> <div class="label"> <div class="top"> <div class="codeImage"> <img width="90px" height="90px" src="/service_barcode/barcode/d3982b48-56c7-4d27-bc81-6e38b59d57ed?codeFormat=1" /> </div> <div class="name">Utviklingsmuseet Org</div> </div> <div class="uuid">d3982b48-56c7-4d27-bc81-6e38b59d57ed</div> </div> </div> </body> </html>'
       },
       d: {
         level: 0,
@@ -135,7 +136,8 @@ describe('printStore', () => {
       .switchMap(
         Template.renderTemplate(() =>
           Observable.of({
-            response: '<!DOCTYPE html> <html lang="en"> <head> <link rel="stylesheet" href="/service_barcode/assets/css/portrait.css"> <link rel="stylesheet" href="/service_barcode/assets/css/label1.css"> </head> <body> <div class="labelsContainer"> <div class="label"> <div class="top"> <div class="codeImage"> <img width="90px" height="90px" src="/service_barcode/barcode/d3982b48-56c7-4d27-bc81-6e38b59d57ed?codeFormat=1" /> </div> <div class="name">Utviklingsmuseet Org</div> </div> <div class="uuid">d3982b48-56c7-4d27-bc81-6e38b59d57ed</div> </div> </div> </body> </html>'
+            response:
+              '<!DOCTYPE html> <html lang="en"> <head> <link rel="stylesheet" href="/service_barcode/assets/css/portrait.css"> <link rel="stylesheet" href="/service_barcode/assets/css/label1.css"> </head> <body> <div class="labelsContainer"> <div class="label"> <div class="top"> <div class="codeImage"> <img width="90px" height="90px" src="/service_barcode/barcode/d3982b48-56c7-4d27-bc81-6e38b59d57ed?codeFormat=1" /> </div> <div class="name">Utviklingsmuseet Org</div> </div> <div class="uuid">d3982b48-56c7-4d27-bc81-6e38b59d57ed</div> </div> </div> </body> </html>'
           })
         )
       );

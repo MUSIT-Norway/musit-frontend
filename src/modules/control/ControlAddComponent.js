@@ -237,9 +237,8 @@ export class ControlAddContainer extends React.Component {
     ];
 
     const renderReadOnly = e => {
-      const make = v => (
-        <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />
-      );
+      const make = v =>
+        <FormControl style={{ backgroundColor: '#f2f2f2' }} readOnly value={v} />;
 
       if (hasProp(e, 'leftValue') && hasProp(e, 'rightValue')) {
         return (
@@ -340,7 +339,8 @@ export class ControlAddContainer extends React.Component {
                       <Row>
                         <Col xs={5}>
                           {hasProp(e, 'leftValue')
-                            ? <label> {translate('musit.newControl.envdata')} </label>
+                            ? <label> {translate('musit.newControl.envdata')}
+                              {' '}</label>
                             : ''}
                         </Col>
                       </Row>

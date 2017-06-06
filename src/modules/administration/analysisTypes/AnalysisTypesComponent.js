@@ -27,11 +27,10 @@ const collections = [
 
 const getCollectionName = n => I18n.t(`musit.userProfile.collections.${n}`);
 
-const CheckBoxShow = (v, c) => (
+const CheckBoxShow = (v, c) =>
   <td key={c} value={c} style={{ textAlign: 'center' }}>
     <input type="checkbox" value="" checked={v} />
-  </td>
-);
+  </td>;
 
 /**
  * TODO: must use localized version of name. Now using norwegian always.
@@ -62,7 +61,7 @@ const getObjectsValue = (store: Store) => {
     : [];
 };
 
-const AnalysisTypesComponent = (props: Props) => (
+const AnalysisTypesComponent = (props: Props) =>
   <div>
     <div className="page-header">
       <h1>{I18n.t('musit.administration.analysisTypes.analysisTypes')}</h1>
@@ -85,17 +84,16 @@ const AnalysisTypesComponent = (props: Props) => (
       <thead>
         <tr>
           <th>Name</th>
-          {collections.map((c, i) => (
+          {collections.map((c, i) =>
             <th style={{ textAlign: 'center' }} key={i}>{getCollectionName(c)}</th>
-          ))}
+          )}
         </tr>
       </thead>
       <tbody>
         {getObjectsValue(props.store)}
       </tbody>
     </table>
-  </div>
-);
+  </div>;
 
 AnalysisTypesComponent.propTypes = {
   store: PropTypes.object.isRequired,

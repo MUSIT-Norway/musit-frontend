@@ -144,7 +144,7 @@ const SampleTableComponent = ({
         noDataText={I18n.t('musit.samples.noSamplesForObject')}
       >
         {samples &&
-          samples.map((s, i) => (
+          samples.map((s, i) =>
             <Tr key={i} onClick={() => onClick(s)}>
               <Td column="sampleNum">{s.sampleNum || ''}</Td>
               <Td column="registeredDate">{s.registeredDate || ''}</Td>
@@ -176,7 +176,7 @@ const SampleTableComponent = ({
                 </a>
               </Td>
             </Tr>
-          ))}
+          )}
       </Table>
     </div>
   );

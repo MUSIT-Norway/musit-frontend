@@ -1,9 +1,8 @@
 import React from 'react';
 
-const CenteredLayout = ({ children }) => (
+const CenteredLayout = ({ children }) =>
   <div className="container">
     {children}
-  </div>
-);
+  </div>;
 
 export default CenteredLayout;

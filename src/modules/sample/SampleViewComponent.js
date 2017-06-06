@@ -73,7 +73,7 @@ export default function SampleViewComponent({
           <div className="col-md-2"><strong>Dato</strong></div>
         </div>
         {form.persons.value &&
-          form.persons.value.map((p, i) => (
+          form.persons.value.map((p, i) =>
             <div className="row" key={i}>
               <div className="col-md-4">{p.name}</div>
               <div className="col-md-2">{p.role}</div>
@@ -81,7 +81,7 @@ export default function SampleViewComponent({
                 {p.date ? moment(p.date).format('DD.MM.YYYY') : null}
               </div>
             </div>
-          ))}
+          )}
       </div>
       <hr />
       <div className="form-group">

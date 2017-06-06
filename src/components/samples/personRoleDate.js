@@ -63,7 +63,7 @@ export const PersonRoleDate = ({
         <Col md={2} />
       </Row>
       <br />
-      {pArr.map((v, i) => (
+      {pArr.map((v, i) =>
         <Row key={`id_${i}`}>
           <Col md={2}>
             <ActorSuggest
@@ -131,7 +131,7 @@ export const PersonRoleDate = ({
             />
           </Col>
         </Row>
-      ))}
+      )}
       <Row>
         <Col md={6}>
           <Button

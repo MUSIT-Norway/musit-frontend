@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Row, Col } from 'react-bootstrap';
 import { I18n } from 'react-i18nify';
 
-const SaveCancel = props => (
+const SaveCancel = props =>
   <Row>
     <Col
       xs={6}
@@ -33,8 +33,7 @@ const SaveCancel = props => (
         {props.cancelLabel || I18n.t('musit.texts.cancel')}
       </Button>
     </Col>
-  </Row>
-);
+  </Row>;
 
 SaveCancel.propTypes = {
   id: PropTypes.string,

@@ -4,14 +4,13 @@ import takeRight from 'lodash/takeRight';
 import map from 'lodash/map';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
-const tooltip = (tipText, child) => (
+const tooltip = (tipText, child) =>
   <OverlayTrigger
     placement="top"
     overlay={<Popover id="breadcrumb tooltip">{tipText}</Popover>}
   >
     {child}
-  </OverlayTrigger>
-);
+  </OverlayTrigger>;
 
 const CrumbItem = props => {
   const name =
