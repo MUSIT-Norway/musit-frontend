@@ -167,7 +167,8 @@ export const moveItems = (
       itemToMove => (isNode ? itemToMove.nodeId : itemToMove.uuid)
     );
     const objectTypesAndIds = items.map(
-      itemToMove => (!isNode ? {id: itemToMove.uuid, objectType: itemToMove.objectType} : null)
+      itemToMove =>
+        !isNode ? { id: itemToMove.uuid, objectType: itemToMove.objectType } : null
     );
 
     const toMoveLength = idsToMove.length;

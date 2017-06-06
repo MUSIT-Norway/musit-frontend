@@ -86,7 +86,7 @@ class MusitObject {
     id: string,
     destination: number,
     doneBy: string,
-    objectType?: Array<{objectType: 'collection' | 'sample', id: string}>,
+    objectType?: Array<{ objectType: 'collection' | 'sample', id: string }>,
     museumId: number,
     token: string,
     callback?: Callback
